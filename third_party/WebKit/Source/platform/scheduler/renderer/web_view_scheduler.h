@@ -21,6 +21,8 @@ class PLATFORM_EXPORT WebViewScheduler {
     virtual ~WebViewSchedulerDelegate() {}
 
     virtual void RequestBeginMainFrameNotExpected(bool new_state) = 0;
+
+    virtual void SetPageStopped(bool stopped) = 0;
   };
 
   virtual ~WebViewScheduler() {}

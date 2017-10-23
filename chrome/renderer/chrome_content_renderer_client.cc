@@ -1205,12 +1205,13 @@ bool ChromeContentRendererClient::RunIdleHandlerWhenWidgetsHidden() {
 }
 
 bool ChromeContentRendererClient::AllowStoppingWhenProcessBackgrounded() {
-#if defined(OS_ANDROID)
+  // #if defined(OS_ANDROID)
+  //   return true;
+  // #else
+  //   // TODO(ojan): Plumb the engagement values for this feature to
+  //   WebViewImpl. return base::FeatureList::IsEnabled(pausetabs::kFeature);
+  // #endif
   return true;
-#else
-  // TODO(ojan): Plumb the engagement values for this feature to WebViewImpl.
-  return base::FeatureList::IsEnabled(pausetabs::kFeature);
-#endif
 }
 
 bool ChromeContentRendererClient::AllowPopup() {
