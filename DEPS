@@ -42,6 +42,12 @@ vars = {
   'checkout_traffic_annotation_tools': 'checkout_configuration == "default"',
   'checkout_instrumented_libraries': 'checkout_linux and checkout_configuration == "default"',
 
+  # TODO(dpranke): change to False before landing.
+  'checkout_chromeos_amd64_generic_sdk': True,
+
+  'checkout_chromeos_betty_sdk': False,
+  'checkout_chromeos_daisy_sdk': False,
+
   'chromium_git': 'https://chromium.googlesource.com',
   'swiftshader_git': 'https://swiftshader.googlesource.com',
   'pdfium_git': 'https://pdfium.googlesource.com',
@@ -1422,6 +1428,66 @@ hooks = [
       'python',
       'src/build/fuchsia/update_sdk.py',
       '492eec9e40c9832dd8772f4718b7db6aac4d7921',
+    ],
+  },
+
+  {
+    'name': 'chromeos_amd64_generic_sdk',
+    'pattern': '\\.sha1',
+    'condition': 'checkout_chromeos_amd64_generic_sdk',
+    'action': [
+      'python',
+      'src/third_party/depot_tools/cros',
+      'chrome-sdk',
+      '--board',
+      'amd64-generic',
+      '--download-vm',
+      '--cache-dir',
+      'build/chromeos',
+    ],
+  },
+  {
+    'name': 'chromeos_betty_sdk',
+    'pattern': '\\.sha1',
+    'condition': 'checkout_chromeos_betty_sdk',
+    'action': [
+      'python',
+      'src/third_party/depot_tools/cros',
+      'chrome-sdk',
+      '--board',
+      'betty',
+      '--download-vm',
+      '--cache-dir',
+      'build/chromeos',
+    ],
+  },
+  {
+    'name': 'chromeos_daisy_sdk',
+    'pattern': '\\.sha1',
+    'condition': 'checkout_chromeos_daisy_sdk',
+    'action': [
+      'python',
+      'src/third_party/depot_tools/cros',
+      'chrome-sdk',
+      '--board',
+      'daisy',
+      '--download-vm',
+      '--cache-dir',
+      'build/chromeos',
+    ],
+  },
+
+  {
+    'name': 'chromeos_qemu',
+    'pattern': '\\.sha1',
+    'condition': 'checkout_chromeos',
+    'action': [
+      'python',
+      'src/third_party/depot_tools/download_from_google_storage.py',
+      '--no_resume',
+      '--no_auth',
+      '--bucket', 'chromium-gvr-static-shim',
+      '-s', 'src/third_party/qemu/linux64/qemu-system-x86_64.sha1',
     ],
   },
 
