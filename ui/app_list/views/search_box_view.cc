@@ -678,6 +678,21 @@ void SearchBoxView::OnKeyEvent(ui::KeyEvent* event) {
   event->SetHandled();
 }
 
+views::Widget* SearchBoxView::GetWidget() {
+  return View::GetWidget();
+}
+
+const views::Widget* SearchBoxView::GetWidget() const {
+  return View::GetWidget();
+}
+
+ui::AXRole SearchBoxView::GetAccessibleWindowRole() const {
+  // Default role of root view is AX_ROLE_WINDOW which traps ChromeVox focus
+  // within the root view. Assign AX_ROLE_GROUP here to allow the focus to move
+  // from elements in search box to app list view.
+  return ui::AX_ROLE_GROUP;
+}
+
 void SearchBoxView::ButtonPressed(views::Button* sender,
                                   const ui::Event& event) {
   if (back_button_ && sender == back_button_) {
