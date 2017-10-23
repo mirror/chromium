@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e73fbb4a_bce5a78a",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-23T22:57:36Z",
+      "side": 1,
+      "message": "I suspect this should be disabled, and/or just fall through to the blacklist (I don\u0027t actually know which one, though disabled is probably the safest).\nThis feature is mostly related to the display hardware, and switching to swiftshader doesn\u0027t bypass the display.",
+      "revId": "1426227d59419f593f41188ca0474af586290205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

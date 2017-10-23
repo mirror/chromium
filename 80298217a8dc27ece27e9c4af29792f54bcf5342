@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c07fabc8_29978996",
+        "filename": "content/browser/gpu/compositor_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-23T22:57:36Z",
+      "side": 0,
+      "message": "Is this ok to remove?",
+      "revId": "80298217a8dc27ece27e9c4af29792f54bcf5342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
