@@ -1731,6 +1731,8 @@ crbug.com/751952 virtual/origin-trials-runtimeflags-disabled/http/tests/origin_t
 crbug.com/771729 [ Win Debug ] external/wpt/html/semantics/scripting-1/the-script-element/execution-timing/039.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 [ Android Linux Mac10.10 Mac10.11 Mac10.12 Retina Win ] external/wpt/css/css-ui-3/cursor-auto-006.html [ Skip ]
+crbug.com/626703 [ Android Linux Mac10.10 Mac10.11 Mac10.12 Retina Win ] external/wpt/css/css-ui-3/cursor-auto-007.html [ Skip ]
 crbug.com/626703 [ Android Linux Mac ] external/wpt/html/semantics/embedded-content/the-object-element/object-events.html [ Timeout ]
 crbug.com/626703 [ Android Win ] external/wpt/css/css-fonts-3/font-kerning-02.html [ Failure ]
 crbug.com/626703 external/wpt/2dcontext/building-paths/canvas_complexshapes_arcto_001.htm [ Failure ]
