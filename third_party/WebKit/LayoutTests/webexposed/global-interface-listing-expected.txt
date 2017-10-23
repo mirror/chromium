@@ -7202,7 +7202,7 @@ interface VR : EventTarget
     getter ondeviceconnect
     getter ondevicedisconnect
     method constructor
-    method getDevices
+    method requestDevice
     setter ondeviceconnect
     setter ondevicedisconnect
 interface VRCoordinateSystem
