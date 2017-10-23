@@ -853,10 +853,25 @@ WebContents* TabManager::DiscardWebContentsAt(int index,
                                               TabStripModel* model,
                                               DiscardTabCondition condition) {
   WebContents* old_contents = model->GetWebContentsAt(index);
+  old_contents->GetController().TakeScreenshot(
+      base::BindOnce(&TabManager::DiscardWebContentsAtAfterScreenshot,
+                     weak_ptr_factory_.GetWeakPtr(), index,
+                     base::Unretained(model), condition));
+  return old_contents;
+}
+
+void TabManager::DiscardWebContentsAtAfterScreenshot(
+    int index,
+    TabStripModel* model,
+    DiscardTabCondition condition,
+    content::ReadbackResponse response) {
+  LOG(ERROR) << "After screenshot " << response;
+
+  WebContents* old_contents = model->GetWebContentsAt(index);
 
   // Can't discard tabs that are already discarded.
   if (GetWebContentsData(old_contents)->IsDiscarded())
-    return nullptr;
+    return;  // nullptr;
 
   // Record statistics before discarding to capture the memory state that leads
   // to the discard.
@@ -929,8 +944,6 @@ WebContents* TabManager::DiscardWebContentsAt(int index,
   // RenderFrameProxyHosts.
   delete old_contents;
   recent_tab_discard_ = true;
-
-  return null_contents;
 }
 
 void TabManager::PauseBackgroundTabOpeningIfNeeded() {

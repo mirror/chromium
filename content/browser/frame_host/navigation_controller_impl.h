@@ -90,6 +90,7 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
                              bool replace_entry) override;
   bool CanPruneAllButLastCommitted() override;
   void PruneAllButLastCommitted() override;
+  void TakeScreenshot(TakeScreenshotCallback callback) override;
   void ClearAllScreenshots() override;
 
   // Whether this is the initial navigation in an unmodified new tab.  In this
@@ -188,9 +189,6 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
 
   void SetGetTimestampCallbackForTest(
       const base::Callback<base::Time()>& get_timestamp_callback);
-
-  // Takes a screenshot of the page at the current state.
-  void TakeScreenshot();
 
   // Sets the screenshot manager for this NavigationControllerImpl. Setting a
   // NULL manager recreates the default screenshot manager and uses that.

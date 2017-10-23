@@ -250,6 +250,8 @@ class CONTENT_EXPORT WebContentsViewAura
 
   bool init_rwhv_with_null_parent_for_testing_;
 
+  aura::Window* screenshot_window_ = nullptr;
+
   DISALLOW_COPY_AND_ASSIGN(WebContentsViewAura);
 };
 

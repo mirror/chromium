@@ -16,46 +16,42 @@
 #include "content/public/common/content_switches.h"
 #include "ui/gfx/codec/png_codec.h"
 
+namespace content {
+
 namespace {
 
 // Minimum delay between taking screenshots.
 const int kMinScreenshotIntervalMS = 1000;
 
+scoped_refptr<base::RefCountedBytes> EncodeScreenshot(const SkBitmap& bitmap) {
+  DCHECK_EQ(bitmap.colorType(), kAlpha_8_SkColorType);
+  // Encode the A8 bitmap to grayscale PNG treating alpha as color intensity.
+  std::vector<unsigned char> data;
+  if (gfx::PNGCodec::EncodeA8SkBitmap(bitmap, &data))
+    return base::RefCountedBytes::TakeVector(&data);
+  return base::MakeRefCounted<base::RefCountedBytes>();
 }
 
-namespace content {
+}  // namespace
 
-// Encodes the A8 SkBitmap to grayscale PNG in a worker thread.
-class ScreenshotData : public base::RefCountedThreadSafe<ScreenshotData> {
+class NavigationEntryScreenshotManager::ScopedScreenshotCallbackRunner {
  public:
-  ScreenshotData() {
-  }
+  ScopedScreenshotCallbackRunner(TakeScreenshotCallback callback)
+      : callback_(std::move(callback)) {}
+  ScopedScreenshotCallbackRunner(ScopedScreenshotCallbackRunner&&) = default;
+  ScopedScreenshotCallbackRunner& operator=(ScopedScreenshotCallbackRunner&&) =
+      default;
+  ~ScopedScreenshotCallbackRunner() { Run(READBACK_FAILED); }
 
-  void EncodeScreenshot(const SkBitmap& bitmap, base::Closure callback) {
-    base::PostTaskWithTraitsAndReply(
-        FROM_HERE, {base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-        base::BindOnce(&ScreenshotData::EncodeOnWorker, this, bitmap),
-        callback);
+  void Run(ReadbackResponse response) {
+    if (callback_)
+      std::move(callback_).Run(response);
   }
-
-  scoped_refptr<base::RefCountedBytes> data() const { return data_; }
 
  private:
-  friend class base::RefCountedThreadSafe<ScreenshotData>;
-  virtual ~ScreenshotData() {
-  }
+  TakeScreenshotCallback callback_;
 
-  void EncodeOnWorker(const SkBitmap& bitmap) {
-    DCHECK_EQ(bitmap.colorType(), kAlpha_8_SkColorType);
-    // Encode the A8 bitmap to grayscale PNG treating alpha as color intensity.
-    std::vector<unsigned char> data;
-    if (gfx::PNGCodec::EncodeA8SkBitmap(bitmap, &data))
-      data_ = new base::RefCountedBytes(data);
-  }
-
-  scoped_refptr<base::RefCountedBytes> data_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScreenshotData);
+  DISALLOW_COPY_AND_ASSIGN(ScopedScreenshotCallbackRunner);
 };
 
 NavigationEntryScreenshotManager::NavigationEntryScreenshotManager(
@@ -63,24 +59,30 @@ NavigationEntryScreenshotManager::NavigationEntryScreenshotManager(
     : owner_(owner),
       min_screenshot_interval_ms_(kMinScreenshotIntervalMS),
       screenshot_factory_(this) {
-
 }
 
 NavigationEntryScreenshotManager::~NavigationEntryScreenshotManager() {
 }
 
-void NavigationEntryScreenshotManager::TakeScreenshot() {
-  static bool overscroll_enabled = base::CommandLine::ForCurrentProcess()->
-      GetSwitchValueASCII(switches::kOverscrollHistoryNavigation) != "0";
-  if (!overscroll_enabled)
-    return;
+void NavigationEntryScreenshotManager::TakeScreenshot(
+    TakeScreenshotCallback callback) {
+  ScopedScreenshotCallbackRunner scoped_callback_runner(std::move(callback));
+
+  /*
+static bool overscroll_enabled = base::CommandLine::ForCurrentProcess()->
+GetSwitchValueASCII(switches::kOverscrollHistoryNavigation) != "0";
+if (!overscroll_enabled)
+return;
+*/
 
   NavigationEntryImpl* entry = owner_->GetLastCommittedEntry();
   if (!entry)
     return;
 
+  /*
   if (!owner_->delegate()->CanOverscrollContent())
     return;
+  */
 
   RenderViewHost* render_view_host = owner_->delegate()->GetRenderViewHost();
   DCHECK(render_view_host && render_view_host->GetWidget());
@@ -90,15 +92,17 @@ void NavigationEntryScreenshotManager::TakeScreenshot() {
     return;
 
   // Make sure screenshots aren't taken too frequently.
-  base::Time now = base::Time::Now();
+  /*
+  base::TimeTicks now = base::TimeTicks::Now();
   if (now - last_screenshot_time_ <
           base::TimeDelta::FromMilliseconds(min_screenshot_interval_ms_)) {
     return;
   }
+  */
 
   WillTakeScreenshot(render_view_host);
 
-  last_screenshot_time_ = now;
+  // last_screenshot_time_ = now;
 
   // This screenshot is destined for the UI, so size the result to the actual
   // on-screen size of the view (and not its device-rendering size).
@@ -106,7 +110,8 @@ void NavigationEntryScreenshotManager::TakeScreenshot() {
   view->CopyFromSurface(
       gfx::Rect(), view_size_on_screen,
       base::Bind(&NavigationEntryScreenshotManager::OnScreenshotTaken,
-                 screenshot_factory_.GetWeakPtr(), entry->GetUniqueID()),
+                 screenshot_factory_.GetWeakPtr(), entry->GetUniqueID(),
+                 base::Passed(std::move(scoped_callback_runner))),
       kAlpha_8_SkColorType);
 }
 
@@ -128,6 +133,7 @@ void NavigationEntryScreenshotManager::SetMinScreenshotIntervalMS(
 
 void NavigationEntryScreenshotManager::OnScreenshotTaken(
     int unique_id,
+    ScopedScreenshotCallbackRunner scoped_callback_runner,
     const SkBitmap& bitmap,
     ReadbackResponse response) {
   NavigationEntryImpl* entry = owner_->GetEntryWithUniqueID(unique_id);
@@ -139,16 +145,18 @@ void NavigationEntryScreenshotManager::OnScreenshotTaken(
   if ((response != READBACK_SUCCESS) || bitmap.empty() || bitmap.isNull()) {
     if (!ClearScreenshot(entry))
       OnScreenshotSet(entry);
+    scoped_callback_runner.Run(response != READBACK_SUCCESS ? READBACK_FAILED
+                                                            : response);
     return;
   }
 
-  scoped_refptr<ScreenshotData> screenshot = new ScreenshotData();
-  screenshot->EncodeScreenshot(
-      bitmap,
-      base::Bind(&NavigationEntryScreenshotManager::OnScreenshotEncodeComplete,
-                 screenshot_factory_.GetWeakPtr(),
-                 unique_id,
-                 screenshot));
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(&EncodeScreenshot, bitmap),
+      base::BindOnce(
+          &NavigationEntryScreenshotManager::OnScreenshotEncodeComplete,
+          screenshot_factory_.GetWeakPtr(), unique_id,
+          std::move(scoped_callback_runner)));
 }
 
 int NavigationEntryScreenshotManager::GetScreenshotCount() const {
@@ -164,12 +172,16 @@ int NavigationEntryScreenshotManager::GetScreenshotCount() const {
 
 void NavigationEntryScreenshotManager::OnScreenshotEncodeComplete(
     int unique_id,
-    scoped_refptr<ScreenshotData> screenshot) {
+    ScopedScreenshotCallbackRunner scoped_callback_runner,
+    scoped_refptr<base::RefCountedBytes> data) {
+  if (data->size() == 0)
+    return;
   NavigationEntryImpl* entry = owner_->GetEntryWithUniqueID(unique_id);
   if (!entry)
     return;
-  entry->SetScreenshotPNGData(screenshot->data());
+  entry->SetScreenshotPNGData(std::move(data));
   OnScreenshotSet(entry);
+  scoped_callback_runner.Run(READBACK_SUCCESS);
 }
 
 void NavigationEntryScreenshotManager::OnScreenshotSet(

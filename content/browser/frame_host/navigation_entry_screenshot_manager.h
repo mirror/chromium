@@ -7,6 +7,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted_memory.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "content/common/content_export.h"
@@ -19,7 +20,6 @@ namespace content {
 class NavigationControllerImpl;
 class NavigationEntryImpl;
 class RenderViewHost;
-class ScreenshotData;
 
 // NavigationEntryScreenshotManager takes care of taking image-captures for the
 // current navigation entry of a NavigationControllerImpl, and managing these
@@ -27,12 +27,14 @@ class ScreenshotData;
 // overscroll gestures.
 class CONTENT_EXPORT NavigationEntryScreenshotManager {
  public:
+  using TakeScreenshotCallback = base::OnceCallback<void(ReadbackResponse)>;
+
   explicit NavigationEntryScreenshotManager(
       NavigationControllerImpl* controller);
   virtual ~NavigationEntryScreenshotManager();
 
   // Takes a screenshot of the last-committed entry of the controller.
-  void TakeScreenshot();
+  void TakeScreenshot(TakeScreenshotCallback callback);
 
   // Clears screenshots of all navigation entries.
   void ClearAllScreenshots();
@@ -51,20 +53,25 @@ class CONTENT_EXPORT NavigationEntryScreenshotManager {
 
   void SetMinScreenshotIntervalMS(int interval_ms);
 
-  // The callback invoked when taking the screenshot of the page is complete.
-  // This sets the screenshot on the navigation entry.
-  void OnScreenshotTaken(int unique_id,
-                         const SkBitmap& bitmap,
-                         ReadbackResponse response);
-
   // Returns the number of entries with screenshots.
   int GetScreenshotCount() const;
 
  private:
+  class ScopedScreenshotCallbackRunner;
+
+  // The callback invoked when taking the screenshot of the page is complete.
+  // This sets the screenshot on the navigation entry.
+  void OnScreenshotTaken(int unique_id,
+                         ScopedScreenshotCallbackRunner scoped_callback_runner,
+                         const SkBitmap& bitmap,
+                         ReadbackResponse response);
+
   // This is called when the screenshot data has beene encoded to PNG in a
   // worker thread.
-  void OnScreenshotEncodeComplete(int unique_id,
-                                  scoped_refptr<ScreenshotData> data);
+  void OnScreenshotEncodeComplete(
+      int unique_id,
+      ScopedScreenshotCallbackRunner scoped_callback_runner,
+      scoped_refptr<base::RefCountedBytes> data);
 
   // Removes the screenshot for the entry, returning true if the entry had a
   // screenshot.
@@ -78,7 +85,7 @@ class CONTENT_EXPORT NavigationEntryScreenshotManager {
   // The navigation controller that owns this screenshot-manager.
   NavigationControllerImpl* owner_;
 
-  base::Time last_screenshot_time_;
+  base::TimeTicks last_screenshot_time_;
   int min_screenshot_interval_ms_;
 
   // Taking a screenshot and encoding them can be async. So use a weakptr for

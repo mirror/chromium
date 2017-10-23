@@ -12,11 +12,13 @@
 #include <string>
 #include <vector>
 
+#include "base/callback_forward.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/global_request_id.h"
+#include "content/public/browser/readback_types.h"
 #include "content/public/browser/reload_type.h"
 #include "content/public/browser/restore_type.h"
 #include "content/public/browser/session_storage_namespace.h"
@@ -87,6 +89,8 @@ class NavigationController {
     // Adding new UserAgentOverrideOption? Also update LoadUrlParams.java
     // static constants.
   };
+
+  using TakeScreenshotCallback = base::OnceCallback<void(ReadbackResponse)>;
 
   // Creates a navigation entry and translates the virtual url to a real one.
   // This is a general call; prefer LoadURL[FromRenderer]/TransferURL below.
@@ -454,6 +458,12 @@ class NavigationController {
   // |CanPruneAllButLastCommitted| returns true before calling this, or it will
   // crash.
   virtual void PruneAllButLastCommitted() = 0;
+
+  // Takes a screenshot of the last committed entry and invokes |callback|. If
+  // the screenshot is captured successfully, it will be displayed when the
+  // entry is visible but unloaded (e.g. during history navigation with
+  // overscroll gestures, when it is discarded).
+  virtual void TakeScreenshot(TakeScreenshotCallback callback) = 0;
 
   // Clears all screenshots associated with navigation entries in this
   // controller. Useful to reduce memory consumption in low-memory situations.
