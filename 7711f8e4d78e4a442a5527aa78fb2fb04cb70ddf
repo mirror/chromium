@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "757e43cb_cdf52da8",
+        "filename": "chrome/gpu/arc_video_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aa55cc5_24250fed",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 27
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46665f53_453935b3",
         "filename": "chrome/gpu/arc_video_decode_accelerator.h",
         "patchSetId": 6
@@ -56,6 +80,24 @@
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2795e5a4_55dcdeb4",
+        "filename": "chrome/gpu/arc_video_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46665f53_453935b3",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +164,30 @@
     },
     {
       "key": {
+        "uuid": "c8d27ce4_9bae706e",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "775537f8_a2c6dfba",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a80f195e_1f410b4d",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 6
@@ -133,6 +199,24 @@
       "writtenOn": "2017-10-18T09:06:18Z",
       "side": 1,
       "message": "I would strongly consider pulling these changes out into a separate CL; the patch is big enough as it is.",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bddde5_40d73c97",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "I agree in general and I considered it initially, however in this case I would prefer to keep it together to simplify any potential merges.",
+      "parentUuid": "a80f195e_1f410b4d",
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -153,6 +237,24 @@
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68a39b7_105f56be",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d41c2d6f_9997f974",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +304,30 @@
     },
     {
       "key": {
+        "uuid": "9d30a597_b8d0a9c7",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Unfortunately not, as as far as I am aware there is no support for that in the libraries on the ARC++ side.",
+      "parentUuid": "72b667f4_1f67e670",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 3
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45c3779d_cd5edd25",
         "filename": "chrome/gpu/protected_buffer_manager_proxy.cc",
         "patchSetId": 6
@@ -216,6 +342,24 @@
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743d8a9f_eea5c3ab",
+        "filename": "chrome/gpu/protected_buffer_manager_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c3779d_cd5edd25",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +380,24 @@
     },
     {
       "key": {
+        "uuid": "14347826_2840aa83",
+        "filename": "chrome/gpu/protected_buffer_manager_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2beee390_8b5d7742",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ff4c8bf_8206362d",
         "filename": "chrome/gpu/protected_buffer_manager_proxy.cc",
         "patchSetId": 6
@@ -250,6 +412,24 @@
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d052ed_3354d8cf",
+        "filename": "chrome/gpu/protected_buffer_manager_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ff4c8bf_8206362d",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -270,6 +450,24 @@
     },
     {
       "key": {
+        "uuid": "cae96c89_ba2880bc",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_native_pixmap.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Ack, but rolling back changes in this file, so leaving it for another CL.",
+      "parentUuid": "41af25a7_20203512",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfcdda0b_aebc2ccc",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_native_pixmap.h",
         "patchSetId": 6
@@ -284,6 +482,24 @@
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ede084_d9a096f5",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_native_pixmap.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cfcdda0b_aebc2ccc",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -357,6 +573,24 @@
     },
     {
       "key": {
+        "uuid": "b1dae861_0db90e6d",
+        "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b09dd482_659e8d60",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aec3e98_f15b49f2",
         "filename": "ui/gfx/gpu_memory_buffer.cc",
         "patchSetId": 6
@@ -374,6 +608,24 @@
     },
     {
       "key": {
+        "uuid": "f340188b_89df0f68",
+        "filename": "ui/gfx/gpu_memory_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2aec3e98_f15b49f2",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf3b78f3_5059e4b2",
         "filename": "ui/gfx/gpu_memory_buffer.h",
         "patchSetId": 6
@@ -385,6 +637,24 @@
       "writtenOn": "2017-10-11T22:56:37Z",
       "side": 1,
       "message": "Do we need this? if it\u0027s really needed then I\u0027d like it done as a dtor to be consistent with SharedMemoryHandle and in a separate patch.",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97142e2_1019b915",
+        "filename": "ui/gfx/gpu_memory_buffer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "bf3b78f3_5059e4b2",
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -411,6 +681,30 @@
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9588c905_6ecada6b",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-23T08:33:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2acf1fa0_825c2582",
+      "range": {
+        "startLine": 263,
+        "startChar": 2,
+        "endLine": 267,
+        "endChar": 73
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
