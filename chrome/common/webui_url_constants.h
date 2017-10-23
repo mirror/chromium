@@ -28,7 +28,6 @@ extern const char kChromeUICertificateViewerURL[];
 extern const char kChromeUICertificateViewerDialogURL[];
 extern const char kChromeUIChromeSigninURL[];
 extern const char kChromeUIChromeURLsURL[];
-extern const char kChromeUIComponentsURL[];
 extern const char kChromeUIConflictsURL[];
 extern const char kChromeUIConstrainedHTMLTestURL[];
 extern const char kChromeUICrashesURL[];
@@ -41,14 +40,11 @@ extern const char kChromeUIDownloadsURL[];
 extern const char kChromeUIExtensionIconURL[];
 extern const char kChromeUIExtensionsFrameURL[];
 extern const char kChromeUIExtensionsURL[];
-extern const char kChromeUIFallbackIconURL[];
 extern const char kChromeUIFaviconURL[];
 extern const char kChromeUIFeedbackURL[];
 extern const char kChromeUIFlagsURL[];
 extern const char kChromeUIFlashURL[];
 extern const char kChromeUIGCMInternalsURL[];
-// TODO(dbeam): remove help-frame.
-extern const char kChromeUIHelpFrameURL[];
 extern const char kChromeUIHelpURL[];
 extern const char kChromeUIHistoryURL[];
 extern const char kDeprecatedChromeUIHistoryFrameURL[];
@@ -107,7 +103,6 @@ extern const char kChromeUIWebApksURL[];
 #if defined(OS_CHROMEOS)
 extern const char kChromeUIBluetoothPairingURL[];
 extern const char kChromeUICertificateManagerDialogURL[];
-extern const char kChromeUIChooseMobileNetworkURL[];
 extern const char kChromeUIDeviceEmulatorURL[];
 extern const char kChromeUIFirstRunURL[];
 extern const char kChromeUIKeyboardOverlayURL[];
@@ -150,7 +145,6 @@ extern const char kChromeUIDiscardsURL[];
 
 // chrome components of URLs. Should be kept in sync with the full URLs above.
 extern const char kChromeUIAboutHost[];
-extern const char kChromeUIAboutPageFrameHost[];
 extern const char kChromeUIBlankHost[];
 extern const char kChromeUIAppLauncherPageHost[];
 extern const char kChromeUIAppListStartPageHost[];
@@ -184,14 +178,11 @@ extern const char kChromeUIDriveInternalsHost[];
 extern const char kChromeUIExtensionIconHost[];
 extern const char kChromeUIExtensionsFrameHost[];
 extern const char kChromeUIExtensionsHost[];
-extern const char kChromeUIFallbackIconHost[];
 extern const char kChromeUIFaviconHost[];
 extern const char kChromeUIFeedbackHost[];
 extern const char kChromeUIFlagsHost[];
 extern const char kChromeUIFlashHost[];
 extern const char kChromeUIGCMInternalsHost[];
-// TODO(dbeam): remove help-frame.
-extern const char kChromeUIHelpFrameHost[];
 extern const char kChromeUIHelpHost[];
 extern const char kChromeUIHangHost[];
 extern const char kChromeUIHangUIHost[];
@@ -271,7 +262,6 @@ extern const char kChromeUISandboxHost[];
 
 #if defined(OS_ANDROID)
 extern const char kChromeUIContextualSearchPromoHost[];
-extern const char kChromeUIOfflineInternalsURL[];
 extern const char kChromeUIPhysicalWebDiagnosticsHost[];
 extern const char kChromeUISnippetsInternalsHost[];
 extern const char kChromeUIWebApksHost[];
