@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10158c4f_d60b1a6b",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-23T23:46:15Z",
+      "side": 1,
+      "message": "This should go outside of the `if use_device:` still.",
+      "revId": "173594405c95ed97e55abd36aec463e24e6e6283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
