@@ -16,6 +16,24 @@
       "revId": "ac682b7a8eb3ce6805188d6a50992b0548bbd64a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b655283_e7cb9a4d",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-23T21:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cce4e51_2441c843",
+      "revId": "ac682b7a8eb3ce6805188d6a50992b0548bbd64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97abec14_2a381691",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-23T21:50:19Z",
+      "side": 1,
+      "message": "Switched to an AtomicWord and using NoBarrier/Load/Store ops. \n\nAdded documentation about leaking.",
+      "parentUuid": "50f4a6bb_776d1389",
+      "revId": "ce391cd6444978e1a73dd9698c11503f375d0728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e9454ec_a45e8d6e",
         "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T20:57:42Z",
       "side": 1,
       "message": "The commit message says teardown is threadsafe now. I can see how this is safer than what we had before, but this seems to be relying on pointer writes being atomic and consistent across all cores, which I don\u0027t think is the case on ARM.",
+      "revId": "ce391cd6444978e1a73dd9698c11503f375d0728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d949cf60_8ca8254f",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-23T21:50:19Z",
+      "side": 1,
+      "message": "switched to NoBarrier_Load.",
+      "parentUuid": "9e9454ec_a45e8d6e",
       "revId": "ce391cd6444978e1a73dd9698c11503f375d0728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "64f83ab4_2f4e39ea",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_posix.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-23T21:50:19Z",
+      "side": 1,
+      "message": "Switched to TimeTicks.\n\nWe only grab a time if there is contention/a filled pipe, in which case performance is already in trouble.",
+      "parentUuid": "aef69a5a_1e9bf5b8",
+      "revId": "ce391cd6444978e1a73dd9698c11503f375d0728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb5e1726_2cbdba0e",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 17
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-23T20:57:42Z",
       "side": 1,
       "message": "Why is this timeout different than the send timeout?",
+      "revId": "ce391cd6444978e1a73dd9698c11503f375d0728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a09ac64_93d9a949",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-23T21:50:19Z",
+      "side": 1,
+      "message": "this is the connection timeout. Added more comments.",
+      "parentUuid": "cb5e1726_2cbdba0e",
       "revId": "ce391cd6444978e1a73dd9698c11503f375d0728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
