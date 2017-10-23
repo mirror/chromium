@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7fc3c3ec_c771119b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T22:21:25Z",
+      "side": 1,
+      "message": "Sorry for the confusion.\n\nFor a second, forget that we ever had this the magical threshold of 4 for CBOR (which is the case for non-canonical CBOR).\n\nWe are also worried, in general, about exhausting Chrome\u0027s own stack, given the recursive nature of the encoder. I\u0027m unsure how, if at all, we should mitigate this.",
+      "parentUuid": "af9cf0ef_bcae0946",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7348cc5_5a37ae2e",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 9
