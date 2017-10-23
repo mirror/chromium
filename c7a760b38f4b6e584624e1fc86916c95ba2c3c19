@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43bed597_7961cc67",
+        "filename": "tools/binary_size/libsupersize/models.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-23T19:23:19Z",
+      "side": 1,
+      "message": "Despite file_format.py comment, using \u0027is\u0027 for string comparison seems to be rather risky?\n  a \u003d \u0027rat\u0027\n  b \u003d \u0027r\u0027 + \u0027at\u0027\n  a \u003d\u003d b  # True.\n  a is b  # True: Python\u0027s smart enough in this case!\n  c \u003d \u0027brat\u0027[1:]\n  a \u003d\u003d c  # True.\n  a is c  # False!!\n\nRecommend going back to \u003d\u003d, or if efficiency is important, change STRING_LITERAL_NAME to some singleton token object with __eq__() banned, and __str__() and/or __repr__() returning \u0027string literal\u0027 (if useful)?",
+      "range": {
+        "startLine": 255,
+        "startChar": 25,
+        "endLine": 255,
+        "endChar": 29
+      },
+      "revId": "c7a760b38f4b6e584624e1fc86916c95ba2c3c19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
