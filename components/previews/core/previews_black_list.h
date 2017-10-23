@@ -15,9 +15,11 @@
 #include "base/containers/queue.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "base/optional.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
+#include "components/previews/core/previews_black_list_observer.h"
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_opt_out_store.h"
 
@@ -71,9 +73,12 @@ class PreviewsBlackList {
   // |opt_out_store| is the backing store to retrieve and store black list
   // information, and can be null. When |opt_out_store| is null, the in-memory
   // map will be immediately loaded to empty. If |opt_out_store| is non-null,
-  // it will be used to load the in-memory map asynchronously.
+  // it will be used to load the in-memory map asynchronously. |observer| is a
+  // single object listening for blacklist events, and it is guaranteed to
+  // overlive the life time of |this|.
   PreviewsBlackList(std::unique_ptr<PreviewsOptOutStore> opt_out_store,
-                    std::unique_ptr<base::Clock> clock);
+                    std::unique_ptr<base::Clock> clock,
+                    PreviewsBlacklistObserver* observer);
   virtual ~PreviewsBlackList();
 
   // Asynchronously adds a new navigation to to the in-memory black list and
@@ -156,6 +161,10 @@ class PreviewsBlackList {
   base::queue<base::Closure> pending_callbacks_;
 
   std::unique_ptr<base::Clock> clock_;
+
+  // The observer listening to this blacklist. |observer_| lifetime is
+  // guaranteed to overlive |this|.
+  PreviewsBlacklistObserver* observer_;
 
   base::ThreadChecker thread_checker_;
 
