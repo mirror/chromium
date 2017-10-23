@@ -1,0 +1,98 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "services/resource_coordinator/public/cpp/page_resource_coordinator.h"
+
+#include "services/resource_coordinator/public/interfaces/coordination_unit_provider.mojom.h"
+#include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
+
+namespace resource_coordinator {
+
+namespace {
+
+void OnConnectionError() {
+  DCHECK(false);
+}
+
+}  // namespace
+
+PageResourceCoordinator::PageResourceCoordinator(
+    service_manager::Connector* connector)
+    : weak_ptr_factory_(this) {
+  CoordinationUnitID new_cu_id(CoordinationUnitType::kPage, std::string());
+  ConnectToService(connector, new_cu_id);
+}
+
+PageResourceCoordinator::~PageResourceCoordinator() = default;
+
+void PageResourceCoordinator::AddBinding(
+    mojom::PageCoordinationUnitRequest request) {
+  if (!service_)
+    return;
+  service_->AddBinding(std::move(request));
+}
+
+void PageResourceCoordinator::SetVisibility(bool visible) {
+  service_->SetVisibility(visible);
+}
+
+void PageResourceCoordinator::SetUKMSourceId(int64_t ukm_source_id) {
+  service_->SetUKMSourceId(ukm_source_id);
+}
+
+void PageResourceCoordinator::OnFaviconUpdated() {
+  service_->OnFaviconUpdated();
+}
+
+void PageResourceCoordinator::OnTitleUpdated() {
+  service_->OnTitleUpdated();
+}
+
+void PageResourceCoordinator::OnMainFrameNavigationCommitted() {
+  service_->OnMainFrameNavigationCommitted();
+}
+
+void PageResourceCoordinator::AddFrame(const FrameResourceCoordinator& frame) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (!service_)
+    return;
+  // We could keep the ID around ourselves, but this hop ensures that the child
+  // has been created on the service-side.
+  frame.service()->GetID(base::Bind(&PageResourceCoordinator::AddFrameByID,
+                                    weak_ptr_factory_.GetWeakPtr()));
+}
+
+void PageResourceCoordinator::RemoveFrame(
+    const FrameResourceCoordinator& frame) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (!service_)
+    return;
+  frame.service()->GetID(base::Bind(&PageResourceCoordinator::RemoveFrameByID,
+                                    weak_ptr_factory_.GetWeakPtr()));
+}
+
+void PageResourceCoordinator::ConnectToService(
+    service_manager::Connector* connector,
+    const CoordinationUnitID& cu_id) {
+  if (!connector)
+    return;
+  cu_id_ = cu_id;
+  mojom::CoordinationUnitProviderPtr provider;
+  connector->BindInterface(mojom::kServiceName, mojo::MakeRequest(&provider));
+  provider->CreatePageCoordinationUnit(mojo::MakeRequest(&service_), cu_id);
+  service_.set_connection_error_handler(base::Bind(&OnConnectionError));
+}
+
+void PageResourceCoordinator::AddFrameByID(const CoordinationUnitID& cu_id) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  service_->AddFrame(cu_id);
+}
+
+void PageResourceCoordinator::RemoveFrameByID(const CoordinationUnitID& cu_id) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  service_->RemoveFrame(cu_id);
+}
+
+}  // namespace resource_coordinator
