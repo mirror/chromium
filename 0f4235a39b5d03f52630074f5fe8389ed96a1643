@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dfe7c0c_e7da9df1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-23T17:15:21Z",
+      "side": 1,
+      "message": "nit: remove empty line.",
+      "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4302d04_e8492710",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-23T17:15:21Z",
+      "side": 1,
+      "message": "nit: Maybe base::MakeUnique work.",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 36
+      },
+      "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84458d2_3478b061",
+        "filename": "components/download/internal/task_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-23T17:15:21Z",
+      "side": 1,
+      "message": "Do we need to erase the |scheduled_params_| before calling this?",
+      "range": {
+        "startLine": 84,
+        "startChar": 3,
+        "endLine": 84,
+        "endChar": 28
+      },
+      "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
