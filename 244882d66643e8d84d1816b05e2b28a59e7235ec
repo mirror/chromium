@@ -401,6 +401,24 @@
     },
     {
       "key": {
+        "uuid": "513d35a8_5fa719d4",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T16:25:39Z",
+      "side": 1,
+      "message": "Yeah, you\u0027ll have to make |policy_names| a dict then... But I think it\u0027s still a good thing to reuse _CheckContains() here.",
+      "parentUuid": "b94f9e78_89fd5dac",
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7358c60_eae8d7eb",
         "filename": "components/policy/tools/template_writers/policy_template_generator.py",
         "patchSetId": 9
@@ -671,6 +689,30 @@
       "side": 1,
       "message": "I tried to modify it. Could you take a look?",
       "parentUuid": "c14e2cb3_db04125e",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 34
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f6a127_8d341098",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T16:25:39Z",
+      "side": 1,
+      "message": "Looks sane now, thanks.",
+      "parentUuid": "4656155c_01432ff4",
       "range": {
         "startLine": 179,
         "startChar": 8,

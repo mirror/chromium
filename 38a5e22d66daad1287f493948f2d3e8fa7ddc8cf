@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9d831d8_6965ad51",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T16:25:39Z",
+      "side": 1,
+      "message": "nit: BTW, these sentences seem to refer to the method behavior overall, not to the description of the argument?",
+      "range": {
+        "startLine": 166,
+        "startChar": 50,
+        "endLine": 168,
+        "endChar": 15
+      },
+      "revId": "38a5e22d66daad1287f493948f2d3e8fa7ddc8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8ecc0a_e6dfa029",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T16:25:39Z",
+      "side": 1,
+      "message": "nit: Indent with one more space, to align with the opened \"[\".",
+      "range": {
+        "startLine": 188,
+        "startChar": 26,
+        "endLine": 188,
+        "endChar": 27
+      },
+      "revId": "38a5e22d66daad1287f493948f2d3e8fa7ddc8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
