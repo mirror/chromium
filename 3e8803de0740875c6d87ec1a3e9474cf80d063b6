@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58269eec_fe16f714",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-23T14:48:19Z",
+      "side": 1,
+      "message": "We recreate LayerTreeFrameSinks when a context is lost right? Is it possible to get this ordering:\n\n1. A LTFS loses the context.\n2. The client creates a new context with the new Viz process but HostFrameSinkManager hasn\u0027t received a signal yet.\n3. The client requests a new CompositorFrameSink from the HostFrameSinkManager prior to the signal.\n4. The request gets dropped on the floor and we never get a CompositorFrameSink and never recover.\n\nThoughts?",
+      "revId": "3e8803de0740875c6d87ec1a3e9474cf80d063b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
