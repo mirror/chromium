@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c881246f_18856bc5",
+        "filename": "ios/chrome/browser/chrome_url_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T18:02:44Z",
+      "side": 1,
+      "message": "It is not important to be able to differentiate between the two. I can revert this if you want (though personally I find it better to have two constants).",
+      "parentUuid": "7b49bc4b_3f446948",
+      "revId": "26fc37b8e74fb152b9e42dfcd3f86d6b9c0a5170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5d4bfd5_afe676a6",
         "filename": "ios/chrome/browser/history/history_tab_helper.mm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "26fc37b8e74fb152b9e42dfcd3f86d6b9c0a5170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfcf2ae_f7858a09",
+        "filename": "ios/chrome/browser/history/history_tab_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T18:02:44Z",
+      "side": 1,
+      "message": "The HistoryTabHelper will only be accessed by the PreloadController to call SetDelayHistoryServiceNotification(). No other method are externally called on this tab helper, it is self-sufficient.\n\nGiven that the tab helper is useless on incognito WebState and is only called in a single file, I think the cost is not that high. My preference would have been to not create the tab helper in that case. However it looks like desktop/android always create the tab helper (chrome/browser/history/history_tab_helper.cc), so I\u0027ve changed this back.",
+      "parentUuid": "c5d4bfd5_afe676a6",
+      "revId": "26fc37b8e74fb152b9e42dfcd3f86d6b9c0a5170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b23967f0_1190c84b",
+        "filename": "ios/chrome/browser/history/history_tab_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T18:02:44Z",
+      "side": 1,
+      "message": "Good catch. Fixed.",
+      "parentUuid": "1b15779d_64e200c6",
+      "revId": "26fc37b8e74fb152b9e42dfcd3f86d6b9c0a5170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "573d6d98_4c47ab80",
         "filename": "ios/chrome/browser/history/history_tab_helper.mm",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "39ceb635_eca9188d",
+        "filename": "ios/chrome/browser/history/history_tab_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T18:02:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "573d6d98_4c47ab80",
+      "revId": "26fc37b8e74fb152b9e42dfcd3f86d6b9c0a5170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54ea27cc_d2a7820a",
         "filename": "ios/chrome/browser/history/history_tab_helper.mm",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "26fc37b8e74fb152b9e42dfcd3f86d6b9c0a5170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31fba9e_9ca36c1a",
+        "filename": "ios/chrome/browser/history/history_tab_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T18:02:44Z",
+      "side": 1,
+      "message": "Yes, std::vector::push_back can take the parameter by rvalue reference to avoid a copy since c++11.\n\nhttp://en.cppreference.com/w/cpp/container/vector/push_back\n\nIdeally HistoryService::AddPage should also take the parameter by value so that it can be moved and the copy omitted in that case too.",
+      "parentUuid": "54ea27cc_d2a7820a",
+      "revId": "26fc37b8e74fb152b9e42dfcd3f86d6b9c0a5170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
