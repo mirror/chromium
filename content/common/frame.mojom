@@ -115,7 +115,7 @@ interface FrameHost {
   // a tab for it.  If |reply.route_id| is MSG_ROUTING_NONE, the window couldn't
   // be created.
   [Sync] CreateNewWindow(CreateNewWindowParams params)
-      => (CreateNewWindowReply reply);
+      => (CreateNewWindowReply? reply);
 
   // Creates and returns a KeepAliveHandle.
   IssueKeepAliveHandle(KeepAliveHandle& keep_alive_handle);

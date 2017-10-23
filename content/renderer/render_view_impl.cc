@@ -1328,6 +1328,18 @@ WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
                                     WebNavigationPolicy policy,
                                     bool suppress_opener,
                                     WebSandboxFlags sandbox_flags) {
+  // For Android WebView, we support a pop-up like behavior for window.open()
+  // even if the embedding app doesn't support multiple windows. In this case,
+  // window.open() will return "window" and navigate it to whatever URL was
+  // passed. We also don't need to consume user gestures to protect against
+  // multiple windows being opened, because, well, the app doesn't support
+  // multiple windows.
+  // TODO(dcheng): It's awkward that this is plumbed into Blink but not really
+  // used much in Blink, except to enable layout testing... perhaps this should
+  // be checked directly in Blink.
+  if (!webkit_preferences_.supports_multiple_windows)
+    return webview();
+
   RenderFrameImpl* creator_frame = RenderFrameImpl::FromWebFrame(creator);
   mojom::CreateNewWindowParamsPtr params = mojom::CreateNewWindowParams::New();
   params->user_gesture = WebUserGestureIndicator::IsProcessingUserGesture();
@@ -1355,17 +1367,10 @@ WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
   mojom::CreateNewWindowReplyPtr reply;
   auto* frame_host = creator_frame->GetFrameHost();
   bool err = !frame_host->CreateNewWindow(std::move(params), &reply);
-  if (err || reply->route_id == MSG_ROUTING_NONE)
+  if (err || !reply)
     return nullptr;
 
-  // For Android WebView, we support a pop-up like behavior for window.open()
-  // even if the embedding app doesn't support multiple windows. In this case,
-  // window.open() will return "window" and navigate it to whatever URL was
-  // passed. We also don't need to consume user gestures to protect against
-  // multiple windows being opened, because, well, the app doesn't support
-  // multiple windows.
-  if (reply->route_id == GetRoutingID())
-    return webview();
+  DCHECK_NE(MSG_ROUTING_NONE, reply->route_id);
 
   WebUserGestureIndicator::ConsumeUserGesture();
 
