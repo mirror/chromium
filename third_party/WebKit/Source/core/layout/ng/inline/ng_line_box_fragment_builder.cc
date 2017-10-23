@@ -73,9 +73,9 @@ void NGLineBoxFragmentBuilder::SetBlockSize(LayoutUnit block_size) {
   block_size_ = block_size;
 }
 
-void NGLineBoxFragmentBuilder::AddPositionedFloat(
-    const NGPositionedFloat& positioned_float) {
-  positioned_floats_.push_back(positioned_float);
+void NGLineBoxFragmentBuilder::SwapPositionedFloats(
+    Vector<NGPositionedFloat>* positioned_floats) {
+  positioned_floats_.swap(*positioned_floats);
 }
 
 void NGLineBoxFragmentBuilder::SetBreakToken(
