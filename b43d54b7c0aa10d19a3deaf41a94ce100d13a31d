@@ -424,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "eb9ebd68_e2503aae",
+        "filename": "ash/metrics/user_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T21:24:31Z",
+      "side": 1,
+      "message": "Adding a DCHECK here, thanks!",
+      "parentUuid": "5056d73d_1ca361a1",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb69ab47_bc6a65fa",
         "filename": "ash/metrics/user_metrics_recorder.h",
         "patchSetId": 6

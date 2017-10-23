@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74a1d2f2_57d15bd6",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T21:24:31Z",
+      "side": 1,
+      "message": "Thanks for the information. I changed this, also other tests that depend on the same crbug.",
+      "parentUuid": "d26fb59b_4f09dfa4",
+      "revId": "74eaa1c684e09bd9f4cb8716d94a79dc39d0845e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a89353c9_5dc2c8d7",
         "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T18:25:46Z",
       "side": 1,
       "message": "Which mojo call? If the class owning the interface has a FlushForTesting() method, call that instead. If not, document which class/interface you\u0027re waiting on.",
+      "revId": "74eaa1c684e09bd9f4cb8716d94a79dc39d0845e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee720cb8_4145f2db",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T21:24:31Z",
+      "side": 1,
+      "message": "Thanks for the comments! We do have a FlushForTesting method for LockScreenClient::AuthenticateUser mojo call. But seems like we still need to run the loop because we need to get the system salt before the mojo call. I\u0027ve update the comments for this information.",
+      "parentUuid": "a89353c9_5dc2c8d7",
       "revId": "74eaa1c684e09bd9f4cb8716d94a79dc39d0845e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "74eaa1c684e09bd9f4cb8716d94a79dc39d0845e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70d386f_f53b83cb",
+        "filename": "ash/metrics/user_metrics_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T21:24:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8e7776a_9b1c0a7a",
+      "revId": "74eaa1c684e09bd9f4cb8716d94a79dc39d0845e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
