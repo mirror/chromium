@@ -20,6 +20,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
+#include "chrome/browser/ui/tab_ui_helper.h"
 #include "chrome/browser/ui/tabs/tab_menu_model.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_delegate.h"
@@ -459,6 +460,19 @@ void BrowserTabStripController::TabDetachedAt(WebContents* contents,
   tabstrip_->RemoveTabAt(contents, model_index);
 }
 
+void BrowserTabStripController::ActiveTabChanged(
+    content::WebContents* old_contents,
+    content::WebContents* new_contents,
+    int index,
+    int reason) {
+  // It's possible for |new_contents| to be null when the final tab in a tab
+  // strip is closed.
+  if (new_contents && index != TabStripModel::kNoTab) {
+    TabUIHelper::FromWebContents(new_contents)->SetWasActive(true);
+    SetTabDataAt(new_contents, index);
+  }
+}
+
 void BrowserTabStripController::TabSelectionChanged(
     TabStripModel* tab_strip_model,
     const ui::ListSelectionModel& old_model) {
@@ -517,9 +531,11 @@ void BrowserTabStripController::SetTabRendererDataFromModel(
     int model_index,
     TabRendererData* data,
     TabStatus tab_status) {
+  TabUIHelper* tab_ui_helper = TabUIHelper::FromWebContents(contents);
   data->favicon = favicon::TabFaviconFromWebContents(contents).AsImageSkia();
   data->network_state = TabContentsNetworkState(contents);
-  data->title = contents->GetTitle();
+  data->title = contents->GetTitle().empty() ? tab_ui_helper->title()
+                                             : contents->GetTitle();
   data->url = contents->GetURL();
   data->crashed_status = contents->GetCrashedStatus();
   data->incognito = contents->GetBrowserContext()->IsOffTheRecord();
@@ -528,6 +544,10 @@ void BrowserTabStripController::SetTabRendererDataFromModel(
   data->blocked = model_->IsTabBlocked(model_index);
   data->app = extensions::TabHelper::FromWebContents(contents)->is_app();
   data->alert_state = chrome::GetTabAlertStateForContents(contents);
+  data->was_active = tab_ui_helper->was_active();
+  data->is_navigation_delayed = tab_ui_helper->is_navigation_delayed();
+  data->created_by_session_restore =
+      tab_ui_helper->created_by_session_restore();
 }
 
 void BrowserTabStripController::SetTabDataAt(content::WebContents* web_contents,
@@ -569,6 +589,7 @@ void BrowserTabStripController::AddTab(WebContents* contents,
                                        bool is_active) {
   // Cancel any pending tab transition.
   hover_tab_selector_.CancelTabTransition();
+  TabUIHelper::FromWebContents(contents)->SetWasActive(is_active);
 
   TabRendererData data;
   SetTabRendererDataFromModel(contents, index, &data, NEW_TAB);
