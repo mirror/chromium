@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5f817c2_47545a84",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/root-layer-scrolls",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-23T16:22:35Z",
+      "side": 1,
+      "message": "No, this one is still broken.",
+      "parentUuid": "8b04edf8_0f076bba",
+      "revId": "8a2a2308669e95a421d4433e4c12016899080fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f99cac44_b1ca2ba6",
         "filename": "third_party/WebKit/LayoutTests/FlagExpectations/root-layer-scrolls",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T01:56:41Z",
       "side": 1,
       "message": "Does this test just need a rebaseline?",
+      "revId": "8a2a2308669e95a421d4433e4c12016899080fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8274f14_e80fa350",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/root-layer-scrolls",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-23T16:22:35Z",
+      "side": 1,
+      "message": "No, this one is still broken.",
+      "parentUuid": "f99cac44_b1ca2ba6",
       "revId": "8a2a2308669e95a421d4433e4c12016899080fc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5a7633e3_ccc2f5cb",
+        "filename": "third_party/WebKit/Source/core/paint/FramePainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-23T16:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41d69172_c15accc1",
+      "revId": "8a2a2308669e95a421d4433e4c12016899080fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0df0e3a8_5adf02cd",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-23T01:56:41Z",
       "side": 1,
       "message": "A few lines below we will add these back if the scrollbar mode is kScrollbarAlwaysOn. Should that happen?",
+      "revId": "8a2a2308669e95a421d4433e4c12016899080fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1e0489_ad00658d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-23T16:22:35Z",
+      "side": 1,
+      "message": "I don\u0027t know for sure, but I guess probably not.  I moved the printing check to LayoutView::CalculateScrollbarModes, which I think is where it belongs (and will fix the issue you point out).",
+      "parentUuid": "0df0e3a8_5adf02cd",
       "revId": "8a2a2308669e95a421d4433e4c12016899080fc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
