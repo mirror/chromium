@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55d3facd_45ab467a",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2204,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T19:36:47Z",
+      "side": 1,
+      "message": "nit: DCHECK(text_attributes) since there\u0027s no reason it should be null.",
+      "revId": "b3b9493df854a5ca04aceb7d89aa8bce8841d80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
