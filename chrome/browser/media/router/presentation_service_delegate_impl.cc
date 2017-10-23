@@ -33,6 +33,8 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/presentation_info.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 #include "url/gurl.h"
 
 #if !defined(OS_ANDROID)
@@ -313,6 +315,9 @@ PresentationServiceDelegateImpl::PresentationServiceDelegateImpl(
     : web_contents_(web_contents),
       router_(MediaRouterFactory::GetApiForBrowserContext(
           web_contents_->GetBrowserContext())),
+      offscreen_presentation_manager_(
+          OffscreenPresentationManagerFactory::GetOrCreateForWebContents(
+              web_contents_)),
       weak_factory_(this) {
   DCHECK(web_contents_);
   DCHECK(router_);
@@ -419,6 +424,7 @@ void PresentationServiceDelegateImpl::OnJoinRouteResponse(
 
 void PresentationServiceDelegateImpl::OnStartPresentationSucceeded(
     const RenderFrameHostId& render_frame_host_id,
+    int64_t display_id,
     content::PresentationConnectionCallback success_cb,
     const content::PresentationInfo& new_presentation_info,
     const MediaRoute& route) {
@@ -427,7 +433,16 @@ void PresentationServiceDelegateImpl::OnStartPresentationSucceeded(
            << ", presentation URL: " << new_presentation_info.presentation_url
            << ", presentation ID: " << new_presentation_info.presentation_id;
   AddPresentation(render_frame_host_id, new_presentation_info, route);
+  offscreen_presentation_manager_->RemovePendingController(display_id);
   std::move(success_cb).Run(new_presentation_info);
+}
+
+void PresentationServiceDelegateImpl::OnStartPresentationFailed(
+    int64_t display_id,
+    content::PresentationConnectionErrorCallback error_cb,
+    const content::PresentationError& error) {
+  offscreen_presentation_manager_->RemovePendingController(display_id);
+  std::move(error_cb).Run(error);
 }
 
 void PresentationServiceDelegateImpl::AddPresentation(
@@ -469,14 +484,23 @@ void PresentationServiceDelegateImpl::StartPresentation(
     return;
   }
 
+  const int64_t display_id =
+      display::Screen::GetScreen()
+          ->GetDisplayNearestView(web_contents_->GetNativeView())
+          .id();
+  offscreen_presentation_manager_->AddPendingController(display_id);
+
   MediaRouterDialogController* controller =
       MediaRouterDialogController::GetOrCreateForWebContents(web_contents_);
   if (!controller->ShowMediaRouterDialogForPresentation(
           request,
           base::BindOnce(
               &PresentationServiceDelegateImpl::OnStartPresentationSucceeded,
-              GetWeakPtr(), render_frame_host_id, std::move(success_cb)),
-          std::move(error_cb))) {
+              GetWeakPtr(), render_frame_host_id, display_id,
+              std::move(success_cb)),
+          base::BindOnce(
+              &PresentationServiceDelegateImpl::OnStartPresentationFailed,
+              GetWeakPtr(), display_id, std::move(error_cb)))) {
     LOG(ERROR)
         << "StartPresentation failed: unable to create Media Router dialog.";
   }
