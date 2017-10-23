@@ -16,6 +16,24 @@
       "revId": "b43f3daf4687cb34a6d884f45ed65cfc9a65d36f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361e89a4_d847f4ae",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-23T23:50:44Z",
+      "side": 0,
+      "message": "No this was an oversight, thanks. I reverted MediaStreamTrack::SetMuted and calling track-\u003eComponent()-\u003eSource()-\u003eSetReadyState() instead.",
+      "parentUuid": "b8b96c96_87c53a56",
+      "revId": "b43f3daf4687cb34a6d884f45ed65cfc9a65d36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
