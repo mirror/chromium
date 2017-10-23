@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f465842c_626e97a9",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-23T20:31:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a79feb2_105d893e",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c1410d_002339a3",
         "filename": "components/offline_pages/core/snapshot_controller.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b50c87_1d988449",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-23T20:31:31Z",
+      "side": 1,
+      "message": "Good catch, I didn\u0027t properly take renovations into account.  Changed the control flow to wait until renovations are done before snapshotting.\n\nThe enable check should be a function, that is how we normally check feature flags as I recall.  renovations_enabled_ is a member since it changes from invocation to invocation.  Would adding an accessor function for renovations_enabled_ be better?  If so, I\u0027ll add one.",
+      "parentUuid": "18c1410d_002339a3",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4d70779f_60cc6d75",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-23T20:31:31Z",
+      "side": 1,
+      "message": "Exactly. The point is that the existing RMD is often firing too soon, before the page is ready in many cases, so we should wait for the RP signal.  In other cases, the page is ready before the DocumentOnLoadCompletedInMainFrame is done, and we don\u0027t wish to wait for the signal.",
+      "parentUuid": "29f4e1e6_88d25dd8",
+      "range": {
+        "startLine": 156,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 0
+      },
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcc2b2ae_df2956f8",
         "filename": "components/offline_pages/core/snapshot_controller.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8792f208_91281708",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-23T20:31:31Z",
+      "side": 1,
+      "message": "Done (I didn\u0027t need it before, but after fixing an issue Dimich pointed out, now I need it).",
+      "parentUuid": "fcc2b2ae_df2956f8",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "d3f79bf8_c140ca1a",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-23T20:31:31Z",
+      "side": 1,
+      "message": "Good point.  Added code to prevent divide by zero.",
+      "parentUuid": "40c6cfc4_0f33488c",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b2f39d5_a0a3ae28",
         "filename": "components/offline_pages/core/snapshot_controller.h",
         "patchSetId": 1
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "2212a7e4_24b69efc",
+        "filename": "components/offline_pages/core/snapshot_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-23T20:31:31Z",
+      "side": 1,
+      "message": "The other user is recent_tab_helper, which sets the quality to POOR, and only checks if the quality is POOR or not POOR, so this should have no effect outside of SnapshotController.",
+      "parentUuid": "3b2f39d5_a0a3ae28",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cac6a561_9d1a6c3b",
         "filename": "components/offline_pages/core/snapshot_controller.h",
         "patchSetId": 1
@@ -124,6 +238,24 @@
       "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bdb3848_8bd9126a",
+        "filename": "components/offline_pages/core/snapshot_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-23T20:31:31Z",
+      "side": 1,
+      "message": "Done (Picked UpdateResourceLoadingProgress)",
+      "parentUuid": "cac6a561_9d1a6c3b",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
