@@ -22,6 +22,30 @@
       "revId": "3f204297d6cf57bedf246baaa4700a7617934475",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f3e48e_42e1d499",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-23T22:11:36Z",
+      "side": 1,
+      "message": "Yes, this did not trigger when I run chrome with --incognito mode and navigate to chrome://interventions-internals.",
+      "parentUuid": "8bddd860_d87ab691",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 16
+      },
+      "revId": "3f204297d6cf57bedf246baaa4700a7617934475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
