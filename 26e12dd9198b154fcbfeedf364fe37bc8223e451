@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9930a970_a5ca37cc",
+        "filename": "third_party/WebKit/common/content_security_policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-23T10:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecdc4959_e0d923da",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b21a8c87_7b981ae0",
         "filename": "third_party/WebKit/common/content_security_policy.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f88026b_ae16bf51",
+        "filename": "third_party/WebKit/common/content_security_policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-23T10:41:52Z",
+      "side": 1,
+      "message": "I realised doing\n// TODO(darin): Update all WebContentSecurityPolicyType consumers to use this\n// type instead, and remove the typemap.\nis impossible still since eventually there is some IPC still in place for which conversions are needed.\n\nI will use content_security_policy.mojom instead however. At least I will not create anything new then...",
+      "parentUuid": "b21a8c87_7b981ae0",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8dd2745c_e29991fc",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-23T10:41:52Z",
+      "side": 1,
+      "message": "semantically it is not similar.\n  typedef std::pair\u003cString, ContentSecurityPolicyHeaderType\u003e CSPHeaderAndType;\nwhereas I want to have the actual policy string, that is the header value and the ContentSecurityPolicyHeaderType.\n\nMy main motivation for an actual struct was to make it easier to extend in case we feel like it. std::pair restricts us to 2 values for all times.\nWhat about simply moving inside the class? After all, this CSP representation should only exist as part of a OriginManifest anyway. Or am I mixing things with concepts from other programming languages now?",
+      "parentUuid": "f467ba83_194697ee",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f1af296_975da92f",
         "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0f5c16bc_893ea3e1",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-23T10:41:52Z",
+      "side": 1,
+      "message": "I agree. Sorry, completely overlooked that one when cleaning up",
+      "parentUuid": "3f1af296_975da92f",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "540c984d_c4c01b9f",
         "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a86cf7_ba0566aa",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-23T10:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "540c984d_c4c01b9f",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "6d0cc8d0_5f7b9207",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-23T10:41:52Z",
+      "side": 1,
+      "message": "I defined an enum class in the header itself. As soon as we put together everything and have an origin_manifest.mojom definition I think it makes sense to define it there, doesn\u0027t it?",
+      "parentUuid": "f222b09a_045a0240",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c222291d_bb385b42",
         "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
         "patchSetId": 1
@@ -124,6 +238,24 @@
       "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3137f2a8_48bb9da0",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-23T10:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c222291d_bb385b42",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
