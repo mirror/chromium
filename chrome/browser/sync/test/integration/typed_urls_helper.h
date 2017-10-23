@@ -8,8 +8,10 @@
 #include <string>
 #include <vector>
 
+#include "base/single_thread_task_runner.h"
 #include "chrome/browser/sync/test/integration/multi_client_status_change_checker.h"
 #include "components/history/core/browser/history_types.h"
+#include "components/history/core/browser/typed_url_sync_bridge.h"
 #include "ui/base/page_transition_types.h"
 
 namespace base {
@@ -69,8 +71,8 @@ void SetPageTitle(int index, const GURL& url, const std::string& title);
 // Returns true if all clients have the same URLs.
 bool CheckAllProfilesHaveSameURLs();
 
-// Return ture if a specific sync directory has the typed url.
-bool CheckSyncDirectoryHasURL(int index, const GURL& url);
+// Return ture if a specific sync metadata has the typed url.
+bool CheckSyncHasURLMetadata(int index, const GURL& url);
 
 // Checks that the two vectors contain the same set of URLRows (possibly in
 // a different order).
@@ -95,6 +97,9 @@ bool AreVisitsUnique(const history::VisitVector& visits);
 // expect).
 base::Time GetTimestamp();
 
+history::HistoryBackend* GetHistoryBackend(
+    const history::TypedURLSyncBridge* bridge);
+
 }  // namespace typed_urls_helper
 
 // Checker that blocks until all clients have the same URLs.
@@ -105,6 +110,42 @@ class ProfilesHaveSameURLsChecker : public MultiClientStatusChangeChecker {
   // Implementation of StatusChangeChecker.
   bool IsExitConditionSatisfied() override;
   std::string GetDebugMessage() const override;
+};
+
+class TypedURLChecker : public StatusChangeChecker,
+                        public history::HistoryBackendObserver {
+ public:
+  TypedURLChecker(int index, const std::string& url);
+  ~TypedURLChecker() override;
+
+  bool IsExitConditionSatisfied() override;
+
+  std::string GetDebugMessage() const override;
+
+  // history::HistoryBackendObserver:
+  void OnURLVisited(history::HistoryBackend* history_backend,
+                    ui::PageTransition transition,
+                    const history::URLRow& row,
+                    const history::RedirectList& redirects,
+                    base::Time visit_time) override;
+  void OnURLsModified(history::HistoryBackend* history_backend,
+                      const history::URLRows& changed_urls) override;
+  void OnURLsDeleted(history::HistoryBackend* history_backend,
+                     bool all_history,
+                     bool expired,
+                     const history::URLRows& deleted_rows,
+                     const std::set<GURL>& favicon_urls) override;
+
+ private:
+  int index_;
+  const std::string url_;
+
+  // Tracks observed history backend, for receiving updates from history
+  // backend.
+  ScopedObserver<history::HistoryBackend, HistoryBackendObserver>
+      history_backend_observer_;
+
+  scoped_refptr<base::SingleThreadTaskRunner> origin_task_runner_;
 };
 
 #endif  // CHROME_BROWSER_SYNC_TEST_INTEGRATION_TYPED_URLS_HELPER_H_

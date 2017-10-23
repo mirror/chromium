@@ -12,6 +12,17 @@
 #include "components/sync/model/model_type_sync_bridge.h"
 #include "components/sync/model/sync_error.h"
 
+class TypedURLChecker;
+
+namespace history {
+class TypedURLSyncBridge;
+}
+
+namespace typed_urls_helper {
+history::HistoryBackend* GetHistoryBackend(
+    const history::TypedURLSyncBridge* bridge);
+}
+
 namespace history {
 
 class TypedURLSyncBridge : public syncer::ModelTypeSyncBridge,
@@ -68,6 +79,8 @@ class TypedURLSyncBridge : public syncer::ModelTypeSyncBridge,
 
  private:
   friend class TypedURLSyncBridgeTest;
+  friend HistoryBackend* typed_urls_helper::GetHistoryBackend(
+      const TypedURLSyncBridge* bridge);
 
   typedef std::vector<std::pair<GURL, std::vector<VisitInfo>>>
       TypedURLVisitVector;
