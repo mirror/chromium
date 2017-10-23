@@ -16,6 +16,24 @@
       "revId": "46f3444d545caa01aea7cffb315ec96f3759c5ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1ffd60_67dfdf13",
+        "filename": "components/gcm_driver/instance_id/android/java/src/org/chromium/components/gcm_driver/instance_id/InstanceIDWithSubtype.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-10-23T18:06:09Z",
+      "side": 1,
+      "message": "Android version shouldn\u0027t matter here. getInstance is part of the GMS client library, which is statically built into Chrome.",
+      "parentUuid": "064e8a32_139078b8",
+      "revId": "46f3444d545caa01aea7cffb315ec96f3759c5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
