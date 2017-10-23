@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc052c8b_720b484f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-10-23T05:54:17Z",
+      "side": 1,
+      "message": "The improvement does\u0027n repro on my machine (Z840 Linux). Could you elaborate your environment and the benchmark item that should improve?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "8a3546ed1a266e64127e07f619749e8fa63d17d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
