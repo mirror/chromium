@@ -218,6 +218,12 @@ bool IsPrerenderTabEvictionExperimentalGroup() {
     Tab* tab = LegacyTabHelper::GetTabForWebState(webState_.get());
     [[tab webController] setNativeProvider:nil];
     [tab setDelegate:nil];
+
+    if (AccountConsistencyService* account_consistency_service =
+            ios::AccountConsistencyServiceFactory::GetForBrowserState(
+                browserState_)) {
+      account_consistency_service->RemoveWebStateHandler(webState_.get());
+    }
   }
 
   return std::move(webState_);
@@ -327,6 +333,11 @@ bool IsPrerenderTabEvictionExperimentalGroup() {
   webState_->SetWebUsageEnabled(true);
   [tab setIsPrerenderTab:YES];
   [tab setDelegate:self];
+  if (AccountConsistencyService* account_consistency_service =
+          ios::AccountConsistencyServiceFactory::GetForBrowserState(
+              browserState_)) {
+    account_consistency_service->SetWebStateHandler(webState_.get(), self);
+  }
 
   web::NavigationManager::WebLoadParams loadParams(prerenderedURL_);
   loadParams.referrer = scheduledReferrer_;
@@ -355,6 +366,11 @@ bool IsPrerenderTabEvictionExperimentalGroup() {
 
   Tab* tab = LegacyTabHelper::GetTabForWebState(webState_.get());
   [[tab webController] setNativeProvider:nil];
+  if (AccountConsistencyService* account_consistency_service =
+          ios::AccountConsistencyServiceFactory::GetForBrowserState(
+              browserState_)) {
+    account_consistency_service->RemoveWebStateHandler(webState_.get());
+  }
   webState_.reset();
 
   prerenderedURL_ = GURL();
@@ -377,6 +393,20 @@ bool IsPrerenderTabEvictionExperimentalGroup() {
 
 - (void)discardPrerender {
   [self schedulePrerenderCancel];
+}
+
+#pragma mark - ManageAccountsDelegate
+
+- (void)onManageAccounts {
+  [self discardPrerender];
+}
+
+- (void)onAddAccount {
+  [self discardPrerender];
+}
+
+- (void)onGoIncognito:(const GURL&)url {
+  [self discardPrerender];
 }
 
 @end
