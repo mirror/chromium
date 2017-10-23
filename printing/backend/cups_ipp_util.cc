@@ -28,6 +28,7 @@ const char kIppCopies[] = CUPS_COPIES;
 const char kIppColor[] = CUPS_PRINT_COLOR_MODE;
 const char kIppMedia[] = CUPS_MEDIA;
 const char kIppDuplex[] = CUPS_SIDES;
+const char kIppResolution[] = "printer-resolution";  // RFC 2911
 
 // collation values
 const char kCollated[] = "collated";
@@ -38,6 +39,7 @@ namespace {
 const int kMicronsPerMM = 1000;
 const double kMMPerInch = 25.4;
 const double kMicronsPerInch = kMMPerInch * kMicronsPerMM;
+const double kCmPerInch = 2.54;
 
 enum Unit {
   INCHES,
@@ -198,6 +200,40 @@ void ExtractCopies(const CupsOptionProvider& printer,
   printer_info->copies_capable = (lower_bound != -1) && (upper_bound >= 2);
 }
 
+bool GetResolution(ipp_attribute_t* attr, int i, gfx::Size* size) {
+  ipp_res_t units;
+  int xres, yres;
+  xres = ippGetResolution(attr, i, &yres, &units);
+  if (!xres)
+    return false;
+
+  switch (units) {
+    case IPP_RES_PER_INCH:
+      *size = gfx::Size(xres, yres);
+      break;
+    case IPP_RES_PER_CM:
+      *size = gfx::Size(xres * kCmPerInch, yres * kCmPerInch);
+      break;
+  }
+  return true;
+}
+
+void ExtractResolutions(const CupsOptionProvider& printer,
+                        PrinterSemanticCapsAndDefaults* printer_info) {
+  ipp_attribute_t* attr = printer.GetSupportedOptionValues(kIppResolution);
+  if (!attr) {
+    return;
+  }
+  int num_options = ippGetCount(attr);
+  gfx::Size size;
+  for (int i = 0; i < num_options; i++)
+    if (GetResolution(attr, i, &size))
+      printer_info->dpis.push_back(size);
+
+  ipp_attribute_t* def_attr = printer.GetDefaultOptionValue(kIppResolution);
+  GetResolution(def_attr, 0, &printer_info->default_dpi);
+}
+
 }  // namespace
 
 ColorModel DefaultColorModel(const CupsOptionProvider& printer) {
@@ -291,8 +327,7 @@ void CapsAndDefaultsFromPrinter(const CupsOptionProvider& printer,
 
   ExtractCopies(printer, printer_info);
   ExtractColor(printer, printer_info);
-
-  // TODO(skau): Add dpi and default_dpi
+  ExtractResolutions(printer, printer_info);
 }
 
 }  //  namespace printing
