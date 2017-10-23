@@ -26,6 +26,8 @@
 #ifndef TextBoundaries_h
 #define TextBoundaries_h
 
+#include <utility>
+
 #include "platform/PlatformExport.h"
 #include "platform/wtf/text/Unicode.h"
 
@@ -40,11 +42,15 @@ PLATFORM_EXPORT int EndOfFirstWordBoundaryContext(const UChar* characters,
 PLATFORM_EXPORT int StartOfLastWordBoundaryContext(const UChar* characters,
                                                    int length);
 
-PLATFORM_EXPORT void FindWordBoundary(const UChar*,
-                                      int len,
-                                      int position,
-                                      int* start,
-                                      int* end);
+enum class AppendTrailingWhitespace { kShouldAppend, kDontAppend };
+
+// |UChar*| should be in logical order string instead of visual order string,
+// since // |FindWordBoundary()| uses ICU working on logical order string.
+PLATFORM_EXPORT std::pair<int, int> FindWordBoundary(const UChar*,
+                                                     int len,
+                                                     int position,
+                                                     AppendTrailingWhitespace);
+PLATFORM_EXPORT int FindWordStartBoundary(const UChar*, int len, int position);
 PLATFORM_EXPORT int FindWordEndBoundary(const UChar*, int len, int position);
 PLATFORM_EXPORT int FindNextWordFromIndex(const UChar*,
                                           int len,
