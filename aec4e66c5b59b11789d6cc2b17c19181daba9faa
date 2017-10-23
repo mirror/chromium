@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bb6fad7_c81aea34",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-23T21:21:28Z",
+      "side": 1,
+      "message": "does this get called if you hit home and then come back?  Is that the intended behavior to stop the state machine?  Or should this only be when we are destroying the activity?\n\nIf we only care about destruction, then we could follow the pattern from AlwaysDismissedDialog and register a state listener for mDelegate.getActivity() and just ensure we call cancel in the destroy call.  That was how we achieved the same thing you\u0027re doing here for general purpose dialogs.",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 22
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a05fe8_419e8c57",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-23T21:21:28Z",
+      "side": 1,
+      "message": "can we just call dismiss() on the fragment directly vs calling cancel internally?",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3382822b_c6f2f721",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-23T21:21:28Z",
+      "side": 1,
+      "message": "Can this be hit?  You are dismissing your fragment, so I don\u0027t think you should be able to get into a state where you have saved instance data.\n\nI know that we have a check like that in RepostFormWarningDialog, but I think that might not be needed anymore because we dismiss it when the tab is destroyed.\n\nIf you set don\u0027t keep activities and leave chrome and come back, do you hit this?  If not, then I think you could not include it (or maybe assert savedInstanceState \u003d\u003d null).",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6ead0f_072577e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-23T21:21:28Z",
+      "side": 1,
+      "message": "do we really need commitAllowingStateLoss below?  I\u0027m wonder if we can just call:\n\ndialogFragment.show(mFragmentManager, PROGRESS_DIALOG_TAG);\n\nSame for below.  I believe your state machine logic should be sufficient to handle all of this.",
+      "range": {
+        "startLine": 141,
+        "startChar": 31,
+        "endLine": 141,
+        "endChar": 45
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
