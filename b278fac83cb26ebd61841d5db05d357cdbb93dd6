@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01d23054_a470c634",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T17:54:25Z",
+      "side": 1,
+      "message": "Does this cause the scroll position of the list to be lost when exiting detail view?",
+      "revId": "b278fac83cb26ebd61841d5db05d357cdbb93dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
