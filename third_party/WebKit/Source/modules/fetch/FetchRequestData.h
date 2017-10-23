@@ -83,6 +83,8 @@ class FetchRequestData final
   void SetMIMEType(const String& type) { mime_type_ = type; }
   String Integrity() const { return integrity_; }
   void SetIntegrity(const String& integrity) { integrity_ = integrity; }
+  bool Keepalive() const { return keepalive_; }
+  void SetKeepalive(bool b) { keepalive_ = b; }
   RefPtr<EncodedFormData> AttachedCredential() const {
     return attached_credential_;
   }
@@ -130,6 +132,7 @@ class FetchRequestData final
   Member<BodyStreamBuffer> buffer_;
   String mime_type_;
   String integrity_;
+  bool keepalive_;
   RefPtr<EncodedFormData> attached_credential_;
 };
 
