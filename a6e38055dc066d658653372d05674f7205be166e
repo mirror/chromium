@@ -110,6 +110,24 @@
       "revId": "a6e38055dc066d658653372d05674f7205be166e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060d6d00_5647f041",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-23T19:01:00Z",
+      "side": 1,
+      "message": "This has been resolved in patchset 10.",
+      "parentUuid": "5eb7d35e_5ce62583",
+      "revId": "a6e38055dc066d658653372d05674f7205be166e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

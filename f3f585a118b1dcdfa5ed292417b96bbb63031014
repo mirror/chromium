@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "58f8013a_557685b1",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-23T19:01:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f869311f_d4be9737",
+      "range": {
+        "startLine": 410,
+        "startChar": 15,
+        "endLine": 410,
+        "endChar": 30
+      },
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea73acb2_41f0e24e",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 9

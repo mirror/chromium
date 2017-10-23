@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f2facd8_1d94ccd9",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-23T19:01:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7119dfd_eb40349d",
+      "revId": "caf961a129a1473203f006d88b11122a75fdb9d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75f24ad2_02830f84",
         "filename": "components/omnibox/browser/history_url_provider.h",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "caf961a129a1473203f006d88b11122a75fdb9d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5c89e0_196d9c6d",
+        "filename": "components/omnibox/browser/history_url_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-23T19:01:00Z",
+      "side": 1,
+      "message": "Done. Used your suggestion.",
+      "parentUuid": "75f24ad2_02830f84",
+      "revId": "caf961a129a1473203f006d88b11122a75fdb9d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
