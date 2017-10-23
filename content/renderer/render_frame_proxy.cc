@@ -490,13 +490,13 @@ void RenderFrameProxy::SetMusEmbeddedFrame(
 #endif
 
 void RenderFrameProxy::WasResized() {
-  if (pending_resize_params_.frame_rect.IsEmpty())
+  if (!pending_resize_params_.frame_rect)
     return;
 
   bool synchronized_params_changed =
       !sent_resize_params_ ||
-      sent_resize_params_->frame_rect.size() !=
-          pending_resize_params_.frame_rect.size() ||
+      sent_resize_params_->frame_rect->size() !=
+          pending_resize_params_.frame_rect->size() ||
       sent_resize_params_->screen_info != pending_resize_params_.screen_info;
 
   if (synchronized_params_changed)
@@ -622,7 +622,7 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
 }
 
 void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
-  pending_resize_params_.frame_rect = frame_rect;
+  pending_resize_params_.frame_rect = gfx::Rect(frame_rect);
   WasResized();
 }
 

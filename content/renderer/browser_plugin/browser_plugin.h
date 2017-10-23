@@ -151,8 +151,8 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
 
   ~BrowserPlugin() override;
 
-  const gfx::Rect& frame_rect() const {
-    return pending_resize_params_.frame_rect;
+  gfx::Rect frame_rect() const {
+    return pending_resize_params_.frame_rect.value_or(gfx::Rect());
   }
 
   const ScreenInfo& screen_info() const {
@@ -217,7 +217,7 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
     ResizeParams();
     ResizeParams(const ResizeParams& other);
     ~ResizeParams();
-    gfx::Rect frame_rect;
+    base::Optional<gfx::Rect> frame_rect;
     ScreenInfo screen_info;
   };
 

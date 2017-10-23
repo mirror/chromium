@@ -154,8 +154,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   void WasResized();
 
-  const gfx::Rect& frame_rect() const {
-    return pending_resize_params_.frame_rect;
+  gfx::Rect frame_rect() const {
+    return pending_resize_params_.frame_rect.value_or(gfx::Rect());
   }
 
   const ScreenInfo& screen_info() const {
@@ -254,7 +254,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
     ResizeParams();
     ResizeParams(const ResizeParams& other);
     ~ResizeParams();
-    gfx::Rect frame_rect;
+    base::Optional<gfx::Rect> frame_rect;
     ScreenInfo screen_info;
   };
 
