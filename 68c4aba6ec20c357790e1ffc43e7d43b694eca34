@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a41e2df8_bfb1814a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-23T18:59:35Z",
+      "side": 1,
+      "message": "The exception list is a bit verbose. I\u0027m guessing that IOError is thrown by network (host.web), ValueError is thrown by json.loads, and KeyError is thrown by dict lookup. Is that correct?\n\nShall we add a comment? Or perhaps \"catch \u0027em all\" isn\u0027t so bad an idea in this case?",
+      "revId": "68c4aba6ec20c357790e1ffc43e7d43b694eca34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce64c3ea_c103570c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-23T18:59:35Z",
+      "side": 1,
+      "message": "I assume both the calendar and the bots are using PT (MTV timezone), so we don\u0027t need to worry about TZ, right?",
+      "revId": "68c4aba6ec20c357790e1ffc43e7d43b694eca34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
