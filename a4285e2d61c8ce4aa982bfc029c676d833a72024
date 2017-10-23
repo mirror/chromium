@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2b517b1_2ea8e4b0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T21:37:48Z",
+      "side": 1,
+      "message": "Does this mean you discard it when you unbind / bind?",
+      "revId": "a4285e2d61c8ce4aa982bfc029c676d833a72024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65763b2_25d78bfc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T21:37:48Z",
+      "side": 1,
+      "message": "Does this mean that you can finally move the history out of this file?",
+      "revId": "a4285e2d61c8ce4aa982bfc029c676d833a72024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
