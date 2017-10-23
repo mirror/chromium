@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c96397_7de76b37",
+        "filename": "ui/keyboard/container_floating_behavior_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-23T06:24:42Z",
+      "side": 1,
+      "message": "FYI: You can use TEST() for this case because the test class doesn\u0027t have anything to do in SetUp() and TearDown().",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "c2cf9ec8fdde4d009854ca7e323e3633644cf33f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
