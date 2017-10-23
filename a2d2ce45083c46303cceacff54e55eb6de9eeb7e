@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a111d607_523d8063",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T12:33:35Z",
+      "side": 1,
+      "message": "As said in other reviews, I think you should use a central MediaControlsImpl::IsModern()",
+      "revId": "a2d2ce45083c46303cceacff54e55eb6de9eeb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
