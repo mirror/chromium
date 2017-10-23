@@ -684,6 +684,58 @@ TEST_F(TrackerImplTest, TestTrackingOnlyTriggering) {
                    0);
 }
 
+TEST_F(TrackerImplTest, TestWouldTriggerInspection) {
+  // Ensure all initialization is finished.
+  StoringInitializedCallback callback;
+  tracker_->AddOnInitializedCallback(base::Bind(
+      &StoringInitializedCallback::OnInitialized, base::Unretained(&callback)));
+  base::RunLoop().RunUntilIdle();
+  base::UserActionTester user_action_tester;
+
+  EXPECT_TRUE(tracker_->WouldTriggerHelpUI(kTestFeatureFoo));
+  EXPECT_TRUE(tracker_->WouldTriggerHelpUI(kTestFeatureBar));
+  EXPECT_FALSE(tracker_->WouldTriggerHelpUI(kTestFeatureQux));
+  VerifyEventTriggerEvents(kTestFeatureFoo, 0u);
+  VerifyEventTriggerEvents(kTestFeatureBar, 0u);
+  VerifyEventTriggerEvents(kTestFeatureQux, 0u);
+  VerifyUserActionsTriggerChecks(user_action_tester, 0, 0, 0, 0);
+  VerifyUserActionsTriggered(user_action_tester, 0, 0, 0, 0);
+  VerifyUserActionsNotTriggered(user_action_tester, 0, 0, 0, 0);
+  VerifyUserActionsWouldHaveTriggered(user_action_tester, 0, 0, 0, 0);
+  VerifyUserActionsDismissed(user_action_tester, 0);
+  VerifyHistograms(false, 0, 0, 0, false, 0, 0, 0, false, 0, 0, 0, false, 0, 0,
+                   0);
+
+  EXPECT_TRUE(tracker_->ShouldTriggerHelpUI(kTestFeatureFoo));
+  EXPECT_FALSE(tracker_->WouldTriggerHelpUI(kTestFeatureFoo));
+  EXPECT_FALSE(tracker_->WouldTriggerHelpUI(kTestFeatureBar));
+  EXPECT_FALSE(tracker_->WouldTriggerHelpUI(kTestFeatureQux));
+  VerifyEventTriggerEvents(kTestFeatureFoo, 1);
+  VerifyUserActionsTriggerChecks(user_action_tester, 1, 0, 0, 0);
+  VerifyUserActionsTriggered(user_action_tester, 1, 0, 0, 0);
+  VerifyUserActionsNotTriggered(user_action_tester, 0, 0, 0, 0);
+  VerifyUserActionsWouldHaveTriggered(user_action_tester, 0, 0, 0, 0);
+  VerifyUserActionsDismissed(user_action_tester, 0);
+  VerifyHistograms(true, 1, 0, 0, false, 0, 0, 0, false, 0, 0, 0, false, 0, 0,
+                   0);
+
+  tracker_->Dismissed(kTestFeatureFoo);
+  EXPECT_FALSE(tracker_->WouldTriggerHelpUI(kTestFeatureFoo));
+  EXPECT_FALSE(tracker_->ShouldTriggerHelpUI(kTestFeatureFoo));
+  EXPECT_TRUE(tracker_->WouldTriggerHelpUI(kTestFeatureBar));
+  EXPECT_TRUE(tracker_->ShouldTriggerHelpUI(kTestFeatureBar));
+  EXPECT_FALSE(tracker_->WouldTriggerHelpUI(kTestFeatureQux));
+  VerifyEventTriggerEvents(kTestFeatureFoo, 1);
+  VerifyEventTriggerEvents(kTestFeatureBar, 1);
+  VerifyUserActionsTriggerChecks(user_action_tester, 2, 1, 0, 0);
+  VerifyUserActionsTriggered(user_action_tester, 1, 1, 0, 0);
+  VerifyUserActionsNotTriggered(user_action_tester, 1, 0, 0, 0);
+  VerifyUserActionsWouldHaveTriggered(user_action_tester, 0, 0, 0, 0);
+  VerifyUserActionsDismissed(user_action_tester, 1);
+  VerifyHistograms(true, 1, 1, 0, true, 1, 0, 0, false, 0, 0, 0, false, 0, 0,
+                   0);
+}
+
 TEST_F(TrackerImplTest, TestTriggerStateInspection) {
   // Before initialization has finished, NOT_READY should always be returned.
   EXPECT_EQ(Tracker::TriggerState::NOT_READY,
