@@ -11632,10 +11632,10 @@
           "--browser=release",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-angle=gl --use-cmd-decoder=validating"
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-cmd-decoder=passthrough"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl_conformance_gl_tests",
+        "name": "webgl_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
@@ -12233,10 +12233,10 @@
           "--browser=debug",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-angle=gl --use-cmd-decoder=validating"
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-cmd-decoder=passthrough"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl_conformance_gl_tests",
+        "name": "webgl_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
@@ -12856,10 +12856,10 @@
           "--browser=release",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-angle=gl --use-cmd-decoder=validating"
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-cmd-decoder=passthrough"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl_conformance_gl_tests",
+        "name": "webgl_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
@@ -13496,10 +13496,10 @@
           "--browser=release",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-angle=gl --use-cmd-decoder=validating"
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-cmd-decoder=passthrough"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl_conformance_gl_tests",
+        "name": "webgl_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
@@ -14170,10 +14170,10 @@
           "--browser=release",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-angle=gl --use-cmd-decoder=validating"
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-cmd-decoder=passthrough"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl_conformance_gl_tests",
+        "name": "webgl_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
@@ -15493,10 +15493,10 @@
           "--browser=debug",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-angle=gl --use-cmd-decoder=validating"
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-cmd-decoder=passthrough"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl_conformance_gl_tests",
+        "name": "webgl_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
@@ -16243,10 +16243,10 @@
           "--browser=release",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-angle=gl --use-cmd-decoder=validating"
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-cmd-decoder=passthrough"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl_conformance_gl_tests",
+        "name": "webgl_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
@@ -18258,10 +18258,10 @@
           "--browser=release",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-angle=gl --use-cmd-decoder=validating"
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-cmd-decoder=passthrough"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl_conformance_gl_tests",
+        "name": "webgl_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
@@ -19033,10 +19033,10 @@
           "--browser=debug_x64",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-angle=gl --use-cmd-decoder=validating"
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-cmd-decoder=passthrough"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl_conformance_gl_tests",
+        "name": "webgl_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
@@ -19709,10 +19709,10 @@
           "--browser=release_x64",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-angle=gl --use-cmd-decoder=validating"
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-cmd-decoder=passthrough"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl_conformance_gl_tests",
+        "name": "webgl_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
