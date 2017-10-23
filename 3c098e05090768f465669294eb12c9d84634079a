@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33d014c8_1ef9ee85",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-23T13:10:20Z",
+      "side": 1,
+      "message": "I think this reads a little better.\n\ngfx::PointF point_in_layer_space(\n  gfx::ScalePoint(device_viewport_point, device_scale_factor) - \n  layer_impl_with_touch_handler-\u003eposition().OffsetFromOrigin());",
+      "range": {
+        "startLine": 660,
+        "startChar": 4,
+        "endLine": 664,
+        "endChar": 59
+      },
+      "revId": "3c098e05090768f465669294eb12c9d84634079a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ceec62f_b32aa62a",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-23T13:10:20Z",
+      "side": 1,
+      "message": "We should probably rename this to. SetTouchActionFromMain perhaps?",
+      "range": {
+        "startLine": 222,
+        "startChar": 22,
+        "endLine": 222,
+        "endChar": 36
+      },
+      "revId": "3c098e05090768f465669294eb12c9d84634079a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1f63da_051313db",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-23T13:10:20Z",
+      "side": 1,
+      "message": "Should we use a Vector2D here? It\u0027s a shame that gesture_event-\u003edata.scroll_update deltas aren\u0027t a point, or this would be a clear win.\n\nI still think it\u0027s a bit clearer though.",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 37
+      },
+      "revId": "3c098e05090768f465669294eb12c9d84634079a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
