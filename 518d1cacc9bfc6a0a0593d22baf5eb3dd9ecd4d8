@@ -1,0 +1,695 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f88001e_7eb73cc9",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "Let\u0027s either CHECK that the buffer is long enough, or, alternatively, return nullptr if it ain\u0027t. Same for [] operator applications below.",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1f7c5a_c5b73267",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: This is always 0.",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 76
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6118068_79cb988d",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: aka.?",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3bd19c1_36c2a76b",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "style nit: Avoid the raw allocation, instead:\n\nreturn std::make_unique\u003cAttestationData\u003e(...);",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce048a9f_6c0f4350",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "Note that this will still be a copy because the parameter is const.",
+      "range": {
+        "startLine": 41,
+        "startChar": 14,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf9092d_6d19ecf3",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: In contrast to EXPECT, arguments of CHECK macro should be in normal comparison order, i.e. reverse the arguments.",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d02ec1_a680a0fb",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "Please add CHECK on |length| as well.",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f110f6ce_90a2bb0f",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "Once we already length-CHECK these vectors, I\u0027d suggest just appending from begin() to end().",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e552e5b2_c171feb8",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "We are writing this in little-endian here. If that\u0027s intentional, could you please add a comment to this effect?",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ef7908_aa94a934",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: unused.",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de13f41_ab79234a",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: No longer applicable, I think.",
+      "range": {
+        "startLine": 18,
+        "startChar": 52,
+        "endLine": 18,
+        "endChar": 62
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81230582_9b4d1456",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "Can you please (either in this CL, a prequel, or a follow-up) update these links to refer to the current version of the spec? All these links show a big red warning now.",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 72
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7e98ed_895296ec",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: Can we make this more specific? CreateFromNotsureWhichFormat?",
+      "range": {
+        "startLine": 23,
+        "startChar": 42,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49fe79b_a949d773",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: Make this consistently passed by non-const value, or const reference.",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec60a016_839d343f",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: #include \u003cstdint.h\u003e",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6ea72a_5a6e8879",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: const std::vector\u003cuint8_t\u003e\u0026 GetCredentialId(), so that the caller can decide if they want to suffer the cost of copying.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254d0a9c_e2f4b414",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "comment nit: WDYT about formatting this like so:\n * AAGUID (16 bytes)\n * Len (2 bytes)\n ...",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d072d55a_b1dfd480",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: #include \u003cmemory\u003e",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b868837_4cbb2e00",
+        "filename": "content/browser/webauth/attestation_object.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: This no longer serves a purpose.",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8fdd4a0_bb03cf93",
+        "filename": "content/browser/webauth/attestation_object.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "Unnamed namespaces are discouraged in headers because the contents are still pulled in to the `content` namespace and thus pollute it.\n\nPlease either move the unnamed namespace to the .cc file, or declare the constants here in an `impl` or `internal` subnamespace and define them in the .cc file.",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5904c98a_0a8d592f",
+        "filename": "content/browser/webauth/attestation_object.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: Even if the literals defined in the spec are short due to space constraints, let\u0027s name the constants in the source code at least more descriptively.",
+      "range": {
+        "startLine": 15,
+        "startChar": 15,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1451c1a7_84e55d0a",
+        "filename": "content/browser/webauth/attestation_object.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: #include \u003cmemory\u003e, also in all other headers that use unique_ptr\u0027s.",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c366b233_5f937521",
+        "filename": "content/browser/webauth/attestation_object.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: #include \"base/macros.h\", also in other headers.",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bbfe1b_5c8a902d",
+        "filename": "content/browser/webauth/attestation_statement.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "Same here: this will result in a copy.",
+      "range": {
+        "startLine": 9,
+        "startChar": 43,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f573898_35e9d22f",
+        "filename": "content/browser/webauth/attestation_statement.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "Can this be CBORValue::MapValue?",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a4e37b_9537f8b1",
+        "filename": "content/browser/webauth/attestation_statement.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: Add comment. Does this need to be a string as opposed to vector\u003cuint8_t\u003e?",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df2c7f4_dbe17f9f",
+        "filename": "content/browser/webauth/authenticator_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: Same here.",
+      "range": {
+        "startLine": 33,
+        "startChar": 37,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c867a0d8_232dd231",
+        "filename": "content/browser/webauth/authenticator_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: Same here. Let\u0027s use counter_.begin/end(), it\u0027s cleaner.",
+      "range": {
+        "startLine": 61,
+        "startChar": 29,
+        "endLine": 61,
+        "endChar": 37
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5cdc690_6d86eafc",
+        "filename": "content/browser/webauth/authenticator_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: constexpr uint8_t\n\nAlso, see my other comment about unnamed namespaces.",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac4fb10_6e2ee9f3",
+        "filename": "content/browser/webauth/authenticator_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: GetHashAsByteArray?",
+      "range": {
+        "startLine": 33,
+        "startChar": 23,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94dde100_edd75b47",
+        "filename": "content/browser/webauth/authenticator_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "That\u0027s great, thanks!",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5c5ed9_5545ea70",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: Same here, please use std::make_unique. In other locations as well.",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d105756_11d0c4b7",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: The return type already indicated that it\u0027s serialized to string, maybe we can omit this here.\nnit2: Does this need to be a string as opposed to a uint8 vector?",
+      "range": {
+        "startLine": 35,
+        "startChar": 29,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb91bc7_776c2409",
+        "filename": "content/browser/webauth/ec_public_key.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "At this point I wonder if we should introduce a helper function to splice a vector, one which always performs the necessary security CHECKs. Maybe even ultimately move it to base/?",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705402e3_5b11576e",
+        "filename": "content/browser/webauth/fido_attestation_statement.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T11:40:11Z",
+      "side": 1,
+      "message": "nit: I clicked on this here and nothing happened. :-)",
+      "range": {
+        "startLine": 15,
+        "startChar": 32,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
