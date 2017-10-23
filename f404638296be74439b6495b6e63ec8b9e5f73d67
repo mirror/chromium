@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8343b68_c278e0b4",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_tooltip.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-23T06:55:16Z",
+      "side": 1,
+      "message": "It was difficult for me to understand if the following statement is correct:\n  \"This condition is true\" if and only if \"The button is focused by target.focus()\".\n\nCould you add a brief explanation about the condition in the comment?",
+      "range": {
+        "startLine": 213,
+        "startChar": 9,
+        "endLine": 213,
+        "endChar": 58
+      },
+      "revId": "f404638296be74439b6495b6e63ec8b9e5f73d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
