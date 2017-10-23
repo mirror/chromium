@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6089cfc0_174fa104",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-23T17:20:12Z",
+      "side": 1,
+      "message": "While you\u0027re here, make it a full sentence ending with a period.\n\n\"...an audio change occurs.\"",
+      "range": {
+        "startLine": 540,
+        "startChar": 5,
+        "endLine": 540,
+        "endChar": 36
+      },
+      "revId": "b179fe1eb8aaa787e2d81874f1542536a675db65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
