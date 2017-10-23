@@ -240,9 +240,11 @@ void ServiceWorkerSubresourceLoader::OnResponse(
 void ServiceWorkerSubresourceLoader::OnResponseBlob(
     const ServiceWorkerResponse& response,
     blink::mojom::BlobPtr body_as_blob,
-    base::Time dispatch_event_time) {
+    base::Time dispatch_event_time,
+    OnResponseBlobCallback callback) {
   StartResponse(response, std::move(body_as_blob),
                 nullptr /* body_as_stream */);
+  std::move(callback).Run();
 }
 
 void ServiceWorkerSubresourceLoader::OnResponseStream(

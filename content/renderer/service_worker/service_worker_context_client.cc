@@ -28,7 +28,6 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/push_event_payload.h"
 #include "content/public/common/referrer.h"
-#include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/child_url_loader_factory_getter.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/document_state.h"
@@ -57,8 +56,6 @@
 #include "ipc/ipc_message_macros.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_response_headers.h"
-#include "services/service_manager/public/cpp/connector.h"
-#include "services/service_manager/public/cpp/interface_provider.h"
 #include "storage/common/blob_storage/blob_handle.h"
 #include "third_party/WebKit/common/blob/blob.mojom.h"
 #include "third_party/WebKit/common/blob/blob_registry.mojom.h"
@@ -287,9 +284,9 @@ void AbortPendingEventCallbacks(T& callbacks, TArgs... args) {
   }
 }
 
-void GetBlobRegistry(blink::mojom::BlobRegistryRequest request) {
-  ChildThreadImpl::current()->GetConnector()->BindInterface(
-      mojom::kBrowserServiceName, std::move(request));
+void OnResponseBlobDispatchDone(
+    const blink::WebServiceWorkerResponse& response) {
+  // This frees the ref to the internal data of |response|.
 }
 
 }  // namespace
@@ -1037,20 +1034,11 @@ void ServiceWorkerContextClient::RespondToFetchEvent(
     if (response.blob) {
       blob_ptr = response.blob->TakeBlobPtr();
       response.blob = nullptr;
-    } else {
-      if (!blob_registry_) {
-        // TODO(kinuko): We should use per-frame / per-worker InterfaceProvider
-        // instead (crbug.com/734210).
-        main_thread_task_runner_->PostTask(
-            FROM_HERE,
-            base::BindOnce(&GetBlobRegistry, MakeRequest(&blob_registry_)));
-      }
-      blob_registry_->GetBlobFromUUID(MakeRequest(&blob_ptr),
-                                      response.blob_uuid);
     }
     response_callback->OnResponseBlob(
         response, std::move(blob_ptr),
-        base::Time::FromDoubleT(event_dispatch_time));
+        base::Time::FromDoubleT(event_dispatch_time),
+        base::BindOnce(&OnResponseBlobDispatchDone, web_response));
   } else {
     response_callback->OnResponse(response,
                                   base::Time::FromDoubleT(event_dispatch_time));
