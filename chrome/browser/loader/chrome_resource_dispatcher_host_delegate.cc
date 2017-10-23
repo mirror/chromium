@@ -52,6 +52,7 @@
 #include "components/nacl/common/features.h"
 #include "components/offline_pages/features/features.h"
 #include "components/policy/core/common/cloud/policy_header_io_helper.h"
+#include "components/previews/content/previews_content_util.h"
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_io_data.h"
 #include "components/variations/net/variations_http_headers.h"
