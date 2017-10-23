@@ -6,10 +6,10 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/test/mock_callback.h"
+#include "chrome/browser/media/router/local_presentation_manager.h"
+#include "chrome/browser/media/router/local_presentation_manager_factory.h"
 #include "chrome/browser/media/router/mock_media_router.h"
 #include "chrome/browser/media/router/mock_screen_availability_listener.h"
-#include "chrome/browser/media/router/offscreen_presentation_manager.h"
-#include "chrome/browser/media/router/offscreen_presentation_manager_factory.h"
 #include "chrome/browser/media/router/test_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/media_router/media_source.h"
@@ -79,7 +79,7 @@ class MockCreatePresentationConnnectionCallbacks {
                void(const content::PresentationError& error));
 };
 
-class MockOffscreenPresentationManager : public OffscreenPresentationManager {
+class MockLocalPresentationManager : public LocalPresentationManager {
  public:
   void RegisterOffscreenPresentationController(
       const content::PresentationInfo& presentation_info,
@@ -109,9 +109,9 @@ class MockOffscreenPresentationManager : public OffscreenPresentationManager {
   MOCK_METHOD1(GetRoute, MediaRoute*(const std::string& presentation_id));
 };
 
-std::unique_ptr<KeyedService> BuildMockOffscreenPresentationManager(
+std::unique_ptr<KeyedService> BuildMockLocalPresentationManager(
     content::BrowserContext* context) {
-  return base::MakeUnique<MockOffscreenPresentationManager>();
+  return base::MakeUnique<MockLocalPresentationManager>();
 }
 
 class PresentationServiceDelegateImplTest
@@ -140,7 +140,7 @@ class PresentationServiceDelegateImplTest
     presentation_request_ = base::MakeUnique<content::PresentationRequest>(
         RenderFrameHostId(main_frame_process_id_, main_frame_routing_id_),
         presentation_urls_, frame_origin_);
-    SetMockOffscreenPresentationManager();
+    SetMockLocalPresentationManager();
   }
 
   MOCK_METHOD1(OnDefaultPresentationStarted,
@@ -149,7 +149,7 @@ class PresentationServiceDelegateImplTest
  protected:
   virtual content::WebContents* GetWebContents() { return web_contents(); }
 
-  MockOffscreenPresentationManager& GetMockOffscreenPresentationManager() {
+  MockLocalPresentationManager& GetMockLocalPresentationManager() {
     return *mock_offscreen_manager_;
   }
 
@@ -197,11 +197,11 @@ class PresentationServiceDelegateImplTest
     main_frame_routing_id_ = main_frame->GetRoutingID();
   }
 
-  void SetMockOffscreenPresentationManager() {
-    OffscreenPresentationManagerFactory::GetInstanceForTest()
-        ->SetTestingFactory(profile(), &BuildMockOffscreenPresentationManager);
-    mock_offscreen_manager_ = static_cast<MockOffscreenPresentationManager*>(
-        OffscreenPresentationManagerFactory::GetOrCreateForBrowserContext(
+  void SetMockLocalPresentationManager() {
+    LocalPresentationManagerFactory::GetInstanceForTest()->SetTestingFactory(
+        profile(), &BuildMockLocalPresentationManager);
+    mock_offscreen_manager_ = static_cast<MockLocalPresentationManager*>(
+        LocalPresentationManagerFactory::GetOrCreateForBrowserContext(
             profile()));
   }
 
@@ -212,7 +212,7 @@ class PresentationServiceDelegateImplTest
   std::vector<GURL> presentation_urls_;
   const GURL frame_url_;
   const url::Origin frame_origin_;
-  MockOffscreenPresentationManager* mock_offscreen_manager_;
+  MockLocalPresentationManager* mock_offscreen_manager_;
 
   // |source1_| and |source2_| correspond to |presentation_url1_| and
   // |presentation_url2_|, respectively.
@@ -435,7 +435,7 @@ TEST_F(PresentationServiceDelegateImplTest, ListenForConnnectionStateChange) {
   const std::string kPresentationId("pid");
   presentation_urls_.push_back(GURL(kPresentationUrl3));
 
-  auto& mock_offscreen_manager = GetMockOffscreenPresentationManager();
+  auto& mock_offscreen_manager = GetMockLocalPresentationManager();
   EXPECT_CALL(mock_offscreen_manager, IsOffscreenPresentation(kPresentationId))
       .WillRepeatedly(Return(false));
 
@@ -519,7 +519,7 @@ TEST_F(PresentationServiceDelegateImplTest,
                          "mediaSinkId", "", true, "", true);
   media_route.set_offscreen_presentation(true);
 
-  auto& mock_offscreen_manager = GetMockOffscreenPresentationManager();
+  auto& mock_offscreen_manager = GetMockLocalPresentationManager();
   EXPECT_CALL(mock_offscreen_manager, IsOffscreenPresentation(kPresentationId))
       .WillRepeatedly(Return(true));
 
@@ -545,7 +545,7 @@ TEST_F(PresentationServiceDelegateImplTest,
                          "mediaSinkId", "", true, "", true);
   media_route.set_offscreen_presentation(true);
 
-  auto& mock_offscreen_manager = GetMockOffscreenPresentationManager();
+  auto& mock_offscreen_manager = GetMockLocalPresentationManager();
   EXPECT_CALL(mock_offscreen_manager, IsOffscreenPresentation(kPresentationId))
       .WillRepeatedly(Return(true));
   EXPECT_CALL(mock_offscreen_manager, GetRoute(kPresentationId))
@@ -581,7 +581,7 @@ TEST_F(PresentationServiceDelegateImplTest, ConnectToOffscreenPresentation) {
   delegate_impl_->OnStartPresentationSucceeded(rfh_id, success_cb.Get(),
                                                presentation_info, media_route);
 
-  auto& mock_offscreen_manager = GetMockOffscreenPresentationManager();
+  auto& mock_offscreen_manager = GetMockLocalPresentationManager();
   EXPECT_CALL(mock_offscreen_manager,
               RegisterOffscreenPresentationController(
                   InfoEquals(presentation_info), rfh_id, Equals(media_route)));
@@ -647,7 +647,7 @@ TEST_F(PresentationServiceDelegateImplTest, AutoJoinRequest) {
     update->AppendIfNotPresent(base::MakeUnique<base::Value>(origin));
   }
 
-  auto& mock_offscreen_manager = GetMockOffscreenPresentationManager();
+  auto& mock_offscreen_manager = GetMockLocalPresentationManager();
   EXPECT_CALL(mock_offscreen_manager, IsOffscreenPresentation(kPresentationId))
       .WillRepeatedly(Return(false));
 
@@ -700,7 +700,7 @@ TEST_F(PresentationServiceDelegateImplIncognitoTest, AutoJoinRequest) {
     update->AppendIfNotPresent(base::MakeUnique<base::Value>(origin));
   }
 
-  auto& mock_offscreen_manager = GetMockOffscreenPresentationManager();
+  auto& mock_offscreen_manager = GetMockLocalPresentationManager();
   EXPECT_CALL(mock_offscreen_manager, IsOffscreenPresentation(kPresentationId))
       .WillRepeatedly(Return(false));
 
