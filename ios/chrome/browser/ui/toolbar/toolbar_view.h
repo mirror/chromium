@@ -12,6 +12,11 @@
 @protocol ToolbarFrameDelegate;
 
 @interface ToolbarView : UIView<RelaxedBoundsConstraintsHitTestSupport>
+- (instancetype)initWithFrame:(CGRect)frame NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithNibName:(NSString*)name
+                         bundle:(NSBundle*)bundle NS_UNAVAILABLE;
+- (instancetype)initWithCoder:(NSCoder*)coder NS_UNAVAILABLE;
+
 // The delegate used to handle frame changes and windows events.
 @property(nonatomic, weak) id<ToolbarFrameDelegate> delegate;
 // Records whether or not the toolbar is currently involved in a transition
