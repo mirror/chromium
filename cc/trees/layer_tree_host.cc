@@ -55,6 +55,7 @@
 #include "cc/trees/swap_promise_manager.h"
 #include "cc/trees/transform_node.h"
 #include "cc/trees/tree_synchronizer.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
 
@@ -1494,6 +1495,12 @@ void LayerTreeHost::SetHasCopyRequest(bool has_copy_request) {
 
 void LayerTreeHost::RequestBeginMainFrameNotExpected(bool new_state) {
   proxy_->RequestBeginMainFrameNotExpected(new_state);
+}
+
+void LayerTreeHost::SetUkmRecorderAndSource(
+    std::unique_ptr<ukm::UkmRecorder> recorder,
+    ukm::SourceId source_id) {
+  proxy_->SetUkmRecorderAndSource(std::move(recorder), source_id);
 }
 
 }  // namespace cc

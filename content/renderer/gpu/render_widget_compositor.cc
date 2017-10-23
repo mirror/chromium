@@ -1312,4 +1312,10 @@ void RenderWidgetCompositor::RequestBeginMainFrameNotExpected(bool new_state) {
   layer_tree_host_->RequestBeginMainFrameNotExpected(new_state);
 }
 
+void RenderWidgetCompositor::SetUkmRecorderAndSource(
+    std::unique_ptr<ukm::UkmRecorder> recorder,
+    ukm::SourceId source_id) {
+  layer_tree_host_->SetUkmRecorderAndSource(std::move(recorder), source_id);
+}
+
 }  // namespace content
