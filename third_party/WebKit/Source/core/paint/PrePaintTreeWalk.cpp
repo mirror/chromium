@@ -10,8 +10,10 @@
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutMultiColumnSpannerPlaceholder.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/compositing/CompositingLayerPropertyUpdater.h"
+#include "core/paint/ng/ng_paint_fragment.h"
 #include "platform/graphics/paint/GeometryMapper.h"
 
 namespace blink {
@@ -234,6 +236,20 @@ void PrePaintTreeWalk::Walk(const LayoutObject& object,
       Walk(*frame_view, context);
     }
     // TODO(pdr): Investigate RemoteFrameView (crbug.com/579281).
+  }
+
+  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled() &&
+      object.IsLayoutNGBlockFlow()) {
+    if (NGPaintFragment* paint_fragment =
+            ToLayoutNGBlockFlow(object).PaintFragment()) {
+      // At this point, PaintInvalidator has updated VisualRect of the
+      // LayoutObject and its descendants. Update NGPaintFragment from the
+      // LayoutObject.
+      // TODO(kojii): When we have NGPaintFragment, we should walk
+      // NGPaintFragment tree instead, and update LayoutObject from it if needed
+      // for compat.
+      paint_fragment->UpdateVisualRectFromLayoutObject();
+    }
   }
 
   object.GetMutableForPainting().ClearPaintFlags();

@@ -29,8 +29,7 @@ namespace blink {
 //   placeholders for displaying them.
 class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
  public:
-  explicit NGPaintFragment(scoped_refptr<const NGPhysicalFragment>,
-                           bool stop_at_block_layout_root = false);
+  explicit NGPaintFragment(scoped_refptr<const NGPhysicalFragment>);
 
   const NGPhysicalFragment& PhysicalFragment() const {
     return *physical_fragment_;
@@ -39,6 +38,11 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
   const Vector<std::unique_ptr<const NGPaintFragment>>& Children() const {
     return children_;
   }
+
+  // Update VisualRect() for this object and all its descendants from
+  // LayoutObject. Corresponding LayoutObject::VisualRect() must be computed and
+  // set beforehand.
+  void UpdateVisualRectFromLayoutObject();
 
   // TODO(layout-dev): Implement when we have oveflow support.
   // TODO(eae): Switch to using NG geometry types.
@@ -67,7 +71,13 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
  private:
   void SetVisualRect(const LayoutRect& rect) { visual_rect_ = rect; }
 
-  void PopulateDescendants(bool stop_at_block_layout_root = false);
+  // A context object used for UpdateVisualObject() and PopulateDescendants().
+  struct UpdateContext {
+    const LayoutObject* parent_box;
+    const NGPhysicalOffset offset_to_parent_box;
+  };
+  void UpdateVisualRectFromLayoutObject(const UpdateContext&);
+  void PopulateDescendants(const UpdateContext&);
 
   scoped_refptr<const NGPhysicalFragment> physical_fragment_;
   LayoutRect visual_rect_;
