@@ -13,6 +13,7 @@
 #include "bindings/modules/v8/V8BasicCardRequest.h"
 #include "core/dom/DOMException.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "modules/payments/BasicCardHelper.h"
 #include "modules/payments/BasicCardRequest.h"
 #include "modules/payments/PaymentInstrument.h"
 #include "modules/payments/PaymentManager.h"
@@ -24,8 +25,6 @@ namespace blink {
 namespace {
 
 static const char kPaymentManagerUnavailable[] = "Payment manager unavailable";
-
-static const size_t kMaxListSize = 1024;
 
 bool rejectError(ScriptPromiseResolver* resolver,
                  payments::mojom::blink::PaymentHandlerStatus status) {
@@ -205,9 +204,9 @@ ScriptPromise PaymentInstruments::set(ScriptState* script_state,
     }
     instrument->stringified_capabilities = ToCoreString(value);
     if (instrument->enabled_methods.Contains("basic-card")) {
-      parseBasiccardCapabilities(details.capabilities(),
-                                 instrument->supported_networks,
-                                 instrument->supported_types, exception_state);
+      BasicCardHelper::parseBasiccardData(
+          details.capabilities(), instrument->supported_networks,
+          instrument->supported_types, exception_state);
     }
   } else {
     instrument->stringified_capabilities = WTF::g_empty_string;
@@ -219,75 +218,6 @@ ScriptPromise PaymentInstruments::set(ScriptState* script_state,
           WTF::Bind(&PaymentInstruments::onSetPaymentInstrument,
                     WrapPersistent(this), WrapPersistent(resolver))));
   return promise;
-}
-
-void PaymentInstruments::parseBasiccardCapabilities(
-    const ScriptValue& input,
-    Vector<BasicCardNetwork>& supported_networks_output,
-    Vector<BasicCardType>& supported_types_output,
-    ExceptionState& exception_state) {
-  DCHECK(!input.IsEmpty());
-
-  BasicCardRequest basic_card;
-  V8BasicCardRequest::ToImpl(input.GetIsolate(), input.V8Value(), basic_card,
-                             exception_state);
-  if (exception_state.HadException())
-    return;
-
-  if (basic_card.hasSupportedNetworks()) {
-    if (basic_card.supportedNetworks().size() > kMaxListSize) {
-      exception_state.ThrowTypeError(
-          "basic-card supportedNetworks cannot be longer than 1024 elements");
-      return;
-    }
-
-    const struct {
-      const payments::mojom::BasicCardNetwork code;
-      const char* const name;
-    } kBasicCardNetworks[] = {{BasicCardNetwork::AMEX, "amex"},
-                              {BasicCardNetwork::DINERS, "diners"},
-                              {BasicCardNetwork::DISCOVER, "discover"},
-                              {BasicCardNetwork::JCB, "jcb"},
-                              {BasicCardNetwork::MASTERCARD, "mastercard"},
-                              {BasicCardNetwork::MIR, "mir"},
-                              {BasicCardNetwork::UNIONPAY, "unionpay"},
-                              {BasicCardNetwork::VISA, "visa"}};
-
-    for (const String& network : basic_card.supportedNetworks()) {
-      for (size_t i = 0; i < arraysize(kBasicCardNetworks); ++i) {
-        if (network == kBasicCardNetworks[i].name) {
-          supported_networks_output.push_back(kBasicCardNetworks[i].code);
-          break;
-        }
-      }
-    }
-  }
-
-  if (basic_card.hasSupportedTypes()) {
-    using ::payments::mojom::blink::BasicCardType;
-
-    if (basic_card.supportedTypes().size() > kMaxListSize) {
-      exception_state.ThrowTypeError(
-          "basic-card supportedTypes cannot be longer than 1024 elements");
-      return;
-    }
-
-    const struct {
-      const BasicCardType code;
-      const char* const name;
-    } kBasicCardTypes[] = {{BasicCardType::CREDIT, "credit"},
-                           {BasicCardType::DEBIT, "debit"},
-                           {BasicCardType::PREPAID, "prepaid"}};
-
-    for (const String& type : basic_card.supportedTypes()) {
-      for (size_t i = 0; i < arraysize(kBasicCardTypes); ++i) {
-        if (type == kBasicCardTypes[i].name) {
-          supported_types_output.push_back(kBasicCardTypes[i].code);
-          break;
-        }
-      }
-    }
-  }
 }
 
 ScriptPromise PaymentInstruments::clear(ScriptState* script_state) {

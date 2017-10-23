@@ -1,0 +1,33 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef BasicCardHelper_h
+#define BasicCardHelper_h
+
+#include "bindings/core/v8/ExceptionState.h"
+#include "platform/wtf/Vector.h"
+#include "public/platform/modules/payments/payment_request.mojom-blink.h"
+
+namespace blink {
+using ::payments::mojom::blink::BasicCardNetwork;
+using ::payments::mojom::blink::BasicCardType;
+
+class BasicCardHelper {
+ public:
+  // Parse 'basic-card' data in |input| and store result in
+  // |supported_networks_output| and |supported_types_output| or throw error
+  // through |exception_state|.
+  static void parseBasiccardData(
+      const ScriptValue& input,
+      Vector<BasicCardNetwork>& supported_networks_output,
+      Vector<BasicCardType>& supported_types_output,
+      ExceptionState& exception_state);
+
+  // Check whether |input| contains 'basic-card' network names.
+  static bool containsNetworkNames(const Vector<String>& input);
+};
+
+}  // namespace blink
+
+#endif

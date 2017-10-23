@@ -61,12 +61,6 @@ class MODULES_EXPORT PaymentInstruments final
   void onClearPaymentInstruments(ScriptPromiseResolver*,
                                  payments::mojom::blink::PaymentHandlerStatus);
 
-  void parseBasiccardCapabilities(
-      const ScriptValue& input,
-      Vector<BasicCardNetwork>& supported_networks_output,
-      Vector<BasicCardType>& supported_types_output,
-      ExceptionState&);
-
   const payments::mojom::blink::PaymentManagerPtr& manager_;
 };
 
