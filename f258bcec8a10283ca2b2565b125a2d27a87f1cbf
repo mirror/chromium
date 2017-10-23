@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "0d6de7ae_da954dd3",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-23T13:36:13Z",
+      "side": 1,
+      "message": "if you want the macro to get exact counts, you can use the EXACT_LINEAR macro",
+      "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "307f2ab7_41d4426c",
         "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
         "patchSetId": 3
@@ -64,6 +81,23 @@
       "writtenOn": "2017-10-20T22:39:53Z",
       "side": 1,
       "message": "Do we need to log here?\n\nI thought we want to record how many times we have retried for NO_BUFFER_SPACE by the time we conclude the write fails or the retry succeeds (@line 178) \n\nYou might end up record twice if logged here and then on line 178.",
+      "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1171af_b2a6304d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 43719,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-23T13:36:13Z",
+      "side": 1,
+      "message": "unit? probably \"retries\"",
       "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
