@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "5834db71_c276c9a6",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-23T18:56:39Z",
+      "side": 1,
+      "message": "What\u0027s the reason that this code is in SetUp(), whereas the SafeBrowsingBlockingPageBrowserTest() code is in the constructor?  Could this be in the constructor as well?",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 337,
+        "endChar": 34
+      },
+      "revId": "829cd037f13514a40491465d03e5795e4c1ea47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837f6393_a51ebbc0",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-23T18:56:39Z",
+      "side": 1,
+      "message": "nit: Can probably omit this blank line.",
+      "revId": "829cd037f13514a40491465d03e5795e4c1ea47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878c028b_c58ba509",
+        "filename": "content/browser/download/download_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-23T18:56:39Z",
+      "side": 1,
+      "message": "Is this comment still relevant?",
+      "range": {
+        "startLine": 882,
+        "startChar": 0,
+        "endLine": 883,
+        "endChar": 31
+      },
+      "revId": "829cd037f13514a40491465d03e5795e4c1ea47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76459b7a_81c3ec5f",
         "filename": "content/browser/loader/resource_scheduler_browsertest.cc",
         "patchSetId": 9
@@ -18,6 +81,99 @@
         "startChar": 9,
         "endLine": 37,
         "endChar": 44
+      },
+      "revId": "829cd037f13514a40491465d03e5795e4c1ea47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d01d0575_7b1854e3",
+        "filename": "content/browser/loader/resource_scheduler_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-23T18:56:39Z",
+      "side": 1,
+      "message": "I wouldn\u0027t be surprised if there were some dead code left over in the tests.  Sounds like a good question to raise with the test owners \u003d)",
+      "parentUuid": "76459b7a_81c3ec5f",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "829cd037f13514a40491465d03e5795e4c1ea47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fdef11_7c55f7e0",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-23T18:56:39Z",
+      "side": 1,
+      "message": "This comment suggests that the list will be recreated for browser-test, but the code below only runs for when browser-test is absent.  Is either the comment or the code reversed?",
+      "range": {
+        "startLine": 262,
+        "startChar": 55,
+        "endLine": 263,
+        "endChar": 26
+      },
+      "revId": "829cd037f13514a40491465d03e5795e4c1ea47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0b4258_f2b84f4c",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-23T18:56:39Z",
+      "side": 1,
+      "message": "I\u0027m not finding \"content-browser-test\" as an existing string in the codebase.  Could you please rephrase this to be clearer as to what you\u0027re referencing?",
+      "range": {
+        "startLine": 263,
+        "startChar": 5,
+        "endLine": 263,
+        "endChar": 25
+      },
+      "revId": "829cd037f13514a40491465d03e5795e4c1ea47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "602df43c_efb4cfda",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-23T18:56:39Z",
+      "side": 1,
+      "message": "nit: switches::kContentBrowserTest, from content/shell/common/shell_switches.h",
+      "range": {
+        "startLine": 265,
+        "startChar": 31,
+        "endLine": 265,
+        "endChar": 45
       },
       "revId": "829cd037f13514a40491465d03e5795e4c1ea47c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
