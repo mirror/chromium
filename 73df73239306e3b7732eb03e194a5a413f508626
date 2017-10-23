@@ -22,6 +22,30 @@
       "revId": "73df73239306e3b7732eb03e194a5a413f508626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eeb60e2_39daa6a0",
+        "filename": "components/policy/resources/policy_templates.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-23T18:35:45Z",
+      "side": 1,
+      "message": "To evaluate the re-translation impact, I\u0027ve run:\n\npython tools/grit/grit.py -i ${PWD}/components/policy/resources/policy_templates.grd xmb ~/tmp/grit/without_cl.xmb\ngit cl patch 707101\n${PWD}/components/policy/resources/policy_templates.grd xmb ~/tmp/grit/with_cl.xmb\n\ndiff ~/tmp/grit/without_cl.xmb ~/tmp/grit/with_cl.xmb \u003e xmb.diff\n\nThis is the result:\nhttps://pastebin.com/e961Ubj8\n\nSummary: two string will have to be retranslated:\n(1) Old: \"Caption of the option named Wipe in policy EcryptfsMigrationStrategy\" id\u003d\"6428409125619433741\n    New: \"Caption of the option named Wipe in policy EcryptfsMigrationStrategy\" id\u003d\"8274603902181597201\"\n    Reason: Encoding of \u0027 character in message fixed.\n(2) Old: \"Caption of the option named Migrate in policy EcryptfsMigrationStrategy\" id\u003d\"5466152574624858469\"\n    New: \"Caption of the option named Migrate in policy EcryptfsMigrationStrategy\" id\u003d\"487460824085252184\"\n    Reason: Encoding of \u0027 character in message fixed.\n\nThe other changes are within \u003cph\u003e\u003c/ph\u003e tags and don\u0027t lead to changes in message ids.",
+      "parentUuid": "f265331e_6ff18847",
+      "range": {
+        "startLine": 123,
+        "startChar": 108,
+        "endLine": 123,
+        "endChar": 125
+      },
+      "revId": "73df73239306e3b7732eb03e194a5a413f508626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
