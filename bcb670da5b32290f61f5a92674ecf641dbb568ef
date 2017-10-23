@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b41d5930_ce04ad67",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-23T22:30:28Z",
+      "side": 1,
+      "message": "The NewScope() method doesn\u0027t work because we still need the copy constructor when assigning the result to a local variable.\n\nAdded a standalone AdjustPaintOffsetScope class.",
+      "parentUuid": "a51ba262_16f5e08d",
+      "revId": "bcb670da5b32290f61f5a92674ecf641dbb568ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aafbff8b_ac820442",
         "filename": "third_party/WebKit/Source/core/paint/TableSectionPainter.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T19:56:29Z",
       "side": 1,
       "message": "Why is it not adjusted_paint_offset? It seems to change behavior to omit layout_table_section_.Location(), is it fixing a bug?",
+      "revId": "bcb670da5b32290f61f5a92674ecf641dbb568ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ba01cf_686a5c47",
+        "filename": "third_party/WebKit/Source/core/paint/TableSectionPainter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-23T22:30:28Z",
+      "side": 1,
+      "message": "The change itself is a bug. Reverted to adjusted_paint_offset. Will add a test for this code.",
+      "parentUuid": "aafbff8b_ac820442",
       "revId": "bcb670da5b32290f61f5a92674ecf641dbb568ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
