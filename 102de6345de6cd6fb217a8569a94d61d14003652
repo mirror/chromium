@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7aa8faa_72bd3b5f",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-23T13:52:37Z",
+      "side": 1,
+      "message": "We\u0027re passing non-thread-safe ref-counted object across threads with Unretained, which is a bit unusual, can we have a short comment about how it\u0027s going to be fine here?",
+      "revId": "102de6345de6cd6fb217a8569a94d61d14003652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e3702c_da01ad79",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-23T13:52:37Z",
+      "side": 1,
+      "message": "nit: kNormal, kFoo for new enums\n\nLifeState -\u003e Lifecycle or LifecycleState?\n\nPlease add some documentation about each. Attach/Detach and Bound/Unbound concept is probably not too clear.\n\nNormal is not too informative, Attached maybe?",
+      "revId": "102de6345de6cd6fb217a8569a94d61d14003652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41fc86b_273ff238",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-23T13:52:37Z",
+      "side": 1,
+      "message": "nit: . -\u003e ,",
+      "revId": "102de6345de6cd6fb217a8569a94d61d14003652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
