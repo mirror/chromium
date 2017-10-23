@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12cff310_2cb3b558",
+        "filename": "chrome/browser/resources/interventions_internals/error_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T18:09:34Z",
+      "side": 1,
+      "message": "rename file to unsupported_page.html",
+      "revId": "3feea64db93e3d3dbdd2c5904c2efb04080c4743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea3e5da_fefb662b",
+        "filename": "chrome/browser/resources/interventions_internals/error_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T18:09:34Z",
+      "side": 1,
+      "message": "You probably just need one div \"unsupported message\", that contains the single message.",
+      "revId": "3feea64db93e3d3dbdd2c5904c2efb04080c4743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb291ff4_524d47fd",
+        "filename": "chrome/browser/resources/interventions_internals/error_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T18:09:34Z",
+      "side": 1,
+      "message": "You don\u0027t need to have it say not supported twice, I\u0027d remove this.",
+      "revId": "3feea64db93e3d3dbdd2c5904c2efb04080c4743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5307369_d79ca2d3",
+        "filename": "chrome/browser/resources/interventions_internals/error_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T18:09:34Z",
+      "side": 1,
+      "message": "You probably just need one message \"Interventions internals is not supported in Guest mode or Incognito mode.",
+      "revId": "3feea64db93e3d3dbdd2c5904c2efb04080c4743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43667f3f_4f9cb817",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T18:09:34Z",
+      "side": 1,
+      "message": "unsupoorted instead or error here.",
+      "range": {
+        "startLine": 33,
+        "startChar": 26,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "3feea64db93e3d3dbdd2c5904c2efb04080c4743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f1b6ad_b75573af",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T18:09:34Z",
+      "side": 1,
+      "message": "Also incognito.",
+      "revId": "3feea64db93e3d3dbdd2c5904c2efb04080c4743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
