@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "83682502_6e27efbc",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-23T11:01:34Z",
+      "side": 1,
+      "message": "This confused me for a bit but then realized it was just a naming thing.\nI think this function would  be clearer if this argument here is called |node| and the one below on line 229 was called |child| (instead of |node|).\nWhen I saw |parent| as input argument I though you were doing some weird thing like passing the up-pointer to the parent when calling recursively, which is not the case.",
+      "range": {
+        "startLine": 226,
+        "startChar": 54,
+        "endLine": 226,
+        "endChar": 60
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "025a26ac_5ae33b23",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 6
@@ -65,6 +88,121 @@
     },
     {
       "key": {
+        "uuid": "8ac6b7d6_46050a6a",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-23T11:01:34Z",
+      "side": 1,
+      "message": "just |child_it| or |child_iter|",
+      "range": {
+        "startLine": 227,
+        "startChar": 12,
+        "endLine": 227,
+        "endChar": 27
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf9f28f_568b9b61",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-23T11:01:34Z",
+      "side": 1,
+      "message": "and this |child|",
+      "range": {
+        "startLine": 229,
+        "startChar": 10,
+        "endLine": 229,
+        "endChar": 14
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d6347b_73bbc45c",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-23T11:01:34Z",
+      "side": 1,
+      "message": "Fix this commen, there is a dead sentence in the parenthesis that continue on the next line.",
+      "range": {
+        "startLine": 230,
+        "startChar": 58,
+        "endLine": 230,
+        "endChar": 66
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e97c5f_a7bfc922",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-23T11:01:34Z",
+      "side": 1,
+      "message": "Does this really do it?\nI mean, I don\u0027t see anything that recursively descends in the weak child node in this case.",
+      "range": {
+        "startLine": 231,
+        "startChar": 7,
+        "endLine": 231,
+        "endChar": 23
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7a29e0_823152c5",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-23T11:01:34Z",
+      "side": 1,
+      "message": "Well a dcheck doesn\u0027t really \"ensure\". I\u0027d say here:\n// We should never be in a situation where ....",
+      "range": {
+        "startLine": 238,
+        "startChar": 7,
+        "endLine": 238,
+        "endChar": 31
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bfc3d1c_a10cff16",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 6
@@ -81,6 +219,29 @@
         "startChar": 4,
         "endLine": 247,
         "endChar": 9
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37d4293_ea9dc038",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-23T11:01:34Z",
+      "side": 1,
+      "message": "comment not necessary if this is called child_it(er), as  ++child_it(er) will be self-documenting.",
+      "range": {
+        "startLine": 253,
+        "startChar": 4,
+        "endLine": 253,
+        "endChar": 28
       },
       "revId": "a754024baca6f6376293641655c74226a8f7f857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
