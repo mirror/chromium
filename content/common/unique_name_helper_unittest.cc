@@ -49,6 +49,7 @@ class TestFrameAdapter : public UniqueNameHelper::FrameAdapter {
   }
 
   bool IsMainFrame() const override { return !parent_; }
+  bool IsDynamicFrame() const override { return false; }
 
   bool IsCandidateUnique(base::StringPiece name) const override {
     auto* top = this;
