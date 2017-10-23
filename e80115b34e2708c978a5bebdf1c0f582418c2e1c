@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "33db54af_36bc2faa",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-23T23:56:11Z",
+      "side": 1,
+      "message": "\u003e \"Simple\" does not convey either of those ideas to me.\n\nAgain, I\u0027m up for calling it something besides \"simple\". Those two aspects are salient and we can build on them since you dislike \"simple\". We could call it BROWSER, as in browser vs content. I\u0027m open to other suggestions that give a hint as to the kind of notification.\n\n\u003e \n\u003e The notification *is* more short-lived than other notifications -- these ones are closed on profile shutdown, the other ones persist beyond it. They\u0027re ephemeral (or transient?) in comparison to that.\n\n\"ephemeral\" just doesn\u0027t suggest to me \"goes away on profile shutdown\". It sounds like something that can disappear at any time.\n\n\u003e \n\u003e Is your concern for DisplayEphemeralNotification purely aesthetical?\n\nI\u0027m not sure what you mean by aesthetic in this case. It is not self-documenting.  It is not analogous to the other names in this list, because \"persistent\", \"non persistent\", \"extension\", etc., do not describe what happens when a profile shuts down (and compare \"ephemeral\" to \"non persistent\" --- it would be a real head scratcher to have to guess what the difference there is). Ultimately, if I read \"DisplayEphemeralNotification\" I have somewhere between no idea and a wrong idea of what that will do if I don\u0027t already know exactly why it\u0027s called ephemeral.",
+      "parentUuid": "363c2536_edb9fcf3",
+      "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "211b149a_44b93f3a",
         "filename": "chrome/browser/notifications/notification_display_service.cc",
         "patchSetId": 4
