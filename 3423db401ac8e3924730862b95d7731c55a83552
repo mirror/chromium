@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dfcd856_dba2ed0e",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T08:05:11Z",
+      "side": 1,
+      "message": "why doesn\u0027t this cause a problem too?",
+      "revId": "3423db401ac8e3924730862b95d7731c55a83552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ae3a89_43974e29",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T08:05:11Z",
+      "side": 1,
+      "message": "usually this also needs to be paired with OnWidgetDestroying ... there\u0027s typically no guarantee that OnWidgetClosing is invoked -- it\u0027s only triggered by calls to Widget::Close() but any request to close a window coming from the system will not do that.\n\nCan you add an override of OnWidgetDestroying(), then trace with the repro to see if that\u0027s happening?",
+      "revId": "3423db401ac8e3924730862b95d7731c55a83552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
