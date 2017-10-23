@@ -90,16 +90,18 @@ int FindNextWordFromIndex(const UChar* chars,
   }
 }
 
-void FindWordBoundary(const UChar* chars,
-                      int len,
-                      int position,
-                      int* start,
-                      int* end) {
+std::pair<int, int> FindWordBoundary(const UChar* chars,
+                                     int len,
+                                     int position) {
   TextBreakIterator* it = WordBreakIterator(chars, len);
-  *end = it->following(position);
-  if (*end < 0)
-    *end = it->last();
-  *start = it->previous();
+  const int end = it->following(position);
+  return {it->previous(), end >= 0 ? end : it->last()};
+}
+
+int FindWordStartBoundary(const UChar* chars, int len, int position) {
+  TextBreakIterator* it = WordBreakIterator(chars, len);
+  it->following(position);
+  return it->previous();
 }
 
 int FindWordEndBoundary(const UChar* chars, int len, int position) {
