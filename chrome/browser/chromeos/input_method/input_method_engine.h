@@ -11,6 +11,8 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "base/lazy_instance.h"
+#include "base/observer_list.h"
 #include "base/time/time.h"
 #include "chrome/browser/ui/input_method/input_method_engine_base.h"
 #include "ui/base/ime/chromeos/input_method_descriptor.h"
@@ -37,6 +39,25 @@ namespace chromeos {
 
 class InputMethodEngine : public ::input_method::InputMethodEngineBase {
  public:
+  class Observer {
+   public:
+    virtual void OnCandidateWindowVisibilityChanged(bool visible) = 0;
+
+   protected:
+    virtual ~Observer() {}
+
+   private:
+    DISALLOW_ASSIGN(Observer);
+  };
+
+  static void AddObserver(Observer* observer) {
+    observer_list_.Get().AddObserver(observer);
+  }
+
+  static void RemoveObserver(Observer* observer) {
+    observer_list_.Get().RemoveObserver(observer);
+  }
+
   enum {
     MENU_ITEM_MODIFIED_LABEL = 0x0001,
     MENU_ITEM_MODIFIED_STYLE = 0x0002,
@@ -122,6 +143,9 @@ class InputMethodEngine : public ::input_method::InputMethodEngineBase {
       const std::vector<input_method::InputMethodManager::MenuItem>& items);
 
  private:
+  // Notify observers that the candidate window visibility has changed.
+  void NotifyObservers(bool visible);
+
   // Converts MenuItem to InputMethodMenuItem.
   void MenuItemToProperty(
       const input_method::InputMethodManager::MenuItem& item,
@@ -138,6 +162,7 @@ class InputMethodEngine : public ::input_method::InputMethodEngineBase {
                                 const std::string& text) override;
   bool SendKeyEvent(ui::KeyEvent* event, const std::string& code) override;
 
+  static base::LazyInstance<base::ObserverList<Observer>>::Leaky observer_list_;
   // The current candidate window.
   std::unique_ptr<ui::CandidateWindow> candidate_window_;
 

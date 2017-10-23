@@ -19,6 +19,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/ime/chromeos/extension_ime_util.h"
 #include "ui/base/ime/chromeos/mock_component_extension_ime_manager_delegate.h"
+#include "ui/base/ime/chromeos/mock_ime_candidate_window_handler.h"
 #include "ui/base/ime/ime_bridge.h"
 #include "ui/base/ime/ime_engine_handler_interface.h"
 #include "ui/base/ime/mock_ime_input_context_handler.h"
@@ -148,7 +149,11 @@ class InputMethodEngineTest : public testing::Test {
     mock_ime_input_context_handler_.reset(new ui::MockIMEInputContextHandler());
     ui::IMEBridge::Get()->SetInputContextHandler(
         mock_ime_input_context_handler_.get());
+
+    mock_ime_candidate_window_visibility_handler_.reset(
+        new chromeos::MockIMECandidateWindowHandler());
   }
+
   ~InputMethodEngineTest() override {
     ui::IMEBridge::Get()->SetInputContextHandler(NULL);
     engine_.reset();
@@ -182,6 +187,8 @@ class InputMethodEngineTest : public testing::Test {
 
   std::unique_ptr<ui::MockIMEInputContextHandler>
       mock_ime_input_context_handler_;
+  std::unique_ptr<chromeos::MockIMECandidateWindowHandler>
+      mock_ime_candidate_window_visibility_handler_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(InputMethodEngineTest);

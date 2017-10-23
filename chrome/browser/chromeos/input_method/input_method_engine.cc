@@ -53,6 +53,10 @@ const int kDefaultPageSize = 9;
 
 }  // namespace
 
+// static
+base::LazyInstance<base::ObserverList<InputMethodEngine::Observer>>::Leaky
+    InputMethodEngine::observer_list_ = LAZY_INSTANCE_INITIALIZER;
+
 InputMethodEngine::Candidate::Candidate() {}
 
 InputMethodEngine::Candidate::Candidate(const Candidate& other) = default;
@@ -104,6 +108,10 @@ void InputMethodEngine::SetCandidateWindowProperty(
       cw_handler->UpdateLookupTable(*candidate_window_, window_visible_);
   }
 }
+void InputMethodEngine::NotifyObservers(bool visible) {
+  for (auto& observer : observer_list_.Get())
+    observer.OnCandidateWindowVisibilityChanged(visible);
+}
 
 bool InputMethodEngine::SetCandidateWindowVisible(bool visible,
                                                   std::string* error) {
@@ -111,6 +119,9 @@ bool InputMethodEngine::SetCandidateWindowVisible(bool visible,
     *error = kErrorNotActive;
     return false;
   }
+
+  if (window_visible_ != visible)
+    NotifyObservers(visible);
 
   window_visible_ = visible;
   IMECandidateWindowHandlerInterface* cw_handler =
