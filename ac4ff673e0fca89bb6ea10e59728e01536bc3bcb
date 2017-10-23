@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2abd263d_6c36cef7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-23T16:40:17Z",
+      "side": 1,
+      "message": "I think the !isTablet() check probably belongs here",
+      "range": {
+        "startLine": 415,
+        "startChar": 12,
+        "endLine": 415,
+        "endChar": 77
+      },
+      "revId": "ac4ff673e0fca89bb6ea10e59728e01536bc3bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
