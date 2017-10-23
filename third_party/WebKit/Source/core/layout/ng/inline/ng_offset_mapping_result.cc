@@ -6,6 +6,7 @@
 
 #include "core/dom/Node.h"
 #include "core/dom/Text.h"
+#include "core/editing/Position.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 
 namespace blink {
@@ -179,6 +180,39 @@ Optional<UChar> NGOffsetMappingResult::GetCharacterBefore(
   if (text_content_offset == kNotFound || !text_content_offset)
     return {};
   return text_[text_content_offset - 1];
+}
+
+Position NGOffsetMappingResult::MapToPosition(unsigned offset) const {
+  // TODO(layout-dev): We should have a flag to indicate |units_| is ordered by
+  // by text content offset. For offset mapping for visual order, |units_|
+  // may be in random order due by BiDi reordering.
+  const NGOffsetMappingUnit* unit =
+      std::lower_bound(units_.begin(), units_.end(), offset,
+                       [](const NGOffsetMappingUnit& unit, unsigned offset) {
+                         return unit.TextContentStart() < offset;
+                       });
+  if (!unit || offset > unit->TextContentEnd()) {
+    // TODO(layout-dev): We can reach here when, for example, |offset| is in
+    // generated content BiDi control characters generated during
+    // |CollectInlines()|. In general, |units_| do not cover the entire text
+    // content range; A text content range is covered only when it's created
+    // from a text node or BR.
+    //
+    // Also, there an edge case where |offset| equals the length of text
+    // content.
+    NOTREACHED() << offset;
+    return {};
+  }
+  if (!unit->GetOwner().IsTextNode()) {
+    // TODO(layout-dev): Here, |GetOwner()| is BR. We should support IMG
+    // here to select IMG followed by word[1], e.g. ^abc<IMG><IMG>| instead
+    // of // ^abc|<IMG><IMG>
+    // [1] http://crbug.com/770152 Extend selection by word should consider
+    // IMG as part of word
+    return Position::BeforeNode(unit->GetOwner());
+  }
+  return Position(unit->GetOwner(),
+                  offset - unit->TextContentStart() + unit->DOMStart());
 }
 
 }  // namespace blink
