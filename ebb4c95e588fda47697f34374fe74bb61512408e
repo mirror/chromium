@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8717a172_32e0190f",
+        "filename": "chrome/browser/chromeos/settings/install_attributes.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-23T14:09:56Z",
+      "side": 1,
+      "message": "FYI/optional: How about\n\nSample state;\nif (result.has_value()) {\n  state \u003d (device_locked_ ? 1 : 0) |\n          (registration_mode_ \u003d\u003d DEVICE_MODE_ENTERPRISE ? 2 : 0) |\n          (!result-\u003eempty() ? 4 : 0);\n} else {\n  state \u003d 8;\n}",
+      "revId": "ebb4c95e588fda47697f34374fe74bb61512408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53aeb3c9_a553beed",
+        "filename": "chrome/browser/chromeos/settings/install_attributes.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-23T14:09:56Z",
+      "side": 1,
+      "message": "I guess, you\u0027d make sure result is *non* empty?",
+      "revId": "ebb4c95e588fda47697f34374fe74bb61512408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

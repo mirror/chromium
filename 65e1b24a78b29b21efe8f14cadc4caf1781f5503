@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d615185b_3a38810f",
+        "filename": "chrome/browser/chromeos/settings/install_attributes.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-23T14:09:56Z",
+      "side": 0,
+      "message": "Good catch. Thank you for fixing this!",
+      "revId": "65e1b24a78b29b21efe8f14cadc4caf1781f5503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
