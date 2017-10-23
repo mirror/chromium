@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bddd860_d87ab691",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-23T21:57:58Z",
+      "side": 1,
+      "message": "Can we manually test this once on desktop with Chrome command line switch --incognito (https://cs.chromium.org/chromium/src/chrome/common/chrome_switches.cc?rcl\u003d4f1b4f320a80f3d2a5ca1e820fe7bc1be1e149d0\u0026l\u003d453).\n\nJust want to make sure that this DCHECK is not triggered at the time of browser shutdown when Chrome is started in incognito mode, and no tab is created in regular mode.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 16
+      },
+      "revId": "3f204297d6cf57bedf246baaa4700a7617934475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
