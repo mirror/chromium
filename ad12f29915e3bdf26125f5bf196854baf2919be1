@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d5e4e66_b84a9fd4",
+        "filename": "tools/cygprofile/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T15:54:13Z",
+      "side": 1,
+      "message": "The instrumentation build is not meant to be used outside of an orderfile_generator.py like flow, so I would err on the side of not putting it in the build system, especially since other changes (such as disabling SELinux) have to be made outside of it.\n\nAlso, this would require a downstream change as well.\n\nwdyt?",
+      "parentUuid": "bec45102_d9694931",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "ad12f29915e3bdf26125f5bf196854baf2919be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80716352_2240233d",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 3
@@ -68,6 +92,30 @@
       "revId": "ad12f29915e3bdf26125f5bf196854baf2919be1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8633315f_177bb720",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T15:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f05a28e_bf0acae1",
+      "range": {
+        "startLine": 119,
+        "startChar": 19,
+        "endLine": 119,
+        "endChar": 54
+      },
+      "revId": "ad12f29915e3bdf26125f5bf196854baf2919be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
