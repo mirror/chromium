@@ -114,6 +114,10 @@ class BackgroundLoaderOffliner : public Offliner,
   void DeleteOfflinePageCallback(const SavePageRequest& request,
                                  DeletePageResult result);
 
+  // When we get fresh loading signals, pass them along to the snapshot
+  // controller.
+  void UpdateLoadingResourceProgress();
+
   // Testing method to examine resource stats.
   RequestStats* GetRequestStatsForTest() { return stats_; }
 
