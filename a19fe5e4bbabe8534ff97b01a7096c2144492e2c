@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa5a17f8_d81392ef",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-23T17:10:01Z",
+      "side": 1,
+      "message": "This seems like an abuse of the ScopedNestableTaskAllower, especially if this is the first loop of the stack.\n\nMaybe we should just get rid of all notion of nestability?\n\nTwo options:\n1) Add a TODO to resolve this later with (2)\n2) Remove nesting (at face value, it seems like this is an expensive change).",
+      "range": {
+        "startLine": 339,
+        "startChar": 4,
+        "endLine": 340,
+        "endChar": 21
+      },
+      "revId": "a19fe5e4bbabe8534ff97b01a7096c2144492e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15592ec3_84b2c036",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-23T17:10:01Z",
+      "side": 1,
+      "message": "This comment can be removed as it now no longer adds anything to the code.",
+      "range": {
+        "startLine": 430,
+        "startChar": 4,
+        "endLine": 430,
+        "endChar": 40
+      },
+      "revId": "a19fe5e4bbabe8534ff97b01a7096c2144492e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552582d6_9a780381",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-23T17:10:01Z",
+      "side": 1,
+      "message": "I think we can nix this part of the translation from the old code. This unintentional stuff is all implied at this point.",
+      "range": {
+        "startLine": 374,
+        "startChar": 18,
+        "endLine": 374,
+        "endChar": 45
+      },
+      "revId": "a19fe5e4bbabe8534ff97b01a7096c2144492e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978c2a96_8cb8b400",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-23T17:10:01Z",
+      "side": 1,
+      "message": "This seems unexpected. We request a runloop with kNestableTasksAllowed and then when we ask the MessageLoop, it says NestableTasks aren\u0027t allowed.\n\nWhat should a caller be checking?",
+      "range": {
+        "startLine": 1603,
+        "startChar": 22,
+        "endLine": 1609,
+        "endChar": 74
+      },
+      "revId": "a19fe5e4bbabe8534ff97b01a7096c2144492e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
