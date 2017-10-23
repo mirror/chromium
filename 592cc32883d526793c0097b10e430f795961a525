@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ec38f85a_52baf66e",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-23T08:36:23Z",
+      "side": 1,
+      "message": "I guess if we really want the \"proper\" focus outline, we\u0027ll have to split this into two elements, one for the gradient and one for the button. Not sure it\u0027s worth the trouble.",
+      "parentUuid": "1132f8fb_75f3a157",
+      "range": {
+        "startLine": 213,
+        "startChar": 29,
+        "endLine": 213,
+        "endChar": 0
+      },
+      "revId": "592cc32883d526793c0097b10e430f795961a525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54a3a81c_6a55aca0",
         "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
         "patchSetId": 5
