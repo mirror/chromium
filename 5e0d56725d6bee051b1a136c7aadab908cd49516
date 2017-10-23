@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9cdaefe2_a69e8e3f",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2302,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-23T14:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2e8ccce_b57bcb2c",
+      "range": {
+        "startLine": 2302,
+        "startChar": 14,
+        "endLine": 2302,
+        "endChar": 15
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "538c87f7_be5f5135",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e4a43f_f4652295",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3906,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-23T14:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "538c87f7_be5f5135",
+      "range": {
+        "startLine": 3906,
+        "startChar": 31,
+        "endLine": 3906,
+        "endChar": 43
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "486976ea_2340131e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3931,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-23T14:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a893a027_78835261",
+      "range": {
+        "startLine": 3931,
+        "startChar": 2,
+        "endLine": 3931,
+        "endChar": 21
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f2307b1_795dcbb5",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2a9f9e_822586cc",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3933,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-23T14:16:03Z",
+      "side": 1,
+      "message": "Good catch. Done.\n\nMy original thought was that since we want to compare load time to prerender, we should measure time for every time prerender is not used. But looks like BVC\u0027s |-loadURL| is used for loading bookmarks as well.",
+      "parentUuid": "6f2307b1_795dcbb5",
+      "range": {
+        "startLine": 3933,
+        "startChar": 9,
+        "endLine": 3933,
+        "endChar": 34
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "15e9aa80_fab8c92f",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-23T14:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69cc4527_91361f0e",
+      "range": {
+        "startLine": 10,
+        "startChar": 24,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d48b0c0_50b639ad",
         "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c13c75ee_c1d75cca",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-23T14:16:03Z",
+      "side": 1,
+      "message": "Sorry, old habit of include what you use. Done.",
+      "parentUuid": "4d48b0c0_50b639ad",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a90b60c_a5852712",
         "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b487339d_d8dcaabf",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-23T14:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a90b60c_a5852712",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 58
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
