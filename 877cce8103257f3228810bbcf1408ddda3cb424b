@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe3fe64e_68c692ef",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 2021,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-23T17:49:40Z",
+      "side": 1,
+      "message": "Could shorten a little: moved_network_transaction_to_writers_.",
+      "range": {
+        "startLine": 2021,
+        "startChar": 4,
+        "endLine": 2021,
+        "endChar": 47
+      },
+      "revId": "877cce8103257f3228810bbcf1408ddda3cb424b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10141917_788552fa",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 3065,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-23T17:49:40Z",
+      "side": 1,
+      "message": "A simple getter function with the same name as the member variable can be snake_case like this but this should really be UpperCase.\n\nIn terms of name bikeshedding, how about GetOwnedNetworkTransaction?",
+      "range": {
+        "startLine": 3065,
+        "startChar": 24,
+        "endLine": 3065,
+        "endChar": 62
+      },
+      "revId": "877cce8103257f3228810bbcf1408ddda3cb424b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
