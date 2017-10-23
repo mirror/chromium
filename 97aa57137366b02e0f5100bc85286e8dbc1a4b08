@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8ecf8a0_f5b50e37",
+        "filename": "cc/trees/proxy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-23T20:30:57Z",
+      "side": 1,
+      "message": "After writing this, I feel like its better to plumb this bool to UkmManager instead of overloading the meaning of TreePriority.",
+      "range": {
+        "startLine": 394,
+        "startChar": 2,
+        "endLine": 396,
+        "endChar": 69
+      },
+      "revId": "97aa57137366b02e0f5100bc85286e8dbc1a4b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
