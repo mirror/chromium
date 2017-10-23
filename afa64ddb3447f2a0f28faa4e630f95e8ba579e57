@@ -16,6 +16,24 @@
       "revId": "afa64ddb3447f2a0f28faa4e630f95e8ba579e57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897f60bc_964ac334",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-23T14:34:34Z",
+      "side": 1,
+      "message": "At line 895 I\u0027ve already added one Layout test file name that failed without |if (start \u003c\u003d end)| expression. Other tests weren\u0027t related to that.\nShould I do something else?\n\nUnfortunately, I never used ClusterFuzz before (AFAIK it is an internal thing for Googlers, isn\u0027t it?). Could you please explain in details, what should I do then?",
+      "parentUuid": "f9a387a9_ae8e4603",
+      "revId": "afa64ddb3447f2a0f28faa4e630f95e8ba579e57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
