@@ -77,7 +77,9 @@ void ContentFaviconDriver::SaveFaviconEvenIfInIncognito() {
 
 gfx::Image ContentFaviconDriver::GetFavicon() const {
   // Like GetTitle(), we also want to use the favicon for the last committed
-  // entry rather than a pending navigation entry.
+  // entry rather than a pending navigation entry. We only consider the pending
+  // navigation entry if it is the initial navigation of the tab and there is no
+  // last committed entry.
   const content::NavigationController& controller =
       web_contents()->GetController();
   content::NavigationEntry* entry = controller.GetTransientEntry();
@@ -87,6 +89,13 @@ gfx::Image ContentFaviconDriver::GetFavicon() const {
   entry = controller.GetLastCommittedEntry();
   if (entry)
     return entry->GetFavicon().image;
+
+  if (controller.IsInitialNavigation()) {
+    entry = web_contents()->GetController().GetPendingEntry();
+    if (entry)
+      return entry->GetFavicon().image;
+  }
+
   return gfx::Image();
 }
 
@@ -148,6 +157,8 @@ void ContentFaviconDriver::OnFaviconUpdated(
     const gfx::Image& image) {
   content::NavigationEntry* entry =
       web_contents()->GetController().GetLastCommittedEntry();
+  if (!entry)
+    entry = web_contents()->GetController().GetPendingEntry();
   DCHECK(entry && entry->GetURL() == page_url);
 
   if (notification_icon_type == FaviconDriverObserver::NON_TOUCH_16_DIP) {
