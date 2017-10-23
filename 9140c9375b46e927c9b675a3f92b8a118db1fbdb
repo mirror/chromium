@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c6708d8_38e5a628",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/CriteriaHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-23T16:56:06Z",
+      "side": 1,
+      "message": "Should we also document how you can use it with lambdas?",
+      "revId": "9140c9375b46e927c9b675a3f92b8a118db1fbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874adbfa_9ce02f09",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/CriteriaHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-23T16:56:06Z",
+      "side": 1,
+      "message": "For this and for pollInstrumentationThread(), should we allow users of lambdas also be able to specify an interval?",
+      "revId": "9140c9375b46e927c9b675a3f92b8a118db1fbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
