@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83e5d83c_6673b159",
+        "filename": "chrome/browser/resources/print_preview/data/document_info.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T23:02:51Z",
+      "side": 1,
+      "message": "Can we remove initialPageSize local variable and simply reference this.pageSize_ here?",
+      "revId": "e530fe853aff50797d1bd29b92ea579e2dd76764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f58dfb2_85aec187",
+        "filename": "chrome/browser/resources/print_preview/data/local_parsers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T23:02:51Z",
+      "side": 1,
+      "message": "Do we have to declare these functions with an assignment instead of a function expression? Looking at \u0027strict mode\u0027 docs, we should be able to simply do\n\nfunction parseDestination(type, printer) {...}\n\nSee docs at https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode (search for \"strict mode for functions\").",
+      "revId": "e530fe853aff50797d1bd29b92ea579e2dd76764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
