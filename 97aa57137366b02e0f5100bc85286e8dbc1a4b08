@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "671786ac_ed81b06b",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-10-23T23:56:13Z",
+      "side": 1,
+      "message": "Sounds reasonable, but perhaps leave a comment somewhere about how this might be out of sync in rare cases?",
+      "parentUuid": "b183c88d_23974d2a",
+      "revId": "97aa57137366b02e0f5100bc85286e8dbc1a4b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4e5024a_f7805d12",
         "filename": "cc/trees/single_thread_proxy.h",
         "patchSetId": 2
