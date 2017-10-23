@@ -3959,6 +3959,14 @@ bool WebContentsImpl::ShouldAllowRunningInsecureContent(
       web_contents, allowed_per_prefs, origin, resource_url);
 }
 
+bool WebContentsImpl::ShouldAllowHttpAuthPrompt(WebContents* web_contents,
+                                                bool allowed_per_prefs,
+                                                const url::Origin& origin,
+                                                const GURL& resource_url) {
+  return GetDelegate()->ShouldAllowHttpAuthPrompt(
+      web_contents, allowed_per_prefs, origin, resource_url);
+}
+
 #if defined(OS_ANDROID)
 base::android::ScopedJavaLocalRef<jobject>
 WebContentsImpl::GetJavaRenderFrameHostDelegate() {

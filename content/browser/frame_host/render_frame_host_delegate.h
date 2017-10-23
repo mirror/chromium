@@ -324,6 +324,10 @@ class CONTENT_EXPORT RenderFrameHostDelegate {
                                                  bool allowed_per_prefs,
                                                  const url::Origin& origin,
                                                  const GURL& resource_url);
+  virtual bool ShouldAllowHttpAuthPrompt(WebContents* web_contents,
+                                         bool allowed_per_prefs,
+                                         const url::Origin& origin,
+                                         const GURL& resource_url);
 
 #if defined(OS_ANDROID)
   virtual base::android::ScopedJavaLocalRef<jobject>

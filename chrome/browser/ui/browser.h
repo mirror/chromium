@@ -494,7 +494,10 @@ class Browser : public TabStripModelObserver,
                                          bool allowed_per_prefs,
                                          const url::Origin& origin,
                                          const GURL& resource_url) override;
-
+  bool ShouldAllowHttpAuthPrompt(content::WebContents* web_contents,
+                                 bool allowed_per_prefs,
+                                 const url::Origin& origin,
+                                 const GURL& resource_url) override;
   bool is_type_tabbed() const { return type_ == TYPE_TABBED; }
   bool is_type_popup() const { return type_ == TYPE_POPUP; }
 

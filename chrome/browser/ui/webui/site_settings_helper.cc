@@ -97,6 +97,7 @@ const ContentSettingsTypeNameEntry kContentSettingsTypeGroupNames[] = {
     {CONTENT_SETTINGS_TYPE_SOUND, nullptr},
     {CONTENT_SETTINGS_TYPE_CLIENT_HINTS, nullptr},
     {CONTENT_SETTINGS_TYPE_SENSORS, nullptr},
+    {CONTENT_SETTINGS_TYPE_HTTP_AUTH, nullptr},
 };
 static_assert(arraysize(kContentSettingsTypeGroupNames) ==
                   // ContentSettingsType starts at -1, so add 1 here.

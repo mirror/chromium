@@ -376,6 +376,7 @@ void ResourceLoader::OnAuthRequired(net::URLRequest* unused,
   DCHECK_EQ(request_.get(), unused);
 
   ResourceRequestInfoImpl* info = GetRequestInfo();
+  info->set_requires_login(true);
   if (info->do_not_prompt_for_login()) {
     request_->CancelAuth();
     return;

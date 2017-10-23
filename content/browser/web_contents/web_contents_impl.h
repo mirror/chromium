@@ -560,10 +560,15 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void DidRunInsecureContent(const GURL& security_origin,
                              const GURL& target_url) override;
   void PassiveInsecureContentFound(const GURL& resource_url) override;
-  bool ShouldAllowRunningInsecureContent(content::WebContents* web_contents,
+  bool ShouldAllowRunningInsecureContent(WebContents* web_contents,
                                          bool allowed_per_prefs,
                                          const url::Origin& origin,
                                          const GURL& resource_url) override;
+  bool ShouldAllowHttpAuthPrompt(WebContents* web_contents,
+                                 bool allowed_per_prefs,
+                                 const url::Origin& origin,
+                                 const GURL& resource_url) override;
+
 #if defined(OS_ANDROID)
   base::android::ScopedJavaLocalRef<jobject> GetJavaRenderFrameHostDelegate()
       override;
