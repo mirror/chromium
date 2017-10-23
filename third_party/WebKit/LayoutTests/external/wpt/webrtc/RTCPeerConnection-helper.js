@@ -445,3 +445,18 @@ class Resolver {
     this.reject = promiseReject;
   }
 }
+
+// Acts like |t.step_func()| but if the function is not invoked within |timeout|
+// milliseconds an assertion fails with |description|.
+function expectCalled(t, func, timeout = 1000, description = 'Expected func to be invoked, but timed out.') {
+  // Not using |t.step_timeout| because you can only have one of those per |t|
+  // and this should not affect other |t.step_timeout| calls. It should also be
+  // possible to run multiple |expectCalled| in parallel.
+  const timeoutHandle = step_timeout(t.step_func(() => {
+    assert_unreached(description);
+  }), timeout);
+  return t.step_func(function() {
+    clearTimeout(timeoutHandle);
+    return func.apply(null, arguments);
+  });
+}
