@@ -15,15 +15,14 @@
 #include "util/win/safe_terminate_process.h"
 
 #if defined(ARCH_CPU_X86)
+
 namespace crashpad {
 
-// This function is written in assembler source because it’s important for it
-// to not be inlined, for it to allocate a stack frame, and most critically,
-// for it to not trust esp on return from TerminateProcess().
-// __declspec(naked) conveniently prevents inlining and allows control of stack
-// layout.
-__declspec(naked)
-bool SafeTerminateProcess(HANDLE process, UINT exit_code) {
+// This function is written in assembler source because it’s important for it to
+// not be inlined, for it to allocate a stack frame, and most critically, for it
+// to not trust esp on return from TerminateProcess(). __declspec(naked)
+// conveniently prevents inlining and allows control of stack layout.
+__declspec(naked) bool SafeTerminateProcess(HANDLE process, UINT exit_code) {
   __asm {
     push ebp
     mov ebp, esp
@@ -48,4 +47,5 @@ bool SafeTerminateProcess(HANDLE process, UINT exit_code) {
 }
 
 }  // namespace crashpad
+
 #endif  // defined(ARCH_CPU_X86)
