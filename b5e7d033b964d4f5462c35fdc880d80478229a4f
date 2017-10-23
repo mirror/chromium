@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5082f65f_b023de04",
+        "filename": "third_party/WebKit/Source/devtools/scripts/migrate_test/test_summary.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T17:08:39Z",
+      "side": 1,
+      "message": "Can we have this aligned vertically, with \"\u003cjs\u003e/\u003ctotal\u003e\" format? It is hard to extract information currently :)",
+      "revId": "b5e7d033b964d4f5462c35fdc880d80478229a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
