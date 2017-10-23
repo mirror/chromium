@@ -40,6 +40,8 @@ PLATFORM_EXPORT int EndOfFirstWordBoundaryContext(const UChar* characters,
 PLATFORM_EXPORT int StartOfLastWordBoundaryContext(const UChar* characters,
                                                    int length);
 
+// |UChar*| should be in logical order string instead of visual order string,
+// since // |FindWordBoundary()| uses ICU working on logical order string.
 PLATFORM_EXPORT void FindWordBoundary(const UChar*,
                                       int len,
                                       int position,
