@@ -339,6 +339,24 @@
     },
     {
       "key": {
+        "uuid": "5e67f492_95c25791",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-23T19:49:31Z",
+      "side": 1,
+      "message": "Correction:\n2. *Zero* or more logSelectionModified() are called.\n3. *Zero* or more logSelectionAction() are called.",
+      "parentUuid": "0e4f11b7_18522a8b",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e98a23ca_48641d22",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 10
