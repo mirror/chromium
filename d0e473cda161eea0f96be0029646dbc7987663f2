@@ -22,6 +22,30 @@
       "revId": "d0e473cda161eea0f96be0029646dbc7987663f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25579ae0_b466e5b2",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-23T18:51:42Z",
+      "side": 1,
+      "message": "I\u0027ve only seen two, but changed to multiple based on the SO article :)",
+      "parentUuid": "e06b70a2_6047af2a",
+      "range": {
+        "startLine": 296,
+        "startChar": 14,
+        "endLine": 296,
+        "endChar": 17
+      },
+      "revId": "d0e473cda161eea0f96be0029646dbc7987663f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
