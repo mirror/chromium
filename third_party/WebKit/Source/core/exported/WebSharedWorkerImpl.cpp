@@ -306,15 +306,12 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
 
   ContentSecurityPolicy* content_security_policy =
       main_script_loader_->ReleaseContentSecurityPolicy();
-  WorkerThreadStartMode start_mode =
-      worker_inspector_proxy_->WorkerStartMode(document);
-  std::unique_ptr<WorkerSettings> worker_settings =
-      WTF::WrapUnique(new WorkerSettings(
-          shadow_page_->GetDocument()->GetFrame()->GetSettings()));
+  auto worker_settings = std::make_unique<WorkerSettings>(
+      shadow_page_->GetDocument()->GetFrame()->GetSettings());
   auto global_scope_creation_params =
       WTF::MakeUnique<GlobalScopeCreationParams>(
           url_, document->UserAgent(), main_script_loader_->SourceText(),
-          nullptr, start_mode,
+          nullptr,
           content_security_policy ? content_security_policy->Headers().get()
                                   : nullptr,
           main_script_loader_->GetReferrerPolicy(), starter_origin,
@@ -342,7 +339,9 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
       WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow;
 
   GetWorkerThread()->Start(std::move(global_scope_creation_params),
-                           thread_startup_data, task_runners);
+                           thread_startup_data,
+                           worker_inspector_proxy_->ShouldPauseOnWorkerStart(),
+                           task_runners);
   worker_inspector_proxy_->WorkerThreadCreated(document, GetWorkerThread(),
                                                url_);
   client_->WorkerScriptLoaded();

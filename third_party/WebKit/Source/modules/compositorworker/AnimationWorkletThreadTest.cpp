@@ -15,6 +15,7 @@
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "core/workers/WorkerBackingThread.h"
+#include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "platform/CrossThreadFunctional.h"
@@ -84,12 +85,14 @@ class AnimationWorkletThreadTest : public ::testing::Test {
     std::unique_ptr<AnimationWorkletThread> thread =
         AnimationWorkletThread::Create(nullptr, *reporting_proxy_);
 
-    thread->Start(WTF::MakeUnique<GlobalScopeCreationParams>(
+    thread->Start(std::make_unique<GlobalScopeCreationParams>(
                       KURL("http://fake.url/"), "fake user agent", "", nullptr,
-                      kDontPauseWorkerGlobalScopeOnStart, nullptr, "",
-                      security_origin_.get(), clients, kWebAddressSpaceLocal,
+                      nullptr, "", security_origin_.get(), clients,
+                      kWebAddressSpaceLocal,
                       nullptr, nullptr, kV8CacheOptionsDefault),
-                  WTF::nullopt, ParentFrameTaskRunners::Create());
+                  WTF::nullopt,
+                  WorkerInspectorProxy::PauseOnWorkerStart::kDontPause
+                  ParentFrameTaskRunners::Create());
     return thread;
   }
 

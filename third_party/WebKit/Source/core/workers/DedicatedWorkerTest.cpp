@@ -131,14 +131,15 @@ class DedicatedWorkerMessagingProxyForTest
     InitializeWorkerThread(
         WTF::MakeUnique<GlobalScopeCreationParams>(
             script_url, "fake user agent", source,
-            nullptr /* cached_meta_data */, kDontPauseWorkerGlobalScopeOnStart,
-            headers.get(), "" /* referrer_policy */, security_origin_.get(),
+            nullptr /* cached_meta_data */, headers.get(),
+            "" /* referrer_policy */, security_origin_.get(),
             nullptr /* worker_clients */, kWebAddressSpaceLocal,
             nullptr /* origin_trial_tokens */, std::move(worker_settings),
             kV8CacheOptionsDefault),
         WorkerBackingThreadStartupData(
             WorkerBackingThreadStartupData::HeapLimitMode::kDefault,
             WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow),
+        WorkerInspectorProxy::PauseOnWorkerStart::kDontPause,
         script_url);
   }
 
