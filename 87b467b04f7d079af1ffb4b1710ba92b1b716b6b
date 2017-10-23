@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b3fbb68_8352af33",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-23T13:55:42Z",
+      "side": 1,
+      "message": "\u003e Has something changed in our static analysis tools here? Having even a public un-referenced member variable used to give errors (in findbugs I think), hence the reason the previous rule is a function not a variable.\n\nI added a suppression for that FindBugs warning for TestRule (which sadly only works for members declared with that exact type).\n\n\u003e If it has changed please change the previous rule to a variable.\n\nDone.",
+      "parentUuid": "f3d1569f_f1dd381f",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "87b467b04f7d079af1ffb4b1710ba92b1b716b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1ef971f_ae94fa80",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-23T13:19:27Z",
       "side": 1,
       "message": "Does this work reliably? Previously I sometimes had screenshots taken too soon (hence my very conservative waitForWindowUpdates()) but turning off animations might fix that. Unfortunately the only way to check this is to run it multiple times and look at the screen shots.",
+      "range": {
+        "startLine": 88,
+        "startChar": 53,
+        "endLine": 88,
+        "endChar": 68
+      },
+      "revId": "87b467b04f7d079af1ffb4b1710ba92b1b716b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f962d9d_44d8d22d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-23T13:55:42Z",
+      "side": 1,
+      "message": "It did work for me. I\u0027m aware that that\u0027s not a guarantee, but it also doesn\u0027t seem ideal to rely on timeouts either. :-/",
+      "parentUuid": "d1ef971f_ae94fa80",
       "range": {
         "startLine": 88,
         "startChar": 53,
