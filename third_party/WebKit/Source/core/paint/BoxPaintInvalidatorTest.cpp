@@ -189,6 +189,7 @@ TEST_P(BoxPaintInvalidatorTest, ComputePaintInvalidationReasonBasic) {
   target.setAttribute(HTMLNames::styleAttr, "background: blue");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
+  box.SetMayNeedPaintInvalidation();
   LayoutRect visual_rect = box.VisualRect();
   EXPECT_EQ(LayoutRect(0, 0, 50, 100), visual_rect);
 
@@ -259,6 +260,9 @@ TEST_P(BoxPaintInvalidatorTest, ComputePaintInvalidationReasonOtherCases) {
 
   target.setAttribute(HTMLNames::styleAttr, "-webkit-appearance: button");
   ExpectFullPaintInvalidationOnGeometryChange("With appearance");
+
+  target.setAttribute(HTMLNames::styleAttr, "clip-path: circle(50% at 0 50%)");
+  ExpectFullPaintInvalidationOnGeometryChange("With clip-path");
 }
 
 TEST_P(BoxPaintInvalidatorTest, IncrementalInvalidationExpand) {

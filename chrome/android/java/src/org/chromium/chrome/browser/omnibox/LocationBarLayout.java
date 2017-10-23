@@ -1040,13 +1040,13 @@ public class LocationBarLayout extends FrameLayout
             }
             // Moving focus away from UrlBar(EditText) to a non-editable focus holder, such as
             // ToolbarPhone, won't automatically hide keyboard app, but restart it with TYPE_NULL,
-            // which will result in a visual glitch. We apply this logic only to ChromeHome
-            // cautiously since hiding keyboard may lower FPS of other animation effects.
-            if (mBottomSheet != null) {
-                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(
-                        Context.INPUT_METHOD_SERVICE);
-                if (imm.isActive(mUrlBar)) imm.hideSoftInputFromWindow(getWindowToken(), 0, null);
-            }
+            // which will result in a visual glitch. Also, currently, we do not allow moving focus
+            // directly from omnibox to web content's form field. Therefore, we hide keyboard on
+            // focus blur indiscriminately here. Note that hiding keyboard may lower FPS of other
+            // animation effects, but we found it tolerable in an experiment.
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            if (imm.isActive(mUrlBar)) imm.hideSoftInputFromWindow(getWindowToken(), 0, null);
         }
 
         if (mToolbarDataProvider.isUsingBrandColor()) {
@@ -1346,7 +1346,7 @@ public class LocationBarLayout extends FrameLayout
         if (provider.isIncognito() || needLightIcon) {
             // For a dark theme color, use light icons.
             list = ApiCompatibilityUtils.getColorStateList(resources, R.color.light_mode_tint);
-        } else if (ColorUtils.isUsingDefaultToolbarColor(resources,
+        } else if (!ColorUtils.isUsingDefaultToolbarColor(resources,
                            FeatureUtilities.isChromeHomeEnabled(), provider.isIncognito(), color)
                 && !isOmniboxOpaque) {
             // For theme colors which are not dark and are also not

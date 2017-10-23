@@ -913,29 +913,6 @@ StyleRuleKeyframe* CSSParserImpl::ConsumeKeyframeStyleRule(
       CreateStylePropertySet(parsed_properties_, context_->Mode()));
 }
 
-static void ObserveSelectors(CSSParserObserverWrapper& wrapper,
-                             CSSParserTokenRange selectors) {
-  // This is easier than hooking into the CSSSelectorParser
-  selectors.ConsumeWhitespace();
-  CSSParserTokenRange original_range = selectors;
-  wrapper.Observer().StartRuleHeader(StyleRule::kStyle,
-                                     wrapper.StartOffset(original_range));
-
-  while (!selectors.AtEnd()) {
-    const CSSParserToken* selector_start = &selectors.Peek();
-    while (!selectors.AtEnd() && selectors.Peek().GetType() != kCommaToken)
-      selectors.ConsumeComponentValue();
-    CSSParserTokenRange selector =
-        selectors.MakeSubRange(selector_start, &selectors.Peek());
-    selectors.ConsumeIncludingWhitespace();
-
-    wrapper.Observer().ObserveSelector(wrapper.StartOffset(selector),
-                                       wrapper.EndOffset(selector));
-  }
-
-  wrapper.Observer().EndRuleHeader(wrapper.EndOffset(original_range));
-}
-
 StyleRule* CSSParserImpl::ConsumeStyleRule(
     CSSParserScopedTokenBuffer prelude_buffer,
     const RangeOffset& prelude_offset,
@@ -947,10 +924,8 @@ StyleRule* CSSParserImpl::ConsumeStyleRule(
     return nullptr;  // Parse error, invalid selector list
 
   // TODO(csharrison): How should we lazily parse css that needs the observer?
-  if (observer_wrapper_) {
-    ObserveSelectors(*observer_wrapper_, prelude);
-  } else if (lazy_state_) {
-    // TODO(shend): Don't lazily parse empty blocks.
+  if (!observer_wrapper_ && lazy_state_ &&
+      lazy_state_->ShouldLazilyParseProperties(selector_list)) {
     DCHECK(style_sheet_);
     return StyleRule::CreateLazy(
         std::move(selector_list),
