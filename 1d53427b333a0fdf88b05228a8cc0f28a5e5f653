@@ -33,6 +33,24 @@
       "revId": "1d53427b333a0fdf88b05228a8cc0f28a5e5f653",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d152bb58_04968f4f",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-23T20:10:12Z",
+      "side": 1,
+      "message": "Good thinking! That\u0027s true.\n\nOn the other hand, \"ended\" doesn\u0027t ever happen in the latest spec unless pc.close() is called. Supporting ended before close() might encourage people to rely on a state that is to go away for this scenario.\n\nBut then again, if we don\u0027t put the track into the \"ended\" state it never will reach it, because the pc will stop caring for the track, and not be in a position to end it at pc.close(), unless we keep a history of tracks.\n\nLet\u0027s chat offline.",
+      "parentUuid": "90aa0005_1b08ced2",
+      "revId": "1d53427b333a0fdf88b05228a8cc0f28a5e5f653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
