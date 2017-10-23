@@ -16,6 +16,24 @@
       "revId": "8c596719421cc1462e48b286aff6d1a6f4b784c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dda36b2_8bda9b7e",
+        "filename": "cc/base/simple_region.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-23T17:43:09Z",
+      "side": 1,
+      "message": "I can make this an inner class of DiscardableImageMap? Wasn\u0027t sure if this needed to be in cc/base anyway.\n\nI do think having a class to encapsulate this functionality instead of having the vector iteration logic sprinkled over multiple places is better. May be limited places use it right now but not long before that changes. If you feel the extra code is still not worth it, happy to go back to plain old Region too.",
+      "parentUuid": "404e7bfd_49ad4999",
+      "revId": "8c596719421cc1462e48b286aff6d1a6f4b784c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
