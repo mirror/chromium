@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "d9df7ae9_a3a44351",
+        "filename": "components/omnibox/browser/autocomplete_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T17:19:12Z",
+      "side": 1,
+      "message": "\u003e Thanks for the suggestions but I expected and encountered each of those limitations when I initially just turned it on without the flag. It turns out that these command-line flags just aren\u0027t processed on iOS. (The Finch configs are, obviously, just not --force-fieldtrial[s|-params].)\n\u003e \n\u003e Feature command-line invocations are, though, so I think what I need to do is add a Feature to control loading the provider on iOS instead. While I\u0027m at it, I propose removing OmniboxFieldTrial::InZeroSuggestFieldTrial() since it\u0027s always true on all other platforms and kZeroSuggestRule isn\u0027t being specified in any field trial configs. What do you think?\nsgtm",
+      "parentUuid": "f7e0426f_fdf9125e",
+      "revId": "25764f2bc9c6a2d8b985e026dcc49830f5b8ebe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f5c3a76_46b0ac90",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 1
