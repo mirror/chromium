@@ -141,9 +141,9 @@ const base::Feature kLazyParseCSS{"LazyParseCSS",
 const base::Feature kLoadingWithMojo {
   "LoadingWithMojo",
 #if defined(OS_ANDROID)
-      base::FEATURE_DISABLED_BY_DEFAULT
-#else
       base::FEATURE_ENABLED_BY_DEFAULT
+#else
+      base::FEATURE_DISABLED_BY_DEFAULT
 #endif
 };
 
