@@ -32,17 +32,4 @@ void CoordinationUnitTestHarness::TearDown() {
   base::RunLoop().RunUntilIdle();
 }
 
-TestCoordinationUnitWrapper CoordinationUnitTestHarness::CreateCoordinationUnit(
-    CoordinationUnitID cu_id) {
-  return TestCoordinationUnitWrapper(
-      CoordinationUnitBase::CreateCoordinationUnit(
-          cu_id, service_context_ref_factory()->CreateRef()));
-}
-
-TestCoordinationUnitWrapper CoordinationUnitTestHarness::CreateCoordinationUnit(
-    CoordinationUnitType type) {
-  CoordinationUnitID cu_id(type, std::string());
-  return CreateCoordinationUnit(cu_id);
-}
-
 }  // namespace resource_coordinator
