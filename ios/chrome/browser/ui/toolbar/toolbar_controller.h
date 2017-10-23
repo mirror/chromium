@@ -131,7 +131,11 @@ class ReadingListModel;
 // Update the view's layout to take into account the new safe area insets.
 - (void)safeAreaInsetsDidChange;
 
+// Returns the preferred toolbar height in the current orientation.
 - (CGFloat)preferredToolbarHeightWhenAlignedToTopOfScreen;
+
+// Returns the constraint controlling the height of the toolbar.
+- (NSLayoutConstraint*)heightConstraint;
 
 @end
 

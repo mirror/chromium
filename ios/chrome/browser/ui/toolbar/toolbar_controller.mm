@@ -85,6 +85,9 @@ using ios::material::TimingFunction;
 
   // The following is nil if not visible.
   ToolsPopupController* toolsPopupController_;
+
+  // The constraint controlling the height of the toolbar.
+  NSLayoutConstraint* toolbarHeightConstraint_;
 }
 
 // Returns the background image that should be used for |style|.
@@ -123,6 +126,14 @@ using ios::material::TimingFunction;
     frame.size.height += statusBarOffset;
   }
   return frame.size.height;
+}
+
+- (NSLayoutConstraint*)heightConstraint {
+  if (!toolbarHeightConstraint_) {
+    toolbarHeightConstraint_ =
+        [view_.heightAnchor constraintEqualToConstant:100];
+  }
+  return toolbarHeightConstraint_;
 }
 
 - (instancetype)initWithStyle:(ToolbarControllerStyle)style
