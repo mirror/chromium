@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71f45e19_300e6e35",
+        "filename": "chrome/browser/ui/cocoa/location_bar/find_bar_decoration.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-23T17:46:52Z",
+      "side": 1,
+      "message": "Leftovers from intermediate work. Removed.",
+      "parentUuid": "20e965d7_afc98bc6",
+      "revId": "c3e3bb0ccd0ce0f32d04a463bcb663caae179b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "590bba33_48c58e9a",
         "filename": "chrome/browser/ui/views/find_bar_host.cc",
         "patchSetId": 22
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "c0b3e665_39dc7df4",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-23T17:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "590bba33_48c58e9a",
+      "range": {
+        "startLine": 270,
+        "startChar": 17,
+        "endLine": 270,
+        "endChar": 44
+      },
+      "revId": "c3e3bb0ccd0ce0f32d04a463bcb663caae179b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d687f663_c57f5c5b",
         "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
         "patchSetId": 22
@@ -56,6 +98,24 @@
       "revId": "c3e3bb0ccd0ce0f32d04a463bcb663caae179b05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afb6e1a_1dbe0565",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-23T17:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d687f663_c57f5c5b",
+      "revId": "c3e3bb0ccd0ce0f32d04a463bcb663caae179b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
