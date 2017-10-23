@@ -100,6 +100,10 @@ PaymentRequestSpec::~PaymentRequestSpec() {}
 
 void PaymentRequestSpec::UpdateWith(mojom::PaymentDetailsPtr details) {
   details_ = std::move(details);
+  RecomputeSpecStateForDetails();
+}
+
+void PaymentRequestSpec::RecomputeSpecStateForDetails() {
   // We reparse the |details_| and update the observers.
   UpdateSelectedShippingOption(/*after_update=*/true);
   NotifyOnSpecUpdated();
