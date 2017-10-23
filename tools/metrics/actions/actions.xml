@@ -2940,6 +2940,11 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="BrowserActionsMenuOpened">
+  <owner>ltian@chromium.org</owner>
+  <description>Browser Actions menu is opened in Chrome.</description>
+</action>
+
 <action name="BrowserForSystemProfile">
   <owner>mlerman@chromium.org</owner>
   <description>
