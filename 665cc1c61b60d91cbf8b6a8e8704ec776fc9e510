@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "546619cc_fbb79047",
+        "filename": "components/viz/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-23T14:21:56Z",
+      "side": 1,
+      "message": "I\u0027ve reverted this and added a rule to components/viz/host/DEPS. Although, it seems desirable that any tests under components/viz/ could include components components/viz/test/? Or are there are tests that shouldn\u0027t include components/viz/test?",
+      "parentUuid": "e820f4d1_23214a52",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e5d8a62_628fa895",
         "filename": "components/viz/host/host_frame_sink_manager.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d02cfc3_3ed0c34f",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-23T14:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5d8a62_628fa895",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "42ea6451_9ba6b2a0",
+        "filename": "components/viz/host/host_frame_sink_manager_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-23T14:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f2af8fa_e966075b",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4673bec7_d73ae13d",
         "filename": "components/viz/host/host_frame_sink_manager_unittests.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7adcffeb_ac5be13a",
+        "filename": "components/viz/host/host_frame_sink_manager_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-23T14:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4673bec7_d73ae13d",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8aad964a_a03d030d",
+        "filename": "components/viz/host/host_frame_sink_manager_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-23T14:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a00c9bc_27f6bae9",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "590498ac_0051a790",
         "filename": "components/viz/test/mock_compositor_frame_sink_client.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f06d7a5_38f360da",
+        "filename": "components/viz/test/mock_compositor_frame_sink_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-23T14:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "590498ac_0051a790",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e46eed79_f26e58a7",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-23T14:21:56Z",
+      "side": 1,
+      "message": "Did\u0027t know that existed, done. Also, I copied this verbatim from GpuProcessTransportFactory? Should I change that as well?\n\nhttps://cs.chromium.org/chromium/src/content/browser/compositor/gpu_process_transport_factory.cc?dr\u003dCSs\u0026sq\u003dpackage:chromium\u0026l\u003d431",
+      "parentUuid": "d7ed9246_f2daf10a",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9321dd8_84ef3290",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03bcb253_23bdd81e",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-23T14:21:56Z",
+      "side": 1,
+      "message": "Oh no.. We could early out here but that will just start an infinite loop retrying to connect. I\u0027ll add a TODO to fix it because this isn\u0027t trivial.",
+      "parentUuid": "f9321dd8_84ef3290",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
