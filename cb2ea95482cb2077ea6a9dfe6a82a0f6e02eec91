@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd580ee3_4ab8bd35",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-23T21:52:03Z",
+      "side": 1,
+      "message": "Update the comment on this method in the header file.",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a64a80_4cead6bd",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-23T21:52:03Z",
+      "side": 1,
+      "message": "This looks safe and correct and in the right place to me but I\u0027m not 100% confident. Can you run it past mpearson?",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42d30f8_9c0240dc",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-23T21:52:03Z",
+      "side": 1,
+      "message": "Could we shorten this block a bit with something like the following?\n\n    bool is_tail(const AutocompleteMatch\u0026 match) {\n      return match.type \u003d\u003d AutocompleteMatchType::SEARCH_SUGGEST_TAIL;\n    };\n    if (is_tail(matches_[0]) || is_tail(matches_[1]) {\n      matches_.erase(std::remove_if(std::next(matches_.begin()), \n                                    matches_.end(),\n                                    std::not1(std::ptr_fun(is_tail))));\n                     matches_.end());\n    } else {\n      matches_.erase(std::remove_if(std::next(matches_.begin()), \n                                    matches_.end(),\n                                    std::ptr_fun(is_tail)),\n                     matches_.end());\n    }",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
