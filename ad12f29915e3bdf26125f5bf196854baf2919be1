@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bec45102_d9694931",
+        "filename": "tools/cygprofile/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-23T14:49:34Z",
+      "side": 1,
+      "message": "can we also add an orderfile containing dummy_function_to_anchor_text in this change or you want to put it in a regular orderfile? I\u0027d vote for simpler bootstrapping (which is \u003d\u003d special orderfile for instrumented builds), but I see how this can be harder in the build system .. not sure\n\nSuggesting to add the anchor mechanics here because it is a small change that would make the whole thing compilable and runnable .. unless I am missing something",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "ad12f29915e3bdf26125f5bf196854baf2919be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80716352_2240233d",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-23T14:49:34Z",
+      "side": 1,
+      "message": "unfortunately, according to my local testing, this is ignored by clang, sorry for the initial bad suggestion",
+      "range": {
+        "startLine": 20,
+        "startChar": 37,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "ad12f29915e3bdf26125f5bf196854baf2919be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f05a28e_bf0acae1",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-23T14:49:34Z",
+      "side": 1,
+      "message": "pardon my ignorance, why do we not check for another array boundary?",
+      "range": {
+        "startLine": 119,
+        "startChar": 19,
+        "endLine": 119,
+        "endChar": 54
+      },
+      "revId": "ad12f29915e3bdf26125f5bf196854baf2919be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
