@@ -7,8 +7,8 @@
 
 #include "ash/ash_export.h"
 #include "ash/public/cpp/voice_interaction_state.h"
-#include "ash/shell_observer.h"
 #include "ash/system/palette/common_palette_tool.h"
+#include "ash/voice_interaction/voice_interaction_observer.h"
 #include "base/memory/weak_ptr.h"
 #include "ui/events/event_handler.h"
 
@@ -21,7 +21,7 @@ namespace ash {
 // menu, but also by the stylus button click.
 class ASH_EXPORT MetalayerMode : public CommonPaletteTool,
                                  public ui::EventHandler,
-                                 public ShellObserver {
+                                 public VoiceInteractionObserver {
  public:
   explicit MetalayerMode(Delegate* delegate);
   ~MetalayerMode() override;
@@ -61,10 +61,10 @@ class ASH_EXPORT MetalayerMode : public CommonPaletteTool,
   // ui::EventHandler:
   void OnTouchEvent(ui::TouchEvent* event) override;
 
-  // ShellObserver:
+  // VoiceInteractionObserver:
   void OnVoiceInteractionStatusChanged(
       ash::VoiceInteractionState state) override;
-  void OnVoiceInteractionEnabled(bool enabled) override;
+  void OnVoiceInteractionSettingsEnabled(bool enabled) override;
   void OnVoiceInteractionContextEnabled(bool enabled) override;
 
   // Update the state of the tool based on the current availability of the tool.
