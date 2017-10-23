@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c1f94aa_92658969",
+        "filename": "android_webview/tools/cts_config/expected_failure_on_bot.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-10-23T13:10:18Z",
+      "side": 1,
+      "message": "probably best to point to crbug.com/777393 (which links to the crbug.com/412058)",
+      "revId": "213523c851c57c126e005cbf2de2be4a0f024e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
