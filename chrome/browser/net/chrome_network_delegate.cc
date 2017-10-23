@@ -25,6 +25,7 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/client_hints/client_hints.h"
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/custom_handlers/protocol_handler_registry.h"
@@ -215,6 +216,8 @@ int ChromeNetworkDelegate::OnBeforeURLRequest(
     net::URLRequest* request,
     const net::CompletionCallback& callback,
     GURL* new_url) {
+  client_hints::OnBeforeURLRequest(request, cookie_settings_);
+
   // TODO(joaodasilva): This prevents extensions from seeing URLs that are
   // blocked. However, an extension might redirect the request to another URL,
   // which is not blocked.
