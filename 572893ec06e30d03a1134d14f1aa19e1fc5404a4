@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce327028_3bce3753",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T18:26:21Z",
+      "side": 1,
+      "message": "Can you DCHECK logger_ before this? I want to make sure that this isn\u0027t called on the unsupported page.",
+      "revId": "572893ec06e30d03a1134d14f1aa19e1fc5404a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
