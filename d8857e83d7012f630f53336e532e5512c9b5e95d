@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "97980723_5a70cd1d",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-23T18:51:36Z",
+      "side": 1,
+      "message": "The casting goes nuts if I switch the type to actually be the enum type.\n\n../../chrome/browser/ui/cocoa/tabs/tab_controller.mm:345:32: error: assigning to \u0027AttentionType\u0027 from incompatible type \u0027int\u0027\n    self.currentAttentionTypes |\u003d AttentionType::kTabWantsAttentionStatus;\n         ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nWill still declare the underlying type of the enum.",
+      "parentUuid": "86d2789a_8516e72b",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 5
+      },
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2855835d_da4a2ddd",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-23T18:51:36Z",
+      "side": 1,
+      "message": "How do you remove the backing variable from a half-synthesized property pair? Do you assume the naming |_currentAttentionTypes|?",
+      "parentUuid": "2b9ad144_2d68e575",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d1e3c02_876d37c8",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a2c62d_ff96656b",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-23T18:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d1e3c02_876d37c8",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "3cefa4de_6aca90d5",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-23T18:51:36Z",
+      "side": 1,
+      "message": "Whaaaa. My mental model said that Mac64 moved to BOOL\u003d\u003dbool, but checking the headers seems to prove me wrong. Done.",
+      "parentUuid": "d3474964_7e5c82b3",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3428cd74_d71992e2",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 8
@@ -90,6 +168,24 @@
       "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39cb2677_dd678248",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-23T18:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3428cd74_d71992e2",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
