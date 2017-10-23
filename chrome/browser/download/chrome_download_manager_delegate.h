@@ -82,6 +82,7 @@ class ChromeDownloadManagerDelegate
       const base::FilePath::StringType& default_extension,
       bool can_save_as_complete,
       const content::SavePackagePathPickedCallback& callback) override;
+  active_downloads::InProgressMetadataCache* GetMetadataCache() override;
   void SanitizeSavePackageResourceName(base::FilePath* filename) override;
   void OpenDownload(content::DownloadItem* download) override;
   void ShowDownloadInShell(content::DownloadItem* download) override;
@@ -175,6 +176,9 @@ class ChromeDownloadManagerDelegate
                                               bool show_download_in_folder);
 
   Profile* profile_;
+
+  std::unique_ptr<active_downloads::InProgressMetadataCache>
+      download_metadata_cache_;
 
   // Incremented by one for each download, the first available download id is
   // assigned from history database or 1 when history database fails to

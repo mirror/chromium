@@ -238,6 +238,10 @@ class CONTENT_EXPORT DownloadUrlParameters {
     blob_data_handle_ = std::move(blob_data_handle);
   }
 
+  // For downloads originating from custom tabs, this records the origin
+  // of the custom tab.
+  void set_request_origin(const std::string& origin) {}
+
   const OnStartedCallback& callback() const { return callback_; }
   bool content_initiated() const { return content_initiated_; }
   const std::string& last_modified() const { return last_modified_; }
