@@ -32,6 +32,12 @@ source_set("result_codes") {
   ]
 }
 
+source_set("XXXXXresult_codes") {
+  sources = [
+    "result_codes.h",
+  ]
+}
+
 # This target allows other targets to depend on content_descriptors.h which is
 # a header-only dependency, without bringing in all of content.
 source_set("content_descriptors") {
