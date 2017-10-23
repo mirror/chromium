@@ -370,8 +370,7 @@ void ArcSessionImpl::OnMiniInstanceStarted(
 
   DCHECK(!container_instance_id.empty());
   container_instance_id_ = container_instance_id;
-  VLOG(2) << "ARC mini instance is successfully started: "
-          << container_instance_id_;
+  VLOG(2) << "ARC mini instance is successfully started.";
 
   if (stop_requested_) {
     // The ARC instance has started to run. Request to stop.
@@ -444,9 +443,7 @@ void ArcSessionImpl::OnFullInstanceStarted(
     DCHECK(!container_instance_id_.empty());
   } else {
     // This was a request to start a full instance from scratch.
-    container_instance_id_ = container_instance_id;
-    VLOG(2) << "ARC instance is successfully started: "
-            << container_instance_id_;
+    VLOG(2) << "ARC instance is successfully started.";
   }
 
   if (stop_requested_) {
