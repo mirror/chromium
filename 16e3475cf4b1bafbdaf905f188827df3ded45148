@@ -16,6 +16,24 @@
       "revId": "16e3475cf4b1bafbdaf905f188827df3ded45148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac1ed44_7db5fc45",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T06:08:15Z",
+      "side": 1,
+      "message": "Thanks, created a patch for it: crrev.com/c/732809",
+      "parentUuid": "ddedf21a_0edfff5e",
+      "revId": "16e3475cf4b1bafbdaf905f188827df3ded45148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
