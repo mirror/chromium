@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "7074faca_57d8e6ac",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrSession_prevent_multiple_exclusive.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-23T16:33:00Z",
+      "side": 1,
+      "message": "This will need to be changed to device when https://chromium-review.googlesource.com/c/chromium/src/+/729228 lands.",
+      "range": {
+        "startLine": 15,
+        "startChar": 42,
+        "endLine": 15,
+        "endChar": 49
+      },
+      "revId": "cfa83aa04c6f853ab17f24ac08ceecbe6d2c7e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b923c307_4af638d1",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-23T16:33:00Z",
+      "side": 1,
+      "message": "This will also need to be device",
+      "range": {
+        "startLine": 181,
+        "startChar": 35,
+        "endLine": 181,
+        "endChar": 42
+      },
+      "revId": "cfa83aa04c6f853ab17f24ac08ceecbe6d2c7e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94d91e36_d0ab7526",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
         "patchSetId": 7
