@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf4fd334_bd2e1e2e",
+        "filename": "base/android/android_hardware_buffer_abi.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Good question. I\u0027m not sure if it makes sense to separately add it to third_party since it\u0027s included in current NDKs, the current copy is just out of date. Should I file a bug for third_party/android_tools/ndk/ to be refreshed so that this can be removed? This could potentially work even without updating the NDK platform level thanks to the new SDK\u0027s unified headers where the file would be available as sysroot/usr/include/android/hardware_buffer.h\n\nAs far as I know updating the SDK is a somewhat tricky operation due to compatibility concerns even without changing the build level, so I\u0027d prefer to tackle this separately.",
+      "parentUuid": "ce15f26d_cc6ac297",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2060fe3_3cab8c47",
         "filename": "base/android/android_hardware_buffer_compat.cc",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "01b193a1_f89d217c",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Renamed, using g_ahardwarebuffer_support since ahardware_buffer looked strange.\n\nAs far as I know I need both - I don\u0027t trust SDK version \u003e\u003d OREO to be a sufficient condition, so I still would prefer to be prepared for the case that symbol loading fails.\n\nI\u0027ve replaced the pair of booleans with a tristate enum to make this a bit clearer, and to help avoid potential memory inconsistencies due to separate storage.",
+      "parentUuid": "b2060fe3_3cab8c47",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e922e34d_436d010e",
         "filename": "base/android/android_hardware_buffer_compat.cc",
         "patchSetId": 14
@@ -50,6 +86,24 @@
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f33c076_5883e285",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "You\u0027re right, I added a lazy initialized lock to protect the state updates.",
+      "parentUuid": "e922e34d_436d010e",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "d5a5712f_bd45c3a3",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2960e511_53bf4186",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2feee488_09f47f5f",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
         "patchSetId": 14
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "e35cf6aa_f913c33c",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2feee488_09f47f5f",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 52
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "929eb439_0b018903",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
         "patchSetId": 14
@@ -113,6 +215,24 @@
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5590d8_84ee000e",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Removed, it\u0027s something I\u0027d like to support at some point but this would need spec changes so that a WebGL drawing context can request a low-bit-depth canvas.",
+      "parentUuid": "929eb439_0b018903",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "8fc23a41_8b1e1c80",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "948f1963_f28f184f",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86be8713_a1cd6b41",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
         "patchSetId": 14
@@ -147,6 +285,24 @@
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f398aca9_d1553b90",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86be8713_a1cd6b41",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "e34bb23d_227626e4",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00f10250_528778b1",
+      "range": {
+        "startLine": 91,
+        "startChar": 19,
+        "endLine": 91,
+        "endChar": 22
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d8ab1e4_acc112a6",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
         "patchSetId": 14
@@ -193,6 +373,30 @@
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c8e700_4f64a9d3",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d8ab1e4_acc112a6",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 73
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "45e6c251_67771e9e",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beb61ba3_d642935e",
+      "range": {
+        "startLine": 160,
+        "startChar": 19,
+        "endLine": 160,
+        "endChar": 22
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b769397a_29d14b14",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h",
         "patchSetId": 14
@@ -242,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "bfd98e72_9712d4df",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b769397a_29d14b14",
+      "range": {
+        "startLine": 21,
+        "startChar": 48,
+        "endLine": 21,
+        "endChar": 71
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c7c12c_d50d1faa",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer_unittest.cc",
         "patchSetId": 14
@@ -256,6 +508,24 @@
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38791740_2b6dba87",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done, though this is not entirely pretty. The APIs don\u0027t quite match, SharedMemory\u0027s Create() method and constructor don\u0027t take a \"usage\" parameter. I\u0027ve added a SharedMemory-compatible Create to the AHardwareBuffer impl to share tests.",
+      "parentUuid": "37c7c12c_d50d1faa",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +546,24 @@
     },
     {
       "key": {
+        "uuid": "09f8f1b3_768ad779",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0482a7e6_a6c17d08",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e370a104_b338a3b8",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
         "patchSetId": 14
@@ -290,6 +578,24 @@
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10982a0_62c5287f",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e370a104_b338a3b8",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +622,30 @@
     },
     {
       "key": {
+        "uuid": "d25f5fdd_0d42d79d",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a00a825a_bbe1eb7b",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 10
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ede0db9_c66aec8d",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
         "patchSetId": 14
@@ -330,6 +660,24 @@
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3bcd447_35a72839",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Replaced with DCHECKs.",
+      "parentUuid": "9ede0db9_c66aec8d",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -356,6 +704,30 @@
     },
     {
       "key": {
+        "uuid": "ef01d142_f31865f0",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done. Out of curiosity, is there an automated tool to help do this?",
+      "parentUuid": "32485baa_e8fb20d3",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 54
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e744279_84fdb469",
         "filename": "ui/gl/gl_image_egl.h",
         "patchSetId": 14
@@ -367,6 +739,24 @@
       "writtenOn": "2017-10-22T22:57:08Z",
       "side": 1,
       "message": "Instead of this, please add a minimal GLImageAndroidHardwareBuffer class and appropriate GLImage unit tests. See unit tests for other GLImage impls.",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06096dae_a6e5c6d5",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "I\u0027ve created the new subclass, but I\u0027m still looking into setting up the unit test. For example, the test template needs a CreateSolidColorImage method which is easy for true shared memory, but a bit tricky here for a GPU-only image.\n\n(Leaving unresolved for now.)",
+      "parentUuid": "3e744279_84fdb469",
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

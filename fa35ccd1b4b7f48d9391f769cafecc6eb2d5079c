@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c277f496_55f5fc3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "I\u0027m adding this check as a requirement, but I don\u0027t think it\u0027s safe to treat this as a sufficient test for support being available. I think it\u0027s safer to continue handling the case where symbol loading may fail even on a \u003e\u003d Oreo system, to avoid potential crashes if this runs on a weird device that may not entirely follow CDD requirements.\n\nThe code already uses this for advertising support, gpu/ipc/common/gpu_memory_buffer_support.cc\u0027s IsNativeGpuMemoryBufferConfigurationSupported will return false if base::AndroidHardwareBufferCompat::IsSupportAvailable() is false.",
+      "parentUuid": "e226fba2_ab0a1576",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42c6787a_96f773e9",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
         "patchSetId": 13
@@ -392,6 +416,24 @@
       "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8c2991_e56cefb3",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-23T20:55:05Z",
+      "side": 1,
+      "message": "Done, and I added a comment that this class is intentionally abstract.",
+      "parentUuid": "9399e018_489be0c9",
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
