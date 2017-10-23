@@ -104,6 +104,7 @@ TaskGroup::TaskGroup(
 #if BUILDFLAG(ENABLE_NACL)
       nacl_debug_stub_port_(nacl::kGdbDebugStubPortUnknown),
 #endif  // BUILDFLAG(ENABLE_NACL)
+      hard_faults_per_second_(-1),
       idle_wakeups_per_second_(-1),
 #if defined(OS_LINUX)
       open_fd_count_(-1),
@@ -334,9 +335,10 @@ void TaskGroup::OnSamplerRefreshDone(SharedSampler::SamplingResult results) {
   // sentinel values.
   // TODO(wez): Migrate the TaskGroup fields to Optional<> so we can remove
   // the need for all this sentinel-handling logic.
-  start_time_ = results.start_time.value_or(base::Time());
   cpu_time_ = results.cpu_time.value_or(base::TimeDelta());
+  hard_faults_per_second_ = results.hard_faults_per_second.value_or(0);
   idle_wakeups_per_second_ = results.idle_wakeups_per_second.value_or(-1);
+  start_time_ = results.start_time.value_or(base::Time());
 #if defined(OS_WIN)
   memory_usage_.physical_bytes = results.physical_bytes.value_or(-1);
 #endif

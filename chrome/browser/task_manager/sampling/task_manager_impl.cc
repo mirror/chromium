@@ -160,6 +160,10 @@ int TaskManagerImpl::GetIdleWakeupsPerSecond(TaskId task_id) const {
   return GetTaskGroupByTaskId(task_id)->idle_wakeups_per_second();
 }
 
+int TaskManagerImpl::GetHardFaultsPerSecond(TaskId task_id) const {
+  return GetTaskGroupByTaskId(task_id)->hard_faults_per_second();
+}
+
 int TaskManagerImpl::GetNaClDebugStubPort(TaskId task_id) const {
 #if BUILDFLAG(ENABLE_NACL)
   return GetTaskGroupByTaskId(task_id)->nacl_debug_stub_port();
