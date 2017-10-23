@@ -16,6 +16,24 @@
       "revId": "2661165ee08a8ca8cffee5e254616069e894a300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c79b7f6_d8a03894",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-23T23:42:55Z",
+      "side": 1,
+      "message": "Yes this function is called only when moving forward. This change is not exactly for backward move, it is for the forward move. Initially this had \"mSelectionEndIndex\" instead of \"mSelectionStartIndex\" and it worked fine because \"mSelectionEndIndex\" was never initialized in the code correctly and was 0 always. Now since we made the change to assign \"mSelectionEndIndex\" its correct value, we need to pass the startIndex here and not the EndIndex.",
+      "parentUuid": "f162c821_20f504e9",
+      "revId": "2661165ee08a8ca8cffee5e254616069e894a300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
