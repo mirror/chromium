@@ -44,6 +44,8 @@ Components.Linkifier = class {
     /** @type {!Map<!SDK.Target, !Bindings.LiveLocationPool>} */
     this._locationPoolByTarget = new Map();
     this._useLinkDecorator = !!useLinkDecorator;
+    /** @type {!WeakMap<!Element, function()>} */
+    this._anchorUpdateCallbacks = new WeakMap();
     Components.Linkifier._instances.add(this);
     SDK.targetManager.observeTargets(this);
   }
@@ -309,6 +311,16 @@ Components.Linkifier = class {
     anchor.title = titleText;
     anchor.classList.toggle('webkit-html-blackbox-link', liveLocation.isBlackboxed());
     Components.Linkifier._updateLinkDecorations(anchor);
+    if (this._anchorUpdateCallbacks.get(anchor))
+      this._anchorUpdateCallbacks.get(anchor)();
+  }
+
+  /**
+   * @param {!Element} anchor
+   * @param {function()} callback
+   */
+  setAnchorUpdateCallback(anchor, callback) {
+    this._anchorUpdateCallbacks.set(anchor, callback);
   }
 
   /**
