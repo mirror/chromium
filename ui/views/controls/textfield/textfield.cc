@@ -35,6 +35,8 @@
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
+#include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/range/range.h"
 #include "ui/gfx/selection_bound.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/strings/grit/ui_strings.h"
@@ -1437,6 +1439,11 @@ bool Textfield::GetTextRange(gfx::Range* range) const {
 
   model_->GetTextRange(range);
   return true;
+}
+
+bool Textfield::GetTextInputClientInfo(
+    ui::TextInputClient::GetTextInputClientInfoCallback callback) const {
+  return false;
 }
 
 bool Textfield::GetCompositionTextRange(gfx::Range* range) const {
