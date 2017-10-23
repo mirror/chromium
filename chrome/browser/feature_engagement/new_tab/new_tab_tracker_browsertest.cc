@@ -42,12 +42,13 @@ class MockTracker : public Tracker {
  public:
   MockTracker() = default;
   MOCK_METHOD1(NotifyEvent, void(const std::string& event));
-  TriggerState GetTriggerState(const base::Feature& feature) override {
+  TriggerState GetTriggerState(const base::Feature& feature) const override {
     return Tracker::TriggerState::HAS_NOT_BEEN_DISPLAYED;
   }
   MOCK_METHOD1(ShouldTriggerHelpUI, bool(const base::Feature& feature));
+  MOCK_CONST_METHOD1(WouldTriggerHelpUI, bool(const base::Feature& feature));
   MOCK_METHOD1(Dismissed, void(const base::Feature& feature));
-  MOCK_METHOD0(IsInitialized, bool());
+  MOCK_CONST_METHOD0(IsInitialized, bool());
   void AddOnInitializedCallback(OnInitializedCallback callback) override {}
 };
 
