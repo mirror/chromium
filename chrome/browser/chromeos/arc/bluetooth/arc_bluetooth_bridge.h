@@ -318,7 +318,8 @@ class ArcBluetoothBridge
   void OnDiscoveryStarted(
       std::unique_ptr<device::BluetoothDiscoverySession> session);
   void OnDiscoveryStopped();
-  void OnDiscoveryError();
+  void OnDiscoveryStartError();
+  void OnDiscoveryStopError();
   void OnPairing(mojom::BluetoothAddressPtr addr) const;
   void OnPairedDone(mojom::BluetoothAddressPtr addr) const;
   void OnPairedError(
@@ -538,6 +539,12 @@ class ArcBluetoothBridge
   enum { kMaxAdvertisements = 1 };
   std::map<int32_t, scoped_refptr<device::BluetoothAdvertisement>>
       advertisements_;
+
+  // CancelDiscovery() could be called almost simultaneously by
+  // ArcBluetoothBridge and from the Android side (mojo call), so we need to
+  // keep track whether Stop() on a BluetoothDiscoverySession object is ongoing
+  // so we can avoid calling Stop() twice on the same object.
+  bool stop_discovery_in_progress_;
 
   THREAD_CHECKER(thread_checker_);
 
