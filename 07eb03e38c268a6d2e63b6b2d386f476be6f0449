@@ -22,6 +22,30 @@
       "revId": "07eb03e38c268a6d2e63b6b2d386f476be6f0449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92d7a2f_37a383d1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-23T18:24:16Z",
+      "side": 1,
+      "message": "Yes, I verified it by looking at the (non-RLS) print preview of this:\n\n\u003ciframe srcdoc\u003d\u0027\u003cdiv style\u003d\"font-size: 144px\"\u003eHello, world!\u003c/div\u003e\u0027\u003e\u003c/iframe\u003e                      \n\u003cdiv style\u003d\u0027height:2000px\u0027\u003e\u003c/div\u003e",
+      "parentUuid": "135a6275_484c5e40",
+      "range": {
+        "startLine": 679,
+        "startChar": 34,
+        "endLine": 679,
+        "endChar": 44
+      },
+      "revId": "07eb03e38c268a6d2e63b6b2d386f476be6f0449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
