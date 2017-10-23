@@ -42,11 +42,13 @@
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tab_contents/tab_contents_iterator.h"
+#include "chrome/browser/ui/tab_ui_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/tab_utils.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
+#include "components/favicon/content/content_favicon_driver.h"
 #include "components/metrics/system_memory_stats_recorder.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/browser_thread.h"
@@ -1180,8 +1182,12 @@ TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
     return content::NavigationThrottle::PROCEED;
   }
 
-  // TODO(zhenw): Try to set the favicon and title from history service if this
-  // navigation will be delayed.
+  TabUIHelper::FromWebContents(contents)->SetIsNavigationDelayed(true);
+  favicon::ContentFaviconDriver* favicon_driver =
+      favicon::ContentFaviconDriver::FromWebContents(contents);
+  favicon_driver->FetchFavicon(throttle->navigation_handle()->GetURL(),
+                               /*is_same_document=*/false);
+
   GetWebContentsData(contents)->SetTabLoadingState(TAB_IS_NOT_LOADING);
   pending_navigations_.push_back(throttle);
   std::stable_sort(pending_navigations_.begin(), pending_navigations_.end(),
@@ -1320,10 +1326,11 @@ void TabManager::ResumeTabNavigationIfNeeded(content::WebContents* contents) {
 }
 
 void TabManager::ResumeNavigation(BackgroundTabNavigationThrottle* throttle) {
-  content::NavigationHandle* navigation_handle = throttle->navigation_handle();
-  GetWebContentsData(navigation_handle->GetWebContents())
-      ->SetTabLoadingState(TAB_IS_LOADING);
-  loading_contents_.insert(navigation_handle->GetWebContents());
+  content::WebContents* contents =
+      throttle->navigation_handle()->GetWebContents();
+  GetWebContentsData(contents)->SetTabLoadingState(TAB_IS_LOADING);
+  loading_contents_.insert(contents);
+  TabUIHelper::FromWebContents(contents)->SetIsNavigationDelayed(false);
 
   throttle->ResumeNavigation();
 }
