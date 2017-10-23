@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc3ce110_2d437856",
+        "filename": "third_party/WebKit/LayoutTests/fast/loader/goto-anchor-infinite-layout-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-23T20:03:24Z",
+      "side": 0,
+      "message": "Still need to change the expectations to remove the \"line 21: \", but otherwise, sounds good. :)",
+      "parentUuid": "eeb87079_4d12ab59",
+      "revId": "c51b738e66d2480237ed8e693200f923b97cd2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa79cec8_5b75858a",
         "filename": "third_party/WebKit/LayoutTests/fast/text/custom-font-data-crash2-expected.txt",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-21T00:41:36Z",
       "side": 0,
       "message": "Is this change flaky?\n\nThe test code contains:\n\u003e setTimeout(\"finish()\", 50);\n\nSo, if the change is because this CL makes the second pair of warnings to be output a little later, i.e. after finish(), then I suspect this might be flaky (if the second pair of warnings appears within 50ms). Delaying finish a little more and keeping the expectation as-is might be better and deflaked.\n\nI\u0027m not sure what is the best way to reliably finish the test after this warning though (ditto for another test).\nBut anyway the tests look old crash tests and probably we don\u0027t have to make the tests super clean.\n\nOn the other hand, if this is because, by making Font cache hit asynchronous, we merge two attempts into one and thus we always have one pair of warnings, then that\u0027s fine.",
+      "revId": "c51b738e66d2480237ed8e693200f923b97cd2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439ac671_c1b58445",
+        "filename": "third_party/WebKit/LayoutTests/fast/text/custom-font-data-crash2-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-23T20:03:24Z",
+      "side": 0,
+      "message": "I think I\u0027ve reworked this to leave the output the same (again, except for line numbers disappearing), and got rid of the 50ms setTimeout() as well.",
+      "parentUuid": "fa79cec8_5b75858a",
       "revId": "c51b738e66d2480237ed8e693200f923b97cd2bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
