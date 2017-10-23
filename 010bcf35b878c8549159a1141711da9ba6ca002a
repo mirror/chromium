@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2a9727d_1063fd4e",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/format_block/contenteditable-false.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-23T02:16:49Z",
+      "side": 1,
+      "message": "Could you change in same file then move to another location for better\ntracking of history and make patch smaller?\n\nSee https://chromium-review.googlesource.com/c/chromium/src/+/711618#message-9c5efb904f0f9d6887b860c47d5a5a7e118b60cc",
+      "revId": "010bcf35b878c8549159a1141711da9ba6ca002a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
