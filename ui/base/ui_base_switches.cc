@@ -13,6 +13,10 @@ const base::Feature kDirectManipulationStylus = {
     "DirectManipulationStylus", base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_WIN)
 
+// Enables the floating virtual keyboard behavior.
+const base::Feature kEnableFloatingVirtualKeyboard = {
+    "enable-floating-virtual-keyboard", base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace features
 
 namespace switches {
@@ -35,10 +39,10 @@ const char kShowMacOverlayBorders[] = "show-mac-overlay-borders";
 
 #if defined(OS_WIN)
 // Disables merging the key event (WM_KEY*) with the char event (WM_CHAR).
-const char kDisableMergeKeyCharEvents[]     = "disable-merge-key-char-events";
+const char kDisableMergeKeyCharEvents[] = "disable-merge-key-char-events";
 
 // Enables merging the key event (WM_KEY*) with the char event (WM_CHAR).
-const char kEnableMergeKeyCharEvents[]     = "enable-merge-key-char-events";
+const char kEnableMergeKeyCharEvents[] = "enable-merge-key-char-events";
 #endif
 
 // Disables layer-edge anti-aliasing in the compositor.

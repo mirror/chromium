@@ -18,6 +18,8 @@ namespace features {
 UI_BASE_EXPORT extern const base::Feature kDirectManipulationStylus;
 #endif  // defined(OS_WIN)
 
+UI_BASE_EXPORT extern const base::Feature kEnableFloatingVirtualKeyboard;
+
 }  // namespace features
 
 namespace switches {
