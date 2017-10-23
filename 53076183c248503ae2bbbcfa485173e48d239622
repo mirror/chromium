@@ -16,6 +16,24 @@
       "revId": "53076183c248503ae2bbbcfa485173e48d239622",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9e9a49_19651316",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-23T23:17:13Z",
+      "side": 1,
+      "message": "This sounds right to me. Thanks for the investigation and detailed explanation.\n\nAm writing some tests to verify.",
+      "parentUuid": "61df75c7_23b998d9",
+      "revId": "53076183c248503ae2bbbcfa485173e48d239622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
