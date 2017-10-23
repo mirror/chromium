@@ -117,6 +117,30 @@
       "revId": "87b467b04f7d079af1ffb4b1710ba92b1b716b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d5a270_ce68eb3e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-23T15:25:09Z",
+      "side": 1,
+      "message": "IIRC, UiDevice.waitForIdle() waits for no UI updates to happen for X ms (in contrast to Instrumentation.waitForIdleSync(), which just waits for the UI looper to become idle).",
+      "parentUuid": "69e4c1e9_0ad165ab",
+      "range": {
+        "startLine": 88,
+        "startChar": 53,
+        "endLine": 88,
+        "endChar": 68
+      },
+      "revId": "87b467b04f7d079af1ffb4b1710ba92b1b716b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
