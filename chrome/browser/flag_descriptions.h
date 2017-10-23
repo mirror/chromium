@@ -448,9 +448,6 @@ extern const char kIgnoreGpuBlacklistDescription[];
 extern const char kImportantSitesInCbdName[];
 extern const char kImportantSitesInCbdDescription[];
 
-extern const char kInertVisualViewportName[];
-extern const char kInertVisualViewportDescription[];
-
 extern const char kInProductHelpDemoModeChoiceName[];
 extern const char kInProductHelpDemoModeChoiceDescription[];
 
