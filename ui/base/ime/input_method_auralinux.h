@@ -56,6 +56,7 @@ class UI_BASE_IME_EXPORT InputMethodAuraLinux
   void ConfirmCompositionText();
   void UpdateContextFocusState();
   void ResetContext();
+  bool IgnoringNonKeyInput() const;
 
   // Processes the key event after the event is processed by the system IME or
   // the extension.
@@ -94,9 +95,8 @@ class UI_BASE_IME_EXPORT InputMethodAuraLinux
   // Indicates if the composition text is changed or deleted.
   bool composition_changed_;
 
-  // If it's true then all input method result received before the next key
-  // event will be discarded.
-  bool suppress_next_result_;
+  // Ignore commit signals if this time is still in the future.
+  base::TimeTicks suppress_commits_until_ = base::TimeTicks::UnixEpoch();
 
   // Used for making callbacks.
   base::WeakPtrFactory<InputMethodAuraLinux> weak_ptr_factory_;
