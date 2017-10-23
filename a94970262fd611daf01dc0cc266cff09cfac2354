@@ -70,6 +70,24 @@
       "revId": "a94970262fd611daf01dc0cc266cff09cfac2354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e12eb86_2dd602ae",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-23T07:46:01Z",
+      "side": 1,
+      "message": "How about landing this change to fix the crash on M-63, then fix the logic on master for M-64 and later?\n\nThere are already VLOGs and NOTREACHEDs in RequestIcon(), SetNotificationsEnabled(), NotifyRegisteredApps(), and MaybeShowPackageInAppLauncher() for GetApp() returning unexpected null so it seems the logic has been left broken for long, and I think fixing the crash is more important than fixing the logic.\nIf we are to fix the logic later, we\u0027ll be able to remove this check and the existing checks around GetApp() which must become unnecessary.",
+      "parentUuid": "ba5680bd_885eb4a8",
+      "revId": "a94970262fd611daf01dc0cc266cff09cfac2354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
