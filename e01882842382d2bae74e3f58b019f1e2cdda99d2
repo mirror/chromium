@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0e7289a_ebb0a332",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-23T18:51:17Z",
+      "side": 1,
+      "message": "you can use auto here\n\nauto filter \u003d std::make_unique...",
+      "range": {
+        "startLine": 565,
+        "startChar": 2,
+        "endLine": 565,
+        "endChar": 34
+      },
+      "revId": "e01882842382d2bae74e3f58b019f1e2cdda99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229602a5_f977b5de",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-23T18:51:17Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 591,
+        "startChar": 2,
+        "endLine": 591,
+        "endChar": 34
+      },
+      "revId": "e01882842382d2bae74e3f58b019f1e2cdda99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
