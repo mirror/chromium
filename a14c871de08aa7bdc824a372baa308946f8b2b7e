@@ -22,6 +22,30 @@
       "revId": "a14c871de08aa7bdc824a372baa308946f8b2b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4dac92_1eca9aa5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/lint.whitelist",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-23T21:30:34Z",
+      "side": 1,
+      "message": "Ack. Using step_timeout (not t.step_timeout) in order to support multiple expectCalls and a t.step_timeout call in parallel.",
+      "parentUuid": "430c775d_5c7c323c",
+      "range": {
+        "startLine": 256,
+        "startChar": 20,
+        "endLine": 256,
+        "endChar": 37
+      },
+      "revId": "a14c871de08aa7bdc824a372baa308946f8b2b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

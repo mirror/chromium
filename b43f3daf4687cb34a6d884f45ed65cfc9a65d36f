@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74ea6d76_164d54af",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-helper.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-23T21:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a16cea59_5a1093a8",
+      "range": {
+        "startLine": 452,
+        "startChar": 6,
+        "endLine": 452,
+        "endChar": 16
+      },
+      "revId": "b43f3daf4687cb34a6d884f45ed65cfc9a65d36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecfc2879_578a5b82",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-helper.js",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "b43f3daf4687cb34a6d884f45ed65cfc9a65d36f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b960c5f_b3be9f86",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-helper.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-23T21:30:34Z",
+      "side": 1,
+      "message": "t.step_func() actually does things with \"this\". To be honest I\u0027m a little bit confused about the JavaScript magic going on here, but if I change it to \"() \u003d\u003e { ... }\" the arguments are not passed correctly and all the tests fail saying \"undefined is not a function\".",
+      "parentUuid": "ecfc2879_578a5b82",
+      "range": {
+        "startLine": 456,
+        "startChar": 20,
+        "endLine": 456,
+        "endChar": 21
+      },
+      "revId": "b43f3daf4687cb34a6d884f45ed65cfc9a65d36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
