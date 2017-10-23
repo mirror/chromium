@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de4073f6_8c290104",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-23T16:52:59Z",
+      "side": 1,
+      "message": "No need to update the README.Chromium?",
+      "range": {
+        "startLine": 161,
+        "startChar": 87,
+        "endLine": 161,
+        "endChar": 127
+      },
+      "revId": "8e08e0f10f2ef0e29380d146a9c7f96e706790ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
