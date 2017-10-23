@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5291d9d_e826863c",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-23T16:07:40Z",
+      "side": 1,
+      "message": "Does this compile if !enable_downloadable_strings (see chrome/browser/BUILD.gn changes)?",
+      "range": {
+        "startLine": 57,
+        "startChar": 86,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bceda4_50fc15c0",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-23T16:07:40Z",
+      "side": 1,
+      "message": "This will interfere with differential updates, which will affect your metrics if you publish multiple versions of the experimental payload. The SKIP_ON_SHUTDOWN might also be problematic in some cases. Consider using a PostTaskAndReply from RegisterDownloadableStringsComponent to delete on browser start (and then proceed with registering the component).\n\nAlternatively, we just have to remember not to enable differential updates for this component on the server side.",
+      "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ccdc8d_9e041567",
+        "filename": "chrome/common/features.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-23T16:07:40Z",
+      "side": 1,
+      "message": "donwloadable → downloadable",
+      "range": {
+        "startLine": 80,
+        "startChar": 11,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc703e58_7b9defb2",
+        "filename": "components/crx_file/id_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-23T16:07:40Z",
+      "side": 1,
+      "message": "This is fine but personally I find the convert-to-hex-and-then-shift a little more readable.",
+      "range": {
+        "startLine": 51,
+        "startChar": 40,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2092c720_0f7aa388",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 17332,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-23T16:07:40Z",
+      "side": 1,
+      "message": "return → returned",
+      "range": {
+        "startLine": 17332,
+        "startChar": 26,
+        "endLine": 17332,
+        "endChar": 27
+      },
+      "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
