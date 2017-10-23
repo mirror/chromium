@@ -6,6 +6,7 @@
 
 #include "base/mac/foundation_util.h"
 #include "base/mac/mac_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/sys_string_conversions.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/ui/browser.h"
@@ -23,6 +24,11 @@
 #include "ui/gfx/image/image.h"
 #include "ui/snapshot/snapshot.h"
 
+// Private method, used to identify instantiated services.
+@interface NSSharingService (ExposeName)
+- (id)name;
+@end
+
 namespace {
 
 NSString* const kExtensionPrefPanePath =
@@ -34,6 +40,46 @@ NSString* const kOpenSharingSubpaneActionValue = @"revealExtensionPoint";
 NSString* const kOpenSharingSubpaneProtocolKey = @"protocol";
 NSString* const kOpenSharingSubpaneProtocolValue = @"com.apple.share-services";
 
+// The following two services don't have convenient NSSharingServiceName*
+// constants.
+NSString* const kRemindersSharingServiceName =
+    @"com.apple.reminders.RemindersShareExtension";
+NSString* const kNotesSharingServiceName = @"com.apple.Notes.SharingExtension";
+
+const struct {
+  NSString* name;
+  MacShareMenuServices histogram_value;
+} kServiceNameMap[] = {
+    {NSSharingServiceNameComposeEmail, MacShareMenuServices::kEmail},
+    {NSSharingServiceNameComposeMessage, MacShareMenuServices::kMessage},
+    {kNotesSharingServiceName, MacShareMenuServices::kNote},
+    {kRemindersSharingServiceName, MacShareMenuServices::kReminder},
+    {NSSharingServiceNamePostOnTwitter, MacShareMenuServices::kTwitter},
+    {NSSharingServiceNamePostOnFacebook, MacShareMenuServices::kFacebook},
+    {NSSharingServiceNamePostOnLinkedIn, MacShareMenuServices::kLinkedIn},
+    {NSSharingServiceNamePostOnSinaWeibo, MacShareMenuServices::kSinaWeibo},
+    {NSSharingServiceNamePostOnTencentWeibo,
+     MacShareMenuServices::kTencentWeibo}};
+
+MacShareMenuServices UMAValueForSharingService(NSSharingService* service) {
+  for (const auto& mapping : kServiceNameMap) {
+    if ([mapping.name isEqualToString:[service name]]) {
+      return mapping.histogram_value;
+    }
+  }
+  return MacShareMenuServices::kUnknownCustom;
+}
+
+void RecordShareToUMA(NSSharingService* service, bool is_success) {
+  MacShareMenuServices service_value = UMAValueForSharingService(service);
+  if (is_success) {
+    UMA_HISTOGRAM_ENUMERATION("NativeMacShare.Success", service_value,
+                              MacShareMenuServices::kShareServiceCount);
+  } else {
+    UMA_HISTOGRAM_ENUMERATION("NativeMacShare.Failure", service_value,
+                              MacShareMenuServices::kShareServiceCount);
+  }
+}
 }  // namespace
 
 @implementation ShareMenuController {
@@ -65,11 +111,10 @@ NSString* const kOpenSharingSubpaneProtocolValue = @"com.apple.share-services";
   // to fetch sharing services that can handle the NSURL type.
   NSArray* services = [NSSharingService
       sharingServicesForItems:@[ [NSURL URLWithString:@"https://google.com"] ]];
-  NSSharingService* readingListService = [NSSharingService
-      sharingServiceNamed:NSSharingServiceNameAddToSafariReadingList];
   for (NSSharingService* service in services) {
     // Don't include "Add to Reading List".
-    if ([service isEqual:readingListService])
+    if ([[service name]
+            isEqualToString:NSSharingServiceNameAddToSafariReadingList])
       continue;
     NSMenuItem* item = [self menuItemForService:service];
     [item setEnabled:canShare];
@@ -91,14 +136,14 @@ NSString* const kOpenSharingSubpaneProtocolValue = @"com.apple.share-services";
 
 - (void)sharingService:(NSSharingService*)service
          didShareItems:(NSArray*)items {
-  // TODO(lgrey): Add an UMA stat.
+  RecordShareToUMA(service, true);
   [self clearTransitionData];
 }
 
 - (void)sharingService:(NSSharingService*)service
     didFailToShareItems:(NSArray*)items
                   error:(NSError*)error {
-  // TODO(lgrey): Add an UMA stat.
+  RecordShareToUMA(service, false);
   [self clearTransitionData];
 }
 
