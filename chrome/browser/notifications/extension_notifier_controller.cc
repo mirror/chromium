@@ -22,9 +22,9 @@ ExtensionNotifierController::ExtensionNotifierController(Observer* observer)
 
 ExtensionNotifierController::~ExtensionNotifierController() {}
 
-std::vector<std::unique_ptr<message_center::Notifier>>
+std::vector<std::unique_ptr<message_center::NotifierUiData>>
 ExtensionNotifierController::GetNotifierList(Profile* profile) {
-  std::vector<std::unique_ptr<message_center::Notifier>> notifiers;
+  std::vector<std::unique_ptr<message_center::NotifierUiData>> ui_data;
   const extensions::ExtensionSet& extension_set =
       extensions::ExtensionRegistry::Get(profile)->enabled_extensions();
   // The extension icon size has to be 32x32 at least to load bigger icons if
@@ -51,15 +51,20 @@ ExtensionNotifierController::GetNotifierList(Profile* profile) {
 
     message_center::NotifierId notifier_id(
         message_center::NotifierId::APPLICATION, extension->id());
+    bool has_advanced_settings_button =
+        extensions::EventRouter::Get(profile)->ExtensionHasEventListener(
+            extension->id(),
+            extensions::api::notifications::OnShowSettings::kEventName);
     NotifierStateTracker* const notifier_state_tracker =
         NotifierStateTrackerFactory::GetForProfile(profile);
-    notifiers.emplace_back(new message_center::Notifier(
+    ui_data.emplace_back(new message_center::NotifierUiData(
         notifier_id, base::UTF8ToUTF16(extension->name()),
+        has_advanced_settings_button,
         notifier_state_tracker->IsNotifierEnabled(notifier_id)));
     app_icon_loader_->FetchImage(extension->id());
   }
 
-  return notifiers;
+  return ui_data;
 }
 
 void ExtensionNotifierController::SetNotifierEnabled(
@@ -69,17 +74,6 @@ void ExtensionNotifierController::SetNotifierEnabled(
   NotifierStateTrackerFactory::GetForProfile(profile)->SetNotifierEnabled(
       notifier_id, enabled);
   observer_->OnNotifierEnabledChanged(notifier_id, enabled);
-}
-
-bool ExtensionNotifierController::HasAdvancedSettings(
-    Profile* profile,
-    const message_center::NotifierId& notifier_id) const {
-  const std::string& extension_id = notifier_id.id;
-
-  extensions::EventRouter* event_router = extensions::EventRouter::Get(profile);
-
-  return event_router->ExtensionHasEventListener(
-      extension_id, extensions::api::notifications::OnShowSettings::kEventName);
 }
 
 void ExtensionNotifierController::OnNotifierAdvancedSettingsRequested(

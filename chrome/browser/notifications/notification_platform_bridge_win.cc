@@ -237,7 +237,7 @@ void NotificationPlatformBridgeWin::Display(
   base::string16 browser_model_id =
       ShellUtil::GetBrowserModelId(InstallUtil::IsPerUserInstall());
   ScopedHString application_id = ScopedHString::Create(browser_model_id);
-  mswr::ComPtr<winui::Notifications::IToastNotifier> notifier;
+  mswr::ComPtr<winui::Notifications::IToastNotifierUiData> notifier;
   hr =
       toast_manager->CreateToastNotifierWithId(application_id.get(), &notifier);
   if (FAILED(hr)) {
