@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9ad791e_17c27e40",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-23T01:54:54Z",
+      "side": 1,
+      "message": "Done (Looks like the constructor initializes them though).",
+      "parentUuid": "8f8bff4a_fb9b8fa5",
+      "revId": "5d586f6f4be57da90412a578aa50a873284bc18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9dd959d_2d5db899",
         "filename": "base/process/process_metrics.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-20T08:26:45Z",
       "side": 1,
       "message": "and also initialize these",
+      "revId": "5d586f6f4be57da90412a578aa50a873284bc18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f86d497_2f7b9752",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-23T01:54:54Z",
+      "side": 1,
+      "message": "Done (Looks like the constructor initializes them though).",
+      "parentUuid": "b9dd959d_2d5db899",
       "revId": "5d586f6f4be57da90412a578aa50a873284bc18e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
