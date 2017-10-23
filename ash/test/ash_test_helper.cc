@@ -100,7 +100,7 @@ void AshTestHelper::SetUp(bool start_session, bool provide_local_state) {
   if (config_ == Config::MUS)
     input_device_client_ = std::make_unique<ui::InputDeviceClient>();
 
-  display::ResetDisplayIdForTest();
+  display::ResetDisplayIdForTesting();
   if (config_ != Config::CLASSIC)
     aura::test::EnvTestHelper().SetAlwaysUseLastMouseLocation(true);
   // WindowManager creates WMState for mash.
