@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab9fb63a_fa2a5091",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-23T10:48:35Z",
+      "side": 1,
+      "message": "Early-out if the queue type didn\u0027t change?",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 21
+      },
+      "revId": "2ceaacf4b2ce7f0ef7d57afcf4508f8dc420850c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c110bfe_054fd884",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-23T10:48:35Z",
+      "side": 1,
+      "message": "Could we save this into the map too to avoid recomputing it?",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 40
+      },
+      "revId": "2ceaacf4b2ce7f0ef7d57afcf4508f8dc420850c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa41808_14f54d53",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-23T10:48:35Z",
+      "side": 1,
+      "message": "Could we add COUNT to kSupportedQueueTypes to avoid this special case?",
+      "range": {
+        "startLine": 158,
+        "startChar": 71,
+        "endLine": 158,
+        "endChar": 76
+      },
+      "revId": "2ceaacf4b2ce7f0ef7d57afcf4508f8dc420850c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc45b3e9_fddbccb5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-23T10:48:35Z",
+      "side": 1,
+      "message": "Could this be a base::small_map?",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "2ceaacf4b2ce7f0ef7d57afcf4508f8dc420850c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93081de_3c93db0f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-23T10:48:35Z",
+      "side": 1,
+      "message": "Not initialized.",
+      "range": {
+        "startLine": 66,
+        "startChar": 35,
+        "endLine": 66,
+        "endChar": 54
+      },
+      "revId": "2ceaacf4b2ce7f0ef7d57afcf4508f8dc420850c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e40a31e_b9049c41",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1957,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-23T10:48:35Z",
+      "side": 1,
+      "message": "I feel like we should introduce an OTHER or NONE type since COUNT is somewhat special.",
+      "range": {
+        "startLine": 1957,
+        "startChar": 68,
+        "endLine": 1957,
+        "endChar": 73
+      },
+      "revId": "2ceaacf4b2ce7f0ef7d57afcf4508f8dc420850c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
