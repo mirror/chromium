@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "5647d23e_f6570ae5",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Why? It would still fail. TypeError: object of type \u0027NoneType\u0027 has no len()",
+      "parentUuid": "a6ff1a80_e63f8de8",
+      "range": {
+        "startLine": 233,
+        "startChar": 6,
+        "endLine": 233,
+        "endChar": 28
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "560a7b07_5302a171",
         "filename": "components/policy/tools/syntax_check_policy_template_json.py",
         "patchSetId": 9
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "4a2e1ebb_e3610313",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "560a7b07_5302a171",
+      "range": {
+        "startLine": 461,
+        "startChar": 39,
+        "endLine": 461,
+        "endChar": 47
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9a9402e_e3194cf5",
         "filename": "components/policy/tools/syntax_check_policy_template_json.py",
         "patchSetId": 9
@@ -108,6 +156,24 @@
       "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc5b5b6_31978eaa",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9a9402e_e3194cf5",
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +224,54 @@
     },
     {
       "key": {
+        "uuid": "4b56210c_d3d1e174",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dbbcd42_6bb5e2f9",
+      "range": {
+        "startLine": 517,
+        "startChar": 19,
+        "endLine": 517,
+        "endChar": 20
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f749f35_1866146b",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43a37497_f9bd7a9d",
+      "range": {
+        "startLine": 517,
+        "startChar": 19,
+        "endLine": 517,
+        "endChar": 20
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa002a81_a28a4b53",
         "filename": "components/policy/tools/syntax_check_policy_template_json.py",
         "patchSetId": 9
@@ -178,6 +292,30 @@
       "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f328ed97_f3c5e32b",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa002a81_a28a4b53",
+      "range": {
+        "startLine": 522,
+        "startChar": 10,
+        "endLine": 522,
+        "endChar": 16
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -221,6 +359,48 @@
     },
     {
       "key": {
+        "uuid": "cc805676_f53f6d78",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "969de0b0_390f69a3",
+      "range": {
+        "startLine": 523,
+        "startChar": 11,
+        "endLine": 523,
+        "endChar": 25
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b94f9e78_89fd5dac",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "How does _CheckContains work if container is a set?\nself._CheckContains(policy_names, policy, None) fails at\n      try:\n        identifier \u003d container.get(\u0027name\u0027)\n      except:\n        self._Error(\u0027Cannot access container name of \"%s\".\u0027 % container_name)\n        return None",
+      "parentUuid": "55aaeeac_3327018a",
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7358c60_eae8d7eb",
         "filename": "components/policy/tools/template_writers/policy_template_generator.py",
         "patchSetId": 9
@@ -244,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "3561ddf2_35aec75f",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7358c60_eae8d7eb",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 67
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed39dc5a_a75ba067",
         "filename": "components/policy/tools/template_writers/policy_template_generator.py",
         "patchSetId": 9
@@ -264,6 +468,30 @@
       "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f22259_8afdd2c9",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed39dc5a_a75ba067",
+      "range": {
+        "startLine": 166,
+        "startChar": 72,
+        "endLine": 166,
+        "endChar": 73
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -313,6 +541,54 @@
     },
     {
       "key": {
+        "uuid": "3ac00d58_313b488b",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81aabbef_6c743413",
+      "range": {
+        "startLine": 173,
+        "startChar": 37,
+        "endLine": 173,
+        "endChar": 38
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c10958b1_30308610",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7161a3b1_cc19f1ff",
+      "range": {
+        "startLine": 173,
+        "startChar": 30,
+        "endLine": 173,
+        "endChar": 31
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be5f6902_0588628f",
         "filename": "components/policy/tools/template_writers/policy_template_generator.py",
         "patchSetId": 9
@@ -336,6 +612,30 @@
     },
     {
       "key": {
+        "uuid": "07819fff_56061549",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be5f6902_0588628f",
+      "range": {
+        "startLine": 176,
+        "startChar": 48,
+        "endLine": 176,
+        "endChar": 49
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c14e2cb3_db04125e",
         "filename": "components/policy/tools/template_writers/policy_template_generator.py",
         "patchSetId": 9
@@ -347,6 +647,30 @@
       "writtenOn": "2017-10-23T11:05:48Z",
       "side": 1,
       "message": "Modifying input parameters is an error-prone practice. Better construct a local object and do all modifications in it.",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 34
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4656155c_01432ff4",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T15:51:31Z",
+      "side": 1,
+      "message": "I tried to modify it. Could you take a look?",
+      "parentUuid": "c14e2cb3_db04125e",
       "range": {
         "startLine": 179,
         "startChar": 8,
