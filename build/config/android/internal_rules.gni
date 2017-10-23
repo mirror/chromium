@@ -2728,14 +2728,6 @@ if (enable_java_templates) {
           }
         }
 
-        if (_run_findbugs) {
-          findbugs("${_template_name}__findbugs") {
-            build_config = _build_config
-            jar_path = _jar_path
-            deps = _accumulated_deps
-          }
-        }
-
         # Use an intermediate group() rather as the data_deps target in order to
         # avoid lint artifacts showing up as runtime_deps (while still having lint
         # run in parallel to other targets).
@@ -2743,9 +2735,6 @@ if (enable_java_templates) {
           public_deps = [
             ":${_template_name}__lint",
           ]
-          if (_run_findbugs) {
-            public_deps += [ ":${_template_name}__findbugs" ]
-          }
         }
       }
 
