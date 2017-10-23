@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d721edf_91a8faf6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-23T17:38:46Z",
+      "side": 1,
+      "message": "No need to specify the number of entries.",
+      "range": {
+        "startLine": 20,
+        "startChar": 62,
+        "endLine": 20,
+        "endChar": 63
+      },
+      "revId": "903816e49b1affa9c207ff05b5d01324ae4caec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8845c0_0121d2ca",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-23T17:38:46Z",
+      "side": 1,
+      "message": "We have a general pattern here of dealing with overall EQT, and then dealing with the split EQT.\n\nDo you have a sense of how we\u0027re going to handle this once we\u0027re splitting on multiple axis? Will we have one SplitCalculator per axis?\n\nOr will SplitCalculator need to learn how to split things on multiple dimensions? If you\u0027re thinking of using the second approach, it may make sense to move the top level EQT computation into the SplitCalculator.",
+      "range": {
+        "startLine": 233,
+        "startChar": 6,
+        "endLine": 233,
+        "endChar": 55
+      },
+      "revId": "903816e49b1affa9c207ff05b5d01324ae4caec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
