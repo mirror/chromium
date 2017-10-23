@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb21b68c_34139d89",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/timeline-network-received-data-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-23T18:07:56Z",
+      "side": 0,
+      "message": "No longer here because no longer dumping html text content on inspected page. We know that it\u0027s been loaded because the script is fulfilling a promise.",
+      "revId": "4897c7cd9d6d0a8115b678a05e950d17938c9bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
