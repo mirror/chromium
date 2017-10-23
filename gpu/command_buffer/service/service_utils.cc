@@ -70,7 +70,11 @@ bool UsePassthroughCommandDecoder(const base::CommandLine* command_line) {
     return false;
   } else {
     // Unrecognized or missing switch, use the default.
+#if defined(OS_WIN)
+    return true;
+#else
     return false;
+#endif
   }
 }
 
