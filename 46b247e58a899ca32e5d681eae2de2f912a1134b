@@ -16,6 +16,24 @@
       "revId": "46b247e58a899ca32e5d681eae2de2f912a1134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b8164d_68a9251a",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-23T16:47:35Z",
+      "side": 1,
+      "message": "WDYT of removing this check entirely?\n\nThis code can only be reached from javascript where, I think, it\u0027s safe to assume the document is active. It\u0027s not obvious from this change but we already force layout further down in the hit test code.",
+      "parentUuid": "881fcfe3_d2e39e68",
+      "revId": "46b247e58a899ca32e5d681eae2de2f912a1134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
