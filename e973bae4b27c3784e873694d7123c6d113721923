@@ -189,6 +189,30 @@
       "revId": "e973bae4b27c3784e873694d7123c6d113721923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215da11e_d96e63fd",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebappDirectoryManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-23T14:48:48Z",
+      "side": 1,
+      "message": "I have added JUnit tests as requested.\n\n- I have also consolidated mocking of WebappDataStorage.Clock into a single class\n- Added a custom Robolectric shadow in order to test histograms recording",
+      "parentUuid": "0b157018_c7e28c2e",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "e973bae4b27c3784e873694d7123c6d113721923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
