@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b66a5678_874b9651",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-23T19:22:27Z",
+      "side": 1,
+      "message": "nit: Get rid of \"static\" since I don\u0027t think it gains us much benefit.",
+      "revId": "1b19040000ae2988c5da738ed689f0884e8e0353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5db7dd_1738c728",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-23T19:22:27Z",
+      "side": 1,
+      "message": "nit: ditto, get rid of \"static\"",
+      "revId": "1b19040000ae2988c5da738ed689f0884e8e0353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
