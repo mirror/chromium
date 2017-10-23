@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd50c2d1_ac8bda9a",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-23T18:04:17Z",
+      "side": 1,
+      "message": "nit: Maybe add a comment here that only calls-to-action are of the PaymentTextCell kind, and that this is why they have blue text?\n\nOpinion (feel free to disregard): doing this here rather than where the call-to-action items are created makes the code harder to understand, as it\u0027s somewhat disconnected. I agree 100% in reducing duplication, but if I were looking at the code N months from now, it would be infinitely clearer to me if either 1) the color was set where the items were created (could be set to a constant instead of [[... cr_bluePalette] tint500]), or 2) there was a hint, in the form of a flag or something less generic than \"it is a PaymentsTextItem\" that would explain why it is being styled as is. :)",
+      "revId": "0efaa2d600d310e57d9646ae7b550701b4d1ccae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
