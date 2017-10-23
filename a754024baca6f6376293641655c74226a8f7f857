@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2308118_ffc8be74",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-23T10:56:22Z",
+      "side": 1,
+      "message": "Can the kv pairs be const?",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 11
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af97c9b_9b4205bb",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-23T10:56:22Z",
+      "side": 1,
+      "message": "nit: It seems common in the codebase to write // static before static methods, but I can\u0027t workout if this is mandated by the style guide or not.",
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025a26ac_5ae33b23",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-23T10:56:22Z",
+      "side": 1,
+      "message": "nit: Might be clearer to extract the variable std::vector\u003cNode*\u003e children \u003d parent-\u003echildren(); to simplify this an the below code.",
+      "range": {
+        "startLine": 227,
+        "startChar": 30,
+        "endLine": 227,
+        "endChar": 48
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfc3d1c_a10cff16",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-23T10:56:22Z",
+      "side": 1,
+      "message": "nit: to channel Primiano, if you can write the type and this still fits on one line it might be clearer to have it explicitly.",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 247,
+        "endChar": 9
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
