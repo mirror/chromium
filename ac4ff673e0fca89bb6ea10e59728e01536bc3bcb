@@ -45,6 +45,30 @@
       "revId": "ac4ff673e0fca89bb6ea10e59728e01536bc3bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da579ee_f51532e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-23T16:48:08Z",
+      "side": 1,
+      "message": "In the experiment framework we will limit the feature to phones, but some device manufacturers override resource loading in unexpected ways (e.g. some large Huawei devices load \u003c sw600 resources even though their minimum screen size is \u003e 600dp). This protects against the experimentation framework and the Chrome client having a mismatch on whether they think a device is a phone or tablet.",
+      "parentUuid": "2a1d85be_01e477c3",
+      "range": {
+        "startLine": 415,
+        "startChar": 41,
+        "endLine": 415,
+        "endChar": 58
+      },
+      "revId": "ac4ff673e0fca89bb6ea10e59728e01536bc3bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
