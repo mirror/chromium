@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d246bc9d_65504cb3",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7205,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-23T21:56:43Z",
+      "side": 1,
+      "message": "Did we lose the rect? Does it not matter any more?",
+      "revId": "858a15a5ae0ecbcbffbaa3829b8e6e7c74adbef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44c2ef4_b4860689",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7241,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-23T21:56:43Z",
+      "side": 1,
+      "message": "I\u0027m wondering, is this something we need to serialize, or could it be handled service-side, as a side effect of DrawRecordOps (and top-level Begin/End)? It seems like we\u0027re always serializing the same thing here, and it\u0027ll always be before the DrawRecordOp (and vice versa for the RestoreOp). In particular adding a canvas on the client side to keep track of things seems redundant, because we could reconstruct those things on the service side (since we have to go through a canvas anyway).",
+      "revId": "858a15a5ae0ecbcbffbaa3829b8e6e7c74adbef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
