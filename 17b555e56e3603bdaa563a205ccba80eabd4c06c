@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0791273_7bfd0319",
+        "filename": "content/child/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T05:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09125039_ec014873",
+      "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "618036d2_4f32acc1",
         "filename": "content/child/service_worker/controller_service_worker_connector.h",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3bed27_65f535c0",
+        "filename": "content/child/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T05:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "618036d2_4f32acc1",
+      "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bb6713ae_28565478",
+        "filename": "content/child/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T05:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac5575f8_93ed2017",
+      "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7ff5707_73dbba08",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 14
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "926824b6_c89d85f6",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T05:41:15Z",
+      "side": 1,
+      "message": "Ah, that seems true. It could be nullptr if the network provider gets destructed before the second DispatchFetchEvent().",
+      "parentUuid": "c7ff5707_73dbba08",
+      "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08b6d180_00665c51",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 14
@@ -84,6 +156,24 @@
       "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c9cf47_4ac16000",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T05:41:15Z",
+      "side": 1,
+      "message": "Thanks. I think so unless we have another way to know if the service worker fails to start up.",
+      "parentUuid": "08b6d180_00665c51",
+      "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
