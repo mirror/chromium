@@ -1475,6 +1475,10 @@ void GlobalActivityTracker::CleanupAfterProcess(int64_t process_id,
                                                 int64_t exit_stamp,
                                                 int exit_code,
                                                 std::string&& command_line) {
+  LOG(WARNING) << "CleanupAfterProcess: pid=" << process_id
+               << ", stamp=" << exit_stamp << ", exit=" << exit_code
+               << ", cmd=" << command_line;  // TESTING -- DO NOT SUBMIT
+
   // The process may not have exited cleanly so its necessary to go through
   // all the data structures it may have allocated in the persistent memory
   // segment and mark them as "released". This will allow them to be reused
@@ -1525,6 +1529,7 @@ void GlobalActivityTracker::CleanupAfterProcess(int64_t process_id,
   // Find all allocations associated with the exited process and free them.
   uint32_t type;
   while ((ref = iter.GetNext(&type)) != 0) {
+    LOG(WARNING) << "Cleaning up record 0x" << std::hex << type << "...";
     switch (type) {
       case kTypeIdActivityTracker:
       case kTypeIdUserDataRecord:
@@ -1545,12 +1550,14 @@ void GlobalActivityTracker::CleanupAfterProcess(int64_t process_id,
           // cause the erasure of something that is in-use). Memory is cleared
           // here, rather than when it's needed, so as to limit the impact at
           // that critical time.
+          LOG(WARNING) << " - pid=" << found_id << ", stamp=" << create_stamp;
           if (found_id == process_id && create_stamp < exit_stamp)
             allocator_->ChangeType(ref, ~type, type, /*clear=*/true);
         }
       } break;
     }
   }
+  LOG(WARNING) << "Done cleanup.";
 }
 
 void GlobalActivityTracker::RecordLogMessage(StringPiece message) {

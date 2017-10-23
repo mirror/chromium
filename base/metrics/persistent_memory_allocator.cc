@@ -1027,7 +1027,9 @@ FilePersistentMemoryAllocator::FilePersistentMemoryAllocator(
           read_only),
       mapped_file_(std::move(file)) {}
 
-FilePersistentMemoryAllocator::~FilePersistentMemoryAllocator() {}
+FilePersistentMemoryAllocator::~FilePersistentMemoryAllocator() {
+  LOG(WARNING) << "~FPMA for \"" << Name() << "\" called";
+}
 
 // static
 bool FilePersistentMemoryAllocator::IsFileAcceptable(
