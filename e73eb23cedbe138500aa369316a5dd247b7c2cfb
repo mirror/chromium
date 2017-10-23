@@ -764,6 +764,24 @@
     },
     {
       "key": {
+        "uuid": "b1ddf8ce_a520b646",
+        "filename": "chrome_elf/whitelist/whitelist_ime.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-23T11:21:16Z",
+      "side": 1,
+      "message": "\u003e I\u0027ve decided this doesn\u0027t matter to me.  I don\u0027t really understand why the language supports both\n\n\"enum class\" was added in C++-11.\n\n\u003e - there doesn\u0027t seem to be chromium consensus on one vs the other.\n\nFrom my experience, most reviewers are nudging toward \"enum class\" everywhere except for the places where \"enum\" really is called for.\n\n\u003e If I print out or log a failure status code now, I don\u0027t know if I\u0027ll be able to tie the value back to the status code, which would be sad.\n\nYou can static_cast\u003cint\u003e(foo) if you need an int.\n\n\u003e If I pass this error value around as an UMA histogram, are they tied to a consistent value?  Do these still have an integer value underneath?  Are they assigned in order of definition?\n\nYes, the values are there, they\u0027re just hidden for the most part.\n\n\u003e Otherwise, this is just a silly c++ ism to me.  :)  Moving on.\n\n\"enum class\" is stronger than \"enum\", in a sense. It has fewer int escape hatches, which can make some code more safe. You will need a cast if you want to get the int value from an \"enum class\". My argument here is that \"enum class\" would have prevented the logic bug that was present.",
+      "parentUuid": "cffd70e9_ae33f5f6",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69a4c796_944ad8c3",
         "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
         "patchSetId": 6

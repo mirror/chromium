@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f55a79a2_20f452b9",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-23T11:21:16Z",
+      "side": 1,
+      "message": "could you use the enum hack for this in the .h:\n\nenum { kGuidLength \u003d 38 };\n\nif it really needs to be uint32_t rather than plain-old-int, use \"enum : uint32_t {...};\"",
+      "revId": "35d02429a1990ddc9ea735df8aff32ef2437b10c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

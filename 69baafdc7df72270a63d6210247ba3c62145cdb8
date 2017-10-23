@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "819cbbff_7d29cac0",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-23T11:21:16Z",
+      "side": 1,
+      "message": "Ack.\n\n\"constexpr const wchar_t* kMicrosoftImeGuids[]\" means:\n\n\"kMicrosoftImeGuids is a compile-time constant array containing pointers to const wchar_t data.\" In other words \"constexpr\" here applies to kMicrosoftImeGuids, whereas \"const\" applies to the wchar_t data pointed to by each item in the array. Putting it yet another way, the contents of the array are constant and fixed at compile time. The memory pointed to by the values in the array are regular old constant data. I hope that muddies things up a bit more. :-)",
+      "parentUuid": "5269f9f8_b3e11dd3",
+      "revId": "69baafdc7df72270a63d6210247ba3c62145cdb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb789c02_a009b5d8",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 7
@@ -183,6 +201,24 @@
       "side": 1,
       "message": "Done.  Would be nice if \"git cl format\" could magically make this happen. :)",
       "parentUuid": "07388e91_852345b7",
+      "revId": "69baafdc7df72270a63d6210247ba3c62145cdb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "015fa4da_e2950831",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-23T11:21:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "515ff6f4_7c16619c",
       "revId": "69baafdc7df72270a63d6210247ba3c62145cdb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
