@@ -10,10 +10,10 @@ cr.exportPath('extensions');
  * @enum {string}
  */
 const Page = {
-  LIST: 'items-list',
-  DETAILS: 'details-view',
-  SHORTCUTS: 'keyboard-shortcuts',
-  ERRORS: 'error-page',
+  LIST: 'itemsList',
+  DETAILS: 'detailsView',
+  SHORTCUTS: 'keyboardShortcuts',
+  ERRORS: 'errorPage',
 };
 
 /** @enum {string} */
