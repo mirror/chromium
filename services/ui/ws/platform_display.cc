@@ -20,6 +20,7 @@ PlatformDisplayFactory* PlatformDisplay::factory_ = nullptr;
 // static
 std::unique_ptr<PlatformDisplay> PlatformDisplay::Create(
     ServerWindow* root,
+    const display::Display& display,
     const display::ViewportMetrics& metrics,
     ThreadedImageCursorsFactory* threaded_image_cursors_factory) {
   if (factory_)
@@ -28,6 +29,8 @@ std::unique_ptr<PlatformDisplay> PlatformDisplay::Create(
 #if defined(OS_ANDROID)
   return base::MakeUnique<PlatformDisplayDefault>(root, metrics,
                                                   nullptr /* image_cursors */);
+#elif defined(OS_CHROMEOS)
+  if (display.id() == )
 #else
   return base::MakeUnique<PlatformDisplayDefault>(
       root, metrics, threaded_image_cursors_factory->CreateCursors());

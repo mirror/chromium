@@ -41,7 +41,7 @@
 #include "ui/display/types/display_constants.h"
 #include "ui/platform_window/mojo/ime_type_converters.h"
 #include "ui/platform_window/text_input_state.h"
-
+#include "base/debug/stack_trace.h" 
 using mojo::InterfaceRequest;
 
 using EventProperties = std::unordered_map<std::string, std::vector<uint8_t>>;
@@ -341,6 +341,7 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
 
   if (!mirrors.empty()) {
     NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified/mirroring modes.";
+    base::debug::StackTrace().Print(); 
     return nullptr;
   }
 
