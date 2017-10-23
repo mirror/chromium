@@ -1,0 +1,82 @@
+<iframe id=iframeEl></iframe>
+<div id="divEl"></div>
+<script>
+function eventhandler1() {
+  console.log("EVENT1");
+  var orphanEl = document.createElement("span");
+  orphanEl.addEventListener("DOMSubtreeModified", eventhandler2);
+  orphanEl.setAttribute("x", "y");
+
+  console.log("EVENT1.5");
+  console.log(iframeEl.contentDocument.body);
+  divEl.appendChild(iframeEl.contentDocument.body);
+  iframeEl.marginHeight = "0";
+}
+
+function eventhandler2() {
+  console.log("EVENT2");
+  iframeEl.marginWidth = "0";
+}
+
+window.setTimeout(eventhandler1, 0);
+iframeEl.contentWindow.addEventListener("DOMSubtreeModified", eventhandler1);
+</script>
+<script type="memo">
+
+  // divEl.appendChild(iframeEl.contantDocument.body)
+  // -> eventhandler1
+  // -> eventhandler2
+  // -> iframeEl.MarginWidth
+
+
+"EVENT1", source: file:///usr/local/google/home/kochi/chrome/src/cf.html (5)
+"EVENT2", source: file:///usr/local/google/home/kochi/chrome/src/cf.html (16)
+"EVENT1", source: file:///usr/local/google/home/kochi/chrome/src/cf.html (5)
+"EVENT2", source: file:///usr/local/google/home/kochi/chrome/src/cf.html (16)
+"EVENT1.5", source: file:///usr/local/google/home/kochi/chrome/src/cf.html (10)
+***CRASH***
+"EVENT1", source: file:///usr/local/google/home/kochi/chrome/src/cf.html (5)
+"EVENT2", source: file:///usr/local/google/home/kochi/chrome/src/cf.html (16)
+"EVENT1.5", source: file:///usr/local/google/home/kochi/chrome/src/cf.html (10)
+"Uncaught TypeError: Failed to execute 'appendChild' on 'Node': parameter 1 is not of type 'Node'.", source: file:///usr/local/google/home/kochi/chrome/src/cf.html (11)
+
+Received signal 11 SEGV_MAPERR 000000000088
+#0 0x2b5de330c30d base::debug::StackTrace::StackTrace()
+#1 0x2b5de330a6dc base::debug::StackTrace::StackTrace()
+#2 0x2b5de330bcc5 base::debug::(anonymous namespace)::StackDumpSignalHandler()
+#3 0x2b5dddebe330 <unknown>
+#4 0x2b5de9d1064c WTF::StaticSingleton<>::InstanceStorage<>::Get()
+#5 0x2b5de9e0104c blink::OffscreenCanvas::RenderingContext()
+#6 0x2b5dea3d0d9c blink::Element::SynchronizeAttribute()
+#7 0x2b5dea3ba595 blink::Element::setAttribute()
+#8 0x2b5dea3b93f5 blink::Element::SetIntegralAttribute()
+#9 0x2b5dea35ced2 blink::Document::WillChangeFrameOwnerProperties()
+#10 0x2b5dea93e483 blink::HTMLFrameElementBase::SetMarginWidth()
+#11 0x2b5dea93e067 blink::HTMLFrameElementBase::ParseAttribute()
+#12 0x2b5dea94625e blink::HTMLIFrameElement::ParseAttribute()
+#13 0x2b5dea3bf723 blink::Element::AttributeChanged()
+#14 0x2b5dea91ade7 blink::HTMLElement::AttributeChanged()
+#15 0x2b5dea3c8123 blink::Element::DidAddAttribute()
+#16 0x2b5dea3c8065 blink::Element::AppendAttributeInternal()
+#17 0x2b5dea3d2056 blink::Element::SetAttributeInternal()
+#18 0x2b5dea3ba606 blink::Element::setAttribute()
+#19 0x2b5deb9d88e1 blink::HTMLIFrameElementV8Internal::marginWidthAttributeSetter()
+#20 0x2b5deb9d87b6 blink::V8HTMLIFrameElement::marginWidthAttributeSetterCallback()
+#21 0x2b5de88c0ca2 v8::internal::FunctionCallbackArguments::Call()
+#22 0x2b5de89bd243 v8::internal::(anonymous namespace)::HandleApiCallHelper<>()
+#23 0x2b5de89bbaf4 v8::internal::Builtins::InvokeApiFunction()
+#24 0x2b5de8f02e5f v8::internal::Object::SetPropertyWithAccessor()
+#25 0x2b5de8f1a38e v8::internal::Object::SetPropertyInternal()
+#26 0x2b5de8f1a099 v8::internal::Object::SetProperty()
+#27 0x2b5de8e10094 v8::internal::StoreIC::Store()
+#28 0x2b5de8e16d40 v8::internal::__RT_impl_Runtime_StoreIC_Miss()
+#29 0x378c62a85204 <unknown>
+  r8: 3d0c235e81355f00  r9: 00007ffe0ad10200 r10: 00007ffe0ad0fd67 r11: 00002b5df1c41110
+ r12: 00007ffe0ad10fa0 r13: 00007ffe0ad11028 r14: 00003a94e72c6020 r15: 00002b5deb9d8610
+  di: 0000000000000088  si: 00002b5dec92b3c0  bp: 00007ffe0ad104a0  bx: 00002b5de373b610
+  dx: 00007ffe0ad106b0  ax: 0000000000000000  cx: 3d0c235e81355f00  sp: 00007ffe0ad104a0
+  ip: 00002b5de9d1064c efl: 0000000000010206 cgf: 0000000000000033 erf: 0000000000000004
+ trp: 000000000000000e msk: 0000000000000000 cr2: 0000000000000088
+[end of stack trace]
+
+</script>

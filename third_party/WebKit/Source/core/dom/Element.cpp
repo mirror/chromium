@@ -388,7 +388,7 @@ void Element::SynchronizeAllAttributes() const {
     ToSVGElement(this)->SynchronizeAnimatedSVGAttribute(AnyQName());
 }
 
-inline void Element::SynchronizeAttribute(const QualifiedName& name) const {
+void Element::SynchronizeAttribute(const QualifiedName& name) const {
   if (!GetElementData())
     return;
   if (UNLIKELY(name == styleAttr &&
