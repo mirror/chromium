@@ -99,6 +99,29 @@
     },
     {
       "key": {
+        "uuid": "7ffe6367_bccbafdb",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-23T19:18:03Z",
+      "side": 1,
+      "message": "I don\u0027t understand this logic.  Why do we ever need to ignore the transfer function here?",
+      "range": {
+        "startLine": 409,
+        "startChar": 50,
+        "endLine": 409,
+        "endChar": 63
+      },
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3817b9af_ef197cb9",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.h",
         "patchSetId": 2
@@ -179,6 +202,29 @@
     },
     {
       "key": {
+        "uuid": "8e2a4eb2_4247d758",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-23T19:18:03Z",
+      "side": 1,
+      "message": "Reading this expression breaks my face. Please split it into multiple statements with well named intermediate variables that help the reader understand what this does.",
+      "range": {
+        "startLine": 53,
+        "startChar": 44,
+        "endLine": 53,
+        "endChar": 45
+      },
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2028b1c_f977f7e7",
         "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
         "patchSetId": 2
@@ -190,6 +236,98 @@
       "writtenOn": "2017-10-23T14:43:45Z",
       "side": 1,
       "message": "Talking to Justin, we think we agreed on doing this comparison always on premul space, in which the tolerance will always be 1.",
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75360ac2_ebfd8c46",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-23T19:18:03Z",
+      "side": 1,
+      "message": "Please add comment to explain what these constants means, or improve the names to make them more self-explanatory.",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f2086d_fce7a86c",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-23T19:18:03Z",
+      "side": 1,
+      "message": "For readability, please name these args.  Also, please don\u0027t use default arg values unless they solve an important problem.",
+      "range": {
+        "startLine": 48,
+        "startChar": 30,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a7c2dc_906935bc",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-23T19:18:03Z",
+      "side": 1,
+      "message": "the void* and int args should be named.",
+      "range": {
+        "startLine": 50,
+        "startChar": 48,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e2747c_0ac4f74f",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-23T19:18:03Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 10
+      },
       "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
