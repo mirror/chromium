@@ -44,3 +44,15 @@ mojom("interfaces") {
     "//mojo/common:common_custom_types",
   ]
 }
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "memlog_sender_pipe_unittest.cc",
+  ]
+  deps = [
+    ":profiling",
+    "//base",
+    "//testing/gtest",
+  ]
+}
