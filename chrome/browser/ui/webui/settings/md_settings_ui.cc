@@ -199,6 +199,11 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
     if (cleaner_controller->ShouldShowCleanupInSettingsUI())
       html_source->AddBoolean("chromeCleanupEnabled", true);
 
+    // We don't need to save this variable in UpdateCleanupDataSource() because
+    // it should never change while Chrome is open.
+    html_source->AddBoolean("userInitiatedCleanupsEnabled",
+                            safe_browsing::UserInitiatedCleanupsEnabled());
+
 #if defined(GOOGLE_CHROME_BUILD)
     if (cleaner_controller->IsPoweredByPartner())
       html_source->AddBoolean("cleanupPoweredByPartner", true);

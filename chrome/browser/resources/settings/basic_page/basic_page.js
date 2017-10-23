@@ -33,7 +33,9 @@ Polymer({
       type: Boolean,
       value: function() {
         return loadTimeData.valueExists('chromeCleanupEnabled') &&
-            loadTimeData.getBoolean('chromeCleanupEnabled');
+            loadTimeData.getBoolean('chromeCleanupEnabled') &&
+            !(loadTimeData.valueExists('userInitiatedCleanupsEnabled') &&
+              loadTimeData.getBoolean('userInitiatedCleanupsEnabled'));
       },
     },
 
