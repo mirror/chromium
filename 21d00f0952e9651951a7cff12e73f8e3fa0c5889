@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe413f0a_6512b448",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T21:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29ef9d12_2f6b8919",
+      "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6117a070_40cf70d0",
         "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T17:02:31Z",
       "side": 1,
       "message": "I don\u0027t think you should keep this as state if you also keep a tree which already knows its id",
+      "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "949d1b84_fd47f006",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T21:04:42Z",
+      "side": 1,
+      "message": "Right now AXTree doesn\u0027t know its own ID.\n\nI\u0027d like to upstream the idea of AXTreeID to ui/accessibility so you could\nlook up an AXTree from its ID anywhere in the code, but for now this is\njust a refactoring, we were already storing the tree ID here.",
+      "parentUuid": "6117a070_40cf70d0",
       "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f7e9765e_2921aefa",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T21:04:42Z",
+      "side": 1,
+      "message": "We initialize an empty AutomationAXTreeWrapper, which owns is own tree,\nthen we use Unserialize to apply changes to the tree. There isn\u0027t a use-case\nfor creating one with an existing tree but if we needed one we could add it\nto the constructor.",
+      "parentUuid": "f04d76a2_5706e47e",
+      "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db264c1c_3ebfb7bc",
         "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-04T17:02:31Z",
       "side": 1,
       "message": "I\u0027ve called this the host node in other places.",
+      "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b30c2a6_d20b7c9c",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T21:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db264c1c_3ebfb7bc",
       "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -87,6 +159,42 @@
     },
     {
       "key": {
+        "uuid": "c26962bf_bd3e6cb6",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T21:04:42Z",
+      "side": 1,
+      "message": "It\u0027s not that we reparent, but sometimes we don\u0027t know the host node\nright away - sometimes the child frame loads before its parent frame,\nso we need to be able to update this ID later.",
+      "parentUuid": "01105048_8a9fc844",
+      "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d0f1867_549a4a1b",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T21:04:42Z",
+      "side": 1,
+      "message": "It\u0027s not that we reparent, but sometimes we don\u0027t know the host node\nright away - sometimes the child frame loads before its parent frame,\nso we need to be able to update this ID later.",
+      "parentUuid": "01105048_8a9fc844",
+      "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8edd1cbd_d15cc2d3",
         "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
         "patchSetId": 3
@@ -98,6 +206,24 @@
       "writtenOn": "2017-10-04T17:02:31Z",
       "side": 1,
       "message": "Why don\u0027t we just clear the delegate in the dctor?",
+      "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8989269_e33c469d",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T21:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8edd1cbd_d15cc2d3",
       "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -121,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "f4c58c28_a0bf7e1c",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T21:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3151be1_a6fb05a0",
+      "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2902556_e25dfff1",
         "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
         "patchSetId": 3
@@ -132,6 +276,24 @@
       "writtenOn": "2017-10-04T17:02:31Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eadc411e_2f0a9d7b",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T21:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2902556_e25dfff1",
       "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -155,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "d142f97f_45c689ef",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T21:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddf91a1e_6e5a7b10",
+      "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cef09d2f_9546b9a5",
         "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
         "patchSetId": 3
@@ -166,6 +346,24 @@
       "writtenOn": "2017-10-04T17:02:31Z",
       "side": 1,
       "message": "nit: tree wrapper\u0027s parent node",
+      "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d27746c5_b6096b4c",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T21:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef09d2f_9546b9a5",
       "revId": "21d00f0952e9651951a7cff12e73f8e3fa0c5889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
