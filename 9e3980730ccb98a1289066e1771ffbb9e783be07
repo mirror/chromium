@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e92c3d24_16d32e4e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-23T11:25:51Z",
+      "side": 1,
+      "message": "\u003e Task queue is a task runner, so yes.\n\nRight, but the opposite isn\u0027t true and we currently only require a SingleThreadTaskRunner (which may not even belong to this TQM) instead of a task queue, so let\u0027s either change that or use more precise terms here.\n\n\u003eThe caveat here is that some of the queues serve as shutdown task runners. The problem is with transferring ownership of a TaskQueueImpl. It\u0027s transferred via base::Passed and tied to a task in a shutdown task queue. When shutdown task queue is unregistered, all tasks are cancelled and TaskQueueImpls owned by these tasks are destroyed. So we need to unregister queues with async deletion before unregistering shutdown task queues. \n\nSorry but I don\u0027t see the problem here: if the shutdown task queue is deleted and the references to other async_deletion queues go away, they should just get cleaned up normally. If we start depending on who exactly happens to own the task queues during shutdown I feel things are going to get brittle.\n\n\u003e The contract is that TaskQueueManager can be deleted at any moment, so we need to do cleanup for task queues.\n\u003e \n\u003e It\u0027s also not just about modifying the container, it\u0027s about use-after-free for these TaskQueueImpls.\n\nRight, I think the TaskQueueImpl destructor should make sure there\u0027s no possibility of UAF.",
+      "parentUuid": "adc4ffc5_107615d2",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 68
+      },
+      "revId": "9e3980730ccb98a1289066e1771ffbb9e783be07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72a1117f_5fac25a3",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Nah. We need to make sure that one of the queues with async deletion will be destroyed before shutdown task queue. The probability of this increases exponentially with number of task queues involved and virtually guaranteed when we have a hundred of them.",
       "parentUuid": "472d7bbb_c61fe785",
+      "range": {
+        "startLine": 3186,
+        "startChar": 17,
+        "endLine": 3186,
+        "endChar": 19
+      },
+      "revId": "9e3980730ccb98a1289066e1771ffbb9e783be07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd2cfad3_38731031",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3186,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-23T11:25:51Z",
+      "side": 1,
+      "message": "I think I still prefer a test hook because 1) this test can easily become a no-op when we change TQM logic and don\u0027t see the connection to here and 2) not sure if we can rely on allocator and set internals in all circumstances (e.g., ASAN/MSAN). WDYT?",
+      "parentUuid": "e66660fe_77f29dfe",
       "range": {
         "startLine": 3186,
         "startChar": 17,
