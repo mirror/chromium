@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6040d7d_3933610e",
+        "filename": "components/spellcheck/common/spellcheck_result.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-23T16:19:03Z",
+      "side": 1,
+      "message": "Let\u0027s keep capitalization consistent. \n\nLAST \u003d SPELLING | GRAMMAR,",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "785274c4cdeec4f09cafde7865e81cb1c849849f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
