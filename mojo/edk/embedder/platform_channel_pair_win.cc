@@ -37,8 +37,8 @@ PlatformChannelPair::PlatformChannelPair(bool client_is_blocking) {
   server_handle_.reset(PlatformHandle(
       CreateNamedPipeW(pipe_name.c_str(), kOpenMode, kPipeMode,
                        1,           // Max instances.
-                       4096,        // Out buffer size.
-                       4096,        // In buffer size.
+                       64 * 1024,   // Out buffer size.
+                       64 * 1024,   // In buffer size.
                        5000,        // Timeout in milliseconds.
                        nullptr)));  // Default security descriptor.
   PCHECK(server_handle_.is_valid());
