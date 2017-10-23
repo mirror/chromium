@@ -1,23 +1,21 @@
-// Copyright 2015 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
-
+#include "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl_create_test_template.h"
-#include "gpu/ipc/client/gpu_memory_buffer_impl_shared_memory.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl_test_template.h"
 
 namespace gpu {
 namespace {
 
-INSTANTIATE_TYPED_TEST_CASE_P(GpuMemoryBufferImplSharedMemory,
+INSTANTIATE_TYPED_TEST_CASE_P(GpuMemoryBufferImplAndroidHardwareBuffer,
                               GpuMemoryBufferImplTest,
-                              GpuMemoryBufferImplSharedMemory);
+                              GpuMemoryBufferImplAndroidHardwareBuffer);
 
-INSTANTIATE_TYPED_TEST_CASE_P(GpuMemoryBufferImplSharedMemory,
+INSTANTIATE_TYPED_TEST_CASE_P(GpuMemoryBufferImplAndroidHardwareBuffer,
                               GpuMemoryBufferImplCreateTest,
-                              GpuMemoryBufferImplSharedMemory);
+                              GpuMemoryBufferImplAndroidHardwareBuffer);
 
 }  // namespace
 }  // namespace gpu

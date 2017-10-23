@@ -187,6 +187,13 @@ component("gl") {
         "gl_image_native_pixmap.h",
       ]
     }
+
+    if (is_android) {
+      sources += [
+        "gl_image_ahardwarebuffer.cc",
+        "gl_image_ahardwarebuffer.h",
+      ]
+    }
   }
   if (is_android || is_linux) {
     sources += [

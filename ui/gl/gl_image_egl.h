@@ -19,6 +19,8 @@ class GL_EXPORT GLImageEGL : public GLImage {
 
   bool Initialize(EGLenum target, EGLClientBuffer buffer, const EGLint* attrs);
 
+  // This is an abstract base class, must define OnMemoryDump in a subclass.
+  //
   // Overridden from GLImage:
   gfx::Size GetSize() override;
   unsigned GetInternalFormat() override;
