@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25c998a3_47f433a0",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 10354,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-23T18:43:26Z",
+      "side": 1,
+      "message": "Optional nit: Perhaps \"Pause.FromOverlay\"?",
+      "range": {
+        "startLine": 10354,
+        "startChar": 29,
+        "endLine": 10354,
+        "endChar": 41
+      },
+      "revId": "02e07d3f106d4e47a94320e07bcc0300d91a774f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
