@@ -22,6 +22,30 @@
       "revId": "96bd9ef90d95efa332485195e03c63477b90bb07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4b1aee_6a27e85b",
+        "filename": "build/util/lastchange.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-10-23T20:40:11Z",
+      "side": 1,
+      "message": "oops, thanks. Will patch this TBRed.",
+      "parentUuid": "38dad9d9_42c961f2",
+      "range": {
+        "startLine": 157,
+        "startChar": 43,
+        "endLine": 157,
+        "endChar": 44
+      },
+      "revId": "96bd9ef90d95efa332485195e03c63477b90bb07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
