@@ -6,41 +6,13 @@ cr.define('print_preview', function() {
   'use strict';
 
   /**
-   * @param{!print_preview.PrinterType} type The type of printer to parse.
-   * @param{!print_preview.LocalDestinationInfo |
-   *        !print_preview.PrivetPrinterDescription |
-   *        !print_preview.ProvisionalDestinationInfo} printer Information
-   *     about the printer. Type expected depends on |type|:
-   *       For LOCAL_PRINTER => print_preview.LocalDestinationInfo
-   *       For PRIVET_PRINTER => print_preview.PrivetPrinterDescription
-   *       For EXTENSION_PRINTER => print_preview.ProvisionalDestinationInfo
-   * @return {!Array<!print_preview.Destination> | !print_preview.Destination}
-   */
-  var parseDestination = function(type, printer) {
-    if (type === print_preview.PrinterType.LOCAL_PRINTER) {
-      return parseLocalDestination(
-          /** @type {!print_preview.LocalDestinationInfo} */ (printer));
-    }
-    if (type === print_preview.PrinterType.PRIVET_PRINTER) {
-      return parsePrivetDestination(
-          /** @type {!print_preview.PrivetPrinterDescription} */ (printer));
-    }
-    if (type === print_preview.PrinterType.EXTENSION_PRINTER) {
-      return parseExtensionDestination(
-          /** @type {!print_preview.ProvisionalDestinationInfo} */ (printer));
-    }
-    assertNotReached('Unknown printer type ' + type);
-    return [];
-  };
-
-  /**
    * Parses a local print destination.
    * @param {!print_preview.LocalDestinationInfo} destinationInfo Information
    *     describing a local print destination.
    * @return {!print_preview.Destination} Parsed local print destination.
    */
-  var parseLocalDestination = function(destinationInfo) {
-    var options = {
+  const parseLocalDestination = function(destinationInfo) {
+    const options = {
       description: destinationInfo.printerDescription,
       isEnterprisePrinter: destinationInfo.cupsEnterprisePrinter
     };
@@ -66,8 +38,8 @@ cr.define('print_preview', function() {
    * @return {!print_preview.Destination |
    *          !Array<!print_preview.Destination>} Parsed destination info.
    */
-  var parsePrivetDestination = function(destinationInfo) {
-    var returnedPrinters = [];
+  const parsePrivetDestination = function(destinationInfo) {
+    const returnedPrinters = [];
 
     if (destinationInfo.hasLocalPrinting) {
       returnedPrinters.push(new print_preview.Destination(
@@ -96,8 +68,8 @@ cr.define('print_preview', function() {
    *     describing an extension printer.
    * @return {!print_preview.Destination} Parsed destination.
    */
-  var parseExtensionDestination = function(destinationInfo) {
-    var provisionalType = destinationInfo.provisional ?
+  const parseExtensionDestination = function(destinationInfo) {
+    const provisionalType = destinationInfo.provisional ?
         print_preview.DestinationProvisionalType.NEEDS_USB_PERMISSION :
         print_preview.DestinationProvisionalType.NONE;
 
@@ -111,6 +83,34 @@ cr.define('print_preview', function() {
           extensionName: destinationInfo.extensionName || '',
           provisionalType: provisionalType
         });
+  };
+
+  /**
+   * @param{!print_preview.PrinterType} type The type of printer to parse.
+   * @param{!print_preview.LocalDestinationInfo |
+   *        !print_preview.PrivetPrinterDescription |
+   *        !print_preview.ProvisionalDestinationInfo} printer Information
+   *     about the printer. Type expected depends on |type|:
+   *       For LOCAL_PRINTER => print_preview.LocalDestinationInfo
+   *       For PRIVET_PRINTER => print_preview.PrivetPrinterDescription
+   *       For EXTENSION_PRINTER => print_preview.ProvisionalDestinationInfo
+   * @return {!Array<!print_preview.Destination> | !print_preview.Destination}
+   */
+  const parseDestination = function(type, printer) {
+    if (type === print_preview.PrinterType.LOCAL_PRINTER) {
+      return parseLocalDestination(
+          /** @type {!print_preview.LocalDestinationInfo} */ (printer));
+    }
+    if (type === print_preview.PrinterType.PRIVET_PRINTER) {
+      return parsePrivetDestination(
+          /** @type {!print_preview.PrivetPrinterDescription} */ (printer));
+    }
+    if (type === print_preview.PrinterType.EXTENSION_PRINTER) {
+      return parseExtensionDestination(
+          /** @type {!print_preview.ProvisionalDestinationInfo} */ (printer));
+    }
+    assertNotReached('Unknown printer type ' + type);
+    return [];
   };
 
   // Export
