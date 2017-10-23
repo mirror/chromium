@@ -357,6 +357,13 @@
 -VirtualKeyboardControllerAutoTest.SuppressedIfExternalKeyboardPresent
 -VirtualKeyboardControllerAutoTest.SuppressedInMaximizedMode
 -VirtualKeyboardControllerTest.RestoreKeyboardDevices
+# TODO: fix these. They fail because of broken input event routing.
+# http://crbug.com/725257
+-LockScreenSanityTest, PasswordSubmitCallsLockScreenClient
+-LoginMetricsRecorderTest.UnlockAttempts
+-LoginPasswordViewTest.PasswordSubmitClearsPassword
+-LoginPasswordViewTest.PasswordSubmitIncludesPasswordText
+-LoginPasswordViewTest.PasswordSubmitViaButton
 
 # Timeouts
 -ToastManagerTest.PositionWithAutoHiddenBottomShelf
