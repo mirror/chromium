@@ -52,6 +52,24 @@
       "revId": "4540e5df1ee955fda3809ffd35791ba61af8b756",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08d4127_e65d0ed0",
+        "filename": "docs/win_cross.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-23T22:01:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e5080c7_8eecf36d",
+      "revId": "4540e5df1ee955fda3809ffd35791ba61af8b756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
