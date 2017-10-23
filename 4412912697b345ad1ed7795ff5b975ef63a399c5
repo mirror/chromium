@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "039e376e_3628f354",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/reentrant-success.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-23T22:40:45Z",
+      "side": 1,
+      "message": "I think maximumAge:1000 would work as well. I chose to keep maximumAge:0 because IMO it makes the test more explicit. We want to guarantee we get the updated position estimate instead of the one set at the beginning of the test. With maximumAge:1000, either estimate would be fresh enough, so it should return the second one. With maximumAge:0, only an estimate set after the call to getCurrentPosition would be fresh enough.",
+      "parentUuid": "05c20fe3_502fb8b3",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 22
+      },
+      "revId": "4412912697b345ad1ed7795ff5b975ef63a399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bff9aa3d_92426d0f",
         "filename": "third_party/WebKit/LayoutTests/geolocation-api/timeout-negative-expected.txt",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "71d559ca_9bd27869",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/timeout-negative-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-23T22:40:45Z",
+      "side": 1,
+      "message": "Removed the parentheses",
+      "parentUuid": "bff9aa3d_92426d0f",
+      "range": {
+        "startLine": 1,
+        "startChar": 55,
+        "endLine": 1,
+        "endChar": 59
+      },
+      "revId": "4412912697b345ad1ed7795ff5b975ef63a399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8854d959_37cfd02e",
         "filename": "third_party/WebKit/LayoutTests/geolocation-api/timeout-negative.html",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-23T02:51:17Z",
       "side": 1,
       "message": "Is the maximumAge actually relevant/required in relation the TIMEOUT response immediately being provided?\n\nIf so: How about removing the \u0027(\u0027 and \u0027)\u0027 characters?\nIf not: How about removing the entire \u0027(and maximumAge is zero)\u0027 as it seems just a distraction?\n\nWDYT?",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 73
+      },
+      "revId": "4412912697b345ad1ed7795ff5b975ef63a399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa04f4e_e255e595",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/timeout-negative.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-23T22:40:45Z",
+      "side": 1,
+      "message": "I think the parenthetical was likely carried over from the timeout-zero test where a non-zero value of maximumAge could allow the cached estimate to be returned if it\u0027s recent enough. When timeout is negative I don\u0027t think it\u0027s ever valid to return a cached estimate.\n\nI\u0027ll remove the parenthetical.",
+      "parentUuid": "8854d959_37cfd02e",
       "range": {
         "startLine": 12,
         "startChar": 49,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "328ab189_41a40db2",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeoNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-23T22:40:45Z",
+      "side": 1,
+      "message": "maximumAge is an unsigned integer type so it will never be negative. To do the comparison correctly we should be careful about negative ages since DOMTimeStamp will wrap them to large positive values. We could cast to a signed integer type for the compare but I think it\u0027s safer to clip at 0.",
+      "parentUuid": "9a1c0214_59cd8935",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 47
+      },
+      "revId": "4412912697b345ad1ed7795ff5b975ef63a399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58043654_fcba2999",
         "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-23T02:51:17Z",
       "side": 1,
       "message": "From looking at:\n\nhttps://dev.w3.org/geo/api/spec-source.html#max-age\n\nand particularly:\n\n\"In case of a watchPosition(), the maximumAge refers to the first position object returned by the implementation.\"\n\nI am wondering if this is doing the right thing. In other words in addition to updating the request time to Now(), shouldn\u0027t we also be zeroing-out the maximumAge after the first request?",
+      "range": {
+        "startLine": 413,
+        "startChar": 6,
+        "endLine": 413,
+        "endChar": 36
+      },
+      "revId": "4412912697b345ad1ed7795ff5b975ef63a399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bed4d7_370e3a53",
+        "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-23T22:40:45Z",
+      "side": 1,
+      "message": "Yeah, I think this is incorrect. watchPosition notifiers should skip CheckPositionAge after the first position estimate is returned. I updated the code to reflect this.",
+      "parentUuid": "58043654_fcba2999",
       "range": {
         "startLine": 413,
         "startChar": 6,
