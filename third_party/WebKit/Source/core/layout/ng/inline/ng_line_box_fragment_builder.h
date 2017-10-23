@@ -15,6 +15,7 @@
 namespace blink {
 
 class ComputedStyle;
+class LayoutBox;
 class NGInlineBreakToken;
 class NGInlineNode;
 class NGPhysicalFragment;
@@ -49,9 +50,12 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
 
     scoped_refptr<NGLayoutResult> layout_result;
     scoped_refptr<NGPhysicalFragment> fragment;
+    LayoutBox* out_of_flow_layout_box = nullptr;
     NGLogicalOffset offset;
 
-    bool HasFragment() const { return layout_result || fragment; }
+    bool IsEmpty() const {
+      return !layout_result && !fragment && !out_of_flow_layout_box;
+    }
     const NGPhysicalFragment* PhysicalFragment() const;
   };
 
@@ -85,6 +89,7 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
 
     void AddChild(scoped_refptr<NGLayoutResult>, const NGLogicalOffset&);
     void AddChild(scoped_refptr<NGPhysicalFragment>, const NGLogicalOffset&);
+    void AddChild(LayoutBox*, const NGLogicalOffset&);
     // nullptr child is a placeholder until enclosing inline boxes are closed
     // and we know the final box structure and their positions. This variant
     // helps to avoid needing static_cast when adding a nullptr.
@@ -97,7 +102,8 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
     Vector<Child, 16> children_;
   };
 
-  void AddChildren(ChildList&);
+  // Add a Child struct using the move semantics.
+  void AddChildByMove(Child&);
 
   // Creates the fragment. Can only be called once.
   scoped_refptr<NGLayoutResult> ToLineBoxFragment();
