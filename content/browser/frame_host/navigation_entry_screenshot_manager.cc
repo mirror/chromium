@@ -69,18 +69,22 @@ NavigationEntryScreenshotManager::NavigationEntryScreenshotManager(
 NavigationEntryScreenshotManager::~NavigationEntryScreenshotManager() {
 }
 
-void NavigationEntryScreenshotManager::TakeScreenshot() {
-  static bool overscroll_enabled = base::CommandLine::ForCurrentProcess()->
-      GetSwitchValueASCII(switches::kOverscrollHistoryNavigation) != "0";
-  if (!overscroll_enabled)
-    return;
+void NavigationEntryScreenshotManager::TakeScreenshot(
+    base::OnceCallback<void(ReadbackResponse)> callback) { /*
+static bool overscroll_enabled = base::CommandLine::ForCurrentProcess()->
+GetSwitchValueASCII(switches::kOverscrollHistoryNavigation) != "0";
+if (!overscroll_enabled)
+return;
+*/
 
   NavigationEntryImpl* entry = owner_->GetLastCommittedEntry();
   if (!entry)
     return;
 
+  /*
   if (!owner_->delegate()->CanOverscrollContent())
     return;
+  */
 
   RenderViewHost* render_view_host = owner_->delegate()->GetRenderViewHost();
   DCHECK(render_view_host && render_view_host->GetWidget());

@@ -32,7 +32,7 @@ class CONTENT_EXPORT NavigationEntryScreenshotManager {
   virtual ~NavigationEntryScreenshotManager();
 
   // Takes a screenshot of the last-committed entry of the controller.
-  void TakeScreenshot();
+  void TakeScreenshot(base::OnceCallback<void(ReadbackResponse)> callback);
 
   // Clears screenshots of all navigation entries.
   void ClearAllScreenshots();
