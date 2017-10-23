@@ -341,8 +341,10 @@ void WallpaperPrivateSetWallpaperIfExistsFunction::OnWallpaperDecoded(
   bool update_wallpaper =
       account_id_ ==
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId();
-  wallpaper_manager->SetWallpaperFromImageSkia(account_id_, image, layout,
-                                               update_wallpaper);
+  wallpaper_manager->SetCustomWallpaper(
+      account_id_, wallpaper::WallpaperFilesId(), std::string() /* file */,
+      layout, wallpaper::WallpaperType::WALLPAPER_TYPE_COUNT /* unused */,
+      image, update_wallpaper);
   bool is_persistent = !user_manager::UserManager::Get()
                             ->IsCurrentUserNonCryptohomeDataEphemeral();
   wallpaper::WallpaperInfo info = {params->url, layout, wallpaper::ONLINE,
@@ -446,8 +448,10 @@ void WallpaperPrivateSetWallpaperFunction::SetDecodedWallpaper(
   bool update_wallpaper =
       account_id_ ==
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId();
-  wallpaper_manager->SetWallpaperFromImageSkia(account_id_, *image.get(),
-                                               layout, update_wallpaper);
+  wallpaper_manager->SetCustomWallpaper(
+      account_id_, wallpaper::WallpaperFilesId(), std::string() /* file */,
+      layout, wallpaper::WallpaperType::WALLPAPER_TYPE_COUNT /* unused */,
+      *image.get(), update_wallpaper);
 
   bool is_persistent = !user_manager::UserManager::Get()
                             ->IsCurrentUserNonCryptohomeDataEphemeral();
