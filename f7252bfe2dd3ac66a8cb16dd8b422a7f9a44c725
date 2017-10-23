@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e7d6876_703d6f9b",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-23T18:24:06Z",
+      "side": 1,
+      "message": "I am not sure if we should do this. SpdySession::GetWeakPtr() is said to be only usable by SpdySessionPool in spdy_session.h. Getting a weak ptr from a raw SpdySession ptr isn\u0027t a good practice and is likely to be abused. You mentioned that this dependency on SpdySession will go away in subsequent CLs, but I am not exactly seeing how that can be done. \n\nCan you outline the steps?",
+      "revId": "f7252bfe2dd3ac66a8cb16dd8b422a7f9a44c725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
