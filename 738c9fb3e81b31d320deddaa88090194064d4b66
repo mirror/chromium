@@ -140,6 +140,30 @@
       "revId": "738c9fb3e81b31d320deddaa88090194064d4b66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38166931_8b828c0c",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7246,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-23T20:44:51Z",
+      "side": 1,
+      "message": "Looks like out of tests, and with the exception of DisplayItemList, all recording goes through PaintRecorder. You think there is benefit in having this be enforced inside a PaintOpBuffer? Feels better than having each subsequent use of the buffer be careful about it. Just a thought.",
+      "parentUuid": "9bfc6579_41271062",
+      "range": {
+        "startLine": 7246,
+        "startChar": 2,
+        "endLine": 7246,
+        "endChar": 44
+      },
+      "revId": "738c9fb3e81b31d320deddaa88090194064d4b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
