@@ -151,7 +151,7 @@ bool NotificationBitmapToGfxImage(
     return false;
 
   // Ensure we have rgba data.
-  std::vector<char>* rgba_data = notification_bitmap.data.get();
+  std::vector<uint8_t>* rgba_data = notification_bitmap.data.get();
   if (!rgba_data)
     return false;
 
@@ -171,7 +171,7 @@ bool NotificationBitmapToGfxImage(
     return false;
 
   uint32_t* pixels = bitmap.getAddr32(0, 0);
-  const char* c_rgba_data = rgba_data->data();
+  const uint8_t* c_rgba_data = rgba_data->data();
 
   for (size_t t = 0; t < rgba_area; ++t) {
     // |c_rgba_data| is RGBA, pixels is ARGB.

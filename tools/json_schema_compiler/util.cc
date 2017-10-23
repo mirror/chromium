@@ -68,7 +68,7 @@ bool PopulateItem(const base::Value& from,
   return true;
 }
 
-bool PopulateItem(const base::Value& from, std::vector<char>* out) {
+bool PopulateItem(const base::Value& from, std::vector<uint8_t>* out) {
   if (!from.is_blob())
     return false;
   *out = from.GetBlob();
@@ -76,7 +76,7 @@ bool PopulateItem(const base::Value& from, std::vector<char>* out) {
 }
 
 bool PopulateItem(const base::Value& from,
-                  std::vector<char>* out,
+                  std::vector<uint8_t>* out,
                   base::string16* error) {
   if (!from.is_blob())
     return ReportError(from, base::Value::Type::BINARY, error);

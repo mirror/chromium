@@ -81,7 +81,7 @@ class Value;
 //   }
 class BASE_EXPORT Value {
  public:
-  using BlobStorage = std::vector<char>;
+  using BlobStorage = std::vector<uint8_t>;
   using DictStorage = base::flat_map<std::string, std::unique_ptr<Value>>;
   using ListStorage = std::vector<Value>;
 

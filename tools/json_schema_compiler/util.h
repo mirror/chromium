@@ -30,9 +30,9 @@ bool PopulateItem(const base::Value& from, std::string* out);
 bool PopulateItem(const base::Value& from,
                   std::string* out,
                   base::string16* error);
-bool PopulateItem(const base::Value& from, std::vector<char>* out);
+bool PopulateItem(const base::Value& from, std::vector<uint8_t>* out);
 bool PopulateItem(const base::Value& from,
-                  std::vector<char>* out,
+                  std::vector<uint8_t>* out,
                   base::string16* error);
 bool PopulateItem(const base::Value& from,
                   std::unique_ptr<base::Value>* out,

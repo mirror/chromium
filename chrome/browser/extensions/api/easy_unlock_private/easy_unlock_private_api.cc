@@ -381,7 +381,7 @@ void EasyUnlockPrivatePerformECDHKeyAgreementFunction::OnData(
   // TODO(tbarzic): Improve error handling.
   if (!secret_key.empty()) {
     results_ = easy_unlock_private::PerformECDHKeyAgreement::Results::Create(
-        std::vector<char>(secret_key.begin(), secret_key.end()));
+        std::vector<uint8_t>(secret_key.begin(), secret_key.end()));
   }
   SendResponse(true);
 }
@@ -405,8 +405,8 @@ void EasyUnlockPrivateGenerateEcP256KeyPairFunction::OnData(
   // TODO(tbarzic): Improve error handling.
   if (!public_key.empty() && !private_key.empty()) {
     results_ = easy_unlock_private::GenerateEcP256KeyPair::Results::Create(
-        std::vector<char>(public_key.begin(), public_key.end()),
-        std::vector<char>(private_key.begin(), private_key.end()));
+        std::vector<uint8_t>(public_key.begin(), public_key.end()),
+        std::vector<uint8_t>(private_key.begin(), private_key.end()));
   }
   SendResponse(true);
 }
@@ -434,7 +434,7 @@ void EasyUnlockPrivateCreateSecureMessageFunction::OnData(
   // TODO(tbarzic): Improve error handling.
   if (!message.empty()) {
     results_ = easy_unlock_private::CreateSecureMessage::Results::Create(
-        std::vector<char>(message.begin(), message.end()));
+        std::vector<uint8_t>(message.begin(), message.end()));
   }
   SendResponse(true);
 }
@@ -462,7 +462,7 @@ void EasyUnlockPrivateUnwrapSecureMessageFunction::OnData(
   // TODO(tbarzic): Improve error handling.
   if (!data.empty()) {
     results_ = easy_unlock_private::UnwrapSecureMessage::Results::Create(
-        std::vector<char>(data.begin(), data.end()));
+        std::vector<uint8_t>(data.begin(), data.end()));
   }
   SendResponse(true);
 }
@@ -859,8 +859,8 @@ void EasyUnlockPrivateGetSignInChallengeFunction::OnDone(
     const std::string& challenge,
     const std::string& signed_nonce) {
   results_ = easy_unlock_private::GetSignInChallenge::Results::Create(
-      std::vector<char>(challenge.begin(), challenge.end()),
-      std::vector<char>(signed_nonce.begin(), signed_nonce.end()));
+      std::vector<uint8_t>(challenge.begin(), challenge.end()),
+      std::vector<uint8_t>(signed_nonce.begin(), signed_nonce.end()));
   SendResponse(true);
 }
 

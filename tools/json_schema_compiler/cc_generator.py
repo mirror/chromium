@@ -895,8 +895,7 @@ class _Generator(object):
         .Sblock('else {')
       )
       if is_ptr:
-        c.Append(
-            '%(dst_var)s.reset(new std::vector<char>(%(src_var)s->GetBlob()));')
+        c.Append('%(dst_var)s.reset(new %(cpp_type)s(%(src_var)s->GetBlob()));')
       else:
         c.Append('%(dst_var)s = %(src_var)s->GetBlob();')
       c.Eblock('}')
