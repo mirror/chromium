@@ -16,6 +16,24 @@
       "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63d0a69_a00b58f8",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-23T19:55:53Z",
+      "side": 1,
+      "message": "Instances enum IconType can only have the values listed above, no bitmask combinations. For cases where icon types are combined, we cast to int first, for example in APIs like https://cs.chromium.org/chromium/src/components/history/core/browser/history_service.h?l\u003d671\u0026rcl\u003d027bc13a7481ee005d535e7fcd433990a0924343",
+      "parentUuid": "4f44d5d3_4c69f1da",
+      "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
