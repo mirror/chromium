@@ -34,6 +34,24 @@
       "revId": "3e8803de0740875c6d87ec1a3e9474cf80d063b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1078d19f_3b2be11d",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-23T16:50:02Z",
+      "side": 1,
+      "message": "It\u0027s crbug.com/776050 that I meant to link to.",
+      "parentUuid": "7fa5c455_e42825d7",
+      "revId": "3e8803de0740875c6d87ec1a3e9474cf80d063b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
