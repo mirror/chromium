@@ -408,9 +408,19 @@ void FindBadConstructsConsumer::CheckCtorDtorWeight(
                 it->isMoveConstructor() &&
                 !record->hasUserDeclaredMoveConstructor() &&
                 record->hasAttr<DLLExportAttr>();
-            if (!is_likely_compiler_generated_dllexport_move_ctor)
+            if (!is_likely_compiler_generated_dllexport_move_ctor) {
               ReportIfSpellingLocNotIgnored(it->getInnerLocStart(),
                                             diag_inline_complex_ctor_);
+              printf("Funny MSVC workaround incoming\n");
+              printf("Has inline body? %d\n", it->hasInlineBody());
+              printf("Copy constructor? %d\n", it->isCopyConstructor());
+              printf("Move constructor? %d\n", it->isMoveConstructor());
+              printf("Has user declared copy ctor? %d\n",
+                     record->hasUserDeclaredCopyConstructor());
+              printf("Has user declared move ctor? %d\n",
+                     record->hasUserDeclaredMoveConstructor());
+              printf("Inlined? %d\n", it->isInlined());
+            }
           }
         } else if (it->isInlined() && !it->isInlineSpecified() &&
                    !it->isDeleted() && (!it->isCopyOrMoveConstructor() ||
@@ -422,6 +432,15 @@ void FindBadConstructsConsumer::CheckCtorDtorWeight(
           // explicitly defaulted copy or move constructor.
           ReportIfSpellingLocNotIgnored(it->getInnerLocStart(),
                                         diag_inline_complex_ctor_);
+          printf("*shrug*\n");
+          printf("Has inline body? %d\n", it->hasInlineBody());
+          printf("Copy constructor? %d\n", it->isCopyConstructor());
+          printf("Move constructor? %d\n", it->isMoveConstructor());
+          printf("Has user declared copy ctor? %d\n",
+                 record->hasUserDeclaredCopyConstructor());
+          printf("Has user declared move ctor? %d\n",
+                 record->hasUserDeclaredMoveConstructor());
+          printf("Inlined? %d\n", it->isInlined());
         }
       }
     }
