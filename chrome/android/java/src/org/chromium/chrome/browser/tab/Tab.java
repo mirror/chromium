@@ -2415,8 +2415,8 @@ public class Tab
         int originalWidth = 0;
         int originalHeight = 0;
         if (mContentViewCore != null) {
-            originalWidth = mContentViewCore.getViewportWidthPix();
-            originalHeight = mContentViewCore.getViewportHeightPix();
+            originalWidth = getViewportWidthPix();
+            originalHeight = getViewportHeightPix();
             mContentViewCore.onHide();
         }
 
@@ -2435,7 +2435,6 @@ public class Tab
         // (zero) to the renderer process, although the new size will be set soon.
         // However, this size fluttering may confuse Blink and rendered result can be broken
         // (see http://crbug.com/340987).
-        newContentViewCore.onSizeChanged(originalWidth, originalHeight, 0, 0);
         newContentViewCore.getWebContents().setSize(originalWidth, originalHeight);
 
         if (!bounds.isEmpty()) {
@@ -2695,6 +2694,37 @@ public class Tab
     }
 
     /**
+     * Sets the height of the top controls.
+     *
+     * @param toControlsHeightPix The height of the browser controls in pixels.
+     * @param topControlsShrinkBlinkSize {@code true} if Blink layout size should be relative
+     *                                   to the size of this View.
+     */
+    public void setTopControlsHeight(int topControlsHeightPix, boolean topControlsShrinkBlinkSize) {
+        if (mContentViewCore != null) {
+            nativeSetTopControlsHeight(
+                    mNativeTabAndroid, topControlsHeightPix, topControlsShrinkBlinkSize);
+        }
+    }
+
+    /**
+     * Returns the height of the top controls in physical pixel.
+     */
+    @VisibleForTesting
+    public int getTopControlsHeight() {
+        return mFullscreenManager != null ? mFullscreenManager.getTopControlsHeight() : 0;
+    }
+
+    /**
+     * Sets the height of the bottom controls. If necessary, triggers a renderer resize.
+     */
+    public void setBottomControlsHeight(int bottomControlHeightPix) {
+        if (mContentViewCore != null) {
+            nativeSetBottomControlsHeight(mNativeTabAndroid, bottomControlHeightPix);
+        }
+    }
+
+    /**
      * Performs any subclass-specific tasks when the Tab crashes.
      */
     void handleTabCrash() {
@@ -2926,6 +2956,15 @@ public class Tab
         return 0;
     }
 
+    @VisibleForTesting
+    public int getViewportWidthPix() {
+        return nativeGetViewportWidthPix(mNativeTabAndroid, getWebContents());
+    }
+
+    public int getViewportHeightPix() {
+        return nativeGetViewportHeightPix(mNativeTabAndroid, getWebContents());
+    }
+
     /**
      * @return the UMA object for the tab. Note that this may be null in some
      * cases.
@@ -3053,7 +3092,6 @@ public class Tab
         Rect bounds = getEstimatedContentSize(context);
         int width = bounds.right - bounds.left;
         int height = bounds.bottom - bounds.top;
-        tab.getContentViewCore().onSizeChanged(width, height, 0, 0);
         tab.getWebContents().setSize(width, height);
 
         tab.detach();
@@ -3286,6 +3324,8 @@ public class Tab
     private native void nativeOnPhysicalBackingSizeChanged(
             long nativeTabAndroid, WebContents webContents, int width, int height);
     private native Profile nativeGetProfileAndroid(long nativeTabAndroid);
+    private native int nativeGetViewportWidthPix(long nativeTabAndroid, WebContents webContents);
+    private native int nativeGetViewportHeightPix(long nativeTabAndroid, WebContents webContents);
     private native int nativeLoadUrl(long nativeTabAndroid, String url, String extraHeaders,
             ResourceRequestBody postData, int transition, String referrerUrl, int referrerPolicy,
             boolean isRendererInitiated, boolean shoulReplaceCurrentEntry,
@@ -3298,6 +3338,10 @@ public class Tab
     private native void nativeCreateHistoricalTab(long nativeTabAndroid);
     private native void nativeUpdateBrowserControlsState(
             long nativeTabAndroid, int constraints, int current, boolean animate);
+    private native void nativeSetTopControlsHeight(
+            long nativeTabAndroid, int topControlsHeightPix, boolean topControlsShrinkBlinkSize);
+    private native void nativeSetBottomControlsHeight(
+            long nativeTabAndroid, int bottomControlHeightPix);
     private native void nativeLoadOriginalImage(long nativeTabAndroid);
     private native long nativeGetBookmarkId(long nativeTabAndroid, boolean onlyEditable);
     private native void nativeSetInterceptNavigationDelegate(long nativeTabAndroid,

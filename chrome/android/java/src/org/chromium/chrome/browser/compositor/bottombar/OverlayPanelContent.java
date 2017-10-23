@@ -350,8 +350,8 @@ public class OverlayPanelContent {
             onPhysicalBackingSizeChanged(mContentViewWidth, mContentViewHeight);
         }
 
-        mContentViewCore.setTopControlsHeight(mBarHeightPx, false);
-        mContentViewCore.setBottomControlsHeight(0);
+        mActivity.getCompositorViewHolder().getCompositorView().setControlsHeight(
+                getWebContents(), mBarHeightPx, 0);
     }
 
     /**
@@ -496,9 +496,10 @@ public class OverlayPanelContent {
     }
 
     void onSizeChanged(int width, int height) {
-        if (mContentViewCore == null) return;
-        mContentViewCore.onSizeChanged(width, height, mContentViewCore.getViewportWidthPix(),
-                mContentViewCore.getViewportHeightPix());
+        WebContents webContents = getWebContents();
+        if (webContents != null) {
+            nativeOnSizeChanged(mNativeOverlayPanelContentPtr, webContents, width, height);
+        }
     }
 
     void onPhysicalBackingSizeChanged(int width, int height) {
@@ -539,6 +540,8 @@ public class OverlayPanelContent {
     private native void nativeDestroy(long nativeOverlayPanelContent);
     private native void nativeRemoveLastHistoryEntry(
             long nativeOverlayPanelContent, String historyUrl, long urlTimeMs);
+    private native void nativeOnSizeChanged(
+            long nativeOverlayPanelContent, WebContents webContents, int width, int height);
     private native void nativeOnPhysicalBackingSizeChanged(
             long nativeOverlayPanelContent, WebContents webContents, int width, int height);
     private native void nativeSetWebContents(long nativeOverlayPanelContent,

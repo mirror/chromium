@@ -281,6 +281,13 @@ public class CompositorView
         nativeOnPhysicalBackingSizeChanged(mNativeCompositorView, webContents, width, height);
     }
 
+    public void setControlsHeight(
+            WebContents webContents, int topControlsHeight, int bottomControlsHeight) {
+        if (webContents == null) return;
+        nativeSetControlsHeight(
+                mNativeCompositorView, webContents, topControlsHeight, bottomControlsHeight);
+    }
+
     @CalledByNative
     private void onCompositorLayout() {
         mRenderHost.onCompositorLayout();
@@ -415,6 +422,8 @@ public class CompositorView
             long nativeCompositorView, int format, int width, int height, Surface surface);
     private native void nativeOnPhysicalBackingSizeChanged(
             long nativeCompositorView, WebContents webContents, int width, int height);
+    private native void nativeSetControlsHeight(long nativeCompositorView, WebContents webContents,
+            int topControlsHeight, int bottomControlsHeight);
     private native void nativeFinalizeLayers(long nativeCompositorView);
     private native void nativeSetNeedsComposite(long nativeCompositorView);
     private native void nativeSetLayoutBounds(long nativeCompositorView);

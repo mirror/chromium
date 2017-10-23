@@ -74,6 +74,12 @@ class CompositorView : public content::CompositorClient,
       const base::android::JavaParamRef<jobject>& jweb_contents,
       jint width,
       jint height);
+  void SetControlsHeight(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& jweb_contents,
+      jint top_controls_height,
+      jint bottom_controls_height);
 
   void SetOverlayVideoMode(JNIEnv* env,
                            const base::android::JavaParamRef<jobject>& object,

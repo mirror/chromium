@@ -53,6 +53,17 @@ void OverlayPanelContent::Destroy(JNIEnv* env,
   delete this;
 }
 
+void OverlayPanelContent::OnSizeChanged(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jweb_contents,
+    jint width,
+    jint height) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  web_contents->GetNativeView()->OnSizeChanged(width, height);
+}
+
 void OverlayPanelContent::OnPhysicalBackingSizeChanged(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
