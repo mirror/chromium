@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58c7354f_17de4d94",
+        "filename": "third_party/WebKit/Source/modules/battery/NavigatorBattery.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-23T19:23:13Z",
+      "side": 1,
+      "message": "I\u0027ll change this to |context| in the next patchset.",
+      "range": {
+        "startLine": 39,
+        "startChar": 31,
+        "endLine": 39,
+        "endChar": 67
+      },
+      "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
