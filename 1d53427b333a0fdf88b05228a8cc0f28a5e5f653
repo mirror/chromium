@@ -51,6 +51,24 @@
       "revId": "1d53427b333a0fdf88b05228a8cc0f28a5e5f653",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82061e95_386b6685",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-10-23T21:55:03Z",
+      "side": 1,
+      "message": "I understand the reasoning; even if \"ended\" semantically makes the most sense, it would be harmful if people start depending on that behavior only to have it change later.",
+      "parentUuid": "d152bb58_04968f4f",
+      "revId": "1d53427b333a0fdf88b05228a8cc0f28a5e5f653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
