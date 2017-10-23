@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c93b63d_de94032e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 3925,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-23T23:09:08Z",
+      "side": 1,
+      "message": "I\u0027m OK with replacing DidPromotePrerenderTab() on line 3902 with DidInitiatePageLoad() (and this is done), but we won\u0027t be able to combine that with this line (3926) because they are operating on two different tab objects.",
+      "parentUuid": "980189ae_28bd7e2e",
+      "range": {
+        "startLine": 3925,
+        "startChar": 6,
+        "endLine": 3925,
+        "endChar": 30
+      },
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af20125_d8b6d77b",
         "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30d8ebb_ade3eb4c",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-23T23:09:08Z",
+      "side": 1,
+      "message": "Yes. If we want to filter out failed navigations, I think it\u0027s cleaner to add a checkto BVC\u0027s |-tabLoadComplete:withSuccess|.",
+      "parentUuid": "1af20125_d8b6d77b",
+      "range": {
+        "startLine": 36,
+        "startChar": 26,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ce4a4b1b_5f22e373",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-23T23:09:08Z",
+      "side": 1,
+      "message": "I think it should be OK because we just need the wait time to be non-zero so we can differentiate the prerender case. It\u0027s not important anymore since the prerender case is merged into DidInitiatePageLoad().",
+      "parentUuid": "a00d28ad_146a3536",
+      "range": {
+        "startLine": 36,
+        "startChar": 36,
+        "endLine": 36,
+        "endChar": 45
+      },
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98388e2d_ec8c9cb6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab70f8be_9ca12846",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29738,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-23T23:09:08Z",
+      "side": 1,
+      "message": "Done. I didn\u0027t refer to the types verbatim because none of the other metric descriptions refer to enum names. Instead I tried to document the scenarios.",
+      "parentUuid": "98388e2d_ec8c9cb6",
+      "range": {
+        "startLine": 29738,
+        "startChar": 20,
+        "endLine": 29738,
+        "endChar": 0
+      },
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
