@@ -750,6 +750,20 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   toolbarFrame.size.height = CGRectGetHeight([[_toolbarController view] frame]);
   [[_toolbarController view] setFrame:toolbarFrame];
   [self.view addSubview:[_toolbarController view]];
+
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    [[_toolbarController view].leadingAnchor
+        constraintEqualToAnchor:self.view.leadingAnchor]
+        .active = YES;
+    [[_toolbarController view].trailingAnchor
+        constraintEqualToAnchor:self.view.trailingAnchor]
+        .active = YES;
+    [[_toolbarController view].topAnchor
+        constraintEqualToAnchor:self.view.topAnchor]
+        .active = YES;
+    [[_toolbarController view] setNeedsLayout];
+  }
+
   [self updateToolbarAppearanceWithAnimation:NO];
 
   InstallBackgroundInView(_backgroundView);
@@ -785,6 +799,15 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   [self prepareForDisplay];
 }
 
+- (void)viewSafeAreaInsetsDidChange {
+  [super viewSafeAreaInsetsDidChange];
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    [_toolbarController heightConstraint].constant =
+        [_toolbarController preferredToolbarHeightWhenAlignedToTopOfScreen];
+    [[_toolbarController view] setNeedsLayout];
+  }
+}
+
 - (void)viewWillAppear:(BOOL)animated {
   _isActive = YES;
   // Sizing steps need to be done here rather than viewDidLoad since they
@@ -812,6 +835,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   // the last time the stack view was shown.
   _gestureStateTracker = [[GestureStateTracker alloc] init];
 
+  [[_toolbarController view] setNeedsLayout];
   [super viewWillAppear:animated];
 }
 
@@ -1912,6 +1936,14 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   [_activeCardSet.displayView
       insertSubview:self.transitionToolbarController.view
        aboveSubview:_activeCardSet.currentCard.view];
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    [self.transitionToolbarController.view.leadingAnchor
+        constraintEqualToAnchor:_activeCardSet.displayView.leadingAnchor]
+        .active = YES;
+    [self.transitionToolbarController.view.trailingAnchor
+        constraintEqualToAnchor:_activeCardSet.displayView.trailingAnchor]
+        .active = YES;
+  }
   CGRect toolbarFrame =
       [_activeCardSet.displayView convertRect:[_toolbarController view].frame
                                      fromView:self.view];
