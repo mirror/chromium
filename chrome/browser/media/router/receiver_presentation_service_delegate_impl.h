@@ -17,7 +17,7 @@ class WebContents;
 
 namespace media_router {
 
-class OffscreenPresentationManager;
+class LocalPresentationManager;
 
 // Implements the receiver side of Presentation API for offscreen presentation.
 // Created with offscreen WebContents for an offscreen presentation. Each
@@ -33,7 +33,7 @@ class ReceiverPresentationServiceDelegateImpl
  public:
   // Creates an instance of ReceiverPresentationServiceDelegateImpl under
   // |web_contents| and registers it as the receiver of the offscreen
-  // presentation |presentation_id| with OffscreenPresentationManager.
+  // presentation |presentation_id| with LocalPresentationManager.
   // No-op if a ReceiverPresentationServiceDelegateImpl instance already
   // exists under |web_contents|. This class does not take ownership of
   // |web_contents|.
@@ -63,8 +63,8 @@ class ReceiverPresentationServiceDelegateImpl
 
   const std::string presentation_id_;
 
-  // This is an unowned pointer to the OffscreenPresentationManager.
-  OffscreenPresentationManager* const offscreen_presentation_manager_;
+  // This is an unowned pointer to the LocalPresentationManager.
+  LocalPresentationManager* const local_presentation_manager_;
 
   PresentationServiceDelegateObservers observers_;
 

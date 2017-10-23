@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_MEDIA_ROUTER_OFFSCREEN_PRESENTATION_MANAGER_H_
-#define CHROME_BROWSER_MEDIA_ROUTER_OFFSCREEN_PRESENTATION_MANAGER_H_
+#ifndef CHROME_BROWSER_MEDIA_ROUTER_LOCAL_PRESENTATION_MANAGER_H_
+#define CHROME_BROWSER_MEDIA_ROUTER_LOCAL_PRESENTATION_MANAGER_H_
 
 #include <map>
 #include <memory>
@@ -35,8 +35,8 @@ namespace media_router {
 // Receiver is created to host the offscreen presentation and registers itself
 // so that controller frames can connect to it:
 //
-//   OffscreenPresentationManager* manager =
-//       OffscreenPresentationManagerFactory::GetOrCreateForBrowserContext(
+//   LocalPresentationManager* manager =
+//       LocalPresentationManagerFactory::GetOrCreateForBrowserContext(
 //           web_contents_->GetBrowserContext());
 //   manager->OnOffscreenPresentationReceiverCreated(presentation_info,
 //       base::Bind(&PresentationServiceImpl::OnReceiverConnectionAvailable));
@@ -89,21 +89,21 @@ namespace media_router {
 // navigation) by unregistering themselves from OffscreenPresentation object.
 //
 // When the receiver is no longer associated with an offscreen presentation, it
-// shall unregister itself with OffscreenPresentationManager. Unregistration
+// shall unregister itself with LocalPresentationManager. Unregistration
 // will prevent additional controllers from establishing a connection with the
 // receiver:
 //
 //   In receiver's PSImpl::Reset() {
-//     offscreen_presentation_manager->
+//     local_presentation_manager->
 //         OnOffscreenPresentationReceiverTerminated(presentation_id);
 //   }
 //
 // This class is not thread safe. All functions must be invoked on the UI
 // thread. All callbacks passed into this class will also be invoked on UI
 // thread.
-class OffscreenPresentationManager : public KeyedService {
+class LocalPresentationManager : public KeyedService {
  public:
-  ~OffscreenPresentationManager() override;
+  ~LocalPresentationManager() override;
 
   // Registers controller PresentationConnectionPtr to presentation with
   // |presentation_id| and |render_frame_id|.
@@ -148,9 +148,9 @@ class OffscreenPresentationManager : public KeyedService {
 
  private:
   // Represents an offscreen presentation registered with
-  // OffscreenPresentationManager. Contains callback to the receiver to inform
+  // LocalPresentationManager. Contains callback to the receiver to inform
   // it of new connections established from a controller. Contains set of
-  // controllers registered to OffscreenPresentationManager before corresponding
+  // controllers registered to LocalPresentationManager before corresponding
   // receiver.
   class OffscreenPresentation {
    public:
@@ -182,8 +182,8 @@ class OffscreenPresentationManager : public KeyedService {
         const content::ReceiverConnectionAvailableCallback& receiver_callback);
 
    private:
-    friend class OffscreenPresentationManagerTest;
-    friend class OffscreenPresentationManager;
+    friend class LocalPresentationManagerTest;
+    friend class LocalPresentationManager;
 
     // Returns false if receiver_callback_ is null and there are no pending
     // controllers.
@@ -222,14 +222,14 @@ class OffscreenPresentationManager : public KeyedService {
   };
 
  private:
-  friend class OffscreenPresentationManagerFactory;
-  friend class OffscreenPresentationManagerTest;
-  friend class MockOffscreenPresentationManager;
+  friend class LocalPresentationManagerFactory;
+  friend class LocalPresentationManagerTest;
+  friend class MockLocalPresentationManager;
   FRIEND_TEST_ALL_PREFIXES(PresentationServiceDelegateImplTest,
                            ConnectToOffscreenPresentation);
 
-  // Used by OffscreenPresentationManagerFactory::GetOrCreateForBrowserContext.
-  OffscreenPresentationManager();
+  // Used by LocalPresentationManagerFactory::GetOrCreateForBrowserContext.
+  LocalPresentationManager();
 
   using OffscreenPresentationMap =
       std::map<std::string, std::unique_ptr<OffscreenPresentation>>;
@@ -243,9 +243,9 @@ class OffscreenPresentationManager : public KeyedService {
 
   base::ThreadChecker thread_checker_;
 
-  DISALLOW_COPY_AND_ASSIGN(OffscreenPresentationManager);
+  DISALLOW_COPY_AND_ASSIGN(LocalPresentationManager);
 };
 
 }  // namespace media_router
 
-#endif  // CHROME_BROWSER_MEDIA_ROUTER_OFFSCREEN_PRESENTATION_MANAGER_H_
+#endif  // CHROME_BROWSER_MEDIA_ROUTER_LOCAL_PRESENTATION_MANAGER_H_
