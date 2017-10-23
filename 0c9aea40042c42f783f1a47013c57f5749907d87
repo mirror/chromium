@@ -22,6 +22,30 @@
       "revId": "0c9aea40042c42f783f1a47013c57f5749907d87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ef3345_b0a43699",
+        "filename": "third_party/WebKit/Source/platform/exported/WebRuntimeFeatures.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-10-23T12:44:38Z",
+      "side": 1,
+      "message": "ah, thank you for pointing it out. So do you mean that RuntimeEnabledFeatures::SetTimerThrottlingForHiddenFramesEnabled should be kept here? Fixed.",
+      "parentUuid": "e53134aa_09b03edc",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 45
+      },
+      "revId": "0c9aea40042c42f783f1a47013c57f5749907d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
