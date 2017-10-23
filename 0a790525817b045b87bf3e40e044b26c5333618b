@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "182807aa_353399f2",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15bbcfc9_c14b4858",
+      "range": {
+        "startLine": 164,
+        "startChar": 57,
+        "endLine": 164,
+        "endChar": 77
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d60d0c1b_6b06abdb",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c2b83f_ef147313",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Moved them lower. Still needs to be separated from definition to add the attributes.\nDone.",
+      "parentUuid": "d60d0c1b_6b06abdb",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 44
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c8dd3597_82398ffa",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3ea3384_ec3af630",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ed0cb08_b17e3e7d",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-20T16:24:57Z",
       "side": 1,
       "message": "maybe g_function_offsets would be more intuitive? I realize that we are calculating this by getting the return address from the instrumentation hook, but outside that context it is not clear what \u0027return\u0027 is\n\nnaming things ..",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af31411d_9c24a369",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "The offset would always be inside a function, and not the offset of a function, so I think this is clearer.",
+      "parentUuid": "1ed0cb08_b17e3e7d",
       "range": {
         "startLine": 36,
         "startChar": 22,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fb5b7e05_cc010247",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Thanks for the suggestion!\nLet\u0027s try.",
+      "parentUuid": "92df2830_8d77bb2d",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21ea6a7c_2a7aaefc",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa149664_05c683ba",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21ea6a7c_2a7aaefc",
+      "range": {
+        "startLine": 43,
+        "startChar": 19,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b8964213_08aaeaa7",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Removed it, and added a comment, thanks.\nDone.",
+      "parentUuid": "6c364fe3_163b3f37",
+      "range": {
+        "startLine": 63,
+        "startChar": 42,
+        "endLine": 63,
+        "endChar": 50
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dea4eb72_49c09180",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685dbee8_775d2b3d",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Indeed, thanks!\nUpdated and added a comment.\nDone.",
+      "parentUuid": "dea4eb72_49c09180",
+      "range": {
+        "startLine": 64,
+        "startChar": 42,
+        "endLine": 64,
+        "endChar": 67
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "2197246e_a5255512",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "The instrumentation function doesn\u0027t call anything, hence no risk of recursion.",
+      "parentUuid": "2f77aebf_481153d9",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 12
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b26d389_2e4fe568",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -229,6 +445,30 @@
       "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e081e07_c34936cc",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "As above, no issue here.",
+      "parentUuid": "7b26d389_2e4fe568",
+      "range": {
+        "startLine": 85,
+        "startChar": 60,
+        "endLine": 86,
+        "endChar": 23
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "5c33b581_8d01d29d",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42c0d243_397ad6c3",
+      "range": {
+        "startLine": 94,
+        "startChar": 24,
+        "endLine": 94,
+        "endChar": 76
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "277089ad_7fb64e8e",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -275,6 +539,30 @@
       "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa9d9de_a74f87a3",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Looking forward to the \"advancing our incredible format\" commit.\nDone.",
+      "parentUuid": "277089ad_7fb64e8e",
+      "range": {
+        "startLine": 99,
+        "startChar": 32,
+        "endLine": 99,
+        "endChar": 63
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "d1c48b93_29fde1ce",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48a543a9_934cb785",
+      "range": {
+        "startLine": 103,
+        "startChar": 7,
+        "endLine": 103,
+        "endChar": 24
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c44f65_5f27799a",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -312,6 +624,30 @@
       "writtenOn": "2017-10-20T16:24:57Z",
       "side": 1,
       "message": "let\u0027s dump only until the last non-zero bit. Faster, less assumptions to carry to the mergetraces/whatever",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 110,
+        "endChar": 59
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4f11d3_91c9dc6d",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "It also makes it harder to know whether the file was truncated.",
+      "parentUuid": "50c44f65_5f27799a",
       "range": {
         "startLine": 110,
         "startChar": 8,
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "82a46ae1_f54a9f49",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67419586_247196bb",
+      "range": {
+        "startLine": 120,
+        "startChar": 69,
+        "endLine": 120,
+        "endChar": 72
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f3a5a9a_9b4da030",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -367,6 +727,30 @@
       "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a963e1fe_0411ead4",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-23T13:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f3a5a9a_9b4da030",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 13
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
