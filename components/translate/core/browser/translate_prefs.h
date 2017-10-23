@@ -96,6 +96,16 @@ class TranslatePrefs {
   static const char kPrefTranslateAutoNeverCount[];
 #endif
 
+  // This parameter specifies how the language should be moved within the list.
+  enum RearrangeSpecifier {
+    // Move the language to the very top of the list.
+    TOP,
+    // Move the language up by one position.
+    UP,
+    // Move the language down by one position.
+    DOWN
+  };
+
   // |preferred_languages_pref| is only used on Chrome OS, other platforms must
   // pass NULL.
   TranslatePrefs(PrefService* user_prefs,
@@ -127,6 +137,16 @@ class TranslatePrefs {
   void AddToLanguageList(const std::string& language, bool force_blocked);
   // Removes the language from the language list at chrome://settings/languages.
   void RemoveFromLanguageList(const std::string& language);
+
+  // Rearranges the given language inside the language list.
+  // The target position is specified as a RearrangeSpecifier.
+  // The param |enabled_languages| is a comma-separated string of languages that
+  // are enabled in the current UI. This is required because the full language
+  // list contains some languages that might not be enabled in the current UI
+  // and we need to skip those languages while rearranging the list.
+  void RearrangeLanguage(const std::string& language,
+                         RearrangeSpecifier where,
+                         const std::string& enabled_languages);
 
   bool IsSiteBlacklisted(const std::string& site) const;
   void BlacklistSite(const std::string& site);
