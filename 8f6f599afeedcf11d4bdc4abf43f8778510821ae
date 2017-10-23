@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95cf1957_07fd2d93",
+        "filename": "tools/binary_size/libsupersize/diff.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-23T18:36:22Z",
+      "side": 1,
+      "message": "Precompile? I tested the following in pypy:\n\n-------- V1 --------\n  import re\n  t \u003d \u0027abc1234567\u0027\n  for i in xrange(1000000):\n    s \u003d re.sub(r\u0027\\d+\u0027, \u0027\u0027, t)\n\n-------- V2 --------\n  import re\n  r \u003d re.compile(r\u0027\\d+\u0027)\n  t \u003d \u0027abc1234567\u0027\n  for i in xrange(1000000):\n    s \u003d re.sub(r, \u0027\u0027, t)\n\nV1 \u003d\u003e ~0.74s, V2 \u003d\u003e ~0.65s, so ~12% faster.",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 22
+      },
+      "revId": "8f6f599afeedcf11d4bdc4abf43f8778510821ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c37a1d3_a2b58d32",
+        "filename": "tools/binary_size/libsupersize/diff.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-23T18:36:22Z",
+      "side": 1,
+      "message": "NIT: \"vs\" -\u003e \"vs.\"",
+      "range": {
+        "startLine": 17,
+        "startChar": 17,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "8f6f599afeedcf11d4bdc4abf43f8778510821ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7bede0_d7448434",
+        "filename": "tools/binary_size/libsupersize/diff.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-23T18:36:22Z",
+      "side": 1,
+      "message": "Reuse precompiled RegExp?",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "8f6f599afeedcf11d4bdc4abf43f8778510821ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7eb113_020b3995",
+        "filename": "tools/binary_size/libsupersize/diff.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-23T18:36:22Z",
+      "side": 1,
+      "message": "FYI this is good (faster than precompiled RegEx).",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "8f6f599afeedcf11d4bdc4abf43f8778510821ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5166427_60719842",
+        "filename": "tools/binary_size/libsupersize/diff.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-23T18:36:22Z",
+      "side": 1,
+      "message": "Precompile?",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "8f6f599afeedcf11d4bdc4abf43f8778510821ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06d6f40_5461dac5",
+        "filename": "tools/binary_size/libsupersize/diff.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-23T18:36:22Z",
+      "side": 1,
+      "message": "Optionally:\n  unmatched_before \u003d sum(before_symbols_by_key.itervalues(), [])",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 43
+      },
+      "revId": "8f6f599afeedcf11d4bdc4abf43f8778510821ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdef2146_78b22e92",
+        "filename": "tools/binary_size/libsupersize/diff.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-23T18:36:22Z",
+      "side": 1,
+      "message": "NIT: Kinda odd that input was (after, before), but return value is (before, after).",
+      "range": {
+        "startLine": 79,
+        "startChar": 24,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "8f6f599afeedcf11d4bdc4abf43f8778510821ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761d386d_c30688e6",
+        "filename": "tools/binary_size/libsupersize/diff.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-23T18:36:22Z",
+      "side": 1,
+      "message": "Optional: Should this be placed inside a loop, using [_ExactMatchKey, _GoodMatchKey, _PoorMatchKey]?\n\nAlso, these functions return tuples with different sizes, so no collision occurs in padding_by_section_name.  If purposefully and essentially, add quick comment?",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 32
+      },
+      "revId": "8f6f599afeedcf11d4bdc4abf43f8778510821ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7321c12_94cec2cf",
+        "filename": "tools/binary_size/libsupersize/models.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-23T18:36:22Z",
+      "side": 1,
+      "message": "NIT: PSS ?",
+      "range": {
+        "startLine": 863,
+        "startChar": 73,
+        "endLine": 863,
+        "endChar": 76
+      },
+      "revId": "8f6f599afeedcf11d4bdc4abf43f8778510821ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
