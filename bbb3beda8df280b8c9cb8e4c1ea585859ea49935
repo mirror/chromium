@@ -16,6 +16,24 @@
       "revId": "bbb3beda8df280b8c9cb8e4c1ea585859ea49935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29f10f5_7f4009d1",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 3920,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-23T17:30:21Z",
+      "side": 1,
+      "message": "Setting the function pointer requires linking in vr_common.lib.\n\nI was worried about linker issues - vr_common is a static lib, and it looks like browser is as well, so anything that links against browser should link against vr_common.lib (specifically test code).\n\nI\u0027m pushing up a change to try the bots with just a deps instead of public_deps.",
+      "parentUuid": "1669fe27_eb4972c3",
+      "revId": "bbb3beda8df280b8c9cb8e4c1ea585859ea49935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
