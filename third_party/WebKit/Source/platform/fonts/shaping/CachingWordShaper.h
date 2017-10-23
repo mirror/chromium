@@ -63,7 +63,6 @@ class PLATFORM_EXPORT CachingWordShaper final {
   Vector<ShapeResultBuffer::RunFontData> GetRunFontData(const TextRun&) const;
 
   GlyphData EmphasisMarkGlyphData(const TextRun&) const;
-
  private:
   ShapeCache* GetShapeCache() const;
 
