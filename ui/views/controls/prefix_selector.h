@@ -14,6 +14,11 @@
 #include "ui/base/ime/text_input_client.h"
 #include "ui/views/views_export.h"
 
+namespace gfx {
+class Rect;
+class Range;
+}  // namespace gfx
+
 namespace views {
 
 class PrefixDelegate;

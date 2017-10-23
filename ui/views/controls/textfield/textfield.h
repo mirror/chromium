@@ -34,6 +34,11 @@
 #include "ui/views/view.h"
 #include "ui/views/word_lookup_client.h"
 
+namespace gfx {
+class Rect;
+class Range;
+}  // namespace gfx
+
 namespace views {
 
 class MenuRunner;
