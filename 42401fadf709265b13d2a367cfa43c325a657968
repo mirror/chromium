@@ -69,6 +69,30 @@
       "revId": "42401fadf709265b13d2a367cfa43c325a657968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4496736_3c80c5c7",
+        "filename": "build/android/test_runner.py.vpython",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-10-23T23:51:58Z",
+      "side": 1,
+      "message": "I don\u0027t really know. The stack trace includes code from the catapult and devil projects, which have places in their code that reference optional and/or required dependencies on those packages. No idea if V8s usage of those projects hits those code paths.",
+      "parentUuid": "c20aa7df_61a21e62",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 1
+      },
+      "revId": "42401fadf709265b13d2a367cfa43c325a657968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
