@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "688bed47_a8ea485f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-10-23T08:37:47Z",
+      "side": 1,
+      "message": "Yes, the issue is that service workers that don\u0027t match the scope of the file do not trigger navigator.serviceWorker.ready.\nI moved site_data.html and empty_worker.js to test/data/browsing_data, so they are not in the top level directory anymore.\nThanks for the suggested code but I think it is better to have an additional empty file than to use a complex workaround?",
+      "parentUuid": "a1cd6fe6_9fa28ccf",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 67
+      },
+      "revId": "0b7c3787c9df2f2c6587b837886962eebbb2ef59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f71c2c5_19609fce",
         "filename": "content/test/data/empty_worker.js",
         "patchSetId": 4
