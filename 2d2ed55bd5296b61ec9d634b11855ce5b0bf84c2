@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e81e0a94_04d1052d",
+        "filename": "components/language/content/browser/geo_language_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-23T13:00:56Z",
+      "side": 1,
+      "message": "As we know that we\u0027d like to bring up this code on iOS at some point, I\u0027d prefer to avoid the layering and just inject in the task runners and Connector that are needed.\n\nThere\u0027s already a TODO in //components/language that Renjie added about bringing up this code on iOS.",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "2d2ed55bd5296b61ec9d634b11855ce5b0bf84c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185d4be7_fd468419",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-23T13:00:56Z",
+      "side": 1,
+      "message": "this doesn\u0027t work dependency-wise: the \"core/\" subdir of a component is shared between all platform, including iOS, whereas the \"content/\" subdir is for //content-based platforms, i.e., not iOS. If the target usage of GeoLanguageProvider is essentially //components/translate/core, perhaps we should try to up the priority of bringing up all this code on iOS (i.e., crbug.com/774879).",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 9
+      },
+      "revId": "2d2ed55bd5296b61ec9d634b11855ce5b0bf84c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
