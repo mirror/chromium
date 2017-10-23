@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "8f7e0eaf_d64fc6fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-23T17:51:09Z",
+      "side": 1,
+      "message": "This first sentence is hard to parse.",
+      "revId": "3c08d8cd82c40f0b1462b7435d842f51f04a9b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9512e96a_d51d68a0",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/payments/PaymentManifestVerifierTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-23T17:51:09Z",
+      "side": 1,
+      "message": "Nit: Might be nice to factor this repeated stuff into a shared place, or make them static fields of this class and then re-use them in AndroidPaymentAppFinderTest.java (or vice versa), or something.",
+      "revId": "3c08d8cd82c40f0b1462b7435d842f51f04a9b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a28d73_df42b528",
+        "filename": "chrome/browser/payments/android/payment_manifest_web_data_service_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-23T17:51:09Z",
+      "side": 1,
+      "message": "Nit: Might be nice to make a typedef/using to make this cleaner, if you end up using these types more.",
+      "revId": "3c08d8cd82c40f0b1462b7435d842f51f04a9b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "923fe647_13aa62ed",
         "filename": "chrome/browser/payments/payment_manifest_parser_browsertest.cc",
         "patchSetId": 4
