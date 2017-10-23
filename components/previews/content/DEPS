@@ -1,0 +1,5 @@
+include_rules = [
+  "+net",
+  "+content/public/common/content_export.h",
+  "+content/public/common/previews_state.h",
+]
