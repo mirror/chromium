@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "724bfcc1_ea5604a1",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-23T09:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e53730d_44c37690",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4acff9b4_2d837a0a",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f939d665_c880bafb",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-23T09:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4acff9b4_2d837a0a",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "67de5f25_d9566af1",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-23T09:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad4b7511_537c8416",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b0f168a_cc89b965",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72938d4c_8456dbd8",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-23T09:48:42Z",
+      "side": 1,
+      "message": "I agree that this is conceptually wrong, removed |last_observation_|.",
+      "parentUuid": "0b0f168a_cc89b965",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9ba77b4a_bd84bd16",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-23T09:48:42Z",
+      "side": 1,
+      "message": "Switched to kPageFaultEscalationThreshold as suggested in the comment below.",
+      "parentUuid": "478f482e_9f08f523",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be5d150d_918220d0",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ede98c3_c0db2637",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-23T09:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be5d150d_918220d0",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
