@@ -16,13 +16,13 @@ using ::payments::mojom::blink::BasicCardType;
 class BasicCardHelper {
  public:
   // Parse 'basic-card' data in |input| and store result in
-  // |supported_networks_output| and |supported_types_output| or throw error
-  // through |exception_state|.
+  // |supported_networks_output| and |supported_types_output| or throw
+  // exception.
   static void parseBasiccardData(
       const ScriptValue& input,
       Vector<BasicCardNetwork>& supported_networks_output,
       Vector<BasicCardType>& supported_types_output,
-      ExceptionState& exception_state);
+      ExceptionState&);
 
   // Check whether |input| contains 'basic-card' network names.
   static bool containsNetworkNames(const Vector<String>& input);
