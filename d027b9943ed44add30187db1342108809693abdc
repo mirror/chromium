@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b33b8a56_473cfb45",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T19:36:11Z",
+      "side": 1,
+      "message": "Please follow the commenting and structure best practices for enum histograms.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms\n\n(For example, the current comment implies only that it must be kept in sync with enums.xml.  But that\u0027s not strong enough.  Values cannot change or be reused.)",
+      "revId": "d027b9943ed44add30187db1342108809693abdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b45d7d4_107f56a1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 37498,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T19:36:11Z",
+      "side": 1,
+      "message": "I tend to prefer that users don\u0027t add new top-level namespaces.  Is there a more natural namescape that this can go in?",
+      "revId": "d027b9943ed44add30187db1342108809693abdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a2eddd_9860fc71",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 37501,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T19:36:11Z",
+      "side": 1,
+      "message": "I see the didFailToShareItems() calls RecordShareToUMA().\nDoes didFailToShareItems also get called for user-canceled shares?  That\u0027s surprising to me.  Or did you forget to add a call to RecordShareToUMA() in the canceled code path?",
+      "revId": "d027b9943ed44add30187db1342108809693abdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
