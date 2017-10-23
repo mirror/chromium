@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1669fe27_eb4972c3",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 3920,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-23T15:17:06Z",
+      "side": 1,
+      "message": "why public_deps? you\u0027re not including the feature header in a .h file, so shouldn\u0027t a regular deps entry be enough?",
+      "revId": "bbb3beda8df280b8c9cb8e4c1ea585859ea49935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
