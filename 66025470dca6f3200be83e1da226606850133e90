@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "becc57fa_ccee4043",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-23T23:45:09Z",
+      "side": 1,
+      "message": "Will do before this checks in.",
+      "parentUuid": "0bec588d_cdc615f3",
+      "revId": "66025470dca6f3200be83e1da226606850133e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7ca7ad2_287bfa37",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "66025470dca6f3200be83e1da226606850133e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4076f8f5_30c90924",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-23T23:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7ca7ad2_287bfa37",
+      "revId": "66025470dca6f3200be83e1da226606850133e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3fc2d1c5_bbd8b8b7",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1665,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-23T23:45:09Z",
+      "side": 1,
+      "message": "+msw for suggestions.",
+      "parentUuid": "37f9ff68_61a42782",
+      "revId": "66025470dca6f3200be83e1da226606850133e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b008bd08_8c63469d",
         "filename": "ui/views/controls/textfield/textfield.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "66025470dca6f3200be83e1da226606850133e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48aecee_d21555c6",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-23T23:45:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b008bd08_8c63469d",
+      "revId": "66025470dca6f3200be83e1da226606850133e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
