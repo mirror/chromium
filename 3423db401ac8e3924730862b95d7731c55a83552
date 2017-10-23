@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8839ec07_fe384f5f",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-23T21:56:12Z",
+      "side": 1,
+      "message": "This shouldn\u0027t cause a problem because the page actually navigates and opens a new tab, unlike OnSignInLinkClicked, which opens the Sign on bubble instead.\n\nWhen the tab switches to the new, Bubble Manager will close all of the bubbles associated with the previous tab, which includes the Extension Installed bubble UI",
+      "parentUuid": "1dfcd856_dba2ed0e",
+      "revId": "3423db401ac8e3924730862b95d7731c55a83552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2ae3a89_43974e29",
         "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T08:05:11Z",
       "side": 1,
       "message": "usually this also needs to be paired with OnWidgetDestroying ... there\u0027s typically no guarantee that OnWidgetClosing is invoked -- it\u0027s only triggered by calls to Widget::Close() but any request to close a window coming from the system will not do that.\n\nCan you add an override of OnWidgetDestroying(), then trace with the repro to see if that\u0027s happening?",
+      "revId": "3423db401ac8e3924730862b95d7731c55a83552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a536d11c_49e0f18e",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-23T21:56:12Z",
+      "side": 1,
+      "message": "Good point, I added the OnWidgetDestroying() override. Unfortunately, I can\u0027t trace this with the repro since I can no longer repro this issue.",
+      "parentUuid": "b2ae3a89_43974e29",
       "revId": "3423db401ac8e3924730862b95d7731c55a83552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
