@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f281b869_04c59981",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 0,
+      "message": "Is it safe to ignore the old (non-fullscreen) config now?\n(if so, hopefully there\u0027s a concerted effort to clean that up)",
+      "revId": "f3fda87e68cdaaf5f54edbc370635ae9c9bad74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c92c76_3274b345",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 0,
+      "message": "What happened to testing VKEY_PRIOR and VKEY_NEXT?",
+      "revId": "f3fda87e68cdaaf5f54edbc370635ae9c9bad74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76530a9a_73b2ed0a",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 0,
+      "message": "q: Again, why inline these checks?",
+      "revId": "f3fda87e68cdaaf5f54edbc370635ae9c9bad74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

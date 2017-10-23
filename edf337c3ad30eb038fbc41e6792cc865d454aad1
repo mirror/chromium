@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d336988a_6ac5a292",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "nit: This comment is a sentence fragment and probably isn\u0027t needed, since it describes the conditional but not the action taken or the reasoning for the action. If you keep this comment, it should be \"has a selection\", and maybe describe why it\u0027s assigning to |handled|. eg. \"Consume the key event if it\u0027s handled by the selected suggestion.\" (I\u0027m not sure if there\u0027s more to say, or how the TODO above is related)",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717aa35e_e568e113",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "nit: \"selected in LTR\" (and \"in RTL below\") or \u0027with\u0027 for both...",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda7d3b1_93b8ea64",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "Does this need to be restored on TearDown? Consider using a scoped helper?",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35cc321c_93becca0",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "nit: \"coordinates, and fixed for RTL.\"",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891549e6_3d6d03d6",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "nit: \"edge and test the other direction\"?",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d6a6bd_8a89a258",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "nit: be consistent about \"focusing\" the search box and \"selecting\" an app item.",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8a8aba_9c7060cc",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "Is it important that all these fixtures show \u003c# per page\u003e + 1 apps? If so, maybe add a helper function, and if not, maybe just use some existing apps, or just add a few items instead? (reduce the setup per fixture if possible, or make it clear that we just need some number apps, not a certain number)",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e67917_e167cf87",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "Check (or set) the initial state before VKEY_DOWN? Ditto elsewhere?",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6f2a2e_778c58fb",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "Call CheckSelectionAtSuggestionsContainer(0) instead of duplicating its contents here and similar comments for the other checks below with CheckNoSelection() and CheckSelectionAtAppsGridView()",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adff113c_a9608e1d",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "Should that focus the search box? Can you test that?",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1fe421c_24f7c09e",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "This description is a little confusing, consider something like \"Tests that moving the selection backwards (eg. left in LTR) selects nothing.\" Again, I also wonder if this should focus the search box or something instead of focusing nothing, and it might be nice if this fixture also tested that immediately moving in the opposite direction restores the selection of the first app (ie. user isn\u0027t stuck in a no-selection/focus state), so maybe combine this fixture and the one below?",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7665e54_847cdbbc",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "Why does this test only check one traversal if it\u0027s meant to \"TraverseAllSuggestedApps\"? Why not repeat the key press and check for increasing selected indices? Maybe it would make sense to have a fixture that tests moving forward from search, through all the suggestions, and then through all the apps in the grid, to the next page etc.? (ie. a SelectionMoveForward fixture and another that tests backward, another that tests down, etc.)",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4cd1703_4a500cf4",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "nit: one period, and optionally just say \"Select the last of the three suggested apps.\", maybe check that there are three suggestions?",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8de33f_317922e2",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "optional nit: pass the key code instead of the event, or inline this in the function below with a local key code value. eg:\n\nbool FocusManager::ProcessArrowKeyTraversal(const ui::KeyEvent\u0026 event) {\n  if (event.IsShiftDown() || event.IsControlDown() || event.IsAltDown())\n    return false;\n\n  const ui::KeyboardCode key \u003d event.key_code();\n  if (key !\u003d ui::VKEY_UP \u0026\u0026 key !\u003d ui::VKEY_DOWN \u0026\u0026\n      key !\u003d ui::VKEY_LEFT \u0026\u0026 key !\u003d ui::VKEY_RIGHT) {\n    return false;\n  }\n\n  const ui::KeyboardCode reverse \u003d\n      base::i18n::IsRTL() ? ui::VKEY_RIGHT : ui::VKEY_LEFT;\n  AdvanceFocus(key \u003d\u003d reverse || key \u003d\u003d up);\n  return true;\n}",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459a0c84_edfec5c6",
+        "filename": "ui/views/focus/focus_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "optional nit: move initializer value to declaration below:\n  FocusManagerArrowKeyTraversalTest() \u003d default;\n  bool previous_arrow_key_traversal_enabled_ \u003d false;",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9d3715_fe1665ce",
+        "filename": "ui/views/focus/focus_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-23T18:40:57Z",
+      "side": 1,
+      "message": "Ditto: Does this need to be restored on TearDown? Consider using a scoped helper?",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
