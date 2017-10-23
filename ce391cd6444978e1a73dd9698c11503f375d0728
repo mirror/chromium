@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50f4a6bb_776d1389",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-23T20:57:42Z",
+      "side": 1,
+      "message": "With the new code you\u0027re trying to be less \"dangerous\" but you\u0027re still depending on this write being atomic (we\u0027re lucky we don\u0027t care about ordering). I guess a single pointer write should be atomic, but I think on ARM that also requires the address be aligned. Do we know that g_send_buffers is 64-byte aligned? Probably best to at least add an alignas(8) to that pointer, and I would feel better with Atomic ops (I think we can do nobarrier since we don\u0027t care about ordering).\n\nWe should document this pointer is leaked on purpose to avoid races.",
+      "revId": "ce391cd6444978e1a73dd9698c11503f375d0728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e9454ec_a45e8d6e",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-23T20:57:42Z",
+      "side": 1,
+      "message": "The commit message says teardown is threadsafe now. I can see how this is safer than what we had before, but this seems to be relying on pointer writes being atomic and consistent across all cores, which I don\u0027t think is the case on ARM.",
+      "revId": "ce391cd6444978e1a73dd9698c11503f375d0728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef69a5a_1e9bf5b8",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_posix.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-23T20:57:42Z",
+      "side": 1,
+      "message": "You want TimeTicks. base::Time will be a wall-clock time.\n\nOne thing I\u0027m worried about: If I recall, on ARM one of the most expensive things about tracking is getting the time for each trace event. Adding an extra time call to time for each send might make things worse. With our large buffer it may still be OK...",
+      "revId": "ce391cd6444978e1a73dd9698c11503f375d0728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5e1726_2cbdba0e",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-23T20:57:42Z",
+      "side": 1,
+      "message": "Why is this timeout different than the send timeout?",
+      "revId": "ce391cd6444978e1a73dd9698c11503f375d0728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
