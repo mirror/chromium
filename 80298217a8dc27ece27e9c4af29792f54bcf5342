@@ -34,6 +34,24 @@
       "revId": "80298217a8dc27ece27e9c4af29792f54bcf5342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bfc372f_d4a10dbc",
+        "filename": "content/browser/gpu/compositor_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-23T23:50:05Z",
+      "side": 0,
+      "message": "Well, this appears into about:gpu, I assume someone wanted it there. I suppose the information is only minimally useful, ok.",
+      "parentUuid": "4151f5af_ba18a523",
+      "revId": "80298217a8dc27ece27e9c4af29792f54bcf5342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
