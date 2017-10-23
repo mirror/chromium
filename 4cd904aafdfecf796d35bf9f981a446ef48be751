@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "385ebc57_0eefa62f",
+        "filename": "ui/gfx/native_pixmap.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-23T21:58:15Z",
+      "side": 1,
+      "message": "This needs a TODO() as exposing access to gem handles this way is really bad and it should be made clear that no one should use this and it will be removed asap.",
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7ccd75_8d7d0fad",
+        "filename": "ui/ozone/public/surface_factory_ozone.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-23T21:58:15Z",
+      "side": 1,
+      "message": "Why do we need this after adding \"CreateNativePixmapForProtectedBufferHandle\"? I was expecting that CreateNativePixmapForProtectedBufferHandle would allow GbmSurfaceFactory to maintain a map between dummy handle and native pixmaps instead of having this callback mechanism. It would be fine to keep a map in the protected buffer manager code too but we\u0027d avoid having to add this callback mechanism here and we\u0027d keep the Ozone API relatively clean.\n\nNot a blocking issue for me but I\u0027d like to understand why this is needed as it seems like removing this would result in a final solution that is only requiring a relatively simple Ozone API change.",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 48
+      },
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
