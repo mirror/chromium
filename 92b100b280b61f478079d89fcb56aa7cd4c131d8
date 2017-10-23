@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b346f96b_46ad3f9e",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-23T15:21:40Z",
+      "side": 1,
+      "message": "To do the reauth before the file chooser dialogue, I would have to place it before this line. However, the current state of this code does not make it easy to test (no way to mock out the PresentFileSelector, AFAICT). We\u0027ll need to refactor this class before we can do this, and that\u0027s not something I\u0027d like to try merging to M63.",
+      "range": {
+        "startLine": 431,
+        "startChar": 2,
+        "endLine": 431,
+        "endChar": 45
+      },
+      "revId": "92b100b280b61f478079d89fcb56aa7cd4c131d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
