@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "488a0aa9_345d6bc5",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-23T20:15:46Z",
+      "side": 1,
+      "message": "nit: - other services are resolved using the full Identity",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2fa21b_e4e92b34",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-23T20:15:46Z",
+      "side": 1,
+      "message": "nit: Maybe \"Insert\" would be more inline with conventional container method naming",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a294babf_87a2bf07",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-23T20:15:46Z",
+      "side": 1,
+      "message": "nit: \"default\" may be a confusing word to use here. How about just \"normal\" or \"regular\" or \"isolated\" - I don\u0027t have a strong preference. I\u0027d use the same name in the enum too, in place of DEFAULT/kDefault",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9192fcd5_93a51521",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-23T20:15:46Z",
+      "side": 1,
+      "message": "?",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cefe6b8_7e4d4698",
+        "filename": "services/service_manager/service_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-23T20:15:46Z",
+      "side": 1,
+      "message": "nit: Please use enum class",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e90c3f_8117b73f",
+        "filename": "services/service_manager/service_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-23T20:15:46Z",
+      "side": 1,
+      "message": "nitty nit: and preferable kConstant style naming for new enum values",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae5c775_f28f4fb1",
+        "filename": "services/service_manager/tests/service_manager/singleton_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-23T20:15:46Z",
+      "side": 1,
+      "message": "Can you preserve the old test for the all_users capability (i.e. add a new all_users_manifest.json which mirrors the old one and use the old test logic with that)?",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
