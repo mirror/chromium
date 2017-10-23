@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f505c70_bc77afe5",
+        "filename": "base/values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-23T08:29:32Z",
+      "side": 1,
+      "message": "I was gonna comment that this probably can be done in one line. Given that now both |FromUPtr| and |ToUPtr| are only one liners, what is the value in having these methods instead of just inlining them everywhere? I could see how it might be a bit error prone, as customers need to be aware of Value\u0027s move semantics, is this your concern as well? Lastly, am I correct in assuming that these utility methods are only of temporary nature to help during the migration to the new API and will be removed afterwards?",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 25
+      },
+      "revId": "72593c409b261dd6a0036aef64c2a92a9485ffa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
