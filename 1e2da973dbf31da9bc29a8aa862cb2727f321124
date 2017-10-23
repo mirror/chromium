@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59d31c05_3a872ab5",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T19:29:19Z",
+      "side": 1,
+      "message": "Maybe name this GetRandomIntForTesting?\n\nAlso, put the implementation in the .cc file - functions should only\nbe inlined if they\u0027re simple accessors like int foo() { return foo_; }.",
+      "revId": "1e2da973dbf31da9bc29a8aa862cb2727f321124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5f8b46_a64363cf",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifierTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T19:29:19Z",
+      "side": 1,
+      "message": "Make this a constant like kEpsilon \u003d 0.00001;\n\nConsider EXPECT_FLOAT_EQ, which lets you pass the epsilon as the\nthird parameter. AreFeaturesEqual could be changed to\nvoid AssertFeaturesEqual() and then you could just do an EXPECT_FLOAT_EQ\ninside.",
+      "revId": "1e2da973dbf31da9bc29a8aa862cb2727f321124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
