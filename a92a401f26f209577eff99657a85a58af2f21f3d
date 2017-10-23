@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "76bddd32_85d76b98",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T09:25:18Z",
+      "side": 1,
+      "message": "nit: Line break not needed.",
+      "revId": "a92a401f26f209577eff99657a85a58af2f21f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f641fa_4cc7c13f",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T09:25:18Z",
+      "side": 1,
+      "message": "nit: Kim, technically, we don\u0027t support (3), so we meet it, right?",
+      "revId": "a92a401f26f209577eff99657a85a58af2f21f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8b6d8e2_cf5bb6c5",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 8

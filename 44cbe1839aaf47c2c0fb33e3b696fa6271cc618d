@@ -203,6 +203,30 @@
     },
     {
       "key": {
+        "uuid": "73c12786_c2a4c0de",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T09:25:18Z",
+      "side": 1,
+      "message": "I see two disparate issues here.\n\n1) Avoiding stack overflow in Chrome for CBORValues with insane levels of nesting. This is an issue either both here and in EncodeCBOR(), or in neither.\n\nBy way of example, with JSON, we seemingly only guard against stack overflow when parsing, not when serializing. We might have some safeguards built in at other layers to ensure safely crashing. Not sure what our stance here is, so I would defer to Chris (palmer@) on this one.\n\n2) Verifying the requirements of canonical CBOR, namely that the nesting level is \u003c 4. Here, I have a strong aversion to CHECK\u0027ing and DCHECK\u0027ing, given the very limited flexibility offered by those. If the caller wants to DCHECK, so be it, but let\u0027s not do it already here. So my preferences would be:\n\n a) Expose: size_t CBORWriter::GetMaxContainerNestingDepth as a public static, potentially expose kCanonicalMaxContainerNestingDepth \u003d 4 as a constant, thus delegating canonicalness-checking entirely to the caller.\n\n b) Expose: bool CBORWriter::CanBeSerializedAsCanonicalCBOR(const CBORValue\u0026)\n\n c) Add an |need_canonical_output| argument, and a bool return value to CBORWriter::EncodeCBOR, which would be false on too high nesting.",
+      "parentUuid": "3f4d6042_a1fed283",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07b04528_cf8ea360",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 4

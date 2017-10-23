@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7348cc5_5a37ae2e",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T09:25:18Z",
+      "side": 1,
+      "message": "nit: Please re-wrap this (and some other comments too) to avoid unnecessary line wraps and minimize the total vertical extent of the code.",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f7c2d5_3fb69139",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T09:25:18Z",
+      "side": 1,
+      "message": "nit: This format is somewhat unusual for enumerations. Consider:\n\n 1) All major ...\n\n 2) Keys ...",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca74b24e_75c2e55c",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T09:25:18Z",
+      "side": 1,
+      "message": "Can we make the nested container an array to clarify beyond doubt that both count?\n\n  //     {\"a\": [1, 2, 3, 4, 5]}",
+      "range": {
+        "startLine": 126,
+        "startChar": 9,
+        "endLine": 128,
+        "endChar": 24
+      },
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
