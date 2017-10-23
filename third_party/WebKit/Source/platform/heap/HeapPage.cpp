@@ -295,8 +295,8 @@ bool BaseArena::LazySweepWithDeadline(double deadline_seconds) {
 
   CHECK(GetThreadState()->IsSweepingInProgress());
   DCHECK(GetThreadState()->SweepForbidden());
-  DCHECK(!GetThreadState()->IsMainThread() ||
-         ScriptForbiddenScope::IsScriptForbidden());
+  // TODO(yhirano): Turn this DCHECK to CHECK before M65 branch is cut.
+  CHECK(ScriptForbiddenScope::IsScriptForbidden());
 
   NormalPageArena* normal_arena = nullptr;
   if (first_unswept_page_ && !first_unswept_page_->IsLargeObjectPage()) {
@@ -329,8 +329,8 @@ bool BaseArena::LazySweepWithDeadline(double deadline_seconds) {
 void BaseArena::CompleteSweep() {
   CHECK(GetThreadState()->IsSweepingInProgress());
   DCHECK(GetThreadState()->SweepForbidden());
-  DCHECK(!GetThreadState()->IsMainThread() ||
-         ScriptForbiddenScope::IsScriptForbidden());
+  // TODO(yhirano): Turn this DCHECK to CHECK before M65 branch is cut.
+  CHECK(ScriptForbiddenScope::IsScriptForbidden());
 
   while (first_unswept_page_) {
     SweepUnsweptPage();
