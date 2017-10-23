@@ -102,7 +102,6 @@ PaletteWelcomeBubble::PaletteWelcomeBubble(PaletteTray* tray) : tray_(tray) {
 PaletteWelcomeBubble::~PaletteWelcomeBubble() {
   if (bubble_view_) {
     bubble_view_->GetWidget()->RemoveObserver(this);
-    ShellPort::Get()->RemovePointerWatcher(this);
   }
   Shell::Get()->session_controller()->RemoveObserver(this);
 }
@@ -115,19 +114,6 @@ void PaletteWelcomeBubble::RegisterProfilePrefs(PrefRegistrySimple* registry) {
 void PaletteWelcomeBubble::OnWidgetClosing(views::Widget* widget) {
   widget->RemoveObserver(this);
   bubble_view_ = nullptr;
-  active_user_pref_service_->SetBoolean(prefs::kShownPaletteWelcomeBubble,
-                                        true);
-  ShellPort::Get()->RemovePointerWatcher(this);
-}
-
-void PaletteWelcomeBubble::OnPointerEventObserved(
-    const ui::PointerEvent& event,
-    const gfx::Point& location_in_screen,
-    gfx::NativeView target) {
-  if (bubble_view_ &&
-      !bubble_view_->GetBoundsInScreen().Contains(location_in_screen)) {
-    bubble_view_->GetWidget()->Close();
-  }
 }
 
 void PaletteWelcomeBubble::OnActiveUserPrefServiceChanged(
@@ -139,9 +125,27 @@ void PaletteWelcomeBubble::ShowIfNeeded() {
   DCHECK(active_user_pref_service_);
   if (!active_user_pref_service_->GetBoolean(
           prefs::kShownPaletteWelcomeBubble) &&
-      !BubbleShown()) {
+      !bubble_shown()) {
     Show();
   }
+}
+
+void PaletteWelcomeBubble::MarkAsShown() {
+  DCHECK(active_user_pref_service_);
+  return active_user_pref_service_->SetBoolean(
+      prefs::kShownPaletteWelcomeBubble, true);
+}
+
+void PaletteWelcomeBubble::Hide() {
+  if (bubble_view_)
+    bubble_view_->GetWidget()->Close();
+}
+
+base::Optional<gfx::Rect> PaletteWelcomeBubble::GetBubbleBounds() {
+  if (bubble_view_)
+    return base::make_optional(bubble_view_->GetBoundsInScreen());
+
+  return base::nullopt;
 }
 
 views::ImageButton* PaletteWelcomeBubble::GetCloseButtonForTest() {
@@ -151,28 +155,16 @@ views::ImageButton* PaletteWelcomeBubble::GetCloseButtonForTest() {
   return nullptr;
 }
 
-base::Optional<gfx::Rect> PaletteWelcomeBubble::GetBubbleBoundsForTest() {
-  if (bubble_view_)
-    return base::make_optional(bubble_view_->GetBoundsInScreen());
-
-  return base::nullopt;
-}
-
 void PaletteWelcomeBubble::Show() {
   if (!bubble_view_) {
     DCHECK(tray_);
     bubble_view_ =
         new WelcomeBubbleView(tray_, views::BubbleBorder::BOTTOM_RIGHT);
   }
+  active_user_pref_service_->SetBoolean(prefs::kShownPaletteWelcomeBubble,
+                                        true);
   bubble_view_->GetWidget()->Show();
   bubble_view_->GetWidget()->AddObserver(this);
-  ShellPort::Get()->AddPointerWatcher(this,
-                                      views::PointerWatcherEventTypes::BASIC);
-}
-
-void PaletteWelcomeBubble::Hide() {
-  if (bubble_view_)
-    bubble_view_->GetWidget()->Close();
 }
 
 }  // namespace ash
