@@ -33,6 +33,24 @@
       "revId": "858a15a5ae0ecbcbffbaa3829b8e6e7c74adbef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5212f498_d0782d90",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7241,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-23T22:35:35Z",
+      "side": 1,
+      "message": "Hmmm, maybe the serialization of these save/restore ops can be avoided but the reason for maintaining a canvas on the client side was to figure out the scale at which images were required. And skipping decoding images for ops which will be clipped out.",
+      "parentUuid": "d44c2ef4_b4860689",
+      "revId": "858a15a5ae0ecbcbffbaa3829b8e6e7c74adbef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
