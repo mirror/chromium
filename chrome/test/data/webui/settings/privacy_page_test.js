@@ -147,7 +147,7 @@ cr.define('settings_privacy_page', function() {
         // Ensure that the dialog is fully opened before returning from this
         // test, otherwise asynchronous code run in attached() can cause flaky
         // errors.
-        return test_util.whenAttributeIs(
+        return webui_test_util.whenAttributeIs(
             dialog.$$('#clearBrowsingDataDialog'), 'open', '');
       });
     });

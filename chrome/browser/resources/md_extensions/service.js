@@ -37,15 +37,6 @@ cr.define('extensions', function() {
         return;
       }
 
-      const keyboardShortcuts = this.manager_.keyboardShortcuts;
-      keyboardShortcuts.addEventListener(
-          'shortcut-updated', this.onExtensionCommandUpdated_.bind(this));
-      keyboardShortcuts.addEventListener(
-          'shortcut-capture-started',
-          this.onShortcutCaptureChanged_.bind(this, true));
-      keyboardShortcuts.addEventListener(
-          'shortcut-capture-ended',
-          this.onShortcutCaptureChanged_.bind(this, false));
       chrome.developerPrivate.onProfileStateChanged.addListener(
           this.onProfileStateChanged_.bind(this));
       chrome.developerPrivate.onItemStateChanged.addListener(
@@ -131,34 +122,6 @@ cr.define('extensions', function() {
               }
             });
       });
-    }
-
-    /**
-     * Updates an extension command.
-     * @param {!CustomEvent} e
-     * @private
-     */
-    onExtensionCommandUpdated_(e) {
-      chrome.developerPrivate.updateExtensionCommand({
-        extensionId: e.detail.item,
-        commandName: e.detail.commandName,
-        keybinding: e.detail.keybinding,
-      });
-    }
-
-    /**
-     * Called when shortcut capturing changes in order to suspend or re-enable
-     * global shortcut handling. This is important so that the shortcuts aren't
-     * processed normally as the user types them.
-     * TODO(devlin): From very brief experimentation, it looks like preventing
-     * the default handling on the event also does this. Investigate more in the
-     * future.
-     * @param {boolean} isCapturing
-     * @param {!CustomEvent} e
-     * @private
-     */
-    onShortcutCaptureChanged_(isCapturing, e) {
-      chrome.developerPrivate.setShortcutHandlingSuspended(isCapturing);
     }
 
     /**

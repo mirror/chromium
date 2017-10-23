@@ -56,7 +56,7 @@ cr.define('languages_page_tests', function() {
 
         // Prefs would normally be data-bound to settings-languages-page.
         languagesPage.prefs = settingsPrefs.prefs;
-        test_util.fakeDataBind(settingsPrefs, languagesPage, 'prefs');
+        webui_test_util.fakeDataBind(settingsPrefs, languagesPage, 'prefs');
 
         document.body.appendChild(languagesPage);
         languagesCollapse = languagesPage.$.languagesCollapse;
@@ -83,7 +83,7 @@ cr.define('languages_page_tests', function() {
       // Resolves the PromiseResolver if the mutation includes removal of the
       // settings-add-languages-dialog.
       // TODO(michaelpg): Extract into a common method similar to
-      // test_util.whenAttributeIs for use elsewhere.
+      // webui_test_util.whenAttributeIs for use elsewhere.
       var onMutation = function(mutations, observer) {
         if (mutations.some(function(mutation) {
           return mutation.type == 'childList' &&
