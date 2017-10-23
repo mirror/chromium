@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "509f3867_3f059724",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T20:20:37Z",
+      "side": 1,
+      "message": "Please add that this is removed because we want to change the code so that it is not idempotent (i.e. cannot be called multiple times in a row).",
+      "revId": "24111aacd611a8caa8dbf7ab2a81ef399f6024cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f90b8ece_c58d934e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2429,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T20:20:37Z",
+      "side": 1,
+      "message": "Can we add a DCHECK here that the delegates where no installed yet? Maybe\n\n  DCHECK_NE(tab.webState-\u003eGetDelegate(), _webStateDelegate.get());",
+      "revId": "24111aacd611a8caa8dbf7ab2a81ef399f6024cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe63bda_2b7506c9",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2465,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T20:20:37Z",
+      "side": 1,
+      "message": "Ditto, but with the condition flipped:\n\n  DCHECK_EQ(tab.webState-\u003eGetDelegate(), _webStateDelegate.get());",
+      "revId": "24111aacd611a8caa8dbf7ab2a81ef399f6024cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
