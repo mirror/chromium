@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9451fd09_c2f703e5",
+        "filename": "content/browser/devtools/devtools_target_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-23T21:28:38Z",
+      "side": 1,
+      "message": "Done, as well as in other places.",
+      "parentUuid": "c0fdf787_280df31d",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 10
+      },
+      "revId": "e1ead0d9007a5e1b9be90c62d0dbbb1861a81c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7638066_6a26169e",
         "filename": "content/browser/devtools/devtools_target_registry.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-23T19:34:58Z",
       "side": 1,
       "message": "FYI: We have something very similar to this in headless although they use locks for thread safety since we need to access them on both IO and UI threads.\nHeadlessBrowserContextImpl::GetDevToolsFrameToken\nHeadlessBrowserContextImpl::GetDevToolsFrameTokenForFrameTreeNodeId\n\nI think I like your method names better mind you :)",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 44
+      },
+      "revId": "e1ead0d9007a5e1b9be90c62d0dbbb1861a81c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07daf43_e34bfff2",
+        "filename": "content/browser/devtools/devtools_target_registry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-23T21:28:38Z",
+      "side": 1,
+      "message": "Yeah, I actually considered a locked map instead, but thought that this will be difficult to get past reviewers, given general sentiment towards locks and sharing state between threads :)",
+      "parentUuid": "e7638066_6a26169e",
       "range": {
         "startLine": 45,
         "startChar": 20,
@@ -68,6 +116,30 @@
       "revId": "e1ead0d9007a5e1b9be90c62d0dbbb1861a81c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5334ec0_c94984c5",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-23T21:28:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "079e7806_d6fc4ce3",
+      "range": {
+        "startLine": 201,
+        "startChar": 37,
+        "endLine": 201,
+        "endChar": 45
+      },
+      "revId": "e1ead0d9007a5e1b9be90c62d0dbbb1861a81c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
