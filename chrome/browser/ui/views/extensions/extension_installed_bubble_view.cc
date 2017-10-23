@@ -286,7 +286,7 @@ void ExtensionInstalledBubbleView::OnSignInLinkClicked() {
   chrome::ShowBrowserSignin(
       browser(),
       signin_metrics::AccessPoint::ACCESS_POINT_EXTENSION_INSTALL_BUBBLE);
-  CloseBubble(BUBBLE_CLOSE_NAVIGATED);
+  CloseBubble(BUBBLE_CLOSE_FOCUS_LOST);
 }
 
 void ExtensionInstalledBubbleView::LinkClicked(views::Link* source,
@@ -349,6 +349,16 @@ void ExtensionInstalledBubbleUi::OnWidgetClosing(views::Widget* widget) {
   // status in BubbleManager.
   if (bubble_reference_)
     bubble_reference_->CloseBubble(BUBBLE_CLOSE_FOCUS_LOST);
+}
+
+void ExtensionInstalledBubbleUi::OnWidgetDestroying(views::Widget* widget) {
+  widget->RemoveObserver(this);
+  bubble_view_ = nullptr;
+
+  // Tells the BubbleController to close the bubble to update the bubble's
+  // status in BubbleManager.
+  if (bubble_reference_)
+    bubble_reference_->CloseBubble(BUBBLE_CLOSE_FORCED);
 }
 
 // Implemented here to create the platform specific instance of the BubbleUi.

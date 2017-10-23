@@ -29,6 +29,7 @@ class ExtensionInstalledBubbleUi : public BubbleUi,
 
   // WidgetObserver:
   void OnWidgetClosing(views::Widget* widget) override;
+  void OnWidgetDestroying(views::Widget* widget) override;
 
  private:
   ExtensionInstalledBubble* bubble_;
