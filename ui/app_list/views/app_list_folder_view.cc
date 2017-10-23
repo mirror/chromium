@@ -56,7 +56,6 @@ AppListFolderView::AppListFolderView(AppsContainerView* container_view,
       model_(model),
       folder_item_(NULL),
       hide_for_reparent_(false),
-      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()),
       is_app_list_focus_enabled_(features::IsAppListFocusEnabled()) {
   AddChildView(folder_header_view_);
   view_model_->Add(folder_header_view_, kIndexFolderHeader);
@@ -122,14 +121,11 @@ void AppListFolderView::ScheduleShowHideAnimation(bool show,
 }
 
 gfx::Size AppListFolderView::CalculatePreferredSize() const {
-  if (is_fullscreen_app_list_enabled_)
-    return gfx::Size(kAppsFolderPreferredWidth, kAppsFolderPreferredHeight);
-
-  const gfx::Size header_size = folder_header_view_->GetPreferredSize();
-  const gfx::Size grid_size = items_grid_view_->GetPreferredSize();
-  int width = std::max(header_size.width(), grid_size.width());
-  int height = header_size.height() + grid_size.height();
-  return gfx::Size(width, height);
+  static gfx::Size size;
+  if (!size.IsEmpty())
+    return size;
+  size = gfx::Size(kAppsFolderPreferredWidth, kAppsFolderPreferredHeight);
+  return size;
 }
 
 void AppListFolderView::Layout() {
@@ -275,8 +271,8 @@ bool AppListFolderView::IsPointOutsideOfFolderBoundary(
 
   gfx::Point center = GetLocalBounds().CenterPoint();
   float delta = (point - center).Length();
-  return delta > container_view_->folder_background_view()->
-      GetFolderContainerBubbleRadius() + kOutOfFolderContainerBubbleDelta;
+  return delta >
+         kFolderBackgroundBubbleRadius + kOutOfFolderContainerBubbleDelta;
 }
 
 // When user drags a folder item out of the folder boundary ink bubble, the
