@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0152c236_e0d42a23",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-23T23:24:43Z",
+      "side": 1,
+      "message": "That\u0027s right; I believe the code in translate will be removed shortly (as the ULP experiment is over and waiting for cleanup), so I don\u0027t think it\u0027s worth creating a shared dependency.\n\nI\u0027ll be responsible for the ULP experiment cleanup (crbug.com/777611) so that the duplication doesn\u0027t remain long term.",
+      "parentUuid": "efa46df2_99dc1c07",
+      "revId": "6f9beeb37528c40750fa15fc2c4e52b746b577b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bea51f0_6e46a49b",
         "filename": "components/language/core/browser/heuristic_language_model.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ce819491_5a6b00f9",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-23T23:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bea51f0_6e46a49b",
+      "revId": "6f9beeb37528c40750fa15fc2c4e52b746b577b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edb40300_ca058b95",
         "filename": "components/language/core/browser/heuristic_language_model.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "6f9beeb37528c40750fa15fc2c4e52b746b577b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62703bb4_dc583171",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-23T23:24:43Z",
+      "side": 1,
+      "message": "This is a good question.\n\nI\u0027ve verified that RVO occurs here (on my build).\n\nIn general, I don\u0027t know exactly how this model\u0027s performance will compare to the existing logic. However it will be rolled out incrementally with an experiment, so we should be able to recognize and address performance issues early.",
+      "parentUuid": "edb40300_ca058b95",
+      "revId": "6f9beeb37528c40750fa15fc2c4e52b746b577b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
