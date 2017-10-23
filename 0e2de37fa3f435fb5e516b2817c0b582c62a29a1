@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac98aac1_b756d312",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-23T18:28:20Z",
+      "side": 1,
+      "message": "Add a comment to document why we set an empty string as AX_ATTR_DESCRIPTION. It is mentioned in CL description but having a comment here would be nice since it is not straightforward why it is needed.",
+      "revId": "0e2de37fa3f435fb5e516b2817c0b582c62a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b655d767_cf8fff47",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-23T18:28:20Z",
+      "side": 1,
+      "message": "nit: forward decl ui::AXNodeData and move this include to cc",
+      "revId": "0e2de37fa3f435fb5e516b2817c0b582c62a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
