@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f6c48cb_4c651193",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-23T21:13:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b33b8a56_473cfb45",
+      "revId": "d027b9943ed44add30187db1342108809693abdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b45d7d4_107f56a1",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 8
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b120f59a_03344805",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 37498,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-23T21:13:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44457332_cd47e185",
+      "revId": "d027b9943ed44add30187db1342108809693abdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1a2eddd_9860fc71",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 8
@@ -68,6 +104,24 @@
       "revId": "d027b9943ed44add30187db1342108809693abdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba041e2_abab7fe4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 37501,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-23T21:13:35Z",
+      "side": 1,
+      "message": "It\u0027s in the same code path (https://developer.apple.com/documentation/appkit/nssharingservicedelegate/1402710-sharingservice?language\u003dobjc)\n\nWe can differentiate via the error code, but I\u0027m not sure it\u0027s actionable information.",
+      "parentUuid": "b1a2eddd_9860fc71",
+      "revId": "d027b9943ed44add30187db1342108809693abdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
