@@ -119,6 +119,44 @@
     const callee = new RTCPeerConnection();
     return getUserMediaTracksAndStreams(2)
     .then(expectCalled(t, ([tracks, streams]) => {
+      let localTracks = tracks;
+      let localStream = streams[0];
+      caller.addTrack(localTracks[0], localStream);
+      let offerPromise = performOffer(caller, callee);
+      callee.ontrack = expectCalled(t, trackEvent => {
+        assert_equals(trackEvent.streams.length, 1,
+                      'Expected track event to fire with a single stream.');
+        let remoteTracks = [ trackEvent.track ];
+        let remoteStream = trackEvent.streams[0];
+        assert_equals(remoteTracks[0].id, localTracks[0].id,
+                      'Expected local and remote track IDs to match.');
+        assert_equals(remoteStream.id, localStream.id,
+                      'Expected local and remote stream IDs to match.');
+        assert_array_equals(remoteStream.getTracks(), remoteTracks,
+                            'Expected the remote stream\'s tracks to be the remote track.');
+        caller.addTrack(localTracks[1], localStream);
+        performOffer(caller, callee);
+        remoteStream.onaddtrack = expectCalled(t, trackEvent => {
+          remoteTracks.push(trackEvent.track);
+          assert_equals(remoteTracks[1].id, localTracks[1].id,
+                        'Expected local and remote track IDs to match.');
+          assert_array_equals(remoteStream.getTracks(), remoteTracks,
+                              'Expected the remote stream\'s tracks to be the remote tracks.');
+          t.done();
+        });
+      }, 1000, 'Expected callee.ontrack to fire but it timed out.');
+      return offerPromise;
+    }, 1000, 'Expected getUserMediaTracksAndStreams()\'s promise to resolve but it timed out.'))
+    .catch(t.step_func(reason => {
+      assert_unreached(reason);
+    }));
+  }, 'addTrack() for an existing stream makes stream.onaddtrack fire.');
+
+  async_test(t => {
+    const caller = new RTCPeerConnection();
+    const callee = new RTCPeerConnection();
+    return getUserMediaTracksAndStreams(2)
+    .then(expectCalled(t, ([tracks, streams]) => {
       let localTrack = tracks[0];
       let localStreams = streams;
       caller.addTrack(localTrack, localStreams[0], localStreams[1]);
