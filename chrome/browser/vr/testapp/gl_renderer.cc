@@ -17,7 +17,13 @@ namespace vr {
 GlRenderer::GlRenderer(const scoped_refptr<gl::GLSurface>& surface,
                        const gfx::Size& size,
                        vr::VrTestContext* vr)
-    : surface_(surface), size_(size), vr_(vr), weak_ptr_factory_(this) {}
+    : surface_(surface),
+      size_(size),
+      inflated_(size),
+      vr_(vr),
+      weak_ptr_factory_(this) {
+  inflated_.Enlarge(size.width(), size.height());
+}
 
 GlRenderer::~GlRenderer() {}
 
@@ -36,7 +42,7 @@ bool GlRenderer::Initialize() {
     return false;
   }
 
-  vr_->OnGlInitialized(size_);
+  vr_->OnGlInitialized(inflated_);
 
   PostRenderFrameTask(gfx::SwapResult::SWAP_ACK);
   return true;
@@ -44,6 +50,56 @@ bool GlRenderer::Initialize() {
 
 void GlRenderer::RenderFrame() {
   context_->MakeCurrent(surface_.get());
+
+  // We're going to render to a texture. MSAA by hand!
+  GLuint fbo = 0;
+  glGenFramebuffersEXT(1, &fbo);
+
+  LOG(ERROR) << glGetError();
+  glBindFramebufferEXT(GL_FRAMEBUFFER, fbo);
+  LOG(ERROR) << glGetError();
+
+  // Now we need a texture for the colors.
+  GLuint texture = 0;
+  glGenTextures(1, &texture);
+  LOG(ERROR) << glGetError();
+  glBindTexture(GL_TEXTURE_2D, texture);
+  LOG(ERROR) << glGetError();
+
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, inflated_.width(), inflated_.height(),
+               0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+  LOG(ERROR) << glGetError();
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+  // We also need a depth buffer.
+  GLuint zbuffer = 0;
+  glGenRenderbuffersEXT(1, &zbuffer);
+  LOG(ERROR) << glGetError();
+  glBindRenderbufferEXT(GL_RENDERBUFFER, zbuffer);
+  LOG(ERROR) << glGetError();
+  glRenderbufferStorageEXT(GL_RENDERBUFFER, GL_DEPTH_COMPONENT,
+                           inflated_.width(), inflated_.height());
+  LOG(ERROR) << glGetError();
+
+  // Now we need to attach these buffers to the fbo.
+  glFramebufferRenderbufferEXT(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                               GL_RENDERBUFFER, zbuffer);
+  LOG(ERROR) << glGetError();
+  glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                            texture, 0);
+  LOG(ERROR) << glGetError();
+
+  GLenum draw_buffers[] = {GL_COLOR_ATTACHMENT0};
+  glDrawBuffersARB(1, draw_buffers);
+  LOG(ERROR) << glGetError();
+
+  if (glCheckFramebufferStatusEXT(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+    LOG(ERROR) << "Could not initialize MSAA fbo.";
+    return;
+  }
+
   vr_->DrawFrame();
   PostRenderFrameTask(surface_->SwapBuffers());
 }

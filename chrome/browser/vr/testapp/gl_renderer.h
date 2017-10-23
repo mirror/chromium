@@ -36,6 +36,7 @@ class GlRenderer {
  private:
   scoped_refptr<gl::GLSurface> surface_;
   gfx::Size size_;
+  gfx::Size inflated_;
   vr::VrTestContext* vr_;
   scoped_refptr<gl::GLContext> context_;
 
