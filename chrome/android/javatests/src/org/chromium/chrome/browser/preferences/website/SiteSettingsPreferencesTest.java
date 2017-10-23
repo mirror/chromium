@@ -603,4 +603,89 @@ public class SiteSettingsPreferencesTest {
             }
         });
     }
+
+    /**
+     * Helper function to test whether the Ads preference shows up in the site settings menu page.
+     * @param expectExists true if the setting should be showing up on the page.
+     */
+    private void doTestAdsPreferenceExistence(final boolean expectExists) {
+        final Preferences preferenceActivity =
+                startSiteSettingsMenu(SiteSettingsPreferences.ADS_KEY);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                SiteSettingsPreferences siteSettings =
+                        (SiteSettingsPreferences) preferenceActivity.getFragmentForTest();
+
+                SiteSettingsPreference ads = (SiteSettingsPreference) siteSettings.findPreference(
+                        SiteSettingsPreferences.ADS_KEY);
+                Assert.assertEquals(expectExists, ads != null);
+
+                preferenceActivity.finish();
+            }
+        });
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @CommandLineFlags.Add({"disable-features=SubresourceFilterExperimentalUI"})
+    public void testNoFeatureNoAdsPreference() {
+        doTestAdsPreferenceExistence(false /* expectExists */);
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @CommandLineFlags.Add({"enable-features=SubresourceFilter,SubresourceFilterExperimentalUI"})
+    public void testAdsFeatureAdsPreference() {
+        doTestAdsPreferenceExistence(true /* expectExists */);
+    }
+
+    /**
+     * Regression test for crbug.com/777430, ensures that reseting the site details page does not
+     * cause Chrome to consider the site as having intrusive ads.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @CommandLineFlags.Add({"enable-features=SubresourceFilter,SubresourceFilterExperimentalUI"})
+    public void testResetDoesNotTriggerSiteAsIntrusive() {
+        WebsiteAddress address = WebsiteAddress.create("example.com");
+        Website website = new Website(address, address);
+
+        // Mark the site as having a specific permission. This allows it to show up in the site
+        // details view.
+        website.setAdsPermission(ContentSetting.BLOCK);
+
+        // Start site details, confirm the ads permission is there, then reset all permissions for
+        // that site.
+        final Preferences preferenceActivity = startSingleWebsitePreferences(website);
+        String key = SingleWebsitePreferences.PREF_ADS_PERMISSION;
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                SingleWebsitePreferences websitePreferences =
+                        (SingleWebsitePreferences) preferenceActivity.getFragmentForTest();
+                Assert.assertFalse(
+                        websitePreferences.getPreferenceScreen().findPreference(key) == null);
+                websitePreferences.resetSite();
+            }
+        });
+        preferenceActivity.finish();
+
+        // Reopen and ensure that the ads preference is not displayed.
+        final Preferences secondPreferenceActivity = startSingleWebsitePreferences(website);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                SingleWebsitePreferences websitePreferences =
+                        (SingleWebsitePreferences) secondPreferenceActivity.getFragmentForTest();
+                Assert.assertTrue(
+                        websitePreferences.getPreferenceScreen().findPreference(key) == null);
+                websitePreferences.resetSite();
+            }
+        });
+        secondPreferenceActivity.finish();
+    }
 }
