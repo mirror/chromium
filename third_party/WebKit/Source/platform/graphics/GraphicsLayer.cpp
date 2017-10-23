@@ -308,6 +308,7 @@ void GraphicsLayer::Paint(const IntRect* interest_rect,
       // Ensure the compositor will raster the under-invalidation overlay.
       layer_->Layer()->Invalidate();
     }
+    //    GetPaintController().ShowDebugData();
   }
 }
 

@@ -32,9 +32,8 @@ bool ReplacedPainter::ShouldAdjustForPaintOffsetTranslation(
     return false;
   if (layout_replaced_.HasSelfPaintingLayer())
     return false;
-  if (!layout_replaced_.FirstFragment())
-    return false;
-  auto* paint_properties = layout_replaced_.FirstFragment()->PaintProperties();
+  auto* paint_properties =
+      layout_replaced_.FirstFragment().GetRarePaintData()->PaintProperties();
   if (!paint_properties)
     return false;
   if (!paint_properties->PaintOffsetTranslation())
@@ -50,16 +49,17 @@ void ReplacedPainter::Paint(const PaintInfo& paint_info,
   PaintInfo local_paint_info(paint_info);
   if (ShouldAdjustForPaintOffsetTranslation(local_paint_info, paint_offset)) {
     auto* paint_properties =
-        layout_replaced_.FirstFragment()->PaintProperties();
-    const auto* local_border_box_properties =
-        layout_replaced_.FirstFragment()->LocalBorderBoxProperties();
+        layout_replaced_.FirstFragment().GetRarePaintData()->PaintProperties();
+    const auto* local_border_box_properties = layout_replaced_.FirstFragment()
+                                                  .GetRarePaintData()
+                                                  ->LocalBorderBoxProperties();
     PaintChunkProperties chunk_properties(
         paint_info.context.GetPaintController().CurrentPaintChunkProperties());
     chunk_properties.property_tree_state = *local_border_box_properties;
     scoped_contents_properties.emplace(paint_info.context.GetPaintController(),
                                        layout_replaced_, chunk_properties);
 
-    adjusted_paint_offset = layout_replaced_.PaintOffset();
+    adjusted_paint_offset = layout_replaced_.FirstFragment().PaintOffset();
     local_paint_info.UpdateCullRect(paint_properties->PaintOffsetTranslation()
                                         ->Matrix()
                                         .ToAffineTransform());
