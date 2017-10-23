@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12bc17d6_9577c84b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-23T19:36:47Z",
+      "side": 1,
+      "message": "This looks hacky. My main concern is that these events are not really scoped, but kinda async events. Namely other scoped events recorded for the background parser thread are going to be screwed as the scoping structure is broken.\n\nConsider the following hypotetical sequence:\nParseOnBackgroundTask::BEGIN\nParseFunction::BEGIN\nParseOnBackgroundTask::END\nParseOnBackgroundTask::BEGIN\nParseFunction::END\nParseOnBackgroundTask::END",
+      "revId": "f936b459ed936c624e0c861c099fa9e4b30f22b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
