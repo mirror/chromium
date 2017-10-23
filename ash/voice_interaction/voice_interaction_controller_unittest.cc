@@ -1,0 +1,125 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "ash/voice_interaction/voice_interaction_controller.h"
+
+#include <memory>
+
+#include "ash/shell.h"
+#include "ash/test/ash_test_base.h"
+#include "ash/voice_interaction/voice_interaction_observer.h"
+
+namespace ash {
+namespace {
+
+class TestVoiceInteractionObserver : public VoiceInteractionObserver {
+ public:
+  TestVoiceInteractionObserver() = default;
+  ~TestVoiceInteractionObserver() override = default;
+
+  // VoiceInteractionObserver overrides:
+  void OnVoiceInteractionStatusChanged(VoiceInteractionState state) override {
+    state_ = state;
+  }
+  void OnVoiceInteractionSettingsEnabled(bool enabled) override {
+    settings_enabled_ = enabled;
+  }
+  void OnVoiceInteractionContextEnabled(bool enabled) override {
+    context_enabled_ = enabled;
+  }
+  void OnVoiceInteractionSetupCompleted(bool completed) override {
+    setup_completed_ = completed;
+  }
+
+  VoiceInteractionState voice_interaction_state() const { return state_; }
+  bool voice_interaction_settings_enabled() const { return settings_enabled_; }
+  bool voice_interaction_context_enabled() const { return context_enabled_; }
+  bool voice_interaction_setup_completed() const { return setup_completed_; }
+
+ private:
+  VoiceInteractionState state_ = VoiceInteractionState::STOPPED;
+  bool settings_enabled_ = false;
+  bool context_enabled_ = false;
+  bool setup_completed_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(TestVoiceInteractionObserver);
+};
+
+class VoiceInteractionControllerTest : public AshTestBase {
+ public:
+  VoiceInteractionControllerTest() {}
+  ~VoiceInteractionControllerTest() override {}
+
+  void SetUp() override {
+    AshTestBase::SetUp();
+
+    observer_ = std::make_unique<TestVoiceInteractionObserver>();
+    voice_interaction_controller()->AddVoiceInteractionObserver(
+        observer_.get());
+  }
+
+  void TearDown() override {
+    voice_interaction_controller()->RemoveVoiceInteractionObserver(
+        observer_.get());
+    observer_.reset();
+
+    AshTestBase::TearDown();
+  }
+
+ protected:
+  VoiceInteractionController* voice_interaction_controller() {
+    return Shell::Get()->voice_interaction_controller();
+  }
+
+  TestVoiceInteractionObserver* voice_interaction_observer() {
+    return observer_.get();
+  }
+
+ private:
+  std::unique_ptr<TestVoiceInteractionObserver> observer_;
+
+  DISALLOW_COPY_AND_ASSIGN(VoiceInteractionControllerTest);
+};
+
+}  // namespace
+
+TEST_F(VoiceInteractionControllerTest, NotifyVoiceInteractionStatusChanged) {
+  voice_interaction_controller()->NotifyVoiceInteractionStatusChanged(
+      VoiceInteractionState::RUNNING);
+  // The cached state should be updated.
+  EXPECT_EQ(VoiceInteractionState::RUNNING,
+            voice_interaction_controller()->voice_interaction_state());
+  // The observers should be notified.
+  EXPECT_EQ(VoiceInteractionState::RUNNING,
+            voice_interaction_observer()->voice_interaction_state());
+}
+
+TEST_F(VoiceInteractionControllerTest, NotifyVoiceInteractionSettingsEnabled) {
+  voice_interaction_controller()->NotifyVoiceInteractionSettingsEnabled(true);
+  // The cached state should be updated.
+  EXPECT_TRUE(
+      voice_interaction_controller()->voice_interaction_settings_enabled());
+  // The observers should be notified.
+  EXPECT_TRUE(
+      voice_interaction_observer()->voice_interaction_settings_enabled());
+}
+
+TEST_F(VoiceInteractionControllerTest, NotifyVoiceInteractionContextEnabled) {
+  voice_interaction_controller()->NotifyVoiceInteractionContextEnabled(true);
+  // The observers should be notified.
+  EXPECT_TRUE(
+      voice_interaction_observer()->voice_interaction_context_enabled());
+}
+
+TEST_F(VoiceInteractionControllerTest, NotifyVoiceInteractionSetupCompleted) {
+  voice_interaction_controller()->NotifyVoiceInteractionSetupCompleted(true);
+  // The cached state should be updated.
+  EXPECT_TRUE(
+      voice_interaction_controller()->voice_interaction_setup_completed());
+  // The observers should be notified.
+  EXPECT_TRUE(
+      voice_interaction_observer()->voice_interaction_setup_completed());
+}
+
+}  // namespace ash

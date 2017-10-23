@@ -15,6 +15,7 @@
 #include "ash/shelf/shelf_view_test_api.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/voice_interaction/voice_interaction_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/i18n/rtl.h"
@@ -79,7 +80,9 @@ TEST_F(AppListButtonTest, LongPressGestureWithoutVoiceInteractionFlag) {
   CreateUserSessions(2);
 
   // Enable voice interaction in system settings.
-  Shell::Get()->NotifyVoiceInteractionEnabled(true);
+  Shell::Get()
+      ->voice_interaction_controller()
+      ->NotifyVoiceInteractionSettingsEnabled(true);
 
   ui::GestureEvent long_press =
       CreateGestureEvent(ui::GestureEventDetails(ui::ET_GESTURE_LONG_PRESS));
@@ -148,7 +151,9 @@ TEST_F(VoiceInteractionAppListButtonTest,
   CreateUserSessions(2);
 
   // Enable voice interaction in system settings.
-  Shell::Get()->NotifyVoiceInteractionEnabled(true);
+  Shell::Get()
+      ->voice_interaction_controller()
+      ->NotifyVoiceInteractionSettingsEnabled(true);
 
   ui::GestureEvent long_press =
       CreateGestureEvent(ui::GestureEventDetails(ui::ET_GESTURE_LONG_PRESS));
@@ -166,7 +171,9 @@ TEST_F(VoiceInteractionAppListButtonTest, LongPressGestureWithSecondaryUser) {
   SimulateUserLogin("user2@test.com");
 
   // Enable voice interaction in system settings.
-  Shell::Get()->NotifyVoiceInteractionEnabled(true);
+  Shell::Get()
+      ->voice_interaction_controller()
+      ->NotifyVoiceInteractionSettingsEnabled(true);
 
   ui::GestureEvent long_press =
       CreateGestureEvent(ui::GestureEventDetails(ui::ET_GESTURE_LONG_PRESS));
@@ -187,8 +194,12 @@ TEST_F(VoiceInteractionAppListButtonTest,
 
   // Simulate a user who has already completed setup flow, but disabled voice
   // interaction in settings.
-  Shell::Get()->NotifyVoiceInteractionEnabled(false);
-  Shell::Get()->NotifyVoiceInteractionSetupCompleted(true);
+  Shell::Get()
+      ->voice_interaction_controller()
+      ->NotifyVoiceInteractionSettingsEnabled(false);
+  Shell::Get()
+      ->voice_interaction_controller()
+      ->NotifyVoiceInteractionSetupCompleted(true);
 
   ui::GestureEvent long_press =
       CreateGestureEvent(ui::GestureEventDetails(ui::ET_GESTURE_LONG_PRESS));
@@ -208,7 +219,9 @@ TEST_F(VoiceInteractionAppListButtonTest,
   CreateUserSessions(2);
 
   // Disable voice interaction in system settings.
-  Shell::Get()->NotifyVoiceInteractionEnabled(false);
+  Shell::Get()
+      ->voice_interaction_controller()
+      ->NotifyVoiceInteractionSettingsEnabled(false);
 
   ui::GestureEvent long_press =
       CreateGestureEvent(ui::GestureEventDetails(ui::ET_GESTURE_LONG_PRESS));

@@ -18,6 +18,7 @@
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/tray_popup_utils.h"
+#include "ash/voice_interaction/voice_interaction_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
@@ -74,6 +75,8 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
   DCHECK(shelf_);
   Shell::Get()->AddShellObserver(this);
   Shell::Get()->session_controller()->AddObserver(this);
+  Shell::Get()->voice_interaction_controller()->AddVoiceInteractionObserver(
+      this);
   SetInkDropMode(InkDropMode::ON_NO_GESTURE_HANDLER);
   set_ink_drop_base_color(kShelfInkDropBaseColor);
   set_ink_drop_visible_opacity(kShelfInkDropVisibleOpacity);
@@ -98,6 +101,8 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
 }
 
 AppListButton::~AppListButton() {
+  Shell::Get()->voice_interaction_controller()->RemoveVoiceInteractionObserver(
+      this);
   Shell::Get()->RemoveShellObserver(this);
   Shell::Get()->session_controller()->RemoveObserver(this);
 }
@@ -383,7 +388,8 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
 
     if (UseVoiceInteractionStyle())
       // active: 100% alpha, inactive: 54% alpha
-      fg_flags.setAlpha(Shell::Get()->voice_interaction_state() ==
+      fg_flags.setAlpha(Shell::Get()->voice_interaction_controller()
+                                    ->voice_interaction_state() ==
                                 ash::VoiceInteractionState::RUNNING
                             ? kVoiceInteractionRunningAlpha
                             : kVoiceInteractionNotRunningAlpha);
@@ -525,11 +531,11 @@ void AppListButton::OnVoiceInteractionStatusChanged(
   }
 }
 
-void AppListButton::OnVoiceInteractionEnabled(bool enabled) {
+void AppListButton::OnVoiceInteractionSettingsEnabled(bool enabled) {
   SchedulePaint();
 }
 
-void AppListButton::OnVoiceInteractionSetupCompleted() {
+void AppListButton::OnVoiceInteractionSetupCompleted(bool completed) {
   SchedulePaint();
 }
 
@@ -548,11 +554,14 @@ void AppListButton::StartVoiceInteractionAnimation() {
   // shelf is at the bottom position and voice interaction is not running and
   // voice interaction setup flow has completed.
   ShelfAlignment alignment = shelf_->alignment();
-  bool show_icon = (alignment == SHELF_ALIGNMENT_BOTTOM ||
-                    alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) &&
-                   Shell::Get()->voice_interaction_state() ==
-                       VoiceInteractionState::STOPPED &&
-                   Shell::Get()->voice_interaction_setup_completed();
+  bool show_icon =
+      (alignment == SHELF_ALIGNMENT_BOTTOM ||
+       alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) &&
+      Shell::Get()->voice_interaction_controller()->voice_interaction_state() ==
+          VoiceInteractionState::STOPPED &&
+      Shell::Get()
+          ->voice_interaction_controller()
+          ->voice_interaction_setup_completed();
   voice_interaction_overlay_->StartAnimation(show_icon);
 }
 
@@ -597,8 +606,12 @@ void AppListButton::GenerateAndSendBackEvent(
 bool AppListButton::UseVoiceInteractionStyle() {
   if (voice_interaction_overlay_ &&
       chromeos::switches::IsVoiceInteractionEnabled() && IsUserPrimary() &&
-      (Shell::Get()->voice_interaction_settings_enabled() ||
-       !Shell::Get()->voice_interaction_setup_completed())) {
+      (Shell::Get()
+           ->voice_interaction_controller()
+           ->voice_interaction_settings_enabled() ||
+       !Shell::Get()
+            ->voice_interaction_controller()
+            ->voice_interaction_setup_completed())) {
     return true;
   }
   return false;
