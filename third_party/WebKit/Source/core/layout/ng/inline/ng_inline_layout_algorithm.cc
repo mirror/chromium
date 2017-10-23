@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/inline/ng_inline_layout_algorithm.h"
 
+#include <algorithm>
 #include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/inline/ng_bidi_paragraph.h"
 #include "core/layout/ng/inline/ng_inline_box_state.h"
@@ -35,6 +36,8 @@ inline bool ShouldCreateBoxFragment(const NGInlineItem& item,
   const ComputedStyle& style = *item.Style();
   // TODO(kojii): We might need more conditions to create box fragments.
   return style.HasBoxDecorationBackground() || style.HasOutline() ||
+         style.CanContainAbsolutePositionObjects() ||
+         style.CanContainFixedPositionObjects() ||
          item_result.needs_box_when_empty;
 }
 
@@ -208,16 +211,7 @@ void NGInlineLayoutAlgorithm::PlaceItems(
       PlaceListMarker(item, &item_result, *line_info);
       DCHECK_GT(line_box_.size(), list_marker_index.value());
     } else if (item.Type() == NGInlineItem::kOutOfFlowPositioned) {
-      // TODO(layout-dev): Report the correct static position for the out of
-      // flow descendant. We can't do this here yet as it doesn't know the
-      // size of the line box.
-      container_builder_.AddOutOfFlowDescendant(
-          // Absolute positioning blockifies the box's display type.
-          // https://drafts.csswg.org/css-display/#transformations
-          {NGBlockNode(ToLayoutBox(item.GetLayoutObject())),
-           NGStaticPosition::Create(ConstraintSpace().WritingMode(),
-                                    ConstraintSpace().Direction(),
-                                    NGPhysicalOffset())});
+      PlaceOutOfFlowPositioned(item, position);
       continue;
     } else {
       continue;
@@ -232,7 +226,10 @@ void NGInlineLayoutAlgorithm::PlaceItems(
                           &text_builder);
   }
 
-  if (line_box_.IsEmpty()) {
+  if (line_box_.IsEmpty() ||
+      std::all_of(line_box_.begin(), line_box_.end(), [](const auto& child) {
+        return child.out_of_flow_layout_box;
+      })) {
     return;  // The line was empty.
   }
 
@@ -269,9 +266,18 @@ void NGInlineLayoutAlgorithm::PlaceItems(
         &line_box_);
   }
 
-  container_builder_.AddChildren(line_box_);
   container_builder_.SetInlineSize(inline_size);
   container_builder_.SetMetrics(line_box_metrics);
+
+  container_builder_.ReserveCapacity(line_box_.size());
+  for (auto& child : line_box_) {
+    if (child.out_of_flow_layout_box) {
+      PlaceOutOfFlowPositioned(child);
+      continue;
+    }
+    container_builder_.AddChildByMove(child);
+    DCHECK(child.IsEmpty());
+  }
 
   NGBfcOffset offset(
       constraint_space_.BfcOffset().line_offset + line_offset.inline_offset,
@@ -387,6 +393,41 @@ void NGInlineLayoutAlgorithm::PlaceListMarker(const NGInlineItem& item,
 
   // The inline position is adjusted later, when we knew the line width.
   PlaceLayoutResult(item_result, LayoutUnit(), nullptr);
+}
+
+void NGInlineLayoutAlgorithm::PlaceOutOfFlowPositioned(const NGInlineItem& item,
+                                                       LayoutUnit position) {
+  // Place as a child. This maybe added to inline boxes in this line box, or
+  // handled later if not. Having a Child helps when an inline containing box
+  // handles this item.
+  line_box_.AddChild(ToLayoutBox(item.GetLayoutObject()),
+                     {position, LayoutUnit()});
+}
+
+void NGInlineLayoutAlgorithm::PlaceOutOfFlowPositioned(
+    const NGLineBoxFragmentBuilder::Child& child) {
+  DCHECK(child.out_of_flow_layout_box);
+  // Reaching here means that this item is not contained in an inline containing
+  // box, and thus it needs to be propagated to ancestors.
+
+  // |child.offset.block_offset| is at the baseline. Make it to the block-start.
+  // TODO(kojii): Review if this is correct for flipped line (vertical-lr).
+  NGLogicalOffset static_offset(child.offset.inline_offset, LayoutUnit());
+
+  // AddOutOfFlowDescendant() requires physical offset. Convert to physical.
+  NGWritingMode writing_mode = ConstraintSpace().WritingMode();
+  TextDirection direction = ConstraintSpace().Direction();
+  NGPhysicalOffset physical_static_offset = static_offset.ConvertToPhysical(
+      writing_mode, direction,
+      container_builder_.Size().ConvertToPhysical(writing_mode),
+      // TODO(kojii): Because the layout of OOF is delayed until it reaches to
+      // the containing block, we don't know its |inner_size| yet. How could we
+      // convert to physical without |inner_size|?
+      NGPhysicalSize());
+  container_builder_.AddOutOfFlowDescendant(
+      {NGBlockNode(child.out_of_flow_layout_box),
+       NGStaticPosition::Create(writing_mode, direction,
+                                physical_static_offset)});
 }
 
 // Justify the line. This changes the size of items by adding spacing.
