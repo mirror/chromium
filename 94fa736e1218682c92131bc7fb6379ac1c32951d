@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05ec0a56_35f71dd2",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-23T21:12:38Z",
+      "side": 1,
+      "message": "This still needs some investigation from me.",
+      "range": {
+        "startLine": 102,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 12
+      },
+      "revId": "94fa736e1218682c92131bc7fb6379ac1c32951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
