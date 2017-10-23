@@ -285,7 +285,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
 
         initializeSearchBoxTextView();
         initializeVoiceSearchButton();
-        initializeChromeHomePromo();
+        if (!DeviceFormFactor.isTablet()) initializeChromeHomePromo();
         initializeLayoutChangeListeners();
         setSearchProviderInfo(searchProviderHasLogo, searchProviderIsGoogle);
         mSearchProviderLogoView.showSearchProviderInitialView();
