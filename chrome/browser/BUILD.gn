@@ -1550,6 +1550,7 @@ split_static_library("browser") {
     "//chrome/browser/ui",
     "//chrome/common/net",
     "//chrome/installer/util:with_no_strings",
+    "//chrome/services/chrome_file_util/public/interfaces",
     "//components/about_handler",
     "//components/app_modal",
     "//components/autofill/content/browser",

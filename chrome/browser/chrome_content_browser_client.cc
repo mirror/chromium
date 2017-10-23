@@ -133,6 +133,7 @@
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/installer/util/google_update_settings.h"
+#include "chrome/services/chrome_file_util/public/interfaces/constants.mojom.h"
 #include "components/autofill/content/browser/content_autofill_driver_factory.h"
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/browsing_data/core/browsing_data_utils.h"
@@ -3099,6 +3100,9 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
   (*services)[proxy_resolver::mojom::kProxyResolverServiceName] =
       l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PROXY_RESOLVER_NAME);
 #endif
+
+  (*services)[chrome::mojom::kChromeFileUtilServiceName] =
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_CHROME_FILE_UTILITIES_NAME);
 
 #if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kMash))

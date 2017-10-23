@@ -18,7 +18,9 @@
 #include "components/update_client/update_query_params.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/common/service_manager_connection.h"
 #include "extensions/browser/extension_prefs.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace extensions {
 
@@ -156,7 +158,10 @@ net::URLRequestContextGetter* ChromeUpdateClientConfig::RequestContext() const {
 
 scoped_refptr<update_client::OutOfProcessPatcher>
 ChromeUpdateClientConfig::CreateOutOfProcessPatcher() const {
-  return base::MakeRefCounted<component_updater::ChromeOutOfProcessPatcher>();
+  return base::MakeRefCounted<component_updater::ChromeOutOfProcessPatcher>(
+      content::ServiceManagerConnection::GetForProcess()
+          ->GetConnector()
+          ->Clone());
 }
 
 bool ChromeUpdateClientConfig::EnabledDeltas() const {
