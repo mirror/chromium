@@ -140,7 +140,7 @@ public class TypedUrlsTest {
         specifics.typedUrl = new TypedUrlSpecifics();
         specifics.typedUrl.url = url;
         specifics.typedUrl.title = url;
-        specifics.typedUrl.visits = new long[]{1L};
+        specifics.typedUrl.visits = System.currentTimeMillis();
         specifics.typedUrl.visitTransitions = new int[]{SyncEnums.TYPED};
         mSyncTestRule.getFakeServerHelper().injectUniqueClientEntity(url /* name */, specifics);
     }
