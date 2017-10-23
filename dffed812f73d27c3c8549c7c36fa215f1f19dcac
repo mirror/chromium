@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d43ad7e_2f728b7f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T18:07:31Z",
+      "side": 1,
+      "message": "this isn\u0027t really good form because if someone implements these methods for Kitkat one, they won\u0027t know there is this corner case that doesn\u0027t work.\n\nprobably better to pass in the bool in the Lollipop (and higher) constructor instead. Then if someone wants to use attached state in kitkat one, at least they\u0027ll realize the initial value is missing, and then fix tracking properly. That does mean inlining WebContentsAccessibility.create here though, which kind of sucks..",
+      "revId": "dffed812f73d27c3c8549c7c36fa215f1f19dcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
