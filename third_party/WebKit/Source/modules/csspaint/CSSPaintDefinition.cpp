@@ -23,13 +23,13 @@ namespace blink {
 
 namespace {
 
-IntSize GetSpecifiedSize(const LayoutSize* size, float zoom) {
+FloatSize GetSpecifiedSize(const LayoutSize* size, float zoom) {
   float un_zoom_factor = 1 / zoom;
-  auto un_zoom_fn = [un_zoom_factor](float a) -> int {
-    return round(a * un_zoom_factor);
+  auto un_zoom_fn = [un_zoom_factor](float a) -> float {
+    return a * un_zoom_factor;
   };
-  return IntSize(un_zoom_fn(size->Width().ToFloat()),
-                 un_zoom_fn(size->Height().ToFloat()));
+  return FloatSize(un_zoom_fn(size->Width().ToFloat()),
+                   un_zoom_fn(size->Height().ToFloat()));
 }
 
 }  // namespace
@@ -80,7 +80,7 @@ scoped_refptr<Image> CSSPaintDefinition::Paint(
   const LayoutObject& layout_object = static_cast<const LayoutObject&>(client);
 
   float zoom = layout_object.StyleRef().EffectiveZoom();
-  const IntSize specified_size = GetSpecifiedSize(logical_size, zoom);
+  const FloatSize specified_size = GetSpecifiedSize(logical_size, zoom);
 
   ScriptState::Scope scope(script_state_.get());
 
@@ -133,8 +133,10 @@ scoped_refptr<Image> CSSPaintDefinition::Paint(
     return nullptr;
   }
 
+  IntSize rounded_paint_size(round(specified_size.Width()),
+                             round(specified_size.Height()));
   return PaintGeneratedImage::Create(
-      rendering_context->GetImageBuffer()->GetRecord(), specified_size);
+      rendering_context->GetImageBuffer()->GetRecord(), rounded_paint_size);
 }
 
 void CSSPaintDefinition::MaybeCreatePaintInstance() {
