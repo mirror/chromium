@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a8c2b5_6285b22e",
+        "filename": "chrome/android/java/res/drawable/ic_snippet_thumbnail_placeholder.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-23T12:52:15Z",
+      "side": 1,
+      "message": "What about renaming the snippets_thumbnail_size_large to snippets_thumbnail_size? If everything is large nothing is large!",
+      "revId": "2b2e975d3a9d1fed30cacf6a221410dc912b82ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a01ce5_c1c74359",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-23T12:52:15Z",
+      "side": 1,
+      "message": "nit: import?",
+      "range": {
+        "startLine": 56,
+        "startChar": 54,
+        "endLine": 56,
+        "endChar": 75
+      },
+      "revId": "2b2e975d3a9d1fed30cacf6a221410dc912b82ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
