@@ -42,6 +42,7 @@
 #include "components/policy/core/common/cloud/cloud_policy_store.h"
 #include "components/policy/core/common/cloud/cloud_policy_validator.h"
 #include "components/policy/core/common/policy_details.h"
+#include "components/policy/core/common/policy_scheduler.h"
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/core/common/remote_commands/remote_commands_service.h"
 #include "components/policy/core/common/schema.h"
@@ -321,7 +322,14 @@ class ActiveDirectoryPolicyStatusProvider
     : public PolicyStatusProvider,
       public policy::CloudPolicyStore::Observer {
  public:
-  explicit ActiveDirectoryPolicyStatusProvider(policy::CloudPolicyStore* store);
+  explicit ActiveDirectoryPolicyStatusProvider(
+      policy::ActiveDirectoryPolicyManager* policy_manager);
+
+  ActiveDirectoryPolicyStatusProvider(
+      policy::ActiveDirectoryPolicyManager* policy_manager,
+      const std::string& management_realm,
+      const std::string& enterprise_display_domain);
+
   ~ActiveDirectoryPolicyStatusProvider() override;
 
   // PolicyStatusProvider implementation.
@@ -332,7 +340,11 @@ class ActiveDirectoryPolicyStatusProvider
   void OnStoreError(policy::CloudPolicyStore* store) override;
 
  private:
-  policy::CloudPolicyStore* store_;
+  policy::ActiveDirectoryPolicyManager* policy_manager_;
+
+  // Empty for the user policy status provider.
+  std::string management_realm_;
+  std::string enterprise_display_domain_;
 
   DISALLOW_COPY_AND_ASSIGN(ActiveDirectoryPolicyStatusProvider);
 };
@@ -449,22 +461,56 @@ void DeviceLocalAccountPolicyStatusProvider::OnDeviceLocalAccountsChanged() {
 }
 
 ActiveDirectoryPolicyStatusProvider::ActiveDirectoryPolicyStatusProvider(
-    policy::CloudPolicyStore* store)
-    : store_(store) {
-  store_->AddObserver(this);
+    policy::ActiveDirectoryPolicyManager* policy_manager)
+    : policy_manager_(policy_manager) {
+  policy_manager_->store()->AddObserver(this);
+}
+
+ActiveDirectoryPolicyStatusProvider::ActiveDirectoryPolicyStatusProvider(
+    policy::ActiveDirectoryPolicyManager* policy_manager,
+    const std::string& management_realm,
+    const std::string& enterprise_display_domain)
+    : ActiveDirectoryPolicyStatusProvider(policy_manager) {
+  management_realm_ = management_realm;
+  enterprise_display_domain_ = enterprise_display_domain;
 }
 
 ActiveDirectoryPolicyStatusProvider::~ActiveDirectoryPolicyStatusProvider() {
-  store_->RemoveObserver(this);
+  policy_manager_->store()->RemoveObserver(this);
 }
 
 // TODO(tnagel): Provide more details and/or remove unused fields from UI.  See
 // https://crbug.com/664747.
 void ActiveDirectoryPolicyStatusProvider::GetStatus(
     base::DictionaryValue* dict) {
+  const em::PolicyData* policy = policy_manager_->store()->policy();
+  std::string client_id = policy ? policy->device_id() : std::string();
+  std::string username = policy ? policy->username() : std::string();
   base::string16 status =
-      policy::FormatStoreStatus(store_->status(), store_->validation_status());
+      policy::FormatStoreStatus(policy_manager_->store()->status(),
+                                policy_manager_->store()->validation_status());
   dict->SetString("status", status);
+  dict->SetString("username", username);
+  dict->SetString("clientId", client_id);
+  const base::TimeDelta refresh_interval =
+      policy_manager_->scheduler()->interval();
+  dict->SetString(
+      "refreshInterval",
+      ui::TimeFormat::Simple(ui::TimeFormat::FORMAT_DURATION,
+                             ui::TimeFormat::LENGTH_SHORT, refresh_interval));
+  const base::TimeTicks last_refresh_time =
+      policy_manager_->scheduler()->last_task_time();
+
+  dict->SetString(
+      "timeSinceLastRefresh",
+      last_refresh_time.is_null()
+          ? l10n_util::GetStringUTF16(IDS_POLICY_NEVER_FETCHED)
+          : ui::TimeFormat::Simple(ui::TimeFormat::FORMAT_ELAPSED,
+                                   ui::TimeFormat::LENGTH_SHORT,
+                                   base::TimeTicks::Now() - last_refresh_time));
+
+  dict->SetString("enterpriseEnrollmentDomain", management_realm_);
+  dict->SetString("enterpriseDisplayDomain", enterprise_display_domain_);
 }
 
 void ActiveDirectoryPolicyStatusProvider::OnStoreLoaded(
@@ -535,7 +581,8 @@ void PolicyUIHandler::RegisterMessages() {
     if (connector->GetDeviceActiveDirectoryPolicyManager()) {
       device_status_provider_ =
           base::MakeUnique<ActiveDirectoryPolicyStatusProvider>(
-              connector->GetDeviceActiveDirectoryPolicyManager()->store());
+              connector->GetDeviceActiveDirectoryPolicyManager(),
+              connector->GetRealm(), connector->GetEnterpriseDisplayDomain());
     } else {
       device_status_provider_ =
           base::MakeUnique<DevicePolicyStatusProvider>(connector);
@@ -566,7 +613,7 @@ void PolicyUIHandler::RegisterMessages() {
   } else if (active_directory_policy) {
     user_status_provider_ =
         base::MakeUnique<ActiveDirectoryPolicyStatusProvider>(
-            active_directory_policy->store());
+            active_directory_policy);
   }
 #else
   policy::UserCloudPolicyManager* user_cloud_policy_manager =

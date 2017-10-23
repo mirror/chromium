@@ -51,6 +51,9 @@ class POLICY_EXPORT PolicyScheduler {
   // scheduled to run immediately after the end of the currently running task.
   void ScheduleTaskNow();
 
+  base::TimeDelta interval() const { return interval_; }
+  base::TimeTicks last_task_time() const { return last_task_; }
+
  private:
   // Schedules next task to run in |delay|. Deletes any previously scheduled
   // tasks.
