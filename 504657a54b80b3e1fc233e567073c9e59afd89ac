@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6d4514d_d98b9e49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T15:03:01Z",
+      "side": 1,
+      "message": "Please update the CL desc.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "504657a54b80b3e1fc233e567073c9e59afd89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7fef06_548f3256",
+        "filename": "chrome/browser/autofill/address_normalizer_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T15:03:01Z",
+      "side": 1,
+      "message": "Not used?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 18
+      },
+      "revId": "504657a54b80b3e1fc233e567073c9e59afd89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1668402_acbeacaf",
+        "filename": "chrome/browser/autofill/address_normalizer_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T15:03:01Z",
+      "side": 1,
+      "message": "Not longer used?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "504657a54b80b3e1fc233e567073c9e59afd89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db11d5be_a3bd0ade",
+        "filename": "chrome/browser/autofill/address_normalizer_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T15:03:01Z",
+      "side": 1,
+      "message": "Do you think it would make more sense to return AddressNormalizer instead of AddressNormalizerImpl?",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "504657a54b80b3e1fc233e567073c9e59afd89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
