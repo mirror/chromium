@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cde120e1_0d341544",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f88001e_7eb73cc9",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d1f7c5a_c5b73267",
         "filename": "content/browser/webauth/attestation_data.cc",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "de05c39b_9e077425",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d1f7c5a_c5b73267",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 76
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6118068_79cb988d",
         "filename": "content/browser/webauth/attestation_data.cc",
         "patchSetId": 6
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-23T11:40:11Z",
       "side": 1,
       "message": "nit: aka.?",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc7afdf_c2c84735",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "I spent waaay too much time trying to figure out which is technically more appropriate in this case. Both seem to be all right, although aka tends to be used for names/proper nouns, and not for words or concepts. I prefer i.e. but don\u0027t care that much. :)",
+      "parentUuid": "c6118068_79cb988d",
       "range": {
         "startLine": 26,
         "startChar": 32,
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "51fbd403_ff84174d",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3bd19c1_36c2a76b",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce048a9f_6c0f4350",
         "filename": "content/browser/webauth/attestation_data.cc",
         "patchSetId": 6
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "40b86e84_c2de9b5d",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce048a9f_6c0f4350",
+      "range": {
+        "startLine": 41,
+        "startChar": 14,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cf9092d_6d19ecf3",
         "filename": "content/browser/webauth/attestation_data.cc",
         "patchSetId": 6
@@ -119,6 +227,24 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02425845_3e6fba27",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cf9092d_6d19ecf3",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "ee711b0a_ffad253b",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32d02ec1_a680a0fb",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f110f6ce_90a2bb0f",
         "filename": "content/browser/webauth/attestation_data.cc",
         "patchSetId": 6
@@ -153,6 +297,24 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17297f1a_976e805e",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f110f6ce_90a2bb0f",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "11b8636d_11238fc4",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "We do want it to be big-endian. But is this really writing it little-endian here? \nexample: length of 130. Gets packed above as [00, 82], and also inserted at [00, 82], right?",
+      "parentUuid": "e552e5b2_c171feb8",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70ef7908_aa94a934",
         "filename": "content/browser/webauth/attestation_data.h",
         "patchSetId": 6
@@ -187,6 +367,24 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76656bfa_f49b7c96",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70ef7908_aa94a934",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +411,30 @@
     },
     {
       "key": {
+        "uuid": "db3a3e23_52079a3e",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0de13f41_ab79234a",
+      "range": {
+        "startLine": 18,
+        "startChar": 52,
+        "endLine": 18,
+        "endChar": 62
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81230582_9b4d1456",
         "filename": "content/browser/webauth/attestation_data.h",
         "patchSetId": 6
@@ -233,6 +455,30 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "841b525c_18db922c",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Yep, definitely. Will update all the links in a follow up CL.",
+      "parentUuid": "81230582_9b4d1456",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 72
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +505,30 @@
     },
     {
       "key": {
+        "uuid": "11e812b3_8e15a6a7",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad7e98ed_895296ec",
+      "range": {
+        "startLine": 23,
+        "startChar": 42,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f49fe79b_a949d773",
         "filename": "content/browser/webauth/attestation_data.h",
         "patchSetId": 6
@@ -273,6 +543,24 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14108e9_dbe322b9",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "K. I think RegisterResponseData is the only one that wasn\u0027t passing it by const reference, so I changed that to non-const value.",
+      "parentUuid": "f49fe79b_a949d773",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -322,6 +610,54 @@
     },
     {
       "key": {
+        "uuid": "afcfdbc6_b0a93351",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c6ea72a_5a6e8879",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51bb2f6e_0ed7a0f0",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec60a016_839d343f",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "254d0a9c_e2f4b414",
         "filename": "content/browser/webauth/attestation_data.h",
         "patchSetId": 6
@@ -336,6 +672,24 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5110b4_14e72a76",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "254d0a9c_e2f4b414",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -356,6 +710,24 @@
     },
     {
       "key": {
+        "uuid": "0a1b1c85_a76eb432",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d072d55a_b1dfd480",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b868837_4cbb2e00",
         "filename": "content/browser/webauth/attestation_object.cc",
         "patchSetId": 6
@@ -373,6 +745,24 @@
     },
     {
       "key": {
+        "uuid": "4feab552_7534efc3",
+        "filename": "content/browser/webauth/attestation_object.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b868837_4cbb2e00",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8fdd4a0_bb03cf93",
         "filename": "content/browser/webauth/attestation_object.h",
         "patchSetId": 6
@@ -387,6 +777,24 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2c2914_62901145",
+        "filename": "content/browser/webauth/attestation_object.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8fdd4a0_bb03cf93",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -413,6 +821,30 @@
     },
     {
       "key": {
+        "uuid": "508985ac_f900eaf2",
+        "filename": "content/browser/webauth/attestation_object.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5904c98a_0a8d592f",
+      "range": {
+        "startLine": 15,
+        "startChar": 15,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1451c1a7_84e55d0a",
         "filename": "content/browser/webauth/attestation_object.h",
         "patchSetId": 6
@@ -430,6 +862,24 @@
     },
     {
       "key": {
+        "uuid": "b8abba09_671d1de9",
+        "filename": "content/browser/webauth/attestation_object.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1451c1a7_84e55d0a",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c366b233_5f937521",
         "filename": "content/browser/webauth/attestation_object.h",
         "patchSetId": 6
@@ -444,6 +894,24 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8bed1b_5dc8282d",
+        "filename": "content/browser/webauth/attestation_object.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c366b233_5f937521",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -470,6 +938,30 @@
     },
     {
       "key": {
+        "uuid": "35ed6849_7aa37072",
+        "filename": "content/browser/webauth/attestation_statement.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7bbfe1b_5c8a902d",
+      "range": {
+        "startLine": 9,
+        "startChar": 43,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f573898_35e9d22f",
         "filename": "content/browser/webauth/attestation_statement.h",
         "patchSetId": 6
@@ -493,6 +985,30 @@
     },
     {
       "key": {
+        "uuid": "8f6f32e2_5b69c5eb",
+        "filename": "content/browser/webauth/attestation_statement.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Good catch.",
+      "parentUuid": "8f573898_35e9d22f",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86a4e37b_9537f8b1",
         "filename": "content/browser/webauth/attestation_statement.h",
         "patchSetId": 6
@@ -507,6 +1023,24 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a461f166_e3386b14",
+        "filename": "content/browser/webauth/attestation_statement.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Yes, it does need to be a string. It\u0027s the name of the format that\u0027s packed into the attestation object; I clarified the name of the method.",
+      "parentUuid": "86a4e37b_9537f8b1",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -533,6 +1067,30 @@
     },
     {
       "key": {
+        "uuid": "f9fa4d89_c122ceed",
+        "filename": "content/browser/webauth/authenticator_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9df2c7f4_dbe17f9f",
+      "range": {
+        "startLine": 33,
+        "startChar": 37,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c867a0d8_232dd231",
         "filename": "content/browser/webauth/authenticator_data.cc",
         "patchSetId": 6
@@ -556,6 +1114,30 @@
     },
     {
       "key": {
+        "uuid": "3443ed50_482b19fc",
+        "filename": "content/browser/webauth/authenticator_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c867a0d8_232dd231",
+      "range": {
+        "startLine": 61,
+        "startChar": 29,
+        "endLine": 61,
+        "endChar": 37
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5cdc690_6d86eafc",
         "filename": "content/browser/webauth/authenticator_data.h",
         "patchSetId": 6
@@ -570,6 +1152,24 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac205468_22e0d211",
+        "filename": "content/browser/webauth/authenticator_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5cdc690_6d86eafc",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -596,6 +1196,30 @@
     },
     {
       "key": {
+        "uuid": "bdf6581d_7745db6b",
+        "filename": "content/browser/webauth/authenticator_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Ah, that does look confusing. It\u0027s not itself a hash; a hash of the relying party id is the first value in the concatenated byte array. I formatted the comment like you recommended in attestation_data.h.",
+      "parentUuid": "bac4fb10_6e2ee9f3",
+      "range": {
+        "startLine": 33,
+        "startChar": 23,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94dde100_edd75b47",
         "filename": "content/browser/webauth/authenticator_data.h",
         "patchSetId": 6
@@ -610,6 +1234,24 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789f2c31_04299667",
+        "filename": "content/browser/webauth/authenticator_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "94dde100_edd75b47",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -630,6 +1272,24 @@
     },
     {
       "key": {
+        "uuid": "13e25896_35f7f048",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f5c5ed9_5545ea70",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d105756_11d0c4b7",
         "filename": "content/browser/webauth/collected_client_data.h",
         "patchSetId": 6
@@ -641,6 +1301,30 @@
       "writtenOn": "2017-10-23T11:40:11Z",
       "side": 1,
       "message": "nit: The return type already indicated that it\u0027s serialized to string, maybe we can omit this here.\nnit2: Does this need to be a string as opposed to a uint8 vector?",
+      "range": {
+        "startLine": 35,
+        "startChar": 29,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83878e5a_80bc0c47",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Half the time I need the JSON string, the other half I need it as bytes. JsonWriter returns a string, and JSON itself is a string format, so it made sense to me to have it return a string and convert to bytes when I need to. Wdyt?",
+      "parentUuid": "8d105756_11d0c4b7",
       "range": {
         "startLine": 35,
         "startChar": 29,
@@ -670,6 +1354,24 @@
     },
     {
       "key": {
+        "uuid": "8402ee30_3b26304a",
+        "filename": "content/browser/webauth/ec_public_key.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure it needs to be that generalized. I doubt the helper function would be called by anything else... things working with EC keys almost always want to do a lot of other stuff other than extracting an x- and y- coordinate, and those features tend to be provided in crypto libraries. Adding a security check here is probably sufficient.",
+      "parentUuid": "9cb91bc7_776c2409",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "705402e3_5b11576e",
         "filename": "content/browser/webauth/fido_attestation_statement.h",
         "patchSetId": 6
@@ -690,6 +1392,30 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d8f698_7b7957c6",
+        "filename": "content/browser/webauth/fido_attestation_statement.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-24T20:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "705402e3_5b11576e",
+      "range": {
+        "startLine": 15,
+        "startChar": 32,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
