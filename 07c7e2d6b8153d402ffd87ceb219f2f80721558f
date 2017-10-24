@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "277ea585_adddf40d",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T21:21:16Z",
+      "side": 1,
+      "message": "Will the callback passed here not end up in a posted task ever? If it does, does something else guard that task to prevent it from running this callback?",
+      "parentUuid": "68398dd8_4ce19ddb",
+      "revId": "07c7e2d6b8153d402ffd87ceb219f2f80721558f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe4e816e_e6966e62",
         "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
         "patchSetId": 13
