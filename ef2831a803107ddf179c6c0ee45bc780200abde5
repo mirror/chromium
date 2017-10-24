@@ -16,6 +16,24 @@
       "revId": "ef2831a803107ddf179c6c0ee45bc780200abde5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11dd899c_e4e0e57b",
+        "filename": "chrome/browser/android/omnibox/autocomplete_controller_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T21:44:49Z",
+      "side": 1,
+      "message": "I like your revisions.  Thanks!\n\nDone.",
+      "parentUuid": "bb5ba285_d8e1b05d",
+      "revId": "ef2831a803107ddf179c6c0ee45bc780200abde5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
