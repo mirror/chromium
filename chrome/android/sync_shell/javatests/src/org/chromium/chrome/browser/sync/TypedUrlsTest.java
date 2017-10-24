@@ -140,7 +140,7 @@ public class TypedUrlsTest {
         specifics.typedUrl = new TypedUrlSpecifics();
         specifics.typedUrl.url = url;
         specifics.typedUrl.title = url;
-        specifics.typedUrl.visits = new long[]{1L};
+        specifics.typedUrl.visits = new long[] {getCurrentTimeInMicroseconds()};
         specifics.typedUrl.visitTransitions = new int[]{SyncEnums.TYPED};
         mSyncTestRule.getFakeServerHelper().injectUniqueClientEntity(url /* name */, specifics);
     }
@@ -191,5 +191,11 @@ public class TypedUrlsTest {
                 }
             }
         }, SyncTestUtil.TIMEOUT_MS, SyncTestUtil.INTERVAL_MS);
+    }
+
+    private long getCurrentTimeInMicroseconds() {
+        long microsecondsSinceEpoch = System.currentTimeMillis() * 1000;
+        // 11644473600000000L is offset of UNIX epoch from windows FILETIME epoch in microseconds.
+        return 11644473600000000L + microsecondsSinceEpoch;
     }
 }
