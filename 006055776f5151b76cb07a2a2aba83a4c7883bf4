@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2ec771a3_8f95c70e",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-24T09:16:55Z",
+      "side": 1,
+      "message": "How about just keeping the request instead of binding to ProviderHostEndpoints? It\u0027s a bit awkward that ProviderHostEndpoints inheris RegistrationObjectHost.",
+      "revId": "006055776f5151b76cb07a2a2aba83a4c7883bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93bd3dad_bfc190cc",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 2
