@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "91a1e16f_f036a8e8",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-24T12:24:01Z",
+      "side": 1,
+      "message": "Moved it to the cpp file. But it\u0027s not just for testing and works in both modes.",
+      "parentUuid": "59d31c05_3a872ab5",
+      "revId": "1e2da973dbf31da9bc29a8aa862cb2727f321124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe5f8b46_a64363cf",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifierTest.cpp",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "1e2da973dbf31da9bc29a8aa862cb2727f321124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3b6027_142bd008",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifierTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-24T12:24:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe5f8b46_a64363cf",
+      "revId": "1e2da973dbf31da9bc29a8aa862cb2727f321124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
