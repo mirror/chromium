@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e2f0be_6ebfc869",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T22:33:26Z",
+      "side": 1,
+      "message": "Rename these to match new name.",
+      "range": {
+        "startLine": 37,
+        "startChar": 50,
+        "endLine": 37,
+        "endChar": 58
+      },
+      "revId": "9768e8519ed980d9f788326d16398cc066e4a859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

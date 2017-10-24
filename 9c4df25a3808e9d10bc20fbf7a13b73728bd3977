@@ -164,6 +164,30 @@
       "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f219a71f_6bdb89fe",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T22:33:26Z",
+      "side": 1,
+      "message": "c++11 allows declaring and initializing. So, code that has been around for a long time (like this) initializes members in the constructor.",
+      "parentUuid": "80c2488b_8b7ac5fa",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 34
+      },
+      "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
