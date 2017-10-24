@@ -52,6 +52,7 @@ class ShellContentBrowserClient : public content::ContentBrowserClient {
   void SiteInstanceDeleting(content::SiteInstance* site_instance) override;
   void AppendExtraCommandLineSwitches(base::CommandLine* command_line,
                                       int child_process_id) override;
+  void ResourceDispatcherHostCreated() override;
   content::SpeechRecognitionManagerDelegate*
   CreateSpeechRecognitionManagerDelegate() override;
   content::BrowserPpapiHost* GetExternalBrowserPpapiHost(

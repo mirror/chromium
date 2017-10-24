@@ -326,6 +326,7 @@ class MojoAsyncResourceHandlerTestBase {
         browser_context_(new TestBrowserContext()) {
     MojoAsyncResourceHandler::SetAllocationSizeForTesting(32 * 1024);
     rdh_.SetDelegate(&rdh_delegate_);
+    rdh_.SetDelegate(nullptr);
 
     // Create and initialize |request_|.  None of this matters, for these tests,
     // just need something non-NULL.

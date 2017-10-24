@@ -103,6 +103,7 @@ class URLLoaderFactoryImplTest : public ::testing::TestWithParam<size_t> {
     resource_message_filter_->InitializeForTest();
     MojoAsyncResourceHandler::SetAllocationSizeForTesting(GetParam());
     rdh_.SetLoaderDelegate(&loader_deleate_);
+    rdh_.SetDelegate(nullptr);
 
     URLLoaderFactoryImpl::Create(
         resource_message_filter_->requester_info_for_test(),
