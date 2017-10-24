@@ -171,36 +171,43 @@ DisplayColorManager::~DisplayColorManager() {
 
 void DisplayColorManager::OnDisplayModeChanged(
     const display::DisplayConfigurator::DisplayStateList& display_states) {
-  for (const display::DisplaySnapshot* state : display_states) {
+  for (const display::DisplaySnapshot* display : display_states) {
+    const bool display_has_valid_color_space = display->color_space().Isvalid();
+    UMA_HISTOGRAM_BOOLEAN("Ash.DisplayColorManager.ValidDisplayColorSpace",
+                          display_has_valid_color_space);
+    // If |display| has a valid color space, skip retrieving/loading the ICC.
+    if (display_has_valid_color_space)
+      continue;
+
     // Ensure we always reset the configuration before setting a new one.
     configurator_->SetColorCorrection(
-        state->display_id(), std::vector<display::GammaRampRGBEntry>(),
+        display->display_id(), std::vector<display::GammaRampRGBEntry>(),
         std::vector<display::GammaRampRGBEntry>(), std::vector<float>());
 
     UMA_HISTOGRAM_BOOLEAN("Ash.DisplayColorManager.HasColorCorrectionMatrix",
-                          state->has_color_correction_matrix());
-    if (calibration_map_[state->product_id()]) {
-      ApplyDisplayColorCalibration(state->display_id(), state->product_id());
+                          display->has_color_correction_matrix());
+    if (calibration_map_[display->product_id()]) {
+      ApplyDisplayColorCalibration(display->display_id(),
+                                   display->product_id());
     } else {
       const bool valid_product_id =
-          state->product_id() != display::DisplaySnapshot::kInvalidProductID;
+          display->product_id() != display::DisplaySnapshot::kInvalidProductID;
       UMA_HISTOGRAM_BOOLEAN("Ash.DisplayColorManager.ValidProductId",
                             valid_product_id);
       if (valid_product_id)
-        LoadCalibrationForDisplay(state);
+        LoadCalibrationForDisplay(display);
     }
   }
 }
 
 void DisplayColorManager::ApplyDisplayColorCalibration(int64_t display_id,
                                                        int64_t product_id) {
-  if (calibration_map_.find(product_id) != calibration_map_.end()) {
-    ColorCalibrationData* data = calibration_map_[product_id].get();
-    if (!configurator_->SetColorCorrection(display_id, data->degamma_lut,
-                                           data->gamma_lut,
-                                           data->correction_matrix))
-      LOG(WARNING) << "Error applying color correction data";
-  }
+  if (calibration_map_.find(product_id) = calibration_map_.end())
+    return;
+  ColorCalibrationData* data = calibration_map_[product_id].get();
+  const bool result = configurator_->SetColorCorrection(
+      display_id, data->degamma_lut, data->gamma_lut, data->correction_matrix);
+  DLOG_IF(WARNING, result) << "Error applying color correction data";
 }
 
 void DisplayColorManager::LoadCalibrationForDisplay(
@@ -233,13 +240,15 @@ void DisplayColorManager::FinishLoadCalibrationForDisplay(
     const base::FilePath& path,
     bool file_downloaded) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  UMA_HISTOGRAM_BOOLEAN("Ash.DisplayColorManager.IccFileFound",
-                        !path.empty() && file_downloaded);
+
   std::string product_string = quirks::IdToHexString(product_id);
   if (path.empty()) {
     VLOG(1) << "No ICC file found with product id: " << product_string
             << " for display id: " << display_id;
     return;
+  } else {
+    UMA_HISTOGRAM_BOOLEAN("Ash.DisplayColorManager.IccFileDownloaded",
+                          file_downloaded);
   }
 
   if (file_downloaded && type == display::DISPLAY_CONNECTION_TYPE_INTERNAL) {
