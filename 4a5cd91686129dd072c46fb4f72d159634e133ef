@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a67c9cab_02e29c1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-24T23:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46b80c06_ef933ab1",
+      "range": {
+        "startLine": 9,
+        "startChar": 26,
+        "endLine": 9,
+        "endChar": 28
+      },
+      "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b500e6d_48389f16",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2eb4c737_531d9927",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-24T23:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b500e6d_48389f16",
+      "range": {
+        "startLine": 10,
+        "startChar": 36,
+        "endLine": 10,
+        "endChar": 40
+      },
+      "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b67f9095_3cc569d8",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
         "patchSetId": 8
@@ -62,6 +110,24 @@
       "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5becd37_d8446276",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-24T23:06:23Z",
+      "side": 1,
+      "message": "Done. We might want to use an enum instead of bool, but I\u0027d like to leave this bool in this CL, because it\u0027s better to replace |ScriptLoader::is_external_| as well when we replace this bool with enum.",
+      "parentUuid": "b67f9095_3cc569d8",
+      "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "ab5e89ba_9022e753",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-24T23:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00e296c0_6c409390",
+      "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "507aaafb_e968aefa",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
         "patchSetId": 8
@@ -96,6 +180,24 @@
       "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9e966b_956f7705",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-24T23:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "507aaafb_e968aefa",
+      "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
