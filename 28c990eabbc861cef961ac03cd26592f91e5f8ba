@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d7c204b_38c4e4cd",
+        "filename": "services/service_manager/sandbox/sandbox.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-24T14:04:48Z",
+      "side": 1,
+      "message": "in this whole file, remove unnecessary service_manager::",
+      "range": {
+        "startLine": 37,
+        "startChar": 25,
+        "endLine": 37,
+        "endChar": 40
+      },
+      "revId": "28c990eabbc861cef961ac03cd26592f91e5f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f2b522_e1a19756",
+        "filename": "services/service_manager/sandbox/win/sandbox_win.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-24T14:04:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "28c990eabbc861cef961ac03cd26592f91e5f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
