@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34a776ee_25fba005",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2870,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-24T00:43:38Z",
+      "side": 1,
+      "message": "nit: Omit this trailing period too.",
+      "range": {
+        "startLine": 2870,
+        "startChar": 35,
+        "endLine": 2870,
+        "endChar": 36
+      },
+      "revId": "ec4e15ecc9ee9cab86863ffe3bce190251849974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
