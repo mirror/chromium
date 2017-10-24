@@ -81,12 +81,11 @@ size_t PaintArtifact::ApproximateUnsharedMemoryUsage() const {
 
 void PaintArtifact::Replay(GraphicsContext& graphics_context) const {
   TRACE_EVENT0("blink,benchmark", "PaintArtifact::replay");
-  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    for (const DisplayItem& display_item : display_item_list_)
-      display_item.Replay(graphics_context);
-  } else {
-    Replay(*graphics_context.Canvas());
-  }
+  // TODO(wangxianzhu, trchen): Enabled the following DCHECK after we let all
+  // SPv175+ paintings use the other form of Replay().
+  // DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+  for (const DisplayItem& display_item : display_item_list_)
+    display_item.Replay(graphics_context);
 }
 
 void PaintArtifact::Replay(PaintCanvas& canvas,

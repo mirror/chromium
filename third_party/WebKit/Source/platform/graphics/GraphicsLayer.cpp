@@ -1263,12 +1263,9 @@ sk_sp<PaintRecord> GraphicsLayer::CaptureRecord() {
   GraphicsContext graphics_context(GetPaintController(),
                                    GraphicsContext::kNothingDisabled, nullptr);
   graphics_context.BeginRecording(bounds);
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() && !layer_state_) {
-    // TODO(wangxianzhu): Remove this condition when all drawable layers have
-    // layer_state_.
-    for (const auto& display_item :
-         GetPaintController().GetPaintArtifact().GetDisplayItemList())
-      display_item.Replay(graphics_context);
+  if (layer_state_) {
+    GetPaintController().GetPaintArtifact().Replay(*graphics_context.Canvas(),
+                                                   layer_state_->state);
   } else {
     GetPaintController().GetPaintArtifact().Replay(graphics_context);
   }
