@@ -281,6 +281,30 @@
       "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cddec866_13fd2221",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-24T15:39:11Z",
+      "side": 1,
+      "message": "network_transaction_ doesn\u0027t need to be reset here since we now destroy the Writers object in HC. We can let WritersDoneWritingToEntry call WriteModeTransactionAboutToBecomeReader before destroying the writers object.",
+      "parentUuid": "6eb5faa8_53c23bfc",
+      "range": {
+        "startLine": 550,
+        "startChar": 20,
+        "endLine": 550,
+        "endChar": 59
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
