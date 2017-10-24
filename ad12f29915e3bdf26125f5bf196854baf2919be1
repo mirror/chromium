@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "31957b55_db28db93",
+        "filename": "tools/cygprofile/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-24T11:59:40Z",
+      "side": 1,
+      "message": "Makes sense.\n\nI think it\u0027s fine for now to stuff orderfile_generator with more hacks. How will it work? Adds a line to the orderfile if it\u0027s not there? Avoid re-adding (or even re-downloading) somehow?",
+      "parentUuid": "2d5e4e66_b84a9fd4",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "ad12f29915e3bdf26125f5bf196854baf2919be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80716352_2240233d",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 3

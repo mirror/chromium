@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdf27a81_3d675506",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-24T11:59:40Z",
+      "side": 1,
+      "message": "nit: s/keep/keeps/",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 30
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0913567_9f4ed2fa",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-24T11:59:40Z",
+      "side": 1,
+      "message": "nit: s/S/Seconds/",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094d91ec_3a3fe905",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-24T11:59:40Z",
+      "side": 1,
+      "message": "CHECK(!g_enabled_and_array.load(std::memory_order_relaxed));",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 30
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63149d20_56e73c1c",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-24T11:59:40Z",
+      "side": 1,
+      "message": "s/sets/set/\n(it is not a description of a function)",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 20
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7142bc7_c2ba49ca",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-24T11:59:40Z",
+      "side": 1,
+      "message": "now, with all proper memory relaxed ordering, it\u0027s not racy :)",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac701a0c_f9dd23bb",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-24T11:59:40Z",
+      "side": 1,
+      "message": "We do not need any barrier because we are not reading/modifying other memory in this thread.",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 32
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
