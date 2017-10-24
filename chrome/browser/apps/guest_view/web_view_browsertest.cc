@@ -4,6 +4,7 @@
 
 #include <set>
 #include <utility>
+#include <iostream>
 
 #include "base/callback_helpers.h"
 #include "base/containers/queue.h"
@@ -3361,10 +3362,12 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, Shim_TestFocusWhileFocused) {
 IN_PROC_BROWSER_TEST_P(WebViewTest, NestedGuestContainerBounds) {
   TestHelper("testPDFInWebview", "web_view/shim", NO_TEST_SERVER);
 
+  std::cout << "A" << std::endl;
   std::vector<content::WebContents*> guest_web_contents_list;
   GetGuestViewManager()->WaitForNumGuestsCreated(2u);
   GetGuestViewManager()->GetGuestWebContentsList(&guest_web_contents_list);
   ASSERT_EQ(2u, guest_web_contents_list.size());
+  std::cout << "B" << std::endl;
 
   content::WebContents* web_view_contents = guest_web_contents_list[0];
   content::WebContents* mime_handler_view_contents = guest_web_contents_list[1];
@@ -3373,12 +3376,14 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, NestedGuestContainerBounds) {
   bool load_success = pdf_extension_test_util::EnsurePDFHasLoaded(
       web_view_contents);
   EXPECT_TRUE(load_success);
+  std::cout << "C" << std::endl;
 
   gfx::Rect web_view_container_bounds = web_view_contents->GetContainerBounds();
   gfx::Rect mime_handler_view_container_bounds =
       mime_handler_view_contents->GetContainerBounds();
   EXPECT_EQ(web_view_container_bounds.origin(),
             mime_handler_view_container_bounds.origin());
+  std::cout << "D" << std::endl;
 }
 
 // Test that context menu Back/Forward items in a MimeHandlerViewGuest affect
