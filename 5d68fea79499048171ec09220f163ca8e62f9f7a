@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "61b2a19e_0b338ab2",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T20:44:05Z",
+      "side": 1,
+      "message": "Sorry...I was suggesting using AtomicFlag but rather pointing out that we can copy it\u0027s atomic ops since we\u0027re fundamentally doing the same thing (having one thread publish results to bunch of other threads).\n\nAs for memory order correctness, we\u0027re discussing off thread.",
+      "parentUuid": "15f73d5f_ab72f33d",
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8c8c89b_4d7c91a9",
         "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
         "patchSetId": 25
@@ -77,6 +95,29 @@
         "startChar": 16,
         "endLine": 114,
         "endChar": 27
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b27cf6_61069ae2",
+        "filename": "chrome/common/profiling/memlog_sender_pipe.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T20:44:05Z",
+      "side": 1,
+      "message": "move these behind functions?",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 36
       },
       "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
