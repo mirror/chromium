@@ -26,5 +26,8 @@ const base::Feature kStalePreviewsTimestamp{"StalePreviewsTimestamp",
 const base::Feature kAMPRedirection{"AMPRedirectionPreviews",
                                     base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kOptimizationHints{"OptimizationHints",
+                                       base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace features
 }  // namespace previews
