@@ -87,7 +87,8 @@ public class WebApkUtils {
      * @return The package name. Returns null on an error.
      */
     public static String getHostBrowserPackageName(Context context) {
-        if (sHostPackage == null || !isInstalled(context.getPackageManager(), sHostPackage)) {
+        if (sHostPackage == null
+                || !isInstalledAndEnabled(context.getPackageManager(), sHostPackage)) {
             sHostPackage = getHostBrowserPackageNameInternal(context);
             if (sHostPackage != null) {
                 writeHostBrowserToSharedPref(context, sHostPackage);
@@ -97,16 +98,17 @@ public class WebApkUtils {
         return sHostPackage;
     }
 
-    /** Returns whether the application is installed. */
-    private static boolean isInstalled(PackageManager packageManager, String packageName) {
+    /** Returns whether the application is installed and enabled. */
+    public static boolean isInstalledAndEnabled(PackageManager packageManager, String packageName) {
         if (TextUtils.isEmpty(packageName)) return false;
 
+        ApplicationInfo info;
         try {
-            packageManager.getApplicationInfo(packageName, 0);
+            info = packageManager.getApplicationInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
-        return true;
+        return info.enabled;
     }
 
     /** Returns the <meta-data> value in the Android Manifest for {@link key}. */
