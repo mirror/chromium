@@ -13,6 +13,7 @@ class Point;
 
 namespace views {
 class NonClientFrameView;
+class View;
 }
 
 namespace ash {
@@ -22,6 +23,7 @@ class FrameCaptionButtonContainerView;
 // Returns the HitTestCompat for the specified point.
 ASH_EXPORT int FrameBorderNonClientHitTest(
     views::NonClientFrameView* view,
+    views::View* back_button,
     FrameCaptionButtonContainerView* caption_button_container,
     const gfx::Point& point_in_widget);
 
