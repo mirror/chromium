@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42e2642b_afaa8ebb",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-24T14:06:13Z",
+      "side": 1,
+      "message": "Sure, done. I used a pointer for consistency with Count(const LocaltFrame*, WebFeature) though, so it just means that the two calls in NavigatorBattery.cpp now take different arguments.",
+      "parentUuid": "2bb70aa9_359239bc",
+      "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "973513b7_81751ca1",
         "filename": "third_party/WebKit/Source/core/frame/UseCounter.cpp",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ecaa84_611c08ae",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-24T14:06:13Z",
+      "side": 1,
+      "message": "Of course, thanks :)",
+      "parentUuid": "973513b7_81751ca1",
+      "range": {
+        "startLine": 1213,
+        "startChar": 15,
+        "endLine": 1213,
+        "endChar": 33
+      },
+      "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "45b008a9_dec4a29d",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-24T14:06:13Z",
+      "side": 1,
+      "message": "Yes, I didn\u0027t even notice what clang-format did to that line :) Thanks, done.",
+      "parentUuid": "ffda3d3d_42af2405",
+      "range": {
+        "startLine": 1234,
+        "startChar": 14,
+        "endLine": 1234,
+        "endChar": 69
+      },
+      "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb7c4a9e_2917836e",
         "filename": "third_party/WebKit/Source/modules/battery/NavigatorBattery.cpp",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb8c8e5_386d50fe",
+        "filename": "third_party/WebKit/Source/modules/battery/NavigatorBattery.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-24T14:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb7c4a9e_2917836e",
+      "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a92cf0c_67189654",
+        "filename": "third_party/WebKit/Source/modules/battery/NavigatorBattery.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-24T14:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58c7354f_17de4d94",
+      "range": {
+        "startLine": 39,
+        "startChar": 31,
+        "endLine": 39,
+        "endChar": 67
+      },
+      "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
