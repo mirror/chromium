@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cab47c0e_a1a74224",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T19:16:09Z",
+      "side": 1,
+      "message": "The first line needs to be actually a single line, it will be truncated to the \\n and looks weird to have the next line as the first line of the commit description.",
+      "revId": "3cbf1f4256350a4921d71baa159521fa30def579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d1cf6b_4796928a",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T19:16:09Z",
+      "side": 1,
+      "message": "Doesn\u0027t this mean that if you had a MessageLoop and called SetNestableTasksAllowed(false) that it would change what it can run? This API seems fairly confusing to use?",
+      "revId": "3cbf1f4256350a4921d71baa159521fa30def579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e64f16d_b59c75a1",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T19:16:09Z",
+      "side": 1,
+      "message": "\u003e\u003d with an enum is a bit unclear to read",
+      "revId": "3cbf1f4256350a4921d71baa159521fa30def579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88237b9_127758d8",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T19:16:09Z",
+      "side": 1,
+      "message": "I got stuck here for a while, but I think its mostly cuz of the API choices I commented on above. It is like NestableAndSystemTasks is sticky, but others aren\u0027t, and it seems to be tied to the ways calling the public Apis set task_type_allowed_. I think this relationship could be more clear.",
+      "revId": "3cbf1f4256350a4921d71baa159521fa30def579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
