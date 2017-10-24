@@ -245,8 +245,8 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
   options.setColorSpaceConversion(
       kConversions[static_cast<uint8_t>(color_space_conversion)]);
 
-  // Set the runtime flags
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
+  // Set the scoped runtime flags for testing.
+  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
 
   return options;
 }
