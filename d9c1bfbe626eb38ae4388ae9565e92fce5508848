@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e6ba0ee_e58341d8",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-24T08:46:49Z",
+      "side": 1,
+      "message": "Fix spacing?",
+      "range": {
+        "startLine": 85,
+        "startChar": 26,
+        "endLine": 85,
+        "endChar": 40
+      },
+      "revId": "d9c1bfbe626eb38ae4388ae9565e92fce5508848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf86820_52fb0cad",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-24T08:46:49Z",
+      "side": 1,
+      "message": "s/handled/handle/",
+      "range": {
+        "startLine": 596,
+        "startChar": 51,
+        "endLine": 596,
+        "endChar": 58
+      },
+      "revId": "d9c1bfbe626eb38ae4388ae9565e92fce5508848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569f9c1b_a866ed42",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-24T08:46:49Z",
+      "side": 1,
+      "message": "\"should have been handled by the preceding -commandWasSelected: call on |_delegate|\" (to make it clear exactly how the delegate handles the action).",
+      "range": {
+        "startLine": 597,
+        "startChar": 45,
+        "endLine": 597,
+        "endChar": 47
+      },
+      "revId": "d9c1bfbe626eb38ae4388ae9565e92fce5508848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f956b0_754f533d",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-24T08:46:49Z",
+      "side": 1,
+      "message": "s/was done/is/\n\n(nit: comments document how the system works, not the history of how it was built).",
+      "range": {
+        "startLine": 598,
+        "startChar": 16,
+        "endLine": 598,
+        "endChar": 24
+      },
+      "revId": "d9c1bfbe626eb38ae4388ae9565e92fce5508848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
