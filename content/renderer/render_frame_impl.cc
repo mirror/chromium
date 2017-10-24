@@ -3365,10 +3365,11 @@ void RenderFrameImpl::DidChangeFramePolicy(
       {flags, FeaturePolicyHeaderFromWeb(container_policy)}));
 }
 
-void RenderFrameImpl::DidSetFeaturePolicyHeader(
+void RenderFrameImpl::DidSetFramePolicyHeaders(
+    blink::WebSandboxFlags flags,
     const blink::WebParsedFeaturePolicy& parsed_header) {
-  Send(new FrameHostMsg_DidSetFeaturePolicyHeader(
-      routing_id_, FeaturePolicyHeaderFromWeb(parsed_header)));
+  Send(new FrameHostMsg_DidSetFramePolicyHeaders(
+      routing_id_, flags, FeaturePolicyHeaderFromWeb(parsed_header)));
 }
 
 void RenderFrameImpl::DidAddContentSecurityPolicies(
