@@ -85,6 +85,7 @@ SurfaceTreeHost::SurfaceTreeHost(const std::string& window_name,
   host_window_->SetName(window_name);
   host_window_->Init(ui::LAYER_SOLID_COLOR);
   host_window_->set_owned_by_parent(false);
+  host_window_->AddObserver(this);
   // The host window is a container of surface tree. It doesn't handle pointer
   // events.
   host_window_->SetEventTargetingPolicy(
