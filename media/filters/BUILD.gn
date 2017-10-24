@@ -94,6 +94,7 @@ source_set("filters") {
   ]
 
   deps = [
+    ":source_buffer_platform",
     "//gpu/command_buffer/common",
     "//media/base",
     "//media/cdm",
@@ -195,18 +196,22 @@ source_set("filters") {
       "h264_bitstream_buffer.h",
     ]
   }
+}
+
+source_set("source_buffer_platform") {
+  sources = [
+    "source_buffer_platform.h",
+  ]
 
   if (use_low_memory_buffer) {
-    sources += [
-      "source_buffer_platform.h",
-      "source_buffer_platform_lowmem.cc",
-    ]
+    sources += [ "source_buffer_platform_lowmem.cc" ]
   } else {
-    sources += [
-      "source_buffer_platform.cc",
-      "source_buffer_platform.h",
-    ]
+    sources += [ "source_buffer_platform.cc" ]
   }
+
+  deps = [
+    "//media/base",
+  ]
 }
 
 source_set("perftests") {
