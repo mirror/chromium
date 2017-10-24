@@ -221,10 +221,7 @@ void DeveloperPrivateApiUnitTest::TestExtensionPrefSetting(
 
     base::ListValue args;
     args.Append(std::move(parameters));
-    EXPECT_FALSE(RunFunction(function, args)) << key;
-    EXPECT_EQ("This action requires a user gesture.", function->GetError());
 
-    ExtensionFunction::ScopedUserGestureForTests scoped_user_gesture;
     function = new api::DeveloperPrivateUpdateExtensionConfigurationFunction();
     EXPECT_TRUE(RunFunction(function, args)) << key;
     EXPECT_TRUE(has_pref.Run()) << key;
@@ -238,7 +235,6 @@ void DeveloperPrivateApiUnitTest::TestExtensionPrefSetting(
     base::ListValue args;
     args.Append(std::move(parameters));
 
-    ExtensionFunction::ScopedUserGestureForTests scoped_user_gesture;
     function = new api::DeveloperPrivateUpdateExtensionConfigurationFunction();
     EXPECT_TRUE(RunFunction(function, args)) << key;
     EXPECT_FALSE(has_pref.Run()) << key;
