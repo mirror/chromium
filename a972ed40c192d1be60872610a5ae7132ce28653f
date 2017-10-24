@@ -16,6 +16,24 @@
       "revId": "a972ed40c192d1be60872610a5ae7132ce28653f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee11d5b_ad504410",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4124,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-24T21:50:00Z",
+      "side": 0,
+      "message": "Done\n\nAlso noted chromium:624513 and chromium:640068",
+      "parentUuid": "d34c37ad_9625fd56",
+      "revId": "a972ed40c192d1be60872610a5ae7132ce28653f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

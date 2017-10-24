@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2eb5558d_fb04fedc",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4153,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-24T21:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00be9cf2_246ed9e9",
+      "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bb35191_312a6f8f",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c65b8d_e400d7ad",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4159,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-24T21:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bb35191_312a6f8f",
+      "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0b9aeaaf_6e76244b",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4169,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-24T21:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edeca6fa_cc5bc8d6",
+      "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12b99246_46db9e58",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6149787f_b03c9a44",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4170,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-24T21:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12b99246_46db9e58",
+      "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "bb8bbe23_88291c6a",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4182,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-24T21:50:00Z",
+      "side": 1,
+      "message": "Because of the A-ring test this re-enables. It just so happens that the last glyph in that test string draws one pixel past the last advance. This is actually something I expected to happen, and am actually surprised it isn\u0027t happening on Linux as well (though it is using different fonts).",
+      "parentUuid": "4637bf4d_df093735",
+      "range": {
+        "startLine": 4182,
+        "startChar": 15,
+        "endLine": 4182,
+        "endChar": 37
+      },
+      "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78e4bee7_59691670",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 5
@@ -107,6 +203,24 @@
       "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5094f434_89f2eb9e",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4185,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-24T21:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78e4bee7_59691670",
+      "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
