@@ -600,7 +600,7 @@ bool AXNodeObject::IsMultiline() const {
 
   // If root of contenteditable area and no ARIA role of textbox/searchbox used,
   // default to multiline=true which is what the default behavior is.
-  return HasContentEditableAttributeSet();
+  return IsEditableRoot();
 }
 
 // This only returns true if this is the element that actually has the
