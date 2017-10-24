@@ -210,11 +210,12 @@ void SaveMostVisitedToDisk(const ntp_tiles::NTPTilesVector& most_visited_data,
     return;
   }
 
-  base::PostTaskWithTraitsAndReply(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::BindOnce(&ClearTemporaryFaviconFolder), base::BindBlockArc(^{
-        GetFaviconsAndSave(most_visited_data, favicon_fetcher, favicons_folder);
-      }));
+  //  base::PostTaskWithTraitsAndReply(
+  //      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+  //      base::BindOnce(&ClearTemporaryFaviconFolder), base::BindBlockArc(^{
+  //        GetFaviconsAndSave(most_visited_data, favicon_fetcher,
+  //        favicons_folder);
+  //      }));
 }
 
 void WriteSingleUpdatedTileToDisk(NTPTile* tile) {
