@@ -73,7 +73,6 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   bool IsSplitViewModeActive() const;
 
   bool IsCurrentScreenOrientationLandscape() const;
-  bool IsCurrentScreenOrientationPrimary() const;
 
   // Snaps window to left/right.
   void SnapWindow(aura::Window* window, SnapPosition snap_position);
@@ -207,6 +206,10 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   // Returns the maximum value of the |divider_position_|. It should always be
   // the length of the longer side of the current display's work area bounds.
   int GetDividerEndPosition();
+
+  // Returns the closest fixed divider position in |kFixedPositionRatios|
+  // according to |distance| and |length|.
+  float FindClosestFixedPositionRatio(float distance, float length);
 
   // The current left/right snapped window.
   aura::Window* left_window_ = nullptr;
