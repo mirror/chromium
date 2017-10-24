@@ -127,6 +127,7 @@ class InternalSettings final : public InternalSettingsGenerated,
   void setAnimationWorkletEnabled(bool, ExceptionState&);
   void setPresentationReceiver(bool, ExceptionState&);
   void setAutoplayPolicy(const String&, ExceptionState&);
+  void setDataSaverEnabled(bool, ExceptionState&);
 
   // FIXME: The following are RuntimeEnabledFeatures and likely
   // cannot be changed after process start. These setters should
