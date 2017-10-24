@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c80b50e_27d4cfae",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-24T21:48:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is better as target_name or output_name. I think it\u0027s probably better to use target_name here, and if there are cases where we actually use output_name to configure tests, just change that. Thoughts?",
+      "revId": "5b09673d6115323b22377855c026ded0b02fd49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5210477_6241a41c",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-24T21:48:03Z",
+      "side": 1,
+      "message": "If I build a target, and then delete the .runtime_deps file, re-running ninja doesn\u0027t create it. \n\nIs that a bug, or would you consider the file to be an ephemeral thing? If the latter, I think I probably need to feed it as input into a separate action(), so I could move the thing that creates the .runtime_deps and the .label as an action, but that seems like it\u0027ll be slower overall.",
+      "revId": "5b09673d6115323b22377855c026ded0b02fd49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
