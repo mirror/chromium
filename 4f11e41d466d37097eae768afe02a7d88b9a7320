@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09d16fc3_999b9a27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-24T16:42:19Z",
+      "side": 1,
+      "message": "I wonder whether it would be worth making this a method on ChromeActivity that is empty by default.",
+      "range": {
+        "startLine": 50,
+        "startChar": 55,
+        "endLine": 50,
+        "endChar": 72
+      },
+      "revId": "4f11e41d466d37097eae768afe02a7d88b9a7320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
