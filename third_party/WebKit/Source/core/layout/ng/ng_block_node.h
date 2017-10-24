@@ -21,7 +21,6 @@ class NGPhysicalFragment;
 struct MinMaxSize;
 struct NGBaselineRequest;
 struct NGBoxStrut;
-struct NGLogicalOffset;
 
 // Represents a node to be laid out.
 class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
@@ -53,9 +52,6 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
   // Runs layout on the underlying LayoutObject and creates a fragment for the
   // resulting geometry.
   scoped_refptr<NGLayoutResult> RunOldLayout(const NGConstraintSpace&);
-
-  // Save static position for legacy AbsPos layout.
-  void SaveStaticOffsetForLegacy(const NGLogicalOffset&);
 
   bool CanUseNewLayout() const;
 
