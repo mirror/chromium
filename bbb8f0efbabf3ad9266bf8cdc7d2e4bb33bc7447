@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "6fc68f18_d0a7982d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-10-24T22:08:25Z",
+      "side": 1,
+      "message": "Miao, thanks for reviewing and sorry that I forgot to mark this CL as abandoned.\nShort story: This CL was created only as a preview of how ARC++ should have called Stop() properly.\nLong story: please refer to the comments of crosreview.com/728352 and this CL\u0027s comments.",
+      "parentUuid": "da37ea1a_7687599d",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 56
+      },
+      "revId": "bbb8f0efbabf3ad9266bf8cdc7d2e4bb33bc7447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffcfbb17_788c5605",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
