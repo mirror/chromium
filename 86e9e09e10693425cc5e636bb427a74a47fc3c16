@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "88856ea8_0f1f558f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-24T17:26:17Z",
+      "side": 1,
+      "message": "Since the structures of DOM tree and AX tree are different, the conversion may not be as straightforward as it appears. For example, if |position| is OffsetInAnchor in a ContainerNode, do we map it to the same (container, offset) pair in AX tree, or do we map it to the position before the same child node in AX tree? And what happens if the child node isn\u0027t in AX tree?\n\nFurthermore, do we want to guarantee that\n\nAXPosition::FromPosition(position).ToPositionWithAffinity().GetPosition() \u003d\u003d position\n\nCan we document the behavior of this function and ToPositionWithAffinity?",
+      "range": {
+        "startLine": 81,
+        "startChar": 29,
+        "endLine": 81,
+        "endChar": 41
+      },
+      "revId": "86e9e09e10693425cc5e636bb427a74a47fc3c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2b80b6_fef0dd33",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-24T17:26:17Z",
+      "side": 1,
+      "message": "s/orphan/null/",
+      "range": {
+        "startLine": 86,
+        "startChar": 9,
+        "endLine": 86,
+        "endChar": 15
+      },
+      "revId": "86e9e09e10693425cc5e636bb427a74a47fc3c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22eb65da_e1fc5998",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
         "patchSetId": 10
