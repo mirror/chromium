@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12ca5c1b_0405881e",
+        "filename": "ios/chrome/browser/tabs/tab.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-24T12:20:14Z",
+      "side": 0,
+      "message": "This gets rid of the dispatcher?  That\u0027s huge!",
+      "revId": "6976fe02ac409ac1a1f0bd51fbb299e106cfc7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
