@@ -388,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "4da30129_582a34cd",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-24T14:33:50Z",
+      "side": 1,
+      "message": "I think you should keep it, if only for readability because it\u0027s expected for unretained pointers.",
+      "parentUuid": "ed6ee7bc_cfe73f93",
+      "range": {
+        "startLine": 67,
+        "startChar": 17,
+        "endLine": 67,
+        "endChar": 22
+      },
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49f42370_88954d26",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 18
