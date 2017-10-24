@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "9dceed08_9d00f395",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T19:30:20Z",
+      "side": 1,
+      "message": "\u003e Hm, I just synced and I still don\u0027t have that file. Maybe the import didn\u0027t land yet?\n\nOh, you’re right, I was holding the import for something this morning and then I wound up holding it again to upstream the SafeTerminateProcess() revert. It’s landing now (https://chromium-review.googlesource.com/c/chromium/src/+/733614), so you can update this if it goes in first, or we can save it for a follow-up.",
+      "parentUuid": "e4a62e79_f22ee7f8",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8301011_af27ef7b",
         "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
         "patchSetId": 3
@@ -258,6 +276,24 @@
       "side": 1,
       "message": "I don\u0027t have that directory; same issue as above?",
       "parentUuid": "9a18cb5c_f006eb48",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41fc9bb_137d16c7",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T19:30:20Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t have that directory; same issue as above?\n\nSame import, yes.",
+      "parentUuid": "3afde10c_61f53edd",
       "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -401,6 +437,24 @@
       "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14ba1ff_eaaf3fb9",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T19:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebdd3ae9_3a23761e",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -580,6 +634,24 @@
     },
     {
       "key": {
+        "uuid": "6fd06e7a_cd36aebe",
+        "filename": "third_party/crashpad/crashpad/util/win/command_line_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T19:30:20Z",
+      "side": 1,
+      "message": "\u003e I originally thought I\u0027d change the test_argc to int, like argc is per standard. But all callers pass arraysize(), so that would\u0027ve been inconvenient.\n\nYes, all of that arraysize() is how we wound up with size_t instead of int here in the first place.\n\n\u003e All callers also pass arrays \u003c 10 items long, so I figured just doing this is fine.\n\nBut we have checked_cast\u003c\u003e, so why not use it?",
+      "parentUuid": "2f8a9e22_7d24caeb",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8feadb16_bf586606",
         "filename": "third_party/crashpad/crashpad/util/win/process_info_test.cc",
         "patchSetId": 3
@@ -600,6 +672,30 @@
       "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b324840_1b6bc5ae",
+        "filename": "third_party/crashpad/crashpad/util/win/process_info_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T19:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8feadb16_bf586606",
+      "range": {
+        "startLine": 565,
+        "startChar": 64,
+        "endLine": 565,
+        "endChar": 67
+      },
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdb7f664_13eba608",
+        "filename": "third_party/crashpad/crashpad/util/stdlib/strlcpy_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T19:30:20Z",
+      "side": 1,
+      "message": "Why not wmemcmp() though?",
+      "revId": "c59b37b9441bd58c5a0d65e0f8ee88c2bfb9f7aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
