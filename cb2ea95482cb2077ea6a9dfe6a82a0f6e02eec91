@@ -442,6 +442,24 @@
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62b344a_f47cef10",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T17:58:43Z",
+      "side": 1,
+      "message": "\u003e I think it makes sense to treat local suggestions as inherently superior, yes. Tail suggestions are a great response to a case where literally nothing else matches. But if there\u0027s long input that actually matches something in the user\u0027s history or bookmarks, preferring that seems right to me.\n\u003e \n\u003e Your initial approach of getting rid of one or the other based on score also seemed reasonable but I hadn\u0027t considered the dedup scenario. If it\u0027s feasible to do the culling before deduping, the score-based approach might still make sense. But I\u0027d still lean towards the simpler approach of preferring local matches and not worrying about whether the server is scoring tail suggestions in a way that\u0027s effective for this purpose.\n\nThinking about this more, I think a good structure might be the same one we use in SearchProvider to enforce constraints.\n\nRoughly, it\u0027s\n1. Do normal processing; fill in list of search and nav suggestions\n2. Convert suggestions to AutocompleteMatches\n3. Check constraints.  If one fails, revise the input (e.g., delete a relevant score, remove a suggestion, whatever) then goto 2.\n\nIndeed, that code is SearchProvider is designed exactly to enforce what we think is sensible, protecting against inappropriate or otherwise bad server scores.  It seems to me that this is exactly the same type of situation here.\n\nThis should get rid of my worries about duplicates.\n\nTo rephrase, my suggestion here would conceptually be something like:\n1. at beginning of SortAndCull, make a copy of |matches_|, call it |orig_matches|\n.2 where this code is, instead say:\nif (dropdown has tail suggest and dropdown has something that is not tail suggest and not search-what-you-typed) { revise orig_matches to remove all tail suggest; set matches_ \u003d orig_matches; goto beginning of SortAndCull }\n\n(Obviously this is not a code structure; the idea should be obvious.  For an example of a good structure that does this, see SearchProvider: UpdateMatches, ConvertResultsToAutocompleteMatches, and EnforceConstraints.)",
+      "parentUuid": "e9dd96e1_6662ae03",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
