@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b01d47c7_38b6ce07",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2303,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T00:57:03Z",
+      "side": 1,
+      "message": "Optional nit. Would it be better to remove resetting code from this method? Method should ideally do only one thing:\n\nif (success) {\n  timer-\u003eReportLoadTime();\n}\ntimer-\u003eReset();",
+      "revId": "966d9c3d013ab554bd02ea8060d53f751ebf79e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
