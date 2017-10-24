@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "e85d9346_3bad3844",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T22:19:11Z",
+      "side": 1,
+      "message": "BTW, CreatePrinterQuery() can\u0027t fail. All the existing callers are doing it wrong.",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf48a42_812f1393",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T22:19:11Z",
+      "side": 1,
+      "message": "No new new keywords.",
+      "range": {
+        "startLine": 140,
+        "startChar": 6,
+        "endLine": 140,
+        "endChar": 9
+      },
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c63eff_f9b748d4",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T22:19:11Z",
+      "side": 1,
+      "message": "Doesn\u0027t the only possible callback just call GetPrintPreviewDataForIndex() internally? Isn\u0027t that currently being called on the UI thread? i.e. No need to PostTask().",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35a89c60_6398c619",
         "filename": "chrome/browser/printing/print_view_manager_base.h",
         "patchSetId": 17
@@ -87,6 +144,30 @@
       "writtenOn": "2017-10-21T00:19:59Z",
       "side": 1,
       "message": "This now fails - not sure if it is just because this isn\u0027t being called from PrintingMessageFilter though. Any idea what this is supposed to be checking for?",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0362ef7a_2c8d0ca6",
+        "filename": "chrome/browser/printing/printer_query.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T22:19:11Z",
+      "side": 1,
+      "message": "Failure means the caller is not creating the PrinterQuery on the expected (IO) thread. What\u0027s the stacktrace for when this fails? If it is the call from PrintViewManagerBase::PrintForPrintPreview(), I believe that\u0027s on the UI thread. The |worker_| PrintJobWorker may also be unhappy if this is the case.",
+      "parentUuid": "9bd18a7e_96b999b2",
       "range": {
         "startLine": 24,
         "startChar": 13,
