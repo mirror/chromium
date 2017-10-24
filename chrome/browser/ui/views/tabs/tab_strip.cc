@@ -370,7 +370,7 @@ void TabStrip::StopAllHighlighting() {
 }
 
 void TabStrip::AddTabAt(int model_index,
-                        const TabRendererData& data,
+                        const base::span<const TabRendererData> data,
                         bool is_active) {
   Tab* tab = new Tab(this, animation_container_.get());
   AddChildView(tab);
@@ -381,7 +381,7 @@ void TabStrip::AddTabAt(int model_index,
   if (touch_layout_) {
     GenerateIdealBoundsForPinnedTabs(NULL);
     int add_types = 0;
-    if (data.pinned)
+    if (data[0].pinned)
       add_types |= StackedTabStripLayout::kAddTypePinned;
     if (is_active)
       add_types |= StackedTabStripLayout::kAddTypeActive;
@@ -420,7 +420,8 @@ void TabStrip::MoveTab(int from_model_index,
                        const TabRendererData& data) {
   DCHECK_GT(tabs_.view_size(), 0);
   const Tab* last_tab = GetLastVisibleTab();
-  tab_at(from_model_index)->SetData(data);
+  tab_at(from_model_index)
+      ->SetData(base::span<const TabRendererData>(&data, 1));
   if (touch_layout_) {
     tabs_.MoveViewOnly(from_model_index, to_model_index);
     int pinned_count = 0;
@@ -479,9 +480,10 @@ void TabStrip::RemoveTabAt(content::WebContents* contents, int model_index) {
   }
 }
 
-void TabStrip::SetTabData(int model_index, const TabRendererData& data) {
+void TabStrip::SetTabData(int model_index,
+                          base::span<const TabRendererData> data) {
   Tab* tab = tab_at(model_index);
-  bool pinned_state_changed = tab->data().pinned != data.pinned;
+  bool pinned_state_changed = tab->data()[0].pinned != data[0].pinned;
   tab->SetData(data);
 
   if (pinned_state_changed) {
@@ -537,7 +539,7 @@ bool TabStrip::ShouldTabBeVisible(const Tab* tab) const {
 
   // Pinned tabs don't change size when activated, so any tab in the pinned tab
   // region is safe.
-  if (tab->data().pinned)
+  if (tab->data()[0].pinned)
     return true;
 
   // If the active tab is on or before this tab, we're safe.
@@ -570,8 +572,8 @@ void TabStrip::PrepareForCloseAt(int model_index, CloseTabSource source) {
     Tab* tab_being_removed = tab_at(model_index);
     available_width_for_tabs_ = last_tab->bounds().right() -
                                 tab_being_removed->width() + Tab::GetOverlap();
-    if (model_index == 0 && tab_being_removed->data().pinned &&
-        !tab_at(1)->data().pinned) {
+    if (model_index == 0 && tab_being_removed->data()[0].pinned &&
+        !tab_at(1)->data()[0].pinned) {
       available_width_for_tabs_ -= kPinnedToNonPinnedOffset;
     }
   }
@@ -639,7 +641,7 @@ void TabStrip::SetSelection(const ui::ListSelectionModel& old_selection,
 
 void TabStrip::TabTitleChangedNotLoading(int model_index) {
   Tab* tab = tab_at(model_index);
-  if (tab->data().pinned && !tab->IsActive())
+  if (tab->data()[0].pinned && !tab->IsActive())
     tab->SetTabNeedsAttention(true);
 }
 
@@ -1496,14 +1498,14 @@ void TabStrip::StackDraggedTabs(int delta) {
       new_bounds.set_x(std::max(min_x, new_bounds.x() - adjusted_delta));
       tabs_.set_ideal_bounds(i, new_bounds);
     }
-    const bool is_active_pinned = tab_at(active_index)->data().pinned;
+    const bool is_active_pinned = tab_at(active_index)->data()[0].pinned;
     const int active_width = ideal_bounds(active_index).width();
     for (int i = active_index + 1; i < tab_count(); ++i) {
       const int max_x = ideal_bounds(active_index).x() +
           (kStackedPadding * std::min(i - active_index, kMaxStackedCount));
       gfx::Rect new_bounds(ideal_bounds(i));
       int new_x = std::max(new_bounds.x() + delta, max_x);
-      if (new_x == max_x && !tab_at(i)->data().pinned && !is_active_pinned &&
+      if (new_x == max_x && !tab_at(i)->data()[0].pinned && !is_active_pinned &&
           new_bounds.width() != active_width)
         new_x += (active_width - new_bounds.width());
       new_bounds.set_x(new_x);
@@ -1530,7 +1532,7 @@ void TabStrip::StackDraggedTabs(int delta) {
       int new_x = std::min(max_x, new_bounds.x() + adjusted_delta);
       // Because of rounding not all tabs are the same width. Adjust the
       // position to accommodate this, otherwise the stacking is off.
-      if (new_x == max_x && !tab_at(i)->data().pinned &&
+      if (new_x == max_x && !tab_at(i)->data()[0].pinned &&
           new_bounds.width() != last_tab_width)
         new_x += (last_tab_width - new_bounds.width());
       new_bounds.set_x(new_x);
@@ -1596,7 +1598,7 @@ void TabStrip::CalculateBoundsForDraggedTabs(const Tabs& tabs,
   int x = 0;
   for (size_t i = 0; i < tabs.size(); ++i) {
     Tab* tab = tabs[i];
-    if (i > 0 && tab->data().pinned != tabs[i - 1]->data().pinned)
+    if (i > 0 && tab->data()[0].pinned != tabs[i - 1]->data()[0].pinned)
       x += kPinnedToNonPinnedOffset;
     gfx::Rect new_bounds = tab->bounds();
     new_bounds.set_origin(gfx::Point(x, 0));
@@ -1610,7 +1612,7 @@ int TabStrip::GetSizeNeededForTabs(const Tabs& tabs) {
   for (size_t i = 0; i < tabs.size(); ++i) {
     Tab* tab = tabs[i];
     width += tab->width();
-    if (i > 0 && tab->data().pinned != tabs[i - 1]->data().pinned)
+    if (i > 0 && tab->data()[0].pinned != tabs[i - 1]->data()[0].pinned)
       width += kPinnedToNonPinnedOffset;
   }
   if (!tabs.empty())
@@ -1620,7 +1622,7 @@ int TabStrip::GetSizeNeededForTabs(const Tabs& tabs) {
 
 int TabStrip::GetPinnedTabCount() const {
   int pinned_count = 0;
-  while (pinned_count < tab_count() && tab_at(pinned_count)->data().pinned)
+  while (pinned_count < tab_count() && tab_at(pinned_count)->data()[0].pinned)
     pinned_count++;
   return pinned_count;
 }
@@ -2173,8 +2175,22 @@ void TabStrip::StartMouseInitiatedRemoveTabAnimation(int model_index) {
   int delta = tab_closing->width() - Tab::GetOverlap();
   // If the tab being closed is a pinned tab next to a non-pinned tab, be sure
   // to add the extra padding.
-  DCHECK_LT(model_index, tab_count() - 1);
-  if (tab_closing->data().pinned && !tab_at(model_index + 1)->data().pinned)
+
+  // FIXME(brettw) TabStrip::RemoveTabAt checks to see if the tab is the last
+  // one only calls this function if it's not the last. That's what this DCHECK
+  // is verifying. But the way it checks whether the tab was the last is by
+  // comparing it to the size of the new model assuming that the model has
+  // decreased in size by one entry. But with groups the model size may not
+  // have changed which makes that check incorrect. We need to check the
+  // current tab view to see if the requested tab is the last one and whether
+  // animation is required.
+  //
+  // To repro: make a group of two tabs and a last one that's selected. Then
+  // close the last one. The group will open because it's now selected.
+  //
+  // DCHECK_LT(model_index, tab_count() - 1);
+  if (tab_closing->data()[0].pinned &&
+      !tab_at(model_index + 1)->data()[0].pinned)
     delta += kPinnedToNonPinnedOffset;
 
   for (int i = model_index + 1; i < tab_count(); ++i) {

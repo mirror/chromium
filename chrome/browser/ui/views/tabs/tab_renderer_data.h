@@ -16,11 +16,13 @@ struct CHROME_VIEWS_EXPORT TabRendererData {
   // Different types of network activity for a tab. The NetworkState of a tab
   // may be used to alter the UI (e.g. show different kinds of loading
   // animations).
+  //
+  // The values are in order of severity so comparisons can be done.
   enum NetworkState {
-    NETWORK_STATE_NONE,     // no network activity.
-    NETWORK_STATE_WAITING,  // waiting for a connection.
-    NETWORK_STATE_LOADING,  // connected, transferring data.
-    NETWORK_STATE_ERROR,    // Encountered a network error.
+    NETWORK_STATE_NONE = 0,     // no network activity.
+    NETWORK_STATE_WAITING = 1,  // waiting for a connection.
+    NETWORK_STATE_LOADING = 2,  // connected, transferring data.
+    NETWORK_STATE_ERROR = 3,    // Encountered a network error.
   };
 
   TabRendererData();

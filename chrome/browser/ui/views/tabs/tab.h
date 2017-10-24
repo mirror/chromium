@@ -8,7 +8,9 @@
 #include <list>
 #include <memory>
 #include <string>
+#include <vector>
 
+#include "base/containers/span.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -92,8 +94,8 @@ class Tab : public gfx::AnimationDelegate,
 
   // Sets the data this tabs displays. Invokes DataChanged. Should only be
   // called after Tab is added to widget hierarchy.
-  void SetData(const TabRendererData& data);
-  const TabRendererData& data() const { return data_; }
+  void SetData(base::span<const TabRendererData> data);
+  const std::vector<TabRendererData>& data() const { return data_; }
 
   // Redraws the loading animation if one is visible. Otherwise, no-op.
   void StepLoadingAnimation();
@@ -217,7 +219,7 @@ class Tab : public gfx::AnimationDelegate,
   void MaybeAdjustLeftForPinnedTab(gfx::Rect* bounds) const;
 
   // Invoked from SetData after |data_| has been updated to the new data.
-  void DataChanged(const TabRendererData& old);
+  void DataChanged(const std::vector<TabRendererData>& old);
 
   // Paints with the normal tab style.  If |clip| is non-empty, the tab border
   // should be clipped against it.
@@ -260,10 +262,10 @@ class Tab : public gfx::AnimationDelegate,
   void PaintIcon(gfx::Canvas* canvas);
 
   // Updates the throbber.
-  void UpdateThrobber(const TabRendererData& old);
+  void UpdateThrobber(const std::vector<TabRendererData>& old);
 
   // Sets the throbber visibility according to the state in |data_|.
-  void RefreshThrobber();
+  void RefreshThrobber(size_t icon_index);
 
   // Returns the number of favicon-size elements that can fit in the tab's
   // current size.
@@ -304,7 +306,7 @@ class Tab : public gfx::AnimationDelegate,
   // The controller, never NULL.
   TabController* const controller_;
 
-  TabRendererData data_;
+  std::vector<TabRendererData> data_;
 
   // True if the tab is being animated closed.
   bool closing_;
@@ -319,6 +321,7 @@ class Tab : public gfx::AnimationDelegate,
   // crashes.
   int favicon_hiding_offset_;
 
+  // FIXME(brettw) this needs to be per-icon.
   bool should_display_crashed_favicon_;
 
   bool showing_attention_indicator_ = false;
@@ -331,7 +334,7 @@ class Tab : public gfx::AnimationDelegate,
 
   scoped_refptr<gfx::AnimationContainer> animation_container_;
 
-  ThrobberView* throbber_;
+  std::vector<ThrobberView*> throbbers_;
   AlertIndicatorButton* alert_indicator_button_;
   views::ImageButton* close_button_;
 
@@ -370,7 +373,7 @@ class Tab : public gfx::AnimationDelegate,
   // The favicon for the tab. This might be the sad tab icon or a copy of
   // data().favicon and may be modified for theming. It is created on demand
   // and thus may be null.
-  gfx::ImageSkia favicon_;
+  std::vector<gfx::ImageSkia> favicons_;
 
   class BackgroundCache {
    public:

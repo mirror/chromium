@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/compiler_specific.h"
+#include "base/containers/span.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -95,7 +96,9 @@ class TabStrip : public views::View,
   void StopAllHighlighting();
 
   // Adds a tab at the specified index.
-  void AddTabAt(int model_index, const TabRendererData& data, bool is_active);
+  void AddTabAt(int model_index,
+                const base::span<const TabRendererData> data,
+                bool is_active);
 
   // Moves a tab.
   void MoveTab(int from_model_index,
@@ -107,7 +110,7 @@ class TabStrip : public views::View,
   void RemoveTabAt(content::WebContents* contents, int model_index);
 
   // Sets the tab data at the specified model index.
-  void SetTabData(int model_index, const TabRendererData& data);
+  void SetTabData(int model_index, base::span<const TabRendererData> data);
 
   // Returns true if the tab is not partly or fully clipped (due to overflow),
   // and the tab couldn't become partly clipped due to changing the selected tab

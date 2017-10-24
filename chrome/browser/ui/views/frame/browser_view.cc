@@ -87,6 +87,7 @@
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
 #include "chrome/browser/ui/views/status_bubble_views.h"
 #include "chrome/browser/ui/views/tabs/browser_tab_strip_controller.h"
+#include "chrome/browser/ui/views/tabs/grouped_tab_strip_controller.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "chrome/browser/ui/views/toolbar/app_menu_button.h"
@@ -1604,7 +1605,7 @@ base::string16 BrowserView::GetAccessibleTabLabel(bool include_app_name,
 
   base::string16 window_title =
       browser_->GetWindowTitleForTab(include_app_name, index);
-  const TabRendererData& data = tabstrip_->tab_at(index)->data();
+  const TabRendererData& data = tabstrip_->tab_at(index)->data()[0];
 
   return chrome::AssembleTabAccessibilityLabel(
       window_title, data.IsCrashed(),
@@ -2116,12 +2117,21 @@ void BrowserView::InitViews() {
   AddChildView(top_container_);
 
   // TabStrip takes ownership of the controller.
+#if 0
   BrowserTabStripController* tabstrip_controller =
-      new BrowserTabStripController(browser_->tab_strip_model(), this);
+      new BrowserTabStripController(, this);
   tabstrip_ =
       new TabStrip(std::unique_ptr<TabStripController>(tabstrip_controller));
   top_container_->AddChildView(tabstrip_);
   tabstrip_controller->InitFromModel(tabstrip_);
+#else
+  GroupedTabStripController* tabstrip_controller =
+      new GroupedTabStripController(browser_->tab_strip_model(), this);
+  tabstrip_ =
+      new TabStrip(std::unique_ptr<TabStripController>(tabstrip_controller));
+  top_container_->AddChildView(tabstrip_);
+  tabstrip_controller->InitFromModel(tabstrip_);
+#endif
 
   toolbar_ = new ToolbarView(browser_.get());
   top_container_->AddChildView(toolbar_);

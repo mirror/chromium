@@ -1,12 +1,14 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/ui/views/tabs/browser_tab_strip_controller.h"
+#include "chrome/browser/ui/views/tabs/grouped_tab_strip_controller.h"
 
 #include "base/auto_reset.h"
 #include "base/macros.h"
 #include "base/metrics/user_metrics.h"
+#include "base/strings/string_number_conversions.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "build/build_config.h"
@@ -21,6 +23,7 @@
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/tabs/tab_menu_model.h"
+#include "chrome/browser/ui/tabs/tab_strip_grouper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_delegate.h"
 #include "chrome/browser/ui/tabs/tab_utils.h"
@@ -61,8 +64,7 @@ using content::WebContents;
 
 namespace {
 
-TabRendererData::NetworkState TabContentsNetworkState(
-    WebContents* contents) {
+TabRendererData::NetworkState TabContentsNetworkState(WebContents* contents) {
   DCHECK(contents);
 
   if (!contents->IsLoadingToDifferentDocument()) {
@@ -80,7 +82,7 @@ TabRendererData::NetworkState TabContentsNetworkState(
 
 bool DetermineTabStripLayoutStacked(PrefService* prefs, bool* adjust_layout) {
   *adjust_layout = false;
-  // For ash, always allow entering stacked mode.
+// For ash, always allow entering stacked mode.
 #if defined(OS_CHROMEOS)
   *adjust_layout = true;
   return prefs->GetBoolean(prefs::kTabStripStackedLayout);
@@ -105,17 +107,18 @@ std::string FindURLMimeType(const GURL& url) {
 
 }  // namespace
 
-class BrowserTabStripController::TabContextMenuContents
+class GroupedTabStripController::TabContextMenuContents
     : public ui::SimpleMenuModel::Delegate {
  public:
-  TabContextMenuContents(Tab* tab,
-                         BrowserTabStripController* controller)
+  TabContextMenuContents(Tab* tab, GroupedTabStripController* controller)
       : tab_(tab),
         controller_(controller),
         last_command_(TabStripModel::CommandFirst) {
-    model_.reset(new TabMenuModel(
-        this, controller->model_,
-        controller->tabstrip_->GetModelIndexOfTab(tab)));
+    // FIXME(brettw) GetModelIndexOfTab returns the item index, is that
+    // what's expected here?
+    model_.reset(
+        new TabMenuModel(this, controller->model_,
+                         controller->tabstrip_->GetModelIndexOfTab(tab)));
     menu_runner_.reset(new views::MenuRunner(
         model_.get(),
         views::MenuRunner::HAS_MNEMONICS | views::MenuRunner::CONTEXT_MENU));
@@ -126,9 +129,7 @@ class BrowserTabStripController::TabContextMenuContents
       controller_->tabstrip_->StopAllHighlighting();
   }
 
-  void Cancel() {
-    controller_ = NULL;
-  }
+  void Cancel() { controller_ = NULL; }
 
   void RunMenuAt(const gfx::Point& point, ui::MenuSourceType source_type) {
     menu_runner_->RunMenuAt(tab_->GetWidget(), NULL,
@@ -140,17 +141,16 @@ class BrowserTabStripController::TabContextMenuContents
   bool IsCommandIdChecked(int command_id) const override { return false; }
   bool IsCommandIdEnabled(int command_id) const override {
     return controller_->IsCommandEnabledForTab(
-        static_cast<TabStripModel::ContextMenuCommand>(command_id),
-        tab_);
+        static_cast<TabStripModel::ContextMenuCommand>(command_id), tab_);
   }
   bool GetAcceleratorForCommandId(int command_id,
                                   ui::Accelerator* accelerator) const override {
     int browser_cmd;
     return TabStripModel::ContextMenuCommandToBrowserCommand(command_id,
-                                                             &browser_cmd) ?
-        controller_->tabstrip_->GetWidget()->GetAccelerator(browser_cmd,
-                                                            accelerator) :
-        false;
+                                                             &browser_cmd)
+               ? controller_->tabstrip_->GetWidget()->GetAccelerator(
+                     browser_cmd, accelerator)
+               : false;
   }
   void CommandIdHighlighted(int command_id) override {
     controller_->StopHighlightTabsForCommand(last_command_, tab_);
@@ -162,8 +162,7 @@ class BrowserTabStripController::TabContextMenuContents
     // |controller_|. So stop the highlights before executing the command.
     controller_->tabstrip_->StopAllHighlighting();
     controller_->ExecuteCommandForTab(
-        static_cast<TabStripModel::ContextMenuCommand>(command_id),
-        tab_);
+        static_cast<TabStripModel::ContextMenuCommand>(command_id), tab_);
   }
 
   void MenuClosed(ui::SimpleMenuModel* /*source*/) override {
@@ -179,7 +178,7 @@ class BrowserTabStripController::TabContextMenuContents
   Tab* tab_;
 
   // A pointer back to our hosting controller, for command state information.
-  BrowserTabStripController* controller_;
+  GroupedTabStripController* controller_;
 
   // The last command that was selected, so that we can start/stop highlighting
   // appropriately as the user moves through the menu.
@@ -189,128 +188,146 @@ class BrowserTabStripController::TabContextMenuContents
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// BrowserTabStripController, public:
+// GroupedTabStripController, public:
 
-BrowserTabStripController::BrowserTabStripController(TabStripModel* model,
+GroupedTabStripController::GroupedTabStripController(TabStripModel* model,
                                                      BrowserView* browser_view)
     : model_(model),
+      grouper_(model),
       tabstrip_(NULL),
       browser_view_(browser_view),
-      hover_tab_selector_(model),
+      hover_tab_selector_(model_),
       weak_ptr_factory_(this) {
-  model_->AddObserver(this);
+  grouper_.AddObserver(this);
 
   local_pref_registrar_.Init(g_browser_process->local_state());
   local_pref_registrar_.Add(
       prefs::kTabStripStackedLayout,
-      base::Bind(&BrowserTabStripController::UpdateStackedLayout,
+      base::Bind(&GroupedTabStripController::UpdateStackedLayout,
                  base::Unretained(this)));
 }
 
-BrowserTabStripController::~BrowserTabStripController() {
+GroupedTabStripController::~GroupedTabStripController() {
   // When we get here the TabStrip is being deleted. We need to explicitly
   // cancel the menu, otherwise it may try to invoke something on the tabstrip
   // from its destructor.
   if (context_menu_contents_.get())
     context_menu_contents_->Cancel();
 
-  model_->RemoveObserver(this);
+  grouper_.RemoveObserver(this);
 }
 
-void BrowserTabStripController::InitFromModel(TabStrip* tabstrip) {
+void GroupedTabStripController::InitFromModel(TabStrip* tabstrip) {
   tabstrip_ = tabstrip;
 
   UpdateStackedLayout();
 
   // Walk the model, calling our insertion observer method for each item within
-  // it.
-  for (int i = 0; i < model_->count(); ++i)
-    AddTab(model_->GetWebContentsAt(i), i, model_->active_index() == i);
+  // it. The active index can be -1 if nothing is selected.
+  int selected_item_index = -1;
+  if (model_->ContainsIndex(model_->active_index())) {
+    selected_item_index =
+        grouper_.ItemIndexForModelIndex(model_->active_index());
+  }
+  for (int i = 0; i < grouper_.count(); ++i)
+    AddTab(i, i == selected_item_index);
 }
 
-bool BrowserTabStripController::IsCommandEnabledForTab(
+bool GroupedTabStripController::IsCommandEnabledForTab(
     TabStripModel::ContextMenuCommand command_id,
     Tab* tab) const {
-  int model_index = tabstrip_->GetModelIndexOfTab(tab);
-  return model_->ContainsIndex(model_index) ?
-      model_->IsContextMenuCommandEnabled(model_index, command_id) : false;
+  int item_index = tabstrip_->GetModelIndexOfTab(tab);
+  int model_index = grouper_.ModelIndexForItemIndex(item_index);
+  return model_->ContainsIndex(model_index)
+             ? model_->IsContextMenuCommandEnabled(model_index, command_id)
+             : false;
 }
 
-void BrowserTabStripController::ExecuteCommandForTab(
+void GroupedTabStripController::ExecuteCommandForTab(
     TabStripModel::ContextMenuCommand command_id,
     Tab* tab) {
-  int model_index = tabstrip_->GetModelIndexOfTab(tab);
+  int item_index = tabstrip_->GetModelIndexOfTab(tab);
+  int model_index = grouper_.ModelIndexForItemIndex(item_index);
   if (model_->ContainsIndex(model_index))
     model_->ExecuteContextMenuCommand(model_index, command_id);
 }
 
-bool BrowserTabStripController::IsTabPinned(Tab* tab) const {
+bool GroupedTabStripController::IsTabPinned(Tab* tab) const {
   return IsTabPinned(tabstrip_->GetModelIndexOfTab(tab));
 }
 
-const ui::ListSelectionModel&
-BrowserTabStripController::GetSelectionModel() const {
-  return model_->selection_model();
+const ui::ListSelectionModel& GroupedTabStripController::GetSelectionModel()
+    const {
+  return grouper_.selection_model();
 }
 
-int BrowserTabStripController::GetCount() const {
-  return model_->count();
+int GroupedTabStripController::GetCount() const {
+  return grouper_.count();
 }
 
-bool BrowserTabStripController::IsValidIndex(int index) const {
-  return model_->ContainsIndex(index);
+bool GroupedTabStripController::IsValidIndex(int item_index) const {
+  return grouper_.ContainsIndex(item_index);
 }
 
-bool BrowserTabStripController::IsActiveTab(int model_index) const {
-  return model_->active_index() == model_index;
+bool GroupedTabStripController::IsActiveTab(int item_index) const {
+  return model_->active_index() == grouper_.ModelIndexForItemIndex(item_index);
 }
 
-int BrowserTabStripController::GetActiveIndex() const {
-  return model_->active_index();
+int GroupedTabStripController::GetActiveIndex() const {
+  // During initialization and cleanup, the active index can be -1.
+  int model_active_index = model_->active_index();
+  if (!model_->ContainsIndex(model_active_index))
+    return -1;
+  return grouper_.ItemIndexForModelIndex(model_active_index);
 }
 
-bool BrowserTabStripController::IsTabSelected(int model_index) const {
-  return model_->IsTabSelected(model_index);
+bool GroupedTabStripController::IsTabSelected(int item_index) const {
+  if (!IsValidIndex(item_index))
+    return false;
+  return model_->IsTabSelected(grouper_.ModelIndexForItemIndex(item_index));
 }
 
-bool BrowserTabStripController::IsTabPinned(int model_index) const {
-  return model_->ContainsIndex(model_index) && model_->IsTabPinned(model_index);
+bool GroupedTabStripController::IsTabPinned(int item_index) const {
+  if (!grouper_.ContainsIndex(item_index))
+    return false;
+  return model_->IsTabPinned(grouper_.ModelIndexForItemIndex(item_index));
 }
 
-void BrowserTabStripController::SelectTab(int model_index) {
-  model_->ActivateTabAt(model_index, true);
+void GroupedTabStripController::SelectTab(int item_index) {
+  model_->ActivateTabAt(grouper_.ModelIndexForItemIndex(item_index), true);
 }
 
-void BrowserTabStripController::ExtendSelectionTo(int model_index) {
-  model_->ExtendSelectionTo(model_index);
+void GroupedTabStripController::ExtendSelectionTo(int item_index) {
+  model_->ExtendSelectionTo(grouper_.ModelIndexForItemIndex(item_index));
 }
 
-void BrowserTabStripController::ToggleSelected(int model_index) {
-  model_->ToggleSelectionAt(model_index);
+void GroupedTabStripController::ToggleSelected(int item_index) {
+  model_->ToggleSelectionAt(grouper_.ModelIndexForItemIndex(item_index));
 }
 
-void BrowserTabStripController::AddSelectionFromAnchorTo(int model_index) {
-  model_->AddSelectionFromAnchorTo(model_index);
+void GroupedTabStripController::AddSelectionFromAnchorTo(int item_index) {
+  model_->AddSelectionFromAnchorTo(grouper_.ModelIndexForItemIndex(item_index));
 }
 
-void BrowserTabStripController::CloseTab(int model_index,
+void GroupedTabStripController::CloseTab(int item_index,
                                          CloseTabSource source) {
   // Cancel any pending tab transition.
   hover_tab_selector_.CancelTabTransition();
 
-  tabstrip_->PrepareForCloseAt(model_index, source);
-  model_->CloseWebContentsAt(model_index,
+  tabstrip_->PrepareForCloseAt(item_index, source);
+  model_->CloseWebContentsAt(grouper_.ModelIndexForItemIndex(item_index),
                              TabStripModel::CLOSE_USER_GESTURE |
-                             TabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
+                                 TabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
 }
 
-void BrowserTabStripController::ToggleTabAudioMute(int model_index) {
-  content::WebContents* const contents = model_->GetWebContentsAt(model_index);
+void GroupedTabStripController::ToggleTabAudioMute(int item_index) {
+  content::WebContents* const contents =
+      model_->GetWebContentsAt(grouper_.ModelIndexForItemIndex(item_index));
   chrome::SetTabAudioMuted(contents, !contents->IsAudioMuted(),
                            TabMutedReason::AUDIO_INDICATOR, std::string());
 }
 
-void BrowserTabStripController::ShowContextMenuForTab(
+void GroupedTabStripController::ShowContextMenuForTab(
     Tab* tab,
     const gfx::Point& p,
     ui::MenuSourceType source_type) {
@@ -318,32 +335,32 @@ void BrowserTabStripController::ShowContextMenuForTab(
   context_menu_contents_->RunMenuAt(p, source_type);
 }
 
-void BrowserTabStripController::UpdateLoadingAnimations() {
+void GroupedTabStripController::UpdateLoadingAnimations() {
   for (int i = 0, tab_count = tabstrip_->tab_count(); i < tab_count; ++i)
     tabstrip_->tab_at(i)->StepLoadingAnimation();
 }
 
-int BrowserTabStripController::HasAvailableDragActions() const {
+int GroupedTabStripController::HasAvailableDragActions() const {
   return model_->delegate()->GetDragActions();
 }
 
-void BrowserTabStripController::OnDropIndexUpdate(int index,
+void GroupedTabStripController::OnDropIndexUpdate(int item_index,
                                                   bool drop_before) {
   // Perform a delayed tab transition if hovering directly over a tab.
   // Otherwise, cancel the pending one.
-  if (index != -1 && !drop_before) {
-    hover_tab_selector_.StartTabTransition(index);
+  if (item_index != -1 && !drop_before) {
+    hover_tab_selector_.StartTabTransition(item_index);
   } else {
     hover_tab_selector_.CancelTabTransition();
   }
 }
 
-void BrowserTabStripController::PerformDrop(bool drop_before,
-                                            int index,
+void GroupedTabStripController::PerformDrop(bool drop_before,
+                                            int item_index,
                                             const GURL& url) {
   chrome::NavigateParams params(browser_view_->browser(), url,
                                 ui::PAGE_TRANSITION_LINK);
-  params.tabstrip_index = index;
+  params.tabstrip_index = grouper_.ModelIndexForItemIndex(item_index);
 
   if (drop_before) {
     base::RecordAction(UserMetricsAction("Tab_DropURLBetweenTabs"));
@@ -351,18 +368,19 @@ void BrowserTabStripController::PerformDrop(bool drop_before,
   } else {
     base::RecordAction(UserMetricsAction("Tab_DropURLOnTab"));
     params.disposition = WindowOpenDisposition::CURRENT_TAB;
-    params.source_contents = model_->GetWebContentsAt(index);
+    params.source_contents =
+        model_->GetWebContentsAt(grouper_.ModelIndexForItemIndex(item_index));
   }
   params.window_action = chrome::NavigateParams::SHOW_WINDOW;
   chrome::Navigate(&params);
 }
 
-bool BrowserTabStripController::IsCompatibleWith(TabStrip* other) const {
+bool GroupedTabStripController::IsCompatibleWith(TabStrip* other) const {
   Profile* other_profile = other->controller()->GetProfile();
   return other_profile == GetProfile();
 }
 
-void BrowserTabStripController::CreateNewTab() {
+void GroupedTabStripController::CreateNewTab() {
   model_->delegate()->AddTabAt(GURL(), -1, true);
 #if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
   auto* new_tab_tracker =
@@ -373,7 +391,7 @@ void BrowserTabStripController::CreateNewTab() {
 #endif
 }
 
-void BrowserTabStripController::CreateNewTabWithLocation(
+void GroupedTabStripController::CreateNewTabWithLocation(
     const base::string16& location) {
   // Use autocomplete to clean up the text, going so far as to turn it into
   // a search query if necessary.
@@ -385,12 +403,12 @@ void BrowserTabStripController::CreateNewTabWithLocation(
     model_->delegate()->AddTabAt(match.destination_url, -1, true);
 }
 
-bool BrowserTabStripController::IsIncognito() {
+bool GroupedTabStripController::IsIncognito() {
   return browser_view_->browser()->profile()->GetProfileType() ==
-      Profile::INCOGNITO_PROFILE;
+         Profile::INCOGNITO_PROFILE;
 }
 
-void BrowserTabStripController::StackedLayoutMaybeChanged() {
+void GroupedTabStripController::StackedLayoutMaybeChanged() {
   bool adjust_layout = false;
   bool stacked_layout = DetermineTabStripLayoutStacked(
       g_browser_process->local_state(), &adjust_layout);
@@ -401,7 +419,7 @@ void BrowserTabStripController::StackedLayoutMaybeChanged() {
                                                tabstrip_->stacked_layout());
 }
 
-void BrowserTabStripController::OnStartedDraggingTabs() {
+void GroupedTabStripController::OnStartedDraggingTabs() {
   if (!immersive_reveal_lock_.get()) {
     // The top-of-window views should be revealed while the user is dragging
     // tabs in immersive fullscreen. The top-of-window views may not be already
@@ -413,106 +431,65 @@ void BrowserTabStripController::OnStartedDraggingTabs() {
   }
 }
 
-void BrowserTabStripController::OnStoppedDraggingTabs() {
+void GroupedTabStripController::OnStoppedDraggingTabs() {
   immersive_reveal_lock_.reset();
 }
 
-void BrowserTabStripController::CheckFileSupported(const GURL& url) {
+void GroupedTabStripController::CheckFileSupported(const GURL& url) {
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(&FindURLMimeType, url),
-      base::Bind(&BrowserTabStripController::OnFindURLMimeTypeCompleted,
+      base::Bind(&GroupedTabStripController::OnFindURLMimeTypeCompleted,
                  weak_ptr_factory_.GetWeakPtr(), url));
 }
 
-SkColor BrowserTabStripController::GetToolbarTopSeparatorColor() const {
+SkColor GroupedTabStripController::GetToolbarTopSeparatorColor() const {
   return browser_view_->frame()->GetFrameView()->GetToolbarTopSeparatorColor();
 }
 
-base::string16 BrowserTabStripController::GetAccessibleTabName(
+base::string16 GroupedTabStripController::GetAccessibleTabName(
     const Tab* tab) const {
   return browser_view_->GetAccessibleTabLabel(
       false /* include_app_name */, tabstrip_->GetModelIndexOfTab(tab));
 }
 
-Profile* BrowserTabStripController::GetProfile() const {
+Profile* GroupedTabStripController::GetProfile() const {
   return model_->profile();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// BrowserTabStripController, TabStripModelObserver implementation:
+void GroupedTabStripController::ItemsChanged(const std::vector<int>& removed,
+                                             const std::vector<int>& added) {
+  // As we remove tabs from left-to-right, the remaining items get shifted over
+  // by one each time, meaning we have to adjust the index of each subsequent
+  // removal to account for it.
+  for (size_t i = 0; i < removed.size(); i++)
+    tabstrip_->RemoveTabAt(nullptr, removed[i] - i);
 
-void BrowserTabStripController::TabInsertedAt(TabStripModel* tab_strip_model,
-                                              WebContents* contents,
-                                              int model_index,
-                                              bool is_active) {
-  DCHECK(contents);
-  DCHECK(model_->ContainsIndex(model_index));
-  AddTab(contents, model_index, is_active);
+  for (size_t i = 0; i < added.size(); i++)
+    AddTab(added[i], false);
 }
 
-void BrowserTabStripController::TabDetachedAt(WebContents* contents,
-                                              int model_index) {
-  // Cancel any pending tab transition.
-  hover_tab_selector_.CancelTabTransition();
-
-  tabstrip_->RemoveTabAt(contents, model_index);
-}
-
-void BrowserTabStripController::TabSelectionChanged(
-    TabStripModel* tab_strip_model,
-    const ui::ListSelectionModel& old_model) {
-  tabstrip_->SetSelection(old_model, model_->selection_model());
-}
-
-void BrowserTabStripController::TabMoved(WebContents* contents,
-                                         int from_model_index,
-                                         int to_model_index) {
-  // Cancel any pending tab transition.
-  hover_tab_selector_.CancelTabTransition();
-
-  // Pass in the TabRendererData as the pinned state may have changed.
-  TabRendererData data;
-  SetTabRendererDataFromModel(contents, to_model_index, &data, EXISTING_TAB);
-  tabstrip_->MoveTab(from_model_index, to_model_index, data);
-}
-
-void BrowserTabStripController::TabChangedAt(WebContents* contents,
-                                             int model_index,
-                                             TabChangeType change_type) {
-  if (change_type == TITLE_NOT_LOADING) {
-    tabstrip_->TabTitleChangedNotLoading(model_index);
+void GroupedTabStripController::ItemUpdatedAt(int item_index,
+                                              TabChangeType change_type) {
+  if (change_type == TabStripModelObserver::TITLE_NOT_LOADING) {
+    tabstrip_->TabTitleChangedNotLoading(item_index);
     // We'll receive another notification of the change asynchronously.
     return;
   }
 
-  SetTabDataAt(contents, model_index);
+  SetItemDataAt(item_index);
 }
 
-void BrowserTabStripController::TabReplacedAt(TabStripModel* tab_strip_model,
-                                              WebContents* old_contents,
-                                              WebContents* new_contents,
-                                              int model_index) {
-  SetTabDataAt(new_contents, model_index);
+void GroupedTabStripController::ItemSelectionChanged(
+    const ui::ListSelectionModel& old_model) {
+  tabstrip_->SetSelection(old_model, grouper_.selection_model());
 }
 
-void BrowserTabStripController::TabPinnedStateChanged(
-    TabStripModel* tab_strip_model,
-    WebContents* contents,
-    int model_index) {
-  SetTabDataAt(contents, model_index);
+void GroupedTabStripController::ItemNeedsAttentionAt(int item_index) {
+  tabstrip_->SetTabNeedsAttention(item_index);
 }
 
-void BrowserTabStripController::TabBlockedStateChanged(WebContents* contents,
-                                                       int model_index) {
-  SetTabDataAt(contents, model_index);
-}
-
-void BrowserTabStripController::TabNeedsAttentionAt(int index) {
-  tabstrip_->SetTabNeedsAttention(index);
-}
-
-void BrowserTabStripController::SetTabRendererDataFromModel(
+void GroupedTabStripController::SetTabRendererDataFromModel(
     WebContents* contents,
     int model_index,
     TabRendererData* data,
@@ -530,32 +507,66 @@ void BrowserTabStripController::SetTabRendererDataFromModel(
   data->alert_state = chrome::GetTabAlertStateForContents(contents);
 }
 
-void BrowserTabStripController::SetTabDataAt(content::WebContents* web_contents,
-                                             int model_index) {
-  TabRendererData data;
-  SetTabRendererDataFromModel(web_contents, model_index, &data, EXISTING_TAB);
-  tabstrip_->SetTabData(model_index,
-                        base::span<const TabRendererData>(&data, 1));
+std::vector<TabRendererData>
+GroupedTabStripController::GetTabRendererDataFromGrouper(
+    TabStripGrouperItem* item,
+    TabStatus tab_status) {
+  std::vector<TabRendererData> result;
+
+  if (item->type() == TabStripGrouperItem::Type::TAB) {
+    result.emplace_back();
+    SetTabRendererDataFromModel(item->web_contents(), item->model_index(),
+                                &result.back(), tab_status);
+  } else {
+    // Group.
+    result.resize(item->items().size());
+
+    for (size_t i = 0; i < item->items().size(); i++) {
+      const TabStripGrouperItem& cur_item = item->items()[i];
+      TabRendererData& data = result[i];
+      SetTabRendererDataFromModel(cur_item.web_contents(),
+                                  cur_item.model_index(), &data, tab_status);
+    }
+
+    // Compute the group title and assign to the first item.
+    // FIXME(brettw) work on title.
+    // Note: These Unicode characters are the left & right lenticular brackets.
+    base::string16 prepend;
+    prepend.push_back(0x3010);
+    prepend.append(
+        base::ASCIIToUTF16(base::SizeTToString(item->items().size())));
+    prepend.push_back(0x3011);
+    prepend.push_back(' ');
+
+    base::string16& title = result.front().title;
+    title.insert(0, prepend);
+  }
+
+  return result;
 }
 
-void BrowserTabStripController::StartHighlightTabsForCommand(
+void GroupedTabStripController::SetItemDataAt(int item_index) {
+  tabstrip_->SetTabData(
+      item_index, GetTabRendererDataFromGrouper(grouper_.GetItemAt(item_index),
+                                                EXISTING_TAB));
+}
+
+void GroupedTabStripController::StartHighlightTabsForCommand(
     TabStripModel::ContextMenuCommand command_id,
     Tab* tab) {
   if (command_id == TabStripModel::CommandCloseOtherTabs ||
       command_id == TabStripModel::CommandCloseTabsToRight) {
-    int model_index = tabstrip_->GetModelIndexOfTab(tab);
-    if (IsValidIndex(model_index)) {
-      std::vector<int> indices =
-          model_->GetIndicesClosedByCommand(model_index, command_id);
-      for (std::vector<int>::const_iterator i(indices.begin());
-           i != indices.end(); ++i) {
-        tabstrip_->StartHighlight(*i);
-      }
+    int item_index = tabstrip_->GetModelIndexOfTab(tab);
+    if (IsValidIndex(item_index)) {
+      std::vector<int> indices = model_->GetIndicesClosedByCommand(
+          grouper_.ModelIndexForItemIndex(item_index), command_id);
+      for (int index : indices)
+        tabstrip_->StartHighlight(index);
     }
   }
 }
 
-void BrowserTabStripController::StopHighlightTabsForCommand(
+void GroupedTabStripController::StopHighlightTabsForCommand(
     TabStripModel::ContextMenuCommand command_id,
     Tab* tab) {
   if (command_id == TabStripModel::CommandCloseTabsToRight ||
@@ -565,19 +576,16 @@ void BrowserTabStripController::StopHighlightTabsForCommand(
   }
 }
 
-void BrowserTabStripController::AddTab(WebContents* contents,
-                                       int index,
-                                       bool is_active) {
+void GroupedTabStripController::AddTab(int item_index, bool is_active) {
   // Cancel any pending tab transition.
   hover_tab_selector_.CancelTabTransition();
-
-  TabRendererData data;
-  SetTabRendererDataFromModel(contents, index, &data, NEW_TAB);
-  tabstrip_->AddTabAt(index, base::span<const TabRendererData>(&data, 1),
-                      is_active);
+  tabstrip_->AddTabAt(
+      item_index,
+      GetTabRendererDataFromGrouper(grouper_.GetItemAt(item_index), NEW_TAB),
+      is_active);
 }
 
-void BrowserTabStripController::UpdateStackedLayout() {
+void GroupedTabStripController::UpdateStackedLayout() {
   bool adjust_layout = false;
   bool stacked_layout = DetermineTabStripLayoutStacked(
       g_browser_process->local_state(), &adjust_layout);
@@ -585,7 +593,7 @@ void BrowserTabStripController::UpdateStackedLayout() {
   tabstrip_->SetStackedLayout(stacked_layout);
 }
 
-void BrowserTabStripController::OnFindURLMimeTypeCompleted(
+void GroupedTabStripController::OnFindURLMimeTypeCompleted(
     const GURL& url,
     const std::string& mime_type) {
   // Check whether the mime type, if given, is known to be supported or whether
