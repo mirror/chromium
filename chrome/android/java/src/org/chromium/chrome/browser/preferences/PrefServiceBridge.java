@@ -969,6 +969,20 @@ public final class PrefServiceBridge {
         nativeSetSupervisedUserId(supervisedUserId);
     }
 
+    /**
+     * @return Whether Reader Mode for Accessibility pref is enabled.
+     */
+    boolean isReaderForAccessibilityEnabled() {
+        return nativeIsReaderForAccessibilityEnabled();
+    }
+
+    /**
+     * Sets whether Reader Mode for Accessibility pref should be enabled.
+     */
+    void setReaderForAccessibilityEnabled(boolean enabled) {
+        nativeSetReaderForAccessibilityEnabled(enabled);
+    }
+
     private native boolean nativeGetBoolean(int preference);
     private native boolean nativeGetAcceptCookiesEnabled();
     private native boolean nativeGetAcceptCookiesUserModifiable();
@@ -1075,4 +1089,6 @@ public final class PrefServiceBridge {
     private native String nativeGetLatestVersionWhenClickedUpdateMenuItem();
     private native void nativeSetSupervisedUserId(String supervisedUserId);
     private native void nativeSetChromeHomePersonalizedOmniboxSuggestionsEnabled(boolean enabled);
+    private native boolean nativeIsReaderForAccessibilityEnabled();
+    private native void nativeSetReaderForAccessibilityEnabled(boolean enabled);
 }

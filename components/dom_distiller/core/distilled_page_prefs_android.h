@@ -34,6 +34,13 @@ class DistilledPagePrefsAndroid {
                       jfloat scaling);
   jfloat GetFontScaling(JNIEnv* env,
                         const base::android::JavaParamRef<jobject>& obj);
+  void SetReaderForAccessibilityEnabled(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      jboolean enabled);
+  jboolean GetReaderForAccessibilityEnabled(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
 
   void AddObserver(JNIEnv* env,
                    const base::android::JavaParamRef<jobject>& obj,
