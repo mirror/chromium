@@ -2,6 +2,97 @@
   "comments": [
     {
       "key": {
+        "uuid": "6c7c3fa0_cfb3ec70",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:50:58Z",
+      "side": 1,
+      "message": "This seems slightly dubious \u003d)\n\nAlso, how come we aren\u0027t either:\n- using the mojom enum consistently throughout or\n- typemapping this",
+      "revId": "9aa4005fbed857625d55a3f22bb0bd9604eb9bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ab20b7_d93f4ee3",
+        "filename": "third_party/WebKit/Source/modules/permissions/ClipboardPermissionDescriptor.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:50:58Z",
+      "side": 1,
+      "message": "Does this need to be RuntimeEnabled guarded, or are we relying on another guard for that?",
+      "revId": "9aa4005fbed857625d55a3f22bb0bd9604eb9bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2103c07b_1ffbbd3e",
+        "filename": "third_party/WebKit/Source/modules/permissions/PermissionUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:50:58Z",
+      "side": 1,
+      "message": "Nit: consider using the form of New() that takes arguments, i.e.:\n\nauto clipboard_extension \u003d mojom::blink::ClipboardPermissionDescriptor::New(\n    allow_without_gesture);",
+      "revId": "9aa4005fbed857625d55a3f22bb0bd9604eb9bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2465934f_9e508f79",
+        "filename": "third_party/WebKit/Source/modules/permissions/PermissionUtils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:50:58Z",
+      "side": 1,
+      "message": "Nit: please call this allow_without_gesture in the header and .cc file",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 28
+      },
+      "revId": "9aa4005fbed857625d55a3f22bb0bd9604eb9bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d701593_75aa384b",
+        "filename": "third_party/WebKit/Source/modules/permissions/PermissionUtils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:50:58Z",
+      "side": 1,
+      "message": "Please don\u0027t change the header guard yet \u003d)\n\nIt\u0027ll make the file move a bit easier later (since this isn\u0027t the right final path anyway), and it keeps it consistent with the rest of Blink for now.",
+      "revId": "9aa4005fbed857625d55a3f22bb0bd9604eb9bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19ca7cbd_7751f1f2",
         "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
         "patchSetId": 6
