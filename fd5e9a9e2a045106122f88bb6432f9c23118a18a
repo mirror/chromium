@@ -81,6 +81,24 @@
       "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b4c46c_9a38fce1",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T17:21:52Z",
+      "side": 1,
+      "message": "Can\u0027t think of anything better myself. Maybe you could ask on cfe-dev.",
+      "parentUuid": "b1a261a8_05623fd2",
+      "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
