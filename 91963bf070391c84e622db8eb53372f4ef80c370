@@ -1,0 +1,305 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff912b58_da8d7f46",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "Which of these patterns did MSVC cl care about, and which did clang-cl care about? I ask because it’d be useful to know (1) which MSVC cl warnings we don’t have enabled in our standalone build that perhaps we should, and (2) which warnings we’re missing in our standalone build in Windows-only code because we don’t test against clang-cl.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c583ddf_7f952322",
+        "filename": "build/secondary/third_party/crashpad/crashpad/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "Can we use the same name used by the GYP build for ease of finding things? crashpad_test.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8e3d25_9e6a5ef6",
+        "filename": "build/secondary/third_party/crashpad/crashpad/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "The test library also depends on crashpad/crashpad/snapshot (mac/dyld.cc) and crashpad/crashpad/util (most everything).\n\nI don‘t know about GN best practices and base is sure to be used almost everywhere, but this library (like all of Crashpad) depends directly on base too.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a104b24_a08c50f0",
+        "filename": "build/secondary/third_party/crashpad/crashpad/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "This library requires libbsm.dylib on Mac and shell32.lib on Windows.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b130b20_0f1d15bd",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "file/directory_reader_test.cc too\n\n(You may need to sync. directory_reader_test.cc was just brought into Chromium’s copy of Crashpad with yesterday’s import.)",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8301011_af27ef7b",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "file/filesystem_test.cc, file/filesystem_test_util.cc, file/filesystem_test_util.h (same import brought these in).",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a5c557a_842b5bf7",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "You can omit all Linux files for now, since the Linux GN build doesn’t work at all and we’ve been leaving them out from our BUILD.gn files until we’re ready to bring them all in to Chromium.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a18cb5c_f006eb48",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "Missing a couple of tests in process.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40fe32d_27bafe08",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "Can lose this whole block too.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea02033a_4aa086ea",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "and move this inline into the list above.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a67aab_ce0f878f",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "This, too, explicitly depends on base, gtest, Crashpad’s util, and Crashpad’s test library. Right now it’ll be picking these up transitively, but I think we prefer to be explicit (as we do with header files).",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec626d9_a857eece",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "We list a few more libraries in the GYP build. We also list Foundation.framework on macOS. Are those coming from elsewhere in the GN build?",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9ca316_2115419b",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "Blank line between executables?",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bad052_fff8b956",
+        "filename": "third_party/crashpad/crashpad/test/scoped_temp_dir_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "DWORD is unsigned long, so %lu.",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10a9270_72a9ea04",
+        "filename": "third_party/crashpad/crashpad/util/stdlib/strlcpy_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "This comment shouldn’t be necessary!\n\nThe real problem here is that we’ve unintentionally wound up with some shear between Chrome’s base/strings/string16.* and mini_chromium’s. In mini_chromium’s, the base::c16* functions are always defined. In Chrome’s, they aren’t.\n\nThat said, this is a useful test, and we do use c16lcpy() (a Crashpad util function, not a Chrome base function) on all platforms, and it’s a real shame to kill the test on Windows. So I don’t think that we should do this. Instead, we should find another way to make sure that this test works on Windows.\n\nThat could mean sticking some “namespace base { using c16len \u003d wcslen; }” into Chrome’s copy of base/strings/string16.h, or it could mean leaving base alone and adding a bit of ugliness to this file, like “#if defined(WCHAR_T_IS_UTF32) using LocalC16Len \u003d base::c16len; #else using LocalC16Len \u003d wcslen; #endif”",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeda2111_79f84081",
+        "filename": "third_party/crashpad/crashpad/util/win/command_line_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "Catch more errors, better. Use base::checked_cast\u003c\u003e instead (#include \"base/numerics/safe_conversions.h\".)\n\nI also have a slight preference for casting the other side to size_t, as it’s consistent with how this function behaves and it’s the conversion that would normally occur when mixing these two types.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8feadb16_bf586606",
+        "filename": "third_party/crashpad/crashpad/util/win/process_info_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:06:11Z",
+      "side": 1,
+      "message": "%lu",
+      "range": {
+        "startLine": 565,
+        "startChar": 64,
+        "endLine": 565,
+        "endChar": 67
+      },
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
