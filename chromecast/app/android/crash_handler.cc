@@ -92,19 +92,26 @@ void CrashHandler::InitializeUploader() {
       base::android::ConvertUTF8ToJavaString(env, crash_dump_path_.value());
   base::android::ScopedJavaLocalRef<jstring> uuid_java =
       base::android::ConvertUTF8ToJavaString(env, "");
+  base::android::ScopedJavaLocalRef<jstring> application_feedback_java =
+      base::android::ConvertUTF8ToJavaString(env, "");
   Java_CastCrashHandler_initializeUploader(env, crash_dump_path_java, uuid_java,
+                                           application_feedback_java,
                                            UploadCrashToStaging(), true);
 }
 
 // static
 void CrashHandler::UploadDumps(const base::FilePath& crash_dump_path,
-                               std::string uuid) {
+                               std::string uuid,
+                               std::string application_feedback) {
   JNIEnv* env = base::android::AttachCurrentThread();
   base::android::ScopedJavaLocalRef<jstring> crash_dump_path_java =
       base::android::ConvertUTF8ToJavaString(env, crash_dump_path.value());
   base::android::ScopedJavaLocalRef<jstring> uuid_java =
       base::android::ConvertUTF8ToJavaString(env, uuid);
+  base::android::ScopedJavaLocalRef<jstring> application_feedback_java =
+      base::android::ConvertUTF8ToJavaString(env, application_feedback);
   Java_CastCrashHandler_initializeUploader(env, crash_dump_path_java, uuid_java,
+                                           application_feedback_java,
                                            UploadCrashToStaging(), false);
 }
 

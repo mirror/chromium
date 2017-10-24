@@ -44,12 +44,15 @@ public final class CastCrashUploader {
     private final String mCrashDumpPath;
     private final String mCrashReportUploadUrl;
     private final String mUuid;
+    private final String mApplicationFeedback;
 
     public CastCrashUploader(ScheduledExecutorService executorService, String crashDumpPath,
-            String uuid, boolean uploadCrashToStaging) {
+            String uuid, String applicationFeedback, boolean uploadCrashToStaging) {
         mExecutorService = executorService;
         mCrashDumpPath = crashDumpPath;
         mUuid = uuid;
+        mApplicationFeedback = applicationFeedback;
+
         mCrashReportUploadUrl = uploadCrashToStaging
                 ? "https://clients2.google.com/cr/staging_report"
                 : "https://clients2.google.com/cr/report";
@@ -147,6 +150,7 @@ public final class CastCrashUploader {
         try {
             InputStream uploadCrashDumpStream = new FileInputStream(dumpFile);
             InputStream logFileStream = null;
+            InputStream feedbackStream = null;
 
             // Dump file is already in multipart MIME format and has a boundary throughout.
             // Scrape the first line, remove two dashes, call that the "boundary" and add it
@@ -161,7 +165,7 @@ public final class CastCrashUploader {
                 logHeader.append(dumpFirstLine);
                 logHeader.append("\n");
                 logHeader.append(
-                        "Content-Disposition: form-data; name=\"log\"; filename=\"log\"\n");
+                        "Content-Disposition: form-data; name=\"log.txt\"; filename=\"log.txt\"\n");
                 logHeader.append("Content-Type: text/plain\n\n");
                 InputStream logHeaderStream =
                         new ByteArrayInputStream(logHeader.toString().getBytes());
@@ -183,6 +187,25 @@ public final class CastCrashUploader {
                 uuidBuilder.append(mUuid + "\n");
                 uploadCrashDumpStream = new SequenceInputStream(
                         new ByteArrayInputStream(uuidBuilder.toString().getBytes()),
+                        uploadCrashDumpStream);
+            }
+
+            if (!mApplicationFeedback.equals("")) {
+                Log.i(TAG, "Including feedback");
+                Log.i(TAG, mApplicationFeedback);
+                StringBuilder feedbackHeader = new StringBuilder();
+                feedbackHeader.append(dumpFirstLine);
+                feedbackHeader.append("\n");
+                feedbackHeader.append(
+                        "Content-Disposition: form-data; name=\"application_feedback.txt\"; filename=\"application.txt\"\n");
+                feedbackHeader.append("Content-Type: text/plain\n\n");
+                InputStream feedbackHeaderStream =
+                        new ByteArrayInputStream(feedbackHeader.toString().getBytes());
+                // logFileStream = new FileInputStream(logFile);
+                feedbackStream = new ByteArrayInputStream(mApplicationFeedback.getBytes());
+                // Upload: prepend the log file for uploading
+                uploadCrashDumpStream = new SequenceInputStream(
+                        new SequenceInputStream(feedbackHeaderStream, feedbackStream),
                         uploadCrashDumpStream);
             }
 
@@ -224,6 +247,9 @@ public final class CastCrashUploader {
                 dumpFileStream.close();
                 if (logFileStream != null) {
                     logFileStream.close();
+                }
+                if (feedbackStream != null) {
+                    feedbackStream.close();
                 }
             }
 
