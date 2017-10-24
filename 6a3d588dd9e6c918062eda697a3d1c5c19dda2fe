@@ -295,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "3631b22c_3a0aed1a",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-24T14:22:10Z",
+      "side": 1,
+      "message": "OK. I am not a big fan of how prefetch does it either, but I understand that we don\u0027t have a better pattern for that right now. Please add a TODO above the field definition.",
+      "parentUuid": "98f32827_7331ff43",
+      "range": {
+        "startLine": 36,
+        "startChar": 59,
+        "endLine": 36,
+        "endChar": 80
+      },
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6abd97fe_7c3bab1a",
         "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.h",
         "patchSetId": 3
