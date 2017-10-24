@@ -17,6 +17,7 @@
 class TabIconView;
 
 namespace ash {
+class FrameCaptionButton;
 class FrameCaptionButtonContainerView;
 class HeaderPainter;
 }
@@ -108,6 +109,8 @@ class BrowserNonClientFrameViewAsh : public BrowserNonClientFrameView,
 
   // View which contains the window controls.
   ash::FrameCaptionButtonContainerView* caption_button_container_;
+
+  ash::FrameCaptionButton* back_button_;
 
   // For popups, the window icon.
   TabIconView* window_icon_;

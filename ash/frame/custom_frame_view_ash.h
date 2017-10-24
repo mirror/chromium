@@ -60,6 +60,9 @@ class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
   // will have some transparency added when the frame is drawn.
   void SetFrameColors(SkColor active_frame_color, SkColor inactive_frame_color);
 
+  void SetShowFrame(bool show);
+  void SetBackButtonStatus(bool show, bool enabled);
+
   // Sets the height of the header. If |height| has no value (the default), the
   // preferred height is used.
   void SetHeaderHeight(base::Optional<int> height);

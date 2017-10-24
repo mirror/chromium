@@ -8,6 +8,7 @@
 #include <memory>
 #include <vector>
 
+#include "ash/frame/caption_buttons/frame_caption_button.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/frame_border_hit_test.h"
 #include "ash/frame/header_view.h"
@@ -341,6 +342,19 @@ void CustomFrameViewAsh::SetFrameColors(SkColor active_frame_color,
                             header_view_->GetInactiveFrameColor());
 }
 
+void CustomFrameViewAsh::SetShowFrame(bool show) {
+  if (header_view_->visible() == show)
+    return;
+  overlay_view_->SetVisible(show);
+  header_view_->SetVisible(show);
+  InvalidateLayout();
+  GetWidget()->GetRootView()->Layout();
+}
+
+void CustomFrameViewAsh::SetBackButtonStatus(bool show, bool enabled) {
+  header_view_->SetBackButtonStatus(show, enabled);
+}
+
 void CustomFrameViewAsh::SetHeaderHeight(base::Optional<int> height) {
   overlay_view_->SetHeaderHeight(height);
 }
@@ -366,8 +380,9 @@ gfx::Rect CustomFrameViewAsh::GetWindowBoundsForClientBounds(
 }
 
 int CustomFrameViewAsh::NonClientHitTest(const gfx::Point& point) {
-  return FrameBorderNonClientHitTest(
-      this, header_view_->caption_button_container(), point);
+  return FrameBorderNonClientHitTest(this, header_view_->back_button(),
+                                     header_view_->caption_button_container(),
+                                     point);
 }
 
 void CustomFrameViewAsh::GetWindowMask(const gfx::Size& size,
@@ -481,7 +496,7 @@ CustomFrameViewAsh::GetFrameCaptionButtonContainerViewForTest() {
 }
 
 int CustomFrameViewAsh::NonClientTopBorderHeight() const {
-  if (frame_->IsFullscreen())
+  if (frame_->IsFullscreen() || !header_view_->visible())
     return 0;
 
   const bool should_hide_titlebar_in_tablet_mode =

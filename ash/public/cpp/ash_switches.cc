@@ -36,6 +36,9 @@ const char kAshDisableTabletAutohideTitlebars[] =
 const char kAshDisableTouchExplorationMode[] =
     "ash-disable-touch-exploration-mode";
 
+// Enables Backbutton on frame.
+const char kAshEnableBackButton[] = "ash-enable-back-button";
+
 // Enables key bindings to scroll magnified screen.
 const char kAshEnableMagnifierKeyScroller[] =
     "ash-enable-magnifier-key-scroller";
