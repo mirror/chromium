@@ -89,8 +89,10 @@ struct ServiceWorkerProviderContext::ControllerState {
   std::unique_ptr<ServiceWorkerHandleReference> active;
 };
 
+// For service worker clients.
 ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     int provider_id,
+    const GURL& client_url,
     ServiceWorkerProviderType provider_type,
     mojom::ServiceWorkerContainerAssociatedRequest request,
     mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
@@ -101,12 +103,52 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       binding_(this, std::move(request)) {
   container_host_.Bind(std::move(host_ptr_info));
-  if (provider_type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER) {
-    controller_state_ = base::MakeUnique<ControllerState>();
-  } else {
-    controllee_state_ = base::MakeUnique<ControlleeState>(
-        std::move(default_loader_factory_getter));
+  controllee_state_ = std::make_unique<ControlleeState>(
+      std::move(default_loader_factory_getter));
+
+  // |dispatcher| may be null in tests.
+  // TODO(falken): Figure out how to make a dispatcher in tests.
+  if (dispatcher)
+    dispatcher->AddProviderContext(this);
+
+  // S13nServiceWorker
+  // Set up the URL loader factory for sending subresource requests to
+  // the controller.
+  // Currently this is only supported for Document (WINDOW) providers.
+  // TODO(kinuko): Support SERVICE_WORKER_PROVIDER_FOR_SHARED_WORKER case.
+  if (!ServiceWorkerUtils::IsServicificationEnabled() ||
+      provider_type_ != SERVICE_WORKER_PROVIDER_FOR_WINDOW) {
+    return;
   }
+  blink::mojom::BlobRegistryPtr blob_registry_ptr;
+  ChildThreadImpl::current()->GetConnector()->BindInterface(
+      mojom::kBrowserServiceName, mojo::MakeRequest(&blob_registry_ptr));
+  auto blob_registry =
+      base::MakeRefCounted<base::RefCountedData<blink::mojom::BlobRegistryPtr>>(
+          std::move(blob_registry_ptr));
+  controllee_state_->controller_connector =
+      base::MakeRefCounted<ControllerServiceWorkerConnector>(
+          container_host_.get());
+  mojo::MakeStrongBinding(
+      base::MakeUnique<ServiceWorkerSubresourceLoaderFactory>(
+          controllee_state_->controller_connector,
+          controllee_state_->default_loader_factory_getter,
+          client_url.GetOrigin(), std::move(blob_registry)),
+      mojo::MakeRequest(&controllee_state_->subresource_loader_factory));
+}
+
+// For service worker contexts.
+ServiceWorkerProviderContext::ServiceWorkerProviderContext(
+    int provider_id,
+    mojom::ServiceWorkerContainerAssociatedRequest request,
+    mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
+    ServiceWorkerDispatcher* dispatcher)
+    : provider_type_(SERVICE_WORKER_PROVIDER_FOR_CONTROLLER),
+      provider_id_(provider_id),
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      binding_(this, std::move(request)) {
+  container_host_.Bind(std::move(host_ptr_info));
+  controller_state_ = std::make_unique<ControllerState>();
 
   // |dispatcher| may be null in tests.
   // TODO(falken): Figure out how to make a dispatcher in tests.
@@ -180,28 +222,6 @@ void ServiceWorkerProviderContext::SetController(
       worker->SetControllerServiceWorker(state->controller->version_id());
     }
   }
-
-  // S13nServiceWorker
-  // Set up the URL loader factory for sending URL requests to the controller.
-  if (!ServiceWorkerUtils::IsServicificationEnabled() || !state->controller) {
-    state->controller_connector = nullptr;
-    state->subresource_loader_factory = nullptr;
-    return;
-  }
-  blink::mojom::BlobRegistryPtr blob_registry_ptr;
-  ChildThreadImpl::current()->GetConnector()->BindInterface(
-      mojom::kBrowserServiceName, mojo::MakeRequest(&blob_registry_ptr));
-  auto blob_registry =
-      base::MakeRefCounted<base::RefCountedData<blink::mojom::BlobRegistryPtr>>(
-          std::move(blob_registry_ptr));
-  state->controller_connector =
-      base::MakeRefCounted<ControllerServiceWorkerConnector>(
-          container_host_.get());
-  mojo::MakeStrongBinding(
-      base::MakeUnique<ServiceWorkerSubresourceLoaderFactory>(
-          state->controller_connector, state->default_loader_factory_getter,
-          state->controller->url().GetOrigin(), std::move(blob_registry)),
-      mojo::MakeRequest(&state->subresource_loader_factory));
 }
 
 ServiceWorkerHandleReference* ServiceWorkerProviderContext::controller() {
