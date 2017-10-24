@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b40344a4_0b4d7eea",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T01:37:19Z",
+      "side": 1,
+      "message": "Can you help me understand why we need the *? It looks like we don\u0027t use the return value.\n\nIf it\u0027s needed, could we break it up into multiple statements with intermediate variables help clarify?",
+      "revId": "e33771da7d967c1e59288f947f83d07ec3a0b45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "139aa36a_0eb2c3ee",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T01:37:19Z",
+      "side": 1,
+      "message": "I\u0027m not really sure the change from Info to InfoPtr is improving readability? What\u0027s the benefit... is it to avoid Clone() which is slow?\n\nOr should ServiceWorkerVersionAttributes have InfoPtrs as well?",
+      "revId": "e33771da7d967c1e59288f947f83d07ec3a0b45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a5628a_ce31fc86",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T01:37:19Z",
+      "side": 1,
+      "message": "Prefer early return to save indentation:\n\nif (!provider_client)\n  return;",
+      "revId": "e33771da7d967c1e59288f947f83d07ec3a0b45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
