@@ -33,6 +33,7 @@
 
 #include <memory>
 
+#include "common/feature_policy/feature_policy.h"
 #include "core/CoreExport.h"
 #include "core/dom/Document.h"
 #include "core/dom/IconURL.h"
@@ -51,7 +52,6 @@
 #include "platform/wtf/Vector.h"
 #include "public/platform/WebContentSecurityPolicyStruct.h"
 #include "public/platform/WebEffectiveConnectionType.h"
-#include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
 #include "public/platform/WebSuddenTerminationDisablerType.h"
@@ -272,10 +272,10 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual void DidChangeFramePolicy(Frame* child_frame,
                                     SandboxFlags,
-                                    const WebParsedFeaturePolicy&) {}
+                                    const ParsedFeaturePolicy&) {}
 
   virtual void DidSetFeaturePolicyHeader(
-      const WebParsedFeaturePolicy& parsed_header) {}
+      const ParsedFeaturePolicy& parsed_header) {}
 
   // Called when a set of new Content Security Policies is added to the frame's
   // document. This can be triggered by handling of HTTP headers, handling of

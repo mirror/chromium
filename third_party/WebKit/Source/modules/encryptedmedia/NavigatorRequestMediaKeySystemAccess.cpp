@@ -8,6 +8,7 @@
 
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "common/feature_policy/feature_policy_feature.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
@@ -30,7 +31,6 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebEncryptedMediaClient.h"
 #include "public/platform/WebEncryptedMediaRequest.h"
-#include "public/platform/WebFeaturePolicyFeature.h"
 #include "public/platform/WebMediaKeySystemConfiguration.h"
 #include "public/platform/WebMediaKeySystemMediaCapability.h"
 #include "public/platform/WebVector.h"
@@ -279,9 +279,8 @@ ScriptPromise NavigatorRequestMediaKeySystemAccess::requestMediaKeySystemAccess(
   Document* document = ToDocument(execution_context);
 
   if (RuntimeEnabledFeatures::FeaturePolicyForPermissionsEnabled()) {
-    if (!document->GetFrame() ||
-        !document->GetFrame()->IsFeatureEnabled(
-            WebFeaturePolicyFeature::kEncryptedMedia)) {
+    if (!document->GetFrame() || !document->GetFrame()->IsFeatureEnabled(
+                                     FeaturePolicyFeature::kEncryptedMedia)) {
       UseCounter::Count(document,
                         WebFeature::kEncryptedMediaDisabledByFeaturePolicy);
       document->AddConsoleMessage(
@@ -295,7 +294,7 @@ ScriptPromise NavigatorRequestMediaKeySystemAccess::requestMediaKeySystemAccess(
     }
   } else {
     Deprecation::CountDeprecationFeaturePolicy(
-        *document, WebFeaturePolicyFeature::kEncryptedMedia);
+        *document, FeaturePolicyFeature::kEncryptedMedia);
   }
 
   // From https://w3c.github.io/encrypted-media/#common-key-systems

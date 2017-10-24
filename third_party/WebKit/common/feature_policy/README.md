@@ -63,7 +63,7 @@ policy is undetermined, consider shipping the feature behind a flag (i.e.,
 
 ##### Define new feature
 1. Feature policy features are defined in
-`third_party/WebKit/common/feature_policy/feature_policy.h`. Add the new feature
+`third_party/WebKit/common/feature_policy/feature_policy_feature.h`. Add the new feature
 enum with a brief decription about what the feature does in the comment, right
 above `LAST_FEATURE`
 

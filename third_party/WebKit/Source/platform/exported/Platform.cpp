@@ -34,6 +34,7 @@
 
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
+#include "common/feature_policy/feature_policy.h"
 #include "platform/Histogram.h"
 #include "platform/InstanceCountersMemoryDumpProvider.h"
 #include "platform/Language.h"
@@ -49,7 +50,6 @@
 #include "platform/wtf/HashMap.h"
 #include "public/platform/InterfaceProvider.h"
 #include "public/platform/WebCanvasCaptureHandler.h"
-#include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebGestureCurve.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
 #include "public/platform/WebImageCaptureFrameGrabber.h"
@@ -287,16 +287,16 @@ std::unique_ptr<TrialPolicy> Platform::OriginTrialPolicy() {
   return std::unique_ptr<TrialPolicy>{};
 }
 
-std::unique_ptr<WebFeaturePolicy> Platform::CreateFeaturePolicy(
-    const WebFeaturePolicy* parent_policy,
-    const WebParsedFeaturePolicy& container_policy,
-    const WebParsedFeaturePolicy& policy_header,
+std::unique_ptr<FeaturePolicy> Platform::CreateFeaturePolicy(
+    const FeaturePolicy* parent_policy,
+    const ParsedFeaturePolicy& container_policy,
+    const ParsedFeaturePolicy& policy_header,
     const WebSecurityOrigin&) {
   return nullptr;
 }
 
-std::unique_ptr<WebFeaturePolicy> Platform::DuplicateFeaturePolicyWithOrigin(
-    const WebFeaturePolicy&,
+std::unique_ptr<FeaturePolicy> Platform::DuplicateFeaturePolicyWithOrigin(
+    const FeaturePolicy&,
     const WebSecurityOrigin&) {
   return nullptr;
 }

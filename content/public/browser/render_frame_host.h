@@ -22,7 +22,7 @@
 #include "url/origin.h"
 
 namespace blink {
-enum class WebFeaturePolicyFeature;
+enum class FeaturePolicyFeature;
 }
 
 namespace base {
@@ -297,7 +297,7 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   // Returns true if the given Feature Policy |feature| is enabled for this
   // RenderFrameHost and is allowed to be used by it. Use this in the browser
   // process to determine whether access to a feature is allowed.
-  virtual bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) = 0;
+  virtual bool IsFeatureEnabled(blink::FeaturePolicyFeature feature) = 0;
 
  private:
   // This interface should only be implemented inside content.

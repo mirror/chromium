@@ -27,6 +27,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/array_buffer_or_array_buffer_view_or_blob_or_document_or_string_or_form_data_or_url_search_params.h"
 #include "bindings/core/v8/array_buffer_or_array_buffer_view_or_blob_or_usv_string.h"
+#include "common/feature_policy/feature_policy_feature.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/DOMImplementation.h"
 #include "core/dom/DocumentInit.h"
@@ -86,7 +87,6 @@
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/CString.h"
 #include "public/platform/WebCORS.h"
-#include "public/platform/WebFeaturePolicyFeature.h"
 #include "public/platform/WebURLRequest.h"
 
 namespace blink {
@@ -695,9 +695,9 @@ void XMLHttpRequest::open(const AtomicString& method,
   upload_complete_ = false;
 
   if (!async && GetExecutionContext()->IsDocument()) {
-    if (IsSupportedInFeaturePolicy(WebFeaturePolicyFeature::kSyncXHR) &&
+    if (IsSupportedInFeaturePolicy(FeaturePolicyFeature::kSyncXHR) &&
         !GetDocument()->GetFrame()->IsFeatureEnabled(
-            WebFeaturePolicyFeature::kSyncXHR)) {
+            FeaturePolicyFeature::kSyncXHR)) {
       exception_state.ThrowDOMException(
           kInvalidAccessError,
           "Synchronous requests are disabled by Feature Policy.");

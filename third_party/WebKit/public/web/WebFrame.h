@@ -34,9 +34,9 @@
 #include <memory>
 #include "WebIconURL.h"
 #include "WebNode.h"
+#include "common/feature_policy/feature_policy.h"
 #include "public/platform/WebCanvas.h"
 #include "public/platform/WebCommon.h"
-#include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/web/WebFrameLoadType.h"
 #include "public/web/WebTreeScopeType.h"
@@ -104,8 +104,7 @@ class BLINK_EXPORT WebFrame {
   // parent is in another process and it dynamically updates this frame's
   // sandbox flags or container policy. The new policy won't take effect until
   // the next navigation.
-  void SetFrameOwnerPolicy(WebSandboxFlags,
-                           const blink::WebParsedFeaturePolicy&);
+  void SetFrameOwnerPolicy(WebSandboxFlags, const blink::ParsedFeaturePolicy&);
 
   // The frame's insecure request policy.
   WebInsecureRequestPolicy GetInsecureRequestPolicy() const;

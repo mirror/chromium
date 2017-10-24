@@ -32,6 +32,7 @@
 
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "common/feature_policy/feature_policy_feature.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
@@ -41,7 +42,6 @@
 #include "core/frame/UseCounter.h"
 #include "modules/webmidi/MIDIAccessInitializer.h"
 #include "modules/webmidi/MIDIOptions.h"
-#include "public/platform/WebFeaturePolicyFeature.h"
 
 namespace blink {
 
@@ -94,7 +94,7 @@ ScriptPromise NavigatorWebMIDI::requestMIDIAccess(ScriptState* script_state,
   UseCounter::CountCrossOriginIframe(
       document, WebFeature::kRequestMIDIAccessIframe_ObscuredByFootprinting);
   Deprecation::CountDeprecationFeaturePolicy(
-      document, WebFeaturePolicyFeature::kMidiFeature);
+      document, FeaturePolicyFeature::kMidiFeature);
 
   return MIDIAccessInitializer::Start(script_state, options);
 }

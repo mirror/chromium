@@ -5,6 +5,7 @@
 #ifndef FeaturePolicy_h
 #define FeaturePolicy_h
 
+#include "common/feature_policy/feature_policy.h"
 #include "platform/PlatformExport.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/HashMap.h"
@@ -12,15 +13,15 @@
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/StringHash.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/WebFeaturePolicy.h"
+#include "url/origin.h"
 
 #include <memory>
 
 namespace blink {
 
-// Returns a map between feature name (string) and WebFeaturePolicyFeature
+// Returns a map between feature name (string) and FeaturePolicyFeature
 // (enum).
-typedef HashMap<String, WebFeaturePolicyFeature> FeatureNameMap;
+typedef HashMap<String, FeaturePolicyFeature> FeatureNameMap;
 PLATFORM_EXPORT const FeatureNameMap& GetDefaultFeatureNameMap();
 
 // Converts a header policy string into a vector of whitelists, one for each
@@ -29,7 +30,7 @@ PLATFORM_EXPORT const FeatureNameMap& GetDefaultFeatureNameMap();
 // appended to it.
 // Example of a feature policy string:
 //     "vibrate a.com b.com; fullscreen 'none'; payment 'self', payment *".
-PLATFORM_EXPORT WebParsedFeaturePolicy
+PLATFORM_EXPORT ParsedFeaturePolicy
 ParseFeaturePolicyHeader(const String& policy,
                          RefPtr<SecurityOrigin>,
                          Vector<String>* messages);
@@ -45,7 +46,7 @@ ParseFeaturePolicyHeader(const String& policy,
 // TODO(loonybear): remove the boolean once the space separated feature list
 // syntax is deprecated.
 // https://crbug.com/761009.
-PLATFORM_EXPORT Vector<WebParsedFeaturePolicyDeclaration>
+PLATFORM_EXPORT ParsedFeaturePolicy
 ParseFeaturePolicyAttribute(const String& policy,
                             RefPtr<SecurityOrigin> self_origin,
                             RefPtr<SecurityOrigin> src_origin,
@@ -61,17 +62,17 @@ ParseFeaturePolicyAttribute(const String& policy,
 // TODO(loonybear): remove the boolean once the space separated feature list
 // syntax is deprecated.
 // https://crbug.com/761009.
-PLATFORM_EXPORT Vector<WebParsedFeaturePolicyDeclaration> ParseFeaturePolicy(
-    const String& policy,
-    RefPtr<SecurityOrigin> self_origin,
-    RefPtr<SecurityOrigin> src_origin,
-    Vector<String>* messages,
-    const FeatureNameMap& feature_names,
-    bool* old_syntax = nullptr);
+PLATFORM_EXPORT ParsedFeaturePolicy
+ParseFeaturePolicy(const String& policy,
+                   RefPtr<SecurityOrigin> self_origin,
+                   RefPtr<SecurityOrigin> src_origin,
+                   Vector<String>* messages,
+                   const FeatureNameMap& feature_names,
+                   bool* old_syntax = nullptr);
 
 // Verifies whether feature policy is enabled and |feature| is supported in
 // feature policy.
-PLATFORM_EXPORT bool IsSupportedInFeaturePolicy(WebFeaturePolicyFeature);
+PLATFORM_EXPORT bool IsSupportedInFeaturePolicy(FeaturePolicyFeature);
 
 }  // namespace blink
 

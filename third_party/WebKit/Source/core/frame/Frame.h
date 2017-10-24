@@ -29,6 +29,7 @@
 #ifndef Frame_h
 #define Frame_h
 
+#include "common/feature_policy/feature_policy.h"
 #include "core/CoreExport.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/FrameLifecycle.h"
@@ -39,7 +40,6 @@
 #include "core/page/FrameTree.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
-#include "public/platform/WebFeaturePolicy.h"
 
 namespace blink {
 
@@ -208,7 +208,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
 
   // Tests whether the feature-policy controlled feature is enabled by policy in
   // the given frame.
-  bool IsFeatureEnabled(WebFeaturePolicyFeature) const;
+  bool IsFeatureEnabled(FeaturePolicyFeature) const;
 
   // Called to make a frame inert or non-inert. A frame is inert when there
   // is a modal dialog displayed within an ancestor frame, and this frame
