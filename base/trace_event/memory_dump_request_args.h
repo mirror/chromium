@@ -31,8 +31,7 @@ enum class MemoryDumpType {
   PERIODIC_INTERVAL,     // Dumping memory at periodic intervals.
   EXPLICITLY_TRIGGERED,  // Non maskable dump request.
   PEAK_MEMORY_USAGE,     // Dumping memory at detected peak total memory usage.
-  SUMMARY_ONLY,          // Calculate just the summary & don't add to the trace.
-  LAST = SUMMARY_ONLY
+  LAST = PEAK_MEMORY_USAGE
 };
 
 // Tells the MemoryDumpProvider(s) how much detailed their dumps should be.
@@ -43,6 +42,9 @@ enum class MemoryDumpLevelOfDetail : uint32_t {
 
   // Retrieve only memory maps. Used only for the heap profiler.
   VM_REGIONS_ONLY_FOR_HEAP_PROFILER = FIRST,
+
+  // Calculate just the summary.
+  SUMMARY_ONLY,
 
   // For background tracing mode. The dump time is quick, and typically just the
   // totals are expected. Suballocations need not be specified. Dump name must
