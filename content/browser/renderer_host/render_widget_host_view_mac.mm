@@ -2565,8 +2565,8 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 }
 
 - (void)showLookUpDictionaryOverlayAtPoint:(NSPoint)point {
-  gfx::Point rootPoint(point.x, NSHeight([self frame]) - point.y);
-  gfx::Point transformedPoint;
+  gfx::PointF rootPoint(point.x, NSHeight([self frame]) - point.y);
+  gfx::PointF transformedPoint;
   if (!renderWidgetHostView_->render_widget_host_ ||
       !renderWidgetHostView_->render_widget_host_->delegate() ||
       !renderWidgetHostView_->render_widget_host_->delegate()
@@ -2584,7 +2584,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   int32_t targetWidgetProcessId = widgetHost->GetProcess()->GetID();
   int32_t targetWidgetRoutingId = widgetHost->GetRoutingID();
   TextInputClientMac::GetInstance()->GetStringAtPoint(
-      widgetHost, transformedPoint,
+      widgetHost, gfx::ToFlooredPoint(transformedPoint),
       ^(NSAttributedString* string, NSPoint baselinePoint) {
         if (!content::RenderWidgetHost::FromID(targetWidgetProcessId,
                                                targetWidgetRoutingId)) {
@@ -3192,8 +3192,8 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
            ->GetInputEventRouter())
     return NSNotFound;
 
-  gfx::Point rootPoint(thePoint.x, thePoint.y);
-  gfx::Point transformedPoint;
+  gfx::PointF rootPoint(thePoint.x, thePoint.y);
+  gfx::PointF transformedPoint;
   RenderWidgetHostImpl* widgetHost =
       renderWidgetHostView_->render_widget_host_->delegate()
           ->GetInputEventRouter()
@@ -3204,7 +3204,7 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
 
   NSUInteger index =
       TextInputClientMac::GetInstance()->GetCharacterIndexAtPoint(
-          widgetHost, transformedPoint);
+          widgetHost, gfx::ToFlooredPoint(transformedPoint));
   return index;
 }
 
