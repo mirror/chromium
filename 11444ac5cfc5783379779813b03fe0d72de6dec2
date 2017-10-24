@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95f41906_561293e8",
+        "filename": "third_party/polymer/v1_0/components-chromium/paper-tooltip/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T21:26:12Z",
+      "side": 1,
+      "message": "Can we remove the trailing slash? In other words, is his equivalent to the following?\n\n\"../neon-animation/animations:fade-in-animation-extracted\",",
+      "revId": "11444ac5cfc5783379779813b03fe0d72de6dec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215c5b43_a7c44e9d",
+        "filename": "third_party/polymer/v1_0/generate_gn.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T21:26:12Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "11444ac5cfc5783379779813b03fe0d72de6dec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babc6963_c012032b",
+        "filename": "tools/polymer/generate_build_gn.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T21:26:12Z",
+      "side": 1,
+      "message": "Nit: Perhaps rename this file to generate_gn.py, such that it matches generate_gn.sh.",
+      "revId": "11444ac5cfc5783379779813b03fe0d72de6dec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
