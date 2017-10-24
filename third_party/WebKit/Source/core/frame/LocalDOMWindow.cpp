@@ -629,10 +629,7 @@ void LocalDOMWindow::PostMessageTimerFired(PostMessageTimer* timer) {
 
   MessageEvent* event = timer->Event();
 
-  UserGestureToken* token = timer->GetUserGestureToken();
-  UserGestureIndicator gesture_indicator(token);
-  if (token && token->HasGestures() && document() && document()->GetFrame())
-    document()->GetFrame()->NotifyUserActivation();
+  UserGestureIndicator gesture_indicator(timer->GetUserGestureToken());
 
   event->EntangleMessagePorts(document());
 
