@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6932984_4355c418",
+        "filename": "ui/views/style/typography_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T00:57:40Z",
+      "side": 1,
+      "message": "Please make View the first arg, and for consistency *all* functions here should take a view. The comment should be something like, \"|view| is the View requesting the X.\"",
+      "range": {
+        "startLine": 31,
+        "startChar": 51,
+        "endLine": 31,
+        "endChar": 67
+      },
+      "revId": "21e6d9e35f32ebbeace9b053208434352dbfd540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
