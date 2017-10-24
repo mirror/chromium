@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8bd0709_8730b95e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4330556e_a430334e",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d66847ec_d1a547aa",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
         "patchSetId": 15
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "10660707_65bfbe39",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "My main concern with this approach is that it\u0027ll require to control the sampling rate in this class directly (or to have a way to enforce it on the caller\u0027s side). So basically it means adding a timer etc and we\u0027ll end up with what I had last week... \n\nI\u0027ve opted for a purely time-based system here because I don\u0027t wanted to impose a sampling rate etc in this class. \n\nI\u0027ve tried to make sure that the transition to a higher state always has priority over the cooldown logic, I could also enforce this here.\n\nI don\u0027t have any strong opinion here (I just want to ship this :) ), but it feels like switching back to a sample-based approach is like going back to where I was last week. IMHO the sampling rate should be set by the monitor, not by this class.",
+      "parentUuid": "2be3ec80_bedfc724",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d31ae44a_7df6a87f",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -68,6 +104,24 @@
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763b2f61_97971f05",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d31ae44a_7df6a87f",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "717368ec_23892256",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd6199ee_dacfe205",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8047116d_39fb8d7d",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -102,6 +174,24 @@
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be39919b_87933b0c",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8047116d_39fb8d7d",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "4ef3fbe8_35561f5e",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Ha sorry, deformation from my days in Syzygy using Doxygen and adding comments to absolutely everything :)",
+      "parentUuid": "f59b80f4_3a4398d7",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc6ad743_df473b67",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -136,6 +244,24 @@
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be867879_a4cd1930",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc6ad743_df473b67",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "d730bfca_4552d7c8",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20188e4a_fcd95f8b",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a69d334_bca31f10",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -170,6 +314,24 @@
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c73ede_01f230b9",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a69d334_bca31f10",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "b1afa927_5e2605cb",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Remove the initial observation from the observer and updated this comment.",
+      "parentUuid": "67af99bf_b66c02f0",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ff910cb_6a88a2e4",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -204,6 +384,24 @@
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5340438e_e7f5a2fb",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ff910cb_6a88a2e4",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "663078e4_7d6172ad",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba316934_6be294c1",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caab77cc_29abc2c4",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -238,6 +454,24 @@
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16397fc9_2d37a15f",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "The reason for them to be here is that I wanted to use them in the unittests.",
+      "parentUuid": "caab77cc_29abc2c4",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +492,24 @@
     },
     {
       "key": {
+        "uuid": "87c0b3b7_5ea91a8c",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e939725b_ec922c6a",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83030cbb_3d3b0976",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -272,6 +524,24 @@
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e45b07_945d7102",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83030cbb_3d3b0976",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +562,24 @@
     },
     {
       "key": {
+        "uuid": "72e7f887_5a54af1b",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "167869ca_e79fe2a3",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd7a668a_b6d67c93",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -306,6 +594,24 @@
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76953b0d_2086f5f3",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "I was initially doing this but I thought that it was more efficient to just reset it (and re-use the most recent observation).",
+      "parentUuid": "fd7a668a_b6d67c93",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -326,6 +632,24 @@
     },
     {
       "key": {
+        "uuid": "746a5c62_7104a746",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "0.0 doesn\u0027t work (as this rate could cause a cooldown), and I don\u0027t really like using magic values (e.g. -1). base::Optional seems like a good choice, wasn\u0027t aware that it was available in Chrome.",
+      "parentUuid": "7a1db820_02e3f2b3",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6b6afda_9e3302b3",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -340,6 +664,24 @@
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0fcb08_e3a33a58",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "b6b6afda_9e3302b3",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -360,6 +702,24 @@
     },
     {
       "key": {
+        "uuid": "b4cf005c_f65eb127",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80130e3f_da9512ff",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ae20731_85d8870c",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -374,6 +734,24 @@
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db6e6cb_6496ec38",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ae20731_85d8870c",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -394,6 +772,24 @@
     },
     {
       "key": {
+        "uuid": "6a0d4446_14f86e87",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ca32d7_01a3735c",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e9a864f_827fa75a",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -408,6 +804,24 @@
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bcfafd7_75950483",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "This is the same of the page-fault counters for all the Chrome processes.\n\nI\u0027ll rename this to \"RecordHardFaultCountForChromeProcesses\".",
+      "parentUuid": "8e9a864f_827fa75a",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -428,6 +842,24 @@
     },
     {
       "key": {
+        "uuid": "f57f18e3_9fc3c606",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "It\u0027s mostly because they look over 2 different periods of time. One is to look at the escalations and one is for the cooldown (i.e. lowering to a lower state), I could modify the Averager\u0027s class to make it work in both cases but I think that it\u0027ll add a lot of unnecessary complexity to it?",
+      "parentUuid": "23ee8edf_f6b398b6",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08d71bb0_7630a0e9",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -439,6 +871,24 @@
       "writtenOn": "2017-10-24T01:07:55Z",
       "side": 1,
       "message": "Do we also need to know _when_ that state was switched-into, so we can determine when enough time has elapsed for us to consider switching to the next state?",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a66289_41df799f",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T06:13:19Z",
+      "side": 1,
+      "message": "Maybe, but at this point I\u0027m not entirely sure how this will be used? The Averager already looks at timestamps etc, so it could be redundant and we might want to wait for a specific use case before preemptively adding this?",
+      "parentUuid": "08d71bb0_7630a0e9",
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
