@@ -339,8 +339,9 @@ std::unique_ptr<FontPlatformData> FontCache::CreateFontPlatformData(
   DCHECK_EQ(creation_params.CreationType(), kCreateFontByFamily);
 
   CString name;
+  PaintTypeface paint_tf;
   sk_sp<SkTypeface> tf =
-      CreateTypeface(font_description, creation_params, name);
+      CreateTypeface(font_description, creation_params, name, paint_tf);
   // Windows will always give us a valid pointer here, even if the face name
   // is non-existent. We have to double-check and see if the family name was
   // really used.
@@ -371,7 +372,9 @@ std::unique_ptr<FontPlatformData> FontCache::CreateFontPlatformData(
       FontFaceCreationParams adjusted_params(adjusted_name);
       FontDescription adjusted_font_description = font_description;
       adjusted_font_description.SetWeight(variant_weight);
-      tf = CreateTypeface(adjusted_font_description, adjusted_params, name);
+      paint_tf = PaintTypeface();
+      tf = CreateTypeface(adjusted_font_description, adjusted_params, name,
+                          paint_tf);
       if (!tf || !TypefacesMatchesFamily(tf.get(), adjusted_name))
         return nullptr;
 
@@ -380,7 +383,9 @@ std::unique_ptr<FontPlatformData> FontCache::CreateFontPlatformData(
       FontFaceCreationParams adjusted_params(adjusted_name);
       FontDescription adjusted_font_description = font_description;
       adjusted_font_description.SetStretch(variant_stretch);
-      tf = CreateTypeface(adjusted_font_description, adjusted_params, name);
+      paint_tf = PaintTypeface();
+      tf = CreateTypeface(adjusted_font_description, adjusted_params, name,
+                          paint_tf);
       if (!tf || !TypefacesMatchesFamily(tf.get(), adjusted_name))
         return nullptr;
 
@@ -389,9 +394,10 @@ std::unique_ptr<FontPlatformData> FontCache::CreateFontPlatformData(
     }
   }
 
+  paint_tf.AssertInitialized();
   std::unique_ptr<FontPlatformData> result =
       WTF::WrapUnique(new FontPlatformData(
-          tf, name.data(), font_size,
+          tf, paint_tf, name.data(), font_size,
           (font_description.Weight() >= BoldThreshold() && !tf->isBold()) ||
               font_description.IsSyntheticBold(),
           ((font_description.Style() == ItalicSlopeValue()) &&

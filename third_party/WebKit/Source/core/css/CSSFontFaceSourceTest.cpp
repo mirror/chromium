@@ -18,8 +18,13 @@ class DummyFontFaceSource : public CSSFontFaceSource {
   scoped_refptr<SimpleFontData> CreateFontData(
       const FontDescription&,
       const FontSelectionCapabilities&) override {
+    auto tf = SkTypeface::MakeDefault();
+    PaintTypeface paint_tf(tf->uniqueID());
+    // We just need to set this to something for DCHECK purposes, otherwise this
+    // value doesn't matter.
+    paint_tf.SetWebFont();
     return SimpleFontData::Create(
-        FontPlatformData(SkTypeface::MakeDefault(), "", 0, false, false));
+        FontPlatformData(std::move(tf), paint_tf, "", 0, false, false));
   }
 
   DummyFontFaceSource() {}
