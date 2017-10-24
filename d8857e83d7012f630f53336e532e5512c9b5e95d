@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "89390073_6b25c234",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-24T18:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "746aa3a4_4084827c",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d1e3c02_876d37c8",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 8
@@ -151,6 +169,24 @@
       "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19091968_f9853429",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-24T18:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6da4e30c_a50d7dd7",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
