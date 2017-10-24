@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2600611a_855903b2",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-10-24T20:39:03Z",
+      "side": 0,
+      "message": "IIUC this should be fine as it just increases the life span of \"recording\" till the end of the function. I\u0027ll revert it though.",
+      "parentUuid": "e60f142d_3b26419b",
+      "revId": "a23ba5120eba56756fc5804491fe99a0c0b476cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f34d46a_9061c2c0",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParamsTest.cpp",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-23T19:18:03Z",
       "side": 0,
       "message": "Why remove this test? IT seems like a good check to have.",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 62
+      },
+      "revId": "a23ba5120eba56756fc5804491fe99a0c0b476cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b383c8e_2a17457b",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParamsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-10-24T20:39:03Z",
+      "side": 0,
+      "message": "This test was not providing full coverage anymore since now CanvasColorParams::GetSkColorSpaceForSkSurfaces() return nullptr for SkSurfaces. I modified the test and added some comments.",
+      "parentUuid": "0f34d46a_9061c2c0",
       "range": {
         "startLine": 22,
         "startChar": 28,
