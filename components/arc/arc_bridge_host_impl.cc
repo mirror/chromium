@@ -12,6 +12,8 @@
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/instance_holder.h"
 
+#include "chrome/browser/chromeos/arc/auth/arc_auth_service.h"
+
 namespace arc {
 
 // Thin interface to wrap InterfacePtr<T> with type erasure.
@@ -79,6 +81,20 @@ ArcBridgeHostImpl::ArcBridgeHostImpl(ArcBridgeService* arc_bridge_service,
   mojom::ArcBridgeHostPtr host_proxy;
   binding_.Bind(mojo::MakeRequest(&host_proxy));
   instance_->Init(std::move(host_proxy));
+}
+
+void ArcBridgeHostImpl::SetVariant(const SetVariantCallback& callback) {
+  if (strcmp(ArcAuthService::kArcVariant, "warmup") == 0) {
+    ArcAuthService::kArcVariant = "default";
+  } else if (strcmp(ArcAuthService::kArcVariant, "default") == 0) {
+    ArcAuthService::kArcVariant = "experiment";
+  } else if (strcmp(ArcAuthService::kArcVariant, "experiment") == 0) {
+    ArcAuthService::kArcVariant = "default";
+  } else {
+    ArcAuthService::kArcVariant = "warmup";
+  }
+  LOG(ERROR) << "INIT AS " << ArcAuthService::kArcVariant;
+  callback.Run(ArcAuthService::kArcVariant);
 }
 
 ArcBridgeHostImpl::~ArcBridgeHostImpl() {

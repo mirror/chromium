@@ -280,6 +280,8 @@ class TermsOfServicePage {
         .addEventListener('click', () => this.onAgree());
     container.querySelector('#button-cancel')
         .addEventListener('click', () => this.onCancel_());
+
+    setTimeout(() => this.onAgree(), 1000);
   }
 
   /** Called when the TermsOfService page is shown. */

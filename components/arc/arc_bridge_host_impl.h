@@ -37,6 +37,9 @@ class ArcBridgeHostImpl : public mojom::ArcBridgeHost {
                     mojom::ArcBridgeInstancePtr instance);
   ~ArcBridgeHostImpl() override;
 
+  void SetVariant(const SetVariantCallback& callback) override;
+
+
   // ArcBridgeHost overrides.
   void OnAccessibilityHelperInstanceReady(
       mojom::AccessibilityHelperInstancePtr accessibility_helper_ptr) override;
