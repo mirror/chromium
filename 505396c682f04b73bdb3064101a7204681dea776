@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "55945a7e_54acb8b6",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-24T04:27:15Z",
+      "side": 1,
+      "message": "Could it be initialized at the ctor?",
+      "revId": "505396c682f04b73bdb3064101a7204681dea776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86596dc6_7729f7ac",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-24T04:27:15Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "505396c682f04b73bdb3064101a7204681dea776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9bafce2_9a7e9d38",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
         "patchSetId": 2
