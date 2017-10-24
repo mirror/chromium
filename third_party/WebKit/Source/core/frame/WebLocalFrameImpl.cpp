@@ -207,6 +207,7 @@
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/HashMap.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebDoubleSize.h"
 #include "public/platform/WebFloatPoint.h"
@@ -1843,7 +1844,7 @@ void WebLocalFrameImpl::DidFail(const ResourceError& error,
     plugin->DidFailLoading(error);
 
   if (was_provisional)
-    Client()->DidFailProvisionalLoad(web_error, web_commit_type);
+    Client()->DidFailProvisionalLoad(web_error, web_commit_type, WTF::nullopt);
   else
     Client()->DidFailLoad(web_error, web_commit_type);
 }
