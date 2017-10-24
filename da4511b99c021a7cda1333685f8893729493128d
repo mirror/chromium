@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8e2ffbe0_025146ea",
+        "filename": "chrome/browser/ui/views/payments/payment_request_can_make_payment_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T19:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa62a91d_a2ceaa7f",
+      "revId": "da4511b99c021a7cda1333685f8893729493128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a3e1666_76cd395a",
         "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
         "patchSetId": 6
@@ -51,6 +69,24 @@
       "revId": "da4511b99c021a7cda1333685f8893729493128d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b16bfa_c0365770",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T19:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a3e1666_76cd395a",
+      "revId": "da4511b99c021a7cda1333685f8893729493128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "80042a25_ca0bf9fd",
+        "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T19:13:17Z",
+      "side": 1,
+      "message": "Explained in comment.",
+      "parentUuid": "5c987202_94f73b63",
+      "revId": "da4511b99c021a7cda1333685f8893729493128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d886dd4_c6b7fab6",
         "filename": "components/payments/core/journey_logger.cc",
         "patchSetId": 6
@@ -85,6 +139,24 @@
       "revId": "da4511b99c021a7cda1333685f8893729493128d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f75d11_c8804db4",
+        "filename": "components/payments/core/journey_logger.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T19:13:17Z",
+      "side": 1,
+      "message": "sections_ is an array. I don\u0027t believe range-based for loops work with arrays.",
+      "parentUuid": "2d886dd4_c6b7fab6",
+      "revId": "da4511b99c021a7cda1333685f8893729493128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
