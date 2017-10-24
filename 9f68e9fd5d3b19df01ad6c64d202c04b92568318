@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "768e3395_426a3ee3",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-24T22:53:56Z",
+      "side": 1,
+      "message": "How about instead of a flag, what if PreviousInTreeOrder returns the\nlast element if you pass null for |object|?",
+      "revId": "9f68e9fd5d3b19df01ad6c64d202c04b92568318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d721da7a_2a454267",
+        "filename": "content/browser/accessibility/one_shot_accessibility_tree_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-24T22:53:56Z",
+      "side": 1,
+      "message": "A new flag is good here, but instead of calling this SetIsAndroid,\ndescribe what behavior it changes, like SetCanWrapToLastElement",
+      "revId": "9f68e9fd5d3b19df01ad6c64d202c04b92568318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
