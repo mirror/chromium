@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f80bcbdb_3b72207d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-24T22:16:26Z",
+      "side": 1,
+      "message": "This test-only method looks out of place on Tab. Is it possible to construct a test w/o adding this bit? Maybe using DownloadController?",
+      "revId": "bfac431f9c3e026af2237287f88eb766fe359c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d0133f_3c1f6451",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-24T22:16:26Z",
+      "side": 1,
+      "message": "This is probably left over after some debugging... Same below.",
+      "revId": "bfac431f9c3e026af2237287f88eb766fe359c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af192932_50280109",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-24T22:16:26Z",
+      "side": 1,
+      "message": "This mime type must be kept in sync with this place: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/DocumentLoader.cpp?rcl\u003d8b002d1386bb5fc03967cee82401ad457369d883\u0026l\u003d97\n\nAt least a comment should be added to both places, of course it\u0027d be better to use the same shared check function in both places (also with a comment) but this is not a blocker if it is harder.",
+      "revId": "bfac431f9c3e026af2237287f88eb766fe359c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ffbefc_eef0ff69",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-24T22:16:26Z",
+      "side": 1,
+      "message": "Naming: it is not clear what is offline page here. Is the resource in question an offline page?\n\nI think it\u0027d be better is_loading_local_offline_page?",
+      "revId": "bfac431f9c3e026af2237287f88eb766fe359c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
