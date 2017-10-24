@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42f383c5_57694afe",
+        "filename": "components/offline_pages/core/model/create_archive_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-24T01:20:31Z",
+      "side": 1,
+      "message": "this change feels a little disconnected from CL description. Please provide more details on why it is done, and why it is done that way.\n\nAlso where does the DCHECK triggered by lack of this change live?",
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "193624be_b23a953f",
+        "filename": "components/offline_pages/core/model/create_archive_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-24T01:20:31Z",
+      "side": 1,
+      "message": "Explain this change, please.",
+      "range": {
+        "startLine": 378,
+        "startChar": 8,
+        "endLine": 378,
+        "endChar": 23
+      },
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efaf28c7_54adb4c8",
+        "filename": "components/offline_pages/core/model/delete_page_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-24T01:20:31Z",
+      "side": 1,
+      "message": "please apply approach 2 in the whole file.\nstore, callback, rest...",
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e29e8b0_e7f91595",
+        "filename": "components/offline_pages/core/model/get_pages_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-24T01:20:31Z",
+      "side": 1,
+      "message": "Fix to apply: store, callback, rest ...\nApplies to the next method.\n\nRemove the modification everywhere else, please.",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb72808d_cf3d11d7",
+        "filename": "components/offline_pages/core/model/offline_page_item_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-24T01:20:31Z",
+      "side": 1,
+      "message": "Why no go with an if, else? Is there a reason to assign twice?",
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0dde27_7c8ea934",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-24T01:20:31Z",
+      "side": 1,
+      "message": "This will crash and you won\u0027t know why.",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 9
+      },
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec43028d_89109ee2",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-24T01:20:31Z",
+      "side": 1,
+      "message": "This is a bad idea.",
+      "range": {
+        "startLine": 36,
+        "startChar": 59,
+        "endLine": 36,
+        "endChar": 80
+      },
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6abd97fe_7c3bab1a",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-24T01:20:31Z",
+      "side": 1,
+      "message": "this is missing _ at the end, but since it is a bad idea, we should remove it.",
+      "range": {
+        "startLine": 62,
+        "startChar": 31,
+        "endLine": 62,
+        "endChar": 40
+      },
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
