@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48799d8e_0ae16b60",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T15:08:42Z",
+      "side": 0,
+      "message": "didStartNavigation: is now called from WKWebView navigation callback. Previously for user-initiated navigations didStartNavigation: was called when WKWebView load was requested. Kurt, do you think we need a separate WebStateObserver callback to tell observers that user-initiated navigation was requested? WebContentsObserver does not have that callback, but if it\u0027s useful on ios, then we should consider adding it.",
+      "revId": "f9974a8c5369686a01afbcc685351549d8202239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
