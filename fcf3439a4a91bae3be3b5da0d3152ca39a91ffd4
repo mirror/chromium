@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0c7fac1_09b409ca",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-24T16:07:52Z",
+      "side": 1,
+      "message": "I think we need to check for HashTableDeletedValue before calling PageFromObject",
+      "range": {
+        "startLine": 249,
+        "startChar": 35,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "fcf3439a4a91bae3be3b5da0d3152ca39a91ffd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
