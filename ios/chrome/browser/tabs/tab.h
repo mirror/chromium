@@ -23,8 +23,8 @@
 @class CastController;
 @class ExternalAppLauncher;
 @class FormInputAccessoryViewController;
-@class FullScreenController;
-@protocol FullScreenControllerDelegate;
+@class LegacyFullscreenController;
+@protocol LegacyFullscreenControllerDelegate;
 class GURL;
 @class OpenInController;
 @class OverscrollActionsController;
@@ -120,8 +120,8 @@ extern NSString* const kProxyPassthroughHeaderValue;
 
 @property(nonatomic, weak) id<IOSCaptivePortalBlockingPageDelegate>
     iOSCaptivePortalBlockingPageDelegate;
-@property(nonatomic, weak) id<FullScreenControllerDelegate>
-    fullScreenControllerDelegate;
+@property(nonatomic, weak) id<LegacyFullscreenControllerDelegate>
+    legacyFullscreenControllerDelegate;
 @property(nonatomic, readonly)
     OverscrollActionsController* overscrollActionsController;
 @property(nonatomic, weak) id<OverscrollActionsControllerDelegate>
