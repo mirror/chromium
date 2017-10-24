@@ -174,12 +174,8 @@ void CSSStyleSheetResource::NotifyFinished() {
                         referrer_policy, Encoding(), this);
   }
 
-  // Clear raw bytes as now we have the full decoded sheet text.
-  // We wait for all LinkStyle::setCSSStyleSheet to run (at least once)
-  // as SubresourceIntegrity checks require raw bytes.
-  // Note that LinkStyle::setCSSStyleSheet can be called from didAddClient too,
-  // but is safe as we should have a cached ResourceIntegrityDisposition.
-  ClearData();
+  // Clear decoded string to save memory.
+  SetDecodedSheetText(String());
 }
 
 void CSSStyleSheetResource::DestroyDecodedDataIfPossible() {
