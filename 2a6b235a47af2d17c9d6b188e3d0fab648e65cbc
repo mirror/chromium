@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65387da3_643c33db",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-24T00:06:58Z",
+      "side": 1,
+      "message": "Instead of saving provider_ here make it a parameter to FetchSourceSensors().",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 36
+      },
+      "revId": "2a6b235a47af2d17c9d6b188e3d0fab648e65cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5d1a71_7a1785ad",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-24T00:06:58Z",
+      "side": 1,
+      "message": "This members are only used in a single place so move them into the Create* functions?",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 58
+      },
+      "revId": "2a6b235a47af2d17c9d6b188e3d0fab648e65cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7edb27c_748a91fd",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-24T00:06:58Z",
+      "side": 1,
+      "message": "scoped_refptr defaults to nullptr",
+      "range": {
+        "startLine": 102,
+        "startChar": 46,
+        "endLine": 102,
+        "endChar": 57
+      },
+      "revId": "2a6b235a47af2d17c9d6b188e3d0fab648e65cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
