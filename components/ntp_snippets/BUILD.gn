@@ -240,7 +240,6 @@ source_set("unit_tests") {
     "//components/sessions",
     "//components/sessions:test_support",
     "//components/signin/core/browser:test_support",
-    "//components/signin/core/common",
     "//components/strings",
     "//components/sync:test_support_driver",
     "//components/sync_preferences:test_support",
