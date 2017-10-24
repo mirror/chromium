@@ -198,7 +198,6 @@ GLImageIOSurface::GLImageIOSurface(const gfx::Size& size,
                                    unsigned internalformat)
     : size_(size),
       internalformat_(ConvertRequestedInternalFormat(internalformat)),
-      client_internalformat_(internalformat),
       format_(gfx::BufferFormat::RGBA_8888) {}
 
 GLImageIOSurface::~GLImageIOSurface() {
@@ -403,10 +402,6 @@ void GLImageIOSurface::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
                                                       io_surface_id_);
   pmd->CreateSharedGlobalAllocatorDump(guid);
   pmd->AddOwnershipEdge(dump->guid(), guid);
-}
-
-bool GLImageIOSurface::EmulatingRGB() const {
-  return client_internalformat_ == GL_RGB;
 }
 
 bool GLImageIOSurface::CanCheckIOSurfaceIsInUse() const {

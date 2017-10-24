@@ -645,8 +645,12 @@ GLenum Framebuffer::GetReadBufferInternalFormat() const {
   }
   const Attachment* attachment = it->second.get();
   if (attachment->EmulatingRGB()) {
-    DCHECK_EQ(static_cast<GLenum>(GL_RGBA), attachment->internal_format());
-    return GL_RGB;
+    switch (attachment->internal_format()) {
+      case GL_RGBA:
+        return GL_RGB;
+      default:
+        break;
+    }
   }
   return attachment->internal_format();
 }

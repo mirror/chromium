@@ -1072,19 +1072,6 @@ void Texture::UpdateHasImages() {
     (*it)->manager()->UpdateNumImages(delta);
 }
 
-void Texture::UpdateEmulatingRGB() {
-  for (const FaceInfo& face_info : face_infos_) {
-    for (const LevelInfo& level_info : face_info.level_infos) {
-      if (level_info.image && level_info.image->EmulatingRGB()) {
-        emulating_rgb_ = true;
-        return;
-      }
-    }
-  }
-  emulating_rgb_ = false;
-}
-
-
 void Texture::IncAllFramebufferStateChangeCount() {
   for (RefSet::iterator it = refs_.begin(); it != refs_.end(); ++it)
     (*it)->manager()->IncFramebufferStateChangeCount();
@@ -1753,7 +1740,6 @@ void Texture::SetLevelImageInternal(GLenum target,
 
   UpdateCanRenderCondition();
   UpdateHasImages();
-  UpdateEmulatingRGB();
 }
 
 void Texture::SetLevelImage(GLenum target,
@@ -1911,10 +1897,6 @@ void Texture::ApplyFormatWorkarounds(FeatureInfo* feature_info) {
     const Texture::LevelInfo& info = face_infos_[0].level_infos[base_level_];
     SetCompatibilitySwizzle(GetCompatibilitySwizzle(info.format));
   }
-}
-
-bool Texture::EmulatingRGB() {
-  return emulating_rgb_;
 }
 
 TextureRef::TextureRef(TextureManager* manager,
