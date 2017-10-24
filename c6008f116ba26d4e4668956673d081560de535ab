@@ -16,6 +16,24 @@
       "revId": "c6008f116ba26d4e4668956673d081560de535ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be735af5_7a651fcb",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-10-24T16:02:52Z",
+      "side": 1,
+      "message": "Agreed. Otherwise the variable gets lost at the end of this function and the tests silently fail (they should pass but everything falls back to sRGB color space).",
+      "parentUuid": "29804948_9ed0acc9",
+      "revId": "c6008f116ba26d4e4668956673d081560de535ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
