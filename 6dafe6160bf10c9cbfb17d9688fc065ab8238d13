@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd9d7797_0b9d1b29",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-24T21:35:51Z",
+      "side": 1,
+      "message": "Using microtasks makes them fire too soon, before the stream has all of its tracks?\n\nI\u0027m a little confused, for non-preexisting streams, a stream should be created in one step with all tracks attached. Only existing streams would experience this problem I would have thought.",
+      "revId": "6dafe6160bf10c9cbfb17d9688fc065ab8238d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
