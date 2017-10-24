@@ -7,6 +7,7 @@
 
 #include "base/callback.h"
 #include "base/compiler_specific.h"
+#include "base/metrics/field_trial.h"
 #include "base/threading/thread.h"
 #include "build/build_config.h"
 #include "content/public/test/test_host_resolver.h"
@@ -131,6 +132,13 @@ class BrowserTestBase : public testing::Test {
   // Temporary
   // TODO(jam): remove this.
   void disable_io_checks() { disable_io_checks_ = true; }
+
+  // Return true for ContentBrowserTest.
+  virtual bool IsContentBrowserTest();
+
+  // A field trial list that's used to support field trials activated prior to
+  // browser start.
+  std::unique_ptr<base::FieldTrialList> field_trial_list_;
 
  private:
   void ProxyRunTestOnMainThreadLoop();
