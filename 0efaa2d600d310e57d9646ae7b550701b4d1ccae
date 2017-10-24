@@ -16,6 +16,24 @@
       "revId": "0efaa2d600d310e57d9646ae7b550701b4d1ccae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75984a54_d32e9dd5",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-24T14:34:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd50c2d1_ac8bda9a",
+      "revId": "0efaa2d600d310e57d9646ae7b550701b4d1ccae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
