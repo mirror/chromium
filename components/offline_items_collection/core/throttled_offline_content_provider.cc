@@ -68,20 +68,15 @@ void ThrottledOfflineContentProvider::ResumeDownload(const ContentId& id,
   FlushUpdates();
 }
 
-const OfflineItem* ThrottledOfflineContentProvider::GetItemById(
-    const ContentId& id) {
-  const OfflineItem* item = wrapped_provider_->GetItemById(id);
-  if (item)
-    UpdateItemIfPresent(*item);
-  return item;
+void ThrottledOfflineContentProvider::GetItemById(
+    const ContentId& id,
+    const SingleItemCallback& callback) {
+  wrapped_provider_->GetItemById(id, callback);
 }
 
-OfflineContentProvider::OfflineItemList
-ThrottledOfflineContentProvider::GetAllItems() {
-  OfflineItemList items = wrapped_provider_->GetAllItems();
-  for (auto item : items)
-    UpdateItemIfPresent(item);
-  return items;
+void ThrottledOfflineContentProvider::GetAllItems(
+    const MultipleItemCallback& callback) {
+  wrapped_provider_->GetAllItems(callback);
 }
 
 void ThrottledOfflineContentProvider::GetVisualsForItem(

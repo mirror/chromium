@@ -356,19 +356,21 @@ void BackgroundFetchDelegateImpl::ResumeDownload(
   // TODO(delphick): Start new downloads that weren't started because of pause.
 }
 
-const offline_items_collection::OfflineItem*
-BackgroundFetchDelegateImpl::GetItemById(
-    const offline_items_collection::ContentId& id) {
+void BackgroundFetchDelegateImpl::GetItemById(
+    const offline_items_collection::ContentId& id,
+    const SingleItemCallback& callback) {
   auto it = job_details_map_.find(id.id);
-  return (it != job_details_map_.end()) ? &it->second.offline_item : nullptr;
+  offline_items_collection::OfflineItem* offline_item =
+      (it != job_details_map_.end()) ? &it->second.offline_item : nullptr;
+  callback.Run(offline_item);
 }
 
-BackgroundFetchDelegateImpl::OfflineItemList
-BackgroundFetchDelegateImpl::GetAllItems() {
+void BackgroundFetchDelegateImpl::GetAllItems(
+    const MultipleItemCallback& callback) {
   OfflineItemList item_list;
   for (auto& entry : job_details_map_)
     item_list.push_back(entry.second.offline_item);
-  return item_list;
+  callback.Run(item_list);
 }
 
 void BackgroundFetchDelegateImpl::GetVisualsForItem(
