@@ -275,7 +275,7 @@ NetworkQualityEstimator::NetworkQualityEstimator(
   watcher_factory_.reset(new nqe::internal::SocketWatcherFactory(
       base::ThreadTaskRunnerHandle::Get(),
       params_->min_socket_watcher_notification_interval(),
-      base::Bind(&NetworkQualityEstimator::OnUpdatedRTTAvailable,
+      base::Bind(&NetworkQualityEstimator::OnUpdatedTransportRTTAvailable,
                  base::Unretained(this)),
       tick_clock_.get()));
 
@@ -1618,7 +1618,7 @@ double NetworkQualityEstimator::RandDouble() const {
   return base::RandDouble();
 }
 
-void NetworkQualityEstimator::OnUpdatedRTTAvailable(
+void NetworkQualityEstimator::OnUpdatedTransportRTTAvailable(
     SocketPerformanceWatcherFactory::Protocol protocol,
     const base::TimeDelta& rtt,
     const base::Optional<nqe::internal::IPHash>& host) {
