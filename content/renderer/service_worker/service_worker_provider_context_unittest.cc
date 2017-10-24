@@ -83,21 +83,24 @@ class ServiceWorkerProviderContextTest : public testing::Test {
     dispatcher_.reset(new ServiceWorkerDispatcher(sender_.get(), nullptr));
   }
 
-  void CreateObjectInfoAndVersionAttributes(
-      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr* info,
-      ServiceWorkerVersionAttributes* attrs) {
-    *info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
-    (*info)->handle_id = 10;
-    (*info)->registration_id = 20;
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
+  CreateServiceWorkerRegistrationObjectInfo() {
+    auto info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
+    info->handle_id = 10;
+    info->registration_id = 20;
     remote_registration_object_host_.AddBinding(
-        mojo::MakeRequest(&(*info)->host_ptr_info));
+        mojo::MakeRequest(&info->host_ptr_info));
 
-    attrs->active.handle_id = 100;
-    attrs->active.version_id = 200;
-    attrs->waiting.handle_id = 101;
-    attrs->waiting.version_id = 201;
-    attrs->installing.handle_id = 102;
-    attrs->installing.version_id = 202;
+    info->active = blink::mojom::ServiceWorkerObjectInfo::New();
+    info->active->handle_id = 100;
+    info->active->version_id = 200;
+    info->waiting = blink::mojom::ServiceWorkerObjectInfo::New();
+    info->waiting->handle_id = 101;
+    info->waiting->version_id = 201;
+    info->installing = blink::mojom::ServiceWorkerObjectInfo::New();
+    info->installing->handle_id = 102;
+    info->installing->version_id = 202;
+    return info;
   }
 
   ThreadSafeSender* thread_safe_sender() { return sender_.get(); }
@@ -121,20 +124,10 @@ class ServiceWorkerProviderContextTest : public testing::Test {
 TEST_F(ServiceWorkerProviderContextTest, CreateForController) {
   // Assume that these objects are passed from the browser process and own
   // references to browser-side registration/worker representations.
-  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration_info;
-  ServiceWorkerVersionAttributes version_attrs;
-  CreateObjectInfoAndVersionAttributes(&registration_info, &version_attrs);
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration_info =
+      CreateServiceWorkerRegistrationObjectInfo();
   // ServiceWorkerRegistrationObjectHost Mojo connection has been added.
   ASSERT_EQ(1, remote_registration_object_host().GetBindingCount());
-  std::unique_ptr<ServiceWorkerHandleReference> installing =
-      ServiceWorkerHandleReference::Adopt(version_attrs.installing,
-                                          thread_safe_sender());
-  std::unique_ptr<ServiceWorkerHandleReference> waiting =
-      ServiceWorkerHandleReference::Adopt(version_attrs.waiting,
-                                          thread_safe_sender());
-  std::unique_ptr<ServiceWorkerHandleReference> active =
-      ServiceWorkerHandleReference::Adopt(version_attrs.active,
-                                          thread_safe_sender());
 
   // Set up ServiceWorkerProviderContext for ServiceWorkerGlobalScope.
   const int kProviderId = 10;
@@ -144,8 +137,7 @@ TEST_F(ServiceWorkerProviderContextTest, CreateForController) {
 
   // The passed references should be adopted and owned by the provider context.
   provider_context->SetRegistrationForServiceWorkerGlobalScope(
-      std::move(registration_info), std::move(installing), std::move(waiting),
-      std::move(active));
+      std::move(registration_info), thread_safe_sender());
   EXPECT_EQ(0UL, ipc_sink()->message_count());
 
   // Destruction of the provider context should release references to the
