@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b80c907_ffb75363",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T16:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bed03c4_27c19d0f",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d04330b_43deba91",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f79a1f_b4622ec0",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T16:21:42Z",
+      "side": 1,
+      "message": "Hum, maybe but in this case I\u0027d expect the rate to be low or otherwise it\u0027ll mean that the system is really thrashing a lot, which is probably something that we want to know? I\u0027ll add a TODO as I\u0027m not sure if this should be handled here.",
+      "parentUuid": "2d04330b_43deba91",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "37690ddc_7ea92b55",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T16:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24415f1c_67cec9a9",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0d09ca4_d45cc5dc",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46ffc91_0eca4982",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T16:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0d09ca4_d45cc5dc",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9b4d980e_34a28874",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T16:21:42Z",
+      "side": 1,
+      "message": "If I do this then I won\u0027t be able to use it in the unittests, is there a reason why we really don\u0027t want it here?",
+      "parentUuid": "5cbdcf52_21681c99",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62c95ac9_216fdd5d",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_win.h",
         "patchSetId": 17
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-24T12:03:46Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d31b747_0ec71ecd",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-24T16:21:42Z",
+      "side": 1,
+      "message": "Ditto :)",
+      "parentUuid": "62c95ac9_216fdd5d",
       "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
