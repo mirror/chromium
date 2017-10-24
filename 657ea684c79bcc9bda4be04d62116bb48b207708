@@ -22,6 +22,30 @@
       "revId": "657ea684c79bcc9bda4be04d62116bb48b207708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb21278_27e74c0d",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-24T18:16:55Z",
+      "side": 1,
+      "message": "Justin is right. This extension becomes part of WebGL2 core and is no longer available. So in WebGL2 this will return false, but actually the support is there.\n\nI also have a question(concern?). This and the color buffer extension are user visible extensions. If you enable them implicitly internally, won\u0027t that mess up WebGL states? I am not against doing this, but I think this behavior needs to be well documented in some spec that\u0027s visible to developers.",
+      "parentUuid": "7ec0a220_b6961b4b",
+      "range": {
+        "startLine": 133,
+        "startChar": 9,
+        "endLine": 133,
+        "endChar": 24
+      },
+      "revId": "657ea684c79bcc9bda4be04d62116bb48b207708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
