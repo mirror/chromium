@@ -313,4 +313,52 @@ TEST_F(CustomFrameViewAshTest, OpeningAppsInTabletMode) {
       delegate->GetCustomFrameViewTopBorderHeight());
 }
 
+TEST_F(CustomFrameViewAshTest, BackButton) {
+  CustomFrameTestWidgetDelegate* delegate = new CustomFrameTestWidgetDelegate;
+  views::Widget* widget = new views::Widget();
+  views::Widget::InitParams params;
+  params.context = CurrentContext();
+  params.delegate = delegate;
+  widget->Init(params);
+  widget->Show();
+
+  CustomFrameViewAsh* custom_frame_view = delegate->custom_frame_view();
+  HeaderView* header_view =
+      static_cast<HeaderView*>(custom_frame_view->GetHeaderView());
+  EXPECT_FALSE(header_view->back_button());
+  custom_frame_view->SetBackButtonStatus(/*show=*/true, /*enabled=*/false);
+  EXPECT_TRUE(header_view->back_button());
+  EXPECT_FALSE(header_view->back_button()->enabled());
+  custom_frame_view->SetBackButtonStatus(/*show=*/true, /*enabled=*/true);
+  EXPECT_TRUE(header_view->back_button());
+  EXPECT_TRUE(header_view->back_button()->enabled());
+  custom_frame_view->SetBackButtonStatus(/*show=*/false, /*enabled=*/true);
+  EXPECT_FALSE(header_view->back_button());
+}
+
+TEST_F(CustomFrameViewAshTest, FrameVisibility) {
+  CustomFrameTestWidgetDelegate* delegate = new CustomFrameTestWidgetDelegate;
+  views::Widget* widget = new views::Widget();
+  views::Widget::InitParams params;
+  params.bounds = gfx::Rect(10, 10, 200, 100);
+  params.context = CurrentContext();
+  params.delegate = delegate;
+  widget->Init(params);
+  widget->Show();
+
+  CustomFrameViewAsh* custom_frame_view = delegate->custom_frame_view();
+  EXPECT_EQ(gfx::Size(200, 67), widget->client_view()->GetLocalBounds().size());
+
+  custom_frame_view->SetVisible(false);
+  widget->GetRootView()->Layout();
+  EXPECT_EQ(gfx::Size(200, 100),
+            widget->client_view()->GetLocalBounds().size());
+  EXPECT_FALSE(widget->non_client_view()->frame_view()->visible());
+
+  custom_frame_view->SetVisible(true);
+  widget->GetRootView()->Layout();
+  EXPECT_EQ(gfx::Size(200, 67), widget->client_view()->GetLocalBounds().size());
+  EXPECT_TRUE(widget->non_client_view()->frame_view()->visible());
+}
+
 }  // namespace ash
