@@ -104,7 +104,6 @@
 #include "content/public/renderer/plugin_instance_throttler.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_frame_visitor.h"
-#include "content/public/renderer/render_thread.h"
 #include "content/public/renderer/render_view.h"
 #include "extensions/common/constants.h"
 #include "extensions/features/features.h"
@@ -445,7 +444,7 @@ void ChromeContentRendererClient::RenderThreadStarted() {
   // ChromeRenderViewTest::SetUp() creates a Spellcheck and injects it using
   // SetSpellcheck(). Don't overwrite it.
   if (!spellcheck_) {
-    spellcheck_.reset(new SpellCheck());
+    spellcheck_.reset(new SpellCheck(this));
     thread->AddObserver(spellcheck_.get());
   }
 #endif
@@ -622,9 +621,9 @@ void ChromeContentRendererClient::RenderFrameCreated(
   }
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-  new SpellCheckProvider(render_frame, spellcheck_.get());
+  new SpellCheckProvider(render_frame, spellcheck_.get(), this);
 #if BUILDFLAG(HAS_SPELLCHECK_PANEL)
-  new SpellCheckPanel(render_frame, registry);
+  new SpellCheckPanel(render_frame, registry, this);
 #endif  // BUILDFLAG(HAS_SPELLCHECK_PANEL)
 #endif
 
@@ -1052,6 +1051,14 @@ GURL ChromeContentRendererClient::GetNaClContentHandlerURL(
     }
   }
   return GURL();
+}
+
+void ChromeContentRendererClient::GetInterface(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  RenderThread::Get()->GetConnector()->BindInterface(
+      service_manager::Identity(chrome::mojom::kServiceName), interface_name,
+      std::move(interface_pipe));
 }
 
 #if BUILDFLAG(ENABLE_NACL)
