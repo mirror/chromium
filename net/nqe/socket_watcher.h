@@ -91,6 +91,9 @@ class NET_EXPORT_PRIVATE SocketWatcher : public SocketPerformanceWatcher {
 
   base::ThreadChecker thread_checker_;
 
+  // Number of RTT notifications received from this socket.
+  size_t rtt_notifications_received_;
+
   // A unique identifier for the remote host that this socket connects to.
   const base::Optional<IPHash> host_;
 

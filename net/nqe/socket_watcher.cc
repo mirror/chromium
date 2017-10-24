@@ -69,8 +69,10 @@ SocketWatcher::SocketWatcher(
                         (!address_list.empty() &&
                          !address_list.front().address().IsReserved())),
       tick_clock_(tick_clock),
+      rtt_notifications_received_(0),
       host_(CalculateIPHash(address_list)) {
   DCHECK(tick_clock_);
+  DCHECK(last_rtt_notification_.is_null());
 }
 
 SocketWatcher::~SocketWatcher() {}
@@ -91,6 +93,14 @@ void SocketWatcher::OnUpdatedRTTAvailable(const base::TimeDelta& rtt) {
 
   if (rtt <= base::TimeDelta())
     return;
+
+  if (rtt_notifications_received_ == 0 &&
+      protocol_ == SocketPerformanceWatcherFactory::PROTOCOL_QUIC) {
+    // First RTT sample from QUIC connections may be synthetically generated,
+    // and may not reflect the actual network quality.
+    ++rtt_notifications_received_;
+    return;
+  }
 
   last_rtt_notification_ = tick_clock_->NowTicks();
   task_runner_->PostTask(
