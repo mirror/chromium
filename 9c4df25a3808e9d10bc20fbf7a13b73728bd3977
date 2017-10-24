@@ -22,6 +22,76 @@
       "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7dce2df_2defd587",
+        "filename": "ui/views/controls/native/native_view_host.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T13:51:16Z",
+      "side": 1,
+      "message": "+1 - This function may be used by any code, so \u0027capture\u0027 isn\u0027t relevant (and is confusing). And make sure when you rename you update the name of the member to match.",
+      "parentUuid": "92bcda04_22540887",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 30
+      },
+      "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9fa9932_311cf026",
+        "filename": "ui/views/controls/native/native_view_host_aura.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T13:51:16Z",
+      "side": 1,
+      "message": "Is this \u0027!\u003d\u0027 conditional really necessary?",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 64
+      },
+      "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbbdd55_26087e2c",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T13:51:16Z",
+      "side": 1,
+      "message": "You never initialize this. Set it to false here and in AttachNativeView().",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 34
+      },
+      "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
