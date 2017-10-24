@@ -21,6 +21,7 @@ namespace blink {
 class ComputedStyle;
 class NGExclusionSpace;
 class NGLayoutResult;
+class NGLayoutInputNode;
 class NGPhysicalFragment;
 struct NGUnpositionedFloat;
 
@@ -32,6 +33,7 @@ class CORE_EXPORT NGContainerFragmentBuilder : public NGBaseFragmentBuilder {
 
   LayoutUnit InlineSize() const { return inline_size_; }
   NGContainerFragmentBuilder& SetInlineSize(LayoutUnit);
+  void SetBlockSize(LayoutUnit block_size) { block_size_ = block_size; }
 
   virtual NGLogicalSize Size() const = 0;
 
@@ -58,8 +60,40 @@ class CORE_EXPORT NGContainerFragmentBuilder : public NGBaseFragmentBuilder {
     return children_;
   }
 
+  // Builder has non-trivial out-of-flow descendant methods.
+  // These methods are building blocks for implementation of
+  // out-of-flow descendants by layout algorithms.
+  //
+  // They are intended to be used by layout algorithm like this:
+  //
+  // Part 1: layout algorithm positions in-flow children.
+  //   out-of-flow children, and out-of-flow descendants of fragments
+  //   are stored inside builder.
+  //
+  // for (child : children)
+  //   if (child->position == (Absolute or Fixed))
+  //     builder->AddOutOfFlowChildCandidate(child);
+  //   else
+  //     fragment = child->Layout()
+  //     builder->AddChild(fragment)
+  // end
+  //
+  // builder->SetSize
+  //
+  // Part 2: Out-of-flow layout part positions out-of-flow descendants.
+  //
+  // NGOutOfFlowLayoutPart(container_style, builder).Run();
+  //
+  // See layout part for builder interaction.
+  NGContainerFragmentBuilder& AddOutOfFlowChildCandidate(
+      NGLayoutInputNode,
+      const NGLogicalOffset&);
+
   NGContainerFragmentBuilder& AddOutOfFlowDescendant(
       NGOutOfFlowPositionedDescendant);
+
+  void GetAndClearOutOfFlowDescendantCandidates(
+      Vector<NGOutOfFlowPositionedDescendant>* descendant_candidates);
 
  protected:
   // An out-of-flow positioned-candidate is a temporary data structure used
@@ -87,6 +121,8 @@ class CORE_EXPORT NGContainerFragmentBuilder : public NGBaseFragmentBuilder {
                              TextDirection);
 
   LayoutUnit inline_size_;
+  LayoutUnit block_size_;
+
   WTF::Optional<NGBfcOffset> bfc_offset_;
   NGMarginStrut end_margin_strut_;
   std::unique_ptr<const NGExclusionSpace> exclusion_space_;

@@ -18,6 +18,7 @@ class NGBreakToken;
 class NGConstraintSpace;
 class NGLayoutResult;
 struct MinMaxSize;
+struct NGLogicalOffset;
 struct NGLogicalSize;
 
 // Represents the input to a layout algorithm for a given node. The layout
@@ -85,6 +86,13 @@ class CORE_EXPORT NGLayoutInputNode {
   bool operator!=(const NGLayoutInputNode& other) const {
     return !(*this == other);
   }
+
+  // Called if this is an out-of-flow block which needs to be
+  // positioned with legacy layout.
+  void UseOldOutOfFlowPositioning() const;
+
+  // Save static position for legacy AbsPos layout.
+  void SaveStaticOffsetForLegacy(const NGLogicalOffset&);
 
 #ifndef NDEBUG
   void ShowNodeTree() const;
