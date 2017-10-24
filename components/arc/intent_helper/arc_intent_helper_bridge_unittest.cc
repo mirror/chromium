@@ -36,6 +36,9 @@ class ArcIntentHelperTest : public testing::Test {
     // ArcIntentHelperBridge::OpenUrlDelegate:
     void OpenUrl(const GURL& url) override { last_opened_url_ = url; }
 
+    // Resets |last_opened_url_|.
+    void Reset() { last_opened_url_ = GURL(); }
+
     const GURL& last_opened_url() const { return last_opened_url_; }
 
    private:
@@ -271,17 +274,26 @@ TEST_F(ArcIntentHelperTest, TestMultipleUpdate) {
 
 // Tests that OnOpenUrl opens the URL in Chrome browser.
 TEST_F(ArcIntentHelperTest, TestOnOpenUrl) {
+  instance_->OnOpenUrl("http://google.com");
+  EXPECT_EQ(GURL("http://google.com"),
+            test_open_url_delegate_->last_opened_url());
+  test_open_url_delegate_->Reset();
+
   instance_->OnOpenUrl("https://google.com");
   EXPECT_EQ(GURL("https://google.com"),
             test_open_url_delegate_->last_opened_url());
+  test_open_url_delegate_->Reset();
 }
 
 // Tests that OnOpenUrl does not open URLs with the 'chrome' scheme.
 TEST_F(ArcIntentHelperTest, TestOnOpenUrl_ChromeScheme) {
   instance_->OnOpenUrl("chrome://www.google.com");
   EXPECT_FALSE(test_open_url_delegate_->last_opened_url().is_valid());
+  test_open_url_delegate_->Reset();
+
   instance_->OnOpenUrl("chrome://settings");
   EXPECT_FALSE(test_open_url_delegate_->last_opened_url().is_valid());
+  test_open_url_delegate_->Reset();
 }
 
 // Tests that OnOpenChromeSettingsMultideviceUrl opens the multidevice settings
@@ -290,6 +302,7 @@ TEST_F(ArcIntentHelperTest, TestOnOpenChromeSettingsMultideviceUrl) {
   instance_->OnOpenChromeSettingsMultideviceUrl();
   EXPECT_EQ(GURL(ArcIntentHelperBridge::kMultideviceSettingsUrl),
             test_open_url_delegate_->last_opened_url());
+  test_open_url_delegate_->Reset();
 }
 
 }  // namespace arc
