@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "9f93c3c3_26bec8f2",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-24T20:32:44Z",
+      "side": 1,
+      "message": "We could also use `viz.`, but I\u0027m totally fine with `i.e.`.",
+      "parentUuid": "dbc7afdf_c2c84735",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3bd19c1_36c2a76b",
         "filename": "content/browser/webauth/attestation_data.cc",
         "patchSetId": 6
@@ -350,6 +374,24 @@
       "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9461197b_3b32bd2c",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-24T20:32:44Z",
+      "side": 1,
+      "message": "Of course, you are right. I was being dense here...",
+      "parentUuid": "11b8636d_11238fc4",
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
