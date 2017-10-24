@@ -32,8 +32,8 @@ Polymer({
     showChromeCleanup: {
       type: Boolean,
       value: function() {
-        return loadTimeData.valueExists('chromeCleanupEnabled') &&
-            loadTimeData.getBoolean('chromeCleanupEnabled');
+        return loadTimeData.getBoolean('chromeCleanupEnabled') &&
+            !loadTimeData.getBoolean('userInitiatedCleanupsEnabled');
       },
     },
 
