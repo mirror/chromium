@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bc9c3010_0448db5e",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "You would, to begin with, check that it doesn\u0027t crash, but you could also then get the thumbnail and verify it\u0027s returned, possibly even the content. The waiter object proposed below would also be simpler since you wouldn\u0027t need to return true for SetPageThumbnail().\n\nIf you decide to go down this road, there are multiple variants and alternatives to the fake-to-real delegation proposed above. A tempting one would be to extend ThumbnailServiceImpl (with our without subclassing) with a notification mechanism that notifies subscribers when a thumbnail has been set, which you could hook into your quitclosure.",
+      "parentUuid": "2354afbd_54bbaa57",
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc7bd751_a61f7e22",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 5
@@ -213,6 +231,30 @@
     },
     {
       "key": {
+        "uuid": "2935f611_4ad5e6a0",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "You\u0027re totally right that the waiter pattern is very common, and I didn\u0027t realize you actually need to wait until the thumbnail gets captured. What I would then suggest is that you encapsulate this logic in a waiter class too, for test readability. You\u0027ll likely soon have multiple tests too.",
+      "parentUuid": "ecd2cecf_7b6f0c01",
+      "range": {
+        "startLine": 136,
+        "startChar": 25,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfbfba51_549cb58d",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 5
@@ -242,6 +284,24 @@
       "side": 1,
       "message": "\u003e Assuming you switched to NiceMock: this EXPECT_CALL above doesn\u0027t seem an actual requirement you\u0027re verifying, but a test fixture. You can use ON_CALL instead, so there a clear split between what\u0027s being instrumented as fixture and what are the actual test expectations.\n\nAs above, IMO it\u0027s not unreasonable to explicitly test this too. But it\u0027s now handled by an ON_CALL as well. I\u0027m considering adding another test just for ShouldAcquirePageThumbnail calls.\n\n\u003e Besides, if you managed to use the real ThumnailServiceImpl, as I was suggesting optionally earlier, you might as well skip these details, since that\u0027s what it\u0027ll return.\n\nNot necessarily: The return value for ShouldAcquirePageThumbnail depends on whether the page is in TopSites, which is not something I\u0027d like to depend on here.",
       "parentUuid": "dfbfba51_549cb58d",
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e810a6fe_6f5d1e5e",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "I\u0027m fine with as it is, but I wouldn\u0027t consider it a bad idea that you\u0027d make sure the page is in TopSites, either by actually visiting the page or by calling AddForcedURL().",
+      "parentUuid": "eb292417_5e1be2dd",
       "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -283,6 +343,30 @@
       "side": 1,
       "message": "Thanks for the pointer!\nI did try to implement this now, but it turned out to be extremely flaky. So either there\u0027s actually a race condition in the new thumbnail code after all, or something\u0027s weird with the test setup. Looking at other tests that exercise CopyFromSurface doesn\u0027t exactly inspire confidence [1, 2, 3]...\n\n[1] https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_view_browsertest.cc?rcl\u003ddd8ac504dd82c0f731300fb04f9d266fd00c10f8\u0026l\u003d160\n[2] https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_view_browsertest.cc?rcl\u003ddd8ac504dd82c0f731300fb04f9d266fd00c10f8\u0026l\u003d60\n[3] https://cs.chromium.org/chromium/src/chrome/browser/plugins/plugin_power_saver_browsertest.cc?rcl\u003d61422a8ac2e4535855169aa41d3c00cdee4c5793\u0026l\u003d402",
       "parentUuid": "62e68731_7316ad5b",
+      "range": {
+        "startLine": 142,
+        "startChar": 79,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c62252d_5cadb040",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "[3] above doesn\u0027t look too bad, or at least better than having nothing, assuming it\u0027s not flaky in the remaining platforms.",
+      "parentUuid": "49ddcc87_3b1535ab",
       "range": {
         "startLine": 142,
         "startChar": 79,

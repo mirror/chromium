@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "793adf75_49d17ff3",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "Nit: is this needed?",
+      "range": {
+        "startLine": 17,
+        "startChar": 51,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22514994_5c43b9aa",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "Nit: move down to its sorted position.",
+      "range": {
+        "startLine": 28,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a41773_2ea1da6f",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "A few above are unused, and InSequence could be removed too as per my later comment.",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4ce06d_2408aeef",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "Can you wrap the whole file within an unnamed namespace? You can also move all using declarations inside as a general practice to avoid naming collisions.",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8cee671_33a9293f",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "What\u0027s the reason to not use BrowserTestBase::embedded_test_server(). You\u0027d still need to call Start(), but I think you can skip ServeFilesFromSourceDirectory().",
+      "range": {
+        "startLine": 106,
+        "startChar": 39,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6ce724_8449e105",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "Optional, since I think it\u0027s more explicit now: you could as well remove the two lines above since it will return false by default anyway.",
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e563d40_1c264a99",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "Nit: not needed now.",
+      "range": {
+        "startLine": 129,
+        "startChar": 22,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab1e8cb_be24d6ed",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T08:21:56Z",
+      "side": 1,
+      "message": "For follow-up patches: I suggest you take a look at some browser tests in content_favicon_driver_browsertest.cc. For example, a sequence like:\n1. Load page A (red)\n2. Load page B which uses a meta refresh tag to redirect to C (blue)\n\nExpectation: page B should have no thumbnail / or it does and it is blue.",
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
