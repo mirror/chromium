@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "044a03f5_a2d4296a",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-24T19:19:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00172d3e_8a483bc4",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34445ef9_211630cf",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
         "patchSetId": 17
@@ -59,6 +83,47 @@
         "endLine": 46,
         "endChar": 18
       },
+      "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf973df_2ece5934",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-24T19:19:24Z",
+      "side": 1,
+      "message": "We don\u0027t get back to the caller even when DCHECK aren\u0027t enabled, we fault below.\n\nThere seems to be no point to supporting a broken call flow/lifecycle at the expense of all the correct ones.\n\nAnd the code is deleted anyway.",
+      "parentUuid": "34445ef9_211630cf",
+      "range": {
+        "startLine": 46,
+        "startChar": 11,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7487749c_2cfbce8e",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-24T19:19:24Z",
+      "side": 1,
+      "message": "This is not what\u0027s intended -\u003e we need to ensure we have the animator thread instance, not the compositor thread.",
       "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -85,6 +150,30 @@
       "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50436cc7_ef753879",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-24T19:19:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7f82830_be2854b7",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 45
+      },
+      "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
