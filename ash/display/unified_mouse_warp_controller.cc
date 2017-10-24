@@ -117,7 +117,7 @@ void UnifiedMouseWarpController::ComputeBounds() {
       Shell::Get()->display_manager()->software_mirroring_display_list();
 
   if (display_list.size() < 2) {
-    LOG(ERROR) << "Mirroring Display lost during re-configuration";
+    DLOG(ERROR) << "Mirroring Display lost during re-configuration";
     return;
   }
   LOG_IF(ERROR, display_list.size() > 2) << "Only two displays are supported";

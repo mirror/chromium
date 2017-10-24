@@ -148,13 +148,13 @@ void TouchCalibratorController::CompleteCalibration(
   }
 
   if (!did_find_touch_device) {
-    VLOG(1) << "No touch device with id: " << touch_device_id_ << " found to "
-            << "complete touch calibration for display with id: "
-            << target_display_.id() << ". Storing it as a fallback";
+    DVLOG(1) << "No touch device with id: " << touch_device_id_ << " found to "
+             << "complete touch calibration for display with id: "
+             << target_display_.id() << ". Storing it as a fallback";
   } else if (touch_device_identifier ==
              display::TouchCalibrationData::
                  GetFallbackTouchDeviceIdentifier()) {
-    LOG(ERROR)
+    DLOG(ERROR)
         << "Hash collision in generating touch device identifier for "
         << " device. Hash Generated: " << touch_device_identifier
         << " || Fallback touch device identifier: "

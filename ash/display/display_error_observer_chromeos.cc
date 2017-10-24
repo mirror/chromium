@@ -20,12 +20,13 @@ DisplayErrorObserver::~DisplayErrorObserver() {}
 void DisplayErrorObserver::OnDisplayModeChangeFailed(
     const display::DisplayConfigurator::DisplayStateList& displays,
     display::MultipleDisplayState new_state) {
-  LOG(ERROR) << "Failed to configure the following display(s):";
+  DLOG(ERROR) << "Failed to configure the following display(s):";
   for (auto* display : displays) {
-    LOG(ERROR) << "- Display with ID = " << display->display_id()
-               << ", and EDID = " << base::HexEncode(display->edid().data(),
-                                                     display->edid().size())
-               << ".";
+    DLOG(ERROR) << "- Display with ID = " << display->display_id()
+                << ", and EDID = "
+                << base::HexEncode(display->edid().data(),
+                                   display->edid().size())
+                << ".";
   }
 
   base::string16 message =

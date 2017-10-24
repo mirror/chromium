@@ -209,9 +209,9 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::GetDisplayLayout(
   std::vector<bool> display_power;
   int num_on_displays =
       GetDisplayPower(displays, new_power_state, &display_power);
-  VLOG(1) << "EnterState: display="
-          << MultipleDisplayStateToString(new_display_state)
-          << " power=" << DisplayPowerStateToString(new_power_state);
+  DVLOG(1) << "EnterState: display="
+           << MultipleDisplayStateToString(new_display_state)
+           << " power=" << DisplayPowerStateToString(new_power_state);
 
   // Framebuffer dimensions.
   gfx::Size size;
@@ -228,17 +228,17 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::GetDisplayLayout(
       return false;
     case MULTIPLE_DISPLAY_STATE_HEADLESS:
       if (displays.size() != 0) {
-        LOG(WARNING) << "Ignoring request to enter headless mode with "
-                     << displays.size() << " connected display(s)";
+        DLOG(WARNING) << "Ignoring request to enter headless mode with "
+                      << displays.size() << " connected display(s)";
         return false;
       }
       break;
     case MULTIPLE_DISPLAY_STATE_SINGLE: {
       // If there are multiple displays connected, only one should be turned on.
       if (displays.size() != 1 && num_on_displays != 1) {
-        LOG(WARNING) << "Ignoring request to enter single mode with "
-                     << displays.size() << " connected displays and "
-                     << num_on_displays << " turned on";
+        DLOG(WARNING) << "Ignoring request to enter single mode with "
+                      << displays.size() << " connected displays and "
+                      << num_on_displays << " turned on";
         return false;
       }
 
@@ -249,17 +249,18 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::GetDisplayLayout(
         if (display_power[i] || states.size() == 1) {
           const DisplayMode* mode_info = state->selected_mode;
           if (!mode_info) {
-            LOG(WARNING) << "No selected mode when configuring display: "
-                         << state->display->ToString();
+            DLOG(WARNING) << "No selected mode when configuring display: "
+                          << state->display->ToString();
             return false;
           }
           if (mode_info->size() == gfx::Size(1024, 768)) {
-            VLOG(1) << "Potentially misdetecting display(1024x768):"
-                    << " displays size=" << states.size()
-                    << ", num_on_displays=" << num_on_displays
-                    << ", current size:" << size.width() << "x" << size.height()
-                    << ", i=" << i << ", display=" << state->display->ToString()
-                    << ", display_mode=" << mode_info->ToString();
+            DVLOG(1) << "Potentially misdetecting display(1024x768):"
+                     << " displays size=" << states.size()
+                     << ", num_on_displays=" << num_on_displays
+                     << ", current size:" << size.width() << "x"
+                     << size.height() << ", i=" << i
+                     << ", display=" << state->display->ToString()
+                     << ", display_mode=" << mode_info->ToString();
           }
           size = mode_info->size();
         }
@@ -269,16 +270,16 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::GetDisplayLayout(
     case MULTIPLE_DISPLAY_STATE_DUAL_MIRROR: {
       if (states.size() != 2 ||
           (num_on_displays != 0 && num_on_displays != 2)) {
-        LOG(WARNING) << "Ignoring request to enter mirrored mode with "
-                     << states.size() << " connected display(s) and "
-                     << num_on_displays << " turned on";
+        DLOG(WARNING) << "Ignoring request to enter mirrored mode with "
+                      << states.size() << " connected display(s) and "
+                      << num_on_displays << " turned on";
         return false;
       }
 
       const DisplayMode* mode_info = states[0].mirror_mode;
       if (!mode_info) {
-        LOG(WARNING) << "No mirror mode when configuring display: "
-                     << states[0].display->ToString();
+        DLOG(WARNING) << "No mirror mode when configuring display: "
+                      << states[0].display->ToString();
         return false;
       }
       size = mode_info->size();
@@ -291,9 +292,9 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::GetDisplayLayout(
     }
     case MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED: {
       if (states.size() < 2) {
-        LOG(WARNING) << "Ignoring request to enter extended mode with "
-                     << states.size() << " connected display(s) and "
-                     << num_on_displays << " turned on";
+        DLOG(WARNING) << "Ignoring request to enter extended mode with "
+                      << states.size() << " connected display(s) and "
+                      << num_on_displays << " turned on";
         return false;
       }
 
@@ -308,8 +309,8 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::GetDisplayLayout(
         // turned back on.
         const DisplayMode* mode_info = states[i].selected_mode;
         if (!mode_info) {
-          LOG(WARNING) << "No selected mode when configuring display: "
-                       << state->display->ToString();
+          DLOG(WARNING) << "No selected mode when configuring display: "
+                        << state->display->ToString();
           return false;
         }
 
@@ -861,10 +862,10 @@ void DisplayConfigurator::SetDisplayPower(
     return;
   }
 
-  VLOG(1) << "SetDisplayPower: power_state="
-          << DisplayPowerStateToString(power_state) << " flags=" << flags
-          << ", configure timer="
-          << (configure_timer_.IsRunning() ? "Running" : "Stopped");
+  DVLOG(1) << "SetDisplayPower: power_state="
+           << DisplayPowerStateToString(power_state) << " flags=" << flags
+           << ", configure timer="
+           << (configure_timer_.IsRunning() ? "Running" : "Stopped");
 
   requested_power_state_ = power_state;
   SetDisplayPowerInternal(requested_power_state_, flags, callback);
@@ -874,8 +875,8 @@ void DisplayConfigurator::SetDisplayMode(MultipleDisplayState new_state) {
   if (!configure_display_ || display_externally_controlled_)
     return;
 
-  VLOG(1) << "SetDisplayMode: state="
-          << MultipleDisplayStateToString(new_state);
+  DVLOG(1) << "SetDisplayMode: state="
+           << MultipleDisplayStateToString(new_state);
   if (current_display_state_ == new_state) {
     // Cancel software mirroring if the state is moving from
     // MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED to
@@ -896,8 +897,8 @@ void DisplayConfigurator::OnConfigurationChanged() {
   // Don't do anything if the displays are currently suspended.  Instead we will
   // probe and reconfigure the displays if necessary in ResumeDisplays().
   if (displays_suspended_) {
-    VLOG(1) << "Displays are currently suspended.  Not attempting to "
-            << "reconfigure them.";
+    DVLOG(1) << "Displays are currently suspended.  Not attempting to "
+             << "reconfigure them.";
     return;
   }
 
@@ -909,7 +910,7 @@ void DisplayConfigurator::OnConfigurationChanged() {
 }
 
 void DisplayConfigurator::OnDisplaySnapshotsInvalidated() {
-  VLOG(1) << "Display snapshots invalidated.";
+  DVLOG(1) << "Display snapshots invalidated.";
   cached_displays_.clear();
 }
 
@@ -982,8 +983,8 @@ void DisplayConfigurator::RunPendingConfiguration() {
     return;
 
   if (!ShouldRunConfigurationTask()) {
-    LOG(ERROR) << "Called RunPendingConfiguration without any changes"
-                  " requested";
+    DLOG(ERROR) << "Called RunPendingConfiguration without any changes"
+                   " requested";
     CallAndClearQueuedCallbacks(true);
     return;
   }
@@ -1013,9 +1014,9 @@ void DisplayConfigurator::OnConfigured(
     const std::vector<DisplaySnapshot*>& displays,
     MultipleDisplayState new_display_state,
     chromeos::DisplayPowerState new_power_state) {
-  VLOG(1) << "OnConfigured: success=" << success << " new_display_state="
-          << MultipleDisplayStateToString(new_display_state)
-          << " new_power_state=" << DisplayPowerStateToString(new_power_state);
+  DVLOG(1) << "OnConfigured: success=" << success << " new_display_state="
+           << MultipleDisplayStateToString(new_display_state)
+           << " new_power_state=" << DisplayPowerStateToString(new_power_state);
 
   cached_displays_ = displays;
   if (success) {
