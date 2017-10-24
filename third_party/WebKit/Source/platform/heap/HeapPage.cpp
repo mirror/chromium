@@ -412,6 +412,16 @@ bool BaseArena::WillObjectBeLazilySwept(BasePage* page,
   return true;
 }
 
+void BaseArena::EnableIncrementalMarkingBarrier() {
+  for (BasePage* page = first_page_; page; page = page->Next())
+    page->SetIncrementalMarking(true);
+}
+
+void BaseArena::DisableIncrementalMarkingBarrier() {
+  for (BasePage* page = first_page_; page; page = page->Next())
+    page->SetIncrementalMarking(false);
+}
+
 NormalPageArena::NormalPageArena(ThreadState* state, int index)
     : BaseArena(state, index),
       current_allocation_point_(nullptr),

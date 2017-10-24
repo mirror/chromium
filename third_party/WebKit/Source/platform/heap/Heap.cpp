@@ -797,6 +797,16 @@ bool ThreadHeap::AdvanceLazySweep(double deadline_seconds) {
   return true;
 }
 
+void ThreadHeap::EnableIncrementalMarkingBarrier() {
+  for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
+    arenas_[i]->EnableIncrementalMarkingBarrier();
+}
+
+void ThreadHeap::DisableIncrementalMarkingBarrier() {
+  for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
+    arenas_[i]->DisableIncrementalMarkingBarrier();
+}
+
 ThreadHeap* ThreadHeap::main_thread_heap_ = nullptr;
 
 }  // namespace blink
