@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcb35cf7_5c3961c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-24T23:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b14fb7b1_74e16f03",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "5ba5c38e89102c026b14db6dee5541267d636988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f120c6d_ff6a2367",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f6a4c2ab_fc4f6ece",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-24T23:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f120c6d_ff6a2367",
+      "range": {
+        "startLine": 9,
+        "startChar": 58,
+        "endLine": 9,
+        "endChar": 66
+      },
+      "revId": "5ba5c38e89102c026b14db6dee5541267d636988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e335dee1_740b48ec",
         "filename": "ios/chrome/browser/ui/ui_util.mm",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "5ba5c38e89102c026b14db6dee5541267d636988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1445435d_a1aa45d6",
+        "filename": "ios/chrome/browser/ui/ui_util.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-24T23:18:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e335dee1_740b48ec",
+      "range": {
+        "startLine": 116,
+        "startChar": 14,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "5ba5c38e89102c026b14db6dee5541267d636988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
