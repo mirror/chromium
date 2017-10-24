@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86e9f6c8_fe4e4bbb",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T02:06:10Z",
+      "side": 1,
+      "message": "going to keep this for consistency for now and we can instead do a s/const/constexpr/ cleanup across all client code later.",
+      "parentUuid": "a7a92648_7a44b245",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "798d3b70_14a42ab5",
         "filename": "components/exo/wayland/clients/blur.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T21:23:15Z",
       "side": 1,
       "message": "Comment explaining what\u0027s going on here.\n\nIt\u0027s also a little bit suprising that sigma is the return value and scale_factor is a parameter.\n\nWhat about something like:\n\nbool AdjectSigma(double max_non_scale_blur_sigma, double* sigma, int* scale_factor);\n\nThe return value could be if the sigma has been adjusted or not.",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b40c7fca_6cb6f905",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T02:06:10Z",
+      "side": 1,
+      "message": "I kept this as before to have it match what skia does internally. This way it\u0027s easier to tell that we have the exact same logic here as inside skia.",
+      "parentUuid": "798d3b70_14a42ab5",
       "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "74eebe01_cb815268",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T02:06:10Z",
+      "side": 1,
+      "message": "max_non_scale_blur_sigma is max_sigma in latest patch but \"\u003e\" still makes sense I think.",
+      "parentUuid": "dcf37d82_5ab68e74",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a222b08_4817edcd",
         "filename": "components/exo/wayland/clients/blur.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-23T21:23:15Z",
       "side": 1,
       "message": "This is now copied and pasted in 5 clients, should we move it to client_helper.h?",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18762f0_3ca5199b",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T02:06:10Z",
+      "side": 1,
+      "message": "I\u0027ll leave that as a follow up as this static cast makes is fine when done locally like this but maybe confusing when moved into helper API without creating something a bit more structured.",
+      "parentUuid": "4a222b08_4817edcd",
       "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "96ccec80_f4fedb6e",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T02:06:10Z",
+      "side": 1,
+      "message": "Done. cell_with/height",
+      "parentUuid": "b0ffb8fe_c505413b",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae8de6dc_c52a5ef2",
         "filename": "components/exo/wayland/clients/blur.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c3a1f0_a7f5b577",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T02:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae8de6dc_c52a5ef2",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ea30de68_b09756fb",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T02:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e8a3a27_cd461133",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edfdd207_0e7cd9d4",
         "filename": "components/exo/wayland/clients/blur.cc",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-23T21:23:15Z",
       "side": 1,
       "message": "braces around the if else bodies, or\nSkCanvas* canvas \u003d blur_filter ? ...",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4888fa_d4434340",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T02:06:10Z",
+      "side": 1,
+      "message": "Done as this change in latest patch.",
+      "parentUuid": "edfdd207_0e7cd9d4",
       "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "7096b6f8_9bc25a3d",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T02:06:10Z",
+      "side": 1,
+      "message": "Remove the reference to contents in latest patch. Background and rectangles are both some form of contents that is meant to represent what we might need to blur. We can adjust this later if it doesn\u0027t represent what we want.",
+      "parentUuid": "f1ba149b_cec6d701",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fb6b8d5_0a4b1429",
         "filename": "components/exo/wayland/clients/blur.cc",
         "patchSetId": 1
@@ -166,6 +328,24 @@
       "writtenOn": "2017-10-23T21:23:15Z",
       "side": 1,
       "message": "Is it possible to use a SkColor4f instead?",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5eef40_e4ddbe89",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T02:06:10Z",
+      "side": 1,
+      "message": "No, this is too much of a hack for that. drawImage just takes alpha into account and this happens to do what we want when kSrc is used for blend mode.",
+      "parentUuid": "1fb6b8d5_0a4b1429",
       "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +366,24 @@
       "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d782983_58356f3c",
+        "filename": "components/exo/wayland/clients/blur.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T02:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69f702d2_375b0d37",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
