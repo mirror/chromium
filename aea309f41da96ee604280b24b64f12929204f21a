@@ -34,6 +34,24 @@
       "revId": "aea309f41da96ee604280b24b64f12929204f21a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a432a13c_9979b7be",
+        "filename": "chrome/browser/resources/settings/about_page/about_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-24T22:22:37Z",
+      "side": 1,
+      "message": "I don\u0027t agree with the reasoning that this should continue to build html in the JS because some html is already built in JS here.\n\nIf this change is needed in a timely fashion I\u0027d accept it as a stop-gap or hack. Without time pressure, let\u0027s not propagate this approach.",
+      "parentUuid": "cafb2dcd_e6ab149a",
+      "revId": "aea309f41da96ee604280b24b64f12929204f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
