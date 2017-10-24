@@ -34,6 +34,24 @@
       "revId": "edd4257e0dbe9da12c7c42097e39d79ac67c543f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845dc785_46623f9d",
+        "filename": "components/subresource_filter/core/common/indexed_ruleset_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T07:49:38Z",
+      "side": 1,
+      "message": "Yes, this would be great. Will you do it in this CL?",
+      "parentUuid": "4aac4600_c9581d4e",
+      "revId": "edd4257e0dbe9da12c7c42097e39d79ac67c543f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
