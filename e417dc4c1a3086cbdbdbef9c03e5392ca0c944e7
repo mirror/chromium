@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea9e6e24_5f39ac1c",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T18:39:26Z",
+      "side": 1,
+      "message": "Is there a clear that needs to happen if the sizes don\u0027t match?",
+      "revId": "e417dc4c1a3086cbdbdbef9c03e5392ca0c944e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
