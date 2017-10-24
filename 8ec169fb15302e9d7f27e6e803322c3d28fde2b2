@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2442a33_f9551844",
+        "filename": "media/mojo/interfaces/audio_input_stream.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-24T08:31:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad5189ee_c01496e6",
+      "revId": "8ec169fb15302e9d7f27e6e803322c3d28fde2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56adcaeb_903251e2",
         "filename": "media/mojo/services/mojo_audio_input_stream.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cdf8c621_537d4665",
+        "filename": "media/mojo/services/mojo_audio_input_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-24T08:31:31Z",
+      "side": 1,
+      "message": "This is a good point. The SharedMemory interface isn\u0027t really clear on this, but I suppose we could run in to a file descriptor limit on Linux, and fail in various other interesting ways on other platforms. I changed this code to send an error instead.",
+      "parentUuid": "56adcaeb_903251e2",
+      "revId": "8ec169fb15302e9d7f27e6e803322c3d28fde2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c890ca5_7356fa03",
         "filename": "media/mojo/services/mojo_audio_input_stream.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "8ec169fb15302e9d7f27e6e803322c3d28fde2b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0eb2b4_b31bb005",
+        "filename": "media/mojo/services/mojo_audio_input_stream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-24T08:31:31Z",
+      "side": 1,
+      "message": "It\u0027s not used by the mojo IPC interface since each stream has its own message pipe. The stream_id argument is here since the AudioInputDelegate code is shared with the legacy IPC code; it will be removed when AudioInputRendererHost/audio_messages.h is removed.",
+      "parentUuid": "1c890ca5_7356fa03",
+      "revId": "8ec169fb15302e9d7f27e6e803322c3d28fde2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
