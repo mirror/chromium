@@ -1982,8 +1982,10 @@ UI.ExternaLinkContextMenuProvider = class {
       targetNode = targetNode.parentNodeOrShadowHost();
     if (!targetNode || !targetNode.href)
       return;
-    contextMenu.appendItem(UI.openLinkExternallyLabel(), () => InspectorFrontendHost.openInNewTab(targetNode.href));
-    contextMenu.appendItem(UI.copyLinkAddressLabel(), () => InspectorFrontendHost.copyText(targetNode.href));
+    contextMenu.section('reveal').appendItem(
+        UI.openLinkExternallyLabel(), () => InspectorFrontendHost.openInNewTab(targetNode.href));
+    contextMenu.section('reveal').appendItem(
+        UI.copyLinkAddressLabel(), () => InspectorFrontendHost.copyText(targetNode.href));
   }
 };
 
