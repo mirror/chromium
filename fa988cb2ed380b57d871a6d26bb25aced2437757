@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b59de76c_787d5787",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1769,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T19:46:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f68344df_01e7b6e0",
+      "revId": "fa988cb2ed380b57d871a6d26bb25aced2437757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e574371_5a59af64",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "fa988cb2ed380b57d871a6d26bb25aced2437757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2049d4b_ed58008a",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1778,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T19:46:31Z",
+      "side": 1,
+      "message": "That would not be sufficient because the redirect chains merged in the loop above (line 1771) could still contain |page_url_to_read|.",
+      "parentUuid": "4e574371_5a59af64",
+      "revId": "fa988cb2ed380b57d871a6d26bb25aced2437757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3a56ca42_bcfe7a7e",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T19:46:31Z",
+      "side": 1,
+      "message": "Since you seem concerned above allocations and copies, and since underlying_type is not exposed for flat_set, what I did instead is change the signature for SetFaviconMappingsForPages() to take two iterators instead. PTAL.",
+      "parentUuid": "031375f6_ab149b95",
+      "revId": "fa988cb2ed380b57d871a6d26bb25aced2437757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db99ba01_e1a40be4",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "fa988cb2ed380b57d871a6d26bb25aced2437757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be15de6e_9691124e",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T19:46:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "db99ba01_e1a40be4",
+      "revId": "fa988cb2ed380b57d871a6d26bb25aced2437757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
