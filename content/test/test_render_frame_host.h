@@ -174,6 +174,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
 
   void SimulateWillStartRequest(ui::PageTransition transition);
 
+  // RenderFrameHostImpl:
+  mojom::FrameNavigationControl* GetNavigationControl() override;
+
   TestRenderFrameHostCreationObserver child_creation_observer_;
 
   std::string contents_mime_type_;
@@ -183,6 +186,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
 
   // The last commit was for an error page.
   bool last_commit_was_error_page_;
+
+  // Used to track and forward outgoing navigation requests from the host.
+  std::unique_ptr<mojom::FrameNavigationControl> navigation_interceptor_;
 
   DISALLOW_COPY_AND_ASSIGN(TestRenderFrameHost);
 };
