@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93bd3dad_bfc190cc",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T05:45:22Z",
+      "side": 1,
+      "message": "This CL is to address the discussions at https://chromium-review.googlesource.com/c/chromium/src/+/726826/7/third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom#53",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "006055776f5151b76cb07a2a2aba83a4c7883bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
