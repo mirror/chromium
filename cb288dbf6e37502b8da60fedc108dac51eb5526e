@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f7b7193c_94a86416",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-24T17:45:54Z",
+      "side": 1,
+      "message": "Ok, how about this?\n\ncrbug.com/774127: Even when autofill thinks that iframe and main frame form data are similar (FormData::SimilarFormAs) and have same URL, switching from iframe to main frame should start a new session.\n\nSomething along the line.",
+      "parentUuid": "8ebc99fb_5c9ed817",
+      "range": {
+        "startLine": 806,
+        "startChar": 11,
+        "endLine": 807,
+        "endChar": 91
+      },
+      "revId": "cb288dbf6e37502b8da60fedc108dac51eb5526e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e39e2be0_6032ffd1",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
         "patchSetId": 2
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Are you worried about the focus isn\u0027t  in main frame, if it happened, assert in line 866 will be false.",
       "parentUuid": "9393755d_a0860c31",
+      "range": {
+        "startLine": 848,
+        "startChar": 15,
+        "endLine": 848,
+        "endChar": 46
+      },
+      "revId": "cb288dbf6e37502b8da60fedc108dac51eb5526e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc08c04_78b43834",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-24T17:45:54Z",
+      "side": 1,
+      "message": "Maybe I\u0027m missing something, but how so? It seems to me that if the main frame is focused, it will do exactly same except for emitting CANCEL.",
+      "parentUuid": "ce1ef02e_335cfacb",
       "range": {
         "startLine": 848,
         "startChar": 15,
