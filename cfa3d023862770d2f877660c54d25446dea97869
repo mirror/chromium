@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b0f5611_079be695",
+        "filename": "net/nqe/socket_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-24T22:15:30Z",
+      "side": 1,
+      "message": "If I\u0027m reading this correctly, you increment rtt_notifications_received_ only when rtt_notifications_received_ \u003d\u003d 0. How can it ever be anything other than 0 or 1?",
+      "revId": "cfa3d023862770d2f877660c54d25446dea97869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9c27a3_ee6ffe4d",
+        "filename": "net/nqe/socket_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-24T22:15:30Z",
+      "side": 1,
+      "message": "What\u0027s this used for?",
+      "revId": "cfa3d023862770d2f877660c54d25446dea97869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
