@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edd1d1de_b5ef199e",
+        "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-24T19:25:29Z",
+      "side": 1,
+      "message": "delete the code rather than #if 0",
+      "revId": "ae4080d58742b6898a732eaf1a5071394577ea8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
