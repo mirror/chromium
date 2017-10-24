@@ -28,6 +28,8 @@ class Browser;
 // browser->window() might be null when the initalizer is called.
 - (id)initWithBrowser:(Browser*)browser window:(NSWindow*)window;
 
+- (BOOL)useGenericButton;
+
 // Returns YES if the browser window's frame color is dark.
 - (BOOL)isFrameColorDark;
 

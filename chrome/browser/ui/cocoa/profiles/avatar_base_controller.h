@@ -45,6 +45,8 @@ class ProfileUpdateObserver;
 // Designated initializer.
 - (id)initWithBrowser:(Browser*)browser;
 
+- (BOOL)shouldUseGenericButton;
+
 // Shows the avatar bubble in the given mode.
 - (void)showAvatarBubbleAnchoredAt:(NSView*)anchor
                           withMode:(BrowserWindow::AvatarBubbleMode)mode

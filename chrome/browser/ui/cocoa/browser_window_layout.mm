@@ -43,6 +43,7 @@ const CGFloat kLocBarBottomInset = 1;
 
 // Space between the incognito badge and the right edge of the window.
 const CGFloat kAvatarRightOffset = 4;
+const CGFloat kGenericAvatarRightOffset = 6;
 
 // Space between the location bar and the right edge of the window, when there
 // are no extension buttons present.
@@ -128,6 +129,10 @@ const CGFloat kLocationBarRightOffset = 35;
 
 - (void)setShouldUseNewAvatar:(BOOL)shouldUseNewAvatar {
   parameters_.shouldUseNewAvatar = shouldUseNewAvatar;
+}
+
+- (void)setIsGenericAvatar:(BOOL)isGenericAvatar {
+  parameters_.isGenericAvatar = isGenericAvatar;
 }
 
 - (void)setAvatarSize:(NSSize)avatarSize {
@@ -218,7 +223,9 @@ const CGFloat kLocationBarRightOffset = 35;
   // Lay out the icognito/avatar badge because calculating the indentation on
   // the right depends on it.
   if (parameters_.shouldShowAvatar) {
-    CGFloat badgeXOffset = -kAvatarRightOffset;
+    CGFloat badgeXOffset = parameters_.isGenericAvatar
+                               ? -kGenericAvatarRightOffset
+                               : -kAvatarRightOffset;
     CGFloat badgeYOffset = 0;
     CGFloat buttonHeight = parameters_.avatarSize.height;
 
