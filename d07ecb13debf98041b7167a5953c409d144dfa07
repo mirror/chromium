@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "973513b7_81751ca1",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T05:33:33Z",
+      "side": 1,
+      "message": "Nit: this should be called blocked_cross_origin; similar comment for the other identifiers in this CL that follow WebKit naming style.",
+      "range": {
+        "startLine": 1213,
+        "startChar": 15,
+        "endLine": 1213,
+        "endChar": 33
+      },
+      "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffda3d3d_42af2405",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T05:33:33Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a need for this comment personally, but I\u0027ll defer to you. It just makes this line wrapping look a bit funny \u003d)",
+      "range": {
+        "startLine": 1234,
+        "startChar": 14,
+        "endLine": 1234,
+        "endChar": 69
+      },
+      "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58c7354f_17de4d94",
         "filename": "third_party/WebKit/Source/modules/battery/NavigatorBattery.cpp",
         "patchSetId": 2
