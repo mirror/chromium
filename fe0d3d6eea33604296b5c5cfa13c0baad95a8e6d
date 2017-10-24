@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b563a338_88a37b78",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-10-24T18:36:12Z",
+      "side": 1,
+      "message": "code style: this is a constant, so name should be kPreferredVideoPreviewStream",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "fe0d3d6eea33604296b5c5cfa13c0baad95a8e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea700ef_f9b767a6",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-10-24T18:36:12Z",
+      "side": 1,
+      "message": "code style: this is a constant, so name should be kPreferredPhotoStream",
+      "revId": "fe0d3d6eea33604296b5c5cfa13c0baad95a8e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ea8e0f_38576c08",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-10-24T18:36:12Z",
+      "side": 1,
+      "message": "code style: Declare methods before fields.",
+      "revId": "fe0d3d6eea33604296b5c5cfa13c0baad95a8e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
