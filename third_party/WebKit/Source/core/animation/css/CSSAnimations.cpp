@@ -145,8 +145,9 @@ StringKeyframeEffectModel* CreateKeyframeEffectModel(
   }
 
   // Merge duplicate keyframes.
-  std::stable_sort(keyframes.begin(), keyframes.end(),
-                   Keyframe::CompareOffsets);
+  std::stable_sort(
+      keyframes.begin(), keyframes.end(),
+      [](const auto& a, const auto& b) { return a->Offset() < b->Offset(); });
   size_t target_index = 0;
   for (size_t i = 1; i < keyframes.size(); i++) {
     if (keyframes[i]->Offset() == keyframes[target_index]->Offset()) {

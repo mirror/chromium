@@ -48,11 +48,6 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
   }
   TimingFunction& Easing() const { return *easing_; }
 
-  static bool CompareOffsets(const scoped_refptr<Keyframe>& a,
-                             const scoped_refptr<Keyframe>& b) {
-    return a->Offset() < b->Offset();
-  }
-
   virtual PropertyHandleSet Properties() const = 0;
 
   virtual scoped_refptr<Keyframe> Clone() const = 0;
