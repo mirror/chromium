@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54f59f8d_eb35d5c5",
+        "filename": "gpu/command_buffer/service/gpu_preferences.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:55:10Z",
+      "side": 0,
+      "message": "Do we actually want to use these fields in a cross-platform way? If not, I\u0027d prefer to keep what we have: I\u0027m hoping to land preprocessing of mojoms this week, and it\u0027ll make it easier to untangle if we still have the #if defined() checks here.",
+      "revId": "e95446a9a4a027c7397bf38925511af46eb85c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
