@@ -89,6 +89,7 @@ Layer::Layer()
       property_tree_sequence_number_(-1),
       should_flatten_transform_from_property_tree_(false),
       draws_content_(false),
+      not_drawn_(false),
       should_check_backface_visibility_(false),
       cache_render_surface_(false),
       force_render_surface_for_testing_(false),
@@ -1264,7 +1265,7 @@ std::unique_ptr<LayerImpl> Layer::CreateLayerImpl(LayerTreeImpl* tree_impl) {
 }
 
 bool Layer::DrawsContent() const {
-  return draws_content_;
+  return draws_content_ && !not_drawn_;
 }
 
 bool Layer::HasDrawableContent() const {
@@ -1332,6 +1333,12 @@ void Layer::SetMayContainVideo(bool yes) {
 void Layer::SetScrollbarsHiddenFromImplSide(bool hidden) {
   if (inputs_.client)
     inputs_.client->didChangeScrollbarsHidden(hidden);
+}
+
+void Layer::set_not_drawn(bool not_drawn) {
+  not_drawn_ = not_drawn;
+  SetPropertyTreesNeedRebuild();
+  SetNeedsCommit();
 }
 
 // On<Property>Animated is called due to an ongoing accelerated animation.

@@ -444,6 +444,8 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   bool has_transform_node() { return has_transform_node_; }
   void SetHasTransformNode(bool val) { has_transform_node_ = val; }
 
+  void set_not_drawn(bool not_drawn);
+
  protected:
   friend class LayerImpl;
   friend class TreeSynchronizer;
@@ -651,6 +653,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   gfx::Vector2dF offset_to_transform_parent_;
   bool should_flatten_transform_from_property_tree_ : 1;
   bool draws_content_ : 1;
+  bool not_drawn_ : 1;
   bool should_check_backface_visibility_ : 1;
   // Force use of and cache render surface.
   bool cache_render_surface_ : 1;
