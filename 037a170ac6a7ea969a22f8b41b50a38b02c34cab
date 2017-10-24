@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0db4ccda_873c596f",
+        "filename": "ios/web/public/test/web_test_with_web_state.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T17:56:50Z",
+      "side": 1,
+      "message": "nit: Avoid \"we\" in the comment (go/avoidwe)",
+      "range": {
+        "startLine": 82,
+        "startChar": 43,
+        "endLine": 82,
+        "endChar": 45
+      },
+      "revId": "037a170ac6a7ea969a22f8b41b50a38b02c34cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc36c7f_a862f0e3",
+        "filename": "ios/web/public/test/web_test_with_web_state.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T17:56:50Z",
+      "side": 1,
+      "message": "Would you like to try file:// URLs instead?\nFormSuggestionControllerTest.PageLoadShouldBeIgnoredWhenNotHtml is a good example for that.\n\nI\u0027m asking to try alternative, because LoadHtml is used in almost every Chrome for iOS test and making this method slower may add significant extra load to the bots.",
+      "revId": "037a170ac6a7ea969a22f8b41b50a38b02c34cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
