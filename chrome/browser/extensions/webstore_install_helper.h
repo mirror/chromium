@@ -22,9 +22,11 @@ namespace chrome {
 class BitmapFetcher;
 }
 
-namespace net {
-class URLRequestContextGetter;
+namespace content {
+namespace mojom {
+class URLLoaderFactory;
 }
+}  // namespace content
 
 namespace safe_json {
 class SafeJsonParser;
@@ -70,7 +72,7 @@ class WebstoreInstallHelper : public base::RefCounted<WebstoreInstallHelper>,
                         const std::string& id,
                         const std::string& manifest,
                         const GURL& icon_url,
-                        net::URLRequestContextGetter* context_getter);
+                        content::mojom::URLLoaderFactory* loader_factory);
   void Start();
 
  private:
@@ -99,7 +101,7 @@ class WebstoreInstallHelper : public base::RefCounted<WebstoreInstallHelper>,
   // If |icon_url_| is non-empty, it needs to be fetched and decoded into an
   // SkBitmap.
   GURL icon_url_;
-  net::URLRequestContextGetter* context_getter_; // Only usable on UI thread.
+  content::mojom::URLLoaderFactory* loader_factory_;
   std::unique_ptr<chrome::BitmapFetcher> icon_fetcher_;
 
   // Flags for whether we're done doing icon decoding and manifest parsing.

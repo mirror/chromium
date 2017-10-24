@@ -4,7 +4,9 @@
 
 #include "chrome/browser/bitmap_fetcher/bitmap_fetcher.h"
 
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/storage_partition.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_status.h"
@@ -20,40 +22,42 @@ BitmapFetcher::BitmapFetcher(
 BitmapFetcher::~BitmapFetcher() {
 }
 
-void BitmapFetcher::Init(net::URLRequestContextGetter* request_context,
+void BitmapFetcher::Init(content::mojom::URLLoaderFactory* loader_factory,
                          const std::string& referrer,
-                         net::URLRequest::ReferrerPolicy referrer_policy,
+                         blink::WebReferrerPolicy referrer_policy,
                          int load_flags) {
-  if (url_fetcher_ != NULL)
+  if (simple_loader_ != NULL)
     return;
 
-  url_fetcher_ = net::URLFetcher::Create(url_, net::URLFetcher::GET, this,
-                                         traffic_annotation_);
-  url_fetcher_->SetRequestContext(request_context);
-  url_fetcher_->SetReferrer(referrer);
-  url_fetcher_->SetReferrerPolicy(referrer_policy);
-  url_fetcher_->SetLoadFlags(load_flags);
+  loader_factory_ = loader_factory;
+  simple_loader_ = content::SimpleURLLoader::Create();
+  content::ResourceRequest resource_request_ = content::ResourceRequest();
+  resource_request_.url = url_;
+  resource_request_.referrer = GURL(referrer);
+  resource_request_.referrer_policy = referrer_policy;
+  resource_request_.load_flags = load_flags;
 }
 
 void BitmapFetcher::Start() {
-  if (url_fetcher_)
-    url_fetcher_->Start();
+  if (simple_loader_) {
+    content::SimpleURLLoader::BodyAsStringCallback callback = base::BindOnce(
+        &BitmapFetcher::OnCompleteCallback, base::Unretained(this));
+    simple_loader_->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
+        resource_request_, loader_factory_, traffic_annotation_,
+        std::move(callback));
+  }
 }
 
-// Methods inherited from URLFetcherDelegate.
-
-void BitmapFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
-  if (source->GetStatus().status() != net::URLRequestStatus::SUCCESS) {
+void BitmapFetcher::OnCompleteCallback(
+    std::unique_ptr<std::string> response_body) {
+  if (!response_body) {
     ReportFailure();
     return;
   }
 
-  std::string image_data;
-  source->GetResponseAsString(&image_data);
-
   // Call start to begin decoding.  The ImageDecoder will call OnImageDecoded
   // with the data when it is done.
-  ImageDecoder::Start(this, image_data);
+  ImageDecoder::Start(this, *response_body);
 }
 
 // Methods inherited from ImageDecoder::ImageRequest.

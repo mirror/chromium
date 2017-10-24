@@ -16,6 +16,7 @@
 #include "chrome/browser/extensions/webstore_data_fetcher.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/crx_file/id_util.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
@@ -308,12 +309,10 @@ void WebstoreStandaloneInstaller::OnWebstoreResponseParseSuccess(
   // Assume ownership of webstore_data.
   webstore_data_ = std::move(webstore_data);
 
-  scoped_refptr<WebstoreInstallHelper> helper =
-      new WebstoreInstallHelper(this,
-                                id_,
-                                manifest,
-                                icon_url,
-                                profile_->GetRequestContext());
+  scoped_refptr<WebstoreInstallHelper> helper = new WebstoreInstallHelper(
+      this, id_, manifest, icon_url,
+      content::BrowserContext::GetDefaultStoragePartition(profile_)
+          ->GetURLLoaderFactoryForBrowserProcess());
   // The helper will call us back via OnWebstoreParseSuccess() or
   // OnWebstoreParseFailure().
   helper->Start();
