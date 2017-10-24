@@ -18,6 +18,7 @@
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/PaintController.h"
 #include "platform/graphics/paint/PaintRecordBuilder.h"
+#include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 
 namespace blink {
 
@@ -67,9 +68,13 @@ ClipPathClipper::ClipPathClipper(GraphicsContext& context,
     : resource_clipper_(nullptr),
       clipper_state_(ClipperState::kNotApplied),
       layout_object_(layout_object),
-      context_(context) {
+      context_(context),
+      clip_path_operation_(clip_path_operation),
+      reference_box_(reference_box) {
+  // SPv175+ always paint clip path as a kDstIn layer after contents.
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     return;
+
   if (clip_path_operation.GetType() == ClipPathOperation::SHAPE) {
     ShapeClipPathOperation& shape =
         ToShapeClipPathOperation(clip_path_operation);
@@ -106,8 +111,10 @@ ClipPathClipper::ClipPathClipper(GraphicsContext& context,
 }
 
 ClipPathClipper::~ClipPathClipper() {
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    PaintClipPathAsEffectNode();
     return;
+  }
   if (resource_clipper_)
     FinishEffect();
 }
@@ -239,6 +246,42 @@ void ClipPathClipper::FinishEffect() {
     case ClipperState::kNotApplied:
       NOTREACHED();
       break;
+  }
+}
+
+void ClipPathClipper::PaintClipPathAsEffectNode() {
+  const auto* object_properties =
+      layout_object_.FirstFragment()->PaintProperties();
+  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+  if (DrawingRecorder::UseCachedDrawingIfPossible(context_, layout_object_,
+                                                  DisplayItem::kSVGClip))
+    return;
+
+  // Could happen if clip-path resolved to invalid shape or bad reference.
+  if (!object_properties || !object_properties->ClipPath())
+    return;
+
+  PaintChunkProperties properties(
+      context_.GetPaintController().CurrentPaintChunkProperties());
+  properties.property_tree_state.SetEffect(object_properties->ClipPath());
+  ScopedPaintChunkProperties scope(context_.GetPaintController(),
+                                   layout_object_, properties);
+
+  if (clip_path_operation_.GetType() == ClipPathOperation::SHAPE) {
+    ShapeClipPathOperation& shape =
+        ToShapeClipPathOperation(clip_path_operation_);
+    if (!shape.IsValid())
+      return;
+
+    DrawingRecorder recorder(context_, layout_object_, DisplayItem::kSVGClip,
+                             object_properties->MaskClip()->ClipRect().Rect());
+    PaintFlags flags;
+    flags.setColor(Color::kBlack);
+    flags.setAntiAlias(true);
+    context_.DrawPath(shape.GetPath(reference_box_).GetSkPath(), flags);
+  } else {
+    DCHECK_EQ(clip_path_operation_.GetType(), ClipPathOperation::REFERENCE);
+    // TODO(trchen): Implement it.
   }
 }
 

@@ -90,11 +90,15 @@ class CORE_EXPORT ObjectPaintProperties {
   // +-[ filter ]
   // |     Isolated group for CSS filter.
   // +-[ mask ]
-  //       Isolated group for painting the CSS mask. This node will have
+  // |     Isolated group for painting the CSS mask. This node will have
+  // |     SkBlendMode::kDstIn and shall paint last, i.e. after masked contents.
+  // +-[ clip path ]
+  //       Isolated group for painting the CSS clip-path. This node will have
   //       SkBlendMode::kDstIn and shall paint last, i.e. after masked contents.
   const EffectPaintPropertyNode* Effect() const { return effect_.get(); }
   const EffectPaintPropertyNode* Filter() const { return filter_.get(); }
   const EffectPaintPropertyNode* Mask() const { return mask_.get(); }
+  const EffectPaintPropertyNode* ClipPath() const { return clip_path_.get(); }
 
   // The hierarchy of the clip subtree created by a LayoutObject is as follows:
   // [ fragment clip ]
@@ -102,7 +106,7 @@ class CORE_EXPORT ObjectPaintProperties {
   //      This is only present for content under a fragmentation
   //      container.
   // +-[ mask clip ]
-  //   |   Clip created by CSS mask. It serves two purposes:
+  //   |   Clip created by CSS mask or CSS clip-path. It serves two purposes:
   //   |   1. Cull painting of the masked subtree. Because anything outside of
   //   |      the mask is never visible, it is pointless to paint them.
   //   |   2. Raster clip of the masked subtree. Because the mask implemented
@@ -147,6 +151,7 @@ class CORE_EXPORT ObjectPaintProperties {
   bool ClearEffect() { return Clear(effect_); }
   bool ClearFilter() { return Clear(filter_); }
   bool ClearMask() { return Clear(mask_); }
+  bool ClearClipPath() { return Clear(clip_path_); }
   bool ClearFragmentClip() { return Clear(fragment_clip_); }
   bool ClearMaskClip() { return Clear(mask_clip_); }
   bool ClearCssClip() { return Clear(css_clip_); }
@@ -221,6 +226,10 @@ class CORE_EXPORT ObjectPaintProperties {
     return Update(mask_, std::forward<Args>(args)...);
   }
   template <typename... Args>
+  UpdateResult UpdateClipPath(Args&&... args) {
+    return Update(clip_path_, std::forward<Args>(args)...);
+  }
+  template <typename... Args>
   UpdateResult UpdateFragmentClip(Args&&... args) {
     return Update(fragment_clip_, std::forward<Args>(args)...);
   }
@@ -259,6 +268,8 @@ class CORE_EXPORT ObjectPaintProperties {
       cloned->filter_ = filter_->Clone();
     if (mask_)
       cloned->mask_ = mask_->Clone();
+    if (clip_path_)
+      cloned->clip_path_ = clip_path_->Clone();
     if (fragment_clip_)
       cloned->fragment_clip_ = fragment_clip_->Clone();
     if (mask_clip_)
@@ -323,6 +334,7 @@ class CORE_EXPORT ObjectPaintProperties {
   scoped_refptr<EffectPaintPropertyNode> effect_;
   scoped_refptr<EffectPaintPropertyNode> filter_;
   scoped_refptr<EffectPaintPropertyNode> mask_;
+  scoped_refptr<EffectPaintPropertyNode> clip_path_;
   scoped_refptr<ClipPaintPropertyNode> fragment_clip_;
   scoped_refptr<ClipPaintPropertyNode> mask_clip_;
   scoped_refptr<ClipPaintPropertyNode> css_clip_;

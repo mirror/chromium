@@ -379,6 +379,27 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   if (!painting_info.paint_dirty_rect.Contains(bounds))
     result = kMayBeClippedByPaintDirtyRect;
 
+  Optional<ScopedPaintChunkProperties> content_scoped_paint_chunk_properties;
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+      !scoped_paint_chunk_properties.has_value()) {
+    // If layoutObject() is a LayoutView and root layer scrolling is enabled,
+    // the LayoutView's paint properties will already have been applied at
+    // the top of this method, in scopedPaintChunkProperties.
+    DCHECK(!(RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
+             paint_layer_.GetLayoutObject().IsLayoutView()));
+    const auto* local_border_box_properties = paint_layer_.GetLayoutObject()
+                                                  .FirstFragment()
+                                                  ->LocalBorderBoxProperties();
+    DCHECK(local_border_box_properties);
+    PaintChunkProperties properties(
+        context.GetPaintController().CurrentPaintChunkProperties());
+    properties.property_tree_state = *local_border_box_properties;
+    properties.backface_hidden =
+        paint_layer_.GetLayoutObject().HasHiddenBackface();
+    content_scoped_paint_chunk_properties.emplace(context.GetPaintController(),
+                                                  paint_layer_, properties);
+  }
+
   // These helpers output clip and compositing operations using a RAII pattern.
   // Stack-allocated-varibles are destructed in the reverse order of
   // construction, so they are nested properly.
@@ -544,27 +565,6 @@ PaintResult PaintLayerPainter::PaintLayerContents(
       if (!should_paint_content)
         result = kMayBeClippedByPaintDirtyRect;
     }
-  }
-
-  Optional<ScopedPaintChunkProperties> content_scoped_paint_chunk_properties;
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
-      !scoped_paint_chunk_properties.has_value()) {
-    // If layoutObject() is a LayoutView and root layer scrolling is enabled,
-    // the LayoutView's paint properties will already have been applied at
-    // the top of this method, in scopedPaintChunkProperties.
-    DCHECK(!(RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
-             paint_layer_.GetLayoutObject().IsLayoutView()));
-    const auto* local_border_box_properties = paint_layer_.GetLayoutObject()
-                                                  .FirstFragment()
-                                                  ->LocalBorderBoxProperties();
-    DCHECK(local_border_box_properties);
-    PaintChunkProperties properties(
-        context.GetPaintController().CurrentPaintChunkProperties());
-    properties.property_tree_state = *local_border_box_properties;
-    properties.backface_hidden =
-        paint_layer_.GetLayoutObject().HasHiddenBackface();
-    content_scoped_paint_chunk_properties.emplace(context.GetPaintController(),
-                                                  paint_layer_, properties);
   }
 
   bool selection_only =

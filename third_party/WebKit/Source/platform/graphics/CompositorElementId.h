@@ -19,9 +19,10 @@ enum class CompositorElementIdNamespace {
   kPrimary,
   kUniqueObjectId,
   kScroll,
-  // The following are SPv2-only.
+  // The following are SPv175+ only.
   kEffectFilter,
   kEffectMask,
+  kEffectClipPath,
   // A sentinel to indicate the maximum representable namespace id
   // (the maximum is one less than this value).
   kMaxRepresentableNamespaceId = 1 << kCompositorNamespaceBitCount
