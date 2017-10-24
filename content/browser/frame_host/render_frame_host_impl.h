@@ -670,6 +670,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return frame_host_associated_binding_;
   }
 
+  blink::WebSandboxFlags active_sandbox_flags() {
+    return active_sandbox_flags_;
+  }
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -715,6 +719,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
                            LoadEventForwardingWhilePendingDeletion);
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessBrowserTest,
                            ContextMenuAfterCrossProcessNavigation);
+  FRIEND_TEST_ALL_PREFIXES(SitePerProcessEmbedderCSPEnforcementBrowserTest,
+                           ActiveSandboxFlagsRetainedAfterSwapOut);
   FRIEND_TEST_ALL_PREFIXES(SecurityExploitBrowserTest,
                            AttemptDuplicateRenderViewHost);
 
@@ -764,7 +770,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnDidAccessInitialDocument();
   void OnDidChangeOpener(int32_t opener_routing_id);
   void OnDidChangeName(const std::string& name, const std::string& unique_name);
-  void OnDidSetFeaturePolicyHeader(
+  void OnDidSetFramePolicyHeaders(
+      blink::WebSandboxFlags sandbox_flags,
       const ParsedFeaturePolicyHeader& parsed_header);
 
   // A new set of CSP |policies| has been added to the document.
@@ -1289,6 +1296,14 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Tracks the feature policy which has been set on this frame.
   std::unique_ptr<FeaturePolicy> feature_policy_;
+
+  // Tracks the sandbox flags which are in effect on this frame. This includes
+  // any flags which have been set by a Content-Security-Policy header, in
+  // addition to those which are set by the embedding frame. This is initially a
+  // copy of the active sandbox flags which are stored in the FrameTreeNode for
+  // this RenderFrameHost, but may diverge if this RenderFrameHost is pending
+  // deletion.
+  blink::WebSandboxFlags active_sandbox_flags_;
 
 #if defined(OS_ANDROID)
   // An InterfaceProvider for Java-implemented interfaces that are scoped to

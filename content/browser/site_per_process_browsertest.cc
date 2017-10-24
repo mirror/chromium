@@ -12143,4 +12143,137 @@ IN_PROC_BROWSER_TEST_F(TouchSelectionControllerClientAndroidSiteIsolationTest,
 
 #endif  // defined(OS_ANDROID)
 
+// Verify that "csp" property on frame elements propagates to child frames
+// correctly. See  https://crbug.com/647588
+// //// Check that browser gets initial sandbox flags
+// Test: sandbox from CSP header in main doc
+// sandbox from CSP header applied to subframe
+// Sandbox from CSP header + more restrictions in frame
+// Sandbox from CSP header + more restrictions in subdoc
+// Cross process navigation preserves flags
+IN_PROC_BROWSER_TEST_F(SitePerProcessEmbedderCSPEnforcementBrowserTest,
+                       SandboxFlagsMaintainedAcrossNavigation) {
+  GURL main_url(
+      embedded_test_server()->GetURL("a.com", "/sandbox_main_frame_csp.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  // It is safe to obtain the root frame tree node here, as it doesn't change.
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  ASSERT_EQ(1u, root->child_count());
+
+  EXPECT_EQ(
+      " Site A\n"
+      "   +--Site A\n"
+      "Where A = http://a.com/",
+      DepictFrameTree(root));
+
+  FrameTreeNode* child_node = root->child_at(0);
+
+  EXPECT_EQ(shell()->web_contents()->GetSiteInstance(),
+            child_node->current_frame_host()->GetSiteInstance());
+
+  // Main page is served with a CSP header applying sandbox flags allow-popups,
+  // allow-pointer-lock and allow-scripts.
+  EXPECT_EQ(blink::WebSandboxFlags::kNone,
+            root->pending_frame_policy().sandbox_flags);
+  EXPECT_EQ(blink::WebSandboxFlags::kNone,
+            root->effective_frame_policy().sandbox_flags);
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kPointerLock &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->active_sandbox_flags());
+
+  // Child frame has iframe sandbox flags allow-popups, allow-scripts, and
+  // allow-orientation-lock. It should receive the intersection of those with
+  // the parent sandbox flags: allow-popups and allow-scripts.
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->child_at(0)->pending_frame_policy().sandbox_flags);
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->child_at(0)->effective_frame_policy().sandbox_flags);
+  // Document in child frame is served with a CSP header giving sandbox flags
+  // allow-popups and allow-pointer-lock. The final effective flags should only
+  // include allow-popups.
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups,
+            root->child_at(0)->active_sandbox_flags());
+
+  // Navigate the child frame to a new page. This should clear any CSP-applied
+  // sandbox flags.
+  GURL frame_url(embedded_test_server()->GetURL("b.com", "/title1.html"));
+  NavigateFrameToURL(root->child_at(0), frame_url);
+
+  EXPECT_NE(shell()->web_contents()->GetSiteInstance(),
+            child_node->current_frame_host()->GetSiteInstance());
+
+  // Navigating should reset the sandbox flags to the frame owner flags:
+  // allow-popups and allow-scripts.
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->child_at(0)->active_sandbox_flags());
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->child_at(0)->pending_frame_policy().sandbox_flags);
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->child_at(0)->effective_frame_policy().sandbox_flags);
+}
+
+// Test that after an RFH is swapped out, its old sandbox flags remain active.
+IN_PROC_BROWSER_TEST_F(SitePerProcessEmbedderCSPEnforcementBrowserTest,
+                       ActiveSandboxFlagsRetainedAfterSwapOut) {
+  GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/sandboxed_main_frame_script.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  // It is safe to obtain the root frame tree node here, as it doesn't change.
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+
+  RenderFrameHostImpl* rfh =
+      static_cast<WebContentsImpl*>(shell()->web_contents())->GetMainFrame();
+
+  // Check sandbox flags on RFH before navigating away.
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kPointerLock &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            rfh->active_sandbox_flags());
+
+  // Set up a slow unload handler to force the RFH to linger in the swapped
+  // out but not-yet-deleted state.
+  EXPECT_TRUE(
+      ExecuteScript(rfh, "window.onunload=function(e){ while(1); };\n"));
+
+  rfh->DisableSwapOutTimerForTesting();
+  RenderFrameDeletedObserver rfh_observer(rfh);
+
+  // Navigate to a page with no sandbox, but wait for commit, not for the actual
+  // load to finish.
+  TestFrameNavigationObserver commit_observer(root);
+  shell()->LoadURL(
+      GURL(embedded_test_server()->GetURL("b.com", "/title1.html")));
+  commit_observer.WaitForCommit();
+
+  // The previous RFH should still be pending deletion, as we wait for either
+  // the SwapOut ACK or a timeout.
+  ASSERT_TRUE(rfh->IsRenderFrameLive());
+  ASSERT_FALSE(rfh->is_active());
+  ASSERT_FALSE(rfh_observer.deleted());
+
+  // Check sandbox flags on old RFH -- they should be unchanged.
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kPointerLock &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            rfh->active_sandbox_flags());
+}
+
 }  // namespace content
