@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ba22ca7_9835f5cb",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-24T15:17:09Z",
+      "side": 1,
+      "message": "Antoine felt this was useful offline and I\u0027m inclined to agree. A misbehaving parent client may pass updated ScreenInfo or rect to the child without updating the LocalSurfaceId which breaks synchronization.",
+      "parentUuid": "f776fa01_43b5e785",
+      "revId": "470cefd4dbc72e144dbf71817551a7d5d855f842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69234244_0cef47d5",
         "filename": "content/browser/renderer_host/render_widget_host_view_base.cc",
         "patchSetId": 9
