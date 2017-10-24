@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e15cd45_420d6b24",
+        "filename": "chrome/browser/resources/pdf/gesture_detector.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-10-24T13:40:05Z",
+      "side": 1,
+      "message": "Let\u0027s put the type declaration one the line above. (similar to line 17 above)",
+      "revId": "5f55af8456833ea292c39b761db03e79d6d5c542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
