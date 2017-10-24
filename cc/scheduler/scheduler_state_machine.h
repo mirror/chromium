@@ -301,6 +301,7 @@ class CC_EXPORT SchedulerStateMachine {
 
   bool ShouldPerformImplSideInvalidation() const;
   bool CouldCreatePendingTree() const;
+  bool ShouldDeferInvalidatingForMainFrame() const;
 
   bool ShouldTriggerBeginImplFrameDeadlineImmediately() const;
   bool ShouldBlockDeadlineIndefinitely() const;
