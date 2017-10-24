@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "605f22cb_b50de283",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:09:15Z",
+      "side": 1,
+      "message": "nit: `\u003d default;`",
+      "revId": "97e6080e11090ab11304a0f63139ca651a312ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42728e50_bef6e334",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-features\u003dAllowActivationDelegationAttr/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:09:15Z",
+      "side": 1,
+      "message": "Instead of having flag-specific tests, I think you could just mark the flag as \"status: test\" which will get it to run on non-stable global-interface-listing-expected.",
+      "revId": "97e6080e11090ab11304a0f63139ca651a312ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d35b6db_c3629e67",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:09:15Z",
+      "side": 1,
+      "message": "early return is best return:\n```\nif (activation_delegation_flags \u003d\u003d flags)\n  return;\n```",
+      "revId": "97e6080e11090ab11304a0f63139ca651a312ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe11a69_e34c1f22",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.idl",
+        "patchSetId": 19
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:09:15Z",
+      "side": 1,
+      "message": "style: leave one empty line.",
+      "revId": "97e6080e11090ab11304a0f63139ca651a312ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be5a6fd_b46c611c",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElementDelegateStickyUserActivation.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:09:15Z",
+      "side": 1,
+      "message": "Do we need this over `contains()`? Maybe the implementation could use `contains()`?",
+      "revId": "97e6080e11090ab11304a0f63139ca651a312ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c558e5_009a940d",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElementDelegateStickyUserActivation.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:09:15Z",
+      "side": 1,
+      "message": "Would it make sense to implement `supports()` from DOMTokenList?",
+      "revId": "97e6080e11090ab11304a0f63139ca651a312ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b254be_d1d6441f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElementDelegateStickyUserActivation.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:09:15Z",
+      "side": 1,
+      "message": "Sounds like we could just expose the ctor here.",
+      "revId": "97e6080e11090ab11304a0f63139ca651a312ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45252d55_0ec9acf9",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElementDelegateStickyUserActivation.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:09:15Z",
+      "side": 1,
+      "message": "I don\u0027t think we need the static method.",
+      "revId": "97e6080e11090ab11304a0f63139ca651a312ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d89912_59a11b16",
+        "filename": "third_party/WebKit/Source/core/html/OWNERS",
+        "patchSetId": 19
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:09:15Z",
+      "side": 1,
+      "message": "You cane remove this, these files have moved to html/media/ (I assume it was added because of merge conflicts).",
+      "revId": "97e6080e11090ab11304a0f63139ca651a312ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b943d7_7f303004",
+        "filename": "third_party/WebKit/public/platform/ActivationDelegationFlags.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:09:15Z",
+      "side": 1,
+      "message": "What about doing `enum class ActivationDelegationFlags`? It would allow to forward declare the enum and should simplify using it. The values could be renamed kNone and kMedia too as you would have to use the full name (ActivationDelagatianFlag::kNone).",
+      "revId": "97e6080e11090ab11304a0f63139ca651a312ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe2f8dd_75312179",
+        "filename": "third_party/WebKit/public/platform/ActivationDelegationFlags.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:09:15Z",
+      "side": 1,
+      "message": "Hopefully, you wouldn\u0027t need to use this if you switch to `enum class`. You can also specify the backing type with `enum class Foo : int` if needed. See: http://en.cppreference.com/w/cpp/language/enum",
+      "revId": "97e6080e11090ab11304a0f63139ca651a312ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
