@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf6ba7ed_b3f32f98",
+        "filename": "content/public/common/menu_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T05:30:06Z",
+      "side": 1,
+      "message": "Nit: TYPE_LAST to follow style guide conventions please.",
+      "revId": "21f84f242a1bce4657b6f25bf6ae8e7fcd3d8b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
