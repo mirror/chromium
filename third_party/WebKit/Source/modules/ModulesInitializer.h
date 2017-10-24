@@ -47,6 +47,8 @@ class MODULES_EXPORT ModulesInitializer : public CoreInitializer {
   void ForceNextWebGLContextCreationToFail() const override;
 
   void CollectAllGarbageForAnimationWorklet() const override;
+
+  void InitMojo() const;
 };
 
 }  // namespace blink

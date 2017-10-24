@@ -125,6 +125,9 @@ class RendererBlinkPlatformImplTestOverrideImpl
   // Get rid of the dependency to the sandbox, which is not available in
   // RenderViewTest.
   blink::WebSandboxSupport* GetSandboxSupport() override { return NULL; }
+
+  void AddConnectionFilter(
+      std::unique_ptr<service_manager::BinderRegistry>) override {}
 };
 
 RenderViewTest::RendererBlinkPlatformImplTestOverride::

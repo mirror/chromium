@@ -35,6 +35,7 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
+#include "content/public/common/simple_connection_filter.h"
 #include "content/public/common/webplugininfo.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/media_stream_utils.h"
@@ -1275,6 +1276,14 @@ blink::InterfaceProvider* RendererBlinkPlatformImpl::GetInterfaceProvider() {
   return blink_interface_provider_.get();
 }
 
+void RendererBlinkPlatformImpl::AddConnectionFilter(
+    std::unique_ptr<service_manager::BinderRegistry> registry) {
+  DCHECK(ChildThread::Get());
+  DCHECK(ChildThread::Get()->GetServiceManagerConnection());
+  ChildThread::Get()->GetServiceManagerConnection()->AddConnectionFilter(
+      std::make_unique<SimpleConnectionFilter>(std::move(registry)));
+}
+
 void RendererBlinkPlatformImpl::StartListening(
     blink::WebPlatformEventType type,
     blink::WebPlatformEventListener* listener) {
@@ -1416,14 +1425,14 @@ void RendererBlinkPlatformImpl::RequestPurgeMemory() {
 
 void RendererBlinkPlatformImpl::InitializeWebDatabaseHostIfNeeded() {
   if (!web_database_host_) {
-    web_database_host_ = content::mojom::ThreadSafeWebDatabaseHostPtr::Create(
+    web_database_host_ = blink::mojom::ThreadSafeWebDatabaseHostPtr::Create(
         std::move(web_database_host_info_),
         base::CreateSequencedTaskRunnerWithTraits(
             {base::WithBaseSyncPrimitives()}));
   }
 }
 
-mojom::WebDatabaseHost& RendererBlinkPlatformImpl::GetWebDatabaseHost() {
+blink::mojom::WebDatabaseHost& RendererBlinkPlatformImpl::GetWebDatabaseHost() {
   InitializeWebDatabaseHostIfNeeded();
   return **web_database_host_;
 }
