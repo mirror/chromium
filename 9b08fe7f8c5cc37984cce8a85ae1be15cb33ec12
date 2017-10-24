@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2028e6_6c4cd660",
+        "filename": "media/formats/mp4/track_run_iterator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-24T17:16:24Z",
+      "side": 1,
+      "message": "I don\u0027t know if this will pass gn check. I don\u0027t think formats can dep filters (circular dep). You may need to move this elsewhere or pass it in to access this header.",
+      "revId": "9b08fe7f8c5cc37984cce8a85ae1be15cb33ec12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc60dae_ecf974bc",
+        "filename": "media/formats/mp4/track_run_iterator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-24T17:16:24Z",
+      "side": 1,
+      "message": "Should we do this instead at the point this is read from the trun? I.e. in box_reader?",
+      "revId": "9b08fe7f8c5cc37984cce8a85ae1be15cb33ec12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
