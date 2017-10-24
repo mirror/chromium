@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0705645_6844da4e",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-24T02:12:27Z",
+      "side": 1,
+      "message": "If you keep the ivar names the same, these lines don\u0027t need to change.",
+      "revId": "3015fbe64af2fa7759207b237b38479ecb2fca6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4ee443_3f0b4e2e",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-24T02:12:27Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "3015fbe64af2fa7759207b237b38479ecb2fca6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
