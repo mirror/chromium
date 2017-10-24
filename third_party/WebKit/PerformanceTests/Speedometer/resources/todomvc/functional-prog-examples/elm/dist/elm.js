@@ -2921,7 +2921,7 @@ function endsWith(sub, str)
 function indexes(sub, str)
 {
     var subLen = sub.length;
-
+    
     if (subLen < 1)
     {
         return _elm_lang$core$Native_List.Nil;
@@ -2934,8 +2934,8 @@ function indexes(sub, str)
     {
         is.push(i);
         i = i + subLen;
-    }
-
+    }   
+    
     return _elm_lang$core$Native_List.fromArray(is);
 }
 
@@ -10368,3 +10368,4 @@ for (var publicModule in Elm)
 }
 
 }).call(this);
+

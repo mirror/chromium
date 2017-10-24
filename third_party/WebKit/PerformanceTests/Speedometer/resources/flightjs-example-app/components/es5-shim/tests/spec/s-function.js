@@ -4,25 +4,25 @@ describe('Function', function() {
     describe('bind', function() {
         var actual, expected,
             testSubject;
-
+        
         testSubject = {
             push: function(o) {
                 this.a.push(o);
             }
         };
-
+        
         function func() {
             Array.prototype.forEach.call(arguments, function(a) {
                 this.push(a);
             }, this);
             return this;
         };
-
+        
         beforeEach(function() {
             actual = [];
             testSubject.a = [];
         });
-
+        
         it('binds properly without a context', function() {
             var context;
             testSubject.func = function() {
@@ -53,7 +53,7 @@ describe('Function', function() {
             expect(actual).toEqual([1,2,3,4,5,6]);
             expect(testSubject.a).toEqual([]);
         });
-
+        
         it('returns properly without binding a context', function() {
             testSubject.func = function() {
                 return this;

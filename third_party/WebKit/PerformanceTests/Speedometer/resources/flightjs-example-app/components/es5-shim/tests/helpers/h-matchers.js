@@ -5,7 +5,7 @@ beforeEach(function() {
                 l, i,
                 key,
                 actual = this.actual;
-
+            
             var getKeys = function(o) {
                 var a = [];
                 for(key in o) {
@@ -17,7 +17,7 @@ beforeEach(function() {
             }
             a1 = getKeys(actual);
             a2 = getKeys(expected);
-
+            
             l = a1.length;
             if(l !== a2.length) {
                 return false;
@@ -27,7 +27,7 @@ beforeEach(function() {
                 expect(key).toEqual(a2[i]);
                 expect(actual[key]).toEqual(expected[key]);
             }
-
+            
             return true;
         }
     })

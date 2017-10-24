@@ -1,5 +1,5 @@
 describe('Date', function () {
-
+    
     describe('now', function () {
         it('should be the current time', function () {
             expect(Date.now() === new Date().getTime()).toBe(true);
@@ -23,7 +23,7 @@ describe('Date', function () {
 
     describe("toISOString", function () {
         // TODO: write the rest of the test.
-
+       
         it('should support extended years', function () {
             expect(new Date(-62198755200000).toISOString().indexOf('-000001-01-01')).toBe(0);
             expect(new Date(8.64e15).toISOString().indexOf('+275760-09-13')).toBe(0);
@@ -34,7 +34,7 @@ describe('Date', function () {
         it('should return the isoString when stringified', function () {
             var date = new Date();
             expect(JSON.stringify(date.toISOString())).toBe(JSON.stringify(date));
-        })
+        }) 
     });
 
 });

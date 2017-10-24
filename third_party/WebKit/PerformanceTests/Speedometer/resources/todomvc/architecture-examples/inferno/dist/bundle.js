@@ -2317,7 +2317,7 @@
             var input = instance._lastInput;
             var fastUnmount = lifecycle.fastUnmount;
             // we store the fastUnmount value, but we set it back to true on the lifecycle
-            // we do this so we can determine if the component render has a fastUnmount or not
+            // we do this so we can determine if the component render has a fastUnmount or not      
             lifecycle.fastUnmount = true;
             instance._vComponent = vNode;
             instance._vNode = vNode;
