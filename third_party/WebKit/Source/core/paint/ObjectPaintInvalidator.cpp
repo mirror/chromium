@@ -461,7 +461,8 @@ ObjectPaintInvalidatorWithContext::ComputePaintInvalidationReason() {
 
   if (!(context_.subtree_flags &
         PaintInvalidatorContext::kInvalidateEmptyVisualRect) &&
-      context_.old_visual_rect.IsEmpty() && object_.VisualRect().IsEmpty())
+      context_.old_visual_rect.IsEmpty() &&
+      context_.fragment_data->VisualRect().IsEmpty())
     return PaintInvalidationReason::kNone;
 
   if (background_obscuration_changed)
@@ -483,17 +484,18 @@ ObjectPaintInvalidatorWithContext::ComputePaintInvalidationReason() {
   // to do a full invalidation of either old bounds or new bounds.
   if (context_.old_visual_rect.IsEmpty())
     return PaintInvalidationReason::kAppeared;
-  if (object_.VisualRect().IsEmpty())
+  if (context_.fragment_data->VisualRect().IsEmpty())
     return PaintInvalidationReason::kDisappeared;
 
   // If we shifted, we don't know the exact reason so we are conservative and
   // trigger a full invalidation. Shifting could be caused by some layout
   // property (left / top) or some in-flow layoutObject inserted / removed
   // before us in the tree.
-  if (object_.VisualRect().Location() != context_.old_visual_rect.Location())
+  if (context_.fragment_data->VisualRect().Location() !=
+      context_.old_visual_rect.Location())
     return PaintInvalidationReason::kGeometry;
 
-  if (object_.LocationInBacking() != context_.old_location)
+  if (context_.fragment_data->LocationInBacking() != context_.old_location)
     return PaintInvalidationReason::kGeometry;
 
   // Incremental invalidation is only applicable to LayoutBoxes. Return
@@ -504,7 +506,7 @@ ObjectPaintInvalidatorWithContext::ComputePaintInvalidationReason() {
   if (object_.IsBox())
     return PaintInvalidationReason::kIncremental;
 
-  if (context_.old_visual_rect != object_.VisualRect())
+  if (context_.old_visual_rect != context_.fragment_data->VisualRect())
     return PaintInvalidationReason::kGeometry;
 
   return PaintInvalidationReason::kNone;
@@ -625,7 +627,7 @@ ObjectPaintInvalidatorWithContext::InvalidatePaintWithComputedReason(
         object_.GetMutableForPainting()
             .SetShouldDoFullPaintInvalidationWithoutGeometryChange(reason);
         FullyInvalidatePaint(reason, context_.old_visual_rect,
-                             object_.VisualRect());
+                             context_.fragment_data->VisualRect());
       }
   }
 
