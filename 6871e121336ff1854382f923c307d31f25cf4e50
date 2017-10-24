@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3db38c86_0f1c48ad",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1212220
+      },
+      "writtenOn": "2017-10-24T12:32:54Z",
+      "side": 1,
+      "message": "Should this test be executed if VR is not supported?\nSame for TestElisionParsingAdjustments.",
+      "range": {
+        "startLine": 733,
+        "startChar": 21,
+        "endLine": 733,
+        "endChar": 44
+      },
+      "revId": "6871e121336ff1854382f923c307d31f25cf4e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
