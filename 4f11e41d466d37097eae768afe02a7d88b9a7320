@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6a4357f8_16d861c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-24T21:07:47Z",
+      "side": 1,
+      "message": "Ufft...Yusuf\u0027s comment made me realize that CTA could die in the background while FullscreenActivity is shown, which would prevent further state updates and then transfering back the tab display from fullscreen to CTA gets muddled.\n\nI do think the browser actions/activity owning it\u0027s own state is probably the most robust solution, but causes a non-trivial amount of overhead where fullscreenactivity would be creating it\u0027s own tab list file and CTA would need to merge it back in during restore if they\u0027re both dead as well as the live merging that Browser Actions does.\n\nDepending on the urgency of the fix, we could look at a various set of options from extracting browser action behavior to a common structure to making tab model work ok-ish with detached but still owned tabs.  This is the solution I mentioned above, but it\u0027s not terribly robust if the tab state file needs to be resaved due to something that makes Tab#isTabStateDirty true after entering fullscreen -- shouldn\u0027t happen because navigations aren\u0027t supported if I recall.  CTA and it\u0027s owned TabModelImpl/TabModelSelectorImpl provides the signal to resave tab state files and FullscreenActivity doesn\u0027t have such a thing.  We might need to educate the TabPersistentStore to check some global tab reparenting container to see if it\u0027s about to restore a tab that is owned by another activity.  If CTA dies in the background and you\u0027ve got a live tab from FullscreenActivity, you wouldn\u0027t want it to be duplicated and you also wouldn\u0027t want the renderer to be killed if you can avoid it so we\u0027d need a way for CTA to restore the state file but take a live tab instead of creating a new one.",
+      "parentUuid": "1543be43_76a620ad",
+      "revId": "4f11e41d466d37097eae768afe02a7d88b9a7320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09d16fc3_999b9a27",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
         "patchSetId": 1
