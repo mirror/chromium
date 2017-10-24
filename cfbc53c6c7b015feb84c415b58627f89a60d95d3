@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2be3ec80_bedfc724",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-24T01:46:16Z",
+      "side": 1,
+      "message": "+1. I may have confused Sébastien about this because I suggested to have a stateful mechanism.",
+      "parentUuid": "d66847ec_d1a547aa",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d31ae44a_7df6a87f",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
