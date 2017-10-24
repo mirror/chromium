@@ -93,6 +93,7 @@ void WaitAndTap(id<GREYMatcher> matcher, NSString* name) {
 void NewMainTabWithURL(const GURL& url, const std::string& word) {
   int number_of_tabs = chrome_test_util::GetMainTabCount();
   chrome_test_util::OpenNewTab();
+  [ChromeEarlGrey waitForPageToFinishLoading];
   [ChromeEarlGrey loadURL:url];
   [ChromeEarlGrey waitForWebViewContainingText:word];
   [ChromeEarlGrey waitForMainTabCount:(number_of_tabs + 1)];
@@ -199,6 +200,7 @@ void CloseTabAtIndexAndSync(NSUInteger i) {
   // Open three tabs with http:// urls.
   for (NSUInteger i = 0; i < numberOfTabs; i++) {
     chrome_test_util::OpenNewTab();
+    [ChromeEarlGrey waitForPageToFinishLoading];
     [ChromeEarlGrey loadURL:url1];
     [ChromeEarlGrey waitForWebViewContainingText:kURL1FirstWord];
     [ChromeEarlGrey waitForMainTabCount:(i + 1)];
@@ -392,6 +394,7 @@ void CloseTabAtIndexAndSync(NSUInteger i) {
   // A blank tab needed to switch to it after reloading.
   chrome_test_util::OpenNewTab();
   chrome_test_util::OpenNewTab();
+  [ChromeEarlGrey waitForPageToFinishLoading];
   chrome_test_util::LoadUrl(slowURL);
   OpenNewIncognitoTabUsingUIAndEvictMainTabs();
 
@@ -504,6 +507,7 @@ void CloseTabAtIndexAndSync(NSUInteger i) {
 
   chrome_test_util::HistogramTester histogramTester;
   chrome_test_util::OpenNewTab();
+  [ChromeEarlGrey waitForPageToFinishLoading];
   chrome_test_util::LoadUrl(slowURL);
 
   OpenNewIncognitoTabUsingUIAndEvictMainTabs();
@@ -549,6 +553,7 @@ void CloseTabAtIndexAndSync(NSUInteger i) {
 
   // We need two tabs to be able to switch.
   chrome_test_util::OpenNewTab();
+  [ChromeEarlGrey waitForPageToFinishLoading];
   [[GREYConfiguration sharedInstance]
           setValue:@(NO)
       forConfigKey:kGREYConfigKeySynchronizationEnabled];
@@ -710,6 +715,7 @@ void CloseTabAtIndexAndSync(NSUInteger i) {
   ResetTabUsageRecorder();
 
   chrome_test_util::OpenNewTab();
+  [ChromeEarlGrey waitForPageToFinishLoading];
   GURL url(kTestUrl1);
 
   chrome_test_util::OpenChromeFromExternalApp(url);
