@@ -94,8 +94,6 @@ namespace {
 const char kNoSuchExtensionError[] = "No such extension.";
 const char kCannotModifyPolicyExtensionError[] =
     "Cannot modify the extension by policy.";
-const char kRequiresUserGestureError[] =
-    "This action requires a user gesture.";
 const char kCouldNotShowSelectFileDialogError[] =
     "Could not show a file chooser.";
 const char kFileSelectionCanceled[] =
@@ -682,8 +680,6 @@ DeveloperPrivateUpdateExtensionConfigurationFunction::Run() {
   const Extension* extension = GetExtensionById(update.extension_id);
   if (!extension)
     return RespondNow(Error(kNoSuchExtensionError));
-  if (!user_gesture())
-    return RespondNow(Error(kRequiresUserGestureError));
 
   if (update.file_access) {
     std::string error;
