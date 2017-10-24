@@ -720,6 +720,7 @@ void NewTabPageBindings::LogMostVisitedImpression(
         position, static_cast<ntp_tiles::TileSource>(tile_source),
         static_cast<ntp_tiles::TileTitleSource>(tile_title_source),
         static_cast<ntp_tiles::TileVisualType>(tile_type),
+        favicon_base::INVALID_ICON,
         ConvertDateValueToTime(*data_generation_time),
         /*url_for_rappor=*/GURL());
     search_box->LogMostVisitedImpression(impression);
@@ -744,6 +745,7 @@ void NewTabPageBindings::LogMostVisitedNavigation(
         position, static_cast<ntp_tiles::TileSource>(tile_source),
         static_cast<ntp_tiles::TileTitleSource>(tile_title_source),
         static_cast<ntp_tiles::TileVisualType>(tile_type),
+        favicon_base::INVALID_ICON,
         ConvertDateValueToTime(*data_generation_time),
         /*url_for_rappor=*/GURL());
     search_box->LogMostVisitedNavigation(impression);
