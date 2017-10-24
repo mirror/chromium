@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "1a183c23_50e002e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T01:22:21Z",
+      "side": 1,
+      "message": "The correctness of first value of the tuple (when the second value is false) is not guaranteed. This is an alternative to doing a DCHECK() / CHECK() which provides little flexibility to the caller. Would it be better to make sure that an empty byte array is returned every time the value of the boolean is false?",
+      "parentUuid": "d58ae998_22fff1e5",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7348cc5_5a37ae2e",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 9
