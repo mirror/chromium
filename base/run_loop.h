@@ -170,23 +170,28 @@ class BASE_EXPORT RunLoop {
       // becomes idle.
       bool ShouldQuitWhenIdle() const;
 
-      // Returns true if this |outer_| is currently in nested runs. This is a
-      // shortcut for RunLoop::IsNestedOnCurrentThread() for the owner of this
-      // interface.
-      bool IsNested() const;
-
-      // Returns true if the Delegate is allowed to process application tasks.
-      // This typically returns true except in nested RunLoops outside the scope
-      // of a ScopedNestableTaskAllowed as, by default, nested RunLoops are only
-      // meant to process system events.
-      bool ProcessingTasksAllowed() const;
-
      private:
       // Only a Delegate can instantiate a Delegate::Client.
       friend class Delegate;
       Client(Delegate* outer);
 
       Delegate* outer_;
+    };
+
+   protected:
+    // Parameter for Delegate::Run() which lets the Delegate know which type of
+    // tasks it's allowed to run as part of that run-level. This levels are
+    // hierarchical in increasing order of permission (each level implies the
+    // previous' permissions and more).
+    enum RunLevelTaskType {
+      // Only system tasks should be run (no application tasks) at this run-
+      // level.
+      kSystemTasksOnly = 0,
+      // Application tasks which are marked as nestable are also allowed to run
+      // (ref. PendingTask::nestable) at this run-level.
+      kNestableAndSystemTasks,
+      // All tasks are allowed to run at this run-level.
+      kAllTasks
     };
 
    private:
@@ -201,11 +206,10 @@ class BASE_EXPORT RunLoop {
     // remaining tasks/messages. Run() calls can nest in which case each Quit()
     // call should result in the topmost active Run() call returning. The only
     // other trigger for Run() to return is Client::ShouldQuitWhenIdle() which
-    // the Delegate should probe before sleeping when it becomes idle. Run()
-    // implementations should also check Client::ProcessingTasksAllowed() before
-    // processing assigned application tasks (they should only process system
-    // tasks otherwise).
-    virtual void Run() = 0;
+    // the Delegate should probe before sleeping when it becomes idle.
+    // |run_level_task_type| indicates the type of tasks that are allowed to be
+    // executed in this run-level.
+    virtual void Run(RunLevelTaskType run_level_task_type) = 0;
     virtual void Quit() = 0;
 
     // Invoked right before a RunLoop enters a nested Run() call on this

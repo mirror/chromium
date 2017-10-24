@@ -238,11 +238,16 @@ void MessageLoop::SetNestableTasksAllowed(bool allowed) {
     // loop that does not go through RunLoop::Run().
     pump_->ScheduleWork();
   }
-  nestable_tasks_allowed_ = allowed;
+
+  // SetNestableTasksAllowed(false) is only expected to be used to toggle back
+  // from SetNestableTasksAllowed(true).
+  DCHECK(allowed || task_type_allowed_ == kNestableAndSystemTasks);
+
+  task_type_allowed_ = allowed ? kNestableAndSystemTasks : kSystemTasksOnly;
 }
 
 bool MessageLoop::NestableTasksAllowed() const {
-  return nestable_tasks_allowed_ || run_loop_client_->ProcessingTasksAllowed();
+  return task_type_allowed_ >= kNestableAndSystemTasks;
 }
 
 // TODO(gab): Migrate TaskObservers to RunLoop as part of separating concerns
@@ -277,17 +282,11 @@ std::unique_ptr<MessageLoop> MessageLoop::CreateUnbound(
 
 MessageLoop::MessageLoop(Type type, MessagePumpFactoryCallback pump_factory)
     : type_(type),
-#if defined(OS_WIN)
-      in_high_res_mode_(false),
-#endif
-      nestable_tasks_allowed_(true),
       pump_factory_(std::move(pump_factory)),
-      current_pending_task_(nullptr),
       incoming_task_queue_(new internal::IncomingTaskQueue(this)),
       unbound_task_runner_(
           new internal::MessageLoopTaskRunner(incoming_task_queue_)),
-      task_runner_(unbound_task_runner_),
-      thread_id_(kInvalidThreadId) {
+      task_runner_(unbound_task_runner_) {
   // If type is TYPE_CUSTOM non-null pump_factory must be given.
   DCHECK(type_ != TYPE_CUSTOM || !pump_factory_.is_null());
 }
@@ -339,9 +338,27 @@ void MessageLoop::ClearTaskRunnerForTesting() {
   thread_task_runner_handle_.reset();
 }
 
-void MessageLoop::Run() {
+void MessageLoop::Run(RunLevelTaskType run_level_task_type) {
   DCHECK_EQ(this, current());
+
+  auto previous_task_type_allowed = task_type_allowed_;
+  // In general |run_level_task_type| should drive |task_type_allowed_|, but
+  // it's also currently possible for MessageLoop::*Nestable* APIs to toggle
+  // |task_type_allowed_| off of the kSystemTasksOnly reentrancy blocker ahead
+  // of the Run() call.
+  // Note: std::max(run_level_task_type, task_type_allowed_) as an unconditional
+  // value here would also be incorrect because it's possible for Run() to nest
+  // without the reentrancy blocker having been set if it's invoked from a
+  // system task being processed by the top-level loop (i.e. which didn't go
+  // through MessageLoop::RunTask()), in that case we want to honor the
+  // |run_level_task_type| not use the existing |task_type_allowed_| which is
+  // still set to kAllTasks.
+  if (task_type_allowed_ != kNestableAndSystemTasks)
+    task_type_allowed_ = run_level_task_type;
+
   pump_->Run(this);
+
+  task_type_allowed_ = previous_task_type_allowed;
 }
 
 void MessageLoop::Quit() {
@@ -364,7 +381,7 @@ void MessageLoop::SetThreadTaskRunnerHandle() {
 }
 
 bool MessageLoop::ProcessNextDelayedNonNestableTask() {
-  if (run_loop_client_->IsNested())
+  if (task_type_allowed_ <= kNestableAndSystemTasks)
     return false;
 
   while (incoming_task_queue_->deferred_tasks().HasTasks()) {
@@ -379,11 +396,12 @@ bool MessageLoop::ProcessNextDelayedNonNestableTask() {
 }
 
 void MessageLoop::RunTask(PendingTask* pending_task) {
-  DCHECK(NestableTasksAllowed());
+  DCHECK_GE(task_type_allowed_, kNestableAndSystemTasks);
   current_pending_task_ = pending_task;
 
-  // Execute the task and assume the worst: It is probably not reentrant.
-  nestable_tasks_allowed_ = false;
+  // Disallow other application tasks by default in the scope of this one.
+  auto current_task_type_allowed = task_type_allowed_;
+  task_type_allowed_ = kSystemTasksOnly;
 
   TRACE_TASK_EXECUTION("MessageLoop::RunTask", *pending_task);
 
@@ -393,24 +411,19 @@ void MessageLoop::RunTask(PendingTask* pending_task) {
   for (auto& observer : task_observers_)
     observer.DidProcessTask(*pending_task);
 
-  nestable_tasks_allowed_ = true;
+  task_type_allowed_ = current_task_type_allowed;
 
   current_pending_task_ = nullptr;
 }
 
 bool MessageLoop::DeferOrRunPendingTask(PendingTask pending_task) {
-  if (pending_task.nestable == Nestable::kNestable ||
-      !run_loop_client_->IsNested()) {
-    RunTask(&pending_task);
-    // Show that we ran a task (Note: a new one might arrive as a
-    // consequence!).
-    return true;
+  if (pending_task.nestable == Nestable::kNonNestable &&
+      task_type_allowed_ <= kNestableAndSystemTasks) {
+    incoming_task_queue_->deferred_tasks().Push(std::move(pending_task));
+    return false;
   }
-
-  // We couldn't run the task now because we're in a nested run loop
-  // and the task isn't nestable.
-  incoming_task_queue_->deferred_tasks().Push(std::move(pending_task));
-  return false;
+  RunTask(&pending_task);
+  return true;
 }
 
 void MessageLoop::DeletePendingTasks() {
@@ -427,8 +440,8 @@ void MessageLoop::ScheduleWork() {
 }
 
 bool MessageLoop::DoWork() {
-  if (!NestableTasksAllowed()) {
-    // Task can't be executed right now.
+  if (task_type_allowed_ <= kSystemTasksOnly) {
+    // Application tasks can't be executed right now.
     return false;
   }
 
@@ -457,7 +470,7 @@ bool MessageLoop::DoWork() {
 }
 
 bool MessageLoop::DoDelayedWork(TimeTicks* next_delayed_work_time) {
-  if (!NestableTasksAllowed() ||
+  if (task_type_allowed_ <= kSystemTasksOnly ||
       !incoming_task_queue_->delayed_tasks().HasTasks()) {
     recent_time_ = *next_delayed_work_time = TimeTicks();
     return false;

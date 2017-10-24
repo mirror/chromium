@@ -233,7 +233,7 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
 
   // Enables nestable tasks on |loop| while in scope.
   // DEPRECATED: This should not be used when the nested loop is driven by
-  // RunLoop (use RunLoop::Type::KNestableTasksAllowed instead). It can however
+  // RunLoop (use RunLoop::Type::kNestableTasksAllowed instead). It can however
   // still be useful in a few scenarios where re-entrancy is caused by a native
   // message loop.
   // TODO(gab): Remove usage of this class alongside RunLoop and rename it to
@@ -250,8 +250,8 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
     }
 
    private:
-    MessageLoop* loop_;
-    bool old_state_;
+    MessageLoop* const loop_;
+    const bool old_state_;
   };
 
   // A TaskObserver is an object that receives task notifications from the
@@ -333,7 +333,7 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   void SetThreadTaskRunnerHandle();
 
   // RunLoop::Delegate:
-  void Run() override;
+  void Run(RunLevelTaskType run_level_task_type) override;
   void Quit() override;
   void EnsureWorkScheduled() override;
 
@@ -362,7 +362,7 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
 #if defined(OS_WIN)
   // Tracks if we have requested high resolution timers. Its only use is to
   // turn off the high resolution timer upon loop destruction.
-  bool in_high_res_mode_;
+  bool in_high_res_mode_ = false;
 #endif
 
   // A recent snapshot of Time::Now(), used to check delayed_work_queue_.
@@ -370,11 +370,12 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
 
   ObserverList<DestructionObserver> destruction_observers_;
 
-  // A recursion block that prevents accidentally running additional tasks when
-  // insider a (accidentally induced?) nested message pump. Deprecated in favor
-  // of run_loop_client_->ProcessingTasksAllowed(), equivalent until then (both
-  // need to be checked in conditionals).
-  bool nestable_tasks_allowed_;
+  // This variable serves two purposes:
+  //   1) Prevents unintentional reentrancy (by being set to kSystemTasksOnly
+  //      while an application task is in progress at the current run-level).
+  //   2) Ensures the top-most run-level only executes tasks of the requested
+  //      type (ref. RunLoop::Delegate::Run()).
+  RunLevelTaskType task_type_allowed_ = kAllTasks;
 
   // pump_factory_.Run() is called to create a message pump for this loop
   // if type_ is TYPE_CUSTOM and pump_ is null.
@@ -387,7 +388,7 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   // meant only to store context for creating a backtrace breadcrumb. Do not
   // attach other semantics to it without thinking through the use caes
   // thoroughly.
-  const PendingTask* current_pending_task_;
+  const PendingTask* current_pending_task_ = nullptr;
 
   scoped_refptr<internal::IncomingTaskQueue> incoming_task_queue_;
 
@@ -400,7 +401,7 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
 
   // Id of the thread this message loop is bound to. Initialized once when the
   // MessageLoop is bound to its thread and constant forever after.
-  PlatformThreadId thread_id_;
+  PlatformThreadId thread_id_ = kInvalidThreadId;
 
   // Whether task observers are allowed.
   bool allow_task_observers_ = true;
