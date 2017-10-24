@@ -99,6 +99,24 @@
       "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db694369_e2f8b7da",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T17:43:49Z",
+      "side": 1,
+      "message": "I looked at clang-format and clang-tidy: clang-tidy does the same thing, while clang-format uses a different ctor--but that\u0027s not an option here because we don\u0027t to always start at the beginning of the file buffer. So I suspect there\u0027s not much improvement to be had here \u003d(",
+      "parentUuid": "e9b4c46c_9a38fce1",
+      "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
