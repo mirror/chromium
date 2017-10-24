@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa9eacc9_c0dd1e8a",
+        "filename": "media/filters/decoder_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-24T23:42:45Z",
+      "side": 1,
+      "message": "nit: indicate this is during actual playback (not, for example, during MSE appendBuffer parsing of a new codec config).",
+      "range": {
+        "startLine": 678,
+        "startChar": 53,
+        "endLine": 678,
+        "endChar": 60
+      },
+      "revId": "d21581942ed798b154ea31c17f2a077d73edc17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa0cb69_5ba25759",
+        "filename": "media/filters/decoder_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-24T23:42:45Z",
+      "side": 1,
+      "message": "nit: Though there\u0027s some usage of AsHumanReadableString() for MEDIA_LOG previously in FFmpegDemuxerStream::Create(), https://cs.chromium.org/chromium/src/media/base/video_decoder_config.h?q\u003dvideodecoderconfig\u0026sq\u003dpackage:chromium\u0026l\u003d73 indicates that the method is for \"debugging and testing\" only. ISTM perhaps those comments in {Audio,Video}DecoderConfig header need updating to explicitly indicate their content is ok for use in MEDIA_LOGs. If ok for chrome://media-internals, but not for MediaError.message, then further comment around not using them in MEDIA_LOG(ERROR,...) logs should be included in those header files.",
+      "range": {
+        "startLine": 679,
+        "startChar": 18,
+        "endLine": 679,
+        "endChar": 39
+      },
+      "revId": "d21581942ed798b154ea31c17f2a077d73edc17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
