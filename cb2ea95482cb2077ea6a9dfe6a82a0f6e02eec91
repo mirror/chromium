@@ -478,6 +478,24 @@
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae361eab_61c6d7b2",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T22:27:34Z",
+      "side": 1,
+      "message": "\u003e But this has your issue with deduping.\nOh, right you are.\n\n\u003e Since SortAndDedup is included in your loop, good local suggestions can be knocked out.\n\u003e \n\u003e Instead, shouldn\u0027t it be like this?\n\u003e \n\u003e find best allowed_to_be_default match according to CompareWithDemoteByType\n\u003e if both tail and non-tail suggestions (besides the above), remove the tail suggestions\n\u003e // the rest as normal\n\u003e SortAndDedup(...\n\u003e etc.\n\u003e \n\u003e And it has the advantage of skipping the copy and sort.\n\nInitially, I think that sounds good to me.  (Disclaimer: I haven\u0027t yet thought\ndeeply about any problems that may arise.)\n\nAlso, please think about the CopyOldMatches() code.  This code preserves matches\nfrom the previous keystroke in order to keep the omnibox dropdown more stable.\nI think this new code might interact fine with it, but I\u0027m not sure and\nI\u0027d appreciate someone else thinking about this situation more.",
+      "parentUuid": "c88642ef_c05d409a",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
