@@ -364,8 +364,10 @@ class VideoFrameStreamTest
   void SatisfyPendingCallback(PendingState state) {
     DCHECK_NE(state, NOT_PENDING);
     switch (state) {
-      case DEMUXER_READ_NORMAL:
       case DEMUXER_READ_CONFIG_CHANGE:
+        EXPECT_MEDIA_LOG(HasSubstr("decoder config changed"))
+            .Times(testing::AtLeast(1));
+      case DEMUXER_READ_NORMAL:
         demuxer_stream_->SatisfyRead();
         break;
 
