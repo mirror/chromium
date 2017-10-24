@@ -460,6 +460,24 @@
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88642ef_c05d409a",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-24T21:10:52Z",
+      "side": 1,
+      "message": "But this has your issue with deduping. Since SortAndDedup is included in your loop, good local suggestions can be knocked out.\n\nInstead, shouldn\u0027t it be like this?\n\nfind best allowed_to_be_default match according to CompareWithDemoteByType\nif both tail and non-tail suggestions (besides the above), remove the tail suggestions\n// the rest as normal\nSortAndDedup(...\netc.\n\nAnd it has the advantage of skipping the copy and sort.",
+      "parentUuid": "f62b344a_f47cef10",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
