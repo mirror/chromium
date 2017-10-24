@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "d58ae998_22fff1e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-24T01:10:02Z",
+      "side": 1,
+      "message": "You know your callers better than I do, but 512 levels of nesting would be a deeper object graph/tree than I\u0027ve ever seen. So although we might have enough stack space to handle nesting that deep, I\u0027d have my doubts about the semantics of such an object.\n\nWhat is the meaning of the pair.first when pair.second is false? How should the caller handle the situation when the bool is false?",
+      "parentUuid": "612cb0d1_0f3bb370",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7348cc5_5a37ae2e",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 9
