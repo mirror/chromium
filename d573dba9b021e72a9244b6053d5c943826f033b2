@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4e4954b_db666a4b",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1862,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-24T23:56:37Z",
+      "side": 1,
+      "message": "nit: video + audio?",
+      "range": {
+        "startLine": 1862,
+        "startChar": 23,
+        "endLine": 1862,
+        "endChar": 47
+      },
+      "revId": "d573dba9b021e72a9244b6053d5c943826f033b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2fd75a_bdf514f8",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-24T23:56:37Z",
+      "side": 1,
+      "message": "This rename is weird. Is the intent to limit per track, per all tracks of this media type (audio or video or ...), or per demuxer?  Previously, in MSE it was per track, but in SRC\u003d it was per demuxer. This needs clarification due to this rename.\n\nPerhaps kDemuxerStream{Audio,Video}MemoryLimit, with a note in FFmpegDemuxer that for SRC\u003d use it assume footprint maximum of just one video demuxer stream ??",
+      "range": {
+        "startLine": 197,
+        "startChar": 20,
+        "endLine": 197,
+        "endChar": 44
+      },
+      "revId": "d573dba9b021e72a9244b6053d5c943826f033b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
