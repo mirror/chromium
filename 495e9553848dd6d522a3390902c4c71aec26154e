@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12bba842_c571410a",
+        "filename": "docs/win_cross.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-24T06:59:49Z",
+      "side": 1,
+      "message": "Looks like you dropped \"build\".",
+      "revId": "495e9553848dd6d522a3390902c4c71aec26154e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
