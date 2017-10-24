@@ -117,6 +117,24 @@
       "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9b4317_974b8c26",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T17:50:41Z",
+      "side": 1,
+      "message": "If you say \"my tool, clang-tidy, and clang-format all need to jump through this hoop\", maybe someone says \"well let\u0027s add those locs to the AST; method decls aren\u0027t that common\"...",
+      "parentUuid": "db694369_e2f8b7da",
+      "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
