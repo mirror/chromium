@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2ed2342b_a5beac82",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-24T15:52:52Z",
+      "side": 1,
+      "message": "Agreed that for this case it makes sense. I\u0027m just not sure it\u0027s\ncorrect for all possible cases where one could call it.\n\nHow about we call this InvalidateTableSubtree for now so that it\u0027s\nclear that we\u0027re only using this for that case (where it\u0027s\nprobably fine)?\n\nThat will hopefully encourage someone to not use it as a totally\ngeneral-purpose InvalidateSubtree in the future.",
+      "parentUuid": "30d4cf88_a49fac67",
+      "revId": "20705a5fa01f43916bb47434e4f8bfed6fc830a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c4e98d0_5dc9aef3",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
         "patchSetId": 7
