@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3446c631_367a9a9b",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-24T16:41:30Z",
+      "side": 1,
+      "message": "As much as we hate it, we can\u0027t remove nesting.",
+      "parentUuid": "aa5a17f8_d81392ef",
+      "range": {
+        "startLine": 339,
+        "startChar": 4,
+        "endLine": 340,
+        "endChar": 21
+      },
+      "revId": "a19fe5e4bbabe8534ff97b01a7096c2144492e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15592ec3_84b2c036",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "a19fe5e4bbabe8534ff97b01a7096c2144492e2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f3405b_531bb2d8",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-24T16:41:30Z",
+      "side": 1,
+      "message": "Reworded in new scheme where it becomes somewhat relevant again I think.",
+      "parentUuid": "15592ec3_84b2c036",
+      "range": {
+        "startLine": 430,
+        "startChar": 4,
+        "endLine": 430,
+        "endChar": 40
+      },
+      "revId": "a19fe5e4bbabe8534ff97b01a7096c2144492e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c91d54c9_4ddbd0a8",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-24T16:41:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "552582d6_9a780381",
+      "range": {
+        "startLine": 374,
+        "startChar": 18,
+        "endLine": 374,
+        "endChar": 45
+      },
+      "revId": "a19fe5e4bbabe8534ff97b01a7096c2144492e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "978c2a96_8cb8b400",
         "filename": "base/message_loop/message_loop_unittest.cc",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "a19fe5e4bbabe8534ff97b01a7096c2144492e2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acce45a3_c1ab4073",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-24T16:41:30Z",
+      "side": 1,
+      "message": "Yeah this is somewhat confusing but it is correct (and comment is aimed at clarifying that). What the kNestableTasksAllowed RunLoop does is allow this task to be processed altogether. But then in its layer, nestable tasks are still disallowed (and that\u0027s what this extra check verifies.\n\nIf the RunLoop wasn\u0027t kNestableTasksAllowed: |nested_run_loop.Run()| would hang per the task responsible to quit not running (as it\u0027s an application task).\nI wasn\u0027t able to write a test for that use case (i.e. test that it hangs...). Perhaps I could with a system task doing the quit (after a timeout to confirm it was necessary to wait for the system task), but I didn\u0027t go there.\n\nThis check is thus verifying an extra fact inside the test for nestable-application-tasks-can-run-nested, that nestable-tasks-arent-blanket-allowed-at-every-layer-above-a-single-allowance.",
+      "parentUuid": "978c2a96_8cb8b400",
+      "range": {
+        "startLine": 1603,
+        "startChar": 22,
+        "endLine": 1609,
+        "endChar": 74
+      },
+      "revId": "a19fe5e4bbabe8534ff97b01a7096c2144492e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
