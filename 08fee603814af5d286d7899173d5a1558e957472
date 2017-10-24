@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7221fea_0ec0df96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-24T21:30:25Z",
+      "side": 1,
+      "message": "Yea, I also thought so. But onItemsAdded() etc use ArrayList, so wanted to keep it consistent. Should we change both to List\u003c\u003e?",
+      "parentUuid": "b66bdf35_b5d2730f",
+      "range": {
+        "startLine": 738,
+        "startChar": 61,
+        "endLine": 738,
+        "endChar": 70
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d402767_0777bd23",
         "filename": "components/ntp_snippets/offline_pages/recent_tab_suggestions_provider.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T17:48:29Z",
       "side": 1,
       "message": "Should you only call this if dismiss_suggestion_callbacks_ was previously empty (e.g. if there wasn\u0027t a request already outstanding)?",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 39
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c775f28c_a9d4f6a8",
+        "filename": "components/ntp_snippets/offline_pages/recent_tab_suggestions_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-24T21:30:25Z",
+      "side": 1,
+      "message": "Yea, that makes sense. The outstanding callback when finished will call all the pending callbacks.",
+      "parentUuid": "6d402767_0777bd23",
       "range": {
         "startLine": 147,
         "startChar": 2,
@@ -68,6 +116,30 @@
       "revId": "08fee603814af5d286d7899173d5a1558e957472",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13fa134_cc6920c5",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-24T21:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bf0d318_7805b0c1",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 1
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,30 @@
       "revId": "08fee603814af5d286d7899173d5a1558e957472",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a65f5f7_9c191f05",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-24T21:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb740568_99be3056",
+      "range": {
+        "startLine": 172,
+        "startChar": 49,
+        "endLine": 172,
+        "endChar": 78
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

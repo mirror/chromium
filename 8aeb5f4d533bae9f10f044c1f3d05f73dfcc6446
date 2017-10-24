@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b59d6e9_b3ed877c",
+        "filename": "components/offline_items_collection/core/throttled_offline_content_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-24T21:30:25Z",
+      "side": 1,
+      "message": "Should we also do UpdateItemIfPresent(item) here for all items?\nIf we do, we have to cache the callbacks at this layer too (just like aggregator).\nLet me know.",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 43
+      },
+      "revId": "8aeb5f4d533bae9f10f044c1f3d05f73dfcc6446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
