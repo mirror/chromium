@@ -110,6 +110,7 @@ target("jumbo_" + modules_target_type, "modules") {
     "//third_party/WebKit/Source/modules/donottrack",
     "//third_party/WebKit/Source/modules/encoding",
     "//third_party/WebKit/Source/modules/encryptedmedia",
+    "//third_party/WebKit/Source/modules/entries",
     "//third_party/WebKit/Source/modules/eventsource",
     "//third_party/WebKit/Source/modules/exported",
     "//third_party/WebKit/Source/modules/fetch",

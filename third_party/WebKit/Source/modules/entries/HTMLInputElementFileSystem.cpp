@@ -28,35 +28,33 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "modules/filesystem/HTMLInputElementFileSystem.h"
+#include "modules/entries/HTMLInputElementFileSystem.h"
 
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/FileList.h"
 #include "core/html/forms/HTMLInputElement.h"
+#include "modules/entries/FileSystem.h"
+#include "modules/entries/FileSystemDirectoryEntry.h"
+#include "modules/entries/FileSystemFileEntry.h"
 #include "modules/filesystem/DOMFilePath.h"
-#include "modules/filesystem/DOMFileSystem.h"
-#include "modules/filesystem/DirectoryEntry.h"
-#include "modules/filesystem/Entry.h"
-#include "modules/filesystem/FileEntry.h"
 #include "platform/FileMetadata.h"
 #include "platform/bindings/ScriptState.h"
-#include "platform/heap/Handle.h"
 
 namespace blink {
 
 // static
-EntryHeapVector HTMLInputElementFileSystem::webkitEntries(
+FileSystemEntryHeapVector HTMLInputElementFileSystem::webkitEntries(
     ScriptState* script_state,
     HTMLInputElement& input) {
-  EntryHeapVector entries;
+  FileSystemEntryHeapVector entries;
   FileList* files = input.files();
 
   if (!files)
     return entries;
 
-  DOMFileSystem* filesystem = DOMFileSystem::CreateIsolatedFileSystem(
+  FileSystem* file_system = FileSystem::Create(
       ExecutionContext::From(script_state), input.DroppedFileSystemId());
-  if (!filesystem) {
+  if (!file_system) {
     // Drag-drop isolated filesystem is not available.
     return entries;
   }
@@ -72,10 +70,12 @@ EntryHeapVector HTMLInputElementFileSystem::webkitEntries(
     // The dropped entries are mapped as top-level entries in the isolated
     // filesystem.
     String virtual_path = DOMFilePath::Append("/", file->name());
-    if (metadata.type == FileMetadata::kTypeDirectory)
-      entries.push_back(DirectoryEntry::Create(filesystem, virtual_path));
-    else
-      entries.push_back(FileEntry::Create(filesystem, virtual_path));
+    if (metadata.type == FileMetadata::kTypeDirectory) {
+      entries.push_back(
+          FileSystemDirectoryEntry::Create(file_system, virtual_path));
+    } else {
+      entries.push_back(FileSystemFileEntry::Create(file_system, virtual_path));
+    }
   }
   return entries;
 }

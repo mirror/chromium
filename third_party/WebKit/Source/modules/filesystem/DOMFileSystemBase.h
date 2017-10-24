@@ -70,7 +70,6 @@ class MODULES_EXPORT DOMFileSystemBase : public ScriptWrappable {
   // toURL()).  http://www.w3.org/TR/file-system-api/#widl-Entry-toURL
   static const char kPersistentPathPrefix[];
   static const char kTemporaryPathPrefix[];
-  static const char kIsolatedPathPrefix[];
   static const char kExternalPathPrefix[];
 
   virtual ~DOMFileSystemBase();

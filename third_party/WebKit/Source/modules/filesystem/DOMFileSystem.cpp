@@ -76,34 +76,6 @@ DOMFileSystem* DOMFileSystem::Create(ExecutionContext* context,
   return new DOMFileSystem(context, name, type, root_url);
 }
 
-DOMFileSystem* DOMFileSystem::CreateIsolatedFileSystem(
-    ExecutionContext* context,
-    const String& filesystem_id) {
-  if (filesystem_id.IsEmpty())
-    return nullptr;
-
-  StringBuilder filesystem_name;
-  filesystem_name.Append(Platform::Current()->FileSystemCreateOriginIdentifier(
-      WebSecurityOrigin(context->GetSecurityOrigin())));
-  filesystem_name.Append(":Isolated_");
-  filesystem_name.Append(filesystem_id);
-
-  // The rootURL created here is going to be attached to each filesystem request
-  // and is to be validated each time the request is being handled.
-  StringBuilder root_url;
-  root_url.Append("filesystem:");
-  root_url.Append(context->GetSecurityOrigin()->ToString());
-  root_url.Append('/');
-  root_url.Append(kIsolatedPathPrefix);
-  root_url.Append('/');
-  root_url.Append(filesystem_id);
-  root_url.Append('/');
-
-  return DOMFileSystem::Create(context, filesystem_name.ToString(),
-                               kFileSystemTypeIsolated,
-                               KURL(root_url.ToString()));
-}
-
 DOMFileSystem::DOMFileSystem(ExecutionContext* context,
                              const String& name,
                              FileSystemType type,

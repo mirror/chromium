@@ -28,44 +28,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DraggedIsolatedFileSystemImpl_h
-#define DraggedIsolatedFileSystemImpl_h
+#ifndef HTMLInputElementFileSystem_h
+#define HTMLInputElementFileSystem_h
 
-#include "core/clipboard/DataObject.h"
-#include "core/clipboard/DraggedIsolatedFileSystem.h"
-#include "platform/heap/Handle.h"
-#include "platform/heap/HeapAllocator.h"
-#include "platform/wtf/Forward.h"
-#include "platform/wtf/text/WTFString.h"
+#include "modules/entries/FileSystemEntriesCallback.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
-class DOMFileSystem;
+class HTMLInputElement;
+class ScriptState;
 
-class DraggedIsolatedFileSystemImpl final
-    : public GarbageCollectedFinalized<DraggedIsolatedFileSystemImpl>,
-      public DraggedIsolatedFileSystem,
-      public Supplement<DataObject> {
-  USING_GARBAGE_COLLECTED_MIXIN(DraggedIsolatedFileSystemImpl);
+class HTMLInputElementFileSystem {
+  STATIC_ONLY(HTMLInputElementFileSystem);
 
  public:
-  static DOMFileSystem* GetDOMFileSystem(DataObject* host,
-                                         ExecutionContext*,
-                                         const DataObjectItem&);
-
-  static const char* SupplementName();
-  static DraggedIsolatedFileSystemImpl* From(DataObject*);
-
-  void Trace(blink::Visitor*) override;
-
-  static void PrepareForDataObject(DataObject*);
-
- private:
-  DraggedIsolatedFileSystemImpl() = default;
-
-  HeapHashMap<String, Member<DOMFileSystem>> filesystems_;
+  static FileSystemEntryHeapVector webkitEntries(ScriptState*,
+                                                 HTMLInputElement&);
 };
 
 }  // namespace blink
 
-#endif  // DraggedIsolatedFileSystemImpl_h
+#endif  // HTMLInputElementFileSystem_h

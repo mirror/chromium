@@ -28,11 +28,44 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// https://wicg.github.io/entries-api/#html-forms
+#ifndef DraggedIsolatedFileSystemImpl_h
+#define DraggedIsolatedFileSystemImpl_h
 
-[
-    ImplementedAs=HTMLInputElementFileSystem,
-    RuntimeEnabled=FileSystem
-] partial interface HTMLInputElement {
-    [CallWith=ScriptState, Measure] readonly attribute FrozenArray<Entry> webkitEntries;
+#include "core/clipboard/DataObject.h"
+#include "core/clipboard/DraggedIsolatedFileSystem.h"
+#include "platform/heap/Handle.h"
+#include "platform/heap/HeapAllocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/text/WTFString.h"
+
+namespace blink {
+
+class FileSystem;
+
+class DraggedIsolatedFileSystemImpl final
+    : public GarbageCollectedFinalized<DraggedIsolatedFileSystemImpl>,
+      public DraggedIsolatedFileSystem,
+      public Supplement<DataObject> {
+  USING_GARBAGE_COLLECTED_MIXIN(DraggedIsolatedFileSystemImpl);
+
+ public:
+  static FileSystem* GetFileSystem(DataObject* host,
+                                   ExecutionContext*,
+                                   const DataObjectItem&);
+
+  static const char* SupplementName();
+  static DraggedIsolatedFileSystemImpl* From(DataObject*);
+
+  void Trace(blink::Visitor*) override;
+
+  static void PrepareForDataObject(DataObject*);
+
+ private:
+  DraggedIsolatedFileSystemImpl() = default;
+
+  HeapHashMap<String, Member<FileSystem>> filesystems_;
 };
+
+}  // namespace blink
+
+#endif  // DraggedIsolatedFileSystemImpl_h

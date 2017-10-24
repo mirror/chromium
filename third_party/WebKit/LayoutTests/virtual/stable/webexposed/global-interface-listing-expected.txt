@@ -1459,6 +1459,34 @@ interface FileReader : EventTarget
     setter onloadend
     setter onloadstart
     setter onprogress
+interface FileSystem
+    attribute @@toStringTag
+    getter name
+    getter root
+    method constructor
+interface FileSystemDirectoryEntry : FileSystemEntry
+    attribute @@toStringTag
+    method constructor
+    method createReader
+    method getDirectory
+    method getFile
+interface FileSystemDirectoryReader
+    attribute @@toStringTag
+    method constructor
+    method readEntries
+interface FileSystemEntry
+    attribute @@toStringTag
+    getter filesystem
+    getter fullPath
+    getter isDirectory
+    getter isFile
+    getter name
+    method constructor
+    method getParent
+interface FileSystemFileEntry : FileSystemEntry
+    attribute @@toStringTag
+    method constructor
+    method file
 interface FocusEvent : UIEvent
     attribute @@toStringTag
     getter relatedTarget

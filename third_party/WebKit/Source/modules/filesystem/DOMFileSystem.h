@@ -62,10 +62,6 @@ class MODULES_EXPORT DOMFileSystem final
                                FileSystemType,
                                const KURL& root_url);
 
-  // Creates a new isolated file system for the given filesystemId.
-  static DOMFileSystem* CreateIsolatedFileSystem(ExecutionContext*,
-                                                 const String& filesystem_id);
-
   DirectoryEntry* root() const;
 
   // DOMFileSystemBase overrides.
