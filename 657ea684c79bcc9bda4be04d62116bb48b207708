@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ec0a220_b6961b4b",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-24T15:02:03Z",
+      "side": 1,
+      "message": "This should not be necessary with WebGL2.  Maybe it is fine though, or maybe we should skip to save overhead.  Adding zmo for guidance.",
+      "range": {
+        "startLine": 133,
+        "startChar": 9,
+        "endLine": 133,
+        "endChar": 24
+      },
+      "revId": "657ea684c79bcc9bda4be04d62116bb48b207708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
