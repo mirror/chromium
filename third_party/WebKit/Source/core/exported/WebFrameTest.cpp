@@ -6507,8 +6507,10 @@ class TestSubstituteDataWebFrameClient
   ~TestSubstituteDataWebFrameClient() override {}
 
   // FrameTestHelpers::TestWebFrameClient:
-  void DidFailProvisionalLoad(const WebURLError& error,
-                              WebHistoryCommitType) override {
+  void DidFailProvisionalLoad(
+      const WebURLError& error,
+      WebHistoryCommitType,
+      const base::Optional<std::string>& error_page_content) override {
     Frame()->LoadHTMLString("This should appear",
                             ToKURL("chrome-error://chromewebdata/"),
                             error.unreachable_url, true);
@@ -11384,8 +11386,10 @@ TEST_P(ParameterizedWebFrameTest, NoLoadingCompletionCallbacksInDetach) {
       TestWebFrameClient::DidStopLoading();
     }
 
-    void DidFailProvisionalLoad(const WebURLError&,
-                                WebHistoryCommitType) override {
+    void DidFailProvisionalLoad(
+        const WebURLError&,
+        WebHistoryCommitType,
+        const base::Optional<std::string>& error_page_content) override {
       EXPECT_TRUE(false) << "The load should not have failed.";
     }
 
