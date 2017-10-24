@@ -34,6 +34,23 @@
       "revId": "b914ee753e619c9efbf239c7b45ad3ac9f7ef79c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22056142_6f9e2a5a",
+        "filename": "components/viz/service/display/gl_renderer_copier_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T20:37:36Z",
+      "side": 1,
+      "message": "nit: The test body is 4 lines, I would just write them out here.",
+      "revId": "b914ee753e619c9efbf239c7b45ad3ac9f7ef79c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
