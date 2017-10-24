@@ -50,6 +50,7 @@
 #include "ui/views/background.h"
 #include "ui/views/border.h"
 #include "ui/views/context_menu_controller.h"
+#include "ui/views/debug/debug_context_menu_controller.h"
 #include "ui/views/drag_controller.h"
 #include "ui/views/layout/layout_manager.h"
 #include "ui/views/view_observer.h"
@@ -148,6 +149,8 @@ View::View()
       context_menu_controller_(NULL),
       drag_controller_(NULL) {
   SetTargetHandler(this);
+  debug_context_menu_controller_ =
+      std::make_unique<DebugContextMenuController>();
 }
 
 View::~View() {
@@ -1351,6 +1354,13 @@ void View::ShowContextMenu(const gfx::Point& p,
   context_menu_controller_->ShowContextMenuForView(this, p, source_type);
 }
 
+void View::ShowDebugContextMenu(const gfx::Point& p) {
+  if (!debug_context_menu_controller_)
+    return;
+
+  debug_context_menu_controller_->ShowDebugContextMenuForView(this, p);
+}
+
 // static
 bool View::ShouldShowContextMenuOnMousePress() {
   return kContextMenuOnMousePress;
@@ -2513,6 +2523,16 @@ bool View::ProcessMousePressed(const ui::MouseEvent& event) {
       ShowContextMenu(location, ui::MENU_SOURCE_MOUSE);
       return true;
     }
+  }
+
+  if (event.IsOnlyRightMouseButton() && event.IsControlDown() &&
+      HitTestPoint(event.location()) &&
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kViewsDebugMenu)) {
+    gfx::Point location(event.location());
+    ConvertPointToScreen(this, &location);
+    ShowDebugContextMenu(location);
+    return true;
   }
 
   // WARNING: we may have been deleted, don't use any View variables.

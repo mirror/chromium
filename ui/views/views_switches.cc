@@ -14,5 +14,8 @@ namespace switches {
 // Draws a semitransparent rect to indicate the bounds of each view.
 const char kDrawViewBoundsRects[] = "draw-view-bounds-rects";
 
+// Enable the View debug menu, which is summoned via ctrl-rightclick on a View.
+const char kViewsDebugMenu[] = "views-debug-menu";
+
 }  // namespace switches
 }  // namespace views
