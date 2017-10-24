@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "92871d7b_dd9fbfd3",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T22:01:58Z",
+      "side": 1,
+      "message": "Sorry for not being clear. I\u0027m asking if this code can change to:\n\nremote_client_-\u003eGetTextInputclientInfo(std::move(callback)) (or base::Passed, not sure which).",
+      "parentUuid": "fd58d6a8_15fb268a",
+      "range": {
+        "startLine": 124,
+        "startChar": 21,
+        "endLine": 124,
+        "endChar": 30
+      },
+      "revId": "8995c626d9a273b85f8cc978a30521c020874bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "640dde3d_2641fa88",
         "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
         "patchSetId": 23
