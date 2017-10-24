@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4e08842_9085936e",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-24T21:37:08Z",
+      "side": 1,
+      "message": "It actually might be DELETE_AFTER_SAVE etc. I wonder why we need this now and didn\u0027t need this before? I think SnapshotController guarantees no another call to StartSnapshot before Reset or  PendingSnapshotCompleted returned by client?",
+      "revId": "56f0e274c4e01093430375307397cfa7ba2a6995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9c14f7_98f3a43f",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-24T21:37:08Z",
+      "side": 1,
+      "message": "Do we want a finch variable right away then? Along the lines of: https://cs.chromium.org/chromium/src/components/variations/variations_associated_data.h\n\nAlso, it seems for most pages (if they have less than 33 images total) this is equivalent to \"want 100% of images\". Should we rather wait for all images, or n-1? It seems a float proportion would means really different things for pages with a few or a lot of images...",
+      "revId": "56f0e274c4e01093430375307397cfa7ba2a6995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b66433_691f3ade",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-24T21:37:08Z",
+      "side": 1,
+      "message": "It is going to be much harder to read the code if we add all these boolean flags, for couple of reasons:\n- this duplicates, somewhat, the state_ and current_page_quality_.\n- the flags may be set not in the (assumed?) sequence from low-\u003ehigh, creating a lot of weird states and possible bugs.",
+      "revId": "56f0e274c4e01093430375307397cfa7ba2a6995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9224fd69_d231da2c",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-24T21:37:08Z",
+      "side": 1,
+      "message": "the condition does not match the comment",
+      "revId": "56f0e274c4e01093430375307397cfa7ba2a6995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
