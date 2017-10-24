@@ -8,6 +8,7 @@
 #include <map>
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "components/arc/common/power.mojom.h"
 #include "components/arc/instance_holder.h"
@@ -59,7 +60,7 @@ class ArcPowerBridge : public KeyedService,
 
  private:
   void ReleaseAllDisplayWakeLocks();
-  void UpdateAndroidScreenBrightness(double percent);
+  void UpdateAndroidScreenBrightness(base::Optional<double> percent);
 
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
   mojo::Binding<mojom::PowerHost> binding_;
