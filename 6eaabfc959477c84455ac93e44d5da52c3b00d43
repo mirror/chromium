@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0d93196_cd9a08c1",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-24T05:26:14Z",
+      "side": 1,
+      "message": "nit: update this",
+      "range": {
+        "startLine": 21,
+        "startChar": 41,
+        "endLine": 21,
+        "endChar": 80
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d189567b_596e8a09",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-24T05:26:14Z",
+      "side": 1,
+      "message": "i don\u0027t understand the interface, i think. does this mean that you can only create one timer per clock_id? i would\u0027ve expected expiration_fd to be the id that\u0027s used to identify which timer to set.",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b2bd49_726dd88e",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-24T05:26:14Z",
+      "side": 1,
+      "message": "do you really need the seconds arg? 2**63 nanoseconds is a bit over 292 years.\n\non the android side, is this only used for the AlarmManager interface? that one just takes milliseconds. maybe the internal impl wants something more fine-grained, though.",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
