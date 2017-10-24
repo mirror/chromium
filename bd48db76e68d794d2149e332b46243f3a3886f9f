@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b0131bff_a23276a6",
+        "filename": "base/android/android_hardware_buffer_abi.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "Updating third_party/android_tools/ndk/ sounds like something we need to do eventually anyhow so it seems like we should just take care of that now instead of unnecessary temporary copy and paste that will add confusion. I\u0027ll leave it up to base/ and third_party/android_tools/ndk/ maintainers to decide this though. Please make sure they are aware of the option.",
+      "parentUuid": "bf4fd334_bd2e1e2e",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2060fe3_3cab8c47",
         "filename": "base/android/android_hardware_buffer_compat.cc",
         "patchSetId": 14
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Renamed, using g_ahardwarebuffer_support since ahardware_buffer looked strange.\n\nAs far as I know I need both - I don\u0027t trust SDK version \u003e\u003d OREO to be a sufficient condition, so I still would prefer to be prepared for the case that symbol loading fails.\n\nI\u0027ve replaced the pair of booleans with a tristate enum to make this a bit clearer, and to help avoid potential memory inconsistencies due to separate storage.",
       "parentUuid": "b2060fe3_3cab8c47",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08d85249_4c1a89b3",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "Why is SDK version \u003e\u003d OREO not sufficient? That seems to be sufficient everywhere else in Chrome. Why do we need an exception here?",
+      "parentUuid": "01b193a1_f89d217c",
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -728,6 +764,30 @@
     },
     {
       "key": {
+        "uuid": "0f1c395b_5278be4d",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "Not sure what the current status of clang-include-fixer is. I think it might work if you modify a file but maybe not when adding a new file. Not sure.",
+      "parentUuid": "ef01d142_f31865f0",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 54
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e744279_84fdb469",
         "filename": "ui/gl/gl_image_egl.h",
         "patchSetId": 14
@@ -757,6 +817,24 @@
       "side": 1,
       "message": "I\u0027ve created the new subclass, but I\u0027m still looking into setting up the unit test. For example, the test template needs a CreateSolidColorImage method which is easy for true shared memory, but a bit tricky here for a GPU-only image.\n\n(Leaving unresolved for now.)",
       "parentUuid": "3e744279_84fdb469",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fac85a3_6cbc10e7",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "Can\u0027t we use AHardwareBuffer_lock/unlock for this? No need to expose lock/unlock in the GMB API but using it for tests so we can at least run this on a device where we know it\u0027s supposed to work to verify the logic would be nice.",
+      "parentUuid": "06096dae_a6e5c6d5",
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

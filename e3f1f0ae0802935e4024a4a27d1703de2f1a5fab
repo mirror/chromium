@@ -1,0 +1,307 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "795a390c_915dd8a7",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "if you\u0027re adding a lazy instance then why not put all function loading logic in the ctor of the instance? that way you can get rid of all this loading state logic and can simply use something like:\n\ng_android_hardware_buffer_support.Get().IsSupported();\ng_android_hardware_buffer_support.Get().Allocate();\n\nwith the lazy instance logic making sure there\u0027s no initialization race.",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed9fb3e_c0ceb6e1",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of overriding these global symbols as that allows for incorrect usage by trying to use them before LoadFunctions has been called. I would prefer if we used a different set of symbols that can\u0027t be accessed without us having a chance load AHardwareBuffer symbols first. E.g. AndroidHardwareBuffer::Allocate, Acquire, etc.",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822fd4f3_7b25427f",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "A helper function is preferred over a macro. Also, I\u0027d much prefer if we failed hard when a lookup fails. Unless we\u0027re aware of a device where this would fail then I don\u0027t think we should protect against it.",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1301f2_e5fb6876",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "why is this needed? wouldn\u0027t \"void* main_dl_handle \u003d dlopen(nullptr, RTLD_NOW)\" be the same in this case?",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc90304_46688d07",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "INVALID or EMPTY? SharedMemoryHandle::NO_HANDLE is a bit weird..",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 13
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a57c96_504a2284",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "would ASHMEM be a better description to not have it confused with posix shared memory used on non-Android posix platforms?",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 9
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f87ccf6_e503be1c",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "nit: handle? or buffer_handle?",
+      "range": {
+        "startLine": 63,
+        "startChar": 40,
+        "endLine": 63,
+        "endChar": 46
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d23ab39_7428c2ac",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "nit: let\u0027s not set these unless we plan on supporting them for import. setting them makes it seem like we support offset and stride..",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 28
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae963d9_168f0297",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "base/memory/shared_memory.h? as I see usage of that below but not handle..",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d6fc3f_034cc2c6",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "LEt\u0027s add usage argument to shared memory impl instead.",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4bd80f_49434848",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_create_test_template.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "please don\u0027t add a new template file for this. keep it in existing gpu_memory_buffer_impl_test_template.h file instead.",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ca1522_123238ed",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_create_test_template.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "nit: please keep a BufferDestroyed function as before and maintain blank lines below so it\u0027s clear that this is just moving code. we can clean up these tests in a follow up if needed",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33d4ad4_42979477",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "this should be done by GLImageEGL dtor and not here.",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 3
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe49ae43_1af3c952",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "is this used? please remove if not",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ab7677_27b56705",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T15:52:31Z",
+      "side": 1,
+      "message": "nit: please move this comment above l.16.",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 4
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
