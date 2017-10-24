@@ -1255,6 +1255,24 @@
       "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a065d3c_f905db16",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-24T04:11:52Z",
+      "side": 1,
+      "message": "...which is now two separate constexpr ints (not an enum).",
+      "parentUuid": "d89f6e09_608334b5",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
