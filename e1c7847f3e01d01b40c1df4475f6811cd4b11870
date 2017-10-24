@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "fd837678_19cc8d20",
+        "filename": "ios/third_party/material_components_ios/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-24T17:00:33Z",
+      "side": 1,
+      "message": "If this is a framework, the you need to have a dependency on the +link target, and probably +bundle too so that the bundle is copied in the application bundle.",
+      "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93164357_8ada1774",
         "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
         "patchSetId": 5
