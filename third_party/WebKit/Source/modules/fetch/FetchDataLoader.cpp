@@ -11,9 +11,9 @@
 #include "modules/fetch/BytesConsumer.h"
 #include "modules/fetch/MultipartParser.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
-#include "platform/http_names.h"
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/network/ParsedContentDisposition.h"
+#include "platform/network/http_names.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -99,7 +99,7 @@ class FetchDataLoaderAsBlobHandle final : public FetchDataLoader,
 
   String DebugName() const override { return "FetchDataLoaderAsBlobHandle"; }
 
-  void Trace(blink::Visitor* visitor) {
+  void Trace(blink::Visitor* visitor) override {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     FetchDataLoader::Trace(visitor);
@@ -172,7 +172,7 @@ class FetchDataLoaderAsArrayBuffer final : public FetchDataLoader,
 
   String DebugName() const override { return "FetchDataLoaderAsArrayBuffer"; }
 
-  void Trace(blink::Visitor* visitor) {
+  void Trace(blink::Visitor* visitor) override {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     FetchDataLoader::Trace(visitor);
@@ -228,7 +228,7 @@ class FetchDataLoaderAsFailure final : public FetchDataLoader,
 
   void Cancel() override { consumer_->Cancel(); }
 
-  void Trace(blink::Visitor* visitor) {
+  void Trace(blink::Visitor* visitor) override {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     FetchDataLoader::Trace(visitor);
@@ -313,7 +313,7 @@ class FetchDataLoaderAsFormData final : public FetchDataLoader,
     multipart_parser_->Cancel();
   }
 
-  void Trace(blink::Visitor* visitor) {
+  void Trace(blink::Visitor* visitor) override {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     visitor->Trace(form_data_);
@@ -466,7 +466,7 @@ class FetchDataLoaderAsString final : public FetchDataLoader,
 
   void Cancel() override { consumer_->Cancel(); }
 
-  void Trace(blink::Visitor* visitor) {
+  void Trace(blink::Visitor* visitor) override {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     FetchDataLoader::Trace(visitor);
@@ -558,7 +558,7 @@ class FetchDataLoaderAsDataPipe final : public FetchDataLoader,
 
   void Cancel() override { StopInternal(); }
 
-  void Trace(blink::Visitor* visitor) {
+  void Trace(blink::Visitor* visitor) override {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     FetchDataLoader::Trace(visitor);

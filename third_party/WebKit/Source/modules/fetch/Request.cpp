@@ -11,11 +11,11 @@
 #include "modules/fetch/FetchManager.h"
 #include "modules/fetch/RequestInit.h"
 #include "platform/bindings/V8PrivateProperty.h"
-#include "platform/http_names.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/network/HTTPParsers.h"
+#include "platform/network/http_names.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/OriginAccessEntry.h"
 #include "platform/weborigin/Referrer.h"
@@ -412,7 +412,7 @@ Request* Request::CreateRequestWithRequestOrString(
   // non-null, run these substeps:"
   if (input_request && input_request->BodyBuffer()) {
     // "Let |dummyStream| be an empty ReadableStream object."
-    auto dummy_stream =
+    auto* dummy_stream =
         new BodyStreamBuffer(script_state, BytesConsumer::CreateClosed());
     // "Set |input|'s request's body to a new body whose stream is
     // |dummyStream|."
