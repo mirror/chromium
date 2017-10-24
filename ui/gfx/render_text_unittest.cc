@@ -4121,8 +4121,7 @@ TEST_P(RenderTextTest, TextDoesntClip) {
       // revealed by the prior unit tests.
       // "TEST_______",
       "TEST some stuff", "WWWWWWWWWW", "gAXAXAXAXAXAXA",
-      // TODO(dschuyler): A-Ring draws outside GetStringSize; crbug.com/459812.
-      // "g\u00C5X\u00C5X\u00C5X\u00C5X\u00C5X\u00C5X\u00C5",
+      "g\u00C5X\u00C5X\u00C5X\u00C5X\u00C5X\u00C5X\u00C5",
       "\u0647\u0654\u0647\u0654\u0647\u0654\u0647\u0654\u0645\u0631\u062D"
       "\u0628\u0627"};
   const Size kCanvasSize(300, 50);
@@ -4140,11 +4139,11 @@ TEST_P(RenderTextTest, TextDoesntClip) {
   for (auto* string : kTestStrings) {
     paint_canvas.clear(SK_ColorWHITE);
     render_text->SetText(UTF8ToUTF16(string));
-    const Size string_size = render_text->GetStringSize();
     render_text->ApplyBaselineStyle(SUPERSCRIPT, Range(1, 2));
     render_text->ApplyBaselineStyle(SUPERIOR, Range(3, 4));
     render_text->ApplyBaselineStyle(INFERIOR, Range(5, 6));
     render_text->ApplyBaselineStyle(SUBSCRIPT, Range(7, 8));
+    const Size string_size = render_text->GetStringSize();
     render_text->SetWeight(Font::Weight::BOLD);
     render_text->SetDisplayRect(
         Rect(kTestSize, kTestSize, string_size.width(), string_size.height()));
@@ -4159,27 +4158,27 @@ TEST_P(RenderTextTest, TextDoesntClip) {
     TestRectangleBuffer rect_buffer(string, buffer, kCanvasSize.width(),
                                     kCanvasSize.height());
     {
-#if !defined(OS_CHROMEOS)
+//#if !defined(OS_CHROMEOS)
       int top_test_height = kTestSize;
-      // Windows 8+ and RenderTextMac (since 10.13) draw 1 pixel above the
-      // display rect.
-      if (IsWin8Plus() || GetParam() == RENDER_TEXT_MAC)
-        top_test_height = kTestSize - 1;
+//      // Windows 8+ and RenderTextMac (since 10.13) draw 1 pixel above the
+//      // display rect.
+//      if (IsWin8Plus() || GetParam() == RENDER_TEXT_MAC)
+//        top_test_height = kTestSize - 1;
 
       // TODO(dschuyler): On ChromeOS text draws above the GetStringSize rect.
       SCOPED_TRACE("TextDoesntClip Top Side");
       rect_buffer.EnsureSolidRect(SK_ColorWHITE, 0, 0, kCanvasSize.width(),
                                   top_test_height);
-#endif // !OS_CHROMEOS
+//#endif // !OS_CHROMEOS
     }
     {
       int bottom_test_y = kTestSize + string_size.height();
       int bottom_test_height = kTestSize;
-      // Windows 8+ draws 1 pixel below the display rect.
-      if (IsWin8Plus()) {
-        bottom_test_y = kTestSize + string_size.height() + 1;
-        bottom_test_height = kTestSize - 1;
-      }
+//      // Windows 8+ draws 1 pixel below the display rect.
+//      if (IsWin8Plus()) {
+//        bottom_test_y = kTestSize + string_size.height() + 1;
+//        bottom_test_height = kTestSize - 1;
+//      }
       SCOPED_TRACE("TextDoesntClip Bottom Side");
       rect_buffer.EnsureSolidRect(SK_ColorWHITE, 0, bottom_test_y,
                                   kCanvasSize.width(), bottom_test_height);
