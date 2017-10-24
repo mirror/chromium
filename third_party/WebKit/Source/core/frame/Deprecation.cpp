@@ -613,6 +613,72 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
     case WebFeature::kWebAudioDezipperBiquadFilterNodeGain:
       return DeprecatedWebAudioDezippering("BiquadFilterNode.gain");
 
+    case WebFeature::kChromeLoadTimesRequestTime:
+      return String(
+          "chrome.loadTimes().requestTime is deprecated, instead use "
+          "standardized API: Navigation Timing 2. "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesStartLoadTime:
+      return String(
+          "chrome.loadTimes().startLoadTime is deprecated, instead use "
+          "standardized API: Navigation Timing 2. "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesCommitLoadTime:
+      return String(
+          "chrome.loadTimes().commitLoadTime is deprecated, instead use "
+          "standardized API: Navigation Timing 2. "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesFinishDocumentLoadTime:
+      return String(
+          "chrome.loadTimes().finishDocumentLoadTime is deprecated, instead "
+          "use standardized API: Navigation Timing 2. "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesFinishLoadTime:
+      return String(
+          "chrome.loadTimes().finishLoadTime is deprecated, instead use "
+          "standardized API: Navigation Timing 2. "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesFirstPaintTime:
+      return String(
+          "chrome.loadTimes().firstPaintTime is deprecated, instead use "
+          "standardized API: Paint Timing. "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesFirstPaintAfterLoadTime:
+      return String(
+          "chrome.loadTimes().firstPaintAfterLoadTime is deprecated, instead "
+          "use standardized API: Paint Timing. "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesNavigationType:
+      return String(
+          "chrome.loadTimes().navigationType is deprecated, instead use "
+          "standardized API: Navigation Timing 2. "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesWasFetchedViaSpdy:
+      return String(
+          "chrome.loadTimes().wasFetchedViaSpdy is deprecated, instead use "
+          "standardized API: Navigation Timing 2 (nextHopProtocol) "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesWasNpnNegotiated:
+      return String(
+          "chrome.loadTimes().wasNpnNegotiated is deprecated, instead use "
+          "standardized API: Navigation Timing 2 (nextHopProtocol). "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesNpnNegotiatedProtocol:
+      return String(
+          "chrome.loadTimes().npnNegotiatedProtocol is deprecated, instead use "
+          "standardized API: Navigation Timing 2 (nextHopProtocol). "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesWasAlternateProtocolAvailable:
+      return String(
+          "chrome.loadTimes().wasAlternateProtocolAvailable is deprecated, "
+          "instead use standardized API: Navigation Timing 2 "
+          "(nextHopProtocol). "
+          "https://www.chromestatus.com/features/5637885046816768");
+    case WebFeature::kChromeLoadTimesConnectionInfo:
+      return String(
+          "chrome.loadTimes().connectionInfo is deprecated, instead use "
+          "standardized API: Navigation Timing 2. "
+          "https://www.chromestatus.com/features/5637885046816768");
     // Features that aren't deprecated don't have a deprecation message.
     default:
       return String();
