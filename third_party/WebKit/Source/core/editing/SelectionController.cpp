@@ -50,10 +50,14 @@
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/inline/ng_offset_mapping_result.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
+#include "platform/text/TextBoundaries.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/AutoReset.h"
+#include "platform/wtf/Optional.h"
 #include "public/platform/WebMenuSourceType.h"
 #include "public/web/WebSelection.h"
 
@@ -551,6 +555,205 @@ bool SelectionController::UpdateSelectionForMouseDownDispatchingSelectStart(
   return true;
 }
 
+static String Ensure16Bit(const String& string) {
+  String result(string);
+  result.Ensure16Bit();
+  return result;
+}
+
+// TODO(layout-dev): |CanBeUseForMapping()| should be static member of
+// |NGOffsetMappingResult|. |AdjustPositionForMapping()| uses it.
+// Returns true for associated layout of |node| object which
+// yields |kObjectReplacementCharacter| in text content in
+// |NGInlineNode::CollectInlines()|.
+static bool CanBeUseForMapping(const Node& node) {
+  const LayoutObject* const layout_object = node.GetLayoutObject();
+  if (!layout_object)
+    return false;
+  return node.IsTextNode() || layout_object->IsAtomicInlineLevel() ||
+         layout_object->IsFloating();
+}
+
+// TODO(layout-dev): |NGOffsetMappingResult| should have
+// |ComputeTextContentOffset()|.
+static Optional<unsigned> ComputeTextContentOffset(
+    const NGOffsetMappingResult& mapping,
+    const PositionInFlatTree& position) {
+  DCHECK(position.IsNotNull());
+  const Node& node = *position.AnchorNode();
+  DCHECK(CanBeUseForMapping(node)) << position;
+  if (position.IsOffsetInAnchor()) {
+    DCHECK(!node.IsTextNode());
+    const NGOffsetMappingUnit* const unit = mapping.GetMappingUnitForDOMOffset(
+        node, position.OffsetInContainerNode());
+    DCHECK(unit) << position;
+    return unit->ConvertDOMOffsetToTextContent(
+        position.OffsetInContainerNode());
+  }
+  if (position.IsBeforeAnchor()) {
+    DCHECK(!node.IsTextNode());
+    const NGOffsetMappingUnit* const unit =
+        mapping.GetMappingUnitForDOMOffset(node, 0);
+    DCHECK(unit) << position;
+    return unit->TextContentStart();
+  }
+  if (position.IsAfterAnchor()) {
+    DCHECK(!node.IsTextNode());
+    const NGOffsetMappingUnit* const unit =
+        mapping.GetMappingUnitForDOMOffset(node, 0);
+    DCHECK(unit) << position;
+    return unit->TextContentEnd();
+  }
+  NOTREACHED() << "unsupported anchor type: " << position;
+  return {};
+}
+
+static PositionInFlatTree AdjustPositionForMapping(
+    const PositionInFlatTree& position,
+    const LayoutBlockFlow& block) {
+  DCHECK(block.IsLayoutNGMixin());
+  DCHECK(block.GetNGInlineNodeData());
+  if (position.IsNull())
+    return position;
+  const Node& node = *position.AnchorNode();
+  switch (position.AnchorType()) {
+    case PositionAnchorType::kAfterAnchor: {
+      if (node.IsTextNode())
+        return {node, static_cast<int>(ToText(node).length())};
+      if (CanBeUseForMapping(node))
+        return position;
+      if (node.GetLayoutObject() == block)
+        return {};
+      const Node* const next_sibling = FlatTreeTraversal::NextSibling(node);
+      if (next_sibling) {
+        return AdjustPositionForMapping(
+            PositionInFlatTree::BeforeNode(*next_sibling), block);
+      }
+      return AdjustPositionForMapping(PositionInFlatTree::BeforeNode(node),
+                                      block);
+    }
+    case PositionAnchorType::kAfterChildren:
+      if (node.GetLayoutObject() == block)
+        return {};
+      return AdjustPositionForMapping(PositionInFlatTree::AfterNode(node),
+                                      block);
+    case PositionAnchorType::kBeforeChildren:
+      if (node.GetLayoutObject() == block)
+        return {};
+      return AdjustPositionForMapping(PositionInFlatTree::BeforeNode(node),
+                                      block);
+    case PositionAnchorType::kBeforeAnchor: {
+      if (node.IsTextNode())
+        return {node, 0};
+      if (CanBeUseForMapping(node))
+        return position;
+      if (node.GetLayoutObject() == block)
+        return {};
+      const Node* const previous_sibling =
+          FlatTreeTraversal::PreviousSibling(node);
+      if (previous_sibling) {
+        return AdjustPositionForMapping(
+            PositionInFlatTree::AfterNode(*previous_sibling), block);
+      }
+      const Node* const parent = FlatTreeTraversal::Parent(node);
+      if (!parent || parent->GetLayoutObject() == block)
+        return {};
+      return AdjustPositionForMapping(PositionInFlatTree::BeforeNode(*parent),
+                                      block);
+    }
+    case PositionAnchorType::kOffsetInAnchor: {
+      if (node.IsTextNode())
+        return position;
+      const Node* const child =
+          FlatTreeTraversal::ChildAt(node, position.OffsetInContainerNode());
+      if (child) {
+        return AdjustPositionForMapping(PositionInFlatTree::BeforeNode(*child),
+                                        block);
+      }
+      return AdjustPositionForMapping(PositionInFlatTree::BeforeNode(node),
+                                      block);
+    }
+  }
+  NOTREACHED() << position;
+  return {};
+}
+
+static bool IsEmptyWordRange(const EphemeralRangeInFlatTree range) {
+  const String& str = PlainText(
+      range, TextIteratorBehavior::Builder()
+                 .SetEmitsObjectReplacementCharacter(
+                     HasEditableStyle(*range.StartPosition().AnchorNode()))
+                 .Build());
+  return str.IsEmpty() || str.SimplifyWhiteSpace().ContainsOnlyWhitespace();
+}
+
+// TODO(editing-dev): We should avoid selecting whitespaces for touch.
+// See call site in |SelectClosestWordFromHitTestResult|.
+EphemeralRangeInFlatTree ComputeWordAroundPosition(
+    const PositionInFlatTree& position,
+    AppendTrailingWhitespace append_trailing_whitespace) {
+  DCHECK(position.IsNotNull());
+  LayoutObject* const layout_object =
+      position.ComputeContainerNode()->GetLayoutObject();
+  if (!layout_object)
+    return {};
+  LayoutBlockFlow* const block = layout_object->EnclosingNGBlockFlow();
+  if (!block || block->GetNGInlineNodeData()) {
+    // For Legacy Layout Tree
+    const VisibleSelectionInFlatTree& visible_selection =
+        CreateVisibleSelectionWithGranularity(
+            SelectionInFlatTree::Builder().Collapse(position).Build(),
+            TextGranularity::kWord);
+    if (visible_selection.IsNone())
+      return {};
+    // TODO(editing-dev): Fix CreateVisibleSelectionWithGranularity() to not
+    // return invalid ranges. Until we do that, we need this check here to avoid
+    // a renderer crash when we call PlainText() below (see crbug.com/735774).
+    if (visible_selection.Start() > visible_selection.End())
+      return {};
+    if (append_trailing_whitespace == AppendTrailingWhitespace::kDontAppend) {
+      return EphemeralRangeInFlatTree(visible_selection.Start(),
+                                      visible_selection.End());
+    }
+    const SelectionInFlatTree& adjusted_selection =
+        AdjustSelectionWithTrailingWhitespace(visible_selection.AsSelection());
+    return EphemeralRangeInFlatTree(adjusted_selection.ComputeStartPosition(),
+                                    adjusted_selection.ComputeEndPosition());
+  }
+
+  // For Layout NG
+
+  const PositionInFlatTree position_for_mapping =
+      AdjustPositionForMapping(position, *block);
+  DCHECK(block->ChildrenInline()) << position;
+  NGInlineNode inline_node(block);
+  const NGOffsetMappingResult& mapping =
+      inline_node.ComputeOffsetMappingIfNeeded();
+  const Optional<unsigned> maybe_offset =
+      ComputeTextContentOffset(mapping, position_for_mapping);
+  if (maybe_offset.has_value())
+    return {};
+  // TODO(editing-dev): Exclude visibility:hidden from text content.
+  const String& text_in_logical_order = Ensure16Bit(inline_node.Text());
+  const std::pair<int, int> offsets = FindWordBoundary(
+      text_in_logical_order.Characters16(), text_in_logical_order.length(),
+      maybe_offset.value(), append_trailing_whitespace);
+  DCHECK_GE(offsets.first, 0);
+  DCHECK_GE(offsets.second, 0);
+  DCHECK_LT(offsets.first, offsets.second);
+  const PositionInFlatTree start =
+      ToPositionInFlatTree(mapping.MapToPosition(offsets.first));
+  const PositionInFlatTree end =
+      ToPositionInFlatTree(mapping.MapToPosition(offsets.second));
+  // TODO(editing-dev): Check |FindWordBoundary()| returns
+  // whitespace run.
+  // TODO(editing-dev): Returns range of end tag at end of
+  // block.
+  // TODO(editing-dev): Adjust editing boundary.
+  DCHECK_LT(start, end);
+  return EphemeralRangeInFlatTree(start, end);
+}
+
 bool SelectionController::SelectClosestWordFromHitTestResult(
     const HitTestResult& result,
     AppendTrailingWhitespace append_trailing_whitespace,
@@ -573,50 +776,34 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
 
   const VisiblePositionInFlatTree& pos =
       VisiblePositionOfHitTestResult(adjusted_hit_test_result);
-  const VisibleSelectionInFlatTree& new_selection =
-      pos.IsNotNull() ? CreateVisibleSelectionWithGranularity(
-                            SelectionInFlatTree::Builder()
-                                .Collapse(pos.ToPositionWithAffinity())
-                                .Build(),
-                            TextGranularity::kWord)
-                      : VisibleSelectionInFlatTree();
-
-  // TODO(editing-dev): Fix CreateVisibleSelectionWithGranularity() to not
-  // return invalid ranges. Until we do that, we need this check here to avoid a
-  // renderer crash when we call PlainText() below (see crbug.com/735774).
-  if (new_selection.IsNone() || new_selection.Start() > new_selection.End())
+  const EphemeralRangeInFlatTree range = ComputeWordAroundPosition(
+      pos.DeepEquivalent(), append_trailing_whitespace);
+  if (range.IsNull())
     return false;
 
-  HandleVisibility visibility = HandleVisibility::kNotVisible;
   if (select_input_event_type == SelectInputEventType::kTouch) {
     // If node doesn't have text except space, tab or line break, do not
     // select that 'empty' area.
-    EphemeralRangeInFlatTree range(new_selection.Start(), new_selection.End());
-    const String& str = PlainText(
-        range,
-        TextIteratorBehavior::Builder()
-            .SetEmitsObjectReplacementCharacter(HasEditableStyle(*inner_node))
-            .Build());
-    if (str.IsEmpty() || str.SimplifyWhiteSpace().ContainsOnlyWhitespace())
+    if (IsEmptyWordRange(range))
       return false;
 
-    Element* const editable = new_selection.RootEditableElement();
+    Element* const editable = RootEditableElementOf(range.StartPosition());
     if (editable && pos.DeepEquivalent() ==
                         VisiblePositionInFlatTree::LastPositionInNode(*editable)
                             .DeepEquivalent())
       return false;
-
-    visibility = HandleVisibility::kVisible;
   }
 
-  const SelectionInFlatTree& adjusted_selection =
-      append_trailing_whitespace == AppendTrailingWhitespace::kShouldAppend
-          ? AdjustSelectionWithTrailingWhitespace(new_selection.AsSelection())
-          : new_selection.AsSelection();
+  const HandleVisibility visibility =
+      select_input_event_type == SelectInputEventType::kTouch
+          ? HandleVisibility::kVisible
+          : HandleVisibility::kNotVisible;
 
   return UpdateSelectionForMouseDownDispatchingSelectStart(
       inner_node,
-      ExpandSelectionToRespectUserSelectAll(inner_node, adjusted_selection),
+      ExpandSelectionToRespectUserSelectAll(
+          inner_node,
+          SelectionInFlatTree::Builder().SetBaseAndExtent(range).Build()),
       TextGranularity::kWord, visibility);
 }
 

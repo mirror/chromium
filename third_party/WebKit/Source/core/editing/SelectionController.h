@@ -40,6 +40,8 @@ namespace blink {
 class HitTestResult;
 class LocalFrame;
 
+enum class AppendTrailingWhitespace;
+
 class CORE_EXPORT SelectionController final
     : public GarbageCollectedFinalized<SelectionController>,
       public DocumentShutdownObserver {
@@ -85,7 +87,6 @@ class CORE_EXPORT SelectionController final
 
   explicit SelectionController(LocalFrame&);
 
-  enum class AppendTrailingWhitespace { kShouldAppend, kDontAppend };
   enum class SelectInputEventType { kTouch, kMouse };
   enum EndPointsAdjustmentMode {
     kAdjustEndpointsAtBidiBoundary,
