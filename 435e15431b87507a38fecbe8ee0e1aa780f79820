@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b92f5f2_988f1d6b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 19598,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-24T17:58:11Z",
+      "side": 1,
+      "message": "double checking - this is meant to be GSU?",
+      "revId": "435e15431b87507a38fecbe8ee0e1aa780f79820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a555560_eea440f3",
+        "filename": "tools/metrics/rappor/rappor.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-24T17:58:11Z",
+      "side": 1,
+      "message": "2",
+      "revId": "435e15431b87507a38fecbe8ee0e1aa780f79820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c40b3a_71fb3054",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-24T17:58:11Z",
+      "side": 1,
+      "message": "did you want to add yourself (or tim?) as owners here?",
+      "revId": "435e15431b87507a38fecbe8ee0e1aa780f79820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
