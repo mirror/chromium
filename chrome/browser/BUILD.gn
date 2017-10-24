@@ -2883,7 +2883,10 @@ split_static_library("browser") {
       "web_applications/web_app_linux.cc",
     ]
 
-    deps += [ "//third_party/speech-dispatcher" ]
+    deps += [
+      "//components/dbus_thread",
+      "//third_party/speech-dispatcher",
+    ]
 
     if (enable_native_notifications) {
       sources += [

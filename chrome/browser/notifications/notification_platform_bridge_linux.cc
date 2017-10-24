@@ -33,6 +33,7 @@
 #include "chrome/grit/chrome_unscaled_resources.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/dbus_thread/dbus_thread.h"
 #include "components/url_formatter/elide_url.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
@@ -263,12 +264,7 @@ class NotificationPlatformBridgeLinuxImpl
   explicit NotificationPlatformBridgeLinuxImpl(scoped_refptr<dbus::Bus> bus)
       : bus_(bus) {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-    // While the tasks in NotificationPlatformBridgeLinux merely need
-    // to run in sequence, many APIs in ::dbus are required to be
-    // called from the same thread (https://crbug.com/130984), so
-    // |task_runner_| is created as the single-threaded flavor.
-    task_runner_ = base::CreateSingleThreadTaskRunnerWithTraits(
-        {base::MayBlock(), base::TaskPriority::USER_BLOCKING});
+    task_runner_ = dbus_thread::GetTaskRunner();
     registrar_.Add(this, chrome::NOTIFICATION_APP_TERMINATING,
                    content::NotificationService::AllSources());
   }
