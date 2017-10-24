@@ -578,6 +578,8 @@ split_static_library("browser") {
     "loader/chrome_resource_dispatcher_host_delegate.h",
     "loader/predictor_resource_throttle.cc",
     "loader/predictor_resource_throttle.h",
+    "mac/assertion_handler.h",
+    "mac/assertion_handler.mm",
     "mac/bluetooth_utility.h",
     "mac/bluetooth_utility.mm",
     "mac/dock.h",

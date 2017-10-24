@@ -13,6 +13,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/trace_event/trace_event.h"
 #import "chrome/browser/app_controller_mac.h"
+#import "chrome/browser/mac/assertion_handler.h"
 #import "chrome/browser/mac/exception_processor.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/crash_keys.h"
@@ -48,6 +49,7 @@ void CancelTerminate() {
   // the most recent 10,000 of them on the treadmill.
   ObjcEvilDoers::ZombieEnable(true, 10000);
 
+  chrome::InstallNSAssertionHandlerOnThread();
   chrome::InstallObjcExceptionPreprocessor();
 }
 
