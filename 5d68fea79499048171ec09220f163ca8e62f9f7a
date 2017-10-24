@@ -164,6 +164,172 @@
       "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04915013_9fedd6a3",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T21:03:45Z",
+      "side": 1,
+      "message": "I don\u0027t think I understand the synchronization of this variable. You are grabbing a lock here before resetting. How do you guarantee the write isn\u0027t going to be sheered?",
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad081e7_644b26a0",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T21:03:45Z",
+      "side": 1,
+      "message": "const?  Or just remove all these extra constants that have only one user?",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 18
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63531d3d_3a334ddb",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T21:03:45Z",
+      "side": 1,
+      "message": "justfify with the rest of the // comments.",
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0272e357_e201c851",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T21:03:45Z",
+      "side": 1,
+      "message": "Why bother with the constant here?\n\nIn fact, for most of these mode constants, I\u0027m not sure it\u0027s clearier with a const pulled out?",
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca640b5_da5dec7f",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T21:03:45Z",
+      "side": 1,
+      "message": "nit: use \u003d\u003d 0 if it\u0027s semantically supposed to return 0.",
+      "range": {
+        "startLine": 74,
+        "startChar": 55,
+        "endLine": 74,
+        "endChar": 62
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c67bd88_03b9c066",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T21:03:45Z",
+      "side": 1,
+      "message": "I *think* you\u0027re using g_waiting_for_write to synchronize with the global callback on the assumption that the lock serializes all callers. Thus, I think you should DCHECK this is false?\n\nAlso, can this timeout logic just be done via SetCommTimeouts() on the handle instead of moving to async writes?\n  https://msdn.microsoft.com/en-us/library/windows/desktop/aa365747(v\u003dvs.85).aspx\n \n(FYI, I\u0027m just reading the docs so I have no experience here...)",
+      "range": {
+        "startLine": 100,
+        "startChar": 5,
+        "endLine": 100,
+        "endChar": 11
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcacf61_bc5259e6",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T21:03:45Z",
+      "side": 1,
+      "message": "What happens if you get woken up by a different AsyncIO on this thread?\n\nI think you need to check g_waiting_for_write here and loop?",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 21
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee98495_626d29be",
+        "filename": "chrome/common/profiling/profiling_client.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T21:03:45Z",
+      "side": 1,
+      "message": "10000 is a magic number. Make a constant?",
+      "range": {
+        "startLine": 56,
+        "startChar": 62,
+        "endLine": 56,
+        "endChar": 63
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
