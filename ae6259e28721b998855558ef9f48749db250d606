@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "735bd25c_a9065be7",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-10-24T20:46:29Z",
+      "side": 1,
+      "message": "Referring to https://cs.chromium.org/chromium/src/cc/layers/picture_layer_impl.cc?rcl\u003d21c822a677b5424cba1219b3722c20f988208819\u0026l\u003d848, PictureLayerImpl\u0027s tile texture size is rounded up by kTileRoundUp(64) or kGpuDefaultTileRoundUp(32) to allow reusing, by default the size is usually 256*256 even if the quad-\u003erect is not. But mask layer used to be an exception that a single texture mask\u0027s texture size is exactly the content_rect.size().\n\nFor example, for a 800*800 mask layer which has 16 tiles, 4 of them are TILED_CONTENT.\nBefore mask tiling the memory usage is 800 * 800 * 4 / 1024 \u003d 2500KB.\nAfter mask tiling the memory usage is 4 * 256 * 256 * 4 / 1024 \u003d 1024KB.\n\nSo we actually saved an area of (800 * 800 - 4＊256 * 256) instead of the total area of solid color quads (12 * 256 * 256).",
+      "parentUuid": "5a007a98_841552e3",
+      "range": {
+        "startLine": 577,
+        "startChar": 34,
+        "endLine": 577,
+        "endChar": 71
+      },
+      "revId": "ae6259e28721b998855558ef9f48749db250d606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1b2f435_7d6775ae",
         "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-24T20:18:56Z",
       "side": 1,
       "message": "If we would have used 256 width * 256 height * 16 tiles * 4 bytes per pixel and we only used 256 * 4 tiles * 4 bytes per pixel this should be saving 3072 shouldn\u0027t it?",
+      "revId": "ae6259e28721b998855558ef9f48749db250d606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abfaa8b9_8ffb33f9",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-10-24T20:46:29Z",
+      "side": 1,
+      "message": "See the above comment. I think the reason is that single texture mask\u0027s tile texture size is not rounded up, it uses exactly the same size as its content rect.",
+      "parentUuid": "c1b2f435_7d6775ae",
       "revId": "ae6259e28721b998855558ef9f48749db250d606",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "afb2826a_135ef295",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-10-24T20:46:29Z",
+      "side": 1,
+      "message": "This is just to avoid overflow of the size_t variable. It is negative (usually -100KB-ish) if the mask layer\u0027s size is smaller than minimum rounded up size. While I think it\u0027s fine to take that into consideration, adding the condition shows us how we are doing with extreme cases.",
+      "parentUuid": "8bdbfde9_7879eb25",
+      "revId": "05a4ab37f59978f81e56c887cc6f90c7b3f8c1dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfc1523b_b798b631",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 2
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "03d93bf8_26b23d2e",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-10-24T20:46:29Z",
+      "side": 1,
+      "message": "Sure I\u0027ll add some statistic logic in picture_layer_impl.cc. But I don\u0027t know if the saved amount of general picture layer swould overwhelm that of mask layers.",
+      "parentUuid": "dfc1523b_b798b631",
+      "revId": "05a4ab37f59978f81e56c887cc6f90c7b3f8c1dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36eb8a48_ed543ee3",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 2
@@ -82,6 +118,24 @@
       "writtenOn": "2017-10-24T20:18:56Z",
       "side": 1,
       "message": "Do you think that we need to know mask tiling memory usage specifically if we know the total GPU memory usage?",
+      "revId": "05a4ab37f59978f81e56c887cc6f90c7b3f8c1dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d13c97a_719f9a33",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-10-24T20:46:29Z",
+      "side": 1,
+      "message": "I think we can skip this one. The saved memory metric would reflect the improvement though it may not be very precise.",
+      "parentUuid": "36eb8a48_ed543ee3",
       "revId": "05a4ab37f59978f81e56c887cc6f90c7b3f8c1dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
