@@ -62,7 +62,7 @@ static const SkColor kLabelColor = SK_ColorWHITE;
 static const SkColor kCloseButtonColor = SK_ColorWHITE;
 
 // Label background color once in overview mode.
-static const SkColor kLabelBackgroundColor = SkColorSetARGB(25, 255, 255, 255);
+static const SkColor kLabelBackgroundColor = SK_ColorBLACK;
 
 // Label background color when exiting overview mode.
 static const SkColor kLabelExitColor = SkColorSetARGB(255, 90, 90, 90);
@@ -83,8 +83,7 @@ static const float kDimmedItemOpacity = 0.5f;
 static const float kClosingItemOpacity = 0.8f;
 
 // Opacity for the item header.
-static const float kHeaderOpacity =
-    (SkColorGetA(kLabelBackgroundColor) / 255.f);
+static const float kHeaderOpacity = 25.f / 255.f;
 
 // Duration it takes for the header to shift from opaque header color to
 // |kLabelBackgroundColor|.
@@ -636,13 +635,19 @@ float WindowSelectorItem::GetItemScale(const gfx::Size& size) {
 
 void WindowSelectorItem::HandlePressEvent(
     const gfx::Point& location_in_screen) {
+  // Make the background opaque while dragging.
+  background_view_->set_color(SkColorSetA(kLabelBackgroundColor, 255));
+  window_grid_->SetSelectionWidgetVisibility(false);
   StartDrag();
   window_selector_->InitiateDrag(this, location_in_screen);
 }
 
 void WindowSelectorItem::HandleReleaseEvent(
     const gfx::Point& location_in_screen) {
+  background_view_->set_color(SkColorSetA(
+      kLabelBackgroundColor, static_cast<int>(kHeaderOpacity * 255.f)));
   EndDrag();
+  window_grid_->SetSelectionWidgetVisibility(true);
   window_selector_->CompleteDrag(this, location_in_screen);
 }
 
@@ -751,7 +756,8 @@ void WindowSelectorItem::UpdateHeaderLayout(
   if (background_view_) {
     if (mode == HeaderFadeInMode::ENTER) {
       background_view_->ObserveLayerAnimations(item_widget_->GetLayer());
-      background_view_->set_color(kLabelBackgroundColor);
+      background_view_->set_color(SkColorSetA(
+          kLabelBackgroundColor, static_cast<int>(kHeaderOpacity * 255.f)));
       // The color will be animated only once the label widget is faded in.
     } else if (mode == HeaderFadeInMode::EXIT) {
       // Normally the observer is disconnected when the fade-in animations
