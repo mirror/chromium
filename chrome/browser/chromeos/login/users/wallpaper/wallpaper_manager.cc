@@ -654,6 +654,12 @@ base::FilePath WallpaperManager::GetCustomWallpaperDir(const char* sub_dir) {
 }
 
 // static
+WallpaperInfo WallpaperManager::GetDefaultWallpaperInfo() {
+  return WallpaperInfo(std::string(), wallpaper::WALLPAPER_LAYOUT_CENTER,
+                       wallpaper::DEFAULT, base::Time::Now().LocalMidnight());
+}
+
+// static
 void WallpaperManager::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterDictionaryPref(kUsersWallpaperInfo);
 }
@@ -781,7 +787,7 @@ void WallpaperManager::SetCustomWallpaper(
   // If decoded wallpaper is empty, we have probably failed to decode the file.
   // Use default wallpaper in this case.
   if (image.isNull()) {
-    SetDefaultWallpaperDelayed(account_id);
+    SetDefaultWallpaper(account_id);
     return;
   }
 
@@ -833,36 +839,9 @@ void WallpaperManager::SetCustomWallpaper(
   wallpaper_cache_[account_id] = CustomWallpaperElement(wallpaper_path, image);
 }
 
-void WallpaperManager::SetDefaultWallpaper(const AccountId& account_id,
-                                           bool update_wallpaper) {
-  RemoveUserWallpaperInfo(account_id);
-
-  const wallpaper::WallpaperInfo info = {
-      std::string(), wallpaper::WALLPAPER_LAYOUT_CENTER, wallpaper::DEFAULT,
-      base::Time::Now().LocalMidnight()};
-  const bool is_persistent =
-      !user_manager::UserManager::Get()->IsUserNonCryptohomeDataEphemeral(
-          account_id);
-  SetUserWallpaperInfo(account_id, info, is_persistent);
-
-  if (update_wallpaper)
-    SetDefaultWallpaperNow(account_id);
-}
-
-void WallpaperManager::SetDefaultWallpaperNow(const AccountId& account_id) {
-  GetPendingWallpaper(account_id, false)->ResetSetDefaultWallpaper();
-}
-
-void WallpaperManager::SetDefaultWallpaperDelayed(const AccountId& account_id) {
-  GetPendingWallpaper(account_id, true)->ResetSetDefaultWallpaper();
-}
-
-void WallpaperManager::SetUserWallpaperNow(const AccountId& account_id) {
-  ScheduleSetUserWallpaper(account_id, false);
-}
-
-void WallpaperManager::SetUserWallpaperDelayed(const AccountId& account_id) {
-  ScheduleSetUserWallpaper(account_id, true);
+void WallpaperManager::SetDefaultWallpaper(const AccountId& account_id) {
+  GetPendingWallpaper(account_id, true /* delayed */)
+      ->ResetSetDefaultWallpaper();
 }
 
 void WallpaperManager::SetUserWallpaperInfo(const AccountId& account_id,
@@ -928,12 +907,12 @@ void WallpaperManager::InitializeWallpaper() {
 
   if (!user_manager->IsUserLoggedIn()) {
     if (!StartupUtils::IsDeviceRegistered())
-      SetDefaultWallpaperDelayed(user_manager::SignInAccountId());
+      SetDefaultWallpaper(user_manager::SignInAccountId());
     else
       InitializeRegisteredDeviceWallpaper();
     return;
   }
-  SetUserWallpaperDelayed(user_manager->GetActiveUser()->GetAccountId());
+  SetUserWallpaper(user_manager->GetActiveUser()->GetAccountId());
 }
 
 void WallpaperManager::UpdateWallpaper(bool clear_cache) {
@@ -942,13 +921,13 @@ void WallpaperManager::UpdateWallpaper(bool clear_cache) {
   // be set. It could result a black screen on external monitors.
   // See http://crbug.com/265689 for detail.
   if (last_selected_user_.empty())
-    SetDefaultWallpaperNow(user_manager::SignInAccountId());
+    SetDefaultWallpaper(user_manager::SignInAccountId());
 
   for (auto& observer : observers_)
     observer.OnUpdateWallpaperForTesting();
   if (clear_cache)
     wallpaper_cache_.clear();
-  SetUserWallpaperNow(last_selected_user_);
+  SetUserWallpaper(last_selected_user_);
 }
 
 bool WallpaperManager::IsPendingWallpaper(uint32_t image_id) {
@@ -1015,7 +994,7 @@ void WallpaperManager::EnsureLoggedInUserWallpaperLoaded() {
     if (info == current_user_wallpaper_info_)
       return;
   }
-  SetUserWallpaperNow(
+  SetUserWallpaper(
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId());
 }
 
@@ -1111,7 +1090,7 @@ void WallpaperManager::OnPolicyCleared(const std::string& policy,
   // If we're at the login screen, do not change the wallpaper but defer it
   // until the user logs in to the system.
   if (user_manager::UserManager::Get()->IsUserLoggedIn())
-    SetDefaultWallpaperNow(account_id);
+    SetDefaultWallpaper(account_id);
 }
 
 void WallpaperManager::SetCustomizedDefaultWallpaper(
@@ -1212,7 +1191,7 @@ void WallpaperManager::Observe(int type,
 }
 
 void WallpaperManager::OnChildStatusChanged(const user_manager::User& user) {
-  SetUserWallpaperNow(user.GetAccountId());
+  SetUserWallpaper(user.GetAccountId());
 }
 
 void WallpaperManager::OnWindowActivated(ActivationReason reason,
@@ -1574,7 +1553,7 @@ void WallpaperManager::InitializeRegisteredDeviceWallpaper() {
       !HasNonDeviceLocalAccounts(users)) {
     // Boot into sign in form, preload default wallpaper.
     if (!SetDeviceWallpaperIfApplicable(user_manager::SignInAccountId()))
-      SetDefaultWallpaperDelayed(user_manager::SignInAccountId());
+      SetDefaultWallpaper(user_manager::SignInAccountId());
     return;
   }
 
@@ -1583,7 +1562,7 @@ void WallpaperManager::InitializeRegisteredDeviceWallpaper() {
     // Normal boot, load user wallpaper.
     // If normal boot animation is disabled wallpaper would be set
     // asynchronously once user pods are loaded.
-    SetUserWallpaperDelayed(users[index]->GetAccountId());
+    SetUserWallpaper(users[index]->GetAccountId());
   }
 }
 
@@ -1800,8 +1779,7 @@ void WallpaperManager::OnWallpaperDecoded(
     SetWallpaper(user_image->image(), info);
 }
 
-void WallpaperManager::ScheduleSetUserWallpaper(const AccountId& account_id,
-                                                bool delayed) {
+void WallpaperManager::SetUserWallpaper(const AccountId& account_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // Some unit tests come here without a UserManager or without a pref system.
   if (!user_manager::UserManager::IsInitialized() ||
@@ -1830,7 +1808,8 @@ void WallpaperManager::ScheduleSetUserWallpaper(const AccountId& account_id,
        user->HasGaiaAccount()) ||
       user->GetType() == user_manager::USER_TYPE_GUEST) {
     InitInitialUserWallpaper(account_id, false);
-    GetPendingWallpaper(account_id, delayed)->ResetSetDefaultWallpaper();
+    GetPendingWallpaper(account_id, true /* delayed */)
+        ->ResetSetDefaultWallpaper();
     if (base::SysInfo::IsRunningOnChromeOS()) {
       LOG(ERROR)
           << "User is ephemeral or guest! Fallback to default wallpaper.";
@@ -1850,13 +1829,14 @@ void WallpaperManager::ScheduleSetUserWallpaper(const AccountId& account_id,
   gfx::ImageSkia user_wallpaper;
   current_user_wallpaper_info_ = info;
   if (GetWallpaperFromCache(account_id, &user_wallpaper)) {
-    GetPendingWallpaper(account_id, delayed)
+    GetPendingWallpaper(account_id, true /* delayed */)
         ->ResetSetWallpaperImage(user_wallpaper, info);
   } else {
     if (info.location.empty()) {
       // Uses default built-in wallpaper when file is empty. Eventually, we
       // will only ship one built-in wallpaper in ChromeOS image.
-      GetPendingWallpaper(account_id, delayed)->ResetSetDefaultWallpaper();
+      GetPendingWallpaper(account_id, true /* delayed */)
+          ->ResetSetDefaultWallpaper();
       return;
     }
 
@@ -1889,13 +1869,14 @@ void WallpaperManager::ScheduleSetUserWallpaper(const AccountId& account_id,
           CustomWallpaperElement(wallpaper_path, gfx::ImageSkia());
       loaded_wallpapers_for_test_++;
 
-      GetPendingWallpaper(account_id, delayed)
+      GetPendingWallpaper(account_id, true /* delayed */)
           ->ResetSetCustomWallpaper(info, wallpaper_path);
       return;
     }
 
     // Load downloaded ONLINE or converted DEFAULT wallpapers.
-    GetPendingWallpaper(account_id, delayed)->ResetLoadWallpaper(info);
+    GetPendingWallpaper(account_id, true /* delayed */)
+        ->ResetLoadWallpaper(info);
   }
 }
 
@@ -2306,7 +2287,7 @@ void WallpaperManager::OnDeviceWallpaperDownloaded(const AccountId& account_id,
   if (!success) {
     LOG(ERROR) << "Failed to download the device wallpaper. Fallback to "
                   "default wallpaper.";
-    SetDefaultWallpaperDelayed(account_id);
+    SetDefaultWallpaper(account_id);
     return;
   }
 
@@ -2338,7 +2319,7 @@ void WallpaperManager::OnCheckDeviceWallpaperMatchHash(
     } else {
       LOG(ERROR) << "The device wallpaper hash doesn't match with provided "
                     "hash value. Fallback to default wallpaper! ";
-      SetDefaultWallpaperDelayed(account_id);
+      SetDefaultWallpaper(account_id);
 
       // Reset the boolean variable so that it can retry to download when the
       // next device wallpaper request comes in.

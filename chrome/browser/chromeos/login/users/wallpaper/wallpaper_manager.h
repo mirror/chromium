@@ -215,6 +215,8 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
   // Returns custom wallpaper directory by appending corresponding |sub_dir|.
   static base::FilePath GetCustomWallpaperDir(const char* sub_dir);
 
+  static wallpaper::WallpaperInfo GetDefaultWallpaperInfo();
+
   // Registers wallpaper manager preferences.
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
@@ -258,24 +260,14 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
                           const gfx::ImageSkia& image,
                           bool update_wallpaper);
 
-  // Updates wallpaper info for |account_id| to default. If |update_wallpaper|
-  // is false, don't change wallpaper but only update cache.
-  void SetDefaultWallpaper(const AccountId& account_id, bool update_wallpaper);
-
-  // Sets wallpaper to default wallpaper (asynchronously with zero delay).
-  void SetDefaultWallpaperNow(const AccountId& account_id);
-
   // Sets wallpaper to default wallpaper (asynchronously with default delay).
-  void SetDefaultWallpaperDelayed(const AccountId& account_id);
-
-  // Sets |account_id|'s wallpaper (asynchronously with zero delay).
-  void SetUserWallpaperNow(const AccountId& account_id);
+  void SetDefaultWallpaper(const AccountId& account_id);
 
   // Sets |account_id|'s wallpaper (asynchronously with default delay).
-  void SetUserWallpaperDelayed(const AccountId& account_id);
+  void SetUserWallpaper(const AccountId& account_id);
 
-  // Sets selected wallpaper information for |account_id| and saves it to Local
-  // State if |is_persistent| is true.
+  // Sets wallpaper info for |account_id| and saves it to local state if
+  // |is_persistent| is true.
   void SetUserWallpaperInfo(const AccountId& account_id,
                             const wallpaper::WallpaperInfo& info,
                             bool is_persistent);

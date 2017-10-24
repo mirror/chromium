@@ -233,8 +233,19 @@ void ArcWallpaperService::SetDefaultWallpaper() {
   // ImageDecoder::ImageRequest.
   decode_request_.reset();
   const PrimaryAccount& account = GetPrimaryAccount();
-  chromeos::WallpaperManager::Get()->SetDefaultWallpaper(account.id,
-                                                         account.is_active);
+
+  chromeos::WallpaperManager* const wallpaper_manager =
+      chromeos::WallpaperManager::Get();
+  wallpaper_manager->RemoveUserWallpaperInfo(account.id);
+  const wallpaper::WallpaperInfo default_info =
+      wallpaper_manager->GetDefaultWallpaperInfo();
+  bool is_persistent =
+      !user_manager::UserManager::Get()->IsUserNonCryptohomeDataEphemeral(
+          account.id);
+  wallpaper_manager->SetUserWallpaperInfo(account.id, default_info,
+                                          is_persistent);
+  if (account.is_active)
+    chromeos::WallpaperManager::Get()->SetDefaultWallpaper(account.id);
 }
 
 void ArcWallpaperService::GetWallpaper(GetWallpaperCallback callback) {
