@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be4e86f_668d5135",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-24T22:46:48Z",
+      "side": 1,
+      "message": "Good question to explore, which approach faster: \"stringstream \u003c\u003c\" or \"string +\u003d\"?",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 21
+      },
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
