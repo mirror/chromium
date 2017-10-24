@@ -123,6 +123,30 @@
       "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ce45fa_7197d777",
+        "filename": "ui/ozone/public/surface_factory_ozone.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-24T23:26:23Z",
+      "side": 1,
+      "message": "The map is indeed gem handle -\u003e protected pixmap. However, we don\u0027t have gem handles as input from the client. The clients provide NativePixmapHandles, because they provide dmabuf fds. We need a way to translate NativePixmapHandle -\u003e gem handle first (which is CreateNativePixmapFromHandle), in order to be able to perform a lookup gem handle -\u003e protected pixmap in the map.\n\nSame issue with gem-handle\u003c-\u003eshmem. We don\u0027t have a gem handle when the client asks for the protected buffer, the client provides a NativePixmapHandle (dmabuf) and we have to import it to get the gem handle.\n\nThis is independent from where the mapping lives. Even if we had it hidden inside ozone drm, we would still have to first import NativePixmapHandles given to us by the client to get gem handles. Users of this cannot and do not use gem handles, they only know dmabuf fds; only DRM understands and is able to use GEM handles.\n\nAs for the delegate, it was proposed by you here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/689818#message-fbd6da57c3eb03bd2e21d10db4b4ff97e9ed163d\nso I thought that was your preferred alternative to my original API proposal?",
+      "parentUuid": "b8919369_8416b8bb",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 48
+      },
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
