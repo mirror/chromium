@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8b15474_329dc769",
+        "filename": "chrome/test/data/webui/test_api.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T00:24:26Z",
+      "side": 1,
+      "message": "FYI the proposal to allow backticks has been started https://groups.google.com/a/chromium.org/d/msg/chromium-dev/6YWOu7XmLec/XNpU3f0PBwAJ, but the CL that updates the styleguide has not landed yet. This CL reminded me to finally land the styleguide change. Please wait until the CL lands if you want to stick with the backticks here.",
+      "revId": "1ebeee180d1aa89bcc2c3fd63df5fd96cb109867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
