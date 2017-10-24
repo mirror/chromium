@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88dda80b_c943e0c8",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:31:03Z",
+      "side": 1,
+      "message": "Should the early out run the callback with false?",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 10
+      },
+      "revId": "8995c626d9a273b85f8cc978a30521c020874bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4a17c0_7704831b",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:31:03Z",
+      "side": 1,
+      "message": "Why do you need the additional bind here? Can\u0027t you pass callback to GetTextInputClientInfo?",
+      "range": {
+        "startLine": 124,
+        "startChar": 21,
+        "endLine": 124,
+        "endChar": 30
+      },
+      "revId": "8995c626d9a273b85f8cc978a30521c020874bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640dde3d_2641fa88",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:31:03Z",
+      "side": 1,
+      "message": "Doesn\u0027t the first condition imply the second is false? In other words, I don\u0027t think you need the second conditional.",
+      "range": {
+        "startLine": 206,
+        "startChar": 6,
+        "endLine": 206,
+        "endChar": 15
+      },
+      "revId": "8995c626d9a273b85f8cc978a30521c020874bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3f8324_ad045034",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:31:03Z",
+      "side": 1,
+      "message": "Why do you need both a WeakPtrFactory and WeakPtr?",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 60
+      },
+      "revId": "8995c626d9a273b85f8cc978a30521c020874bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57d0cd4_34b5e714",
+        "filename": "services/ui/public/interfaces/ime/ime.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:31:03Z",
+      "side": 1,
+      "message": "Please wrap these as you would C++; as you can\u0027t fit it all on one line then have each arg on its own line.",
+      "range": {
+        "startLine": 191,
+        "startChar": 30,
+        "endLine": 193,
+        "endChar": 35
+      },
+      "revId": "8995c626d9a273b85f8cc978a30521c020874bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
