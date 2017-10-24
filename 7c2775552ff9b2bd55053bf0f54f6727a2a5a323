@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "03f5eff7_ecf12b82",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-24T09:47:29Z",
+      "side": 1,
+      "message": "I support inheriting from View. You can override GetPreferredSize to have enough space for both images.\nBadgedProfilePhoto can have two subviews of type ImageView (the avatar and the badge) or one if the badge is disabled. In BadgedProfilePhoto::Layout() you would place those images in the expected positions. Then you would have no need to do the painting here. If you want to clip the images you could just inherit from ImageView and use the child classes in BadgedProfilePhoto (see CircularImageView, you may just reuse it).",
+      "parentUuid": "4421cde6_7df8ddeb",
+      "range": {
+        "startLine": 50,
+        "startChar": 27,
+        "endLine": 51,
+        "endChar": 71
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b00c728d_e1b10fc0",
         "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
         "patchSetId": 13
