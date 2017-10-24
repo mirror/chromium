@@ -70,6 +70,24 @@
       "revId": "7ebcda9c81f833254d5df4111baccdb80d27dcf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef8034e_28f88fc9",
+        "filename": "chrome/test/data/webui/webui_test_util.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T22:08:42Z",
+      "side": 1,
+      "message": "Full paths would be nice, although I don\u0027t know off the top of my head how this could be fixed. The processing we do on the provided stack trace is at https://cs.chromium.org/chromium/src/chrome/test/data/webui/mocha_adapter.js?q\u003dmocha_adapter.js\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d38,48.\n\nAlso, I simulated an error locally and the message I am getting is as shown at https://imgur.com/a/DDRdI. Specifically the line of interest is\n\"at Object.whenAttributeIs (test_util.js:15:5)\"\n\nIMO this seems enough information to locate which test_util.js file is referred here. I\u0027d rather avoid having non-optimal (redundant) file names, to compensate for a non-optimal error stack. This approach does not scale-able. We would have to rename multiple files following the same pattern (webui/test_util.js -\u003e webui/webui_test_util.js) which I don\u0027t think is worth the churn.",
+      "parentUuid": "c296e556_073892b5",
+      "revId": "7ebcda9c81f833254d5df4111baccdb80d27dcf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
