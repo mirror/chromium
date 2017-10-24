@@ -208,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "d9993b4d_40ffccb0",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T21:07:22Z",
+      "side": 1,
+      "message": "I meant: You are NOT grabbing the lock before resetting.",
+      "parentUuid": "04915013_9fedd6a3",
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ad081e7_644b26a0",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 25
