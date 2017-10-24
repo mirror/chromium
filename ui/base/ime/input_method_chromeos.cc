@@ -29,6 +29,7 @@
 #include "ui/base/ime/text_input_client.h"
 #include "ui/events/event.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/range/range.h"
 
 namespace {
 ui::IMEEngineHandlerInterface* GetEngine() {
@@ -185,57 +186,9 @@ void InputMethodChromeOS::OnCaretBoundsChanged(const TextInputClient* client) {
   if (GetEngine())
     GetEngine()->SetCompositionBounds(GetCompositionBounds(client));
 
-  chromeos::IMECandidateWindowHandlerInterface* candidate_window =
-      ui::IMEBridge::Get()->GetCandidateWindowHandler();
-  if (!candidate_window)
-    return;
-
-  const gfx::Rect caret_rect = client->GetCaretBounds();
-
-  gfx::Rect composition_head;
-  if (client->HasCompositionText())
-    client->GetCompositionCharacterBounds(0, &composition_head);
-
-  // Pepper doesn't support composition bounds, so fall back to caret bounds to
-  // avoid a bad user experience (the IME window moved to upper left corner).
-  if (composition_head.IsEmpty())
-    composition_head = caret_rect;
-  candidate_window->SetCursorBounds(caret_rect, composition_head);
-
-  gfx::Range text_range;
-  gfx::Range selection_range;
-  base::string16 surrounding_text;
-  if (!client->GetTextRange(&text_range) ||
-      !client->GetTextFromRange(text_range, &surrounding_text) ||
-      !client->GetSelectionRange(&selection_range)) {
-    previous_surrounding_text_.clear();
-    previous_selection_range_ = gfx::Range::InvalidRange();
-    return;
-  }
-
-  if (previous_selection_range_ == selection_range &&
-      previous_surrounding_text_ == surrounding_text)
-    return;
-
-  previous_selection_range_ = selection_range;
-  previous_surrounding_text_ = surrounding_text;
-
-  if (!selection_range.IsValid()) {
-    // TODO(nona): Ideally selection_range should not be invalid.
-    // TODO(nona): If javascript changes the focus on page loading, even (0,0)
-    //             can not be obtained. Need investigation.
-    return;
-  }
-
-  // Here SetSurroundingText accepts relative position of |surrounding_text|, so
-  // we have to convert |selection_range| from node coordinates to
-  // |surrounding_text| coordinates.
-  if (!GetEngine())
-    return;
-  GetEngine()->SetSurroundingText(base::UTF16ToUTF8(surrounding_text),
-                                  selection_range.start() - text_range.start(),
-                                  selection_range.end() - text_range.start(),
-                                  text_range.start());
+  client->GetTextInputClientInfo(
+      base::Bind(&InputMethodChromeOS::GetTextInputClientInfoCallBack,
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void InputMethodChromeOS::CancelComposition(const TextInputClient* client) {
@@ -706,6 +659,51 @@ bool InputMethodChromeOS::IsNonPasswordInputFieldFocused() {
 
 bool InputMethodChromeOS::IsInputFieldFocused() {
   return GetTextInputType() != TEXT_INPUT_TYPE_NONE;
+}
+
+void InputMethodChromeOS::GetTextInputClientInfoCallBack(
+    bool success,
+    const gfx::Range& text_range,
+    const base::string16& surrounding_text,
+    const gfx::Range& selection_range,
+    const gfx::Rect& composition_bounds) {
+  chromeos::IMECandidateWindowHandlerInterface* candidate_window =
+      ui::IMEBridge::Get()->GetCandidateWindowHandler();
+  if (!candidate_window)
+    return;
+
+  candidate_window->SetCursorBounds(GetTextInputClient()->GetCaretBounds(),
+                                    composition_bounds);
+
+  if (!success) {
+    previous_surrounding_text_.clear();
+    previous_selection_range_ = gfx::Range::InvalidRange();
+    return;
+  }
+
+  if (previous_selection_range_ == selection_range &&
+      previous_surrounding_text_ == surrounding_text)
+    return;
+
+  previous_selection_range_ = selection_range;
+  previous_surrounding_text_ = surrounding_text;
+
+  if (!selection_range.IsValid()) {
+    // TODO(nona): Ideally selection_range should not be invalid.
+    // TODO(nona): If javascript changes the focus on page loading, even (0,0)
+    //             can not be obtained. Need investigation.
+    return;
+  }
+
+  // Here SetSurroundingText accepts relative position of |surrounding_text|, so
+  // we have to convert |selection_range| from node coordinates to
+  // |surrounding_text| coordinates.
+  if (!GetEngine())
+    return;
+  GetEngine()->SetSurroundingText(base::UTF16ToUTF8(surrounding_text),
+                                  selection_range.start() - text_range.start(),
+                                  selection_range.end() - text_range.start(),
+                                  text_range.start());
 }
 
 }  // namespace ui
