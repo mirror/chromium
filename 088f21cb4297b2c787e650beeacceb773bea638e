@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21be67c5_dc01efc3",
+        "filename": "components/exo/wayland/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-24T23:14:49Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "088f21cb4297b2c787e650beeacceb773bea638e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09efa750_a1b8ef72",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-24T23:14:49Z",
+      "side": 1,
+      "message": "swap and reverse?",
+      "revId": "088f21cb4297b2c787e650beeacceb773bea638e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a86d457_576621b6",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-24T23:14:49Z",
+      "side": 1,
+      "message": "Maybe // !blur_filter",
+      "revId": "088f21cb4297b2c787e650beeacceb773bea638e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c285650_2f9af15a",
+        "filename": "components/exo/wayland/clients/perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-24T23:14:49Z",
+      "side": 1,
+      "message": "Why did you decide not to have one test per sigma configuration?",
+      "revId": "088f21cb4297b2c787e650beeacceb773bea638e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
