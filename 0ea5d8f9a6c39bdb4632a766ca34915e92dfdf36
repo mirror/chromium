@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "629054f7_0373a9f1",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-10-24T13:43:01Z",
+      "side": 1,
+      "message": "If we add more zoom factors in the future (there has been a request to go all the way to 6400% that we\u0027re debating) would this cause issues for the scaling?",
+      "revId": "0ea5d8f9a6c39bdb4632a766ca34915e92dfdf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
