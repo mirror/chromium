@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "99c55713_9d7738c3",
+        "filename": "ui/views/controls/combobox/combobox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-24T06:52:15Z",
+      "side": 1,
+      "message": "neat :). I suppose this won\u0027t be quite right for `ACTION_STYLE` combox, but we\u0027re trying to phase those out.",
+      "parentUuid": "ef99d189_596f8547",
+      "revId": "d265e11335c746e23225c4ee55f538d0838cbcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1320c49_c3f30e2a",
         "filename": "ui/views/controls/combobox/combobox.cc",
         "patchSetId": 5
