@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f02a1c2_79a41825",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-24T09:46:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7261ff19_84e3d806",
+      "range": {
+        "startLine": 7,
+        "startChar": 20,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "5895442778ca6a109c0c84c125308e69b3954091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8657c1b9_90699941",
         "filename": "content/renderer/dom_storage/dom_storage_dispatcher.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-23T17:01:29Z",
       "side": 1,
       "message": "Too bad there doesn\u0027t seem to be an easy way to tie these back to the respective frame so we could avoid going through the RendererScheduler.",
+      "range": {
+        "startLine": 52,
+        "startChar": 37,
+        "endLine": 52,
+        "endChar": 69
+      },
+      "revId": "5895442778ca6a109c0c84c125308e69b3954091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c126f3c9_b8eb0695",
+        "filename": "content/renderer/dom_storage/dom_storage_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-24T09:46:18Z",
+      "side": 1,
+      "message": "Not without a loot of plumbing :(",
+      "parentUuid": "8657c1b9_90699941",
       "range": {
         "startLine": 52,
         "startChar": 37,
