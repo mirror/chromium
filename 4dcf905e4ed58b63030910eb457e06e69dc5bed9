@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "450da4c5_5c5002cf",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1534,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T12:31:48Z",
+      "side": 1,
+      "message": "optional nit: I think it makes more sense to put this condition to  ForceSavingExperimentEnabled and ManualPasswordGenerationEnabled along with moving  ForceSavingExperimentEnabled to password_manager_utils. This way AppendPasswordItems will look cleaner IMHO.",
+      "range": {
+        "startLine": 1534,
+        "startChar": 25,
+        "endLine": 1534,
+        "endChar": 39
+      },
+      "revId": "4dcf905e4ed58b63030910eb457e06e69dc5bed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
