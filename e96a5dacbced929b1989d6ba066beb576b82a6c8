@@ -46,6 +46,30 @@
       "revId": "e96a5dacbced929b1989d6ba066beb576b82a6c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad94a357_f22bea6e",
+        "filename": "chrome/browser/chromeos/printing/printer_configurer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-24T16:34:32Z",
+      "side": 1,
+      "message": "What you\u0027ve done works.  I was hoping the callback could be removed as a parameter but that looks to be awkward.",
+      "parentUuid": "74c5f43f_545d411b",
+      "range": {
+        "startLine": 204,
+        "startChar": 25,
+        "endLine": 204,
+        "endChar": 50
+      },
+      "revId": "e96a5dacbced929b1989d6ba066beb576b82a6c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
