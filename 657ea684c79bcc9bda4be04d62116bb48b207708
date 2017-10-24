@@ -46,6 +46,30 @@
       "revId": "657ea684c79bcc9bda4be04d62116bb48b207708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ccd011_fe9ba8e2",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-24T19:10:23Z",
+      "side": 1,
+      "message": "The \"Floating point textures always available\" section of\nhttps://webgl2fundamentals.org/webgl/lessons/webgl2-whats-new.html\nsays\n\n    Note: Unfortunately they are still restricted in that filtering\n    and rendering to float point textures is still optional. See\n    OES_texture_float_linear and EXT_color_buffer_float.\n\nIn local tests, WebGL2 returns true for this test.\n\nYes, this behavior should document that it will expose the extensions necessary for the particular backbuffer type (of note is that OES_texture_float_linear isn\u0027t strictly required, but it\u0027s still probably a good idea to keep as a requirement).",
+      "parentUuid": "4cb21278_27e74c0d",
+      "range": {
+        "startLine": 133,
+        "startChar": 9,
+        "endLine": 133,
+        "endChar": 24
+      },
+      "revId": "657ea684c79bcc9bda4be04d62116bb48b207708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
