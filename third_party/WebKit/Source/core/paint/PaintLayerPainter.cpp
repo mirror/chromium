@@ -81,8 +81,10 @@ bool PaintLayerPainter::PaintedOutputInvisible(
     if (layout_object.StyleRef().Opacity())
       return false;
 
-    const EffectPaintPropertyNode* effect =
-        layout_object.FirstFragment()->PaintProperties()->Effect();
+    const EffectPaintPropertyNode* effect = layout_object.FirstFragment()
+                                                .GetRarePaintData()
+                                                ->PaintProperties()
+                                                ->Effect();
     if (effect && effect->RequiresCompositingForAnimation()) {
       return false;
     }
@@ -257,6 +259,7 @@ static bool ShouldRepaintSubsequence(
 void PaintLayerPainter::AdjustForPaintOffsetTranslation(
     PaintLayerPaintingInfo& painting_info) {
   if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+
     return;
   // Paint offset translation for transforms or composited layers is already
   // taken care of.
@@ -264,16 +267,19 @@ void PaintLayerPainter::AdjustForPaintOffsetTranslation(
       paint_layer_.PaintsComposited(painting_info.GetGlobalPaintFlags()))
     return;
 
-  if (const auto* properties =
-          paint_layer_.GetLayoutObject().FirstFragment()->PaintProperties()) {
+  if (const auto* properties = paint_layer_.GetLayoutObject()
+                                   .FirstFragment()
+                                   .GetRarePaintData()
+                                   ->PaintProperties()) {
     if (properties->PaintOffsetTranslation()) {
       painting_info.root_layer = &paint_layer_;
       painting_info.paint_dirty_rect =
           properties->PaintOffsetTranslation()->Matrix().Inverse().MapRect(
               painting_info.paint_dirty_rect);
 
-      painting_info.sub_pixel_accumulation =
-          ToLayoutSize(paint_layer_.GetLayoutObject().PaintOffset());
+      // TODO(chrishtr): is this correct for fragmentation?
+      painting_info.sub_pixel_accumulation = ToLayoutSize(
+          paint_layer_.GetLayoutObject().FirstFragment().PaintOffset());
     }
   }
 }
@@ -294,6 +300,7 @@ PaintResult PaintLayerPainter::PaintLayerContents(
       paint_layer_.GetLayoutObject().IsLayoutView()) {
     const auto* local_border_box_properties = paint_layer_.GetLayoutObject()
                                                   .FirstFragment()
+                                                  .GetRarePaintData()
                                                   ->LocalBorderBoxProperties();
     DCHECK(local_border_box_properties);
     PaintChunkProperties properties(
@@ -476,7 +483,8 @@ PaintResult PaintLayerPainter::PaintLayerContents(
           PaintLayer::kUseGeometryMapper, kIgnorePlatformOverlayScrollbarSize,
           respect_overflow_clip, &offset_from_root,
           local_painting_info.sub_pixel_accumulation);
-    } else if (IsFixedPositionObjectInPagedMedia()) {
+    } else if (paint_layer_.GetLayoutObject()
+                   .IsFixedPositionObjectInPagedMedia()) {
       PaintLayerFragments single_fragment;
       paint_layer_for_fragments->AppendSingleFragmentIgnoringPagination(
           single_fragment, local_painting_info.root_layer,
@@ -556,6 +564,7 @@ PaintResult PaintLayerPainter::PaintLayerContents(
              paint_layer_.GetLayoutObject().IsLayoutView()));
     const auto* local_border_box_properties = paint_layer_.GetLayoutObject()
                                                   .FirstFragment()
+                                                  .GetRarePaintData()
                                                   ->LocalBorderBoxProperties();
     DCHECK(local_border_box_properties);
     PaintChunkProperties properties(
@@ -702,21 +711,11 @@ bool PaintLayerPainter::AtLeastOneFragmentIntersectsDamageRect(
   return false;
 }
 
-inline bool PaintLayerPainter::IsFixedPositionObjectInPagedMedia() {
-  LayoutObject& object = paint_layer_.GetLayoutObject();
-  LayoutView* view = object.View();
-  return object.StyleRef().GetPosition() == EPosition::kFixed &&
-         object.Container() == view && view->PageLogicalHeight() &&
-         // TODO(crbug.com/619094): Figure out the correct behaviour for fixed
-         // position objects in paged media with vertical writing modes.
-         view->IsHorizontalWritingMode();
-}
-
 void PaintLayerPainter::RepeatFixedPositionObjectInPages(
     const PaintLayerFragment& single_fragment_ignored_pagination,
     const PaintLayerPaintingInfo& painting_info,
     PaintLayerFragments& layer_fragments) {
-  DCHECK(IsFixedPositionObjectInPagedMedia());
+  DCHECK(paint_layer_.GetLayoutObject().IsFixedPositionObjectInPagedMedia());
 
   LayoutView* view = paint_layer_.GetLayoutObject().View();
   unsigned pages =
@@ -758,7 +757,7 @@ PaintResult PaintLayerPainter::PaintLayerWithTransform(
   PaintResult result = kFullyPainted;
   PaintLayerFragments layer_fragments;
   bool is_fixed_position_object_in_paged_media =
-      this->IsFixedPositionObjectInPagedMedia();
+      paint_layer_.GetLayoutObject().IsFixedPositionObjectInPagedMedia();
 
   // This works around a bug in squashed-layer painting.
   // Squashed layers paint into a backing in its compositing container's
@@ -1048,7 +1047,7 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   LayoutPoint paint_offset = -paint_layer_.LayoutBoxLocation();
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     new_cull_rect.Move(painting_info.scroll_offset_accumulation);
-    paint_offset += paint_layer_.GetLayoutObject().PaintOffset();
+    paint_offset += fragment.fragment_data->PaintOffset();
   } else {
     paint_offset += ToSize(fragment.layer_bounds.Location());
     if (!painting_info.scroll_offset_accumulation.IsZero()) {
@@ -1219,8 +1218,10 @@ void PaintLayerPainter::PaintMaskForFragments(
 
   Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    const auto* object_paint_properties =
-        paint_layer_.GetLayoutObject().FirstFragment()->PaintProperties();
+    const auto* object_paint_properties = paint_layer_.GetLayoutObject()
+                                              .FirstFragment()
+                                              .GetRarePaintData()
+                                              ->PaintProperties();
     DCHECK(object_paint_properties && object_paint_properties->Mask());
     PaintChunkProperties properties(
         context.GetPaintController().CurrentPaintChunkProperties());
