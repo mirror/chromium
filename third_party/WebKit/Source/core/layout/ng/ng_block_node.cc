@@ -26,7 +26,6 @@
 #include "core/layout/ng/ng_length_utils.h"
 #include "core/layout/ng/ng_page_layout_algorithm.h"
 #include "core/layout/ng/ng_writing_mode.h"
-#include "core/paint/PaintLayer.h"
 #include "platform/runtime_enabled_features.h"
 
 namespace blink {
@@ -604,14 +603,6 @@ void NGBlockNode::AddAtomicInlineBaselineFromOldLayout(
     position -= box_->MarginOver();
 
   builder->AddBaseline(request, position);
-}
-
-// Save static position for legacy AbsPos layout.
-void NGBlockNode::SaveStaticOffsetForLegacy(const NGLogicalOffset& offset) {
-  DCHECK(box_->IsOutOfFlowPositioned());
-  DCHECK(box_->Layer());
-  box_->Layer()->SetStaticBlockPosition(offset.block_offset);
-  box_->Layer()->SetStaticInlinePosition(offset.inline_offset);
 }
 
 }  // namespace blink
