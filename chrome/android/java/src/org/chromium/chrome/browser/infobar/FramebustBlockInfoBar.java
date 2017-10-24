@@ -5,12 +5,6 @@
 package org.chromium.chrome.browser.infobar;
 
 import android.net.Uri;
-import android.support.v4.text.BidiFormatter;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +16,6 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.interventions.FramebustBlockMessageDelegate;
 import org.chromium.chrome.browser.interventions.FramebustBlockMessageDelegateBridge;
 import org.chromium.components.url_formatter.UrlFormatter;
-import org.chromium.ui.text.NoUnderlineClickableSpan;
 
 /**
  * This InfoBar is shown to let the user know about a blocked Framebust and offer to
@@ -80,21 +73,11 @@ public class FramebustBlockInfoBar extends InfoBar {
 
     @Override
     protected void createCompactLayoutContent(InfoBarCompactLayout layout) {
-        final int messagePadding = getContext().getResources().getDimensionPixelOffset(
-                R.dimen.reader_mode_infobar_text_padding);
-
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(BidiFormatter.getInstance().unicodeWrap(mDelegate.getShortMessage()));
-        builder.append(" ");
-        builder.append(makeDetailsLink());
-
-        TextView prompt = new TextView(getContext(), null);
-        prompt.setText(builder);
-        prompt.setMovementMethod(LinkMovementMethod.getInstance());
-        prompt.setGravity(Gravity.CENTER_VERTICAL);
-        prompt.setPadding(0, messagePadding, 0, messagePadding);
-
-        layout.addContent(prompt, 1f);
+        View messageView = new InfoBarCompactLayout.MessageBuilder(layout)
+                                   .setMessage(mDelegate.getShortMessage())
+                                   .setLink(R.string.details_link, view -> onLinkClicked())
+                                   .build();
+        layout.addContent(messageView, 1f);
     }
 
     @Override
@@ -111,21 +94,6 @@ public class FramebustBlockInfoBar extends InfoBar {
         }
 
         mDelegate.onLinkTapped();
-    }
-
-    /**
-     * Creates and sets up the "Details" link that allows going from the mini to the full infobar.
-     */
-    private SpannableString makeDetailsLink() {
-        String label = getContext().getResources().getString(R.string.details_link);
-        SpannableString link = new SpannableString(label);
-        link.setSpan(new NoUnderlineClickableSpan() {
-            @Override
-            public void onClick(View view) {
-                onLinkClicked();
-            }
-        }, 0, label.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        return link;
     }
 
     @CalledByNative
