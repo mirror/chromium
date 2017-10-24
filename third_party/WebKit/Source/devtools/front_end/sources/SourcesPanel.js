@@ -699,13 +699,6 @@ Sources.SourcesPanel = class extends UI.Panel {
   }
 
   /**
-   * @param {!Workspace.UISourceCode} uiSourceCode
-   */
-  _showLocalHistory(uiSourceCode) {
-    Sources.RevisionHistoryView.showHistory(uiSourceCode);
-  }
-
-  /**
    * @override
    * @param {!Event} event
    * @param {!UI.ContextMenu} contextMenu
