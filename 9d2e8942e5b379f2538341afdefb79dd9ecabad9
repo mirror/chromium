@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7a98dc7_2779131b",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-24T20:19:20Z",
+      "side": 1,
+      "message": "nit: \"properly\" means overlapping borders, right?",
+      "range": {
+        "startLine": 270,
+        "startChar": 41,
+        "endLine": 270,
+        "endChar": 49
+      },
+      "revId": "9d2e8942e5b379f2538341afdefb79dd9ecabad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
