@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ce553ddc_01c2cce9",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-24T04:55:54Z",
+      "side": 1,
+      "message": "Thanks for you clear explanation. Since use mojo::StructPtr\u003c\u003e is for later patch, let\u0027s also address it later to make this patch clear.",
+      "parentUuid": "92afd930_74471157",
+      "revId": "e33771da7d967c1e59288f947f83d07ec3a0b45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89a5628a_ce31fc86",
         "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 4
