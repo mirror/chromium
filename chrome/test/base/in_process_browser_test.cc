@@ -149,6 +149,7 @@ InProcessBrowserTest::InProcessBrowserTest()
       , autorelease_pool_(NULL)
 #endif  // OS_MACOSX
     {
+  field_trial_list_ = std::make_unique<base::FieldTrialList>(nullptr);
 #if defined(OS_MACOSX)
   // TODO(phajdan.jr): Make browser_tests self-contained on Mac, remove this.
   // Before we run the browser, we have to hack the path to the exe to match

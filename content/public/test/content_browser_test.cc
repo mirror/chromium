@@ -157,4 +157,8 @@ Shell* ContentBrowserTest::CreateOffTheRecordBrowser() {
       gfx::Size());
 }
 
+bool ContentBrowserTest::IsContentBrowserTest() {
+  return true;
+}
+
 }  // namespace content
