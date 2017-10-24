@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5e4e2343_4515fde8",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-24T04:53:35Z",
+      "side": 1,
+      "message": "no {} needed",
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0e1f0ef_9b6ee2af",
         "filename": "components/download/internal/DEPS",
         "patchSetId": 2
@@ -19,6 +36,23 @@
         "endLine": 4,
         "endChar": 1
       },
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebd7aa1_8391694e",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-24T04:53:35Z",
+      "side": 1,
+      "message": "i would refactor this a little bit to remove some indentations:\n\nif (!entry)\n  return nullptr;\n\nauto* client \u003d clients_-\u003eGetClient(entry-\u003eclient);\nif (!client)\n  return nullptr;\n      \nreturn client-\u003eGetUploadData();",
       "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +124,98 @@
         "endLine": 217,
         "endChar": 2
       },
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de5267c0_a755f09a",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-24T04:53:35Z",
+      "side": 1,
+      "message": "I think we should use UploadDataStreamBuilder::Build, FileSystemContext and BlobStorageContext are tied to the BrowserContext, but i don\u0027t see that\u0027s needed since we don\u0027t support blob and filesystem URIs for now",
+      "parentUuid": "689b73cc_8e60eb70",
+      "range": {
+        "startLine": 217,
+        "startChar": 1,
+        "endLine": 217,
+        "endChar": 2
+      },
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812a970c_7c326962",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-24T04:53:35Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5cf94e_c8782930",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-24T04:53:35Z",
+      "side": 1,
+      "message": "is this needed? And it seems the whole class is not needed, just use the super class?",
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcde069c_c0eb524e",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-24T04:53:35Z",
+      "side": 1,
+      "message": "BlobData? or just file?",
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9acb811_69c28bdd",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-24T04:53:35Z",
+      "side": 1,
+      "message": "is this NOTREACHED or NOTIMPLEMENTED?",
       "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
