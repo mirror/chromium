@@ -54,8 +54,11 @@
 #include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/scoped_user_protocol_entry.h"
 #include "chrome/installer/util/shell_util.h"
+#include "chrome/services/chrome_win_util/public/interfaces/chrome_win_util.mojom.h"
+#include "chrome/services/chrome_win_util/public/interfaces/constants.mojom.h"
 #include "components/variations/variations_associated_data.h"
-#include "content/public/browser/utility_process_mojo_client.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace shell_integration {
@@ -451,7 +454,8 @@ class OpenSystemSettingsHelper {
 OpenSystemSettingsHelper* OpenSystemSettingsHelper::instance_ = nullptr;
 
 // Helper class to determine if Chrome is pinned to the taskbar. Hides the
-// complexity of managing the lifetime of a UtilityProcessMojoClient.
+// complexity of managing the lifetime of connection to the ChromeWinUtil
+// service.
 class IsPinnedToTaskbarHelper {
  public:
   using ResultCallback = win::IsPinnedToTaskbarCallback;
@@ -466,7 +470,7 @@ class IsPinnedToTaskbarHelper {
   void OnConnectionError();
   void OnIsPinnedToTaskbarResult(bool succeeded, bool is_pinned_to_taskbar);
 
-  content::UtilityProcessMojoClient<chrome::mojom::ShellHandler> shell_handler_;
+  chrome::mojom::ChromeWinUtilPtr chrome_win_util_ptr_;
 
   ErrorCallback error_callback_;
   ResultCallback result_callback_;
@@ -486,21 +490,20 @@ void IsPinnedToTaskbarHelper::GetState(const ErrorCallback& error_callback,
 IsPinnedToTaskbarHelper::IsPinnedToTaskbarHelper(
     const ErrorCallback& error_callback,
     const ResultCallback& result_callback)
-    : shell_handler_(
-          l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_SHELL_HANDLER_NAME)),
-      error_callback_(error_callback),
-      result_callback_(result_callback) {
+    : error_callback_(error_callback), result_callback_(result_callback) {
   DCHECK(error_callback_);
   DCHECK(result_callback_);
 
-  // |shell_handler_| owns the callbacks and is guaranteed to be destroyed
-  // before |this|, therefore making base::Unretained() safe to use.
-  shell_handler_.set_error_callback(base::Bind(
-      &IsPinnedToTaskbarHelper::OnConnectionError, base::Unretained(this)));
-  shell_handler_.set_disable_sandbox();
-  shell_handler_.Start();
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(chrome::mojom::kChromeWinUtilServiceName,
+                      &chrome_win_util_ptr_);
 
-  shell_handler_.service()->IsPinnedToTaskbar(
+  // |chrome_win_util_ptr_| owns the callbacks and is guaranteed to be destroyed
+  // before |this|, therefore making base::Unretained() safe to use.
+  chrome_win_util_ptr_.set_connection_error_handler(base::Bind(
+      &IsPinnedToTaskbarHelper::OnConnectionError, base::Unretained(this)));
+  chrome_win_util_ptr_->IsPinnedToTaskbar(
       base::Bind(&IsPinnedToTaskbarHelper::OnIsPinnedToTaskbarResult,
                  base::Unretained(this)));
 }

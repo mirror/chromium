@@ -51,7 +51,8 @@
 #endif
 
 #if defined(OS_WIN)
-#include "chrome/utility/shell_handler_impl_win.h"
+#include "chrome/services/chrome_win_util/chrome_win_util_service.h"
+#include "chrome/services/chrome_win_util/public/interfaces/constants.mojom.h"
 #endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -291,10 +292,6 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
 #endif  // !defined(OS_ANDROID)
     registry->AddInterface(base::Bind(&payments::PaymentManifestParser::Create),
                            base::ThreadTaskRunnerHandle::Get());
-#if defined(OS_WIN)
-    registry->AddInterface(base::Bind(&ShellHandlerImpl::Create),
-                           base::ThreadTaskRunnerHandle::Get());
-#endif
 #if defined(OS_CHROMEOS)
     registry->AddInterface(base::Bind(&ZipFileCreatorImpl::Create),
                            base::ThreadTaskRunnerHandle::Get());
@@ -359,6 +356,15 @@ void ChromeContentUtilityClient::RegisterServices(
       base::Bind(&ProfileImportService::CreateService);
   services->emplace(chrome::mojom::kProfileImportServiceName,
                     profile_import_info);
+#endif
+
+#if defined(OS_WIN)
+  {
+    service_manager::EmbeddedServiceInfo service_info;
+    service_info.factory =
+        base::Bind(&chrome::ChromeWinUtilService::CreateService);
+    services->emplace(chrome::mojom::kChromeWinUtilServiceName, service_info);
+  }
 #endif
 
 #if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
