@@ -308,8 +308,6 @@ v8::StartupData V8ContextSnapshot::TakeSnapshot() {
 
   {
     v8::HandleScope handleScope(isolate);
-    creator->SetDefaultContext(v8::Context::New(isolate));
-
     TakeSnapshotForWorld(creator, DOMWrapperWorld::MainWorld());
     // For non main worlds, we can use any type to create a context.
     TakeSnapshotForWorld(
