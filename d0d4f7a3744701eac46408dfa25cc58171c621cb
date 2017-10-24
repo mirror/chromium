@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b08e2df_223369d7",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/history.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:51:37Z",
+      "side": 1,
+      "message": "In contrast to our JS style, we actually *don\u0027t* have spaces in HTML between operators.\n\u003clink rel\u003d\"stylesheet\" type\u003d\"text/css\" href\u003d\"style.css\"/\u003e",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c62f07e_a6b93bec",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:51:37Z",
+      "side": 1,
+      "message": "nit: for readability, let\u0027s pull this out into a separate top-level function:\n\nfunction constructHistory(historyItems) {\n\n}\n\nand then\n\nchrome.history.search({ ... }, constructHistory);",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b59c580_b399c9a8",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:51:37Z",
+      "side": 1,
+      "message": "Some of these elements could be a bit more readable if we give them names related to what they show.  For instance here, prefer `faviconImage` or similar - then I don\u0027t have to look down to see what it\u0027s used for.\n\nI\u0027d also recommend constructing these closer to their usage, rather than all at the top in one big burst, but I don\u0027t feel super strongly.",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2403136d_8be52dfd",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:51:37Z",
+      "side": 1,
+      "message": "nit: line is over 80 chars (though won\u0027t be if we pull this out, so it\u0027ll probably be okay), and needs to end in a ;",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85f4248_b9c776d3",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:51:37Z",
+      "side": 1,
+      "message": "many of the lines below here are missing ;",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2711cf6_72ea7fde",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:51:37Z",
+      "side": 1,
+      "message": "is this just copy-paste from above?  If so, we can just pass in constructHistory.  If not, we should have constructHistory take a param for what the difference is (though it\u0027s not immediately clear to me if there is one).",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0376b19_20527b21",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:51:37Z",
+      "side": 1,
+      "message": "nit: Remove debugging logs",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee707243_dc72d71a",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:51:37Z",
+      "side": 1,
+      "message": "indentation off",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99630718_617acc73",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:51:37Z",
+      "side": 1,
+      "message": "are these permissions needed?",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d090a2a_41cf8b8b",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:51:37Z",
+      "side": 1,
+      "message": "indentation off",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
