@@ -52,7 +52,7 @@ class FileWriterSync final : public GarbageCollectedFinalized<FileWriterSync>,
  public:
   static FileWriterSync* Create() { return new FileWriterSync(); }
   ~FileWriterSync() override;
-  virtual void Trace(blink::Visitor*);
+  void Trace(blink::Visitor*) override;
 
   // FileWriterBase
   void write(Blob*, ExceptionState&);
