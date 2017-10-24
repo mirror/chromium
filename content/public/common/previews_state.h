@@ -6,6 +6,7 @@
 #define CONTENT_PUBLIC_COMMON_PREVIEWS_STATE_H_
 
 #include "content/common/content_export.h"
+
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 
 #define STATIC_ASSERT_PREVIEWS_ENUM(a, b)                   \
