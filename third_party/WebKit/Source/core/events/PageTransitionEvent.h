@@ -35,9 +35,16 @@ class PageTransitionEvent final : public Event {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
+  enum class TransitionReason { kUnknown, kStopped, kDiscarded };
+
   static PageTransitionEvent* Create() { return new PageTransitionEvent; }
   static PageTransitionEvent* Create(const AtomicString& type, bool persisted) {
     return new PageTransitionEvent(type, persisted);
+  }
+  static PageTransitionEvent* Create(const AtomicString& type,
+                                     bool persisted,
+                                     TransitionReason reason) {
+    return new PageTransitionEvent(type, persisted, reason);
   }
   static PageTransitionEvent* Create(
       const AtomicString& type,
@@ -50,6 +57,7 @@ class PageTransitionEvent final : public Event {
   const AtomicString& InterfaceName() const override;
 
   bool persisted() const { return persisted_; }
+  AtomicString reason() const;
 
   virtual void Trace(blink::Visitor*);
 
@@ -57,8 +65,11 @@ class PageTransitionEvent final : public Event {
   PageTransitionEvent();
   PageTransitionEvent(const AtomicString& type, bool persisted);
   PageTransitionEvent(const AtomicString&, const PageTransitionEventInit&);
-
+  PageTransitionEvent(const AtomicString& type,
+                      bool persisted,
+                      TransitionReason);
   bool persisted_;
+  TransitionReason reason_;
 };
 
 }  // namespace blink
