@@ -21,6 +21,7 @@ struct SpellCheckResult {
     // Gray underline for correctly spelled words that are incorrectly used in
     // their context.
     GRAMMAR = 1 << 2,
+    LAST = SPELLING | GRAMMAR,
   };
 
   // Default values are so we have a default constructor for IPC::ReadParam()
