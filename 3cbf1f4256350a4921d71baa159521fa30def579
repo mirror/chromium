@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "65d8ad06_f5e62b62",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-24T20:45:37Z",
+      "side": 1,
+      "message": "No it wouldn\u0027t. I hate (and find confusing) the MessageLoop::*Nestable* APIs too and that\u0027s why I\u0027m trying to get rid of them.\n\nIn practice the only caller of SetNestableTasksAllowed(false) is ScopedNestableTaskAllower and ScopedNestableTaskAllower itself is only used from a chrome task (prior to initiating a nested loop -- native or via RunLoop).\n\nSo really this is just toggling between true (kSystemTasksOnly (because a task is in progress) \u003d\u003e kNestableAndSystemTasks) and false (kNestableAndSystemTasks \u003d\u003e kSystemTasksOnly).\n\nI tried to add a DCHECK to show this, but it hits in one scenario. If the nested loop is kicked off from a system task then MessageLoop::RunTask() wasn\u0027t involved and |task_type_allowed_| is still kAllTasks. We still want to go to kNestableAndSystemTasks mode in that case.\n\nAnd the API also doesn\u0027t currently prevent making redundant calls.\n\nSo this means that for |allowed \u003d\u003d true| we usually want to toggle from kSystemTasksOnly to kNestableAndSystemTasks but we can also redundantly already be in kNestableAndSystemTasks or be in kAllTasks mode in the aforementioned scenario.\n\nOn |allowed \u003d\u003d false| we expect to toggle back from kNestableAndSystemTasks to kSystemTasksOnly, but nothing prevents a redundant call either. So really the only illegal toggle is asking |!allowed| from kAllTasks which would be a very weird thing to do. In practice since SetNestableTasksAllowed(false) is only ever used from ScopedNestableTaskAllower it\u0027s expected to always toggle back from the kNestableAndSystemTasks it set.\n\nI\u0027ve added a check as such for now to show this while I get rid of the NestableTasks API (unfortunately have to fix this ahead of getting rid of callers because of the bug).",
+      "parentUuid": "75d1cf6b_4796928a",
+      "revId": "3cbf1f4256350a4921d71baa159521fa30def579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e64f16d_b59c75a1",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 16
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "6f70a02b_32dc234a",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-24T20:45:37Z",
+      "side": 1,
+      "message": "Don\u0027t see why? There other hierarchical enums in the codebase and I explicitly mentioned this in the definition of the enum.",
+      "parentUuid": "5e64f16d_b59c75a1",
+      "revId": "3cbf1f4256350a4921d71baa159521fa30def579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c88237b9_127758d8",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 16
@@ -64,6 +100,24 @@
       "writtenOn": "2017-10-24T19:16:09Z",
       "side": 1,
       "message": "I got stuck here for a while, but I think its mostly cuz of the API choices I commented on above. It is like NestableAndSystemTasks is sticky, but others aren\u0027t, and it seems to be tied to the ways calling the public Apis set task_type_allowed_. I think this relationship could be more clear.",
+      "revId": "3cbf1f4256350a4921d71baa159521fa30def579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4731215c_d23cb23f",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-24T20:45:37Z",
+      "side": 1,
+      "message": "In the ideal world, |task_type_allowed_ \u003d\u003d kSystemTasksOnly| always holds here before setting it.\n\nThis isn\u0027t the case in two scenarios:\n\n 1) Top-level Run() call where it\u0027s equal to kAllTasks per that being its initial value (ideally it would be initialized to kSystemTasksOnly and only be upgraded by Run() but then that breaks calling NestableTasksAllowed() outside Run() -- which only unit tests do at the moment so we could probably break that).\n\n 2) When entering Run() after a call to SetNestableTasksAllowed() (usually through ScopedNestableTaskAllower). The goal is to refactor away from the majority of these callers so they use RunLoop::Type::kNestableTasksAllowed but we won\u0027t be able to get rid of all them (ref. existing TODO(gab) on ScopedNestableTaskAllower).\n\nThe only time we don\u0027t want to set |task_type_allowed_ \u003d run_level_task_type| is in case #2 as that would undo SetNestableTasksAllowed() (RunLoop will call |Run(kSystemTasksOnly)| because it isn\u0027t of Type::kNestableTasksAllowed).",
+      "parentUuid": "c88237b9_127758d8",
       "revId": "3cbf1f4256350a4921d71baa159521fa30def579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
