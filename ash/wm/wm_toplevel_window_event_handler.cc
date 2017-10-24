@@ -446,7 +446,7 @@ void WmToplevelWindowEventHandler::HandleMousePressed(aura::Window* target,
                                                       ui::MouseEvent* event) {
   if (event->phase() != ui::EP_PRETARGET || !target->delegate())
     return;
-
+  LOG(ERROR) << "HandleMOusePress!!!";
   // We also update the current window component here because for the
   // mouse-drag-release-press case, where the mouse is released and
   // pressed without mouse move event.

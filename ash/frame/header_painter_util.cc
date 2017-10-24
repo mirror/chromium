@@ -60,11 +60,14 @@ int HeaderPainterUtil::GetThemeBackgroundXInset() {
 
 // static
 gfx::Rect HeaderPainterUtil::GetTitleBounds(
+    const views::View* back_button,
     const views::View* left_view,
     const views::View* right_view,
     const gfx::FontList& title_font_list) {
-  int x = left_view ? left_view->bounds().right() + kTitleIconOffsetX
-                    : kTitleNoIconOffsetX;
+  int x = (left_view ? left_view->bounds().right() + kTitleIconOffsetX
+                     : (back_button ? back_button->bounds().right()
+                                    : kTitleNoIconOffsetX));
+
   int height = title_font_list.GetHeight();
   // Floor when computing the center of |caption_button_container| and when
   // computing the center of the text.

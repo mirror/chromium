@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "ash/frame/caption_buttons/frame_back_button.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/default_header_painter.h"
 #include "ash/shell.h"
@@ -28,7 +29,8 @@ HeaderView::HeaderView(views::Widget* target_widget,
   caption_button_container_->UpdateSizeButtonVisibility();
   AddChildView(caption_button_container_);
 
-  header_painter_->Init(target_widget_, this, caption_button_container_);
+  header_painter_->Init(target_widget_, this, caption_button_container_,
+                        nullptr);
 
   Shell::Get()->AddShellObserver(this);
   Shell::Get()->tablet_mode_controller()->AddObserver(this);
@@ -92,6 +94,21 @@ void HeaderView::SetAvatarIcon(const gfx::ImageSkia& avatar) {
   Layout();
 }
 
+void HeaderView::SetBackButtonStatus(bool show, bool enabled) {
+  if (show) {
+    if (!back_button_) {
+      back_button_ = new FrameBackButton();
+      AddChildView(back_button_);
+    }
+    back_button_->SetEnabled(enabled);
+  } else {
+    delete back_button_;
+    back_button_ = nullptr;
+  }
+  header_painter_->UpdateBackButton(back_button_);
+  Layout();
+}
+
 void HeaderView::SizeConstraintsChanged() {
   caption_button_container_->ResetWindowControls();
   caption_button_container_->UpdateSizeButtonVisibility();
@@ -116,13 +133,15 @@ SkColor HeaderView::GetInactiveFrameColor() const {
 
 void HeaderView::Layout() {
   did_layout_ = true;
+  if (back_button_)
+    back_button_->set_use_light_images(header_painter_->ShouldUseLightImages());
   header_painter_->LayoutHeader();
 }
 
 void HeaderView::OnPaint(gfx::Canvas* canvas) {
   bool paint_as_active =
       target_widget_->non_client_view()->frame_view()->ShouldPaintAsActive();
-  caption_button_container_->SetPaintAsActive(paint_as_active);
+  header_painter_->SetPaintAsActive(paint_as_active);
 
   HeaderPainter::Mode header_mode = paint_as_active
                                         ? HeaderPainter::MODE_ACTIVE
