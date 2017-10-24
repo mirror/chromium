@@ -42,6 +42,12 @@
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
+#include "ash/public/cpp/window_pin_type.h"
+#include "ash/public/cpp/window_properties.h"
+#include "ash/public/cpp/window_state_type.h"
+#include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ash/public/interfaces/window_state_type.mojom.h"
+
 namespace {
 
 // Space between right edge of tabstrip and maximize button.
@@ -246,10 +252,20 @@ void BrowserNonClientFrameViewAsh::UpdateWindowIcon() {
 void BrowserNonClientFrameViewAsh::UpdateWindowTitle() {
   if (!frame()->IsFullscreen())
     header_painter_->SchedulePaintForTitle();
+
+  if (!frame()->GetNativeWindow() || !browser_view())
+    return;
+
+  // FIXME this should be in some ActiveTabChanged listener.
+  content::WebContents* current_tab = browser_view()->GetActiveWebContents();
+  std::string origin =
+      current_tab ? current_tab->GetLastCommittedURL().GetOrigin().spec()
+                  : std::string();
+  frame()->GetNativeWindow()->SetProperty(ash::kWindowContentOriginKey,
+                                          new std::string(origin));
 }
 
-void BrowserNonClientFrameViewAsh::SizeConstraintsChanged() {
-}
+void BrowserNonClientFrameViewAsh::SizeConstraintsChanged() {}
 
 ///////////////////////////////////////////////////////////////////////////////
 // views::View:
