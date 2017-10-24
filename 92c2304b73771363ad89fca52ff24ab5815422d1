@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "a117a57e_4c893090",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T15:22:09Z",
+      "side": 1,
+      "message": "\u003e Regarding clicking to switch tabs, are you referring to clicking on a tab?\n\nYes\n\n\u003e Here, the user just hit enter or clicked on a suggestion. We always blur the Omnibox in this case.\n\nTrue. But that\u0027s where my hesitation lies. As a way of switching tabs rather than navigating in the existing tab, this new action is somewhere between a tab-strip click and a traditional suggestion navigation. But again, I think you\u0027re probably right.",
+      "parentUuid": "fe4ef016_7da7093e",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c31f0ab_df8a4c87",
         "filename": "components/omnibox/browser/history_quick_provider.cc",
         "patchSetId": 5
@@ -242,6 +260,24 @@
       "side": 1,
       "message": "Agreed, did you want them to start on it before UI is settled?",
       "parentUuid": "d36df644_e537867a",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b993cd_b3930e3d",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T15:22:09Z",
+      "side": 1,
+      "message": "No, I think this is fine for now.",
+      "parentUuid": "8c7c175e_e386434a",
       "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -419,6 +455,24 @@
       "side": 1,
       "message": "In my example, GetText() would not be empty.",
       "parentUuid": "3a755a3b_097c3c15",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8b1e82f_4fb6d003",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T15:22:09Z",
+      "side": 1,
+      "message": "I\u0027m fine with how this is for experimental purposes, but why wouldn\u0027t GetText() (or now permanent_text_) be empty in that case? If I go to chrome://newtab, no text is displayed, just as when I open a new tab. If the state of permanent_text_ is for some reason different depending on how we got to the new tab page, that seems like an implementation detail that we shouldn\u0027t rely on.",
+      "parentUuid": "9d5cce61_8511c1a8",
       "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

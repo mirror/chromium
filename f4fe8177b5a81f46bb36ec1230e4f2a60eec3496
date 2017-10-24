@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc345364_93c99bc4",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T15:22:09Z",
+      "side": 1,
+      "message": "Per the style guide, capitalize and add a period.\n\nhttp://go/cpp-style#Punctuation,_Spelling_and_Grammar",
+      "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4bf313_5bdb7ad4",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T15:22:09Z",
+      "side": 1,
+      "message": "And move this to match.",
+      "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa4f133_ae2fa205",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T15:22:09Z",
+      "side": 1,
+      "message": "Move this below the other OmniboxEditController overrides (OnAutocompleteAccept, OnInputInProgress) in the private: section.",
+      "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fecc28_60acb3e4",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T15:22:09Z",
+      "side": 1,
+      "message": "Add \"Returns true if a tab with the supplied URL was found.\" or something similar.",
+      "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c07ce678_91042ca1",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T15:22:09Z",
+      "side": 1,
+      "message": "Can you add a comment here to make it clear that a lack of return in the failure case is intentional? Something like:\n\n// Attempt to switch to an open tab at |match.destination_url|. If it fails\n// (may have been closed or navigated since the match was generated), do\n// nothing and fall back to a normal navigation below.",
+      "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
