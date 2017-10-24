@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2afdce8e_26f64380",
+        "filename": "components/download/in_progress_metadata/proto/download_entry.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-24T05:27:22Z",
+      "side": 1,
+      "message": "Copied these messages verbatim from a design doc. Will remove most of these resumption related stuff as Joy would add them as needed on a separate CL.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449a0d9f_4a1522e7",
+        "filename": "content/public/browser/download_url_parameters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-24T05:27:22Z",
+      "side": 1,
+      "message": "TODO: Will remove this, Copied from Cathy\u0027s CL. Essentially they would use DownloadUrlParameter to pass this stuff.",
+      "range": {
+        "startLine": 243,
+        "startChar": 1,
+        "endLine": 243,
+        "endChar": 2
+      },
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
