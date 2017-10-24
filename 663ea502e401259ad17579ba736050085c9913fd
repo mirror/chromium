@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daa70276_7f66e8bb",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-24T19:10:01Z",
+      "side": 1,
+      "message": "It\u0027s useful to show an example with an expression inside a template value, but in this example, we\u0027d just do ${myName.first}${myName.last}. Maybe change it, and add an example with a more complex expression?",
+      "range": {
+        "startLine": 469,
+        "startChar": 25,
+        "endLine": 469,
+        "endChar": 28
+      },
+      "revId": "663ea502e401259ad17579ba736050085c9913fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
