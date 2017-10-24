@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "bf5ab0d8_25a7aa29",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-10-24T22:00:36Z",
+      "side": 1,
+      "message": "nit: add prefix \"arc/bluetooth: \"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 55
+      },
+      "revId": "bbb8f0efbabf3ad9266bf8cdc7d2e4bb33bc7447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da37ea1a_7687599d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-10-24T22:00:36Z",
+      "side": 1,
+      "message": "Assuming this only guards the case where the initiator of discovery change is Arc++ BT but not the case where other applications are the initiator, isn\u0027t it better to move the guarding to Chrome BT implementation?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 56
+      },
+      "revId": "bbb8f0efbabf3ad9266bf8cdc7d2e4bb33bc7447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffcfbb17_788c5605",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-10-24T22:00:36Z",
+      "side": 1,
+      "message": "Is there any manual test to verify the fix?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "bbb8f0efbabf3ad9266bf8cdc7d2e4bb33bc7447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acac85a1_4bd6c91c",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 2
