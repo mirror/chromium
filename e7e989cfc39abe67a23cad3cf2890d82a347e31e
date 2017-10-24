@@ -22,6 +22,30 @@
       "revId": "e7e989cfc39abe67a23cad3cf2890d82a347e31e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56195ced_ce18c2a5",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-24T20:24:46Z",
+      "side": 1,
+      "message": "\u003e if it\u0027s actually an unused preload, then that won\u0027t happen because it won\u0027t have any clients.\n\nThe CSSStyleSheetResource won\u0027t have any clients, except for CSSPreloaderResourceClient (for CSSPreloadScanner).\nProbably CSSPreloaderResourceClient should be already removed from the clients in DidAppendFirstData(), so we might be able to CHECK() that Clients() is empty, return immediately here, and get the identical behavior.",
+      "parentUuid": "f30335e2_6c597eb1",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 27
+      },
+      "revId": "e7e989cfc39abe67a23cad3cf2890d82a347e31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
