@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "69a9d52b_510024ee",
+        "filename": "components/viz/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T18:13:22Z",
+      "side": 1,
+      "message": "Yes, any test code I agree. This affects production files too though.",
+      "parentUuid": "546619cc_fbb79047",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e5d8a62_628fa895",
         "filename": "components/viz/host/host_frame_sink_manager.h",
         "patchSetId": 1
