@@ -1,0 +1,2 @@
+CONSOLE ERROR: Uncaught TypeError: Failed to resolve module specifier "specifier-without-valid-prefix". They must start with either "/", "./", or "../".
+

@@ -72,24 +72,34 @@ void Modulator::ClearModulator(ScriptState* script_state) {
   per_context_data->ClearData(kPerContextDataKey);
 }
 
+bool Modulator::ModuleSpecifierStartsWithValidPrefix(
+    const String& module_request) {
+  // https://html.spec.whatwg.org/multipage/webappapis.html#resolve-a-module-specifier
+  // Step 2. "If specifier does not start with the character U+002F SOLIDUS (/),
+  // the two-character sequence U+002E FULL STOP, U+002F SOLIDUS (./), or the
+  // three-character sequence U+002E FULL STOP, U+002E FULL STOP, U+002F SOLIDUS
+  // (../), return failure and abort these steps." [spec text]
+  return module_request.StartsWith("/") || module_request.StartsWith("./") ||
+         module_request.StartsWith("../");
+}
+
 KURL Modulator::ResolveModuleSpecifier(const String& module_request,
                                        const KURL& base_url) {
-  // Step 1. Apply the URL parser to specifier. If the result is not failure,
-  // return the result.
+  // https://html.spec.whatwg.org/multipage/webappapis.html#resolve-a-module-specifier
+
+  // Step 1. "Apply the URL parser to specifier. If the result is not failure,
+  // return the result." [spec text]
   KURL url(NullURL(), module_request);
   if (url.IsValid())
     return url;
 
-  // Step 2. If specifier does not start with the character U+002F SOLIDUS (/),
-  // the two-character sequence U+002E FULL STOP, U+002F SOLIDUS (./), or the
-  // three-character sequence U+002E FULL STOP, U+002E FULL STOP, U+002F SOLIDUS
-  // (../), return failure and abort these steps.
-  if (!module_request.StartsWith("/") && !module_request.StartsWith("./") &&
-      !module_request.StartsWith("../"))
+  // Step 2 condition is implemented at
+  // Modulator::ModuleSpecifierStartsWithValidPrefix.
+  if (!ModuleSpecifierStartsWithValidPrefix(module_request))
     return KURL();
 
-  // Step 3. Return the result of applying the URL parser to specifier with
-  // script's base URL as the base URL.
+  // Step 3. "Return the result of applying the URL parser to specifier with
+  // script's base URL as the base URL." [spec text]
   DCHECK(base_url.IsValid());
   KURL absolute_url(base_url, module_request);
   if (absolute_url.IsValid())
