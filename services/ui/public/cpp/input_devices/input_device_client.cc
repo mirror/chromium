@@ -61,6 +61,10 @@ void InputDeviceClient::RemoveObserver(ui::InputDeviceEventObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
+void InputDeviceClient::OnStylusStateChangedForTesting(StylusState state) {
+  OnStylusStateChanged(state);
+}
+
 InputDeviceClient::InputDeviceClient(bool is_input_device_manager)
     : binding_(this), is_input_device_manager_(is_input_device_manager) {
   if (is_input_device_manager_)

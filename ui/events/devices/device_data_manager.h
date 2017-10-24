@@ -62,9 +62,9 @@ class EVENTS_DEVICES_EXPORT DeviceDataManager
   bool AreDeviceListsComplete() const override;
   bool AreTouchscreensEnabled() const override;
   bool AreTouchscreenTargetDisplaysValid() const override;
-
   void AddObserver(InputDeviceEventObserver* observer) override;
   void RemoveObserver(InputDeviceEventObserver* observer) override;
+  void OnStylusStateChangedForTesting(StylusState state) override;
 
  protected:
   DeviceDataManager();

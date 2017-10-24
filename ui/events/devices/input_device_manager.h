@@ -15,6 +15,8 @@
 
 namespace ui {
 
+enum class StylusState;
+
 // Interface to query available input devices. Holds a thread-local pointer to
 // an implementation that provides this service. The implementation could be
 // DeviceDataManager or something that mirrors the necessary state if
@@ -41,6 +43,8 @@ class EVENTS_DEVICES_EXPORT InputDeviceManager {
 
   virtual void AddObserver(InputDeviceEventObserver* observer) = 0;
   virtual void RemoveObserver(InputDeviceEventObserver* observer) = 0;
+
+  virtual void OnStylusStateChangedForTesting(StylusState state) = 0;
 
  protected:
   // Sets the instance. This should only be set once per thread.

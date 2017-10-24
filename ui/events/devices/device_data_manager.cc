@@ -253,6 +253,10 @@ void DeviceDataManager::RemoveObserver(InputDeviceEventObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
+void DeviceDataManager::OnStylusStateChangedForTesting(StylusState state) {
+  NotifyObserversStylusStateChanged(state);
+}
+
 void DeviceDataManager::SetTouchscreensEnabled(bool enabled) {
   touch_screens_enabled_ = enabled;
 }
