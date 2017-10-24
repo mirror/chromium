@@ -89,12 +89,7 @@ class ScreenOrientationBrowserTest : public ContentBrowserTest  {
     main_frame_rwh->Send(
         new ViewMsg_Resize(main_frame_rwh->GetRoutingID(), params));
 
-    // 2. The WebContents sends a PageMsg_UpdateScreenInfo to all the renderers
-    // involved in the FrameTree.
-    web_contents()->GetFrameTree()->root()->render_manager()->SendPageMessage(
-        new PageMsg_UpdateScreenInfo(MSG_ROUTING_NONE, screen_info), nullptr);
-
-    // 3. When the top-level frame gets the ViewMsg_Resize, it'll dispatch a
+    // 2. When the top-level frame gets the ViewMsg_Resize, it'll dispatch a
     // FrameHostMsg_FrameRectsChanged IPC that causes the remote subframes to
     // receive the ViewMsg_Resize from the browser.
     for (auto* rwh : rwhs)

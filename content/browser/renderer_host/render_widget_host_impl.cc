@@ -710,9 +710,8 @@ void RenderWidgetHostImpl::WasShown(const ui::LatencyInfo& latency_info) {
   // 2. WasResized -> do nothing as resize_ack_pending_ is true
   // 3. WasHidden
   // 4. OnResizeOrRepaintACK from (1) processed. Does NOT invoke WasResized as
-  // view
-  //    is hidden. Now renderer/browser out of sync with what they think size
-  //    is.
+  //    view is hidden. Now renderer/browser out of sync with what they think
+  //    size is.
   // By invoking WasResized the renderer is updated as necessary. WasResized
   // does nothing if the sizes are already in sync.
   //
