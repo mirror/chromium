@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c85fc4e7_36e05df7",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-24T21:00:46Z",
+      "side": 1,
+      "message": "Nit: \"*send* it over to...\"?",
+      "range": {
+        "startLine": 391,
+        "startChar": 29,
+        "endLine": 391,
+        "endChar": 39
+      },
+      "revId": "d446c4ca19411352cf90ac047a6a4f87cbc00e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54c474b_8f0a28b6",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-24T21:00:46Z",
+      "side": 1,
+      "message": "Not sure but shouldn\u0027t we have \"compositor_task_runner_\" instead?  If we have a compositor_task_runner_, it seems like cc is conceptually the sender of the ack (regardless of which thread it belongs to), no?",
+      "range": {
+        "startLine": 400,
+        "startChar": 8,
+        "endLine": 400,
+        "endChar": 30
+      },
+      "revId": "d446c4ca19411352cf90ac047a6a4f87cbc00e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
