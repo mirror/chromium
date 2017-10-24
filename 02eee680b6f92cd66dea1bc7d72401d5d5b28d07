@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ebf712b_7c4d838a",
+        "filename": "third_party/WebKit/public/platform/InterfaceRegistry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T12:25:34Z",
+      "side": 1,
+      "message": "Would you add a comment that the usage of the associated interface should really be limited?",
+      "revId": "02eee680b6f92cd66dea1bc7d72401d5d5b28d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
