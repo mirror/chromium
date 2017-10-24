@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "91296d5b_cd87f366",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-24T22:43:38Z",
+      "side": 1,
+      "message": "Please comment on what are the rules for this field. When should I expect this to be null?",
+      "range": {
+        "startLine": 105,
+        "startChar": 27,
+        "endLine": 105,
+        "endChar": 40
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6e6ce1f_15881e57",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 2
@@ -53,6 +76,29 @@
         "startChar": 12,
         "endLine": 317,
         "endChar": 33
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2785d0bf_c3df7552",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-24T22:43:38Z",
+      "side": 1,
+      "message": "Are you sure TWAs will be able to act on the updated \"LastCheckForUpdatedWebManifest\"? I don\u0027t know WebAPKs code that well, but it seems this is used in WebApkUpdateManager. Have you ensured TWAs are treated the way you want in WebApkUpdateManager? \n\nIf you don\u0027t want to go as far in this patch, then maybe make a note to yourself to come back to the question of how Web Manifest updates should be treated by TWAs and revert this change?",
+      "range": {
+        "startLine": 456,
+        "startChar": 36,
+        "endLine": 456,
+        "endChar": 78
       },
       "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -194,6 +240,53 @@
         "startChar": 13,
         "endLine": 19,
         "endChar": 25
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4ef530_2602bd48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-24T22:43:38Z",
+      "side": 1,
+      "message": "Alternatively:\n\nCan we fold register(...) into WebappActivity, I don\u0027t understand why it would need to be here.\n\nCan we elegantly move all disclosure notification related code into WebApkDisclosureNotificationManager and rename it into WebappDisclosureNotificationManager, with a comment when disclosure notification applies (i.e. unbound WebAPKs and TWAs).\n\nWebappHelper dies and we\u0027re all a little bit happier.",
+      "parentUuid": "416550fa_f063719c",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5225c8_7cabec06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-24T22:43:38Z",
+      "side": 1,
+      "message": "Well, now it\u0027s not only WebAPKs, it also for TWAs.",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 30
       },
       "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
