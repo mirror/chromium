@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "a188e401_9ff0029f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-24T01:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fddea20_be2b610f",
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f11cab53_c74c1af0",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
         "patchSetId": 15
@@ -140,6 +158,24 @@
       "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbfdb3d9_df93026c",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-24T01:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b16b414d_6f8f78f2",
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
