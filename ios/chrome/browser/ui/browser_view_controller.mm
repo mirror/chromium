@@ -1331,7 +1331,13 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [super viewDidAppear:animated];
   self.viewVisible = YES;
   [self updateDialogPresenterActiveState];
-  [self presentBubblesIfEligible];
+
+  // |viewDidAppear| can be called after |browserState| is destroyed. So, since
+  // |presentBubblesIfEligible| can use |browserState|, check for
+  // |browserState| before calling it.
+  if (self.browserState) {
+    [self presentBubblesIfEligible];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -2145,6 +2151,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
                 direction:(BubbleArrowDirection)direction
                 alignment:(BubbleAlignment)alignment
                      text:(NSString*)text {
+  DCHECK(_browserState);
   if (!feature_engagement::TrackerFactory::GetForBrowserState(_browserState)
            ->ShouldTriggerHelpUI(feature)) {
     return nil;
