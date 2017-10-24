@@ -24,6 +24,7 @@ ServiceWorkerFetchContextImpl::ServiceWorkerFetchContextImpl(
 ServiceWorkerFetchContextImpl::~ServiceWorkerFetchContextImpl() {}
 
 void ServiceWorkerFetchContextImpl::InitializeOnWorkerThread(
+    const blink::WebURL& context_url,
     scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner) {
   resource_dispatcher_ = base::MakeUnique<ResourceDispatcher>(
       nullptr, std::move(loading_task_runner));
