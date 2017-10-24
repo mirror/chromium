@@ -39,9 +39,9 @@ OneShotAccessibilityTreeSearch::OneShotAccessibilityTreeSearch(
       direction_(OneShotAccessibilityTreeSearch::FORWARDS),
       result_limit_(UNLIMITED_RESULTS),
       immediate_descendants_only_(false),
+      is_android_(false),
       visible_only_(false),
-      did_search_(false) {
-}
+      did_search_(false) {}
 
 OneShotAccessibilityTreeSearch::~OneShotAccessibilityTreeSearch() {
 }
@@ -71,6 +71,11 @@ void OneShotAccessibilityTreeSearch::SetImmediateDescendantsOnly(
     bool immediate_descendants_only) {
   DCHECK(!did_search_);
   immediate_descendants_only_ = immediate_descendants_only;
+}
+
+void OneShotAccessibilityTreeSearch::SetIsAndroid(bool is_android) {
+  DCHECK(!did_search_);
+  is_android_ = is_android;
 }
 
 void OneShotAccessibilityTreeSearch::SetVisibleOnly(bool visible_only) {
@@ -159,7 +164,7 @@ void OneShotAccessibilityTreeSearch::SearchByWalkingTree() {
     if (direction_ == FORWARDS)
       node = tree_->NextInTreeOrder(start_node_);
     else
-      node = tree_->PreviousInTreeOrder(start_node_);
+      node = tree_->PreviousInTreeOrder(start_node_, is_android_);
   }
 
   BrowserAccessibility* stop_node = scope_node_->PlatformGetParent();
@@ -173,7 +178,7 @@ void OneShotAccessibilityTreeSearch::SearchByWalkingTree() {
     if (direction_ == FORWARDS)
       node = tree_->NextInTreeOrder(node);
     else
-      node = tree_->PreviousInTreeOrder(node);
+      node = tree_->PreviousInTreeOrder(node, is_android_);
   }
 }
 

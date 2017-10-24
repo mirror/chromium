@@ -108,6 +108,9 @@ class CONTENT_EXPORT OneShotAccessibilityTreeSearch {
   // recurse.
   void SetImmediateDescendantsOnly(bool immediate_descendants_only);
 
+  // If true, the device is Android.
+  void SetIsAndroid(bool is_android);
+
   // If true, only considers nodes that aren't invisible or offscreen.
   void SetVisibleOnly(bool visible_only);
 
@@ -138,6 +141,7 @@ class CONTENT_EXPORT OneShotAccessibilityTreeSearch {
   Direction direction_;
   int result_limit_;
   bool immediate_descendants_only_;
+  bool is_android_;
   bool visible_only_;
   std::string search_text_;
 

@@ -291,7 +291,8 @@ class CONTENT_EXPORT BrowserAccessibilityManager : public ui::AXTreeDelegate {
   static BrowserAccessibility* NextInTreeOrder(
       const BrowserAccessibility* object);
   static BrowserAccessibility* PreviousInTreeOrder(
-      const BrowserAccessibility* object);
+      const BrowserAccessibility* object,
+      bool is_android);
   static BrowserAccessibility* NextTextOnlyObject(
       const BrowserAccessibility* object);
   static BrowserAccessibility* PreviousTextOnlyObject(
