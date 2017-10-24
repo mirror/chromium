@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25ed3e50_3950a9ca",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T18:55:28Z",
+      "side": 1,
+      "message": "Is this looping over all open profiles or merely windows within this profile?",
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4390cc93_32976a48",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T18:55:28Z",
+      "side": 1,
+      "message": "What happens if we closed the current WebContents, then WebContents that replaced the closed tab was the one we want.  Should we be calling ActiveContents on it or not?",
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a723f09_0b205799",
+        "filename": "components/omnibox/browser/autocomplete_provider.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T18:55:28Z",
+      "side": 1,
+      "message": "Why are you adding a new provider type here?  It doesn\u0027t look like you\u0027re adding a new provider.  You also haven\u0027t modified the list of provider types in omnibox_event.proto.",
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e02a5f_4e3cd39c",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T18:55:28Z",
+      "side": 1,
+      "message": "used in two places.  Make it a common variable (constexpr?).",
+      "range": {
+        "startLine": 201,
+        "startChar": 30,
+        "endLine": 201,
+        "endChar": 48
+      },
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431e2aee_59486e59",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T18:55:28Z",
+      "side": 1,
+      "message": "\"Called to try to switch\" ... \"Returns true if given URL is found within a tab.\"\nDoes this means it will sometimes return true without switching tabs?  (It returns true if it finds a URL in the tab, but the only thing this function says it does is to \"try to switch\".  It doesn\u0027t say anything about guaranteeing success if the URL is found.)",
+      "range": {
+        "startLine": 36,
+        "startChar": 18,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1920d421_aff2bdcf",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T18:55:28Z",
+      "side": 1,
+      "message": "Does this look across windows or just within the same window?",
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
