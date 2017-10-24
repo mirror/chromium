@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "750ed217_f8e32b7b",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-24T20:18:47Z",
+      "side": 1,
+      "message": "BluetoothDevice says we should call DidConnectGatt here to make sure pending connection callbacks are handled correctly. Are the callbacks handled somewhere else?",
+      "range": {
+        "startLine": 279,
+        "startChar": 54,
+        "endLine": 279,
+        "endChar": 70
+      },
+      "revId": "9e4b7f3c83e242769393cd3e102b456479a8b45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce543f4_be9b361c",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-24T20:18:47Z",
+      "side": 1,
+      "message": "If Windows always treats devices as GATT-connected, will this ever be called? If not, can we add an assert?",
+      "range": {
+        "startLine": 282,
+        "startChar": 25,
+        "endLine": 282,
+        "endChar": 39
+      },
+      "revId": "9e4b7f3c83e242769393cd3e102b456479a8b45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
