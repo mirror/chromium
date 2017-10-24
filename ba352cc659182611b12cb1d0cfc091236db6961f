@@ -507,6 +507,30 @@
     },
     {
       "key": {
+        "uuid": "e509a8ca_dbe5d8a0",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T18:31:02Z",
+      "side": 1,
+      "message": "\"get\" is used when a value is *returned* indirectly (f.e. via completion handler, or via the argument). In this case the method name should start with a noun describing the result.",
+      "parentUuid": "0c813d5c_381cd9d3",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65500852_0340f19c",
         "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
         "patchSetId": 12
@@ -683,6 +707,30 @@
       "side": 1,
       "message": "Not sure i understand why, i remember in different previous cases. you mentioned that URL is all acronym and should all be capitalized. ?",
       "parentUuid": "755a6d6f_fc4b9194",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a13e941_b42f24ab",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T18:31:02Z",
+      "side": 1,
+      "message": "URL for Objective-C Style and Url for C++ Style. \nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/objective-c/objective-c.md#objective_c_style-matches-the-language",
+      "parentUuid": "dd26966e_cbcd1de5",
       "range": {
         "startLine": 17,
         "startChar": 11,
