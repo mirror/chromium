@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5db5b432_c78f3e11",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-24T18:05:22Z",
+      "side": 1,
+      "message": "\u003e It\u0027s used by tab_android.cc, rwhva.cc, I can put it in content (rwhva.cc) but then we need an API in render_widget_host_view.h for that instead.\n\ntab_android is in chrome already. OnShowUnhandledTapUIIfNeeded in rwhva is contextual search, so can pass Size up to chrome, and then have chrome do whatever resize is necessary",
+      "parentUuid": "8aee8112_fe052db7",
+      "revId": "7bf757271d9c98e604fb4fdb024a761453f7c07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d2cc412_aded88af",
         "filename": "ui/android/view_android.cc",
         "patchSetId": 7
@@ -148,6 +166,24 @@
       "side": 1,
       "message": "\u003e shrink should be on the window, rather than individual views, right?\n\nNot likely. The content for overlay panel needs to manage its own flag.  \n\n\u003e and the controls should just be stored out of band in content, rather than going through views?\n\nMy summary is here https://bugs.chromium.org/p/chromium/issues/detail?id\u003d622847#c37 Then I believe you want them all browser control info to be in content, namely in RWHVA.",
       "parentUuid": "7ba2e199_2fcb37ac",
+      "revId": "7bf757271d9c98e604fb4fdb024a761453f7c07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccdacd9_654aa944",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-24T18:05:22Z",
+      "side": 1,
+      "message": "\u003e My summary is here https://bugs.chromium.org/p/chromium/issues/detail?id\u003d622847#c37 Then I believe you want them all browser control info to be in content, namely in RWHVA.\n\nYeah, I think browser control size should not be on views here, and content (at least on the browser side) just need to pass the control size down to rwhva and shouldn\u0027t use it in any way.\n\nUnless this breaks something, but don\u0027t know until you try it I guess..",
+      "parentUuid": "3893369c_c54b322d",
       "revId": "7bf757271d9c98e604fb4fdb024a761453f7c07e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
