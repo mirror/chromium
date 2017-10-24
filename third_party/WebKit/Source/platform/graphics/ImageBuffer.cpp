@@ -385,8 +385,8 @@ bool ImageBuffer::GetImageData(Multiply multiplied,
           : kRGBA_8888_SkColorType;
 
   SkImageInfo info =
-      SkImageInfo::Make(rect.Width(), rect.Height(), color_type, alpha_type,
-                        surface_->ColorParams().GetSkColorSpaceForSkSurfaces());
+      SkImageInfo::Make(rect.Width(), rect.Height(), color_type, alpha_type);
+
   snapshot->PaintImageForCurrentFrame().GetSkImage()->readPixels(
       info, result.Data(), bytes_per_pixel * rect.Width(), rect.X(), rect.Y());
   gpu_readback_invoked_in_current_frame_ = true;
