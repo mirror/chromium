@@ -4,10 +4,39 @@
 
 cr.define('mobile', function() {
 
+  var WEBVIEW_REDIRECT_FUNCTION = '(function(form, paymentUrl, postData) {' +
+      'function addInputElement(form, name, value) {' +
+      '  var input = document.createElement(\'input\');' +
+      '  input.type = \'hidden\';' +
+      '  input.name = name;' +
+      '  input.value = value;' +
+      '  form.appendChild(input);' +
+      '}' +
+      'function initFormFromPostData(form, postData) {' +
+      '  var pairs = postData.split(\'&\');' +
+      '  pairs.forEach(pairStr => {' +
+      '    var pair = pairStr.split(\'=\');' +
+      '    if (pair.length == 2)' +
+      '      addInputElement(form, pair[0], pair[1]);' +
+      '    else if (pair.length == 1)' +
+      '      addInputElement(form, pair[0], true);' +
+      '  });' +
+      '}' +
+      'form.action = unescape(paymentUrl);' +
+      'form.method = \'POST\';' +
+      'initFormFromPostData(form, unescape(postData));' +
+      'form.submit();' +
+      '})';
+
+  var WEBVIEW_REDIRECT_FORM_ID = 'redirectForm';
+
+  var WEBVIEW_REDIRECT_HTML = '<html><body>' +
+      '<form id="' + WEBVIEW_REDIRECT_FORM_ID + '"></form>' +
+      '</body></html>';
+
   // TODO(tbarzic): Share code with mobile_setup.js.
   var EXTENSION_BASE_URL =
       'chrome-extension://iadeocfgjdjdmpenejdbfeaocpbikmab/';
-  var REDIRECT_POST_PAGE_URL = EXTENSION_BASE_URL + 'redirect.html?autoPost=1';
   var PORTAL_OFFLINE_PAGE_URL = EXTENSION_BASE_URL + 'portal_offline.html';
   var INVALID_DEVICE_INFO_PAGE_URL =
       EXTENSION_BASE_URL + 'invalid_device_info.html';
@@ -72,6 +101,7 @@ cr.define('mobile', function() {
         // If the portal is reachable and device info is valid, set and show
         // portalFrame; and hide system status displaying 'offline portal' page.
         this.setPortalFrameIfNeeded_(this.deviceInfo_);
+        this.setCarrierPage_(CarrierPageType.NOT_SET);
         $('portalFrame').hidden = false;
         $('systemStatus').hidden = true;
         this.stopSpinner_();
@@ -85,21 +115,19 @@ cr.define('mobile', function() {
 
       switch (type) {
         case CarrierPageType.PORTAL_OFFLINE:
-          $('carrierPage').contentWindow.location.href =
-              PORTAL_OFFLINE_PAGE_URL;
+          $('carrierPage').src = PORTAL_OFFLINE_PAGE_URL;
           $('statusHeader').textContent =
               loadTimeData.getString('portal_unreachable_header');
           this.startSpinner_();
           break;
         case CarrierPageType.INVALID_DEVICE_INFO:
-          $('carrierPage').contentWindow.location.href =
-              INVALID_DEVICE_INFO_PAGE_URL;
+          $('carrierPage').src = INVALID_DEVICE_INFO_PAGE_URL;
           $('statusHeader').textContent =
               loadTimeData.getString('invalid_device_info_header');
           this.stopSpinner_();
           break;
         case CarrierPageType.NOT_SET:
-          $('carrierPage').contentWindow.location.href = 'about:blank';
+          $('carrierPage').src = 'about:blank';
           $('statusHeader').textContent = '';
           this.stopSpinner_();
           break;
@@ -110,17 +138,29 @@ cr.define('mobile', function() {
       this.carrierPageType_ = type;
     },
 
+    onPortalFrameCommit_: function(deviceInfo, redirectFrameUrl, evt) {
+      if (!evt.isTopLevel || evt.url != redirectFrameUrl)
+        return;
+      $('portalFrame').executeScript({
+        code: WEBVIEW_REDIRECT_FUNCTION + '(' +
+            'document.getElementById(\'' + WEBVIEW_REDIRECT_FORM_ID + '\'),' +
+            ' \'' + escape(deviceInfo.payment_url) + '\',' +
+            ' \'' + escape(deviceInfo.post_data) + '\');'
+      });
+    },
+
     setPortalFrameIfNeeded_: function(deviceInfo) {
       // The portal should be set only once.
       if (this.portalFrameSet_)
         return;
 
-      var postData = '';
-      if (deviceInfo.post_data && deviceInfo.post_data.length)
-        postData = '&post_data=' + encodeURIComponent(deviceInfo.post_data);
-
-      $('portalFrame').contentWindow.location.href = REDIRECT_POST_PAGE_URL +
-          postData + '&formUrl=' + encodeURIComponent(deviceInfo.payment_url);
+      var frameSrc = 'data:text/html;charset=utf-8,' +
+          encodeURIComponent(WEBVIEW_REDIRECT_HTML);
+      var frame = $('portalFrame');
+      frame.addEventListener(
+          'loadcommit',
+          this.onPortalFrameCommit_.bind(this, deviceInfo, frameSrc));
+      frame.src = frameSrc;
 
       this.portalFrameSet_ = true;
     },
