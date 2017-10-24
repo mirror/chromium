@@ -22,6 +22,30 @@
       "revId": "3f06119d3c41c9ea1ce6a367a043c308c1e6627c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838de1b3_a0f8f301",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-24T12:40:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73b42745_7b865a25",
+      "range": {
+        "startLine": 334,
+        "startChar": 2,
+        "endLine": 334,
+        "endChar": 36
+      },
+      "revId": "3f06119d3c41c9ea1ce6a367a043c308c1e6627c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

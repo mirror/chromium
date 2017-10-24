@@ -296,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "ebe4b4f2_d78efc89",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-24T12:40:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5369f0d6_64b51f25",
+      "range": {
+        "startLine": 409,
+        "startChar": 21,
+        "endLine": 409,
+        "endChar": 29
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f26324c7_f106c0a1",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
         "patchSetId": 3
