@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61d63e42_ace42bfc",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/worklet-animation-creation.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-24T19:18:58Z",
+      "side": 0,
+      "message": "What do we do if there is no timeline specified? i.e. new WorkletAnimation(\u0027my-animation\u0027, [effect]);",
+      "revId": "750ba7027d0a8d62aa843a0d27c2f13365022ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
