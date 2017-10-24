@@ -22,6 +22,30 @@
       "revId": "2c29887ba64db25308a2bef7465475db80fbf2eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fdf9a74_fc92fe98",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-24T03:32:06Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s entirely unrelated. One of the main reasons why we wanted a Feature Policy for EME was because it has the potential to show a prompt from an iframe, which can be confusing for users. It\u0027s true that the feature won\u0027t always request permission though.\n\nI think the link is ok because I think it still clearly explains to developers what the changes are and how to continue to make things work.",
+      "parentUuid": "fa02e294_3488dc77",
+      "range": {
+        "startLine": 44,
+        "startChar": 42,
+        "endLine": 44,
+        "endChar": 63
+      },
+      "revId": "2c29887ba64db25308a2bef7465475db80fbf2eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
