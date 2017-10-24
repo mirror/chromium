@@ -135,6 +135,24 @@
       "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51618c09_9fba9b25",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T17:58:20Z",
+      "side": 1,
+      "message": "They\u0027re not all looking for the same thing though. The clang-tidy check happens to want to do something similar, since it\u0027s also trying to insert `override`. However, clang-format does not--and in general, there are quite a few instantiations of the lexer in raw mode for other things.",
+      "parentUuid": "8c9b4317_974b8c26",
+      "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
