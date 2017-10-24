@@ -5,6 +5,7 @@
 #include "ui/app_list/views/search_box_view.h"
 
 #include <algorithm>
+#include <iostream>
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -402,7 +403,7 @@ bool SearchBoxView::MoveArrowFocus(const ui::KeyEvent& event) {
     default:
       NOTREACHED();
   }
-
+  std::cout << "focused view: " << focused_view_ << std::endl;
   SetSelected(focused_view_ == FOCUS_SEARCH_BOX);
   return (focused_view_ < FOCUS_CONTENTS_VIEW);
 }
@@ -782,6 +783,7 @@ views::View* SearchBoxView::GetSelectedViewInContentsView() const {
 void SearchBoxView::SetSelected(bool selected) {
   if (!is_fullscreen_app_list_enabled_)
     return;
+  LOG(ERROR) << "Selected? " << selected;
   if (selected_ == selected)
     return;
   selected_ = selected;
