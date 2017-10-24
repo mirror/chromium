@@ -752,6 +752,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
 // Presents a bubble associated with the new incognito tab tip in-product help
 // promotion.
 - (void)presentNewIncognitoTabTipBubble;
+// Presents either the New Tab Tip or the New Incognito Tab Tip Bubble if one is
+// eligible. If neither is eligible, neither bubble is presented. This method
+// requires that |self.browserState| is not NULL.
+- (void)presentBubblesIfEligible;
 
 // Update find bar with model data. If |shouldFocus| is set to YES, the text
 // field will become first responder.
@@ -1263,6 +1267,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (void)presentBubblesIfEligible {
+  DCHECK(self.browserState);
   [self presentNewTabTipBubbleOnInitialized];
   [self presentNewIncognitoTabTipBubble];
 }
@@ -1331,7 +1336,13 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [super viewDidAppear:animated];
   self.viewVisible = YES;
   [self updateDialogPresenterActiveState];
-  [self presentBubblesIfEligible];
+
+  // |viewDidAppear| can be called after |browserState| is destroyed. So, since
+  // |presentBubblesIfEligible| requires |browserState|, check for
+  // |browserState| before calling it.
+  if (self.browserState) {
+    [self presentBubblesIfEligible];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
