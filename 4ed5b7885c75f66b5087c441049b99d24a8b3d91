@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "f06629e3_c9cbc098",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T23:18:42Z",
+      "side": 1,
+      "message": "We should always call this since we don\u0027t all it in the constructor. (We might want to log an error if is_forced_off is null). This is a great example of a surprising result if a callback never gets called - a bug in GetBacklightsForcedOff() in the power manager could cause the touch devices controller to behave unexpectedly.",
+      "revId": "4ed5b7885c75f66b5087c441049b99d24a8b3d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87864e9a_1d023f19",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T23:18:42Z",
+      "side": 1,
+      "message": "Is this the correct behavior on a power manager failure, or should we call the methods below with default values?",
+      "revId": "4ed5b7885c75f66b5087c441049b99d24a8b3d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1b0755_7ac6c0d3",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T23:18:42Z",
+      "side": 1,
+      "message": "We probably want to set an initial screen state in this case to a default value?",
+      "revId": "4ed5b7885c75f66b5087c441049b99d24a8b3d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b71220f_85c0e3b3",
         "filename": "chromeos/dbus/power_manager_client.cc",
         "patchSetId": 2
@@ -13,6 +64,23 @@
       "writtenOn": "2017-10-24T21:54:51Z",
       "side": 1,
       "message": "feel free to say no if you think it\u0027s out of scope for this change, but all of these could probably be functions in the anon namespace, or maybe even lambda expressions, instead of methods, right?",
+      "revId": "4ed5b7885c75f66b5087c441049b99d24a8b3d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62bb3b9_e9ecaede",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T23:18:42Z",
+      "side": 1,
+      "message": "Probably worth logging an error here to make it clear that the DBus error caused us not to call UpdateScreenBrightnessSettings for Arc.",
       "revId": "4ed5b7885c75f66b5087c441049b99d24a8b3d91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
