@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c70f005c_e99724fd",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-24T20:32:29Z",
+      "side": 1,
+      "message": "While you\u0027re in the neighborhood, could you change this to MakeUnique to avoid the call to new?",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 26
+      },
+      "revId": "b638c0b179920ba7b72cb083c00ebb9655506f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
