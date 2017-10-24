@@ -2089,12 +2089,12 @@ bool SourceBufferStream<RangeClass>::SetPendingBuffer(
 }
 
 template <>
-constexpr bool SourceBufferStream<SourceBufferRangeByDts>::BufferingByPts() {
+bool SourceBufferStream<SourceBufferRangeByDts>::BufferingByPts() const {
   return false;
 }
 
 template <>
-constexpr bool SourceBufferStream<SourceBufferRangeByPts>::BufferingByPts() {
+bool SourceBufferStream<SourceBufferRangeByPts>::BufferingByPts() const {
   return true;
 }
 
