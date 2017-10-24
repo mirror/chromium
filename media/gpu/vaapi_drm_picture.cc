@@ -138,4 +138,25 @@ bool VaapiDrmPicture::AllowOverlay() const {
   return true;
 }
 
+// static
+linked_ptr<VaapiPicture> VaapiPicture::CreatePicture(
+    const scoped_refptr<VaapiWrapper>& vaapi_wrapper,
+    const MakeGLContextCurrentCallback& make_context_current_cb,
+    const BindGLImageCallback& bind_image_cb,
+    int32_t picture_buffer_id,
+    const gfx::Size& size,
+    uint32_t texture_id,
+    uint32_t client_texture_id) {
+  linked_ptr<VaapiPicture> picture;
+  picture.reset(new VaapiDrmPicture(vaapi_wrapper, make_context_current_cb,
+                                    bind_image_cb, picture_buffer_id, size,
+                                    texture_id, client_texture_id));
+  return picture;
+}
+
+// static
+uint32_t VaapiPicture::GetGLTextureTarget() {
+  return GL_TEXTURE_EXTERNAL_OES;
+}
+
 }  // namespace media
