@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "630c9cfe_4fde5610",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115004
+      },
+      "writtenOn": "2017-10-24T16:13:02Z",
+      "side": 1,
+      "message": "This will go away eventually, right?",
+      "revId": "5801ebb8186531de8503d89d7c1e447515fb5e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc8ef13_a2cea9b9",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115004
+      },
+      "writtenOn": "2017-10-24T16:13:02Z",
+      "side": 1,
+      "message": "This will also go away eventually?",
+      "revId": "5801ebb8186531de8503d89d7c1e447515fb5e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
