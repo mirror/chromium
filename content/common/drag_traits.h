@@ -11,7 +11,9 @@
 
 #define IPC_MESSAGE_START DragMsgStart
 
-IPC_ENUM_TRAITS(blink::WebDragOperation)  // Bitmask.
+IPC_ENUM_TRAITS_MIN_MAX_VALUE(blink::WebDragOperation,
+                              blink::kWebDragOperationEvery,
+                              blink::kWebDragOperationLast)
 IPC_ENUM_TRAITS_MAX_VALUE(ui::DragDropTypes::DragEventSource,
                           ui::DragDropTypes::DRAG_EVENT_SOURCE_LAST)
 IPC_ENUM_TRAITS_MAX_VALUE(content::DropData::Kind,
