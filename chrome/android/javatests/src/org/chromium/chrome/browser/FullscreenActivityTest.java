@@ -193,6 +193,36 @@ public class FullscreenActivityTest {
     }
 
     /**
+     * Tests that the Tab is not lost if the Chrome is killed.
+     */
+    @Test
+    @MediumTest
+    public void testTabSurvives() throws Throwable {
+        // Create a second Tab.
+        mActivityTestRule.loadUrl("https://www.example.com/");
+        Tab backgroundTab = mActivity.getActivityTab();
+
+        mActivityTestRule.loadUrlInNewTab(mTestServer.getURL(TEST_PATH));
+        Tab videoTab = mActivity.getActivityTab();
+        String videoUrl = videoTab.getUrl();
+
+        // Basic sanity check.
+        Assert.assertNotSame(backgroundTab, videoTab);
+
+        final FullscreenActivity fullscreenActivity = enterFullscreen();
+
+        // Kill Chrome.
+        fullscreenActivity.finish();
+        mActivity.finish();
+
+        // Restart Chrome.
+        mActivityTestRule.startMainActivityFromLauncher();
+        mActivity = mActivityTestRule.getActivity();
+
+        Assert.assertEquals(mActivity.getActivityTab().getUrl(), videoUrl);
+    }
+
+    /**
      * When a FullscreenActivity goes to the background it exits fullscreen if the video is paused.
      * In this case we want to exit fullscreen normally, not through Intenting back to the CTA,
      * since this will appear to relaunch Chrome.

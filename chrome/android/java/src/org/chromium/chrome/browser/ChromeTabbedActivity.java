@@ -276,6 +276,12 @@ public class ChromeTabbedActivity
     // Time at which an intent was received and handled.
     private long mIntentHandlingTimeMs;
 
+    /*
+     * Tab state is usually saved when ChromeTabbedActivity is stopped. If this is true, the Tab
+     * state was saved manually and saving during onStop should be skipped (once).
+     */
+    private boolean mTabStateSavedEarlier;
+
     private class TabbedAssistStatusHandler extends AssistStatusHandler {
         public TabbedAssistStatusHandler(Activity activity) {
             super(activity);
@@ -696,7 +702,11 @@ public class ChromeTabbedActivity
 
         if (getActivityTab() != null) getActivityTab().setIsAllowedToReturnToExternalApp(false);
 
-        mTabModelSelectorImpl.saveState();
+        if (!mTabStateSavedEarlier) {
+            mTabModelSelectorImpl.saveState();
+        }
+        mTabStateSavedEarlier = false;
+
         StartupMetrics.getInstance().recordHistogram(true);
         mActivityStopMetrics.onStopWithNative(this);
 
@@ -1169,6 +1179,16 @@ public class ChromeTabbedActivity
         } finally {
             TraceEvent.end("ChromeTabbedActivity.initializeState");
         }
+    }
+
+    /**
+     * Save the TabModel state early and skip saving it the next time the Activity stops. When the
+     * ChromeTabbedActivity is restarted, it will recreate the Tab state as it was when this
+     * method was called instead of when the CTA is stopped.
+     */
+    public void saveTabStateEarly() {
+        mTabModelSelectorImpl.saveState();
+        mTabStateSavedEarlier = true;
     }
 
     /**

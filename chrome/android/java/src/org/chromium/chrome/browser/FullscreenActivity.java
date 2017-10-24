@@ -43,6 +43,13 @@ public class FullscreenActivity extends SingleTabActivity {
         final Tab tab = getTabToSteal(IntentUtils.safeGetIntExtra(
                 getIntent(), IntentHandler.EXTRA_TAB_ID, Tab.INVALID_TAB_ID));
 
+        // If we are transferring the Tab away from a ChromeTabbedActivity, we get it to save its
+        // Tab state before we steal the Tab. This allows the FullscreenActivity to not care if
+        // it is killed before transferring the Tab back - the CTA will reload the stolen Tab.
+        if (tab.getActivity() instanceof ChromeTabbedActivity) {
+            ((ChromeTabbedActivity) tab.getActivity()).saveTabStateEarly();
+        }
+
         tab.reparent(this, createTabDelegateFactory());
 
         tab.getFullscreenManager().setTab(tab);
