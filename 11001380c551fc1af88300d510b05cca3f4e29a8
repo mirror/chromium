@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f1319c7_dd23d0f7",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-24T21:10:43Z",
+      "side": 1,
+      "message": "nit: Just do enclosing_rect \u003d tile-\u003eenclosing_layer_rect(); here? We don\u0027t need the extra else branch then.",
+      "range": {
+        "startLine": 891,
+        "startChar": 2,
+        "endLine": 891,
+        "endChar": 27
+      },
+      "revId": "11001380c551fc1af88300d510b05cca3f4e29a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5bcd27_500151f7",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-24T21:10:43Z",
+      "side": 1,
+      "message": "We would definitely have a |resource| at this point. The else branch at 1130 makes sure we acquire a new resource if an existing one couldn\u0027t be reused.",
+      "range": {
+        "startLine": 1155,
+        "startChar": 33,
+        "endLine": 1155,
+        "endChar": 72
+      },
+      "revId": "11001380c551fc1af88300d510b05cca3f4e29a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4106476e_2bd18599",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-24T21:10:43Z",
+      "side": 1,
+      "message": "const gfx::Rect*.",
+      "range": {
+        "startLine": 372,
+        "startChar": 6,
+        "endLine": 372,
+        "endChar": 33
+      },
+      "revId": "11001380c551fc1af88300d510b05cca3f4e29a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
