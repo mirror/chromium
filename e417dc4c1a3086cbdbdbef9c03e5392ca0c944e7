@@ -16,6 +16,24 @@
       "revId": "e417dc4c1a3086cbdbdbef9c03e5392ca0c944e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe62573_688d9b90",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-24T19:45:20Z",
+      "side": 1,
+      "message": "That depends on RendererSettings::should_clear_root_render_pass which is set to true by default. We set it to false for android webview and some tests. See DrawRenderPass for how it\u0027s used: https://cs.chromium.org/chromium/src/components/viz/service/display/direct_renderer.cc?rcl\u003d80f64960a6cd47c29a500a08cd6d21c3b4a844ac\u0026l\u003d559",
+      "parentUuid": "ea9e6e24_5f39ac1c",
+      "revId": "e417dc4c1a3086cbdbdbef9c03e5392ca0c944e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
