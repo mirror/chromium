@@ -48,7 +48,7 @@ bool ResourceDispatcherHostDelegate::HandleExternalProtocol(
 }
 
 bool ResourceDispatcherHostDelegate::ShouldForceDownloadResource(
-    const GURL& url,
+    net::URLRequest* request,
     const std::string& mime_type) {
   return false;
 }

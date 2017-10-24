@@ -25,8 +25,12 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.components.offlinepages.SavePageResult;
+import org.chromium.content.browser.test.util.Criteria;
+import org.chromium.content.browser.test.util.CriteriaHelper;
+import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.net.test.EmbeddedTestServer;
+import org.chromium.ui.base.PageTransition;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -42,6 +46,7 @@ public class OfflinePageRequestTest {
 
     private static final String TEST_PAGE = "/chrome/test/data/android/test.html";
     private static final String ABOUT_PAGE = "/chrome/test/data/android/about.html";
+    private static final String MHTML_PAGE = "/chrome/test/data/android/hello.mhtml";
     private static final int TIMEOUT_MS = 5000;
     private static final ClientId CLIENT_ID =
             new ClientId(OfflinePageBridge.BOOKMARK_NAMESPACE, "1234");
@@ -143,6 +148,32 @@ public class OfflinePageRequestTest {
         mActivityTestRule.loadUrl(testUrl);
         Assert.assertFalse(isErrorPage(tab));
         Assert.assertTrue(isOfflinePage(tab));
+    }
+
+    @Test
+    @SmallTest
+    @RetryOnFailure
+    public void testDownloadMHTMLPageFromServer() throws Exception {
+        EmbeddedTestServer testServer =
+                EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        final String url = testServer.getURL(MHTML_PAGE);
+        final Tab tab = mActivityTestRule.getActivity().getActivityTab();
+
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                tab.loadUrl(new LoadUrlParams(
+                        url, PageTransition.TYPED | PageTransition.FROM_ADDRESS_BAR));
+            }
+        });
+
+        // The download should start.
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return tab.isDownloading();
+            }
+        });
     }
 
     private void savePage(String url) throws InterruptedException {

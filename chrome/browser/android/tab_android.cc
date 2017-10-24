@@ -317,6 +317,11 @@ void TabAndroid::Observe(int type,
                          const content::NotificationSource& source,
                          const content::NotificationDetails& details) {
   switch (type) {
+    case chrome::NOTIFICATION_DOWNLOAD_INITIATED: {
+      JNIEnv* env = base::android::AttachCurrentThread();
+      Java_Tab_setIsDownloading(env, weak_java_tab_.get(env));
+      break;
+    }
     case chrome::NOTIFICATION_WEB_CONTENT_SETTINGS_CHANGED: {
       TabSpecificContentSettings* settings =
           TabSpecificContentSettings::FromWebContents(web_contents());
@@ -401,6 +406,9 @@ void TabAndroid::InitWebContents(
   web_contents()->SetDelegate(web_contents_delegate_.get());
 
   notification_registrar_.Add(
+      this, chrome::NOTIFICATION_DOWNLOAD_INITIATED,
+      content::Source<content::WebContents>(web_contents()));
+  notification_registrar_.Add(
       this,
       chrome::NOTIFICATION_WEB_CONTENT_SETTINGS_CHANGED,
       content::Source<content::WebContents>(web_contents()));
@@ -445,6 +453,9 @@ void TabAndroid::DestroyWebContents(JNIEnv* env,
   if (web_contents()->GetNativeView())
     web_contents()->GetNativeView()->GetLayer()->RemoveFromParent();
 
+  notification_registrar_.Remove(
+      this, chrome::NOTIFICATION_DOWNLOAD_INITIATED,
+      content::Source<content::WebContents>(web_contents()));
   notification_registrar_.Remove(
       this,
       chrome::NOTIFICATION_WEB_CONTENT_SETTINGS_CHANGED,

@@ -565,7 +565,7 @@ bool MimeSniffingResourceHandler::MustDownload() {
     must_download_ = true;
   } else if (host_->delegate() &&
              host_->delegate()->ShouldForceDownloadResource(
-                 request()->url(), response_->head.mime_type)) {
+                 request(), response_->head.mime_type)) {
     must_download_ = true;
   } else {
     must_download_ = false;

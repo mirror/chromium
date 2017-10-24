@@ -408,6 +408,9 @@ public class Tab
     /** Whether or not the tab closing the tab can send the user back to the app that opened it. */
     private boolean mIsAllowedToReturnToExternalApp;
 
+    /** Whether or not the tab is downloading something. */
+    private boolean mIsDownloading;
+
     private GestureStateListener createGestureStateListener() {
         return new GestureStateListener() {
             @Override
@@ -3273,6 +3276,18 @@ public class Tab
         Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
         tracker.dismissed(FeatureConstants.MEDIA_DOWNLOAD_FEATURE);
         nativeMediaDownloadInProductHelpDismissed(mNativeTabAndroid);
+    }
+
+    /**
+     * @return Whether the tab is downloading something.
+     */
+    public boolean isDownloading() {
+        return mIsDownloading;
+    }
+
+    @CalledByNative
+    private void setIsDownloading() {
+        mIsDownloading = true;
     }
 
     private native void nativeInit();
