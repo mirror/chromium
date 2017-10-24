@@ -57,6 +57,8 @@ struct CORE_EXPORT NGInlineNodeData {
   // produce a single zero block-size line box. If the node has text, atomic
   // inlines, open/close tags with margins/border/padding this will be false.
   unsigned is_empty_inline_ : 1;
+
+  unsigned use_new_layout_ : 1;
 };
 
 }  // namespace blink
