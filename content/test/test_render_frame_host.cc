@@ -35,6 +35,37 @@
 
 namespace content {
 
+namespace {
+
+class NavigationInterceptor : public mojom::FrameNavigationControl {
+ public:
+  explicit NavigationInterceptor(mojom::FrameNavigationControl* target,
+                                 MockRenderProcessHost* process)
+      : target_(target), process_(process) {}
+
+  // mojom::FrameNavigationControl:
+  void CommitNavigation(const ResourceResponseHead& head,
+                        const GURL& body_url,
+                        const CommonNavigationParams& common_params,
+                        const RequestNavigationParams& request_params,
+                        mojo::ScopedDataPipeConsumerHandle body_data,
+                        mojom::URLLoaderFactoryPtr
+                            default_subresource_url_loader_factory) override {
+    process_->set_did_frame_commit_navigation(true);
+    target_->CommitNavigation(
+        head, body_url, common_params, request_params, std::move(body_data),
+        std::move(default_subresource_url_loader_factory));
+  }
+
+ private:
+  mojom::FrameNavigationControl* const target_;
+  MockRenderProcessHost* const process_;
+
+  DISALLOW_COPY_AND_ASSIGN(NavigationInterceptor);
+};
+
+}  // namespace
+
 TestRenderFrameHostCreationObserver::TestRenderFrameHostCreationObserver(
     WebContents* web_contents)
     : WebContentsObserver(web_contents), last_created_frame_(NULL) {
@@ -527,6 +558,14 @@ void TestRenderFrameHost::SimulateWillStartRequest(
   navigation_handle()->CallWillStartRequestForTesting(
       false /* is_post */, Referrer(GURL(), blink::kWebReferrerPolicyDefault),
       true /* user_gesture */, transition, false /* is_external_protocol */);
+}
+
+mojom::FrameNavigationControl* TestRenderFrameHost::GetNavigationControl() {
+  if (!navigation_interceptor_) {
+    navigation_interceptor_ = std::make_unique<NavigationInterceptor>(
+        RenderFrameHostImpl::GetNavigationControl(), GetProcess());
+  }
+  return navigation_interceptor_.get();
 }
 
 }  // namespace content
