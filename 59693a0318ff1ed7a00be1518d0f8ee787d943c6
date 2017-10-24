@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09efb5d8_473e3c9a",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-24T05:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13193522_322fe5c0",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf7b6b56_8ce8f8ff",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-23T06:17:44Z",
       "side": 1,
       "message": "perhaps Basic -\u003e HostedAppFrame ?",
+      "range": {
+        "startLine": 454,
+        "startChar": 59,
+        "endLine": 454,
+        "endChar": 64
+      },
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf8feb1_7899c201",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-24T05:32:23Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a better name. Done.",
+      "parentUuid": "bf7b6b56_8ce8f8ff",
       "range": {
         "startLine": 454,
         "startChar": 59,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "44932171_9bd4165d",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-24T05:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c083f3d9_dda607ba",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e58d2e4e_ecb3d681",
         "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
         "patchSetId": 6
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "d81d0b46_b744f0c1",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-24T05:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e58d2e4e_ecb3d681",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dba80285_42bebbba",
         "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
         "patchSetId": 6
@@ -90,6 +168,24 @@
       "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d69854d_d640b266",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-24T05:32:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dba80285_42bebbba",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +209,30 @@
       "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89168065_1e694154",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-24T05:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c5da38a_9c6dcbf9",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +276,48 @@
     },
     {
       "key": {
+        "uuid": "911a2071_a3d679d7",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-24T05:32:23Z",
+      "side": 1,
+      "message": "I\u0027m going to want to do a lot of other things here after I implement the custom app menu I think. I\u0027m not entirely sure how the tests there will pan out, but I think it\u0027s better to leave this out here to help avoid churn.",
+      "parentUuid": "df52e0a6_d8cc1f0a",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ee7380_cfe55df5",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-24T05:32:23Z",
+      "side": 1,
+      "message": "I think this is okay since it\u0027s below HostedAppButtonContainer? There shouldn\u0027t be any cases where confusion happens.",
+      "parentUuid": "b5f98bc0_0c47ef07",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6757b1a8_ef39c45e",
         "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
         "patchSetId": 6
@@ -167,6 +329,24 @@
       "writtenOn": "2017-10-23T06:17:44Z",
       "side": 1,
       "message": "hmmmm - it seems this is also only really needed for the test. I guess this is preferable to a static cast though.",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c20d4e_17194ba7",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-24T05:32:23Z",
+      "side": 1,
+      "message": "It will come up again later, when dealing with active/inactive states.",
+      "parentUuid": "6757b1a8_ef39c45e",
       "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
