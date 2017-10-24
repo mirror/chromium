@@ -145,7 +145,9 @@ class AsyncResourceHandlerTest : public ::testing::Test,
                                  public ResourceLoaderDelegate {
  protected:
   AsyncResourceHandlerTest()
-      : thread_bundle_(TestBrowserThreadBundle::IO_MAINLOOP), context_(true) {}
+      : thread_bundle_(TestBrowserThreadBundle::IO_MAINLOOP), context_(true) {
+    rdh_.SetDelegate(nullptr);
+  }
 
   void TearDown() override {
     if (filter_)

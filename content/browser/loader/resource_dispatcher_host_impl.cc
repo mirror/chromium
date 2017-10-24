@@ -336,6 +336,7 @@ ResourceDispatcherHostImpl::ResourceDispatcherHostImpl(
     CreateDownloadHandlerIntercept download_handler_intercept,
     const scoped_refptr<base::SingleThreadTaskRunner>& io_thread_runner)
     : request_id_(-1),
+      init_done_(false),
       is_shutdown_(false),
       num_in_flight_requests_(0),
       max_num_in_flight_requests_(base::SharedMemory::GetHandleLimit()),
@@ -354,14 +355,9 @@ ResourceDispatcherHostImpl::ResourceDispatcherHostImpl(
   DCHECK(main_thread_task_runner_->BelongsToCurrentThread());
   DCHECK(!g_resource_dispatcher_host);
   g_resource_dispatcher_host = this;
-
   ANNOTATE_BENIGN_RACE(
       &last_user_gesture_time_,
       "We don't care about the precise value, see http://crbug.com/92889");
-
-  io_thread_task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&ResourceDispatcherHostImpl::OnInit,
-                                base::Unretained(this)));
 
   update_load_states_timer_ = base::MakeUnique<base::RepeatingTimer>();
 
@@ -397,6 +393,10 @@ ResourceDispatcherHostImpl* ResourceDispatcherHostImpl::Get() {
 void ResourceDispatcherHostImpl::SetDelegate(
     ResourceDispatcherHostDelegate* delegate) {
   delegate_ = delegate;
+
+  io_thread_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&ResourceDispatcherHostImpl::OnInit,
+                                base::Unretained(this)));
 }
 
 void ResourceDispatcherHostImpl::SetAllowCrossOriginAuthPrompt(bool value) {
@@ -737,6 +737,11 @@ std::unique_ptr<net::ClientCertStore>
 }
 
 void ResourceDispatcherHostImpl::OnInit() {
+  if (init_done_)
+    return;
+
+  init_done_ = true;
+
   // In some tests |delegate_| does not get set, when that happens assume the
   // scheduler is enabled.
   bool enable_resource_scheduler =

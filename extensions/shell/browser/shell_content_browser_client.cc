@@ -16,6 +16,7 @@
 #include "content/public/browser/browser_main_runner.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/browser/resource_dispatcher_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_descriptors.h"
@@ -209,6 +210,10 @@ void ShellContentBrowserClient::AppendExtraCommandLineSwitches(
       command_line->GetSwitchValueASCII(::switches::kProcessType);
   if (process_type == ::switches::kRendererProcess)
     AppendRendererSwitches(command_line);
+}
+
+void ShellContentBrowserClient::ResourceDispatcherHostCreated() {
+  content::ResourceDispatcherHost::Get()->SetDelegate(nullptr);
 }
 
 content::SpeechRecognitionManagerDelegate*

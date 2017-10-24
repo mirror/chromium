@@ -119,6 +119,7 @@ class NavigationURLLoaderTest : public testing::Test {
         host_(base::Bind(&CreateDownloadResourceHandler),
               base::ThreadTaskRunnerHandle::Get()) {
     host_.SetLoaderDelegate(&loader_delegate_);
+    host_.SetDelegate(nullptr);
     BrowserContext::EnsureResourceContextInitialized(browser_context_.get());
     base::RunLoop().RunUntilIdle();
     net::URLRequestContext* request_context =
