@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a8f8da9_ddde7e5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T21:27:41Z",
+      "side": 1,
+      "message": "Please update this comment.",
+      "range": {
+        "startLine": 9,
+        "startChar": 14,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "182b2d25_416db0c6",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T21:27:41Z",
+      "side": 1,
+      "message": "Do you actually need to define this method? I would expect that CreateForWebState simply inherits one from WebStateUserData.",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d554e0d_a007547a",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T21:27:41Z",
+      "side": 1,
+      "message": "Optional nit: Consider using base::ElapsedTimer to avoid arithmetics.",
+      "range": {
+        "startLine": 47,
+        "startChar": 42,
+        "endLine": 47,
+        "endChar": 43
+      },
+      "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702d3bf1_3eae920b",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T21:27:41Z",
+      "side": 1,
+      "message": "nit: No need to put tests into anonymous namespace",
+      "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7050f9ac_717fbebf",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T21:27:41Z",
+      "side": 1,
+      "message": "Do you want to add comments to this method? Seems like non-trivial.",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
