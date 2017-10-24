@@ -64,14 +64,12 @@ class PLATFORM_EXPORT PaintArtifact final {
   // shared with the embedder after copying to WebDisplayItemList.
   size_t ApproximateUnsharedMemoryUsage() const;
 
-  // Draws the paint artifact to a GraphicsContext.
+  // Draws the paint artifact to a GraphicsContext. For SPv1 only.
   void Replay(GraphicsContext&) const;
 
   // Draws the paint artifact to a PaintCanvas. For SPv175+ only.
   // Replays into the ancestor state given by |replay_state|.
-  void Replay(
-      PaintCanvas&,
-      const PropertyTreeState& replay_state = PropertyTreeState::Root()) const;
+  void Replay(PaintCanvas&, const PropertyTreeState& replay_state) const;
 
   // Writes the paint artifact into a WebDisplayItemList.
   void AppendToWebDisplayItemList(const LayoutSize& visual_rect_offset,
