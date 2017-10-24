@@ -33,6 +33,9 @@ class SadTabTabHelper : public web::WebStateUserData<SadTabTabHelper>,
   // Sets the SadTabHelper delegate.
   void SetDelegate(id<SadTabTabHelperDelegate> delegate);
 
+  // Returns the Webstate being observed by SadTabHelper.
+  web::WebState* GetWebState();
+
   ~SadTabTabHelper() override;
 
  private:
@@ -77,6 +80,9 @@ class SadTabTabHelper : public web::WebStateUserData<SadTabTabHelper>,
   // The default window of time a failure of the same URL needs to occur
   // to be considered a repeat failure.
   static const double kDefaultRepeatFailureInterval;
+
+  // Webstate being observed by this helper.
+  web::WebState* web_state_ = nil;
 
   // Stores the last URL that caused a renderer crash,
   // used to detect repeated crashes.
