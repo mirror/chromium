@@ -14,11 +14,12 @@
 #include "content/browser/webauth/cbor/cbor_values.h"
 #include "content/common/content_export.h"
 
+#include "base/gtest_prod_util.h"
+
 // A basic Concise Binary Object Representation (CBOR) encoder as defined by
-// https://tools.ietf.org/html/rfc7049.
-// This is a non-canonical, generic encoder that supplies well-formed
-// CBOR values but does not guarantee their validity (see
-// https://tools.ietf.org/html/rfc7049#section-3.2).
+// https://tools.ietf.org/html/rfc7049. This is a generic encoder that supplies
+// canonical, well-formed CBOR values but does not guarantee their validity
+// (see https://tools.ietf.org/html/rfc7049#section-3.2).
 // Supported:
 //  * Major types:
 //     * 0: Unsigned integers, up to 64-bit.
@@ -32,6 +33,24 @@
 //  * Floating-point numbers.
 //  * Indefinite-length encodings.
 //  * Parsing.
+//
+// Requirements for canonical CBOR as suggested by RFC 7049 are:
+//  1) All major data types for the CBOR values must be as short as possible.
+//      * Unsigned integer between 0 to 23 must be expressed in same byte as
+//            the major type.
+//      * 24 to 255 must be expressed only with an additional uint8_t.
+//      * 256 to 65535 must be expressed only with an additional uint16_t.
+//      * 65536 to 4294967295 must be expressed only with an additional
+//            uint32_t. * The rules for expression of length in major types
+//            2 to 5 follow the above rule for integers.
+//  2) Keys in every map must be sorted (by major type, by key length, by value
+//         in byte-wise lexical order).
+//  3) Indefinite length items must be converted to definite length items.
+//  4) All maps must not have duplicate keys.
+//
+// Current implementation of CBORWriter encoder meets all the requirements of
+// canonical CBOR.
+
 enum class CborMajorType {
   kUnsigned = 0,    // Unsigned integer.
   kNegative = 1,    // Negative integer. Unsupported by this implementation.
@@ -44,6 +63,8 @@ enum class CborMajorType {
 namespace content {
 
 namespace {
+// Maximum depth of nested CBOR.
+constexpr size_t kMaxNestingLevel = 512;
 // Mask selecting the last 5 bits  of the "initial byte" where
 // 'additional information is encoded.
 constexpr uint8_t kAdditionalInformationDataMask = 0x1F;
@@ -55,6 +76,7 @@ constexpr uint8_t kAdditionalInformation2Bytes = 25;
 constexpr uint8_t kAdditionalInformation4Bytes = 26;
 // Indicates the integer is in the next 8 bytes.
 constexpr uint8_t kAdditionalInformation8Bytes = 27;
+
 }  // namespace
 
 class CONTENT_EXPORT CBORWriter {
@@ -62,14 +84,16 @@ class CONTENT_EXPORT CBORWriter {
   ~CBORWriter();
 
   // Generates a CBOR byte string.
-  static std::vector<uint8_t> Write(const CBORValue& node);
+  static std::pair<std::vector<uint8_t>, bool> Write(
+      const CBORValue& node,
+      size_t maxNestingLevel = kMaxNestingLevel);
 
  private:
   CBORWriter(std::vector<uint8_t>* cbor);
 
   // Called recursively to build the CBOR bytestring. When completed,
   // |encoded_cbor_| will contain the CBOR.
-  void EncodeCBOR(const CBORValue& node);
+  bool EncodeCBOR(const CBORValue& node, size_t maxNestingLevel);
 
   // Encodes the type and size of the data being added.
   void StartItem(CborMajorType type, uint64_t size);
@@ -86,6 +110,21 @@ class CONTENT_EXPORT CBORWriter {
 
   // Holds the encoded CBOR data.
   std::vector<uint8_t>* encoded_cbor_;
+
+  // Returns whether input CBOR value has nesting level below the designated
+  // maxNestingLevel parameter. Nested CBOR is defined as any combination of
+  // CBOR maps and/or CBOR arrays. Nesting level is defined by number of hash-
+  // or arrayrefs that the encoder needs to traverse or the number of { or [
+  // characters without their matching closing parenthesis crossed to reach a
+  // given character in a string. As a default, maximum nesting layer size is
+  // set to 512. For CBOR used for CTAP(Client To Authenticator Protocol),
+  // because some authenticators are memory constrained, the depth of nested
+  // CBOR structures used by all message encodings is limited to at most four.
+  //
+  // For example, below CBOR format would have 2 nesting layers.
+  //   {"a": [1, 2, 3, 4, 5]}
+  static bool IsValidDepth(const CBORValue& node,
+                           size_t maxNestingLevel = kMaxNestingLevel);
 
   DISALLOW_COPY_AND_ASSIGN(CBORWriter);
 };
