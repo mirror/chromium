@@ -144,7 +144,8 @@ void IsolateHolder::SetUp(
   CHECK(allocator) << "You need to invoke gin::IsolateHolder::Initialize first";
   isolate_data_.reset(
       new PerIsolateData(isolate_, allocator, access_mode_, task_runner));
-  isolate_memory_dump_provider_.reset(new V8IsolateMemoryDumpProvider(this));
+  isolate_memory_dump_provider_.reset(
+      new V8IsolateMemoryDumpProvider(this, task_runner));
 #if defined(OS_WIN)
   {
     void* code_range;

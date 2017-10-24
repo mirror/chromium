@@ -17,10 +17,12 @@
 namespace gin {
 
 V8IsolateMemoryDumpProvider::V8IsolateMemoryDumpProvider(
-    IsolateHolder* isolate_holder)
+    IsolateHolder* isolate_holder,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
     : isolate_holder_(isolate_holder) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-      this, "V8Isolate", base::ThreadTaskRunnerHandle::Get());
+      this, "V8Isolate",
+      task_runner ? task_runner : base::ThreadTaskRunnerHandle::Get());
 }
 
 V8IsolateMemoryDumpProvider::~V8IsolateMemoryDumpProvider() {
