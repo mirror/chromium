@@ -43,15 +43,18 @@ class VisualRectMappingTest : public RenderingTest {
       return;
 
     FloatClipRect geometry_mapper_rect((FloatRect(local_rect)));
-    if (FragmentData* fragment_data = object.FirstFragment()) {
-      if (fragment_data->PaintProperties() ||
-          fragment_data->LocalBorderBoxProperties()) {
-        geometry_mapper_rect.MoveBy(FloatPoint(object.PaintOffset()));
+    const FragmentData& fragment_data = object.FirstFragment();
+    if (auto* rare_paint_data = fragment_data.GetRarePaintData()) {
+      if (rare_paint_data->PaintProperties() ||
+          rare_paint_data->LocalBorderBoxProperties()) {
+        geometry_mapper_rect.MoveBy(
+            FloatPoint(object.FirstFragment().PaintOffset()));
         GeometryMapper::LocalToAncestorVisualRect(
-            *fragment_data->LocalBorderBoxProperties(),
-            ancestor.FirstFragment()->ContentsProperties(),
+            *rare_paint_data->LocalBorderBoxProperties(),
+            ancestor.FirstFragment().GetRarePaintData()->ContentsProperties(),
             geometry_mapper_rect);
-        geometry_mapper_rect.MoveBy(-FloatPoint(ancestor.PaintOffset()));
+        geometry_mapper_rect.MoveBy(
+            -FloatPoint(ancestor.FirstFragment().PaintOffset()));
       }
     }
 
@@ -67,7 +70,8 @@ class VisualRectMappingTest : public RenderingTest {
     EXPECT_TRUE(EnclosingIntRect(slow_map_rect)
                     .Contains(EnclosingIntRect(expected_visual_rect)));
 
-    if (object.FirstFragment() && object.FirstFragment()->PaintProperties()) {
+    if (object.FirstFragment().GetRarePaintData() &&
+        object.FirstFragment().GetRarePaintData()->PaintProperties()) {
       EXPECT_TRUE(EnclosingIntRect(geometry_mapper_rect.Rect())
                       .Contains(EnclosingIntRect(expected_visual_rect)));
     }

@@ -11,9 +11,10 @@ bool AdjustPaintOffsetScope::ShouldAdjustForPaintOffsetTranslation(
   DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
   if (box.HasSelfPaintingLayer())
     return false;
-  if (!box.FirstFragment())
+  if (!box.FirstFragment().GetRarePaintData())
     return false;
-  auto* paint_properties = box.FirstFragment()->PaintProperties();
+  auto* paint_properties =
+      box.FirstFragment().GetRarePaintData()->PaintProperties();
   if (!paint_properties)
     return false;
   if (!paint_properties->PaintOffsetTranslation())
@@ -27,9 +28,10 @@ void AdjustPaintOffsetScope::AdjustForPaintOffsetTranslation(
   DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
   DCHECK(ShouldAdjustForPaintOffsetTranslation(box));
 
-  auto* paint_properties = box.FirstFragment()->PaintProperties();
+  auto* paint_properties =
+      box.FirstFragment().GetRarePaintData()->PaintProperties();
   const auto* local_border_box_properties =
-      box.FirstFragment()->LocalBorderBoxProperties();
+      box.FirstFragment().GetRarePaintData()->LocalBorderBoxProperties();
   PaintChunkProperties chunk_properties(
       old_paint_info_.context.GetPaintController()
           .CurrentPaintChunkProperties());
@@ -41,7 +43,7 @@ void AdjustPaintOffsetScope::AdjustForPaintOffsetTranslation(
   new_paint_info_->UpdateCullRect(
       paint_properties->PaintOffsetTranslation()->Matrix().ToAffineTransform());
 
-  adjusted_paint_offset_ = box.PaintOffset();
+  adjusted_paint_offset_ = box.FirstFragment().PaintOffset();
 }
 
 }  // namespace blink
