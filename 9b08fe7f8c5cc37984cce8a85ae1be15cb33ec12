@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82484052_f10e6a59",
+        "filename": "media/formats/mp4/track_run_iterator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-24T18:17:28Z",
+      "side": 1,
+      "message": "This both compiles and passes gn check for me, but I suppose that\u0027s because I didn\u0027t actually depend on any target that includes that header.\n\nI\u0027ve added a new target for source_buffer_platform that both targets can depend on.",
+      "parentUuid": "da2028e6_6c4cd660",
+      "revId": "9b08fe7f8c5cc37984cce8a85ae1be15cb33ec12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cc60dae_ecf974bc",
         "filename": "media/formats/mp4/track_run_iterator.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-24T17:16:24Z",
       "side": 1,
       "message": "Should we do this instead at the point this is read from the trun? I.e. in box_reader?",
+      "revId": "9b08fe7f8c5cc37984cce8a85ae1be15cb33ec12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fd1828_f09d4124",
+        "filename": "media/formats/mp4/track_run_iterator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-24T18:17:28Z",
+      "side": 1,
+      "message": "We certainly could enforce a limit there, but enforcing exactly the same limit would be violating layers and mixing concerns.",
+      "parentUuid": "9cc60dae_ecf974bc",
       "revId": "9b08fe7f8c5cc37984cce8a85ae1be15cb33ec12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
