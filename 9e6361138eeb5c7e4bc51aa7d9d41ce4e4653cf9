@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "73bc9831_cb6bdfd3",
+        "filename": "third_party/WebKit/Source/core/events/PageTransitionEventInit.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-24T18:39:43Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "f8e670f7_eba12410",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 89
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5853fcb2_68d55853",
         "filename": "third_party/WebKit/Source/core/page/Page.cpp",
         "patchSetId": 1
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "I was hoping that there already a unit test class, but since there is not one already, I don\u0027t think it is worth creating one for Getter and Setter.",
       "parentUuid": "3802befc_74f821f6",
+      "range": {
+        "startLine": 269,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 24
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d212dfc2_4f4506bf",
+        "filename": "third_party/WebKit/Source/core/page/Page.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-24T18:39:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9952337_089dfe40",
       "range": {
         "startLine": 269,
         "startChar": 7,
@@ -345,6 +393,30 @@
       "side": 1,
       "message": "I recommend adding the state as part of the CL that uses it, since we are omitting other states as well as per your previous comment. I don\u0027t object leaving it in though.",
       "parentUuid": "69f29ad8_93f04a97",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9256a765_fc547039",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-24T18:39:43Z",
+      "side": 1,
+      "message": "Hmm Ok. Removing for now.\n(The reason Discarded is different from rest of the list is that it\u0027s needed for immediate work / TMT)",
+      "parentUuid": "746431e6_0419415b",
       "range": {
         "startLine": 15,
         "startChar": 2,
