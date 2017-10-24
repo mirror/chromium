@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f84f6cb_c5dd137b",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-24T16:54:02Z",
+      "side": 1,
+      "message": "Any item the list of user sheets changes, we clear the map and re-add all the @keyframes rules from all the user sheets.\n\nI can think of optimizing this.",
+      "revId": "d00f360d96533c475885b8178e745ec63f34d42f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e6a4802_8c6fe142",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-24T16:54:02Z",
+      "side": 1,
+      "message": "This section I\u0027ve just copied exactly from ScopedStyleResolver.",
+      "revId": "d00f360d96533c475885b8178e745ec63f34d42f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e576f9ea_f0de5708",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-24T16:54:02Z",
+      "side": 1,
+      "message": "StyleEngine now also maintains the @keyframes rules found in user style sheets.",
+      "revId": "d00f360d96533c475885b8178e745ec63f34d42f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed56ebba_fad4a259",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-24T16:54:02Z",
+      "side": 1,
+      "message": "If no @keyframes rule is found among the author sheets, look it up in the user sheets.",
+      "revId": "d00f360d96533c475885b8178e745ec63f34d42f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
