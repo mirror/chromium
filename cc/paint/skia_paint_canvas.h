@@ -99,7 +99,8 @@ class CC_PAINT_EXPORT SkiaPaintCanvas final : public PaintCanvas {
   void drawTextBlob(sk_sp<SkTextBlob> blob,
                     SkScalar x,
                     SkScalar y,
-                    const PaintFlags& flags) override;
+                    const PaintFlags& flags,
+                    const std::vector<PaintTypeface>& used_typefaces) override;
 
   void drawPicture(sk_sp<const PaintRecord> record) override;
 
