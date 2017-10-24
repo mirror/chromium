@@ -196,8 +196,9 @@ void CaretDisplayItemClient::InvalidatePaint(
     return;
   }
 
-  if (block == previous_layout_block_)
+  if (block == previous_layout_block_) {
     InvalidatePaintInPreviousLayoutBlock(context);
+  }
 }
 
 void CaretDisplayItemClient::InvalidatePaintInPreviousLayoutBlock(
