@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ef0a6f5_8cb7de34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-24T19:18:30Z",
+      "side": 1,
+      "message": "nit: s/.../samples/",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "5c7e9c4b3bdd2c15fcde0dd125cc77a6021ce9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367c37a4_a252ed77",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-24T19:18:30Z",
+      "side": 1,
+      "message": "nit: s/memory/memory or take too long to process further/ ?",
+      "range": {
+        "startLine": 9,
+        "startChar": 92,
+        "endLine": 9,
+        "endChar": 98
+      },
+      "revId": "5c7e9c4b3bdd2c15fcde0dd125cc77a6021ce9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c30b62_8cb6b247",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-24T19:18:30Z",
+      "side": 1,
+      "message": "nit: s/150MB/150MB (not including any allocation fragmentation overhead)/",
+      "range": {
+        "startLine": 10,
+        "startChar": 32,
+        "endLine": 10,
+        "endChar": 37
+      },
+      "revId": "5c7e9c4b3bdd2c15fcde0dd125cc77a6021ce9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
