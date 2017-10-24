@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4129483b_1abe2047",
+        "filename": "ui/gfx/native_pixmap.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T21:02:38Z",
+      "side": 1,
+      "message": "I\u0027m going to leave it up to ozone experts to approve this part. Here are some points to help them evaluate this:\n\n- GetUniqueId() is needed because we currently track of non-drm buffers that are identified by gem handles. See shared memory buffers in ProtectedBufferManager.cc/h.\n- I think we agree that using gem handles to identify protected posix shared memory is confusing and something we should try to remove asap. I already filed crbug.com/771863 for this and suggested a way to solve it.\n\nIMO we should at least add a TODO here to indicate that we plan to remove this. We all know that if something can be accessed, then people will start using it. Leaving it up to dnicoara@ and rjkroege@ to make the final call.",
+      "parentUuid": "8b5e58a5_8ad91339",
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c7ccd75_8d7d0fad",
         "filename": "ui/ozone/public/surface_factory_ozone.h",
         "patchSetId": 7
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "The map is in PBM, because it maintains all the mappings, also the ones that are not for ProtectedPixmaps, but ProtectedSharedMemory as well. So it keeps the code in one place, contained to PBM.\n\nThe map is not handle-\u003epixmap, but pixmap-\u003epixmap. To create a NativePixmap used for lookup in the map from the NativePixmapHandle provided, we need to call CreateNativePixmapFromHandle again, so that creates an infinite recursion. This is also another reason why I initially used GMBs, so that I would have a higher-level call that could avoid the recursion.",
       "parentUuid": "9c7ccd75_8d7d0fad",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 48
+      },
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8919369_8416b8bb",
+        "filename": "ui/ozone/public/surface_factory_ozone.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T21:02:38Z",
+      "side": 1,
+      "message": "I realize there was some more miscommunication here. The CreateNativePixmapForProtectedBufferHandle API you proposed seemed great to me as it makes it possible to maintain a gem-handle\u003c-\u003eprotected-pixmap mapping inside ozone-drm for the lifetime of the pixmap returned from this function. I assumed that\u0027s how it would be used. CreateNativePixmapForProtectedBufferHandle + NativePixmap::GetUniqueId would also allow an external gem-handle\u003c-\u003eshmem mapping to be maintained until we\u0027ve been able to remove the need for that.\n\nI\u0027m going to leave it up to dnicoara@ and rjkroege@ to decide if this delegate is OK.",
+      "parentUuid": "b0739d9e_120f17fb",
       "range": {
         "startLine": 117,
         "startChar": 2,
