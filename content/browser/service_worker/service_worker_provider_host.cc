@@ -14,6 +14,7 @@
 #include "base/time/time.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
+#include "content/browser/service_worker/service_worker_common.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_request_handler.h"
 #include "content/browser/service_worker/service_worker_controllee_request_handler.h"
@@ -45,15 +46,10 @@ namespace content {
 
 namespace {
 
-const char kNoDocumentURLErrorMessage[] =
-    "No URL is associated with the caller's document.";
-const char kShutdownErrorMessage[] = "The Service Worker system has shutdown.";
 const char kUserDeniedPermissionMessage[] =
     "The user denied permission to use Service Worker.";
 
 const char kBadMessageInvalidURL[] = "Some URLs are invalid.";
-const char kBadMessageInproperOrigins[] =
-    "Origins are not matching, or some cannot access service worker.";
 const char kBadMessageFromNonWindow[] =
     "The request message should not come from a non-window client.";
 const char kBadMessageGetRegistrationForReadyDuplicated[] =
@@ -117,12 +113,6 @@ void RemoveProviderHost(base::WeakPtr<ServiceWorkerContextCore> context,
     return;
   }
   context->RemoveProviderHost(process_id, provider_id);
-}
-
-WebContents* GetWebContents(int render_process_id, int render_frame_id) {
-  RenderFrameHost* rfh =
-      RenderFrameHost::FromID(render_process_id, render_frame_id);
-  return WebContents::FromRenderFrameHost(rfh);
 }
 
 void GetInterfaceImpl(const std::string& interface_name,
@@ -944,10 +934,11 @@ void ServiceWorkerProviderHost::RegistrationComplete(
                          trace_id, "Status", status, "Registration ID",
                          registration_id);
   if (!dispatcher_host_ || !IsContextAlive()) {
-    std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kAbort,
-                            std::string(kServiceWorkerRegisterErrorPrefix) +
-                                std::string(kShutdownErrorMessage),
-                            nullptr, base::nullopt);
+    std::move(callback).Run(
+        blink::mojom::ServiceWorkerErrorType::kAbort,
+        std::string(kServiceWorkerRegisterErrorPrefix) +
+            std::string(service_worker::kShutdownErrorMessage),
+        nullptr, base::nullopt);
     return;
   }
 
@@ -1048,7 +1039,7 @@ void ServiceWorkerProviderHost::GetRegistrationComplete(
     std::move(callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
         std::string(kServiceWorkerGetRegistrationErrorPrefix) +
-            std::string(kShutdownErrorMessage),
+            std::string(service_worker::kShutdownErrorMessage),
         nullptr, base::nullopt);
     return;
   }
@@ -1092,7 +1083,7 @@ void ServiceWorkerProviderHost::GetRegistrationsComplete(
     std::move(callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
         std::string(kServiceWorkerGetRegistrationsErrorPrefix) +
-            std::string(kShutdownErrorMessage),
+            std::string(service_worker::kShutdownErrorMessage),
         base::nullopt, base::nullopt);
     return;
   }
@@ -1181,7 +1172,7 @@ bool ServiceWorkerProviderHost::IsValidRegisterMessage(
   }
   std::vector<GURL> urls = {document_url(), options.scope, script_url};
   if (!ServiceWorkerUtils::AllOriginsMatchAndCanAccessServiceWorkers(urls)) {
-    *out_error = kBadMessageInproperOrigins;
+    *out_error = service_worker::kBadMessageImproperOrigins;
     return false;
   }
 
@@ -1201,7 +1192,7 @@ bool ServiceWorkerProviderHost::IsValidGetRegistrationMessage(
   }
   std::vector<GURL> urls = {document_url(), client_url};
   if (!ServiceWorkerUtils::AllOriginsMatchAndCanAccessServiceWorkers(urls)) {
-    *out_error = kBadMessageInproperOrigins;
+    *out_error = service_worker::kBadMessageImproperOrigins;
     return false;
   }
 
@@ -1215,7 +1206,7 @@ bool ServiceWorkerProviderHost::IsValidGetRegistrationsMessage(
     return false;
   }
   if (!OriginCanAccessServiceWorkers(document_url())) {
-    *out_error = kBadMessageInproperOrigins;
+    *out_error = service_worker::kBadMessageImproperOrigins;
     return false;
   }
 
@@ -1259,7 +1250,8 @@ bool ServiceWorkerProviderHost::CanServeContainerHostMethods(
   if (!dispatcher_host_ || !IsContextAlive()) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
-        std::string(error_prefix) + std::string(kShutdownErrorMessage),
+        std::string(error_prefix) +
+            std::string(service_worker::kShutdownErrorMessage),
         args...);
     return false;
   }
@@ -1269,14 +1261,16 @@ bool ServiceWorkerProviderHost::CanServeContainerHostMethods(
   if (document_url().is_empty()) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kSecurity,
-        std::string(error_prefix) + std::string(kNoDocumentURLErrorMessage),
+        std::string(error_prefix) +
+            std::string(service_worker::kNoDocumentURLErrorMessage),
         args...);
     return false;
   }
 
   if (!GetContentClient()->browser()->AllowServiceWorker(
           scope, topmost_frame_url(), dispatcher_host_->resource_context(),
-          base::Bind(&GetWebContents, render_process_id_, frame_id()))) {
+          base::Bind(&service_worker::GetWebContents, render_process_id_,
+                     frame_id()))) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kDisabled,
         std::string(error_prefix) + std::string(kUserDeniedPermissionMessage),

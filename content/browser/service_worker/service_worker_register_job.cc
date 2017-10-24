@@ -11,6 +11,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
+#include "content/browser/service_worker/service_worker_common.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_job_coordinator.h"
 #include "content/browser/service_worker/service_worker_metrics.h"
@@ -59,10 +60,6 @@ class InstallEventMethodsReceiver
 
   DISALLOW_COPY_AND_ASSIGN(InstallEventMethodsReceiver);
 };
-
-void RunSoon(const base::Closure& closure) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, closure);
-}
 
 }  // namespace
 
@@ -119,9 +116,9 @@ void ServiceWorkerRegisterJob::AddCallback(
       provider_host->AddScopedProcessReferenceToPattern(pattern_);
     return;
   }
-  RunSoon(base::Bind(callback, promise_resolved_status_,
-                     promise_resolved_status_message_,
-                     base::RetainedRef(promise_resolved_registration_)));
+  service_worker::RunSoon(base::Bind(
+      callback, promise_resolved_status_, promise_resolved_status_message_,
+      base::RetainedRef(promise_resolved_registration_)));
 }
 
 void ServiceWorkerRegisterJob::Start() {
@@ -147,7 +144,8 @@ void ServiceWorkerRegisterJob::StartImpl() {
   scoped_refptr<ServiceWorkerRegistration> registration =
       context_->storage()->GetUninstallingRegistration(pattern_);
   if (registration.get())
-    RunSoon(base::Bind(next_step, SERVICE_WORKER_OK, registration));
+    service_worker::RunSoon(
+        base::Bind(next_step, SERVICE_WORKER_OK, registration));
   else
     context_->storage()->FindRegistrationForPattern(pattern_, next_step);
 }
