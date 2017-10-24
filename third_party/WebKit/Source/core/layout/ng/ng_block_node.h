@@ -54,13 +54,6 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
   // resulting geometry.
   scoped_refptr<NGLayoutResult> RunOldLayout(const NGConstraintSpace&);
 
-  // Called if this is an out-of-flow block which needs to be
-  // positioned with legacy layout.
-  void UseOldOutOfFlowPositioning();
-
-  // Save static position for legacy AbsPos layout.
-  void SaveStaticOffsetForLegacy(const NGLogicalOffset&);
-
   bool CanUseNewLayout() const;
 
   String ToString() const;
