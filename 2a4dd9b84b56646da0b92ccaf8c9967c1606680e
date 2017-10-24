@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "752c7212_e8934502",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-24T01:42:08Z",
+      "side": 1,
+      "message": "Since |visibility| is used only in the return statement,\nhow about using the right expression in the statement?",
+      "revId": "2a4dd9b84b56646da0b92ccaf8c9967c1606680e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
