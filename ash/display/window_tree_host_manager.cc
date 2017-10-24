@@ -325,8 +325,8 @@ void WindowTreeHostManager::SetPrimaryDisplayId(int64_t id) {
   const display::Display& new_primary_display =
       GetDisplayManager()->GetDisplayForId(id);
   if (!new_primary_display.is_valid()) {
-    LOG(ERROR) << "Invalid or non-existent display is requested:"
-               << new_primary_display.ToString();
+    DLOG(ERROR) << "Invalid or non-existent display is requested:"
+                << new_primary_display.ToString();
     return;
   }
 

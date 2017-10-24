@@ -43,7 +43,7 @@ int64_t FakeDisplayDelegate::AddDisplay(const gfx::Size& display_size) {
   DCHECK(!display_size.IsEmpty());
 
   if (next_display_id_ == 0xFF) {
-    LOG(ERROR) << "Exceeded display id limit";
+    DLOG(ERROR) << "Exceeded display id limit";
     return kInvalidDisplayId;
   }
 
@@ -63,7 +63,7 @@ bool FakeDisplayDelegate::AddDisplay(std::unique_ptr<DisplaySnapshot> display) {
   // Check there is no existing display with the same id.
   for (auto& existing_display : displays_) {
     if (existing_display->display_id() == display_id) {
-      LOG(ERROR) << "Display with id " << display_id << " already exists";
+      DLOG(ERROR) << "Display with id " << display_id << " already exists";
       return false;
     }
   }
@@ -203,7 +203,7 @@ bool FakeDisplayDelegate::InitializeFromSpecString(const std::string& str) {
       AddDisplay(std::move(snapshot));
       next_display_id_++;
     } else {
-      LOG(ERROR) << "Failed to parse display \"" << part << "\"";
+      DLOG(ERROR) << "Failed to parse display \"" << part << "\"";
       return false;
     }
   }

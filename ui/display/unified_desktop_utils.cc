@@ -35,20 +35,20 @@ bool ValidateDisplayGraph(const DisplayChildToParentMap& child_to_parent,
     if (current_id == primary_id) {
       // The primary display should not have a parent, and shouldn't exist in
       // the map as a key. That's a potential cycle.
-      LOG(ERROR) << "Primary display must not have a parent.";
+      DLOG(ERROR) << "Primary display must not have a parent.";
       return false;
     }
 
     std::set<int64_t> visited_ids;
     while (current_id != primary_id) {
       if (!visited_ids.emplace(current_id).second) {
-        LOG(ERROR) << "A cycle exists at display ID: " << current_id;
+        DLOG(ERROR) << "A cycle exists at display ID: " << current_id;
         return false;
       }
 
       const auto parent_iter = child_to_parent.find(current_id);
       if (parent_iter == child_to_parent.end()) {
-        LOG(ERROR) << "Display ID: " << current_id << " has no parent.";
+        DLOG(ERROR) << "Display ID: " << current_id << " has no parent.";
         return false;
       }
 
@@ -147,7 +147,7 @@ UnifiedDesktopLayoutMatrix BuildDisplayMatrix(const DisplayLayout& layout) {
   const size_t num_columns = max_column - min_column + 1;
 
   if (displays_cells.size() != num_rows * num_columns) {
-    LOG(ERROR) << "Unified Desktop layout matrix has wrong dimentions";
+    DLOG(ERROR) << "Unified Desktop layout matrix has wrong dimentions";
     // Return an empty matrix, ValidateMatrix() will catch it as invalid.
     return matrix;
   }
@@ -176,7 +176,7 @@ bool ValidateMatrix(const UnifiedDesktopLayoutMatrix& matrix) {
   for (const auto& row : matrix) {
     for (const auto& id : row) {
       if (id == display::kInvalidDisplayId) {
-        LOG(ERROR) << "Unified Desktop layout matrix has an empty cell in it.";
+        DLOG(ERROR) << "Unified Desktop layout matrix has an empty cell in it.";
         return false;
       }
     }
@@ -192,8 +192,8 @@ bool BuildUnifiedDesktopMatrix(const DisplayIdList& ids_list,
                                UnifiedDesktopLayoutMatrix* out_matrix) {
   // The primary display should be in the IDs list.
   if (!base::ContainsValue(ids_list, layout.primary_id)) {
-    LOG(ERROR) << "The primary ID: " << layout.primary_id
-               << " is not in the IDs list.";
+    DLOG(ERROR) << "The primary ID: " << layout.primary_id
+                << " is not in the IDs list.";
     return false;
   }
 
@@ -208,13 +208,13 @@ bool BuildUnifiedDesktopMatrix(const DisplayIdList& ids_list,
                        return placement.display_id == id;
                      });
     if (iter == layout.placement_list.end()) {
-      LOG(ERROR) << "Display with ID: " << id << " has no placement.";
+      DLOG(ERROR) << "Display with ID: " << id << " has no placement.";
       return false;
     }
   }
 
   if (layout.placement_list.empty()) {
-    LOG(ERROR) << "Placement list is empty.";
+    DLOG(ERROR) << "Placement list is empty.";
     return false;
   }
 
@@ -230,48 +230,48 @@ bool BuildUnifiedDesktopMatrix(const DisplayIdList& ids_list,
   for (const auto& placement : layout.placement_list) {
     // Unified mode placements are not allowed to have offsets.
     if (placement.offset != 0) {
-      LOG(ERROR) << "Unified mode placements are not allowed to have offsets.";
+      DLOG(ERROR) << "Unified mode placements are not allowed to have offsets.";
       return false;
     }
 
     if (placement.display_id == kInvalidDisplayId) {
-      LOG(ERROR) << "display_id is not initialized";
+      DLOG(ERROR) << "display_id is not initialized";
       return false;
     }
     if (placement.parent_display_id == kInvalidDisplayId) {
-      LOG(ERROR) << "parent_display_id is not initialized";
+      DLOG(ERROR) << "parent_display_id is not initialized";
       return false;
     }
     if (placement.display_id == placement.parent_display_id) {
-      LOG(ERROR) << "display_id must not be the same as parent_display_id";
+      DLOG(ERROR) << "display_id must not be the same as parent_display_id";
       return false;
     }
     if (!base::ContainsValue(ids_list, placement.display_id)) {
-      LOG(ERROR) << "display_id: " << placement.display_id
-                 << " is not in the id list: " << placement.ToString();
+      DLOG(ERROR) << "display_id: " << placement.display_id
+                  << " is not in the id list: " << placement.ToString();
       return false;
     }
 
     if (!base::ContainsValue(ids_list, placement.parent_display_id)) {
-      LOG(ERROR) << "parent_display_id: " << placement.parent_display_id
-                 << " is not in the id list: " << placement.ToString();
+      DLOG(ERROR) << "parent_display_id: " << placement.parent_display_id
+                  << " is not in the id list: " << placement.ToString();
       return false;
     }
 
     if (!displays_filled_sides[placement.parent_display_id]
              .emplace(placement.position)
              .second) {
-      LOG(ERROR) << "Parent display with ID: " << placement.parent_display_id
-                 << " has more than one display on the same side: "
-                 << placement.position;
+      DLOG(ERROR) << "Parent display with ID: " << placement.parent_display_id
+                  << " has more than one display on the same side: "
+                  << placement.position;
       return false;
     }
 
     if (!child_to_parent
              .emplace(placement.display_id, placement.parent_display_id)
              .second) {
-      LOG(ERROR) << "Display ID: " << placement.display_id << " appears more "
-                 << "than once in the placement list.";
+      DLOG(ERROR) << "Display ID: " << placement.display_id << " appears more "
+                  << "than once in the placement list.";
       return false;
     }
 
@@ -279,7 +279,7 @@ bool BuildUnifiedDesktopMatrix(const DisplayIdList& ids_list,
   }
 
   if (!has_primary_as_parent) {
-    LOG(ERROR) << "At least, one placement must have the primary as a parent.";
+    DLOG(ERROR) << "At least, one placement must have the primary as a parent.";
     return false;
   }
 

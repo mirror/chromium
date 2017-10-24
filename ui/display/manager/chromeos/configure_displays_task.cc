@@ -108,10 +108,10 @@ void ConfigureDisplaysTask::OnDisplaySnapshotsInvalidated() {
 
 void ConfigureDisplaysTask::OnConfigured(size_t index, bool success) {
   DisplayConfigureRequest* request = &requests_[index];
-  VLOG(2) << "Configured status=" << success
-          << " display=" << request->display->display_id()
-          << " origin=" << request->origin.ToString()
-          << " mode=" << (request->mode ? request->mode->ToString() : "null");
+  DVLOG(2) << "Configured status=" << success
+           << " display=" << request->display->display_id()
+           << " origin=" << request->origin.ToString()
+           << " mode=" << (request->mode ? request->mode->ToString() : "null");
   if (!success) {
     request->mode = FindNextMode(*request->display, request->mode);
     if (request->mode) {
