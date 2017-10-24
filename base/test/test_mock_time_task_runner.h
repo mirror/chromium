@@ -227,7 +227,7 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
                        TestPendingTask* next_task);
 
   // RunLoop::Delegate:
-  void Run() override;
+  void Run(RunLevelTaskType run_level_task_type) override;
   void Quit() override;
   void EnsureWorkScheduled() override;
 
