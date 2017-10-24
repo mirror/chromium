@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "878af4a7_e0de2ff3",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-24T17:41:49Z",
+      "side": 1,
+      "message": "Can this be renamed to RequestBeginning to align with this method? OnBeforeURLRequest is already a method of NetworkDelegate, which could cause confusion.",
+      "range": {
+        "startLine": 458,
+        "startChar": 16,
+        "endLine": 458,
+        "endChar": 34
+      },
+      "revId": "a665bc2d5eaead0565e4857840147eac12dd1f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
