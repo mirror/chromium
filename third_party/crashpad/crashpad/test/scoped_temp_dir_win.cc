@@ -34,7 +34,7 @@ base::FilePath GenerateCandidateName() {
   PCHECK(path_len != 0) << "GetTempPath";
   base::FilePath system_temp_dir(temp_path);
   base::string16 new_dir_name = base::UTF8ToUTF16(base::StringPrintf(
-        "crashpad.test.%d.%s", GetCurrentProcessId(), RandomString().c_str()));
+      "crashpad.test.%lu.%s", GetCurrentProcessId(), RandomString().c_str()));
   return system_temp_dir.Append(new_dir_name);
 }
 
@@ -81,7 +81,7 @@ void ScopedTempDir::RecursivelyDeleteTemporaryDirectory(
   WIN32_FIND_DATA find_data;
   HANDLE search_handle = FindFirstFile(search_mask.c_str(), &find_data);
   if (search_handle == INVALID_HANDLE_VALUE)
-    ASSERT_EQ(GetLastError(), ERROR_FILE_NOT_FOUND);
+    ASSERT_EQ(GetLastError(), static_cast<DWORD>(ERROR_FILE_NOT_FOUND));
   do {
     if (wcscmp(find_data.cFileName, L".") == 0 ||
         wcscmp(find_data.cFileName, L"..") == 0) {
@@ -94,7 +94,7 @@ void ScopedTempDir::RecursivelyDeleteTemporaryDirectory(
     else
       EXPECT_TRUE(DeleteFile(entry_path.value().c_str()));
   } while (FindNextFile(search_handle, &find_data));
-  EXPECT_EQ(GetLastError(), ERROR_NO_MORE_FILES);
+  EXPECT_EQ(GetLastError(), static_cast<DWORD>(ERROR_NO_MORE_FILES));
 
   EXPECT_TRUE(FindClose(search_handle));
   EXPECT_TRUE(RemoveDirectory(path.value().c_str()));
