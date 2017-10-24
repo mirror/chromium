@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96e2cac7_ca899f22",
+        "filename": "chrome/browser/autofill/address_normalizer_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T12:58:52Z",
+      "side": 1,
+      "message": "std::make_unique\u003cautofill::ChromeMetadataSource\u003e (should work, AFAIK)",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "fc73f5621b9e2da879945b8f369137115c148d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df39f49_d6c97eb8",
+        "filename": "chrome/browser/autofill/address_normalizer_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T12:58:52Z",
+      "side": 1,
+      "message": "Profile::FromBrowserContext(context) is probably safer.",
+      "range": {
+        "startLine": 45,
+        "startChar": 14,
+        "endLine": 45,
+        "endChar": 44
+      },
+      "revId": "fc73f5621b9e2da879945b8f369137115c148d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beae7ba6_16afad68",
+        "filename": "chrome/browser/autofill/address_normalizer_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T12:58:52Z",
+      "side": 1,
+      "message": "Please override GetBrowserContextToUse, otherwise AddressNormalizer will be null in incognito. #WhyDoWeEvenHaveThisButton.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "fc73f5621b9e2da879945b8f369137115c148d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
