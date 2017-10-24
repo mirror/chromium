@@ -243,6 +243,10 @@ class FakeServiceWorkerContainerHost
     get_controller_service_worker_count_++;
     fake_controller_->Clone(std::move(request));
   }
+  void CloneForWorker(
+      mojom::ServiceWorkerContainerHostRequest request) override {
+    NOTIMPLEMENTED();
+  }
 
   int get_controller_service_worker_count_ = 0;
   FakeControllerServiceWorker* fake_controller_;
