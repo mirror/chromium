@@ -16,6 +16,24 @@
       "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefc7ee2_3f317e59",
+        "filename": "third_party/WebKit/Source/core/loader/WorkletScriptLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T05:15:07Z",
+      "side": 1,
+      "message": "What do we think about the difficulty / complexity of doing #2?  I think we could also possibly try firing it asyncly only when it\u0027s on the same callstack with SetResource (needs a bit more hack in a very specific code path).",
+      "parentUuid": "2b0449ee_b647f462",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
