@@ -55,7 +55,7 @@ class VaapiPicture {
 
   int32_t picture_buffer_id() const { return picture_buffer_id_; }
 
-  virtual bool AllowOverlay() const;
+  virtual bool AllowOverlay() const { return false; }
 
   // Downloads the |va_surface| into the picture, potentially scaling
   // it if needed.
