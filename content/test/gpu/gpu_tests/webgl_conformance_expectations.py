@@ -67,7 +67,7 @@ class WebGLConformanceExpectations(GpuTestExpectations):
         ['win', 'amd', 'd3d9'])
 
     self.Fail('WebglExtension_WEBGL_draw_buffers',
-        ['win', 'd3d9', 'no_passthrough'])
+        ['win', 'd3d9'])
 
     # Android general
     self.Fail('WebglExtension_EXT_disjoint_timer_query',
