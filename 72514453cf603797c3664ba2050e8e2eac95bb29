@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "289c01c2_04153222",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/bindings-frame-attach-detach-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-24T01:20:31Z",
+      "side": 1,
+      "message": "who is this guy?",
+      "revId": "72514453cf603797c3664ba2050e8e2eac95bb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3443d3e_b3c7c201",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/dynamic-bindings-frame-attach-detach-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-24T01:20:31Z",
+      "side": 1,
+      "message": "can we have these named?",
+      "revId": "72514453cf603797c3664ba2050e8e2eac95bb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
