@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2282983a_7a9d5be7",
+        "filename": "chrome/browser/printing/print_preview_dialog_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:38:13Z",
+      "side": 1,
+      "message": "Nit: add /* for_preview*/ in comments.",
+      "range": {
+        "startLine": 380,
+        "startChar": 48,
+        "endLine": 380,
+        "endChar": 52
+      },
+      "revId": "e804486df1708680b15e3039943d03a41515ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d1871a_1ab3ba75",
+        "filename": "chrome/browser/printing/printing_init.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:38:13Z",
+      "side": 1,
+      "message": "I\u0027d suggest putting /* for_preview\u003d*/ in comments here; otherwise it\u0027s not very easy to understand what the bool is for without looking up the declaration.",
+      "range": {
+        "startLine": 27,
+        "startChar": 46,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "e804486df1708680b15e3039943d03a41515ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c7eae5_a67be184",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:38:13Z",
+      "side": 1,
+      "message": "Nit: I\u0027d prefer to just let UnwrapSharedMemoryHandle to all the necessary validation (and then just check the result below), rather than having call sites inconsistently validate that the handle value is valid.",
+      "revId": "e804486df1708680b15e3039943d03a41515ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65fbbd7_a5730fbf",
+        "filename": "components/printing/browser/print_manager_utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:38:13Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure I understand this logic: even without these conditions being true, we can have out-of-process iframes.",
+      "revId": "e804486df1708680b15e3039943d03a41515ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
