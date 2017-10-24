@@ -89,8 +89,10 @@ def FindPageSetDependencies(base_dir):
 
   # Add base_dir to path so our imports relative to base_dir will work.
   sys.path.append(base_dir)
+  # Only deals with importable tests.
   tests = discover.DiscoverClasses(base_dir, base_dir, benchmark.Benchmark,
-                                   index_by_class_name=True)
+                                   index_by_class_name=True,
+                                   ignore_import_error=True)
 
   for test_class in tests.itervalues():
     test_obj = test_class()

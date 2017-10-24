@@ -857,7 +857,7 @@ def current_benchmarks():
 
   for b in discover.DiscoverClasses(
       benchmarks_dir, top_level_dir, benchmark_module.Benchmark,
-      index_by_class_name=True).values():
+      index_by_class_name=True, ignore_import_error=True).values():
     if not b.Name() in _UNSCHEDULED_TELEMETRY_BENCHMARKS:
       all_benchmarks.append(b)
 

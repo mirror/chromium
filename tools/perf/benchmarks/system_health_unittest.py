@@ -19,7 +19,8 @@ def _GetAllSystemHealthBenchmarks():
   all_perf_benchmarks = discover.DiscoverClasses(
       path_util.GetPerfBenchmarksDir(), path_util.GetPerfDir(),
       benchmark_module.Benchmark,
-      index_by_class_name=True).values()
+      index_by_class_name=True,
+      ignore_import_error=True).values()
   return [b for b in all_perf_benchmarks if
           sys.modules[b.__module__] == system_health_benchmark]
 
