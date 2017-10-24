@@ -39,6 +39,24 @@
       "revId": "037a170ac6a7ea969a22f8b41b50a38b02c34cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae14b1c_6afc5222",
+        "filename": "ios/web/public/test/web_test_with_web_state.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-24T23:16:42Z",
+      "side": 1,
+      "message": "What do you mean by trying file:// URL?\nFormSuggestionControllerTest.PageLoadShouldBeIgnoredWhenNotHtml is loading a real file. Converting all tests that use LoadHTML() to loading a file will fix the issue, but it\u0027ll touch a lot of files, and I\u0027m not sure loading a file would actually be faster than loading about:blank first.\n\nI did some microbenchmarking, the extra about:blank load adds ~40ms setup time per test. A trivial test that only calls LoadHTML() takes ~240ms. So you\u0027re right, this is non-trivial.\n\nAn alternative is to remove the DCHECK(wk_item) from WKBasedNavigationManager. If web_view.backForwardList.currentItem is nil in WKBasedNavigationManagerImpl::CommitPendingItem() is nil, we\u0027ll just drop the NavigationItem. This only affects tests anyways, because the production code path uses |-loadHTML:forApplicationSpecificURL| and already has the placeholder hack. WDYT?",
+      "parentUuid": "4bc36c7f_a862f0e3",
+      "revId": "037a170ac6a7ea969a22f8b41b50a38b02c34cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
