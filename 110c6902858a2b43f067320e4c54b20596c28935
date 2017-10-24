@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65a6e846_2dfeda82",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f12d476_ca9c487b",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05abb882_9a452ef5",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 26
@@ -48,6 +72,54 @@
     },
     {
       "key": {
+        "uuid": "d036dd91_9f34cc7d",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05abb882_9a452ef5",
+      "range": {
+        "startLine": 117,
+        "startChar": 21,
+        "endLine": 118,
+        "endChar": 22
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4faf0e7d_8df69fcd",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05abb882_9a452ef5",
+      "range": {
+        "startLine": 117,
+        "startChar": 21,
+        "endLine": 118,
+        "endChar": 22
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1d945f_0fc55538",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
         "patchSetId": 26
@@ -68,6 +140,30 @@
       "revId": "110c6902858a2b43f067320e4c54b20596c28935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e777251_a661c41c",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1d945f_0fc55538",
+      "range": {
+        "startLine": 18,
+        "startChar": 70,
+        "endLine": 18,
+        "endChar": 74
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,54 @@
     },
     {
       "key": {
+        "uuid": "e51eb6a5_f2733b25",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89ce855e_34972f75",
+      "range": {
+        "startLine": 22,
+        "startChar": 49,
+        "endLine": 22,
+        "endChar": 57
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0922dec_f6ccd26d",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ede4bd6_2c9423f6",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 14
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f92350da_6fd437a1",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
         "patchSetId": 26
@@ -137,6 +281,30 @@
       "revId": "110c6902858a2b43f067320e4c54b20596c28935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449890ca_22bf17c5",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f92350da_6fd437a1",
+      "range": {
+        "startLine": 23,
+        "startChar": 50,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "2fac4ec3_0474ff00",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittests.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20180918_20067404",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00a389aa_1580768b",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittests.cc",
         "patchSetId": 26
@@ -183,6 +375,30 @@
       "revId": "110c6902858a2b43f067320e4c54b20596c28935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c6ea85_f79e1d9c",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittests.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00a389aa_1580768b",
+      "range": {
+        "startLine": 130,
+        "startChar": 42,
+        "endLine": 130,
+        "endChar": 47
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "e92bd0fd_d0de12a4",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittests.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0c6b252c_969c36c8",
+      "range": {
+        "startLine": 140,
+        "startChar": 6,
+        "endLine": 140,
+        "endChar": 54
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfa2c60c_e857ee76",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittests.cc",
         "patchSetId": 26
@@ -232,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "1f3522b2_65936a3a",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittests.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfa2c60c_e857ee76",
+      "range": {
+        "startLine": 153,
+        "startChar": 13,
+        "endLine": 153,
+        "endChar": 41
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1eed2d1_2059a979",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittests.cc",
         "patchSetId": 26
@@ -243,6 +507,30 @@
       "writtenOn": "2017-10-23T16:25:37Z",
       "side": 1,
       "message": "I don\u0027t think this test mirrors reality very effectively. A separator element should not accept events in the first place (CanProcessEventsWithinSubtree() \u003d\u003d false), hence OnMouseReleased would not be called on it.",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 55
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2729277d_d9715b6c",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittests.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Should I then in this Cl implement separator in a way that CanProcessEventsWithinSubtree() \u003d\u003d fals and then test it instead?",
+      "parentUuid": "b1eed2d1_2059a979",
       "range": {
         "startLine": 159,
         "startChar": 2,
@@ -275,6 +563,30 @@
       "revId": "110c6902858a2b43f067320e4c54b20596c28935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177b66e5_b9e2bdf4",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_views.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-24T15:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6f0047a_0befca62",
+      "range": {
+        "startLine": 272,
+        "startChar": 2,
+        "endLine": 272,
+        "endChar": 3
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
