@@ -10,6 +10,7 @@
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_layout_result.h"
+#include "core/paint/PaintLayer.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -152,6 +153,20 @@ const ComputedStyle& NGLayoutInputNode::Style() const {
 String NGLayoutInputNode::ToString() const {
   return IsInline() ? ToNGInlineNode(*this).ToString()
                     : ToNGBlockNode(*this).ToString();
+}
+
+void NGLayoutInputNode::UseOldOutOfFlowPositioning() const {
+  DCHECK(box_->IsOutOfFlowPositioned());
+  box_->ContainingBlock()->InsertPositionedObject(box_);
+}
+
+// Save static position for legacy AbsPos layout.
+void NGLayoutInputNode::SaveStaticOffsetForLegacy(
+    const NGLogicalOffset& offset) {
+  DCHECK(box_->IsOutOfFlowPositioned());
+  DCHECK(box_->Layer());
+  box_->Layer()->SetStaticBlockPosition(offset.block_offset);
+  box_->Layer()->SetStaticInlinePosition(offset.inline_offset);
 }
 
 #ifndef NDEBUG
