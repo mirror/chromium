@@ -11820,6 +11820,22 @@
       }
     ]
   },
+  "CrWinClexeGoma": {
+    "gtest_tests": [
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "base_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "content_unittests"
+      }
+    ]
+  },
   "CrWinClngLLD64dbg tester": {
     "gtest_tests": [
       {
