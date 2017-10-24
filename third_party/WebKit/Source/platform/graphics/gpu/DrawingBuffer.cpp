@@ -555,21 +555,6 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateOrRecycleColorBuffer() {
   return CreateColorBuffer(size_);
 }
 
-DrawingBuffer::ScopedRGBEmulationForBlitFramebuffer::
-    ScopedRGBEmulationForBlitFramebuffer(DrawingBuffer* drawing_buffer,
-                                         bool is_user_draw_framebuffer_bound)
-    : drawing_buffer_(drawing_buffer) {
-  doing_work_ = drawing_buffer->SetupRGBEmulationForBlitFramebuffer(
-      is_user_draw_framebuffer_bound);
-}
-
-DrawingBuffer::ScopedRGBEmulationForBlitFramebuffer::
-    ~ScopedRGBEmulationForBlitFramebuffer() {
-  if (doing_work_) {
-    drawing_buffer_->CleanupRGBEmulationForBlitFramebuffer();
-  }
-}
-
 DrawingBuffer::ColorBuffer::ColorBuffer(
     DrawingBuffer* drawing_buffer,
     const IntSize& size,
@@ -672,16 +657,7 @@ bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
     // A CHROMIUM_image backed texture requires a specialized set of parameters
     // on OSX.
     texture_target_ = GC3D_TEXTURE_RECTANGLE_ARB;
-    if (want_alpha_channel_) {
-      allocate_alpha_channel_ = true;
-    } else if (ContextProvider()
-                   ->GetCapabilities()
-                   .chromium_image_rgb_emulation) {
-      allocate_alpha_channel_ = false;
-    } else {
-      allocate_alpha_channel_ =
-          DefaultBufferRequiresAlphaChannelToBePreserved();
-    }
+    allocate_alpha_channel_ = true;
   }
 #endif
 
@@ -1236,8 +1212,9 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
   // Clear the alpha channel if this is RGB emulated.
   if (image_id && !want_alpha_channel_ &&
       ContextProvider()->GetCapabilities().chromium_image_rgb_emulation) {
-    GLuint fbo = 0;
+    gl_->BindTexImage2DWithInternalformatCHROMIUM(texture_target_, GL_RGB, 0);
 
+    GLuint fbo = 0;
     state_restorer_->SetClearStateDirty();
     gl_->GenFramebuffers(1, &fbo);
     gl_->BindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -1296,84 +1273,6 @@ GLenum DrawingBuffer::GetMultisampledRenderbufferFormat() {
     return GL_RGBA8_OES;
   }
   return GL_RGB8_OES;
-}
-
-bool DrawingBuffer::SetupRGBEmulationForBlitFramebuffer(
-    bool is_user_draw_framebuffer_bound) {
-  // We only need to do this work if:
-  //  - We are blitting to the default framebuffer
-  //  - The user has selected alpha:false and antialias:false
-  //  - We are using CHROMIUM_image with RGB emulation
-  // macOS is the only platform on which this is necessary.
-
-  if (is_user_draw_framebuffer_bound) {
-    return false;
-  }
-
-  if (want_alpha_channel_ || anti_aliasing_mode_ != kNone) {
-    return false;
-  }
-
-  if (!(ShouldUseChromiumImage() &&
-        ContextProvider()->GetCapabilities().chromium_image_rgb_emulation))
-    return false;
-
-  if (!back_color_buffer_)
-    return false;
-
-  // If for some reason the back buffer doesn't have a CHROMIUM_image,
-  // don't proceed with this workaround.
-  if (!back_color_buffer_->image_id)
-    return false;
-
-  // Before allowing the BlitFramebuffer call to go through, it's necessary
-  // to swap out the RGBA texture that's bound to the CHROMIUM_image
-  // instance with an RGB texture. BlitFramebuffer requires the internal
-  // formats of the source and destination to match when doing a
-  // multisample resolve, and the best way to achieve this without adding
-  // more full-screen blits is to hook up a true RGB texture to the
-  // underlying IOSurface. Unfortunately, on macOS, this rendering path
-  // destroys the alpha channel and requires a fixup afterward, which is
-  // why it isn't used all the time.
-
-  GLuint rgb_texture = back_color_buffer_->rgb_workaround_texture_id;
-  DCHECK_EQ(texture_target_, GC3D_TEXTURE_RECTANGLE_ARB);
-  if (!rgb_texture) {
-    gl_->GenTextures(1, &rgb_texture);
-    gl_->BindTexture(texture_target_, rgb_texture);
-    gl_->TexParameteri(texture_target_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    gl_->TexParameteri(texture_target_, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    gl_->TexParameteri(texture_target_, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    gl_->TexParameteri(texture_target_, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-    // Bind this texture to the CHROMIUM_image instance that the color
-    // buffer owns. This is an expensive operation, so it's important that
-    // the result be cached.
-    gl_->BindTexImage2DWithInternalformatCHROMIUM(texture_target_, GL_RGB,
-                                                  back_color_buffer_->image_id);
-    back_color_buffer_->rgb_workaround_texture_id = rgb_texture;
-  }
-
-  gl_->FramebufferTexture2D(GL_DRAW_FRAMEBUFFER_ANGLE, GL_COLOR_ATTACHMENT0,
-                            texture_target_, rgb_texture, 0);
-  return true;
-}
-
-void DrawingBuffer::CleanupRGBEmulationForBlitFramebuffer() {
-  // This will only be called if SetupRGBEmulationForBlitFramebuffer was.
-  // Put the framebuffer back the way it was, and clear the alpha channel.
-  DCHECK(back_color_buffer_);
-  DCHECK(back_color_buffer_->image_id);
-  gl_->FramebufferTexture2D(GL_DRAW_FRAMEBUFFER_ANGLE, GL_COLOR_ATTACHMENT0,
-                            texture_target_, back_color_buffer_->texture_id, 0);
-  // Clear the alpha channel.
-  gl_->ColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_TRUE);
-  gl_->Disable(GL_SCISSOR_TEST);
-  gl_->ClearColor(0, 0, 0, 1);
-  gl_->Clear(GL_COLOR_BUFFER_BIT);
-  DCHECK(client_);
-  client_->DrawingBufferClientRestoreScissorTest();
-  client_->DrawingBufferClientRestoreMaskAndClearValues();
 }
 
 DrawingBuffer::ScopedStateRestorer::ScopedStateRestorer(

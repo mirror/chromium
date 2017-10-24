@@ -230,20 +230,6 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
   // Restore all state that may have been dirtied by any call.
   void RestoreAllState();
 
-  // This class helps implement correct semantics for BlitFramebuffer
-  // when the DrawingBuffer is using a CHROMIUM image for its backing
-  // store and RGB emulation is in use (basically, macOS only).
-  class PLATFORM_EXPORT ScopedRGBEmulationForBlitFramebuffer {
-   public:
-    ScopedRGBEmulationForBlitFramebuffer(DrawingBuffer*,
-                                         bool is_user_draw_framebuffer_bound);
-    ~ScopedRGBEmulationForBlitFramebuffer();
-
-   private:
-    RefPtr<DrawingBuffer> drawing_buffer_;
-    bool doing_work_ = false;
-  };
-
  protected:  // For unittests
   DrawingBuffer(std::unique_ptr<WebGraphicsContext3DProvider>,
                 std::unique_ptr<Extensions3DUtil>,
@@ -436,11 +422,6 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
 
   // The format to use when creating a multisampled renderbuffer.
   GLenum GetMultisampledRenderbufferFormat();
-
-  // Helpers to ensure correct behavior of BlitFramebuffer when using
-  // an emulated RGB CHROMIUM_image back buffer.
-  bool SetupRGBEmulationForBlitFramebuffer(bool is_user_draw_framebuffer_bound);
-  void CleanupRGBEmulationForBlitFramebuffer();
 
   // Weak, reset by beginDestruction.
   Client* client_ = nullptr;
