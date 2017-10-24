@@ -473,6 +473,10 @@
       status: "experimental",
     },
     {
+      name: "IDBPromises",
+      status: "experimental",
+    },
+    {
       name: "IdleTimeColdModeSpellChecking",
       status: "test",
     },

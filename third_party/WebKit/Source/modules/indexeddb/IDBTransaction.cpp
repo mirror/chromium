@@ -114,7 +114,10 @@ IDBTransaction::IDBTransaction(ExecutionContext* execution_context,
       database_(db),
       mode_(kWebIDBTransactionModeReadOnly),
       scope_(scope),
-      state_(kActive) {
+      state_(kActive),
+      complete_promise_(new CompletePromise(execution_context,
+                                            this,
+                                            CompletePromise::kComplete)) {
   DCHECK(database_);
   DCHECK(!scope_.IsEmpty()) << "Observer transactions must operate "
                                "on a well-defined set of stores";
@@ -130,7 +133,11 @@ IDBTransaction::IDBTransaction(ScriptState* script_state,
       id_(id),
       database_(db),
       mode_(mode),
-      scope_(scope) {
+      scope_(scope),
+      complete_promise_(
+          new CompletePromise(ExecutionContext::From(script_state),
+                              this,
+                              CompletePromise::kComplete)) {
   DCHECK(database_);
   DCHECK(!scope_.IsEmpty()) << "Non-versionchange transactions must operate "
                                "on a well-defined set of stores";
@@ -156,6 +163,9 @@ IDBTransaction::IDBTransaction(ExecutionContext* execution_context,
       open_db_request_(open_db_request),
       mode_(kWebIDBTransactionModeVersionChange),
       state_(kInactive),
+      complete_promise_(new CompletePromise(execution_context,
+                                            this,
+                                            CompletePromise::kComplete)),
       old_database_metadata_(old_metadata) {
   DCHECK(database_);
   DCHECK(open_db_request_);
@@ -176,6 +186,7 @@ void IDBTransaction::Trace(blink::Visitor* visitor) {
   visitor->Trace(database_);
   visitor->Trace(open_db_request_);
   visitor->Trace(error_);
+  visitor->Trace(complete_promise_);
   visitor->Trace(request_list_);
   visitor->Trace(object_store_map_);
   visitor->Trace(old_store_metadata_);
@@ -495,6 +506,25 @@ const String& IDBTransaction::mode() const {
   return IndexedDBNames::readonly;
 }
 
+ScriptPromise IDBTransaction::complete(ScriptState* script_state) {
+  return complete_promise_->Promise(script_state->World());
+}
+
+ScriptPromise IDBTransaction::then(ScriptState* script_state,
+                                   const ScriptValue& onFulfilled,
+                                   const ScriptValue& onRejected) {
+  v8::Local<v8::Function> fulfilled_function;
+  if (!onFulfilled.IsEmpty() && onFulfilled.IsFunction())
+    fulfilled_function = onFulfilled.V8Value().As<v8::Function>();
+
+  v8::Local<v8::Function> rejected_function;
+  if (!onRejected.IsEmpty() && onRejected.IsFunction())
+    rejected_function = onRejected.V8Value().As<v8::Function>();
+
+  return complete_promise_->Promise(script_state->World())
+      .Then(fulfilled_function, rejected_function);
+}
+
 DOMStringList* IDBTransaction::objectStoreNames() const {
   if (IsVersionChange())
     return database_->objectStoreNames();
@@ -541,6 +571,11 @@ DispatchEventResult IDBTransaction::DispatchEventInternal(Event* event) {
   DCHECK(GetExecutionContext());
   DCHECK_EQ(event->target(), this);
   state_ = kFinished;
+
+  if (event->type() == EventTypeNames::complete)
+    complete_promise_->Resolve(ToV8UndefinedGenerator());
+  else if (event->type() == EventTypeNames::abort)
+    complete_promise_->Reject(error_);
 
   HeapVector<Member<EventTarget>> targets;
   targets.push_back(this);

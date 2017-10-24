@@ -28,8 +28,10 @@
 
 #include <memory>
 
+#include "bindings/core/v8/ScriptPromiseProperty.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/DOMStringList.h"
+#include "core/dom/SuspendableObject.h"
 #include "core/dom/events/EventListener.h"
 #include "modules/EventModules.h"
 #include "modules/EventTargetModules.h"
@@ -105,6 +107,16 @@ class MODULES_EXPORT IDBTransaction final
   DOMException* error() const { return error_; }
   IDBObjectStore* objectStore(const String& name, ExceptionState&);
   void abort(ExceptionState&);
+
+  // https://github.com/inexorabletash/indexeddb-promises
+  ScriptPromise complete(ScriptState*);
+  ScriptPromise then(ScriptState*,
+                     const ScriptValue& onFulfilled,
+                     const ScriptValue& onRejected = ScriptValue());
+  ScriptPromise catchFunction(ScriptState* script_state,
+                              const ScriptValue& onRejected) {
+    return then(script_state, ScriptValue(), onRejected);
+  }
 
   void RegisterRequest(IDBRequest*);
   void UnregisterRequest(IDBRequest*);
@@ -222,6 +234,11 @@ class MODULES_EXPORT IDBTransaction final
   State state_ = kActive;
   bool has_pending_activity_ = true;
   Member<DOMException> error_;
+
+  using CompletePromise = ScriptPromiseProperty<Member<IDBTransaction>,
+                                                ToV8UndefinedGenerator,
+                                                Member<DOMException>>;
+  Member<CompletePromise> complete_promise_;
 
   HeapListHashSet<Member<IDBRequest>> request_list_;
 
