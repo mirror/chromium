@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2b29cef_fa011b12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T13:08:41Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s add some info about the motivations to the CL description.",
+      "revId": "7a8e7a4c0d75e081499c5f3ed9c28390d6ec89b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e09d10_f5189472",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2740,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T13:08:41Z",
+      "side": 1,
+      "message": "nit: This is one case where I think it would be easier to read to not have an early return.\n\nif (ServiceManagerConnection::GetForProcess()) {\n  // bind interface\n}\n\nreturn geolocation_context_.get();",
+      "revId": "7a8e7a4c0d75e081499c5f3ed9c28390d6ec89b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5496ba8_0ca44c61",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2745,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T13:08:41Z",
+      "side": 1,
+      "message": "nit: People suggest that in general this DCHECK isn\u0027t needed if you\u0027re going to dereference the pointer on the next line, as the dereference essentially serves as documentation that you\u0027re assuming that the pointer is non-null.",
+      "revId": "7a8e7a4c0d75e081499c5f3ed9c28390d6ec89b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f664ad_1ee1674a",
+        "filename": "device/geolocation/geolocation_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T13:08:41Z",
+      "side": 1,
+      "message": "nit: the device:: is unnecessary.",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "7a8e7a4c0d75e081499c5f3ed9c28390d6ec89b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b30f091_e6ac6a3b",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T13:08:41Z",
+      "side": 1,
+      "message": "nit: Please add an interface-level comment.",
+      "revId": "7a8e7a4c0d75e081499c5f3ed9c28390d6ec89b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e54192_a4f39716",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T13:08:41Z",
+      "side": 1,
+      "message": "nit: Let\u0027s put this interface in geolocation_context.mojom. GeolocationService should also have been in its own file, and will be eventually.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 9
+      },
+      "revId": "7a8e7a4c0d75e081499c5f3ed9c28390d6ec89b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc124999_548d39f5",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T13:08:41Z",
+      "side": 1,
+      "message": "nit: the weak binding isn\u0027t a property of the interface.",
+      "revId": "7a8e7a4c0d75e081499c5f3ed9c28390d6ec89b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06e9c06_8463e8ee",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T13:08:41Z",
+      "side": 1,
+      "message": "nit: This should include that the override applies to the geolocations created within this context.",
+      "revId": "7a8e7a4c0d75e081499c5f3ed9c28390d6ec89b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
