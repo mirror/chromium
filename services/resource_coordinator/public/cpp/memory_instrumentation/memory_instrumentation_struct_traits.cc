@@ -20,8 +20,6 @@ EnumTraits<memory_instrumentation::mojom::DumpType,
       return memory_instrumentation::mojom::DumpType::PEAK_MEMORY_USAGE;
     case base::trace_event::MemoryDumpType::SUMMARY_ONLY:
       return memory_instrumentation::mojom::DumpType::SUMMARY_ONLY;
-    case base::trace_event::MemoryDumpType::VM_REGIONS_ONLY:
-      return memory_instrumentation::mojom::DumpType::VM_REGIONS_ONLY;
     default:
       CHECK(false) << "Invalid type: " << static_cast<uint8_t>(type);
       // This should not be reached. Just return a random value.
@@ -47,9 +45,6 @@ bool EnumTraits<memory_instrumentation::mojom::DumpType,
     case memory_instrumentation::mojom::DumpType::SUMMARY_ONLY:
       *out = base::trace_event::MemoryDumpType::SUMMARY_ONLY;
       break;
-    case memory_instrumentation::mojom::DumpType::VM_REGIONS_ONLY:
-      *out = base::trace_event::MemoryDumpType::VM_REGIONS_ONLY;
-      break;
     default:
       NOTREACHED() << "Invalid type: " << static_cast<uint8_t>(input);
       return false;
@@ -69,6 +64,10 @@ EnumTraits<memory_instrumentation::mojom::LevelOfDetail,
       return memory_instrumentation::mojom::LevelOfDetail::LIGHT;
     case base::trace_event::MemoryDumpLevelOfDetail::DETAILED:
       return memory_instrumentation::mojom::LevelOfDetail::DETAILED;
+    case base::trace_event::MemoryDumpLevelOfDetail::
+        VM_REGIONS_ONLY_FOR_HEAP_PROFILER:
+      return memory_instrumentation::mojom::LevelOfDetail::
+          VM_REGIONS_ONLY_FOR_HEAP_PROFILER;
     default:
       CHECK(false) << "Invalid type: " << static_cast<uint8_t>(level_of_detail);
       // This should not be reached. Just return a random value.
@@ -90,6 +89,11 @@ bool EnumTraits<memory_instrumentation::mojom::LevelOfDetail,
       break;
     case memory_instrumentation::mojom::LevelOfDetail::DETAILED:
       *out = base::trace_event::MemoryDumpLevelOfDetail::DETAILED;
+      break;
+    case memory_instrumentation::mojom::LevelOfDetail::
+        VM_REGIONS_ONLY_FOR_HEAP_PROFILER:
+      *out = base::trace_event::MemoryDumpLevelOfDetail::
+          VM_REGIONS_ONLY_FOR_HEAP_PROFILER;
       break;
     default:
       NOTREACHED() << "Invalid type: " << static_cast<uint8_t>(input);

@@ -20,8 +20,6 @@ const char* MemoryDumpTypeToString(const MemoryDumpType& dump_type) {
       return "peak_memory_usage";
     case MemoryDumpType::SUMMARY_ONLY:
       return "summary_only";
-    case MemoryDumpType::VM_REGIONS_ONLY:
-      return "vm_regions_only";
   }
   NOTREACHED();
   return "unknown";
@@ -36,8 +34,6 @@ MemoryDumpType StringToMemoryDumpType(const std::string& str) {
     return MemoryDumpType::PEAK_MEMORY_USAGE;
   if (str == "summary_only")
     return MemoryDumpType::SUMMARY_ONLY;
-  if (str == "vm_regions_only")
-    return MemoryDumpType::VM_REGIONS_ONLY;
   NOTREACHED();
   return MemoryDumpType::LAST;
 }
@@ -45,6 +41,8 @@ MemoryDumpType StringToMemoryDumpType(const std::string& str) {
 const char* MemoryDumpLevelOfDetailToString(
     const MemoryDumpLevelOfDetail& level_of_detail) {
   switch (level_of_detail) {
+    case MemoryDumpLevelOfDetail::VM_REGIONS_ONLY_FOR_HEAP_PROFILER:
+      return "vm_regions_only";
     case MemoryDumpLevelOfDetail::BACKGROUND:
       return "background";
     case MemoryDumpLevelOfDetail::LIGHT:
@@ -58,6 +56,8 @@ const char* MemoryDumpLevelOfDetailToString(
 
 MemoryDumpLevelOfDetail StringToMemoryDumpLevelOfDetail(
     const std::string& str) {
+  if (str == "vm_regions_only")
+    return MemoryDumpLevelOfDetail::VM_REGIONS_ONLY_FOR_HEAP_PROFILER;
   if (str == "background")
     return MemoryDumpLevelOfDetail::BACKGROUND;
   if (str == "light")

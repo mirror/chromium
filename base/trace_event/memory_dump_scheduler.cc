@@ -50,6 +50,10 @@ void MemoryDumpScheduler::StartInternal(MemoryDumpScheduler::Config config) {
   for (const Config::Trigger& trigger : config.triggers) {
     DCHECK_GT(trigger.period_ms, 0u);
     switch (trigger.level_of_detail) {
+      case MemoryDumpLevelOfDetail::VM_REGIONS_ONLY_FOR_HEAP_PROFILER:
+        // The heap profiler should not be requesting periodic dumps.
+        NOTREACHED();
+        return;
       case MemoryDumpLevelOfDetail::BACKGROUND:
         break;
       case MemoryDumpLevelOfDetail::LIGHT:
