@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a52ddf8b_2686027f",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "Why does every TabUIHelper need to track SessionRestore?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 36
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef74a0a_23ee9908",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this only be set to true if |contents| \u003d\u003d this?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11914c89_50852ec8",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "title_.clear()",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4496df28_b3df9745",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this comment. This diesn\u0027t control anything.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48fce91_fc2b4d79",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "Generally inlined functions use hacker_style, e.g. set_was_active.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e7599b_948f29e3",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "Why does this need to take a boolean? Shouldn\u0027t it only ever go from false to true and never true to false?",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23743b3c_e8121a4a",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "This name is subtle (I initially missed the meaning). How about was_active_at_least_once?",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12c37c0_d96ae739",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "const base::string16\u0026",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 16
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a132adcb_bd3c1bec",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "Remove everything after the \u0027\u003d\u0027. The default constructor gives you an empty string.",
+      "range": {
+        "startLine": 58,
+        "startChar": 24,
+        "endLine": 58,
+        "endChar": 47
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81e0b0f_feb363ff",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "Based on this code, shouldn\u0027t the name be SetIsActive?\nAlso, I don\u0027t see you resetting the active state anywhere?",
+      "range": {
+        "startLine": 471,
+        "startChar": 48,
+        "endLine": 471,
+        "endChar": 60
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca21f8bd_d920bbb5",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "How about always calling to TabUIHelper for the title and it can have the smarts as what title to use.",
+      "range": {
+        "startLine": 537,
+        "startChar": 16,
+        "endLine": 538,
+        "endChar": 68
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a2f7bf_96249071",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "Why do you need this call? This may change was active to false, which my understanding is that should never happen.",
+      "range": {
+        "startLine": 592,
+        "startChar": 0,
+        "endLine": 592,
+        "endChar": 66
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe82f3a_58d05f9a",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "How does the initial navigation favicon get set?",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 39
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f471158b_063bc267",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:23:43Z",
+      "side": 1,
+      "message": "What triggers the !entry code path? By that I mean who is now calling OnFaviconUpdated() when there is no last committed entry?",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 62
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
