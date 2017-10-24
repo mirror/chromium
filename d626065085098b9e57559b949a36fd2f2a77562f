@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a53d1dc8_6f87b22e",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-24T19:54:06Z",
+      "side": 1,
+      "message": "We could avoid a copy here by making address a StringPiece. StringToBluetoothAddress would also need to be modified to take StringPiece. WDYT?",
+      "revId": "d626065085098b9e57559b949a36fd2f2a77562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57722598_abf2e80d",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-24T19:54:06Z",
+      "side": 1,
+      "message": "Let\u0027s add a test for this string to bluetooth_low_energy_win_unittest",
+      "range": {
+        "startLine": 336,
+        "startChar": 5,
+        "endLine": 336,
+        "endChar": 118
+      },
+      "revId": "d626065085098b9e57559b949a36fd2f2a77562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
