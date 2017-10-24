@@ -49,9 +49,6 @@ extern NSString* const kSigninPromoCloseButtonId;
 @property(nonatomic, readonly) MDCFlatButton* secondaryButton;
 // Hidden by default.
 @property(nonatomic, readonly) UIButton* closeButton;
-// Called when the user taps on the close button. If not set, the close button
-// is hidden.
-@property(nonatomic, copy) CloseButtonCallback closeButtonAction;
 
 // Horizontal padding used for |textLabel|, |primaryButton| and
 // |secondaryButton|. Used to compute the preferred max layout width of

@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class SigninPromoViewMediator;
 @protocol ApplicationCommands;
 
 namespace ios {
@@ -17,10 +18,15 @@ namespace user_prefs {
 class PrefRegistrySyncable;
 }  // namespace user_prefs
 
+@class SigninPromoViewConfigurator;
 @protocol BookmarkPromoControllerDelegate
 
 // Controls the state of the promo.
 - (void)promoStateChanged:(BOOL)promoEnabled;
+
+- (void)configureSigninPromoWithConfigurator:
+            (SigninPromoViewConfigurator*)configurator
+                             identityChanged:(BOOL)identityChanged;
 
 @end
 
@@ -34,6 +40,8 @@ class PrefRegistrySyncable;
 // call the promoStateChanged: selector on the delegate.
 @property(nonatomic, assign) BOOL promoState;
 
+@property(nonatomic, readonly) SigninPromoViewMediator* signinPromoViewMediator;
+
 // Registers the feature preferences.
 + (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry;
 
@@ -41,9 +49,6 @@ class PrefRegistrySyncable;
                             delegate:
                                 (id<BookmarkPromoControllerDelegate>)delegate
                           dispatcher:(id<ApplicationCommands>)dispatcher;
-
-// Presents the sign-in UI.
-- (void)showSignIn;
 
 // Hides the promo cell. It won't be presented again on this profile.
 - (void)hidePromoCell;

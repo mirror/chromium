@@ -497,4 +497,12 @@ const CGFloat kSubtitleMinimunLineHeight = 24.0;
   [configurator configureSigninPromoView:_signinPromoView];
 }
 
+- (void)wasShown {
+  [_signinPromoViewMediator signinPromoViewVisible];
+}
+
+- (void)wasHidden {
+  [_signinPromoViewMediator signinPromoViewHidden];
+}
+
 @end
