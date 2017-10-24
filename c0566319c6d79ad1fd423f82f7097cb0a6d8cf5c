@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44caa793_9e7a4e5c",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-10-24T12:05:56Z",
+      "side": 1,
+      "message": "Suggestion taken. The condition should be impossible, so if we ever encounter this, it\u0027s a clear sign of a bug. Sounds like a perfect use of assert. Then again, ApkSignatureSchemeV2Verifier is complicated, and such a bug is imaginable. It\u0027s also conceivable that the API might change and not always guarantee a certificate in the chain. Might as well be robust.",
+      "parentUuid": "5eceb65e_b4068222",
+      "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29788e84_e27c70a0",
         "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fefabd2_371fc617",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-10-24T12:05:56Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "29788e84_e27c70a0",
+      "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fab0ba62_31074f01",
+        "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-10-24T12:05:56Z",
+      "side": 1,
+      "message": "Doesn\u0027t compile—expectedDigests.keySet() contains Integers, not ints. The loop is needed to unbox.",
+      "parentUuid": "59b25876_03b300ba",
+      "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82b6b291_6302b5cd",
         "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6b18ed_0e3a8636",
+        "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-10-24T12:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82b6b291_6302b5cd",
+      "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2ddb2670_e6517912",
+        "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-10-24T12:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f4a437_dfa68b06",
+      "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc09ec59_133104e0",
         "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
         "patchSetId": 14
@@ -101,6 +191,24 @@
       "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c0e46b_ae467d77",
+        "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-10-24T12:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc09ec59_133104e0",
+      "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "795468f4_6e6d2096",
+        "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-10-24T12:05:56Z",
+      "side": 1,
+      "message": "I have no idea why the mask. Long.toHexString returns different output for negative numbers, but seems useless here. I\u0027ll change it.",
+      "parentUuid": "77fa726e_fd526933",
+      "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37b41e99_2030a48c",
         "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
         "patchSetId": 14
@@ -135,6 +261,24 @@
       "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c81c6c_a1e1c373",
+        "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-10-24T12:05:56Z",
+      "side": 1,
+      "message": "In my opinion, it aids readability by grouping the delegation methods in one place, and isolating the more interesting behavior in another. I\u0027ll add an explanatory comment to this class.",
+      "parentUuid": "37b41e99_2030a48c",
+      "revId": "c0566319c6d79ad1fd423f82f7097cb0a6d8cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
