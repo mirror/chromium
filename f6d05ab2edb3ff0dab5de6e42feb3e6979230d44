@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8458cc0_c9407ac2",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T14:33:04Z",
+      "side": 1,
+      "message": "Sorry, wasn\u0027t sure... are you going to change not-found case to use nullptr in this CL or not?\n\nIf not I prefer the code structure like below, initializing info with New\u0027s and then overwriting it in some case feels a bit confusing.  Would it make sense?  (But just returning nullptr still feels simpler)\n\nDCHECK(status !\u003d SERVICE_WORKER_OK || registration);\n\nblink::mojom::ServiceWorkerRegistrationObjectInfoPtr info;\nif (status !\u003d SERVICE_WORKER_OK || registration-\u003eis_uninstalling()) {\n  info \u003d blink::mojom::ServiceWorkerRegistrationObjectInfo::New();\n  info-\u003eoptions \u003d ...;\n  info-\u003eactive \u003d ...;\n  ...\n} else {\n  info \u003d CreateServiceWorkerRegistrationObjectInfo(...);\n}",
+      "revId": "f6d05ab2edb3ff0dab5de6e42feb3e6979230d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
