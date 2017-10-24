@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ec646bd_cdaf2492",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-24T21:51:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a8f8da9_ddde7e5b",
+      "range": {
+        "startLine": 9,
+        "startChar": 14,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "182b2d25_416db0c6",
         "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970da05c_fd24c8ca",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-24T21:51:23Z",
+      "side": 1,
+      "message": "You\u0027re right. This is not needed.",
+      "parentUuid": "182b2d25_416db0c6",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2d42d20b_3c50afc9",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-24T21:51:23Z",
+      "side": 1,
+      "message": "I feel ElapsedTimer is more convenient when used in an RAII pattern. But since we\u0027re starting, resetting and stopping timer in different methods, using TimeTicks directly seems more clear to me.",
+      "parentUuid": "0d554e0d_a007547a",
+      "range": {
+        "startLine": 47,
+        "startChar": 42,
+        "endLine": 47,
+        "endChar": 43
+      },
+      "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "702d3bf1_3eae920b",
         "filename": "ios/chrome/browser/web/load_timing_tab_helper_unittest.mm",
         "patchSetId": 8
@@ -85,6 +157,24 @@
       "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ddd9973_a843038b",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-24T21:51:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "702d3bf1_3eae920b",
+      "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +198,30 @@
       "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa70184f_fa6eb930",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-24T21:51:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7050f9ac_717fbebf",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "1d5503b76bd4cd5bbe6c4c510726a1fd58748761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
