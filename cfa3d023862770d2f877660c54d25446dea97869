@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77829c65_536a562e",
+        "filename": "net/nqe/socket_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-24T23:36:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b0f5611_079be695",
+      "revId": "cfa3d023862770d2f877660c54d25446dea97869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba9c27a3_ee6ffe4d",
         "filename": "net/nqe/socket_watcher.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "cfa3d023862770d2f877660c54d25446dea97869",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c6aba3_31d04a18",
+        "filename": "net/nqe/socket_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-24T23:36:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba9c27a3_ee6ffe4d",
+      "revId": "cfa3d023862770d2f877660c54d25446dea97869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
