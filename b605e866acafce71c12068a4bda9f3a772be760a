@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5f38511_04ed2449",
+        "filename": "chrome/browser/resources/settings/reset_page/reset_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-24T18:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2466a50_c5921d4b",
+      "revId": "b605e866acafce71c12068a4bda9f3a772be760a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c97b037d_7fb5e7f1",
         "filename": "chrome/browser/resources/settings/reset_page/reset_page.html",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "b605e866acafce71c12068a4bda9f3a772be760a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91da485a_89159ad9",
+        "filename": "chrome/browser/resources/settings/reset_page/reset_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-24T18:36:03Z",
+      "side": 1,
+      "message": "Done. Please notice that I needed to add to this CL something I intended to do further down the road, which is to add the trigger for the page.",
+      "parentUuid": "c97b037d_7fb5e7f1",
+      "revId": "b605e866acafce71c12068a4bda9f3a772be760a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d9d514e7_ffd3c3c5",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-24T18:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63c804d6_b7e30fb7",
+      "revId": "b605e866acafce71c12068a4bda9f3a772be760a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d04f53a_7362d875",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "b605e866acafce71c12068a4bda9f3a772be760a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620ad269_64f4528c",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-24T18:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d04f53a_7362d875",
+      "revId": "b605e866acafce71c12068a4bda9f3a772be760a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
