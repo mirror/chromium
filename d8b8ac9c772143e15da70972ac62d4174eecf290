@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1256162d_678e5e27",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-24T23:37:23Z",
+      "side": 0,
+      "message": "nit: maybe it\u0027s safer / future-proof to keep the return;?",
+      "revId": "d8b8ac9c772143e15da70972ac62d4174eecf290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

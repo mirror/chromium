@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ababdd48_8efb4375",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-24T23:37:23Z",
+      "side": 1,
+      "message": "Maybe a stupid question but how would this help writing tests when there\u0027s no change to the header file?",
+      "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5ed2d7_1deec301",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-24T23:37:23Z",
+      "side": 1,
+      "message": "Can you move this up? The comment above is for the function.",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 72
+      },
+      "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e87915f_3d79dd83",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-24T23:37:23Z",
+      "side": 1,
+      "message": "Can you add some info on which thread this function is executed?",
+      "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b10d17d_0383bfe8",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-24T23:37:23Z",
+      "side": 1,
+      "message": "nit/optional: not a new issue but isn\u0027t it better to weak-bind this since there\u0027s no reason to execute the function when |this| is already freed?",
+      "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
