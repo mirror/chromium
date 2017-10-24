@@ -48,6 +48,12 @@
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
+#include "ash/public/cpp/window_pin_type.h"
+#include "ash/public/cpp/window_properties.h"
+#include "ash/public/cpp/window_state_type.h"
+#include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ash/public/interfaces/window_state_type.mojom.h"
+
 using extensions::AppWindow;
 
 namespace {
@@ -151,6 +157,8 @@ void ChromeNativeAppWindowViewsAuraAsh::InitializeWindow(
     window->SetProperty(aura::client::kAppType,
                         static_cast<int>(ash::AppType::CHROME_APP));
   }
+  std::string origin = app_window->initial_url().GetOrigin().spec();
+  window->SetProperty(ash::kWindowContentOriginKey, &origin);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -48,6 +48,8 @@ void MusPropertyMirrorAsh::MirrorPropertyFromWidgetWindowToRootWindow(
     MirrorOwnedProperty(window, root_window, aura::client::kAppIconKey);
   } else if (key == kShelfIDKey) {
     MirrorOwnedProperty(window, root_window, kShelfIDKey);
+  } else if (key == kWindowContentOriginKey) {
+    MirrorOwnedProperty(window, root_window, kWindowContentOriginKey);
   } else if (key == aura::client::kDrawAttentionKey) {
     bool value = window->GetProperty(aura::client::kDrawAttentionKey);
     root_window->SetProperty(aura::client::kDrawAttentionKey, value);

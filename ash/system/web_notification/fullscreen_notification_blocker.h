@@ -30,6 +30,7 @@ class FullscreenNotificationBlocker
                                 aura::Window* root_window) override;
 
   bool should_block_ = false;
+  GURL fullscreen_window_origin_;
 
   DISALLOW_COPY_AND_ASSIGN(FullscreenNotificationBlocker);
 };

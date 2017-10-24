@@ -35,6 +35,10 @@ ASH_PUBLIC_EXPORT extern const aura::WindowProperty<bool>* const
 ASH_PUBLIC_EXPORT extern const aura::WindowProperty<std::string*>* const
     kShelfIDKey;
 
+// FIXME
+ASH_PUBLIC_EXPORT extern const aura::WindowProperty<std::string*>* const
+    kWindowContentOriginKey;
+
 // A property key to store the type of a window's shelf item.
 ASH_PUBLIC_EXPORT extern const aura::WindowProperty<int32_t>* const
     kShelfItemTypeKey;
