@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e05b3ddc_c967d72a",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T12:37:21Z",
+      "side": 1,
+      "message": "Add DCHECK(!first_unswept_page_).",
+      "revId": "c89ee3cca88301684d823bd6fbe54bcfb0501d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568408e0_1e987e14",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T12:37:21Z",
+      "side": 1,
+      "message": "Add DCHECK(!first_unswept_page_).",
+      "revId": "c89ee3cca88301684d823bd6fbe54bcfb0501d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0feb0bd6_41ced916",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T12:37:21Z",
+      "side": 1,
+      "message": "As keishi pointed out, this won\u0027t work if a new page is allocated while the incremental marking is in progress.\n\nI\u0027d prefer starting with a simpler approach. i.e., add the flag to ThreadState and then optimize later.",
+      "revId": "c89ee3cca88301684d823bd6fbe54bcfb0501d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
