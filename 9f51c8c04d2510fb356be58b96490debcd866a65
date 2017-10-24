@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf17f9dd_e56cec2c",
+        "filename": "ash/public/interfaces/window_state_type.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-24T18:06:05Z",
+      "side": 1,
+      "message": "fixme \u003d things to fix before sending to review; in this case I know this property doesn\u0027t belong here",
+      "range": {
+        "startLine": 40,
+        "startChar": 3,
+        "endLine": 40,
+        "endChar": 8
+      },
+      "revId": "9f51c8c04d2510fb356be58b96490debcd866a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
