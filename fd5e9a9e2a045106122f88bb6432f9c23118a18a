@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b88c284_4312d632",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T17:08:28Z",
+      "side": 1,
+      "message": "nit: the verb is \"to set up\" with a space",
+      "range": {
+        "startLine": 572,
+        "startChar": 16,
+        "endLine": 572,
+        "endChar": 21
+      },
+      "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34edbf32_b6eb84d5",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T17:08:28Z",
+      "side": 1,
+      "message": "yikes!",
+      "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
