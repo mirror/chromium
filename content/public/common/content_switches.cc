@@ -170,6 +170,10 @@ const char kDisableLowResTiling[] = "disable-low-res-tiling";
 // Disable the GPU process sandbox.
 const char kDisableGpuSandbox[]             = "disable-gpu-sandbox";
 
+// Disable the thread that crashes the GPU process if it stops responding to
+// messages.
+const char kDisableGpuWatchdog[] = "disable-gpu-watchdog";
+
 // Suppresses hang monitor dialogs in renderer processes.  This may allow slow
 // unload handlers on a page to prevent the tab from closing, but the Task
 // Manager can be used to terminate the offending process in this case.
