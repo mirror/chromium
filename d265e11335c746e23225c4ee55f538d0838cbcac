@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef99d189_596f8547",
+        "filename": "ui/views/controls/combobox/combobox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-24T06:42:41Z",
+      "side": 1,
+      "message": "Ah it works if I set the tooltip to arrow_button_ (which I understand is otherwise used for mouse events).",
+      "parentUuid": "74b10097_68dd2484",
+      "revId": "d265e11335c746e23225c4ee55f538d0838cbcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1320c49_c3f30e2a",
         "filename": "ui/views/controls/combobox/combobox.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-20T05:35:23Z",
       "side": 1,
       "message": "what\u0027s wrong with the default implementation? (comment here?)",
+      "revId": "d265e11335c746e23225c4ee55f538d0838cbcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee403ce_954179a7",
+        "filename": "ui/views/controls/combobox/combobox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-24T06:42:41Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "parentUuid": "c1320c49_c3f30e2a",
       "revId": "d265e11335c746e23225c4ee55f538d0838cbcac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "d265e11335c746e23225c4ee55f538d0838cbcac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e715282e_c8f5d6aa",
+        "filename": "ui/views/controls/combobox/combobox.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-24T06:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7739358_03fb9f36",
+      "revId": "d265e11335c746e23225c4ee55f538d0838cbcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
