@@ -654,6 +654,20 @@ void LayoutBlockFlow::DetermineLogicalLeftPositionForChild(LayoutBox& child) {
         StartOffsetForLine(LogicalTopForChild(child), kDoNotIndentText,
                            LogicalHeightForChild(child));
 
+    // This section of code is just for a use counter. It counts if something
+    // that avoids floats may have been affected by a float with shape-outside.
+    if (position_to_avoid_floats != start_position &&
+        !ShapeOutsideInfo::IsEmpty()) {
+      for (const auto& floating_object : GetFloatingObjects()->Set()) {
+        if (floating_object->GetLayoutObject()->GetShapeOutsideInfo()) {
+          UseCounter::Count(
+              GetDocument(),
+              WebFeature::kShapeOutsideMaybeAffectedInlinePosition);
+          break;
+        }
+      }
+    }
+
     // If the child has an offset from the content edge to avoid floats then use
     // that, otherwise let any negative margin pull it back over the content
     // edge or any positive margin push it out.
