@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19ca7cbd_7751f1f2",
+        "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-24T02:49:36Z",
+      "side": 1,
+      "message": "It would be good to gate this behind a flag so we can have control over when we expose it.",
+      "revId": "9aa4005fbed857625d55a3f22bb0bd9604eb9bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
