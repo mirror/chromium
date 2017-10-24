@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbdb1c68_b1332741",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-24T18:19:55Z",
+      "side": 1,
+      "message": "This block feels out of place. Maybe InteractiveDetector\u0027s constructor can grab the navigation start time? The constructor takes a Document\u0026, so you should be able to do:\ndocument.Loader()-\u003eGetTiming()-\u003eNavigationStart()",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1562251d_a736e7c6",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-24T18:19:55Z",
+      "side": 1,
+      "message": "This helper is only called one place. Either inline it or move the helper next to the caller?",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdec78ff_89b460cb",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-24T18:19:55Z",
+      "side": 1,
+      "message": "Will this do the right thing if the page has long running background requests? I\u0027m worried that by including NonblockingRequestCount(), you could end up in a case where network quiet is never reached. Is that ok?",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3606e594_95396149",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-24T18:19:55Z",
+      "side": 1,
+      "message": "This comment is a little ambiguous. DomContentLoaded can be fired multiple times, but DocumentTiming (and therefore InteractiveDetector) only get notified about the first fire. Might be worth clarifying.",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ad560a_faa349ed",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-24T18:19:55Z",
+      "side": 1,
+      "message": "For consistency, spell out fmp and dcl instead of acronyms? I feel less strongly in the test cases than in the actual implementation.",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06890a0a_9a029940",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-24T18:19:55Z",
+      "side": 1,
+      "message": "I would have expected this to exist somewhere already. Mind double-checking for something to reuse?",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4df6024_fd59795f",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-24T18:19:55Z",
+      "side": 1,
+      "message": "I have trouble remembering how gtest test cases interact with visiblity rules. Is the problem with using kTimeToInteractiveWindowSeconds that it\u0027s private in InteractiveDetector, and therefore InteractiveDetectorTest can see it, but the test cases can\u0027t?\n\nIf so, should we consider either having InteractiveDetectorTest mirror it, or just making it a public constant?",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
