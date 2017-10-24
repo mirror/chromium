@@ -1,0 +1,429 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4330556e_a430334e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be a CL description, but more of a message to the code-reviewers :)\n\nCan we update it to describe what you\u0027re actually doing in here, and leave the commentary on future cleanup work in e.g. a TODO bug?",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66847ec_d1a547aa",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "This implementation seems pretty complex, and it seems that in principle we can end up with both transition_to_higher_rate AND transition_to_lower_rate set.\n\nWouldn\u0027t the three levels fall out naturally, without any need for the state-machine cases, if you have something like:\n\nS \u003d window size (in number of samples)\nH \u003d number of samples we require to exceed a threshold, out of the past S samples, for us to treat thrashing as \"confirmed\".\nL \u003d number of samples we require to exceed a threshold, out of the past S samples, to treat thrashing as \"suspected\".\n\nThen provided that H\u003c\u003dS and L\u003cH, we should be guaranteed that if we just count the number of \"high\" samples over the interval, we\u0027ll implicitly transition through the state-machine (e.g. if we have a ten sample window, and all the samples were high then we\u0027re CONFIRMED, then if thrashing stops then we\u0027ll eventually see L \u003c\u003d high-samples \u003c H, so we\u0027ll drop to SUSPECTED, and then high-samples \u003c L and drop to NONE.",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31ae44a_7df6a87f",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: Suggest we call this SwapThrashingMonitorWin, and introduce the Monitor/Delegate split when we reach that point; having a Delegate without calling code is likely confusing!",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6199ee_dacfe205",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: Clarify why it needs calling periodically (i.e. that the calls are when it samples the state of the system, so they need to be regular).",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8047116d_39fb8d7d",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: May as well make this diagram linear, since that\u0027s the way we use these states.",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59b80f4_3a4398d7",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: This comment doesn\u0027t add anything helpful :P",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6ad743_df473b67",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: No need to provide the one-line comments if you\u0027re doing to define the meanings of the levels in the class-level comment.",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20188e4a_fcd95f8b",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like this needs to be here?",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a69d334_bca31f10",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: Do we need this comment? :)",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67af99bf_b66c02f0",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: This definition requires that the constructor performs the (potentially expensive) sampling operation, which doesn\u0027t seem desirable; I\u0027d recommend that we instead just define that the first call will return swap thrashing level NONE, and subsequent calls will return something meaningful.",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff910cb_6a88a2e4",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: This class doesn\u0027t require thread-affinity, only sequence-affinity, through use of ThreadChecker.\n\nRather than saying it \"will require to do a system call\" you might instead say that the call is \"blocking\" and so should be run on a blocking worker Sequence, for example.",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba316934_6be294c1",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: Naming-wise, I think it\u0027s worth including the fact that this actually *samples* the OS stats to determine the level - it is not just calculating a level from previously-sampled data. e.g. SampleAndCalculateSwapThrashingLevel().",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caab77cc_29abc2c4",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "Do these constants need to be defined in the class header? Could they just be defined as constexpr size_t in the .cc file?",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e939725b_ec922c6a",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: Chromium comment style is to just directly describe what a thing does, e.g. in this case:\n\n\"Records page-fault-count observations and calculates their average over a window.\"\n\nor\n\n\"Used to calculate the average page-fault rate across a specified time window.\"",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83030cbb_3d3b0976",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: Suggest PageFaultRate or PageFaultAverageRate or similar; the class itself isn\u0027t a window, nor does it actually \"detect\" faults itself.",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167869ca_e79fe2a3",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "No need for this comment, but a comment to explain |window_length| might be useful, since typically one might assume that |window_length| determines when we\u0027ll start dropping samples, while in your case you\u0027re actually ignoring samples until you have at least |window_length| of them to work from.",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7a668a_b6d67c93",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: Do we need to be able to reset the window length, or can we just teardown and re-create the averager in that case?",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1db820_02e3f2b3",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "IIUC the intention in having the bool return-value is to allow the function to indicate that it cannot return a rate at present; you could instead define that it return 0.0 until it has enough data on which to base an average.\n\nIf you prefer an explicit not-valid result then I\u0027d suggest using a base::Optional\u003cdouble\u003e rather than the bool function(Result* result) pattern.",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b6afda_9e3302b3",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: Do you really need this accessor, given that the caller must have set the length when it created this object?",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80130e3f_da9512ff",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "nit: As above, does this comment really add anything?",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae20731_85d8870c",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "Using a std::list\u003c\u003e here means an allocation/deallocation for every sample; consider using a base::circular_deque\u003c\u003e to avoid that overhead.",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ca32d7_01a3735c",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "Also DISALLOW_COPY_AND_ASSIGN :)",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9a864f_827fa75a",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "Does this actually get the total counter, or the total of the average page fault counts across all the Chrome processes?",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ee8edf_f6b398b6",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "Why do we need to keep two separate averagers?",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d71bb0_7630a0e9",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-24T01:07:55Z",
+      "side": 1,
+      "message": "Do we also need to know _when_ that state was switched-into, so we can determine when enough time has elapsed for us to consider switching to the next state?",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
