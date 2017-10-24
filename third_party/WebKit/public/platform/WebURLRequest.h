@@ -36,6 +36,7 @@
 #include "WebCommon.h"
 #include "WebHTTPBody.h"
 #include "WebReferrerPolicy.h"
+#include "services/network/public/interfaces/fetch_api.mojom-shared.h"
 
 namespace blink {
 
@@ -103,16 +104,6 @@ class WebURLRequest {
     kFrameTypeNested,
     kFrameTypeNone,
     kFrameTypeTopLevel
-  };
-
-  // Corresponds to Fetch request's "mode" and "use-CORS-preflight flag":
-  // https://fetch.spec.whatwg.org/#concept-request-mode
-  enum FetchRequestMode : uint8_t {
-    kFetchRequestModeSameOrigin,
-    kFetchRequestModeNoCORS,
-    kFetchRequestModeCORS,
-    kFetchRequestModeCORSWithForcedPreflight,
-    kFetchRequestModeNavigate
   };
 
   // Corresponds to Fetch request's "credentials mode":
@@ -306,8 +297,10 @@ class WebURLRequest {
   BLINK_PLATFORM_EXPORT void SetShouldResetAppCache(bool);
 
   // The request mode which will be passed to the ServiceWorker.
-  BLINK_PLATFORM_EXPORT FetchRequestMode GetFetchRequestMode() const;
-  BLINK_PLATFORM_EXPORT void SetFetchRequestMode(FetchRequestMode);
+  BLINK_PLATFORM_EXPORT network::mojom::FetchRequestMode GetFetchRequestMode()
+      const;
+  BLINK_PLATFORM_EXPORT void SetFetchRequestMode(
+      network::mojom::FetchRequestMode);
 
   // The credentials mode which will be passed to the ServiceWorker.
   BLINK_PLATFORM_EXPORT FetchCredentialsMode GetFetchCredentialsMode() const;
