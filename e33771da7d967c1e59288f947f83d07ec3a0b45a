@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "92afd930_74471157",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-24T02:37:38Z",
+      "side": 1,
+      "message": "Sorry for lack of explanation!\nI think it\u0027d be safer to carry the struct as mojo::StructPtr\u003c\u003e since it has move-only semantics (and also there is unnecessary copy but it\u0027s not heavy). Currently there is no Mojo pipe as the member, but on later patch, IIUC, ServiceWorkerObjectInfo will have a pipe to keep the refcount of SWHandle. After that, we cannot use Clone() and we need to make SWVersionAttributes have InfoPtrs as well.\nHowever, we can fix that at the time, so we might not have to address it in this patch.",
+      "parentUuid": "8e823337_3b785a42",
+      "revId": "e33771da7d967c1e59288f947f83d07ec3a0b45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89a5628a_ce31fc86",
         "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 4
