@@ -3221,7 +3221,7 @@ void GLRenderer::ScheduleDCLayers() {
           z_order, transform);
     }
     if (ids_to_send > 0) {
-      gl_->SetColorSpaceForScanoutCHROMIUM(
+      gl_->SetColorSpaceMetadataCHROMIUM(
           texture_ids[0],
           reinterpret_cast<GLColorSpace>(&dc_layer_overlay.color_space));
     }
