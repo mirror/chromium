@@ -512,6 +512,24 @@
     },
     {
       "key": {
+        "uuid": "0c359cef_76467148",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-24T19:27:30Z",
+      "side": 1,
+      "message": "You definitely don\u0027t need to block this RTL fix on overhauling the tests, you can followup with that later. I was just pointing out that it probably does deserve some attention.",
+      "parentUuid": "e307989f_a05526c7",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4cd1703_4a500cf4",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
