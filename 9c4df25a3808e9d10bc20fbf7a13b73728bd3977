@@ -188,6 +188,30 @@
       "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3985734b_a2908be3",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-24T23:28:04Z",
+      "side": 1,
+      "message": "Ack.  I went ahead and switched to initializing it here.",
+      "parentUuid": "f219a71f_6bdb89fe",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 34
+      },
+      "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

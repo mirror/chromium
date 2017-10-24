@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c2e346bd_19a46e1d",
+        "filename": "content/browser/media/capture/web_contents_video_capture_device.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-24T23:28:04Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "6da4bc75_de4473ef",
+      "range": {
+        "startLine": 689,
+        "startChar": 18,
+        "endLine": 689,
+        "endChar": 31
+      },
+      "revId": "a2fe79ee52d4f1e7bedb77a34b80eac1650a5083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2609af9_d5d18a74",
         "filename": "ui/views/controls/native/native_view_host.cc",
         "patchSetId": 22
