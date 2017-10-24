@@ -143,6 +143,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   WindowProxy* GetWindowProxy(DOMWrapperWorld&);
 
   virtual void DidChangeVisibilityState();
+  virtual void DidPageStop();
 
   void UpdateUserActivationInFrameTree();
 

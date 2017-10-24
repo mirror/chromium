@@ -180,6 +180,15 @@ void Frame::DidChangeVisibilityState() {
     child_frames[i]->DidChangeVisibilityState();
 }
 
+void Frame::DidPageStop() {
+  HeapVector<Member<Frame>> child_frames;
+  for (Frame* child = Tree().FirstChild(); child;
+       child = child->Tree().NextSibling())
+    child_frames.push_back(child);
+  for (size_t i = 0; i < child_frames.size(); ++i)
+    child_frames[i]->DidPageStop();
+}
+
 void Frame::UpdateUserActivationInFrameTree() {
   user_activation_state_.Activate();
   if (Frame* parent = Tree().Parent())

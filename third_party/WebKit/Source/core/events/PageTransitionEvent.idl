@@ -30,4 +30,5 @@
     // TODO(foolip): Exposed=(Window,Worker)
 ] interface PageTransitionEvent : Event {
     readonly attribute boolean persisted;
+    [RuntimeEnabled=PageLifecycle] readonly attribute DOMString reason;
 };

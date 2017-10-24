@@ -1010,12 +1010,10 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   main_thread_only().longest_jank_free_task_duration =
       longest_jank_free_task_duration;
 
-  bool loading_tasks_seem_expensive = false;
-  bool timer_tasks_seem_expensive = false;
-  loading_tasks_seem_expensive =
+  bool loading_tasks_seem_expensive =
       main_thread_only().loading_task_cost_estimator.expected_task_duration() >
       longest_jank_free_task_duration;
-  timer_tasks_seem_expensive =
+  bool timer_tasks_seem_expensive =
       main_thread_only().timer_task_cost_estimator.expected_task_duration() >
       longest_jank_free_task_duration;
 
@@ -1050,7 +1048,6 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
     base::TimeTicks stop_at =
         main_thread_only().background_status_changed_at +
         base::TimeDelta::FromMilliseconds(kStopWhenBackgroundedDelayMillis);
-
     newly_stopped = !main_thread_only().stopped_when_backgrounded;
     main_thread_only().stopped_when_backgrounded = now >= stop_at;
     newly_stopped &= main_thread_only().stopped_when_backgrounded;
@@ -1197,8 +1194,8 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
 
   if (main_thread_only().stopped_when_backgrounded) {
     new_policy.timer_queue_policy().is_stopped = true;
-    if (RuntimeEnabledFeatures::StopLoadingInBackgroundAndroidEnabled())
-      new_policy.loading_queue_policy().is_stopped = true;
+    // if (RuntimeEnabledFeatures::StopLoadingInBackgroundAndroidEnabled())
+    new_policy.loading_queue_policy().is_stopped = true;
   }
   if (main_thread_only().renderer_pause_count) {
     new_policy.loading_queue_policy().is_paused = true;

@@ -454,7 +454,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // The amount of time to wait before suspending shared timers, and loading
   // etc. after the renderer has been backgrounded. This is used only if
   // background suspension is enabled.
-  static const int kStopWhenBackgroundedDelayMillis = 5 * 60 * 1000;
+  static const int kStopWhenBackgroundedDelayMillis = 5 /* * 60*/ * 1000;
 
   // The time we should stay in a priority-escalated mode after a call to
   // DidAnimateForInputOnCompositorThread().

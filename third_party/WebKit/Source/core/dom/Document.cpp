@@ -1773,6 +1773,22 @@ void Document::DidChangeVisibilityState() {
     canvas_font_cache_->PruneAll();
 }
 
+void Document::DidPageStop() {
+  if (LocalDOMWindow* window = domWindow()) {
+    const double pagehide_event_start = MonotonicallyIncreasingTime();
+    window->DispatchEvent(PageTransitionEvent::Create(
+                              EventTypeNames::pagehide, false,
+                              PageTransitionEvent::TransitionReason::kStopped),
+                          this);
+    const double pagehide_event_end = MonotonicallyIncreasingTime();
+    DEFINE_STATIC_LOCAL(
+        CustomCountHistogram, pagehide_histogram,
+        ("DocumentEventTiming.PageHideDuration", 0, 10000000, 50));
+    pagehide_histogram.Count((pagehide_event_end - pagehide_event_start) *
+                             1000000.0);
+  }
+}
+
 String Document::nodeName() const {
   return "#document";
 }

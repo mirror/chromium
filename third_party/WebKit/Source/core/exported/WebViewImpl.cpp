@@ -949,6 +949,14 @@ void WebViewImpl::RequestBeginMainFrameNotExpected(bool new_state) {
   }
 }
 
+void WebViewImpl::SetPageStopped(bool stopped) {
+  if (!GetPage())
+    return;
+  GetPage()->SetLifecycleState(
+      stopped ? PageLifecycleState::kPageLifecycleStateStopped
+              : PageLifecycleState::kPageLifecycleStateUnknown);
+}
+
 WebInputEventResult WebViewImpl::HandleKeyEvent(const WebKeyboardEvent& event) {
   DCHECK((event.GetType() == WebInputEvent::kRawKeyDown) ||
          (event.GetType() == WebInputEvent::kKeyDown) ||
