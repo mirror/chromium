@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61ac4c33_5041002c",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/MockWebappDataStorageClockRule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-24T00:41:08Z",
+      "side": 1,
+      "message": "Minor nit: \"subtracting\"",
+      "range": {
+        "startLine": 13,
+        "startChar": 67,
+        "endLine": 13,
+        "endChar": 79
+      },
+      "revId": "b1b4bf3ca28f124c4977dcb1104df1a276ba0dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43e65ae_40454984",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/MockWebappDataStorageClockRule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-24T00:41:08Z",
+      "side": 1,
+      "message": "Nit: can this just be 1L? Otherwise perhaps take away a few zeroes so this number is easier to reason about?",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "b1b4bf3ca28f124c4977dcb1104df1a276ba0dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
