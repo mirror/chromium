@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41bddf4f_019a3af1",
+        "filename": "ui/arc/notification/arc_notification_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-24T01:36:05Z",
+      "side": 1,
+      "message": "Could you move this code and CreateCustomMessageView method to the ctor of ArcNotifcationManager? This is one-time initialization and shouldn\u0027t be here since ArcNotificationDelegate is delegate of each notification.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 3
+      },
+      "revId": "eee1a288f697786081fcd71258623deda378dfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
