@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb5ba285_d8e1b05d",
+        "filename": "chrome/browser/android/omnibox/autocomplete_controller_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T03:03:39Z",
+      "side": 1,
+      "message": "Defining the phone behavior in terms of what it\u0027s *not* doing was a little confusing to me when I first read this. How about reworking the comment to something like the following?\n\n    // On phones, the omnibox is not initially shown on the NTP. In this\n    // case, treat the fakebox like the omnibox.\n    if (ui::GetDeviceFormFactor() \u003d\u003d ui::DEVICE_FORM_FACTOR_PHONE)\n      return OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS;\n\n    // On tablets, the user can choose to focus either the fakebox or the \n    // omnibox.  This distinguishes between the two in order to apply URL\n    // demotion when the user focuses the fakebox (which looks more like a\n    // search box) but not when they focus the omnibox (which looks more\n    // like a URL bar).\n    return focused_from_fakebox ?\n        OmniboxEventProto::INSTANT_NTP_WITH_FAKEBOX_AS_STARTING_FOCUS :\n        OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS;\n\nI wrote \"not initially shown\" above because the omnibox is shown if you scroll down, even if you never touch the fakebox.",
+      "revId": "ef2831a803107ddf179c6c0ee45bc780200abde5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
