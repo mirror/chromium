@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<title>IndexedDB: IDBTransaction's waitUntil() method</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="resources/testharness-helpers.js"></script>
+<script>
+
+// func is called with the test object, a read-write transaction, and an
+// object store (containing key: 1). It must return a promise. If the
+// promise resolves successfully, the test passes.
+function basic_test(func, description) {
+    return indexeddb_test(
+        (t, db) => {
+            let store = db.createObjectStore('store');
+            store.put('value', 1);
+        },
+        (t, db) => {
+            let tx = db.transaction('store', 'readwrite');
+            let store = tx.objectStore('store');
+            Promise.resolve(func(t, tx, store))
+                   .then(t.step_func(result => t.done()),
+                         t.step_func(err =>
+                             assert_unreached('failed: ' + err.message)));
+        },
+        description);
+}
+
+test(t => {
+    assert_true('waitUntil' in IDBTransaction.prototype,
+                'IDBTransaction has waitUntil');
+    assert_equals(typeof IDBTransaction.prototype.waitUntil, 'function',
+                  'IDBTransaction.waitUntil() is a function');
+    assert_equals(IDBTransaction.prototype.waitUntil.length, 1,
+                  'IDBTransaction.waitUntil() has one required argument');
+}, 'IDBTransaction has waitUntil() method');
+
+basic_test((t, tx, store) => {
+    assert_true(tx.then(null) instanceof Promise,
+                'then() returns a Promise');
+    assert_true(tx.then(null, null) instanceof Promise,
+                'then() with 2 args returns a Promise');
+    assert_true(tx.catch(null) instanceof Promise,
+                'catch() returns a Promise');
+}, 'IDBTransaction.then() and .catch() return Promises');
+
+</script>

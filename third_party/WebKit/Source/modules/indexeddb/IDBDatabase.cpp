@@ -216,7 +216,7 @@ void IDBDatabase::OnChanges(
           observer, IDBObserverChanges::Create(this, transaction, observations,
                                                map_entry.second, isolate_));
       if (transaction)
-        transaction->SetActive(false);
+        transaction->SetDispatching(false);
     }
   }
 }

@@ -32,6 +32,15 @@ enum IDBTransactionMode {
     "versionchange"
 };
 
+// https://github.com/inexorabletash/indexeddb-promises
+enum IDBTransactionState {
+    "active",
+    "inactive",
+    "waiting",
+    "committing",
+    "finished"
+};
+
 // https://w3c.github.io/IndexedDB/#idl-def-IDBTransaction
 
 [
@@ -47,9 +56,11 @@ enum IDBTransactionMode {
     readonly attribute DOMException error;
 
     // https://github.com/inexorabletash/indexeddb-promises
+    [RuntimeEnabled=IDBPromises] readonly attribute IDBTransactionState state;
     [RuntimeEnabled=IDBPromises, CallWith=ScriptState] readonly attribute Promise<void> complete;
     [RuntimeEnabled=IDBPromises, CallWith=ScriptState] Promise<any> then(any onFulfilled, optional any onRejected);
     [RuntimeEnabled=IDBPromises, CallWith=ScriptState, ImplementedAs=catchFunction] Promise<any> catch(any onRejected);
+    [RuntimeEnabled=IDBPromises, CallWith=ScriptState, RaisesException] void waitUntil(Promise<any> f);
 
     // Methods
     [RaisesException] IDBObjectStore objectStore (DOMString name);

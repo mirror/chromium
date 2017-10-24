@@ -807,7 +807,7 @@ IDBIndex* IDBObjectStore::index(const String& name,
         kInvalidStateError, IDBDatabase::kObjectStoreDeletedErrorMessage);
     return nullptr;
   }
-  if (transaction_->IsFinished() || transaction_->IsFinishing()) {
+  if (transaction_->IsFinished()) {
     exception_state.ThrowDOMException(
         kInvalidStateError, IDBDatabase::kTransactionFinishedErrorMessage);
     return nullptr;

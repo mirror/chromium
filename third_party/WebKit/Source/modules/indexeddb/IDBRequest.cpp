@@ -699,7 +699,7 @@ DispatchEventResult IDBRequest::DispatchEventInternal(Event* event) {
        (event->type() == EventTypeNames::error && !request_aborted_));
 
   if (set_transaction_active)
-    transaction_->SetActive(true);
+    transaction_->SetDispatching(true);
 
   // The request must be unregistered from the transaction before the event
   // handler is invoked, because the handler can call an IDBCursor method that
@@ -743,7 +743,7 @@ DispatchEventResult IDBRequest::DispatchEventInternal(Event* event) {
 
   // If this was the last request in the transaction's list, it may commit here.
   if (set_transaction_active)
-    transaction_->SetActive(false);
+    transaction_->SetDispatching(false);
 
   if (cursor_to_notify)
     cursor_to_notify->PostSuccessHandlerCallback();

@@ -92,9 +92,17 @@ class MODULES_EXPORT IDBTransaction final
   WebIDBDatabase* BackendDB() const;
 
   int64_t Id() const { return id_; }
-  bool IsActive() const { return state_ == kActive; }
-  bool IsFinished() const { return state_ == kFinished; }
-  bool IsFinishing() const { return state_ == kFinishing; }
+
+  // A transaction is "active" (accepting requests) if the state is
+  // Active (during event dispatch) or Waiting (on promises).
+  bool IsActive() const { return state_ == kActive || state_ == kWaiting; }
+
+  // A transaction is "finished" (will never accept new requests)
+  // if it is Committing, Aborting, or Finished.
+  bool IsFinished() const {
+    return state_ == kCommitting || state_ == kAborting || state_ == kFinished;
+  }
+
   bool IsReadOnly() const { return mode_ == kWebIDBTransactionModeReadOnly; }
   bool IsVersionChange() const {
     return mode_ == kWebIDBTransactionModeVersionChange;
@@ -105,8 +113,10 @@ class MODULES_EXPORT IDBTransaction final
   DOMStringList* objectStoreNames() const;
   IDBDatabase* db() const { return database_.Get(); }
   DOMException* error() const { return error_; }
+  const String& state() const;
   IDBObjectStore* objectStore(const String& name, ExceptionState&);
   void abort(ExceptionState&);
+  void waitUntil(ScriptState*, ScriptPromise, ExceptionState&);
 
   // https://github.com/inexorabletash/indexeddb-promises
   ScriptPromise complete(ScriptState*);
@@ -141,7 +151,7 @@ class MODULES_EXPORT IDBTransaction final
   // Called when deleting an index whose IDBIndex had been created.
   void IndexDeleted(IDBIndex*);
 
-  void SetActive(bool);
+  void SetDispatching(bool);
   void SetError(DOMException*);
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(abort);
@@ -175,6 +185,8 @@ class MODULES_EXPORT IDBTransaction final
   DispatchEventResult DispatchEventInternal(Event*) override;
 
  private:
+  class WaitUntilThenFunction;
+
   using IDBObjectStoreMap = HeapHashMap<String, Member<IDBObjectStore>>;
 
   // For observer transactions.
@@ -199,6 +211,10 @@ class MODULES_EXPORT IDBTransaction final
 
   void EnqueueEvent(Event*);
 
+  void WaitingPromiseAdded();
+  void WaitingPromiseFulfilled();
+  void WaitingPromiseRejected(ScriptValue);
+
   // Called when a transaction is aborted.
   void AbortOutstandingRequests();
   void RevertDatabaseMetadata();
@@ -207,10 +223,14 @@ class MODULES_EXPORT IDBTransaction final
   void Finished();
 
   enum State {
-    kInactive,   // Created or started, but not in an event callback
-    kActive,     // Created or started, in creation scope or an event callback
-    kFinishing,  // In the process of aborting or completing.
-    kFinished,   // No more events will fire and no new requests may be filed.
+    kInactive,    // Created or started, but not in an event callback.
+    kActive,      // Created or started, in creation scope or an event callback.
+    kWaiting,     // Waiting on one or more promises to resolve.
+    kCommitting,  // In the process of completing; initiated here and event not
+                  // dispatched yet.
+    kAborting,  // In the process of aborting; either initiated here or by back
+                // end, but event not dispatched.
+    kFinished,  // Abort or complete event has been dispatched.
   };
 
   const int64_t id_;
@@ -232,6 +252,8 @@ class MODULES_EXPORT IDBTransaction final
   const HashSet<String> scope_;
 
   State state_ = kActive;
+  bool dispatching_ = false;
+  int waiting_promise_count_ = 0;
   bool has_pending_activity_ = true;
   Member<DOMException> error_;
 
