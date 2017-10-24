@@ -82,6 +82,24 @@
     },
     {
       "key": {
+        "uuid": "ca478caf_fe599a66",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T21:00:44Z",
+      "side": 1,
+      "message": "Moved the code for checking depth of encoding value to Write() to prevent recursive calling.",
+      "parentUuid": "d7f2810b_0190cc70",
+      "revId": "36b674f16e068ac4e8ccb5563f3688e4239599bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9e9ab68_1aeef7ca",
         "filename": "content/browser/webauth/cbor/cbor_writer.cc",
         "patchSetId": 12
@@ -96,6 +114,24 @@
       "revId": "36b674f16e068ac4e8ccb5563f3688e4239599bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2129530a_35fca95c",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T21:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9e9ab68_1aeef7ca",
+      "revId": "36b674f16e068ac4e8ccb5563f3688e4239599bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +158,30 @@
     },
     {
       "key": {
+        "uuid": "7e38b3a2_aa09e8e7",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T21:00:44Z",
+      "side": 1,
+      "message": "Move all constants to .cc file except the kMaxNestingLevel constant, since it should be used for default parameter for Write() function in header file.",
+      "parentUuid": "43afedfc_fbbad4ce",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 15
+      },
+      "revId": "36b674f16e068ac4e8ccb5563f3688e4239599bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "457e5078_8a388b75",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 12
@@ -145,6 +205,30 @@
     },
     {
       "key": {
+        "uuid": "2ef7b76e_5987435b",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T21:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457e5078_8a388b75",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "36b674f16e068ac4e8ccb5563f3688e4239599bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e8ba1e4_244bfea3",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 12
@@ -165,6 +249,30 @@
       "revId": "36b674f16e068ac4e8ccb5563f3688e4239599bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1734f285_48511d0f",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T21:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e8ba1e4_244bfea3",
+      "range": {
+        "startLine": 100,
+        "startChar": 13,
+        "endLine": 100,
+        "endChar": 28
+      },
+      "revId": "36b674f16e068ac4e8ccb5563f3688e4239599bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
