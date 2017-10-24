@@ -125,5 +125,8 @@ bool FakeRendererScheduler::MainThreadSeemsUnresponsive(
 
 void FakeRendererScheduler::SetRendererProcessType(RendererProcessType type) {}
 
+void FakeRendererScheduler::SetPendingDomStorageMessageCount(
+    int pending_count) {}
+
 }  // namespace scheduler
 }  // namespace blink
