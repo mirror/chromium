@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5829d2c4_f57f2c8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-24T21:21:18Z",
+      "side": 1,
+      "message": "I didn\u0027t know about ApplicationStatus.registerStateListenerForActivity, thank you!\n\nUnfortunately, it\u0027s not possible to follow \"register in onAttachToWindow and unregister in onDetachedFromWindow\" pattern for this listener. onDetachedFromWindow is invoked before ActivityStateListener so if I unregister listener there, it doesn\u0027t receive onActivityStateChange(activity, ActivityState.DESTROYED) call altogether. Dismissing dialog from onDetachedFromWindow is not an option as activity already entered destruction phase and FragmentTransaction to dismiss dialog produces an IllegalStateException.\n\nWhile debugging this exception I realized something interesting. Calling cancel() from onActivityStateChange(activity, ActivityState.DESTROYED) doesn\u0027t crash because findFragmentByTag returns null. It actually makes sense: destroying activity destroys all fragments, so dismissing them manually doesn\u0027t make sense.\n\nI\u0027ve added dismissDialogs flag to ConfirmSyncDataStateMachine.cancel. All things considered, it seems like the best solution to me, because ActivityStateListener that is not unregistered in onDetachView will extend AccountSigninView lifetime till activity is destroyed.",
+      "parentUuid": "6bb6fad7_c81aea34",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 22
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01a05fe8_419e8c57",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachine.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093500b7_5503f2c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-24T21:21:18Z",
+      "side": 1,
+      "message": "Good point. Although we need to use dismissAllowingStateLoss similarly to ConfirmSyncDataStateMachineDelegate.dismissDialog (see my last comment for justification).",
+      "parentUuid": "01a05fe8_419e8c57",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "58e40deb_b453b544",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-24T21:21:18Z",
+      "side": 1,
+      "message": "There\u0027s at least on situation in which savedInstanceState is not null:\n1. DialogFragment is opened.\n2. User presses \"Home\".\n3. Android invokes onSaveInstanceState().\n4. User opens some other app.\n5. Under memory pressure Android kills Chrome process without calling onDestroy (it is explicitly said in documentation that Android can kill process without calling this method: https://developer.android.com/reference/android/app/Activity.html#onDestroy() ).\n6. User returns to Chrome process.\n7. Android Framework recreates dialogs that were saved by onSaveInstanceState().\n\nIdeally, I would like to reimplement AccountSigninView as a Fragment instead of View, so all the dialogs created by ConfirmSyncDataStateMachine could obtain their listeners by casting the result of getTargetFragment(). This way there will be no need for explicit setListener methods, and saving/restoring states will work without any crutches like checking whether savedInstanceState is null.",
+      "parentUuid": "3382822b_c6f2f721",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc6ead0f_072577e1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-23T21:21:28Z",
       "side": 1,
       "message": "do we really need commitAllowingStateLoss below?  I\u0027m wonder if we can just call:\n\ndialogFragment.show(mFragmentManager, PROGRESS_DIALOG_TAG);\n\nSame for below.  I believe your state machine logic should be sufficient to handle all of this.",
+      "range": {
+        "startLine": 141,
+        "startChar": 31,
+        "endLine": 141,
+        "endChar": 45
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7b50ac_db2866a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-24T21:21:18Z",
+      "side": 1,
+      "message": "We do need commitAllowingStateLoss until ConfirmSyncDataStateMachine is aware of onSaveInstanceState. Calling commit() after onSaveInstanceState produces IllegalStateException: \"Can not perform this action after onSaveInstanceState\", so if we\u0027re going to dismiss dialogs in onDestroy/onStop, then we will have to keep using commitAllowingStateLoss here.",
+      "parentUuid": "fc6ead0f_072577e1",
       "range": {
         "startLine": 141,
         "startChar": 31,
