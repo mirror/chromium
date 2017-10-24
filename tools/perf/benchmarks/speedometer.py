@@ -18,6 +18,8 @@ engine, CSS style resolution, layout, and other technologies.
 
 import os
 
+from benchmarks.v8_helper import AppendJSFlags
+
 from core import perf_benchmark
 
 from telemetry import benchmark
@@ -119,3 +121,18 @@ class Speedometer(perf_benchmark.PerfBenchmark):
       def SetExpectations(self):
         pass # http://browserbench.org/Speedometer/ not disabled.
     return StoryExpectations()
+
+
+@benchmark.Owner(emails=['hablich@chromium.org'])
+class V8SpeedometerFuture(Speedometer):
+  """Speedometer benchmark with the V8 flag --future.
+
+  Shows the performance of upcoming V8 VM features.
+  """
+
+  @classmethod
+  def Name(cls):
+    return 'speedometer-future'
+
+  def SetExtraBrowserOptions(self, options):
+     AppendJSFlags(options, '--future')
