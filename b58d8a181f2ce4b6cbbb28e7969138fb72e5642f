@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eb04170_bcbae02f",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScriptTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-24T03:18:12Z",
+      "side": 1,
+      "message": "needs rebase? probably?",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "b58d8a181f2ce4b6cbbb28e7969138fb72e5642f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1441b298_eb3aa2b4",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResourceData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-24T03:18:12Z",
+      "side": 1,
+      "message": "Add class comment",
+      "revId": "b58d8a181f2ce4b6cbbb28e7969138fb72e5642f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81a6428_a9fe3ed1",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResourceData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-24T03:18:12Z",
+      "side": 1,
+      "message": "ResourceResponse\u0026?",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "b58d8a181f2ce4b6cbbb28e7969138fb72e5642f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc3765f_9b4d8450",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResourceData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-24T03:18:12Z",
+      "side": 1,
+      "message": "Can we keep the values explicitly instead of copying the entire ResourceResponse?",
+      "range": {
+        "startLine": 62,
+        "startChar": 35,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "b58d8a181f2ce4b6cbbb28e7969138fb72e5642f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
