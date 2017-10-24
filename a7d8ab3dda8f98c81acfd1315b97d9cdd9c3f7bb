@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "07d85a57_3dead3f5",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-24T20:32:01Z",
+      "side": 1,
+      "message": "In most of the code seems is_drawable is set to true unless: 1. the ui::Layer type_\u003dLAYER_NOT_DRAWN; 2. In blink some code will change it based on visibility [1,2].\nCase 1. is easy to recover, but not for case 2.\n\n[1] https://cs.chromium.org/chromium/src/content/renderer/child_frame_compositing_helper.cc?l\u003d322\u0026rcl\u003d21c822a677b5424cba1219b3722c20f988208819\n[2] https://cs.chromium.org/chromium/src/cc/blink/web_layer_impl.cc?l\u003d179\u0026rcl\u003d21c822a677b5424cba1219b3722c20f988208819",
+      "parentUuid": "3e6e4632_6d08d6a0",
+      "revId": "a7d8ab3dda8f98c81acfd1315b97d9cdd9c3f7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d209dec_77bda5d4",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 2
