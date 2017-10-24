@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9981115c_d859a6fc",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T09:45:21Z",
+      "side": 0,
+      "message": "I guess this was only required back when #logo-doodle-button was actually an \u003ca\u003e?",
+      "revId": "b8e471180e6cedd7929e706f1087a1468143ecac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
