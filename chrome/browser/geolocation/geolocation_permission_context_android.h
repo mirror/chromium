@@ -55,6 +55,7 @@ class GeolocationPermissionContextAndroid
     kCount,
   };
 
+
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);
 
   explicit GeolocationPermissionContextAndroid(Profile* profile);
@@ -112,7 +113,8 @@ class GeolocationPermissionContextAndroid
   // will be prompted for permission.
   bool IsLocationAccessPossible(content::WebContents* web_contents,
                                 const GURL& requesting_origin,
-                                bool user_gesture);
+                                bool user_gesture,
+                                const std::string& package_name);
 
   bool IsRequestingOriginDSE(const GURL& requesting_origin) const;
 
@@ -121,6 +123,12 @@ class GeolocationPermissionContextAndroid
                                       const GURL& embedding_origin,
                                       const BrowserPermissionCallback& callback,
                                       bool permissions_updated);
+
+//  void HandleUpdateAndroidPermissionsOtherThread(const PermissionRequestID& id,
+//                                      const GURL& requesting_frame_origin,
+//                                      const GURL& embedding_origin,
+//                                      const BrowserPermissionCallback& callback,
+//                                      bool permissions_updated);
 
   // Will return true if the location settings dialog will be shown for the
   // given origins. This is true if the location setting is off, the dialog can
@@ -160,6 +168,9 @@ class GeolocationPermissionContextAndroid
 
   PermissionRequestID location_settings_dialog_request_id_;
   BrowserPermissionCallback location_settings_dialog_callback_;
+
+//  std::unique_ptr<PermissionAndroidApkDelegate>
+//      permission_android_apk_delegate_;
 
   // Must be the last member, to ensure that it will be destroyed first, which
   // will invalidate weak pointers.

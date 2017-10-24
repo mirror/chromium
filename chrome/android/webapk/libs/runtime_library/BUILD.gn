@@ -17,6 +17,7 @@ android_aidl("webapk_service_aidl") {
   import_include = [ "src/org/chromium/webapk/lib/runtime_library" ]
   interface_file = "src/org/chromium/webapk/lib/runtime_library/common.aidl"
   sources = [
+    "src/org/chromium/webapk/lib/runtime_library/IPermissionRequestCallback.aidl",
     "src/org/chromium/webapk/lib/runtime_library/IWebApkApi.aidl",
   ]
 }
@@ -31,7 +32,7 @@ android_library("webapk_service_aidl_java") {
 # library because the dx tool expects files ending in .dex.jar
 android_library("runtime_library_for_assets_java") {
   java_files =
-      [ "src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java" ]
+      [ "src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java"]
   srcjar_deps = [ ":webapk_service_aidl" ]
   deps = [
     "//third_party/android_tools:android_support_v4_java",
@@ -41,7 +42,8 @@ android_library("runtime_library_for_assets_java") {
 # The subset of runtime_library_from_assets_java needed for tests.
 android_library("runtime_library_for_tests_java") {
   java_files =
-      [ "src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java" ]
+      [ "src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "src/org/chromium/webapk/lib/runtime_library/PermissionActivity.java" ]
   deps = [
     ":webapk_service_aidl_java",
     "//third_party/android_tools:android_support_v4_java",

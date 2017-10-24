@@ -25,7 +25,8 @@ public class WebApkServiceFactory extends Service {
      */
     private static final String WEBAPK_SERVICE_IMPL_CLASS_NAME =
             "org.chromium.webapk.lib.runtime_library.WebApkServiceImpl";
-
+    private static final String PERMISSION_ACTIVITY_CLASS_NAME =
+            "org.chromium.webapk.lib.runtime_library.PermissionActivity";
     /**
      * Key for passing id of icon to represent WebAPK notifications in status bar.
      */
@@ -48,6 +49,8 @@ public class WebApkServiceFactory extends Service {
         try {
             Class<?> webApkServiceImplClass =
                     webApkClassLoader.loadClass(WEBAPK_SERVICE_IMPL_CLASS_NAME);
+            Class<?> permissionActivityClass =
+                    webApkClassLoader.loadClass(PERMISSION_ACTIVITY_CLASS_NAME);
             Constructor<?> webApkServiceImplConstructor =
                     webApkServiceImplClass.getConstructor(Context.class, Bundle.class);
             int hostBrowserUid = WebApkUtils.getHostBrowserUid(this);

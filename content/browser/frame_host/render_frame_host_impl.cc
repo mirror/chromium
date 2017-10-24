@@ -4359,6 +4359,10 @@ service_manager::InterfaceProvider* RenderFrameHostImpl::GetJavaInterfaces() {
   return java_interfaces_.get();
 }
 
+std::string RenderFrameHostImpl::GetPackageName() {
+  return "org.chromium.arbitrarypackage";
+}
+
 void RenderFrameHostImpl::ForwardGetInterfaceToRenderFrame(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle pipe) {
