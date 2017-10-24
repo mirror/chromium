@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "f73c5d18_1be1239f",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T20:38:44Z",
+      "side": 1,
+      "message": "ok cool, you don\u0027t need to worry about blink uses :)",
+      "parentUuid": "07d85a57_3dead3f5",
+      "revId": "a7d8ab3dda8f98c81acfd1315b97d9cdd9c3f7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d209dec_77bda5d4",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 2
