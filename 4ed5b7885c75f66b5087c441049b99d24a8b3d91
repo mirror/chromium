@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b71220f_85c0e3b3",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-24T21:54:51Z",
+      "side": 1,
+      "message": "feel free to say no if you think it\u0027s out of scope for this change, but all of these could probably be functions in the anon namespace, or maybe even lambda expressions, instead of methods, right?",
+      "revId": "4ed5b7885c75f66b5087c441049b99d24a8b3d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
