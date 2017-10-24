@@ -23,7 +23,9 @@
 @optional
 
 // Called when the sign-in is finished.
-- (void)signinDidFinish;
+- (void)signinDidFinishWithSuccess:(BOOL)succeeded;
+
+- (void)signinCloseButtonWasTapped;
 
 @end
 

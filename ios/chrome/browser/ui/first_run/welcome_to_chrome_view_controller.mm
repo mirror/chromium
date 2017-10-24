@@ -66,13 +66,13 @@ const BOOL kDefaultStatsCheckboxValue = YES;
 
 + (BOOL)defaultStatsCheckboxValue {
   // Record metrics reporting as opt-in/opt-out only once.
-  static dispatch_once_t once;
-  dispatch_once(&once, ^{
-    metrics::RecordMetricsReportingDefaultState(
-        GetApplicationContext()->GetLocalState(),
-        kDefaultStatsCheckboxValue ? metrics::EnableMetricsDefault::OPT_OUT
-                                   : metrics::EnableMetricsDefault::OPT_IN);
-  });
+  //  static dispatch_once_t once;
+  //  dispatch_once(&once, ^{
+  //    metrics::RecordMetricsReportingDefaultState(
+  //        GetApplicationContext()->GetLocalState(),
+  //        kDefaultStatsCheckboxValue ? metrics::EnableMetricsDefault::OPT_OUT
+  //                                   : metrics::EnableMetricsDefault::OPT_IN);
+  //  });
   return kDefaultStatsCheckboxValue;
 }
 
