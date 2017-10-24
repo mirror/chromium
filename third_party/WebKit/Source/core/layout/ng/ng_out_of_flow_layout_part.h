@@ -14,7 +14,7 @@
 namespace blink {
 
 class ComputedStyle;
-class NGBlockNode;
+class NGLayoutInputNode;
 class NGFragmentBuilder;
 class NGConstraintSpace;
 class NGLayoutResult;
@@ -38,14 +38,14 @@ class CORE_EXPORT NGOutOfFlowLayoutPart {
 
  private:
   scoped_refptr<NGLayoutResult> LayoutDescendant(
-      NGBlockNode descendant,
+      NGLayoutInputNode descendant,
       NGStaticPosition static_position,
       NGLogicalOffset* offset);
 
   bool IsContainingBlockForDescendant(const ComputedStyle& descendant_style);
 
   scoped_refptr<NGLayoutResult> GenerateFragment(
-      NGBlockNode node,
+      NGLayoutInputNode node,
       const Optional<LayoutUnit>& block_estimate,
       const NGAbsolutePhysicalPosition node_position);
 
