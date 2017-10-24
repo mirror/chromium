@@ -4318,7 +4318,9 @@ TEST_F(ExtensionServiceTest, PolicyBlockedPermissionPolicyUpdate) {
 }
 
 // Flaky on windows; http://crbug.com/309833
-#if defined(OS_WIN)
+// Causes race conditions with an in-process utility thread, so disable under
+// TSan
+#if defined(OS_WIN) || defined(THREAD_SANITIZER)
 #define MAYBE_ExternalExtensionAutoAcknowledgement DISABLED_ExternalExtensionAutoAcknowledgement
 #else
 #define MAYBE_ExternalExtensionAutoAcknowledgement ExternalExtensionAutoAcknowledgement
