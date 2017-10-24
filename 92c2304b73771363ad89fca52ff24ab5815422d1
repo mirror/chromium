@@ -479,6 +479,24 @@
     },
     {
       "key": {
+        "uuid": "60681105_4469f855",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-24T16:19:51Z",
+      "side": 1,
+      "message": "Grep through the file and you\u0027ll see that lots of code depends on the field. See \u0027UpdatePermanentText\u0027 for the change Peter and I made, that carefully updates it. And again, this field behaves consistently between platforms. I think it would be difficult for someone to change it arbitrarily. (I\u0027m not saying that the field shouldn\u0027t be cleaned up, only that no one is going to up and change it and not get a bunch of bugs filed.)",
+      "parentUuid": "a8b1e82f_4fb6d003",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d25a7bf_36929ca2",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 5

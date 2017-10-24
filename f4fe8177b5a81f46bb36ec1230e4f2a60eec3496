@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7d64994_87e35489",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-24T16:19:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc345364_93c99bc4",
+      "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b4bf313_5bdb7ad4",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3baa395_78d4221d",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-24T16:19:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b4bf313_5bdb7ad4",
+      "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d46a5644_39335a80",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-24T16:19:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aa4f133_ae2fa205",
+      "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76fecc28_60acb3e4",
         "filename": "components/omnibox/browser/omnibox_edit_controller.h",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "51732aac_baa4017f",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-24T16:19:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76fecc28_60acb3e4",
+      "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c07ce678_91042ca1",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 11
@@ -84,6 +156,24 @@
       "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffaf5d67_6d4cf712",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-24T16:19:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c07ce678_91042ca1",
+      "revId": "f4fe8177b5a81f46bb36ec1230e4f2a60eec3496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
