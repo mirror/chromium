@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5679dcf9_7e29c35b",
+        "filename": "components/offline_pages/core/model/create_archive_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-24T02:38:08Z",
+      "side": 1,
+      "message": "I think I forgot to update the description. I\u0027ll change it to explain more.\nThe DCHECK is https://cs.chromium.org/chromium/src/components/offline_pages/core/offline_page_model_impl.cc?rcl\u003d851deaf4756d76a717b5879ef28a057714661de3\u0026l\u003d97. Since before the change, the client_id of the page returned in the callback will be OfflinePageItem() which has an empty client_id. And also calling back with the proposed_page seems more reasonable to me.",
+      "parentUuid": "42f383c5_57694afe",
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "193624be_b23a953f",
         "filename": "components/offline_pages/core/model/create_archive_task_unittest.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4eba3bd9_2d9848c0",
+        "filename": "components/offline_pages/core/model/create_archive_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-24T02:38:08Z",
+      "side": 1,
+      "message": "will do in the description as the previous comment.",
+      "parentUuid": "193624be_b23a953f",
+      "range": {
+        "startLine": 378,
+        "startChar": 8,
+        "endLine": 378,
+        "endChar": 23
+      },
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efaf28c7_54adb4c8",
         "filename": "components/offline_pages/core/model/delete_page_task.h",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83dea647_92108276",
+        "filename": "components/offline_pages/core/model/delete_page_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-24T02:38:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efaf28c7_54adb4c8",
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d8079665_24bc6fcb",
+        "filename": "components/offline_pages/core/model/get_pages_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-24T02:38:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e29e8b0_e7f91595",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb72808d_cf3d11d7",
         "filename": "components/offline_pages/core/model/offline_page_item_generator.cc",
         "patchSetId": 3
@@ -96,6 +180,24 @@
       "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1052af8_71b62081",
+        "filename": "components/offline_pages/core/model/offline_page_item_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-24T02:38:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb72808d_cf3d11d7",
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "7d37d039_42eeba0c",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-24T02:38:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fc0dde27_7c8ea934",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 9
+      },
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec43028d_89109ee2",
         "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.h",
         "patchSetId": 3
@@ -133,6 +259,30 @@
       "writtenOn": "2017-10-24T01:20:31Z",
       "side": 1,
       "message": "This is a bad idea.",
+      "range": {
+        "startLine": 36,
+        "startChar": 59,
+        "endLine": 36,
+        "endChar": 80
+      },
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f32827_7331ff43",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-24T02:38:08Z",
+      "side": 1,
+      "message": "Prefetch seems using a similar idea... and there\u0027s a TODO to refactor it and make it not own the store... I\u0027m leaving this open until we have a easy/better solution that will fit in this CL.",
+      "parentUuid": "ec43028d_89109ee2",
       "range": {
         "startLine": 36,
         "startChar": 59,
@@ -165,6 +315,30 @@
       "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e21c46c_7d679d8c",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-24T02:38:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6abd97fe_7c3bab1a",
+      "range": {
+        "startLine": 62,
+        "startChar": 31,
+        "endLine": 62,
+        "endChar": 40
+      },
+      "revId": "6a3d588dd9e6c918062eda697a3d1c5c19dda2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
