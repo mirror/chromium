@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a502c1b_f1542025",
+        "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-24T20:09:01Z",
+      "side": 1,
+      "message": "just run the whole name together, e.g. \"InvokeDialog_DangerousFileFromDownloadApi\" (and for other tests in the file). You can shorten it to \"FromApi\" too.",
+      "range": {
+        "startLine": 398,
+        "startChar": 49,
+        "endLine": 398,
+        "endChar": 50
+      },
+      "revId": "e96957e1091e1b8c97eb4ad75a5a7ccd04757119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
