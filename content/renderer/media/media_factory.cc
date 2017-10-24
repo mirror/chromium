@@ -132,6 +132,35 @@ void PostMediaContextProviderToCallback(
 
 namespace content {
 
+namespace {
+
+// Provides an implementation of service_manager::mojom::InterfaceProvider which
+// safely forwards to a RenderFrame's own remote InterfaceProvider, as it might
+// change on navigation.
+//
+// rebound on navigations.
+class FrameRemoteInterfacesAdapter
+    : public service_manager::mojom::InterfaceProvider {
+ public:
+  // |frame| must outlive this object.
+  explicit FrameRemoteInterfacesAdapter(RenderFrame* frame) : frame_(frame) {}
+  ~FrameRemoteInterfacesAdapter() override {}
+
+  // service_manager::mojom::InterfaceProvider:
+  void GetInterface(const std::string& interface_name,
+                    mojo::ScopedMessagePipeHandle handle) override {
+    frame_->GetRemoteInterfaces()->GetInterface(interface_name,
+                                                std::move(handle));
+  }
+
+ private:
+  RenderFrame* const frame_;
+
+  DISALLOW_COPY_AND_ASSIGN(FrameRemoteInterfacesAdapter);
+};
+
+}  // namespace
+
 MediaFactory::MediaFactory(
     RenderFrameImpl* render_frame,
     media::RequestRoutingTokenCallback request_routing_token_cb)
@@ -141,11 +170,9 @@ MediaFactory::MediaFactory(
 MediaFactory::~MediaFactory() {}
 
 void MediaFactory::SetupMojo() {
-  // Only do setup once.
-  DCHECK(!remote_interfaces_);
-
-  remote_interfaces_ = render_frame_->GetRemoteInterfaces();
-  DCHECK(remote_interfaces_);
+  DCHECK(!frame_remote_interfaces_forwarder_);
+  frame_remote_interfaces_forwarder_ =
+      base::MakeUnique<FrameRemoteInterfacesAdapter>(render_frame_);
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
   // Create the SinkAvailabilityObserver to monitor the remoting sink
@@ -276,7 +303,7 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
             web_frame);
 
   if (!watch_time_recorder_provider_) {
-    remote_interfaces_->GetInterface(
+    render_frame_->GetRemoteInterfaces()->GetInterface(
         mojo::MakeRequest(&watch_time_recorder_provider_));
   }
 
@@ -344,14 +371,12 @@ MediaFactory::CreateRendererFactorySelector(
   auto factory_selector = base::MakeUnique<media::RendererFactorySelector>();
 
 #if defined(OS_ANDROID)
-  DCHECK(remote_interfaces_);
-
   // The only MojoRendererService that is registered at the RenderFrameHost
   // level uses the MediaPlayerRenderer as its underlying media::Renderer.
   auto mojo_media_player_renderer_factory =
       base::MakeUnique<media::MojoRendererFactory>(
           media::MojoRendererFactory::GetGpuFactoriesCB(),
-          remote_interfaces_->get());
+          frame_remote_interfaces_forwarder_.get());
 
   // Always give |factory_selector| a MediaPlayerRendererClient factory. WMPI
   // might fallback to it if the final redirected URL is an HLS url.
@@ -502,8 +527,7 @@ RendererMediaPlayerManager* MediaFactory::GetMediaPlayerManager() {
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
 media::mojom::RemoterFactory* MediaFactory::GetRemoterFactory() {
   if (!remoter_factory_) {
-    DCHECK(remote_interfaces_);
-    remote_interfaces_->GetInterface(&remoter_factory_);
+    render_frame_->GetRemoteInterfaces()->GetInterface(&remoter_factory_);
   }
   return remoter_factory_.get();
 }
@@ -541,9 +565,10 @@ media::CdmFactory* MediaFactory::GetCdmFactory() {
 
 media::mojom::VideoDecodeStatsRecorderPtr
 MediaFactory::CreateVideoDecodeStatsRecorder() {
-  DCHECK(remote_interfaces_);
+  DCHECK(frame_remote_interfaces_forwarder_);
   media::mojom::VideoDecodeStatsRecorderPtr recorder_ptr;
-  service_manager::GetInterface(remote_interfaces_->get(), &recorder_ptr);
+  service_manager::GetInterface(frame_remote_interfaces_forwarder_.get(),
+                                &recorder_ptr);
 
   return recorder_ptr;
 }
@@ -551,9 +576,9 @@ MediaFactory::CreateVideoDecodeStatsRecorder() {
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
 media::mojom::InterfaceFactory* MediaFactory::GetMediaInterfaceFactory() {
   if (!media_interface_factory_) {
-    DCHECK(remote_interfaces_);
+    DCHECK(frame_remote_interfaces_forwarder_);
     media_interface_factory_.reset(
-        new MediaInterfaceFactory(remote_interfaces_));
+        new MediaInterfaceFactory(frame_remote_interfaces_forwarder_.get()));
   }
 
   return media_interface_factory_.get();
