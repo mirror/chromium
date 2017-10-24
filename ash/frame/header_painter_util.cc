@@ -65,6 +65,7 @@ gfx::Rect HeaderPainterUtil::GetTitleBounds(
     const gfx::FontList& title_font_list) {
   int x = left_view ? left_view->bounds().right() + kTitleIconOffsetX
                     : kTitleNoIconOffsetX;
+
   int height = title_font_list.GetHeight();
   // Floor when computing the center of |caption_button_container| and when
   // computing the center of the text.
