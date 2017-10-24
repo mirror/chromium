@@ -148,18 +148,14 @@ void MoveCursorTo(AshWindowTreeHost* ash_host,
   host->MoveCursorToLocationInPixels(point_in_host);
 
   if (update_last_location_now) {
-    gfx::Point new_point_in_screen;
+    gfx::Point new_point_in_screen = point_in_native;
+    host->ConvertScreenInPixelsToDIP(&new_point_in_screen);
+    ::wm::ConvertPointToScreen(host->window(), &new_point_in_screen);
+
     if (Shell::Get()->display_manager()->IsInUnifiedMode()) {
-      new_point_in_screen = point_in_host;
-      // First convert to the unified host.
-      host->ConvertPixelsToDIP(&new_point_in_screen);
-      // Then convert to the unified screen.
-      Shell::GetPrimaryRootWindow()->GetHost()->ConvertPixelsToDIP(
+      // Convert to the unified screen.
+      Shell::GetPrimaryRootWindow()->GetHost()->ConvertScreenInPixelsToDIP(
           &new_point_in_screen);
-    } else {
-      new_point_in_screen = point_in_native;
-      host->ConvertScreenInPixelsToDIP(&new_point_in_screen);
-      ::wm::ConvertPointToScreen(host->window(), &new_point_in_screen);
     }
     aura::Env::GetInstance()->set_last_mouse_location(new_point_in_screen);
   }
