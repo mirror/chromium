@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c9a997f_14bda6c1",
+        "filename": "third_party/ots/patches/0000-byteorder-macros.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-24T06:35:20Z",
+      "side": 1,
+      "message": "Extra space here?",
+      "revId": "16c4c9efc957da1dfe50d2a89ef6892b95585d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
