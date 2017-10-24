@@ -5,9 +5,17 @@
 #include "platform/bindings/ScriptForbiddenScope.h"
 
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/ThreadSpecific.h"
 
 namespace blink {
 
-unsigned ScriptForbiddenScope::script_forbidden_count_ = 0;
+std::pair<unsigned, bool>& ScriptForbiddenScope::State() {
+  using StateType = std::pair<unsigned, bool>;
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(WTF::ThreadSpecific<StateType>,
+                                  script_forbidden_state_, ());
+  if (!script_forbidden_state_.IsSet())
+    *script_forbidden_state_ = StateType(0, false);
+  return *script_forbidden_state_;
+}
 
 }  // namespace blink
