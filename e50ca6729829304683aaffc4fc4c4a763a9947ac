@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bed03c4_27c19d0f",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T12:03:46Z",
+      "side": 1,
+      "message": "Add:\n\n  if (observation_length \u003c\u003d 0)\n    return ret;",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d04330b_43deba91",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T12:03:46Z",
+      "side": 1,
+      "message": "Maybe we should have a logic to return base::nullptr if observation_length is much longer than window_length_.",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24415f1c_67cec9a9",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T12:03:46Z",
+      "side": 1,
+      "message": "Can we simply make Reset() do the following work?\n\n- Remove observations except the latest one.\n\nThen we can remove MostRecentObservation and OnObservation.",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d09ca4_d45cc5dc",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T12:03:46Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cbdcf52_21681c99",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T12:03:46Z",
+      "side": 1,
+      "message": "Can we move this constant to the cpp file?",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c95ac9_216fdd5d",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T12:03:46Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "e50ca6729829304683aaffc4fc4c4a763a9947ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
