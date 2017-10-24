@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67b68091_38601b73",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3053,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T16:13:58Z",
+      "side": 1,
+      "message": "nit: It might not be too clear what part is a to-do.\n\nTODO(horo): Use this host pointer also when S13nServiceWorker is not enabled\nonce we support navigator.serviceWorker on dedicated workers. Currently we use\nthis only to call GetControllerServiceWorker() from the worker thread if\nS13nServiceWorker is enabled.\n\n?",
+      "revId": "9a6a7d00bdec4073597e83049a7744991e9a2e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef63177_c48dca7c",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T16:13:58Z",
+      "side": 1,
+      "message": "Would we need to reset the subresource_loader_factory_ if the controller is changed (from another service worker)?",
+      "revId": "9a6a7d00bdec4073597e83049a7744991e9a2e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d253499_753cc03c",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T16:13:58Z",
+      "side": 1,
+      "message": "nit: If -\u003e if",
+      "revId": "9a6a7d00bdec4073597e83049a7744991e9a2e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9cb0504_d56fbebf",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T16:13:58Z",
+      "side": 1,
+      "message": "nit: route -\u003e routes",
+      "revId": "9a6a7d00bdec4073597e83049a7744991e9a2e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574389e3_075c2f8a",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T16:13:58Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9a6a7d00bdec4073597e83049a7744991e9a2e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
