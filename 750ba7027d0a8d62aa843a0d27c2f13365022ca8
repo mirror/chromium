@@ -34,6 +34,24 @@
       "revId": "750ba7027d0a8d62aa843a0d27c2f13365022ca8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816b2986_e939213d",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/worklet-animation-creation.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-24T19:39:51Z",
+      "side": 0,
+      "message": "As discussed offline, you can\u0027t currently call the constructor like that; the bindings code will disallow it (wrong number of args).",
+      "parentUuid": "02264945_3a2db16a",
+      "revId": "750ba7027d0a8d62aa843a0d27c2f13365022ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
