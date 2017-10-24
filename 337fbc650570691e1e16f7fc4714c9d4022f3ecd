@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b6f089b_8a22bd86",
+        "filename": "content/browser/devtools/devtools_target_registry.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-24T09:06:35Z",
+      "side": 1,
+      "message": "I wonder if MSVC requires this to be base::RefCounted\u003cObserverBase\u003e;",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "337fbc650570691e1e16f7fc4714c9d4022f3ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
