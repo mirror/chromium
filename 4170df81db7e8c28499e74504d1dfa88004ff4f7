@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fca3858_2248b8ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "Nit: remove \"Promo\"",
+      "range": {
+        "startLine": 49,
+        "startChar": 26,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ed8156_df6c2516",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "I think it would be cleaner to replace the whole file referenced here so we don\u0027t have a mish-mash of peek_promo and bar-banner references.",
+      "range": {
+        "startLine": 81,
+        "startChar": 30,
+        "endLine": 81,
+        "endChar": 68
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884b0716_acbe254d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "I think you should change all occurrences of \"peek promo\" to avoid confusion.  There will still be references to the Opt-in \"promo\" but now that should be less confusing.\n\nAlso in many places below.",
+      "range": {
+        "startLine": 208,
+        "startChar": 27,
+        "endLine": 208,
+        "endChar": 32
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ce60c9_f8659073",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "There\u0027s a race condition here, since the user can actually open the panel before the Search Term resolves (which is when the entity data comes back from the server).  That\u0027s probably OK for these purposes since we want to get the user to open the panel!  Please add a one or two line comment here, as a warning to anyone that might want to copy the code here.",
+      "range": {
+        "startLine": 223,
+        "startChar": 36,
+        "endLine": 223,
+        "endChar": 53
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c965526b_2505cab2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "I\u0027m surprised I don\u0027t see this anywhere in the old code, so I\u0027m wondering how you knew to add it.  Did you notice something was not working correctly and add this?",
+      "range": {
+        "startLine": 247,
+        "startChar": 32,
+        "endLine": 247,
+        "endChar": 44
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3d3fc4_c6a048d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagementDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "Nit: for -\u003e for the",
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00406c48_3e1caaca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "Maybe make mHelpBubble null here too?",
+      "range": {
+        "startLine": 380,
+        "startChar": 45,
+        "endLine": 380,
+        "endChar": 52
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a38753c_d02b050e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "If this was true, we\u0027d crash above, so reorder.  :-)\n\nIs there a reason why this new code isn\u0027t down where the old peekpromo code was?",
+      "range": {
+        "startLine": 386,
+        "startChar": 12,
+        "endLine": 386,
+        "endChar": 24
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a019a613_ca907e81",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "Nit: I think it would be a bit better organizationally to put this new code down where we handle other Management Delegate overrides, after dismissContextualSearchBar.",
+      "range": {
+        "startLine": 527,
+        "startChar": 0,
+        "endLine": 527,
+        "endChar": 13
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0992c3_47ced37c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "This code has lots of details about help bubbles, maybe we can have a help bubble utils or help bubble class that can separate this out?  CSManager is so big and messy already, it would be great to limit how much we need to add for help here.",
+      "range": {
+        "startLine": 548,
+        "startChar": 17,
+        "endLine": 548,
+        "endChar": 46
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62c831b_096ee90e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "I don\u0027t think this code should be here -- it knows too much about the specifics of the panel.  Can we just put a method in the panel (move this code there?)",
+      "range": {
+        "startLine": 582,
+        "startChar": 17,
+        "endLine": 582,
+        "endChar": 29
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96a18a3_785a0811",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "Where did this come from?",
+      "range": {
+        "startLine": 586,
+        "startChar": 33,
+        "endLine": 586,
+        "endChar": 35
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa16a386_77608cc8",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2853,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-24T22:46:20Z",
+      "side": 1,
+      "message": "Nit: add a \".\" to the end of these descriptions (OK to leave the actually messages without them).",
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
