@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "305a1a36_d9683eaf",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-24T01:29:25Z",
+      "side": 1,
+      "message": "This is something that will likely be unique to the voicesearch tab helper.  None of the others need to be instantiated this early.\n\nWhat happens if this tab helper is created later and missed some navigation observer calls?",
+      "revId": "cf54d6642e3f9564061ea4b955f985a5c2614389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcad76ae_18c6e058",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-24T01:29:25Z",
+      "side": 1,
+      "message": "Is this logic that could move into the tab helper too?",
+      "range": {
+        "startLine": 384,
+        "startChar": 0,
+        "endLine": 393,
+        "endChar": 14
+      },
+      "revId": "cf54d6642e3f9564061ea4b955f985a5c2614389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c4f8f5_a2488b14",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3942,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-24T01:29:25Z",
+      "side": 1,
+      "message": "Is this replacing the notifyTabChanged call that was removed from tab.mm?",
+      "revId": "cf54d6642e3f9564061ea4b955f985a5c2614389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
