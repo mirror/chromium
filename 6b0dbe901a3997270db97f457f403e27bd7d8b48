@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b04f86d_c87a9d00",
+        "filename": "chrome/common/webui_url_constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T18:13:06Z",
+      "side": 1,
+      "message": "FWIW, I think we could potentially remove the need for both host and URL constants. As follows (example):\n\n 1) Delete kChromeUIAboutHost, keep kChromeUIAboutURL.\n 2) Replace all usages of kChromeUIAboutHost (https://cs.chromium.org/search/?q\u003dkChromeUIAboutHost\u0026sq\u003dpackage:chromium\u0026type\u003dcs), by using GURL EqualsIgnoringRef(), see https://cs.chromium.org/chromium/src/url/gurl.h?gsn\u003durl\u0026l\u003d410.\n\nOverall, maintaining constants of both the full URL (scheme+host) and the host seems redundant, when GURL already provides ways to extract both scheme and host separately.",
+      "revId": "6b0dbe901a3997270db97f457f403e27bd7d8b48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
