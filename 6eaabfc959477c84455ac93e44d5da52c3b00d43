@@ -192,6 +192,23 @@
     },
     {
       "key": {
+        "uuid": "642492db_73da70f9",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-24T16:51:57Z",
+      "side": 1,
+      "message": "Would crash if timer is nullptr.",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "695a5c91_95ccd188",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 8
@@ -307,6 +324,23 @@
     },
     {
       "key": {
+        "uuid": "76b414fe_94621ff7",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-24T16:51:57Z",
+      "side": 1,
+      "message": "This assumption is not correct.\narc_timer_store_ can be clear() in DeleteArcTimers() call under the current code.\n\nMy recommendation is;\n- Pass WeakPtr to the callback passed to Start().\n- Instantiate this instance in OnIstanceReady() and delete the whole instance in OnInstanceClosed().\n\nit follows common practice used in chrome, which is safer.",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5321dddf_b63b4d9d",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 8
@@ -376,6 +410,23 @@
     },
     {
       "key": {
+        "uuid": "1765f2ef_1c32ae6c",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-24T16:51:57Z",
+      "side": 1,
+      "message": "can this be arc namespace?",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8721fa9_903dd6c1",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 8
@@ -393,6 +444,87 @@
         "endLine": 32,
         "endChar": 18
       },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bafb366_710468c1",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-24T16:51:57Z",
+      "side": 1,
+      "message": "Instead, I\u0027d request to write unittest for this.",
+      "parentUuid": "e8721fa9_903dd6c1",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 18
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280c3f9a_a74b7df8",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-24T16:51:57Z",
+      "side": 1,
+      "message": "nit/style: often in ARC code, we use be verb. IsArcTimerInitialized.",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3053c4c9_7369c253",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-24T16:51:57Z",
+      "side": 1,
+      "message": "nit: ArcTimer?",
+      "range": {
+        "startLine": 56,
+        "startChar": 22,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a8d8ce_a270d478",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-24T16:51:57Z",
+      "side": 1,
+      "message": "Looks like a constexpr? If so, pls use constant sorted array with constexpr, and use std::binarysearch() for simplicity and avoiding unnecessary performance consideration.\n\nThough, I still prefer enum in mojom definition.",
       "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
