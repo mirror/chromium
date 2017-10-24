@@ -170,6 +170,8 @@ DrawingBuffer::DrawingBuffer(
       software_rendering_(this->ContextProvider()->IsSoftwareRendering()),
       want_depth_(want_depth),
       want_stencil_(want_stencil),
+      use_half_float_storage_(color_params.PixelFormat() ==
+                              kF16CanvasPixelFormat),
       storage_color_space_(color_params.GetStorageGfxColorSpace()),
       sampler_color_space_(color_params.GetSamplerGfxColorSpace()),
       chromium_image_usage_(chromium_image_usage) {
@@ -665,6 +667,10 @@ bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
             gpu::DISABLE_WEBGL_RGB_MULTISAMPLING_USAGE)) {
       allocate_alpha_channel_ = true;
     }
+    // There exists no RGB half-float Bufferformat.
+    if (ShouldUseChromiumImage()) {
+      allocate_alpha_channel_ = true;
+    }
   }
 
   // Determine if we have a writeable alpha channel in our storage (even if
@@ -850,12 +856,17 @@ bool DrawingBuffer::ResizeDefaultFramebuffer(const IntSize& size) {
   if (WantExplicitResolve()) {
     state_restorer_->SetFramebufferBindingDirty();
     state_restorer_->SetRenderbufferBindingDirty();
+    // TODO(ccameron): This fails because we don't expose the necessary
+    // extensions by default.
+    GLenum internal_format =
+        use_half_float_storage_
+            ? (allocate_alpha_channel_ ? GL_RGBA16F_EXT : GL_RGB16F_EXT)
+            : (allocate_alpha_channel_ ? GL_RGBA8_OES : GL_RGB8_OES);
     gl_->BindFramebuffer(GL_FRAMEBUFFER, multisample_fbo_);
     gl_->BindRenderbuffer(GL_RENDERBUFFER, multisample_renderbuffer_);
-    gl_->RenderbufferStorageMultisampleCHROMIUM(
-        GL_RENDERBUFFER, sample_count_,
-        allocate_alpha_channel_ ? GL_RGBA8_OES : GL_RGB8_OES, size.Width(),
-        size.Height());
+    gl_->RenderbufferStorageMultisampleCHROMIUM(GL_RENDERBUFFER, sample_count_,
+                                                internal_format, size.Width(),
+                                                size.Height());
     if (gl_->GetError() == GL_OUT_OF_MEMORY)
       return false;
 
@@ -1188,9 +1199,11 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
     gfx::BufferFormat buffer_format;
     GLenum gl_format = GL_NONE;
     if (allocate_alpha_channel_) {
-      buffer_format = gfx::BufferFormat::RGBA_8888;
+      buffer_format = use_half_float_storage_ ? gfx::BufferFormat::RGBA_F16
+                                              : gfx::BufferFormat::RGBA_8888;
       gl_format = GL_RGBA;
     } else {
+      DCHECK(!use_half_float_storage_);
       buffer_format = gfx::BufferFormat::RGBX_8888;
       if (gpu::IsImageFromGpuMemoryBufferFormatSupported(
               gfx::BufferFormat::BGRX_8888,
@@ -1229,13 +1242,28 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
   } else {
     if (storage_texture_supported_) {
       GLenum internal_storage_format =
-          allocate_alpha_channel_ ? GL_RGBA8 : GL_RGB8;
+          use_half_float_storage_
+              ? (allocate_alpha_channel_ ? GL_RGBA16F_EXT : GL_RGB16F_EXT)
+              : (allocate_alpha_channel_ ? GL_RGBA8 : GL_RGB8);
       gl_->TexStorage2DEXT(GL_TEXTURE_2D, 1, internal_storage_format,
                            size.Width(), size.Height());
     } else {
-      GLenum gl_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
-      gl_->TexImage2D(target, 0, gl_format, size.Width(), size.Height(), 0,
-                      gl_format, GL_UNSIGNED_BYTE, nullptr);
+      GLenum internal_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
+      GLenum format = internal_format;
+      GLenum data_type = GL_UNSIGNED_BYTE;
+      // TODO(ccameron): Half-float storage reports no errors in WebGL 2, but
+      // also is blank.
+      if (use_half_float_storage_) {
+        if (webgl_version_ > kWebGL1) {
+          internal_format = allocate_alpha_channel_ ? GL_RGBA16F : GL_RGB16F;
+          data_type = GL_HALF_FLOAT;
+        } else {
+          internal_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
+          data_type = GL_HALF_FLOAT_OES;
+        }
+      }
+      gl_->TexImage2D(target, 0, internal_format, size.Width(), size.Height(),
+                      0, format, data_type, nullptr);
     }
   }
 
