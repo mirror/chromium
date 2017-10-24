@@ -38,6 +38,7 @@ class ChromeOmniboxEditController : public OmniboxEditController {
                             ui::PageTransition transition,
                             AutocompleteMatchType::Type type) override;
   void OnInputInProgress(bool in_progress) override;
+  bool SwitchToTabWithURL(const std::string& url, bool close_this) override;
 
   CommandUpdater* command_updater_;
 
