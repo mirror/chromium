@@ -1,0 +1,299 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32b370a8_25c9d226",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "cache_only_keys_when_posible is set but never used.",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48363549_09f3b37f",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "Did you want for this to set options.cache_mode?",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993e292b_6cfd5110",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "std::move(callback_).Run(); to prevent a second run and release the closure.",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 15
+      },
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e423d55_cd6241dc",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "Nit: I think a ternary would be clearer here, but your call - just a thought.",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c67d9d9_9d0f9072",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "dummy_wrapper.reset()?",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5f6289_a4f3713e",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "Because some tests reuse the result parameter (like in InMemory below) it might be a good idea to clear result here. Granted you\u0027re returning false so those tests should still fail.",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70969b5_110eca02",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "|client_old_value|",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb095c31_0b3576a4",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "STL\u0027s size() isn\u0027t guaranteed to be constant time so make it the second check.",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6adc561_94ecc4a0",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "LoadState also has \"unloaded\"",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef39ad1_f4157f3c",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "It\u0027s a two line check, so add braces.",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24984e80_99abeefb",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "How about setting a flag, and then the in-flight commit batch can unload when finished?",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d513534_2905dcdc",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "Use std::make_unique now. crbug.com/755727",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0978cf_3e812d5f",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "const",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1770f43_28581d80",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "Nit: Suggest using enum class when possible.",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717a17a7_d2fa689a",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "Nit: \"KEYS_ONLY_WHEN_POSSIBLE\" to be similarly named to LoadState.",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fda4e15_f05a7264",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "If you don\u0027t have a constructor then how about initializing these members here?",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15a6dcd_3f83c7af",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "Pass in an enumeration here. It\u0027ll be easier to read at the call site.",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f4bf885e_6bb87e8d",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-24T18:22:30Z",
+      "side": 1,
+      "message": "Then how about using content::RenderProcessHost::GetMaxRendererProcessCount()? I\u0027d rather not couple to this to a platform whose characteristics may change, when what we really care about is the characteristics. I\u0027m sure we\u0027ll have other Chrome ports for low end devices that aren\u0027t Android.",
+      "parentUuid": "56bba5b5_6fbd26ac",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76677d8a_03d54990",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
