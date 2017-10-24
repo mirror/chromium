@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "1405637f_481ef0d9",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T22:26:28Z",
+      "side": 1,
+      "message": "The import landed at https://chromium.googlesource.com/chromium/src/+/b653292f3f8de3ac19374d12090c46dc20b4220f.",
+      "parentUuid": "9dceed08_9d00f395",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8301011_af27ef7b",
         "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
         "patchSetId": 3
