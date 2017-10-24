@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a9522bd_a2ff1ccf",
+        "filename": "components/spellcheck/common/spellcheck_result.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T05:30:10Z",
+      "side": 1,
+      "message": "Can the two enum values here ever be ORed together? That would cause it to fail validation. It certainly looks like a bitmask as defined...",
+      "revId": "13e0c50c51e0d8f66d0d391d4b4c32d7d1f60ca0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
