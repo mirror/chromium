@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "cd3a69cd_3b42f9fe",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T22:03:46Z",
+      "side": 1,
+      "message": "1. Created a bug for refactoring those one-offs crbug.com/777997 .\n2. Created a private base::test::ScopedRestoreICUDefaultLocale in both tests.",
+      "parentUuid": "87650d89_d1bd3fb8",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35cc321c_93becca0",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
@@ -353,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "54b0514d_05f86a04",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T22:03:46Z",
+      "side": 1,
+      "message": "I have modified the helpers to return bools.",
+      "parentUuid": "580fab84_8a5f7087",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adff113c_a9608e1d",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
@@ -385,6 +421,24 @@
       "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778fd202_37db8953",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T22:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce514e22_eb97d52c",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -438,6 +492,24 @@
       "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62561e8b_f16bca84",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T22:03:46Z",
+      "side": 1,
+      "message": "Thanks, I have created a bug and put it in our hotlist to ensure it doesn\u0027t get dropped.\n\ncrbug.com/778012",
+      "parentUuid": "24d3a69a_791a108a",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -527,6 +599,24 @@
       "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df31f84_a0259320",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T22:03:46Z",
+      "side": 1,
+      "message": "Ok! I created crbug.com/777977 and triaged it for my team, we should get to it soon.",
+      "parentUuid": "0c359cef_76467148",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -685,6 +775,24 @@
       "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab1d05e4_2de1b5ae",
+        "filename": "ui/views/focus/focus_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T22:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "840e86fc_e13506e4",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
