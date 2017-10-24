@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+Copyright 2017 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+
+Refer to README.md for content description and update process.
+-->
+
+<annotations>
+ <item id="A" hash_code="A" content_hash_code="A" os_list="linux,windows"/>
+ <item id="C" hash_code="C" content_hash_code="C" os_list="linux,windows"/>
+ <item id="E" hash_code="E" content_hash_code="E" os_list="linux,windows"/>
+ <item id="M" hash_code="N" content_hash_code="N" os_list="linux,windows"/>
+ <item id="X" hash_code="X" content_hash_code="X" os_list="linux,windows"/>
+ <item id="Z" hash_code="Z" content_hash_code="Z" os_list="linux,windows"/>
+</annotations>

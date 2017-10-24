@@ -1,0 +1,5 @@
+
+	Add line: ' <item id="A" hash_code="A" content_hash_code="A" os_list="linux,windows"/>'
+	Add line: ' <item id="E" hash_code="E" content_hash_code="E" os_list="linux,windows"/>'
+	Add line: ' <item id="Z" hash_code="Z" content_hash_code="Z" os_list="linux,windows"/>'
+	Update line: ' <item id="M" hash_code="M" content_hash_code="M" os_list="linux,windows"/>' --> ' <item id="M" hash_code="N" content_hash_code="N" os_list="linux,windows"/>'
