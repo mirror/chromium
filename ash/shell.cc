@@ -25,6 +25,7 @@
 #include "ash/display/display_color_manager_chromeos.h"
 #include "ash/display/display_configuration_controller.h"
 #include "ash/display/display_error_observer_chromeos.h"
+#include "ash/display/display_move_window_controller.h"
 #include "ash/display/event_transformation_handler.h"
 #include "ash/display/mouse_cursor_event_filter.h"
 #include "ash/display/projecting_observer_chromeos.h"
@@ -959,6 +960,9 @@ void Shell::Init(const ShellInitParams& init_params) {
     aura::Env::GetInstance()->set_context_factory_private(
         init_params.context_factory_private);
   }
+
+  display_move_window_controller_ =
+      std::make_unique<DisplayMoveWindowController>();
 
   // The WindowModalityController needs to be at the front of the input event
   // pretarget handler list to ensure that it processes input events when modal

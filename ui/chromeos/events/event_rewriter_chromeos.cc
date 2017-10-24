@@ -857,6 +857,8 @@ void EventRewriterChromeOS::RewriteNumPadKeys(const ui::KeyEvent& key_event,
 
 void EventRewriterChromeOS::RewriteExtendedKeys(const ui::KeyEvent& key_event,
                                                 MutableKeyState* state) {
+  // TODO(warx): Fix this problem.
+  return;
   DCHECK(key_event.type() == ui::ET_KEY_PRESSED ||
          key_event.type() == ui::ET_KEY_RELEASED);
   MutableKeyState incoming = *state;
