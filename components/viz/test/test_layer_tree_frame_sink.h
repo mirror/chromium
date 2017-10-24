@@ -108,6 +108,9 @@ class TestLayerTreeFrameSink : public cc::LayerTreeFrameSink,
   // ExternalBeginFrameSource implementation.
   void OnNeedsBeginFrames(bool needs_begin_frames) override;
 
+  // ContextLostObserver implementation.
+  void OnContextLost() override;
+
   void SendCompositorFrameAckToClient();
 
   const bool synchronous_composite_;
