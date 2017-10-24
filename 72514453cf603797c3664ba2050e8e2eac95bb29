@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0b52f14_5f51f10d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/bindings-frame-attach-detach-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-24T18:10:08Z",
+      "side": 1,
+      "message": "This is from: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js?q\u003dTestRunner.js\u0026sq\u003dpackage:chromium\u0026l\u003d1273\n\nWe\u0027re adding a \u003cbase\u003e tag so paths are relative to the test file and not the inspected page.",
+      "parentUuid": "289c01c2_04153222",
+      "revId": "72514453cf603797c3664ba2050e8e2eac95bb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3443d3e_b3c7c201",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/dynamic-bindings-frame-attach-detach-expected.txt",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-24T01:20:31Z",
       "side": 1,
       "message": "can we have these named?",
+      "revId": "72514453cf603797c3664ba2050e8e2eac95bb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fea63b9_d1e43495",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/dynamic-bindings-frame-attach-detach-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-24T18:10:08Z",
+      "side": 1,
+      "message": "I can see why you want them named - but I\u0027m a bit hesitant to associate it with a filename because all of the test runner method internals should be opaque. For example, if we refactor a method and move it from one module to another (e.g. test_runner -\u003e bindings_test_runner), it shouldn\u0027t require rebaselining dozens of tests.\n\nIn principle, I think these evaluateInPageAnonymously() scripts should be filtered out from the test expectation files because they are noisy and not really what\u0027s being tested. All of these \"debugger:///\" lines seem to be specific to bindings test so let\u0027s land this as-is and then we can iterate and make this less noisy if this is a big issue.",
+      "parentUuid": "a3443d3e_b3c7c201",
       "revId": "72514453cf603797c3664ba2050e8e2eac95bb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
