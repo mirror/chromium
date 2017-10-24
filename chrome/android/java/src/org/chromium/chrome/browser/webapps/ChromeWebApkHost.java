@@ -16,6 +16,7 @@ import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.externalauth.ExternalAuthUtils;
 import org.chromium.webapk.lib.client.WebApkIdentityServiceClient;
+import org.chromium.webapk.lib.client.WebApkServiceImplClient;
 import org.chromium.webapk.lib.client.WebApkValidator;
 
 /**
@@ -64,7 +65,7 @@ public class ChromeWebApkHost {
                             || newState == ApplicationState.HAS_DESTROYED_ACTIVITIES) {
                         WebApkIdentityServiceClient.disconnectAll(
                                 ContextUtils.getApplicationContext());
-                        WebApkServiceClient.disconnectAll();
+                        WebApkServiceImplClient.disconnectAll();
 
                         ApplicationStatus.unregisterApplicationStateListener(sListener);
                         sListener = null;

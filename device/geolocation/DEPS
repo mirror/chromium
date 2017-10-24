@@ -1,4 +1,6 @@
 include_rules = [
+  "+chrome/android/webapk/libs/runtime_library",
+  "+chrome/android/webapk/libs/client",
   "+chromeos",
   "+dbus",
   "+jni",

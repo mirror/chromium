@@ -30,6 +30,9 @@ class GeolocationProvider {
  public:
   DEVICE_GEOLOCATION_EXPORT static GeolocationProvider* GetInstance();
 
+  DEVICE_GEOLOCATION_EXPORT static GeolocationProvider* Get(
+      const std::string& package_name);
+
   // Optional: provide a Delegate to override typical services.
   // Call before using Init() on the singleton GetInstance(), and call no more
   // than once.
@@ -82,7 +85,6 @@ class GeolocationProvider {
   // (crbug.com/125931).
   virtual void OverrideLocationForTesting(const Geoposition& position) = 0;
 
- protected:
   virtual ~GeolocationProvider() {}
 };
 

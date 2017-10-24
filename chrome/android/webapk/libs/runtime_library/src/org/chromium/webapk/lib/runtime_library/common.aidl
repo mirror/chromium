@@ -3,3 +3,4 @@
 // found in the LICENSE file.
 
 interface org.chromium.webapk.lib.runtime_library.IWebApkApi;
+interface org.chromium.webapk.lib.runtime_library.ILocationChangedCallback;

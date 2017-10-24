@@ -100,39 +100,40 @@ ContentSetting GeolocationPermissionContextAndroid::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin) const {
-  ContentSetting value =
-      GeolocationPermissionContext::GetPermissionStatusInternal(
-          render_frame_host, requesting_origin, embedding_origin);
+  /*  ContentSetting value =
+        GeolocationPermissionContext::GetPermissionStatusInternal(
+            render_frame_host, requesting_origin, embedding_origin);
 
-  if (value == CONTENT_SETTING_ASK && requesting_origin == embedding_origin) {
-    // Consult the DSE Geolocation setting. Note that this only needs to be
-    // consulted when the content setting is ASK. In the other cases (ALLOW or
-    // BLOCK) checking the setting is redundant, as the setting is kept
-    // consistent with the content setting.
-    SearchGeolocationService* search_helper =
-        SearchGeolocationService::Factory::GetForBrowserContext(profile());
+    if (value == CONTENT_SETTING_ASK && requesting_origin == embedding_origin) {
+      // Consult the DSE Geolocation setting. Note that this only needs to be
+      // consulted when the content setting is ASK. In the other cases (ALLOW or
+      // BLOCK) checking the setting is redundant, as the setting is kept
+      // consistent with the content setting.
+      SearchGeolocationService* search_helper =
+          SearchGeolocationService::Factory::GetForBrowserContext(profile());
 
-    // If the user is incognito, use the DSE Geolocation setting from the
-    // original profile - but only if it is BLOCK.
-    if (!search_helper) {
-      DCHECK(profile()->IsOffTheRecord());
-      search_helper = SearchGeolocationService::Factory::GetForBrowserContext(
-          profile()->GetOriginalProfile());
-    }
+      // If the user is incognito, use the DSE Geolocation setting from the
+      // original profile - but only if it is BLOCK.
+      if (!search_helper) {
+        DCHECK(profile()->IsOffTheRecord());
+        search_helper = SearchGeolocationService::Factory::GetForBrowserContext(
+            profile()->GetOriginalProfile());
+      }
 
-    if (search_helper && search_helper->UseDSEGeolocationSetting(
-                             url::Origin::Create(embedding_origin))) {
-      if (!search_helper->GetDSEGeolocationSetting()) {
-        // If the DSE setting is off, always return BLOCK.
-        value = CONTENT_SETTING_BLOCK;
-      } else if (!profile()->IsOffTheRecord()) {
-        // Otherwise, return ALLOW only if this is not incognito.
-        value = CONTENT_SETTING_ALLOW;
+      if (search_helper && search_helper->UseDSEGeolocationSetting(
+                               url::Origin::Create(embedding_origin))) {
+        if (!search_helper->GetDSEGeolocationSetting()) {
+          // If the DSE setting is off, always return BLOCK.
+          value = CONTENT_SETTING_BLOCK;
+        } else if (!profile()->IsOffTheRecord()) {
+          // Otherwise, return ALLOW only if this is not incognito.
+          value = CONTENT_SETTING_ALLOW;
+        }
       }
     }
-  }
 
-  return value;
+    return value; */
+  return CONTENT_SETTING_ALLOW;
 }
 
 // static

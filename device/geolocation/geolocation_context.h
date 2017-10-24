@@ -22,7 +22,7 @@ struct Geoposition;
 // geolocation on these instances.
 class DEVICE_GEOLOCATION_EXPORT GeolocationContext {
  public:
-  GeolocationContext();
+  GeolocationContext(const std::string& package_name);
   virtual ~GeolocationContext();
 
   // Creates a GeolocationImpl that is weakly bound to |request|.
@@ -39,8 +39,12 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationContext {
   // Disables geolocation override.
   void ClearOverride();
 
+  const std::string& getPackageName() { return package_name_; }
+
  private:
   std::vector<std::unique_ptr<GeolocationImpl>> impls_;
+
+  std::string package_name_;
 
   std::unique_ptr<Geoposition> geoposition_override_;
 
