@@ -3824,7 +3824,6 @@ void LayerTreeHostImpl::PinchGestureUpdate(float magnify_delta,
   viewport()->PinchUpdate(magnify_delta, anchor);
   client_->SetNeedsCommitOnImplThread();
   SetNeedsRedraw();
-  client_->RenewTreePriority();
   // Pinching can change the root scroll offset, so inform the synchronous input
   // handler.
   UpdateRootLayerStateForSynchronousInputHandler();
@@ -3839,6 +3838,7 @@ void LayerTreeHostImpl::PinchGestureEnd() {
   viewport()->PinchEnd();
   browser_controls_offset_manager_->PinchEnd();
   client_->SetNeedsCommitOnImplThread();
+  client_->RenewTreePriority();
   // When a pinch ends, we may be displaying content cached at incorrect scales,
   // so updating draw properties and drawing will ensure we are using the right
   // scales that we want when we're not inside a pinch.
