@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d14dc8b_c2ff5f9f",
+        "filename": "build/install-build-deps.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T23:56:52Z",
+      "side": 1,
+      "message": "Still got a \"yakkety\" reference here.",
+      "revId": "73b79fcd8ed65ad231c4e6c9ed7d619bbf9e818b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
