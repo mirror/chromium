@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09d1e22d_f1c80953",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-24T07:04:45Z",
+      "side": 1,
+      "message": "nit: s/(selection)/selection/",
+      "revId": "f823dcf502615f5276f6c3230e464fd1c5972c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b39bfce_59fc8f2b",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-24T07:04:45Z",
+      "side": 1,
+      "message": "nit: s/\u003d\u003e{/\u003d\u003e {/",
+      "revId": "f823dcf502615f5276f6c3230e464fd1c5972c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c342ee4_b461725e",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-24T07:04:45Z",
+      "side": 1,
+      "message": "nit: s/200/0/\nWe don\u0027t want to make this test to take 200+ms.\nJust enter into event loop is fine for verification.",
+      "revId": "f823dcf502615f5276f6c3230e464fd1c5972c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f39d48_69af9dae",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-24T07:04:45Z",
+      "side": 1,
+      "message": "nit: s/async/window.setTimeout/",
+      "revId": "f823dcf502615f5276f6c3230e464fd1c5972c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fed52b2_805139da",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-24T07:04:45Z",
+      "side": 1,
+      "message": "nit: s/(selection)/selection/",
+      "revId": "f823dcf502615f5276f6c3230e464fd1c5972c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2613097_fa698f72",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-24T07:04:45Z",
+      "side": 1,
+      "message": "s/reject()/{ reject(); return; }/\nto avoid throwing an exception at L400.\n\nWe can use\nassert_unreached(\u0027Requires chrome.gpuBenchmarkin\u0027);\n\nNote: |assert_unreached()| throws an exception.",
+      "revId": "f823dcf502615f5276f6c3230e464fd1c5972c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438e9ff0_dd4c8c46",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-24T07:04:45Z",
+      "side": 1,
+      "message": "BTW, it is better to introduce |pointerActionSequence()| as wrapper of\n|chrome.gputBenchmarking.pointerActionSequence()|.\n\nfunction pointerActionSequence(actions) {\n  return new Promise(resolve \u003d\u003e {\n    if (!chrome || !chrome.gpuBenchmarking)\n      assert_unreached(\u0027Requires chrome.gpuBenchmarking\u0027);\n    chrome.gputBenchmarking.pointerActionSequence(actions, resolve);\n  });\n}\n\nThen we can write test case as below:\n\nselection_test(\n  \u0027....\u0027,\n  async function(selection) \u003d\u003e {\n    ... compute actions ...\n    return pointerActionsSequence(actions);\n  },\n  \u0027....);\n\nIt is OK to utilize |await|, in this case tester return\n|Promise.resolve(undefined)|.\n\nselection_test(\n  \u0027....\u0027,\n  async function(selection) \u003d\u003e {\n    ... compute actions ...\n    await pointerActionsSequence(actions);\n    console.log(\u0027done\u0027);\n  },\n  \u0027....);",
+      "revId": "f823dcf502615f5276f6c3230e464fd1c5972c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3325c1c_1ea4345f",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-24T07:04:45Z",
+      "side": 1,
+      "message": "We don\u0027t need to have braces here since then-clause has one statement.",
+      "range": {
+        "startLine": 975,
+        "startChar": 23,
+        "endLine": 975,
+        "endChar": 24
+      },
+      "revId": "f823dcf502615f5276f6c3230e464fd1c5972c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2ccd76_786bdec3",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-24T07:04:45Z",
+      "side": 1,
+      "message": "I proposed to use JS AsyncFunction to lead |selection_test| to use\n|promise_test()| instead of introducing \"async\" option to\n|assert_selection()|.\n\n\n\nselection_test(\n  \u0027...\u0027,\n  async function(selection) {\n    return new Promise(resolve \u003d\u003e window.setTimeout(() \u003d\u003e resolve(), 0));\n  }\n  \u0027...\u0027);\n\nfunction isAsyncFunction(object) {\n  // Note: there is no symbol |AsyncFunction| in global namespace.\n  return tester.constructor.name \u003d\u003d\u003d \u0027AsyncFunction\u0027;\n}\n\nfunction selection_test(...) {\n...\n  if (isAsyncFunction(tester)) {\n    promise_test(() \u003d\u003e {\n      // |assertSelection()| returns |Promise|.\n      return assertSelection(inputText, tester, expectedText, ...);\n    }, description);\n    return;\n  }\n\n// Because of we don\u0027t use return value of |assertSelection()| for\n// |test()|, it is OK to return Promise.\nasync function assertSelection() {\n...\n  if (isAsyncFunction(tester)) {\n    await tester.call(window, sample.selection);\n    confirm();\n    return;\n  }\n...\n}",
+      "revId": "f823dcf502615f5276f6c3230e464fd1c5972c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
