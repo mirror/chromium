@@ -113,7 +113,12 @@ void NativeViewHostMac::UninstallClip() {
   NOTIMPLEMENTED();
 }
 
-void NativeViewHostMac::ShowWidget(int x, int y, int w, int h) {
+void NativeViewHostMac::ShowWidget(int x,
+                                   int y,
+                                   int w,
+                                   int h,
+                                   int render_w,
+                                   int render_h) {
   if (host_->fast_resize())
     NOTIMPLEMENTED();
 
