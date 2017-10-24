@@ -112,6 +112,19 @@ static bool g_modify_layout_tree_structure_any_state = false;
 
 }  // namespace
 
+void LayoutObject::SetNeedsCollectInlines() {
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled() || NeedsCollectInlines() ||
+      (!IsInline() && !IsLayoutBlockFlow()))
+    return;
+  for (LayoutObject* object = this; object && !object->NeedsCollectInlines();
+       object = object->Parent()) {
+    DLOG(INFO) << "SetNeedsCollectInlines: " << object->DecoratedName();
+    object->SetNeedsCollectInlines(true);
+    if (object->IsLayoutBlockFlow())
+      break;
+  }
+}
+
 #if DCHECK_IS_ON()
 
 LayoutObject::SetLayoutNeededForbiddenScope::SetLayoutNeededForbiddenScope(
@@ -775,6 +788,7 @@ static inline bool ObjectIsRelayoutBoundary(const LayoutObject* object) {
 
 void LayoutObject::MarkContainerChainForLayout(bool schedule_relayout,
                                                SubtreeLayoutScope* layouter) {
+  DLOG(INFO) << "MarkContainerChainForLayout";
 #if DCHECK_IS_ON()
   DCHECK(!IsSetNeedsLayoutForbidden());
 #endif
@@ -791,6 +805,8 @@ void LayoutObject::MarkContainerChainForLayout(bool schedule_relayout,
   bool simplified_normal_flow_layout = NeedsSimplifiedNormalFlowLayout() &&
                                        !SelfNeedsLayout() &&
                                        !NormalChildNeedsLayout();
+  if (object)
+    object->SetNeedsCollectInlines();
 
   while (object) {
     if (object->SelfNeedsLayout())
@@ -809,10 +825,12 @@ void LayoutObject::MarkContainerChainForLayout(bool schedule_relayout,
       object->SetPosChildNeedsLayout(true);
       simplified_normal_flow_layout = true;
     } else if (simplified_normal_flow_layout) {
+      DLOG(INFO) << "MarkContainerChainForLayout: simplified_normal_flow_layout " << object->NeedsSimplifiedNormalFlowLayout() << " " << object->DecoratedName();
       if (object->NeedsSimplifiedNormalFlowLayout())
         return;
       object->SetNeedsSimplifiedNormalFlowLayout(true);
     } else {
+      DLOG(INFO) << "MarkContainerChainForLayout: NormalChildNeedsLayout " << object->NormalChildNeedsLayout() << " " << object->DecoratedName();
       if (object->NormalChildNeedsLayout())
         return;
       object->SetNormalChildNeedsLayout(true);
@@ -2954,6 +2972,7 @@ void LayoutObject::ScheduleRelayout() {
 
 void LayoutObject::ForceLayout() {
   SetSelfNeedsLayout(true);
+  SetNeedsCollectInlines();
   SetShouldDoFullPaintInvalidation();
   UpdateLayout();
 }
@@ -2963,6 +2982,7 @@ void LayoutObject::ForceLayout() {
 // forceLayout.
 void LayoutObject::ForceChildLayout() {
   SetNormalChildNeedsLayout(true);
+  SetNeedsCollectInlines();
   UpdateLayout();
 }
 

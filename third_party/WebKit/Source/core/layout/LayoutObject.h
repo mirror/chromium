@@ -823,6 +823,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   bool NormalChildNeedsLayout() const {
     return bitfields_.NormalChildNeedsLayout();
   }
+  bool NeedsCollectInlines() const { return bitfields_.NeedsCollectInlines(); }
 
   bool PreferredLogicalWidthsDirty() const {
     return bitfields_.PreferredLogicalWidthsDirty();
@@ -1023,6 +1024,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   void SetNeedsPositionedMovementLayout();
   void SetPreferredLogicalWidthsDirty(MarkingBehavior = kMarkContainerChain);
   void ClearPreferredLogicalWidthsDirty();
+  void SetNeedsCollectInlines();
+  void ClearNeedsCollectInlines() { SetNeedsCollectInlines(false); }
 
   void SetNeedsLayoutAndPrefWidthsRecalc(
       LayoutInvalidationReasonForTracing reason) {
@@ -2339,6 +2342,10 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     ADD_BOOLEAN_BITFIELD(preferred_logical_widths_dirty_,
                          PreferredLogicalWidthsDirty);
 
+    // This flag is set on the inline container box that needs to run the
+    // Pre-layout phase. Also maybe set to inline to optimize the propagation.
+    ADD_BOOLEAN_BITFIELD(needs_collect_inlines_, NeedsCollectInlines);
+
     ADD_BOOLEAN_BITFIELD(may_need_paint_invalidation_,
                          MayNeedPaintInvalidation);
     ADD_BOOLEAN_BITFIELD(may_need_paint_invalidation_subtree_,
@@ -2474,7 +2481,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
    protected:
     // Use protected to avoid warning about unused variable.
-    unsigned unused_bits_ : 5;
+    unsigned unused_bits_ : 4;
 
    private:
     // This is the cached 'position' value of this object
@@ -2575,6 +2582,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   void SetNeedsSimplifiedNormalFlowLayout(bool b) {
     bitfields_.SetNeedsSimplifiedNormalFlowLayout(b);
   }
+  void SetNeedsCollectInlines(bool b) { bitfields_.SetNeedsCollectInlines(b); }
+
   void SetSelfNeedsOverflowRecalcAfterStyleChange() {
     bitfields_.SetSelfNeedsOverflowRecalcAfterStyleChange(true);
   }
@@ -2658,6 +2667,7 @@ inline void LayoutObject::SetNeedsLayout(
 #endif
   bool already_needed_layout = bitfields_.SelfNeedsLayout();
   SetSelfNeedsLayout(true);
+  SetNeedsCollectInlines();
   if (!already_needed_layout) {
     TRACE_EVENT_INSTANT1(
         TRACE_DISABLED_BY_DEFAULT("devtools.timeline.invalidationTracking"),
@@ -2704,6 +2714,7 @@ inline void LayoutObject::SetChildNeedsLayout(MarkingBehavior mark_parents,
 #endif
   bool already_needed_layout = NormalChildNeedsLayout();
   SetNormalChildNeedsLayout(true);
+  SetNeedsCollectInlines();
   // FIXME: Replace MarkOnlyThis with the SubtreeLayoutScope code path and
   // remove the MarkingBehavior argument entirely.
   if (!already_needed_layout && mark_parents == kMarkContainerChain &&
