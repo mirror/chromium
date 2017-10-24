@@ -34,11 +34,14 @@ class GL_EXPORT GLImageDXGIBase : public GLImage {
                             gfx::OverlayTransform transform,
                             const gfx::Rect& bounds_rect,
                             const gfx::RectF& crop_rect) override;
+  void SetColorSpace(const gfx::ColorSpace& color_space) override;
   void Flush() override;
   void OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
                     uint64_t process_tracing_id,
                     const std::string& dump_name) override;
   Type GetType() const override;
+
+  const gfx::ColorSpace& color_space() const { return color_space_; }
 
   base::win::ScopedComPtr<ID3D11Texture2D> texture() { return texture_; }
   size_t level() const { return level_; }
@@ -50,6 +53,7 @@ class GL_EXPORT GLImageDXGIBase : public GLImage {
   ~GLImageDXGIBase() override;
 
   gfx::Size size_;
+  gfx::ColorSpace color_space_;
 
   base::win::ScopedComPtr<ID3D11Texture2D> texture_;
   base::win::ScopedComPtr<IDXGIKeyedMutex> keyed_mutex_;
