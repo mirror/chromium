@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70989426_a2d8a66a",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-10-24T06:12:42Z",
+      "side": 1,
+      "message": "regions_by_base is keyed on the base language, so why are you using \"lang\" here to look up? I see \"lang\" here could be a region specific lang, right?",
+      "range": {
+        "startLine": 67,
+        "startChar": 45,
+        "endLine": 67,
+        "endChar": 49
+      },
+      "revId": "250e1f04fee68595b0a2448d8e9db64c113c3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4403ff6e_928d5a7d",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-10-24T06:12:42Z",
+      "side": 1,
+      "message": "nit: if languages appear in descending order of prob, then you could break out the for look early, the first time the prob is below the threshold.",
+      "range": {
+        "startLine": 196,
+        "startChar": 11,
+        "endLine": 196,
+        "endChar": 18
+      },
+      "revId": "250e1f04fee68595b0a2448d8e9db64c113c3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d219f0_8ff257d1",
+        "filename": "components/language/core/browser/heuristic_language_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-10-24T06:12:42Z",
+      "side": 1,
+      "message": "nit: the description is not exactly inline with the impl. If the delta makes score -ve, it\u0027ll be floored at 0 (and not \"not updated\")",
+      "range": {
+        "startLine": 105,
+        "startChar": 26,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "250e1f04fee68595b0a2448d8e9db64c113c3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
