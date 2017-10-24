@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59df4f74_58378cd5",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "Hi Scott, what do you think about having a separate helper class here?",
+      "parentUuid": "d1982b3c_23b87c9a",
+      "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e99b518a_72e38460",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T22:51:19Z",
       "side": 1,
       "message": "This file is built under \"if (!is_mac || mac_views_browser)\". Does mac_views_browser mean it will work on mac desktop Chrome?",
+      "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd747156_1c781a17",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "Hi Scott, do you know if mac is auto covered already with mac_views_browser?",
+      "parentUuid": "e99b518a_72e38460",
       "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "180da130_10620ee1",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "You are right. It does not need to. Now I updated it to let the TabManager tell the specific helper.",
+      "parentUuid": "a52ddf8b_2686027f",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 36
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bef74a0a_23ee9908",
         "filename": "chrome/browser/ui/tab_ui_helper.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a3bd1d_c902d75e",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "This function is removed now.",
+      "parentUuid": "bef74a0a_23ee9908",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8394f681_965d3d68",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11914c89_50852ec8",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4496df28_b3df9745",
         "filename": "chrome/browser/ui/tab_ui_helper.h",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8604332_f828faf5",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "4496df28_b3df9745",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "c51fb448_8e36a990",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "For some tab, it can be false for a long time if the user doesn\u0027t select it.\n\nNow updated to was_active_at_once.",
+      "parentUuid": "a48fce91_fc2b4d79",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23743b3c_e8121a4a",
         "filename": "chrome/browser/ui/tab_ui_helper.h",
         "patchSetId": 4
@@ -160,6 +280,30 @@
       "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64254b1a_b89d3fba",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23743b3c_e8121a4a",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "c09c08bb_d8e32d1b",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b12c37c0_d96ae739",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 16
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a132adcb_bd3c1bec",
         "filename": "chrome/browser/ui/tab_ui_helper.h",
         "patchSetId": 4
@@ -206,6 +374,30 @@
       "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36362c18_3be48000",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a132adcb_bd3c1bec",
+      "range": {
+        "startLine": 58,
+        "startChar": 24,
+        "endLine": 58,
+        "endChar": 47
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "d04a2e7d_2c69e9d2",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "Renamed this to set_was_active_at_least_once.\n\nSince this tracks if the tab was active for at least once, there is no need to set it back to non-active.",
+      "parentUuid": "f81e0b0f_feb363ff",
+      "range": {
+        "startLine": 471,
+        "startChar": 48,
+        "endLine": 471,
+        "endChar": 60
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca21f8bd_d920bbb5",
         "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
         "patchSetId": 4
@@ -252,6 +468,30 @@
       "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2892026_af7501a0",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca21f8bd_d920bbb5",
+      "range": {
+        "startLine": 537,
+        "startChar": 16,
+        "endLine": 538,
+        "endChar": 68
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "8c7edb40_d9fcf7ce",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "I think AddTab() is called when a new tab is created and inserted, right? This code can be treated as initializing the TabUIHelper\u0027s state. At that time, the tab could be in the background (is_active is false). And we need to initialize it to false.",
+      "parentUuid": "b6a2f7bf_96249071",
+      "range": {
+        "startLine": 592,
+        "startChar": 0,
+        "endLine": 592,
+        "endChar": 66
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efe82f3a_58d05f9a",
         "filename": "components/favicon/content/content_favicon_driver.cc",
         "patchSetId": 4
@@ -301,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "93676496_375f14c6",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "Normally, we only know the favicon after the navigation commits, so we have some committed navigation entry already. For our case, the initial navigation was delayed (before sending out network request), so there is only pending navigation entry.",
+      "parentUuid": "efe82f3a_58d05f9a",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 39
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f471158b_063bc267",
         "filename": "components/favicon/content/content_favicon_driver.cc",
         "patchSetId": 4
@@ -321,6 +609,30 @@
       "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0a1be1_9bea29b1",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "In this CL, TabManager uses ContentFaviconDriver to fetch the favicon. When successful, it will get to here. And at this time, the initial navigation is still delayed, so there is no committed nav entry.",
+      "parentUuid": "f471158b_063bc267",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 62
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64c19eee_a508805a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-24T22:48:13Z",
+      "side": 1,
+      "message": "Maybe we should use host instead of URL here to fetch favicon, so that we have higher chance of getting a hit in the history service? For example, using \"http://www.cnn.com/\" instead of \"http://www.cnn.com/some_news_path1\".\n\nThe assumption here is that the URL\u0027s favicon is likely the same as the host\u0027s favicon.",
+      "range": {
+        "startLine": 1207,
+        "startChar": 33,
+        "endLine": 1207,
+        "endChar": 72
+      },
+      "revId": "11f41605d7f9023990eaea5172590cc67ff4aa46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
