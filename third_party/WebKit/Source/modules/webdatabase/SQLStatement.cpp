@@ -97,10 +97,10 @@ bool SQLStatement::PerformCallback(SQLTransaction* transaction) {
   if (error) {
     if (error_callback)
       callback_error =
-          error_callback->handleEvent(transaction, SQLError::Create(*error));
+          error_callback->handleEvent(transaction, SQLError::Create(*error)).IsJust();
   } else if (callback) {
     callback_error =
-        !callback->handleEvent(transaction, backend_->SqlResultSet());
+        callback->handleEvent(transaction, backend_->SqlResultSet()).IsNothing();
   }
 
   return callback_error;

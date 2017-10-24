@@ -29,6 +29,7 @@
 #ifndef SQLStatementErrorCallback_h
 #define SQLStatementErrorCallback_h
 
+#include "platform/bindings/CallbackInterfaceBase.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -41,7 +42,7 @@ class SQLStatementErrorCallback
  public:
   virtual ~SQLStatementErrorCallback() {}
   virtual void Trace(blink::Visitor* visitor) {}
-  virtual bool handleEvent(SQLTransaction*, SQLError*) = 0;
+  virtual v8::Maybe<bool> handleEvent(SQLTransaction*, SQLError*) = 0;
 };
 
 }  // namespace blink
