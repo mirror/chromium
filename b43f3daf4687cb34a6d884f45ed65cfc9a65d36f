@@ -93,6 +93,30 @@
       "revId": "b43f3daf4687cb34a6d884f45ed65cfc9a65d36f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "031b37a4_b007578a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-helper.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-24T21:42:44Z",
+      "side": 1,
+      "message": "In fact, it\u0027s not about \"this\" here, but \"arguments\". Arrow functions do not have \"arguments\" defined, which means the arguments you apply towards func are actually from the enclosing scope (i.e. the arguments for expectedCalled) but not those of the actual call site.",
+      "parentUuid": "9b960c5f_b3be9f86",
+      "range": {
+        "startLine": 456,
+        "startChar": 20,
+        "endLine": 456,
+        "endChar": 21
+      },
+      "revId": "b43f3daf4687cb34a6d884f45ed65cfc9a65d36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

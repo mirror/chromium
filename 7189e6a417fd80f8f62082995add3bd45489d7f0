@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eb88536_a17ceb0d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-helper.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-24T21:42:44Z",
+      "side": 1,
+      "message": "Perhaps I\u0027m missing something, but I wonder if this is really the case. Test.prototype.step_timeout doesn\u0027t seem to use any magic that prevent it to be called multiple times within a test. I also did a quick experiment and it seemed to work.",
+      "range": {
+        "startLine": 452,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 78
+      },
+      "revId": "7189e6a417fd80f8f62082995add3bd45489d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
