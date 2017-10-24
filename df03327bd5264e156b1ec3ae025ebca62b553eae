@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a521bf5_4cd2cf0c",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-24T03:43:54Z",
+      "side": 1,
+      "message": "This default action is defined only in Chrome OS so how abount renaming this to MESSAGE_CENTER_SETTING?\n\nOr should we remove this and open message center in the handler on Chrome OS as well as the settings on the non-Chrome OS device?",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 50
+      },
+      "revId": "df03327bd5264e156b1ec3ae025ebca62b553eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
