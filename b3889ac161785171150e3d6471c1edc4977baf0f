@@ -283,6 +283,30 @@
       "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524e6cda_3d030921",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-24T11:31:39Z",
+      "side": 1,
+      "message": "Thanks! This looks great.\n\n\u003e is the documentation in /services/network/public/interfaces/cookie_manager.mojom not enough?\n\nWell, no. If the network service decided that it won\u0027t delete cookies with the value \"plz don\u0027t delete me\", it won\u0027t be reflected in the CookieDeletionFilter struct in cookie_manager.mojom. But it can be reflected here by adding a test for that value.\n\nI probably sound super nitpicky by now, but as a browsing_data owner, I primarily deal with \"something wasn\u0027t deleted\" bugs, so you know... I really appreciate your eagerness to add more tests :)",
+      "parentUuid": "7f3b2a3f_9ee6c41b",
+      "range": {
+        "startLine": 916,
+        "startChar": 52,
+        "endLine": 916,
+        "endChar": 74
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
