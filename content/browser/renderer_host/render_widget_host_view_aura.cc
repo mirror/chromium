@@ -1702,6 +1702,14 @@ bool RenderWidgetHostViewAura::TransformPointToCoordSpaceForView(
 void RenderWidgetHostViewAura::FocusedNodeChanged(
     bool editable,
     const gfx::Rect& node_bounds_in_screen) {
+#if !defined(OS_ANDROID)
+  // Android handles this message in ImeAdapter#focusedNodeChanged(), and waits
+  // until receiving the next text input state update before resetting the IME.
+  if (GetInputMethod())
+    GetInputMethod()->CancelComposition(this);
+  has_composition_text_ = false;
+#endif
+
 #if defined(OS_WIN)
   if (!editable && virtual_keyboard_requested_) {
     virtual_keyboard_requested_ = false;
