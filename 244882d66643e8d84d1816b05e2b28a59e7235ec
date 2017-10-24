@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "8c9954b4_893ce993",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-24T07:28:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e7dd1689_b319c9d1",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 61
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6ff1a80_e63f8de8",
         "filename": "components/policy/tools/syntax_check_policy_template_json.py",
         "patchSetId": 9
@@ -83,6 +107,30 @@
       "side": 1,
       "message": "Why? It would still fail. TypeError: object of type \u0027NoneType\u0027 has no len()",
       "parentUuid": "a6ff1a80_e63f8de8",
+      "range": {
+        "startLine": 233,
+        "startChar": 6,
+        "endLine": 233,
+        "endChar": 28
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6a8b61_166af30e",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-24T07:28:36Z",
+      "side": 1,
+      "message": "This would make the program crash, but it\u0027s generally written in a way that it prints errors instead (note that _Error() actually prints and doesn\u0027t crash). This allows it to find all errors and not just the ones up to the crash.",
+      "parentUuid": "5647d23e_f6570ae5",
       "range": {
         "startLine": 233,
         "startChar": 6,

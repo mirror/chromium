@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38853372_de05ec75",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-24T07:28:36Z",
+      "side": 1,
+      "message": "Nit: I wonder what happens if one forgets to close triple quotes. My guess is that eval already bails and you won\u0027t even get here. It\u0027s still a good sanity check, but if that\u0027s the case, you could consider an assert here.",
+      "range": {
+        "startLine": 469,
+        "startChar": 0,
+        "endLine": 471,
+        "endChar": 0
+      },
+      "revId": "e7361e1939dca89068c011b21b1d4e5bfb4a5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
