@@ -16,6 +16,24 @@
       "revId": "750ba7027d0a8d62aa843a0d27c2f13365022ca8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02264945_3a2db16a",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/worklet-animation-creation.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-24T19:25:53Z",
+      "side": 0,
+      "message": "Since we are not exposing animation.timeline as a writable property, then creating\nan animation without a timeline is effectively useless. So I am fine to throw for\nnow until we allow timeline to be set after construction.\n\nwdyt?",
+      "parentUuid": "61d63e42_ace42bfc",
+      "revId": "750ba7027d0a8d62aa843a0d27c2f13365022ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
