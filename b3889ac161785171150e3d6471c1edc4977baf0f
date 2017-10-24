@@ -307,6 +307,30 @@
       "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7410c93e_05d9a1a5",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-24T11:42:42Z",
+      "side": 1,
+      "message": "Still confused (if the network service changes behavior, it should totally change documentation, and cookie_manager.mojom is the documentation for how the network service handles cookies) but I\u0027m not going to worry about it.  If we\u0027re ever in an interactive medium, I may take the 30s it would probably cost to get unconfused, though :-}.",
+      "parentUuid": "524e6cda_3d030921",
+      "range": {
+        "startLine": 916,
+        "startChar": 52,
+        "endLine": 916,
+        "endChar": 74
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
