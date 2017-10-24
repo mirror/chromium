@@ -11,6 +11,9 @@ namespace blink {
 
 namespace {
 
+using ::payments::mojom::blink::BasicCardNetwork;
+using ::payments::mojom::blink::BasicCardType;
+
 static const size_t kMaxListSize = 1024;
 
 const struct {
@@ -65,8 +68,6 @@ void BasicCardHelper::parseBasiccardData(
   }
 
   if (basic_card.hasSupportedTypes()) {
-    using ::payments::mojom::blink::BasicCardType;
-
     if (basic_card.supportedTypes().size() > kMaxListSize) {
       exception_state.ThrowTypeError(
           "basic-card supportedTypes cannot be longer than 1024 elements");

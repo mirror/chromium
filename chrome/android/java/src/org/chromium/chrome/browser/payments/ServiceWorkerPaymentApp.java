@@ -63,7 +63,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
          * @param supportedCardTypes    The supported card types of a 'basic-card' payment
          *                              instrument.
          */
-        Capabilities(int[] supportedCardNetworks, int[] supportedCardTypes) {
+        /* package */ Capabilities(int[] supportedCardNetworks, int[] supportedCardTypes) {
             mSupportedCardNetworks = supportedCardNetworks;
             mSupportedCardTypes = supportedCardTypes;
         }
@@ -73,7 +73,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
          *
          * @return a set of mojom::BasicCardNetwork.
          */
-        int[] getSupportedCardNetworks() {
+        /* package */ int[] getSupportedCardNetworks() {
             return mSupportedCardNetworks;
         }
 
@@ -82,7 +82,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
          *
          * @return a set of mojom::BasicCardType.
          */
-        int[] getSupportedCardTypes() {
+        /* package */ int[] getSupportedCardTypes() {
             return mSupportedCardTypes;
         }
     }
@@ -180,7 +180,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     }
 
     // Matches |requestMethodData|.supportedTypes and |requestMethodData|.supportedNetwokrs for
-    // 'basic-card' payment method with the Capabilities in this payment app to determine whehter
+    // 'basic-card' payment method with the Capabilities in this payment app to determine whether
     // this payment app supports |requestMethodData|.
     private boolean matchBasiccardCapabilities(PaymentMethodData requestMethodData) {
         // Empty supported card types and networks in payment request method data indicates it
@@ -203,8 +203,8 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
         }
 
         // If requestSupportedTypes and requestSupportedNetworks are not empty, match them with the
-        // capabilities. Break out of the for loop if a matched capabilities has been found. So 'j
-        // >= mCapabilities.length' indicates that there is matched capabilities in this payment
+        // capabilities. Break out of the for loop if a matched capability has been found. So 'j
+        // < mCapabilities.length' indicates that there is a matched capability in this payment
         // app.
         int j = 0;
         for (; j < mCapabilities.length; j++) {
@@ -234,9 +234,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
 
             break;
         }
-        if (j >= mCapabilities.length) return false;
-
-        return true;
+        return j < mCapabilities.length;
     }
 
     @Override

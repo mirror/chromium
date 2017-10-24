@@ -11,18 +11,18 @@
 
 namespace blink {
 
-using ::payments::mojom::blink::BasicCardNetwork;
-using ::payments::mojom::blink::BasicCardType;
-
 class BasicCardHelper {
+  STATIC_ONLY(BasicCardHelper);
+
  public:
   // Parse 'basic-card' data in |input| and store result in
   // |supported_networks_output| and |supported_types_output| or throw
   // exception.
   static void parseBasiccardData(
       const ScriptValue& input,
-      Vector<BasicCardNetwork>& supported_networks_output,
-      Vector<BasicCardType>& supported_types_output,
+      Vector<::payments::mojom::blink::BasicCardNetwork>&
+          supported_networks_output,
+      Vector<::payments::mojom::blink::BasicCardType>& supported_types_output,
       ExceptionState&);
 
   // Check whether |input| contains 'basic-card' network names.
@@ -31,4 +31,4 @@ class BasicCardHelper {
 
 }  // namespace blink
 
-#endif
+#endif  // BasicCardHelper_h
