@@ -6,6 +6,7 @@
     var root = host.attachShadow({mode:'open'});
     root.innerHTML = '<slot/><link rel="stylesheet" href="data:text/css,:host{color:red}">';
 
+setTimeout(function() {
     test(() => {
         assert_equals(getComputedStyle(host).color, "rgb(255, 0, 0)", "Host color is red.");
     }, "Check initial color from applied stylesheet.");
@@ -14,4 +15,5 @@
         root.querySelector("link").setAttribute("href", "data:text/css,");
         assert_equals(getComputedStyle(host).color, "rgb(0, 0, 0)", "Host color is black after href is changed.");
     }, "Changing href on a link in shadow should not trigger an assert.");
+}, 0);
 </script>

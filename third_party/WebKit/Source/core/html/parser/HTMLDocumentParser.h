@@ -168,9 +168,7 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   bool HasInsertionPoint() final;
   void PrepareToStopParsing() final;
   void StopParsing() final;
-  bool IsPaused() const {
-    return IsWaitingForScripts() || is_waiting_for_stylesheets_;
-  }
+  bool IsPaused() const;
   bool IsWaitingForScripts() const final;
   bool IsExecutingScript() const final;
   void ExecuteScriptsWaitingForResources() final;

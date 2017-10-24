@@ -8,6 +8,9 @@ PASS link.sheet is null
 PASS sheet.ownerNode is null
 PASS sheet.cssRules[0].cssText[0] is "*"
 Re-adding <link>...
+PASS successfullyParsed is true
+
+TEST COMPLETE
 PASS sheet.ownerNode is null
 PASS link.sheet === sheet is false
 PASS link.sheet.ownerNode is link
@@ -22,7 +25,4 @@ Re-adding <style>...
 PASS sheet.ownerNode is null
 PASS style.sheet === sheet is false
 PASS style.sheet.ownerNode is style
-PASS successfullyParsed is true
-
-TEST COMPLETE
 

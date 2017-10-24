@@ -9,6 +9,9 @@
 Test that &lt;link> elements only have stylesheets when in document.</p>
 <div id="console"></div>
 <script>
+    if (window.testRunner)
+        testRunner.waitUntilDone();
+
     debug("Testing &lt;link>...");
     sheet = document.styleSheets[0];
     head = document.getElementsByTagName("head")[0];
@@ -26,30 +29,36 @@ Test that &lt;link> elements only have stylesheets when in document.</p>
 
     debug("Re-adding &lt;link>...");
     head.appendChild(link);
-    shouldBe('sheet.ownerNode', 'null')
-    shouldBe('link.sheet === sheet', 'false')
-    shouldBe('link.sheet.ownerNode', 'link')
 
-    debug("Testing &lt;style>...");
-    sheet = document.styleSheets[0];
-    head = document.getElementsByTagName("head")[0];
-    style = document.getElementsByTagName("style")[0];
+    setTimeout(function() {
+      shouldBe('sheet.ownerNode', 'null')
+      shouldBe('link.sheet === sheet', 'false')
+      shouldBe('link.sheet.ownerNode', 'link')
 
-    shouldBe('sheet.ownerNode', 'style')
-    shouldBe('style.sheet', 'sheet')
+      debug("Testing &lt;style>...");
+      sheet = document.styleSheets[0];
+      head = document.getElementsByTagName("head")[0];
+      style = document.getElementsByTagName("style")[0];
 
-    debug("Removing &lt;style>...");
-    head.removeChild(style);
+      shouldBe('sheet.ownerNode', 'style')
+      shouldBe('style.sheet', 'sheet')
 
-    shouldBe('style.sheet', 'null')
-    shouldBe('sheet.ownerNode', 'null')
-    shouldBe('sheet.cssRules[0].cssText[0]', '"*"')
+      debug("Removing &lt;style>...");
+      head.removeChild(style);
 
-    debug("Re-adding &lt;style>...");
-    head.appendChild(style);
-    shouldBe('sheet.ownerNode', 'null')
-    shouldBe('style.sheet === sheet', 'false')
-    shouldBe('style.sheet.ownerNode', 'style')
+      shouldBe('style.sheet', 'null')
+      shouldBe('sheet.ownerNode', 'null')
+      shouldBe('sheet.cssRules[0].cssText[0]', '"*"')
+
+      debug("Re-adding &lt;style>...");
+      head.appendChild(style);
+      shouldBe('sheet.ownerNode', 'null')
+      shouldBe('style.sheet === sheet', 'false')
+      shouldBe('style.sheet.ownerNode', 'style')
+
+      if (window.testRunner)
+          testRunner.notifyDone();
+    }, 0);
 
 </script>
 </body>
