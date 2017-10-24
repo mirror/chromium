@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e21bd48e_dd4757db",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2300,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-24T00:01:05Z",
+      "side": 1,
+      "message": "The reason why it is put here is because I want to measure the user-perceived load time with prerender (i.e. from time they tap in omnibar to page load). WebStateObserver callbacks can only measure real page load so won\u0027t report prerender time correctly.\n\nHere\u0027s my understanding of the sequencing of events seen by a prerender tab:\n1. WebStateObserver::DidStartNavigation\n2. WebStateObserver::PageLoaded\n3. PreloadController -releasePrerenderContents\n4. BVC -tabLoadComplete:withSuccess\n\nI can move the DidPromotePrerenderTab() call below that you called out to PreloadController. Is there a better way for TabHelper to hook into point 4?\n\nThanks for pointers!",
+      "parentUuid": "c8c268ce_e163f53b",
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "426d8dd0_b84aeada",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
