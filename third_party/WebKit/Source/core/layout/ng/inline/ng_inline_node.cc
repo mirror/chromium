@@ -382,12 +382,22 @@ void NGInlineNode::InvalidatePrepareLayout() {
   DCHECK(!IsPrepareLayoutFinished());
 }
 
-void NGInlineNode::PrepareLayout() {
+void NGInlineNode::PrepareLayoutIfNeeded() {
+  LayoutBlockFlow* block_flow = GetLayoutBlockFlow();
+  if (IsPrepareLayoutFinished()) {
+    if (!block_flow->NeedsCollectInlines())
+      return;
+
+    block_flow->ResetNGInlineNodeData();
+  }
+
   // Scan list of siblings collecting all in-flow non-atomic inlines. A single
   // NGInlineNode represent a collection of adjacent non-atomic inlines.
   CollectInlines();
   SegmentText();
   ShapeText();
+
+  block_flow->SetNeedsCollectInlines(false);
 }
 
 const NGOffsetMappingResult& NGInlineNode::ComputeOffsetMappingIfNeeded() {
@@ -543,6 +553,8 @@ void NGInlineNode::ShapeTextForFirstLineIfNeeded() {
 scoped_refptr<NGLayoutResult> NGInlineNode::Layout(
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token) {
+  PrepareLayoutIfNeeded();
+
   NGInlineLayoutAlgorithm algorithm(*this, constraint_space,
                                     ToNGInlineBreakToken(break_token));
   return algorithm.Layout();
@@ -589,6 +601,8 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
 }
 
 MinMaxSize NGInlineNode::ComputeMinMaxSize() {
+  PrepareLayoutIfNeeded();
+
   // Run line breaking with 0 and indefinite available width.
 
   // TODO(kojii): There are several ways to make this more efficient and faster
@@ -613,6 +627,7 @@ MinMaxSize NGInlineNode::ComputeMinMaxSize() {
 }
 
 NGLayoutInputNode NGInlineNode::NextSibling() {
+  PrepareLayoutIfNeeded();
   return NGBlockNode(Data().next_sibling_);
 }
 

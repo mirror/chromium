@@ -791,6 +791,8 @@ void LayoutObject::MarkContainerChainForLayout(bool schedule_relayout,
   bool simplified_normal_flow_layout = NeedsSimplifiedNormalFlowLayout() &&
                                        !SelfNeedsLayout() &&
                                        !NormalChildNeedsLayout();
+  bool mark_collect_inlines = RuntimeEnabledFeatures::LayoutNGEnabled() &&
+                              !IsLayoutBlockFlow() && IsInline();
 
   while (object) {
     if (object->SelfNeedsLayout())
@@ -801,6 +803,10 @@ void LayoutObject::MarkContainerChainForLayout(bool schedule_relayout,
     LayoutObject* container = object->Container();
     if (!container && !object->IsLayoutView())
       return;
+    if (mark_collect_inlines && container->IsLayoutBlockFlow()) {
+      container->SetNeedsCollectInlines(true);
+      mark_collect_inlines = false;
+    }
     if (!last->IsTextOrSVGChild() && last->Style()->HasOutOfFlowPosition()) {
       object = last->ContainingBlock();
       if (object->PosChildNeedsLayout())

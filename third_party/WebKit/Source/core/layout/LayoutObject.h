@@ -823,6 +823,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   bool NormalChildNeedsLayout() const {
     return bitfields_.NormalChildNeedsLayout();
   }
+  bool NeedsCollectInlines() const { return bitfields_.NeedsCollectInlines(); }
+  void SetNeedsCollectInlines(bool b) { bitfields_.SetNeedsCollectInlines(b); }
 
   bool PreferredLogicalWidthsDirty() const {
     return bitfields_.PreferredLogicalWidthsDirty();
@@ -2423,6 +2425,9 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     ADD_BOOLEAN_BITFIELD(contains_inline_with_outline_and_continuation_,
                          ContainsInlineWithOutlineAndContinuation);
 
+    // from LayoutNGBlockFlow
+    ADD_BOOLEAN_BITFIELD(needs_collect_inlines_, NeedsCollectInlines);
+
     // from LayoutInline
     ADD_BOOLEAN_BITFIELD(always_create_line_boxes_for_layout_inline_,
                          AlwaysCreateLineBoxesForLayoutInline);
@@ -2474,7 +2479,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
    protected:
     // Use protected to avoid warning about unused variable.
-    unsigned unused_bits_ : 5;
+    unsigned unused_bits_ : 4;
 
    private:
     // This is the cached 'position' value of this object
@@ -2575,6 +2580,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   void SetNeedsSimplifiedNormalFlowLayout(bool b) {
     bitfields_.SetNeedsSimplifiedNormalFlowLayout(b);
   }
+
   void SetSelfNeedsOverflowRecalcAfterStyleChange() {
     bitfields_.SetSelfNeedsOverflowRecalcAfterStyleChange(true);
   }
@@ -2658,6 +2664,7 @@ inline void LayoutObject::SetNeedsLayout(
 #endif
   bool already_needed_layout = bitfields_.SelfNeedsLayout();
   SetSelfNeedsLayout(true);
+  SetNeedsCollectInlines(true);
   if (!already_needed_layout) {
     TRACE_EVENT_INSTANT1(
         TRACE_DISABLED_BY_DEFAULT("devtools.timeline.invalidationTracking"),
