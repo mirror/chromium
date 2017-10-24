@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5747538_b17c8ff0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-10-24T18:06:34Z",
+      "side": 1,
+      "message": "We need more details so as to how you go about doing this",
+      "revId": "a82fa9c0f6d2899a3c9d3136d5838af734d706be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
