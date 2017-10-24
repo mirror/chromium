@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f848fe4c_62fc6b97",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T21:58:01Z",
+      "side": 1,
+      "message": "It\u0027s a bit odd that the default style of #dump is set to display: none. Instead how about the following?\n\n - Change the HTML To \u003cdiv id\u003d\"dump\" hidden\u003e\n - Remove display: none from here.\n - Modify the JS code to add/remove the \"hidden\" attribute as necessary, instead of using element.style.display.",
+      "revId": "40ada34a776bfcb7600ece6cbbbd757cbb87fb71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca679b26_8742bfc1",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T21:58:01Z",
+      "side": 1,
+      "message": "Is this equivalent to the following?\n\nbackground-color: white;",
+      "range": {
+        "startLine": 72,
+        "startChar": 20,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "40ada34a776bfcb7600ece6cbbbd757cbb87fb71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c09439f_a034b288",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T21:58:01Z",
+      "side": 1,
+      "message": "Nit (optional): Can we reduce the redundancy of the code here?\n\n[\n  \u0027delete-all-pages\u0027,\n  \u0027delete-selected-pages\u0027,\n  ...\n].forEach(el \u003d\u003e el.disabled \u003d incognito);",
+      "revId": "40ada34a776bfcb7600ece6cbbbd757cbb87fb71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
