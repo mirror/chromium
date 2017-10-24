@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb80a5ce_0a181b96",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T17:14:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b88c284_4312d632",
+      "range": {
+        "startLine": 572,
+        "startChar": 16,
+        "endLine": 572,
+        "endChar": 21
+      },
+      "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34edbf32_b6eb84d5",
         "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-24T17:08:28Z",
       "side": 1,
       "message": "yikes!",
+      "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a261a8_05623fd2",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T17:14:18Z",
+      "side": 1,
+      "message": "I\u0027m definitely open to suggestions for a better way \u003d)\n\nI looked at what clang::Lexer::getRawToken was doing, and just generalized it a bit so the Lexer object can be used more than once.",
+      "parentUuid": "34edbf32_b6eb84d5",
       "revId": "fd5e9a9e2a045106122f88bb6432f9c23118a18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
