@@ -55,7 +55,7 @@ class FramebufferManagerTest : public GpuServiceTest {
   }
   ~FramebufferManagerTest() override {
     manager_.Destroy(false);
-    texture_manager_->Destroy(false);
+    texture_manager_->Destroy();
     renderbuffer_manager_->Destroy(false);
   }
 
@@ -133,7 +133,7 @@ class FramebufferInfoTestBase : public GpuServiceTest {
   }
   ~FramebufferInfoTestBase() override {
     manager_.Destroy(false);
-    texture_manager_->Destroy(false);
+    texture_manager_->Destroy();
     renderbuffer_manager_->Destroy(false);
   }
 
