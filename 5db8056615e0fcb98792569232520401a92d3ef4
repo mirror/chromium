@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d6a2118_805e0cbd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ChromeHomeDownloadManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-24T17:28:33Z",
+      "side": 1,
+      "message": "Looking at the other CustomTabActivityTestRule uses, I think I need to add this annotation to make sure first run doesn\u0027t pop up:\n\n@CommandLineFlags.Add({\n        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,\n        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG,\n})",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 44
+      },
+      "revId": "5db8056615e0fcb98792569232520401a92d3ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa9441df_00e08c97",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ChromeHomeDownloadManagerTest.java",
         "patchSetId": 1
