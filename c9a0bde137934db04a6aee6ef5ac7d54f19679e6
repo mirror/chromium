@@ -19,6 +19,108 @@
     },
     {
       "key": {
+        "uuid": "63995e08_491a13a2",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-24T21:55:25Z",
+      "side": 1,
+      "message": "nit: ternary operator (? :)",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb55c88_637aab96",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-24T21:55:25Z",
+      "side": 1,
+      "message": "newline",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d4811d_1add3463",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-24T21:55:25Z",
+      "side": 1,
+      "message": "can\u0027t we just copy it?",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd147823_50ee2243",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-24T21:55:25Z",
+      "side": 1,
+      "message": "if (VLOG_IS_ON(2))",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228cbdd8_6adf8da4",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-24T21:55:25Z",
+      "side": 1,
+      "message": "nit: can this be range based loop?",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9998a81c_24cf306a",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-24T21:55:25Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e106c4a_ccf14d99",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 4
@@ -70,6 +172,23 @@
     },
     {
       "key": {
+        "uuid": "858043aa_2f15fc37",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-24T21:55:25Z",
+      "side": 1,
+      "message": "do these have to be here? It\u0027s a bit uncommon for struct to have a static members.",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edbb8fa9_22525e30",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 4
@@ -81,6 +200,23 @@
       "writtenOn": "2017-10-24T21:41:23Z",
       "side": 1,
       "message": "Why do we want to make this a class? The class itself holds no data so what about just going back to the previous free standing function?",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a594b5b9_62b39a81",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-24T21:55:25Z",
+      "side": 1,
+      "message": "nit: make_unique",
       "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
