@@ -90,7 +90,6 @@ class SurfaceTreeHost : public SurfaceDelegate,
   void OnWindowAddedToRootWindow(aura::Window* window) override;
   void OnWindowRemovingFromRootWindow(aura::Window* window,
                                       aura::Window* new_root) override;
-  void OnWindowDestroying(aura::Window* window) override;
 
   // Overridden from cc::BeginFrameObserverBase:
   bool OnBeginFrameDerivedImpl(const viz::BeginFrameArgs& args) override;

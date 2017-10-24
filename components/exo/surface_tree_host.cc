@@ -85,6 +85,7 @@ SurfaceTreeHost::SurfaceTreeHost(const std::string& window_name,
   host_window_->SetName(window_name);
   host_window_->Init(ui::LAYER_SOLID_COLOR);
   host_window_->set_owned_by_parent(false);
+  host_window_->AddObserver(this);
   // The host window is a container of surface tree. It doesn't handle pointer
   // events.
   host_window_->SetEventTargetingPolicy(
@@ -102,6 +103,7 @@ SurfaceTreeHost::~SurfaceTreeHost() {
     host_window_->layer()->GetCompositor()->vsync_manager()->RemoveObserver(
         this);
   }
+  host_window_->RemoveObserver(this);
   LayerTreeFrameSinkHolder::DeleteWhenLastResourceHasBeenReclaimed(
       std::move(layer_tree_frame_sink_holder_));
 }
@@ -232,11 +234,6 @@ void SurfaceTreeHost::OnWindowRemovingFromRootWindow(aura::Window* window,
                                                      aura::Window* new_root) {
   DCHECK_EQ(window, host_window());
   window->layer()->GetCompositor()->vsync_manager()->RemoveObserver(this);
-}
-
-void SurfaceTreeHost::OnWindowDestroying(aura::Window* window) {
-  DCHECK_EQ(window, host_window());
-  window->RemoveObserver(this);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
