@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89b90f9d_bd235d0e",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-24T01:18:23Z",
+      "side": 1,
+      "message": "Ah, yes, I have updated the comment.",
+      "parentUuid": "b7468927_2a4f938c",
+      "revId": "313ffc50eb6314994a61122636e44a0600cbe5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14c57d40_64b30f6c",
         "filename": "remoting/codec/webrtc_video_encoder_selector.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-24T00:23:36Z",
       "side": 1,
       "message": "I\u0027m not sure how this semantic (only reset if profile changed) is useful to a caller? Doesn\u0027t the caller have to know that the reset happened, so it knows whether to call CreateEncoder() after this method, or to continue using the encoder it already has?\nFor example, if the caller called SetDesktopFrame() and the profile did *not* change, the caller already is using a perfectly good encoder, and should not call CreateEncoder() again because it would return a different, inferior encoder.",
+      "revId": "313ffc50eb6314994a61122636e44a0600cbe5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6024fc07_b7953fc7",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-24T01:18:23Z",
+      "side": 1,
+      "message": "No, the caller does not need to know whether reset has happened.\nCaller does not need to call CreateEncoder() if the last encoder works fine with the DesktopFrame. If encoding failed, the caller calls SetDesktopFrame() with the failed DesktopFrame, and call CreateEncoder() again to get next available encoder. If there is not more encoder, we should stop the video stream. Otherwise, we should restart the video stream.\n\nI have updated the comment of this class to explain this behavior.",
+      "parentUuid": "14c57d40_64b30f6c",
       "revId": "313ffc50eb6314994a61122636e44a0600cbe5dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
