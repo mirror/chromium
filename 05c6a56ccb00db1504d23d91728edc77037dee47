@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c5cc689_b6ed62e4",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestVariadicConstructorArguments.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-24T13:34:51Z",
+      "side": 1,
+      "message": "[\n    Constructor(double... args)\n] interface TestVariadicConstructorArguments {\n};",
+      "revId": "05c6a56ccb00db1504d23d91728edc77037dee47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
