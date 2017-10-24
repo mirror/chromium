@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "623a1400_2a4c269e",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T03:51:45Z",
+      "side": 1,
+      "message": "Maybe we can slightly simplify: \n // |impl|\u0027s destruction needs both DetachAndMaybeDestroy() and OnConnectionError()\n // to be called (see comments at LifecycleState enum), and OnConnectionError() cannot\n // happen before BindRequest(), therefore using base::Unretained() here is safe.",
+      "revId": "505396c682f04b73bdb3064101a7204681dea776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9bafce2_9a7e9d38",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T03:51:45Z",
+      "side": 1,
+      "message": "nit: DCHECK(creation_task_runner_-\u003eRunsTasksInCurrentSequence()) for documentation",
+      "revId": "505396c682f04b73bdb3064101a7204681dea776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
