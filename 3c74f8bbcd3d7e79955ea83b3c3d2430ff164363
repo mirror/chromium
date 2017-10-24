@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "361da9cd_a4491627",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-24T19:27:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efbb8940_8ba47cf9",
+      "range": {
+        "startLine": 27,
+        "startChar": 15,
+        "endLine": 27,
+        "endChar": 83
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3e3aae3_f71e56ef",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f06784c_846d92ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-24T19:27:28Z",
+      "side": 1,
+      "message": "The originally pinned notification gets killed when startForeground is called on another notification id :( So the detach is necessary to not have the flicker.",
+      "parentUuid": "c3e3aae3_f71e56ef",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5582acc7_a10455f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-24T19:27:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b440829b_14a5dd78",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 94
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cd6a92c_7b1f7bd7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338995fc_f5d8d6f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-24T19:27:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cd6a92c_7b1f7bd7",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 5
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e9cdc963_efa9d5b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-24T19:27:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0dae956_4f6a0a85",
+      "range": {
+        "startLine": 296,
+        "startChar": 36,
+        "endLine": 296,
+        "endChar": 54
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe063c7a_99dbf89a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c54b4c7_dea33771",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-24T19:27:28Z",
+      "side": 1,
+      "message": "We can\u0027t use the same notification id because the service stops after this is called, bringing the old notification id down with it. (Sequence of calls: https://paste.googleplex.com/5451076601905152)\n\nThis might be a problem eventually, but can be handled as it happens.",
+      "parentUuid": "fe063c7a_99dbf89a",
+      "range": {
+        "startLine": 626,
+        "startChar": 16,
+        "endLine": 631,
+        "endChar": 96
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
