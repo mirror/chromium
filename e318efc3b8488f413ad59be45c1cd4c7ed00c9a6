@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "924d57e3_c1e94ef0",
+        "filename": "content/public/common/menu_item.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-24T20:27:47Z",
+      "side": 1,
+      "message": "Needs rebase.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "e318efc3b8488f413ad59be45c1cd4c7ed00c9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
