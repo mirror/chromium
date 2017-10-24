@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "20909dbd_2a40e630",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-24T01:14:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4bcfb4ab_479e002d",
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a42f990_d8b67b60",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
         "patchSetId": 15
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "But TestPaintWorklet overrides it, so it has to be protected.",
       "parentUuid": "4a42f990_d8b67b60",
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fddea20_be2b610f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-24T01:14:44Z",
+      "side": 1,
+      "message": "\"protected\" is not necessary for overriding. C++ allows a derived class overrides a virtual private function. It\u0027s callable from a base class, but not from a derived class.",
+      "parentUuid": "b4bf0df3_733b2fd1",
       "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
