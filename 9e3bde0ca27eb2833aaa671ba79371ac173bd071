@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d184fdb_2f41ae90",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-24T00:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "488a0aa9_345d6bc5",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd2fa21b_e4e92b34",
         "filename": "services/service_manager/service_manager.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6889dadd_86e7490e",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-24T00:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd2fa21b_e4e92b34",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "501b145e_5366cc4f",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-24T00:41:09Z",
+      "side": 1,
+      "message": "I went with regular.",
+      "parentUuid": "a294babf_87a2bf07",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9192fcd5_93a51521",
         "filename": "services/service_manager/service_manager.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a3746b_8c68f816",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-24T00:41:09Z",
+      "side": 1,
+      "message": "Removed.\n(Instance::Stop() is called multiple times. I\u0027ll investigate in a different patch.)",
+      "parentUuid": "9192fcd5_93a51521",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e573ea80_cd01a6d5",
+        "filename": "services/service_manager/service_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-24T00:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cefe6b8_7e4d4698",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28e90c3f_8117b73f",
         "filename": "services/service_manager/service_manager.h",
         "patchSetId": 5
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "46713447_4822b2fb",
+        "filename": "services/service_manager/service_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-24T00:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28e90c3f_8117b73f",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fae5c775_f28f4fb1",
         "filename": "services/service_manager/tests/service_manager/singleton_manifest.json",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf4622c_94ee828f",
+        "filename": "services/service_manager/tests/service_manager/singleton_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-24T00:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fae5c775_f28f4fb1",
+      "revId": "9e3bde0ca27eb2833aaa671ba79371ac173bd071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
