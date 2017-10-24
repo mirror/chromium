@@ -328,7 +328,10 @@ class GPU_EXPORT Texture final : public TextureBase {
 
   void ApplyFormatWorkarounds(FeatureInfo* feature_info);
 
-  bool EmulatingRGB();
+  // If this texture's internal format is GL_RGBA, then report the internal
+  // format as GL_RGB for validation.
+  void SetEmulatingRGB(bool emulating_rgb) { emulating_rgb_ = emulating_rgb; }
+  bool EmulatingRGB() const { return emulating_rgb_; }
 
   // In GLES2 "texture complete" means it has all required mips for filtering
   // down to a 1x1 pixel texture, they are in the correct order, they are all
@@ -555,10 +558,6 @@ class GPU_EXPORT Texture final : public TextureBase {
   // Updates the images count in all the managers referencing this
   // texture.
   void UpdateHasImages();
-
-  // Updates the flag that indicates whether this texture requires RGB
-  // emulation.
-  void UpdateEmulatingRGB();
 
   // Increment the framebuffer state change count in all the managers
   // referencing this texture.
