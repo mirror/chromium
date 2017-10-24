@@ -22,6 +22,30 @@
       "revId": "0358e82b0a5c5cf140b3dda992c57d1c89072661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d0db1c_203eff6f",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-24T07:39:15Z",
+      "side": 1,
+      "message": "Do you mean GetPointerToBufferData and CreateIBufferFromData shouldn\u0027t be held in core_winrt_util?",
+      "parentUuid": "6d047890_7368df11",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "0358e82b0a5c5cf140b3dda992c57d1c89072661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
