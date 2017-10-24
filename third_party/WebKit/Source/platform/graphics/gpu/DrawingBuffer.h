@@ -506,6 +506,8 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
   const bool want_depth_;
   const bool want_stencil_;
 
+  bool use_half_float_storage_ = false;
+
   // The color space of this buffer's storage, and the color space in which
   // shader samplers will read this buffer.
   const gfx::ColorSpace storage_color_space_;
