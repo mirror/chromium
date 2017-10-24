@@ -56,10 +56,6 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   // Instruct to re-compute |PrepareLayout| on the next layout.
   void InvalidatePrepareLayout();
 
-  // Prepare inline and text content for layout. Must be called before
-  // calling the Layout method.
-  void PrepareLayout();
-
   const String& Text() const { return Data().text_content_; }
   StringView Text(unsigned start_offset, unsigned end_offset) const {
     return StringView(Data().text_content_, start_offset,
@@ -89,6 +85,10 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
 
  protected:
   bool IsPrepareLayoutFinished() const { return !Text().IsNull(); }
+
+  // Prepare inline and text content for layout. Must be called before
+  // calling the Layout method.
+  void PrepareLayoutIfNeeded();
 
   void CollectInlines();
   void SegmentText();
