@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42e6af23_6a272dda",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "IIRC it was all clang-cl.",
+      "parentUuid": "ff912b58_da8d7f46",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c583ddf_7f952322",
         "filename": "build/secondary/third_party/crashpad/crashpad/test/BUILD.gn",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-24T18:06:11Z",
       "side": 1,
       "message": "Can we use the same name used by the GYP build for ease of finding things? crashpad_test.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a26b20c_49f9edea",
+        "filename": "build/secondary/third_party/crashpad/crashpad/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Sure, done. I thought it was confusing that both the test binary names end in \"_test\" (and not \"_tests\") and this non-executable target did too, but done.",
+      "parentUuid": "1c583ddf_7f952322",
       "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d53e6f7d_6cc58d2c",
+        "filename": "build/secondary/third_party/crashpad/crashpad/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f8e3d25_9e6a5ef6",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a104b24_a08c50f0",
         "filename": "build/secondary/third_party/crashpad/crashpad/test/BUILD.gn",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ebaa0e4f_729ab8dc",
+        "filename": "build/secondary/third_party/crashpad/crashpad/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "shell32.lib is a default lib for better or worse: https://cs.chromium.org/chromium/src/build/config/BUILD.gn?type\u003dcs\u0026q\u003dshell32.lib+file:%5C.gn\u0026sq\u003dpackage:chromium\u0026l\u003d197\n\nAdded libbsm.",
+      "parentUuid": "0a104b24_a08c50f0",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b130b20_0f1d15bd",
         "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-24T18:06:11Z",
       "side": 1,
       "message": "file/directory_reader_test.cc too\n\n(You may need to sync. directory_reader_test.cc was just brought into Chromium’s copy of Crashpad with yesterday’s import.)",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a62e79_f22ee7f8",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Hm, I just synced and I still don\u0027t have that file. Maybe the import didn\u0027t land yet?",
+      "parentUuid": "2b130b20_0f1d15bd",
       "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "3cc3ab48_de132b27",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a5c557a_842b5bf7",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a18cb5c_f006eb48",
         "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
         "patchSetId": 3
@@ -132,6 +240,24 @@
       "writtenOn": "2017-10-24T18:06:11Z",
       "side": 1,
       "message": "Missing a couple of tests in process.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afde10c_61f53edd",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "I don\u0027t have that directory; same issue as above?",
+      "parentUuid": "9a18cb5c_f006eb48",
       "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "49740c42_1bcbd476",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a40fe32d_27bafe08",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea02033a_4aa086ea",
         "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
         "patchSetId": 3
@@ -169,6 +313,24 @@
       "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25781a7b_716cd116",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea02033a_4aa086ea",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "3dc0cd0a_604e9dcc",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Done (util is :util at the top)",
+      "parentUuid": "f6a67aab_ce0f878f",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ec626d9_a857eece",
         "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
         "patchSetId": 3
@@ -200,6 +380,24 @@
       "writtenOn": "2017-10-24T18:06:11Z",
       "side": 1,
       "message": "We list a few more libraries in the GYP build. We also list Foundation.framework on macOS. Are those coming from elsewhere in the GN build?",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebdd3ae9_3a23761e",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Windows has a pretty long list of default libs, see above. Foundation.framework is already here in the is_mac block above.",
+      "parentUuid": "1ec626d9_a857eece",
       "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -220,6 +418,24 @@
       "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfdc78b7_3be542af",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba9ca316_2115419b",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -246,6 +462,54 @@
     },
     {
       "key": {
+        "uuid": "0cdc9980_f674fe22",
+        "filename": "third_party/crashpad/crashpad/test/scoped_temp_dir_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67bad052_fff8b956",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4243fbe4_4a03a08f",
+        "filename": "third_party/crashpad/crashpad/test/scoped_temp_dir_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67bad052_fff8b956",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a10a9270_72a9ea04",
         "filename": "third_party/crashpad/crashpad/util/stdlib/strlcpy_test.cc",
         "patchSetId": 3
@@ -263,6 +527,24 @@
     },
     {
       "key": {
+        "uuid": "d2629431_5b315517",
+        "filename": "third_party/crashpad/crashpad/util/stdlib/strlcpy_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a10a9270_72a9ea04",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeda2111_79f84081",
         "filename": "third_party/crashpad/crashpad/util/win/command_line_test.cc",
         "patchSetId": 3
@@ -274,6 +556,24 @@
       "writtenOn": "2017-10-24T18:06:11Z",
       "side": 1,
       "message": "Catch more errors, better. Use base::checked_cast\u003c\u003e instead (#include \"base/numerics/safe_conversions.h\".)\n\nI also have a slight preference for casting the other side to size_t, as it’s consistent with how this function behaves and it’s the conversion that would normally occur when mixing these two types.",
+      "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8a9e22_7d24caeb",
+        "filename": "third_party/crashpad/crashpad/util/win/command_line_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T18:57:38Z",
+      "side": 1,
+      "message": "I originally thought I\u0027d change the test_argc to int, like argc is per standard. But all callers pass arraysize(), so that would\u0027ve been inconvenient. All callers also pass arrays \u003c 10 items long, so I figured just doing this is fine.",
+      "parentUuid": "aeda2111_79f84081",
       "revId": "91963bf070391c84e622db8eb53372f4ef80c370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
