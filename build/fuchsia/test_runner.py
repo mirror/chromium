@@ -199,7 +199,8 @@ def main():
         args.output_directory, runtime_deps, args.exe_name, child_args,
         args.dry_run, bootdata=args.bootdata,
         summary_output=args.test_launcher_summary_output,
-        power_off=True, target_cpu=args.target_cpu, use_device=args.device)
+        power_off=True, target_cpu=args.target_cpu, use_device=args.device,
+        use_autorun=True)
     if not bootfs:
       return 2
 
