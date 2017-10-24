@@ -251,6 +251,30 @@
     },
     {
       "key": {
+        "uuid": "b7d5e9e5_35883319",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T00:36:54Z",
+      "side": 1,
+      "message": "Used option (c) as a way of returning verification result to the caller. Since CBORWriter::EncodeCBOR is a private member function, I changed CBORWriter::Write() function to return a tuple of (bytes, bool).",
+      "parentUuid": "d1422f23_95135f4b",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b04528_cf8ea360",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 4

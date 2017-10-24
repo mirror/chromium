@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9aef022f_4e2f2598",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T00:36:54Z",
+      "side": 1,
+      "message": "I referred to the RFC and FIDO 2.0 specs! :) But now I deleted the 5th requirement (CBOR must have at most 4 nesting layers) since it is CTAP specific requirement.",
+      "parentUuid": "06b34ad0_45b3544f",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d84b72d9_b0110ab6",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "612cb0d1_0f3bb370",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T00:36:54Z",
+      "side": 1,
+      "message": "Thanks for the advice! I also went for the second option. More specifically, I added a parameter \"maxNestingLevel\"to exposed CBORWriter function Write() to prevent any Dos abuse. Currently, the default value is set to 512. Please let me know if you think this should be changed!\n\nSo now, CBORWriter class is a generic CBOR encoder and it is completely up to the caller to determine what layer size should be enforced. As an additional interface for caller to verify that the layer size requirement was met, the return value of CBORWriter::Write() was changed from std::vector\u003cuint8_t\u003e to std::pair\u003cstd::vector\u003cuint8_t\u003e, bool\u003e.",
+      "parentUuid": "bc388b83_b43bb5f8",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7348cc5_5a37ae2e",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 9
@@ -125,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "b03c71b5_992d2b91",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T00:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7348cc5_5a37ae2e",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94f7c2d5_3fb69139",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 9
@@ -139,6 +193,24 @@
       "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7ca1c6_11227ad7",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T00:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94f7c2d5_3fb69139",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +234,30 @@
       "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac94916_144ad99a",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-24T00:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca74b24e_75c2e55c",
+      "range": {
+        "startLine": 126,
+        "startChar": 9,
+        "endLine": 128,
+        "endChar": 24
+      },
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
