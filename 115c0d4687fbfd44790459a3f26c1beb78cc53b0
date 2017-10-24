@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e38e73d6_26cd95a8",
+        "filename": "chrome/android/java/res/layout/infobar_expandable_compact_content.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-24T15:31:20Z",
+      "side": 1,
+      "message": "Thanks did not know about this one. Done via MessageBuilder",
+      "parentUuid": "7885074e_d2a2f492",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 9
+      },
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4cfcd52_abb04ddd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/ExpandableInfoBar.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2a390b_71517a94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/ExpandableInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-24T15:31:20Z",
+      "side": 1,
+      "message": "Should not be needed, the 2 strings should be in the same locale. I initially added that because I was not sure concatenating \".\" would give the right results. Irrelevant now.",
+      "parentUuid": "a4cfcd52_abb04ddd",
+      "range": {
+        "startLine": 49,
+        "startChar": 23,
+        "endLine": 49,
+        "endChar": 62
+      },
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +185,24 @@
     },
     {
       "key": {
+        "uuid": "c36f5dab_f438a690",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 3290,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-24T15:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61b7169a_95057b20",
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36a7075d_ceeee001",
         "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
         "patchSetId": 3
@@ -157,6 +223,30 @@
       "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65335bc_05d82d5f",
+        "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-24T15:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36a7075d_ceeee001",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 37
+      },
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -183,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "a96b812e_73e4ca93",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-24T15:31:20Z",
+      "side": 1,
+      "message": "Obsolete",
+      "parentUuid": "dc5d40f4_471b37e2",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf277cfd_7b0f2cbf",
         "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
         "patchSetId": 3
@@ -203,6 +317,30 @@
       "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35725bc3_17526592",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-24T15:31:20Z",
+      "side": 1,
+      "message": "Not possible as the constructor is private.",
+      "parentUuid": "cf277cfd_7b0f2cbf",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 38
+      },
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
