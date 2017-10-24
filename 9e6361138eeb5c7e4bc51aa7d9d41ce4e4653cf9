@@ -234,6 +234,30 @@
       "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f29ad8_93f04a97",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-24T15:48:23Z",
+      "side": 1,
+      "message": "Also I don\u0027t think we tear down the Page object when discarding, it\u0027s about unloading the document (the WebContents and Page is still there AFAICT).",
+      "parentUuid": "84c542b0_4c691d7a",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
