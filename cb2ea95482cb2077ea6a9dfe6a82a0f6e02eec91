@@ -284,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "ec9a4071_b60f728c",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T15:47:50Z",
+      "side": 1,
+      "message": "Readability is truly in the eye of the beholder, then. :) To my eye, a short, semantically clear name like is_tail is more readable than two nearly identical inline definitions side-by-side. But no big deal, moving to a helper function greatly lessens my desire to have this block be terser.\n\n\u003e btw, ptr_fun will be deprecated this year.\n\nThanks, good to know.",
+      "parentUuid": "0b76ebd4_3933969d",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5d60d2f_44c98dd5",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 2
@@ -349,6 +367,24 @@
       "side": 1,
       "message": "That seems pretty subtle to me. Some things that I keep in mind: We either see all tail suggestions, or all non-tail suggestions. I\u0027ve only been able to generate a mixed response once, by manufacturing it. This code is strictly to guarantee uniform suggestions.\n\nI did suggest that we allow non-tail suggestions ahead of tail suggestions. AFAICT, that would have allowed your example. They were fairly adamant with their \u0027no\u0027, but you might want to chime in on the thread.",
       "parentUuid": "a343fb81_1344d7ee",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c8b9de6_46a45725",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T15:47:50Z",
+      "side": 1,
+      "message": "These scenarios are all pretty unlikely but it\u0027d be comforting to know that we\u0027d do the right thing regardless.\n\nCan we cull tail suggestions before the deduping? We can do it regardless of whether there are \"enough\" or how they score or whether they\u0027re dupes of another suggestion. As I read it, the requirements were to only show tail suggestions if nothing else is available (except of course the what-you-typed match), so we could keep it simple.",
+      "parentUuid": "09cb4828_5a123361",
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
