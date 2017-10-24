@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9d4f1a4_dec18b44",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T18:31:01Z",
+      "side": 1,
+      "message": "In other places we check the context capabilities: https://cs.chromium.org/chromium/src/cc/resources/resource_provider.cc?rcl\u003df2d24819ac5cb5a0c682f50d56ede57c124b94b1\u0026l\u003d357\n\nWhy is this different?",
+      "revId": "b914ee753e619c9efbf239c7b45ad3ac9f7ef79c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
