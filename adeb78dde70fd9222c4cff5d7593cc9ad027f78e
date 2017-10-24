@@ -22,6 +22,30 @@
       "revId": "adeb78dde70fd9222c4cff5d7593cc9ad027f78e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa544e6_4e479f1c",
+        "filename": "components/spellcheck/common/spellcheck_struct_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:53:05Z",
+      "side": 1,
+      "message": "I\u0027ve commented on other CLs, but I\u0027d rather we just not add a _LAST value for bitmasks (as it forces extra case statements like this that should never be reached).\n\nEither this enum is not a bitmask, and the values should be updated to reflect this, or it is a bitmask, and we can\u0027t do range checks.\n\nFWIW, given that it\u0027s mapped to Mojo, it seems like it can\u0027t be a bitmask so let\u0027s just fix the C++ values; then we can just use the usual _LAST trick with IPC_ENUM_TRAITS_MAX_VALUE.",
+      "parentUuid": "b7e7ecf3_61bcb946",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 32
+      },
+      "revId": "adeb78dde70fd9222c4cff5d7593cc9ad027f78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
