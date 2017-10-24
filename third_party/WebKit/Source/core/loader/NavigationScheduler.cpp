@@ -249,7 +249,8 @@ class ScheduledReload final : public ScheduledNavigation {
         kFrameLoadTypeReload, KURL(), ClientRedirectPolicy::kClientRedirect);
     if (resource_request.IsNull())
       return;
-    FrameLoadRequest request = FrameLoadRequest(nullptr, resource_request);
+    FrameLoadRequest request =
+        FrameLoadRequest(OriginDocument(), resource_request);
     request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
     MaybeLogScheduledNavigationClobber(
         ScheduledNavigationType::kScheduledReload, frame);
@@ -265,8 +266,14 @@ class ScheduledReload final : public ScheduledNavigation {
 
  private:
   explicit ScheduledReload(LocalFrame* frame)
-      : ScheduledNavigation(Reason::kReload, 0.0, nullptr, true, true),
-        frame_(frame) {}
+      : ScheduledNavigation(Reason::kReload,
+                            0.0,
+                            frame->GetDocument(),
+                            true,
+                            true),
+        frame_(frame) {
+    DCHECK(frame->GetDocument());
+  }
 
   Member<LocalFrame> frame_;
 };

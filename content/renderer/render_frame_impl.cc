@@ -6462,13 +6462,12 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
 
   blink::WebURLRequest& request = info.url_request;
 
-  // Set RequestorOrigin and SiteForCookies
+  // Set SiteForCookies
   WebDocument frame_document = frame_->GetDocument();
   if (request.GetFrameType() == blink::WebURLRequest::kFrameTypeTopLevel)
     request.SetSiteForCookies(request.Url());
   else
     request.SetSiteForCookies(frame_document.SiteForCookies());
-  request.SetRequestorOrigin(frame_document.GetSecurityOrigin());
 
   // Note: At this stage, the goal is to apply all the modifications the
   // renderer wants to make to the request, and then send it to the browser, so
@@ -6510,6 +6509,9 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
          GetRequestContextFrameTypeForWebURLRequest(info.url_request) ==
              REQUEST_CONTEXT_FRAME_TYPE_NESTED);
 
+  // In most cases, there is an initiator (i.e. the navigation is initiated by a
+  // document). There is cases where it is not the cases. Examples:
+  // - Devtools
   DCHECK(!info.url_request.RequestorOrigin().IsNull());
   base::Optional<url::Origin> initiator_origin =
       base::Optional<url::Origin>(info.url_request.RequestorOrigin());

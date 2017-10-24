@@ -853,16 +853,20 @@ void FrameFetchContext::SetFirstPartyCookieAndRequestorOrigin(
   }
 
   // Subresource requests inherit their requestor origin from |document_|
-  // directly.  Top-level frame types are taken care of in 'FrameLoadRequest()'.
+  // directly. Top-level frame types are taken care of in 'FrameLoadRequest()'.
   // Auxiliary frame types in 'CreateWindow()' and 'FrameLoader::Load'.
   if (!request.RequestorOrigin()) {
-    if (request.GetFrameType() == WebURLRequest::kFrameTypeNone) {
-      request.SetRequestorOrigin(GetRequestorOrigin());
-    } else {
-      // Set the requestor origin to the same origin as the frame's document
-      // if it hasn't yet been set. (We may hit here for nested frames and
-      // redirect cases)
-      request.SetRequestorOrigin(GetRequestorOriginForFrameLoading());
+    switch (request.GetFrameType()) {
+      case WebURLRequest::kFrameTypeAuxiliary:
+        request.SetRequestorOrigin(GetRequestorOriginForFrameLoading());
+        break;
+      case WebURLRequest::kFrameTypeNone:
+        request.SetRequestorOrigin(GetRequestorOrigin());
+        break;
+      case WebURLRequest::kFrameTypeTopLevel:
+      case WebURLRequest::kFrameTypeNested:
+        // Handled in FrameLoadRequest().
+        break;
     }
   }
 }

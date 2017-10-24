@@ -226,6 +226,8 @@ RefPtr<SecurityOrigin> ResourceRequest::RequestorOrigin() const {
 
 void ResourceRequest::SetRequestorOrigin(
     RefPtr<SecurityOrigin> requestor_origin) {
+  DCHECK(requestor_origin);
+  DCHECK(!requestor_origin_);
   requestor_origin_ = std::move(requestor_origin);
 }
 

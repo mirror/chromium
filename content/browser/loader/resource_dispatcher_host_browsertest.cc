@@ -1040,17 +1040,13 @@ IN_PROC_BROWSER_TEST_F(RequestDataResourceDispatcherHostBrowserTest,
 
   EXPECT_EQ(2u, delegate_->data().size());
 
-  // User-initiated top-level navigations have a first-party and initiator that
-  // matches the URL to which they navigate, even if they fail to load.
-  // PlzNavigate: the top-level initiator is null.
+  // User-initiated top-level navigations have a first-party that matches the
+  // URL to which they navigate, even if they fail to load.
+  // The top-level initiator is null. The navigation was initiated from a user
+  // outside of a document.
   EXPECT_EQ(top_url, delegate_->data()[0]->url);
   EXPECT_EQ(top_url, delegate_->data()[0]->first_party);
-  if (IsBrowserSideNavigationEnabled()) {
-    EXPECT_FALSE(delegate_->data()[0]->initiator.has_value());
-  } else {
-    ASSERT_TRUE(delegate_->data()[0]->initiator.has_value());
-    EXPECT_EQ(top_origin, delegate_->data()[0]->initiator);
-  }
+  EXPECT_FALSE(delegate_->data()[0]->initiator.has_value());
 
   // Auxiliary navigations have a first-party that matches the URL to which they
   // navigate, and an initiator that matches the document that triggered them.
@@ -1087,17 +1083,13 @@ IN_PROC_BROWSER_TEST_F(RequestDataResourceDispatcherHostBrowserTest,
 
   EXPECT_EQ(2u, delegate_->data().size());
 
-  // User-initiated top-level navigations have a first-party and initiator that
-  // matches the URL to which they navigate, even if they fail to load.
-  // PlzNavigate: the top-level initiator is null.
+  // User-initiated top-level navigations have a first-party that matches the
+  // URL to which they navigate, even if they fail to load.
+  // The top-level initiator is null. The navigation was initiated from a user
+  // outside of a document.
   EXPECT_EQ(top_url, delegate_->data()[0]->url);
   EXPECT_EQ(top_url, delegate_->data()[0]->first_party);
-  if (IsBrowserSideNavigationEnabled()) {
-    EXPECT_FALSE(delegate_->data()[0]->initiator.has_value());
-  } else {
-    ASSERT_TRUE(delegate_->data()[0]->initiator.has_value());
-    EXPECT_EQ(top_origin, delegate_->data()[0]->initiator);
-  }
+  EXPECT_FALSE(delegate_->data()[0]->initiator.has_value());
 
   // Auxiliary navigations have a first-party that matches the URL to which they
   // navigate, and an initiator that matches the document that triggered them.
