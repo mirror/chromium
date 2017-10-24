@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03ef8411_2ec93921",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-24T20:31:36Z",
+      "side": 1,
+      "message": "Nice attention to detail :), should this be !has_seen_stylus_?",
+      "revId": "f2f6ebc06a3616bdfaa94f558456fa8b96b75d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005f068b_6ee72ab6",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-24T20:31:36Z",
+      "side": 1,
+      "message": "Do we need the |has_seen_stylus_| variable? Can we just lookup the pref value whenever we need it, or default to false if prefs are not available?\n\nShould |has_seen_stylus_| be set to true in this function? Or is that done in OnHasSeenStylusPrefChanged because the pref change will invoke it? Maybe comment that |has_seen_stylus_| is updated there if so. Ideally we eliminate the variable though.",
+      "revId": "f2f6ebc06a3616bdfaa94f558456fa8b96b75d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c4fa59_a7ab51d0",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-24T20:31:36Z",
+      "side": 1,
+      "message": "Add comment?",
+      "revId": "f2f6ebc06a3616bdfaa94f558456fa8b96b75d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ceda51b_247bd0fc",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-24T20:31:36Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by this comment because it implies we don\u0027t need |ignore_stylus_up_event_|, can you reword it?",
+      "revId": "f2f6ebc06a3616bdfaa94f558456fa8b96b75d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7274f2bd_03b4407a",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-24T20:31:36Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "f2f6ebc06a3616bdfaa94f558456fa8b96b75d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
