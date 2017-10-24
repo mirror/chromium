@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "784c0084_b05f16a5",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "Some of these #includes don\u0027t seem to be used.",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6991bb55_c8ba2b71",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "I presume that |web_contents| takes ownership of |this|?  Can you add a brief comment noting this?",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2caa8a_40c960ea",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "Will the conditions that enable fullscreen-in-tab behavior guaranteed to be active at the time you fullscreen the video element?",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb63ab99_0f173d30",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "I believe it\u0027s documented that this entire class is only used from the UI thread in practice, and I don\u0027t see these checks elsewhere in the public API.  This is probably unnecessary.",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87e966f_d4bbc7e0",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "Does this happen after the \u003cvideo\u003e element has been created?",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6045e7d_903a5918",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "Does it matter where the user is navigating to?  They could be navigating to another file: URL.",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37642332_ee49b3ee",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "It seems like we should be checking the full URL here (see comment above).",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2101fcce_ad7d6cb7",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "This method, along with MaybeReportFileInformation, is specific to casting of local media files.  I think we should eventually split the logic for the local media casting flow into a separate class from MediaRouterUI.",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7caa53d_186f0392",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "I tend to use ternary expressions where possible, but that\u0027s really just my personal preference for readability.",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adccab1a_65ea4f06",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "I couldn\u0027t quite follow this comment - what is \"it\"?  (Also applies below.)",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05f2af1_3ae64c8a",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "Is there any way to make this not time dependent?  Fixed timeouts are recipes for flaky tests.\n (Also applies below.)",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394eec9f_a428924d",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "Can you elaborate on this?  I think the important assertion is that the single tab is now showing a fullscreen-in-tab video element.\n\n(Similar comment applies below.)",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f5329b_266e08dc",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "What is \"tab fullscreen\"?",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43425a8_f6b679ed",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "Presumably, this will have a Mojo equivalent someday, but I don\u0027t know the status of servicification of RenderFrame/RenderFrameHost.  It\u0027s a big job :-)",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45883257_b43d02f8",
+        "filename": "third_party/WebKit/Source/core/exported/WebElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-24T17:12:54Z",
+      "side": 1,
+      "message": "Extra blank line?",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
