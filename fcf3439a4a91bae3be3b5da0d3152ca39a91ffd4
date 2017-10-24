@@ -46,6 +46,30 @@
       "revId": "fcf3439a4a91bae3be3b5da0d3152ca39a91ffd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5127d3bb_4ff37d6c",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-24T16:23:56Z",
+      "side": 1,
+      "message": "Oh you\u0027re right! I could do the same to CheckPointer to remove that check.",
+      "parentUuid": "ddaeebc0_6e32d078",
+      "range": {
+        "startLine": 249,
+        "startChar": 35,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "fcf3439a4a91bae3be3b5da0d3152ca39a91ffd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
