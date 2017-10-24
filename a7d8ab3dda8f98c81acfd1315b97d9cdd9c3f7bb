@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "3e6e4632_6d08d6a0",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T18:54:01Z",
+      "side": 1,
+      "message": "isn\u0027t this for a very specific case of the window label? Why would that be not set to drawable, or ever have that change? Maybe you can look into if it would be a conflict, cuz I\u0027d be surprised.\n\nI think generally this flag is used for layers that are there to clip/position/transform, but not to present content.",
+      "parentUuid": "a2a8d888_1fd75159",
+      "revId": "a7d8ab3dda8f98c81acfd1315b97d9cdd9c3f7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d209dec_77bda5d4",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 2
