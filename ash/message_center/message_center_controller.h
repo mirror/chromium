@@ -15,14 +15,26 @@
 
 namespace ash {
 
-// This class manages the ash message center. For now it just houses
-// Ash-specific notification blockers. In the future, when the MessageCenter
-// lives in the Ash process, it will also manage adding and removing
-// notifications sent from clients (like Chrome).
+// This class manages the ash message center and allows clients (like Chrome) to
+// add and remove notifications.
 class MessageCenterController : public mojom::AshMessageCenterController {
  public:
   MessageCenterController();
   ~MessageCenterController() override;
+
+  // Provides the current notifier list in |notifiers|.
+  void GetNotifierList(
+      std::vector<std::unique_ptr<message_center::NotifierUiData>>* notifiers);
+
+  // Called when the |enabled| for the given notifier has been changed by user
+  // operation.
+  void SetNotifierEnabled(const message_center::NotifierId& notifier_id,
+                                  bool enabled);
+
+  // Called upon request for more information about a particular notifier.
+  void OnNotifierAdvancedSettingsRequested(
+      const message_center::NotifierId& notifier_id,
+      const std::string* notification_id);
 
   void BindRequest(mojom::AshMessageCenterControllerRequest request);
 

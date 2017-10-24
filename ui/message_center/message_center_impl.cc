@@ -603,6 +603,7 @@ void MessageCenterImpl::DisplayedNotification(
   }
 }
 
+#if 0
 void MessageCenterImpl::SetNotifierSettingsProvider(
     std::unique_ptr<NotifierSettingsProvider> provider) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -615,6 +616,7 @@ NotifierSettingsProvider* MessageCenterImpl::GetNotifierSettingsProvider() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return settings_provider_.get();
 }
+#endif
 
 void MessageCenterImpl::SetQuietMode(bool in_quiet_mode) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);

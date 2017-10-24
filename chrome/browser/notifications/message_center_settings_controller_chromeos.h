@@ -24,26 +24,27 @@ class NotifierController;
 // The class to bridge between the settings UI of notifiers and the preference
 // storage.
 class MessageCenterSettingsControllerChromeOs
-    : public message_center::NotifierSettingsProvider,
-      public NotifierController::Observer {
+    :/* public message_center::NotifierSettingsProvider,
+      public NotifierController::Observer*/ {
  public:
   MessageCenterSettingsControllerChromeOs();
-  ~MessageCenterSettingsControllerChromeOs() override;
+  ~MessageCenterSettingsControllerChromeOs() /*override*/;
 
   // message_center::NotifierSettingsProvider
+#if 0
   void AddObserver(message_center::NotifierSettingsObserver* observer) override;
   void RemoveObserver(
       message_center::NotifierSettingsObserver* observer) override;
-  void GetNotifierList(std::vector<std::unique_ptr<message_center::Notifier>>*
-                           notifiers) override;
+  void GetNotifierList(
+      std::vector<std::unique_ptr<message_center::NotifierUiData>>* notifiers)
+      override;
   void SetNotifierEnabled(const message_center::NotifierId& notifier_id,
                           bool enabled) override;
   void OnNotifierSettingsClosing() override;
-  bool NotifierHasAdvancedSettings(
-      const message_center::NotifierId& notifier_id) const override;
   void OnNotifierAdvancedSettingsRequested(
       const message_center::NotifierId& notifier_id,
       const std::string* notification_id) override;
+#endif
 
  private:
   // NotifierController::Observer

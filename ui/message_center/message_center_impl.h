@@ -33,8 +33,7 @@ class ScopedNotificationsIterationLock;
 // The default implementation of MessageCenter.
 class MESSAGE_CENTER_EXPORT MessageCenterImpl
     : public MessageCenter,
-      public NotificationBlocker::Observer,
-      public message_center::NotifierSettingsObserver {
+      public NotificationBlocker::Observer {
  public:
   MessageCenterImpl();
   ~MessageCenterImpl() override;
@@ -76,9 +75,11 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
                               bool mark_notification_as_read) override;
   void DisplayedNotification(const std::string& id,
                              const DisplaySource source) override;
+#if 0
   void SetNotifierSettingsProvider(
       std::unique_ptr<NotifierSettingsProvider> provider) override;
   NotifierSettingsProvider* GetNotifierSettingsProvider() override;
+#endif
   void SetQuietMode(bool in_quiet_mode) override;
   void SetLockedState(bool locked) override;
   void EnterQuietModeWithExpire(const base::TimeDelta& expires_in) override;
@@ -90,9 +91,9 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
   // NotificationBlocker::Observer overrides:
   void OnBlockingStateChanged(NotificationBlocker* blocker) override;
 
-  // message_center::NotifierSettingsObserver overrides:
+  // message_center::NotifierSettingsObserver overrides: FIXME
   void NotifierEnabledChanged(const NotifierId& notifier_id,
-                              bool enabled) override;
+                              bool enabled);// override;
 
   // Unexposed methods:
   void AddNotificationImmediately(std::unique_ptr<Notification> notification);
@@ -129,7 +130,7 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
   std::unique_ptr<PopupTimersController> popup_timers_controller_;
   std::unique_ptr<base::OneShotTimer> quiet_mode_timer_;
   // Null on !ChromeOS.
-  std::unique_ptr<NotifierSettingsProvider> settings_provider_;
+ // std::unique_ptr<NotifierSettingsProvider> settings_provider_;
   std::vector<NotificationBlocker*> blockers_;
   std::unique_ptr<ChangeQueue> notification_change_queue_;
 

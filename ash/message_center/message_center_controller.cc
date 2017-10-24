@@ -53,6 +53,17 @@ MessageCenterController::MessageCenterController()
 
 MessageCenterController::~MessageCenterController() {}
 
+// FIXME call this when icons are
+void MessageCenterController::GetNotifierList(
+    std::vector<std::unique_ptr<message_center::NotifierUiData>>* notifiers) {}
+
+void MessageCenterController::SetNotifierEnabled(const message_center::NotifierId& notifier_id,
+                                                 bool enabled) {}
+
+void MessageCenterController::OnNotifierAdvancedSettingsRequested(
+    const message_center::NotifierId& notifier_id,
+    const std::string* notification_id) {}
+
 void MessageCenterController::BindRequest(
     mojom::AshMessageCenterControllerRequest request) {
   binding_.Bind(std::move(request));
