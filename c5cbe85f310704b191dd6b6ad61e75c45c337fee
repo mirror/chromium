@@ -34,6 +34,24 @@
       "revId": "c5cbe85f310704b191dd6b6ad61e75c45c337fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1818ecf2_0240d761",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T22:50:32Z",
+      "side": 0,
+      "message": "I\u0027d slightly prefer the strict origin check, because it ensures this isn\u0027t used more widely, but I don\u0027t feel very strongly (and, realistically, this won\u0027t likely be used by any webui other than extensions - so this is probably fine).",
+      "parentUuid": "1a4eab25_b6bd1ef2",
+      "revId": "c5cbe85f310704b191dd6b6ad61e75c45c337fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

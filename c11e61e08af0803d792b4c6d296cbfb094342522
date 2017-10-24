@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "380e89f0_a2832451",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T22:50:32Z",
+      "side": 1,
+      "message": "nit: no need for parens here",
+      "revId": "c11e61e08af0803d792b4c6d296cbfb094342522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
