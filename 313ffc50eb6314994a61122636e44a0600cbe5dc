@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7468927_2a4f938c",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-24T00:23:36Z",
+      "side": 1,
+      "message": "I don\u0027t think this makes sense. It\u0027s impossible (because of the 2 \u0027if\u0027 conditions) for preferred_codec_ to be -1 in this block, so this comment describes something that can\u0027t happen.\n\nBut if preferred_codec_ is -1 at the beginning of this method, we always want to start the search from last_codec_ anyway? Not \"first codec\" as the comment says?",
+      "revId": "313ffc50eb6314994a61122636e44a0600cbe5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c57d40_64b30f6c",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-24T00:23:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure how this semantic (only reset if profile changed) is useful to a caller? Doesn\u0027t the caller have to know that the reset happened, so it knows whether to call CreateEncoder() after this method, or to continue using the encoder it already has?\nFor example, if the caller called SetDesktopFrame() and the profile did *not* change, the caller already is using a perfectly good encoder, and should not call CreateEncoder() again because it would return a different, inferior encoder.",
+      "revId": "313ffc50eb6314994a61122636e44a0600cbe5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
