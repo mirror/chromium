@@ -105,6 +105,121 @@
     },
     {
       "key": {
+        "uuid": "95801391_6fe1866c",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-24T02:24:34Z",
+      "side": 1,
+      "message": "std::make_unique?",
+      "range": {
+        "startLine": 325,
+        "startChar": 17,
+        "endLine": 325,
+        "endChar": 33
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062938c6_9091ce43",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-24T02:24:34Z",
+      "side": 1,
+      "message": "+Mathieu@ should we always prefer emplace_back over push_back?",
+      "range": {
+        "startLine": 339,
+        "startChar": 41,
+        "endLine": 339,
+        "endChar": 50
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33967140_332f38a6",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-24T02:24:34Z",
+      "side": 1,
+      "message": "Does this need to be virtual?",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 10
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d5debb_7d7ccf58",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-24T02:24:34Z",
+      "side": 1,
+      "message": "SetAppLocale?",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8242180a_603b35f6",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-24T02:24:34Z",
+      "side": 1,
+      "message": "add a comment?",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 38
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "607b500c_a35bbc10",
         "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
         "patchSetId": 2
@@ -140,6 +255,30 @@
       "side": 1,
       "message": "you can add //components/ukm to the right DEPS file.",
       "parentUuid": "607b500c_a35bbc10",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 38
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3bbc0b0_5a5f5b6b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-24T02:24:34Z",
+      "side": 1,
+      "message": "Will forward declaration work instead?",
+      "parentUuid": "a3380850_3cfd422d",
       "range": {
         "startLine": 79,
         "startChar": 0,
