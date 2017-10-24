@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12cf83df_c6226478",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-24T09:03:58Z",
+      "side": 1,
+      "message": "Not done:\nsignin::RegisterProfilePrefs() would be too generic.\nWe would need to add another namespace like:\nsignin::AccountConsistency::RegisterProfilePrefs()\n\nI can do that if you have a strong preference, but otherwise I\u0027ll leave it like this.",
+      "parentUuid": "07034f67_bc21bfca",
+      "range": {
+        "startLine": 503,
+        "startChar": 10,
+        "endLine": 503,
+        "endChar": 48
+      },
+      "revId": "68587fbc6eb73700f7647a796a6ec7e3b6549d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf6b6094_4a044ffc",
         "filename": "components/signin/core/browser/profile_management_switches_unittest.cc",
         "patchSetId": 27
@@ -45,6 +69,30 @@
       "revId": "68587fbc6eb73700f7647a796a6ec7e3b6549d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3c2c66_fd5a9b6e",
+        "filename": "components/signin/core/browser/profile_management_switches_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-24T09:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf6b6094_4a044ffc",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 15
+      },
+      "revId": "68587fbc6eb73700f7647a796a6ec7e3b6549d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8398b1b5_789c11e5",
+        "filename": "components/signin/core/common/profile_management_switches.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-24T09:03:58Z",
+      "side": 1,
+      "message": "Done, added a TODO in the .h to remove this code once Dice is fully rolled out (assuming that this is what you meant).",
+      "parentUuid": "f78d95ed_52fd5888",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 59
+      },
+      "revId": "68587fbc6eb73700f7647a796a6ec7e3b6549d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9490f321_0fa613fa",
         "filename": "components/signin/core/common/profile_management_switches.h",
         "patchSetId": 27
@@ -82,6 +154,24 @@
       "writtenOn": "2017-10-23T15:55:18Z",
       "side": 1,
       "message": "Should this be moved up to IsDiceMigrationEnabled?",
+      "revId": "68587fbc6eb73700f7647a796a6ec7e3b6549d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656cd309_40171686",
+        "filename": "components/signin/core/common/profile_management_switches.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-24T09:03:58Z",
+      "side": 1,
+      "message": "No, because IsDiceMigrationEnabled is a global switch whereas this one is per-profile.\nThe way we ordered functions are global functions first and per-profile functions after.",
+      "parentUuid": "9490f321_0fa613fa",
       "revId": "68587fbc6eb73700f7647a796a6ec7e3b6549d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
