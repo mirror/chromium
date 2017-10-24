@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be9a1312_c3625200",
+        "filename": "remoting/codec/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-24T22:49:59Z",
+      "side": 0,
+      "message": "Doesn\u0027t seem part of this CL, undo?",
+      "revId": "611bc1e28e9131c6bc94b931cf48d1e770290f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

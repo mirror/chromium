@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c284f88_dc190bb9",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-24T22:49:59Z",
+      "side": 1,
+      "message": "Are you sure about this? I thought this was only true if the screen was static and no frames were sent; but my recent host CL should fix this by sending regular empty frame deltas. After this CL, key-frames should be rare - they should only happen on major packet loss.\n\nIn any case, I don\u0027t understand why this class needs to know how often key-frames are sent. All it cares about is how long key-frames take to process, not how often they happen. This class should work even if key-frames happen very rarely.",
+      "range": {
+        "startLine": 17,
+        "startChar": 35,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577fb99e_b6f24db9",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-24T22:49:59Z",
+      "side": 1,
+      "message": "6 / 3 !\u003d 3",
+      "range": {
+        "startLine": 18,
+        "startChar": 66,
+        "endLine": 18,
+        "endChar": 67
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a67957_d8719f10",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-24T22:49:59Z",
+      "side": 1,
+      "message": "Both call-sites pass the same value, so you can remove this parameter.",
+      "range": {
+        "startLine": 26,
+        "startChar": 61,
+        "endLine": 26,
+        "endChar": 75
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b49d923_05e87592",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-24T22:49:59Z",
+      "side": 1,
+      "message": "spelling?",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 31
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e1008c_ccfb2eda",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-24T22:49:59Z",
+      "side": 1,
+      "message": "Doesn\u0027t make sense: parameter is a dimensionless count, but |..._us_| is in microseconds.",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 55
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bad3de_46b1c381",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-24T22:49:59Z",
+      "side": 1,
+      "message": "What would the caller do in this case? Wait 1 minute before scheduling the next capture?\nMaybe we should assume low bandwidth estimates are silly, and just apply a maximum cap to how long we wait between captures?",
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7550530f_efce5cf4",
+        "filename": "remoting/codec/frame_processing_time_estimator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-24T22:49:59Z",
+      "side": 1,
+      "message": "This interface prevents callers from caching Now() as an optimization, forcing a system clock lookup each time. Instead, I think it\u0027s better to pass the current time to StartFrame() and FinishFrame(), as we do in many other places. The planned call-sites already have pre-computed TimeTicks::Now() so it\u0027s easy for them to pass to this object.",
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fcf20f7_64ab8a2f",
+        "filename": "remoting/codec/frame_processing_time_estimator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-24T22:49:59Z",
+      "side": 1,
+      "message": "Maybe EXPECT_EQ is better, because the following expectation is independent - should still be tested if this one fails.",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
