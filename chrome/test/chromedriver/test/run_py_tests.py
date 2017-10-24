@@ -2445,14 +2445,11 @@ class SessionHandlingTest(ChromeDriverBaseTest):
     driver.Quit()
 
   def testGetSessions(self):
-    driver = self.CreateDriver()
-    response = driver.GetSessions()
-    self.assertEqual(1, len(response))
-
+    driver1 = self.CreateDriver()
+    response1 = driver1.GetSessions()
     driver2 = self.CreateDriver()
-    response = driver2.GetSessions()
-    self.assertEqual(2, len(response))
-
+    response2 = driver2.GetSessions()
+    self.assertEqual(1, len(response2) - len(response1))
 
 class RemoteBrowserTest(ChromeDriverBaseTest):
   """Tests for ChromeDriver remote browser capability."""
