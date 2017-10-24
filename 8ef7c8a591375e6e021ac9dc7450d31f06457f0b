@@ -16,6 +16,24 @@
       "revId": "8ef7c8a591375e6e021ac9dc7450d31f06457f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4235cc66_7a9e81fb",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T17:00:52Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6bffcc30_2f534690",
+      "revId": "8ef7c8a591375e6e021ac9dc7450d31f06457f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
