@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3c85a09_706c8f45",
+        "filename": "components/autofill/content/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T12:57:38Z",
+      "side": 1,
+      "message": "Did you ensure that these dependencies were added everywhere that there\u0027s a new dependency on this code?",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202ae6ef_75768d5b",
+        "filename": "components/autofill/content/browser/risk/fingerprint.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T12:57:38Z",
+      "side": 1,
+      "message": "Is this the same functionality as the previous form of validation?",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b61981_287e25bd",
+        "filename": "components/autofill/content/browser/risk/fingerprint.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T12:57:38Z",
+      "side": 1,
+      "message": "Is there any possibility for behavioral change with the conversions to/from doubles that we\u0027re now doing throughout this code? (general question for the whole CL)",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147a7c56_846e51d5",
+        "filename": "device/geolocation/geolocation_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T12:57:38Z",
+      "side": 1,
+      "message": "this assignment is setting all the fields that were being manually set before?",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee1208b_e72b9d06",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T12:57:38Z",
+      "side": 1,
+      "message": "what\u0027s the difference between this call and mojom::Geoposition::New() again?",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c37a87_6ad15873",
+        "filename": "device/geolocation/public/cpp/geoposition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-24T12:57:38Z",
+      "side": 1,
+      "message": "nit: This should have a more-specific name, e.g. ValidateGeoposition().",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
