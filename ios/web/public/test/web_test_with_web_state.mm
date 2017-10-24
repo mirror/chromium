@@ -78,6 +78,21 @@ void WebTestWithWebState::LoadHtml(NSString* html, const GURL& url) {
   // Initiate asynchronous HTML load.
   CRWWebController* web_controller = GetWebController(web_state());
   ASSERT_EQ(PAGE_LOADED, web_controller.loadPhase);
+
+  // If the underlying WKWebView is empty, we need to load a placeholder
+  // about:blank to create a WKBackForwardListItem before calling |-loadHTML|
+  // because the latter assumes an current navigation entry exists.
+  // TODO(crbug.com/777884): Can we remove the assumption that |-loadHTML| must
+  // correspond to a navigation entry?
+  if (!web_state()->GetNavigationManager()->GetItemCount()) {
+    GURL url(url::kAboutBlankURL);
+    NavigationManager::WebLoadParams params(url);
+    web_state()->GetNavigationManager()->LoadURLWithParams(params);
+    base::test::ios::WaitUntilCondition(^{
+      return web_controller.loadPhase == PAGE_LOADED;
+    });
+  }
+
   [web_controller loadHTML:html forURL:url];
   ASSERT_EQ(LOAD_REQUESTED, web_controller.loadPhase);
 
