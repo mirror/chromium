@@ -187,6 +187,30 @@
       "revId": "ba7fc81edca15fc0548f2110480c37a58c725954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7b9283_2f9f5821",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-24T22:11:32Z",
+      "side": 1,
+      "message": "We\u0027re trying to make the root frame use PLSA as well (so once that ships, you won\u0027t have to duplicate this logic. You can try it out with --root-layer-scrolls. Page scrolling will be handled by LayoutView\u0027s PLSA rather than LocalFrameView) so lets not assume that PLSA means non-root frame.",
+      "parentUuid": "5ce12b3d_e068ceca",
+      "range": {
+        "startLine": 1301,
+        "startChar": 2,
+        "endLine": 1302,
+        "endChar": 17
+      },
+      "revId": "ba7fc81edca15fc0548f2110480c37a58c725954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
