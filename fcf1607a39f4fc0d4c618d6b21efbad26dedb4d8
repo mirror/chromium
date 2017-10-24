@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8907e61_7314347f",
+        "filename": "headless/public/util/compositor_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-24T12:41:32Z",
+      "side": 1,
+      "message": "Good to see this downstream, thanks!",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 42
+      },
+      "revId": "fcf1607a39f4fc0d4c618d6b21efbad26dedb4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cabb84d3_1230b511",
+        "filename": "headless/public/util/compositor_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-24T12:41:32Z",
+      "side": 1,
+      "message": "Can you expand upon this comment to explain why it\u0027s necessary to wait real time for the compositor to become ready ?",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "fcf1607a39f4fc0d4c618d6b21efbad26dedb4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7a7c03_02ef7163",
+        "filename": "headless/public/util/compositor_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-24T12:41:32Z",
+      "side": 1,
+      "message": "You should be able to hold a base::TimeDelta in a register so is there any point to a reference? :)",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 29
+      },
+      "revId": "fcf1607a39f4fc0d4c618d6b21efbad26dedb4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54e33d1_d58afb99",
+        "filename": "headless/public/util/compositor_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-24T12:41:32Z",
+      "side": 1,
+      "message": "The name and the comment don\u0027t seem to match.  Perhaps WaitForIdle?",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "fcf1607a39f4fc0d4c618d6b21efbad26dedb4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179459d5_45bcc286",
+        "filename": "headless/public/util/compositor_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-24T12:41:32Z",
+      "side": 1,
+      "message": "How would we use this?  (I\u0027m wondering if it should be private / protected)",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 36
+      },
+      "revId": "fcf1607a39f4fc0d4c618d6b21efbad26dedb4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
