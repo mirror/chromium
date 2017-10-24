@@ -217,12 +217,13 @@ bool SVGPaintContext::ApplyFilterIfNecessary(SVGResources* resources) {
 }
 
 bool SVGPaintContext::IsIsolationInstalled() const {
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+    return true;
   if (compositing_recorder_)
     return true;
   if (masker_ || filter_)
     return true;
-  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() && clip_path_clipper_ &&
-      clip_path_clipper_->UsingMask())
+  if (clip_path_clipper_ && clip_path_clipper_->UsingMask())
     return true;
   return false;
 }

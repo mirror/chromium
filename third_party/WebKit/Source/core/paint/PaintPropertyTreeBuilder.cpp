@@ -12,6 +12,7 @@
 #include "core/layout/FragmentainerIterator.h"
 #include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/svg/LayoutSVGResourceClipper.h"
 #include "core/layout/svg/LayoutSVGResourceMasker.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/layout/svg/SVGLayoutSupport.h"
@@ -550,6 +551,71 @@ static bool ComputeMaskParameters(IntRect& mask_clip,
   return true;
 }
 
+static bool ComputeClipPathParameters(IntRect& clip_path_clip,
+                                      const LayoutObject& object,
+                                      const LayoutPoint& paint_offset) {
+  const ComputedStyle& style = object.StyleRef();
+  if (!style.ClipPath())
+    return false;
+
+  FloatRect reference_box;
+  if (object.IsBoxModelObject()) {
+    LayoutRect unsnapped_reference_box =
+        ToLayoutBoxModelObject(object).Layer()->BoxForClipPath();
+    unsnapped_reference_box.MoveBy(paint_offset);
+    // TODO(trchen): PaintLayerPainter doesn't snap. Probably should snap
+    // at both places?
+    reference_box = FloatRect(unsnapped_reference_box);
+  } else {
+    DCHECK(object.IsSVGChild());
+    reference_box = object.ObjectBoundingBox();
+  }
+
+  ClipPathOperation& clip_path = *style.ClipPath();
+  if (clip_path.GetType() == ClipPathOperation::SHAPE) {
+    ShapeClipPathOperation& shape = ToShapeClipPathOperation(clip_path);
+    if (!shape.IsValid())
+      return false;
+    const Path& path = shape.GetPath(reference_box);
+    clip_path_clip = EnclosingIntRect(path.BoundingRect());
+  } else {
+    DCHECK_EQ(clip_path.GetType(), ClipPathOperation::REFERENCE);
+    LayoutSVGResourceClipper* clipper = nullptr;
+    if (object.IsSVGChild()) {
+      SVGResources* resources =
+          SVGResourcesCache::CachedResourcesForLayoutObject(&object);
+      if (!resources)
+        return false;
+      clipper = resources->Clipper();
+    } else {
+      // TODO(crbug.com/109212): Doesn't work with external SVG references.
+      Node* node = object.GetNode();
+      if (!node)
+        return false;
+      SVGElement* path_element =
+          ToReferenceClipPathOperation(clip_path).FindElement(
+              node->GetTreeScope());
+      if (!IsSVGClipPathElement(path_element))
+        return false;
+      clipper = ToLayoutSVGResourceClipper(
+          ToLayoutSVGResourceContainer(path_element->GetLayoutObject()));
+    }
+    if (!clipper)
+      return false;
+    FloatRect bounding_box = clipper->ResourceBoundingBox(reference_box);
+    if (object.IsBoxModelObject() &&
+        clipper->ClipPathUnits() == SVGUnitTypes::kSvgUnitTypeUserspaceonuse) {
+      // With kSvgUnitTypeUserspaceonuse, the clip path layout is relative to
+      // the current transform space, and the reference box is unused.
+      // While SVG object has no concept of paint offset, HTML object's
+      // local space is shifted by paint offset.
+      bounding_box.MoveBy(reference_box.Location());
+    }
+    clip_path_clip = EnclosingIntRect(bounding_box);
+  }
+  return true;
+}
+
 static bool NeedsEffect(const LayoutObject& object) {
   const ComputedStyle& style = object.StyleRef();
 
@@ -597,6 +663,9 @@ static bool NeedsEffect(const LayoutObject& object) {
   if (object.StyleRef().HasMask())
     return true;
 
+  if (object.StyleRef().ClipPath())
+    return true;
+
   return false;
 }
 
@@ -628,18 +697,25 @@ void PaintPropertyTreeBuilder::UpdateEffect(
       ColorFilter mask_color_filter;
       bool has_mask = ComputeMaskParameters(
           mask_clip, mask_color_filter, object, context.current.paint_offset);
-      if (has_mask &&
+      IntRect clip_path_clip;
+      bool has_clip_path = ComputeClipPathParameters(
+          clip_path_clip, object, context.current.paint_offset);
+      if ((has_mask || has_clip_path) &&
           // TODO(crbug.com/768691): Remove the following condition after mask
           // clip doesn't fail fast/borders/inline-mask-overlay-image-outset-
           // vertical-rl.html.
           RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-        FloatRoundedRect rounded_mask_clip(mask_clip);
+        IntRect combined_clip = has_mask ? mask_clip : clip_path_clip;
+        if (has_mask && has_clip_path)
+          combined_clip.Intersect(clip_path_clip);
+
+        FloatRoundedRect rounded_combined_clip(combined_clip);
         if (properties.MaskClip() &&
-            rounded_mask_clip != properties.MaskClip()->ClipRect())
+            rounded_combined_clip != properties.MaskClip()->ClipRect())
           local_clip_changed = true;
         auto result = properties.UpdateMaskClip(context.current.clip,
                                                 context.current.transform,
-                                                FloatRoundedRect(mask_clip));
+                                                rounded_combined_clip);
         local_clip_added_or_removed |= result.NewNodeCreated();
         output_clip = properties.MaskClip();
       } else {
@@ -670,9 +746,22 @@ void PaintPropertyTreeBuilder::UpdateEffect(
       } else {
         force_subtree_update |= properties.ClearMask();
       }
+      if (has_clip_path) {
+        auto result = properties.UpdateClipPath(
+            properties.Effect(), context.current.transform, output_clip,
+            kColorFilterNone, CompositorFilterOperations(), 1.f,
+            SkBlendMode::kDstIn, kCompositingReasonNone,
+            CompositorElementIdFromUniqueObjectId(
+                object.UniqueId(),
+                CompositorElementIdNamespace::kEffectClipPath));
+        force_subtree_update |= result.NewNodeCreated();
+      } else {
+        force_subtree_update |= properties.ClearClipPath();
+      }
     } else {
       force_subtree_update |= properties.ClearEffect();
       force_subtree_update |= properties.ClearMask();
+      force_subtree_update |= properties.ClearClipPath();
       local_clip_added_or_removed |= properties.ClearMaskClip();
     }
     force_subtree_update |= local_clip_added_or_removed;
