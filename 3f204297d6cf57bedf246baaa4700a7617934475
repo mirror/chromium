@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9dd6db0_1c5bc0c7",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-24T15:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32decfe5_ef3f28cd",
+      "revId": "3f204297d6cf57bedf246baaa4700a7617934475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bddd860_d87ab691",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
         "patchSetId": 7
