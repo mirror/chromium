@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1c56c42_2753e05f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-10-24T22:22:36Z",
+      "side": 1,
+      "message": "Thanks, this is meant to be same as flush\u003dTRUE.\n\nThis patch for chromium uses TRUE/FALSE since chromium always includes ICU which defines these values.\n\nIn libxml, TRUE/FALSE are not defined, so I must use 1/0 for code to still compile in the default case where icu is not included.",
+      "parentUuid": "89ae6147_014ae898",
+      "range": {
+        "startLine": 9,
+        "startChar": 24,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "9b39b0b629d6a74f103721ebb9171494062b1b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d32b8c3_55c28cee",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a0539f7e_177ae5a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-10-24T22:22:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5d32b8c3_55c28cee",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 25
+      },
+      "revId": "9b39b0b629d6a74f103721ebb9171494062b1b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8dfdc80_dfbb8785",
         "filename": "third_party/libxml/src/include/libxml/encoding.h",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "9b39b0b629d6a74f103721ebb9171494062b1b66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d26532_bd43841e",
+        "filename": "third_party/libxml/src/include/libxml/encoding.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-10-24T22:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8dfdc80_dfbb8785",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 24
+      },
+      "revId": "9b39b0b629d6a74f103721ebb9171494062b1b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
