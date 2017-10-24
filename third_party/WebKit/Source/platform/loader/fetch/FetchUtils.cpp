@@ -4,9 +4,9 @@
 
 #include "platform/loader/fetch/FetchUtils.h"
 
-#include "platform/http_names.h"
 #include "platform/network/HTTPHeaderMap.h"
 #include "platform/network/HTTPParsers.h"
+#include "platform/network/http_names.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/text/AtomicString.h"
@@ -162,7 +162,7 @@ AtomicString FetchUtils::NormalizeMethod(const AtomicString& method) {
       "GET", "POST", "DELETE", "HEAD", "OPTIONS", "PUT",
   };
 
-  for (const auto& known : kMethods) {
+  for (auto* const known : kMethods) {
     if (EqualIgnoringASCIICase(method, known)) {
       // Don't bother allocating a new string if it's already all
       // uppercase.
