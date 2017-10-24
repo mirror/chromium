@@ -424,6 +424,24 @@
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9dd96e1_6662ae03",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-24T17:16:17Z",
+      "side": 1,
+      "message": "I think it makes sense to treat local suggestions as inherently superior, yes. Tail suggestions are a great response to a case where literally nothing else matches. But if there\u0027s long input that actually matches something in the user\u0027s history or bookmarks, preferring that seems right to me.\n\nYour initial approach of getting rid of one or the other based on score also seemed reasonable but I hadn\u0027t considered the dedup scenario. If it\u0027s feasible to do the culling before deduping, the score-based approach might still make sense. But I\u0027d still lean towards the simpler approach of preferring local matches and not worrying about whether the server is scoring tail suggestions in a way that\u0027s effective for this purpose.",
+      "parentUuid": "2220c2b7_e090676d",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
