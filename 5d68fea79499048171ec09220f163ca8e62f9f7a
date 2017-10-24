@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b9141e4_09dd268e",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T18:59:43Z",
+      "side": 1,
+      "message": "You\u0027re basically writing a version of AtomicFlag where non-zero has a semantic other than true. Should we just copy what they\u0027re doing?\n\nhttps://cs.chromium.org/chromium/src/base/synchronization/atomic_flag.cc?sq\u003dpackage:chromium\u0026l\u003d21\n\nAlso, this still a NoBarrier_Store.\n\nI think you want a ReleaseStore at the very least, but I\u0027m also not convinced you can get away with relaxed on the load.\n\nThread A (setting)\n   1: p \u003d allocate\n   2: initlaize(p)\n   3: release-store pointer \n\nThread B (using)\n   1: load-acquire p\n   2: use(p)\n\nIf in B1, we remove the load-acquire and replace with relaxed (aka no barrier), then I think the cache system is free to send the results A3 from thread A to thread B BEFORE it sends the results of A2 or A1...\n\nI think?",
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c8c89b_4d7c91a9",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T18:59:43Z",
+      "side": 1,
+      "message": "Do we need to static_assert that AtomicWord can hold a pointer without truncation? Or will compiler warnings catch that for us?",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 27
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
