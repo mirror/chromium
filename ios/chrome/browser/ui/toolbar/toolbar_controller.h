@@ -49,6 +49,9 @@ class ReadingListModel;
 // Style of this toolbar.
 @property(nonatomic, readonly, assign) ToolbarControllerStyle style;
 
+// The constraint controlling the height of the toolbar.
+@property(nonatomic, readonly) NSLayoutConstraint* heightConstraint;
+
 // The reading list model reflected by the toolbar.
 @property(nonatomic, readwrite, assign) ReadingListModel* readingListModel;
 
@@ -134,6 +137,7 @@ class ReadingListModel;
 // Update the view's layout to take into account the new safe area insets.
 - (void)safeAreaInsetsDidChange;
 
+// Returns the preferred toolbar height in the current orientation.
 - (CGFloat)preferredToolbarHeightWhenAlignedToTopOfScreen;
 
 @end
