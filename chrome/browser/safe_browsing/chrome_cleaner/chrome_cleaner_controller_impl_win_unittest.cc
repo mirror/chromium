@@ -4,6 +4,7 @@
 
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.h"
 
+#include <sstream>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -223,14 +224,14 @@ enum class UwsFoundStatus {
   kUwsFoundNoRebootRequired,
 };
 
+typedef std::
+    tuple<CleanerProcessStatus, CrashPoint, UwsFoundStatus, UserResponse>
+        ChromeCleanerControllerTestParams;
+
 // Test fixture that runs a mock Chrome Cleaner process in various
 // configurations and mocks the user's response.
 class ChromeCleanerControllerTest
-    : public testing::TestWithParam<
-          std::tuple<CleanerProcessStatus,
-                     MockChromeCleanerProcess::CrashPoint,
-                     UwsFoundStatus,
-                     ChromeCleanerController::UserResponse>>,
+    : public testing::TestWithParam<ChromeCleanerControllerTestParams>,
       public ChromeCleanerRunnerTestDelegate,
       public ChromeCleanerControllerDelegate {
  public:
@@ -556,6 +557,40 @@ TEST_P(ChromeCleanerControllerTest, WithMockCleanerProcess) {
   controller_->RemoveObserver(&mock_observer_);
 }
 
+// Make all the test parameter types printable.
+std::ostream& operator<<(std::ostream& out, CleanerProcessStatus status) {
+  return out << "CleanerProcessStatus" << static_cast<int>(status);
+}
+
+std::ostream& operator<<(std::ostream& out, CrashPoint crash_point) {
+  return out << "CrashPoint" << static_cast<int>(crash_point);
+}
+
+std::ostream& operator<<(std::ostream& out, UwsFoundStatus status) {
+  return out << "UwsFoundStatus" << static_cast<int>(status);
+}
+
+std::ostream& operator<<(std::ostream& out, UserResponse response) {
+  return out << "UserResponse" << static_cast<int>(response);
+}
+
+// Supposedly ::testing::PrintToStringParamName should magically handle tuples,
+// calling the above operator<< for each element depending on its type. But the
+// correct override for CrashPoint and UserResponse do not get called, so this
+// functor can be used to get each element in the tuple explicitly.
+struct ChromeCleanerControllerTestParamsToString {
+  std::string operator()(
+      const ::testing::TestParamInfo<ChromeCleanerControllerTestParams>& info)
+      const {
+    std::ostringstream param_name;
+    param_name << std::get<0>(info.param) << "_";
+    param_name << std::get<1>(info.param) << "_";
+    param_name << std::get<2>(info.param) << "_";
+    param_name << std::get<3>(info.param);
+    return param_name.str();
+  }
+};
+
 INSTANTIATE_TEST_CASE_P(
     All,
     ChromeCleanerControllerTest,
@@ -575,7 +610,8 @@ INSTANTIATE_TEST_CASE_P(
             Values(UserResponse::kAcceptedWithLogs,
                    UserResponse::kAcceptedWithoutLogs,
                    UserResponse::kDenied,
-                   UserResponse::kDismissed)));
+                   UserResponse::kDismissed)),
+    ChromeCleanerControllerTestParamsToString());
 
 }  // namespace
 }  // namespace safe_browsing
