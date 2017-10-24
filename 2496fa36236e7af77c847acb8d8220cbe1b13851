@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbcbffe4_d5db7230",
+        "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-24T12:37:23Z",
+      "side": 1,
+      "message": "nit: Please add comment \"It can be called only once.\"",
+      "revId": "2496fa36236e7af77c847acb8d8220cbe1b13851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338eafc9_50513981",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-24T12:37:23Z",
+      "side": 1,
+      "message": "nit: new WebURLLoaderFactory",
+      "range": {
+        "startLine": 721,
+        "startChar": 27,
+        "endLine": 721,
+        "endChar": 33
+      },
+      "revId": "2496fa36236e7af77c847acb8d8220cbe1b13851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
