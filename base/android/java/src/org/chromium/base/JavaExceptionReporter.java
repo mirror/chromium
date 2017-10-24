@@ -42,6 +42,13 @@ public class JavaExceptionReporter implements Thread.UncaughtExceptionHandler {
     }
 
     /**
+     * Report assert failure without crash.
+     */
+    public static void reportAssertFailure(AssertionError assertionError) {
+        nativeReportJavaException(false, assertionError);
+    }
+
+    /**
      * Report and upload the stack trace as if it was a crash. This is very expensive and should
      * be called rarely and only on the UI thread to avoid corrupting other crash uploads. Ideally
      * only called in idle handlers.
