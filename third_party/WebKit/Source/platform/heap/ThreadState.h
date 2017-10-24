@@ -517,6 +517,8 @@ class PLATFORM_EXPORT ThreadState {
 
   int GcAge() const { return gc_age_; }
 
+  Visitor* CurrentVisitor() { return current_gc_data_.visitor.get(); }
+
  private:
   template <typename T>
   friend class PrefinalizerRegistration;
