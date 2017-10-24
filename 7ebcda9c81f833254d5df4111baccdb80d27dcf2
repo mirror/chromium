@@ -34,6 +34,24 @@
       "revId": "7ebcda9c81f833254d5df4111baccdb80d27dcf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97872bbd_39d6f20c",
+        "filename": "chrome/test/data/webui/webui_test_util.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T20:20:47Z",
+      "side": 1,
+      "message": "Does the filename itself need to be unique enough? Given that the path is already unique. For example webui/test_util.js different than webui/pdf/test_util.js and they can be easily located by searching for the path instead of searching for the filename only.\n\nThe current status (see https://cs.chromium.org/search/?q\u003dtest_util.js\u0026sq\u003dpackage:chromium\u0026type\u003dcs) seems preferable to me.\n\nAs a counter example, see https://cs.chromium.org/chromium/src/chrome/test/data/webui/extensions/, where most files are prefixed with \"extensions_\" which I find a bit redundant and cumbersome (and was planning to remove the prefixes).",
+      "parentUuid": "df8d2ce2_1771f140",
+      "revId": "7ebcda9c81f833254d5df4111baccdb80d27dcf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
