@@ -39,7 +39,7 @@ const TableColumnData kColumns[] = {
 #endif
 
     {IDS_TASK_MANAGER_CPU_COLUMN, ui::TableColumn::RIGHT, -1, 0,
-     arraysize("99.9") * kCharWidth, -1, true, false, true},
+     arraysize("99.99") * kCharWidth, -1, true, false, true},
 #if defined(OS_WIN)
     {IDS_TASK_MANAGER_CPU_TIME_COLUMN, ui::TableColumn::RIGHT, -1, 0,
      arraysize("1234h 42m 30s") * kCharWidth, -1, true, false, false},

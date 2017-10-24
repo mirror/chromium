@@ -35,7 +35,7 @@ namespace task_manager {
 
 namespace {
 
-const char kCpuTextFormatString[] = "%.1f";
+const char kCpuTextFormatString[] = "%.2f";
 
 #if defined(OS_MACOSX)
 // Match Activity Monitor's default refresh rate.
