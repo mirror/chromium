@@ -16,6 +16,7 @@
 #pragma mark - SadTabTabHelperDelegate
 
 - (void)presentSadTabForRepeatedFailure:(BOOL)repeatedFailure {
+  DCHECK(self.webState);
   // Create a SadTabView so |webstate| presents it.
   SadTabView* sadTabview = [[SadTabView alloc]
            initWithMode:repeatedFailure ? SadTabViewMode::FEEDBACK
