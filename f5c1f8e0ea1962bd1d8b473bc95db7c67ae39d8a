@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50f3726c_65075382",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-24T21:19:45Z",
+      "side": 1,
+      "message": "Does it make sense to DCHECK(characteristic-\u003eIsWritableWithoutResponse) here?",
+      "range": {
+        "startLine": 826,
+        "startChar": 23,
+        "endLine": 826,
+        "endChar": 33
+      },
+      "revId": "f5c1f8e0ea1962bd1d8b473bc95db7c67ae39d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
