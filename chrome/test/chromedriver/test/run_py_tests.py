@@ -92,6 +92,10 @@ _OS_SPECIFIC_FILTER['win'] = [
     'ChromeDownloadDirTest.testDownloadDirectoryOverridesExistingPreferences',
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1945
     'ChromeDriverTest.testWindowFullScreen',
+    # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2096
+    'ChromeDriverTest.testAlertHandlingOnPageUnload',
+    'ChromeDriverTest.testGoBackAndGoForward',
+    'ChromeDriverTest.testTabCrash',
 ]
 _OS_SPECIFIC_FILTER['linux'] = [
     # Xvfb doesn't support maximization.
