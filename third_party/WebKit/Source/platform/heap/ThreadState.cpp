@@ -1359,6 +1359,8 @@ void ThreadState::MarkPhaseEpilogue() {
   Heap().WeakProcessing(current_gc_data_.visitor.get());
   Heap().DecommitCallbackStacks();
 
+  current_gc_data_.visitor.reset();
+
   Heap().HeapStats().SetEstimatedMarkingTimePerByte(
       current_gc_data_.marked_object_size
           ? (current_gc_data_.marking_time_in_milliseconds / 1000 /
