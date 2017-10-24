@@ -471,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "bb1a2528_3abb05ec",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1230519
+      },
+      "writtenOn": "2017-10-24T18:47:00Z",
+      "side": 1,
+      "message": "I think it would be good to just remove this log message for now, since it seems to only before for debugging (and if there is a mismatch between expected and actual sizes, the tests themselves will say so).",
+      "parentUuid": "1632c087_47d70841",
+      "range": {
+        "startLine": 165,
+        "startChar": 33,
+        "endLine": 165,
+        "endChar": 37
+      },
+      "revId": "9f98033645a61e042c6716803cece13094da74e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "765a359b_bab24e1f",
         "filename": "components/cronet/ios/test/cronet_performance_test.mm",
         "patchSetId": 9
@@ -482,6 +506,30 @@
       "writtenOn": "2017-10-13T21:21:54Z",
       "side": 1,
       "message": "Looks like duplication of code in StartDataTaskAndWaitForCompletion(task). Maybe we can add an overloaded method that allows to specify the whether to crash on failure and allows passing the timeout. I think we should specify a reasonable timeout.",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 28
+      },
+      "revId": "9f98033645a61e042c6716803cece13094da74e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f443e1_92b9c46c",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1230519
+      },
+      "writtenOn": "2017-10-24T18:47:00Z",
+      "side": 1,
+      "message": "I think it might make sense to just have StartDataTaskAndWaitForCompletion return the error, and the caller can decide if they want to crash or not.  That feels like a more transparent use to me.\n\nIf not, I think it would make sense to have two separate functions, because the return type should be different in each case (there\u0027s no reason for the function that crashes on error to return the error code).\n\nI have added a timeout parameter, however, with a default timeout of 20 seconds.",
+      "parentUuid": "765a359b_bab24e1f",
       "range": {
         "startLine": 188,
         "startChar": 0,
@@ -561,6 +609,30 @@
       "revId": "9f98033645a61e042c6716803cece13094da74e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45d397a_5f7418b7",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1230519
+      },
+      "writtenOn": "2017-10-24T18:47:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da947560_f2cff574",
+      "range": {
+        "startLine": 201,
+        "startChar": 6,
+        "endLine": 201,
+        "endChar": 25
+      },
+      "revId": "9f98033645a61e042c6716803cece13094da74e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
