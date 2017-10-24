@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bbab4b98_42f53f87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-24T22:54:43Z",
+      "side": 1,
+      "message": "Commit message revised.",
+      "parentUuid": "13bf50a8_c18f3d60",
+      "revId": "900af70e87e4a7fd85cce8dd28a1430fd58b89c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ece7e38_8aebb1cb",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T06:28:26Z",
       "side": 1,
       "message": "How about returning std::pair\u003cunsigned, unsigned\u003e? It seems \ndifference between is ConvertTextContentTo{First,Last}DOMOffset()\nis   \n\nif (text_content_start_ \u003d\u003d text_content_end_)\n    return dom_{start,end}_;",
+      "revId": "900af70e87e4a7fd85cce8dd28a1430fd58b89c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fff4b29_b8898784",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-24T22:54:43Z",
+      "side": 1,
+      "message": "The API seems not so good when returning a pair. I changed ConvertTextContentToLastDOMOffset() to reuse ...First... when the unit is not collapsed.",
+      "parentUuid": "5ece7e38_8aebb1cb",
       "revId": "900af70e87e4a7fd85cce8dd28a1430fd58b89c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b35d5222_c883857f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-24T22:54:43Z",
+      "side": 1,
+      "message": "Both functions are semantically clear, and I\u0027m expecting some external usage of ConvertTextContentToFirst/LastDOMOffset, so it seems better to keep them as public APIs.",
+      "parentUuid": "0cd1d5aa_7a552ea9",
+      "revId": "900af70e87e4a7fd85cce8dd28a1430fd58b89c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddbe8ff3_7535de40",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-23T06:28:26Z",
       "side": 1,
       "message": "How about using template function to share code between Get{First,Last}Position()?",
+      "revId": "900af70e87e4a7fd85cce8dd28a1430fd58b89c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f342ff_d8204db6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-24T22:54:43Z",
+      "side": 1,
+      "message": "I found it not that easy to templatize, due to subtle differences like lower_bound vs. upper_bound.\n\nWrapped the (node, offset) to Position part into a function to slightly reudce code duplication.",
+      "parentUuid": "ddbe8ff3_7535de40",
       "revId": "900af70e87e4a7fd85cce8dd28a1430fd58b89c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +177,30 @@
       "side": 1,
       "message": "Let\u0027s use PositionInFlatTree because flat tree are almost identical to\nlayout tree to clear meaning of positions of BeforeAnchor/AfterAnchor.\n\ne.g.\n\u003cdiv host\u003e\n \u003cshadowRoot\u003efoo\u003cslot name\u003dbr\u003e\u003c/slot\u003ebar\u003c/shadowRoot\u003e\n \u003cspan slot\u003dbr\u003enewline\u003cbr\u003e|\u003c/slot\u003ebaz\n\u003c/div\u003e\n\nNext(AfterNode(BR)) should be \"bar\"(in flat tree) instead of \"baz\"(in\ndom tree)",
       "parentUuid": "b75eef61_5e13ee2d",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 40
+      },
+      "revId": "900af70e87e4a7fd85cce8dd28a1430fd58b89c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67a39ed_59a3bd14",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-24T22:54:43Z",
+      "side": 1,
+      "message": "I remember in another conversation, we concluded that PositionInFlatTree is an implementation detail in editing and shouldn\u0027t be exposed elsewhere. And if we use PiFT in these two functions, we need to use them everywhere else in offset mapping, which doesn\u0027t look quite good.\n\nThe position mismatch issue may not be that important since all positions returned by the APIs are anchored to either text or atomic inline.\n\nI\u0027ve revised the comment. Hope it looks better.",
+      "parentUuid": "d67827d4_ac24381b",
       "range": {
         "startLine": 161,
         "startChar": 0,
