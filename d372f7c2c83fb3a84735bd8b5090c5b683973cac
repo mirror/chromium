@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "881843cc_6f7fa549",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T07:03:54Z",
+      "side": 1,
+      "message": "Could this comment be simplified now that we have LifecycleState? Perhaps we can just replace it with something after line 228 saying something like\n\n// We will continue in OnConnectionError() triggered by destruction of the content::ServiceWorkerRegistrationHandle in the browser process, or else in Attach*() if |this| is reused.",
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c261fe90_a86e0074",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T07:03:54Z",
+      "side": 1,
+      "message": "Why don\u0027t we need to check kUnbound here and below? What happens if a WebSeviceWorkerRegistration::Handle still tries to use us while we are kUnbound?",
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716d8776_ddbe592f",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T07:03:54Z",
+      "side": 1,
+      "message": "There\u0027s a bit of a contradiction here with the new LifecycleState stuff.\n\nThis comment is structured as a sequence where first the render-process Handles die, then we sever the Mojo connection, then we get destructed.\n\nLifecycleState seems to say that Handles dying or Mojo connection breaking can happen in either order, then we get destructed when both happen.\n\nCan you help me understand why Mojo connection breaking can happen before Handles die?",
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4058c0fc_ec6a9d15",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T07:03:54Z",
+      "side": 1,
+      "message": "\", from\" -\u003e \". From\"",
+      "range": {
+        "startLine": 141,
+        "startChar": 37,
+        "endLine": 141,
+        "endChar": 42
+      },
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6322bc_efbbc75d",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T07:03:54Z",
+      "side": 1,
+      "message": "Blink",
+      "range": {
+        "startLine": 144,
+        "startChar": 59,
+        "endLine": 144,
+        "endChar": 64
+      },
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae54b9d3_5a8b0aad",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T07:03:54Z",
+      "side": 1,
+      "message": "This comment should also mention why we transition from kDetached to kAttachedAndBound.",
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ba603d_c6a4848f",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T07:03:54Z",
+      "side": 1,
+      "message": "contexts",
+      "range": {
+        "startLine": 231,
+        "startChar": 69,
+        "endLine": 231,
+        "endChar": 71
+      },
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
