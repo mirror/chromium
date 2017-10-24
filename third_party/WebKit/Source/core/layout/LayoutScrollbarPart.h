@@ -76,7 +76,7 @@ class LayoutScrollbarPart final : public LayoutBlock {
 
   // Expose for LayoutScrollbar and PaintInvalidationCapableScrollableArea for
   // paint invalidation.
-  using LayoutObject::SetVisualRect;
+  //  using LayoutObject::SetVisualRect;
 
  protected:
   void StyleWillChange(StyleDifference,
