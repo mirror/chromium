@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "2a721986_ee456efe",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-24T17:16:58Z",
+      "side": 1,
+      "message": "The idea of this code:\n- Worker should track entities that are in process of being committed. It shouldn\u0027t remove entity before receiving commit response about it. We should catch such occurrences during testing.\n- When we receive corrupt response from network we should just sip it and keep going instead of crashing.\n\nI\u0027m Ok with removing \"continue\", network corruptions shouldn\u0027t happen that often and client would simply crash, restart and recover.\nI\u0027m not comfortable removing NOTREACHED(). If we write a bug that removes entities then response wouldn\u0027t reach processor and it will keep recommitting the same entity.\n\nWhat do you think?",
+      "parentUuid": "0cd59462_6706d2a6",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d664f8af_eb2e0305",
         "filename": "components/sync/engine_impl/model_type_worker.h",
         "patchSetId": 1
