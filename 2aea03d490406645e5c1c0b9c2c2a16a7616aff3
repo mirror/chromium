@@ -411,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "67965dd4_a19199ee",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-24T01:08:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca26c18d_e95eadcc",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b7b3c79_3d6bc2b3",
         "filename": "chromeos/dbus/power_manager_client.cc",
         "patchSetId": 1
@@ -1768,6 +1786,24 @@
       "side": 1,
       "message": "not done yet.",
       "parentUuid": "8f587740_c279f3d7",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde552c5_39fdc90f",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-24T01:08:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60ee5d81_ec1e30ae",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
