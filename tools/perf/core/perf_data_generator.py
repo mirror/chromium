@@ -447,7 +447,15 @@ def get_waterfall_config():
          ('load_library_perf_tests', 'build94-m1'),
          # crbug.com/735679
          # ('performance_browser_tests', 'build94-m1'),
-         ('media_perftests', 'build95-m1')]
+         ('media_perftests', 'build95-m1')
+        ],
+        'perf_tests_with_args': [
+         ('passthrough_command_buffer_perftests', 'build94-m1',
+          ['--use-cmd-decoder=passthrough', '--use-angle=gl-null'],
+          'command_buffer_perftests'),
+         ('validating_command_buffer_perftests', 'build94-m1',
+          ['--use-cmd-decoder=validating', '--use-stub'],
+          'command_buffer_perftests')]
       }
     ])
 
@@ -697,12 +705,26 @@ def get_swarming_dimension(dimension, device_id):
   return complete_dimension
 
 
+def generate_cplusplus_isolate_script_entry(
+    dimension, name, shard, test_args, isolate_name):
+  return generate_isolate_script_entry(
+      [get_swarming_dimension(dimension, shard)], test_args, isolate_name,
+         name, ignore_task_failure=False)
+
+
 def generate_cplusplus_isolate_script_test(dimension):
   return [
-    generate_isolate_script_entry(
-        [get_swarming_dimension(dimension, shard)], [], name,
-        name, ignore_task_failure=False)
+    generate_cplusplus_isolate_script_entry(
+        dimension, name, shard, [], name)
     for name, shard in dimension['perf_tests']
+  ]
+
+def generate_cplusplus_isolate_script_test_with_args(dimension):
+  return [
+    generate_cplusplus_isolate_script_entry(
+        dimension, name, shard, test_args, isolate_name)
+    for name, shard, test_args, isolate_name
+        in dimension['perf_tests_with_args']
   ]
 
 
@@ -908,6 +930,9 @@ def generate_all_tests(waterfall):
     if config['swarming_dimensions'][0].get('perf_tests', False):
       isolated_scripts += generate_cplusplus_isolate_script_test(
         config['swarming_dimensions'][0])
+    if config['swarming_dimensions'][0].get('perf_tests_with_args', False):
+      isolated_scripts += generate_cplusplus_isolate_script_test_with_args(
+        config['swarming_dimensions'][0])
 
     isolated_scripts, devices_to_test_skipped = remove_blacklisted_device_tests(
         isolated_scripts, BLACKLISTED_DEVICES)
@@ -1002,6 +1027,10 @@ BenchmarkMetadata = collections.namedtuple(
     'BenchmarkMetadata', 'emails component not_scheduled')
 NON_TELEMETRY_BENCHMARKS = {
     'angle_perftests': BenchmarkMetadata('jmadill@chromium.org', None, False),
+    'validating_command_buffer_perftests': BenchmarkMetadata(
+        'piman@chromium.org', None, False),
+    'passthrough_command_buffer_perftests': BenchmarkMetadata(
+        'geofflang@chromium.org', None, False),
     'net_perftests': BenchmarkMetadata('xunjieli@chromium.org', None, False),
     'cc_perftests': BenchmarkMetadata('enne@chromium.org', None, False),
     'gpu_perftests': BenchmarkMetadata('reveman@chromium.org', None, False),
