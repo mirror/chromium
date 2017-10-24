@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f776fa01_43b5e785",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-24T15:08:11Z",
+      "side": 1,
+      "message": "Is this worth terminating the child process over, as opposed to just having a DCHECK here?",
+      "revId": "470cefd4dbc72e144dbf71817551a7d5d855f842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69234244_0cef47d5",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-24T15:08:11Z",
+      "side": 1,
+      "message": "Should this return RenderWidgetHostImpl::GetScreenInfo() by default, so that it is implemented for all RWHVs?\n\nIf not, I don\u0027t think you need to touch the .cc file, you can just inline the empty function body in the header.",
+      "revId": "470cefd4dbc72e144dbf71817551a7d5d855f842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
