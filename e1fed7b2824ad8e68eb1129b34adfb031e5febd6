@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1bb46ac_50856832",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T11:37:17Z",
+      "side": 1,
+      "message": "Yes, see patch set 2.",
+      "parentUuid": "7f4e11ae_080e047b",
+      "revId": "e1fed7b2824ad8e68eb1129b34adfb031e5febd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94fffff0_4c341908",
         "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "e1fed7b2824ad8e68eb1129b34adfb031e5febd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da3001e_b6d4be3b",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T11:37:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94fffff0_4c341908",
+      "revId": "e1fed7b2824ad8e68eb1129b34adfb031e5febd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
