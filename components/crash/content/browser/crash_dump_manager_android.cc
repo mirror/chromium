@@ -19,6 +19,7 @@
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "components/crash/content/app/breakpad_linux.h"
+#include "content/public/browser/browser_thread.h"
 #include "jni/CrashDumpManager_jni.h"
 
 namespace breakpad {
@@ -28,12 +29,45 @@ base::LazyInstance<CrashDumpManager>::Leaky g_instance =
     LAZY_INSTANCE_INITIALIZER;
 }
 
+CrashDumpManager::MinidumpDetails::MinidumpDetails(
+    int process_host_id,
+    content::ProcessType process_type,
+    base::TerminationStatus termination_status,
+    base::android::ApplicationState app_state,
+    int64_t file_size)
+    : process_host_id(process_host_id),
+      process_type(process_type),
+      termination_status(termination_status),
+      app_state(app_state),
+      file_size(file_size) {}
+
+CrashDumpManager::MinidumpDetails::MinidumpDetails() {}
+CrashDumpManager::MinidumpDetails::~MinidumpDetails() {}
+
+CrashDumpManager::MinidumpDetails::MinidumpDetails(
+    const CrashDumpManager::MinidumpDetails& other)
+    : MinidumpDetails(other.process_host_id,
+                      other.process_type,
+                      other.termination_status,
+                      other.app_state,
+                      other.file_size) {}
+
 // static
 CrashDumpManager* CrashDumpManager::GetInstance() {
   return g_instance.Pointer();
 }
 
-CrashDumpManager::CrashDumpManager() {}
+void CrashDumpManager::AddObserver(Observer* observer) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  observers_.AddObserver(observer);
+}
+
+void CrashDumpManager::RemoveObserver(Observer* observer) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  observers_.RemoveObserver(observer);
+}
+
+CrashDumpManager::CrashDumpManager() : weak_factory_(this) {}
 
 CrashDumpManager::~CrashDumpManager() {}
 
@@ -60,92 +94,50 @@ base::ScopedFD CrashDumpManager::CreateMinidumpFileForChild(
   return base::ScopedFD(minidump_file.TakePlatformFile());
 }
 
-bool CrashDumpManager::ProcessMinidumpFileFromChild(
+void CrashDumpManager::ProcessMinidumpFileFromChild(
     base::FilePath crash_dump_dir,
     int process_host_id,
     content::ProcessType process_type,
     base::TerminationStatus termination_status,
     base::android::ApplicationState app_state) {
   base::AssertBlockingAllowed();
-  bool increase_crash_count = false;
   base::FilePath minidump_path;
   // If the minidump for a given child process has already been
   // processed, then there is no more work to do.
   if (!GetMinidumpPath(process_host_id, &minidump_path))
-    return increase_crash_count;
+    return;
 
   int64_t file_size = 0;
 
   if (!base::PathExists(minidump_path)) {
     LOG(ERROR) << "minidump does not exist " << minidump_path.value();
-    return increase_crash_count;
+    return;
   }
 
   int r = base::GetFileSize(minidump_path, &file_size);
   DCHECK(r) << "Failed to retrieve size for minidump "
             << minidump_path.value();
 
-  // TODO(wnwen): If these numbers match up to TabWebContentsObserver's
-  //     TabRendererCrashStatus histogram, then remove that one as this is more
-  //     accurate with more detail.
-  if ((process_type == content::PROCESS_TYPE_RENDERER ||
-       process_type == content::PROCESS_TYPE_GPU) &&
-      app_state != base::android::APPLICATION_STATE_UNKNOWN) {
-    ExitStatus exit_status;
-    bool is_running =
-        (app_state == base::android::APPLICATION_STATE_HAS_RUNNING_ACTIVITIES);
-    bool is_paused =
-        (app_state == base::android::APPLICATION_STATE_HAS_PAUSED_ACTIVITIES);
-    if (file_size == 0) {
-      if (is_running) {
-        exit_status = EMPTY_MINIDUMP_WHILE_RUNNING;
-      } else if (is_paused) {
-        exit_status = EMPTY_MINIDUMP_WHILE_PAUSED;
-      } else {
-        exit_status = EMPTY_MINIDUMP_WHILE_BACKGROUND;
-      }
-    } else {
-      if (is_running) {
-        exit_status = VALID_MINIDUMP_WHILE_RUNNING;
-      } else if (is_paused) {
-        exit_status = VALID_MINIDUMP_WHILE_PAUSED;
-      } else {
-        exit_status = VALID_MINIDUMP_WHILE_BACKGROUND;
-      }
-    }
-    if (process_type == content::PROCESS_TYPE_RENDERER) {
-      if (termination_status == base::TERMINATION_STATUS_OOM_PROTECTED) {
-        // There is a delay for OOM flag to be removed when app goes to
-        // background, so we can't just check for OOM_PROTECTED flag.
-        increase_crash_count = is_running || is_paused;
-        UMA_HISTOGRAM_ENUMERATION("Tab.RendererDetailedExitStatus",
-                                  exit_status,
-                                  ExitStatus::MINIDUMP_STATUS_COUNT);
-      } else {
-        UMA_HISTOGRAM_ENUMERATION("Tab.RendererDetailedExitStatusUnbound",
-                                  exit_status,
-                                  ExitStatus::MINIDUMP_STATUS_COUNT);
-      }
-    } else if (process_type == content::PROCESS_TYPE_GPU) {
-      UMA_HISTOGRAM_ENUMERATION("GPU.GPUProcessDetailedExitStatus",
-                                exit_status,
-                                ExitStatus::MINIDUMP_STATUS_COUNT);
-    }
-  }
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::Bind(&CrashDumpManager::OnMinidumpProcessed,
+                 weak_factory_.GetWeakPtr(),
+                 MinidumpDetails(process_host_id, process_type,
+                                 termination_status, app_state, file_size)));
 
   if (file_size == 0) {
     // Empty minidump, this process did not crash. Just remove the file.
     r = base::DeleteFile(minidump_path, false);
     DCHECK(r) << "Failed to delete temporary minidump file "
               << minidump_path.value();
-    return increase_crash_count;
+    return;
   }
 
   // We are dealing with a valid minidump. Copy it to the crash report
   // directory from where Java code will upload it later on.
   if (crash_dump_dir.empty()) {
     NOTREACHED() << "Failed to retrieve the crash dump directory.";
-    return increase_crash_count;
+    return;
   }
   const uint64_t rand = base::RandUint64();
   const std::string filename = base::StringPrintf(
@@ -156,7 +148,7 @@ bool CrashDumpManager::ProcessMinidumpFileFromChild(
     LOG(ERROR) << "Failed to move crash dump from " << minidump_path.value()
                << " to " << dest_path.value();
     base::DeleteFile(minidump_path, false);
-    return increase_crash_count;
+    return;
   }
   VLOG(1) << "Crash minidump successfully generated: " << dest_path.value();
 
@@ -167,7 +159,7 @@ bool CrashDumpManager::ProcessMinidumpFileFromChild(
   base::android::ScopedJavaLocalRef<jstring> j_dest_path =
       base::android::ConvertUTF8ToJavaString(env, dest_path.value());
   Java_CrashDumpManager_tryToUploadMinidump(env, j_dest_path);
-  return increase_crash_count;
+  return;
 }
 
 void CrashDumpManager::SetMinidumpPath(int process_host_id,
@@ -189,6 +181,58 @@ bool CrashDumpManager::GetMinidumpPath(int process_host_id,
   *minidump_path = iter->second;
   process_host_id_to_minidump_path_.erase(iter);
   return true;
+}
+
+void CrashDumpManager::OnMinidumpProcessed(const MinidumpDetails& details) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  // TODO(wnwen): If these numbers match up to TabWebContentsObserver's
+  //     TabRendererCrashStatus histogram, then remove that one as this is more
+  //     accurate with more detail.
+  if ((details.process_type == content::PROCESS_TYPE_RENDERER ||
+       details.process_type == content::PROCESS_TYPE_GPU) &&
+      details.app_state != base::android::APPLICATION_STATE_UNKNOWN) {
+    ExitStatus exit_status;
+    bool is_running = (details.app_state ==
+                       base::android::APPLICATION_STATE_HAS_RUNNING_ACTIVITIES);
+    bool is_paused = (details.app_state ==
+                      base::android::APPLICATION_STATE_HAS_PAUSED_ACTIVITIES);
+    if (details.file_size == 0) {
+      if (is_running) {
+        exit_status = EMPTY_MINIDUMP_WHILE_RUNNING;
+      } else if (is_paused) {
+        exit_status = EMPTY_MINIDUMP_WHILE_PAUSED;
+      } else {
+        exit_status = EMPTY_MINIDUMP_WHILE_BACKGROUND;
+      }
+    } else {
+      if (is_running) {
+        exit_status = VALID_MINIDUMP_WHILE_RUNNING;
+      } else if (is_paused) {
+        exit_status = VALID_MINIDUMP_WHILE_PAUSED;
+      } else {
+        exit_status = VALID_MINIDUMP_WHILE_BACKGROUND;
+      }
+    }
+    if (details.process_type == content::PROCESS_TYPE_RENDERER) {
+      if (details.termination_status ==
+          base::TERMINATION_STATUS_OOM_PROTECTED) {
+        UMA_HISTOGRAM_ENUMERATION("Tab.RendererDetailedExitStatus", exit_status,
+                                  ExitStatus::MINIDUMP_STATUS_COUNT);
+      } else {
+        UMA_HISTOGRAM_ENUMERATION("Tab.RendererDetailedExitStatusUnbound",
+                                  exit_status,
+                                  ExitStatus::MINIDUMP_STATUS_COUNT);
+      }
+    } else if (details.process_type == content::PROCESS_TYPE_GPU) {
+      UMA_HISTOGRAM_ENUMERATION("GPU.GPUProcessDetailedExitStatus", exit_status,
+                                ExitStatus::MINIDUMP_STATUS_COUNT);
+    }
+  }
+
+  for (Observer& observer : observers_) {
+    observer.OnMinidumpProcessed(details);
+  }
 }
 
 }  // namespace breakpad
