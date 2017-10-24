@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b49b4766_644a22fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "Please add:\n\n/* package */\n\nExplanation: Leaving out the access level modifiers will default to making your constructor and member variables package-private. In this case, we have a convention to specify /* package */ in comments where the access level modifier would usually go. This assures the reviewer that the author intentionally leave out the access level modifier instead of forgetting to specify one.",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 8
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27073e20_379a3676",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "/* package */",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 8
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85328954_7d08a11d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "/* package */",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 8
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8366f28a_31ce7e8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "whether",
+      "range": {
+        "startLine": 183,
+        "startChar": 90,
+        "endLine": 183,
+        "endChar": 97
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e76c7cb_0fff371f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "capability",
+      "range": {
+        "startLine": 206,
+        "startChar": 64,
+        "endLine": 206,
+        "endChar": 76
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0129ec2_163a9cb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "a matched capability",
+      "range": {
+        "startLine": 207,
+        "startChar": 60,
+        "endLine": 207,
+        "endChar": 80
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fed4d06_000bb74c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "\u003c",
+      "range": {
+        "startLine": 207,
+        "startChar": 11,
+        "endLine": 207,
+        "endChar": 13
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5601d45f_e5217503",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "return j \u003c mCapabilities.length;",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 20
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac541f08_588d6f58",
+        "filename": "third_party/WebKit/Source/modules/payments/BasicCardHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "This would work best at the top of the anonymous namespace.",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 50
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12feca78_6369b75d",
+        "filename": "third_party/WebKit/Source/modules/payments/BasicCardHelper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "Please put the using statements in BasicCardHelper.cpp and use the fully qualified type name in BasicCardHelper.h. This avoids accidentally polluting the namespaces of users of this header file with types blink::BasicCardNetwork and blink::BasicCardType.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 46
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94fbf8d1_11f6caa9",
+        "filename": "third_party/WebKit/Source/modules/payments/BasicCardHelper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "Please add STATIC_ONLY(BasicCardHelper) above \"public\". Example:\n\nclass BasicCardHelper {\n  STATIC_ONLY(BasicCardHelper);\n public:\n\nExplanation: This will prevent users of your class from accidentally calling \"new BasicCardHelper()\", which is not the way that you intend for your class to be used.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa210dc5_057fe4b8",
+        "filename": "third_party/WebKit/Source/modules/payments/BasicCardHelper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T14:54:30Z",
+      "side": 1,
+      "message": "#endif  // BasicCardHelper_h",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "d140f4e6c6d0df5a483c409455bb7e0684f5a3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
