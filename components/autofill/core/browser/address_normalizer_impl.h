@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "components/autofill/core/browser/address_normalizer.h"
+#include "components/keyed_service/core/keyed_service.h"
 
 namespace i18n {
 namespace addressinput {
@@ -25,7 +26,7 @@ namespace autofill {
 class AutofillProfile;
 
 // A class used to normalize addresses.
-class AddressNormalizerImpl : public AddressNormalizer {
+class AddressNormalizerImpl : public AddressNormalizer, public KeyedService {
  public:
   AddressNormalizerImpl(std::unique_ptr<::i18n::addressinput::Source> source,
                         std::unique_ptr<::i18n::addressinput::Storage> storage);
