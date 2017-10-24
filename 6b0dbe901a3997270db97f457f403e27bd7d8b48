@@ -16,6 +16,24 @@
       "revId": "6b0dbe901a3997270db97f457f403e27bd7d8b48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c51d97_2a9bcd24",
+        "filename": "chrome/common/webui_url_constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T18:33:13Z",
+      "side": 1,
+      "message": "I\u0027ll play with that and make another pass at this file.",
+      "parentUuid": "7b04f86d_c87a9d00",
+      "revId": "6b0dbe901a3997270db97f457f403e27bd7d8b48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
