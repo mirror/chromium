@@ -2017,6 +2017,19 @@ LayoutUnit LayoutBox::ShrinkLogicalWidthToAvoidFloats(
                                             kDoNotIndentText, logical_height) -
            child_margin_start - child_margin_end;
 
+  // This section of code is just for a use counter. It counts if something
+  // that avoids floats may have been affected by a float with shape-outside.
+  DCHECK(cb->ContainsFloats());
+  if (!ShapeOutsideInfo::IsEmpty()) {
+    for (const auto& floating_object : cb->GetFloatingObjects()->Set()) {
+      if (floating_object->GetLayoutObject()->GetShapeOutsideInfo()) {
+        UseCounter::Count(GetDocument(),
+                          WebFeature::kShapeOutsideMaybeAffectedInlineSize);
+        break;
+      }
+    }
+  }
+
   LayoutUnit width =
       cb->AvailableLogicalWidthForLine(logical_top_position, kDoNotIndentText,
                                        logical_height) -
