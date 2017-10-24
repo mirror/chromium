@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f795c84_c6ec1571",
+        "filename": "ios/chrome/browser/web/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "it contains all apps not one app, i intentionally named it like that",
+      "parentUuid": "f806e978_772133c0",
+      "range": {
+        "startLine": 149,
+        "startChar": 5,
+        "endLine": 149,
+        "endChar": 40
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba0c06bd_466f9bc7",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d82f682f_ee345970",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba0c06bd_466f9bc7",
+      "range": {
+        "startLine": 86,
+        "startChar": 20,
+        "endLine": 86,
+        "endChar": 21
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55aa211a_2ae91d9a",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-24T03:08:20Z",
       "side": 1,
       "message": "Would it be better to inject policy decider in init, so it can be mocked?",
+      "range": {
+        "startLine": 145,
+        "startChar": 23,
+        "endLine": 145,
+        "endChar": 54
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac121437_c3945614",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "I\u0027m not sure if there is a need for that at least now (we can\u0027t test it anyway from external app launcher), would it be better to add create another constructor to inject policyDecider when needed",
+      "parentUuid": "55aa211a_2ae91d9a",
       "range": {
         "startLine": 145,
         "startChar": 23,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "9a3b8cf2_8961d8fe",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa4e1ed0_28e144fa",
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2705ba5c_52ebc340",
         "filename": "ios/chrome/browser/web/external_app_launching_state.h",
         "patchSetId": 12
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "ba822e8f_de836e25",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2705ba5c_52ebc340",
+      "range": {
+        "startLine": 10,
+        "startChar": 45,
+        "endLine": 10,
+        "endChar": 53
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2fc307d_a568db65",
         "filename": "ios/chrome/browser/web/external_app_launching_state.h",
         "patchSetId": 12
@@ -131,6 +245,30 @@
       "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd4c8cd_2c8a8b00",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2fc307d_a568db65",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 47
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +318,54 @@
     },
     {
       "key": {
+        "uuid": "1dfcb59e_62c2a108",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1a498d5_66863d29",
+      "range": {
+        "startLine": 32,
+        "startChar": 38,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "481640db_68f012fc",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "moved to the implementation file",
+      "parentUuid": "022644b7_3b3806fa",
+      "range": {
+        "startLine": 32,
+        "startChar": 39,
+        "endLine": 32,
+        "endChar": 56
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d87f46e8_0359b43f",
         "filename": "ios/chrome/browser/web/external_app_launching_state.mm",
         "patchSetId": 12
@@ -200,6 +386,30 @@
       "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55634c52_4b20ef59",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d87f46e8_0359b43f",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 62
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "e52a920f_b7905640",
+        "filename": "ios/chrome/browser/web/external_app_launching_state_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71fe25b2_4cf03dc9",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "961ce2f3_e98b0f59",
         "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
         "patchSetId": 12
@@ -237,6 +471,30 @@
       "writtenOn": "2017-10-24T03:08:20Z",
       "side": 1,
       "message": "1). From Coding Guidelines for Cocoa: \"The use of “get” is unnecessary, unless one or more values are returned indirectly.\"\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001751-BCIJHEDH\n\n2.) \"Make the word before the argument describe the argument.\"\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001751-BCIJHEDH\n\n3.) s/soureURL/sourceURL",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c813d5c_381cd9d3",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "1) Maybe i understand it incorrectly but this is about if the method is returning a property, it says \"he use of “get” is unnecessary, unless one or more values are returned indirectly.\" which is exactly what is being done here (i\u0027m creating a key based on two parameters) \n2) done\n3) done",
+      "parentUuid": "961ce2f3_e98b0f59",
       "range": {
         "startLine": 25,
         "startChar": 24,
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "3fd65cdc_0ac31698",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65500852_0340f19c",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 30
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "224f37e0_8306cab6",
         "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
         "patchSetId": 12
@@ -292,6 +574,30 @@
       "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f7bf6c_018465b4",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "224f37e0_8306cab6",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 47
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "e9fa76f0_ea38a6b7",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab020b17_961fabce",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "755a6d6f_fc4b9194",
         "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider_unittest.mm",
         "patchSetId": 12
@@ -329,6 +659,30 @@
       "writtenOn": "2017-10-24T03:08:20Z",
       "side": 1,
       "message": "nit: s/URL/Url",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd26966e_cbcd1de5",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Not sure i understand why, i remember in different previous cases. you mentioned that URL is all acronym and should all be capitalized. ?",
+      "parentUuid": "755a6d6f_fc4b9194",
       "range": {
         "startLine": 17,
         "startChar": 11,
@@ -358,6 +712,24 @@
     },
     {
       "key": {
+        "uuid": "f68855c6_627af6d7",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4ef3050_183f93a0",
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd2b791d_4a1beaa9",
         "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider_unittest.mm",
         "patchSetId": 12
@@ -378,6 +750,30 @@
       "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9134ae_c4c4ea73",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T17:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd2b791d_4a1beaa9",
+      "range": {
+        "startLine": 149,
+        "startChar": 6,
+        "endLine": 149,
+        "endChar": 15
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
