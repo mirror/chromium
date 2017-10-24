@@ -9,6 +9,7 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashFunctions.h"
 #include "platform/wtf/HashTraits.h"
+#include "platform/heap/TraceTraits.h"
 
 namespace blink {
 
@@ -195,43 +196,86 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
  public:
   Member() : Parent() {}
   Member(std::nullptr_t) : Parent(nullptr) {}
-  Member(T* raw) : Parent(raw) {}
-  Member(T& raw) : Parent(raw) {}
+  Member(T* raw) : Parent(raw) { WriteBarrier(this->raw_); }
+  Member(T& raw) : Parent(raw) { WriteBarrier(this->raw_); }
   Member(WTF::HashTableDeletedValueType x) : Parent(x) {}
 
-  Member(const Member& other) : Parent(other) {}
+  Member(const Member& other) : Parent(other) { WriteBarrier(this->raw_); }
   template <typename U>
-  Member(const Member<U>& other) : Parent(other) {}
+  Member(const Member<U>& other) : Parent(other) {
+    WriteBarrier(this->raw_);
+  }
   template <typename U>
-  Member(const Persistent<U>& other) : Parent(other) {}
+  Member(const Persistent<U>& other) : Parent(other) {
+    WriteBarrier(this->raw_);
+  }
 
   template <typename U>
   Member& operator=(const Persistent<U>& other) {
     Parent::operator=(other);
+    WriteBarrier(this->raw_);
     return *this;
   }
 
   template <typename U>
   Member& operator=(const Member<U>& other) {
     Parent::operator=(other);
+    WriteBarrier(this->raw_);
     return *this;
   }
 
   template <typename U>
   Member& operator=(const WeakMember<U>& other) {
     Parent::operator=(other);
+    WriteBarrier(this->raw_);
     return *this;
   }
 
   template <typename U>
   Member& operator=(U* other) {
     Parent::operator=(other);
+    WriteBarrier(this->raw_);
     return *this;
   }
 
   Member& operator=(std::nullptr_t) {
     Parent::operator=(nullptr);
     return *this;
+  }
+
+ private:
+  ALWAYS_INLINE void WriteBarrier(const T* value) const {
+    if (value) {
+      BasePage* page = PageFromObject(value);
+      if (!page) {
+        return;
+      }
+
+      ThreadState* thread_state =
+          ThreadStateFor<ThreadingTrait<T>::kAffinity>::GetState();
+      DCHECK(thread_state);
+      // Bail out if tracing is not in progress.
+      if (!thread_state->CurrentVisitor())
+        return;
+
+      //BasePage* page = LookupPageForAddress(address);
+      HeapObjectHeader* header;
+      if (page->IsLargeObjectPage()) {
+        header = static_cast<LargeObjectPage*>(page)->GetHeapObjectHeader();
+      } else {
+        header = static_cast<NormalPage*>(page)->FindHeaderFromAddress(reinterpret_cast<Address>(reinterpret_cast<intptr_t>(this->raw_)));
+      }
+
+      // If the wrapper is already marked we can bail out here.
+      if (header->IsMarked())
+        return;
+
+      // Otherwise, eagerly mark the wrapper header and put the object on the
+      // marking deque for further processing.
+      header->Mark();
+      const GCInfo* gc_info = ThreadHeap::GcInfo(header->GcInfoIndex());
+      thread_state->Heap().PushTraceCallback(reinterpret_cast<void*>(const_cast<Member<T>*>(this)), gc_info->trace_);
+    }
   }
 };
 
