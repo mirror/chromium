@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2da1b1de_a035731c",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-10-24T19:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be78b8a8_63f5fa08",
+      "range": {
+        "startLine": 887,
+        "startChar": 4,
+        "endLine": 887,
+        "endChar": 24
+      },
+      "revId": "b353c6d467c2e1f2206cd5ff91ae1c958fc95e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89e05ef6_d4fad563",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "b353c6d467c2e1f2206cd5ff91ae1c958fc95e1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3f491f_00c215ab",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-10-24T19:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89e05ef6_d4fad563",
+      "range": {
+        "startLine": 1121,
+        "startChar": 12,
+        "endLine": 1121,
+        "endChar": 28
+      },
+      "revId": "b353c6d467c2e1f2206cd5ff91ae1c958fc95e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "292225f8_ec0a5a13",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-10-24T19:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a1427bd_ce8a7a81",
+      "range": {
+        "startLine": 1126,
+        "startChar": 4,
+        "endLine": 1126,
+        "endChar": 26
+      },
+      "revId": "b353c6d467c2e1f2206cd5ff91ae1c958fc95e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7e5c96d_34863e5b",
         "filename": "cc/tiles/tile_manager.h",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "b353c6d467c2e1f2206cd5ff91ae1c958fc95e1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4526377_516ffd9f",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-10-24T19:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7e5c96d_34863e5b",
+      "range": {
+        "startLine": 275,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 24
+      },
+      "revId": "b353c6d467c2e1f2206cd5ff91ae1c958fc95e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
