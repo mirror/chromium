@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c1db7d2_24380325",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-24T21:45:44Z",
+      "side": 1,
+      "message": "Just musing here: Aesthetically, it would be nice if the AddObserver (which is really the DisplayVirtualKeyboard call) were moved to the ctor, so that the ctor/dtor were balanced. \n\nWe could technically do this (e.g. by moving the DisplayVirtualKeyboard call here) but I\u0027m not sure we should, since we\u0027d have to plumb out the bool return parameter somehow, and out params in ctors are weird.\n\nSo, I guess keep it the way you have it.",
+      "revId": "60e2bf58794110f70dbc7bce9d0c300714e133e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0122b35_81d92f16",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1706,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-24T21:45:44Z",
+      "side": 1,
+      "message": "This looks like it could be the source of the leak, right?",
+      "revId": "60e2bf58794110f70dbc7bce9d0c300714e133e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
