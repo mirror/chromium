@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "6a2d4484_eb07b1c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-24T16:07:11Z",
+      "side": 1,
+      "message": "This seems unnecessary since everything needed to make one is available publicly.",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 5
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b25c8d_429065bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-24T16:07:11Z",
+      "side": 1,
+      "message": "InfobarMessageBuilder? This might also be worth separating into its own file since it constitutes most of this class.",
+      "range": {
+        "startLine": 112,
+        "startChar": 24,
+        "endLine": 112,
+        "endChar": 38
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774ad22b_a9f9cde9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-24T16:07:11Z",
+      "side": 1,
+      "message": "Should insertion be left to the object using this class?",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 44
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4aae16_63b09acb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-24T16:07:11Z",
+      "side": 1,
+      "message": "Does this need to be public? Is there ever a case where we want to build this but not insert it?",
+      "range": {
+        "startLine": 157,
+        "startChar": 8,
+        "endLine": 157,
+        "endChar": 27
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bb2dbf4_c42b0d2d",
         "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
         "patchSetId": 7
