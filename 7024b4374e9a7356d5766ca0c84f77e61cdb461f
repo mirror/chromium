@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b111b738_d1384fae",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T20:31:26Z",
+      "side": 1,
+      "message": "I realize we are not consistent about this in login/oobe, but generaly in Web UI comments are either:\n/** single line *.\n/*\n * muliti\n * line\n */\n(i.e. these should have \u0027/*\u0027 on its own line)",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8d22e7_9100e919",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T20:31:26Z",
+      "side": 1,
+      "message": "nit: last sentence doesn\u0027t really clarify anything.",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4328bf37_3366f6f7",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T20:31:26Z",
+      "side": 1,
+      "message": "blank line",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf9bb91_b8340d63",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T20:31:26Z",
+      "side": 1,
+      "message": "does :host(:not([rtl])) .email-section work? That would be a little more clear.",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee2644f_b47a7fb0",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T20:31:26Z",
+      "side": 1,
+      "message": "\u0027 \u0027 before */",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4aba9d_dd872cea",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T20:31:26Z",
+      "side": 1,
+      "message": "\u0027 \u0027 before */",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8fa5a5_3a9beb61",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T20:31:26Z",
+      "side": 1,
+      "message": "nit: adding a trailing \u0027,\u0027 to the last item in these property objects makes them a little more readable (closure will put each entry on its own line, e.g.:\nactiveSection: {\n  type: String,\n  value: \u0027emailSection\u0027,\n},",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ae8839_66c0895b",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T20:31:26Z",
+      "side": 1,
+      "message": "Like this :)",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
