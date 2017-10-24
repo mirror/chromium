@@ -466,6 +466,8 @@ net::Error NetErrorFromString(const std::string& error, bool* ok) {
     return net::ERR_FAILED;
   if (error == Network::ErrorReasonEnum::Aborted)
     return net::ERR_ABORTED;
+  if (error == Network::ErrorReasonEnum::Blocked)
+    return net::ERR_BLOCKED_BY_CLIENT;
   if (error == Network::ErrorReasonEnum::TimedOut)
     return net::ERR_TIMED_OUT;
   if (error == Network::ErrorReasonEnum::AccessDenied)

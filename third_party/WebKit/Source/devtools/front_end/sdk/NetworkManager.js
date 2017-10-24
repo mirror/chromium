@@ -503,6 +503,8 @@ SDK.NetworkDispatcher = class {
     networkRequest.failed = true;
     networkRequest.setResourceType(Common.resourceTypes[resourceType]);
     networkRequest.canceled = !!canceled;
+    if (SDK.multitargetNetworkManager._hasBlockedRequest(networkRequest.url(), localizedDescription))
+      blockedReason = Protocol.Network.BlockedReason.Inspector;
     if (blockedReason) {
       networkRequest.setBlockedReason(blockedReason);
       if (blockedReason === Protocol.Network.BlockedReason.Inspector) {
@@ -799,12 +801,7 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
       networkAgent.setExtraHTTPHeaders(this._extraHeaders);
     if (this._currentUserAgent())
       networkAgent.setUserAgentOverride(this._currentUserAgent());
-    if (this._effectiveBlockedURLs.length)
-      networkAgent.setBlockedURLs(this._effectiveBlockedURLs);
-    if (this.isIntercepting()) {
-      networkAgent.setRequestInterception(
-          this._requestInterceptorMap.keysArray().map(pattern => ({urlPattern: pattern.replace(/([\\?*])/g, '\\$1')})));
-    }
+    this._updateInterceptionOnAgent(networkAgent, false /* force */);
     this._agents.add(networkAgent);
     if (this.isThrottling())
       this._updateNetworkConditions(networkAgent);
@@ -967,8 +964,7 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
     if (!urls.length && !this._effectiveBlockedURLs.length)
       return;
     this._effectiveBlockedURLs = urls;
-    for (var agent of this._agents)
-      agent.setBlockedURLs(this._effectiveBlockedURLs);
+    this._updateInterceptionPatternsOnNextTick();
   }
 
   /**
@@ -1014,14 +1010,27 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
   _updateInterceptionPatterns() {
     this._updatingInterceptionPatternsPromise = null;
     var promises = /** @type {!Array<!Promise>} */ ([]);
-    for (var agent of this._agents) {
-      // We do not allow '?' as a single character wild card for now and do not support '*' either.
-      var patterns =
-          this._requestInterceptorMap.keysArray().map(pattern => ({urlPattern: pattern.replace(/([\\?*])/g, '\\$1')}));
-      promises.push(agent.setRequestInterception(this.isIntercepting() ? patterns : []));
-    }
+    for (var agent of this._agents)
+      promises.push(this._updateInterceptionOnAgent(agent, true /* force */));
     this.dispatchEventToListeners(SDK.MultitargetNetworkManager.Events.InterceptorsChanged);
     return Promise.all(promises);
+  }
+
+  /**
+   * @param {!Protocol.NetworkAgent} networkAgent
+   * @param {boolean} force
+   * @return {!Promise}
+   */
+  _updateInterceptionOnAgent(networkAgent, force) {
+    var intercepting = this.isIntercepting() || this._effectiveBlockedURLs.length;
+    if (!intercepting)
+      return force ? networkAgent.setRequestInterception([]) : Promise.resolve();
+    // We do not allow '?' as a single character wild card for now and do not support '*' either.
+    var patterns =
+        this._requestInterceptorMap.keysArray().map(pattern => ({urlPattern: pattern.replace(/([\\?*])/g, '\\$1')}));
+    // We assume implicit '*' at the begin/end of blocked urls.
+    patterns = patterns.concat(this._effectiveBlockedURLs.map(url => ({urlPattern: '*' + url + '*'})));
+    return networkAgent.setRequestInterception(patterns);
   }
 
   /**
@@ -1029,6 +1038,12 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
    */
   async _requestIntercepted(interceptedRequest) {
     var url = interceptedRequest.request.url;
+    for (var blockedUrl of this._effectiveBlockedURLs) {
+      if (this._matchesBlockedUrl(url, blockedUrl)) {
+        interceptedRequest.continueRequestWithError(Protocol.Network.ErrorReason.Blocked);
+        return;
+      }
+    }
     var requestInterceptors = this._requestInterceptorMap.get(url);
     if (!requestInterceptors)
       return;
@@ -1042,6 +1057,38 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
     }
     if (!interceptedRequest.hasResponded())
       interceptedRequest.continueRequestWithoutChange();
+  }
+
+  /**
+   * @param {string} url
+   * @param {string} blockedUrl
+   * @return {boolean}
+   */
+  _matchesBlockedUrl(url, blockedUrl) {
+    var pos = 0;
+    for (var part of blockedUrl.split('*')) {
+      pos = url.indexOf(part, pos);
+      if (pos === -1)
+        return false;
+      pos += part.length;
+    }
+    return true;
+  }
+
+  /**
+   * @param {string} url
+   * @param {string} localizedDescription
+   * @return {boolean}
+   */
+  _hasBlockedRequest(url, localizedDescription) {
+    // TODO(dgozman): this should check request id once it is unified across interception and instrumentation.
+    if (localizedDescription !== 'net::ERR_BLOCKED_BY_CLIENT' || !this._effectiveBlockedURLs.length)
+      return false;
+    for (var blockedUrl of this._effectiveBlockedURLs) {
+      if (this._matchesBlockedUrl(url, blockedUrl))
+        return true;
+    }
+    return false;
   }
 
   clearBrowserCache() {
