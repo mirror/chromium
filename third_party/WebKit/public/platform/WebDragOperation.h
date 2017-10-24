@@ -47,6 +47,9 @@ enum WebDragOperation {
   kWebDragOperationPrivate = 8,
   kWebDragOperationMove = 16,
   kWebDragOperationDelete = 32,
+  kWebDragOperationLast = kWebDragOperationCopy | kWebDragOperationLink |
+                          kWebDragOperationGeneric | kWebDragOperationPrivate |
+                          kWebDragOperationMove | kWebDragOperationDelete,
   kWebDragOperationEvery = UINT_MAX
 };
 
