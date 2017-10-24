@@ -10,6 +10,7 @@
 #include "platform/fonts/SimpleFontData.h"
 #include "platform/fonts/shaping/ShapeResultBuffer.h"
 #include "platform/geometry/FloatPoint.h"
+#include "platform/graphics/paint/PaintTypeface.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Vector.h"
 #include "third_party/skia/include/core/SkTextBlob.h"
@@ -53,6 +54,8 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
     if (UNLIKELY(font_data != pending_font_data_)) {
       CommitPendingRun();
       pending_font_data_ = font_data;
+      paint_typefaces_.emplace_back(
+          pending_font_data_->PlatformData().GetPaintTypeface());
       DCHECK_EQ(GetBlobRotation(font_data), BlobRotation::kNoRotation);
     }
 
@@ -69,6 +72,8 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
     if (UNLIKELY(font_data != pending_font_data_)) {
       CommitPendingRun();
       pending_font_data_ = font_data;
+      paint_typefaces_.emplace_back(
+          pending_font_data_->PlatformData().GetPaintTypeface());
       pending_vertical_baseline_x_offset_ =
           GetBlobRotation(font_data) == BlobRotation::kNoRotation
               ? 0
@@ -85,10 +90,15 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
 
   enum class BlobRotation { kNoRotation, kCCWRotation };
   struct BlobInfo {
-    BlobInfo(sk_sp<SkTextBlob> b, BlobRotation r)
-        : blob(std::move(b)), rotation(r) {}
+    BlobInfo(sk_sp<SkTextBlob> b,
+             BlobRotation r,
+             std::vector<PaintTypeface> paint_typefaces)
+        : blob(std::move(b)),
+          rotation(r),
+          paint_typefaces(std::move(paint_typefaces)) {}
     sk_sp<SkTextBlob> blob;
     BlobRotation rotation;
+    std::vector<PaintTypeface> paint_typefaces;
   };
 
   using BlobBuffer = Vector<BlobInfo, 16>;
@@ -140,6 +150,7 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
   // Current text blob state.
   SkTextBlobBuilder builder_;
   BlobRotation builder_rotation_ = BlobRotation::kNoRotation;
+  std::vector<PaintTypeface> paint_typefaces_;
   size_t builder_run_count_ = 0;
 
   // Current run state.
