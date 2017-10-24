@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfbde2fb_b5dda37f",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-24T21:41:23Z",
+      "side": 1,
+      "message": "?",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e106c4a_ccf14d99",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-24T21:41:23Z",
+      "side": 1,
+      "message": "Use a struct?",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b125ce_060f9e22",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-24T21:41:23Z",
+      "side": 1,
+      "message": "Put static functions above ctors?",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e14f36b_8c7bbd47",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-24T21:41:23Z",
+      "side": 1,
+      "message": "Move to cc file",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edbb8fa9_22525e30",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-24T21:41:23Z",
+      "side": 1,
+      "message": "Why do we want to make this a class? The class itself holds no data so what about just going back to the previous free standing function?",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
