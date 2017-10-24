@@ -58,25 +58,18 @@ struct StructTraits<gpu::mojom::GpuPreferencesDataView, gpu::GpuPreferences> {
     out->enable_gpu_scheduler = prefs.enable_gpu_scheduler();
     out->disable_accelerated_video_decode =
         prefs.disable_accelerated_video_decode();
-
-#if defined(OS_CHROMEOS)
+    out->gpu_startup_dialog = prefs.gpu_startup_dialog();
+    out->disable_gpu_watchdog = prefs.disable_gpu_watchdog();
+    out->gpu_sandbox_start_early = prefs.gpu_sandbox_start_early();
     out->disable_vaapi_accelerated_video_encode =
         prefs.disable_vaapi_accelerated_video_encode();
-#endif
-
-#if BUILDFLAG(ENABLE_WEBRTC)
     out->disable_web_rtc_hw_encoding = prefs.disable_web_rtc_hw_encoding();
-#endif
-
-#if defined(OS_WIN)
     if (!prefs.ReadEnableAcceleratedVpxDecode(
             &out->enable_accelerated_vpx_decode))
       return false;
     out->enable_low_latency_dxva = prefs.enable_low_latency_dxva();
     out->enable_zero_copy_dxgi_video = prefs.enable_zero_copy_dxgi_video();
     out->enable_nv12_dxgi_video = prefs.enable_nv12_dxgi_video();
-#endif
-
     out->compile_shader_always_succeeds =
         prefs.compile_shader_always_succeeds();
     out->disable_gl_error_limit = prefs.disable_gl_error_limit();
@@ -121,52 +114,37 @@ struct StructTraits<gpu::mojom::GpuPreferencesDataView, gpu::GpuPreferences> {
       const gpu::GpuPreferences& prefs) {
     return prefs.disable_accelerated_video_decode;
   }
+  static bool gpu_startup_dialog(const gpu::GpuPreferences& prefs) {
+    return prefs.gpu_startup_dialog;
+  }
+  static bool disable_gpu_watchdog(const gpu::GpuPreferences& prefs) {
+    return prefs.disable_gpu_watchdog;
+  }
+  static bool gpu_sandbox_start_early(const gpu::GpuPreferences& prefs) {
+    return prefs.gpu_sandbox_start_early;
+  }
 
   static bool disable_vaapi_accelerated_video_encode(
       const gpu::GpuPreferences& prefs) {
-#if defined(OS_CHROMEOS)
     return prefs.disable_vaapi_accelerated_video_encode;
-#else
-    return false;
-#endif
   }
 
   static bool disable_web_rtc_hw_encoding(const gpu::GpuPreferences& prefs) {
-#if BUILDFLAG(ENABLE_WEBRTC)
     return prefs.disable_web_rtc_hw_encoding;
-#else
-    return false;
-#endif
   }
 
   static gpu::GpuPreferences::VpxDecodeVendors enable_accelerated_vpx_decode(
       const gpu::GpuPreferences& prefs) {
-#if defined(OS_WIN)
     return prefs.enable_accelerated_vpx_decode;
-#else
-    return gpu::GpuPreferences::VPX_VENDOR_MICROSOFT;
-#endif
   }
   static bool enable_low_latency_dxva(const gpu::GpuPreferences& prefs) {
-#if defined(OS_WIN)
     return prefs.enable_low_latency_dxva;
-#else
-    return false;
-#endif
   }
   static bool enable_zero_copy_dxgi_video(const gpu::GpuPreferences& prefs) {
-#if defined(OS_WIN)
     return prefs.enable_zero_copy_dxgi_video;
-#else
-    return false;
-#endif
   }
   static bool enable_nv12_dxgi_video(const gpu::GpuPreferences& prefs) {
-#if defined(OS_WIN)
     return prefs.enable_nv12_dxgi_video;
-#else
-    return false;
-#endif
   }
   static bool compile_shader_always_succeeds(const gpu::GpuPreferences& prefs) {
     return prefs.compile_shader_always_succeeds;
