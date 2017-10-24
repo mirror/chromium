@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "08e66318_63c903cb",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1180278
+      },
+      "writtenOn": "2017-10-24T09:54:45Z",
+      "side": 1,
+      "message": "Thanks for your input.\n\nThomas, you can look at this code to create the circle:\n      gfx::Image image \u003d profiles::GetSizedAvatarIcon(\n          item.icon, true, kProfileIconSize, kProfileIconSize,\n          profiles::SHAPE_CIRCLE);\n(this come from ProfileChooserView::CreateOptionsView(), this is to make the button to switch profile).",
+      "parentUuid": "03f5eff7_ecf12b82",
+      "range": {
+        "startLine": 50,
+        "startChar": 27,
+        "endLine": 51,
+        "endChar": 71
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b00c728d_e1b10fc0",
         "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
         "patchSetId": 13
