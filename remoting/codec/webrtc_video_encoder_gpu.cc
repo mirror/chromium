@@ -198,6 +198,7 @@ void WebrtcVideoEncoderGpu::BeginInitialization() {
   // per second.
   uint32_t initial_bitrate = kTargetFrameRate * 1024 * 1024 * 8;
   gpu::GpuPreferences gpu_preferences;
+  gpu_preferences.enable_media_foundation_vea_on_windows7 = true;
 
   video_encode_accelerator_ =
       media::GpuVideoEncodeAcceleratorFactory::CreateVEA(
