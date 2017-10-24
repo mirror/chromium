@@ -73,7 +73,7 @@ class FrameThrottlingTest : public SimTest,
     if (layer->DrawsContent()) {
       layer->SetNeedsDisplay();
     }
-    for (const auto& child : layer->Children())
+    for (auto* const child : layer->Children())
       InvalidateRecursively(child);
   }
 
@@ -84,7 +84,7 @@ class FrameThrottlingTest : public SimTest,
       layer->WebContentLayerClientForTesting().PaintContents(
           display_items, WebContentLayerClient::kPaintDefaultBehavior);
     }
-    for (const auto& child : layer->Children())
+    for (auto* const child : layer->Children())
       PaintRecursively(child, display_items);
   }
 
