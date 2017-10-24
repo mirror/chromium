@@ -2448,8 +2448,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
     tabHelper->SetLauncher(self);
   tab.webState->SetDelegate(_webStateDelegate.get());
   // BrowserViewController owns the coordinator that displays the Sad Tab.
-  if (!SadTabTabHelper::FromWebState(tab.webState))
+  if (!SadTabTabHelper::FromWebState(tab.webState)) {
+    _sadTabCoordinator.webState = tab.webState;
     SadTabTabHelper::CreateForWebState(tab.webState, _sadTabCoordinator);
+  }
   PrintTabHelper::CreateForWebState(tab.webState, self);
   RepostFormTabHelper::CreateForWebState(tab.webState, self);
   NetExportTabHelper::CreateForWebState(tab.webState, self);
