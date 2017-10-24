@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5baf6aec_27430e9e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-24T19:16:34Z",
+      "side": 1,
+      "message": "braces are always required in java unless the statement and condition can all fit on a single line",
+      "range": {
+        "startLine": 84,
+        "startChar": 19,
+        "endLine": 84,
+        "endChar": 23
+      },
+      "revId": "bdad801f477dd8bc79f4b824bfe7f96ffd5770a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95906882_66c1ca4f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyControllerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-24T19:16:34Z",
+      "side": 1,
+      "message": "you\u0027d want to restrict this to phones only:\n\n@Restriction(UiRestriction.RESTRICTION_TYPE_PHONE)",
+      "range": {
+        "startLine": 27,
+        "startChar": 23,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "bdad801f477dd8bc79f4b824bfe7f96ffd5770a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2ecb0c_78438893",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyControllerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-24T19:16:34Z",
+      "side": 1,
+      "message": "What here requires native?  I\u0027m wondering if this all could be in junit as well.  We could create a mock tab and checks these conditions there.  Spinning up the activity seems overkill to me if we can avoid it.",
+      "revId": "bdad801f477dd8bc79f4b824bfe7f96ffd5770a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
