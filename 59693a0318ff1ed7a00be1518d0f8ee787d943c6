@@ -318,6 +318,48 @@
     },
     {
       "key": {
+        "uuid": "6ce0a87f_05c14845",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-24T06:35:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "43ee7380_cfe55df5",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0992bed1_71e79065",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-24T06:35:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "911a2071_a3d679d7",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6757b1a8_ef39c45e",
         "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
         "patchSetId": 6
