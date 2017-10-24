@@ -480,6 +480,24 @@
       "revId": "b72f2a4cd5c0090ea5d23477f134607ea7ec8139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc707089_d8ef9994",
+        "filename": "third_party/devtools-node-modules",
+        "patchSetId": 29
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-24T17:31:39Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "3a55e14f_0d4d610a",
+      "revId": "b72f2a4cd5c0090ea5d23477f134607ea7ec8139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
