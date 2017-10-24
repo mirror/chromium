@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9301789f_034a935c",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T23:29:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ac121437_c3945614",
+      "range": {
+        "startLine": 145,
+        "startChar": 23,
+        "endLine": 145,
+        "endChar": 54
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa4e1ed0_28e144fa",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 12
@@ -531,6 +555,30 @@
     },
     {
       "key": {
+        "uuid": "18fd592a_fe4edf99",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T23:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e509a8ca_dbe5d8a0",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65500852_0340f19c",
         "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
         "patchSetId": 12
@@ -740,6 +788,30 @@
       "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db90923e_8cf141a4",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T23:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a13e941_b42f24ab",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
