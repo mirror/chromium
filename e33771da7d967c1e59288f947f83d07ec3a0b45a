@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "8e823337_3b785a42",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-24T01:53:03Z",
+      "side": 1,
+      "message": "Yeah, it is for avoiding Clone().\nAs my comment in https://chromium-review.googlesource.com/c/chromium/src/+/715476/2/content/browser/service_worker/service_worker_provider_host.cc#897\nI am also not sure if it\u0027s better to replace Clone(), use InfoPtr seems weird..\nSo @Shimazu, could you confirm?",
+      "parentUuid": "139aa36a_0eb2c3ee",
+      "revId": "e33771da7d967c1e59288f947f83d07ec3a0b45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89a5628a_ce31fc86",
         "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 4
@@ -50,6 +68,24 @@
       "revId": "e33771da7d967c1e59288f947f83d07ec3a0b45a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2cf1ff_ae1bb444",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-24T01:53:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89a5628a_ce31fc86",
+      "revId": "e33771da7d967c1e59288f947f83d07ec3a0b45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
