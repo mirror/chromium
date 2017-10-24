@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b5e58a5_8ad91339",
+        "filename": "ui/gfx/native_pixmap.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-24T09:55:03Z",
+      "side": 1,
+      "message": "I agree this would not have been a good idea if this was saying \"return the GEM handle for the pixmap\". But this API is not implying in any way that the id returned is a GEM handle, and the client of this API must not be interpreting it as one. From the point of view of the API client, it is just an arbitrary, abstract unique id of type uint32_t. It\u0027s up to the implementation how to implement an unique int32_t id in a platform-specific way, assuming it meets the conditions described above.\n\nThe security of this solution should also not be a concern, as the security of GEM handles is not based on their values being kept secret, as they are guessable, but on DRM access rights and the fact that they are local to a DRM file. This API is not adding any additional access to GEM/DRM rights on top of what the client might have already had.",
+      "parentUuid": "385ebc57_0eefa62f",
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c7ccd75_8d7d0fad",
         "filename": "ui/ozone/public/surface_factory_ozone.h",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-23T21:58:15Z",
       "side": 1,
       "message": "Why do we need this after adding \"CreateNativePixmapForProtectedBufferHandle\"? I was expecting that CreateNativePixmapForProtectedBufferHandle would allow GbmSurfaceFactory to maintain a map between dummy handle and native pixmaps instead of having this callback mechanism. It would be fine to keep a map in the protected buffer manager code too but we\u0027d avoid having to add this callback mechanism here and we\u0027d keep the Ozone API relatively clean.\n\nNot a blocking issue for me but I\u0027d like to understand why this is needed as it seems like removing this would result in a final solution that is only requiring a relatively simple Ozone API change.",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 48
+      },
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0739d9e_120f17fb",
+        "filename": "ui/ozone/public/surface_factory_ozone.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-24T09:55:03Z",
+      "side": 1,
+      "message": "The map is in PBM, because it maintains all the mappings, also the ones that are not for ProtectedPixmaps, but ProtectedSharedMemory as well. So it keeps the code in one place, contained to PBM.\n\nThe map is not handle-\u003epixmap, but pixmap-\u003epixmap. To create a NativePixmap used for lookup in the map from the NativePixmapHandle provided, we need to call CreateNativePixmapFromHandle again, so that creates an infinite recursion. This is also another reason why I initially used GMBs, so that I would have a higher-level call that could avoid the recursion.",
+      "parentUuid": "9c7ccd75_8d7d0fad",
       "range": {
         "startLine": 117,
         "startChar": 2,
