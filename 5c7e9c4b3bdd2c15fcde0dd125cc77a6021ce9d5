@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "4a6d805c_a89e0380",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-24T20:07:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ef0a6f5_8cb7de34",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "5c7e9c4b3bdd2c15fcde0dd125cc77a6021ce9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa40f46_d55e0d0d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-24T20:07:34Z",
+      "side": 1,
+      "message": "While this is true, I don\u0027t think this CL actually tries to solve the performance part of things. I\u0027ll add a comment about that specifically.",
+      "parentUuid": "367c37a4_a252ed77",
+      "range": {
+        "startLine": 9,
+        "startChar": 92,
+        "endLine": 9,
+        "endChar": 98
+      },
+      "revId": "5c7e9c4b3bdd2c15fcde0dd125cc77a6021ce9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48c30b62_8cb6b247",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-24T19:18:30Z",
       "side": 1,
       "message": "nit: s/150MB/150MB (not including any allocation fragmentation overhead)/",
+      "range": {
+        "startLine": 10,
+        "startChar": 32,
+        "endLine": 10,
+        "endChar": 37
+      },
+      "revId": "5c7e9c4b3bdd2c15fcde0dd125cc77a6021ce9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c32a3c1_0e748a8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-24T20:07:34Z",
+      "side": 1,
+      "message": "As a vector, |samples| has a contiguous allocation so, while it can cause fragmentation, it can\u0027t be fragmented. There is some container overhead but, as a vector, it\u0027s tiny.",
+      "parentUuid": "48c30b62_8cb6b247",
       "range": {
         "startLine": 10,
         "startChar": 32,
