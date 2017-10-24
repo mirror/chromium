@@ -246,9 +246,10 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
       const wallpaper::WallpaperFilesId& wallpaper_files_id,
       const std::string& file);
 
-  // Saves custom wallpaper to file, post task to generate thumbnail and updates
-  // local state preferences. If |update_wallpaper| is false, don't change
-  // wallpaper but only update cache.
+  // Sets wallpaper to |image| (asynchronously with zero delay). If
+  // |update_wallpaper| is false, don't change wallpaper but only update cache.
+  // If |file| is not empty, also saves custom wallpaper to file, posts task to
+  // generate thumbnail and updates local state preferences.
   void SetCustomWallpaper(const AccountId& account_id,
                           const wallpaper::WallpaperFilesId& wallpaper_files_id,
                           const std::string& file,
@@ -278,13 +279,6 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
   void SetUserWallpaperInfo(const AccountId& account_id,
                             const wallpaper::WallpaperInfo& info,
                             bool is_persistent);
-
-  // Sets wallpaper to |image| (asynchronously with zero delay). If
-  // |update_wallpaper| is false, skip change wallpaper but only update cache.
-  void SetWallpaperFromImageSkia(const AccountId& account_id,
-                                 const gfx::ImageSkia& image,
-                                 wallpaper::WallpaperLayout layout,
-                                 bool update_wallpaper);
 
   // Initializes wallpaper. If logged in, loads user's wallpaper. If not logged
   // in, uses a solid color wallpaper. If logged in as a stub user, uses an

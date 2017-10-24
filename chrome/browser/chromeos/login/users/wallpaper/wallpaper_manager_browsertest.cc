@@ -539,11 +539,9 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTestCacheUpdate,
 
 // Tests for crbug.com/339576. Wallpaper cache should be updated in
 // multi-profile mode when user:
-// 1. chooses an online wallpaper from wallpaper
-//    picker (calls SetWallpaperFromImageSkia);
-// 2. chooses a custom wallpaper from wallpaper
-//    picker (calls SetCustomWallpaper);
-// 3. reverts to a default wallpaper.
+// 1. chooses an online wallpaper or a custom wallpaper from wallpaper picker
+//    (calls SetCustomWallpaper);
+// 2. reverts to a default wallpaper.
 // Also, when user login at multi-profile mode, previous logged in users'
 // wallpaper cache should not be deleted.
 IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTestCacheUpdate,
@@ -577,11 +575,14 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTestCacheUpdate,
   EXPECT_EQ(original_path, path);
 
   gfx::ImageSkia red_wallpaper = CreateTestImage(SK_ColorRED);
-  wallpaper_manager->SetWallpaperFromImageSkia(test_account_id1_, red_wallpaper,
-                                               WALLPAPER_LAYOUT_CENTER, true);
+  wallpaper_manager->SetCustomWallpaper(
+      test_account_id1_, wallpaper::WallpaperFilesId(),
+      std::string() /* file */, WALLPAPER_LAYOUT_CENTER,
+      wallpaper::WallpaperType::WALLPAPER_TYPE_COUNT /* unused */,
+      red_wallpaper, true);
   wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
-  // SetWallpaperFromImageSkia should update wallpaper cache when multi-profile
-  // is turned on.
+  // SetCustomWallpaper should update wallpaper cache when multi-profile is
+  // turned on.
   EXPECT_TRUE(
       test_api->GetWallpaperFromCache(test_account_id1_, &cached_wallpaper));
   EXPECT_TRUE(test_api->GetPathFromCache(test_account_id1_, &path));
@@ -593,7 +594,7 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTestCacheUpdate,
       "dummy",  // dummy file name
       WALLPAPER_LAYOUT_CENTER, wallpaper::CUSTOMIZED, green_wallpaper, true);
   wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
-  // SetCustomWallpaper should also update wallpaper cache when multi-profile is
+  // SetCustomWallpaper should update wallpaper cache when multi-profile is
   // turned on.
   EXPECT_TRUE(
       test_api->GetWallpaperFromCache(test_account_id1_, &cached_wallpaper));

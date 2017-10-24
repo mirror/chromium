@@ -749,11 +749,27 @@ void WallpaperManager::SetCustomWallpaper(
     wallpaper::WallpaperType type,
     const gfx::ImageSkia& image,
     bool update_wallpaper) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
   // There is no visible wallpaper in kiosk mode.
   if (user_manager::UserManager::Get()->IsLoggedInAsKioskApp())
     return;
+
+  // Do not need to save the custom wallpaper to file.
+  if (file.empty()) {
+    DCHECK(user_manager::UserManager::Get()->IsUserLoggedIn());
+    WallpaperInfo info;
+    info.layout = layout;
+    // This is an API call and we do not know the path. So we set the image, but
+    // no path.
+    wallpaper_cache_[account_id] =
+        CustomWallpaperElement(base::FilePath(), image);
+    if (update_wallpaper) {
+      GetPendingWallpaper(last_selected_user_, false)
+          ->ResetSetWallpaperImage(image, info);
+    }
+    return;
+  }
+
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   // Don't allow custom wallpapers while policy is in effect.
   if (type != wallpaper::POLICY && IsPolicyControlled(account_id))
@@ -877,30 +893,6 @@ void WallpaperManager::SetUserWallpaperInfo(const AccountId& account_id,
   wallpaper_info_dict->SetInteger(kNewWallpaperTypeNodeName, info.type);
   wallpaper_update->SetWithoutPathExpansion(account_id.GetUserEmail(),
                                             std::move(wallpaper_info_dict));
-}
-
-void WallpaperManager::SetWallpaperFromImageSkia(
-    const AccountId& account_id,
-    const gfx::ImageSkia& image,
-    wallpaper::WallpaperLayout layout,
-    bool update_wallpaper) {
-  DCHECK(user_manager::UserManager::Get()->IsUserLoggedIn());
-
-  // There is no visible wallpaper in kiosk mode.
-  if (user_manager::UserManager::Get()->IsLoggedInAsKioskApp())
-    return;
-  WallpaperInfo info;
-  info.layout = layout;
-
-  // This is an API call and we do not know the path. So we set the image, but
-  // no path.
-  wallpaper_cache_[account_id] =
-      CustomWallpaperElement(base::FilePath(), image);
-
-  if (update_wallpaper) {
-    GetPendingWallpaper(last_selected_user_, false /* Not delayed */)
-        ->ResetSetWallpaperImage(image, info);
-  }
 }
 
 void WallpaperManager::InitializeWallpaper() {
