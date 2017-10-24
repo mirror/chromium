@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06e8d750_12259953",
+        "filename": "build/install-build-deps.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-24T23:10:17Z",
+      "side": 1,
+      "message": "while we\u0027re here, could you remove yakkety support?  It\u0027s reached EOL",
+      "range": {
+        "startLine": 123,
+        "startChar": 6,
+        "endLine": 123,
+        "endChar": 34
+      },
+      "revId": "a22de7ffb106e7e3624cb71f79bfa28bb0318ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
