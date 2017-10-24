@@ -412,6 +412,7 @@ void FeatureInfo::InitializeFeatures() {
   AddExtensionString("GL_CHROMIUM_rate_limit_offscreen_context");
   AddExtensionString("GL_CHROMIUM_resize");
   AddExtensionString("GL_CHROMIUM_resource_safe");
+  AddExtensionString("GL_CHROMIUM_scanout_color_space");
   AddExtensionString("GL_CHROMIUM_strict_attribs");
   AddExtensionString("GL_CHROMIUM_texture_mailbox");
   AddExtensionString("GL_CHROMIUM_trace_marker");
