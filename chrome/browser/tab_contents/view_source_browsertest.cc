@@ -18,7 +18,6 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
@@ -382,11 +381,6 @@ IN_PROC_BROWSER_TEST_F(ViewSourceTest, HttpPostInSubframe) {
       view_source_contents_observer.GetWebContents();
   EXPECT_TRUE(WaitForLoadStop(view_source_contents));
 
-  // TODO(lukasza): https://crbug.com/774691: With PlzNavigate the POST data,
-  // Referer, etc. are lost, so all the test assertions below will fail :-(.
-  if (content::IsBrowserSideNavigationEnabled())
-    return;
-
   // Verify contents of the view-source tab.  In particular:
   // 1) the sources should contain the POST data
   // 2) the sources should contain the original response-nonce
@@ -411,9 +405,7 @@ IN_PROC_BROWSER_TEST_F(ViewSourceTest, HttpPostInSubframe) {
       source_text,
       ContainsRegex(
           "Request Headers:.*Content-Type: application/x-www-form-urlencoded"));
-
-  // TODO(lukasza): https://crbug.com/774691: Verify the responce nonce
-  // (similarily to how this is done in the ViewSourceTest.HttpPostInMainframe
-  // test).  Today the nonce is mismatched (e.g. the http server sees a new POST
-  // request) even without PlzNavigate :-(.
+  EXPECT_THAT(source_text, HasSubstr("<h1>Response nonce:</h1>"
+                                     "<pre id='response-nonce'>" +
+                                     response_nonce + "</pre>"));
 }

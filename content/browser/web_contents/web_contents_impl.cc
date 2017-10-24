@@ -105,6 +105,7 @@
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/resource_request_details.h"
+#include "content/public/browser/restore_type.h"
 #include "content/public/browser/security_style_explanations.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/browser/storage_partition.h"
@@ -3933,60 +3934,69 @@ bool WebContentsImpl::ShouldAllowRunningInsecureContent(
 
 void WebContentsImpl::ViewSource(RenderFrameHostImpl* frame) {
   DCHECK_EQ(this, WebContents::FromRenderFrameHost(frame));
+  if (!delegate_)
+    return;
 
-  NavigationEntryImpl* last_original_entry =
+  NavigationEntryImpl* last_committed_entry =
       static_cast<NavigationEntryImpl*>(frame->frame_tree_node()
                                             ->navigator()
                                             ->GetController()
                                             ->GetLastCommittedEntry());
-  if (!last_original_entry)
+  if (!last_committed_entry)
     return;
+
   FrameNavigationEntry* frame_entry =
-      last_original_entry->GetFrameEntry(frame->frame_tree_node());
+      last_committed_entry->GetFrameEntry(frame->frame_tree_node());
   if (!frame_entry)
     return;
-
-  WebContents* view_source_contents = Clone();
-  DCHECK(view_source_contents->GetController().CanPruneAllButLastCommitted());
-  view_source_contents->GetController().PruneAllButLastCommitted();
-  NavigationEntryImpl* last_cloned_entry = static_cast<NavigationEntryImpl*>(
-      view_source_contents->GetController().GetLastCommittedEntry());
-  if (!last_cloned_entry)
-    return;
-
-  GURL url = frame->GetLastCommittedURL();
-  GURL view_source_url =
-      GURL(content::kViewSourceScheme + std::string(":") + url.spec());
-  last_cloned_entry->SetVirtualURL(view_source_url);
-  last_cloned_entry->SetURL(url);
-
-  // Do not restore scroller position.
-  PageState page_state = frame_entry->page_state().RemoveScrollOffset();
-
-  // Trim |last_cloned_entry| to the subtree of |frame|.
-  last_cloned_entry->SetPageState(page_state);
-
-  // Open in a new process (for consistency with the behavior of allocating a
-  // new process for handling new tab opened by middle-clicking a link).
-  last_cloned_entry->set_site_instance(nullptr);
-
-  // Do not restore title, derive it from the url.
-  view_source_contents->UpdateTitleForEntry(last_cloned_entry,
-                                            base::string16());
 
   // Any new WebContents opened while this WebContents is in fullscreen can be
   // used to confuse the user, so drop fullscreen.
   if (IsFullscreenForCurrentTab())
     ExitFullscreen(true);
 
-  if (delegate_) {
-    gfx::Rect initial_rect;
-    constexpr bool kUserGesture = true;
-    bool ignored_was_blocked;
-    delegate_->AddNewContents(this, view_source_contents,
-                              WindowOpenDisposition::NEW_FOREGROUND_TAB,
-                              initial_rect, kUserGesture, &ignored_was_blocked);
-  }
+  auto navigation_entry = std::make_unique<NavigationEntryImpl>(
+      /* site_instance = */ nullptr,
+      /* url = */ frame_entry->url(),
+      /* referrer = */ Referrer(),
+      /* title = */ base::string16(),
+      /* transition_type = */ ui::PAGE_TRANSITION_LINK,
+      /* is_renderer_initiated = */ false);
+  navigation_entry->SetVirtualURL(GURL(content::kViewSourceScheme +
+                                       std::string(":") +
+                                       frame_entry->url().spec()));
+
+  // Do not restore scroller position.
+  // TODO(creis, lukasza, arthursonzogni): Do not reuse the original PageState,
+  // but start from a new one and only copy the needed data.
+  const PageState& new_page_state =
+      frame_entry->page_state().RemoveScrollOffset();
+
+  scoped_refptr<FrameNavigationEntry> new_frame_entry =
+      navigation_entry->root_node()->frame_entry;
+  new_frame_entry->set_method(frame_entry->method());
+  new_frame_entry->SetPageState(new_page_state);
+
+  // Create a new WebContents, it is used to display the source code.
+  WebContentsImpl* view_source_contents =
+      static_cast<WebContentsImpl*>(Create(CreateParams(GetBrowserContext())));
+
+  // Do not restore title, derive it from the url.
+  view_source_contents->UpdateTitleForEntry(navigation_entry.get(),
+                                            base::string16());
+
+  // Restore the previously created NavigationEntry.
+  std::vector<std::unique_ptr<NavigationEntry>> navigation_entries;
+  navigation_entries.push_back(std::move(navigation_entry));
+  view_source_contents->GetController().Restore(0, RestoreType::CURRENT_SESSION,
+                                                &navigation_entries);
+
+  gfx::Rect initial_rect;
+  constexpr bool kUserGesture = true;
+  bool ignored_was_blocked;
+  delegate_->AddNewContents(this, view_source_contents,
+                            WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                            initial_rect, kUserGesture, &ignored_was_blocked);
 }
 
 #if defined(OS_ANDROID)
