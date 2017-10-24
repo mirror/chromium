@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48f8c5f7_0092ad96",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "Yes, for browser()-\u003etab_strip_model()-\u003eGetActiveWebContents()",
+      "parentUuid": "793adf75_49d17ff3",
+      "range": {
+        "startLine": 17,
+        "startChar": 51,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22514994_5c43b9aa",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f658ce47_965b14d2",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22514994_5c43b9aa",
+      "range": {
+        "startLine": 28,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "81c403f9_2c7c3818",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0a41773_2ea1da6f",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a4ce06d_2408aeef",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f18b5ad_715049f6",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a4ce06d_2408aeef",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ef6f9391_95baedc0",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "The reason is I didn\u0027t know embedded_test_server() existed :)  Done.",
+      "parentUuid": "f8cee671_33a9293f",
+      "range": {
+        "startLine": 106,
+        "startChar": 39,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c6ce724_8449e105",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 6
@@ -131,6 +251,24 @@
       "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3c4de8_0f9195fe",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have this here explicitly rather than relying on the implicit default value.",
+      "parentUuid": "0c6ce724_8449e105",
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "3591a2d3_a129a039",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e563d40_1c264a99",
+      "range": {
+        "startLine": 129,
+        "startChar": 22,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cab1e8cb_be24d6ed",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 6
@@ -171,6 +333,24 @@
       "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1496a3cb_feb12420",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "In the meantime, I did extend the test to verify the image contents (though not for the case of redirects yet), see crrev.com/c/735486, and it looks like the whole capturing-before-navigation is actually flaky. :(\nAs in, sometimes it captures a screenshot from *after* the navigation. What\u0027s weird is that it fails quite consistently in the test, but I couldn\u0027t reproduce it live, even with the same minimal pages, served from a locally-running server.\nAnyway, that\u0027s a different discussion...",
+      "parentUuid": "cab1e8cb_be24d6ed",
+      "revId": "ff04bab77f341c7a50b2b39510d62ceb1026f29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

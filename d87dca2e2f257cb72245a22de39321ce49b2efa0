@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "54f7a454_3df3f425",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "eb918689_85276d27",
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6f4cdd3_4a872b8d",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 5
@@ -87,6 +105,24 @@
       "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd73b93_cfb22ff9",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "Hm, I guess subclassing would work, though it\u0027s not a pattern I particularly like. Though maybe better than adding observer/notification infrastructure just for tests.\n\nAnyway, as mentioned in another comment, I\u0027d really like to avoid the TopSites dependency at least for now.",
+      "parentUuid": "bc9c3010_0448db5e",
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +291,30 @@
     },
     {
       "key": {
+        "uuid": "022fd1b2_35469b18",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "Hm, that\u0027d mean either moving the EXPECT_CALL into the helper (ugh) or making a fake ThumbnailService instead of a mock and verifying the params afterwards. Do you think that\u0027s worth it?",
+      "parentUuid": "2935f611_4ad5e6a0",
+      "range": {
+        "startLine": 136,
+        "startChar": 25,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfbfba51_549cb58d",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 5
@@ -305,6 +365,24 @@
       "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc546a8_e7fea1cb",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "I\u0027d really prefer to not depend on TopSites right now. I guess I\u0027m trying to write a test for thumbnail *capturing* specifically, not a full integration test. (Gotta start somewhere, and this is quite flaky enough as it is...)",
+      "parentUuid": "e810a6fe_6f5d1e5e",
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -376,6 +454,30 @@
       "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4091126_9b776cf3",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-24T15:36:32Z",
+      "side": 1,
+      "message": "Well, the tests are disabled on two out of four platforms plus ASan and MSan, and they run with --disable-gpu so they\u0027re not even covering the code path that most users see. To me, all that definitely sounds like there\u0027s some race condition there.",
+      "parentUuid": "2c62252d_5cadb040",
+      "range": {
+        "startLine": 142,
+        "startChar": 79,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
