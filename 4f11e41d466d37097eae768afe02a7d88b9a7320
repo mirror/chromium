@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1543be43_76a620ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-24T19:18:27Z",
+      "side": 1,
+      "message": "Is there a reason why does FullscreenActivity not save its state? If it did save it in a way that that tabState is merged back to the Tabbed mode model that should solve this problem, right? Ted, can we use the thing we do for Browser Actions where we save their state while in a separate model and then tabbed mode gets them in its model the next time it restores tabs here?\n\nLike Ted mentioned, the most fragile part of a detached tab list inside a model is this concept of transferring ownership I believe, because there might be more than a boolean state here. When I first read that I thought we are talking about not transferring the tab to the other activity, but we are actually talking about another layer of transfer on the model here. So it might be possible to get permutations of both (Activity ownership and Model ownership) which might gets things quite entangled. Is there any hard fast rule we can set around that? When you detach but not attach, maybe you have to transfer tab model ownership and not keep it in your detached list?(Since that would be the hardest to keep track of). If you do attach and do transfer ownership, that means the new Activity owns most of the tab related functionality (the other one can\u0027t show it, take screenshots/thumbnails from it), but state bookkeeping is the old activity\u0027s business?\n\nI do agree, right now we leave the question of what reparenting does to the TabModel up in the air a bit and especially new use cases have been running into issues around this though.",
+      "parentUuid": "952a8cec_15728417",
+      "revId": "4f11e41d466d37097eae768afe02a7d88b9a7320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09d16fc3_999b9a27",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
         "patchSetId": 1
