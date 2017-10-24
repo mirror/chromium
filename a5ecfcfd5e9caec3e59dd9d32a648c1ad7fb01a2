@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab0912e8_90ba8315",
+        "filename": "third_party/crashpad/crashpad/util/win/command_line_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-24T18:34:11Z",
+      "side": 1,
+      "message": "Where you’re putting this new const is correct. The final const (saying that the pointers in the array are const) is redundant for an array that’s already being declared constexpr. We should remove the final const here and from all of the other test data arrays.\n\n(It looks like I did a bad job converting this file to use constexpr in https://chromium-review.googlesource.com/c/crashpad/crashpad/+/583997/, but evidently only clang cares.)",
+      "revId": "a5ecfcfd5e9caec3e59dd9d32a648c1ad7fb01a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
