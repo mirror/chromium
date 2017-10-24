@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4bbe9f63_5090f4d7",
+        "filename": "mojo/common/time.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T10:13:59Z",
+      "side": 1,
+      "message": "I\u0027ll document it for now. While making it work in Java/JS would be nice, it would be easier to have an actual use case to work against.",
+      "parentUuid": "72447146_bb1d3952",
+      "revId": "2eb9ef81aa534e0edd7ca9d7c78d5e0b86824a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0bb7cf0_88a0dbe4",
         "filename": "mojo/common/time.mojom",
         "patchSetId": 5
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "\"uint8_t[8] internal_bytes\" doesn\u0027t seem better than uint64_t, and less efficient.\n\nI understand that it is not fixed to a reference point, however it maybe useful to clarify that the number is in moicroseconds, so the difference of two TimeTicks can be converted to TimeDelta.\n\n(Same as Time, I will defer to you on this.)",
       "parentUuid": "32f0087f_dfec7e8c",
+      "revId": "2eb9ef81aa534e0edd7ca9d7c78d5e0b86824a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875512ff_773198b0",
+        "filename": "mojo/common/time.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T10:13:59Z",
+      "side": 1,
+      "message": "Ditto for documentation.",
+      "parentUuid": "c457304d_6fe18b6a",
       "revId": "2eb9ef81aa534e0edd7ca9d7c78d5e0b86824a7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
