@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0f2f881_37f46dcf",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/become-unfragmented-with-lines.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc03d29_e23be22a",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/multicol-with-overflowing-block-rl-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "These raster invalidations seems much bigger than the changed part [8,8,500,500]. Are they related to the TODOs in PaintLayerClipper about clipping of multiple fragmentation?",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11af5d6_09ef579b",
+        "filename": "third_party/WebKit/Source/core/editing/CaretDisplayItemClient.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "Nit: unrelated change",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f3343d_9c5e4398",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 3511,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "This method seems hot and might be better to inline it.",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4df5447_10a5dd9b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "Can you declare it as private to forbid usages outside of the DisplayItemClient interface?",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2515f819_1b208693",
+        "filename": "third_party/WebKit/Source/core/paint/BlockPainter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "Nit: Move this after line 181?",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8192ef07_c5fc2ef8",
+        "filename": "third_party/WebKit/Source/core/paint/BlockPainter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "Change to layout_block_.FirstFragment() to fragment, or change line 181 to const auto* rare_paint_data \u003d layout_block_.FirstFragmentPaintData()?",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac919b8_83fb8b62",
+        "filename": "third_party/WebKit/Source/core/paint/FragmentData.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "Optional:\nThe pattern\n  const auto* paint_property \u003d fragment.GetRarePaintData() ? fragment.GetRarePaintData()-\u003ePaintProperties() : nullptr;\noccurs in many places. It could be shortened if we had \n  const ObjectPaintProperties* PaintProperties() const {\n    return rare_paint_data_ ? rare_paint_data-\u003ePaintProperties() : nullptr;\n  }\nin FragmentData.",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a48dd3_7d184943",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPainter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e54e4a5_e1ed4983",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "Can you omit this parameter by using context.fragment_data?",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6775294_252a383f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "Remove the TODO.",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc82131_6f48562c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-24T16:58:45Z",
+      "side": 1,
+      "message": "Can you change this parameter to a reference?",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
