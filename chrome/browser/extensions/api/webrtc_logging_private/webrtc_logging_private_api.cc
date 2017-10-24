@@ -20,9 +20,11 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/browser/extension_function.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/common/error_utils.h"
+#include "extensions/common/permissions/permissions_data.h"
 
 namespace extensions {
 
@@ -402,7 +404,9 @@ bool WebrtcLoggingPrivateStopRtpDumpFunction::RunAsync() {
 
 bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableAudioDebugRecordingsFromExtension)) {
+          switches::kEnableAudioDebugRecordingsFromExtension) &&
+      !extension()->permissions_data()->active_permissions().HasAPIPermission(
+          APIPermission::kWebrtcLoggingPrivateAudioDiagnostics)) {
     return false;
   }
 
@@ -437,7 +441,9 @@ bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
 
 bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableAudioDebugRecordingsFromExtension)) {
+          switches::kEnableAudioDebugRecordingsFromExtension) &&
+      !extension()->permissions_data()->active_permissions().HasAPIPermission(
+          APIPermission::kWebrtcLoggingPrivateAudioDiagnostics)) {
     return false;
   }
 
