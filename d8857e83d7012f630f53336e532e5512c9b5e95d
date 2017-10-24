@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "746aa3a4_4084827c",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-24T02:10:36Z",
+      "side": 1,
+      "message": "Use \"… \u003d currentAttentionTypes_;\" (same for the other properties). At some point I want to bulk-convert everything to leading underscores and then the @synthesize lines can be dropped completely, but for now that tells the compiler how to name the ivar.",
+      "parentUuid": "2855835d_da4a2ddd",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d1e3c02_876d37c8",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 8
@@ -116,6 +134,23 @@
       "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6da4e30c_a50d7dd7",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-24T02:10:36Z",
+      "side": 1,
+      "message": "Since Chrome still uses trailing underscores in ObjC, these lines don\u0027t need to change.",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
