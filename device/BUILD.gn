@@ -113,6 +113,7 @@ test("device_unittests") {
   # HID and Serial:
   # Android doesn't compile.
   # Linux, requires udev.
+  # BLE discovery: works on Linux.
   if (!is_linux_without_udev && !is_android) {
     sources += [
       "hid/hid_connection_unittest.cc",
@@ -125,6 +126,7 @@ test("device_unittests") {
       "serial/serial_io_handler_posix_unittest.cc",
       "u2f/fake_hid_impl_for_testing.cc",
       "u2f/fake_hid_impl_for_testing.h",
+      "u2f/u2f_ble_discovery_unittest.cc",
       "u2f/u2f_hid_device_unittest.cc",
       "u2f/u2f_hid_discovery_unittest.cc",
     ]
