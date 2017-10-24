@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "9e61b742_602e18e8",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T21:41:30Z",
+      "side": 1,
+      "message": "Boosting the relevance seems problematic.\nHQP, like other providers, tries not to exceed the top score of HistoryURL provider.  This is because once you get used to having the omnibox respond to \"ma\" with a suggestion to \"mail.google.com\", you keep typing \"ma\", and hitting enter, without looking.  Having other providers exceed this score would break this behavior.\n\nWith the +\u003d100, this provider breaks that.  That means, for example, that \"ma\" + enter could yield different things depending on which tabs are already open.  Ugh.  One of the core design principles is predictability.\n\nI suggest you remove the relevance boost.",
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5e02a5f_4e3cd39c",
         "filename": "components/omnibox/browser/history_quick_provider.cc",
         "patchSetId": 12
