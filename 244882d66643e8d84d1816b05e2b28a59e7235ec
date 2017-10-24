@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "e2db01e6_d398f844",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-24T08:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa6a8b61_166af30e",
+      "range": {
+        "startLine": 233,
+        "startChar": 6,
+        "endLine": 233,
+        "endChar": 28
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "560a7b07_5302a171",
         "filename": "components/policy/tools/syntax_check_policy_template_json.py",
         "patchSetId": 9
