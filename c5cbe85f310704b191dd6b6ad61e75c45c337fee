@@ -52,6 +52,24 @@
       "revId": "c5cbe85f310704b191dd6b6ad61e75c45c337fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d037b88e_ad1409a3",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T22:59:47Z",
+      "side": 0,
+      "message": "Acknowledged. I prefer to stick with current check, because it makes for easier testing inside a  unit_test with set_source_context_type(Feature::WEBUI_CONTEXT), whereas faking the origin seems more involved (although probably still possible).\n\nIf anything, we can clean this up in a follow up CL, where both usages of Feature::WEBUI_CONTEXT in this file are replaced with a helper isExtensionsWebUI() that uses the origin check.",
+      "parentUuid": "1818ecf2_0240d761",
+      "revId": "c5cbe85f310704b191dd6b6ad61e75c45c337fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
