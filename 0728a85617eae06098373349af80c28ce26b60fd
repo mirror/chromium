@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d76426c_1550134d",
+        "filename": "chrome/browser/extensions/api/webstore_private/webstore_private_apitest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T14:49:20Z",
+      "side": 1,
+      "message": "This effectively disables these two tests with mus. Is there a timeline for when that bug will be fixed?  It\u0027s a shame to have to degrade test coverage...",
+      "revId": "0728a85617eae06098373349af80c28ce26b60fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
