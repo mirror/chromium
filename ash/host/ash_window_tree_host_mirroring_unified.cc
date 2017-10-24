@@ -1,0 +1,54 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "ash/host/ash_window_tree_host_mirroring_unified.h"
+
+#include "ash/host/ash_window_tree_host_mirroring_delegate.h"
+#include "ui/gfx/geometry/point3_f.h"
+#include "ui/gfx/geometry/point_conversions.h"
+#include "ui/gfx/transform.h"
+
+namespace ash {
+
+AshWindowTreeHostMirroringUnified::AshWindowTreeHostMirroringUnified(
+    const gfx::Rect& initial_bounds,
+    int64_t mirroring_display_id,
+    AshWindowTreeHostMirroringDelegate* delegate)
+    : AshWindowTreeHostPlatform(initial_bounds),
+      mirroring_display_id_(mirroring_display_id),
+      delegate_(delegate) {
+  DCHECK(delegate_);
+}
+
+AshWindowTreeHostMirroringUnified::~AshWindowTreeHostMirroringUnified() {}
+
+gfx::Transform
+AshWindowTreeHostMirroringUnified::GetRootTransformForLocalEventCoordinates()
+    const {
+  const auto* display =
+      delegate_->GetMirroringDisplayById(mirroring_display_id_);
+  DCHECK(display);
+  gfx::Transform trans = GetRootTransform();
+  // Undo the translation in the root window transform, since this transform
+  // should be applied on local points to this host.
+  trans.Translate(SkIntToMScalar(display->bounds().x()),
+                  SkIntToMScalar(display->bounds().y()));
+  return trans;
+}
+
+void AshWindowTreeHostMirroringUnified::ConvertDIPToPixels(
+    gfx::Point* point) const {
+  auto point_3f = gfx::Point3F(gfx::PointF(*point));
+  GetRootTransformForLocalEventCoordinates().TransformPoint(&point_3f);
+  *point = gfx::ToFlooredPoint(point_3f.AsPointF());
+}
+
+void AshWindowTreeHostMirroringUnified::ConvertPixelsToDIP(
+    gfx::Point* point) const {
+  auto point_3f = gfx::Point3F(gfx::PointF(*point));
+  GetInverseRootTransformForLocalEventCoordinates().TransformPoint(&point_3f);
+  *point = gfx::ToFlooredPoint(point_3f.AsPointF());
+}
+
+}  // namespace ash
