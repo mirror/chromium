@@ -45,8 +45,13 @@
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/surfaces/surface_reference_owner.h"
 #include "components/viz/common/surfaces/surface_sequence_generator.h"
+#include "services/metrics/public/cpp/ukm_source_id.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/rect.h"
+
+namespace ukm {
+class UkmRecorder;
+}  // namespace ukm
 
 namespace cc {
 class HeadsUpDisplayLayer;
@@ -500,6 +505,9 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   void RequestBeginMainFrameNotExpected(bool new_state);
 
   float recording_scale_factor() const { return recording_scale_factor_; }
+
+  void SetUkmRecorderAndSource(std::unique_ptr<ukm::UkmRecorder> recorder,
+                               ukm::SourceId source_id);
 
  protected:
   LayerTreeHost(InitParams* params, CompositorMode mode);

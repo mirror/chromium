@@ -57,6 +57,12 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
   void SetMutator(std::unique_ptr<LayerTreeMutator> mutator) override;
   bool SupportsImplScrolling() const override;
   bool MainFrameWillHappenForTesting() override;
+  void SetUkmRecorderAndSource(std::unique_ptr<ukm::UkmRecorder> recorder,
+                               ukm::SourceId source_id) override {
+    // Single-threaded mode is only for browser compositing and for renderers in
+    // layout tests. This will still get called in the latter case, but we don't
+    // need to record UKM in that case.
+  }
 
   // Blink layout tests might call into this even though an unthreaded CC
   // doesn't have BrowserControls itself.

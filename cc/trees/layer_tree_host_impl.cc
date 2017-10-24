@@ -1044,6 +1044,11 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
     active_tree()->set_needs_update_draw_properties();
   }
 
+  ukm_manager_.AddCheckerboardStatsForFrame(
+      checkerboarded_no_recording_content_area +
+          checkerboarded_needs_raster_content_area,
+      num_missing_tiles);
+
   if (active_tree_->has_ever_been_drawn()) {
     UMA_HISTOGRAM_COUNTS_100(
         "Compositing.RenderPass.AppendQuadData.NumMissingTiles",
