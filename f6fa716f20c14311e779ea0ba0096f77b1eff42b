@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32713d9a_dea1d221",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-24T23:11:09Z",
+      "side": 1,
+      "message": "I\u0027ve addressed this by abandoning the virtual IsDynamicFrame approach and instead exposing UniqueNameHelper::Freeze() method.",
+      "parentUuid": "8bf3fe78_55dcf04b",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fe7553a_1480e3fc",
         "filename": "content/common/unique_name_helper.h",
         "patchSetId": 11
@@ -65,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "72336d25_67be391d",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-24T23:11:09Z",
+      "side": 1,
+      "message": "I\u0027ve tried this (introducing RenderFrameImpl::unique_name_override_for_layout_tests_ field), but this didn\u0027t work for DumpFrameState in blink_test_controller.cc (which needs to emit the old unique name, but it only has new unique name from |frame_state.target| and doesn\u0027t have access to the historical RenderFrameImpl).\n\nIn theory we could let UniqueNameHelper know that it is operating in layout tests mode by calling a hypothetical UniqueNameHelper::EnterLayoutTestsModeForTesting() from EnableRendererLayoutTestMode() in content/test/layouttest_support.cc.  OTOH, I am slightly worried about doing a different thing in tests and in product.  In theory the difference shouldn\u0027t matter, but there is a risk that we would be testing something other than what we ship...\n\nWDYT?",
+      "parentUuid": "b5780480_9c807864",
+      "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55e3bc3e_bdf1a12c",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 11
@@ -79,6 +121,24 @@
       "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d46e1b_b351b4dd",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-24T23:11:09Z",
+      "side": 1,
+      "message": "This method has disappeared in the latest patchset.  OTOH, I\u0027ve tried to explain what \"dynamic\" means in the comment for UniqueNameHelper::GenerateNameForNewChildFrame.",
+      "parentUuid": "55e3bc3e_bdf1a12c",
+      "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +225,24 @@
       "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f8328b_f44e8da4",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 2138,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-24T23:11:09Z",
+      "side": 1,
+      "message": "You\u0027re right - this doesn\u0027t catch frames created by inline scripts (i.e. scripts which execute happen before the onLoad event).  I\u0027ve added a test for this situation and it seems that detecting this situation via v8::Isolate::GetCurrent()-\u003eInContext() (instead of HasFinishedParsing) is working okay.",
+      "parentUuid": "a2ad8ff7_9dff6331",
+      "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

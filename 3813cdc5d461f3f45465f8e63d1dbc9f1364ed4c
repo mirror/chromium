@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0b6849af_700d4250",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 6031,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-24T23:11:09Z",
+      "side": 0,
+      "message": "\u003e Your change does affect the fundamental thing being tested in these two tests: whether we can get a unique name collision in the tree as the page is being modified.\n\u003e \n\u003e I think it comes down to a question of whether the original bug fixed by https://codereview.chromium.org/2191543003 is still possible.  Can a frame be added to the page with the unique name of a frame that has already been removed?  If not, maybe we can remove the tests.\n\u003e \n\u003e On one hand, I hope we can\u0027t add such a frame, because that sounds like something that might bypass the fix in this CL.  (That would suggest frames are being added after others are removed, in which case the behavior might be non-deterministic and lead to the same race we\u0027re trying to fix.)\n\u003e \n\u003e On the other hand, maybe it is still possible?  What approach were you going to take with static frames?\n\nI\u0027ve modified the first test, so that it results in a colliding uniqueName, by injecting a dynamic frame that navigates to a *static* 1-1.html which is modified to include 2 named subframes.  Since these 2 named subframes are created *statically* (not dynamically) they are not subject to the changes in this CL.\n\nWe said that the collision/confusion from the first modified test can be fixed by always searching for a uniqueName match only among immediate children (rather than globally) - this is tracked by https://crbug.com/774637 AFAICT.\n\nI\u0027ve deleted the second test, because after this CL a dynamic frame without a src should not be able to cause a uniqueName collision (even with past entries) because such a frame will have a random/fresh uniqueName and because such frame won\u0027t have static children.\n\n\u003e Or would it be possible if a page had inline script tags which injected and removed iframes before the page was done parsing?\n\u003e Or if a page use document.write() to change its contents?\n\nBoth of these should be impossible after switching from HasFinishedParsing to v8::Isolate::GetCurrent()-\u003eInContext().",
+      "parentUuid": "d77ec270_fe50ebb8",
+      "range": {
+        "startLine": 6026,
+        "startChar": 0,
+        "endLine": 6031,
+        "endChar": 3
+      },
+      "revId": "3813cdc5d461f3f45465f8e63d1dbc9f1364ed4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37fb5765_724b09f1",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 11
