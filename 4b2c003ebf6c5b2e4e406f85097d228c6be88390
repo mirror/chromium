@@ -16,6 +16,24 @@
       "revId": "4b2c003ebf6c5b2e4e406f85097d228c6be88390",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c2dd8a_040d7823",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-24T19:37:14Z",
+      "side": 1,
+      "message": "No, for other reasons. Will comment.",
+      "parentUuid": "e46c75b0_18e22c93",
+      "revId": "4b2c003ebf6c5b2e4e406f85097d228c6be88390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
