@@ -160,6 +160,23 @@
       "revId": "b31e0539c74ead8aa1d280bc4b144d91a5d96a32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5a4793_13954dda",
+        "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-24T08:34:19Z",
+      "side": 1,
+      "message": "TODO: Add serialization",
+      "revId": "b31e0539c74ead8aa1d280bc4b144d91a5d96a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
