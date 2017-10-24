@@ -74,5 +74,78 @@ v8::Local<v8::Value> MessageToV8(v8::Local<v8::Context> context,
   return parsed_message;
 }
 
+ParseOptionsResult ParseMessageOptions(v8::Local<v8::Context> context,
+                                       v8::Local<v8::Object> v8_options,
+                                       int flags,
+                                       MessageOptions* options_out,
+                                       std::string* error_out) {
+  DCHECK(!v8_options.IsEmpty());
+  DCHECK(!v8_options->IsNull());
+
+  v8::Isolate* isolate = context->GetIsolate();
+
+  MessageOptions options;
+
+  // Theoretically, our argument matching code already checked the types of
+  // the properties on v8_connect_options. However, since we don't make an
+  // independent copy, it's possible that author script has super sneaky
+  // getters/setters that change the result each time the property is
+  // queried. Make no assumptions.
+  v8::TryCatch try_catch(isolate);
+
+  if ((flags & CHECK_CHANNEL_NAME) != 0) {
+    v8::Local<v8::Value> v8_channel_name;
+    if (!v8_options->Get(context, gin::StringToSymbol(isolate, "name"))
+             .ToLocal(&v8_channel_name)) {
+      try_catch.ReThrow();
+      return THROWN;
+    }
+    if (!v8_channel_name->IsUndefined()) {
+      if (!v8_channel_name->IsString()) {
+        *error_out = "connectInfo.name must be a string.";
+        return TYPE_ERROR;
+      }
+      options.channel_name = gin::V8ToString(v8_channel_name);
+    }
+  }
+
+  if ((flags & CHECK_INCLUDE_TLS_CHANNEL_ID) != 0) {
+    v8::Local<v8::Value> v8_include_tls_channel_id;
+    if (!v8_options
+             ->Get(context, gin::StringToSymbol(isolate, "includeTlsChannelId"))
+             .ToLocal(&v8_include_tls_channel_id)) {
+      try_catch.ReThrow();
+      return THROWN;
+    }
+    if (!v8_include_tls_channel_id->IsUndefined()) {
+      if (!v8_include_tls_channel_id->IsBoolean()) {
+        *error_out = "connectInfo.includeTlsChannelId must be a boolean.";
+        return TYPE_ERROR;
+      }
+      options.include_tls_channel_id =
+          v8_include_tls_channel_id->BooleanValue();
+    }
+  }
+
+  if ((flags & CHECK_FRAME_ID) != 0) {
+    v8::Local<v8::Value> v8_frame_id;
+    if (!v8_options->Get(context, gin::StringToSymbol(isolate, "frameId"))
+             .ToLocal(&v8_frame_id)) {
+      try_catch.ReThrow();
+      return THROWN;
+    }
+    if (!v8_frame_id->IsUndefined()) {
+      if (!v8_frame_id->IsInt32()) {
+        *error_out = "connectInfo.includeTlsChannelId must be a number.";
+        return TYPE_ERROR;
+      }
+      options.frame_id = v8_frame_id->Int32Value();
+    }
+  }
+
+  *options_out = std::move(options);
+  return SUCCESS;
+}
+
 }  // namespace messaging_util
 }  // namespace extensions
