@@ -629,8 +629,8 @@ TEST(ValuesTest, FindPath) {
 TEST(ValuesTest, SetPath) {
   Value root(Value::Type::DICTIONARY);
 
-  Value* inserted = root.SetPath({"one"}, Value(123));
-  Value* found = root.FindPathOfType({"one"}, Value::Type::INTEGER);
+  Value* inserted = root.SetPath({"one", "two"}, Value(123));
+  Value* found = root.FindPathOfType({"one", "two"}, Value::Type::INTEGER);
   ASSERT_TRUE(found);
   EXPECT_EQ(inserted, found);
   EXPECT_EQ(123, found->GetInt());
