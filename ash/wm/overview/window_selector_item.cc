@@ -365,8 +365,6 @@ class WindowSelectorItem::RoundedContainerView
   void OnLayerAnimationEnded(ui::LayerAnimationSequence* sequence) override {
     if (0 != (sequence->properties() &
               ui::LayerAnimationElement::AnimatableProperty::OPACITY)) {
-      if (item_)
-        item_->HideHeader();
       StopObservingLayerAnimations();
       AnimateColor(gfx::Tween::EASE_IN, kSelectorColorSlideMilliseconds);
     }
@@ -580,10 +578,6 @@ void WindowSelectorItem::CloseWindow() {
   transform_window_.Close();
 }
 
-void WindowSelectorItem::HideHeader() {
-  transform_window_.HideHeader();
-}
-
 void WindowSelectorItem::OnMinimizedStateChanged() {
   transform_window_.UpdateMirrorWindowForMinimizedState();
 }
@@ -673,7 +667,7 @@ void WindowSelectorItem::SetItemBounds(const gfx::Rect& target_bounds,
       screen_rect, selector_item_bounds);
   ScopedTransformOverviewWindow::ScopedAnimationSettings animation_settings;
   transform_window_.BeginScopedAnimation(animation_type, &animation_settings);
-  transform_window_.SetTransform(root_window_, transform);
+  transform_window_.SetTransform(transform);
 }
 
 void WindowSelectorItem::SetOpacity(float opacity) {
