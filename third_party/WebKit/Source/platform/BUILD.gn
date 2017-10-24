@@ -1137,6 +1137,7 @@ jumbo_component("platform") {
     "graphics/paint/PaintRecordBuilder.h",
     "graphics/paint/PaintRecorder.h",
     "graphics/paint/PaintShader.h",
+    "graphics/paint/PaintTypeface.h",
     "graphics/paint/PropertyTreeState.cpp",
     "graphics/paint/PropertyTreeState.h",
     "graphics/paint/RasterInvalidationTracking.cpp",

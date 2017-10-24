@@ -43,6 +43,8 @@ cc_component("paint") {
     "paint_recorder.h",
     "paint_shader.cc",
     "paint_shader.h",
+    "paint_typeface.cc",
+    "paint_typeface.h",
     "record_paint_canvas.cc",
     "record_paint_canvas.h",
     "scoped_image_flags.cc",

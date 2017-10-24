@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "platform/graphics/paint/PaintCanvas.h"
+#include "platform/graphics/paint/PaintTypeface.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "third_party/skia/include/core/SkMetaData.h"
 
@@ -86,11 +87,12 @@ class MockPaintCanvas : public PaintCanvas {
                     size_t byte_length,
                     const SkPoint pos[],
                     const PaintFlags& flags));
-  MOCK_METHOD4(drawTextBlob,
+  MOCK_METHOD5(drawTextBlob,
                void(sk_sp<SkTextBlob> blob,
                     SkScalar x,
                     SkScalar y,
-                    const PaintFlags& flags));
+                    const PaintFlags& flags,
+                    const std::vector<PaintTypeface>& typefaces));
   MOCK_METHOD1(drawPicture, void(sk_sp<const PaintRecord> record));
   MOCK_CONST_METHOD0(isClipEmpty, bool());
   MOCK_CONST_METHOD0(isClipRect, bool());
