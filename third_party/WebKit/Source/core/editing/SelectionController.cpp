@@ -587,7 +587,6 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
   if (new_selection.IsNone() || new_selection.Start() > new_selection.End())
     return false;
 
-  HandleVisibility visibility = HandleVisibility::kNotVisible;
   if (select_input_event_type == SelectInputEventType::kTouch) {
     // If node doesn't have text except space, tab or line break, do not
     // select that 'empty' area.
@@ -605,8 +604,6 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
                         VisiblePositionInFlatTree::LastPositionInNode(*editable)
                             .DeepEquivalent())
       return false;
-
-    visibility = HandleVisibility::kVisible;
   }
 
   const SelectionInFlatTree& adjusted_selection =
@@ -617,7 +614,10 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
   return UpdateSelectionForMouseDownDispatchingSelectStart(
       inner_node,
       ExpandSelectionToRespectUserSelectAll(inner_node, adjusted_selection),
-      TextGranularity::kWord, visibility);
+      TextGranularity::kWord,
+      select_input_event_type == SelectInputEventType::kTouch
+          ? HandleVisibility::kVisible
+          : HandleVisibility::kNotVisible);
 }
 
 void SelectionController::SelectClosestMisspellingFromHitTestResult(
