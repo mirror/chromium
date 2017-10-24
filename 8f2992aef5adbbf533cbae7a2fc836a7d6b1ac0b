@@ -81,6 +81,30 @@
       "revId": "8f2992aef5adbbf533cbae7a2fc836a7d6b1ac0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4afcb3e5_8b2b9186",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_nameservers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-24T19:06:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a6c243a7_f48d65cd",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 74
+      },
+      "revId": "8f2992aef5adbbf533cbae7a2fc836a7d6b1ac0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
