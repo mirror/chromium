@@ -28,6 +28,8 @@ namespace crashpad {
 namespace test {
 namespace {
 
+// The base::c16 functions only exist if WCHAR_T_IS_UTF32.
+#if defined(WCHAR_T_IS_UTF32)
 TEST(strlcpy, c16lcpy) {
   // Use a destination buffer that’s larger than the length passed to c16lcpy.
   // The unused portion is a guard area that must not be written to.
@@ -90,6 +92,7 @@ TEST(strlcpy, c16lcpy) {
     }
   }
 }
+#endif  // defined(WCHAR_T_IS_UTF32)
 
 }  // namespace
 }  // namespace test
