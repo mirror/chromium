@@ -1079,13 +1079,15 @@ void BrowserPluginGuest::OnUpdateResizeParams(
     return;
   }
 
-  local_surface_id_ = local_surface_id;
   screen_info_ = screen_info;
   frame_rect_ = frame_rect;
   GetWebContents()->SendScreenRects();
-  RenderWidgetHostView* view = web_contents()->GetRenderWidgetHostView();
-  if (view)
-    view->GetRenderWidgetHost()->WasResized();
+  if (local_surface_id_ != local_surface_id) {
+    local_surface_id_ = local_surface_id;
+    RenderWidgetHostView* view = web_contents()->GetRenderWidgetHostView();
+    if (view)
+      view->GetRenderWidgetHost()->WasResized();
+  }
 }
 
 void BrowserPluginGuest::OnHasTouchEventHandlers(bool accept) {

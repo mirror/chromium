@@ -194,6 +194,7 @@ void BrowserPlugin::Attach() {
     }
   }
 
+  sent_resize_params_ = base::nullopt;
   WasResized();
 }
 
@@ -277,7 +278,7 @@ void BrowserPlugin::OnGuestReady(int browser_plugin_instance_id,
                                  const viz::FrameSinkId& frame_sink_id) {
   guest_crashed_ = false;
   frame_sink_id_ = frame_sink_id;
-
+  sent_resize_params_ = base::nullopt;
   WasResized();
 }
 

@@ -146,7 +146,6 @@ void RenderWidgetHostViewGuest::Hide() {
 }
 
 void RenderWidgetHostViewGuest::SetSize(const gfx::Size& size) {
-  host_->WasResized();
 }
 
 void RenderWidgetHostViewGuest::SetBounds(const gfx::Rect& rect) {
