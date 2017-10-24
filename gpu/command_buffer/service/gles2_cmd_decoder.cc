@@ -4971,6 +4971,9 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
   srgb_converter_.reset();
   clear_framebuffer_blit_.reset();
 
+  if (group_ && group_->texture_manager())
+    group_->texture_manager()->notify_lost_context(have_context);
+
   if (framebuffer_manager_.get()) {
     framebuffer_manager_->Destroy(have_context);
     if (group_->texture_manager())
