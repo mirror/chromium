@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f42f2273_65880cf4",
+        "filename": "chrome/test/data/webui/webui_test_util.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T01:40:06Z",
+      "side": 1,
+      "message": "Can we preserve the file name as test_util.js? The webui_ prefix seems redundant since it already resides on webui/ folder.",
+      "revId": "7ebcda9c81f833254d5df4111baccdb80d27dcf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
