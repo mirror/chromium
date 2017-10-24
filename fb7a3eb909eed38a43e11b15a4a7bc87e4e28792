@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482476dd_5e5900e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1106294
+      },
+      "writtenOn": "2017-10-24T18:16:03Z",
+      "side": 1,
+      "message": "Bug: swiftshader:86",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "fb7a3eb909eed38a43e11b15a4a7bc87e4e28792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
