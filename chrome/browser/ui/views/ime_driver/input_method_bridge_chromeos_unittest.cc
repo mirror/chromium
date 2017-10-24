@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/views/ime_driver/input_method_bridge_chromeos.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -22,6 +23,8 @@
 #include "ui/events/keycodes/dom/dom_key.h"
 #include "ui/events/keycodes/keyboard_code_conversion.h"
 #include "ui/events/keycodes/keyboard_codes.h"
+#include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/range/range.h"
 
 enum class CompositionEventType {
   SET,
@@ -92,6 +95,13 @@ class TestTextInputClient : public ui::mojom::TextInputClient {
       DispatchKeyEventPostIMECallback callback) override {
     std::move(callback).Run(false);
   }
+  void GetTextInputClientInfo(
+      GetTextInputClientInfoCallback callback) override {
+    std::move(callback).Run(false, gfx::Range(), base::string16(), gfx::Range(),
+                            gfx::Rect());
+  }
+  void OnInputMethodChanged() override {}
+  void EnsureCaretNotInRect(const gfx::Rect& rect) override {}
 
   mojo::Binding<ui::mojom::TextInputClient> binding_;
   std::unique_ptr<base::RunLoop> run_loop_;

@@ -36,6 +36,9 @@ class TextInputClientImpl : public ui::mojom::TextInputClient {
   void DispatchKeyEventPostIME(
       std::unique_ptr<ui::Event> event,
       DispatchKeyEventPostIMECallback callback) override;
+  void GetTextInputClientInfo(GetTextInputClientInfoCallback callback) override;
+  void OnInputMethodChanged() override;
+  void EnsureCaretNotInRect(const gfx::Rect& rect) override;
 
   ui::TextInputClient* text_input_client_;
   mojo::Binding<ui::mojom::TextInputClient> binding_;
