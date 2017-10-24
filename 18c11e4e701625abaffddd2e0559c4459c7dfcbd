@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad698d66_7d3383dc",
+        "filename": "components/machine_intelligence/assist_ranker_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-24T20:14:17Z",
+      "side": 1,
+      "message": "unless you\u0027re moving model_url, model_filename, and UMAPrefix (name convention volation!) you should take these by const ref and/or StringPiece.",
+      "revId": "18c11e4e701625abaffddd2e0559c4459c7dfcbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

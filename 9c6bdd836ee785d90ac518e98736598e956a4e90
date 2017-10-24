@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d0c98f8_d9e5705d",
+        "filename": "components/machine_intelligence/assist_ranker_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-24T20:14:17Z",
+      "side": 1,
+      "message": "Who hangs on the the returned predictor?\n\nIs there a convention/policy in place ensuring that we only build a single predictor for a given model?",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1468b5_99ff0f01",
+        "filename": "components/machine_intelligence/assist_ranker_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-24T20:14:17Z",
+      "side": 1,
+      "message": "take params by const ref unless this method is going to move the copies into some other destination.",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79f67ea_2f33e0a8",
+        "filename": "components/machine_intelligence/assist_ranker_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-24T20:14:17Z",
+      "side": 1,
+      "message": "Move this contents of this func (other than the DCHECK and call to GetModelPath) to a factory func on BinaryClassifierPredictor, make LoadModel protected, and here just return BinaryClassifierPredictor::Create(...);\n\nSee comment for BasePredictor::LoadModel.",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d6c53f_87737539",
+        "filename": "components/machine_intelligence/base_predictor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-24T20:14:17Z",
+      "side": 1,
+      "message": "maybe the model_loader should be passed via the constructor so there\u0027s no way to misuse this entrypoint?\n\nthis would simplify to just calling NotifyOfRankerActivity()\n\nhmmm... the loader constructor needs the predictor to already exist to that it can know who to notify OnModelAvailable and moving this to the constructor would create a circular dependency.  :(\n\nmaybe make this private and make it\u0027s caller a friend?\n\nbetter yet, make this protected and add a factory function to the derived classes:\n\ni.e....\n\n  static unique_ptr\u003cBinaryPredictor\u003e BinaryPredictor::Create(....) {\n    auto predictor \u003d MakeUnique\u003cBinaryPredictor\u003e();\n    auto loader \u003d ...;  // Copied from service impl.\n    predictor-\u003eLoadModel(std::move(loader));  // accessible since we\u0027re in the subclass.\n    return predictor;\n  }",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ddc681_cd49c1e2",
+        "filename": "components/machine_intelligence/generic_logistic_regression_inference.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-24T20:14:17Z",
+      "side": 1,
+      "message": "Are these sentences both related to the TODO? The 2nd looks like class documentation.",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
