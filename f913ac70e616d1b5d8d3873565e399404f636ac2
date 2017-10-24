@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e11cb36_574d6df5",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T09:42:58Z",
+      "side": 1,
+      "message": "Would it be difficult to enable / disable the OOM intervention on a per-page basis?\n\nConceptually it won\u0027t make sense to enable the intervention for all pages (including background tabs) at the same time. For example, if we decide to drop V8 heaps, it should be enabled on a per-page basis.\n\nThat said, in practice this won\u0027t become a problem because background tabs won\u0027t exist when the OOM intervention kicks in. So I\u0027m fine with revisiting the issue later.",
+      "revId": "f913ac70e616d1b5d8d3873565e399404f636ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b29f76_ec23e134",
+        "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T09:42:58Z",
+      "side": 1,
+      "message": "Add a copyright.",
+      "revId": "f913ac70e616d1b5d8d3873565e399404f636ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
