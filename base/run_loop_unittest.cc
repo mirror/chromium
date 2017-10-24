@@ -136,17 +136,20 @@ class TestDelegate final : public RunLoop::Delegate {
   }
 
  private:
-  void Run() override {
+  void Run(RunLevelTaskType run_level_task_type) override {
+    ++run_level_;
+
     if (nested_run_allowing_tasks_incoming_) {
-      EXPECT_TRUE(run_loop_client_->IsNested());
-      EXPECT_TRUE(run_loop_client_->ProcessingTasksAllowed());
-    } else if (run_loop_client_->IsNested()) {
-      EXPECT_FALSE(run_loop_client_->ProcessingTasksAllowed());
+      EXPECT_EQ(kNestableAndSystemTasks, run_level_task_type);
+    } else if (run_level_ > 1) {
+      // Nested run-level without explicit allowance should only be allowed to
+      // run system tasks.
+      EXPECT_EQ(run_level_task_type, kSystemTasksOnly);
     }
     nested_run_allowing_tasks_incoming_ = false;
 
     while (!should_quit_) {
-      if (run_loop_client_->ProcessingTasksAllowed() &&
+      if (run_level_task_type >= kNestableAndSystemTasks &&
           simple_task_runner_->ProcessTask()) {
         continue;
       }
@@ -165,6 +168,8 @@ class TestDelegate final : public RunLoop::Delegate {
       PlatformThread::YieldCurrentThread();
     }
     should_quit_ = false;
+
+    --run_level_;
   }
 
   void Quit() override { should_quit_ = true; }
@@ -176,6 +181,10 @@ class TestDelegate final : public RunLoop::Delegate {
   // True if the next invocation of Run() is expected to be from a
   // kNestableTasksAllowed RunLoop.
   bool nested_run_allowing_tasks_incoming_ = false;
+
+  // Incremented for the duration of each Run() call (used to indentify nested
+  // calls for testing).
+  int run_level_ = 0;
 
   scoped_refptr<SimpleSingleThreadTaskRunner> simple_task_runner_ =
       MakeRefCounted<SimpleSingleThreadTaskRunner>();
