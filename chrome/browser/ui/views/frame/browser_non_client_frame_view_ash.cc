@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "ash/ash_layout_constants.h"
+#include "ash/frame/caption_buttons/frame_back_button.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/default_header_painter.h"
 #include "ash/frame/frame_border_hit_test.h"
@@ -64,6 +65,7 @@ BrowserNonClientFrameViewAsh::BrowserNonClientFrameViewAsh(
     BrowserView* browser_view)
     : BrowserNonClientFrameView(frame, browser_view),
       caption_button_container_(nullptr),
+      back_button_(nullptr),
       window_icon_(nullptr) {
   ash::wm::InstallResizeHandleWindowTargeterForWindow(frame->GetNativeWindow(),
                                                       nullptr);
@@ -90,11 +92,17 @@ void BrowserNonClientFrameViewAsh::Init() {
     AddChildView(window_icon_);
     window_icon_->Update();
   }
+  if (browser->is_app()) {
+    back_button_ = new ash::FrameBackButton();
+    AddChildView(back_button_);
+    // TODO(oshima): Update the back button state.
+  }
 
   if (UsePackagedAppHeaderStyle()) {
     ash::DefaultHeaderPainter* header_painter = new ash::DefaultHeaderPainter;
     header_painter_.reset(header_painter);
-    header_painter->Init(frame(), this, caption_button_container_);
+    header_painter->Init(frame(), this, caption_button_container_,
+                         back_button_);
     if (window_icon_)
       header_painter->UpdateLeftHeaderView(window_icon_);
 
@@ -116,7 +124,7 @@ void BrowserNonClientFrameViewAsh::Init() {
     BrowserHeaderPainterAsh* header_painter = new BrowserHeaderPainterAsh;
     header_painter_.reset(header_painter);
     header_painter->Init(frame(), browser_view(), this, window_icon_,
-                         caption_button_container_);
+                         caption_button_container_, back_button_);
   }
 
   if (browser->is_app()) {
@@ -211,8 +219,8 @@ gfx::Rect BrowserNonClientFrameViewAsh::GetWindowBoundsForClientBounds(
 }
 
 int BrowserNonClientFrameViewAsh::NonClientHitTest(const gfx::Point& point) {
-  const int hit_test =
-      ash::FrameBorderNonClientHitTest(this, caption_button_container_, point);
+  const int hit_test = ash::FrameBorderNonClientHitTest(
+      this, back_button_, caption_button_container_, point);
 
   // When the window is restored we want a large click target above the tabs
   // to drag the window, so redirect clicks in the tab's shadow to caption.
@@ -259,7 +267,7 @@ void BrowserNonClientFrameViewAsh::OnPaint(gfx::Canvas* canvas) {
     return;
 
   const bool should_paint_as_active = ShouldPaintAsActive();
-  caption_button_container_->SetPaintAsActive(should_paint_as_active);
+  header_painter_->SetPaintAsActive(should_paint_as_active);
 
   const ash::HeaderPainter::Mode header_mode = should_paint_as_active ?
       ash::HeaderPainter::MODE_ACTIVE : ash::HeaderPainter::MODE_INACTIVE;

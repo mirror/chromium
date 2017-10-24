@@ -5,6 +5,7 @@
 #include "ash/frame/default_header_painter.h"
 
 #include "ash/ash_layout_constants.h"
+#include "ash/frame/caption_buttons/frame_caption_button.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/header_painter_util.h"
 #include "ash/resources/grit/ash_resources.h"
@@ -19,6 +20,7 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image.h"
+#include "ui/gfx/render_text.h"
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/views/view.h"
@@ -82,6 +84,7 @@ DefaultHeaderPainter::DefaultHeaderPainter(mojom::WindowStyle window_style)
     : window_style_(window_style),
       frame_(nullptr),
       view_(nullptr),
+      back_button_(nullptr),
       left_header_view_(nullptr),
       active_frame_color_(kDefaultFrameColor),
       inactive_frame_color_(kDefaultFrameColor),
@@ -96,7 +99,8 @@ DefaultHeaderPainter::~DefaultHeaderPainter() {}
 void DefaultHeaderPainter::Init(
     views::Widget* frame,
     views::View* header_view,
-    FrameCaptionButtonContainerView* caption_button_container) {
+    FrameCaptionButtonContainerView* caption_button_container,
+    FrameCaptionButton* back_button) {
   DCHECK(frame);
   DCHECK(header_view);
   DCHECK(caption_button_container);
@@ -106,6 +110,7 @@ void DefaultHeaderPainter::Init(
   caption_button_container_->SetButtonSize(
       GetAshLayoutSize(AshLayoutSize::NON_BROWSER_CAPTION_BUTTON));
   UpdateAllButtonImages();
+  UpdateBackButton(back_button);
 }
 
 int DefaultHeaderPainter::GetMinimumHeaderWidth() const {
@@ -167,6 +172,8 @@ void DefaultHeaderPainter::LayoutHeader() {
                            : AshLayoutSize::BROWSER_RESTORED_CAPTION_BUTTON));
     caption_button_container_->SetButtonSize(button_size);
   }
+  if (back_button_)
+    back_button_->set_use_light_images(ShouldUseLightImages());
 
   caption_button_container_->SetUseLightImages(ShouldUseLightImages());
   UpdateSizeButtonImages();
@@ -179,6 +186,14 @@ void DefaultHeaderPainter::LayoutHeader() {
       caption_button_container_size.width(),
       caption_button_container_size.height());
 
+  int origin = 0;
+  if (back_button_) {
+    gfx::Size size = back_button_->GetPreferredSize();
+    back_button_->SetBounds(0, 0, size.width(),
+                            caption_button_container_size.height());
+    origin = back_button_->bounds().right();
+  }
+
   if (left_header_view_) {
     // Vertically center the left header view with respect to the caption button
     // container.
@@ -186,8 +201,9 @@ void DefaultHeaderPainter::LayoutHeader() {
     gfx::Size size = left_header_view_->GetPreferredSize();
     int icon_offset_y =
         caption_button_container_->height() / 2 - size.height() / 2;
-    left_header_view_->SetBounds(HeaderPainterUtil::GetLeftViewXInset(),
-                                 icon_offset_y, size.width(), size.height());
+    left_header_view_->SetBounds(
+        HeaderPainterUtil::GetLeftViewXInset() + origin, icon_offset_y,
+        size.width(), size.height());
   }
 
   // The header/content separator line overlays the caption buttons.
@@ -210,6 +226,12 @@ void DefaultHeaderPainter::SchedulePaintForTitle() {
   view_->SchedulePaintInRect(GetTitleBounds());
 }
 
+void DefaultHeaderPainter::SetPaintAsActive(bool paint_as_active) {
+  caption_button_container_->SetPaintAsActive(paint_as_active);
+  if (back_button_)
+    back_button_->set_paint_as_active(paint_as_active);
+}
+
 void DefaultHeaderPainter::SetFrameColors(SkColor active_frame_color,
                                           SkColor inactive_frame_color) {
   active_frame_color_ = active_frame_color;
@@ -225,8 +247,17 @@ SkColor DefaultHeaderPainter::GetInactiveFrameColor() const {
   return inactive_frame_color_;
 }
 
+bool DefaultHeaderPainter::ShouldUseLightImages() {
+  return color_utils::IsDark(mode_ == MODE_INACTIVE ? inactive_frame_color_
+                                                    : active_frame_color_);
+}
+
 void DefaultHeaderPainter::UpdateLeftHeaderView(views::View* left_header_view) {
   left_header_view_ = left_header_view;
+}
+
+void DefaultHeaderPainter::UpdateBackButton(FrameCaptionButton* button) {
+  back_button_ = button;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -272,6 +303,17 @@ void DefaultHeaderPainter::PaintTitleBar(gfx::Canvas* canvas) {
   // The window icon is painted by its own views::View.
   gfx::Rect title_bounds = GetTitleBounds();
   title_bounds.set_x(view_->GetMirroredXForRect(title_bounds));
+  auto title = frame_->widget_delegate()->GetWindowTitle();
+  LOG(ERROR) << "WindowTitle:" << title
+             << ", title bounds=" << title_bounds.ToString();
+  /*
+  SkColor text_color = kTitleTextColor;
+  if (color_utils::GetRelativeLuminance(active_frame_color_) < 0.5) {
+    text_color = SK_ColorWHITE;
+  }
+  int flag = gfx::Canvas::NO_SUBPIXEL_RENDERING |
+      gfx::Canvas::NO_ELLIPSIS;
+  */
   canvas->DrawStringRectWithFlags(
       frame_->widget_delegate()->GetWindowTitle(), GetTitleFontList(),
       ShouldUseLightImages() ? kLightTitleTextColor : kTitleTextColor,
@@ -286,11 +328,6 @@ void DefaultHeaderPainter::PaintHeaderContentSeparator(gfx::Canvas* canvas) {
   flags.setColor((mode_ == MODE_ACTIVE) ? kHeaderContentSeparatorColor
                                         : kHeaderContentSeparatorInactiveColor);
   canvas->sk_canvas()->drawRect(gfx::RectFToSkRect(rect), flags);
-}
-
-bool DefaultHeaderPainter::ShouldUseLightImages() {
-  return color_utils::IsDark(mode_ == MODE_INACTIVE ? inactive_frame_color_
-                                                    : active_frame_color_);
 }
 
 void DefaultHeaderPainter::UpdateAllButtonImages() {
@@ -323,8 +360,9 @@ gfx::Rect DefaultHeaderPainter::GetLocalBounds() const {
 }
 
 gfx::Rect DefaultHeaderPainter::GetTitleBounds() const {
-  return HeaderPainterUtil::GetTitleBounds(
-      left_header_view_, caption_button_container_, GetTitleFontList());
+  return HeaderPainterUtil::GetTitleBounds(back_button_, left_header_view_,
+                                           caption_button_container_,
+                                           GetTitleFontList());
 }
 
 bool DefaultHeaderPainter::UsesCustomFrameColors() const {

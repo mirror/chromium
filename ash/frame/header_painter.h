@@ -40,6 +40,8 @@ class ASH_EXPORT HeaderPainter {
 
   // Schedule a re-paint of the entire title.
   virtual void SchedulePaintForTitle() = 0;
+
+  virtual void SetPaintAsActive(bool paint_as_active) = 0;
 };
 
 }  // namespace ash
