@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "bf692cee_a31f1b16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-24T20:07:47Z",
+      "side": 1,
+      "message": "i guess WebappInfo already has WebApkPackageName (which is strange too) so ok.",
+      "parentUuid": "786d7476_8e77d751",
+      "range": {
+        "startLine": 505,
+        "startChar": 18,
+        "endLine": 505,
+        "endChar": 38
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f9587d3_18d14374",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 2
