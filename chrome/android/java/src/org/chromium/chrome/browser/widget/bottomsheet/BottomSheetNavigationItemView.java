@@ -14,15 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.widget.TintedImageView;
 import org.chromium.chrome.browser.widget.bottomsheet.base.BottomNavigationItemView;
 
 /**
  * An implementation of the forked {@link BottomNavigationItemView} specifically for the Chrome Home
  * bottom navigation menu.
  *
- * Uses a different layout XML that simplifies the menu item with only one label, and uses a
- * {@link TintedImageView} to simplify the icon tinting logic.
+ * Uses a different layout XML that simplifies the menu item with only one label.
  */
 public class BottomSheetNavigationItemView extends BottomNavigationItemView {
     private boolean mLabelHidden;
@@ -39,6 +37,7 @@ public class BottomSheetNavigationItemView extends BottomNavigationItemView {
         setGravity(Gravity.CENTER);
         setBackgroundResource(
                 android.support.design.R.drawable.design_bottom_navigation_item_background);
+        setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
         mIcon = (ImageView) findViewById(R.id.icon);
         mLabel = (TextView) findViewById(R.id.label);
     }
