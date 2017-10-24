@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "368da39d_11be64a0",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-24T12:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdf27a81_3d675506",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 30
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0913567_9f4ed2fa",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23be889f_737a5437",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-24T12:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0913567_9f4ed2fa",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4a5c03c2_ae678ca3",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-24T12:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "094d91ec_3a3fe905",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 30
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63149d20_56e73c1c",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1123d22a_0e067e82",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-24T12:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63149d20_56e73c1c",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 20
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7142bc7_c2ba49ca",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-24T11:59:40Z",
       "side": 1,
       "message": "now, with all proper memory relaxed ordering, it\u0027s not racy :)",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a79b11_7a3d608c",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-24T12:50:07Z",
+      "side": 1,
+      "message": "It is still racy, right? We could observe a stale value for the element.",
+      "parentUuid": "e7142bc7_c2ba49ca",
       "range": {
         "startLine": 119,
         "startChar": 5,
@@ -137,6 +257,30 @@
       "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94166d43_6251843a",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-24T12:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac701a0c_f9dd23bb",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 32
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
