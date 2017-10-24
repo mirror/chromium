@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cronet_test_base.h"
+#include "cronet_perf_test_base.h"
 
 #include "components/grpc_support/test/quic_test_server.h"
 #include "crypto/sha2.h"
@@ -14,51 +14,54 @@
 
 #pragma mark
 
-@implementation TestDelegate {
-  // Completion semaphore for this TestDelegate. When the request this delegate
-  // is attached to finishes (either successfully or with an error), this
-  // delegate signals this semaphore.
-  dispatch_semaphore_t _semaphore;
+@implementation PerfTestDelegate {
+  // Completion semaphore for this PerfTestDelegate. When the request this
+  // delegate is attached to finishes (either successfully or with an error),
+  // this delegate signals this semaphore.
+  // dispatch_semaphore_t _semaphore;
+  NSMutableDictionary* _semaphores;
 }
 
 @synthesize error = _error;
-@synthesize totalBytesReceived = _totalBytesReceived;
-@synthesize expectedContentLength = _expectedContentLength;
-
-static NSMutableArray<NSData*>* _responseData;
+@synthesize totalBytesReceivedPerTask = _totalBytesReceivedPerTask;
+@synthesize expectedContentLengthPerTask = _expectedContentLengthPerTask;
 
 - (id)init {
   if (self = [super init]) {
-    _semaphore = dispatch_semaphore_create(0);
+    //_semaphore = dispatch_semaphore_create(0);
+    _semaphores = [NSMutableDictionary dictionaryWithCapacity:0];
   }
   return self;
 }
 
 - (void)reset {
-  _responseData = nil;
   _error = nil;
-  _totalBytesReceived = 0;
-  _expectedContentLength = 0;
+  _totalBytesReceivedPerTask = [NSMutableDictionary dictionaryWithCapacity:0];
+  _expectedContentLengthPerTask =
+      [NSMutableDictionary dictionaryWithCapacity:0];
 }
 
 - (NSString*)responseBody {
-  if (_responseData == nil) {
-    return nil;
-  }
-  NSMutableString* body = [NSMutableString string];
-  for (NSData* data in _responseData) {
-    [body appendString:[[NSString alloc] initWithData:data
-                                             encoding:NSUTF8StringEncoding]];
-  }
-  VLOG(3) << "responseBody size:" << [body length]
-          << " chunks:" << [_responseData count];
-  return body;
+  return nil;
 }
 
-- (BOOL)waitForDone {
-  int64_t deadline_ns = 20 * NSEC_PER_SEC;
-  return dispatch_semaphore_wait(
-             _semaphore, dispatch_time(DISPATCH_TIME_NOW, deadline_ns)) == 0;
+// |deadline| specifies how long to wait before timing out in nanoseconds, a
+// value of 0 means do not ever time out.
+- (BOOL)waitForDone:(NSURLSessionDataTask*)task
+        withTimeout:(int64_t)deadline_ns {
+  // int64_t deadline_ns = 20 * NSEC_PER_SEC;
+  if (!_semaphores[task]) {
+    _semaphores[task] = dispatch_semaphore_create(0);
+  }
+
+  if (deadline_ns) {
+    return dispatch_semaphore_wait(
+               _semaphores[task],
+               dispatch_time(DISPATCH_TIME_NOW, deadline_ns)) == 0;
+  } else {
+    return dispatch_semaphore_wait(_semaphores[task], DISPATCH_TIME_FOREVER) ==
+           0;
+  }
 }
 
 - (void)URLSession:(NSURLSession*)session
@@ -70,7 +73,12 @@ static NSMutableArray<NSData*>* _responseData;
     didCompleteWithError:(NSError*)error {
   if (error)
     [self setError:error];
-  dispatch_semaphore_signal(_semaphore);
+  // dispatch_semaphore_signal(_semaphore);
+
+  if (!_semaphores[task]) {
+    _semaphores[task] = dispatch_semaphore_create(0);
+  }
+  dispatch_semaphore_signal(_semaphores[task]);
 }
 
 - (void)URLSession:(NSURLSession*)session
@@ -87,18 +95,21 @@ static NSMutableArray<NSData*>* _responseData;
     didReceiveResponse:(NSURLResponse*)response
      completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))
                            completionHandler {
-  _expectedContentLength = [response expectedContentLength];
+  _expectedContentLengthPerTask[dataTask] =
+      [NSNumber numberWithInt:[response expectedContentLength]];
   completionHandler(NSURLSessionResponseAllow);
 }
 
 - (void)URLSession:(NSURLSession*)session
           dataTask:(NSURLSessionDataTask*)dataTask
     didReceiveData:(NSData*)data {
-  _totalBytesReceived += [data length];
-  if (_responseData == nil) {
-    _responseData = [[NSMutableArray alloc] init];
-  }
-  [_responseData addObject:data];
+  if (_totalBytesReceivedPerTask[dataTask])
+    _totalBytesReceivedPerTask[dataTask] = [NSNumber
+        numberWithInt:[_totalBytesReceivedPerTask[dataTask] intValue] +
+                      [data length]];
+  else
+    _totalBytesReceivedPerTask[dataTask] =
+        [NSNumber numberWithInt:[data length]];
 }
 
 - (void)URLSession:(NSURLSession*)session
@@ -113,27 +124,28 @@ static NSMutableArray<NSData*>* _responseData;
 
 namespace cronet {
 
-void CronetTestBase::SetUp() {
+void CronetPerfTestBase::SetUp() {
   ::testing::Test::SetUp();
   grpc_support::StartQuicTestServer();
-  delegate_ = [[TestDelegate alloc] init];
+  delegate_ = [[PerfTestDelegate alloc] init];
 }
 
-void CronetTestBase::TearDown() {
+void CronetPerfTestBase::TearDown() {
   grpc_support::ShutdownQuicTestServer();
   ::testing::Test::TearDown();
 }
 
-// Launches the supplied |task| and blocks until it completes, with a timeout
-// of 1 second.
-void CronetTestBase::StartDataTaskAndWaitForCompletion(
-    NSURLSessionDataTask* task) {
+// Launches the supplied |task| and blocks until it completes, with a default
+// timeout of 20 seconds.  |deadline_ns|, if specified, is in nanoseconds.
+BOOL CronetPerfTestBase::StartDataTaskAndWaitForCompletion(
+    NSURLSessionDataTask* task,
+    int64_t deadline_ns) {
   [delegate_ reset];
   [task resume];
-  CHECK([delegate_ waitForDone]);
+  return [delegate_ waitForDone:task withTimeout:deadline_ns];
 }
 
-::testing::AssertionResult CronetTestBase::IsResponseSuccessful() {
+::testing::AssertionResult CronetPerfTestBase::IsResponseSuccessful() {
   if ([delegate_ error])
     return ::testing::AssertionFailure() << "error in response: " <<
            [[[delegate_ error] description]
@@ -142,7 +154,8 @@ void CronetTestBase::StartDataTaskAndWaitForCompletion(
     return ::testing::AssertionSuccess() << "no errors in response";
 }
 
-std::unique_ptr<net::MockCertVerifier> CronetTestBase::CreateMockCertVerifier(
+std::unique_ptr<net::MockCertVerifier>
+CronetPerfTestBase::CreateMockCertVerifier(
     const std::vector<std::string>& certs,
     bool known_root) {
   std::unique_ptr<net::MockCertVerifier> mock_cert_verifier(
@@ -167,8 +180,9 @@ std::unique_ptr<net::MockCertVerifier> CronetTestBase::CreateMockCertVerifier(
   return mock_cert_verifier;
 }
 
-bool CronetTestBase::CalculatePublicKeySha256(const net::X509Certificate& cert,
-                                              net::HashValue* out_hash_value) {
+bool CronetPerfTestBase::CalculatePublicKeySha256(
+    const net::X509Certificate& cert,
+    net::HashValue* out_hash_value) {
   // Convert the cert to DER encoded bytes.
   std::string der_cert_bytes;
   net::X509Certificate::OSCertHandle cert_handle = cert.os_cert_handle();

@@ -668,6 +668,7 @@ void HttpProtocolHandlerCore::Start(id<CRNNetworkClientProtocol> base_client) {
 
   net_request_ =
       context->CreateRequest(url, DEFAULT_PRIORITY, this).release();
+  LogNSURLRequest(request_);
   net_request_->set_method(base::SysNSStringToUTF8([request_ HTTPMethod]));
 
   net_request_->set_site_for_cookies(GURLWithNSURL([request_ mainDocumentURL]));
@@ -725,6 +726,7 @@ void HttpProtocolHandlerCore::StopNetRequest() {
   if (tracker_)
     tracker_->StopRequest(net_request_);
   delete net_request_;
+  LogNSURLRequest(request_);
   net_request_ = nullptr;
   if (stream_delegate_.get())
     StopListeningStream([request_ HTTPBodyStream]);
