@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "e6232f54_e8548611",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-24T13:26:57Z",
+      "side": 1,
+      "message": "You are right, it is racy (as in: at least 2 threads may access the memory location concurrently and at least one of them is a write).\n\nI am not sure what exactly I was worried about in this wording, just looked clever in a way that did not simplify reading the code .. CAS and cache lines are terms referring to lower-level concepts than the memory model, so maybe that\u0027s naturally puzzling to me.\n\nAfter the recent changes we avoid compare-exchange to avoid setting the bit that is already set, that\u0027s it. Sadly, it sounds less clever, sorry about that :)\n\nUp to you. Too long of a discussion around a lowly comment :)",
+      "parentUuid": "87a79b11_7a3d608c",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "71e23b0888c78c8c2a00be279a30f04fbd80f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac701a0c_f9dd23bb",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 4
