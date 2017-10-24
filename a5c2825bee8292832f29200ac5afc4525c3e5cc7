@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2aa486b3_7a2614b4",
+        "filename": "content/common/devtools.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-24T19:05:40Z",
+      "side": 1,
+      "message": "There is no documentation, so I am adding here.",
+      "parentUuid": "14f52800_b0861e48",
+      "revId": "a5c2825bee8292832f29200ac5afc4525c3e5cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d27a0fca_eb3febf9",
         "filename": "content/common/devtools.mojom",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "eadfe150_db5db8ff",
+        "filename": "content/common/devtools.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-24T19:05:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d27a0fca_eb3febf9",
+      "revId": "a5c2825bee8292832f29200ac5afc4525c3e5cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d92a0704_0b94dc53",
         "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-24T00:45:57Z",
       "side": 1,
       "message": "I\u0027m curious why this isn\u0027t just |delete this|, it doesn\u0027t get reused anyway.",
+      "revId": "a5c2825bee8292832f29200ac5afc4525c3e5cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d2aacd_f3dc220c",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-24T19:05:40Z",
+      "side": 1,
+      "message": "You are right, we can just cleanup.",
+      "parentUuid": "d92a0704_0b94dc53",
       "revId": "a5c2825bee8292832f29200ac5afc4525c3e5cc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
