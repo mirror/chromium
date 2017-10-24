@@ -436,6 +436,7 @@ std::unique_ptr<BlobDataHandle> BlobStorageContext::AddBrokenBlob(
 
 bool BlobStorageContext::RegisterPublicBlobURL(const GURL& blob_url,
                                                const std::string& uuid) {
+  DVLOG(2) << "Blob URL registered: " << blob_url.spec() << " for blob " << uuid;
   if (!registry_.CreateUrlMapping(blob_url, uuid))
     return false;
   IncrementBlobRefCount(uuid);
@@ -446,6 +447,7 @@ void BlobStorageContext::RevokePublicBlobURL(const GURL& blob_url) {
   std::string uuid;
   if (!registry_.DeleteURLMapping(blob_url, &uuid))
     return;
+  DVLOG(2) << "Blob URL revoked: " << blob_url.spec() << " for blob " << uuid;
   DecrementBlobRefCount(uuid);
 }
 

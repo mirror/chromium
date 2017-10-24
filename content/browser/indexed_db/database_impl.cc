@@ -133,8 +133,6 @@ class DatabaseImpl::IDBSequenceHelper {
                                    storage::QuotaStatusCode status,
                                    int64_t usage,
                                    int64_t quota);
-  void AckReceivedBlobs(const std::vector<std::string>& uuids);
-
  private:
   scoped_refptr<IndexedDBContextImpl> indexed_db_context_;
   std::unique_ptr<IndexedDBConnection> connection_;
@@ -473,8 +471,10 @@ void DatabaseImpl::Commit(int64_t transaction_id) {
 }
 
 void DatabaseImpl::AckReceivedBlobs(const std::vector<std::string>& uuids) {
-  for (const auto& uuid : uuids)
+  for (const auto& uuid : uuids) {
+    LOG(ERROR) << "dropping blob " << uuid;
     dispatcher_host_->DropBlobData(uuid);
+  }
 }
 
 DatabaseImpl::IDBSequenceHelper::IDBSequenceHelper(

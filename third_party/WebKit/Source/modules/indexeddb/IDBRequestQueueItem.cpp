@@ -146,6 +146,7 @@ IDBRequestQueueItem::~IDBRequestQueueItem() {
   DCHECK(ready_);
   DCHECK(callback_fired_);
 #endif  // DCHECK_IS_ON()
+  LOG(ERROR) << "Item destruction";
 }
 
 void IDBRequestQueueItem::OnResultLoadComplete() {
