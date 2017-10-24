@@ -125,28 +125,28 @@ class PLATFORM_EXPORT ProcessHeap {
   static CrossThreadPersistentRegion& GetCrossThreadPersistentRegion();
 
   static void IncreaseTotalAllocatedObjectSize(size_t delta) {
-    AtomicAdd(&total_allocated_object_size_, static_cast<long>(delta));
+    AtomicAdd(&total_allocated_object_size_, delta);
   }
   static void DecreaseTotalAllocatedObjectSize(size_t delta) {
-    AtomicSubtract(&total_allocated_object_size_, static_cast<long>(delta));
+    AtomicSubtract(&total_allocated_object_size_, delta);
   }
   static size_t TotalAllocatedObjectSize() {
     return AcquireLoad(&total_allocated_object_size_);
   }
   static void IncreaseTotalMarkedObjectSize(size_t delta) {
-    AtomicAdd(&total_marked_object_size_, static_cast<long>(delta));
+    AtomicAdd(&total_marked_object_size_, delta);
   }
   static void DecreaseTotalMarkedObjectSize(size_t delta) {
-    AtomicSubtract(&total_marked_object_size_, static_cast<long>(delta));
+    AtomicSubtract(&total_marked_object_size_, delta);
   }
   static size_t TotalMarkedObjectSize() {
     return AcquireLoad(&total_marked_object_size_);
   }
   static void IncreaseTotalAllocatedSpace(size_t delta) {
-    AtomicAdd(&total_allocated_space_, static_cast<long>(delta));
+    AtomicAdd(&total_allocated_space_, delta);
   }
   static void DecreaseTotalAllocatedSpace(size_t delta) {
-    AtomicSubtract(&total_allocated_space_, static_cast<long>(delta));
+    AtomicSubtract(&total_allocated_space_, delta);
   }
   static size_t TotalAllocatedSpace() {
     return AcquireLoad(&total_allocated_space_);
