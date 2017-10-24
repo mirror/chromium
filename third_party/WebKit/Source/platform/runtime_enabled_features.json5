@@ -409,6 +409,10 @@
       status: "experimental",
     },
     {
+      name: "FetchRequestKeepalive",
+      status: "experimental",
+    },
+    {
       name: "FileSystem",
       status: "stable",
     },
