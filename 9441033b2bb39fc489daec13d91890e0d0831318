@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76f72f30_372dd011",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/UsageAndCrashReportsPreferenceFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-24T22:29:52Z",
+      "side": 1,
+      "message": "UmaSessionStats#changeMetricsReportingConsent() calls PrivacyPreferencesManager#setUsageAndCrashReporting() so I don\u0027t think you need to explicitly clear the SurveyController cache here.",
+      "range": {
+        "startLine": 51,
+        "startChar": 16,
+        "endLine": 51,
+        "endChar": 71
+      },
+      "revId": "9441033b2bb39fc489daec13d91890e0d0831318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc889ae_84634ba0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-24T22:29:52Z",
+      "side": 1,
+      "message": "I think this needs to be wrapped in a method that allows strict mode exceptions since it\u0027s reading from shared preferences.",
+      "range": {
+        "startLine": 132,
+        "startChar": 15,
+        "endLine": 132,
+        "endChar": 96
+      },
+      "revId": "9441033b2bb39fc489daec13d91890e0d0831318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9113b5d_15538613",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-24T22:29:52Z",
+      "side": 1,
+      "message": "Ideally there\u0027s a downstream patch ready to land as soon this one lands so the downstream bots aren\u0027t broken for very long.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 53
+      },
+      "revId": "9441033b2bb39fc489daec13d91890e0d0831318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
