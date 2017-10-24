@@ -2379,27 +2379,22 @@ ShadowRoot* Element::createShadowRoot(const ScriptState* script_state,
       script_state, GetDocument(),
       HostsUsingFeatures::Feature::kElementCreateShadowRoot);
   if (ShadowRoot* root = GetShadowRoot()) {
-    if (root->IsV1()) {
-      exception_state.ThrowDOMException(kInvalidStateError,
-                                        "Shadow root cannot be created on a "
-                                        "host which already hosts a v1 shadow "
-                                        "tree.");
-      return nullptr;
-    }
     if (root->GetType() == ShadowRootType::kUserAgent) {
       exception_state.ThrowDOMException(
           kInvalidStateError,
-          "Shadow root cannot be created on a "
-          "host which already hosts an user-agent "
-          "shadow tree.");
+          "Shadow root cannot be created on a host which already hosts a "
+          "user-agent shadow tree.");
       return nullptr;
     }
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      "Shadow root cannot be created on a "
+                                      "host which already hosts a shadow "
+                                      "tree.");
   } else if (AlwaysCreateUserAgentShadowRoot()) {
     exception_state.ThrowDOMException(
         kInvalidStateError,
-        "Shadow root cannot be created on a host "
-        "which already hosts an user-agent shadow "
-        "tree.");
+        "Shadow root cannot be created on a host which already hosts a "
+        "user-agent shadow tree.");
     return nullptr;
   }
   // Some elements make assumptions about what kind of layoutObjects they allow
