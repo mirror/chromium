@@ -167,6 +167,12 @@ class PromiseAllHandler final
 
 }  // namespace
 
+template <>
+void Member<PromiseAllHandler>::WriteBarrierImpl(
+    const PromiseAllHandler* value) const {
+  ThreadState::Current()->ADD_TO_WORK_LIST(value);
+}
+
 ScriptPromise::InternalResolver::InternalResolver(ScriptState* script_state)
     : resolver_(script_state,
                 v8::Promise::Resolver::New(script_state->GetContext())) {}

@@ -195,37 +195,45 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
  public:
   Member() : Parent() {}
   Member(std::nullptr_t) : Parent(nullptr) {}
-  Member(T* raw) : Parent(raw) {}
-  Member(T& raw) : Parent(raw) {}
+  Member(T* raw) : Parent(raw) { WriteBarrier(this->raw_); }
+  Member(T& raw) : Parent(raw) { WriteBarrier(this->raw_); }
   Member(WTF::HashTableDeletedValueType x) : Parent(x) {}
 
-  Member(const Member& other) : Parent(other) {}
+  Member(const Member& other) : Parent(other) { WriteBarrier(this->raw_); }
   template <typename U>
-  Member(const Member<U>& other) : Parent(other) {}
+  Member(const Member<U>& other) : Parent(other) {
+    WriteBarrier(this->raw_);
+  }
   template <typename U>
-  Member(const Persistent<U>& other) : Parent(other) {}
+  Member(const Persistent<U>& other) : Parent(other) {
+    WriteBarrier(this->raw_);
+  }
 
   template <typename U>
   Member& operator=(const Persistent<U>& other) {
     Parent::operator=(other);
+    WriteBarrier(this->raw_);
     return *this;
   }
 
   template <typename U>
   Member& operator=(const Member<U>& other) {
     Parent::operator=(other);
+    WriteBarrier(this->raw_);
     return *this;
   }
 
   template <typename U>
   Member& operator=(const WeakMember<U>& other) {
     Parent::operator=(other);
+    WriteBarrier(this->raw_);
     return *this;
   }
 
   template <typename U>
   Member& operator=(U* other) {
     Parent::operator=(other);
+    WriteBarrier(this->raw_);
     return *this;
   }
 
@@ -233,6 +241,20 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
     Parent::operator=(nullptr);
     return *this;
   }
+
+ protected:
+  ALWAYS_INLINE void WriteBarrier(const T* value) const {
+#if defined(HEAP_INCREMENTAL_MARKING)
+    if (value) {
+      BasePage const* const page = PageFromObject(value);
+      if (page->IsIncrementalMarking()) {
+        WriteBarrierImpl(value);
+      }
+    }
+#endif  // HEAP_INCREMENTAL_MARKING
+  }
+
+  void WriteBarrierImpl(const T* value) const;
 };
 
 // A checked version of Member<>, verifying that only same-thread references
