@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a70e9d75_a571eaff",
+        "filename": "components/encrypted_messages/message_encrypter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-24T00:07:40Z",
+      "side": 1,
+      "message": "Globals are gone now",
+      "parentUuid": "3465412b_6a106d81",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "fb170ea95c80eaa94a53adcd1ccdfc77533c3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e781b5cc_76d94208",
         "filename": "components/encrypted_messages/message_encrypter_unittest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "fb170ea95c80eaa94a53adcd1ccdfc77533c3e96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a3aa8d_dd61311b",
+        "filename": "components/encrypted_messages/message_encrypter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-24T00:07:40Z",
+      "side": 1,
+      "message": "That\u0027s right, I was completely overthinking this test. The client private key can still be randomly generated, as long as we know the associated public key (which we do), and the server private key. Removed this call and reverted the changes on the other files.",
+      "parentUuid": "e781b5cc_76d94208",
+      "range": {
+        "startLine": 170,
+        "startChar": 22,
+        "endLine": 170,
+        "endChar": 45
+      },
+      "revId": "fb170ea95c80eaa94a53adcd1ccdfc77533c3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
