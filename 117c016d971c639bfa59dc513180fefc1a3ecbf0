@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c26623c_6c4583f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-24T18:26:19Z",
+      "side": 1,
+      "message": "nit: prefixes is a more common plural form?\nhttps://en.wiktionary.org/wiki/prefix#Noun",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "117c016d971c639bfa59dc513180fefc1a3ecbf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd8ffe7_16aced36",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-24T18:26:19Z",
+      "side": 1,
+      "message": "Optional: I feel this is not super clean, but I don\u0027t have a clearly better alternative.\n\nPossible alternatives are:\n- Make Modulator::ResolveModuleSpecifier() report why it failed. Probably overkill?\n- is_not_absolute \u003d KURL(NullURL(), module_request) is valid (this is copy of the first condition of ResolveModuleSpecifier()). This makes |is_not_absolute| here and Modulator::ResolveModuleSpecifier() more directly consistent, but increases duplicated code.\n\nLeaving this as-is is also fine with me, provided this is used only for error message handling.",
+      "revId": "117c016d971c639bfa59dc513180fefc1a3ecbf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
