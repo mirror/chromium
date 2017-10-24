@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "6d3d287f_7e133151",
+        "filename": "components/signin/core/common/profile_management_switches.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-24T13:32:11Z",
+      "side": 1,
+      "message": "I meant to say that the function is called \"MigrateProfileToDice\" but it looked to the outsider as if the function does not perform a migration. Maybe the function should be called \"SetProfileAsMigratedToDice\"",
+      "parentUuid": "8398b1b5_789c11e5",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 59
+      },
+      "revId": "68587fbc6eb73700f7647a796a6ec7e3b6549d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9490f321_0fa613fa",
         "filename": "components/signin/core/common/profile_management_switches.h",
         "patchSetId": 27
