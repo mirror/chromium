@@ -240,6 +240,24 @@
     },
     {
       "key": {
+        "uuid": "0cde48e5_7af107e6",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-24T22:36:30Z",
+      "side": 1,
+      "message": "mojofication of per-RenderFrame functionality is pretty far along. In fact, using mojo ought to simplify this CL a bit.\n\nThe reason you don\u0027t see a lot of methods on the Frame/FrameHost mojo interface yet is that for the most part, the work has proceeded by creating small frame-associated interfaces. With mojo, it\u0027s not necessary to route messages through render_frame_host_impl.cc and the content/public/browser interfaces -- instead, RenderFrameImpl (or even blink) is allowed to expose an interface, and chrome/ would be allowed to talk to it directly. In short, mojo lets us drop the old pattern of a huge frame_messages.h that spans everything because routing ids are expensive.\n\nI think RenderFrameImpl::SetEngagementLevel works similarly to what you need here, so you can look to it for how to structure this (though hopefully not the part where you have to cache the origin for later use... that\u0027s gross): https://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?l\u003d2928",
+      "parentUuid": "b43425a8_f6b679ed",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45883257_b43d02f8",
         "filename": "third_party/WebKit/Source/core/exported/WebElement.cpp",
         "patchSetId": 2
