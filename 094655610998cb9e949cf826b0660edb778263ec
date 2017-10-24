@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78f2c20a_514b6f2a",
+        "filename": "chrome/test/data/webui/test_util.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-24T23:03:23Z",
+      "side": 1,
+      "message": "Moving the file considered the code \u0027touched\u0027 and so it\u0027s reformatted by git cl format --js.\nThe above is a formatting-only change.",
+      "revId": "094655610998cb9e949cf826b0660edb778263ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
