@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f9ad077_69c4e501",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43810ef8_a1f16035",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 1
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6498dd5_6c456f9e",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e96e7adb_20af61f4",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6498dd5_6c456f9e",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 54
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a415f078_ef76701b",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 15
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-23T21:42:44Z",
       "side": 1,
       "message": "Based on how you use this in downstream code, how about a SkBitmap instead:\n\n  SkBitmap result_bitmap;\n  result_bitmap.allocPixels(SkImageInfo::Make(image-\u003ewidth(), image-\u003eheight(), image-\u003ecolorType(), image-\u003ealphaType(), image-\u003erefColorSpace()));",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 76
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5ea50a_9a676861",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "I agree SkBitmap would help with readability. But unless there is an optimization in allocPixels() that I am not aware of, this would alloc/free memory for each frame. That would be somewhat costly, and in a long session result in memory fragmentation.(We see this problem in overnight webrtc peerconnection tests.)\nI wanted to use a memory pool to avoid that. Instead of reimplementing one that holds onto SkBitmaps, I decided to use the existing media::VideoFramePool. WDYT?",
+      "parentUuid": "a415f078_ef76701b",
       "range": {
         "startLine": 239,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e1318bda_f05af6df",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "I still want to handle the case where WeakPtr\u003cWebGraphicsContext3DProviderWrapper\u003e is null, resulting in |context_provider| null. From the offline discussion with junov@, he suggested checking this in case we switch contexts between capture frames and WeakPtr is invalidated. As far as I read, the underlying ContextProviderCommandBuffer::SetLostContextCallback() is set on a scoped_refptr\u003c\u003e and might not be called yet in this case. Still, junov@ would be better to advise on this. WDYT?\n\nhttps://cs.chromium.org/chromium/src/content/renderer/webgraphicscontext3d_provider_impl.cc?rcl\u003d2c1897b1878afb629d3cc48e8010e6f14366ff61\u0026l\u003d49",
+      "parentUuid": "464c0fa5_6ac8f35b",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 27
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ad15c3f_2b92a7f1",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 15
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-23T15:17:36Z",
       "side": 1,
       "message": "This downcast is unfortunate. Hopefully it will go away soon by eliminating blink\u0027s platfrom integration interface layer in favor of direct integration with chromium.  Fine for now.",
+      "range": {
+        "startLine": 252,
+        "startChar": 33,
+        "endLine": 252,
+        "endChar": 65
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635fd3d5_ebb74244",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "Agreed. This was the missing point for accessing gpu::ContextSupport object from blink::WebGraphicsContext3DProvider.",
+      "parentUuid": "4ad15c3f_2b92a7f1",
       "range": {
         "startLine": 252,
         "startChar": 33,
@@ -163,6 +283,54 @@
     },
     {
       "key": {
+        "uuid": "04f2146b_0bf5c33e",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "I see, this somehow clashes with junov@ advice on using only the context shipped with each frame from blink though. ContextFactory is a chromium side global object and I don\u0027t think that is linked from any object within blink::Image. Also, all ContextFactory implementation including the example, are from content/browser which we can\u0027t access from this renderer instance. Which would be the right one from renderer?\n\nhttps://cs.chromium.org/chromium/src/ui/compositor/compositor.h?rcl\u003da6b909e78774f2fc928c50689623ec064a57caeb\u0026l\u003d87",
+      "parentUuid": "d4f55ed4_9c25f270",
+      "range": {
+        "startLine": 256,
+        "startChar": 26,
+        "endLine": 256,
+        "endChar": 49
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71e8516_e5435a8d",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a9178c7_5fa80a14",
+      "range": {
+        "startLine": 256,
+        "startChar": 8,
+        "endLine": 256,
+        "endChar": 24
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "660aa2ed_7917e019",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 15
@@ -174,6 +342,30 @@
       "writtenOn": "2017-10-23T21:42:44Z",
       "side": 1,
       "message": "This isn\u0027t necessary, since OnContextLost() should have been called.",
+      "range": {
+        "startLine": 276,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 23
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852e1fbd_e0ccaedb",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "See my reply above.",
+      "parentUuid": "660aa2ed_7917e019",
       "range": {
         "startLine": 276,
         "startChar": 0,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "10504d28_7c1c17a5",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec13abf8_043950bb",
+      "range": {
+        "startLine": 306,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 63
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee43ea4_5ae79efa",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 15
@@ -220,6 +436,30 @@
       "writtenOn": "2017-10-23T21:42:44Z",
       "side": 1,
       "message": "When would success be false? It seems this would indicate temporary issues, like readback during shutdown, or a temporary context loss. So, I would not recommend calling ReadPixelsSync().",
+      "range": {
+        "startLine": 373,
+        "startChar": 4,
+        "endLine": 373,
+        "endChar": 38
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f173a4_3f863c0d",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "There is this supported check that I came across to when writing tests. It checks color type mismatch AFAICT. I\u0027ll remove if you think that case isn\u0027t possible.\nhttps://cs.chromium.org/chromium/src/components/viz/common/gl_helper.cc?rcl\u003d9e43f8812c7a4bcd02167f8f8cb162fd0df6f007\u0026l\u003d613\nhttps://cs.chromium.org/chromium/src/components/viz/common/gl_helper_readback_support.cc?rcl\u003d053fffb2146d5065bd8b7e3a70020df5d8fb5d0f\u0026l\u003d117",
+      "parentUuid": "2ee43ea4_5ae79efa",
       "range": {
         "startLine": 373,
         "startChar": 4,
@@ -279,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "2aec41ec_88ae2bb5",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "I couldn\u0027t trigger the context loss from content_unittest. \n- I cannot build blink::WebGraphicsContext3DProvider to pass along with each frame using a cc::TestInProcessContextProvider that is available on chromium side.\n- Even when I refactor code for tests such that I use GLHelper built from cc::TestInProcessContextProvider, all ReadbackTextureAsync() calls just return false as things aren\u0027t implemented. The code path is not properly exercised.\n- I think more appropriate place would be WebRtcCaptureFromElementBrowserTest. Do you know how to trigger context loss there?",
+      "parentUuid": "cdedef63_daa0a19e",
+      "range": {
+        "startLine": 383,
+        "startChar": 13,
+        "endLine": 383,
+        "endChar": 18
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b605f18f_333d7d46",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler_unittest.cc",
         "patchSetId": 15
@@ -290,6 +554,30 @@
       "writtenOn": "2017-10-23T21:42:44Z",
       "side": 1,
       "message": "You should check the result to make sure:\n\n1. It is not null.\n2. It has the correct format (I420 with or without alpha).\n3. It has the correct size.\n\nWith gmock, I usually do something like:\n\n  scoped_refptr\u003cmedia::VideoFrame\u003e result;\n  EXPECT_CALL(*this, DoOnDeliverFrame(_, _))\n    .Times(1)\n    .WillOnce(DoAll(SaveArg\u003c0\u003e(\u0026result), RunClosure(quit_closure)));\n  ...do operations...\n  ASSERT_TRUE(!!result);\n  EXPECT_EQ(320, result-\u003ewidth());\n  ...etc...",
+      "range": {
+        "startLine": 232,
+        "startChar": 38,
+        "endLine": 232,
+        "endChar": 42
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3ec434_e27c0f8b",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "We are already doing those, plus the color checks. See OnVerifyDeliveredFrame().",
+      "parentUuid": "b605f18f_333d7d46",
       "range": {
         "startLine": 232,
         "startChar": 38,
@@ -325,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "30aec576_5e70935c",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "I added OnVerifyDeliveredFrame() call here as well.",
+      "parentUuid": "48114e09_98791a0b",
+      "range": {
+        "startLine": 270,
+        "startChar": 38,
+        "endLine": 270,
+        "endChar": 42
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77c65120_259c6bd3",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasDrawListener.cpp",
         "patchSetId": 15
@@ -348,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "1001057f_0c29c85a",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasDrawListener.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77c65120_259c6bd3",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50978a3d_537f0382",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasDrawListener.h",
         "patchSetId": 15
@@ -359,6 +695,30 @@
       "writtenOn": "2017-10-23T21:42:44Z",
       "side": 1,
       "message": "Why is this a weak pointer? How about a raw pointer?",
+      "range": {
+        "startLine": 25,
+        "startChar": 28,
+        "endLine": 25,
+        "endChar": 72
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d7e021_5d9d23c3",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasDrawListener.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-24T00:19:18Z",
+      "side": 1,
+      "message": "See my reply earlier about context switch. My understanding from my offline discussions with junov@ is that this can be nullptr in that case.",
+      "parentUuid": "50978a3d_537f0382",
       "range": {
         "startLine": 25,
         "startChar": 28,
