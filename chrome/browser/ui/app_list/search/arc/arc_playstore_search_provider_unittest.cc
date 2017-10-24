@@ -102,4 +102,35 @@ TEST_F(ArcPlayStoreSearchProviderTest, Basic) {
   }
 }
 
+TEST_F(ArcPlayStoreSearchProviderTest, FailedQuery) {
+  constexpr size_t kMaxResults = 12;
+  constexpr char kQuery[] = "Play App";
+
+  std::unique_ptr<ArcPlayStoreSearchProvider> provider =
+      CreateSearch(kMaxResults);
+  EXPECT_TRUE(provider->results().empty());
+  ArcPlayStoreSearchResult::DisableSafeDecodingForTesting();
+
+  // Create a non-empty query.
+  provider->Start(false, base::UTF8ToUTF16(kQuery));
+  ASSERT_GT(provider->results().size(), 0u);
+
+  // Create an empty query and it should clear the result list.
+  provider->Start(false, base::UTF8ToUTF16(""));
+  ASSERT_EQ(provider->results().size(), 0u);
+
+  // TODO(crbug.com/742517): Use the mojo generated constants.
+  constexpr int kAppListPlayStoreQueryStateNum = 17;
+  const std::string kFailedQueryPrefix("FailedQueryWithCode-");
+  for (int i = 1; i < kAppListPlayStoreQueryStateNum; i++) {
+    // Create a non-empty query.
+    provider->Start(false, base::UTF8ToUTF16(kQuery));
+    ASSERT_GT(provider->results().size(), 0u);
+
+    // Fabricate a failing query and it should clear the result list.
+    provider->Start(false, base::UTF8ToUTF16(base::StringPrintf(
+                               "%s%d", kFailedQueryPrefix.c_str(), i)));
+    ASSERT_EQ(provider->results().size(), 0u);
+  }
+}
 }  // namespace app_list

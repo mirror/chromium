@@ -328,8 +328,17 @@ void FakeAppInstance::GetRecentAndSuggestedAppsFromPlayStore(
         fake_icon_png_data,                             // icon_png_data
         base::StringPrintf("test.package.%d", i)));     // package_name
   }
-  std::move(callback).Run(arc::mojom::AppDiscoveryRequestState::SUCCESS,
-                          std::move(fake_apps));
+
+  // Check if we're a fabricating failed query.
+  const std::string kFailedQueryPrefix("FailedQueryWithCode-");
+  arc::mojom::AppDiscoveryRequestState state_code =
+      arc::mojom::AppDiscoveryRequestState::SUCCESS;
+  if (!query.compare(0, kFailedQueryPrefix.size(), kFailedQueryPrefix)) {
+    fake_apps.clear();
+    state_code = static_cast<arc::mojom::AppDiscoveryRequestState>(
+        stoi(query.substr(kFailedQueryPrefix.size())));
+  }
+  std::move(callback).Run(state_code, std::move(fake_apps));
 }
 
 void FakeAppInstance::StartPaiFlow() {
