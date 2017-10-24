@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a1906ea_9adb410e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/Tile.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T09:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bdd89e4_f62f7de3",
+      "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f44d5d3_4c69f1da",
         "filename": "components/favicon_base/favicon_types.h",
         "patchSetId": 22
@@ -69,6 +87,24 @@
       "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4b473a_6a05dbb7",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T09:31:58Z",
+      "side": 1,
+      "message": "Changing this enum type is beyond this patch and non-trivial because a) it\u0027s casted back and forth to other enums that are compatible, like ios/web/public/favicon_url.h; b) it\u0027s persisted in a DB within HistoryBackend / ThumbnailDatabase. Hence the helper function to do the conversion for UMA. I agree it would be cleaner though.",
+      "parentUuid": "ee122fc4_adaff958",
+      "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
