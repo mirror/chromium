@@ -504,7 +504,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       frame_host_associated_binding_(this),
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
-      interface_provider_binding_(this),
+      document_scoped_interface_provider_binding_(this),
       weak_ptr_factory_(this) {
   frame_tree_->AddRenderViewHostRef(render_view_host_);
   GetProcess()->AddRoute(routing_id_, this);
@@ -1491,7 +1491,8 @@ void RenderFrameHostImpl::OnDidFailLoadWithError(
 // notification containing parameters identifying the navigation.
 void RenderFrameHostImpl::DidCommitProvisionalLoad(
     std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
-        validated_params) {
+        validated_params,
+    service_manager::mojom::InterfaceProviderRequest interfaces_request) {
   ScopedCommitStateResetter commit_state_resetter(this);
   RenderProcessHost* process = GetProcess();
 
@@ -1515,6 +1516,20 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
       !GetParent()) {
     base::TimeTicks approx_renderer_start_time = send_before_unload_start_time_;
     OnBeforeUnloadACK(true, approx_renderer_start_time, base::TimeTicks::Now());
+  }
+
+  if (interfaces_request.is_pending()) {
+    // Close the old binding to ensure that pending interface requests
+    // originating from the previous document will never be dispatched.
+    DCHECK(document_scoped_interface_provider_binding_.is_bound());
+    document_scoped_interface_provider_binding_.Close();
+    BindInterfacesRequest(std::move(interfaces_request));
+  } else if (!validated_params->was_within_same_document) {
+    // TODO(https://crbug.com/729021): Once AssociatedBinding supports
+    // ReportBadMessage, use that instead.
+    bad_message::ReceivedBadMessage(
+        process, bad_message::RFH_INTERFACE_PROVIDER_MISSING);
+    return;
   }
 
   // If we're waiting for an unload ack from this renderer and we receive a
@@ -1849,7 +1864,7 @@ void RenderFrameHostImpl::OnRenderProcessGone(int status, int exit_code) {
   // reset.
   SetRenderFrameCreated(false);
   InvalidateMojoConnection();
-  interface_provider_binding_.Close();
+  document_scoped_interface_provider_binding_.Close();
 
   // Execute any pending AX tree snapshot callbacks with an empty response,
   // since we're never going to get a response from this renderer.
@@ -2744,9 +2759,9 @@ void RenderFrameHostImpl::OnRequestOverlayRoutingToken() {
 
 void RenderFrameHostImpl::BindInterfacesRequest(
     service_manager::mojom::InterfaceProviderRequest interfaces_request) {
-  DCHECK(!interface_provider_binding_.is_bound());
+  DCHECK(!document_scoped_interface_provider_binding_.is_bound());
   DCHECK(interfaces_request.is_pending());
-  interface_provider_binding_.Bind(
+  document_scoped_interface_provider_binding_.Bind(
       RouteThroughCapabilityFilter(std::move(interfaces_request)));
 }
 
@@ -2884,6 +2899,12 @@ void RenderFrameHostImpl::CreateNewWindow(
       std::move(callback), std::move(reply), std::move(main_frame_interfaces),
       render_view_route_id, main_frame_route_id, main_frame_widget_route_id,
       cloned_namespace->id());
+}
+
+void RenderFrameHostImpl::BindInterfaceProviderForNewDocument(
+    service_manager::mojom::InterfaceProviderRequest request) {
+  document_scoped_interface_provider_binding_.Bind(
+      RouteThroughCapabilityFilter(std::move(request)));
 }
 
 service_manager::mojom::InterfaceProviderRequest
@@ -3114,9 +3135,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   registry_->AddInterface(
       base::Bind(&ForwardRequest<device::mojom::VibrationManager>,
                  device::mojom::kServiceName));
-
-  registry_->AddInterface(
-      base::Bind(&media::WatchTimeRecorder::CreateWatchTimeRecorderProvider));
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           cc::switches::kEnableGpuBenchmarking)) {
@@ -4183,6 +4201,9 @@ void RenderFrameHostImpl::BindPresentationServiceRequest(
 void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
+  // Requests are serviced on |document_scoped_interface_provider_binding_|. It
+  // is therefore safe to assume that every incoming interface request is coming
+  // from the currently active document in the corresponding RenderFrame.
   if (!registry_ ||
       !registry_->TryBindInterface(interface_name, &interface_pipe)) {
     delegate_->OnInterfaceRequest(this, interface_name, &interface_pipe);
