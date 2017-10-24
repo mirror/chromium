@@ -34,6 +34,24 @@
       "revId": "1730a9e1036141d8f44f9b9bb92d546e4a1c2778",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882dfa46_d70a048f",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-toolbar-dropdown/viewer-toolbar-dropdown.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-10-24T08:50:42Z",
+      "side": 1,
+      "message": "Yeah, 0.87 would be fine.",
+      "parentUuid": "00d19402_5a9aca75",
+      "revId": "1730a9e1036141d8f44f9b9bb92d546e4a1c2778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
