@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a9cc55c1_dafcfd0c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-24T17:32:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "363aff4f_f99c492a",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62dc9df6_ca657e25",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 18
@@ -116,6 +134,30 @@
       "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e75c15_af12e4ba",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-24T17:32:25Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "8d956cf1_b806c111",
+      "range": {
+        "startLine": 1143,
+        "startChar": 30,
+        "endLine": 1143,
+        "endChar": 47
+      },
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +228,24 @@
       "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6610a50_0c4e9a84",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-24T17:32:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0351f1c8_edde3429",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -335,6 +395,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "ba82c42e_80c8e7af",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75df3e6e_fef3346f",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-24T17:32:25Z",
+      "side": 1,
+      "message": "This should apply to the other elements below as well (it should be all or nothing).  If you prefer nothing, that\u0027s okay too, as presumably this method is called only in certain situations.",
+      "parentUuid": "84ca0186_23270c1a",
       "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -503,6 +581,24 @@
       "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdeb7150_8f3da69f",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-24T17:32:25Z",
+      "side": 1,
+      "message": "I was referring to custom logic. Ack.",
+      "parentUuid": "2265c8e4_9ed725b0",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
