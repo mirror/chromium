@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89ae6147_014ae898",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1249238
+      },
+      "writtenOn": "2017-10-24T21:34:37Z",
+      "side": 1,
+      "message": "TRUE",
+      "range": {
+        "startLine": 9,
+        "startChar": 24,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "9b39b0b629d6a74f103721ebb9171494062b1b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d32b8c3_55c28cee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1249238
+      },
+      "writtenOn": "2017-10-24T21:34:37Z",
+      "side": 1,
+      "message": "TRUE",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 25
+      },
+      "revId": "9b39b0b629d6a74f103721ebb9171494062b1b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8dfdc80_dfbb8785",
+        "filename": "third_party/libxml/src/include/libxml/encoding.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1249238
+      },
+      "writtenOn": "2017-10-24T21:34:37Z",
+      "side": 1,
+      "message": "Optional: I would make this an array right here, not a pointer+malloc+free.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 24
+      },
+      "revId": "9b39b0b629d6a74f103721ebb9171494062b1b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
