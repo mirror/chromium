@@ -171,10 +171,6 @@ struct ScreenInfo;
 struct StartNavigationParams;
 struct StreamOverrideParameters;
 
-namespace {
-class CreateFrameWidgetParams;
-}
-
 class CONTENT_EXPORT RenderFrameImpl
     : public RenderFrame,
       blink::mojom::EngagementClient,

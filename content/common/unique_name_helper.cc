@@ -11,6 +11,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
+#include "base/unguessable_token.h"
 #include "crypto/sha2.h"
 
 namespace content {
@@ -56,6 +57,7 @@ class PendingChildFrameAdapter : public UniqueNameHelper::FrameAdapter {
 constexpr char kFramePathPrefix[] = "<!--framePath /";
 constexpr int kFramePathPrefixLength = 15;
 constexpr int kFramePathSuffixLength = 3;
+constexpr char kDynamicFrameSuffixMarker[] = "<!-- dynamicFrameId: ";
 
 // 80% of unique names are shorter than this, and it also guarantees that this
 // won't ever increase the length of a unique name, as a hashed unique name is
@@ -189,15 +191,27 @@ UniqueNameHelper::UniqueNameHelper(FrameAdapter* frame) : frame_(frame) {}
 UniqueNameHelper::~UniqueNameHelper() {}
 
 std::string UniqueNameHelper::GenerateNameForNewChildFrame(
-    const std::string& name) const {
+    const std::string& name,
+    bool is_new_subframe_dynamic) const {
   PendingChildFrameAdapter adapter(frame_);
-  return CalculateNewName(&adapter, name);
+  std::string unique_name_of_new_child = CalculateNewName(&adapter, name);
+  if (is_new_subframe_dynamic) {
+    unique_name_of_new_child += kDynamicFrameSuffixMarker;
+    unique_name_of_new_child += base::UnguessableToken::Create().ToString();
+    unique_name_of_new_child += "-->";
+  }
+  return unique_name_of_new_child;
 }
 
 void UniqueNameHelper::UpdateName(const std::string& name) {
+  // Don't update the unique name if it should remain frozen.
+  if (frozen_)
+    return;
+
   // The unique name of the main frame is always the empty string.
   if (frame_->IsMainFrame())
     return;
+
   // It's important to clear this before calculating a new name, as the
   // calculation checks for collisions with existing unique names.
   unique_name_.clear();
@@ -272,6 +286,14 @@ std::string UniqueNameHelper::CalculateLegacyNameForTesting(
     const FrameAdapter* frame,
     const std::string& name) {
   return CalculateNameInternal(frame, name);
+}
+
+std::string UniqueNameHelper::RemoveDynamicFrameSuffixForTesting(
+    const std::string& name) {
+  size_t i = name.rfind(kDynamicFrameSuffixMarker);
+  if (i == std::string::npos)
+    return name;
+  return name.substr(0, i);
 }
 
 }  // namespace content
