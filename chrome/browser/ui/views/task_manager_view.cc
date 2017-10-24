@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -187,7 +188,9 @@ bool TaskManagerView::ExecuteWindowsCommand(int command_id) {
 }
 
 base::string16 TaskManagerView::GetWindowTitle() const {
-  return l10n_util::GetStringUTF16(IDS_TASK_MANAGER_TITLE);
+  std::string title = "N-freeResized, L(U) 1366x1206";
+  return base::string16(base::UTF8ToUTF16(title));
+  // return l10n_util::GetStringUTF16(IDS_TASK_MANAGER_TITLE);
 }
 
 std::string TaskManagerView::GetWindowName() const {
