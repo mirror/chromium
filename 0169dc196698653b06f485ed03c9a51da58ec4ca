@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c387b55_b3131af9",
+        "filename": "content/renderer/gpu/gpu_benchmarking_extension.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-24T22:24:17Z",
+      "side": 1,
+      "message": "Should this be ThrowTypeError with a message? Like in BeginSmoothDrag?",
+      "range": {
+        "startLine": 804,
+        "startChar": 20,
+        "endLine": 804,
+        "endChar": 22
+      },
+      "revId": "0169dc196698653b06f485ed03c9a51da58ec4ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
