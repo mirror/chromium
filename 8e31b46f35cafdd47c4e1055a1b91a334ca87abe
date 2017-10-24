@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7adf654_53ec6b58",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T13:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42a6af5a_ad9b4413",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 3
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f9483a7_3107d7f2",
         "filename": "device/u2f/u2f_ble_discovery.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8ddaa3_11612ae1",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T13:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f9483a7_3107d7f2",
+      "range": {
+        "startLine": 28,
+        "startChar": 18,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "599dcf10_859d993b",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T13:10:56Z",
+      "side": 1,
+      "message": "Correct. Added a comment to remove this class later.",
+      "parentUuid": "16ef06e9_e668d73a",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 2
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d50fe0c3_22f444c4",
         "filename": "device/u2f/u2f_ble_discovery.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f08700f_92f39e17",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T13:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50fe0c3_22f444c4",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 47
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4d0e186a_c04362ba",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T13:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6123287a_c83ab577",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 40
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1daa5735_db19ed21",
         "filename": "device/u2f/u2f_ble_discovery.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58cb457_5f139b26",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T13:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1daa5735_db19ed21",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 50
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "febe3566_51dc9542",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T13:10:56Z",
+      "side": 1,
+      "message": "Oh, haven\u0027t noticed we already have allowed C++14 features. Thanks :)",
+      "parentUuid": "89cf22e8_ac9c3860",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0630a21f_f24040c2",
         "filename": "device/u2f/u2f_ble_discovery.cc",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb87a6c_c4583e27",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T13:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0630a21f_f24040c2",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 48
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "345b81f1_d14f9159",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T13:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d004ab6_68c1479d",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 45
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0de8553_16201181",
         "filename": "device/u2f/u2f_ble_discovery.h",
         "patchSetId": 3
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "306e3360_6b15722c",
+        "filename": "device/u2f/u2f_ble_discovery.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T13:10:56Z",
+      "side": 1,
+      "message": "Nope.",
+      "parentUuid": "b0de8553_16201181",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f0a1266_76a9ea6a",
         "filename": "device/u2f/u2f_ble_uuids.h",
         "patchSetId": 3
@@ -252,6 +492,30 @@
       "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5247bc7_1622ab9f",
+        "filename": "device/u2f/u2f_ble_uuids.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-24T13:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f0a1266_76a9ea6a",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 3
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
