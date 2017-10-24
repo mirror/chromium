@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "952a8cec_15728417",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-24T17:57:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is going to be a 100% reliable fix.  While this prevents the save state in onStop, there is nothing that prevents the tab model selector from saving again while in the background and removing the now moved tab.\n\nSince any subsequent saveState will just iterate over the list of tabs in the model, any following one will cause the tab state to be deleted.\n\nI do think this does need a more involved change, but I don\u0027t have a great immediate suggestion.  We could introduce the concept of a detached tab that isn\u0027t actually removed from another activities tab model.  We\u0027d likely need to add checks to verify that two activities don\u0027t attempt to use the tab at the same time though.  This definitely gets complicated as we can\u0027t naively select the previous tab as there might not be any other tab or the other selected tab could be closed by a delayed javascript causing our now detached tab to get selected and thus clobbering any of our activity stuff.\n\nWe could introduce the concept of a detached tab to the tab model and update TabPersistentStore#serializeTabModelSelector to add the detached tabs at the right place.  We could always save them at the end or potentially try to interleave them in the correct position based on their parent ID/previous ID.  Without the positioning fix, I suspect this option is going to be less painful as the rest of the system wouldn\u0027t need to be taught about detached tabs nor would we need to expand the concept of the TabModel#getComprehensiveModel() to include them.  With that said, making the comprehensive model aware of this might not be bad either, but again, I wouldn\u0027t rank that super high in terms of priority.\n\nThat being said, VR discussed this concept a long time ago, but we shot it down because of the potential side effects, but I think having persisted detached tabs hang off of the model shouldn\u0027t be too bad.\n\nOn another note, I don\u0027t see any code in FullscreenActivity that handles the case where Chrome\u0027s process is killed while it is running.  Ahh, but it looks like it has android:noHistory set which means that you should never be able to return to it after the fact (was wondering if we needed to just call finish if we saw savedInstanceState !\u003d null, but that was done via android magic instead...nvm).\n\nMy basic thinking is we could change Tab#detach to do something like:\n\n\nvoid detach(boolean transferOwnership) {\n    if (tabModelSelector !\u003d null) {\n        TabModel model \u003d tabModelSelector.getModel(mIncognito);\n        model.removeTab(this);\n        if (!transferOwnership) model.addDetachedTab(this);\n    }\n}\n\nWe\u0027d always be removing the tab from the model so UI like the tab strip/toolbar number count would decrement, but the model itself would then save it in serializeTabModelSelector by:\n\n        TabModel normalModel \u003d selector.getModel(false);\n        TabModelMetadata normalInfo \u003d new TabModelMetadata(normalModel.index());\n        for (int i \u003d 0; i \u003c normalModel.getCount(); i++) {\n            normalInfo.ids.add(normalModel.getTabAt(i).getId());\n            normalInfo.urls.add(normalModel.getTabAt(i).getUrl());\n        }\n        for (int i \u003d 0; i \u003c normalModel.getDetachedCount(); i++) {\n            normalInfo.ids.add(normalModel.getDetachedTabAt(i).getId());\n            normalInfo.ids.add(normalModel.getDetachedTabAt(i).getId());\n        }\n\nGranted, this could be the home of untold number of other gotchas, so I can\u0027t guarantee this will be bulletproof in other regards.",
+      "revId": "4f11e41d466d37097eae768afe02a7d88b9a7320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09d16fc3_999b9a27",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
         "patchSetId": 1
