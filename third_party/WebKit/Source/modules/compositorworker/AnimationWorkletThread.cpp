@@ -55,6 +55,7 @@ void AnimationWorkletThread::CollectAllGarbage() {
   auto* holder = WorkletThreadHolder<AnimationWorkletThread>::GetInstance();
   if (!holder)
     return;
+
   holder->GetThread()->BackingThread().PostTask(
       BLINK_FROM_HERE, CrossThreadBind(&CollectAllGarbageOnThread,
                                        CrossThreadUnretained(&done_event)));
@@ -64,7 +65,7 @@ void AnimationWorkletThread::CollectAllGarbage() {
 void AnimationWorkletThread::EnsureSharedBackingThread() {
   DCHECK(IsMainThread());
   WorkletThreadHolder<AnimationWorkletThread>::EnsureInstance(
-      Platform::Current()->CompositorThread());
+      "AnimationWorkletThread");
 }
 
 void AnimationWorkletThread::ClearSharedBackingThread() {
@@ -74,7 +75,7 @@ void AnimationWorkletThread::ClearSharedBackingThread() {
 
 void AnimationWorkletThread::CreateSharedBackingThreadForTest() {
   WorkletThreadHolder<AnimationWorkletThread>::CreateForTest(
-      Platform::Current()->CompositorThread());
+      "AnimationWorkletThread");
 }
 
 WorkerOrWorkletGlobalScope* AnimationWorkletThread::CreateWorkerGlobalScope(
