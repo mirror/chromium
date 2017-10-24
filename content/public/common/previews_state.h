@@ -5,12 +5,16 @@
 #ifndef CONTENT_PUBLIC_COMMON_PREVIEWS_STATE_H_
 #define CONTENT_PUBLIC_COMMON_PREVIEWS_STATE_H_
 
+#include "build/build_config.h"
 #include "content/common/content_export.h"
+
+#if !defined(OS_IOS)
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 
 #define STATIC_ASSERT_PREVIEWS_ENUM(a, b)                   \
   static_assert(static_cast<int>(a) == static_cast<int>(b), \
                 "mismatching enums: " #a)
+#endif  // defined(OS_IOS)
 
 namespace content {
 
@@ -45,6 +49,7 @@ enum PreviewsTypes {
 // content.
 const PreviewsState PARTIAL_CONTENT_SAFE_PREVIEWS = SERVER_LOFI_ON;
 
+#if !defined(OS_IOS)
 // Ensure that content::PreviewsState and blink::WebURLRequest::PreviewsState
 // are kept in sync.
 STATIC_ASSERT_PREVIEWS_ENUM(PREVIEWS_UNSPECIFIED,
@@ -63,6 +68,7 @@ STATIC_ASSERT_PREVIEWS_ENUM(PREVIEWS_OFF, blink::WebURLRequest::kPreviewsOff);
 STATIC_ASSERT_PREVIEWS_ENUM(NOSCRIPT_ON, blink::WebURLRequest::kNoScriptOn);
 STATIC_ASSERT_PREVIEWS_ENUM(PREVIEWS_STATE_LAST,
                             blink::WebURLRequest::kPreviewsStateLast);
+#endif  // defined(OS_IOS)
 
 }  // namespace content
 
