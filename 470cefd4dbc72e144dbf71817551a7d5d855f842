@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "48ed534e_05f20ece",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-24T18:32:13Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly whether or not we should kill the renderer, but I do feel strongly that validation of input from untrusted renderers should happen as early as possible, so that code that is not security-aware (e.g. display) doesn\u0027t accidentally make assumptions that would be broken with untrusted input. IOW returning here without crashing the renderer is acceptable. That said, crashing the tab might be better UX than have it stop working altogether (at least it\u0027s actionable by the user).",
+      "parentUuid": "43ce1faa_3aa23100",
+      "revId": "470cefd4dbc72e144dbf71817551a7d5d855f842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69234244_0cef47d5",
         "filename": "content/browser/renderer_host/render_widget_host_view_base.cc",
         "patchSetId": 9
