@@ -7,17 +7,22 @@
 
 #import <UIKit/UIKit.h>
 
+#include "ios/web/public/web_state/ui/crw_web_delegate.h"
+
 class GURL;
 
 // A customized external app launcher that optionally shows a modal
 // confirmation dialog before switching context to an external application.
 @interface ExternalAppLauncher : NSObject
 
-// Opens URL in an external application if possible (optionally after
+// Opens |gURL| in an external application if possible (optionally after
 // confirming via dialog in case that user didn't interact using
-// |linkClicked| or if the external application is face time) or returns NO
-// if there is no such application available.
-- (BOOL)openURL:(const GURL&)gURL linkClicked:(BOOL)linkClicked;
+// |linkClicked| or if the external application is FaceTime). Calls
+// |completionHandler| on main thread with status of whether an app was
+// launched for opening |gURL|.
+- (void)openURL:(const GURL&)gURL
+    linkClicked:(BOOL)linkClicked
+     completion:(OpenURLCompletionBlock)completionHandler;
 
 @end
 
