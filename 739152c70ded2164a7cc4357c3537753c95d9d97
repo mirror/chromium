@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c76f677_ef38c5cf",
+        "filename": "testing/libfuzzer/fuzzers/icu_collator_compare_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-24T17:19:16Z",
+      "side": 1,
+      "message": "You may end up having\n\ndata \u003d NULL;\n\nas per https://chromium-review.googlesource.com/c/chromium/src/+/720462/2/testing/libfuzzer/fuzzers/intl-objects.cc#64",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 26
+      },
+      "revId": "739152c70ded2164a7cc4357c3537753c95d9d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c196a16_fc2c4b84",
+        "filename": "testing/libfuzzer/fuzzers/intl-objects.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-24T17:19:16Z",
+      "side": 1,
+      "message": "Please remove these comments",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "739152c70ded2164a7cc4357c3537753c95d9d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc7d1c0_fed7e726",
+        "filename": "testing/libfuzzer/fuzzers/intl-objects.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-24T17:19:16Z",
+      "side": 1,
+      "message": "Are all of these headers needed?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "739152c70ded2164a7cc4357c3537753c95d9d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1692b3ee_0b91b6f3",
+        "filename": "testing/libfuzzer/fuzzers/intl-objects.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-24T17:19:16Z",
+      "side": 1,
+      "message": "Why 256? Are you sure this is safe? Is there any constant or macro holding the necessary value, something like ULOC_FULLNAME_CAPACITY?",
+      "range": {
+        "startLine": 128,
+        "startChar": 18,
+        "endLine": 128,
+        "endChar": 21
+      },
+      "revId": "739152c70ded2164a7cc4357c3537753c95d9d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
