@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4e0810d_18fee048",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-24T18:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ea3d95c_6efd38d2",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 25
+      },
+      "revId": "5aed67dd16a932c25054858a6d65772d3f05b307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a35e8c15_d1776cb7",
         "filename": "components/previews/core/previews_io_data_unittest.cc",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "43b309dd_42c602d5",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-24T18:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a35e8c15_d1776cb7",
+      "range": {
+        "startLine": 175,
+        "startChar": 7,
+        "endLine": 175,
+        "endChar": 24
+      },
+      "revId": "5aed67dd16a932c25054858a6d65772d3f05b307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b641392_9b1c1231",
         "filename": "components/previews/core/previews_ui_service_unittest.cc",
         "patchSetId": 15
@@ -68,6 +116,30 @@
       "revId": "5aed67dd16a932c25054858a6d65772d3f05b307",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adec5b9d_26d065e4",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-24T18:23:50Z",
+      "side": 1,
+      "message": "These methods are overridden for unit tests purposes. I will be adding integration tests for testing behavior end to end in future CLs (crbug.com/777936)",
+      "parentUuid": "4b641392_9b1c1231",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "5aed67dd16a932c25054858a6d65772d3f05b307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
