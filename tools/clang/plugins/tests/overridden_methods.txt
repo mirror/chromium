@@ -4,7 +4,7 @@ In file included from overridden_methods.cpp:5:
                             ^
                              override
 ./overridden_methods.h:38:42: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
-  virtual void WebKitModifiedSomething() {};
+  virtual void WebKitModifiedSomething() {}
                                          ^
                                           override
 ./overridden_methods.h:46:27: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
@@ -47,48 +47,52 @@ In file included from overridden_methods.cpp:5:
   virtual void SomeMethodWithCommentAndBody() {}  // This is a comment.
                                               ^
                                                override
-overridden_methods.cpp:15:29: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+./overridden_methods.h:78:36: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+  ~DerivedClassWithDefaultedDtor() = default;
+                                   ^
+                                    override
+overridden_methods.cpp:17:29: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
   virtual void SomeMethod() = 0;
                             ^
                              override
-overridden_methods.cpp:22:41: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+overridden_methods.cpp:24:41: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
   virtual ~ImplementationDerivedClass() {}
                                         ^
                                          override
-overridden_methods.cpp:24:28: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+overridden_methods.cpp:26:28: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
   virtual void SomeMethod();
                            ^
                             override
-overridden_methods.cpp:28:35: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+overridden_methods.cpp:30:35: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
   virtual void SomeInlineMethod() {}
                                   ^
                                    override
-overridden_methods.cpp:30:41: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+overridden_methods.cpp:32:41: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
   virtual void WebKitModifiedSomething();
                                         ^
                                          override
-overridden_methods.cpp:32:40: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+overridden_methods.cpp:34:40: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
   virtual void SomeConstMethod() const {}
                                        ^
                                         override
-overridden_methods.cpp:34:54: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+overridden_methods.cpp:36:54: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
   virtual void SomeMethodWithExceptionSpec() throw() {}
                                                      ^
                                                       override
-overridden_methods.cpp:37:68: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+overridden_methods.cpp:39:68: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
   virtual void SomeConstMethodWithExceptionSpec() const throw(int) {}
                                                                    ^
                                                                     override
-overridden_methods.cpp:39:40: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+overridden_methods.cpp:41:40: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
   virtual void SomeNonPureBaseMethod() {}
                                        ^
                                         override
-overridden_methods.cpp:41:39: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+overridden_methods.cpp:43:39: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
   virtual void SomeMethodWithComment();  // This is a comment.
                                       ^
                                        override
-overridden_methods.cpp:43:47: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
+overridden_methods.cpp:45:47: warning: [chromium-style] Overriding method must be marked with 'override' or 'final'.
   virtual void SomeMethodWithCommentAndBody() {}  // This is a comment.
                                               ^
                                                override
-23 warnings generated.
+24 warnings generated.
