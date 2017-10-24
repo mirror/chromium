@@ -27,6 +27,7 @@
 #include "components/favicon_base/favicon_util.h"
 #include "components/image_fetcher/core/request_metadata.h"
 #include "net/base/network_change_notifier.h"
+#include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "skia/ext/image_operations.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/geometry/size.h"
@@ -60,6 +61,8 @@ const char kGoogleServerV2DesiredToMaxSizeFactorParam[] =
 
 const double kGoogleServerV2MinimumMaxSizeInPixel = 256.0;
 const char kGoogleServerV2MinimumMaxSizeInPixelParam[] = "minimum_max_size";
+
+const int kInvalidOrganizationId = -1;
 
 GURL TrimPageUrlForGoogleServer(const GURL& page_url) {
   if (!page_url.SchemeIsHTTPOrHTTPS() || page_url.HostIsIPAddress())
@@ -191,22 +194,55 @@ void FinishServerRequestAsynchronously(
                                                 base::Bind(callback, status));
 }
 
+// Returns a map keyed by organization-identifying domain (excludes registrar
+// portion, e.g. final ".com") and a value that represents an ID for the
+// organization.
+base::flat_map<base::StringPiece, int>
+BuildDomainToCanonicalOrganizationIdMap() {
+  // Each row in the matrix below represents an organization and lists some
+  // known domains
+  const std::vector<std::vector<base::StringPiece>> kOrganizationTable = {
+      {"amazon", "ssl-images-amazon"},
+      {"cnn"},
+      {"espn", "espncdn"},
+      {"facebook", "fbcdn"},
+      {"google", "gstatic"},
+      {"live", "gfx"},
+      {"nytimes"},
+      {"twitter", "twimg"},
+      {"washingtonpost"},
+      {"wikipedia"},
+      {"yahoo", "yimg"},
+      {"youtube"},
+  };
+  base::flat_map<base::StringPiece, int> result;
+  for (int row = 0; row < static_cast<int>(kOrganizationTable.size()); ++row) {
+    for (const base::StringPiece organization : kOrganizationTable[row]) {
+      result[organization] = row + 1;
+    }
+  }
+  return result;
+}
+
 // Processes the bitmap data returned from the FaviconService as part of a
 // LargeIconService request.
 class LargeIconWorker : public base::RefCountedThreadSafe<LargeIconWorker> {
  public:
   // Exactly one of the callbacks is expected to be non-null.
-  LargeIconWorker(int min_source_size_in_pixel,
-                  int desired_size_in_pixel,
-                  favicon_base::LargeIconCallback raw_bitmap_callback,
-                  favicon_base::LargeIconImageCallback image_callback,
-                  base::CancelableTaskTracker* tracker);
+  LargeIconWorker(
+      const base::flat_map<base::StringPiece, int>& organization_id_map,
+      int min_source_size_in_pixel,
+      int desired_size_in_pixel,
+      favicon_base::LargeIconCallback raw_bitmap_callback,
+      favicon_base::LargeIconImageCallback image_callback,
+      base::CancelableTaskTracker* tracker);
 
   // Must run on the owner (UI) thread in production.
   // Intermediate callback for GetLargeIconOrFallbackStyle(). Invokes
   // ProcessIconOnBackgroundThread() so we do not perform complex image
   // operations on the UI thread.
   void OnIconLookupComplete(
+      const GURL& page_url,
       const favicon_base::FaviconRawBitmapResult& db_result);
 
  private:
@@ -218,6 +254,17 @@ class LargeIconWorker : public base::RefCountedThreadSafe<LargeIconWorker> {
   // Invoked when ProcessIconOnBackgroundThread() is done.
   void OnIconProcessingComplete();
 
+  // Logs UMA metrics that reflect suspicious page-URL / icon-URL pairs, because
+  // we know they shouldn't be hosting their favicons in each other.
+  void LogSuspiciousURLMismatches(
+      const GURL& page_url,
+      const favicon_base::FaviconRawBitmapResult& db_result);
+
+  // Returns a unique ID representing a known organization, or
+  // |kInvalidOrganizationId| in case the URL is not known.
+  int GetCanonicalOrganizationId(const GURL& url) const;
+
+  const base::flat_map<base::StringPiece, int> organization_id_map_;
   int min_source_size_in_pixel_;
   int desired_size_in_pixel_;
   favicon_base::LargeIconCallback raw_bitmap_callback_;
@@ -234,12 +281,14 @@ class LargeIconWorker : public base::RefCountedThreadSafe<LargeIconWorker> {
 };
 
 LargeIconWorker::LargeIconWorker(
+    const base::flat_map<base::StringPiece, int>& organization_id_map,
     int min_source_size_in_pixel,
     int desired_size_in_pixel,
     favicon_base::LargeIconCallback raw_bitmap_callback,
     favicon_base::LargeIconImageCallback image_callback,
     base::CancelableTaskTracker* tracker)
-    : min_source_size_in_pixel_(min_source_size_in_pixel),
+    : organization_id_map_(organization_id_map),
+      min_source_size_in_pixel_(min_source_size_in_pixel),
       desired_size_in_pixel_(desired_size_in_pixel),
       raw_bitmap_callback_(raw_bitmap_callback),
       image_callback_(image_callback),
@@ -254,7 +303,9 @@ LargeIconWorker::~LargeIconWorker() {
 }
 
 void LargeIconWorker::OnIconLookupComplete(
+    const GURL& page_url,
     const favicon_base::FaviconRawBitmapResult& db_result) {
+  LogSuspiciousURLMismatches(page_url, db_result);
   tracker_->PostTaskAndReply(
       background_task_runner_.get(), FROM_HERE,
       base::Bind(&ProcessIconOnBackgroundThread, db_result,
@@ -286,6 +337,29 @@ void LargeIconWorker::OnIconProcessingComplete() {
   }
   image_callback_.Run(
       favicon_base::LargeIconImageResult(fallback_icon_style_.release()));
+}
+
+void LargeIconWorker::LogSuspiciousURLMismatches(
+    const GURL& page_url,
+    const favicon_base::FaviconRawBitmapResult& db_result) {
+  const int page_organization_id = GetCanonicalOrganizationId(page_url);
+
+  // Ignore trivial cases.
+  if (!db_result.is_valid() || page_organization_id == kInvalidOrganizationId)
+    return;
+
+  const int icon_organization_id =
+      GetCanonicalOrganizationId(db_result.icon_url);
+  const bool mismatch_found = page_organization_id != icon_organization_id &&
+                              icon_organization_id != kInvalidOrganizationId;
+  UMA_HISTOGRAM_BOOLEAN("Favicons.LargeIconService.BlacklistedURLMismatch",
+                        mismatch_found);
+}
+
+int LargeIconWorker::GetCanonicalOrganizationId(const GURL& url) const {
+  auto it = organization_id_map_.find(
+      LargeIconService::GetOrganizationNameForUma(url));
+  return it == organization_id_map_.end() ? kInvalidOrganizationId : it->second;
 }
 
 void ReportDownloadedSize(int size) {
@@ -342,6 +416,7 @@ LargeIconService::LargeIconService(
     FaviconService* favicon_service,
     std::unique_ptr<image_fetcher::ImageFetcher> image_fetcher)
     : favicon_service_(favicon_service),
+      organization_id_map_(BuildDomainToCanonicalOrganizationIdMap()),
       image_fetcher_(std::move(image_fetcher)) {
   large_icon_types_.push_back(favicon_base::IconType::WEB_MANIFEST_ICON);
   large_icon_types_.push_back(favicon_base::IconType::FAVICON);
@@ -439,6 +514,25 @@ void LargeIconService::TouchIconFromGoogleServer(const GURL& icon_url) {
   favicon_service_->TouchOnDemandFavicon(icon_url);
 }
 
+// static
+std::string LargeIconService::GetOrganizationNameForUma(const GURL& url) {
+  const size_t registry_length =
+      net::registry_controlled_domains::GetRegistryLength(
+          url, net::registry_controlled_domains::EXCLUDE_UNKNOWN_REGISTRIES,
+          net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES);
+  std::string organization =
+      net::registry_controlled_domains::GetDomainAndRegistry(
+          url, net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES);
+  if (registry_length == 0 || registry_length == std::string::npos ||
+      registry_length >= organization.size()) {
+    return "";
+  }
+
+  // Strip final registry as well as the preceding dot.
+  organization.resize(organization.size() - registry_length - 1);
+  return organization;
+}
+
 base::CancelableTaskTracker::TaskId
 LargeIconService::GetLargeIconOrFallbackStyleImpl(
     const GURL& page_url,
@@ -450,9 +544,9 @@ LargeIconService::GetLargeIconOrFallbackStyleImpl(
   DCHECK_LE(1, min_source_size_in_pixel);
   DCHECK_LE(0, desired_size_in_pixel);
 
-  scoped_refptr<LargeIconWorker> worker =
-      new LargeIconWorker(min_source_size_in_pixel, desired_size_in_pixel,
-                          raw_bitmap_callback, image_callback, tracker);
+  scoped_refptr<LargeIconWorker> worker = new LargeIconWorker(
+      organization_id_map_, min_source_size_in_pixel, desired_size_in_pixel,
+      raw_bitmap_callback, image_callback, tracker);
 
   int max_size_in_pixel =
       std::max(desired_size_in_pixel, min_source_size_in_pixel);
@@ -462,7 +556,8 @@ LargeIconService::GetLargeIconOrFallbackStyleImpl(
   //   a large icon is known but its bitmap is not available.
   return favicon_service_->GetLargestRawFaviconForPageURL(
       page_url, large_icon_types_, max_size_in_pixel,
-      base::Bind(&LargeIconWorker::OnIconLookupComplete, worker), tracker);
+      base::Bind(&LargeIconWorker::OnIconLookupComplete, worker, page_url),
+      tracker);
 }
 
 }  // namespace favicon

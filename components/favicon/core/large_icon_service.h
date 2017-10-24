@@ -7,7 +7,9 @@
 
 #include <vector>
 
+#include "base/containers/flat_map.h"
 #include "base/macros.h"
+#include "base/strings/string_piece.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "components/favicon_base/favicon_callback.h"
 #include "components/image_fetcher/core/image_fetcher.h"
@@ -105,6 +107,11 @@ class LargeIconService : public KeyedService {
   // postpones the automatic eviction of the favicon from the database.
   void TouchIconFromGoogleServer(const GURL& icon_url);
 
+  // Extracts the organization-identifying domain from |url| which excludes
+  // registrar portion (e.g. final ".com"). Used for logging UMA metrics.
+  // Exposed publicly for testing.
+  static std::string GetOrganizationNameForUma(const GURL& url);
+
  private:
   base::CancelableTaskTracker::TaskId GetLargeIconOrFallbackStyleImpl(
       const GURL& page_url,
@@ -115,6 +122,11 @@ class LargeIconService : public KeyedService {
       base::CancelableTaskTracker* tracker);
 
   FaviconService* favicon_service_;
+
+  // Map keyed by organization-identifying domain (excludes registrar portion,
+  // e.g. final ".com") and a value that represents an ID for the organization.
+  // Used to emit UMA metrics.
+  const base::flat_map<base::StringPiece, int> organization_id_map_;
 
   // A pre-populated list of icon types to consider when looking for large
   // icons. This is an optimization over populating an icon type vector on each
