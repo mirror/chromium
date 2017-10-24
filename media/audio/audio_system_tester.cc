@@ -12,6 +12,8 @@
 #include "media/audio/mock_audio_manager.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
+#include "base/threading/thread_task_runner_handle.h"
+
 using ::testing::InvokeWithoutArgs;
 
 namespace media {
@@ -63,6 +65,9 @@ AudioSystemTester::AudioSystemTester(MockAudioManager* audio_manager,
 AudioSystemTester::~AudioSystemTester() = default;
 
 void AudioSystemTester::TestGetInputStreamParametersNormal() {
+  DLOG(ERROR) << "@@@@ " << __PRETTY_FUNCTION__
+              << " runner: " << base::ThreadTaskRunnerHandle::Get().get();
+
   base::RunLoop wait_loop;
   EXPECT_CALL(*this, AudioParametersReceived())
       .WillOnce(InvokeWithoutArgs(&wait_loop, &base::RunLoop::Quit));
@@ -71,6 +76,8 @@ void AudioSystemTester::TestGetInputStreamParametersNormal() {
       base::Bind(&AudioSystemTester::OnAudioParams, base::Unretained(this),
                  input_params_));
   wait_loop.Run();
+  DLOG(ERROR) << "@@@@ END" << __PRETTY_FUNCTION__
+              << " runner: " << base::ThreadTaskRunnerHandle::Get().get();
 }
 
 void AudioSystemTester::TestGetInputStreamParametersNoDevice() {

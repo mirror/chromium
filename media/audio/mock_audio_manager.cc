@@ -10,6 +10,8 @@
 #include "base/logging.h"
 #include "media/base/audio_parameters.h"
 
+#include "base/threading/thread_task_runner_handle.h"
+
 namespace media {
 
 MockAudioManager::MockAudioManager(std::unique_ptr<AudioThread> audio_thread)
@@ -18,14 +20,22 @@ MockAudioManager::MockAudioManager(std::unique_ptr<AudioThread> audio_thread)
 MockAudioManager::~MockAudioManager() {
 }
 
-void MockAudioManager::ShutdownOnAudioThread() {}
+void MockAudioManager::ShutdownOnAudioThread() {
+  DLOG(ERROR) << "@@@@ " << __PRETTY_FUNCTION__
+              << " runner: " << base::ThreadTaskRunnerHandle::Get().get();
+  DCHECK(GetTaskRunner()->BelongsToCurrentThread());
+}
 
 bool MockAudioManager::HasAudioOutputDevices() {
+  DLOG(ERROR) << "@@@@ " << __PRETTY_FUNCTION__
+              << " runner: " << base::ThreadTaskRunnerHandle::Get().get();
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   return has_output_devices_;
 }
 
 bool MockAudioManager::HasAudioInputDevices() {
+  DLOG(ERROR) << "@@@@ " << __PRETTY_FUNCTION__
+              << " runner: " << base::ThreadTaskRunnerHandle::Get().get();
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   return has_input_devices_;
 }
@@ -81,6 +91,7 @@ void MockAudioManager::RemoveOutputDeviceChangeListener(
 }
 
 AudioParameters MockAudioManager::GetDefaultOutputStreamParameters() {
+  DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   return default_output_params_;
 }
 
@@ -92,6 +103,8 @@ AudioParameters MockAudioManager::GetOutputStreamParameters(
 
 AudioParameters MockAudioManager::GetInputStreamParameters(
     const std::string& device_id) {
+  DLOG(ERROR) << "@@@@ " << __PRETTY_FUNCTION__
+              << " runner: " << base::ThreadTaskRunnerHandle::Get().get();
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   return input_params_;
 }
@@ -129,6 +142,7 @@ void MockAudioManager::SetMakeInputStreamCB(MakeInputStreamCallback cb) {
 }
 
 void MockAudioManager::SetInputStreamParameters(const AudioParameters& params) {
+  DLOG(ERROR) << "***SetInputStreamParameters";
   input_params_ = params;
 }
 
