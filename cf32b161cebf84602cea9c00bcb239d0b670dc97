@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c4e7b4e_1ace57a3",
+        "filename": "chrome/browser/ui/passwords/password_access_authenticator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-24T08:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da51b8b_f3abb673",
+      "range": {
+        "startLine": 23,
+        "startChar": 64,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "cf32b161cebf84602cea9c00bcb239d0b670dc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b9d01d8_5f5e0194",
         "filename": "chrome/browser/ui/passwords/password_access_authenticator.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "cf32b161cebf84602cea9c00bcb239d0b670dc97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1cd699_0920618d",
+        "filename": "chrome/browser/ui/passwords/password_access_authenticator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-24T08:39:57Z",
+      "side": 1,
+      "message": "I had troubles with the macros, because another function calling this was in a .cc file and did not get recompiled for the target unit_test after being compiled for production. Therefore it was not compiled at all in unit tests and the linker complained.\n\nSo I went with the ForTesting. For that I had to change the naming style of the method to CamelCase, and move its implementation to the .cc file. I don\u0027t think that\u0027s harmful, though.",
+      "parentUuid": "2b9d01d8_5f5e0194",
+      "range": {
+        "startLine": 35,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "cf32b161cebf84602cea9c00bcb239d0b670dc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "61d0f366_53d5d8ec",
+        "filename": "chrome/browser/ui/passwords/password_access_authenticator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-24T08:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0ecec44_c58bbeea",
+      "range": {
+        "startLine": 37,
+        "startChar": 46,
+        "endLine": 37,
+        "endChar": 48
+      },
+      "revId": "cf32b161cebf84602cea9c00bcb239d0b670dc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "924dba1c_f13675d4",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "cf32b161cebf84602cea9c00bcb239d0b670dc97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5163b71f_9c8a175b",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-24T08:39:57Z",
+      "side": 1,
+      "message": "Good catch. I fixed the comment for the new class to say where Android is handled.",
+      "parentUuid": "924dba1c_f13675d4",
+      "range": {
+        "startLine": 459,
+        "startChar": 2,
+        "endLine": 459,
+        "endChar": 12
+      },
+      "revId": "cf32b161cebf84602cea9c00bcb239d0b670dc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
