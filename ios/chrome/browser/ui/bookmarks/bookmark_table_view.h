@@ -8,6 +8,8 @@
 #import <UIKit/UIKit.h>
 #include <set>
 
+@class SigninPromoViewMediator;
+@class SigninPromoViewConfigurator;
 @protocol ApplicationCommands;
 class GURL;
 
@@ -28,6 +30,9 @@ class PrefRegistrySyncable;
 
 // Delegate to handle actions on the table.
 @protocol BookmarkTableViewDelegate<NSObject>
+
+@property(nonatomic, readonly) SigninPromoViewMediator* signinPromoViewMediator;
+
 // Tells the delegate that a URL was selected for navigation.
 - (void)bookmarkTableView:(BookmarkTableView*)view
     selectedUrlForNavigation:(const GURL&)url;
@@ -98,6 +103,10 @@ class PrefRegistrySyncable;
 
 // Called when something outside the view causes the promo state to change.
 - (void)promoStateChangedAnimated:(BOOL)animated;
+
+- (void)configureSigninPromoWithConfigurator:
+            (SigninPromoViewConfigurator*)configurator
+                             identityChanged:(BOOL)identityChanged;
 
 // Called when adding a new folder
 - (void)addNewFolder;

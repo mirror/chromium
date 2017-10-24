@@ -15,6 +15,9 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/pref_names.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
+#import "ios/chrome/browser/ui/authentication/signin_promo_view_configurator.h"
+#import "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h"
+#import "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/show_signin_command.h"
 #import "ios/chrome/browser/ui/ui_util.h"
@@ -45,7 +48,7 @@ const char kBookmarksPromoActionsHistogram[] = "Stars.PromoActions";
 class SignInObserver;
 }  // namespace
 
-@interface BookmarkPromoController () {
+@interface BookmarkPromoController ()<SigninPromoViewConsumer> {
   bool _isIncognito;
   ios::ChromeBrowserState* _browserState;
   std::unique_ptr<SignInObserver> _signinObserver;
@@ -54,6 +57,9 @@ class SignInObserver;
 
 // Dispatcher for sending commands.
 @property(nonatomic, readonly, weak) id<ApplicationCommands> dispatcher;
+
+@property(nonatomic, readwrite)
+    SigninPromoViewMediator* signinPromoViewMediator;
 
 // Records that the promo was displayed. Can be called several times per
 // instance but will effectively record the histogram only once per instance.
@@ -98,6 +104,7 @@ class SignInObserver : public SigninManagerBase::Observer {
 @synthesize delegate = _delegate;
 @synthesize promoState = _promoState;
 @synthesize dispatcher = _dispatcher;
+@synthesize signinPromoViewMediator = _signinPromoViewMediator;
 
 + (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry {
   registry->RegisterBooleanPref(prefs::kIosBookmarkPromoAlreadySeen, false);
@@ -127,6 +134,8 @@ class SignInObserver : public SigninManagerBase::Observer {
 }
 
 - (void)dealloc {
+  [_signinPromoViewMediator signinPromoViewRemoved];
+
   if (!_isIncognito) {
     DCHECK(_browserState);
     SigninManager* signinManager =
@@ -151,12 +160,6 @@ class SignInObserver : public SigninManagerBase::Observer {
 - (void)hidePromoCell {
   DCHECK(!_isIncognito);
   DCHECK(_browserState);
-
-  UMA_HISTOGRAM_ENUMERATION(kBookmarksPromoActionsHistogram,
-                            BOOKMARKS_PROMO_ACTION_DISMISSED,
-                            BOOKMARKS_PROMO_ACTION_COUNT);
-  PrefService* prefs = _browserState->GetPrefs();
-  prefs->SetBoolean(prefs::kIosBookmarkPromoAlreadySeen, true);
   self.promoState = NO;
 }
 
@@ -174,12 +177,24 @@ class SignInObserver : public SigninManagerBase::Observer {
 
   DCHECK(_browserState);
   PrefService* prefs = _browserState->GetPrefs();
-  if (!prefs->GetBoolean(prefs::kIosBookmarkPromoAlreadySeen)) {
+  if ([SigninPromoViewMediator
+          shouldDisplaySigninPromoWithAccessPoint:
+              signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER
+                                preferenceService:prefs]) {
     SigninManager* signinManager =
         ios::SigninManagerFactory::GetForBrowserState(_browserState);
     self.promoState = !signinManager->IsAuthenticated();
-    if (self.promoState)
+    if (self.promoState) {
+      if (!_signinPromoViewMediator) {
+        _signinPromoViewMediator = [[SigninPromoViewMediator alloc]
+            initWithBrowserState:_browserState
+                     accessPoint:signin_metrics::AccessPoint::
+                                     ACCESS_POINT_BOOKMARK_MANAGER
+                      dispatcher:self.dispatcher];
+        _signinPromoViewMediator.consumer = self;
+      }
       [self recordPromoDisplayed];
+    }
   }
 }
 
@@ -189,11 +204,10 @@ class SignInObserver : public SigninManagerBase::Observer {
   if (_promoDisplayedRecorded)
     return;
   _promoDisplayedRecorded = YES;
+  [_signinPromoViewMediator signinPromoViewVisible];
   UMA_HISTOGRAM_ENUMERATION(kBookmarksPromoActionsHistogram,
                             BOOKMARKS_PROMO_ACTION_DISPLAYED,
                             BOOKMARKS_PROMO_ACTION_COUNT);
-  base::RecordAction(
-      base::UserMetricsAction("Signin_Impression_FromBookmarkManager"));
 }
 
 #pragma mark - SignInObserver
@@ -201,12 +215,31 @@ class SignInObserver : public SigninManagerBase::Observer {
 // Called when a user signs into Google services such as sync.
 - (void)googleSigninSucceededWithAccountId:(const std::string&)account_id
                                   username:(const std::string&)username {
-  self.promoState = NO;
+  if (!_signinPromoViewMediator.isSigninActive)
+    self.promoState = NO;
 }
 
 // Called when the currently signed-in user for a user has been signed out.
 - (void)googleSignedOutWithAcountId:(const std::string&)account_id
                            username:(const std::string&)username {
+  [self updatePromoState];
+}
+
+#pragma mark - SigninPromoViewConsumer
+
+- (void)configureSigninPromoWithConfigurator:
+            (SigninPromoViewConfigurator*)configurator
+                             identityChanged:(BOOL)identityChanged {
+  [self.delegate configureSigninPromoWithConfigurator:configurator
+                                      identityChanged:identityChanged];
+}
+
+- (void)signinDidFinishWithSuccess:(BOOL)succeeded {
+  if (succeeded)
+    [self updatePromoState];
+}
+
+- (void)signinCloseButtonWasTapped {
   [self updatePromoState];
 }
 

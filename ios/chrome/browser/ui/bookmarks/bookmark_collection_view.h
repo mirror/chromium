@@ -19,6 +19,8 @@
 
 @protocol ApplicationCommands;
 @class BookmarkCollectionView;
+@class SigninPromoViewMediator;
+@class SigninPromoViewConfigurator;
 class GURL;
 @protocol UrlLoader;
 
@@ -30,6 +32,8 @@ class PrefRegistrySyncable;
 }  // namespace user_prefs
 
 @protocol BookmarkCollectionViewDelegate<NSObject>
+
+@property(nonatomic, readonly) SigninPromoViewMediator* signinPromoViewMediator;
 
 // This method tells the delegate to add the node and cell
 // to the list of those being edited.
@@ -64,9 +68,6 @@ class PrefRegistrySyncable;
 
 // Returns true if a bookmarks promo cell should be shown.
 - (BOOL)bookmarkCollectionViewShouldShowPromoCell:(BookmarkCollectionView*)view;
-
-// Shows a sign-in view controller.
-- (void)bookmarkCollectionViewShowSignIn:(BookmarkCollectionView*)view;
 
 // Dismisses the promo.
 - (void)bookmarkCollectionViewDismissPromo:(BookmarkCollectionView*)view;
@@ -110,6 +111,10 @@ class PrefRegistrySyncable;
 
 // Called when something outside the view causes the promo state to change.
 - (void)promoStateChangedAnimated:(BOOL)animated;
+
+- (void)configureSigninPromoWithConfigurator:
+            (SigninPromoViewConfigurator*)configurator
+                             identityChanged:(BOOL)identityChanged;
 
 @property(nonatomic, assign, readonly) bookmarks::BookmarkModel* bookmarkModel;
 @property(nonatomic, weak, readonly) id<UrlLoader> loader;

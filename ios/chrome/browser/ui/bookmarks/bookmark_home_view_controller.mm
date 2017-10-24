@@ -306,6 +306,19 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   }
 }
 
+- (void)configureSigninPromoWithConfigurator:
+            (SigninPromoViewConfigurator*)configurator
+                             identityChanged:(BOOL)identityChanged {
+  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
+    [self.bookmarksTableView
+        configureSigninPromoWithConfigurator:configurator
+                             identityChanged:identityChanged];
+  } else {
+    [self.folderView configureSigninPromoWithConfigurator:configurator
+                                          identityChanged:identityChanged];
+  }
+}
+
 #pragma mark Action sheet callbacks
 
 // Enters into edit mode by selecting the given node corresponding to the
@@ -806,10 +819,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   return self.bookmarkPromoController.promoState;
 }
 
-- (void)bookmarkCollectionViewShowSignIn:(BookmarkCollectionView*)view {
-  [self.bookmarkPromoController showSignIn];
-}
-
 - (void)bookmarkCollectionViewDismissPromo:(BookmarkCollectionView*)view {
   [self.bookmarkPromoController hidePromoCell];
 }
@@ -892,6 +901,10 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
                  style:UIAlertActionStyleCancel];
 
   [self.actionSheetCoordinator start];
+}
+
+- (SigninPromoViewMediator*)signinPromoViewMediator {
+  return self.bookmarkPromoController.signinPromoViewMediator;
 }
 
 #pragma mark - BookmarkModelBridgeObserver
