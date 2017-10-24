@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2bce88fa_b4c744d0",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-24T18:47:37Z",
+      "side": 1,
+      "message": "|mirror_window_for_hiding_caption_| is used to decide should we scale/posit the original_window.\n\n|mirror_widget_| can be set for minimized window and window with inset caption. For minimized windows, it is not visible so it works just fine in current code. For the window with inset caption, we create a |mirror_widget_| and need to hide the original_window and scale/posit the hided original_window to the same position of the |mirror_widget_| in the overview mode. All this just to make looks better for \"exit animation\": we destroy the |mirror_widget_| in RestoreWindow() and show the original_window to do the animation. The transition of |mirror_widget_| and show of original_window should be smooth.",
+      "parentUuid": "11466ff2_9b21c859",
+      "revId": "a7d8ab3dda8f98c81acfd1315b97d9cdd9c3f7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd177c64_5d083c6b",
         "filename": "cc/layers/layer.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a2a8d888_1fd75159",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-24T18:47:37Z",
+      "side": 1,
+      "message": "Yes. I am a little hesitate to reuse \"SetIsDrawable\" because I do not know the initial status of \"inputs_.is_drawable\". Some layers in the layer hierarchy might have initial \"false\" value for is_drawable? But it seems also not a good idea to come up a new variable for the same purpose only for overview usage. Maybe we can remember the initial value before we set it to false in the PrepareForOverview() and reset in RestoreWindow()?",
+      "parentUuid": "fd177c64_5d083c6b",
+      "revId": "a7d8ab3dda8f98c81acfd1315b97d9cdd9c3f7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d209dec_77bda5d4",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-24T13:48:45Z",
       "side": 1,
       "message": "should this take not_drawn state into account?",
+      "revId": "a7d8ab3dda8f98c81acfd1315b97d9cdd9c3f7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c75368_125d23d2",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-24T18:47:37Z",
+      "side": 1,
+      "message": "Thanks! I will consider how to take it into account.\nIf I reuse cc::Layer \"inputs_.is_drawable\", I may not add it to here, because even the layer is not drawn but the sub-layer may be still drawable. This function seems traverse to the root to make sure all the layer\u0027s visibility.",
+      "parentUuid": "6d209dec_77bda5d4",
       "revId": "a7d8ab3dda8f98c81acfd1315b97d9cdd9c3f7bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
