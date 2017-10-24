@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ff81c7_4418ee01",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-24T17:35:11Z",
+      "side": 1,
+      "message": "I think a base::flat_map is more appropriate for this use case.",
+      "revId": "047d5d0a8ba2925d5d779ab6fbd756c1c7dc2f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e9e71a_efcef1e6",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-24T17:35:11Z",
+      "side": 1,
+      "message": "This heap allocations 19 strings and 13 vectors from constant data every time this function is called just to populate a map. We should be able to write this in a way that completely avoids creating extra intermediate containers.",
+      "range": {
+        "startLine": 203,
+        "startChar": 35,
+        "endLine": 203,
+        "endChar": 36
+      },
+      "revId": "047d5d0a8ba2925d5d779ab6fbd756c1c7dc2f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2774aa33_0de81a52",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-24T17:35:11Z",
+      "side": 1,
+      "message": "Optional: I would have just written this \"auto it \u003d ...\"",
+      "revId": "047d5d0a8ba2925d5d779ab6fbd756c1c7dc2f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
