@@ -105,6 +105,7 @@ class MESSAGE_CENTER_EXPORT MessageCenter {
 
   // Removes an existing notification.
   virtual void RemoveNotification(const std::string& id, bool by_user) = 0;
+  virtual void RemoveNotificationsForNotifierId(const NotifierId& notifier_id) = 0;
   virtual void RemoveAllNotifications(bool by_user, RemoveType type) = 0;
 
   // Sets the icon image. Icon appears at the top-left of the notification.
@@ -151,11 +152,13 @@ class MESSAGE_CENTER_EXPORT MessageCenter {
       const std::string& id,
       const DisplaySource source) = 0;
 
+#if 0
   // Setter/getter of notifier settings provider. The getter may return null
   // for tests, and will always be null on non-ChromeOS.
   virtual void SetNotifierSettingsProvider(
       std::unique_ptr<NotifierSettingsProvider> provider) = 0;
   virtual NotifierSettingsProvider* GetNotifierSettingsProvider() = 0;
+#endif
 
   // This can be called to change the quiet mode state (without a timeout).
   virtual void SetQuietMode(bool in_quiet_mode) = 0;

@@ -32,14 +32,6 @@ class MessagePopupCollectionTest;
 class MessageCenterNotificationManagerTest;
 class Notification;
 class NotifierSettingsDelegate;
-class NotifierSettingsProvider;
-
-// Brings up the settings dialog and returns a weak reference to the delegate,
-// which is typically the view. If the dialog already exists, it is brought to
-// the front, otherwise it is created.
-MESSAGE_CENTER_EXPORT NotifierSettingsDelegate* ShowSettings(
-    NotifierSettingsProvider* provider,
-    gfx::NativeView context);
 
 // A struct that identifies the source of notifications. For example, a web page
 // might send multiple notifications but they'd all have the same NotifierId.
@@ -99,18 +91,22 @@ struct MESSAGE_CENTER_EXPORT NotifierId {
 };
 
 // A struct to hold UI information about notifiers. The data is used by
-// NotifierSettingsView. TODO(estade): rename to NotifierUiData.
-struct MESSAGE_CENTER_EXPORT Notifier {
-  Notifier(const NotifierId& notifier_id,
-           const base::string16& name,
-           bool enabled);
-  ~Notifier();
+// NotifierSettingsView.
+struct MESSAGE_CENTER_EXPORT NotifierUiData {
+  NotifierUiData(const NotifierId& notifier_id,
+                 const base::string16& name,
+                 bool has_advanced_settings,
+                 bool enabled);
+  ~NotifierUiData();
 
   NotifierId notifier_id;
 
   // The human-readable name of the notifier such like the extension name.
   // It can be empty.
   base::string16 name;
+
+  // True if the notifier should have an affordance for advanced settings.
+  bool has_advanced_settings;
 
   // True if the source is allowed to send notifications. True is default.
   bool enabled;
@@ -119,11 +115,12 @@ struct MESSAGE_CENTER_EXPORT Notifier {
   gfx::Image icon;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(Notifier);
+  DISALLOW_COPY_AND_ASSIGN(NotifierUiData);
 };
 
 // An observer class implemented by the view of the NotifierSettings to get
 // notified when the controller has changed data.
+// TODO(estade): this is Chrome OS only. Remove it.
 class MESSAGE_CENTER_EXPORT NotifierSettingsObserver {
  public:
   // Called when an icon in the controller has been updated.
@@ -137,6 +134,7 @@ class MESSAGE_CENTER_EXPORT NotifierSettingsObserver {
 
 // A class used by NotifierSettingsView to integrate with a setting system
 // for the clients of this module.
+// TODO(estade): this is Chrome OS only. Remove it.
 class MESSAGE_CENTER_EXPORT NotifierSettingsProvider {
  public:
   virtual ~NotifierSettingsProvider() {}
@@ -147,7 +145,7 @@ class MESSAGE_CENTER_EXPORT NotifierSettingsProvider {
 
   // Provides the current notifier list in |notifiers|.
   virtual void GetNotifierList(
-      std::vector<std::unique_ptr<Notifier>>* notifiers) = 0;
+      std::vector<std::unique_ptr<NotifierUiData>>* notifiers) = 0;
 
   // Called when the |enabled| for the given notifier has been changed by user
   // operation.
@@ -156,11 +154,6 @@ class MESSAGE_CENTER_EXPORT NotifierSettingsProvider {
 
   // Called when the settings window is closed.
   virtual void OnNotifierSettingsClosing() = 0;
-
-  // Called to determine if a particular notifier can respond to a request for
-  // more information.
-  virtual bool NotifierHasAdvancedSettings(const NotifierId& notifier_id)
-      const = 0;
 
   // Called upon request for more information about a particular notifier.
   virtual void OnNotifierAdvancedSettingsRequested(

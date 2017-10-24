@@ -10,6 +10,8 @@
 #include <string>
 #include <utility>
 
+#include "ash/shell.h"
+#include "ash/message_center/message_center_controller.h"
 #include "ash/message_center/message_center_style.h"
 #include "ash/message_center/message_center_view.h"
 #include "ash/resources/vector_icons/vector_icons.h"
@@ -53,9 +55,8 @@
 namespace ash {
 
 using message_center::MessageCenter;
-using message_center::Notifier;
+using message_center::NotifierUiData;
 using message_center::NotifierId;
-using message_center::NotifierSettingsProvider;
 
 namespace {
 
@@ -258,18 +259,15 @@ class EmptyNotifierView : public views::View {
 // We do not use views::Checkbox class directly because it doesn't support
 // showing 'icon'.
 NotifierSettingsView::NotifierButton::NotifierButton(
-    NotifierSettingsProvider* provider,
-    std::unique_ptr<Notifier> notifier,
+    std::unique_ptr<NotifierUiData> notifier_ui_data,
     views::ButtonListener* listener)
     : views::Button(listener),
-      provider_(provider),
-      notifier_(std::move(notifier)),
+      notifier_ui_data_(std::move(notifier_ui_data)),
       icon_view_(new views::ImageView()),
-      name_view_(new views::Label(notifier_->name)),
+      name_view_(new views::Label(notifier_ui_data_->name)),
       checkbox_(new views::Checkbox(base::string16(), true /* force_md */)),
       learn_more_(nullptr) {
-  DCHECK(provider_);
-  DCHECK(notifier_);
+  DCHECK(notifier_ui_data_);
 
   name_view_->SetAutoColorReadabilityEnabled(false);
   name_view_->SetEnabledColor(kLabelColor);
@@ -277,10 +275,10 @@ NotifierSettingsView::NotifierButton::NotifierButton(
   name_view_->SetFontList(message_center_style::GetFontListForSizeAndWeight(
       kLabelFontSize, gfx::Font::Weight::NORMAL));
 
-  checkbox_->SetChecked(notifier_->enabled);
+  checkbox_->SetChecked(notifier_ui_data_->enabled);
   checkbox_->set_listener(this);
   checkbox_->SetFocusBehavior(FocusBehavior::NEVER);
-  checkbox_->SetAccessibleName(notifier_->name);
+  checkbox_->SetAccessibleName(notifier_ui_data_->name);
 
   if (ShouldHaveLearnMoreButton()) {
     // Create a more-info button that will be right-aligned.
@@ -311,14 +309,42 @@ NotifierSettingsView::NotifierButton::NotifierButton(
                                    views::ImageButton::ALIGN_MIDDLE);
   }
 
-  UpdateIconImage(notifier_->icon);
+  UpdateIconImage(notifier_ui_data_->icon);
 }
 
 NotifierSettingsView::NotifierButton::~NotifierButton() {}
 
+void NotifierSettingsView::SetNotifierList(
+    std::vector<std::unique_ptr<NotifierUiData>> ui_data) {
+  buttons_.clear();
+
+  views::View* contents_view = new ScrollContentsView();
+  contents_view->SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kVertical, gfx::Insets(0, kHorizontalMargin)));
+
+  size_t notifier_count = ui_data.size();
+  for (size_t i = 0; i < notifier_count; ++i) {
+    NotifierButton* button =
+        new NotifierButton(std::move(ui_data[i]), this);
+    EntryView* entry = new EntryView(button);
+
+    entry->SetFocusBehavior(FocusBehavior::ALWAYS);
+    contents_view->AddChildView(entry);
+    buttons_.insert(button);
+  }
+
+  top_label_->SetVisible(notifier_count > 0);
+  no_notifiers_view_->SetVisible(notifier_count == 0);
+
+  scroller_->SetContents(contents_view);
+
+  contents_view->SetBoundsRect(gfx::Rect(contents_view->GetPreferredSize()));
+  InvalidateLayout();
+}
+
 void NotifierSettingsView::NotifierButton::UpdateIconImage(
     const gfx::Image& icon) {
-  notifier_->icon = icon;
+  notifier_ui_data_->icon = icon;
   if (icon.IsEmpty()) {
     icon_view_->SetImage(gfx::CreateVectorIcon(
         message_center::kProductIcon, kEntryIconSize, gfx::kChromeIconGrey));
@@ -331,7 +357,7 @@ void NotifierSettingsView::NotifierButton::UpdateIconImage(
 
 void NotifierSettingsView::NotifierButton::SetChecked(bool checked) {
   checkbox_->SetChecked(checked);
-  notifier_->enabled = checked;
+  notifier_ui_data_->enabled = checked;
 }
 
 bool NotifierSettingsView::NotifierButton::checked() const {
@@ -342,8 +368,9 @@ bool NotifierSettingsView::NotifierButton::has_learn_more() const {
   return learn_more_ != nullptr;
 }
 
-const Notifier& NotifierSettingsView::NotifierButton::notifier() const {
-  return *notifier_.get();
+const NotifierUiData& NotifierSettingsView::NotifierButton::notifier_ui_data()
+    const {
+  return *notifier_ui_data_;
 }
 
 void NotifierSettingsView::NotifierButton::SendLearnMorePressedForTest() {
@@ -366,9 +393,10 @@ void NotifierSettingsView::NotifierButton::ButtonPressed(
     checkbox_->SetChecked(!checkbox_->checked());
     Button::NotifyClick(event);
   } else if (button == learn_more_) {
-    DCHECK(provider_);
-    provider_->OnNotifierAdvancedSettingsRequested(notifier_->notifier_id,
-                                                   nullptr);
+    Shell::Get()
+        ->message_center_controller()
+        ->OnNotifierAdvancedSettingsRequested(notifier_ui_data_->notifier_id,
+                                              nullptr);
   }
 }
 
@@ -378,10 +406,7 @@ void NotifierSettingsView::NotifierButton::GetAccessibleNodeData(
 }
 
 bool NotifierSettingsView::NotifierButton::ShouldHaveLearnMoreButton() const {
-  if (!provider_)
-    return false;
-
-  return provider_->NotifierHasAdvancedSettings(notifier_->notifier_id);
+  return notifier_ui_data_->has_advanced_settings;
 }
 
 void NotifierSettingsView::NotifierButton::GridChanged(bool has_learn_more) {
@@ -427,17 +452,12 @@ void NotifierSettingsView::NotifierButton::GridChanged(bool has_learn_more) {
 
 // NotifierSettingsView -------------------------------------------------------
 
-NotifierSettingsView::NotifierSettingsView(NotifierSettingsProvider* provider)
+NotifierSettingsView::NotifierSettingsView()
     : title_arrow_(nullptr),
       header_view_(nullptr),
       top_label_(nullptr),
       scroller_(nullptr),
-      no_notifiers_view_(nullptr),
-      provider_(provider) {
-  // |provider_| may be null in tests.
-  if (provider_)
-    provider_->AddObserver(this);
-
+      no_notifiers_view_(nullptr) {
   SetFocusBehavior(FocusBehavior::ALWAYS);
   SetBackground(
       views::CreateSolidBackground(message_center_style::kBackgroundColor));
@@ -501,17 +521,12 @@ NotifierSettingsView::NotifierSettingsView(NotifierSettingsProvider* provider)
   no_notifiers_view_ = new EmptyNotifierView();
   AddChildView(no_notifiers_view_);
 
-  std::vector<std::unique_ptr<Notifier>> notifiers;
-  if (provider_)
-    provider_->GetNotifierList(&notifiers);
-
-  UpdateContentsView(std::move(notifiers));
+  Shell::Get()->message_center_controller()->SetNotifierSettingsListener(this);
 }
 
 NotifierSettingsView::~NotifierSettingsView() {
-  // |provider_| may be null in tests.
-  if (provider_)
-    provider_->RemoveObserver(this);
+  Shell::Get()->message_center_controller()->SetNotifierSettingsListener(
+      nullptr);
 }
 
 bool NotifierSettingsView::IsScrollable() {
@@ -526,39 +541,11 @@ void NotifierSettingsView::UpdateIconImage(const NotifierId& notifier_id,
                                            const gfx::Image& icon) {
   for (std::set<NotifierButton*>::iterator iter = buttons_.begin();
        iter != buttons_.end(); ++iter) {
-    if ((*iter)->notifier().notifier_id == notifier_id) {
+    if ((*iter)->notifier_ui_data().notifier_id == notifier_id) {
       (*iter)->UpdateIconImage(icon);
       return;
     }
   }
-}
-
-void NotifierSettingsView::UpdateContentsView(
-    std::vector<std::unique_ptr<Notifier>> notifiers) {
-  buttons_.clear();
-
-  views::View* contents_view = new ScrollContentsView();
-  contents_view->SetLayoutManager(new views::BoxLayout(
-      views::BoxLayout::kVertical, gfx::Insets(0, kHorizontalMargin)));
-
-  size_t notifier_count = notifiers.size();
-  for (size_t i = 0; i < notifier_count; ++i) {
-    NotifierButton* button =
-        new NotifierButton(provider_, std::move(notifiers[i]), this);
-    EntryView* entry = new EntryView(button);
-
-    entry->SetFocusBehavior(FocusBehavior::ALWAYS);
-    contents_view->AddChildView(entry);
-    buttons_.insert(button);
-  }
-
-  top_label_->SetVisible(notifier_count > 0);
-  no_notifiers_view_->SetVisible(notifier_count == 0);
-
-  scroller_->SetContents(contents_view);
-
-  contents_view->SetBoundsRect(gfx::Rect(contents_view->GetPreferredSize()));
-  InvalidateLayout();
 }
 
 void NotifierSettingsView::Layout() {
@@ -633,9 +620,8 @@ void NotifierSettingsView::ButtonPressed(views::Button* sender,
     return;
 
   (*iter)->SetChecked(!(*iter)->checked());
-  if (provider_)
-    provider_->SetNotifierEnabled((*iter)->notifier().notifier_id,
-                                  (*iter)->checked());
+  Shell::Get()->message_center_controller()->SetNotifierEnabled(
+      (*iter)->notifier_ui_data().notifier_id, (*iter)->checked());
 }
 
 }  // namespace ash

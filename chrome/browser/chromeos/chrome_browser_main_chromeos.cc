@@ -187,6 +187,8 @@
 #include "ui/events/event_utils.h"
 #include "ui/message_center/message_center.h"
 
+#include "ash/message_center/message_center_controller.h"
+
 #if BUILDFLAG(ENABLE_RLZ)
 #include "components/rlz/rlz_tracker.h"
 #endif
@@ -882,7 +884,8 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
       l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_OS_NAME));
 
   // Create and set the settings provider for the message center.
-  message_center::MessageCenter::Get()->SetNotifierSettingsProvider(
+  // TODO(estade): remove this; use mojo.
+  ash::Shell::Get()->message_center_controller()->SetNotifierSettingsProvider(
       std::make_unique<MessageCenterSettingsControllerChromeOs>());
 
   // Register all installed components for regular update.
