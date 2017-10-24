@@ -6,11 +6,14 @@
 
 #include <base/macros.h>
 #include <memory>
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/frame/Settings.h"
 #include "core/html/LinkRelAttribute.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/LinkLoaderClient.h"
 #include "core/loader/NetworkHintsInterface.h"
+#include "core/loader/modulescript/ModuleScriptFetchRequest.h"
+#include "core/testing/DummyModulator.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -317,6 +320,75 @@ constexpr PreloadTestParams kPreloadTestParams[] = {
 INSTANTIATE_TEST_CASE_P(LinkLoaderPreloadTest,
                         LinkLoaderPreloadTest,
                         ::testing::ValuesIn(kPreloadTestParams));
+
+struct ModulePreloadTestParams {
+  const char* href;
+  const char* nonce;
+  const ReferrerPolicy referrer_policy;
+  const bool expecting_load;
+  const WebURLRequest::FetchCredentialsMode expected_credentials_mode;
+};
+
+constexpr ModulePreloadTestParams kModulePreloadTestParams[] = {
+    {"", nullptr, kReferrerPolicyDefault, false,
+     WebURLRequest::kFetchCredentialsModeOmit},
+    {"http://example.test/cat.js", nullptr, kReferrerPolicyDefault, true,
+     WebURLRequest::kFetchCredentialsModeOmit},
+    {"http://example.test/cat.js", "nonce", kReferrerPolicyDefault, true,
+     WebURLRequest::kFetchCredentialsModeOmit}};
+
+class LinkLoaderModulePreloadTest
+    : public ::testing::TestWithParam<ModulePreloadTestParams> {};
+
+class ModulePreloadTestModulator final : public DummyModulator {
+ public:
+  ModulePreloadTestModulator(const ModulePreloadTestParams* params)
+      : params_(params), fetched_(false) {}
+
+  void FetchSingle(const ModuleScriptFetchRequest& request,
+                   ModuleGraphLevel,
+                   SingleModuleClient*) override {
+    fetched_ = true;
+
+    EXPECT_EQ(KURL(NullURL(), params_->href), request.Url());
+    EXPECT_EQ(params_->nonce, request.Options().Nonce());
+    EXPECT_EQ(kParserInserted, request.Options().ParserState());
+    EXPECT_EQ(params_->expected_credentials_mode,
+              request.Options().CredentialsMode());
+    EXPECT_EQ(AtomicString(), request.GetReferrer());
+  }
+
+  bool fetched() const { return fetched_; }
+
+ private:
+  const ModulePreloadTestParams* params_;
+  bool fetched_;
+};
+
+TEST_P(LinkLoaderModulePreloadTest, ModulePreload) {
+  const auto& test_case = GetParam();
+  std::unique_ptr<DummyPageHolder> dummy_page_holder =
+      DummyPageHolder::Create();
+  ModulePreloadTestModulator* modulator =
+      new ModulePreloadTestModulator(&test_case);
+  Modulator::SetModulator(
+      ToScriptStateForMainWorld(dummy_page_holder->GetDocument().GetFrame()),
+      modulator);
+  Persistent<MockLinkLoaderClient> loader_client =
+      MockLinkLoaderClient::Create(true);
+  LinkLoader* loader = LinkLoader::Create(loader_client.Get());
+  KURL href_url = KURL(NullURL(), test_case.href);
+  loader->LoadLink(LinkRelAttribute("modulepreload"),
+                   kCrossOriginAttributeNotSet, String() /* type */,
+                   String() /* as */, String() /* media */, test_case.nonce,
+                   test_case.referrer_policy, href_url,
+                   dummy_page_holder->GetDocument(), NetworkHintsMock());
+  ASSERT_EQ(test_case.expecting_load, modulator->fetched());
+}
+
+INSTANTIATE_TEST_CASE_P(LinkLoaderModulePreloadTest,
+                        LinkLoaderModulePreloadTest,
+                        ::testing::ValuesIn(kModulePreloadTestParams));
 
 TEST(LinkLoaderTest, Prefetch) {
   struct TestCase {

@@ -633,6 +633,10 @@
       name: "ModernMediaControls",
     },
     {
+      name: "ModulePreload",
+      status: "experimental",
+    },
+    {
       name: "ModuleScripts",
       status: "stable",
     },

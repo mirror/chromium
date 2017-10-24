@@ -234,6 +234,21 @@ bool ScriptLoader::BlockForNoModule(ScriptType script_type, bool nomodule) {
          RuntimeEnabledFeatures::ModuleScriptsEnabled();
 }
 
+// Step 16 of https://html.spec.whatwg.org/#prepare-a-script
+WebURLRequest::FetchCredentialsMode ScriptLoader::ModuleScriptCredentialsMode(
+    CrossOriginAttributeValue cross_origin) {
+  switch (cross_origin) {
+    case kCrossOriginAttributeNotSet:
+      return WebURLRequest::kFetchCredentialsModeOmit;
+    case kCrossOriginAttributeAnonymous:
+      return WebURLRequest::kFetchCredentialsModeSameOrigin;
+    case kCrossOriginAttributeUseCredentials:
+      return WebURLRequest::kFetchCredentialsModeInclude;
+  }
+  NOTREACHED();
+  return WebURLRequest::kFetchCredentialsModeOmit;
+}
+
 bool ScriptLoader::IsScriptTypeSupported(LegacyTypeSupport support_legacy_types,
                                          ScriptType& out_script_type) const {
   return IsValidScriptTypeAndLanguage(element_->TypeAttributeValue(),
@@ -333,18 +348,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
   // 16. "Let module script credentials mode be determined by switching
   //      on CORS setting:"
   WebURLRequest::FetchCredentialsMode credentials_mode =
-      WebURLRequest::kFetchCredentialsModeOmit;
-  switch (cross_origin) {
-    case kCrossOriginAttributeNotSet:
-      credentials_mode = WebURLRequest::kFetchCredentialsModeOmit;
-      break;
-    case kCrossOriginAttributeAnonymous:
-      credentials_mode = WebURLRequest::kFetchCredentialsModeSameOrigin;
-      break;
-    case kCrossOriginAttributeUseCredentials:
-      credentials_mode = WebURLRequest::kFetchCredentialsModeInclude;
-      break;
-  }
+      ModuleScriptCredentialsMode(cross_origin);
 
   // 17. "If the script element has a nonce attribute,
   //      then let cryptographic nonce be that attribute's value.
