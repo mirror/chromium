@@ -35,6 +35,7 @@
 #include "chrome/browser/prerender/prerender_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_io_data.h"
+#include "chrome/browser/renderer_host/chrome_navigation_ui_data.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/signin/chrome_signin_helper.h"
 #include "chrome/browser/tab_contents/tab_util.h"
@@ -50,6 +51,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/nacl/common/features.h"
+#include "components/offline_pages/core/request_header/offline_page_navigation_ui_data.h"
 #include "components/offline_pages/features/features.h"
 #include "components/policy/core/common/cloud/policy_header_io_helper.h"
 #include "components/previews/core/previews_experiments.h"
@@ -681,10 +683,36 @@ void ChromeResourceDispatcherHostDelegate::AppendStandardResourceThrottles(
 }
 
 bool ChromeResourceDispatcherHostDelegate::ShouldForceDownloadResource(
-    const GURL& url, const std::string& mime_type) {
+    net::URLRequest* request,
+    const std::string& mime_type) {
+  LOG(ERROR) << "@@ShouldForceDownloadResource " << request->url().spec() << " "
+             << mime_type;
+  // Force to download the MHTML page from the remote server, instead of loading
+  // it.
+  if (request->url().SchemeIsHTTPOrHTTPS() &&
+      mime_type == "multipart/related") {
+    bool is_offline_page = false;
+#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+    // It is OK to load the saved offline copy, in MHTML format.
+    const ResourceRequestInfo* info = ResourceRequestInfo::ForRequest(request);
+    ChromeNavigationUIData* navigation_data =
+        static_cast<ChromeNavigationUIData*>(info->GetNavigationUIData());
+    if (navigation_data) {
+      offline_pages::OfflinePageNavigationUIData* offline_page_data =
+          navigation_data->GetOfflinePageNavigationUIData();
+      LOG(ERROR) << "@@ShouldForceDownloadResource~2 " << offline_page_data;
+      if (offline_page_data)
+        is_offline_page = offline_page_data->is_offline_page();
+    }
+#endif
+    LOG(ERROR) << "@@ShouldForceDownloadResource~3 " << is_offline_page;
+    if (!is_offline_page)
+      return true;
+  }
+
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   // Special-case user scripts to get downloaded instead of viewed.
-  return extensions::UserScript::IsURLUserScript(url, mime_type);
+  return extensions::UserScript::IsURLUserScript(request->url(), mime_type);
 #else
   return false;
 #endif
