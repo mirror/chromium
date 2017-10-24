@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dd15de5_e8476529",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-24T19:32:56Z",
+      "side": 1,
+      "message": "nit: we use std::make_unique now",
+      "revId": "1dbb4d4865690bb871400b4f5aac14da5d7e1772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b315453d_82303b8d",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-24T19:32:56Z",
+      "side": 1,
+      "message": "Can we not add this? It seems unnecessary given how trivial the implementation is. We don\u0027t do this for other client APIs.",
+      "revId": "1dbb4d4865690bb871400b4f5aac14da5d7e1772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
