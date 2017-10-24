@@ -1,0 +1,21 @@
+module blink.mojom;
+
+enum OomInterventionStatus {
+  // The intervention is inactive and renderer is running normally.
+  INACTIVE,
+  // The intervention is active and renderer is paused.
+  ACTIVE,
+};
+
+// Renderer interface for OOM intervention.
+interface OomIntervention {
+  // Returns the current status of the intervention.
+  GetStatus() => (OomInterventionStatus status);
+
+  // Called when NearOomMonitor detects near-OOM situation.
+  OnNearOomDetected() => ();
+
+  // Called when the intervention is declined. Only called after
+  // OnNearOomDetected().
+  OnInterventionDeclined() => ();
+};
