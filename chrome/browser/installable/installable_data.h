@@ -19,13 +19,13 @@ struct InstallableData {
   const InstallableStatusCode error_code;
 
   // Empty if the site has no <link rel="manifest"> tag.
-  const GURL& manifest_url;
+  GURL manifest_url;
 
   // Empty if the site has an unparseable manifest.
   const content::Manifest& manifest;
 
   // Empty if no primary_icon was requested.
-  const GURL& primary_icon_url;
+  GURL primary_icon_url;
 
   // nullptr if the most appropriate primary icon couldn't be determined or
   // downloaded. The underlying primary icon is owned by the InstallableManager;
@@ -35,7 +35,7 @@ struct InstallableData {
   const SkBitmap* primary_icon;
 
   // Empty if no badge_icon was requested.
-  const GURL& badge_icon_url;
+  GURL badge_icon_url;
 
   // nullptr if the most appropriate badge icon couldn't be determined or
   // downloaded. The underlying badge icon is owned by the InstallableManager;
