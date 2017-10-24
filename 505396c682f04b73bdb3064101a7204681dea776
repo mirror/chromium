@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc2d33ca_39c0e357",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T05:28:20Z",
+      "side": 1,
+      "message": "Done and Thanks! Clearer than mine.",
+      "parentUuid": "623a1400_2a4c269e",
+      "revId": "505396c682f04b73bdb3064101a7204681dea776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55945a7e_54acb8b6",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-24T04:27:15Z",
       "side": 1,
       "message": "Could it be initialized at the ctor?",
+      "revId": "505396c682f04b73bdb3064101a7204681dea776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7794f9bc_d074c5bf",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T05:28:20Z",
+      "side": 1,
+      "message": "I thought it\u0027d be better/clearer to set kAttachedAndBound just after line69-72 and before line74, because \n  - line74 returning |impl| as a scoped_refptr\u003c\u003e, means |impl| can start to be considered as ATTACHED (will have at least one reference to it).\n  - line69-72 means |impl| can start to be considered as BOUND.\n\nI also considered setting a kInitial state in the ctor, but given that the ctor is only called by these 2 factory create methods (line60 and line82) and after that soon the |state_| is set to kAttachedAndBound (line73 and line85) accordingly, I feel the kInitial state is somehow unnecessary.",
+      "parentUuid": "55945a7e_54acb8b6",
       "revId": "505396c682f04b73bdb3064101a7204681dea776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -67,6 +103,24 @@
       "revId": "505396c682f04b73bdb3064101a7204681dea776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690dc3db_004c5b20",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T05:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9bafce2_9a7e9d38",
+      "revId": "505396c682f04b73bdb3064101a7204681dea776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
