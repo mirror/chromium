@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79646dd0_65317a2a",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-24T14:43:47Z",
+      "side": 1,
+      "message": "nit: graphics",
+      "range": {
+        "startLine": 347,
+        "startChar": 47,
+        "endLine": 347,
+        "endChar": 54
+      },
+      "revId": "4e36928c2e7909e40d4b4458f7d9ebbdf848c1ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
