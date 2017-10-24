@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9e99596_eb0a2832",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-24T03:32:43Z",
+      "side": 1,
+      "message": "How about this:\n\nAutofill thinks that data and iframeData are similar (FormData::SimilarFormAs) and have same URL.\n\n(To avoid the new session... is duplicate as test description.)",
+      "range": {
+        "startLine": 806,
+        "startChar": 11,
+        "endLine": 807,
+        "endChar": 91
+      },
+      "revId": "cb288dbf6e37502b8da60fedc108dac51eb5526e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39e2be0_6032ffd1",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-24T03:32:43Z",
+      "side": 1,
+      "message": "nit: new line before this",
+      "range": {
+        "startLine": 826,
+        "startChar": 24,
+        "endLine": 826,
+        "endChar": 33
+      },
+      "revId": "cb288dbf6e37502b8da60fedc108dac51eb5526e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9393755d_a0860c31",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-24T03:32:43Z",
+      "side": 1,
+      "message": "I didn\u0027t know that an autofocus inside iframe would be enough. I thought that you need to set the frame focus separately, but I guess I\u0027m wrong. But could you check that you\u0027re inside an iframe, e.g., window.frameElement or window.self !\u003d window.top?",
+      "range": {
+        "startLine": 848,
+        "startChar": 15,
+        "endLine": 848,
+        "endChar": 46
+      },
+      "revId": "cb288dbf6e37502b8da60fedc108dac51eb5526e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
