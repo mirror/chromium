@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e5419f0_155f1246",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/content_script.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:41:48Z",
+      "side": 1,
+      "message": "This is a bit tricky, unfortunately.  There\u0027s a few gotchas here.  textContent includes both un-rendered text as well as descendent text (i.e., the text of a child element).\n\nFor unrendered text, this means we\u0027ll include a lot of content that isn\u0027t actually visible to the user, so it will be very unclear why a section might be highlighted.  For a fun example of this, go to google.com and type in `document.body.textContent` in the dev console - even though there\u0027s very little text on the screen, that will include a buuuuunch of stuff.\n\nFor descendent text, we have the issue where if a parent element has a child element that matches the regexp, we\u0027ll color both the parent and the child (possibly different colors).  In the extreme case, this might mean that we end up coloring the entire page, even if only a child element has the context.\n\nNow, these shouldn\u0027t be *too* bad, since you\u0027re restricting the elements you\u0027re searching - but that also can backfire if a page puts text into a different kind of element (say, an input field or a div).\n\nUnfortunately, I\u0027m not sure what a good way of tackling this would be without this extension becoming a lot more complicated.  I wonder if we can tweak the use case a bit to make these easier?  It might be worth chatting about this week.  Alternatively, we could say these are accepted in the design - it makes a bit less functional, but these concerns aren\u0027t really extension-related.\n\nWDYT?",
+      "revId": "e9832d324d99747658664c975f0064ece78059fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10d87b3_f1e743ae",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/manifest.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:41:48Z",
+      "side": 1,
+      "message": "For this, prefer indentation like:\n  ...\n  \"content_scripts\": [{\n    \"all_frames\": true,\n    \"js\": [\"content_script.js\"],\n    \"matches\": [\"\u003call_urls\u003e\"],\n    \"run_at\": \"document_idle\"\n  }]\n}",
+      "revId": "e9832d324d99747658664c975f0064ece78059fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463dcf45_7d6c6a34",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/manifest.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:41:48Z",
+      "side": 1,
+      "message": "Any reason for document_end instead of document_idle?",
+      "revId": "e9832d324d99747658664c975f0064ece78059fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3be80e_1a1c9141",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/popup.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:41:48Z",
+      "side": 1,
+      "message": "more spaces:\nvar i \u003d 0; i \u003c searchWords.length;",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "e9832d324d99747658664c975f0064ece78059fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e97508b_36f6d217",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/popup.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:41:48Z",
+      "side": 1,
+      "message": "Is this return needed?  It doesn\u0027t look like the value is used anywhere.",
+      "revId": "e9832d324d99747658664c975f0064ece78059fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a07dad_dca3c609",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/popup.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:41:48Z",
+      "side": 1,
+      "message": "end in a ;",
+      "range": {
+        "startLine": 24,
+        "startChar": 65,
+        "endLine": 24,
+        "endChar": 67
+      },
+      "revId": "e9832d324d99747658664c975f0064ece78059fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb60156_28f9da7f",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/popup.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:41:48Z",
+      "side": 1,
+      "message": "; here too",
+      "revId": "e9832d324d99747658664c975f0064ece78059fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc58d25a_2f2e6c59",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/popup.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T00:41:48Z",
+      "side": 1,
+      "message": "nit: space between these: function() {",
+      "range": {
+        "startLine": 35,
+        "startChar": 56,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "e9832d324d99747658664c975f0064ece78059fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
