@@ -54,12 +54,12 @@ std::unique_ptr<DisplayMode> ParseDisplayMode(const std::string& str) {
   // Check against regex and extract values.
   if (!RE2::FullMatch(str, "(\\d+)x(\\d+)(?:%(\\d+\\.?\\d*))?", &width, &height,
                       &refresh_rate_str)) {
-    LOG(ERROR) << "Invalid display mode string \"" << str << "\"";
+    DLOG(ERROR) << "Invalid display mode string \"" << str << "\"";
     return nullptr;
   }
 
   if (width <= 0 || height <= 0) {
-    LOG(ERROR) << "Resolution " << width << "x" << height << " is invalid";
+    DLOG(ERROR) << "Resolution " << width << "x" << height << " is invalid";
     return nullptr;
   }
 
@@ -67,7 +67,7 @@ std::unique_ptr<DisplayMode> ParseDisplayMode(const std::string& str) {
   double refresh_rate = 60.0f;
   if (!refresh_rate_str.empty() &&
       !base::StringToDouble(refresh_rate_str, &refresh_rate)) {
-    LOG(ERROR) << "Unable to parse display mode \"" << str << "\"";
+    DLOG(ERROR) << "Unable to parse display mode \"" << str << "\"";
     return nullptr;
   }
 
@@ -104,7 +104,7 @@ bool HandleDPI(FakeDisplaySnapshot::Builder* builder, StringPiece dpi) {
     return true;
   }
 
-  LOG(ERROR) << "Invalid DPI string \"" << dpi << "\"";
+  DLOG(ERROR) << "Invalid DPI string \"" << dpi << "\"";
   return false;
 }
 
@@ -127,7 +127,7 @@ bool HandleOptions(FakeDisplaySnapshot::Builder* builder, StringPiece options) {
         builder->SetType(DISPLAY_CONNECTION_TYPE_INTERNAL);
         break;
       default:
-        LOG(ERROR) << "Invalid option specifier \"" << options[i] << "\"";
+        DLOG(ERROR) << "Invalid option specifier \"" << options[i] << "\"";
         return false;
     }
   }
