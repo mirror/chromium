@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9a3c3d7_7c48a908",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-24T01:45:48Z",
+      "side": 1,
+      "message": "How about marking const |range| or constructing directly on L604?",
+      "revId": "6b1692471b4d2981eb81c7e9444d9eb2c7c6ea57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
