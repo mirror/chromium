@@ -18,6 +18,7 @@
 #include "components/sync/engine/passive_model_worker.h"
 #include "components/sync/engine/sequenced_model_worker.h"
 #include "components/sync/engine/ui_model_worker.h"
+#include "components/sync/model/model_type_store_test_util.h"
 #include "net/url_request/url_request_test_util.h"
 
 namespace browser_sync {
@@ -262,6 +263,8 @@ ProfileSyncService::InitParams ProfileSyncServiceBundle::CreateBasicInitParams(
   init_params.url_request_context = url_request_context();
   init_params.debug_identifier = "dummyDebugName";
   init_params.channel = version_info::Channel::UNKNOWN;
+  init_params.model_type_store_factory =
+      syncer::ModelTypeStoreTestUtil::FactoryForInMemoryStoreForTest();
 
   return init_params;
 }
