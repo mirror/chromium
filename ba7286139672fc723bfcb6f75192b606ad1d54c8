@@ -93,6 +93,30 @@
       "revId": "ba7286139672fc723bfcb6f75192b606ad1d54c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a37c829_70bb4b47",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-24T21:45:57Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like from the discussion on the design doc that there was a strong reason to prefer immediate retry, and there are some issues that going through the regular retry logic would avert, like the fact that you wouldn\u0027t need to change LogResonseOrErrorCode, and that ReportingInfo will get updated to increment the attempt count / and provide last response code / error code.  (I think in this case particularly, we would want to send the error code we received when attempting the https upload in the ReportingInfo message of the http upload).",
+      "parentUuid": "75e2ebc0_99aa7790",
+      "range": {
+        "startLine": 253,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 63
+      },
+      "revId": "ba7286139672fc723bfcb6f75192b606ad1d54c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
