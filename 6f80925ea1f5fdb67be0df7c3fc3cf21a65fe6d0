@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c188735_f7f231f1",
+        "filename": "third_party/WebKit/Source/platform/heap/BlinkGC.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-24T15:26:56Z",
+      "side": 1,
+      "message": "Done. Added a comment.\n\nI\u0027d like to keep the runtime flag and ultimately turn this define here into always true as soon as possible. (Similar to the flag in HeapCompact.h.)",
+      "parentUuid": "d13d04d7_3cbca5e5",
+      "revId": "6f80925ea1f5fdb67be0df7c3fc3cf21a65fe6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d4ff8aa_4fec8345",
         "filename": "third_party/WebKit/Source/platform/heap/Member.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "6f80925ea1f5fdb67be0df7c3fc3cf21a65fe6d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5521e948_5fe903e7",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-24T15:26:56Z",
+      "side": 1,
+      "message": "Good check! Done.",
+      "parentUuid": "4d4ff8aa_4fec8345",
+      "revId": "6f80925ea1f5fdb67be0df7c3fc3cf21a65fe6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
