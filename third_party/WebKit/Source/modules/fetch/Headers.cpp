@@ -37,7 +37,7 @@ class HeadersIterationSource final
     return true;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  void Trace(blink::Visitor* visitor) override {
     PairIterable<String, String>::IterationSource::Trace(visitor);
   }
 
