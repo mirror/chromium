@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "688a4fad_3665b4a2",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-24T15:45:52Z",
+      "side": 1,
+      "message": "nit: Recor -\u003e Record",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 41
+      },
+      "revId": "5ab18a5a12d07d46e3fa6972fb6245d481d1acb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67209d2f_bfafc57e",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-24T15:45:52Z",
+      "side": 1,
+      "message": "Can you add a quick check here that reboot_prompt_started_ is false?",
+      "revId": "5ab18a5a12d07d46e3fa6972fb6245d481d1acb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
