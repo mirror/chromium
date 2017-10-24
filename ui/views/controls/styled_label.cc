@@ -122,7 +122,7 @@ void StyledLabel::SetText(const base::string16& text) {
 }
 
 gfx::FontList StyledLabel::GetDefaultFontList() const {
-  return style::GetFont(text_context_, default_text_style_);
+  return style::GetFont(*this, text_context_, default_text_style_);
 }
 
 void StyledLabel::AddStyleRange(const gfx::Range& range,
@@ -235,9 +235,9 @@ void StyledLabel::LinkClicked(Link* source, int event_flags) {
 int StyledLabel::GetDefaultLineHeight() const {
   return specified_line_height_ > 0
              ? specified_line_height_
-             : std::max(
-                   style::GetLineHeight(text_context_, default_text_style_),
-                   GetDefaultFontList().GetHeight());
+             : std::max(style::GetLineHeight(*this, text_context_,
+                                             default_text_style_),
+                        GetDefaultFontList().GetHeight());
 }
 
 gfx::FontList StyledLabel::GetFontListForRange(
@@ -248,7 +248,7 @@ gfx::FontList StyledLabel::GetFontListForRange(
   return range->style_info.custom_font
              ? range->style_info.custom_font.value()
              : style::GetFont(
-                   text_context_,
+                   *this, text_context_,
                    range->style_info.text_style.value_or(default_text_style_));
 }
 

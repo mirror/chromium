@@ -10,6 +10,7 @@
 #include "ui/gfx/color_utils.h"
 #include "ui/gfx/platform_font.h"
 #include "ui/native_theme/native_theme.h"
+#include "ui/views/view.h"
 
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"
@@ -104,7 +105,8 @@ int HarmonyTypographyProvider::GetPlatformFontHeight(int font_context) {
 }
 #endif
 
-const gfx::FontList& HarmonyTypographyProvider::GetFont(int context,
+const gfx::FontList& HarmonyTypographyProvider::GetFont(const views::View& view,
+                                                        int context,
                                                         int style) const {
   // "Target" font size constants from the Harmony spec.
   constexpr int kHeadlineSize = 20;
@@ -144,12 +146,15 @@ const gfx::FontList& HarmonyTypographyProvider::GetFont(int context,
       size_delta, gfx::Font::NORMAL, font_weight);
 }
 
-SkColor HarmonyTypographyProvider::GetColor(
-    int context,
-    int style,
-    const ui::NativeTheme& theme) const {
-  if (ShouldIgnoreHarmonySpec(theme))
-    return GetHarmonyTextColorForNonStandardNativeTheme(context, style, theme);
+SkColor HarmonyTypographyProvider::GetColor(const views::View& view,
+                                            int context,
+                                            int style) const {
+  const ui::NativeTheme* native_theme = view.GetNativeTheme();
+  DCHECK(native_theme);
+  if (ShouldIgnoreHarmonySpec(*native_theme)) {
+    return GetHarmonyTextColorForNonStandardNativeTheme(context, style,
+                                                        *native_theme);
+  }
 
   if (context == views::style::CONTEXT_BUTTON_MD) {
     switch (style) {
@@ -180,7 +185,9 @@ SkColor HarmonyTypographyProvider::GetColor(
   return SkColorSetRGB(0x21, 0x21, 0x21);  // Primary for everything else.
 }
 
-int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
+int HarmonyTypographyProvider::GetLineHeight(const views::View& view,
+                                             int context,
+                                             int style) const {
   // "Target" line height constants from the Harmony spec. A default OS
   // configuration should use these heights. However, if the user overrides OS
   // defaults, then GetLineHeight() should return the height that would add the
@@ -224,16 +231,17 @@ int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
   // ui::ResourceBundle::ReloadFonts(). Currently that only happens on ChromeOS.
   // See http://crbug.com/708943.
   static const int headline_height =
-      GetFont(CONTEXT_HEADLINE, kTemplateStyle).GetHeight() -
+      GetFont(view, CONTEXT_HEADLINE, kTemplateStyle).GetHeight() -
       kHeadlinePlatformHeight + kHeadlineHeight;
   static const int title_height =
-      GetFont(views::style::CONTEXT_DIALOG_TITLE, kTemplateStyle).GetHeight() -
+      GetFont(view, views::style::CONTEXT_DIALOG_TITLE, kTemplateStyle)
+          .GetHeight() -
       kTitlePlatformHeight + kTitleHeight;
   static const int body_large_height =
-      GetFont(CONTEXT_BODY_TEXT_LARGE, kTemplateStyle).GetHeight() -
+      GetFont(view, CONTEXT_BODY_TEXT_LARGE, kTemplateStyle).GetHeight() -
       kBodyTextLargePlatformHeight + kBodyHeight;
   static const int default_height =
-      GetFont(CONTEXT_BODY_TEXT_SMALL, kTemplateStyle).GetHeight() -
+      GetFont(view, CONTEXT_BODY_TEXT_SMALL, kTemplateStyle).GetHeight() -
       kBodyTextSmallPlatformHeight + kBodyHeight;
 
   switch (context) {

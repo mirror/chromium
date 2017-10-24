@@ -21,7 +21,8 @@ void ApplyCommonFontStyles(int context,
 #endif
 }
 
-const gfx::FontList& LegacyTypographyProvider::GetFont(int context,
+const gfx::FontList& LegacyTypographyProvider::GetFont(const views::View& view,
+                                                       int context,
                                                        int style) const {
   constexpr int kHeadlineDelta = 8;
   constexpr int kDialogMessageDelta = 1;
@@ -62,12 +63,12 @@ const gfx::FontList& LegacyTypographyProvider::GetFont(int context,
       size_delta, kFontStyle, font_weight);
 }
 
-SkColor LegacyTypographyProvider::GetColor(int context,
-                                           int style,
-                                           const ui::NativeTheme& theme) const {
+SkColor LegacyTypographyProvider::GetColor(const views::View& view,
+                                           int context,
+                                           int style) const {
   // Use "disabled grey" for HINT and SECONDARY when Harmony is disabled.
   if (style == STYLE_HINT || style == STYLE_SECONDARY)
     style = views::style::STYLE_DISABLED;
 
-  return DefaultTypographyProvider::GetColor(context, style, theme);
+  return DefaultTypographyProvider::GetColor(view, context, style);
 }

@@ -45,9 +45,11 @@ LabelButton::LabelButton(ButtonListener* listener,
       label_(new LabelButtonLabel(text, button_context)),
       ink_drop_container_(new InkDropContainerView()),
       cached_normal_font_list_(
-          style::GetFont(button_context, style::STYLE_PRIMARY)),
+          style::GetFont(*this, button_context, style::STYLE_PRIMARY)),
       cached_default_button_font_list_(
-          style::GetFont(button_context, style::STYLE_DIALOG_BUTTON_DEFAULT)),
+          style::GetFont(*this,
+                         button_context,
+                         style::STYLE_DIALOG_BUTTON_DEFAULT)),
       button_state_images_(),
       button_state_colors_(),
       explicitly_set_colors_(),

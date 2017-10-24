@@ -219,7 +219,7 @@ void MdTextButton::UpdatePadding() {
   // |size_delta| will be zero, so to adjust upwards we double 17 to get 34.
   int size_delta =
       label()->font_list().GetFontSize() -
-      style::GetFont(style::CONTEXT_BUTTON_MD, style::STYLE_PRIMARY)
+      style::GetFont(*this, style::CONTEXT_BUTTON_MD, style::STYLE_PRIMARY)
           .GetFontSize();
   // TODO(tapted): This should get |target_height| using LayoutProvider::
   // GetControlHeightForFont(). It can't because that only returns a correct
@@ -243,12 +243,11 @@ void MdTextButton::UpdatePadding() {
 }
 
 void MdTextButton::UpdateColors() {
-  ui::NativeTheme* theme = GetNativeTheme();
   bool is_disabled = state() == STATE_DISABLED;
-  SkColor enabled_text_color = style::GetColor(
-      label()->text_context(),
-      is_prominent_ ? style::STYLE_DIALOG_BUTTON_DEFAULT : style::STYLE_PRIMARY,
-      theme);
+  SkColor enabled_text_color =
+      style::GetColor(*this, label()->text_context(),
+                      is_prominent_ ? style::STYLE_DIALOG_BUTTON_DEFAULT
+                                    : style::STYLE_PRIMARY);
   if (!explicitly_set_normal_color()) {
     const auto colors = explicitly_set_colors();
     LabelButton::SetEnabledTextColors(enabled_text_color);
@@ -258,8 +257,8 @@ void MdTextButton::UpdateColors() {
     // since a descendant could have overridden the label enabled color.
     if (is_disabled && !is_prominent_) {
       LabelButton::SetTextColor(STATE_DISABLED,
-                                style::GetColor(label()->text_context(),
-                                                style::STYLE_DISABLED, theme));
+                                style::GetColor(*this, label()->text_context(),
+                                                style::STYLE_DISABLED));
     }
     set_explicitly_set_colors(colors);
   }
@@ -269,14 +268,16 @@ void MdTextButton::UpdateColors() {
   if (is_prominent_)
     SetTextColor(STATE_DISABLED, enabled_text_color);
 
+  ui::NativeTheme* native_theme = GetNativeTheme();
+  DCHECK(native_theme);
   SkColor text_color = label()->enabled_color();
   SkColor bg_color =
-      theme->GetSystemColor(ui::NativeTheme::kColorId_DialogBackground);
+      native_theme->GetSystemColor(ui::NativeTheme::kColorId_DialogBackground);
 
   if (bg_color_override_) {
     bg_color = *bg_color_override_;
   } else if (is_prominent_) {
-    bg_color = theme->GetSystemColor(
+    bg_color = native_theme->GetSystemColor(
         ui::NativeTheme::kColorId_ProminentButtonColor);
     if (is_disabled) {
       bg_color = color_utils::BlendTowardOppositeLuma(
@@ -285,8 +286,8 @@ void MdTextButton::UpdateColors() {
   }
 
   if (state() == STATE_PRESSED) {
-    SkColor shade =
-        theme->GetSystemColor(ui::NativeTheme::kColorId_ButtonPressedShade);
+    SkColor shade = native_theme->GetSystemColor(
+        ui::NativeTheme::kColorId_ButtonPressedShade);
     bg_color = color_utils::GetResultingPaintColor(shade, bg_color);
   }
 

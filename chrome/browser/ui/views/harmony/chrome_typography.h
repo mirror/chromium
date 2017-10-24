@@ -74,10 +74,12 @@ class LegacyTypographyProvider : public views::DefaultTypographyProvider {
   LegacyTypographyProvider() = default;
 
   // DefaultTypographyProvider:
-  const gfx::FontList& GetFont(int context, int style) const override;
-  SkColor GetColor(int context,
-                   int style,
-                   const ui::NativeTheme& theme) const override;
+  const gfx::FontList& GetFont(const views::View& view,
+                               int context,
+                               int style) const override;
+  SkColor GetColor(const views::View& view,
+                   int context,
+                   int style) const override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(LegacyTypographyProvider);

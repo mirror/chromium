@@ -41,7 +41,9 @@ class TestLayoutProvider : public LayoutProvider,
   int GetSnappedDialogWidth(int min_width) const override;
 
   // TypographyProvider:
-  const gfx::FontList& GetFont(int context, int style) const override;
+  const gfx::FontList& GetFont(const View& view,
+                               int context,
+                               int style) const override;
 
  private:
   std::map<int, int> distance_metrics_;
