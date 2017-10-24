@@ -8,10 +8,32 @@
 #include <stdint.h>
 #include <string>
 
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "content/common/content_export.h"
 
 namespace content {
+
+// TODO(toyoshim): We may want to use mojo enums for WebCORS::AccessStatus,
+// and other WebCORS enum types, and have it here as a struct that contains
+// them all.
+enum ResourceRequestCORSErrorCode {
+  // Corresponds to WebCORS::AccessStatus.
+  kAccessAllowed,
+  kInvalidResponse,
+  kAllowOriginMismatch,
+  kSubOriginMismatch,
+  kWildcardOriginNotAllowed,
+  kMissingAllowOriginHeader,
+  kMultipleAllowOriginValues,
+  kInvalidAllowOriginValue,
+  kDisallowCredentialsNotSetToTrue,
+
+  // TODO(toyoshim): Other WebCORS entries for preflight and redirect will
+  // follow.
+
+  kLastCode = kDisallowCredentialsNotSetToTrue
+};
 
 struct CONTENT_EXPORT ResourceRequestCompletionStatus {
   ResourceRequestCompletionStatus();
@@ -41,6 +63,9 @@ struct CONTENT_EXPORT ResourceRequestCompletionStatus {
 
   // The length of the response body after decoding.
   int64_t decoded_body_length = 0;
+
+  // Optional CORS error details.
+  base::Optional<ResourceRequestCORSErrorCode> cors_error_code;
 };
 
 }  // namespace content
