@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8107c0be_dceefa60",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2300,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T00:32:21Z",
+      "side": 1,
+      "message": "Sylvain, \n\nThe original code in current CL works correctly for prerender and non prerender cases. Also current logic starts and stops the timer in the same class (BVC).\n\nAdding DidPromotePrerenderTab() will allow to move timer stopping logic from BVC to TabHelper, but timer starting logic will still remain in BVC. I would argue that starting the timer in one class and stopping the timer in another class adds extra complexity. What is the advantage of your proposal to partially move the logic from BVC to TabHelper?",
+      "parentUuid": "e21bd48e_dd4757db",
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "426d8dd0_b84aeada",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
