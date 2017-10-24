@@ -9,9 +9,36 @@
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 
+#include "chrome/browser/chromeos/arc/auth/arc_auth_service.h"
+
 namespace arc {
 
 namespace {
+
+std::map<std::string, std::vector<float>> s_play_store_times;
+std::map<std::string, std::vector<float>> s_checkin_times;
+
+void Update(std::vector<float>& data, const char* key, const char* variant) {
+  std::sort(data.begin(), data.end());
+  size_t skip = (data.size() / 7);
+  size_t cnt = data.size() - 2 * skip;
+  float min_time = data[skip];
+  float max_time = data[skip];
+  float average_time = 0.0;
+  for (size_t i = 0; i < cnt; ++i) {
+    average_time += data[skip + i];
+    min_time = std::min(min_time, data[skip + i]);
+    max_time = std::max(min_time, data[skip + i]);
+  }
+  average_time /= (float)cnt;
+  float deviation = (max_time - min_time)  / average_time;
+  LOG(ERROR) << "# - " << key << "(" << variant << ") " << cnt << " samples, "
+             << average_time << " average, "
+             << min_time << " - " << max_time << " range, "
+             << *data.begin() << " - " << *data.rbegin() << " absolute range, "
+             << deviation << " deviation.";
+
+}
 
 std::string GetHistogramName(const std::string& base_name, bool managed) {
   return base_name + (managed ? "Managed" : "Unmanaged");
@@ -70,6 +97,8 @@ void UpdatePlayStoreShowTime(const base::TimeDelta& elapsed_time,
   base::UmaHistogramCustomTimes(
       GetHistogramName("Arc.PlayStoreShown.TimeDelta.", managed), elapsed_time,
       base::TimeDelta::FromSeconds(1), base::TimeDelta::FromMinutes(10), 50);
+  s_play_store_times[arc::ArcAuthService::kArcVariant].push_back((float)elapsed_time.InSecondsF());
+  Update(s_play_store_times[arc::ArcAuthService::kArcVariant], "PlayStoreShown", arc::ArcAuthService::kArcVariant);
 }
 
 void UpdateAuthTiming(const char* histogram_name,
@@ -78,6 +107,8 @@ void UpdateAuthTiming(const char* histogram_name,
                                 base::TimeDelta::FromSeconds(1) /* minimum */,
                                 base::TimeDelta::FromMinutes(3) /* maximum */,
                                 50 /* bucket_count */);
+  s_checkin_times[arc::ArcAuthService::kArcVariant].push_back((float)elapsed_time.InSecondsF());
+  Update(s_checkin_times[arc::ArcAuthService::kArcVariant], "CheckinTime", arc::ArcAuthService::kArcVariant);
 }
 
 void UpdateAuthCheckinAttempts(int32_t num_attempts) {
