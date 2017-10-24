@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc37b6d_4f85657b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/components/dom-extension.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-24T16:38:39Z",
+      "side": 0,
+      "message": "Can we just remove this one, but leave the test? It tests how our traverseNextNode function works, which is quite unrelated to multiple shadow roots.",
+      "revId": "62e2e57b1d70dafad060d270ecd88e86a936ab1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3564b3_e457504c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/shadow/shadow-host-display-modes.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-24T16:38:39Z",
+      "side": 0,
+      "message": "Similar here, let\u0027s just drop adding youngest shadow root but leave the test.",
+      "revId": "62e2e57b1d70dafad060d270ecd88e86a936ab1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
