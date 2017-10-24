@@ -402,7 +402,6 @@ bool SearchBoxView::MoveArrowFocus(const ui::KeyEvent& event) {
     default:
       NOTREACHED();
   }
-
   SetSelected(focused_view_ == FOCUS_SEARCH_BOX);
   return (focused_view_ < FOCUS_CONTENTS_VIEW);
 }
