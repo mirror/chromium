@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b87856d0_5baa851c",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 0,
+      "message": "Are |kPreviewInitiatorHostId| and |kPreviewInitiatorRoutingId| obsolete as well? This is the only setter, and there is still a reader in chrome/browser/printing/printing_message_filter.cc.",
+      "revId": "3ccdaef7ede99969a15fce8ebb8394895de92c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f7fb30_0b49f4bf",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 0,
+      "message": "Remove |settings_| in the header?",
+      "revId": "3ccdaef7ede99969a15fce8ebb8394895de92c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

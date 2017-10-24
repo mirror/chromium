@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "35a89c60_6398c619",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Do you want to use {Once,Repeating}Callback in new code, if possible, so they won\u0027t need to be converted again.",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1127a098_1b263dbc",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "This can be derived from |rfh|.",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d5fa20_2eab1e71",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Add a: using GetPageCallback \u003d base::Callback\u003c...\u003e; statement so it\u0027s less unwieldy. Consider doing it for |callback| too.",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec93053_0c5b1bf3",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "().",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 36
+      },
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bd18a7e_96b999b2",
         "filename": "chrome/browser/printing/printer_query.cc",
         "patchSetId": 17
@@ -19,6 +93,331 @@
         "endLine": 24,
         "endChar": 17
       },
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e402575e_a38a0f8a",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "(For another CL) Can we add destination.isSaveAsPDF()?",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3369e816_1104be56",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Are the new #includes needed?",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87dd753_260b15a1",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Update. Same in local_printer_handler_default.h.",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1921f82b_971574ac",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "content::WebContents* const",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c85685_905f9d94",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "show_system_dialog might be a little clearer.",
+      "range": {
+        "startLine": 670,
+        "startChar": 7,
+        "endLine": 670,
+        "endChar": 20
+      },
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082f556f_24a3d454",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Should we replace all these booleans with an enum someday?",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dda9981_52f9ba8f",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "The cloud printer handling code is much shorter. Let\u0027s handle that first and exit early.",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d842ea_e3d26e4b",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "We may want to consider splitting StartPrint() into 2. It\u0027s convenient to be able to just call StartPrint() here, but on the down side:\n\n- Some StartPrint() impls have a bunch of unused parameters\n- Some imples have to take |json_str| and convert it to a base::DictionaryValue, which this method already has as |settings|.",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a25a34_0b53db3c",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Can this be const ref instead?",
+      "range": {
+        "startLine": 173,
+        "startChar": 50,
+        "endLine": 173,
+        "endChar": 65
+      },
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3edc9e_1c27f604",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Isn\u0027t this more like \"GetPageData\" ?",
+      "range": {
+        "startLine": 173,
+        "startChar": 37,
+        "endLine": 173,
+        "endChar": 49
+      },
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac8bc3d_1cfb796a",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Can you verify these are actually set incorrectly and needs to be corrected? We may want to look into if it is possible to set them correctly in the first place.",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788338bd_80db0da4",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Is there a constant we can use?",
+      "range": {
+        "startLine": 315,
+        "startChar": 32,
+        "endLine": 315,
+        "endChar": 44
+      },
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce052c9c_3e82705d",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "\u003c\u003d",
+      "range": {
+        "startLine": 315,
+        "startChar": 72,
+        "endLine": 315,
+        "endChar": 74
+      },
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73efa40b_f13cf5fa",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Already in printing namespace.",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 12
+      },
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401a7774_c88aa029",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Can we sort the parameters into roughly the same order as PrinterHandler::StartPrint()?",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf37d87_268c975a",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Can you document what |print_data| is? Not obvious given the Mac-specific code in the impl.",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f867e3_c87e9a3f",
+        "filename": "components/printing/renderer/print_render_frame_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-24T20:56:52Z",
+      "side": 1,
+      "message": "Can this be removed too?",
       "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
