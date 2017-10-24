@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "ad156e60_229ee884",
+        "filename": "chrome/common/profiling/memlog_sender_pipe.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-24T21:06:17Z",
+      "side": 1,
+      "message": "IMO if it\u0027s a struct, it should be rougly C-like. So copyable and all public.\n\nIf it\u0027s a class, it should be class like. So no public data fields.\n\nThe half-way state is weird...\n\nIf we want to keep it public, then I retract my previous suggestion of making it a class.",
+      "parentUuid": "943fbd8f_2e0c201b",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 36
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04915013_9fedd6a3",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 25
