@@ -55,6 +55,14 @@ SkColor NativeThemeDarkAura::GetSystemColor(ColorId color_id) const {
     case kColorId_LinkPressed:
       return gfx::kGoogleBlue300;
 
+    // TabbedPane
+    case kColorId_TabTitleColorActive:
+      return SkColorSetRGB(0x42, 0x85, 0xf4);
+    case kColorId_TabTitleColorInactive:
+      return SkColorSetRGB(0x75, 0x75, 0x75);
+    case kColorId_TabBottomBorder:
+      return SkColorSetA(SK_ColorBLACK, 0x1e);
+
     // Textfield
     case kColorId_TextfieldDefaultColor:
     case kColorId_TextfieldSelectionColor:
