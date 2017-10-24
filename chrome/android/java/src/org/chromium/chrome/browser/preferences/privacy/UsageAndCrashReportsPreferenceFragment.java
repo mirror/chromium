@@ -9,12 +9,14 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.metrics.UmaSessionStats;
 import org.chromium.chrome.browser.preferences.ChromeSwitchPreference;
 import org.chromium.chrome.browser.preferences.ManagedPreferenceDelegate;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.PreferenceUtils;
+import org.chromium.chrome.browser.survey.SurveyController;
 
 /**
  * Fragment to manage the Usage and crash reports preference and to explain to
@@ -42,7 +44,11 @@ public class UsageAndCrashReportsPreferenceFragment extends PreferenceFragment {
         usageAndCrashReportsSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                UmaSessionStats.changeMetricsReportingConsent((boolean) newValue);
+                boolean enabled = (boolean) newValue;
+                if (!enabled) {
+                    SurveyController.clearCache(ContextUtils.getApplicationContext());
+                }
+                UmaSessionStats.changeMetricsReportingConsent(enabled);
                 return true;
             }
         });
