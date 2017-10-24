@@ -365,4 +365,42 @@ test(() => {
       '<div id="second">four |<span id="end"></span>five six</div>',
     ].join(''));
 }, 'computeLeft() and computeTop()');
+
+selection_test(
+    '<div>foo</div>',
+    (selection) => {
+      return new Promise((resolve) =>{
+        setTimeout(() => {
+          selection.document.execCommand('selectAll');
+          resolve();}, 200)}
+      );
+    },
+    '<div>^foo|</div>',
+    {async: true},
+    'aync');
+
+selection_test(
+    '<div>foo</div>',
+    (selection) => {
+      return new Promise((resolve, reject) =>{
+        if (!chrome || !chrome.gpuBenchmarking)
+          reject();
+
+        let div = selection.document.querySelector('div');
+        let x = selection.computeLeft(div);
+        let y = selection.computeTop(div) + div.offsetHeight / 2;
+        var pointerActions = [{
+            source: "mouse",
+            actions: [
+                { name: "pointerMove", x: x, y: y },
+                { name: "pointerDown", x: x, y: y },
+                { name: "pointerMove", x: x + div.offsetWidth / 2, y: y}
+            ]
+        }];
+        chrome.gpuBenchmarking.pointerActionSequence(pointerActions, resolve);
+      });
+    },
+    '<div>^foo|</div>',
+    {async: true},
+    'aync pointerActionSequence');
 </script>
