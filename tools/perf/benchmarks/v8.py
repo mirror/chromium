@@ -6,6 +6,9 @@ from core import perf_benchmark
 
 from measurements import v8_detached_context_age_in_gc
 import page_sets
+from benchmarks.speedometer2 import Speedometer2
+from benchmarks.speedometer import Speedometer
+from benchmarks.v8_helper import AppendJSFlags
 
 from telemetry import benchmark
 from telemetry import story
@@ -97,3 +100,31 @@ class V8Top25RuntimeStats(_Top25RuntimeStats):
             [story.expectations.ALL_ANDROID, story.expectations.ALL_WIN],
             'crbug.com/664318')
     return StoryExpectations()
+
+@benchmark.Owner(emails=['hablich@chromium.org'])
+class V8Speedometer2Future(Speedometer2):
+  """Speedometer2 benchmark with the V8 flag --future.
+
+  Shows the performance of upcoming V8 VM features.
+  """
+
+  @classmethod
+  def Name(cls):
+    return 'v8.speedometer2-future'
+
+  def SetExtraBrowserOptions(self, options):
+     AppendJSFlags(options, '--future')
+
+@benchmark.Owner(emails=['hablich@chromium.org'])
+class V8SpeedometerFuture(Speedometer):
+  """Speedometer benchmark with the V8 flag --future.
+
+  Shows the performance of upcoming V8 VM features.
+  """
+
+  @classmethod
+  def Name(cls):
+    return 'v8.speedometer-future'
+
+  def SetExtraBrowserOptions(self, options):
+     AppendJSFlags(options, '--future')
