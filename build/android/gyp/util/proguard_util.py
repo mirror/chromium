@@ -156,6 +156,8 @@ class ProguardCmdBuilder(object):
     if self._verbose:
       cmd.append('-verbose')
 
+    cmd.append('-whyareyoukeeping public class *')
+
     self._cmd = cmd
     return self._cmd
 
