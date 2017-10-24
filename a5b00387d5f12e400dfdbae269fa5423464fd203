@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2349b90a_873d8791",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-24T13:45:41Z",
+      "side": 1,
+      "message": "nit: auto* should suffice; reference-to-pointer is weird (even if it\u0027s what we were technically doing before)",
+      "revId": "a5b00387d5f12e400dfdbae269fa5423464fd203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "073694db_1c301be4",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.cpp",
         "patchSetId": 1
