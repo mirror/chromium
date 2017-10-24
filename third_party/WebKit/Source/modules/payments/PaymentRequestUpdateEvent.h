@@ -37,6 +37,8 @@ class MODULES_EXPORT PaymentRequestUpdateEvent final : public Event,
 
   void updateWith(ScriptState*, ScriptPromise, ExceptionState&);
 
+  bool is_waiting_for_update() const { return wait_for_update_; }
+
   // PaymentUpdater:
   void OnUpdatePaymentDetails(const ScriptValue& details_script_value) override;
   void OnUpdatePaymentDetailsFailure(const String& error) override;
