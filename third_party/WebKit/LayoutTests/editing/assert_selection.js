@@ -66,6 +66,8 @@ const kIFrameBorderSize = 2;
 
 /** @const @type {string} */
 const kTextArea = 'TEXTAREA';
+/** @const @type {string} */
+const kAsync = 'async';
 
 class Traversal {
   /**
@@ -937,15 +939,8 @@ function assertSelection(
 
   checkExpectedText(expectedText);
   const sample = new Sample(inputText);
-  if (typeof(tester) === 'function') {
-    tester.call(window, sample.selection);
-  } else if (typeof(tester) === 'string') {
-    const strings = tester.split(/ (.+)/);
-    sample.document.execCommand(strings[0], false, strings[1]);
-  } else {
-    throw new Error(`Invalid tester: ${tester}`);
-  }
 
+  let confirm = () => {
   /** @type {!Traversal} */
   const traversal = (() => {
     switch (dumpAs) {
@@ -975,6 +970,21 @@ function assertSelection(
     `\t expected ${expectedText},\n` +
     `\t but got  ${actualText},\n` +
     `\t sameupto ${commonPrefixOf(expectedText, actualText)}`);
+  };
+
+  if (options[kAsync]) {
+    return tester.call(window, sample.selection)
+      .then(confirm);
+  }
+  if (typeof(tester) === 'function') {
+    tester.call(window, sample.selection);
+  } else if (typeof(tester) === 'string') {
+    const strings = tester.split(/ (.+)/);
+    sample.document.execCommand(strings[0], false, strings[1]);
+  } else {
+    throw new Error(`Invalid tester: ${tester}`);
+  }
+  return confirm();
 }
 
 /**
@@ -989,8 +999,15 @@ function selectionTest(inputText, tester, expectedText, opt_options,
   const description = typeof(opt_options) === 'string' ? opt_options
                                                        : opt_description;
   const options = typeof(opt_options) === 'string' ? undefined : opt_options;
+  if (options && options[kAsync]) {
+    promise_test(() =>
+ assertSelection(inputText, tester, expectedText, options),
+         description);
+    return;
+  }
   test(() => assertSelection(inputText, tester, expectedText, options),
        description);
+
 }
 
 // Export symbols
