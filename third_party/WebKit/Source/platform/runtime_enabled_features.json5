@@ -402,7 +402,7 @@
     },
     {
       name: "FeaturePolicyForPermissions",
-      status: "stable"
+      status: "experimental"
     },
     {
       name: "FetchRequestCache",
