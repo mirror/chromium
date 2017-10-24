@@ -26,6 +26,7 @@
 #include "components/viz/common/quads/render_pass_draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
 #include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/tile_draw_quad.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/transform.h"
@@ -494,6 +495,7 @@ void RenderSurfaceImpl::TileMaskLayer(viz::RenderPass* render_pass,
       visible_layer_rect, 1.f / mask_quad_to_surface_contents_scale.x(),
       1.f / mask_quad_to_surface_contents_scale.y());
 
+  float total_texture_area = 0;
   for (auto* temp_quad : temp_render_pass->quad_list) {
     gfx::Rect quad_rect = temp_quad->rect;
     if (!quad_rect.Intersects(content_rect_in_coverage_space))
@@ -541,6 +543,9 @@ void RenderSurfaceImpl::TileMaskLayer(viz::RenderPass* render_pass,
                      mask_texture_size, owning_layer_to_surface_contents_scale,
                      FiltersOrigin(), quad_rect_in_non_normalized_texture_space,
                      !layer_tree_impl_->settings().enable_edge_anti_aliasing);
+        gfx::Size texture_size =
+            static_cast<viz::TileDrawQuad*>(temp_quad)->texture_size;
+        total_texture_area += texture_size.width() * texture_size.height();
       } break;
       case viz::DrawQuad::SOLID_COLOR: {
         if (!static_cast<viz::SolidColorDrawQuad*>(temp_quad)->color)
@@ -566,6 +571,10 @@ void RenderSurfaceImpl::TileMaskLayer(viz::RenderPass* render_pass,
         break;
     }
   }
+  float content_area = content_rect().width() * content_rect().height();
+  if (total_texture_area > 0)
+    static_cast<PictureLayerImpl*>(mask_layer)
+        ->set_saved_texture_ratio(content_area / total_texture_area - 1);
 }
 
 }  // namespace cc

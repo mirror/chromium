@@ -567,27 +567,39 @@ class LayerTreeHostImplTest : public testing::Test,
     host_impl_->DidDrawAllLayers(frame);
   }
 
-  void TestGPUMemoryForTilings(const gfx::Size& layer_size) {
-    std::unique_ptr<FakeRecordingSource> recording_source =
-        FakeRecordingSource::CreateFilledRecordingSource(layer_size);
-    PaintImage checkerable_image =
-        CreateDiscardablePaintImage(gfx::Size(500, 500));
-    recording_source->add_draw_image(checkerable_image, gfx::Point(0, 0));
-
-    recording_source->Rerecord();
-    scoped_refptr<FakeRasterSource> raster_source =
-        FakeRasterSource::CreateFromRecordingSource(recording_source.get());
-
+  void TestGPUMemoryCommon(const gfx::Size& layer_size,
+                           scoped_refptr<FakeRasterSource> raster_source,
+                           Layer::LayerMaskType mask_type) {
     // Create the pending tree.
     host_impl_->BeginCommit();
     LayerTreeImpl* pending_tree = host_impl_->pending_tree();
     host_impl_->SetViewportSize(layer_size);
-    pending_tree->SetRootLayerForTesting(
-        FakePictureLayerImpl::CreateWithRasterSource(pending_tree, 1,
-                                                     raster_source));
-    auto* root = static_cast<FakePictureLayerImpl*>(*pending_tree->begin());
-    root->SetBounds(layer_size);
-    root->SetDrawsContent(true);
+    FakePictureLayerImpl* picture_layer_impl = nullptr;
+    if (mask_type != Layer::LayerMaskType::NOT_MASK) {
+      pending_tree->SetRootLayerForTesting(LayerImpl::Create(pending_tree, 1));
+      auto* root = *pending_tree->begin();
+      std::unique_ptr<LayerImpl> render_surface =
+          LayerImpl::Create(pending_tree, 2);
+      render_surface->SetBounds(layer_size);
+      render_surface->SetDrawsContent(true);
+      render_surface->set_contributes_to_drawn_render_surface(true);
+      render_surface->test_properties()->SetMaskLayer(
+          FakePictureLayerImpl::CreateMaskWithRasterSource(pending_tree, 3,
+                                                           raster_source));
+      picture_layer_impl = static_cast<FakePictureLayerImpl*>(
+          render_surface->test_properties()->mask_layer);
+      picture_layer_impl->SetLayerMaskType(mask_type);
+      pending_tree->AddToLayerList(render_surface.get());
+      root->test_properties()->AddChild(std::move(render_surface));
+    } else {
+      pending_tree->SetRootLayerForTesting(
+          FakePictureLayerImpl::CreateWithRasterSource(pending_tree, 1,
+                                                       raster_source));
+      picture_layer_impl =
+          static_cast<FakePictureLayerImpl*>(*pending_tree->begin());
+    }
+    picture_layer_impl->SetBounds(layer_size);
+    picture_layer_impl->SetDrawsContent(true);
     pending_tree->BuildPropertyTreesForTesting();
 
     // CompleteCommit which should perform a PrepareTiles, adding tilings for
@@ -601,6 +613,34 @@ class LayerTreeHostImplTest : public testing::Test,
 
     host_impl_->ReleaseLayerTreeFrameSink();
     host_impl_ = nullptr;
+  }
+
+  void TestGPUMemoryForTilings(const gfx::Size& layer_size) {
+    std::unique_ptr<FakeRecordingSource> recording_source =
+        FakeRecordingSource::CreateFilledRecordingSource(layer_size);
+    PaintImage checkerable_image =
+        CreateDiscardablePaintImage(gfx::Size(500, 500));
+    recording_source->add_draw_image(checkerable_image, gfx::Point(0, 0));
+
+    recording_source->Rerecord();
+    scoped_refptr<FakeRasterSource> raster_source =
+        FakeRasterSource::CreateFromRecordingSource(recording_source.get());
+    TestGPUMemoryCommon(layer_size, std::move(raster_source),
+                        Layer::LayerMaskType::NOT_MASK);
+  }
+
+  void TestGPUMemoryForBorderRadiusMask(const gfx::Size& layer_size,
+                                        int radius,
+                                        Layer::LayerMaskType mask_type) {
+    SkRRect rrect = SkRRect::MakeRectXY(
+        gfx::RectToSkRect(gfx::Rect(layer_size)), radius, radius);
+    std::unique_ptr<FakeRecordingSource> recording_source =
+        FakeRecordingSource::CreateFilledRecordingSource(layer_size);
+    recording_source->add_draw_rrect(rrect);
+    recording_source->Rerecord();
+    scoped_refptr<FakeRasterSource> raster_source =
+        FakeRasterSource::CreateFromRecordingSource(recording_source.get());
+    TestGPUMemoryCommon(layer_size, std::move(raster_source), mask_type);
   }
 
   void pinch_zoom_pan_viewport_forces_commit_redraw(float device_scale_factor);
@@ -911,6 +951,43 @@ TEST_F(CommitToPendingTreeLayerTreeHostImplTest,
       "Compositing.Renderer.GPUMemoryForTilingsInKb", 1024, 1);
   histogram_tester.ExpectTotalCount(
       "Compositing.Renderer.GPUMemoryForTilingsInKb", 1);
+}
+
+TEST_F(CommitToPendingTreeLayerTreeHostImplTest,
+       GPUMemoryForSingleTextureMaskHistogramTest) {
+  base::HistogramTester histogram_tester;
+  SetClientNameForMetrics("Renderer");
+  TestGPUMemoryForBorderRadiusMask(gfx::Size(1000, 1000), 10,
+                                   Layer::LayerMaskType::SINGLE_TEXTURE_MASK);
+  // The single texture mask has a texture of exact the same size. So the memory
+  // usage is 1000 * 1000 * 4 / 1024 = 3906KB memory.
+  histogram_tester.ExpectBucketCount("Compositing.Renderer.MaskMemoryUsageInKb",
+                                     3906, 1);
+  histogram_tester.ExpectBucketCount(
+      "Compositing.Renderer.MaskMemoryUsageSavedByTilingInKb", 0, 1);
+  histogram_tester.ExpectTotalCount("Compositing.Renderer.MaskMemoryUsageInKb",
+                                    1);
+  histogram_tester.ExpectTotalCount(
+      "Compositing.Renderer.MaskMemoryUsageSavedByTilingInKb", 1);
+}
+
+TEST_F(CommitToPendingTreeLayerTreeHostImplTest,
+       GPUMemoryForMultiTextureMaskHistogramTest) {
+  base::HistogramTester histogram_tester;
+  SetClientNameForMetrics("Renderer");
+  TestGPUMemoryForBorderRadiusMask(gfx::Size(1000, 1000), 10,
+                                   Layer::LayerMaskType::MULTI_TEXTURE_MASK);
+  // The multi texture mask only has textures for the 4 corners, with default
+  // tile size being set to 256 * 256, the memory usage of the 4 tiles is
+  // 256 * 256 * 4 * 4 / 124 = 1024KB memory.
+  histogram_tester.ExpectBucketCount("Compositing.Renderer.MaskMemoryUsageInKb",
+                                     1024, 1);
+  histogram_tester.ExpectBucketCount(
+      "Compositing.Renderer.MaskMemoryUsageSavedByTilingInKb", 2882, 1);
+  histogram_tester.ExpectTotalCount("Compositing.Renderer.MaskMemoryUsageInKb",
+                                    1);
+  histogram_tester.ExpectTotalCount(
+      "Compositing.Renderer.MaskMemoryUsageSavedByTilingInKb", 1);
 }
 
 TEST_F(LayerTreeHostImplTest, ScrollRootCallsCommitAndRedraw) {

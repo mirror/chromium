@@ -112,7 +112,8 @@ PictureLayerImpl::PictureLayerImpl(LayerTreeImpl* tree_impl,
       nearest_neighbor_(false),
       use_transformed_rasterization_(false),
       is_directly_composited_image_(false),
-      can_use_lcd_text_(true) {
+      can_use_lcd_text_(true),
+      saved_texture_ratio_(1.f) {
   layer_tree_impl()->RegisterPictureLayerImpl(this);
 }
 
@@ -1605,6 +1606,23 @@ void PictureLayerImpl::InvalidateRegionForImages(
   SetNeedsPushProperties();
   TRACE_EVENT1("cc", "PictureLayerImpl::InvalidateRegionForImages Invalidation",
                "Invalidation", invalidation.ToString());
+}
+
+int PictureLayerImpl::GPUMemoryUsageInBytesSavedByMaskTiling() const {
+  DCHECK(mask_type_ != Layer::LayerMaskType::NOT_MASK);
+  viz::ResourceFormat format = viz::ResourceFormat::RGBA_8888;
+  int usage = GPUMemoryUsageInBytes();
+
+  if (usage)
+    return usage * saved_texture_ratio_;
+
+  // If the mask layer is solid color, we would save all memory used to store
+  // the texture, in this way, we estimate the saved memory using format
+  // RGBA_8888.
+  gfx::Rect content_rect = gfx::ScaleToEnclosingRect(
+      gfx::Rect(bounds()), MaximumTilingContentsScale());
+  return ResourceUtil::UncheckedSizeInBytes<size_t>(content_rect.size(),
+                                                    format);
 }
 
 void PictureLayerImpl::RegisterAnimatedImages() {
