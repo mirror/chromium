@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea8871e_2f5f4cbb",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T16:17:56Z",
+      "side": 1,
+      "message": "Nit: Remove this and add an include for StringPiece.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 33
+      },
+      "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe87a46_e818b7c3",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T16:17:56Z",
+      "side": 1,
+      "message": "While this could be\n\n  return \"ble:\" + std::string(address); \n\nI imagine your solution is more efficient (1 string allocation instead of 2, if I counted correctly). Fine as is :)",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f20d5b1_661de4fa",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T16:17:56Z",
+      "side": 1,
+      "message": "Nit: Simply DCHECK(adapter_) should work as well.",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 11
+      },
+      "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac03fb3_56500d82",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T16:17:56Z",
+      "side": 1,
+      "message": "Could you guard accesses to delegate_ by either an if or DCHECK? It could happen that it is null. Probably we should treat that as an error, so maybe DCHECK is best? Also applies to the other usages.",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 15
+      },
+      "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9dac670_3813a438",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T16:17:56Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 20
+      },
+      "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
