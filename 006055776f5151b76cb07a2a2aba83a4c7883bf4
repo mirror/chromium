@@ -22,6 +22,57 @@
       "revId": "006055776f5151b76cb07a2a2aba83a4c7883bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb03bff5_3cbf56f8",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T08:01:42Z",
+      "side": 1,
+      "message": "Make this a new sentence: \"In case there is no registration at |client_url|, or the registration is uninstalling, |error| is still kNone but with null |registration| and |attributes|.\"",
+      "revId": "006055776f5151b76cb07a2a2aba83a4c7883bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc285864_dcbec21b",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T08:01:42Z",
+      "side": 1,
+      "message": "\"no registration found\" kind of sounds like a failure case to me... would just say\n\n\"if there is no registration at the scope or it\u0027s uninstalling\"",
+      "revId": "006055776f5151b76cb07a2a2aba83a4c7883bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc63836_15591743",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T08:01:42Z",
+      "side": 1,
+      "message": "Do these also work?\n\nDCHECK_NE(kInvalidServiceWorkerRegistrationId)\nDCHECK_NE(kInvalidServiceWorkerRgistrationHandleId)",
+      "revId": "006055776f5151b76cb07a2a2aba83a4c7883bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
