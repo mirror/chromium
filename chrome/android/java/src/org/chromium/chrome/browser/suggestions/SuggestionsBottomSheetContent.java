@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.suggestions;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.View.OnAttachStateChangeListener;
 import android.view.ViewGroup;
 
 import org.chromium.base.CollectionUtil;
+import org.chromium.base.Log;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -66,6 +68,9 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     private boolean mNewTabShown;
     private boolean mSearchProviderHasLogo = true;
     private float mLastSheetHeightFraction = 1f;
+    private final int mToolbarHeight;
+    private final float mMaxToolbarOffset;
+    private int mScrollY;
 
     /**
      * Whether {@code mView} is currently attached to the window. This is used in place of
@@ -94,6 +99,12 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         mView.setBackgroundColor(backgroundColor);
         mRecyclerView = mView.findViewById(R.id.recycler_view);
         mRecyclerView.setBackgroundColor(backgroundColor);
+//        mRecyclerView.setBackgroundColor(0xffffcccc);
+        mToolbarHeight = resources.getDimensionPixelSize(R.dimen.bottom_control_container_height);
+        mMaxToolbarOffset =
+                resources.getDimensionPixelSize(R.dimen.ntp_logo_height_modern) +
+                        resources.getDimensionPixelSize(R.dimen.ntp_logo_margin_top_modern) +
+                        resources.getDimensionPixelSize(R.dimen.ntp_logo_margin_bottom_modern);
 
         TouchEnabledDelegate touchEnabledDelegate = activity.getBottomSheet()::setTouchEnabled;
         mContextMenuManager = new ContextMenuManager(
@@ -157,6 +168,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                     mRecyclerView.setScrollEnabled(true);
                 }
 
+                Log.w("mvano", "onContentStateChanged calling updateLogoTransition");
                 updateLogoTransition();
             }
 
@@ -164,17 +176,19 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             public void onSheetClosed(@StateChangeReason int reason) {
                 super.onSheetClosed(reason);
                 mRecyclerView.setAdapter(null);
+                Log.w("mvano", "onSheetClosed calling updateLogoTransition");
                 updateLogoTransition();
             }
 
             @Override
             public void onSheetOffsetChanged(float heightFraction) {
                 mLastSheetHeightFraction = heightFraction;
+                Log.w("mvano", "onSheetOffsetChanged calling updateLogoTransition");
                 updateLogoTransition();
             }
         };
 
-        final LocationBar locationBar = (LocationBar) sheet.findViewById(R.id.location_bar);
+        final LocationBar locationBar = sheet.findViewById(R.id.location_bar);
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             @SuppressLint("ClickableViewAccessibility")
@@ -205,12 +219,23 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             @Override
             public void onViewAttachedToWindow(View v) {
                 mIsAttachedToWindow = true;
+                Log.w("mvano", "onViewAttachedToWindow calling updateLogoTransition");
                 updateLogoTransition();
             }
 
             @Override
             public void onViewDetachedFromWindow(View v) {
                 mIsAttachedToWindow = false;
+                Log.w("mvano", "onViewDetachedFromWindow calling updateLogoTransition");
+                updateLogoTransition();
+            }
+        });
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                mScrollY += dy;
+                Log.w("mvano", "onScrolled calling updateLogoTransition");
                 updateLogoTransition();
             }
         });
@@ -268,17 +293,20 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     @Override
     public void onNewTabShown() {
         mNewTabShown = true;
+        updateRecyclerViewTopPadding();
     }
 
     @Override
     public void onNewTabHidden() {
         mNewTabShown = false;
+        updateRecyclerViewTopPadding();
     }
 
     @Override
     public void onTemplateURLServiceChanged() {
         updateSearchProviderHasLogo();
         loadSearchProviderLogo();
+        Log.w("mvano", "onTemplateURLServiceChanged calling updateLogoTransition");
         updateLogoTransition();
     }
 
@@ -322,11 +350,11 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     }
 
     private void updateLogoTransition() {
-        boolean showLogo = mSearchProviderHasLogo && mNewTabShown && mSheet.isSheetOpen()
-                && !mActivity.getTabModelSelector().isIncognitoSelected() && mIsAttachedToWindow
-                && !mSheet.isSmallScreen()
-                && mActivity.getTabModelSelector().getModel(false).getCount() > 0;
+        boolean showLogo = shouldShowLogo();
+        Log.w("mvano", "updateLogoTransition showLogo: %s", showLogo);
+        Log.w("mvano", "updateLogoTransition mScrollY: %s", mScrollY);
 
+        // If the logo is not shown, reset all transitions.
         if (!showLogo) {
             mLogoView.setVisibility(View.GONE);
             mControlContainerView.setTranslationY(0);
@@ -342,7 +370,6 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
         ViewGroup.MarginLayoutParams logoParams =
                 (ViewGroup.MarginLayoutParams) mLogoView.getLayoutParams();
-        float maxToolbarOffset = logoParams.height + logoParams.topMargin + logoParams.bottomMargin;
 
         // Transform the sheet height fraction back to pixel scale.
         float rangePx =
@@ -354,23 +381,44 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         // The transition starts when the sheet is `2 * maxToolbarOffset` from the bottom or the
         // top. This makes the toolbar stay vertically centered in the sheet during the
         // bottom transition.
-        float transitionFraction =
-                Math.max(Math.max(1 - sheetHeightPx / (2 * maxToolbarOffset),
-                                 1 + (sheetHeightPx - rangePx) / (2 * maxToolbarOffset)),
-                        0);
+//        float transitionFraction =
+//                Math.max(Math.max(1 - sheetHeightPx / (2 * mMaxToolbarOffset),
+//                                 1 + (sheetHeightPx - rangePx) / (2 * mMaxToolbarOffset)),
+//                        0);
+
+        float transitionFraction = Math.min(1, mScrollY / mMaxToolbarOffset);
+        Log.w("mvano", "updateLogoTransition transitionFraction: %s", transitionFraction);
 
         mLogoView.setTranslationY(logoParams.topMargin * -transitionFraction);
         mLogoView.setAlpha(Math.max(0.0f, 1.0f - (transitionFraction * 3.0f)));
 
-        float toolbarOffset = maxToolbarOffset * (1.0f - transitionFraction);
+        float toolbarOffset = mMaxToolbarOffset * (1.0f - transitionFraction);
         mControlContainerView.setTranslationY(toolbarOffset);
         mToolbarPullHandle.setTranslationY(-toolbarOffset);
         mToolbarShadow.setTranslationY(-toolbarOffset);
-        mRecyclerView.setTranslationY(toolbarOffset);
     }
 
     @Override
     public void scrollToTop() {
         mRecyclerView.smoothScrollToPosition(0);
+    }
+
+    private void updateRecyclerViewTopPadding() {
+        int newPadding = mToolbarHeight;
+        if (shouldShowLogo()) newPadding += (int) mMaxToolbarOffset;
+        Log.w("mvano", "setRecyclerViewTopPadding: newPadding %s", newPadding);
+        int currentPadding = mRecyclerView.getPaddingTop();
+        if (newPadding == currentPadding) return;
+
+        int left = mRecyclerView.getPaddingLeft();
+        int right = mRecyclerView.getPaddingRight();
+        int bottom = mRecyclerView.getPaddingBottom();
+        mRecyclerView.setPadding(left, newPadding, right, bottom);
+        mRecyclerView.scrollToPosition(0);
+    }
+
+    private boolean shouldShowLogo() {
+        return mSearchProviderHasLogo && mNewTabShown && mSheet.isSheetOpen()
+                && !mActivity.getTabModelSelector().isIncognitoSelected() && mIsAttachedToWindow;
     }
 }
