@@ -255,6 +255,22 @@ void VrGLThread::SetExitVrPromptEnabled(bool enabled,
                             browser_ui_, enabled, reason));
 }
 
+void VrGLThread::SetRecognizingSpeechEnabled(bool enabled) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&vr::BrowserUiInterface::SetRecognizingSpeechEnabled,
+                 browser_ui_, enabled));
+}
+
+void VrGLThread::OnSpeechRecognitionStateChanged(int new_state) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&vr::BrowserUiInterface::OnSpeechRecognitionStateChanged,
+                 browser_ui_, new_state));
+}
+
 bool VrGLThread::OnMainThread() const {
   return main_thread_task_runner_->BelongsToCurrentThread();
 }

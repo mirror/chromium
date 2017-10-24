@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/vr/elements/close_button_texture.h"
+#include "chrome/browser/vr/elements/vector_icon_button_texture.h"
 
 #include "base/memory/ptr_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -10,8 +10,8 @@
 
 namespace vr {
 
-TEST(CloseButtonTextureTest, HitTest) {
-  auto button = base::MakeUnique<CloseButtonTexture>();
+TEST(VectorIconButtonTextureTest, HitTest) {
+  auto button = base::MakeUnique<VectorIconButtonTexture>();
 
   struct {
     gfx::PointF location;

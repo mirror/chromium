@@ -20,6 +20,7 @@ class ContentElement;
 class ContentInputDelegate;
 class Grid;
 class Rect;
+class SpeechRecognitionPrompt;
 class TransientElement;
 class WebVrUrlToast;
 class UiBrowserInterface;
@@ -62,10 +63,13 @@ struct UiInitialState;
 //         kLoadingIndicator
 //         kExitButton
 //         kUnderDevelopmentNotice
-//     kFullscreenToast
+//         kVoiceSearchButton
 //     kScreenDimmer
 //     k2dBrowsingViewportAwareRoot
 //       kExitWarning
+//     kSpeechRecognitionPrompt
+//       kSpeechRecognitionPromptBackplane
+
 //   kWebVrRoot
 //     kWebVrViewportAwareRoot
 //       kExclusiveScreenToastTransientParent
@@ -124,7 +128,7 @@ class UiSceneManager {
   const ColorScheme& color_scheme() const;
 
  private:
-  void Create2dBrowsingSubtreeRoots();
+  void Create2dBrowsingSubtreeRoots(Model* model);
   void CreateWebVrRoot();
   void CreateScreenDimmer();
   void CreateWebVRExitWarning();
@@ -139,7 +143,7 @@ class UiSceneManager {
   void CreateCloseButton();
   void CreateExitPrompt();
   void CreateToasts();
-  void CreateVoiceSearchButton();
+  void CreateVoiceSearchUiGroup(Model* model);
 
   void ConfigureScene();
   void ConfigureExclusiveScreenToast();
@@ -149,6 +153,7 @@ class UiSceneManager {
   void OnSecurityIconClicked();
   void OnExitPromptChoice(bool chose_exit);
   void OnExitPromptBackplaneClicked();
+  void OnExitRecognizingSpeechClicked();
   void OnCloseButtonClicked();
   void OnUnsupportedMode(UiUnsupportedMode mode);
   void OnVoiceSearchButtonClicked();
@@ -169,6 +174,8 @@ class UiSceneManager {
   ShowUntilSignalTransientElement* splash_screen_transient_parent_ = nullptr;
   ExitPrompt* exit_prompt_ = nullptr;
   UiElement* exit_prompt_backplane_ = nullptr;
+  SpeechRecognitionPrompt* speech_recognition_prompt_ = nullptr;
+  UiElement* speech_recognition_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
   ContentElement* main_content_ = nullptr;
   UiElement* audio_capture_indicator_ = nullptr;
@@ -207,7 +214,6 @@ class UiSceneManager {
   bool screen_capturing_ = false;
   bool location_access_ = false;
   bool bluetooth_connected_ = false;
-  bool recognizing_speech_ = false;
   UiUnsupportedMode exit_vr_prompt_reason_ = UiUnsupportedMode::kCount;
 
   std::vector<Rect*> background_panels_;

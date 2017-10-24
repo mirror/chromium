@@ -54,6 +54,8 @@ enum UiElementName {
   kBackgroundTop,
   kBackgroundBottom,
   kUnderDevelopmentNotice,
+  kSpeechRecognitionPrompt,
+  kSpeechRecognitionPromptBackplane,
 };
 
 }  // namespace vr

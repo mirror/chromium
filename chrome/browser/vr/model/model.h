@@ -10,6 +10,8 @@ namespace vr {
 struct Model {
   bool loading = false;
   float load_progress = 0.0f;
+  bool recognizing_speech = false;
+  int speech_recognition_state = 0;
 };
 
 }  // namespace vr
