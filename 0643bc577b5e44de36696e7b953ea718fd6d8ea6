@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0aaa6836_e024e880",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-24T06:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e516c0cf_37dff62f",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 38
+      },
+      "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9e2721e_6915fd68",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 9
@@ -147,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "b5c6fafc_260f7db4",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-24T06:30:05Z",
+      "side": 1,
+      "message": "Yes, destructs shouldn\u0027t be marked \"override\" with discussing in here[1]\n\n[1] https://github.com/isocpp/CppCoreGuidelines/issues/721",
+      "parentUuid": "b1c90052_0f06724b",
+      "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecc7f889_1e5797f7",
         "filename": "services/shape_detection/face_detection_impl_win.h",
         "patchSetId": 9
@@ -161,6 +203,24 @@
       "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570226b6_7d9b0817",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-24T06:30:05Z",
+      "side": 1,
+      "message": "Yes, it has move constructor[1] and move \u003d operator[2].\n\n[1] https://msdn.microsoft.com/en-us/library/br245066.aspx\n[2] https://msdn.microsoft.com/en-us/library/br230401.aspx",
+      "parentUuid": "ecc7f889_1e5797f7",
+      "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
