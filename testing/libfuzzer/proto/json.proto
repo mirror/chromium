@@ -1,0 +1,89 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// The proto definition for JSON format has been written based on
+// http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf
+
+syntax = "proto2";
+
+package json_proto;
+
+enum ValueType {
+  Object = 0;
+  Array = 1;
+  Number = 2;
+  String = 3;
+  True = 4;
+  False = 5;
+  Null = 6;
+}
+
+message JsonObject {
+  required string name = 1;
+  required JsonValue value = 2;
+}
+
+message JsonValue {
+  oneof value {
+    // Json value types:
+
+    // null: null, will be used when 'oneof' contains nothing
+
+    // object: another json object of any type
+    JsonObject object_value = 2;
+    
+    // array: an array of values
+    ArrayValue array_value = 3;
+    
+    // number: can be an integer, a float, an exponent
+    NumberValue number_value = 4;
+    
+    // string: unicode string
+    StringValue string_value = 5;
+
+    // boolean: true or talse
+    BooleanValue boolean_value = 6;
+  }
+}
+
+message ArrayValue {
+  repeated JsonValue value = 1;
+}
+
+message NumberInteger {
+  required int64 value = 1;
+}
+
+message NumberFloat {
+  required double value = 1;
+}
+
+message NumberExponent {
+  required int32 base = 1;
+  required int32 exponent = 2;
+  required bool use_uppercase = 3;
+}
+
+message NumberExponentFrac {
+  required float base = 1;
+  required int32 exponent = 2;
+  required bool use_uppercase = 3;
+}
+
+message NumberValue {
+  oneof value {
+    NumberInteger integer_value = 1;
+    NumberFloat float_value = 2;
+    NumberExponent exponent_value = 3;
+    NumberExponentFrac exponent_frac_value = 4;
+  }
+}
+
+message StringValue {
+  required string value = 1;
+}
+
+message BooleanValue {
+  required bool value = 1;
+}
