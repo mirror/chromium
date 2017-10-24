@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af5c697e_0e9bc417",
+        "filename": "chrome/browser/android/webapk/webapk_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-10-24T14:21:48Z",
+      "side": 1,
+      "message": "it might make more sense to move this enum into the proto",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "182c1f8444336e90f20d11a1ea0cb9e284bead56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
