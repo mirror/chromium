@@ -12,6 +12,10 @@
 #include "net/http/http_response_headers.h"
 #include "url/gurl.h"
 
+namespace content {
+class ResourceRequestBody;
+}  // namespace content
+
 namespace download {
 
 struct CompletionInfo;
@@ -116,6 +120,9 @@ class Client {
   // the outcome of this function.
   virtual bool CanServiceRemoveDownloadedFile(const std::string& guid,
                                               bool force_delete) = 0;
+
+  // Called by the service to ask the client to provide the upload data, if any.
+  virtual scoped_refptr<content::ResourceRequestBody> GetUploadData() = 0;
 };
 
 }  // namespace download

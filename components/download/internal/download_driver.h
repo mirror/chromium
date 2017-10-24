@@ -16,6 +16,10 @@ namespace base {
 class FilePath;
 }  // namespace base
 
+namespace content {
+class ResourceRequestBody;
+}  // namespace content
+
 namespace download {
 
 struct RequestParams;
@@ -62,6 +66,9 @@ class DownloadDriver {
 
     // Returns whether the client is tracking the download with |guid|.
     virtual bool IsTrackingDownload(const std::string& guid) const = 0;
+
+    virtual scoped_refptr<content::ResourceRequestBody> GetUploadData(
+        const std::string& guid) const = 0;
   };
 
   virtual ~DownloadDriver() = default;

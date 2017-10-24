@@ -31,6 +31,7 @@ class DebuggingClient : public Client {
                            const CompletionInfo& completion_info) override;
   bool CanServiceRemoveDownloadedFile(const std::string& guid,
                                       bool force_delete) override;
+  scoped_refptr<content::ResourceRequestBody> GetUploadData() override;
 
   DISALLOW_COPY_AND_ASSIGN(DebuggingClient);
 };

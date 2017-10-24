@@ -4,6 +4,8 @@
 
 #include "components/download/internal/debugging_client.h"
 
+#include "content/public/common/resource_request_body.h"
+
 namespace download {
 
 void DebuggingClient::OnServiceInitialized(
@@ -35,6 +37,10 @@ void DebuggingClient::OnDownloadSucceeded(
 bool DebuggingClient::CanServiceRemoveDownloadedFile(const std::string& guid,
                                                      bool force_delete) {
   return true;
+}
+
+scoped_refptr<content::ResourceRequestBody> DebuggingClient::GetUploadData() {
+  return nullptr;
 }
 
 }  // namespace download

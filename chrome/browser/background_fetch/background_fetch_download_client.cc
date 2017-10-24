@@ -12,6 +12,7 @@
 #include "components/download/public/download_metadata.h"
 #include "content/public/browser/background_fetch_response.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/common/resource_request_body.h"
 #include "url/origin.h"
 
 BackgroundFetchDownloadClient::BackgroundFetchDownloadClient(
@@ -73,4 +74,9 @@ bool BackgroundFetchDownloadClient::CanServiceRemoveDownloadedFile(
     bool force_delete) {
   // TODO(delphick): Return false if the background fetch hasn't finished yet
   return true;
+}
+
+scoped_refptr<content::ResourceRequestBody>
+BackgroundFetchDownloadClient::GetUploadData() {
+  return nullptr;
 }

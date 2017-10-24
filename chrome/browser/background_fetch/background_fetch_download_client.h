@@ -43,6 +43,7 @@ class BackgroundFetchDownloadClient : public download::Client {
                            const download::CompletionInfo& info) override;
   bool CanServiceRemoveDownloadedFile(const std::string& guid,
                                       bool force_delete) override;
+  scoped_refptr<content::ResourceRequestBody> GetUploadData() override;
 
   content::BrowserContext* browser_context_;
   base::WeakPtr<BackgroundFetchDelegateImpl> delegate_;
