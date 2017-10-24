@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a9a92c34_3a2caa53",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-24T20:43:51Z",
+      "side": 1,
+      "message": "Interactive Detector is constructed on the first call to InteractiveDetector::From, which is supposed to be here. We also want to start listening for long tasks and network requests immediately after navigation commits.",
+      "parentUuid": "bbdb1c68_b1332741",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1562251d_a736e7c6",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-24T18:19:55Z",
       "side": 1,
       "message": "This helper is only called one place. Either inline it or move the helper next to the caller?",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301f9b17_bd9716f8",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-24T20:43:51Z",
+      "side": 1,
+      "message": "Moved next to caller.",
+      "parentUuid": "1562251d_a736e7c6",
       "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fa324f1f_3a82dc92",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-24T20:43:51Z",
+      "side": 1,
+      "message": "This is intentional. We really do want to keep track of until the very end even if they\u0027re non-blocking (e.g. multipart images). Since we forgive up to two outstanding network requests for network quietness determination, we were hoping this should be enough to handle majority of the cases of long running non blocking resource. The network quietness heuristic is still being actively iterated on - we\u0027ll compare strategies in the future and change this if necessary.",
+      "parentUuid": "bdec78ff_89b460cb",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3606e594_95396149",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-24T18:19:55Z",
       "side": 1,
       "message": "This comment is a little ambiguous. DomContentLoaded can be fired multiple times, but DocumentTiming (and therefore InteractiveDetector) only get notified about the first fire. Might be worth clarifying.",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedec754_29eff98b",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-24T20:43:51Z",
+      "side": 1,
+      "message": "I\u0027m changing the comment. As as aside, do you know why DomContentLoaded can fire multiple times? This makes me wonder if I\u0027m taking the current DCL time or whether I should take the later time if DCL fires again. I understand this happens in tests like RenderFrameHostManagerSpoofingTest.ShowLoadingURLUntilDocumentOpenSpoof[1] but I don\u0027t understand why. \n\n[1]: https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_manager_browsertest.cc?type\u003dcs\u0026q\u003dShowLoadingURLUntilDocumentOpenSpoof\u0026sq\u003dpackage:chromium\u0026l\u003d1459",
+      "parentUuid": "3606e594_95396149",
       "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ae87140e_d7ec5202",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-24T20:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2ad560a_faa349ed",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06890a0a_9a029940",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
         "patchSetId": 11
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "3ecd3203_9e70fd6b",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-24T20:43:51Z",
+      "side": 1,
+      "message": "Done - changed to use PODInterval. Thanks!",
+      "parentUuid": "06890a0a_9a029940",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4df6024_fd59795f",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
         "patchSetId": 11
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-24T18:19:55Z",
       "side": 1,
       "message": "I have trouble remembering how gtest test cases interact with visiblity rules. Is the problem with using kTimeToInteractiveWindowSeconds that it\u0027s private in InteractiveDetector, and therefore InteractiveDetectorTest can see it, but the test cases can\u0027t?\n\nIf so, should we consider either having InteractiveDetectorTest mirror it, or just making it a public constant?",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b42c9ad_b75927bb",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-24T20:43:51Z",
+      "side": 1,
+      "message": "This is not a visibility issue. It\u0027s just much, much easier to write test cases if I assume the window size is 5 seconds - I can write a test case like FMP happened at 3 seconds, a long task ending at 4 seconds, DCL happening at 6 seconds, and another long task happened from 11 seconds to 11.5 seconds, so TTI should be reached at the 6th second. If I don\u0027t assume the 5 second window, these cases are a lot harder to write and read - every timestamp has to be proportional to the window size and even then we might have to branch on some boundary values of kTimeToInteractiveWindowSeconds depending on the exact ordering of events.",
+      "parentUuid": "f4df6024_fd59795f",
       "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
