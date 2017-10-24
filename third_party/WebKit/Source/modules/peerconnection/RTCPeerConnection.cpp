@@ -1532,8 +1532,16 @@ void RTCPeerConnection::DidAddRemoteTrack(
       new RTCRtpReceiver(std::move(web_rtp_receiver), track, streams);
   rtp_receivers_.push_back(rtp_receiver);
   if (RuntimeEnabledFeatures::RTCRtpSenderEnabled()) {
-    ScheduleDispatchEvent(
-        new RTCTrackEvent(rtp_receiver, rtp_receiver->track(), streams));
+    // Fire the "ontrack" event in a microtask ensures it is fired before
+    // setRemoteDescription's promise's then() is called.
+    // TODO(hbos): Unify ways of firing an event: always use microtasks
+    // (redefine ScheduleDispatchEvent), fire in a resolved promise (share the
+    // same "queue" as promises), or handle event queues on a case-by-case
+    // basis. https://crbug.com/777999
+    Microtask::EnqueueMicrotask(
+        WTF::Bind(&RTCPeerConnection::FireEvent, WrapPersistent(this),
+                  WrapPersistent(new RTCTrackEvent(
+                      rtp_receiver, rtp_receiver->track(), streams))));
   }
 }
 
@@ -1725,6 +1733,16 @@ void RTCPeerConnection::DispatchScheduledEvent() {
   }
 
   events.clear();
+}
+
+// TODO(hbos): Unify ways of firing an event: always use microtasks (redefine
+// ScheduleDispatchEvent), fire in a resolved promise (share the same "queue" as
+// promises), or handle event queues on a case-by-case basis.
+// https://crbug.com/777999
+void RTCPeerConnection::FireEvent(Member<Event> event) {
+  if (stopped_)
+    return;
+  DispatchEvent(event.Release());
 }
 
 void RTCPeerConnection::RecordRapporMetrics() {

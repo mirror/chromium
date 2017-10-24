@@ -251,6 +251,7 @@ class MODULES_EXPORT RTCPeerConnection final
   void ScheduleDispatchEvent(Event*);
   void ScheduleDispatchEvent(Event*, BoolFunction);
   void DispatchScheduledEvent();
+  void FireEvent(Member<Event>);
   MediaStreamTrack* GetTrack(const WebMediaStreamTrack&) const;
   HeapVector<Member<RTCRtpReceiver>>::iterator FindReceiver(
       const WebRTCRtpReceiver& web_receiver);
