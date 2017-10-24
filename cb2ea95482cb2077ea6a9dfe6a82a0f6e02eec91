@@ -302,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "b269c3cf_bbfbec61",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-24T17:07:53Z",
+      "side": 1,
+      "message": "Oh, is_tail (or below) is much better. I was referring to the 90\u0027s STL yuck required to support it.\n\nI was thinking that this (in a helper function) would be best:\n\n   if (matches_[0].type \u003d\u003d TAIL || matches_[1].type \u003d\u003d TAIL) {\n     ...",
+      "parentUuid": "ec9a4071_b60f728c",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5d60d2f_44c98dd5",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 2
@@ -385,6 +403,24 @@
       "side": 1,
       "message": "These scenarios are all pretty unlikely but it\u0027d be comforting to know that we\u0027d do the right thing regardless.\n\nCan we cull tail suggestions before the deduping? We can do it regardless of whether there are \"enough\" or how they score or whether they\u0027re dupes of another suggestion. As I read it, the requirements were to only show tail suggestions if nothing else is available (except of course the what-you-typed match), so we could keep it simple.",
       "parentUuid": "09cb4828_5a123361",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2220c2b7_e090676d",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-24T17:07:53Z",
+      "side": 1,
+      "message": "My concern is that some poor local suggestion is going to (repeatedly) kick out tail suggestions and we\u0027ll wonder why our users aren\u0027t seeing them as often.\n\nIf local suggestions really are better, we should score them that way and make the whole issue go away.",
+      "parentUuid": "5c8b9de6_46a45725",
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
