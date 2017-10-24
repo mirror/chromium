@@ -6,8 +6,10 @@
 #define CHROMEOS_DBUS_POWER_MANAGER_CLIENT_H_
 
 #include <string>
+#include <vector>
 
 #include "base/callback.h"
+#include "base/files/scoped_file.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
@@ -19,7 +21,7 @@
 namespace power_manager {
 class PowerManagementPolicy;
 class PowerSupplyProperties;
-}
+}  // namespace power_manager
 
 namespace chromeos {
 
@@ -36,6 +38,12 @@ class CHROMEOS_EXPORT PowerManagerClient : public DBusClient {
     ON,
     OFF,
     UNSUPPORTED,
+  };
+
+  // Typemapping for |ArcTimerArgs| in timer.mojom
+  struct ArcTimerArgs {
+    int32_t clock_id;
+    base::ScopedFD expiration_fd;
   };
 
   // Callback used for getting the current screen brightness. The param is in

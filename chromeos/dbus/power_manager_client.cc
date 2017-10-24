@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 
+#include <mojo/edk/embedder/scoped_platform_handle.h>
 #include <algorithm>
 #include <memory>
 #include <utility>
@@ -139,8 +140,7 @@ class PowerManagerClientImpl : public PowerManagerClient {
     dbus::MessageWriter writer(&method_call);
     writer.AppendBool(allow_off);
     power_manager_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         dbus::ObjectProxy::EmptyResponseCallback());
   }
 
@@ -165,13 +165,10 @@ class PowerManagerClientImpl : public PowerManagerClient {
         power_manager::kSetScreenBrightnessPercentMethod);
     dbus::MessageWriter writer(&method_call);
     writer.AppendDouble(percent);
-    writer.AppendInt32(
-        gradual ?
-        power_manager::kBrightnessTransitionGradual :
-        power_manager::kBrightnessTransitionInstant);
+    writer.AppendInt32(gradual ? power_manager::kBrightnessTransitionGradual
+                               : power_manager::kBrightnessTransitionInstant);
     power_manager_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         dbus::ObjectProxy::EmptyResponseCallback());
   }
 
@@ -232,57 +229,49 @@ class PowerManagerClientImpl : public PowerManagerClient {
   }
 
   void NotifyUserActivity(power_manager::UserActivityType type) override {
-    dbus::MethodCall method_call(
-        power_manager::kPowerManagerInterface,
-        power_manager::kHandleUserActivityMethod);
+    dbus::MethodCall method_call(power_manager::kPowerManagerInterface,
+                                 power_manager::kHandleUserActivityMethod);
     dbus::MessageWriter writer(&method_call);
     writer.AppendInt32(type);
 
     power_manager_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         dbus::ObjectProxy::EmptyResponseCallback());
   }
 
   void NotifyVideoActivity(bool is_fullscreen) override {
-    dbus::MethodCall method_call(
-        power_manager::kPowerManagerInterface,
-        power_manager::kHandleVideoActivityMethod);
+    dbus::MethodCall method_call(power_manager::kPowerManagerInterface,
+                                 power_manager::kHandleVideoActivityMethod);
     dbus::MessageWriter writer(&method_call);
     writer.AppendBool(is_fullscreen);
 
     power_manager_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         dbus::ObjectProxy::EmptyResponseCallback());
   }
 
   void SetPolicy(const power_manager::PowerManagementPolicy& policy) override {
     POWER_LOG(USER) << "SetPolicy";
-    dbus::MethodCall method_call(
-        power_manager::kPowerManagerInterface,
-        power_manager::kSetPolicyMethod);
+    dbus::MethodCall method_call(power_manager::kPowerManagerInterface,
+                                 power_manager::kSetPolicyMethod);
     dbus::MessageWriter writer(&method_call);
     if (!writer.AppendProtoAsArrayOfBytes(policy)) {
       POWER_LOG(ERROR) << "Error calling " << power_manager::kSetPolicyMethod;
       return;
     }
     power_manager_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         dbus::ObjectProxy::EmptyResponseCallback());
   }
 
   void SetIsProjecting(bool is_projecting) override {
     POWER_LOG(USER) << "SetIsProjecting";
-    dbus::MethodCall method_call(
-        power_manager::kPowerManagerInterface,
-        power_manager::kSetIsProjectingMethod);
+    dbus::MethodCall method_call(power_manager::kPowerManagerInterface,
+                                 power_manager::kSetIsProjectingMethod);
     dbus::MessageWriter writer(&method_call);
     writer.AppendBool(is_projecting);
     power_manager_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         dbus::ObjectProxy::EmptyResponseCallback());
     last_is_projecting_ = is_projecting;
   }
@@ -385,8 +374,7 @@ class PowerManagerClientImpl : public PowerManagerClient {
                    weak_ptr_factory_.GetWeakPtr()));
 
     power_manager_proxy_->ConnectToSignal(
-        power_manager::kPowerManagerInterface,
-        power_manager::kInputEventSignal,
+        power_manager::kPowerManagerInterface, power_manager::kInputEventSignal,
         base::Bind(&PowerManagerClientImpl::InputEventReceived,
                    weak_ptr_factory_.GetWeakPtr()),
         base::Bind(&PowerManagerClientImpl::SignalConnected,
@@ -395,9 +383,8 @@ class PowerManagerClientImpl : public PowerManagerClient {
     power_manager_proxy_->ConnectToSignal(
         power_manager::kPowerManagerInterface,
         power_manager::kSuspendImminentSignal,
-        base::Bind(
-            &PowerManagerClientImpl::HandleSuspendImminent,
-            weak_ptr_factory_.GetWeakPtr(), false),
+        base::Bind(&PowerManagerClientImpl::HandleSuspendImminent,
+                   weak_ptr_factory_.GetWeakPtr(), false),
         base::Bind(&PowerManagerClientImpl::SignalConnected,
                    weak_ptr_factory_.GetWeakPtr()));
 
@@ -412,27 +399,24 @@ class PowerManagerClientImpl : public PowerManagerClient {
     power_manager_proxy_->ConnectToSignal(
         power_manager::kPowerManagerInterface,
         power_manager::kDarkSuspendImminentSignal,
-        base::Bind(
-            &PowerManagerClientImpl::HandleSuspendImminent,
-            weak_ptr_factory_.GetWeakPtr(), true),
+        base::Bind(&PowerManagerClientImpl::HandleSuspendImminent,
+                   weak_ptr_factory_.GetWeakPtr(), true),
         base::Bind(&PowerManagerClientImpl::SignalConnected,
                    weak_ptr_factory_.GetWeakPtr()));
 
     power_manager_proxy_->ConnectToSignal(
         power_manager::kPowerManagerInterface,
         power_manager::kIdleActionImminentSignal,
-        base::Bind(
-            &PowerManagerClientImpl::IdleActionImminentReceived,
-            weak_ptr_factory_.GetWeakPtr()),
+        base::Bind(&PowerManagerClientImpl::IdleActionImminentReceived,
+                   weak_ptr_factory_.GetWeakPtr()),
         base::Bind(&PowerManagerClientImpl::SignalConnected,
                    weak_ptr_factory_.GetWeakPtr()));
 
     power_manager_proxy_->ConnectToSignal(
         power_manager::kPowerManagerInterface,
         power_manager::kIdleActionDeferredSignal,
-        base::Bind(
-            &PowerManagerClientImpl::IdleActionDeferredReceived,
-            weak_ptr_factory_.GetWeakPtr()),
+        base::Bind(&PowerManagerClientImpl::IdleActionDeferredReceived,
+                   weak_ptr_factory_.GetWeakPtr()),
         base::Bind(&PowerManagerClientImpl::SignalConnected,
                    weak_ptr_factory_.GetWeakPtr()));
 
@@ -458,8 +442,7 @@ class PowerManagerClientImpl : public PowerManagerClient {
     dbus::MethodCall method_call(power_manager::kPowerManagerInterface,
                                  method_name);
     power_manager_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         dbus::ObjectProxy::EmptyResponseCallback());
   }
 
@@ -620,7 +603,8 @@ class PowerManagerClientImpl : public PowerManagerClient {
       const power_manager::PowerSupplyProperties& proto) {
     for (auto& observer : observers_)
       observer.PowerChanged(proto);
-    const bool on_battery = proto.external_power() ==
+    const bool on_battery =
+        proto.external_power() ==
         power_manager::PowerSupplyProperties_ExternalPower_DISCONNECTED;
     base::PowerMonitorDeviceSource::SetPowerSource(on_battery);
   }
@@ -792,8 +776,7 @@ class PowerManagerClientImpl : public PowerManagerClient {
           dbus::MessageWriter writer(&method_call);
           writer.AppendInt64(proto.timestamp());
           power_manager_proxy_->CallMethod(
-              &method_call,
-              dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+              &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
               dbus::ObjectProxy::EmptyResponseCallback());
         }
         break;
@@ -821,8 +804,8 @@ class PowerManagerClientImpl : public PowerManagerClient {
       const std::string& method_name,
       const power_manager::RegisterSuspendDelayRequest& protobuf_request,
       dbus::ObjectProxy::ResponseCallback callback) {
-    dbus::MethodCall method_call(
-        power_manager::kPowerManagerInterface, method_name);
+    dbus::MethodCall method_call(power_manager::kPowerManagerInterface,
+                                 method_name);
     dbus::MessageWriter writer(&method_call);
 
     if (!writer.AppendProtoAsArrayOfBytes(protobuf_request)) {
@@ -852,14 +835,12 @@ class PowerManagerClientImpl : public PowerManagerClient {
     protobuf_request.set_description(kSuspendDelayDescription);
 
     RegisterSuspendDelayImpl(
-        power_manager::kRegisterSuspendDelayMethod,
-        protobuf_request,
+        power_manager::kRegisterSuspendDelayMethod, protobuf_request,
         base::Bind(&PowerManagerClientImpl::HandleRegisterSuspendDelayReply,
                    weak_ptr_factory_.GetWeakPtr(), false,
                    power_manager::kRegisterSuspendDelayMethod));
     RegisterSuspendDelayImpl(
-        power_manager::kRegisterDarkSuspendDelayMethod,
-        protobuf_request,
+        power_manager::kRegisterDarkSuspendDelayMethod, protobuf_request,
         base::Bind(&PowerManagerClientImpl::HandleRegisterSuspendDelayReply,
                    weak_ptr_factory_.GetWeakPtr(), true,
                    power_manager::kRegisterDarkSuspendDelayMethod));
@@ -905,8 +886,8 @@ class PowerManagerClientImpl : public PowerManagerClient {
     if (render_process_manager_delegate_ && !suspending_from_dark_resume_)
       render_process_manager_delegate_->SuspendImminent();
 
-    dbus::MethodCall method_call(
-        power_manager::kPowerManagerInterface, method_name);
+    dbus::MethodCall method_call(power_manager::kPowerManagerInterface,
+                                 method_name);
     dbus::MessageWriter writer(&method_call);
 
     POWER_LOG(EVENT) << "Announcing readiness of suspend delay " << delay_id
@@ -923,8 +904,7 @@ class PowerManagerClientImpl : public PowerManagerClient {
       return;
     }
     power_manager_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         dbus::ObjectProxy::EmptyResponseCallback());
   }
 
@@ -977,11 +957,9 @@ class PowerManagerClientImpl : public PowerManagerClient {
   DISALLOW_COPY_AND_ASSIGN(PowerManagerClientImpl);
 };
 
-PowerManagerClient::PowerManagerClient() {
-}
+PowerManagerClient::PowerManagerClient() {}
 
-PowerManagerClient::~PowerManagerClient() {
-}
+PowerManagerClient::~PowerManagerClient() {}
 
 // static
 PowerManagerClient* PowerManagerClient::Create(
