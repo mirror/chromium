@@ -22,6 +22,30 @@
       "revId": "32ea4cbe9f93cd7a45e7b3a5018df3053ad98926",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682072f7_6148224e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-24T21:17:54Z",
+      "side": 1,
+      "message": "Widths are set on global layout to ensure proper icon spacing for portrait vs. landscape, multi-window, etc. so this gets overwritten anyway.",
+      "parentUuid": "f6f922ac_a35d77bd",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 66
+      },
+      "revId": "32ea4cbe9f93cd7a45e7b3a5018df3053ad98926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
