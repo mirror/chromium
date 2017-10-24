@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ceb2689c_8ad50a1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-24T19:49:27Z",
+      "side": 1,
+      "message": "so one way in which this seems to differ from WebappLauncherActivity is that there\u0027s no validation at handling time of intent verification. Where does that happen? So specifically this is when we\u0027d do DAL-verification for TWA but I\u0027m guessing you\u0027re doing that elsewhere? Oh, in WebappInfo.create that you added? It\u0027s probably cleaner to not have WebappInfo depend on CustomTabs at all, and do the verification before constructing the webappinfo with the intent.",
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6e6ce1f_15881e57",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 2
@@ -18,6 +35,29 @@
         "startChar": 12,
         "endLine": 317,
         "endChar": 33
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7503f57f_46dd1c18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-24T19:49:27Z",
+      "side": 1,
+      "message": "pretty weird to move this now without larger merging of webapk/webapp :/",
+      "range": {
+        "startLine": 505,
+        "startChar": 18,
+        "endLine": 505,
+        "endChar": 38
       },
       "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -59,6 +99,30 @@
       "writtenOn": "2017-10-24T04:33:47Z",
       "side": 1,
       "message": "This name is a little generic. Specifically, this class is meant to manage the installed, user-visible behaviour (as opposed to the implementation details like processes, etc.).\n\nSomething like a WebappUxDelegate? Or WebappBehaviorDelegate? Naming is hard. :(",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416550fa_f063719c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-24T19:49:27Z",
+      "side": 1,
+      "message": "agree naming is hard, but that WebappHelper isn\u0027t sufficient.\n\nCan this be a WebappUxStrategy? There\u0027s possibly more that can be brought into it",
+      "parentUuid": "fdf8d98a_461d36b2",
       "range": {
         "startLine": 19,
         "startChar": 13,
