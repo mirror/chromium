@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "65cb7342_f037f901",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-10-24T08:15:06Z",
+      "side": 1,
+      "message": "Isn\u0027t this the only remaining user of this function? If that\u0027s the case you could consider removing the function and adding the code here.",
+      "revId": "adc9442be64d241fb6328324772b15425927b7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bf3902c_466ee052",
         "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
         "patchSetId": 12
@@ -81,6 +98,23 @@
       "writtenOn": "2017-10-20T09:54:58Z",
       "side": 1,
       "message": "I guess we only need this if \"direction_ \u003d\u003d kForColumns\",\nso maybe we can add that condition here too.",
+      "revId": "adc9442be64d241fb6328324772b15425927b7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6abe52_b21d8dba",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-10-24T08:15:06Z",
+      "side": 1,
+      "message": "I know we only need it for indefinite size computations but I think it\u0027s much better to unconditionally initialize the is_in_perform_layout_ attribute. Note that there might be future users of that value who might not know about the rationale of having it.",
       "revId": "adc9442be64d241fb6328324772b15425927b7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
