@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e8d4096_f34606ff",
+        "filename": "ios/chrome/browser/open_url_util.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-24T11:24:24Z",
+      "side": 1,
+      "message": "Can you add \n\n#if !defined(__IPHONE_10_0) || __IPHONE_OS_VERSION_MIN_REQUIRED \u003c __IPHONE_10_0\n\naround the else clause? This will avoid compiling this code when the minimum target is set to 10, triggering the deprecated warning.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "5df7c539394ad439d58644d8fc97a794b7616896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4952bd_e62df701",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-24T11:24:24Z",
+      "side": 1,
+      "message": "Should the completion handler be called with NO on those early returns?",
+      "range": {
+        "startLine": 730,
+        "startChar": 4,
+        "endLine": 730,
+        "endChar": 10
+      },
+      "revId": "5df7c539394ad439d58644d8fc97a794b7616896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75895857_246cd795",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-24T11:24:24Z",
+      "side": 1,
+      "message": "This comment may be read as implying that the completion handler is not called if an app is not launched, maybe rephrase to make that clearer?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 74
+      },
+      "revId": "5df7c539394ad439d58644d8fc97a794b7616896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
