@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1487342c_5ead77ee",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutInline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-24T11:01:18Z",
+      "side": 1,
+      "message": "These all seem dubious to me, over-riding their own destructor. I don\u0027t think they need tobe virtual either, but maybe they do.",
+      "revId": "02bad477feb3a556bb18513493f81d5f95c995bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c723b1_4db18e6d",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineBox.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-24T11:01:18Z",
+      "side": 1,
+      "message": "What does it mean to override your own destructor?",
+      "revId": "02bad477feb3a556bb18513493f81d5f95c995bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
