@@ -105,6 +105,24 @@
       "revId": "858a15a5ae0ecbcbffbaa3829b8e6e7c74adbef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28228006_125373d7",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7241,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-24T17:54:58Z",
+      "side": 1,
+      "message": "\u003e Here\u0027s my thinking process of how I got to this question: we have to worry somewhere on the service side about doing more restore than saves (side question: where do we do that?). \n\nIf it helps, SkCanvas::restore() is robust to restore-related underflow, so there doesn\u0027t need to be any checking matching saves and restores during deserialization.",
+      "parentUuid": "7419f6b1_c62a4c5b",
+      "revId": "858a15a5ae0ecbcbffbaa3829b8e6e7c74adbef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
