@@ -419,6 +419,24 @@
     },
     {
       "key": {
+        "uuid": "df61f4fb_6ac25f02",
+        "filename": "ios/chrome/browser/web/external_app_launcher_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T00:00:29Z",
+      "side": 1,
+      "message": "I refactored the classes and moved the tests out of this file",
+      "parentUuid": "b976a87b_95202984",
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1570fa4f_b2f2e9f1",
         "filename": "ios/chrome/browser/web/external_application_state.h",
         "patchSetId": 8

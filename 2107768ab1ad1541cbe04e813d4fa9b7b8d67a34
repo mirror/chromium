@@ -1012,6 +1012,30 @@
     },
     {
       "key": {
+        "uuid": "7c7445d2_9688b675",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T00:00:29Z",
+      "side": 1,
+      "message": "i refactored the classes to have ExternalAppLaunchingState as the actual state and ExternalAppsLaunchPolicyDecider as the policy decider",
+      "parentUuid": "a53a896c_ba32d14b",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e6ac97d_2ec47124",
         "filename": "ios/chrome/browser/web/external_app_launching_state.h",
         "patchSetId": 7
@@ -1436,6 +1460,30 @@
     },
     {
       "key": {
+        "uuid": "9ff07008_ab19d732",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T00:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "747f5fd9_4af64dc1",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 14
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b524f6b_17bee529",
         "filename": "ios/chrome/browser/web/external_app_launching_state_unittest.mm",
         "patchSetId": 7
@@ -1575,6 +1623,30 @@
       "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906cd4ac_131de627",
+        "filename": "ios/chrome/browser/web/external_app_launching_state_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-24T00:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7121193_dacefe04",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 73
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
