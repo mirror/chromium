@@ -23,6 +23,7 @@ media_subcomponent_deps = [
   "//media/cdm",
   "//media/device_monitors",
   "//media/filters",
+  "//media/filters:source_buffer_platform",
   "//media/formats",
   "//media/muxers",
   "//media/renderers",

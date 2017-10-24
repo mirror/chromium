@@ -61,7 +61,10 @@ source_set("formats") {
   ]
 
   if (proprietary_codecs) {
-    deps += [ "//media/video" ]
+    deps += [
+      "//media/filters:source_buffer_platform",
+      "//media/video",
+    ]
     sources += [
       "mp4/aac.cc",
       "mp4/aac.h",
