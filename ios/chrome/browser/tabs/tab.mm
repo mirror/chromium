@@ -86,7 +86,7 @@
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/commands/show_signin_command.h"
 #import "ios/chrome/browser/ui/downloads/download_manager_controller.h"
-#import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
+#import "ios/chrome/browser/ui/fullscreen/legacy_fullscreen_controller.h"
 #import "ios/chrome/browser/ui/open_in_controller.h"
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
@@ -193,7 +193,7 @@ class TabHistoryContext : public history::Context {
   double _lastVisitedTimestamp;
 
   // The Full Screen Controller responsible for hiding/showing the toolbar.
-  FullScreenController* _fullScreenController;
+  LegacyFullscreenController* _fullScreenController;
 
   // The Overscroll controller responsible for displaying the
   // overscrollActionsView above the toolbar.
@@ -465,15 +465,15 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   [self countMainFrameLoad];
 }
 
-- (void)setFullScreenControllerDelegate:
-    (id<FullScreenControllerDelegate>)fullScreenControllerDelegate {
+- (void)setLegacyFullscreenControllerDelegate:
+    (id<LegacyFullscreenControllerDelegate>)fullScreenControllerDelegate {
   if (fullScreenControllerDelegate == fullScreenControllerDelegate_)
     return;
-  // Lazily create a FullScreenController.
+  // Lazily create a LegacyFullscreenController.
   // The check for fullScreenControllerDelegate is necessary to avoid recreating
-  // a FullScreenController during teardown.
+  // a LegacyFullscreenController during teardown.
   if (!_fullScreenController && fullScreenControllerDelegate) {
-    _fullScreenController = [[FullScreenController alloc]
+    _fullScreenController = [[LegacyFullscreenController alloc]
          initWithDelegate:fullScreenControllerDelegate
         navigationManager:self.navigationManager
                 sessionID:self.tabId];
