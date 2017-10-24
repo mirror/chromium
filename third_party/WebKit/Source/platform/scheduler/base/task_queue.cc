@@ -31,14 +31,17 @@ TaskQueue::Task::Task(TaskQueue::PostedTask task,
     : PendingTask(task.posted_from,
                   std::move(task.callback),
                   desired_run_time,
-                  task.nestable) {}
+                  task.nestable),
+      task_type_(task.task_type) {}
 
 TaskQueue::PostedTask::PostedTask(base::OnceClosure callback,
                                   base::Location posted_from,
+                                  TaskType task_type,
                                   base::TimeDelta delay,
                                   base::Nestable nestable)
     : callback(std::move(callback)),
       posted_from(posted_from),
+      task_type(task_type),
       delay(delay),
       nestable(nestable) {}
 
@@ -65,8 +68,10 @@ bool TaskQueue::PostDelayedTask(const base::Location& from_here,
   auto lock = AcquireImplReadLockIfNeeded();
   if (!impl_)
     return false;
-  return impl_->PostDelayedTask(
-      PostedTask(std::move(task), from_here, delay, base::Nestable::kNestable));
+  // TODO(hajimehoshi): Give appropriate task type
+  return impl_->PostDelayedTask(PostedTask(std::move(task), from_here,
+                                           TaskType::kUnthrottled, delay,
+                                           base::Nestable::kNestable));
 }
 
 bool TaskQueue::PostNonNestableDelayedTask(const base::Location& from_here,
@@ -75,7 +80,9 @@ bool TaskQueue::PostNonNestableDelayedTask(const base::Location& from_here,
   auto lock = AcquireImplReadLockIfNeeded();
   if (!impl_)
     return false;
-  return impl_->PostDelayedTask(PostedTask(std::move(task), from_here, delay,
+  // TODO(hajimehoshi): Give an appropriate task type
+  return impl_->PostDelayedTask(PostedTask(std::move(task), from_here,
+                                           TaskType::kUnthrottled, delay,
                                            base::Nestable::kNonNestable));
 }
 

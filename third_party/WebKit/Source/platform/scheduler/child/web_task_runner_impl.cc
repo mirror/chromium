@@ -56,8 +56,9 @@ WebTaskRunnerImpl::ToSingleThreadTaskRunner() {
 bool WebTaskRunnerImpl::PostDelayedTask(const base::Location& location,
                                         base::OnceClosure task,
                                         base::TimeDelta delay) {
-  return task_queue_->PostTaskWithMetadata(
-      TaskQueue::PostedTask(std::move(task), location, delay));
+  // TODO(hajimehoshi): Give an appropriate task type
+  return task_queue_->PostTaskWithMetadata(TaskQueue::PostedTask(
+      std::move(task), location, TaskType::kUnthrottled, delay));
 }
 
 }  // namespace scheduler
