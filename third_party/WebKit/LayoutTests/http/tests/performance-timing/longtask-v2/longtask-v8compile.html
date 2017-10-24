@@ -16,24 +16,25 @@
         assert_equals(entries.length, 1,
             'Exactly one entry is expected.');
         const longtask = entries[0];
+        if (longtask.name !== 'self') return;
+        const it = longtask.attribution.find(function(it) {
+          return it.name === 'script-compile' && it.scriptURL.includes('resources/makelongtask.js(0, 0)');
+        });
+        if (!it) return;
         assert_equals(longtask.entryType, 'longtask');
-        assert_equals(longtask.name, 'self');
         assert_greater_than(longtask.duration, 50);
         assert_greater_than_equal(longtask.startTime, 0);
         const currentTime = performance.now();
         assert_less_than_equal(longtask.startTime, currentTime);
-
-        const it = longtask.attribution.find(function(it) {
-          return it.name === 'script-compile';
-        });
-        assert_false(!it, 'script-compile is not captured.');
+        
+        // Skip 'it.duration' because this is an artificial script-compile 
+        // long-task.
         assert_greater_than(it.startTime, 0);
         assert_equals(it.entryType, 'taskattribution');
         assert_equals(it.containerType, 'iframe');
         assert_equals(it.containerId, '');
         assert_equals(it.containerName, '');
         assert_equals(it.containerSrc, '');
-        assert_true(it.scriptURL.includes('resources/makelongtask.js(0, 0)'));
         observer.disconnect();
         t.done();
       })
@@ -46,6 +47,7 @@
     iframe.src = "resources/makelongtask.js";
     document.body.appendChild(iframe);
 
+    t.step_timeout(t.unreached_func("script-compile long task is not captured."), 5000);
 }, 'Performance longtask entries with script-compile attribute are observable.');
 </script>
 
