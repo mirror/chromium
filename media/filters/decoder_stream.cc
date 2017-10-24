@@ -674,6 +674,10 @@ void DecoderStream<StreamType>::OnBufferReady(
     const DecoderConfig& config = StreamTraits::GetDecoderConfig(stream_);
     traits_.OnConfigChanged(config);
 
+    MEDIA_LOG(INFO, media_log_)
+        << GetStreamTypeString() << " decoder config changed; "
+        << config.AsHumanReadableString();
+
     if (!config_change_observer_cb_.is_null())
       config_change_observer_cb_.Run(config);
 
