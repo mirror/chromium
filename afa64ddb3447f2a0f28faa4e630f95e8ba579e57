@@ -34,6 +34,24 @@
       "revId": "afa64ddb3447f2a0f28faa4e630f95e8ba579e57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9ea061_ec617a92",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-24T01:52:19Z",
+      "side": 1,
+      "message": "\u003eAt line 895 I\u0027ve already added one Layout test file name that failed without |if (start \u003c\u003d end)| expression. Other tests weren\u0027t related to that.\nShould I do something else?\nNo. Sorry, I missed layout test file names in comment.\n\nBTW, once we have a time, it is better to rewrite these test with\n|selection_test()|. Our preference is non-script based test, we want to\ngenerate |selection_test()| from them.\n\n\n\u003eUnfortunately, I never used ClusterFuzz before (AFAIK it is an internal thing for Googlers, isn\u0027t it?). Could you please explain in details, what should I do then?\nNothing you need to do.\n\nClusterFuzz is a fuzzing bots running by google. ClusterFuzz has been\nfinding lots of edge cases[1]\n\n[1] https://bugs.chromium.org/p/chromium/issues/list?can\u003d2\u0026q\u003dcomponent%3ABlink%3EEditing+label%3AClusterFuzz\u0026colspec\u003dID+Pri+M+Stars+ReleaseBlock+Component+Status+Owner+Summary+OS+Modified\u0026x\u003dm\u0026y\u003dreleaseblock\u0026cells\u003dids",
+      "parentUuid": "897f60bc_964ac334",
+      "revId": "afa64ddb3447f2a0f28faa4e630f95e8ba579e57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
