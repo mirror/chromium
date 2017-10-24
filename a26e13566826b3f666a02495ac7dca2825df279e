@@ -246,6 +246,24 @@
       "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b5377e_58b67f17",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-24T10:04:59Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "c905a4f7_2b838e2b",
+      "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
