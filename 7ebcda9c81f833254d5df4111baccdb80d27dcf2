@@ -52,6 +52,24 @@
       "revId": "7ebcda9c81f833254d5df4111baccdb80d27dcf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c296e556_073892b5",
+        "filename": "chrome/test/data/webui/webui_test_util.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-24T20:37:21Z",
+      "side": 1,
+      "message": "Sure, the path would be great! Sadly we don\u0027t get the path in an assertion stack trace. We get something like this:\n\n  at assertTrue (test_util.js:853:17)\n\nAnd I\u0027m left looking at test_util.js until I find one that has something sensible (like the assertTrue) on line 853.\n\nIf we got the full paths, that would address the issue.",
+      "parentUuid": "97872bbd_39d6f20c",
+      "revId": "7ebcda9c81f833254d5df4111baccdb80d27dcf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
