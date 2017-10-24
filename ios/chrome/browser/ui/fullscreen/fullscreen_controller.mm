@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/chrome/browser/ui/fullscreen_controller.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
 
 #include <cmath>
 
@@ -423,8 +423,6 @@ BOOL CGFloatEquals(CGFloat a, CGFloat b) {
 - (BOOL)isEntryBrokenSSL:(web::NavigationItem*)item {
   if (!item)
     return NO;
-  // Only BROKEN results in an error (vs. a warning); see toolbar_model_impl.cc.
-  // TODO(qsr): Find a way to share this logic with the omnibox.
   const web::SSLStatus& ssl = item->GetSSL();
   switch (ssl.security_style) {
     case web::SECURITY_STYLE_UNKNOWN:
