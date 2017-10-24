@@ -62,12 +62,20 @@ constexpr const char kAppDotComManifest[] = R"( { "name": "Hosted App",
 } )";
 
 void NavigateToURLAndWait(Browser* browser, const GURL& url) {
-  content::TestNavigationObserver observer(
-      browser->tab_strip_model()->GetActiveWebContents(),
-      content::MessageLoopRunner::QuitMode::DEFERRED);
-  chrome::NavigateParams params(browser, url, ui::PAGE_TRANSITION_LINK);
-  ui_test_utils::NavigateToURL(&params);
-  observer.Wait();
+  ui_test_utils::UrlLoadObserver url_observer(
+      url, content::NotificationService::AllSources());
+  std::string script = base::StringPrintf(
+      "(() => {"
+      "const link = document.createElement('a');"
+      "link.href = '%s';"
+      "document.body.appendChild(link);"
+      "const event = new MouseEvent('click', {'view': window});"
+      "link.dispatchEvent(event);"
+      "})();",
+      url.spec().c_str());
+  ASSERT_TRUE(content::ExecuteScript(
+      browser->tab_strip_model()->GetActiveWebContents(), script));
+  url_observer.Wait();
 }
 
 // Used by ShouldLocationBarForXXX. Performs a navigation and then checks that
