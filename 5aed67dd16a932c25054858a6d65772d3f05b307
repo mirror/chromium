@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea3d95c_6efd38d2",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-24T17:55:12Z",
+      "side": 1,
+      "message": "s/userWasBlacklisted/user_was_blacklisted/",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 25
+      },
+      "revId": "5aed67dd16a932c25054858a6d65772d3f05b307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35e8c15_d1776cb7",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-24T17:55:12Z",
+      "side": 1,
+      "message": "nit: initialize to false in the constructor.",
+      "range": {
+        "startLine": 175,
+        "startChar": 7,
+        "endLine": 175,
+        "endChar": 24
+      },
+      "revId": "5aed67dd16a932c25054858a6d65772d3f05b307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b641392_9b1c1231",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-24T17:55:12Z",
+      "side": 1,
+      "message": "Is it possible to not override these? I suggest that we add a test observer to the PreviewsLogger in this test. Then, check the params that the test observer received.",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "5aed67dd16a932c25054858a6d65772d3f05b307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
