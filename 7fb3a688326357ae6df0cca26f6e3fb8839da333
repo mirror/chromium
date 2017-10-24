@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7df696a7_d1dc2248",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-24T12:16:33Z",
+      "side": 1,
+      "message": "I don\u0027t think the Maybe is necessary in the function name.\n\nI think I\u0027d probably call it \"CoerceToInt()\", but \"ConvertValueToInt()\" is fine.",
+      "range": {
+        "startLine": 196,
+        "startChar": 20,
+        "endLine": 196,
+        "endChar": 25
+      },
+      "revId": "7fb3a688326357ae6df0cca26f6e3fb8839da333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
