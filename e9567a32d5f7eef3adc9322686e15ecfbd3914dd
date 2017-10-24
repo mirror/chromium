@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3ad303d_ab0157a9",
+        "filename": "content/test/data/media/peerconnection-multiple-streams.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-10-24T13:55:55Z",
+      "side": 1,
+      "message": "We could have kept this throw, but may as well be consistent.",
+      "range": {
+        "startLine": 92,
+        "startChar": 6,
+        "endLine": 92,
+        "endChar": 15
+      },
+      "revId": "e9567a32d5f7eef3adc9322686e15ecfbd3914dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

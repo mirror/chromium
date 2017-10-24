@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb4db307_3e13b58f",
+        "filename": "content/browser/webrtc/webrtc_pause_play_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-10-24T13:55:55Z",
+      "side": 1,
+      "message": "The function is just called straight from the C++ here. This call returns when returnToTest(\u0027OK\u0027) is called from the javascript (which is done by reportTestSuccessful()).\n\nYou can write more fancy code that returns anything else than OK or error to the c++, but we\u0027ve found we can handle most things in js and keep the c++ simple.",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 70
+      },
+      "revId": "20cbb8e03e9ce9988a7ab4565f4ba4914960f155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afdbc530_1161dfab",
+        "filename": "content/test/data/media/peerconnection-pause-play.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-10-24T13:55:55Z",
+      "side": 1,
+      "message": "throw new Error -\u003e failTest",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 64
+      },
+      "revId": "20cbb8e03e9ce9988a7ab4565f4ba4914960f155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "397fab22_d6200e1c",
+        "filename": "content/test/data/media/peerconnection-pause-play.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-10-24T13:55:55Z",
+      "side": 1,
+      "message": "cpuOverUseDetection \u003d always false for now",
+      "range": {
+        "startLine": 35,
+        "startChar": 50,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "20cbb8e03e9ce9988a7ab4565f4ba4914960f155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a23a2fb_65766c74",
+        "filename": "content/test/data/media/peerconnection-pause-play.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-10-24T13:55:55Z",
+      "side": 1,
+      "message": "Added this",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "20cbb8e03e9ce9988a7ab4565f4ba4914960f155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d8383f4_0291d10e",
+        "filename": "content/test/data/media/peerconnection-pause-play.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-10-24T13:55:55Z",
+      "side": 1,
+      "message": "Added this parameter. We could add cpuOverUseDetection too.",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 15
+      },
+      "revId": "20cbb8e03e9ce9988a7ab4565f4ba4914960f155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
