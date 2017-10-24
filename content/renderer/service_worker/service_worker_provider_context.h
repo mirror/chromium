@@ -125,6 +125,13 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // ServiceWorkerProviderContext.
   mojom::ServiceWorkerWorkerClientRequest CreateWorkerClientRequest();
 
+  // S13nServiceWorker:
+  // For service worker clients. Creates a ServiceWorkerContainerHostPtrInfo
+  // which can be used to call GetControllerServiceWorker() in a (dedicated or
+  // shared) worker thread and sends FetchEvents to the controller service
+  // worker for subresource loading.
+  mojom::ServiceWorkerContainerHostPtrInfo CloneContainerHostPtrInfo();
+
   // Called when ServiceWorkerNetworkProvider is destructed. This function
   // severs the Mojo binding to the browser-side ServiceWorkerProviderHost. The
   // reason ServiceWorkerNetworkProvider is special compared to the other
