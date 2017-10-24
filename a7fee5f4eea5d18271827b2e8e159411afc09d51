@@ -16,6 +16,24 @@
       "revId": "a7fee5f4eea5d18271827b2e8e159411afc09d51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b60b34b_952d33e6",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-24T18:47:30Z",
+      "side": 1,
+      "message": "Gotcha. I\u0027ve updated the comment to include prose to give concrete UI we could show in each of the states (which are the actual UI that we do show), but leave open the possibility of changing this UI without invalidating the comments.",
+      "parentUuid": "a58dabe7_5e8572de",
+      "revId": "a7fee5f4eea5d18271827b2e8e159411afc09d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

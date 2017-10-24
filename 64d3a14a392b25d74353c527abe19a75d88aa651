@@ -419,6 +419,24 @@
     },
     {
       "key": {
+        "uuid": "1954815d_8723255a",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-24T18:47:30Z",
+      "side": 1,
+      "message": "Whoops! That was a mistake. I\u0027ve added checks for these other elements, too.",
+      "parentUuid": "75df3e6e_fef3346f",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36aa4b56_1fbf6a89",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 18
