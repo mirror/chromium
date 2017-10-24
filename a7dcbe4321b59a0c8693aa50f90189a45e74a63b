@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac5b2c30_b2840a07",
+        "filename": "media/base/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-24T23:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8022ce7c_ec7655cb",
+      "revId": "a7dcbe4321b59a0c8693aa50f90189a45e74a63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0277fd8d_f072f5b1",
         "filename": "media/base/demuxer_memory_limit.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8f5ca542_ae2c2c37",
+        "filename": "media/base/demuxer_memory_limit.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-24T23:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0277fd8d_f072f5b1",
+      "revId": "a7dcbe4321b59a0c8693aa50f90189a45e74a63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5cc793b_ba332eb6",
         "filename": "media/base/demuxer_memory_limit.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-24T21:59:11Z",
       "side": 1,
       "message": "MEDIA_EXPORT?",
+      "revId": "a7dcbe4321b59a0c8693aa50f90189a45e74a63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711316db_92673e0e",
+        "filename": "media/base/demuxer_memory_limit.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-24T23:41:55Z",
+      "side": 1,
+      "message": "I explicitly removed that, because everything that uses these constants is in the same component. There are not even any unit tests that need them, and I am hoping we don\u0027t need to reference these from tests anyway.",
+      "parentUuid": "b5cc793b_ba332eb6",
       "revId": "a7dcbe4321b59a0c8693aa50f90189a45e74a63b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
