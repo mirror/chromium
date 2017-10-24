@@ -19,6 +19,8 @@ source_set("shell") {
   sources = [
     "shell_app_delegate.h",
     "shell_app_delegate.m",
+    "shell_autofill_delegate.h",
+    "shell_autofill_delegate.m",
     "shell_exe_main.m",
     "shell_translation_delegate.h",
     "shell_translation_delegate.m",
@@ -53,6 +55,7 @@ bundle_data("resources") {
   visibility = [ ":shell" ]
   sources = [
     "Default-568h@2x.png",
+    "autofill_multi_test.html",
     "textfield_background@2x.png",
     "toolbar_back@2x.png",
     "toolbar_forward@2x.png",

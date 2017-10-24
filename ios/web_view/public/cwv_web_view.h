@@ -8,6 +8,7 @@
 
 #import "cwv_export.h"
 
+@class CWVAutofillController;
 @class CWVScrollView;
 @class CWVTranslationController;
 @class CWVWebViewConfiguration;
@@ -29,6 +30,9 @@ CWV_EXPORT
 
 // This web view's navigation delegate.
 @property(nonatomic, weak) id<CWVNavigationDelegate> navigationDelegate;
+
+// This web view's autofill controller.
+@property(nonatomic, readonly) CWVAutofillController* autofillController;
 
 // This web view's translation controller.
 @property(nonatomic, readonly) CWVTranslationController* translationController;
