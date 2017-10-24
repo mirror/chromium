@@ -31,14 +31,14 @@ namespace {
 std::unique_ptr<DisplayColorManager::ColorCalibrationData> ParseDisplayProfile(
     const base::FilePath& path,
     bool has_color_correction_matrix) {
-  VLOG(1) << "Trying ICC file " << path.value()
-          << " has_color_correction_matrix: "
-          << (has_color_correction_matrix ? "true" : "false");
+  DVLOG(1) << "Trying ICC file " << path.value()
+           << " has_color_correction_matrix: "
+           << (has_color_correction_matrix ? "true" : "false");
   base::AssertBlockingAllowed();
   // Reads from a file.
   qcms_profile* display_profile = qcms_profile_from_path(path.value().c_str());
   if (!display_profile) {
-    LOG(WARNING) << "Unable to load ICC file: " << path.value();
+    DLOG(WARNING) << "Unable to load ICC file: " << path.value();
     return nullptr;
   }
 
@@ -46,8 +46,8 @@ std::unique_ptr<DisplayColorManager::ColorCalibrationData> ParseDisplayProfile(
       qcms_profile_get_vcgt_channel_length(display_profile);
 
   if (!has_color_correction_matrix && !vcgt_channel_length) {
-    LOG(WARNING) << "No vcgt table or color correction matrix in ICC file: "
-                 << path.value();
+    DLOG(WARNING) << "No vcgt table or color correction matrix in ICC file: "
+                  << path.value();
     qcms_profile_release(display_profile);
     return nullptr;
   }
@@ -61,7 +61,7 @@ std::unique_ptr<DisplayColorManager::ColorCalibrationData> ParseDisplayProfile(
     std::vector<uint16_t> vcgt_data;
     vcgt_data.resize(vcgt_channel_length * 3);
     if (!qcms_profile_get_vcgt_rgb_channels(display_profile, &vcgt_data[0])) {
-      LOG(WARNING) << "Unable to get vcgt data";
+      DLOG(WARNING) << "Unable to get vcgt data";
       qcms_profile_release(display_profile);
       return nullptr;
     }
@@ -73,7 +73,7 @@ std::unique_ptr<DisplayColorManager::ColorCalibrationData> ParseDisplayProfile(
       data->gamma_lut[i].b = vcgt_data[(vcgt_channel_length * 2) + i];
     }
   } else {
-    VLOG(1) << "Using full degamma/gamma/CTM from profile.";
+    DVLOG(1) << "Using full degamma/gamma/CTM from profile.";
     qcms_profile* srgb_profile = qcms_profile_sRGB();
 
     qcms_transform* transform =
@@ -81,7 +81,7 @@ std::unique_ptr<DisplayColorManager::ColorCalibrationData> ParseDisplayProfile(
                               QCMS_DATA_RGB_8, QCMS_INTENT_PERCEPTUAL);
 
     if (!transform) {
-      LOG(WARNING)
+      DLOG(WARNING)
           << "Unable to create transformation from sRGB to display profile.";
 
       qcms_profile_release(display_profile);
@@ -90,7 +90,7 @@ std::unique_ptr<DisplayColorManager::ColorCalibrationData> ParseDisplayProfile(
     }
 
     if (!qcms_transform_is_matrix(transform)) {
-      LOG(WARNING) << "No transformation matrix available";
+      DLOG(WARNING) << "No transformation matrix available";
 
       qcms_transform_release(transform);
       qcms_profile_release(display_profile);
@@ -104,7 +104,7 @@ std::unique_ptr<DisplayColorManager::ColorCalibrationData> ParseDisplayProfile(
         transform, display_profile, QCMS_TRC_USHORT, NULL);
 
     if (degamma_size == 0 || gamma_size == 0) {
-      LOG(WARNING)
+      DLOG(WARNING)
           << "Invalid number of elements in gamma tables: degamma size = "
           << degamma_size << " gamma size = " << gamma_size;
 
@@ -148,7 +148,7 @@ std::unique_ptr<DisplayColorManager::ColorCalibrationData> ParseDisplayProfile(
     qcms_profile_release(srgb_profile);
   }
 
-  VLOG(1) << "ICC file successfully parsed";
+  DVLOG(1) << "ICC file successfully parsed";
   qcms_profile_release(display_profile);
   return data;
 }
@@ -199,7 +199,7 @@ void DisplayColorManager::ApplyDisplayColorCalibration(int64_t display_id,
     if (!configurator_->SetColorCorrection(display_id, data->degamma_lut,
                                            data->gamma_lut,
                                            data->correction_matrix))
-      LOG(WARNING) << "Error applying color correction data";
+      DLOG(WARNING) << "Error applying color correction data";
   }
 }
 
@@ -207,7 +207,7 @@ void DisplayColorManager::LoadCalibrationForDisplay(
     const display::DisplaySnapshot* display) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (display->display_id() == display::kInvalidDisplayId) {
-    LOG(WARNING) << "Trying to load calibration data for invalid display id";
+    DLOG(WARNING) << "Trying to load calibration data for invalid display id";
     return;
   }
 
@@ -237,21 +237,21 @@ void DisplayColorManager::FinishLoadCalibrationForDisplay(
                         !path.empty() && file_downloaded);
   std::string product_string = quirks::IdToHexString(product_id);
   if (path.empty()) {
-    VLOG(1) << "No ICC file found with product id: " << product_string
-            << " for display id: " << display_id;
+    DVLOG(1) << "No ICC file found with product id: " << product_string
+             << " for display id: " << display_id;
     return;
   }
 
   if (file_downloaded && type == display::DISPLAY_CONNECTION_TYPE_INTERNAL) {
-    VLOG(1) << "Downloaded ICC file with product id: " << product_string
-            << " for internal display id: " << display_id
-            << ". Profile will be applied on next startup.";
+    DVLOG(1) << "Downloaded ICC file with product id: " << product_string
+             << " for internal display id: " << display_id
+             << ". Profile will be applied on next startup.";
     return;
   }
 
-  VLOG(1) << "Loading ICC file " << path.value()
-          << " for display id: " << display_id
-          << " with product id: " << product_string;
+  DVLOG(1) << "Loading ICC file " << path.value()
+           << " for display id: " << display_id
+           << " with product id: " << product_string;
 
   base::PostTaskAndReplyWithResult(
       sequenced_task_runner_.get(), FROM_HERE,

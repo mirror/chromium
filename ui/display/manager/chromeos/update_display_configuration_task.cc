@@ -66,12 +66,12 @@ void UpdateDisplayConfigurationTask::OnDisplaysUpdated(
   if (new_display_state_ == MULTIPLE_DISPLAY_STATE_INVALID)
     new_display_state_ = ChooseDisplayState();
 
-  VLOG(1) << "OnDisplaysUpdated: new_display_state="
-          << MultipleDisplayStateToString(new_display_state_)
-          << " new_power_state=" << DisplayPowerStateToString(new_power_state_)
-          << " flags=" << power_flags_
-          << " force_configure=" << force_configure_
-          << " display_count=" << cached_displays_.size();
+  DVLOG(1) << "OnDisplaysUpdated: new_display_state="
+           << MultipleDisplayStateToString(new_display_state_)
+           << " new_power_state=" << DisplayPowerStateToString(new_power_state_)
+           << " flags=" << power_flags_
+           << " force_configure=" << force_configure_
+           << " display_count=" << cached_displays_.size();
   // If there has been any change in the requested power state and the displays
   // aren't being turned off force a change in DPMS state.
   force_dpms_ = ShouldForceDpms() && ShouldConfigure();
@@ -89,7 +89,7 @@ void UpdateDisplayConfigurationTask::OnDisplaysUpdated(
 
 void UpdateDisplayConfigurationTask::EnterState(
     const ConfigureDisplaysTask::ResponseCallback& callback) {
-  VLOG(2) << "EnterState";
+  DVLOG(2) << "EnterState";
   std::vector<DisplayConfigureRequest> requests;
   if (!layout_manager_->GetDisplayLayout(cached_displays_, new_display_state_,
                                          new_power_state_, &requests)) {
@@ -101,7 +101,7 @@ void UpdateDisplayConfigurationTask::EnterState(
         new ConfigureDisplaysTask(delegate_, requests, callback));
     configure_task_->Run();
   } else {
-    VLOG(2) << "No displays";
+    DVLOG(2) << "No displays";
     callback.Run(ConfigureDisplaysTask::SUCCESS);
   }
 }

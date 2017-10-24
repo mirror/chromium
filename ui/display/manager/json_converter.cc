@@ -55,7 +55,7 @@ bool UpdateFromDict(const base::DictionaryValue* dict_value,
                     Output* output) {
   const base::Value* field = nullptr;
   if (!dict_value->Get(field_name, &field)) {
-    LOG(WARNING) << "Missing field: " << field_name;
+    DLOG(WARNING) << "Missing field: " << field_name;
     return true;
   }
 

@@ -189,10 +189,10 @@ double TouchTransformController::GetTouchResolutionScale(
   double touch_area = touch_device.size.GetArea();
   double ratio = std::sqrt(display_area / touch_area);
 
-  VLOG(2) << "Display size: "
-          << touch_display.bounds_in_native().size().ToString()
-          << ", Touchscreen size: " << touch_device.size.ToString()
-          << ", Touch radius scale ratio: " << ratio;
+  DVLOG(2) << "Display size: "
+           << touch_display.bounds_in_native().size().ToString()
+           << ", Touchscreen size: " << touch_device.size.ToString()
+           << ", Touch radius scale ratio: " << ratio;
   return ratio;
 }
 
