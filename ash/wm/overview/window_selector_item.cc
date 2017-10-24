@@ -636,6 +636,7 @@ float WindowSelectorItem::GetItemScale(const gfx::Size& size) {
 
 void WindowSelectorItem::HandlePressEvent(
     const gfx::Point& location_in_screen) {
+  window_grid_->SetSelectionWidgetVisibility(false);
   StartDrag();
   window_selector_->InitiateDrag(this, location_in_screen);
 }
@@ -643,6 +644,7 @@ void WindowSelectorItem::HandlePressEvent(
 void WindowSelectorItem::HandleReleaseEvent(
     const gfx::Point& location_in_screen) {
   EndDrag();
+  window_grid_->SetSelectionWidgetVisibility(true);
   window_selector_->CompleteDrag(this, location_in_screen);
 }
 
