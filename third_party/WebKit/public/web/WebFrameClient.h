@@ -49,6 +49,7 @@
 #include "WebSandboxFlags.h"
 #include "WebTextDirection.h"
 #include "WebTriggeringEventInfo.h"
+#include "base/optional.h"
 #include "public/platform/BlameContext.h"
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebColor.h"
@@ -405,8 +406,10 @@ class BLINK_EXPORT WebFrameClient {
 
   // The provisional load failed. The WebHistoryCommitType is the commit type
   // that would have been used had the load succeeded.
-  virtual void DidFailProvisionalLoad(const WebURLError&,
-                                      WebHistoryCommitType) {}
+  virtual void DidFailProvisionalLoad(
+      const WebURLError&,
+      WebHistoryCommitType,
+      const base::Optional<std::string>& error_page_content) {}
 
   // The provisional datasource is now committed.  The first part of the
   // response body has been received, and the encoding of the response
