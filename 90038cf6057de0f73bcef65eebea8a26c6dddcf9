@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b22c5ce3_9b14833d",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T03:52:11Z",
+      "side": 1,
+      "message": "// Starts |request| using |loader_factory| and returns the resulting URLLoader and its URLLoaderClient. The caller can then use functions like client.RunUntilComplete() to wait for completion. Calling base:RunLoop().RunUntilIdle() also advances the load to until |fake_controller_| receives the fetch event.\n\n(Should we maybe give fake_controller_ a function like RunUntilFetchEvent()?)",
+      "revId": "90038cf6057de0f73bcef65eebea8a26c6dddcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ed9b0e_ad53f301",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T03:52:11Z",
+      "side": 1,
+      "message": "nit: \"endpoint\" makes me think it\u0027s some remote thing... would just call this |loader_and_client| (same comment throughout)\n\nActually I think Kinuko had the better idea of making URLLoader a required output param since most of the time we just want client. Or we could make both Loader and Client individual required out params.",
+      "revId": "90038cf6057de0f73bcef65eebea8a26c6dddcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2247e0d7_04a0d352",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T03:52:11Z",
+      "side": 1,
+      "message": "Since |loader_endpoint.client| is used 7 times, wdyt of a reference or another std::unique_ptr variable named |client|.",
+      "revId": "90038cf6057de0f73bcef65eebea8a26c6dddcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0943a206_6ff56470",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T03:52:11Z",
+      "side": 1,
+      "message": "maybe delete line 480, this seems to fit in that block",
+      "revId": "90038cf6057de0f73bcef65eebea8a26c6dddcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
