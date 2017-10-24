@@ -33,6 +33,24 @@
       "revId": "5b09673d6115323b22377855c026ded0b02fd49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d571500_4c5ff517",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-24T21:59:09Z",
+      "side": 1,
+      "message": "It\u0027s an ephemeral thing. It\u0027s actually almost impossible to make it work the way you probably want, because \"ninja chrome\" will make sure \"chrome\" is up-to-date, but not necessarily other files it happens to produce.",
+      "parentUuid": "d5210477_6241a41c",
+      "revId": "5b09673d6115323b22377855c026ded0b02fd49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
