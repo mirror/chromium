@@ -23,6 +23,8 @@
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/skia/include/core/SkBitmap.h"
+#include "third_party/skia/include/core/SkColor.h"
 #include "url/gurl.h"
 
 namespace thumbnails {
@@ -37,6 +39,25 @@ using testing::_;
 
 ACTION_P(RunClosure, closure) {
   closure.Run();
+}
+
+// |arg| is a gfx::Image, |expected_color| is a SkColor.
+MATCHER_P(ImageColorIs, expected_color, "") {
+  SkBitmap bitmap = arg.AsBitmap();
+  if (bitmap.empty()) {
+    *result_listener << "expected color but no bitmap data available";
+    return false;
+  }
+
+  SkColor actual_color = bitmap.getColor(1, 1);
+  if (actual_color != expected_color) {
+    *result_listener << "expected color "
+                     << base::StringPrintf("%08X", expected_color)
+                     << " but actual color is "
+                     << base::StringPrintf("%08X", actual_color);
+    return false;
+  }
+  return true;
 }
 
 class MockThumbnailService : public ThumbnailService {
@@ -72,6 +93,12 @@ class ThumbnailTest : public InProcessBrowserTest {
   }
 
  private:
+  void SetUp() override {
+    // Enabling pixel output is required for readback to work.
+    EnablePixelOutput();
+    InProcessBrowserTest::SetUp();
+  }
+
   void SetUpInProcessBrowserTestFixture() override {
     feature_list_.InitAndEnableFeature(
         features::kCaptureThumbnailOnNavigatingAway);
@@ -112,11 +139,21 @@ IN_PROC_BROWSER_TEST_F(ThumbnailTest, ShouldCaptureOnNavigatingAway) {
 #endif
 
   const GURL about_blank_url("about:blank");
-  const GURL simple_url = embedded_test_server()->GetURL("/simple.html");
+  const GURL simple_red_url =
+      embedded_test_server()->GetURL("/simple_red.html");
+  const GURL simple_yellow_url =
+      embedded_test_server()->GetURL("/simple_yellow.html");
+  const GURL simple_green_url =
+      embedded_test_server()->GetURL("/simple_green.html");
 
   ON_CALL(*thumbnail_service(), ShouldAcquirePageThumbnail(about_blank_url, _))
       .WillByDefault(Return(false));
-  ON_CALL(*thumbnail_service(), ShouldAcquirePageThumbnail(simple_url, _))
+  ON_CALL(*thumbnail_service(), ShouldAcquirePageThumbnail(simple_red_url, _))
+      .WillByDefault(Return(true));
+  ON_CALL(*thumbnail_service(),
+          ShouldAcquirePageThumbnail(simple_yellow_url, _))
+      .WillByDefault(Return(true));
+  ON_CALL(*thumbnail_service(), ShouldAcquirePageThumbnail(simple_green_url, _))
       .WillByDefault(Return(true));
 
   // The test framework opens an about:blank tab by default.
@@ -125,17 +162,31 @@ IN_PROC_BROWSER_TEST_F(ThumbnailTest, ShouldCaptureOnNavigatingAway) {
   ASSERT_EQ(about_blank_url, active_tab->GetLastCommittedURL());
 
   // Navigate to some page.
-  ui_test_utils::NavigateToURL(browser(), simple_url);
+  ui_test_utils::NavigateToURL(browser(), simple_red_url);
 
-  // Before navigating away, we should take a thumbnail of the page.
-  base::RunLoop run_loop;
-  EXPECT_CALL(*thumbnail_service(),
-              SetPageThumbnail(Field(&ThumbnailingContext::url, simple_url), _))
-      .WillOnce(DoAll(RunClosure(run_loop.QuitClosure()), Return(true)));
-  // Navigate to about:blank again.
-  ui_test_utils::NavigateToURL(browser(), about_blank_url);
-  // Wait for the thumbnailing process to finish.
-  run_loop.Run();
+  {
+    // Before navigating away from the red page, we should take a thumbnail.
+    ui_test_utils::NavigateToURL(browser(), simple_yellow_url);
+    base::RunLoop run_loop;
+    EXPECT_CALL(
+        *thumbnail_service(),
+        SetPageThumbnail(Field(&ThumbnailingContext::url, simple_red_url),
+                         ImageColorIs(SK_ColorRED)))
+        .WillOnce(DoAll(RunClosure(run_loop.QuitClosure()), Return(true)));
+    run_loop.Run();
+  }
+
+  {
+    // Before navigating away from the yellow page, we should take a thumbnail.
+    ui_test_utils::NavigateToURL(browser(), simple_green_url);
+    base::RunLoop run_loop;
+    EXPECT_CALL(
+        *thumbnail_service(),
+        SetPageThumbnail(Field(&ThumbnailingContext::url, simple_yellow_url),
+                         ImageColorIs(SK_ColorYELLOW)))
+        .WillOnce(DoAll(RunClosure(run_loop.QuitClosure()), Return(true)));
+    run_loop.Run();
+  }
 }
 
 }  // namespace
