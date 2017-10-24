@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68398dd8_4ce19ddb",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-24T21:15:57Z",
+      "side": 1,
+      "message": "Because two reasons:\n1. In the dtor, we will set the vsync callback to null.\n2. Seems GetCommandBufferProxy() returned object is owned by this class, so the callback should not be called, if this object is destroyed.\n\nMaybe we should remove the weak_ptr_factory_,and change SetSwapBuffersCompletionCallback() as well. ?",
+      "parentUuid": "37044d07_77979eb6",
+      "revId": "07c7e2d6b8153d402ffd87ceb219f2f80721558f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe4e816e_e6966e62",
         "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "07c7e2d6b8153d402ffd87ceb219f2f80721558f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a4e627_7488d393",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-24T21:15:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe4e816e_e6966e62",
+      "revId": "07c7e2d6b8153d402ffd87ceb219f2f80721558f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
