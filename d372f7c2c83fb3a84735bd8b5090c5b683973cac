@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f2b6dc1_ad60175a",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T10:30:47Z",
+      "side": 1,
+      "message": "Done. Perfect! Also added similar sentence into OnConnectionError().",
+      "parentUuid": "881843cc_6f7fa549",
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c261fe90_a86e0074",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1dc1c00c_fe20e087",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T10:30:47Z",
+      "side": 1,
+      "message": "If |this| is in kUnbound state, means the remote SWRegistrationHandle has destroyed, so that the remote end point of |GetRegistrationObjectHost()| has been closed, making {Update(),Unregister()} calls on it will just be ignored silently. \nHow about we just DCHECK(state_\u003d\u003dkUnbound || state_\u003d\u003dkAttachedAndBound) here?",
+      "parentUuid": "c261fe90_a86e0074",
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "716d8776_ddbe592f",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-24T07:03:54Z",
       "side": 1,
       "message": "There\u0027s a bit of a contradiction here with the new LifecycleState stuff.\n\nThis comment is structured as a sequence where first the render-process Handles die, then we sever the Mojo connection, then we get destructed.\n\nLifecycleState seems to say that Handles dying or Mojo connection breaking can happen in either order, then we get destructed when both happen.\n\nCan you help me understand why Mojo connection breaking can happen before Handles die?",
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a18251_a85cbf9a",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T10:30:47Z",
+      "side": 1,
+      "message": "Added some sentences about another destruction scenario: the browser process destroys the SWRegistrationObject Mojo connection while some Handles are still held by Blink.\n\nAbout why the browser process destroys the Mojo connection so early, I\u0027m not very sure about the root cause but have some thoughts:\nFrom https://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_dispatcher_host.h?rcl\u003db80b8a10f9ed3d64f2a742e30fe92330bd786027\u0026l\u003d244 we can see that SWRegistrationHandle is also owned by ServiceWorkerDispatcherHost, and, from https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_process_host_impl.cc?rcl\u003d23f7989bf5deeb36f18f101311ecb12d9c40665e\u0026l\u003d1741 we can see that ServiceWorkerDispatcherHost is owned by RenderProcessHostImpl, so, seems on some time points when page transits to another url with different origin, the browser process just deletes the old RenderProcessHostImpl without waiting for end of the renderer process. Thus, the SWRegistrationHandle destruction leads to such a case.",
+      "parentUuid": "716d8776_ddbe592f",
       "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "9d5d3850_37c18a87",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T10:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4058c0fc_ec6a9d15",
+      "range": {
+        "startLine": 141,
+        "startChar": 37,
+        "endLine": 141,
+        "endChar": 42
+      },
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed6322bc_efbbc75d",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 3
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "e464a67c_411a2e78",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T10:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed6322bc_efbbc75d",
+      "range": {
+        "startLine": 144,
+        "startChar": 59,
+        "endLine": 144,
+        "endChar": 64
+      },
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae54b9d3_5a8b0aad",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 3
@@ -113,6 +215,24 @@
       "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454fa03a_adc43e4a",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T10:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae54b9d3_5a8b0aad",
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +256,30 @@
       "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4237484a_8f178841",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T10:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0ba603d_c6a4848f",
+      "range": {
+        "startLine": 231,
+        "startChar": 69,
+        "endLine": 231,
+        "endChar": 71
+      },
+      "revId": "d372f7c2c83fb3a84735bd8b5090c5b683973cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
