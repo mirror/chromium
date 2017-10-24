@@ -20,6 +20,16 @@
   // states of RTCPeerConnection, MediaStream and MediaStreamTrack.
 
   async_test(t => {
+    let pc = new RTCPeerConnection();
+    pc.onnegotiationneeded = () => {
+      console.log('event fired!');
+    };
+    pc.dispatchAndResolve().then(() => {
+      console.log('promise resolved (then fired)!');
+    });
+  }, 'dispatch and resolve');
+
+  /*async_test(t => {
     const caller = new RTCPeerConnection();
     const callee = new RTCPeerConnection();
     return getUserMediaTracksAndStreams(1)
@@ -217,6 +227,6 @@
     .catch(t.step_func(reason => {
       assert_unreached(reason);
     }));
-  }, 'removeTrack does not remove the receiver.');
+  }, 'removeTrack does not remove the receiver.');*/
 
 </script>

@@ -114,6 +114,8 @@ class MODULES_EXPORT RTCPeerConnection final
                                      RTCPeerConnectionErrorCallback*);
   RTCSessionDescription* remoteDescription();
 
+  ScriptPromise dispatchAndResolve(ScriptState*);
+
   String signalingState() const;
 
   void setConfiguration(ScriptState*, const RTCConfiguration&, ExceptionState&);

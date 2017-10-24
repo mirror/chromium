@@ -794,6 +794,15 @@ ScriptPromise RTCPeerConnection::setRemoteDescription(
   return ScriptPromise::CastUndefined(script_state);
 }
 
+ScriptPromise RTCPeerConnection::dispatchAndResolve(ScriptState* script_state) {
+  ScheduleDispatchEvent(Event::Create(EventTypeNames::negotiationneeded));
+
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+  resolver->Resolve();
+  return promise;
+}
+
 RTCSessionDescription* RTCPeerConnection::remoteDescription() {
   WebRTCSessionDescription web_session_description =
       peer_handler_->RemoteDescription();

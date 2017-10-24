@@ -111,6 +111,8 @@ enum RTCIceConnectionState {
     // spec, remove it or change it?): https://github.com/w3c/webrtc-stats/issues/116
     [CallWith=ScriptState] Promise<RTCStatsReport> getStats();
 
+    [CallWith=ScriptState] Promise<void> dispatchAndResolve();
+
     // RTP Media API
     // https://w3c.github.io/webrtc-pc/#dom-rtcpeerconnection-getsenders
     [RuntimeEnabled=RTCRtpSender] sequence<RTCRtpSender> getSenders();
