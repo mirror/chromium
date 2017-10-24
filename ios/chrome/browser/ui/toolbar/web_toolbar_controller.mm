@@ -111,6 +111,7 @@ using ios::material::TimingFunction;
   UIButton* _starButton;
   UIButton* _voiceSearchButton;
   OmniboxTextFieldIOS* _omniBox;
+  LocationBarView* _locationBarView;
   UIButton* _cancelButton;
   // Progress bar used to show what fraction of the page has loaded.
   MDCProgressView* _determinateProgressView;
@@ -266,11 +267,11 @@ using ios::material::TimingFunction;
           : [UIColor colorWithWhite:0 alpha:[MDCTypography body1FontOpacity]];
   UIColor* tintColor = _incognito ? textColor : nil;
   CGRect omniboxRect = LayoutRectGetRect(kOmniboxFrame[idiom]);
-  _omniBox =
-      [[OmniboxTextFieldIOS alloc] initWithFrame:omniboxRect
-                                            font:[MDCTypography subheadFont]
-                                       textColor:textColor
-                                       tintColor:tintColor];
+  _locationBarView =
+      [[LocationBarView alloc] initWithFrame:omniboxRect
+                                        font:[MDCTypography subheadFont]
+                                   textColor:textColor
+                                   tintColor:tintColor];
 
   // Disable default drop interactions on the omnibox.
   // TODO(crbug.com/739903): Handle drop events once Chrome iOS is built with
@@ -279,23 +280,26 @@ using ios::material::TimingFunction;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     SEL setInteractionsSelector = NSSelectorFromString(@"setInteractions:");
-    if ([_omniBox respondsToSelector:setInteractionsSelector]) {
-      [_omniBox performSelector:setInteractionsSelector withObject:@[]];
+    if ([_locationBarView.textField
+            respondsToSelector:setInteractionsSelector]) {
+      [_locationBarView.textField performSelector:setInteractionsSelector
+                                       withObject:@[]];
     }
 #pragma clang diagnostic pop
   }
   if (_incognito) {
-    [_omniBox setIncognito:YES];
-    [_omniBox
+    [_locationBarView.textField setIncognito:YES];
+    [_locationBarView.textField
         setSelectedTextBackgroundColor:[UIColor colorWithWhite:1 alpha:0.1]];
-    [_omniBox setPlaceholderTextColor:[UIColor colorWithWhite:1 alpha:0.5]];
+    [_locationBarView.textField
+        setPlaceholderTextColor:[UIColor colorWithWhite:1 alpha:0.5]];
   } else if (!IsIPadIdiom()) {
     // Set placeholder text color to match fakebox placeholder text color when
     // on iPhone and in regular mode.
     UIColor* placeholderTextColor =
         [UIColor colorWithWhite:kiPhoneOmniboxPlaceholderColorBrightness
                           alpha:1.0];
-    [_omniBox setPlaceholderTextColor:placeholderTextColor];
+    [_locationBarView.textField setPlaceholderTextColor:placeholderTextColor];
   }
   _backButton = [[UIButton alloc]
       initWithFrame:LayoutRectGetRect(kBackButtonFrame[idiom])];
@@ -314,8 +318,8 @@ using ios::material::TimingFunction;
   [_webToolbar addSubview:_backButton];
   [_webToolbar addSubview:_forwardButton];
 
-  // _omniboxBackground needs to be added under _omniBox so as not to cover up
-  // _omniBox.
+  // _omniboxBackground needs to be added under _locationBarView so as not to
+  // cover up _locationBarView.
   _omniboxBackground = [[UIImageView alloc] initWithFrame:omniboxRect];
   [_omniboxBackground setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                           UIViewAutoresizingFlexibleTopMargin];
@@ -356,7 +360,7 @@ using ios::material::TimingFunction;
     }
   }
 
-  [_webToolbar addSubview:_omniBox];
+  [_webToolbar addSubview:_locationBarView];
 
   [_backButton setEnabled:NO];
   [_forwardButton setEnabled:NO];
@@ -465,8 +469,8 @@ using ios::material::TimingFunction;
   NSString* imageName =
       _incognito ? @"omnibox_transparent_background" : @"omnibox_background";
   [_omniboxBackground setImage:StretchableImageNamed(imageName, 12, 12)];
-  [_omniBox setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                UIViewAutoresizingFlexibleTopMargin];
+  [_locationBarView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+                                        UIViewAutoresizingFlexibleTopMargin];
   [_reloadButton addTarget:self
                     action:@selector(cancelOmniboxEdit)
           forControlEvents:UIControlEventTouchUpInside];
@@ -491,7 +495,7 @@ using ios::material::TimingFunction;
                                    UIViewAutoresizingFlexibleTopMargin];
   [_webToolbar setFrame:[self specificControlsArea]];
   _locationBar = base::MakeUnique<LocationBarControllerImpl>(
-      _omniBox, _browserState, self, self.dispatcher);
+      _locationBarView, _browserState, self, self.dispatcher);
   _popupView = _locationBar->CreatePopupView(self);
 
   // Create the determinate progress bar (phone only).
@@ -619,7 +623,7 @@ using ios::material::TimingFunction;
   if (isCurrentTab && !isNTP) {
     // This has the effect of making any alpha-ed out items visible.
     [self updateToolbarAlphaForFrame:CGRectZero];
-    [_omniBox setHidden:NO];
+    [_locationBarView setHidden:NO];
     return;
   }
 
@@ -630,7 +634,7 @@ using ios::material::TimingFunction;
   [_backButton setEnabled:tab.canGoBack];
   [_forwardButton setHidden:!forwardEnabled];
   [_forwardButton setEnabled:forwardEnabled];
-  [_omniBox setHidden:YES];
+  [_locationBarView setHidden:YES];
   [self.backgroundView setAlpha:isNTP ? 0 : 1];
   [_omniboxBackground setHidden:isNTP ? YES : NO];
   [self hideViewsForNewTabPage:isNTP ? YES : NO];
@@ -638,7 +642,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)resetToolbarAfterSideSwipeSnapshot {
-  [_omniBox setHidden:NO];
+  [_locationBarView setHidden:NO];
   [_backButton setHidden:NO];
   [_forwardButton setHidden:NO];
   [_omniboxBackground setHidden:NO];
@@ -683,7 +687,7 @@ using ios::material::TimingFunction;
 }
 
 - (BOOL)isOmniboxFirstResponder {
-  return [_omniBox isFirstResponder];
+  return [_locationBarView.textField isFirstResponder];
 }
 
 - (BOOL)showingOmniboxPopup {
@@ -819,12 +823,12 @@ using ios::material::TimingFunction;
   [[_webToolbar layer] addAnimation:frameAnimation
                              forKey:kToolbarTransitionAnimationKey];
 
-  // Animate omnibox: center the omnibox vertically within the card web toolbar,
-  // maintain its leading offset, and adjusting its width to match the available
-  // space on the card.
-  CGFloat omniboxHeight = [_omniBox frame].size.height;
+  // Animate location bar: center the omnibox vertically within the card web
+  // toolbar, maintain its leading offset, and adjusting its width to match the
+  // available space on the card.
+  CGFloat omniboxHeight = [_locationBarView frame].size.height;
   LayoutRect toolbarOmniboxLayout = LayoutRectForRectInBoundingRect(
-      [_omniBox frame], [_omniBox superview].bounds);
+      [_locationBarView frame], [_locationBarView superview].bounds);
   CGFloat omniboxLeading = toolbarOmniboxLayout.position.leading;
 
   LayoutRect omniboxBeginLayout = toolbarOmniboxLayout;
@@ -850,14 +854,14 @@ using ios::material::TimingFunction;
   CGRect omniboxEndFrame =
       AlignRectOriginAndSizeToPixels(LayoutRectGetRect(omniboxEndLayout));
 
-  frameAnimation =
-      FrameAnimationMake([_omniBox layer], omniboxBeginFrame, omniboxEndFrame);
+  frameAnimation = FrameAnimationMake([_locationBarView layer],
+                                      omniboxBeginFrame, omniboxEndFrame);
   frameAnimation.duration = frameDuration;
   frameAnimation.timingFunction = frameTiming;
-  [self.transitionLayers addObject:[_omniBox layer]];
-  [[_omniBox layer] addAnimation:frameAnimation
-                          forKey:kToolbarTransitionAnimationKey];
-  [_omniBox
+  [self.transitionLayers addObject:[_locationBarView layer]];
+  [[_locationBarView layer] addAnimation:frameAnimation
+                                  forKey:kToolbarTransitionAnimationKey];
+  [_locationBarView.textField
       animateFadeWithStyle:((style == TOOLBAR_TRANSITION_STYLE_TO_STACK_VIEW)
                                 ? OMNIBOX_TEXT_FIELD_FADE_STYLE_OUT
                                 : OMNIBOX_TEXT_FIELD_FADE_STYLE_IN)];
@@ -936,7 +940,7 @@ using ios::material::TimingFunction;
 
 - (void)reverseTransitionAnimations {
   [super reverseTransitionAnimations];
-  [_omniBox reverseFadeAnimations];
+  [_locationBarView.textField reverseFadeAnimations];
 }
 
 - (void)cleanUpTransitionAnimations {
@@ -946,7 +950,7 @@ using ios::material::TimingFunction;
   self.view.backgroundColor =
       [UIColor colorWithWhite:backgroundColorBrightness alpha:1.0];
   [super cleanUpTransitionAnimations];
-  [_omniBox cleanUpFadeAnimations];
+  [_locationBarView.textField cleanUpFadeAnimations];
 }
 
 #pragma mark -
@@ -1118,7 +1122,7 @@ using ios::material::TimingFunction;
 
 - (void)focusOmnibox {
   if (![_webToolbar isHidden])
-    [_omniBox becomeFirstResponder];
+    [_locationBarView.textField becomeFirstResponder];
 }
 
 - (void)cancelOmniboxEdit {
@@ -1176,8 +1180,8 @@ using ios::material::TimingFunction;
     // For iPad, the omnibox visually extends to include the voice search button
     // on the right. Start with the field's frame in |parent|'s coordinate
     // system.
-    CGRect fieldFrame =
-        [parent convertRect:[_omniBox bounds] fromView:_omniBox];
+    CGRect fieldFrame = [parent convertRect:[_locationBarView bounds]
+                                   fromView:_locationBarView];
 
     // Now create a new frame that's below the field, stretching the full width
     // of |parent|, minus an inset on each side.
@@ -1236,11 +1240,11 @@ using ios::material::TimingFunction;
     [self loadURLForQuery:result];
   } else {
     [self focusOmnibox];
-    [_omniBox insertTextWhileEditing:result];
+    [_locationBarView.textField insertTextWhileEditing:result];
     // Notify the accessibility system to start reading the new contents of the
     // Omnibox.
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
-                                    _omniBox);
+                                    _locationBarView.textField);
   }
 }
 
@@ -1277,7 +1281,7 @@ using ios::material::TimingFunction;
 
 - (void)keyPressed:(NSString*)title {
   NSString* text = [self updateTextForDotCom:title];
-  [_omniBox insertTextWhileEditing:text];
+  [_locationBarView.textField insertTextWhileEditing:text];
 }
 
 #pragma mark - TabHistory Requirements
@@ -1322,8 +1326,8 @@ using ios::material::TimingFunction;
 #pragma mark CAAnimationDelegate
 - (void)animationDidStop:(CAAnimation*)anim finished:(BOOL)flag {
   if ([[anim valueForKey:@"id"] isEqual:@"resizeOmnibox"] &&
-      ![_omniBox isFirstResponder]) {
-    [_omniBox setRightView:nil];
+      ![_locationBarView.textField isFirstResponder]) {
+    [_locationBarView.textField setRightView:nil];
   }
 }
 
@@ -1360,7 +1364,7 @@ using ios::material::TimingFunction;
   CGRect newReloadButtonFrame = LayoutRectGetRect(reloadButtonLayout);
   CGRect newOmniboxFrame = [self newOmniboxFrame];
   BOOL isPad = IsIPadIdiom();
-  BOOL growOmnibox = [_omniBox isFirstResponder];
+  BOOL growOmnibox = [_locationBarView.textField isFirstResponder];
 
   // Animate buttons. Hide most of the buttons (standard set, back, forward)
   // for extended omnibox layout. Also show an extra cancel button so the
@@ -1393,17 +1397,18 @@ using ios::material::TimingFunction;
                    }
                    completion:nil];
 
-  if (CGRectEqualToRect([_omniBox frame], newOmniboxFrame))
+  if (CGRectEqualToRect([_locationBarView frame], newOmniboxFrame))
     return;
 
   // Hide the clear and voice search buttons during omniBox frame animations.
-  [_omniBox setRightViewMode:UITextFieldViewModeNever];
+  [_locationBarView.textField setRightViewMode:UITextFieldViewModeNever];
 
   // Make sure the accessory images are in the correct positions so they do not
   // move during the animation.
-  [_omniBox rightView].frame =
-      [_omniBox rightViewRectForBounds:newOmniboxFrame];
-  [_omniBox leftView].frame = [_omniBox leftViewRectForBounds:newOmniboxFrame];
+  [_locationBarView.textField rightView].frame =
+      [_locationBarView.textField rightViewRectForBounds:newOmniboxFrame];
+  [_locationBarView.textField leftView].frame =
+      [_locationBarView.textField leftViewRectForBounds:newOmniboxFrame];
 
   CGRect materialBackgroundFrame = RectShiftedDownForStatusBar(newOmniboxFrame);
 
@@ -1415,11 +1420,11 @@ using ios::material::TimingFunction;
       delay:0.0
       options:UIViewAnimationOptionAllowUserInteraction
       animations:^{
-        [_omniBox setFrame:newOmniboxFrame];
+        [_locationBarView setFrame:newOmniboxFrame];
         [_omniboxBackground setFrame:materialBackgroundFrame];
       }
       completion:^(BOOL finished) {
-        [_omniBox setRightViewMode:UITextFieldViewModeAlways];
+        [_locationBarView.textField setRightViewMode:UITextFieldViewModeAlways];
       }];
 }
 
@@ -1429,13 +1434,13 @@ using ios::material::TimingFunction;
   InterfaceIdiom idiom = IsIPadIdiom() ? IPAD_IDIOM : IPHONE_IDIOM;
   LayoutRect newOmniboxLayout;
   // Grow the omnibox if focused.
-  BOOL growOmnibox = [_omniBox isFirstResponder];
+  BOOL growOmnibox = [_locationBarView.textField isFirstResponder];
   if (idiom == IPAD_IDIOM) {
     // When the omnibox is focused, the star button is hidden.
     [_starButton setAlpha:(growOmnibox ? 0 : 1)];
 
-    newOmniboxLayout =
-        LayoutRectForRectInBoundingRect([_omniBox frame], [_webToolbar bounds]);
+    newOmniboxLayout = LayoutRectForRectInBoundingRect([_locationBarView frame],
+                                                       [_webToolbar bounds]);
     CGFloat omniboxLeading = [self omniboxLeading];
     CGFloat omniboxLeadingDiff =
         omniboxLeading - newOmniboxLayout.position.leading;
@@ -1454,8 +1459,8 @@ using ios::material::TimingFunction;
     [_webToolbar setAutoresizesSubviews:YES];
 
     // Compute new omnibox layout after the web toolbar is resized.
-    newOmniboxLayout =
-        LayoutRectForRectInBoundingRect([_omniBox frame], [_webToolbar bounds]);
+    newOmniboxLayout = LayoutRectForRectInBoundingRect([_locationBarView frame],
+                                                       [_webToolbar bounds]);
 
     if (growOmnibox) {
       // If the omnibox is expanded, there is padding on both the left and right
@@ -1628,7 +1633,7 @@ using ios::material::TimingFunction;
           ? fmax((kIPadToolbarY - frame.origin.y) - kScrollFadeDistance, 0)
           : -1 * frame.origin.y;
   CGFloat fraction = 1 - fmin(distanceOffscreen / kScrollFadeDistance, 1);
-  if (![_omniBox isFirstResponder])
+  if (![_locationBarView.textField isFirstResponder])
     [self setStandardControlsAlpha:fraction];
 
   [_backButton setAlpha:fraction];
@@ -1636,7 +1641,7 @@ using ios::material::TimingFunction;
     [_forwardButton setAlpha:fraction];
   [_reloadButton setAlpha:fraction];
   [_omniboxBackground setAlpha:fraction];
-  [_omniBox setAlpha:fraction];
+  [_locationBarView setAlpha:fraction];
   [_starButton setAlpha:fraction];
   [_voiceSearchButton setAlpha:fraction];
 }
@@ -1654,8 +1659,8 @@ using ios::material::TimingFunction;
     [_stopButton setHidden:isCompactTabletView];
     [self updateToolbarState];
 
-    if ([_omniBox isFirstResponder]) {
-      [_omniBox reloadInputViews];
+    if ([_locationBarView.textField isFirstResponder]) {
+      [_locationBarView.textField reloadInputViews];
     }
 
     // Re-layout toolbar and omnibox.
@@ -1758,16 +1763,17 @@ using ios::material::TimingFunction;
     return [self layoutOmnibox];
 
   CGRect newOmniboxFrame = [self newOmniboxFrame];
-  BOOL growOmnibox = [_omniBox isFirstResponder];
+  BOOL growOmnibox = [_locationBarView.textField isFirstResponder];
 
-  // Determine the starting and ending bounds and position for |_omniBox|.
-  // Increasing the height of _omniBox results in the text inside it jumping
-  // vertically during the animation, so the height change will not be animated.
-  CGRect fromBounds = [_omniBox layer].bounds;
+  // Determine the starting and ending bounds and position for
+  // |_locationBarView|. Increasing the height of _locationBarView results in
+  // the text inside it jumping vertically during the animation, so the height
+  // change will not be animated.
+  CGRect fromBounds = [_locationBarView layer].bounds;
   LayoutRect toLayout =
       LayoutRectForRectInBoundingRect(newOmniboxFrame, [_webToolbar bounds]);
   CGRect toBounds = CGRectZero;
-  CGPoint fromPosition = [_omniBox layer].position;
+  CGPoint fromPosition = [_locationBarView layer].position;
   CGPoint toPosition = fromPosition;
   CGRect omniboxRect = LayoutRectGetRect(kOmniboxFrame[IPHONE_IDIOM]);
   if (growOmnibox) {
@@ -1794,8 +1800,9 @@ using ios::material::TimingFunction;
         CGSizeMake(newOmniboxFrame.size.width, omniboxRect.size.height);
   }
   toBounds = LayoutRectGetBoundsRect(toLayout);
-  toPosition.x =
-      LayoutRectGetPositionForAnchor(toLayout, [_omniBox layer].anchorPoint).x;
+  toPosition.x = LayoutRectGetPositionForAnchor(
+                     toLayout, [_locationBarView layer].anchorPoint)
+                     .x;
 
   // Determine starting and ending bounds for |_omniboxBackground|.
   // _omniboxBackground is needed to simulate the omnibox growing vertically and
@@ -1820,7 +1827,7 @@ using ios::material::TimingFunction;
   }
 
   // Is the omnibox already at the new size? Then there's nothing to animate.
-  if (CGRectEqualToRect([_omniBox layer].bounds, toBounds))
+  if (CGRectEqualToRect([_locationBarView layer].bounds, toBounds))
     return;
 
   [self animateStandardControlsForOmniboxExpansion:growOmnibox];
@@ -1831,7 +1838,7 @@ using ios::material::TimingFunction;
     if (_locationBar.get()->IsShowingPlaceholderWhileCollapsed())
       [self fadeOutOmniboxLeadingView];
     else
-      [_omniBox leftView].alpha = 0;
+      [_locationBarView.textField leftView].alpha = 0;
 
     if (_incognito)
       [self fadeInIncognitoIcon];
@@ -1842,7 +1849,7 @@ using ios::material::TimingFunction;
     if (_locationBar.get()->IsShowingPlaceholderWhileCollapsed())
       [self fadeInOmniboxLeadingView];
     else
-      [_omniBox leftView].alpha = 1;
+      [_locationBarView.textField leftView].alpha = 1;
 
     if (_incognito)
       [self fadeOutIncognitoIcon];
@@ -1853,7 +1860,7 @@ using ios::material::TimingFunction;
   [CATransaction setCompletionBlock:^{
     // Re-layout the omnibox's subviews after the animation to allow VoiceOver
     // to select the clear text button.
-    [_omniBox setNeedsLayout];
+    [_locationBarView setNeedsLayout];
   }];
   CGFloat duration = ios::material::kDuration1;
   // If app is on the regular New Tab Page, make this animation occur instantly
@@ -1878,14 +1885,16 @@ using ios::material::TimingFunction;
   [resizeAnimation setValue:@"resizeOmnibox" forKey:@"id"];
   resizeAnimation.fromValue = [NSValue valueWithCGRect:fromBounds];
   resizeAnimation.toValue = [NSValue valueWithCGRect:toBounds];
-  [_omniBox layer].bounds = toBounds;
-  [[_omniBox layer] addAnimation:resizeAnimation forKey:@"resizeBounds"];
+  [_locationBarView layer].bounds = toBounds;
+  [[_locationBarView layer] addAnimation:resizeAnimation
+                                  forKey:@"resizeBounds"];
   CABasicAnimation* positionAnimation =
       [CABasicAnimation animationWithKeyPath:@"position"];
   positionAnimation.fromValue = [NSValue valueWithCGPoint:fromPosition];
   positionAnimation.toValue = [NSValue valueWithCGPoint:toPosition];
-  [_omniBox layer].position = toPosition;
-  [[_omniBox layer] addAnimation:positionAnimation forKey:@"movePosition"];
+  [_locationBarView layer].position = toPosition;
+  [[_locationBarView layer] addAnimation:positionAnimation
+                                  forKey:@"movePosition"];
 
   resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
   resizeAnimation.fromValue = [NSValue valueWithCGRect:backgroundFromBounds];
@@ -1906,7 +1915,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)fadeInOmniboxTrailingView {
-  UIView* trailingView = [_omniBox rightView];
+  UIView* trailingView = [_locationBarView.textField rightView];
   trailingView.alpha = 0;
   [_cancelButton setAlpha:0];
   [_cancelButton setHidden:NO];
@@ -1931,7 +1940,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)fadeInOmniboxLeadingView {
-  UIView* leadingView = [_omniBox leftView];
+  UIView* leadingView = [_locationBarView.textField leftView];
   leadingView.alpha = 0;
   // Instead of passing a delay into -fadeInView:, wait to call -fadeInView:.
   // The CABasicAnimation's start and end positions are calculated immediately
@@ -1949,7 +1958,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)fadeOutOmniboxTrailingView {
-  UIView* trailingView = [_omniBox rightView];
+  UIView* trailingView = [_locationBarView.textField rightView];
 
   // Animate the opacity of the trailingView to 0.
   [CATransaction begin];
@@ -1993,7 +2002,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)fadeOutOmniboxLeadingView {
-  UIView* leadingView = [_omniBox leftView];
+  UIView* leadingView = [_locationBarView.textField leftView];
 
   // Animate the opacity of leadingView to 0.
   [CATransaction begin];
@@ -2239,9 +2248,9 @@ using ios::material::TimingFunction;
           (([_forwardButton state] & kButtonStateMask) << 3) |
           (([_cancelButton state] & kButtonStateMask) << 6);
   // Omnibox size & text it contains.
-  hash ^= [[_omniBox text] hash];
-  hash ^= static_cast<uint32_t>([_omniBox frame].size.width) << 16;
-  hash ^= static_cast<uint32_t>([_omniBox frame].size.height) << 24;
+  hash ^= [[_locationBarView.textField text] hash];
+  hash ^= static_cast<uint32_t>([_locationBarView frame].size.width) << 16;
+  hash ^= static_cast<uint32_t>([_locationBarView frame].size.height) << 24;
   // Also note progress bar state.
   float progress = 0;
   if (_determinateProgressView && ![_determinateProgressView isHidden])
@@ -2282,10 +2291,12 @@ using ios::material::TimingFunction;
 
 - (NSString*)updateTextForDotCom:(NSString*)text {
   if ([text isEqualToString:kDotComTLD]) {
-    UITextRange* textRange = [_omniBox selectedTextRange];
-    NSInteger pos = [_omniBox offsetFromPosition:[_omniBox beginningOfDocument]
-                                      toPosition:textRange.start];
-    if (pos > 0 && [[_omniBox text] characterAtIndex:pos - 1] == '.')
+    UITextRange* textRange = [_locationBarView.textField selectedTextRange];
+    NSInteger pos = [_locationBarView.textField
+        offsetFromPosition:[_locationBarView.textField beginningOfDocument]
+                toPosition:textRange.start];
+    if (pos > 0 &&
+        [[_locationBarView.textField text] characterAtIndex:pos - 1] == '.')
       return [kDotComTLD substringFromIndex:1];
   }
   return text;
@@ -2348,7 +2359,7 @@ using ios::material::TimingFunction;
 }
 
 - (std::string)getLocationText {
-  return base::UTF16ToUTF8([_omniBox displayedText]);
+  return base::UTF16ToUTF8([_locationBarView.textField displayedText]);
 }
 
 - (BOOL)isLoading {
