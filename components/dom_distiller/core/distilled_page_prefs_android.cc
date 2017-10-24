@@ -61,6 +61,20 @@ jfloat DistilledPagePrefsAndroid::GetFontScaling(
   return distilled_page_prefs_->GetFontScaling();
 }
 
+void DistilledPagePrefsAndroid::SetReaderForAccessibilityEnabled(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    jboolean enabled) {
+  distilled_page_prefs_->SetReaderForAccessibilityEnabled(
+      static_cast<bool>(enabled));
+}
+
+jboolean DistilledPagePrefsAndroid::GetReaderForAccessibilityEnabled(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  return distilled_page_prefs_->GetReaderForAccessibilityEnabled();
+}
+
 jlong Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            jlong distilled_page_prefs_ptr) {

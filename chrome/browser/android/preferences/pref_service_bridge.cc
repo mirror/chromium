@@ -40,6 +40,7 @@
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/content_settings/core/common/pref_names.h"
+#include "components/dom_distiller/core/distilled_page_prefs.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/omnibox/browser/omnibox_pref_names.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
@@ -1050,4 +1051,18 @@ const char* PrefServiceBridge::GetPrefNameExposedToJava(int pref_index) {
   DCHECK_GE(pref_index, 0);
   DCHECK_LT(pref_index, Pref::PREF_NUM_PREFS);
   return kPrefsExposedToJava[pref_index];
+}
+
+static jboolean IsReaderForAccessibilityEnabled(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  return GetPrefService()->GetBoolean(
+      dom_distiller::kReaderForAccessibilityPref);
+}
+
+static void SetReaderForAccessibilityEnabled(JNIEnv* env,
+                                             const JavaParamRef<jobject>& obj,
+                                             jboolean enabled) {
+  GetPrefService()->SetBoolean(dom_distiller::kReaderForAccessibilityPref,
+                               enabled);
 }

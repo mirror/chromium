@@ -65,7 +65,11 @@ public class AccessibilityPreferences extends PreferenceFragment
 
         mReaderForAccessibilityPref =
                 (ChromeBaseCheckBoxPreference) findPreference(PREF_READER_FOR_ACCESSIBILITY);
-        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.ALLOW_READER_FOR_ACCESSIBILITY)) {
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.ALLOW_READER_FOR_ACCESSIBILITY)) {
+            mReaderForAccessibilityPref.setChecked(
+                    PrefServiceBridge.getInstance().isReaderForAccessibilityEnabled());
+            mReaderForAccessibilityPref.setOnPreferenceChangeListener(this);
+        } else {
             this.getPreferenceScreen().removePreference(mReaderForAccessibilityPref);
         }
     }
@@ -110,6 +114,8 @@ public class AccessibilityPreferences extends PreferenceFragment
             mFontSizePrefs.setUserFontScaleFactor((Float) newValue);
         } else if (PREF_FORCE_ENABLE_ZOOM.equals(preference.getKey())) {
             mFontSizePrefs.setForceEnableZoomFromUser((Boolean) newValue);
+        } else if (PREF_READER_FOR_ACCESSIBILITY.equals(preference.getKey())) {
+            PrefServiceBridge.getInstance().setReaderForAccessibilityEnabled((Boolean) newValue);
         }
         return true;
     }

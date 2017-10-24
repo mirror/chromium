@@ -24,6 +24,9 @@ const char kFontScalePref[] = "dom_distiller.font_scale";
 }
 
 namespace dom_distiller {
+// Path to the boolean whether Reader Mode for Accessibilty option is enabled.
+const char kReaderForAccessibilityPref[] =
+    "dom_distiller.reader_for_accessibility";
 
 DistilledPagePrefs::DistilledPagePrefs(PrefService* pref_service)
     : pref_service_(pref_service), weak_ptr_factory_(this) {
@@ -46,6 +49,9 @@ void DistilledPagePrefs::RegisterProfilePrefs(
   registry->RegisterDoublePref(
       kFontScalePref,
       1.0);
+  registry->RegisterBooleanPref(
+      kReaderForAccessibilityPref, false,
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 }
 
 void DistilledPagePrefs::SetFontFamily(
@@ -103,6 +109,14 @@ float DistilledPagePrefs::GetFontScaling() {
     return 1.0;
   }
   return scaling;
+}
+
+void DistilledPagePrefs::SetReaderForAccessibilityEnabled(bool enabled) {
+  pref_service_->SetBoolean(kReaderForAccessibilityPref, enabled);
+}
+
+bool DistilledPagePrefs::GetReaderForAccessibilityEnabled() {
+  return pref_service_->GetBoolean(kReaderForAccessibilityPref);
 }
 
 void DistilledPagePrefs::AddObserver(Observer* obs) {

@@ -61,6 +61,11 @@ class DistilledPagePrefs {
   // Returns the user's preference for the font size scaling of distilled pages.
   float GetFontScaling();
 
+  // Sets whether Reader Mode for Accessibilty option is enabled.
+  void SetReaderForAccessibilityEnabled(bool enabled);
+  // Returns whether Reader Mode for Accessibilty option is enabled.
+  bool GetReaderForAccessibilityEnabled();
+
   void AddObserver(Observer* obs);
   void RemoveObserver(Observer* obs);
 
@@ -80,6 +85,8 @@ class DistilledPagePrefs {
 
   DISALLOW_COPY_AND_ASSIGN(DistilledPagePrefs);
 };
+
+extern const char kReaderForAccessibilityPref[];
 
 }  // namespace dom_distiller
 
