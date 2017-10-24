@@ -4,6 +4,7 @@
 
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "base/mac/mac_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/posix/global_descriptors.h"
@@ -55,9 +56,11 @@ void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
   options->environ = delegate_->GetEnvironment();
 
   bool no_sandbox = command_line_->HasSwitch(switches::kNoSandbox);
+  bool use_v2 = base::FeatureList::IsEnabled(features::kMacV2Sandbox) &&
+                base::mac::IsAtLeastOS10_11() &&
+                GetProcessType() == switches::kRendererProcess;
 
-  if (base::FeatureList::IsEnabled(features::kMacV2Sandbox) &&
-      GetProcessType() == switches::kRendererProcess && !no_sandbox) {
+  if (use_v2 && !no_sandbox) {
     // Disable os logging to com.apple.diagnosticd which is a performance
     // problem.
     options->environ.insert(std::make_pair("OS_ACTIVITY_MODE", "disable"));
