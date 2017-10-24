@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5fbdbfd_0448763c",
+        "filename": "media/gpu/gpu_video_encode_accelerator_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-24T01:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbca1ca8_a174b30e",
+      "range": {
+        "startLine": 65,
+        "startChar": 49,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "a31fcfdb10beccc0b492bad4660a062a805724a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83db10dd_e07fbd4d",
         "filename": "media/gpu/gpu_video_encode_accelerator_factory.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-23T23:12:12Z",
       "side": 1,
       "message": "How do you make sure that this preferences field only applies to CRD? If this flag is set and WebRTC peerconnection is tried, it will still pick up HW encoder.",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 66
+      },
+      "revId": "a31fcfdb10beccc0b492bad4660a062a805724a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8d33a7_0305eead",
+        "filename": "media/gpu/gpu_video_encode_accelerator_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-24T01:26:19Z",
+      "side": 1,
+      "message": "The default value of enable_media_foundation_vea_on_windows7 is false. We will only set it to true inside of CRD (in this file https://cs.chromium.org/chromium/src/remoting/codec/webrtc_video_encoder_gpu.cc).",
+      "parentUuid": "83db10dd_e07fbd4d",
       "range": {
         "startLine": 102,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8841d46b_e89b48d7",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-24T01:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efd537cd_b093f4ac",
+      "range": {
+        "startLine": 105,
+        "startChar": 71,
+        "endLine": 105,
+        "endChar": 77
+      },
+      "revId": "a31fcfdb10beccc0b492bad4660a062a805724a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c47c8db8_7746536b",
         "filename": "media/gpu/media_foundation_video_encode_accelerator_win.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "a31fcfdb10beccc0b492bad4660a062a805724a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d158c6_6532380a",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-24T01:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c47c8db8_7746536b",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "a31fcfdb10beccc0b492bad4660a062a805724a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
