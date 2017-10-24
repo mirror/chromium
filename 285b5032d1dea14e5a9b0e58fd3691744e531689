@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "5eaa0304_9e42df15",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-24T22:25:45Z",
+      "side": 1,
+      "message": "Correct.  I added code to avoid loading the ICC file when the\nDisplaySnapshot has a correct gfx::ColorSpace, and added a UMA\nfor this. \n\nAlso deprecated Ash.DisplayColorManager.IccFileFound in favour\nof Ash.DisplayColorManager.IccFileDownloaded that tells us if\nthe ICC file was downloaded or was in the system already (the\ncase of |path| being screwed is already considered in \nAsh.DisplayColorManager.ValidDisplayColorSpace false).",
+      "parentUuid": "0fd99e0a_c8e9418c",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a74bacc_8048d78a",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 4
