@@ -98,7 +98,7 @@ SettingsAutofillSectionBrowserTest.prototype = {
   /** @override */
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
     'passwords_and_autofill_fake_data.js',
-    'test_util.js',
+    '../test_util.js',
     'ensure_lazy_loaded.js',
   ]),
 

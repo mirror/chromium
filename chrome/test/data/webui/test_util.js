@@ -26,8 +26,11 @@ cr.define('test_util', function() {
             return;
           }
         }
-      }).observe(
-          target, {attributes: true, childList: false, characterData: false});
+      }).observe(target, {
+        attributes: true,
+        childList: false,
+        characterData: false
+      });
     });
   }
 

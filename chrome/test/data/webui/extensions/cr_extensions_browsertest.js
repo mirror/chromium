@@ -574,7 +574,7 @@ var CrExtensionsToggleRowTest = class extends CrExtensionsBrowserTest {
   /** @override */
   get extraLibraries() {
     return super.extraLibraries.concat([
-      '../settings/test_util.js',
+      '../test_util.js',
       'toggle_row_test.js',
     ]);
   }

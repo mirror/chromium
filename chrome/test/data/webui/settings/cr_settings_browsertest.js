@@ -182,7 +182,7 @@ CrSettingsAboutPageTest.prototype = {
 
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
-    'test_util.js',
+    '../test_util.js',
     '../test_browser_proxy.js',
     'test_lifetime_browser_proxy.js',
     'about_page_tests.js',
@@ -721,7 +721,7 @@ CrSettingsCertificateManagerTest.prototype = {
 
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
-    'test_util.js',
+    '../test_util.js',
     '../test_browser_proxy.js',
     'certificate_manager_test.js',
   ]),
@@ -748,7 +748,7 @@ CrSettingsPrivacyPageTest.prototype = {
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     ROOT_PATH + 'ui/webui/resources/js/promise_resolver.js',
-    'test_util.js',
+    '../test_util.js',
     '../test_browser_proxy.js',
     'test_privacy_page_browser_proxy.js',
     'privacy_page_test.js',
@@ -1034,7 +1034,7 @@ CrSettingsSiteDataTest.prototype = {
   browsePreload: 'chrome://settings/site_settings/site_data.html',
 
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
-    'test_util.js',
+    '../test_util.js',
     '../test_browser_proxy.js',
     'test_local_data_browser_proxy.js',
     'site_data_test.js',
@@ -1292,7 +1292,7 @@ CrSettingsLanguagesTest.prototype = {
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     ROOT_PATH + 'ui/webui/resources/js/promise_resolver.js',
     '../fake_chrome_event.js',
-    'test_util.js',
+    '../test_util.js',
     '../test_browser_proxy.js',
     'fake_language_settings_private.js',
     'fake_settings_private.js',
@@ -1322,7 +1322,7 @@ CrSettingsLanguagesPageTest.prototype = {
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     '../fake_chrome_event.js',
-    'test_util.js',
+    '../test_util.js',
     '../test_browser_proxy.js',
     'fake_settings_private.js',
     'fake_language_settings_private.js',
@@ -1456,7 +1456,7 @@ CrSettingsMainPageTest.prototype = {
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     '../test_browser_proxy.js',
-    'test_util.js',
+    '../test_util.js',
     'settings_main_test.js',
   ]),
 };
@@ -1577,7 +1577,7 @@ CrSettingsPrintingPageTest.prototype = {
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     ROOT_PATH + 'ui/webui/resources/js/assert.js',
-    'test_util.js',
+    '../test_util.js',
     '../test_browser_proxy.js',
     'cups_printer_page_tests.js',
   ]),
