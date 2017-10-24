@@ -22,6 +22,30 @@
       "revId": "c9a24a5d50022a6da2609019e3ca523d57a0160a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02fe2021_66366439",
+        "filename": "tools/binary_size/libsupersize/diff.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-24T01:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e54f05f_6b93268d",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "c9a24a5d50022a6da2609019e3ca523d57a0160a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
