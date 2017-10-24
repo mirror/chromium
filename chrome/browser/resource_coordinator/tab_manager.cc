@@ -42,12 +42,15 @@
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tab_contents/tab_contents_iterator.h"
+#include "chrome/browser/ui/tab_ui_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/tab_utils.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
+#include "components/favicon/content/content_favicon_driver.h"
 #include "components/metrics/system_memory_stats_recorder.h"
+#include "components/url_formatter/url_formatter.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
@@ -186,6 +189,13 @@ std::unique_ptr<base::trace_event::ConvertableToTraceFormat> DataAsTraceValue(
   data->SetInteger("num_of_pending_navigations", num_of_pending_navigations);
   data->SetInteger("num_of_loading_contents", num_of_loading_contents);
   return std::move(data);
+}
+
+base::string16 FormatUrlToSubdomain(const GURL& url) {
+  base::string16 formated_url = url_formatter::FormatUrl(
+      url, url_formatter::kFormatUrlExperimentalOmitTrivialSubdomains,
+      net::UnescapeRule::SPACES, nullptr, nullptr, nullptr);
+  return base::UTF8ToUTF16(GURL(formated_url).host());
 }
 
 }  // namespace
@@ -1180,8 +1190,19 @@ TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
     return content::NavigationThrottle::PROCEED;
   }
 
-  // TODO(zhenw): Try to set the favicon and title from history service if this
-  // navigation will be delayed.
+  // If this navigation will be delayed, set the title and favicon for better
+  // user experience.
+  TabUIHelper::FromWebContents(contents)->set_is_navigation_delayed(true);
+  TabUIHelper::FromWebContents(contents)->set_title(
+      FormatUrlToSubdomain(throttle->navigation_handle()->GetURL()));
+  favicon::ContentFaviconDriver* favicon_driver =
+      favicon::ContentFaviconDriver::FromWebContents(contents);
+  // |favicon_driver| might be null when testing.
+  if (favicon_driver) {
+    favicon_driver->FetchFavicon(throttle->navigation_handle()->GetURL(),
+                                 false /*is_same_document=*/);
+  }
+
   GetWebContentsData(contents)->SetTabLoadingState(TAB_IS_NOT_LOADING);
   pending_navigations_.push_back(throttle);
   std::stable_sort(pending_navigations_.begin(), pending_navigations_.end(),
@@ -1217,11 +1238,17 @@ bool TabManager::CanLoadNextTab() const {
   return false;
 }
 
-void TabManager::OnWillRestoreTab(WebContents* web_contents) {
-  WebContentsData* data = GetWebContentsData(web_contents);
+void TabManager::OnWillRestoreTab(WebContents* contents) {
+  WebContentsData* data = GetWebContentsData(contents);
   DCHECK(!data->is_in_session_restore());
   data->SetIsInSessionRestore(true);
-  data->SetIsRestoredInForeground(web_contents->IsVisible());
+  data->SetIsRestoredInForeground(contents->IsVisible());
+
+  // TabUIHelper is initialized in TabHelpers::AttachTabHelpers. But this place
+  // gets called earlier than that. So for restored tabs, also initialize their
+  // TabUIHelper here.
+  TabUIHelper::CreateForWebContents(contents);
+  TabUIHelper::FromWebContents(contents)->set_created_by_session_restore(true);
 }
 
 void TabManager::OnDidFinishNavigation(
@@ -1320,10 +1347,11 @@ void TabManager::ResumeTabNavigationIfNeeded(content::WebContents* contents) {
 }
 
 void TabManager::ResumeNavigation(BackgroundTabNavigationThrottle* throttle) {
-  content::NavigationHandle* navigation_handle = throttle->navigation_handle();
-  GetWebContentsData(navigation_handle->GetWebContents())
-      ->SetTabLoadingState(TAB_IS_LOADING);
-  loading_contents_.insert(navigation_handle->GetWebContents());
+  content::WebContents* contents =
+      throttle->navigation_handle()->GetWebContents();
+  GetWebContentsData(contents)->SetTabLoadingState(TAB_IS_LOADING);
+  loading_contents_.insert(contents);
+  TabUIHelper::FromWebContents(contents)->set_is_navigation_delayed(false);
 
   throttle->ResumeNavigation();
 }
