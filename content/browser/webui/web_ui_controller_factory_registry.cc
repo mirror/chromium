@@ -9,6 +9,7 @@
 #include "base/lazy_instance.h"
 #include "content/browser/frame_host/debug_urls.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/common/url_utils.h"
 #include "url/gurl.h"
 
 namespace content {
