@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ad62ac_c9866656",
+        "filename": "chrome/browser/chromeos/printing/printer_configurer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-24T00:32:43Z",
+      "side": 1,
+      "message": "Would you mind breaking this into two methods so we don\u0027t need to pass the pointer?",
+      "range": {
+        "startLine": 204,
+        "startChar": 25,
+        "endLine": 204,
+        "endChar": 50
+      },
+      "revId": "e96a5dacbced929b1989d6ba066beb576b82a6c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
