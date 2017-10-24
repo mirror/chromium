@@ -10,6 +10,8 @@
 
 namespace blink {
 
+class Document;
+
 class CORE_EXPORT WorkletAnimationBase
     : public GarbageCollectedFinalized<WorkletAnimationBase> {
  public:
@@ -23,7 +25,9 @@ class CORE_EXPORT WorkletAnimationBase
   // element), so the caller should try again next main frame.
   virtual bool StartOnCompositor() = 0;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  virtual Document* GetDocument() const = 0;
+
+  virtual void Trace(Visitor*) {}
 };
 
 }  // namespace blink
