@@ -59,10 +59,6 @@ class TypedUrlSyncableService;
 class HistoryBackendHelper;
 class URLDatabase;
 
-// The maximum number of icons URLs per page which can be stored in the
-// thumbnail database.
-static const size_t kMaxFaviconsPerPage = 8;
-
 // The maximum number of bitmaps for a single icon URL which can be stored in
 // the thumbnail database.
 static const size_t kMaxFaviconBitmapsPerIconURL = 8;
@@ -331,6 +327,11 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
                    const GURL& icon_url,
                    const std::vector<SkBitmap>& bitmaps);
 
+  void CloneFaviconMappingsForPages(
+      const GURL& page_url_to_read,
+      int icon_types,
+      const base::flat_set<GURL>& page_urls_to_write);
+
   bool SetOnDemandFavicons(const GURL& page_url,
                            favicon_base::IconType icon_type,
                            const GURL& icon_url,
@@ -568,6 +569,7 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, NoFaviconChangedNotifications);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest,
                            UpdateFaviconMappingsAndFetchMultipleIconTypes);
+  FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, CloneFaviconMappingsForPages);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, GetFaviconsFromDBEmpty);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest,
                            GetFaviconsFromDBNoFaviconBitmaps);
@@ -760,34 +762,32 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
       std::vector<favicon_base::FaviconRawBitmapResult>*
           favicon_bitmap_results);
 
-  // Maps the favicon ids in |icon_ids| to |page_url| (and all redirects)
-  // for |icon_type|.
+  // Maps the favicon ID |icon_id| to |page_url| (and all redirects) for
+  // |icon_type|.
   // Returns true if the mappings for the page or any of its redirects were
   // changed.
-  bool SetFaviconMappingsForPageAndRedirects(
-      const GURL& page_url,
-      favicon_base::IconType icon_type,
-      const std::vector<favicon_base::FaviconID>& icon_ids);
+  bool SetFaviconMappingsForPageAndRedirects(const GURL& page_url,
+                                             favicon_base::IconType icon_type,
+                                             favicon_base::FaviconID icon_id);
 
-  // Maps the favicon ids in |icon_ids| to URLs in |page_urls| for |icon_type|.
-  // Returns true if the function changed at least one of the |page_urls|
-  // mappings.
-  bool SetFaviconMappingsForPages(
-      const std::vector<GURL>& page_urls,
+  // Maps the favicon ID |icon_id| for |icon_type| for page URLs in the range
+  // [|page_urls_begin|..|page_urls_end|).
+  // Returns page URLs whose mappings were changed (might be empty).
+  std::vector<GURL> SetFaviconMappingsForPages(
+      std::vector<GURL>::const_iterator page_urls_begin,
+      std::vector<GURL>::const_iterator page_urls_end,
       favicon_base::IconType icon_type,
-      const std::vector<favicon_base::FaviconID>& icon_ids);
+      favicon_base::FaviconID icon_id);
 
-  // Maps the favicon ids in |icon_ids| to |page_url| for |icon_type|.
+  // Maps the favicon ID |icon_ids| to |page_url| for |icon_type|.
   // Returns true if the function changed at least one of |page_url|'s mappings.
-  bool SetFaviconMappingsForPage(
-      const GURL& page_url,
-      favicon_base::IconType icon_type,
-      const std::vector<favicon_base::FaviconID>& icon_ids);
+  bool SetFaviconMappingsForPage(const GURL& page_url,
+                                 favicon_base::IconType icon_type,
+                                 favicon_base::FaviconID icon_id);
 
   // Returns all the page URLs in the redirect chain for |page_url|. If there
   // are no known redirects for |page_url|, returns a vector with |page_url|.
-  void GetCachedRecentRedirects(const GURL& page_url,
-                                RedirectList* redirect_list);
+  RedirectList GetCachedRecentRedirects(const GURL& page_url);
 
   // Send notification that the favicon has changed for |page_url| and all its
   // redirects. This should be called if the mapping between the page URL
