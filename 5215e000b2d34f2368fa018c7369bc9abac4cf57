@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "d3eab724_5318c700",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-24T09:07:00Z",
+      "side": 1,
+      "message": "Actually error: an initializer for a delegating constructor must appear alone",
+      "parentUuid": "e8da9bae_af37048c",
+      "range": {
+        "startLine": 474,
+        "startChar": 0,
+        "endLine": 475,
+        "endChar": 57
+      },
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40924bb1_437fa6aa",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 1
