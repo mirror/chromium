@@ -67,6 +67,7 @@ class VrTestContext : public vr::ContentInputDelegate,
 
   std::unique_ptr<Ui> ui_;
   gfx::Size window_size_;
+  gfx::Size surface_size_;
 
   std::unique_ptr<ControllerInfo> controller_info_;
 

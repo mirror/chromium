@@ -28,6 +28,14 @@
 #include "ui/events/keycodes/dom/dom_code.h"
 #include "ui/gfx/font_list.h"
 
+#define CHECK_GL_ERRORS()                         \
+  {                                               \
+    GLuint err;                                   \
+    while ((err = glGetError()) != GL_NO_ERROR) { \
+      LOG(ERROR) << "GL error: " << err;          \
+    }                                             \
+  }
+
 namespace vr {
 
 namespace {
@@ -79,13 +87,58 @@ VrTestContext::~VrTestContext() = default;
 void VrTestContext::DrawFrame() {
   base::TimeTicks current_time = base::TimeTicks::Now();
 
+  // We're going to render to a texture. MSAA by hand!
+  GLuint fbo = 0;
+  glGenFramebuffersEXT(1, &fbo);
+
+  glBindFramebufferEXT(GL_FRAMEBUFFER, fbo);
+
+  // Now we need a texture for the colors.
+  GLuint texture = 0;
+  glGenTextures(1, &texture);
+  glBindTexture(GL_TEXTURE_2D, texture);
+
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surface_size_.width(),
+               surface_size_.height(), 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+  // We also need a depth buffer.
+  GLuint zbuffer = 0;
+  glGenRenderbuffersEXT(1, &zbuffer);
+  CHECK_GL_ERRORS();
+  glBindRenderbufferEXT(GL_RENDERBUFFER, zbuffer);
+  CHECK_GL_ERRORS();
+  glRenderbufferStorageEXT(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16,
+                           surface_size_.width(), surface_size_.height());
+  CHECK_GL_ERRORS();
+
+  // Now we need to attach these buffers to the fbo.
+  glFramebufferRenderbufferEXT(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                               GL_RENDERBUFFER, zbuffer);
+  CHECK_GL_ERRORS();
+  glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                            texture, 0);
+  CHECK_GL_ERRORS();
+
+  GLenum draw_buffers[] = {GL_COLOR_ATTACHMENT0};
+  glDrawBuffersARB(1, draw_buffers);
+
+  CHECK_GL_ERRORS();
+  if (glCheckFramebufferStatusEXT(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+    LOG(ERROR) << "Could not initialize MSAA fbo.";
+    return;
+  }
+  CHECK_GL_ERRORS();
+
   const gfx::Transform proj_matrix(view_scale_factor_, 0, 0, 0, 0,
                                    view_scale_factor_, 0, 0, 0, 0, -1, 0, 0, 0,
                                    -1, 0);
   RenderInfo render_info;
   render_info.head_pose = head_pose_;
-  render_info.surface_texture_size = window_size_;
-  render_info.left_eye_info.viewport = gfx::Rect(window_size_);
+  render_info.surface_texture_size = surface_size_;
+  render_info.left_eye_info.viewport = gfx::Rect(surface_size_);
   render_info.left_eye_info.view_matrix = head_pose_;
   render_info.left_eye_info.proj_matrix = proj_matrix;
   render_info.left_eye_info.view_proj_matrix = proj_matrix * head_pose_;
@@ -94,6 +147,25 @@ void VrTestContext::DrawFrame() {
   ui_->scene()->OnBeginFrame(current_time, kForwardVector);
   ui_->OnProjMatrixChanged(render_info.left_eye_info.proj_matrix);
   ui_->ui_renderer()->Draw(render_info, *controller_info_);
+
+  glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
+  CHECK_GL_ERRORS();
+
+  glViewport(0, 0, window_size_.width(), window_size_.height());
+  CHECK_GL_ERRORS();
+  glDisable(GL_CULL_FACE);
+  CHECK_GL_ERRORS();
+  glDisable(GL_DEPTH_TEST);
+  CHECK_GL_ERRORS();
+  gfx::Transform m;
+  m.Scale3d(2.0f, 2.0f, 1.0f);
+  gfx::RectF copy_rect(0, 0, 1, 1);
+  ui_->vr_shell_renderer()->DrawTexturedQuad(
+      texture, UiElementRenderer::kTextureLocationLocal, m, copy_rect, 1.0,
+      gfx::SizeF(window_size_), 0.f);
+  CHECK_GL_ERRORS();
+  ui_->vr_shell_renderer()->Flush();
+  CHECK_GL_ERRORS();
 
   // TODO(cjgrant): Render viewport-aware elements.
 }
@@ -186,6 +258,8 @@ void VrTestContext::OnGlInitialized(const gfx::Size& window_size) {
   unsigned int content_texture_id = CreateFakeContentTexture();
 
   window_size_ = window_size;
+  surface_size_ = window_size;
+  surface_size_.Enlarge(window_size.width(), window_size.height());
   ui_->OnGlInitialized(content_texture_id,
                        UiElementRenderer::kTextureLocationLocal);
 }
