@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+#include "build/build_config.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/dropdown_bar_host_delegate.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
@@ -53,6 +54,9 @@ void DropdownBarHost::Init(views::View* host_view,
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
   params.parent = browser_view_->GetWidget()->GetNativeView();
   params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
+#if defined(OS_MACOSX)
+  params.shadow_type = views::Widget::InitParams::SHADOW_TYPE_NONE;
+#endif
   host_->Init(params);
   host_->SetContentsView(clip_view.release());
 

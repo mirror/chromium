@@ -271,6 +271,9 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
     // revert this change once http://crbug.com/125248 is fixed.
     params.force_software_compositing = true;
 #endif
+#if defined(OS_MACOSX)
+    params.shadow_type = views::Widget::InitParams::SHADOW_TYPE_NONE;
+#endif
     params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
     params.parent = popup_parent->GetNativeView();
     params.bounds = GetPopupBounds();
