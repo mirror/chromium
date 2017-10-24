@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "148bc361_509ea46e",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-24T08:31:31Z",
+      "side": 1,
+      "message": "Chromium-style need mark it with \u0027override\u0027 or \u0027final\u0027.",
+      "parentUuid": "b5c6fafc_260f7db4",
+      "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecc7f889_1e5797f7",
         "filename": "services/shape_detection/face_detection_impl_win.h",
         "patchSetId": 9
