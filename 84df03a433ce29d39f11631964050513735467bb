@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fa12563_3e92c4da",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-24T18:34:02Z",
+      "side": 1,
+      "message": "For the sake of consistency, can you please add:\n\nPackageInfo info \u003d new PackageInfo();\ninfo.packageName \u003d packageName;\ninfo.applicationInfo \u003d new ApplicationInfo();\ninfo.applicationInfo.enabled \u003d true;\nmPackageManager.addPackage(info);",
+      "revId": "84df03a433ce29d39f11631964050513735467bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13bed615_b13c7261",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-24T18:34:02Z",
+      "side": 1,
+      "message": "Let\u0027s keep the original function name. The other call sites (e.g. WebApkUtils#getInstalledBrowserResolveInfos()) also check whether a browser is both installed and enabled.",
+      "range": {
+        "startLine": 102,
+        "startChar": 97,
+        "endLine": 102,
+        "endChar": 98
+      },
+      "revId": "84df03a433ce29d39f11631964050513735467bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abaeb1ec_e1e8780c",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-24T18:34:02Z",
+      "side": 1,
+      "message": "Can you add a comment:\n\n\"PackageManager#queryIntentActivities() does not return ResolveInfos for disabled browsers.\"",
+      "revId": "84df03a433ce29d39f11631964050513735467bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
