@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aabc3363_bc78f748",
+        "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T00:30:13Z",
+      "side": 1,
+      "message": "Same here. Can we use a function expression instead (and parseInvitation below)? Or is the JSCompiler going to start complaining?",
+      "revId": "4110645c7ad94cedb69036a35e4c0f691de1af81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85043b2_2e3fd770",
+        "filename": "chrome/browser/resources/print_preview/data/local_parsers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T00:30:13Z",
+      "side": 1,
+      "message": "Guessing that you also don\u0027t need to move this function anymore.",
+      "revId": "4110645c7ad94cedb69036a35e4c0f691de1af81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
