@@ -22,6 +22,30 @@
       "revId": "df03327bd5264e156b1ec3ae025ebca62b553eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27fc982_bd27c9e2",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-24T15:27:55Z",
+      "side": 1,
+      "message": "\u003e This default action is defined only in Chrome OS so how abount renaming this to MESSAGE_CENTER_SETTING?\n\nSince this enum exists as part of the message center it seems like anything with \"message center\" in the name is redundant and not particularly elucidating.\n\n\u003e \n\u003e Or should we remove this and open message center in the handler on Chrome OS as well as the settings on the non-Chrome OS device?\n\nI\u0027m not sure I understand this suggestion. Arc uses CUSTOM.",
+      "parentUuid": "5a521bf5_4cd2cf0c",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 50
+      },
+      "revId": "df03327bd5264e156b1ec3ae025ebca62b553eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
