@@ -370,45 +370,44 @@ void ArcAccessibilityHelperBridge::OnAction(
     return;
   action_data->window_id = tree_source->window_id();
 
+  using ARCAction = arc::mojom::AccessibilityActionType;
   switch (data.action) {
-    case ui::AX_ACTION_DO_DEFAULT:
-      action_data->action_type = arc::mojom::AccessibilityActionType::CLICK;
-      break;
-    case ui::AX_ACTION_FOCUS:
-      action_data->action_type =
-          arc::mojom::AccessibilityActionType::ACCESSIBILITY_FOCUS;
-      break;
-    case ui::AX_ACTION_SCROLL_TO_MAKE_VISIBLE:
-      action_data->action_type =
-          arc::mojom::AccessibilityActionType::SHOW_ON_SCREEN;
-      break;
-    case ui::AX_ACTION_SCROLL_BACKWARD:
-      action_data->action_type =
-          arc::mojom::AccessibilityActionType::SCROLL_BACKWARD;
-      break;
-    case ui::AX_ACTION_SCROLL_FORWARD:
-      action_data->action_type =
-          arc::mojom::AccessibilityActionType::SCROLL_FORWARD;
-      break;
-    case ui::AX_ACTION_SCROLL_UP:
-      action_data->action_type = arc::mojom::AccessibilityActionType::SCROLL_UP;
-      break;
-    case ui::AX_ACTION_SCROLL_DOWN:
-      action_data->action_type =
-          arc::mojom::AccessibilityActionType::SCROLL_DOWN;
-      break;
-    case ui::AX_ACTION_SCROLL_LEFT:
-      action_data->action_type =
-          arc::mojom::AccessibilityActionType::SCROLL_LEFT;
-      break;
-    case ui::AX_ACTION_SCROLL_RIGHT:
-      action_data->action_type =
-          arc::mojom::AccessibilityActionType::SCROLL_RIGHT;
+    case ui::AX_ACTION_BLUR:
+      action_data->action_type = ARCAction::CLEAR_ACCESSIBILITY_FOCUS;
       break;
     case ui::AX_ACTION_CUSTOM_ACTION:
-      action_data->action_type =
-          arc::mojom::AccessibilityActionType::CUSTOM_ACTION;
+      action_data->action_type = ARCAction::CUSTOM_ACTION;
       action_data->custom_action_id = data.custom_action_id;
+      break;
+    case ui::AX_ACTION_DO_DEFAULT:
+      action_data->action_type = ARCAction::CLICK;
+      break;
+    case ui::AX_ACTION_FOCUS:
+      action_data->action_type = ARCAction::ACCESSIBILITY_FOCUS;
+      break;
+    case ui::AX_ACTION_SCROLL_BACKWARD:
+      action_data->action_type = ARCAction::SCROLL_BACKWARD;
+      break;
+    case ui::AX_ACTION_SCROLL_DOWN:
+      action_data->action_type = ARCAction::SCROLL_DOWN;
+      break;
+    case ui::AX_ACTION_SCROLL_FORWARD:
+      action_data->action_type = ARCAction::SCROLL_FORWARD;
+      break;
+    case ui::AX_ACTION_SCROLL_LEFT:
+      action_data->action_type = ARCAction::SCROLL_LEFT;
+      break;
+    case ui::AX_ACTION_SCROLL_RIGHT:
+      action_data->action_type = ARCAction::SCROLL_RIGHT;
+      break;
+    case ui::AX_ACTION_SCROLL_TO_MAKE_VISIBLE:
+      action_data->action_type = ARCAction::SHOW_ON_SCREEN;
+      break;
+    case ui::AX_ACTION_SCROLL_UP:
+      action_data->action_type = ARCAction::SCROLL_UP;
+      break;
+    case ui::AX_ACTION_SHOW_CONTEXT_MENU:
+      action_data->action_type = ARCAction::CONTEXT_CLICK;
       break;
     default:
       return;
