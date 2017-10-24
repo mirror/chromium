@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9a1f5bc8_8460d714",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-24T20:38:34Z",
+      "side": 1,
+      "message": "For example, on my Linux desktop, BGRA textures are supported all across GL. However, the implementation does not use the BGRA format internally for glReadPixels() data transfer.",
+      "parentUuid": "98335950_619982dd",
+      "revId": "b914ee753e619c9efbf239c7b45ad3ac9f7ef79c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22056142_6f9e2a5a",
         "filename": "components/viz/service/display/gl_renderer_copier_unittest.cc",
         "patchSetId": 1
