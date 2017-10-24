@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0dd4823b_9747247f",
+        "filename": "ui/views/controls/native/native_view_host.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-24T17:53:44Z",
+      "side": 1,
+      "message": "Done.  Changed to SetNativeViewSize and updated all references to render size (including change description).",
+      "parentUuid": "a7dce2df_2defd587",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 30
+      },
+      "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9fa9932_311cf026",
         "filename": "ui/views/controls/native/native_view_host_aura.cc",
         "patchSetId": 23
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "d5f0bd84_92f4f20a",
+        "filename": "ui/views/controls/native/native_view_host_aura.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-24T17:53:44Z",
+      "side": 1,
+      "message": "Nope, just me not realizing I can remove when I added the member bool. :p\n\nRemoved.",
+      "parentUuid": "d9fa9932_311cf026",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 64
+      },
+      "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bbbdd55_26087e2c",
         "filename": "ui/views/controls/native/native_view_host_aura.h",
         "patchSetId": 23
@@ -92,6 +140,30 @@
       "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c2488b_8b7ac5fa",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-24T17:53:44Z",
+      "side": 1,
+      "message": "Oops, thanks for catching this.  I\u0027m still getting familiar with c++, don\u0027t I need to set this in the constructor?  I didn\u0027t see any other examples of declaring and initializing a bool in the header file...\n\nI\u0027ve updated it to set in the constructor (and in AttachNativeView as well).",
+      "parentUuid": "7bbbdd55_26087e2c",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 34
+      },
+      "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
