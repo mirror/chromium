@@ -606,11 +606,6 @@ void NGBlockNode::AddAtomicInlineBaselineFromOldLayout(
   builder->AddBaseline(request, position);
 }
 
-void NGBlockNode::UseOldOutOfFlowPositioning() {
-  DCHECK(box_->IsOutOfFlowPositioned());
-  box_->ContainingBlock()->InsertPositionedObject(box_);
-}
-
 // Save static position for legacy AbsPos layout.
 void NGBlockNode::SaveStaticOffsetForLegacy(const NGLogicalOffset& offset) {
   DCHECK(box_->IsOutOfFlowPositioned());
