@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d882546_947ebe64",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_event_queue.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-24T18:48:58Z",
+      "side": 1,
+      "message": "I changed the code to call it only once. \n\nThis metric records whether GSU events are latched or not. The first GSU event after a GSB is not latched since GSB causes a hittest to find a new scrolling element. For the rest of the scrolling sequence the GSU events are latched to the current scrolling element. By adding this metric I can compute the percentage of the latched GSU events which is useful for tweaking the latching timer timeout.",
+      "parentUuid": "ae9b69e3_175c5d95",
+      "revId": "80bd450f30adce914d8c56f74803ff3421b6d7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b530d585_1cfa978e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "80bd450f30adce914d8c56f74803ff3421b6d7a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a388064b_d7e6fb9b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 95347,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-24T18:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b530d585_1cfa978e",
+      "revId": "80bd450f30adce914d8c56f74803ff3421b6d7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
