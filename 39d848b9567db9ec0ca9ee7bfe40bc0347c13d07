@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a0cea81_43c50973",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test_fixture.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T01:56:45Z",
+      "side": 1,
+      "message": "Can be simplified by using Array#every().\n\nreturn nodeResult.any.every(hit \u003d\u003e {\n  return hit.relatedNotes.every(node \u003d\u003e {\n    return ExtensionsA11yTestFixture.hasAncestor_(\n        node.element, \u0027iron-iconset-svg\u0027);\n  });\n});",
+      "revId": "39d848b9567db9ec0ca9ee7bfe40bc0347c13d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5553c019_a00cf44a",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test_fixture.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-24T01:56:45Z",
+      "side": 1,
+      "message": "Nit: Remove line 74. Instead:\n\n@return {boolean} Whether any ancestor of |node| is a |type| element.",
+      "revId": "39d848b9567db9ec0ca9ee7bfe40bc0347c13d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
