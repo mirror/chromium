@@ -16,6 +16,24 @@
       "revId": "a994822151935a6fe960d6ef5d51c354a7efa106",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94dcaed8_89177d4b",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLParserScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-24T19:56:27Z",
+      "side": 1,
+      "message": "ACK. I\u0027ll update the comment in a separate CL later, because I\u0027m touching other code regions related to these methods and until some other CLs are landed the comments can be anyway stale.",
+      "parentUuid": "02655a44_bfbcdc03",
+      "revId": "a994822151935a6fe960d6ef5d51c354a7efa106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
