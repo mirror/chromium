@@ -1843,7 +1843,7 @@ void WebLocalFrameImpl::DidFail(const ResourceError& error,
     plugin->DidFailLoading(error);
 
   if (was_provisional)
-    Client()->DidFailProvisionalLoad(web_error, web_commit_type);
+    Client()->DidFailProvisionalLoad(web_error, web_commit_type, base::nullopt);
   else
     Client()->DidFailLoad(web_error, web_commit_type);
 }

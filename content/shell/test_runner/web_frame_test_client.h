@@ -61,8 +61,10 @@ class WebFrameTestClient : public blink::WebFrameClient {
   void DidStartProvisionalLoad(blink::WebDocumentLoader* loader,
                                blink::WebURLRequest& request) override;
   void DidReceiveServerRedirectForProvisionalLoad() override;
-  void DidFailProvisionalLoad(const blink::WebURLError& error,
-                              blink::WebHistoryCommitType commit_type) override;
+  void DidFailProvisionalLoad(
+      const blink::WebURLError& error,
+      blink::WebHistoryCommitType commit_type,
+      const base::Optional<std::string>& error_page_content) override;
   void DidCommitProvisionalLoad(
       const blink::WebHistoryItem& history_item,
       blink::WebHistoryCommitType history_type) override;
