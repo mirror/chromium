@@ -4529,6 +4529,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   DCHECK_EQ(_webView, webView);
   _certVerificationErrors->Clear();
+  // This point should closely approximate the document object change, so reset
+  // the list of injected scripts to those that are automatically injected.
+  _injectedScriptManagers = [[NSMutableSet alloc] init];
+  [_windowIDJSManager inject];
 
   // This is the point where the document's URL has actually changed, and
   // pending navigation information should be applied to state information.
@@ -4568,16 +4572,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
       self.webStateImpl->SetContentsMimeType(
           base::SysNSStringToUTF8(storedMIMEType));
     }
-  }
-
-  // This point should closely approximate the document object change, so reset
-  // the list of injected scripts to those that are automatically injected.
-  _injectedScriptManagers = [[NSMutableSet alloc] init];
-  if ([self contentIsHTML] || self.webState->GetContentsMimeType().empty()) {
-    // In unit tests MIME type will be empty, because loadHTML:forURL: does not
-    // notify web view delegate about received response, so web controller does
-    // not get a chance to properly update MIME type.
-    [_windowIDJSManager inject];
   }
 
   if (isLastNavigation) {
