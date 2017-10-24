@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "22f47f2f_e17df610",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "hidehiko@ and I still think it\u0027s better to have this be an enum, especially now since there will be no actual calls to timerfd_create(2).",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0d93196_cd9a08c1",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 8
@@ -18,6 +41,52 @@
         "startChar": 41,
         "endLine": 21,
         "endChar": 80
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b7dc8c_1f2ef2d9",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "instance?",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b484dd_596cf38d",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "Now that this doesn\u0027t need to go to powerd and thus you have more control of the implementation, how about you do:\n\n  CreateTimer@0(TimerRequest request) \u003d\u003e (Timer? timer);  // or just pass in the clock_id/handle instead of a Request. less boilerplate!\n\n(yes, I still prefer this to be a \"Request\" rather than \"Args\". Also, the Arc prefix is unnecessary since we\u0027re in the \"arc\" namespace already)\n\nand then have the Timer be as close to base::Timer as possible:\n\n// Simple timer interface. Performs notifications as 8-byte writes to its\n// associated file descriptor.\ninterface Timer {\n  // Start the timer to run at the given |delay| from now.\n  // If the timer is already running, it will be replaced. Notification will be performed as\n  // an 8-byte write to the associated expiration FD.\n  Start@1(mojom::TimeDiff delay) \u003d\u003e (ArcTimerResult result);\n\n  // Call this method to stop and cancel the timer.  It is a no-op if the timer\n  // is not running.\n  Stop@2() \u003d\u003e (ArcTimerResult result);\n};\n\nYou can choose to implement just one of the StartAbsolute / StartRelative.\n\nHaving it be a separate interface takes care of derat@\u0027s question since there is a one-to-one mapping between ArcTimer and clock_id.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 14
       },
       "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -53,6 +122,277 @@
       "writtenOn": "2017-10-24T05:26:14Z",
       "side": 1,
       "message": "do you really need the seconds arg? 2**63 nanoseconds is a bit over 292 years.\n\non the android side, is this only used for the AlarmManager interface? that one just takes milliseconds. maybe the internal impl wants something more fine-grained, though.",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf275bd1_4db7017f",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "I\u0027d like for this to use TimeDiff in the interface. If this causes issues in the Android side, let\u0027s fix them instead of having that limitation force us to use a subpar interface :(",
+      "parentUuid": "38b2bd49_726dd88e",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9012972_b81ba037",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "Since you\u0027re losing resolution anyways, how about\n\n base::TimeDelta::FromSeconds(seconds) +\n base::TimeDelta::FromMicroseconds(nanoseconds /\n                                   base::Time::kNanosecondsPerMicrosecond)",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 92,
+        "endChar": 66
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f27e81b_ebb99e6f",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "What\u0027s wrong with base::Time::operator\u003c\u003c? https://cs.chromium.org/chromium/src/base/time/time.cc?sq\u003dpackage:chromium\u0026l\u003d278",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695a5c91_95ccd188",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "nit: s/expiry/expiration/g across the whole change.",
+      "range": {
+        "startLine": 55,
+        "startChar": 48,
+        "endLine": 55,
+        "endChar": 54
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93d977d_c6d66020",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "This should be a failure case.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 5
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2262c7af_84057856",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "Why is this desirable?",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 68
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb616a4_a99e91bb",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "This is too heavy-handed. Can you use https://cs.chromium.org/chromium/src/base/posix/unix_domain_socket.cc?type\u003dcs\u0026file:src/base\u0026sq\u003dpackage:chromium\u0026l\u003d70 instead, which passes MSG_NOSIGNAL?",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27e58fe_3b9aff29",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "This is being called in the UI thread, where I/O is forbidden. You need to post a task to a blocking thread.",
+      "range": {
+        "startLine": 129,
+        "startChar": 19,
+        "endLine": 129,
+        "endChar": 35
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5321dddf_b63b4d9d",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be 0x1? there have not been 171 timer expirations, and you\u0027ll write exactly once to the pipe for each expiration.",
+      "range": {
+        "startLine": 137,
+        "startChar": 24,
+        "endLine": 137,
+        "endChar": 28
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668887f8_17a8590f",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "As mentioned above, try using base::UnixDomainSocket::SendMsg() instead, since that does the HANDLE_EINTR() for you.",
+      "range": {
+        "startLine": 139,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 11
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa84d183_d003082b",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "Maybe this should remove the timer from |timers_|. Of course, you cannot modify |timers_| directly since you\u0027re running on a different thread, so you\u0027ll have to post a task to the main thread so it can remove it.",
+      "range": {
+        "startLine": 141,
+        "startChar": 18,
+        "endLine": 141,
+        "endChar": 60
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8721fa9_903dd6c1",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-24T16:19:21Z",
+      "side": 1,
+      "message": "You\u0027re using this class only in the arc_timer_bridge.cc class, so can\u0027t you put it in that .cc instead? It\u0027ll save you some boilerplate.",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 18
+      },
       "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
