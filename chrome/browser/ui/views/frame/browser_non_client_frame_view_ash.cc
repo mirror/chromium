@@ -94,7 +94,7 @@ void BrowserNonClientFrameViewAsh::Init() {
   if (UsePackagedAppHeaderStyle()) {
     ash::DefaultHeaderPainter* header_painter = new ash::DefaultHeaderPainter;
     header_painter_.reset(header_painter);
-    header_painter->Init(frame(), this, caption_button_container_);
+    header_painter->Init(frame(), this, caption_button_container_, is_app());
     if (window_icon_)
       header_painter->UpdateLeftHeaderView(window_icon_);
 
@@ -116,7 +116,7 @@ void BrowserNonClientFrameViewAsh::Init() {
     BrowserHeaderPainterAsh* header_painter = new BrowserHeaderPainterAsh;
     header_painter_.reset(header_painter);
     header_painter->Init(frame(), browser_view(), this, window_icon_,
-                         caption_button_container_);
+                         caption_button_container_, is_app());
   }
 
   if (browser->is_app()) {
@@ -211,8 +211,8 @@ gfx::Rect BrowserNonClientFrameViewAsh::GetWindowBoundsForClientBounds(
 }
 
 int BrowserNonClientFrameViewAsh::NonClientHitTest(const gfx::Point& point) {
-  const int hit_test =
-      ash::FrameBorderNonClientHitTest(this, caption_button_container_, point);
+  const int hit_test = ash::FrameBorderNonClientHitTest(
+      this, nullptr, caption_button_container_, point);
 
   // When the window is restored we want a large click target above the tabs
   // to drag the window, so redirect clicks in the tab's shadow to caption.

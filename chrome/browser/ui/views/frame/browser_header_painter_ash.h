@@ -39,7 +39,8 @@ class BrowserHeaderPainterAsh : public ash::HeaderPainter,
             BrowserView* browser_view,
             BrowserNonClientFrameViewAsh* header_view,
             views::View* window_icon,
-            ash::FrameCaptionButtonContainerView* caption_button_container);
+            ash::FrameCaptionButtonContainerView* caption_button_container,
+            bool enable_back_button);
 
   // ash::HeaderPainter overrides:
   int GetMinimumHeaderWidth() const override;
@@ -85,6 +86,7 @@ class BrowserHeaderPainterAsh : public ash::HeaderPainter,
   BrowserNonClientFrameViewAsh* view_;
 
   views::View* window_icon_;
+  ash::BackButton* back_button_;
   ash::FrameCaptionButtonContainerView* caption_button_container_;
   int painted_height_;
 
