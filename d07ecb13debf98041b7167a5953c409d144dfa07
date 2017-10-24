@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2bb70aa9_359239bc",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T10:13:51Z",
+      "side": 1,
+      "message": "Could you take a `const LocalFrame\u0026` instead?",
+      "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "973513b7_81751ca1",
         "filename": "third_party/WebKit/Source/core/frame/UseCounter.cpp",
         "patchSetId": 2
@@ -42,6 +59,23 @@
         "endLine": 1234,
         "endChar": 69
       },
+      "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7c4a9e_2917836e",
+        "filename": "third_party/WebKit/Source/modules/battery/NavigatorBattery.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T10:13:51Z",
+      "side": 1,
+      "message": "style: no { }",
       "revId": "d07ecb13debf98041b7167a5953c409d144dfa07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
