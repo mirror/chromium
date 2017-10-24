@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e9bd1a4_3edb0c00",
+        "filename": "chrome/test/data/login/load_img_from_same_domain_mixed_content.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-24T22:22:46Z",
+      "side": 1,
+      "message": "No, moved it into the \u003cbody\u003e.",
+      "parentUuid": "8f7a6404_fb0cb3b1",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "c8d9188b02981e7e347725a89a9d7c6d5bcd3601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c645e9d_7f4a7584",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-24T16:56:55Z",
       "side": 1,
       "message": "Confirming that we want to use SchemeIsCryptographic here vs. IsOriginSecure? (Issue 688157)",
+      "range": {
+        "startLine": 2590,
+        "startChar": 21,
+        "endLine": 2590,
+        "endChar": 42
+      },
+      "revId": "c8d9188b02981e7e347725a89a9d7c6d5bcd3601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c043418_22c73d70",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2590,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-24T22:22:46Z",
+      "side": 1,
+      "message": "Done.\n\n(I spent two hours trying to figure out why including content/public/common/origin_util.h was causing a DEPS error. Simply rebasing fixed it.)",
+      "parentUuid": "6c645e9d_7f4a7584",
       "range": {
         "startLine": 2590,
         "startChar": 21,
