@@ -46,6 +46,40 @@
       "revId": "e318efc3b8488f413ad59be45c1cd4c7ed00c9a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc0ff42_a49c3fc7",
+        "filename": "ppapi/api/dev/pp_print_settings_dev.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:44:10Z",
+      "side": 1,
+      "message": "Let\u0027s just not add _LAST members / use IPC_ENUM_TRAITS_MAX_VALUE for bitfields? It adds a spurious enum member that needs to be handled in switch statements.",
+      "revId": "e318efc3b8488f413ad59be45c1cd4c7ed00c9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4371a3f_671e84eb",
+        "filename": "ppapi/c/dev/pp_print_settings_dev.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T23:44:10Z",
+      "side": 1,
+      "message": "Same comment about bitfields here.",
+      "revId": "e318efc3b8488f413ad59be45c1cd4c7ed00c9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
