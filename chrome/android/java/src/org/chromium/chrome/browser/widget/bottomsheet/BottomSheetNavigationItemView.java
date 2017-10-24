@@ -40,6 +40,7 @@ public class BottomSheetNavigationItemView extends BottomNavigationItemView {
         setGravity(Gravity.CENTER);
         setBackgroundResource(
                 android.support.design.R.drawable.design_bottom_navigation_item_background);
+        setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
         mIcon = (TintedImageView) findViewById(R.id.icon);
         mLabel = (TextView) findViewById(R.id.label);
     }
