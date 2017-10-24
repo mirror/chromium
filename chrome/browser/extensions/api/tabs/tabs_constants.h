@@ -103,8 +103,8 @@ extern const char kInvalidWindowStateError[];
 extern const char kScreenshotsDisabled[];
 extern const char kCannotUpdateMuteDisabled[];
 extern const char kCannotUpdateMuteCaptured[];
-
 extern const char kCannotDetermineLanguageOfUnloadedTab[];
+extern const char kMissingLockWindowFullscreenPrivatePermission[];
 
 };  // namespace tabs_constants
 };  // namespace extensions
