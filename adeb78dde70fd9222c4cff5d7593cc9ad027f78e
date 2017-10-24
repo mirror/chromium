@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7e7ecf3_61bcb946",
+        "filename": "components/spellcheck/common/spellcheck_struct_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-24T22:01:07Z",
+      "side": 1,
+      "message": "Nit: add a comment that this fall-through is intentional. That clarifies to the reviewer that you did not accidentally forget a return statement in here.",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 32
+      },
+      "revId": "adeb78dde70fd9222c4cff5d7593cc9ad027f78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
