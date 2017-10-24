@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "094e5af6_caa11260",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T20:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0ff81c7_4418ee01",
+      "revId": "047d5d0a8ba2925d5d779ab6fbd756c1c7dc2f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81e9e71a_efcef1e6",
         "filename": "components/favicon/core/large_icon_service.cc",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-24T17:35:11Z",
       "side": 1,
       "message": "This heap allocations 19 strings and 13 vectors from constant data every time this function is called just to populate a map. We should be able to write this in a way that completely avoids creating extra intermediate containers.",
+      "range": {
+        "startLine": 203,
+        "startChar": 35,
+        "endLine": 203,
+        "endChar": 36
+      },
+      "revId": "047d5d0a8ba2925d5d779ab6fbd756c1c7dc2f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495ef6d8_2fdbac69",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T20:12:23Z",
+      "side": 1,
+      "message": "Since I want to avoid making this function more error prone or less readable, what I did instead to improve the raised performance concern is to call this function only once during the construction of LargeIconService, which happens once. PTAL.",
+      "parentUuid": "81e9e71a_efcef1e6",
       "range": {
         "startLine": 203,
         "startChar": 35,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "18ee6bff_f15e683d",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T20:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2774aa33_0de81a52",
+      "revId": "047d5d0a8ba2925d5d779ab6fbd756c1c7dc2f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf166c43_75bb45be",
         "filename": "components/favicon/core/large_icon_service_unittest.cc",
         "patchSetId": 6
@@ -73,6 +133,24 @@
       "revId": "047d5d0a8ba2925d5d779ab6fbd756c1c7dc2f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f359fe4_149b203d",
+        "filename": "components/favicon/core/large_icon_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-24T20:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf166c43_75bb45be",
+      "revId": "047d5d0a8ba2925d5d779ab6fbd756c1c7dc2f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
