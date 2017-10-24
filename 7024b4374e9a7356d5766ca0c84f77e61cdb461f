@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cd1bd9f8_972b6757",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-24T21:13:13Z",
+      "side": 1,
+      "message": "nit: me -\u003e be",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b111b738_d1384fae",
         "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
         "patchSetId": 2
@@ -13,6 +36,23 @@
       "writtenOn": "2017-10-24T20:31:26Z",
       "side": 1,
       "message": "I realize we are not consistent about this in login/oobe, but generaly in Web UI comments are either:\n/** single line *.\n/*\n * muliti\n * line\n */\n(i.e. these should have \u0027/*\u0027 on its own line)",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e743de_aef9307e",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-24T21:13:13Z",
+      "side": 1,
+      "message": "Can we just use width?",
       "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +138,23 @@
       "writtenOn": "2017-10-24T20:31:26Z",
       "side": 1,
       "message": "\u0027 \u0027 before */",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b35cb5_02d52712",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-24T21:13:13Z",
+      "side": 1,
+      "message": "just width: 640px ?",
       "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
