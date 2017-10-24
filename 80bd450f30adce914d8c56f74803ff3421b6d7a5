@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae9b69e3_175c5d95",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_event_queue.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-24T17:39:35Z",
+      "side": 1,
+      "message": "I can\u0027t claim I understand fully what this metric is trying to accomplish, but I\u0027m surprised it\u0027s been emitted 3 places. It\u0027s generally best for a metric to get emitted just once - otherwise it gets increasingly hard to reason about it. \nIt may be possible this is best, but you may want to verify this is measuring in the clearest way.",
+      "revId": "80bd450f30adce914d8c56f74803ff3421b6d7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b530d585_1cfa978e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 95347,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-24T17:39:35Z",
+      "side": 1,
+      "message": "Unusual to frame it as when it is false. Maybe rephrase, making it clear what triggers emitting this metric, and noting what it records (both true/false).",
+      "revId": "80bd450f30adce914d8c56f74803ff3421b6d7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
