@@ -17,21 +17,21 @@ import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
 
 /**
- * Controls the Search Peek Promo.
+ * Controls the Search Bar Banner.
  */
-public class ContextualSearchPeekPromoControl extends OverlayPanelInflater {
+public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
     /**
      * The initial width of the ripple for the appearance animation, in dps.
      */
     private static final float RIPPLE_MINIMUM_WIDTH_DP = 56.f;
 
     /**
-     * Whether the Peek Promo is visible.
+     * Whether the Bar Banner is visible.
      */
     private boolean mIsVisible;
 
     /**
-     * The height of the Peek Promo, in pixels.
+     * The height of the Bar Banner, in pixels.
      */
     private float mHeightPx;
 
@@ -51,12 +51,12 @@ public class ContextualSearchPeekPromoControl extends OverlayPanelInflater {
     private float mTextOpacity;
 
     /**
-     * The precomputed padding of the Peek Promo, in pixels.
+     * The precomputed padding of the Bar Banner, in pixels.
      */
     private final float mPaddingPx;
 
     /**
-     * The precomputed default height of the Peek Promo in pixels.
+     * The precomputed default height of the Bar Banner in pixels.
      */
     private final float mDefaultHeightPx;
 
@@ -76,10 +76,8 @@ public class ContextualSearchPeekPromoControl extends OverlayPanelInflater {
      * @param container         The container View used to inflate the View.
      * @param resourceLoader    The resource loader that will handle the snapshot capturing.
      */
-    public ContextualSearchPeekPromoControl(OverlayPanel panel,
-                                            Context context,
-                                            ViewGroup container,
-                                            DynamicResourceLoader resourceLoader) {
+    public ContextualSearchBarBannerControl(OverlayPanel panel, Context context,
+            ViewGroup container, DynamicResourceLoader resourceLoader) {
         super(panel, R.layout.contextual_search_peek_promo_text_view,
                 R.id.contextual_search_peek_promo_text_view, context, container, resourceLoader);
 
@@ -95,7 +93,7 @@ public class ContextualSearchPeekPromoControl extends OverlayPanelInflater {
     }
 
     /**
-     * Shows the Peek Promo. This includes inflating the View and setting it to its initial state.
+     * Shows the Bar Banner. This includes inflating the View and setting it to its initial state.
      * This also means a new cc::Layer will be created and added to the tree.
      */
     void show() {
@@ -108,7 +106,7 @@ public class ContextualSearchPeekPromoControl extends OverlayPanelInflater {
     }
 
     /**
-     * Hides the Peek Promo, returning the Control to its initial uninitialized state. In this
+     * Hides the Bar Banner, returning the Control to its initial uninitialized state. In this
      * state, now View will be created and no Layer added to the tree (or removed if present).
      */
     void hide() {
@@ -119,7 +117,7 @@ public class ContextualSearchPeekPromoControl extends OverlayPanelInflater {
     }
 
     /**
-     * @return The height of the Peek Promo when the Panel is the peeked state.
+     * @return The height of the Bar Banner when the Panel is the peeked state.
      */
     float getHeightPeekingPx() {
         return mIsVisible ? mDefaultHeightPx : 0.f;
@@ -130,21 +128,21 @@ public class ContextualSearchPeekPromoControl extends OverlayPanelInflater {
     // ============================================================================================
 
     /**
-     * @return Whether the Peek Promo is visible.
+     * @return Whether the Bar Banner is visible.
      */
     public boolean isVisible() {
         return mIsVisible;
     }
 
     /**
-     * @return The Peek Promo height in pixels.
+     * @return The Bar Banner height in pixels.
      */
     public float getHeightPx() {
         return mHeightPx;
     }
 
     /**
-     * @return The Peek Promo padding in pixels.
+     * @return The Bar Banner padding in pixels.
      */
     public float getPaddingPx() {
         return mPaddingPx;
@@ -211,11 +209,11 @@ public class ContextualSearchPeekPromoControl extends OverlayPanelInflater {
     }
 
     // ============================================================================================
-    // Peek Promo Appearance Animation
+    // Bar Banner Appearance Animation
     // ============================================================================================
 
     /**
-     * Animates the Peek Promo appearance.
+     * Animates the Bar Banner appearance.
      */
     public void animateAppearance() {
         AnimatorUpdateListener listener = new AnimatorUpdateListener() {
