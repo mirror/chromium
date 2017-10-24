@@ -10,11 +10,13 @@
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
 
+#define PRINT_HEAP_STATS 0  // Enable this macro to print heap stats to stderr.
+
+#define HEAP_INCREMENTAL_MARKING 1
+
 namespace blink {
 
 class Visitor;
-
-#define PRINT_HEAP_STATS 0  // Enable this macro to print heap stats to stderr.
 
 using Address = uint8_t*;
 
