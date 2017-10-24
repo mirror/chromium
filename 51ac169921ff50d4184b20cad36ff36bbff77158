@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c28b9231_f4715de8",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2392,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-24T11:08:15Z",
+      "side": 1,
+      "message": "Moved this into else-clause and moved \"return nullptr;\" out of if-clause.",
+      "parentUuid": "6974fdc7_9fa8d508",
+      "revId": "51ac169921ff50d4184b20cad36ff36bbff77158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a35bbed5_bfaa81d1",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "51ac169921ff50d4184b20cad36ff36bbff77158",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d674dff3_b073927d",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2393,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-24T11:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a35bbed5_bfaa81d1",
+      "revId": "51ac169921ff50d4184b20cad36ff36bbff77158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
