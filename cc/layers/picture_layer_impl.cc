@@ -112,7 +112,8 @@ PictureLayerImpl::PictureLayerImpl(LayerTreeImpl* tree_impl,
       nearest_neighbor_(false),
       use_transformed_rasterization_(false),
       is_directly_composited_image_(false),
-      can_use_lcd_text_(true) {
+      can_use_lcd_text_(true),
+      saved_texture_ratio_(1.f) {
   layer_tree_impl()->RegisterPictureLayerImpl(this);
 }
 
@@ -1605,6 +1606,11 @@ void PictureLayerImpl::InvalidateRegionForImages(
   SetNeedsPushProperties();
   TRACE_EVENT1("cc", "PictureLayerImpl::InvalidateRegionForImages Invalidation",
                "Invalidation", invalidation.ToString());
+}
+
+int PictureLayerImpl::GPUMemoryUsageInBytesSavedByMaskTiling() const {
+  DCHECK(mask_type_ != Layer::LayerMaskType::NOT_MASK);
+  return GPUMemoryUsageInBytes() * saved_texture_ratio_;
 }
 
 void PictureLayerImpl::RegisterAnimatedImages() {
