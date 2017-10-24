@@ -19,6 +19,91 @@
     },
     {
       "key": {
+        "uuid": "ae85dc34_0f592805",
+        "filename": "ash/public/interfaces/voice_interaction_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need this. Chrome and Ash are in the same source tree and uprev on the same cycle.",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11176190_d2dbe411",
+        "filename": "ash/public/interfaces/voice_interaction_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "Rather than maintaining two duplicate VoiceInteractionState enums, I think it would be better to just use the mojom version everywhere. Then you don\u0027t need all the typemapping. I would put this enum in its own mojom file, like voice_interaction_state.mojom.\n\n(Do you still need the copy in //components/arc? Ideally we would have one enum and use it everywhere.)\n\nIf this changes a lot of files you could do the C++ enum -\u003e mojom enum conversation in a precursor CL, since it should be pretty mechanical.",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb98f99_62852cd2",
+        "filename": "ash/public/interfaces/voice_interaction_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "nit: document what these states mean and the allowable transitions. (For example, can it go from not_ready to stopped? stopped to not_ready?)",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cf6989_fcb38052",
+        "filename": "ash/public/interfaces/voice_interaction_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "nit: document what \"context\" means",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5174b02_6cf8bca1",
+        "filename": "ash/public/interfaces/voice_interaction_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "nit: These method names would be shorter, and probably not lose any readability, if they were just OnSetupCompleted(), or NotifySetupCompleted(), or similar.",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d437cac8_96d97f4c",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 1
@@ -65,6 +150,91 @@
     },
     {
       "key": {
+        "uuid": "a6c0a55c_f011cb5a",
+        "filename": "ash/voice_interaction/voice_interaction_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "nit: Just AddObserver() and RemoveObserver()",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b36a7ca_846bdafb",
+        "filename": "ash/voice_interaction/voice_interaction_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "nit: How about just settings_enabled_? Then the getter is shorter, and it doesn\u0027t lose readability because all the external access is of the form voice_interaction_controller()-\u003esettings_enabled()",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35605067_5c56dfa8",
+        "filename": "ash/voice_interaction/voice_interaction_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "ditto, setup_completed_",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63935dd6_25a34374",
+        "filename": "ash/voice_interaction/voice_interaction_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "Just |observers_| since there is only one type",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1313c487_14706a19",
+        "filename": "ash/voice_interaction/voice_interaction_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "The tests would have better line wrapping if this was just controller() and the one below was just observer().",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca8511c8_bf21f2b3",
         "filename": "ash/voice_interaction/voice_interaction_struct_traits.h",
         "patchSetId": 1
@@ -76,6 +246,40 @@
       "writtenOn": "2017-10-23T23:30:11Z",
       "side": 1,
       "message": "Same for this file, it seems to be moved from a different file. The other file should be in this cl.",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d344ffd_d11f3ff1",
+        "filename": "ash/voice_interaction/voice_interaction_struct_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "If you have to keep the struct_traits, then the file goes in //ash/public/cpp",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98e2892_27b330bc",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "Remove the TODO",
       "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -168,6 +372,125 @@
         "endLine": 372,
         "endChar": 36
       },
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3032a62_66e3796a",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "nit: use EXPECT_TRUE and EXPECT_FALSE",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393f2792_17277b88",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "super-nit: end with .",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3fb4c6a_24330f03",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "Q: Does most arc code go in namespace arc? Most chrome code does not go in any namespace. For example, code in //chrome/browser/ui/ash is not in namespace ash, that\u0027s reserved for //ash.",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc42040e_2d8dbf33",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "Document. What is it, and more importantly why does it exist.",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ade821_cc9783da",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "no explicit",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f79e38_55c816c1",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "typos",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96cee14c_24534f20",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-24T00:14:25Z",
+      "side": 1,
+      "message": "None of these need \"VoiceInteraction\" in their names",
       "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
