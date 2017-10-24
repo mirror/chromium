@@ -135,6 +135,30 @@
       "revId": "8a8997210055ba84753f6a333def51f830006bf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c68b667_2d2a54c1",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-24T14:02:34Z",
+      "side": 0,
+      "message": "The difference between this code and a middle click is that it clones the webcontents. No other action does that. This is why there is an explicit call to SessionService.",
+      "parentUuid": "1550a306_0130002c",
+      "range": {
+        "startLine": 1262,
+        "startChar": 2,
+        "endLine": 1263,
+        "endChar": 62
+      },
+      "revId": "8a8997210055ba84753f6a333def51f830006bf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
