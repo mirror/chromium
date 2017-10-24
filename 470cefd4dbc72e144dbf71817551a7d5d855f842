@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "43ce1faa_3aa23100",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-24T17:55:08Z",
+      "side": 1,
+      "message": "This is saying that we would rather have a sad tab renderer crash than have surfaces lose synchronization. I\u0027m surprised by that but I\u0027m also fine deferring to piman@.",
+      "parentUuid": "1ba22ca7_9835f5cb",
+      "revId": "470cefd4dbc72e144dbf71817551a7d5d855f842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69234244_0cef47d5",
         "filename": "content/browser/renderer_host/render_widget_host_view_base.cc",
         "patchSetId": 9
@@ -48,6 +66,23 @@
       "writtenOn": "2017-10-24T15:08:11Z",
       "side": 1,
       "message": "Should this return RenderWidgetHostImpl::GetScreenInfo() by default, so that it is implemented for all RWHVs?\n\nIf not, I don\u0027t think you need to touch the .cc file, you can just inline the empty function body in the header.",
+      "revId": "470cefd4dbc72e144dbf71817551a7d5d855f842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e72253e_2daf9bfe",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-24T17:55:08Z",
+      "side": 1,
+      "message": "Can this be removed now?",
       "revId": "470cefd4dbc72e144dbf71817551a7d5d855f842",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
