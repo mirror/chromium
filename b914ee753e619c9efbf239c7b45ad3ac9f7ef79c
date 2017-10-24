@@ -16,6 +16,24 @@
       "revId": "b914ee753e619c9efbf239c7b45ad3ac9f7ef79c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98335950_619982dd",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-24T19:55:41Z",
+      "side": 1,
+      "message": "It\u0027s different because the capabilities are only specifying *whether* BGRA textures are supported, and not anything about the format being used for data transfer between the GPU--\u003eCPU when using glReadPixels(). The code here is asking the implementation what it uses internally between the GPU and driver, so we can avoid an extra copy-with-swizzle step on the CPU in the driver.",
+      "parentUuid": "c9d4f1a4_dec18b44",
+      "revId": "b914ee753e619c9efbf239c7b45ad3ac9f7ef79c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
