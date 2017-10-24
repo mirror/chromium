@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c38d3a8_c1169534",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptForbiddenScope.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T08:46:58Z",
+      "side": 1,
+      "message": "But V8GCController is using it...",
+      "revId": "f096747213b2450722c989ae4e321aff2fda1d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
