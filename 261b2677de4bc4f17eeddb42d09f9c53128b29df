@@ -50,6 +50,24 @@
       "revId": "261b2677de4bc4f17eeddb42d09f9c53128b29df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a1ecf9_6c73830e",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-24T16:50:13Z",
+      "side": 1,
+      "message": "The root cause of this is that StorageId and PlatformVerification are two different features supported on different platforms and we are mixing them together...",
+      "parentUuid": "560bf578_c933fa40",
+      "revId": "261b2677de4bc4f17eeddb42d09f9c53128b29df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
