@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a007a98_841552e3",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-24T20:18:56Z",
+      "side": 1,
+      "message": "Isn\u0027t the saved texture memory the total area of the solid color quads? I don\u0027t understand why it would be the content area\u0027s proportion of the texture area.",
+      "range": {
+        "startLine": 577,
+        "startChar": 34,
+        "endLine": 577,
+        "endChar": 71
+      },
+      "revId": "ae6259e28721b998855558ef9f48749db250d606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b2f435_7d6775ae",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-24T20:18:56Z",
+      "side": 1,
+      "message": "If we would have used 256 width * 256 height * 16 tiles * 4 bytes per pixel and we only used 256 * 4 tiles * 4 bytes per pixel this should be saving 3072 shouldn\u0027t it?",
+      "revId": "ae6259e28721b998855558ef9f48749db250d606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

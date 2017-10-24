@@ -34,6 +34,57 @@
       "revId": "05a4ab37f59978f81e56c887cc6f90c7b3f8c1dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bdbfde9_7879eb25",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-24T20:18:56Z",
+      "side": 1,
+      "message": "Why is this conditional?",
+      "revId": "05a4ab37f59978f81e56c887cc6f90c7b3f8c1dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc1523b_b798b631",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-24T20:18:56Z",
+      "side": 1,
+      "message": "Can we track the memory saved by solid color tiles in general? While it\u0027s nice to know how much masked tiling saved it seems like that might be better done with an experiment based on more general purpose metrics.",
+      "revId": "05a4ab37f59978f81e56c887cc6f90c7b3f8c1dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36eb8a48_ed543ee3",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-24T20:18:56Z",
+      "side": 1,
+      "message": "Do you think that we need to know mask tiling memory usage specifically if we know the total GPU memory usage?",
+      "revId": "05a4ab37f59978f81e56c887cc6f90c7b3f8c1dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
