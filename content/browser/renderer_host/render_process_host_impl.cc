@@ -78,6 +78,7 @@
 #include "content/browser/cache_storage/cache_storage_context_impl.h"
 #include "content/browser/cache_storage/cache_storage_dispatcher_host.h"
 #include "content/browser/child_process_security_policy_impl.h"
+#include "content/browser/compositor/image_transport_factory.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
 #include "content/browser/dom_storage/dom_storage_message_filter.h"
@@ -1813,6 +1814,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 
   AddUIThreadInterface(
       registry.get(),
+      base::Bind(&RenderProcessHostImpl::BindCompositingModeReporter,
+                 base::Unretained(this)));
+
+  AddUIThreadInterface(
+      registry.get(),
       base::Bind(&RenderProcessHostImpl::BindSharedBitmapAllocationNotifier,
                  base::Unretained(this)));
 
@@ -2001,6 +2007,12 @@ void RenderProcessHostImpl::CreateOffscreenCanvasProvider(
 void RenderProcessHostImpl::BindFrameSinkProvider(
     mojom::FrameSinkProviderRequest request) {
   frame_sink_provider_.Bind(std::move(request));
+}
+
+void RenderProcessHostImpl::BindCompositingModeReporter(
+    viz::mojom::CompositingModeReporterRequest request) {
+  BrowserMainLoop::GetInstance()->GetCompositingModeReporter(
+      std::move(request));
 }
 
 void RenderProcessHostImpl::BindSharedBitmapAllocationNotifier(
@@ -2516,7 +2528,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kDisableDistanceFieldText,
     switches::kDisableFileSystem,
     switches::kDisableGestureRequirementForPresentation,
-    switches::kDisableGpuCompositing,
     switches::kDisableGpuMemoryBufferVideoFrames,
     switches::kDisableGpuVsync,
     switches::kDisableLowResTiling,
@@ -2724,6 +2735,14 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
       !browser_cmd.HasSwitch(switches::kDisableDatabases)) {
     renderer_cmd->AppendSwitch(switches::kDisableDatabases);
   }
+
+  // If gpu compositing is not being used, tell the renderer at startup. This
+  // is inherently racey, as it may change while the renderer is being launched,
+  // but the renderer will hear about the correct state eventually. This
+  // optimizes the common case to avoid wasted work.
+  if (browser_cmd.HasSwitch(switches::kDisableGpuCompositing) ||
+      ImageTransportFactory::GetInstance()->IsGpuCompositingDisabled())
+    renderer_cmd->AppendSwitch(switches::kDisableGpuCompositing);
 
   // Add kWaitForDebugger to let renderer process wait for a debugger.
   if (browser_cmd.HasSwitch(switches::kWaitForDebuggerChildren)) {
@@ -3676,6 +3695,8 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   frame_sink_provider_.Unbind();
   if (renderer_host_binding_.is_bound())
     renderer_host_binding_.Unbind();
+
+  compositing_mode_reporter_.reset();
 
   shared_bitmap_allocation_notifier_impl_.ChildDied();
 

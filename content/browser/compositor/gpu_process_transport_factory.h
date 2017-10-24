@@ -42,6 +42,7 @@ class ContextProviderCommandBuffer;
 }
 
 namespace viz {
+class CompositingModeReporterImpl;
 class OutputDeviceBacking;
 class SoftwareOutputDevice;
 class VulkanInProcessContextProvider;
@@ -55,6 +56,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
  public:
   GpuProcessTransportFactory(
       gpu::GpuChannelEstablishFactory* gpu_channel_factory,
+      viz::CompositingModeReporterImpl* compositing_mode_reporter,
       scoped_refptr<base::SingleThreadTaskRunner> resize_task_runner);
 
   ~GpuProcessTransportFactory() override;
@@ -94,6 +96,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   void SetOutputIsSecure(ui::Compositor* compositor, bool secure) override;
 
   // ImageTransportFactory implementation.
+  bool IsGpuCompositingDisabled() override;
   ui::ContextFactory* GetContextFactory() override;
   ui::ContextFactoryPrivate* GetContextFactoryPrivate() override;
   viz::FrameSinkManagerImpl* GetFrameSinkManager() override;
@@ -111,8 +114,10 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
       gfx::AcceleratedWidget widget);
   void EstablishedGpuChannel(
       base::WeakPtr<ui::Compositor> compositor,
-      bool create_gpu_output_surface,
+      bool use_gpu_compositing,
       scoped_refptr<gpu::GpuChannelHost> established_channel_host);
+
+  void DisableGpuCompositing(ui::Compositor* guilty_compositor);
 
   void OnLostMainThreadSharedContextInsideCallback();
   void OnLostMainThreadSharedContext();
@@ -141,6 +146,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   scoped_refptr<ui::ContextProviderCommandBuffer>
       shared_worker_context_provider_;
 
+  bool is_gpu_compositing_disabled_ = false;
   bool disable_display_vsync_ = false;
   bool wait_for_all_pipeline_stages_before_draw_ = false;
   bool shared_vulkan_context_provider_initialized_ = false;
@@ -148,6 +154,9 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
       shared_vulkan_context_provider_;
 
   gpu::GpuChannelEstablishFactory* const gpu_channel_factory_;
+  // Service-side impl that controls the compositing mode based on what mode the
+  // display compositors are using.
+  viz::CompositingModeReporterImpl* const compositing_mode_reporter_;
 
   base::WeakPtrFactory<GpuProcessTransportFactory> callback_factory_;
 

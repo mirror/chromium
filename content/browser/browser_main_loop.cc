@@ -54,6 +54,7 @@
 #include "components/tracing/common/tracing_switches.h"
 #include "components/viz/common/switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
+#include "components/viz/service/display_embedder/compositing_mode_reporter_impl.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "content/browser/browser_thread_impl.h"
@@ -1418,6 +1419,16 @@ viz::FrameSinkManagerImpl* BrowserMainLoop::GetFrameSinkManager() const {
 }
 #endif
 
+void BrowserMainLoop::GetCompositingModeReporter(
+    viz::mojom::CompositingModeReporterRequest request) {
+  if (IsUsingMus()) {
+    // TODO(danakj): Support viz/mus.
+  } else {
+    compositing_mode_reporter_bindings_.AddBinding(
+        compositing_mode_reporter_impl_.get(), std::move(request));
+  }
+}
+
 void BrowserMainLoop::StopStartupTracingTimer() {
   startup_trace_timer_.Stop();
 }
@@ -1503,9 +1514,16 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       surface_utils::ConnectWithLocalFrameSinkManager(
           host_frame_sink_manager_.get(), frame_sink_manager_impl_.get());
 
+      // TODO(???): Do something with this when we fall back to software.
+      // And hook up the ImageTransportFactory to this as a listener too, so
+      // that if one falls back they all do.
+      compositing_mode_reporter_impl_ =
+          std::make_unique<viz::CompositingModeReporterImpl>();
+
       ImageTransportFactory::SetFactory(
           std::make_unique<GpuProcessTransportFactory>(
-              BrowserGpuChannelHostFactory::instance(), GetResizeTaskRunner()));
+              BrowserGpuChannelHostFactory::instance(),
+              compositing_mode_reporter_impl_.get(), GetResizeTaskRunner()));
     }
   }
 
