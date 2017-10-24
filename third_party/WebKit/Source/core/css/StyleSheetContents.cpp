@@ -379,6 +379,8 @@ void StyleSheetContents::ParseAuthorStyleSheet(
     CSSTiming::From(*document).RecordAuthorStyleSheetParseTime(
         parse_duration_seconds);
   }
+
+  // DCHECK(!sheet_text.Impl() || sheet_text.Impl()->HasOneRef());
 }
 
 void StyleSheetContents::ParseString(const String& sheet_text) {
