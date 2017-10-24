@@ -4,14 +4,18 @@
 
 #include "chrome/browser/notifications/notification_template_builder.h"
 
+#include "base/i18n/time_formatting.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/time/time.h"
 #include "components/url_formatter/elide_url.h"
 #include "third_party/libxml/chromium/libxml_utils.h"
 #include "ui/message_center/notification.h"
 #include "url/origin.h"
+
+using base::Time;
 
 namespace {
 
@@ -34,6 +38,7 @@ const char kUserResponse[] = "userResponse";
 const char kTextElement[] = "text";
 const char kToastElement[] = "toast";
 const char kToastElementLaunchAttribute[] = "launch";
+const char kToastElementDisplayTimestamp[] = "displayTimestamp";
 const char kVisualElement[] = "visual";
 
 // Name of the template used for default Chrome notifications.
@@ -41,6 +46,10 @@ const char kDefaultTemplate[] = "ToastGeneric";
 
 // The XML version header that has to be stripped from the output.
 const char kXmlVersionHeader[] = "<?xml version=\"1.0\"?>\n";
+
+std::string DatePartToString(int date_part) {
+  return (date_part < 10 ? "0" : "") + base::IntToString(date_part);
+}
 
 }  // namespace
 
@@ -53,7 +62,7 @@ std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
 
   // TODO(finnur): Can we set <toast scenario="reminder"> for notifications
   // that have set the never_timeout() flag?
-  builder->StartToastElement(notification_id);
+  builder->StartToastElement(notification_id, notification.timestamp());
   builder->StartVisualElement();
 
   // TODO(finnur): Set the correct binding template based on the |notification|.
@@ -102,9 +111,19 @@ std::string NotificationTemplateBuilder::FormatOrigin(
 }
 
 void NotificationTemplateBuilder::StartToastElement(
-    const std::string& notification_id) {
+    const std::string& notification_id,
+    const base::Time& timestamp) {
   xml_writer_->StartElement(kToastElement);
   xml_writer_->AddAttribute(kToastElementLaunchAttribute, notification_id);
+  Time::Exploded exploded;
+  timestamp.UTCExplode(&exploded);
+  std::string timestring = DatePartToString(exploded.year) + "-" +
+                           DatePartToString(exploded.month) + "-" +
+                           DatePartToString(exploded.day_of_month) + "T" +
+                           DatePartToString(exploded.hour) + ":" +
+                           DatePartToString(exploded.minute) + ":" +
+                           DatePartToString(exploded.second) + "Z";
+  xml_writer_->AddAttribute(kToastElementDisplayTimestamp, timestring);
 }
 
 void NotificationTemplateBuilder::EndToastElement() {
