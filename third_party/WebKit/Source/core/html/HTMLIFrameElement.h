@@ -26,6 +26,7 @@
 
 #include "core/CoreExport.h"
 #include "core/html/HTMLFrameElementBase.h"
+#include "core/html/HTMLIFrameElementDelegateStickyUserActivation.h"
 #include "core/html/HTMLIFrameElementSandbox.h"
 #include "platform/Supplementable.h"
 #include "public/platform/WebFeaturePolicy.h"
@@ -43,6 +44,7 @@ class CORE_EXPORT HTMLIFrameElement final
   DECLARE_NODE_FACTORY(HTMLIFrameElement);
   virtual void Trace(blink::Visitor*);
   ~HTMLIFrameElement() override;
+  DOMTokenList* delegateStickyUserActivation() const;
   DOMTokenList* sandbox() const;
 
   Vector<WebParsedFeaturePolicyDeclaration> ConstructContainerPolicy(
@@ -88,6 +90,8 @@ class CORE_EXPORT HTMLIFrameElement final
   bool allow_fullscreen_;
   bool allow_payment_request_;
   bool collapsed_by_client_;
+  Member<HTMLIFrameElementDelegateStickyUserActivation>
+      delegate_sticky_user_activation_;
   Member<HTMLIFrameElementSandbox> sandbox_;
 
   ReferrerPolicy referrer_policy_;

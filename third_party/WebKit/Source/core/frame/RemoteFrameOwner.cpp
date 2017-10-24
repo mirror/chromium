@@ -14,7 +14,9 @@ RemoteFrameOwner::RemoteFrameOwner(
     SandboxFlags flags,
     const WebParsedFeaturePolicy& container_policy,
     const WebFrameOwnerProperties& frame_owner_properties)
-    : sandbox_flags_(flags),
+    : activation_delegation_flags_(
+          frame_owner_properties.activation_delegation_flags),
+      sandbox_flags_(flags),
       browsing_context_container_name_(
           static_cast<String>(frame_owner_properties.name)),
       scrolling_(
