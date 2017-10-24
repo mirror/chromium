@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "content/browser/permissions/permission_service_impl.h"
+#include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/permission_manager.h"
@@ -70,9 +71,26 @@ PermissionServiceContext::PermissionServiceContext(
 PermissionServiceContext::~PermissionServiceContext() {
 }
 
+// static
+void PermissionServiceContext::CreateServiceForWorker(
+    blink::mojom::PermissionServiceRequest request,
+    RenderProcessHost* host,
+    const url::Origin& origin) {
+  static_cast<RenderProcessHostImpl*>(host)
+      ->permission_service_context()
+      .CreateServiceForWorkerImpl(std::move(request), origin);
+}
+
 void PermissionServiceContext::CreateService(
     blink::mojom::PermissionServiceRequest request) {
-  services_.AddBinding(base::MakeUnique<PermissionServiceImpl>(this),
+  DCHECK(render_frame_host_);
+  CreateServiceForWorkerImpl(std::move(request), {});
+}
+
+void PermissionServiceContext::CreateServiceForWorkerImpl(
+    blink::mojom::PermissionServiceRequest request,
+    const url::Origin& origin) {
+  services_.AddBinding(base::MakeUnique<PermissionServiceImpl>(this, origin),
                        std::move(request));
 }
 

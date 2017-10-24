@@ -6,6 +6,9 @@
 
 #include <utility>
 
+#include "base/bind.h"
+#include "content/browser/permissions/permission_service_context.h"
+#include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "url/origin.h"
@@ -18,8 +21,8 @@ namespace {
 class WorkerInterfaceBinders {
  public:
   WorkerInterfaceBinders() {
-    // TODO(sammc): Populate |parameterized_binder_registry_| and
-    // |binder_registry_|.
+    InitializeParameterizedBinderRegistry();
+    // TODO(sammc): Populate |binder_registry_|.
   }
 
   // Bind an interface request |interface_pipe| for |interface_name| received
@@ -40,11 +43,18 @@ class WorkerInterfaceBinders {
   }
 
  private:
+  void InitializeParameterizedBinderRegistry();
+
   service_manager::BinderRegistryWithArgs<RenderProcessHost*,
                                           const url::Origin&>
       parameterized_binder_registry_;
   service_manager::BinderRegistry binder_registry_;
 };
+
+void WorkerInterfaceBinders::InitializeParameterizedBinderRegistry() {
+  parameterized_binder_registry_.AddInterface(
+      base::Bind(&PermissionServiceContext::CreateServiceForWorker));
+}
 
 }  // namespace
 
