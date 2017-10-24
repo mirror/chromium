@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "78f516a5_6a3c7fe1",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T16:42:24Z",
+      "side": 1,
+      "message": "Hm. Once WebURLLoaderFactory change lands we need to create a WebURLLoaderFactory here.  That factory\u0027s ipml can hide the details but do we rather want to keep CreateURLLoader interface (but not CreateURLLoaderFactory one) at WebWorkerFetchContext surface?",
+      "revId": "9a6a7d00bdec4073597e83049a7744991e9a2e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ef63177_c48dca7c",
         "filename": "content/renderer/service_worker/worker_fetch_context_impl.cc",
         "patchSetId": 9
