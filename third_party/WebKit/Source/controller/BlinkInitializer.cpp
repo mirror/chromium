@@ -83,6 +83,11 @@ void Initialize(Platform* platform) {
     const size_t kMB = 1024 * 1024;
     for (size_t size = 512 * kMB; size >= 32 * kMB; size -= 16 * kMB) {
       if (base::ReserveAddressSpace(size)) {
+        // Report successful reservation.
+        DEFINE_STATIC_LOCAL(CustomCountHistogram, reservation_size_histogram,
+                            ("Renderer4.ReservedMemory", 32, 512, 32));
+        reservation_size_histogram.Count(size / kMB);
+
         break;
       }
     }
