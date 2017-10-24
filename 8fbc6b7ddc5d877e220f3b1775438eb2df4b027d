@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e90a420_ff629e28",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 13363,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-24T22:58:06Z",
+      "side": 1,
+      "message": "nit: I\u0027m gathering from the histogram summary that this histogram is related to extensions, so perhaps move it into the \"Extensions\" top-level group?",
+      "range": {
+        "startLine": 13363,
+        "startChar": 17,
+        "endLine": 13363,
+        "endChar": 38
+      },
+      "revId": "8fbc6b7ddc5d877e220f3b1775438eb2df4b027d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
