@@ -315,14 +315,14 @@ void MirrorWindowController::OnHostResized(aura::WindowTreeHost* host) {
   }
 }
 
-aura::Window* MirrorWindowController::GetWindow() {
-  display::DisplayManager* display_manager = Shell::Get()->display_manager();
-  if (!display_manager->IsInMirrorMode() || mirroring_host_info_map_.empty())
-    return nullptr;
-  DCHECK_EQ(1U, mirroring_host_info_map_.size());
-  return mirroring_host_info_map_.begin()
-      ->second->ash_host->AsWindowTreeHost()
-      ->window();
+void MirrorWindowController::GetWindows(
+    aura::Window::Windows* out_windows) const {
+  if (!Shell::Get()->display_manager()->IsInSoftwareMirrorMode())
+    return;
+  for (auto& info : mirroring_host_info_map_) {
+    out_windows->emplace_back(
+        info.second->ash_host->AsWindowTreeHost()->window());
+  }
 }
 
 display::Display MirrorWindowController::GetDisplayForRootWindow(
