@@ -10,7 +10,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/sys_info.h"
-#include "base/threading/thread.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/arc_midis_client.h"
 #include "chromeos/dbus/arc_obb_mounter_client.h"
@@ -44,6 +43,7 @@
 #include "chromeos/dbus/system_clock_client.h"
 #include "chromeos/dbus/update_engine_client.h"
 #include "chromeos/dbus/upstart_client.h"
+#include "components/dbus_thread/dbus_thread.h"
 #include "dbus/bus.h"
 #include "dbus/dbus_statistics.h"
 
@@ -63,17 +63,11 @@ DBusThreadManager::DBusThreadManager(ProcessMask process_mask,
   dbus::statistics::Initialize();
 
   if (use_real_clients) {
-    // Create the D-Bus thread.
-    base::Thread::Options thread_options;
-    thread_options.message_loop_type = base::MessageLoop::TYPE_IO;
-    dbus_thread_.reset(new base::Thread("D-Bus thread"));
-    dbus_thread_->StartWithOptions(thread_options);
-
     // Create the connection to the system bus.
     dbus::Bus::Options system_bus_options;
     system_bus_options.bus_type = dbus::Bus::SYSTEM;
     system_bus_options.connection_type = dbus::Bus::PRIVATE;
-    system_bus_options.dbus_task_runner = dbus_thread_->task_runner();
+    system_bus_options.dbus_task_runner = dbus_thread::GetTaskRunner();
     system_bus_ = new dbus::Bus(system_bus_options);
   }
 }
@@ -87,10 +81,6 @@ DBusThreadManager::~DBusThreadManager() {
   // the bus synchronously.
   if (system_bus_.get())
     system_bus_->ShutdownOnDBusThreadAndBlock();
-
-  // Stop the D-Bus thread.
-  if (dbus_thread_)
-    dbus_thread_->Stop();
 
   dbus::statistics::Shutdown();
 

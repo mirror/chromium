@@ -29,6 +29,7 @@ component("chromeos") {
     "//base",
     "//base:i18n",
     "//base/third_party/dynamic_annotations",
+    "//components/dbus_thread",
     "//components/device_event_log",
     "//components/onc",
     "//components/policy:cloud_policy_proto_generated_compile",
