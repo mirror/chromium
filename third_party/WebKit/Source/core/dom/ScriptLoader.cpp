@@ -50,7 +50,6 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/SubresourceIntegrityHelper.h"
 #include "core/loader/modulescript/ModuleScriptFetchRequest.h"
-#include "core/loader/resource/ScriptResource.h"
 #include "core/svg_names.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/loader/SubresourceIntegrity.h"
@@ -111,16 +110,16 @@ ScriptLoader::~ScriptLoader() {}
 
 void ScriptLoader::Trace(blink::Visitor* visitor) {
   visitor->Trace(element_);
-  visitor->Trace(resource_);
   visitor->Trace(pending_script_);
-  visitor->Trace(module_tree_client_);
+  visitor->Trace(prepared_pending_script_);
   visitor->Trace(original_document_);
+  visitor->Trace(resource_keep_alive_);
   PendingScriptClient::Trace(visitor);
 }
 
 void ScriptLoader::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(pending_script_);
-  visitor->TraceWrappers(module_tree_client_);
+  visitor->TraceWrappers(prepared_pending_script_);
 }
 
 void ScriptLoader::SetFetchDocWrittenScriptDeferIdle() {
@@ -391,8 +390,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
       return false;
     }
 
-    DCHECK(!resource_);
-    DCHECK(!module_tree_client_);
+    DCHECK(!prepared_pending_script_);
 
     // 21.6. "Switch on the script's type:"
     if (GetScriptType() == ScriptType::kClassic) {
@@ -432,9 +430,6 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
         DispatchErrorEvent();
         return false;
       }
-
-      DCHECK(resource_);
-      DCHECK(!module_tree_client_);
     } else {
       // - "module":
 
@@ -453,10 +448,8 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
       // FetchClassicScript to take |options| too.
       ScriptFetchOptions options(nonce_, parser_state, credentials_mode);
       FetchModuleScriptTree(url, modulator, options);
-
-      DCHECK(!resource_);
-      DCHECK(module_tree_client_);
     }
+    DCHECK(prepared_pending_script_);
 
     // "When the chosen algorithm asynchronously completes, set
     //  the script's script to the result. At that time, the script is ready."
@@ -516,10 +509,11 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
         // 4. "Fetch the descendants of script (using an empty ancestor list).
         //     When this asynchronously completes, set the script's script to
         //     the result. At that time, the script is ready."
-        DCHECK(!module_tree_client_);
-        module_tree_client_ = ModulePendingScriptTreeClient::Create();
+        auto* module_tree_client = ModulePendingScriptTreeClient::Create();
         modulator->FetchDescendantsForInlineScript(module_script,
-                                                   module_tree_client_);
+                                                   module_tree_client);
+        prepared_pending_script_ = ModulePendingScript::Create(
+            element_, module_tree_client, is_external_script_);
         break;
       }
     }
@@ -532,7 +526,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
   if (GetScriptType() == ScriptType::kClassic &&
       document_write_intervention_ ==
           DocumentWriteIntervention::kFetchDocWrittenScriptDeferIdle) {
-    pending_script_ = CreatePendingScript();
+    pending_script_ = TakePendingScript();
     pending_script_->WatchForLoad(this);
     return true;
   }
@@ -602,7 +596,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
     // "Add the element to the end of the list of scripts that will execute
     // in order as soon as possible associated with the node document of the
     // script element at the time the prepare a script algorithm started."
-    pending_script_ = CreatePendingScript();
+    pending_script_ = TakePendingScript();
     async_exec_type_ = ScriptRunner::kInOrder;
     // TODO(hiroshige): Here |contextDocument| is used as "node document"
     // while Step 14 uses |elementDocument| as "node document". Fix this.
@@ -626,7 +620,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
     // "The element must be added to the set of scripts that will execute
     //  as soon as possible of the node document of the script element at the
     //  time the prepare a script algorithm started."
-    pending_script_ = CreatePendingScript();
+    pending_script_ = TakePendingScript();
     async_exec_type_ = ScriptRunner::kAsync;
     // TODO(hiroshige): Here |contextDocument| is used as "node document"
     // while Step 14 uses |elementDocument| as "node document". Fix this.
@@ -764,10 +758,14 @@ bool ScriptLoader::FetchClassicScript(
   // |kLazyLoad| for module scripts in ModuleScriptLoader.
   params.SetDefer(defer);
 
-  resource_ = ScriptResource::Fetch(params, fetcher);
+  ClassicPendingScript* pending_script =
+      ClassicPendingScript::Fetch(element_, params, fetcher);
 
-  if (!resource_)
+  if (!pending_script)
     return false;
+
+  prepared_pending_script_ = pending_script;
+  resource_keep_alive_ = pending_script->GetResource();
 
   return true;
 }
@@ -779,23 +777,19 @@ void ScriptLoader::FetchModuleScriptTree(const KURL& url,
   // 22.6, "module":
   //     "Fetch a module script graph given url, settings object, "script", and
   //      options."
-  module_tree_client_ = ModulePendingScriptTreeClient::Create();
+
+  auto* module_tree_client = ModulePendingScriptTreeClient::Create();
   modulator->FetchTree(ModuleScriptFetchRequest(url, options),
-                       module_tree_client_);
+                       module_tree_client);
+  prepared_pending_script_ = ModulePendingScript::Create(
+      element_, module_tree_client, is_external_script_);
 }
 
-PendingScript* ScriptLoader::CreatePendingScript() {
-  switch (GetScriptType()) {
-    case ScriptType::kClassic:
-      CHECK(resource_);
-      return ClassicPendingScript::Create(element_, resource_);
-    case ScriptType::kModule:
-      CHECK(module_tree_client_);
-      return ModulePendingScript::Create(element_, module_tree_client_,
-                                         is_external_script_);
-  }
-  NOTREACHED();
-  return nullptr;
+PendingScript* ScriptLoader::TakePendingScript() {
+  CHECK(prepared_pending_script_);
+  PendingScript* pending_script = prepared_pending_script_;
+  prepared_pending_script_ = nullptr;
+  return pending_script;
 }
 
 // Steps 3--7 of https://html.spec.whatwg.org/#execute-the-script-block
@@ -890,8 +884,7 @@ void ScriptLoader::Execute() {
   PendingScript* pending_script = pending_script_;
   pending_script_ = nullptr;
   ExecuteScriptBlock(pending_script, NullURL());
-  resource_ = nullptr;
-  module_tree_client_ = nullptr;
+  resource_keep_alive_ = nullptr;
 }
 
 // https://html.spec.whatwg.org/#execute-the-script-block
