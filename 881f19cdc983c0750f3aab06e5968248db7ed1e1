@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06f28871_906bdddd",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2451,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-24T02:57:15Z",
+      "side": 1,
+      "message": "drive-by: you need {} around your block otherwise you are changing the logic as indentation has no semantic level in c++, so with property indentation, your CL change:\n\n  if (!SadTabTabHelper::FromWebState(tab.webState))\n    SadTabTabHelper::CreateForWebState(tab.webState, _sadTabCoordinator);\n\nto\n\n  if (!SadTabTabHelper::FromWebState(tab.webState))\n    _sadTabCoordinator.webState \u003d tab.webState;\n  SadTabTabHelper::CreateForWebState(tab.webState, _sadTabCoordinator);\n\nThat is SadTabHelper used to only be created if it did not exists, while it is now always created. This is minor since SadTabTabHelper::CreateForWebState is a no-op if the tab helper already exists.",
+      "revId": "881f19cdc983c0750f3aab06e5968248db7ed1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
