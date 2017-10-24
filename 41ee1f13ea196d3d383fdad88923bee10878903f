@@ -336,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "a17b0617_b0165889",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-24T19:46:37Z",
+      "side": 1,
+      "message": "I removed continue.",
+      "parentUuid": "10dfefde_7be0903f",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46c013e5_b32c3061",
         "filename": "components/sync/engine_impl/model_type_worker.cc",
         "patchSetId": 1
@@ -350,6 +368,24 @@
       "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd533346_92f999e6",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-24T19:46:37Z",
+      "side": 1,
+      "message": "This DCHECK no longer exists in the last patchset.",
+      "parentUuid": "46c013e5_b32c3061",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
