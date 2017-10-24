@@ -100,6 +100,24 @@
     },
     {
       "key": {
+        "uuid": "6e52c733_2984bf6b",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T04:21:17Z",
+      "side": 1,
+      "message": "+mlippautz Just FYI. This kind of discussion is happening in so many places :) It\u0027s not easy to use wrapper-tracing correctly -- i.e., extending the wrapper-tracing to the unified GC is really important :)",
+      "parentUuid": "a662b962_2c36fcc1",
+      "revId": "cfa83aa04c6f853ab17f24ac08ceecbe6d2c7e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a9b814e_011e2d2a",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
         "patchSetId": 7
