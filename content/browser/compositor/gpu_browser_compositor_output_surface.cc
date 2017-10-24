@@ -79,7 +79,8 @@ void GpuBrowserCompositorOutputSurface::BindToClient(
       base::Bind(&GpuBrowserCompositorOutputSurface::OnGpuSwapBuffersCompleted,
                  weak_ptr_factory_.GetWeakPtr()));
   GetCommandBufferProxy()->SetUpdateVSyncParametersCallback(
-      update_vsync_parameters_callback_);
+      base::Bind(&GpuBrowserCompositorOutputSurface::OnVSyncParametersUpdated,
+                 base::Unretained(this)));
 }
 
 void GpuBrowserCompositorOutputSurface::EnsureBackbuffer() {}
@@ -174,6 +175,13 @@ void GpuBrowserCompositorOutputSurface::SetDrawRectangle(
       rect.x(), rect.y(), rect.width(), rect.height());
 }
 
+void GpuBrowserCompositorOutputSurface::OnVSyncParametersUpdated(
+    base::TimeTicks timebase,
+    base::TimeDelta interval) {
+  DCHECK(!client_);
+  client_->DidUpdateVSyncParameters(timebase, interval);
+  update_vsync_parameters_callback_.Run(timebase, interval);
+}
 gpu::CommandBufferProxyImpl*
 GpuBrowserCompositorOutputSurface::GetCommandBufferProxy() {
   ui::ContextProviderCommandBuffer* provider_command_buffer =
