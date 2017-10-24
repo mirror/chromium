@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68c2b893_e993ab21",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/history.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-24T18:09:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b08e2df_223369d7",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c62f07e_a6b93bec",
         "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5f5a186f_8dba4e7c",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-24T18:09:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c62f07e_a6b93bec",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b59c580_b399c9a8",
         "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-24T00:51:37Z",
       "side": 1,
       "message": "Some of these elements could be a bit more readable if we give them names related to what they show.  For instance here, prefer `faviconImage` or similar - then I don\u0027t have to look down to see what it\u0027s used for.\n\nI\u0027d also recommend constructing these closer to their usage, rather than all at the top in one big burst, but I don\u0027t feel super strongly.",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e9b9fd_a8e5e95d",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-24T18:09:13Z",
+      "side": 1,
+      "message": "tried to group elements together better and added some comments to increase readability. Can remove comments if preferred.",
+      "parentUuid": "1b59c580_b399c9a8",
       "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3200a5e0_e9643cf7",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-24T18:09:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2403136d_8be52dfd",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d85f4248_b9c776d3",
         "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b6f492_6e10734b",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-24T18:09:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d85f4248_b9c776d3",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "96caf6db_3b6e6c5a",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-24T18:09:13Z",
+      "side": 1,
+      "message": "No difference - just needs to create the elements again based on the search query. Updated it to use the same function as above.",
+      "parentUuid": "a2711cf6_72ea7fde",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0376b19_20527b21",
         "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4479019_3f23b9c9",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-24T18:09:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0376b19_20527b21",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "80d7d540_b6a15d24",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-24T18:09:13Z",
+      "side": 1,
+      "message": "removed activeTab, but I believe we need \u003call_urls\u003e to get the favicon link",
+      "parentUuid": "99630718_617acc73",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d090a2a_41cf8b8b",
         "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/manifest.json",
         "patchSetId": 2
@@ -169,6 +313,24 @@
       "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c351b93_1d7aa09f",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-24T18:09:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d090a2a_41cf8b8b",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
