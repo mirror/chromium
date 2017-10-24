@@ -5,6 +5,7 @@
 #include "ui/display/manager/managed_display_info.h"
 
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/display/manager/chromeos/touch_device_manager.h"
 
 namespace display {
 namespace {

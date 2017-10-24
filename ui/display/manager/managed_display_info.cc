@@ -18,7 +18,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "ui/display/display.h"
-#include "ui/events/devices/touchscreen_device.h"
+#include "ui/display/manager/chromeos/touch_device_manager.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/geometry/size_f.h"
 
@@ -36,8 +36,6 @@ const int64_t kSynthesizedDisplayIdStart = 2200000000LL;
 int64_t synthesized_display_id = kSynthesizedDisplayIdStart;
 
 const float kDpi96 = 96.0;
-
-constexpr char kFallbackTouchDeviceName[] = "fallback_touch_device_name";
 
 // Check the content of |spec| and fill |bounds| and |device_scale_factor|.
 // Returns true when |bounds| is found.
@@ -77,50 +75,6 @@ struct ManagedDisplayModeSorter {
 };
 
 }  // namespace
-
-TouchCalibrationData::TouchCalibrationData() {}
-
-TouchCalibrationData::TouchCalibrationData(
-    const TouchCalibrationData::CalibrationPointPairQuad& point_pairs,
-    const gfx::Size& bounds) : point_pairs(point_pairs),
-                               bounds(bounds) {}
-
-TouchCalibrationData::TouchCalibrationData(
-    const TouchCalibrationData& calibration_data)
-    : point_pairs(calibration_data.point_pairs),
-      bounds(calibration_data.bounds) {}
-
-// static
-uint32_t TouchCalibrationData::GenerateTouchDeviceIdentifier(
-    const ui::TouchscreenDevice& device) {
-  std::string hash_str = device.name + "-" +
-                         base::UintToString(device.vendor_id) + "-" +
-                         base::UintToString(device.product_id);
-  return base::PersistentHash(hash_str);
-}
-
-// static
-uint32_t TouchCalibrationData::GetFallbackTouchDeviceIdentifier() {
-  ui::TouchscreenDevice device;
-  device.name = kFallbackTouchDeviceName;
-  device.vendor_id = device.product_id = 0;
-  static const uint32_t kFallbackTouchDeviceIdentifier =
-      GenerateTouchDeviceIdentifier(device);
-  return kFallbackTouchDeviceIdentifier;
-}
-
-bool TouchCalibrationData::operator==(TouchCalibrationData other) const {
-  if (bounds != other.bounds)
-    return false;
-  CalibrationPointPairQuad quad_1 = point_pairs;
-  CalibrationPointPairQuad& quad_2 = other.point_pairs;
-
-  // Make sure the point pairs are in the correct order.
-  std::sort(quad_1.begin(), quad_1.end(), CalibrationPointPairCompare);
-  std::sort(quad_2.begin(), quad_2.end(), CalibrationPointPairCompare);
-
-  return quad_1 == quad_2;
-}
 
 ManagedDisplayMode::ManagedDisplayMode() {}
 
