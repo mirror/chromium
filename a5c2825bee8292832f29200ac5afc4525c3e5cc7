@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14f52800_b0861e48",
+        "filename": "content/common/devtools.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T00:45:57Z",
+      "side": 1,
+      "message": "If it\u0027s possible to add more comments about what api_script is, that would be nice.\n\nAlternatively, if there already exists documentation about this, pointing at that would be sufficient as well.",
+      "revId": "a5c2825bee8292832f29200ac5afc4525c3e5cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27a0fca_eb3febf9",
+        "filename": "content/common/devtools.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T00:45:57Z",
+      "side": 1,
+      "message": "Similarly here, please document what extension_api is: judging by how this used to work, I guess it\u0027s also JS to execute.",
+      "revId": "a5c2825bee8292832f29200ac5afc4525c3e5cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92a0704_0b94dc53",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T00:45:57Z",
+      "side": 1,
+      "message": "I\u0027m curious why this isn\u0027t just |delete this|, it doesn\u0027t get reused anyway.",
+      "revId": "a5c2825bee8292832f29200ac5afc4525c3e5cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
