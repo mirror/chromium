@@ -454,7 +454,7 @@ void RemotePlayback::RemotePlaybackDisabled() {
 }
 
 void RemotePlayback::AvailabilityChanged(
-    mojom::ScreenAvailability availability) {
+    mojom::blink::ScreenAvailability availability) {
   DCHECK(RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled());
   DCHECK(is_listening_);
 
@@ -484,11 +484,15 @@ void RemotePlayback::AvailabilityChanged(
   AvailabilityChanged(remote_playback_availability);
 }
 
-const WebVector<WebURL>& RemotePlayback::Urls() const {
+Vector<KURL> RemotePlayback::Urls() const {
   DCHECK(RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled());
   // TODO(avayvod): update the URL format and add frame url, mime type and
   // response headers when available.
-  return availability_urls_;
+  Vector<KURL> urls;
+  urls.ReserveCapacity(availability_urls_.size());
+  for (const WebURL& url : availability_urls_)
+    urls.push_back(url);
+  return urls;
 }
 
 void RemotePlayback::OnConnectionSuccess(
@@ -559,12 +563,12 @@ void RemotePlayback::StopListeningForAvailability() {
     return;
 
   availability_ = WebRemotePlaybackAvailability::kUnknown;
-  WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
-  if (!client)
+  PresentationController* controller =
+      PresentationController::FromContext(GetExecutionContext());
+  if (!controller)
     return;
 
-  client->StopListening(this);
+  controller->StopListeningForAvailability(this);
   is_listening_ = false;
 }
 
@@ -581,12 +585,12 @@ void RemotePlayback::MaybeStartListeningForAvailability() {
   if (availability_urls_.empty() || availability_callbacks_.IsEmpty())
     return;
 
-  WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
-  if (!client)
+  PresentationController* controller =
+      PresentationController::FromContext(GetExecutionContext());
+  if (!controller)
     return;
 
-  client->StartListening(this);
+  controller->StartListeningForAvailability(this);
   is_listening_ = true;
 }
 

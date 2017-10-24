@@ -39,11 +39,6 @@ PresentationAvailability::PresentationAvailability(
       value_(value),
       state_(State::kActive) {
   DCHECK(execution_context->IsDocument());
-  WebVector<WebURL> data(urls.size());
-  for (size_t i = 0; i < urls.size(); ++i)
-    data[i] = WebURL(urls[i]);
-
-  urls_.Swap(data);
 }
 
 PresentationAvailability::~PresentationAvailability() {}
@@ -105,20 +100,20 @@ void PresentationAvailability::SetState(State state) {
 }
 
 void PresentationAvailability::UpdateListening() {
-  WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
-  if (!client)
+  PresentationController* controller =
+      PresentationController::FromContext(GetExecutionContext());
+  if (!controller)
     return;
 
   if (state_ == State::kActive &&
       (ToDocument(GetExecutionContext())->GetPageVisibilityState() ==
        kPageVisibilityStateVisible))
-    client->StartListening(this);
+    controller->StartListeningForAvailability(this);
   else
-    client->StopListening(this);
+    controller->StopListeningForAvailability(this);
 }
 
-const WebVector<WebURL>& PresentationAvailability::Urls() const {
+Vector<KURL> PresentationAvailability::Urls() const {
   return urls_;
 }
 
