@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02655a44_bfbcdc03",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLParserScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-24T03:20:28Z",
+      "side": 1,
+      "message": "Don\u0027t forget to update your comment at https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/PendingScript.h?rcl\u003d8fd3f246088d0fc1ca4757ea96dbdaba6f1b8221\u0026l\u003d98",
+      "revId": "a994822151935a6fe960d6ef5d51c354a7efa106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
