@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "948efbaf_2196979c",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-24T01:00:21Z",
+      "side": 1,
+      "message": "wrap in #if defined(OS_CHROMEOS) like the .cc definition",
+      "revId": "8f2992aef5adbbf533cbae7a2fc836a7d6b1ac0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4f2cef_e777271c",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_nameservers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-24T01:00:21Z",
+      "side": 1,
+      "message": "when is this false?",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 74
+      },
+      "revId": "8f2992aef5adbbf533cbae7a2fc836a7d6b1ac0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
