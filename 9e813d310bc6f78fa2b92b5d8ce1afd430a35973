@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "e2f498e6_40d0a703",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-24T23:02:46Z",
+      "side": 1,
+      "message": "I\u0027d try to use  WaitForLoadStop from content/public/test/browser_test_utils.h.\n\nIf your IPC is routed via the frame\u0027s routing_id_, or the action is a frame-associated mojo interface, then waiting for LoadStop ought to ensure that the force-fullscreen IPC will arrive in the renderer prior to the IPC that results from the ExecuteScript call below.\n\nIf you don\u0027t want to rely on that subtle IPC ordering though, you could modify your kIsFullscreen script so that it waits for an onfullscreenchange DOM event.",
+      "parentUuid": "e05f2af1_3ae64c8a",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "394eec9f_a428924d",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 2
