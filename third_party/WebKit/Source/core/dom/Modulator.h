@@ -110,6 +110,9 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
   // is still "fetching".
   virtual ModuleScript* GetFetchedModuleScript(const KURL&) = 0;
 
+  // https://html.spec.whatwg.org/#resolve-a-module-specifier Step 2.
+  static bool ModuleSpecifierStartsWithValidPrefix(const String&);
+
   // https://html.spec.whatwg.org/#resolve-a-module-specifier
   static KURL ResolveModuleSpecifier(const String& module_request,
                                      const KURL& base_url);
