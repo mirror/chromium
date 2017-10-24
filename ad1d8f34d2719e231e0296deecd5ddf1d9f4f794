@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6052493_4a6c1eca",
+        "filename": "ui/gl/gl_context_glx.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-24T18:19:50Z",
+      "side": 1,
+      "message": "Do you want to remove this one too?",
+      "revId": "ad1d8f34d2719e231e0296deecd5ddf1d9f4f794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
