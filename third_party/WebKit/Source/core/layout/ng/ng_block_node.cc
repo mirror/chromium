@@ -273,7 +273,14 @@ bool NGBlockNode::CanUseNewLayout() const {
   if (!box_->IsLayoutNGMixin())
     return false;
 
-  return RuntimeEnabledFeatures::LayoutNGEnabled();
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return false;
+
+  const ComputedStyle& style = box_->StyleRef();
+  if (style.UserModify() != EUserModify::kReadOnly)
+    return false;
+
+  return true;
 }
 
 String NGBlockNode::ToString() const {
