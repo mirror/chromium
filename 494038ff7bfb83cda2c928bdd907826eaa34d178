@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "91d4b524_99ee2b43",
+        "filename": "components/browser_sync/profile_sync_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-24T11:21:28Z",
+      "side": 0,
+      "message": "You will need to modify the call in ios/chrome/browser/reading_list/reading_list_model_factory.cc",
+      "range": {
+        "startLine": 559,
+        "startChar": 14,
+        "endLine": 559,
+        "endChar": 23
+      },
+      "revId": "494038ff7bfb83cda2c928bdd907826eaa34d178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd12a844_a1ae38ec",
         "filename": "components/sync/device_info/device_info_sync_bridge_unittest.cc",
         "patchSetId": 3
