@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15f73d5f_ab72f33d",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T19:15:42Z",
+      "side": 1,
+      "message": "AtomicFlag doesn\u0027t really suit our needs. We need to atomically grab a stored pointer. The setter is also not guaranteed to be tied to a specific thread.\n\nI think we\u0027re not quite on the same page.\n\nB1: calls load-acquire p. It will either get some real pointer, let\u0027s say 0xBEEF, or nullptr. This operation is atomic. That\u0027s all we need - we don\u0027t need sequencing.\n\nIf B gets 0xBEEF, it will use it. If B gets nullptr, it will early out.",
+      "parentUuid": "8b9141e4_09dd268e",
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8c8c89b_4d7c91a9",
         "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
         "patchSetId": 25
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-24T18:59:43Z",
       "side": 1,
       "message": "Do we need to static_assert that AtomicWord can hold a pointer without truncation? Or will compiler warnings catch that for us?",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 27
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883da27f_d5fd5a36",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T19:15:42Z",
+      "side": 1,
+      "message": "compiler warning will catch it [I think], and also the definition says that AtomicWord is defined as being a machine-sized pointer:\nhttps://cs.chromium.org/chromium/src/base/atomicops.h?type\u003dcs\u0026q\u003dAtomicWord\u0026sq\u003dpackage:chromium\u0026l\u003d67",
+      "parentUuid": "d8c8c89b_4d7c91a9",
       "range": {
         "startLine": 114,
         "startChar": 16,
