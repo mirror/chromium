@@ -29,3 +29,15 @@ interface GeolocationService {
   // been created.
   CreateGeolocation(Geolocation& request, bool user_gesture);
 };
+
+interface GeolocationContext {
+  // Creates a GeolocationImpl that is weakly bound to |request|.
+  BindGeolocation(Geolocation& request);
+
+  // Enables geolocation override. This method can be used to trigger possible
+  // location-specific behavior in a particular context.
+  SetOverride(Geoposition geoposition);
+
+  // Disables geolocation override.
+  ClearOverride();
+};

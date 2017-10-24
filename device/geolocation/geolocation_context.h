@@ -20,24 +20,23 @@ class GeolocationImpl;
 // Provides information to a set of GeolocationImpl instances that are
 // associated with a given context. Notably, allows pausing and resuming
 // geolocation on these instances.
-class DEVICE_GEOLOCATION_EXPORT GeolocationContext {
+class DEVICE_GEOLOCATION_EXPORT GeolocationContext
+    : public device::mojom::GeolocationContext {
  public:
   GeolocationContext();
-  virtual ~GeolocationContext();
+  ~GeolocationContext() override;
 
-  // Creates a GeolocationImpl that is weakly bound to |request|.
-  void Bind(mojom::GeolocationRequest request);
+  // Creates GeolocationContext that is strongly bound to |request|.
+  static void Create(mojom::GeolocationContextRequest request);
+
+  // device::mojom::GeolocationContext implementation:
+  void BindGeolocation(mojom::GeolocationRequest request) override;
+  void SetOverride(mojom::GeopositionPtr geoposition) override;
+  void ClearOverride() override;
 
   // Called when a GeolocationImpl has a connection error. After this call, it
   // is no longer safe to access |impl|.
   void OnConnectionError(GeolocationImpl* impl);
-
-  // Enables geolocation override. This method can be used to trigger possible
-  // location-specific behavior in a particular context.
-  void SetOverride(mojom::GeopositionPtr geoposition);
-
-  // Disables geolocation override.
-  void ClearOverride();
 
  private:
   std::vector<std::unique_ptr<GeolocationImpl>> impls_;
