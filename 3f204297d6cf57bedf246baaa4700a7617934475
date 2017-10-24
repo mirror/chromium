@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "32decfe5_ef3f28cd",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-10-24T08:58:30Z",
+      "side": 1,
+      "message": "Nit: Please sort this alphabetically by name, which would place it under IDR_INTERVENTIONS_INTERNALS_MOJO_INDEX_JS",
+      "revId": "3f204297d6cf57bedf246baaa4700a7617934475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bddd860_d87ab691",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
         "patchSetId": 7
