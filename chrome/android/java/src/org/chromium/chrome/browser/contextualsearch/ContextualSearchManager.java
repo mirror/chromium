@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.contextualsearch;
 
 import android.annotation.SuppressLint;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -34,6 +35,7 @@ import org.chromium.chrome.browser.externalnav.ExternalNavigationParams;
 import org.chromium.chrome.browser.feature_engagement.TrackerFactory;
 import org.chromium.chrome.browser.gsa.GSAContextDisplaySelection;
 import org.chromium.chrome.browser.infobar.InfoBarContainer;
+import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabRedirectHandler;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelObserver;
@@ -45,6 +47,7 @@ import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabObserver;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarManager;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarObserver;
+import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
 import org.chromium.components.feature_engagement.Tracker;
@@ -137,6 +140,7 @@ public class ContextualSearchManager
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
     private FindToolbarManager mFindToolbarManager;
     private FindToolbarObserver mFindToolbarObserver;
+    private TextBubble mHelpBubble;
 
     private boolean mDidStartLoadingResolvedSearchRequest;
     private long mLoadedSearchUrlTimeMs;
@@ -147,6 +151,7 @@ public class ContextualSearchManager
 
     private boolean mWasActivatedByTap;
     private boolean mIsInitialized;
+    private boolean mReceivedContextualCardsEntityData;
 
     // The current search context, or null.
     private ContextualSearchContext mContext;
@@ -157,8 +162,6 @@ public class ContextualSearchManager
      */
     private boolean mShouldLoadDelayedSearch;
 
-    private boolean mIsShowingPeekPromo;
-    private boolean mWouldShowPeekPromo;
     private boolean mIsShowingPromo;
     private boolean mIsMandatoryPromo;
     private boolean mDidLogPromoOutcome;
@@ -374,6 +377,12 @@ public class ContextualSearchManager
 
     @Override
     public void onCloseContextualSearch(StateChangeReason reason) {
+        if (mHelpBubble != null) mHelpBubble.dismiss();
+        if (mSearchPanel.isBarBannerVisible()) {
+            TrackerFactory.getTrackerForProfile(mActivity.getActivityTab().getProfile())
+                    .dismissed(FeatureConstants.CONTEXTUAL_SEARCH_TAP_FEATURE);
+        }
+
         if (mSearchPanel == null) return;
 
         mSelectionController.onSearchEnded(reason);
@@ -397,10 +406,6 @@ public class ContextualSearchManager
         mWereSearchResultsSeen = false;
 
         mSearchRequest = null;
-
-        if (mIsShowingPeekPromo || mWouldShowPeekPromo) {
-            mPolicy.logPeekPromoMetrics(mIsShowingPeekPromo, mWouldShowPeekPromo);
-        }
 
         if (mIsShowingPromo && !mDidLogPromoOutcome && mSearchPanel.wasPromoInteractive()) {
             ContextualSearchUma.logPromoOutcome(mWasActivatedByTap, mIsMandatoryPromo);
@@ -450,6 +455,7 @@ public class ContextualSearchManager
         }
 
         mSearchPanel.destroyContent();
+        mReceivedContextualCardsEntityData = false;
 
         String selection = mSelectionController.getSelectedText();
         boolean isTap = mSelectionController.getSelectionType() == SelectionType.TAP;
@@ -483,15 +489,11 @@ public class ContextualSearchManager
         }
         mWereSearchResultsSeen = false;
 
-        // Show the Peek Promo only when the Panel wasn't previously visible, provided
-        // the policy allows it.
-        if (!mSearchPanel.isShowing()) {
-            mWouldShowPeekPromo = mPolicy.isPeekPromoConditionSatisfied();
-            mIsShowingPeekPromo = mPolicy.isPeekPromoAvailable();
-            if (mIsShowingPeekPromo) {
-                mSearchPanel.showPeekPromo();
-                mPolicy.registerPeekPromoSeen();
-            }
+        Tracker tracker =
+                TrackerFactory.getTrackerForProfile(mActivity.getActivityTab().getProfile());
+        if (!mWasActivatedByTap && mPolicy.isTapSupported()
+                && tracker.shouldTriggerHelpUI(FeatureConstants.CONTEXTUAL_SEARCH_TAP_FEATURE)) {
+            mSearchPanel.showBarBanner();
         }
 
         // Note: now that the contextual search has properly started, set the promo involvement.
@@ -510,8 +512,6 @@ public class ContextualSearchManager
         assert mSelectionController.getSelectionType() != SelectionType.UNDETERMINED;
         mWasActivatedByTap = mSelectionController.getSelectionType() == SelectionType.TAP;
 
-        Tracker tracker =
-                TrackerFactory.getTrackerForProfile(mActivity.getActivityTab().getProfile());
         tracker.notifyEvent(mWasActivatedByTap
                         ? EventConstants.CONTEXTUAL_SEARCH_TRIGGERED_BY_TAP
                         : EventConstants.CONTEXTUAL_SEARCH_TRIGGERED_BY_LONGPRESS);
@@ -522,6 +522,75 @@ public class ContextualSearchManager
                     tracker.getTriggerState(FeatureConstants.CONTEXTUAL_SEARCH_TAP_FEATURE)
                     == TriggerState.HAS_BEEN_DISPLAYED);
         }
+    }
+
+    @Override
+    public boolean wasTriggeredByTap() {
+        return mWasActivatedByTap;
+    }
+
+    @Override
+    public boolean isEntityDataShown() {
+        return mWasActivatedByTap && mReceivedContextualCardsEntityData;
+    }
+
+    @Override
+    public void onPanelShown() {
+        if (!mWasActivatedByTap) {
+            maybeShowHelpBubbleAbovePanel(FeatureConstants.CONTEXTUAL_SEARCH_FEATURE);
+        }
+    }
+
+    /**
+     * Shows a help bubble if IPH conditions are met.
+     * @param featureName Name of the feature in IPH, look at {@link FeatureConstants}.
+     */
+    private void maybeShowHelpBubbleAbovePanel(String featureName) {
+        if (!isSearchPanelShowing()) return;
+
+        if (!featureName.equals(FeatureConstants.CONTEXTUAL_SEARCH_PANEL_FEATURE)
+                && !featureName.equals(FeatureConstants.CONTEXTUAL_SEARCH_FEATURE))
+            return;
+
+        final Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
+        if (!tracker.shouldTriggerHelpUI(featureName)) return;
+
+        int stringId = R.string.contextual_search_iph_search_result;
+        int accessibilityStringId = R.string.contextual_search_iph_search_result;
+        if (featureName.equals(FeatureConstants.CONTEXTUAL_SEARCH_PANEL_FEATURE)) {
+            stringId = R.string.contextual_search_iph_entity;
+            accessibilityStringId = R.string.contextual_search_iph_entity;
+        }
+
+        if (mHelpBubble != null) {
+            mHelpBubble.dismiss();
+        }
+        mHelpBubble = new TextBubble(
+                mParentView.getContext(), mParentView, stringId, accessibilityStringId);
+        mHelpBubble.setAnchorRect(getPanelRect());
+
+        mHelpBubble.setDismissOnTouchInteraction(true);
+        mHelpBubble.addOnDismissListener(() -> { tracker.dismissed(featureName); });
+
+        mHelpBubble.show();
+    }
+
+    /**
+     * Calculates the coordinates of the Contextual Search panel.
+     * @return the {@link Rect} which Contextual Search panel is located in.
+     */
+    private Rect getPanelRect() {
+        float dpToPx = mParentView.getResources().getDisplayMetrics().density;
+        // mSearchPanel.getOffsetY() includes the height of the shadow of the panel which makes the
+        // bubble look too distant from the panel. This offset compensates for that.
+        int topPanelOffsetInDp = 15;
+
+        int left = (int) (mSearchPanel.getOffsetX() * dpToPx);
+        int top = (int) ((mSearchPanel.getOffsetY() + topPanelOffsetInDp) * dpToPx);
+        int bottom = top + (int) (mSearchPanel.getHeight() * dpToPx);
+        int right = left + (int) (mSearchPanel.getWidth() * dpToPx);
+
+        return new Rect(left, top, right, bottom);
     }
 
     @Override
@@ -721,17 +790,20 @@ public class ContextualSearchManager
 
         boolean quickActionShown =
                 mSearchPanel.getSearchBarControl().getQuickActionControl().hasQuickAction();
-        boolean receivedContextualCardsEntityData = !quickActionShown && receivedCaptionOrThumbnail;
+        mReceivedContextualCardsEntityData = !quickActionShown && receivedCaptionOrThumbnail;
 
-        if (receivedContextualCardsEntityData) {
+        if (mReceivedContextualCardsEntityData) {
             Tracker tracker =
                     TrackerFactory.getTrackerForProfile(mActivity.getActivityTab().getProfile());
             tracker.notifyEvent(EventConstants.CONTEXTUAL_SEARCH_ENTITY_RESULT);
+            if (mWasActivatedByTap) {
+                maybeShowHelpBubbleAbovePanel(FeatureConstants.CONTEXTUAL_SEARCH_PANEL_FEATURE);
+            }
         }
 
-        ContextualSearchUma.logContextualCardsDataShown(receivedContextualCardsEntityData);
+        ContextualSearchUma.logContextualCardsDataShown(mReceivedContextualCardsEntityData);
         mSearchPanel.getPanelMetrics().setWasContextualCardsDataShown(
-                receivedContextualCardsEntityData);
+                mReceivedContextualCardsEntityData);
 
         if (ContextualSearchFieldTrial.isContextualSearchSingleActionsEnabled()) {
             ContextualSearchUma.logQuickActionShown(quickActionShown, quickActionCategory);

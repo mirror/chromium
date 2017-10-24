@@ -64,4 +64,19 @@ public interface ContextualSearchManagementDelegate {
      * Log the current state of Contextual Search.
      */
     void logCurrentState();
+
+    /**
+     * Called when Contextual Search panel is shown.
+     */
+    void onPanelShown();
+
+    /**
+     * @return Whether Contextual Search was triggered by tapping.
+     */
+    boolean wasTriggeredByTap();
+
+    /**
+     * @return Whether entity data was received for current search.
+     */
+    boolean isEntityDataShown();
 }
