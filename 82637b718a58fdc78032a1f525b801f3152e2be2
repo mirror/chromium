@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a10fb3f_eb6e1f10",
+        "filename": "chrome/browser/shell_integration_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-10-24T21:36:39Z",
+      "side": 0,
+      "message": "I am not familiar with services. They don\u0027t run in a sandbox? Have you checked to see if this code still works?\n\nThe easiest way to do that is to open Chrome while it is pinned to the Windows taskbar, wait for around 1 minute (the exact time is 45 seconds) and check in chrome://histograms if Windows.IsPinnedToTaskbar has a sample for the value \"1\".",
+      "range": {
+        "startLine": 500,
+        "startChar": 17,
+        "endLine": 500,
+        "endChar": 36
+      },
+      "revId": "82637b718a58fdc78032a1f525b801f3152e2be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

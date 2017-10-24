@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ff3fc97_603c49ce",
+        "filename": "chrome/browser/shell_integration_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-10-24T21:36:39Z",
+      "side": 1,
+      "message": "nit: of *the* connection",
+      "range": {
+        "startLine": 457,
+        "startChar": 42,
+        "endLine": 457,
+        "endChar": 53
+      },
+      "revId": "64cec36235cd0c07f61b600e5953743f1c6f3ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef2d5b5_edf89805",
+        "filename": "chrome/services/chrome_win_util/manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-10-24T21:36:39Z",
+      "side": 1,
+      "message": "I don\u0027t feel like changing the name is a good thing here. You can chose whatever you want but I would keep the \"shell\" part somewhere in it. Something like win_shell_util.\n\nThis interface is specifically used to isolate operations that interacts with the Windows shell from the browser process, and it should be obvious from the name IMO.",
+      "range": {
+        "startLine": 2,
+        "startChar": 11,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "64cec36235cd0c07f61b600e5953743f1c6f3ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
