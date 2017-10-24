@@ -1,0 +1,93 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#import "ios/chrome/browser/web/load_timing_tab_helper.h"
+
+#include <memory>
+#include <vector>
+
+#include "base/test/histogram_tester.h"
+#include "base/threading/platform_thread.h"
+#include "base/time/time.h"
+#import "ios/web/public/test/fakes/test_web_state.h"
+#include "testing/gmock/include/gmock/gmock.h"
+#include "testing/gtest/include/gtest/gtest.h"
+#include "testing/platform_test.h"
+
+namespace {
+
+class LoadTimingTabHelperTest : public PlatformTest {
+ protected:
+  LoadTimingTabHelperTest() {
+    LoadTimingTabHelper::CreateForWebState(&web_state_);
+  }
+
+  LoadTimingTabHelper* tab_helper() {
+    return LoadTimingTabHelper::FromWebState(&web_state_);
+  }
+
+  void ExpectEmptyHistogram() {
+    EXPECT_TRUE(histogram_tester_
+                    .GetTotalCountsForPrefix(
+                        LoadTimingTabHelper::kOmniboxToPageLoadedMetric)
+                    .empty());
+  }
+
+  web::TestWebState web_state_;
+  base::HistogramTester histogram_tester_;
+};
+
+TEST_F(LoadTimingTabHelperTest, ReportMetricOnLoadSuccess) {
+  tab_helper()->DidInitiatePageLoad();
+  web_state_.OnPageLoaded(web::PageLoadCompletionStatus::SUCCESS);
+
+  histogram_tester_.ExpectTimeBucketCount(
+      LoadTimingTabHelper::kOmniboxToPageLoadedMetric, base::TimeDelta(), 1);
+}
+
+TEST_F(LoadTimingTabHelperTest, MetricNotReportedOnLoadFailure) {
+  tab_helper()->DidInitiatePageLoad();
+  web_state_.OnPageLoaded(web::PageLoadCompletionStatus::FAILURE);
+  ExpectEmptyHistogram();
+}
+
+TEST_F(LoadTimingTabHelperTest, MetricNotReportedIfTimerNotStarted) {
+  web_state_.OnPageLoaded(web::PageLoadCompletionStatus::SUCCESS);
+  ExpectEmptyHistogram();
+}
+
+TEST_F(LoadTimingTabHelperTest, ReportZeroIfPrerenderPromotedAfterPageLoaded) {
+  ASSERT_FALSE(web_state_.IsLoading());
+  tab_helper()->DidPromotePrerenderTab();
+  histogram_tester_.ExpectTimeBucketCount(
+      LoadTimingTabHelper::kOmniboxToPageLoadedMetric, base::TimeDelta(), 1);
+}
+
+TEST_F(LoadTimingTabHelperTest,
+       RestartTimerIfPrerenderPromotedBeforePageLoaded) {
+  ASSERT_FALSE(web_state_.IsLoading());
+  web_state_.SetLoading(true);
+
+  tab_helper()->DidPromotePrerenderTab();
+  ExpectEmptyHistogram();
+
+  web_state_.OnPageLoaded(web::PageLoadCompletionStatus::SUCCESS);
+  histogram_tester_.ExpectTimeBucketCount(
+      LoadTimingTabHelper::kOmniboxToPageLoadedMetric, base::TimeDelta(), 1);
+}
+
+// Tests that
+
+//
+//  // Timer should be reset now and no new sample should be reported without
+//  // DidInitiatePageLoad().
+//  tab_helper()->PageLoaded();
+//
+//  base::HistogramTester::CountsMap expected_counts;
+//  expected_counts[LoadTimingTabHelper::kOmniboxToPageLoadedMetric] = 1;
+//  EXPECT_THAT(histogram_tester_.GetTotalCountsForPrefix(
+//                  LoadTimingTabHelper::kOmniboxToPageLoadedMetric),
+//              testing::ContainerEq(expected_counts));
+
+}  // namespace
