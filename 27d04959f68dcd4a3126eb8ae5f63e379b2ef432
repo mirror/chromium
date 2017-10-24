@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b63bae30_d07c8e1e",
+        "filename": "base/trace_event/memory_dump_request_args.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-10-24T13:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5adb0e93_61ad5be9",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 44
+      },
+      "revId": "27d04959f68dcd4a3126eb8ae5f63e379b2ef432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4cde4c2_6507d845",
         "filename": "base/trace_event/memory_dump_scheduler.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8a7d50bf_8b362fe3",
+        "filename": "base/trace_event/memory_dump_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-10-24T13:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4cde4c2_6507d845",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 69
+      },
+      "revId": "27d04959f68dcd4a3126eb8ae5f63e379b2ef432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5f6f3b8_af098b05",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "27d04959f68dcd4a3126eb8ae5f63e379b2ef432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a189d157_c7be2b8e",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-10-24T13:31:33Z",
+      "side": 1,
+      "message": "Yeah this has been bugging me for a while so glad I was able to fix it with this CL :P",
+      "parentUuid": "b5f6f3b8_af098b05",
+      "range": {
+        "startLine": 179,
+        "startChar": 5,
+        "endLine": 180,
+        "endChar": 60
+      },
+      "revId": "27d04959f68dcd4a3126eb8ae5f63e379b2ef432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
