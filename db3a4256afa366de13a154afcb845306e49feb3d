@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c38a468_fda1afef",
+        "filename": "chrome/test/chromedriver/capabilities_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T07:22:42Z",
+      "side": 1,
+      "message": "Nit: For consistency with the other tests I would either leave this as |ListValue| and |AppendString|, or change every other test as well. Up to you :)",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 32
+      },
+      "revId": "db3a4256afa366de13a154afcb845306e49feb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654183fe_53780838",
+        "filename": "chrome/test/chromedriver/capabilities_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T07:22:42Z",
+      "side": 1,
+      "message": "Nit: For one lists of length 1 |SetKey| is better.",
+      "range": {
+        "startLine": 310,
+        "startChar": 8,
+        "endLine": 310,
+        "endChar": 15
+      },
+      "revId": "db3a4256afa366de13a154afcb845306e49feb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ce6af1_4fdc84c3",
+        "filename": "chrome/test/chromedriver/capabilities_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T07:22:42Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 311,
+        "startChar": 8,
+        "endLine": 311,
+        "endChar": 15
+      },
+      "revId": "db3a4256afa366de13a154afcb845306e49feb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
