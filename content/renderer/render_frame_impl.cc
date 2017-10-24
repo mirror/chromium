@@ -526,6 +526,8 @@ CommonNavigationParams MakeCommonNavigationParams(
           ? CSPDisposition::CHECK
           : CSPDisposition::DO_NOT_CHECK;
 
+  bool has_user_gesture = false;
+
   const RequestExtraData* extra_data =
       static_cast<RequestExtraData*>(info.url_request.GetExtraData());
   DCHECK(extra_data);
@@ -536,7 +538,7 @@ CommonNavigationParams MakeCommonNavigationParams(
       static_cast<PreviewsState>(info.url_request.GetPreviewsState()),
       base::TimeTicks::Now(), info.url_request.HttpMethod().Latin1(),
       GetRequestBodyForWebURLRequest(info.url_request), source_location,
-      should_check_main_world_csp);
+      should_check_main_world_csp, has_user_gesture);
 }
 
 WebFrameLoadType ReloadFrameLoadTypeFor(
@@ -5299,8 +5301,8 @@ void RenderFrameImpl::OnCommitNavigation(
   // If the request was initiated in the context of a user gesture then make
   // sure that the navigation also executes in the context of a user gesture.
   std::unique_ptr<blink::WebScopedUserGesture> gesture(
-      request_params.has_user_gesture ? new blink::WebScopedUserGesture(frame_)
-                                      : nullptr);
+      common_params.has_user_gesture ? new blink::WebScopedUserGesture(frame_)
+                                     : nullptr);
 
   browser_side_navigation_pending_ = false;
   browser_side_navigation_pending_url_ = GURL();
@@ -6531,7 +6533,6 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
 
   BeginNavigationParams begin_navigation_params(
       GetWebURLRequestHeadersAsString(info.url_request), load_flags,
-      info.url_request.HasUserGesture(),
       info.url_request.GetServiceWorkerMode() !=
           blink::WebURLRequest::ServiceWorkerMode::kAll,
       GetRequestContextTypeForWebURLRequest(info.url_request),
