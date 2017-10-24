@@ -128,14 +128,31 @@ RefPtr<DrawingBuffer> DrawingBuffer::Create(
   if (discard_framebuffer_supported)
     extensions_util->EnsureExtensionEnabled("GL_EXT_discard_framebuffer");
 
+  // Enable platform support for half-float support, if requested.
+  if (color_params.PixelFormat() == kF16CanvasPixelFormat) {
+    if (!extensions_util->EnsureExtensionEnabled(
+            "GL_OES_texture_half_float_linear")) {
+      DLOG(ERROR) << "Floating point linear filtering support is absent.";
+      return nullptr;
+    }
+    const char* color_buffer_extension = webgl_version > kWebGL1
+                                             ? "GL_EXT_color_buffer_float"
+                                             : "GL_EXT_color_buffer_half_float";
+    if (!extensions_util->EnsureExtensionEnabled(color_buffer_extension)) {
+      DLOG(ERROR) << "Half-float color buffers support is absent.";
+      return nullptr;
+    }
+  }
+
   RefPtr<DrawingBuffer> drawing_buffer = WTF::AdoptRef(new DrawingBuffer(
       std::move(context_provider), std::move(extensions_util), client,
       discard_framebuffer_supported, want_alpha_channel, premultiplied_alpha,
       preserve, webgl_version, want_depth_buffer, want_stencil_buffer,
       chromium_image_usage, color_params));
   if (!drawing_buffer->Initialize(size, multisample_supported)) {
+    DLOG(ERROR) << "Failed to allocate DrawingBuffer";
     drawing_buffer->BeginDestruction();
-    return RefPtr<DrawingBuffer>();
+    return nullptr;
   }
   return drawing_buffer;
 }
@@ -170,6 +187,8 @@ DrawingBuffer::DrawingBuffer(
       software_rendering_(this->ContextProvider()->IsSoftwareRendering()),
       want_depth_(want_depth),
       want_stencil_(want_stencil),
+      use_half_float_storage_(color_params.PixelFormat() ==
+                              kF16CanvasPixelFormat),
       storage_color_space_(color_params.GetStorageGfxColorSpace()),
       sampler_color_space_(color_params.GetSamplerGfxColorSpace()),
       chromium_image_usage_(chromium_image_usage) {
@@ -618,6 +637,7 @@ bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
 
   if (gl_->GetGraphicsResetStatusKHR() != GL_NO_ERROR) {
     // Need to try to restore the context again later.
+    DLOG(ERROR) << "Context was lost before initialization.";
     return false;
   }
 
@@ -665,6 +685,10 @@ bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
             gpu::DISABLE_WEBGL_RGB_MULTISAMPLING_USAGE)) {
       allocate_alpha_channel_ = true;
     }
+    // There exists no RGB half-float BufferFormat.
+    if (ShouldUseChromiumImage()) {
+      allocate_alpha_channel_ = true;
+    }
   }
 
   // Determine if we have a writeable alpha channel in our storage (even if
@@ -691,8 +715,10 @@ bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
     gl_->BindFramebuffer(GL_FRAMEBUFFER, multisample_fbo_);
     gl_->GenRenderbuffers(1, &multisample_renderbuffer_);
   }
-  if (!ResizeFramebufferInternal(size))
+  if (!ResizeFramebufferInternal(size)) {
+    DLOG(ERROR) << "Failed initial framebuffer allocation.";
     return false;
+  }
 
   if (depth_stencil_buffer_) {
     DCHECK(WantDepthOrStencil());
@@ -702,6 +728,7 @@ bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
   if (gl_->GetGraphicsResetStatusKHR() != GL_NO_ERROR) {
     // It's possible that the drawing buffer allocation provokes a context loss,
     // so check again just in case. http://crbug.com/512302
+    DLOG(ERROR) << "Context lost after initialization.";
     return false;
   }
 
@@ -850,14 +877,22 @@ bool DrawingBuffer::ResizeDefaultFramebuffer(const IntSize& size) {
   if (WantExplicitResolve()) {
     state_restorer_->SetFramebufferBindingDirty();
     state_restorer_->SetRenderbufferBindingDirty();
+    // TODO(ccameron): Half-float renderbuffer storage fails to allocate in
+    // GLES 2 because GL_EXT_color_buffer_half_float is not supported.
+    // https://crbug.com/777756
+    GLenum internal_format =
+        use_half_float_storage_
+            ? (allocate_alpha_channel_ ? GL_RGBA16F_EXT : GL_RGB16F_EXT)
+            : (allocate_alpha_channel_ ? GL_RGBA8_OES : GL_RGB8_OES);
     gl_->BindFramebuffer(GL_FRAMEBUFFER, multisample_fbo_);
     gl_->BindRenderbuffer(GL_RENDERBUFFER, multisample_renderbuffer_);
-    gl_->RenderbufferStorageMultisampleCHROMIUM(
-        GL_RENDERBUFFER, sample_count_,
-        allocate_alpha_channel_ ? GL_RGBA8_OES : GL_RGB8_OES, size.Width(),
-        size.Height());
-    if (gl_->GetError() == GL_OUT_OF_MEMORY)
+    gl_->RenderbufferStorageMultisampleCHROMIUM(GL_RENDERBUFFER, sample_count_,
+                                                internal_format, size.Width(),
+                                                size.Height());
+    if (gl_->GetError() == GL_OUT_OF_MEMORY) {
+      DLOG(ERROR) << "Out of memory allocating renderbuffer.";
       return false;
+    }
 
     gl_->FramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
                                  GL_RENDERBUFFER, multisample_renderbuffer_);
@@ -894,13 +929,23 @@ bool DrawingBuffer::ResizeDefaultFramebuffer(const IntSize& size) {
   if (WantExplicitResolve()) {
     state_restorer_->SetFramebufferBindingDirty();
     gl_->BindFramebuffer(GL_FRAMEBUFFER, multisample_fbo_);
-    if (gl_->CheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    GLenum framebuffer_status = gl_->CheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (framebuffer_status != GL_FRAMEBUFFER_COMPLETE) {
+      DLOG(ERROR) << "Multisample framebuffer incomplete, status: "
+                  << framebuffer_status;
       return false;
+    }
   }
 
   state_restorer_->SetFramebufferBindingDirty();
   gl_->BindFramebuffer(GL_FRAMEBUFFER, fbo_);
-  return gl_->CheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
+  GLenum framebuffer_status = gl_->CheckFramebufferStatus(GL_FRAMEBUFFER);
+  if (framebuffer_status != GL_FRAMEBUFFER_COMPLETE) {
+    DLOG(ERROR) << "Framebuffer incomplete, status: " << framebuffer_status;
+    return false;
+  }
+
+  return true;
 }
 
 void DrawingBuffer::ClearFramebuffers(GLbitfield clear_mask) {
@@ -948,8 +993,10 @@ bool DrawingBuffer::ResizeFramebufferInternal(const IntSize& new_size) {
   DCHECK(state_restorer_);
   DCHECK(!new_size.IsEmpty());
   IntSize adjusted_size = AdjustSize(new_size, size_, max_texture_size_);
-  if (adjusted_size.IsEmpty())
+  if (adjusted_size.IsEmpty()) {
+    DLOG(ERROR) << "Refusing to create empty buffer.";
     return false;
+  }
 
   if (adjusted_size != size_) {
     do {
@@ -966,8 +1013,10 @@ bool DrawingBuffer::ResizeFramebufferInternal(const IntSize& new_size) {
     recycled_color_buffer_queue_.clear();
     recycled_bitmaps_.clear();
 
-    if (adjusted_size.IsEmpty())
+    if (adjusted_size.IsEmpty()) {
+      DLOG(ERROR) << "Refusing to create empty buffer.";
       return false;
+    }
   }
 
   state_restorer_->SetClearStateDirty();
@@ -1187,10 +1236,15 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
 #endif
     gfx::BufferFormat buffer_format;
     GLenum gl_format = GL_NONE;
+    // TODO(ccameron): GpuMemoryBuffer allocation of half-float surfaces fails
+    // due to inappropriately cached capabilities.
+    // https://crbug.com/777748
     if (allocate_alpha_channel_) {
-      buffer_format = gfx::BufferFormat::RGBA_8888;
+      buffer_format = use_half_float_storage_ ? gfx::BufferFormat::RGBA_F16
+                                              : gfx::BufferFormat::RGBA_8888;
       gl_format = GL_RGBA;
     } else {
+      DCHECK(!use_half_float_storage_);
       buffer_format = gfx::BufferFormat::RGBX_8888;
       if (gpu::IsImageFromGpuMemoryBufferFormatSupported(
               gfx::BufferFormat::BGRX_8888,
@@ -1229,13 +1283,29 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
   } else {
     if (storage_texture_supported_) {
       GLenum internal_storage_format =
-          allocate_alpha_channel_ ? GL_RGBA8 : GL_RGB8;
+          use_half_float_storage_
+              ? (allocate_alpha_channel_ ? GL_RGBA16F_EXT : GL_RGB16F_EXT)
+              : (allocate_alpha_channel_ ? GL_RGBA8 : GL_RGB8);
       gl_->TexStorage2DEXT(GL_TEXTURE_2D, 1, internal_storage_format,
                            size.Width(), size.Height());
     } else {
-      GLenum gl_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
-      gl_->TexImage2D(target, 0, gl_format, size.Width(), size.Height(), 0,
-                      gl_format, GL_UNSIGNED_BYTE, nullptr);
+      GLenum internal_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
+      GLenum format = internal_format;
+      GLenum data_type = GL_UNSIGNED_BYTE;
+      // TODO(ccameron): Half-float storage is allocated in GLES 3 but fails to
+      // composite.
+      // https://crbug.com/777750
+      if (use_half_float_storage_) {
+        if (webgl_version_ > kWebGL1) {
+          internal_format = allocate_alpha_channel_ ? GL_RGBA16F : GL_RGB16F;
+          data_type = GL_HALF_FLOAT;
+        } else {
+          internal_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
+          data_type = GL_HALF_FLOAT_OES;
+        }
+      }
+      gl_->TexImage2D(target, 0, internal_format, size.Width(), size.Height(),
+                      0, format, data_type, nullptr);
     }
   }
 
