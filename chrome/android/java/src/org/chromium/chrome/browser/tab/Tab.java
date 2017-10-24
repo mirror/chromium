@@ -17,11 +17,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Browser;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnAttachStateChangeListener;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
@@ -475,6 +475,18 @@ public class Tab
 
     private BrowserControlsVisibilityDelegate mBrowserControlsVisibilityDelegate;
 
+    /** Listens for views related to the tab to be attached or detached. */
+    private OnAttachStateChangeListener mAttachStateChangeListener;
+
+    /** Whether the tab can currently be interacted with. */
+    private boolean mInteractableState;
+
+    /** A runnable to delay the enabling of fullscreen mode if necessary. */
+    private Runnable mEnterFullscreenRunnable;
+
+    /** Whether or not the tab's active view is attached to the window. */
+    private boolean mIsViewAttachedToWindow;
+
     /**
      * Creates an instance of a {@link Tab}.
      *
@@ -545,6 +557,20 @@ public class Tab
                         && creationState == TabCreationState.FROZEN_ON_RESTORE;
             }
         }
+
+        mAttachStateChangeListener = new OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View view) {
+                mIsViewAttachedToWindow = true;
+                updateInteractableState();
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View view) {
+                mIsViewAttachedToWindow = false;
+                updateInteractableState();
+            }
+        };
     }
 
     private int calculateDefaultThemeColor() {
@@ -1158,6 +1184,7 @@ public class Tab
             // Keep unsetting mIsHidden above loadIfNeeded(), so that we pass correct visibility
             // when spawning WebContents in loadIfNeeded().
             mIsHidden = false;
+            updateInteractableState();
 
             loadIfNeeded();
             assert !isFrozen();
@@ -1201,6 +1228,7 @@ public class Tab
             TraceEvent.begin("Tab.hide");
             if (isHidden()) return;
             mIsHidden = true;
+            updateInteractableState();
 
             if (mContentViewCore != null) mContentViewCore.onHide();
 
@@ -1237,7 +1265,11 @@ public class Tab
     private void showNativePage(NativePage nativePage) {
         if (mNativePage == nativePage) return;
         NativePage previousNativePage = mNativePage;
+        if (mNativePage != null) {
+            mNativePage.getView().removeOnAttachStateChangeListener(mAttachStateChangeListener);
+        }
         mNativePage = nativePage;
+        mNativePage.getView().addOnAttachStateChangeListener(mAttachStateChangeListener);
         pushNativePageStateToNavigationEntry();
         // Notifying of theme color change before content change because some of
         // the observers depend on the theme information being correct in
@@ -1255,6 +1287,7 @@ public class Tab
         if (mNativePage == null || mNativePage instanceof FrozenNativePage) return;
         assert mNativePage.getView().getParent() == null : "Cannot freeze visible native page";
         mNativePage = FrozenNativePage.freeze(mNativePage);
+        mNativePage.getView().addOnAttachStateChangeListener(mAttachStateChangeListener);
     }
 
     /**
@@ -1265,6 +1298,7 @@ public class Tab
 
         if (mNativePage == null) return;
         NativePage previousNativePage = mNativePage;
+        mNativePage.getView().removeOnAttachStateChangeListener(mAttachStateChangeListener);
         mNativePage = null;
         notifyContentChanged();
         destroyNativePageInternal(previousNativePage);
@@ -1716,6 +1750,8 @@ public class Tab
             cvc.getContainerView().setOnSystemUiVisibilityChangeListener(this);
 
             mContentView = cvc.getContainerView();
+            mContentView.addOnAttachStateChangeListener(mAttachStateChangeListener);
+            updateInteractableState();
             mWebContentsDelegate = mDelegateFactory.createWebContentsDelegate(this);
             mWebContentsObserver =
                     new TabWebContentsObserver(mContentViewCore.getWebContents(), this);
@@ -2195,7 +2231,29 @@ public class Tab
      */
     @CalledByNative
     public boolean isUserInteractable() {
-        return !mIsHidden && ViewCompat.isAttachedToWindow(getView());
+        return !mIsHidden && getView() != null && mIsViewAttachedToWindow;
+    }
+
+    /**
+     * Update the interactable state of the tab. If the state has changed, it will call the
+     * {@link #onInteractableStateChanged(boolean)} method.
+     */
+    private void updateInteractableState() {
+        boolean currentState = isUserInteractable();
+
+        if (isUserInteractable() == mInteractableState) return;
+
+        mInteractableState = currentState;
+        onInteractableStateChanged(currentState);
+    }
+
+    /**
+     * A notification that the interactability of this tab has changed.
+     * @param interactable Whether the tab is interactable.
+     */
+    private void onInteractableStateChanged(boolean interactable) {
+        if (interactable && mEnterFullscreenRunnable != null) mEnterFullscreenRunnable.run();
+        for (TabObserver observer : mObservers) observer.onInteractabilityChanged(interactable);
     }
 
     /**
@@ -2302,7 +2360,9 @@ public class Tab
             mSwipeRefreshHandler.destroy();
             mSwipeRefreshHandler = null;
         }
+        mContentView.removeOnAttachStateChangeListener(mAttachStateChangeListener);
         mContentView = null;
+        updateInteractableState();
         mContentViewCore.destroy();
         mContentViewCore = null;
 
@@ -2582,10 +2642,31 @@ public class Tab
     }
 
     /**
-     * Toggles fullscreen mode and notifies all observers.
+     * Toggles fullscreen mode. If enabling fullscreen while the tab is not interactable, fullscreen
+     * will be delayed until the tab is interactable.
      * @param enableFullscreen Whether fullscreen should be enabled.
      */
     public void toggleFullscreenMode(boolean enableFullscreen) {
+        if (!isUserInteractable() && enableFullscreen) {
+            mEnterFullscreenRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    toggleFullscreenInternal(true);
+                    mEnterFullscreenRunnable = null;
+                }
+            };
+            return;
+        }
+
+        mEnterFullscreenRunnable = null;
+        toggleFullscreenInternal(enableFullscreen);
+    }
+
+    /**
+     * Toggles fullscreen mode and notifies all observers.
+     * @param enableFullscreen Whether fullscreen should be enabled.
+     */
+    private void toggleFullscreenInternal(boolean enableFullscreen) {
         if (mFullscreenManager != null) {
             mFullscreenManager.setPersistentFullscreenMode(enableFullscreen);
         }
