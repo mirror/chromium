@@ -45,6 +45,20 @@ class WebMediaStream;
 
 class BLINK_EXPORT WebUserMediaRequest {
  public:
+  enum class Error {
+    kNotSupported,
+    kPermissionDismissed,
+    kInvalidState,
+    kDevicesNotFound,
+    kTabCapture,
+    kScreenCapture,
+    kDeviceCapture,
+    kTrackStart,
+    kMediaDeviceNotSupported,
+    kMediaDeviceFailedDueToShutdown,
+    kMediaDeviceKillSwitchOn
+  };
+
   WebUserMediaRequest() {}
   WebUserMediaRequest(const WebUserMediaRequest& request) { Assign(request); }
   ~WebUserMediaRequest() { Reset(); }
@@ -72,7 +86,7 @@ class BLINK_EXPORT WebUserMediaRequest {
   void RequestDenied(const WebString& description = WebString());
   void RequestFailedConstraint(const WebString& constraint_name,
                                const WebString& description = WebString());
-  void RequestFailedUASpecific(const WebString& name,
+  void RequestFailedUASpecific(Error name,
                                const WebString& constraint_name = WebString(),
                                const WebString& description = WebString());
 

@@ -110,7 +110,7 @@ void WebUserMediaRequest::RequestFailedConstraint(
 }
 
 void WebUserMediaRequest::RequestFailedUASpecific(
-    const WebString& name,
+    Error name,
     const WebString& constraint_name,
     const WebString& description) {
   DCHECK(!IsNull());
