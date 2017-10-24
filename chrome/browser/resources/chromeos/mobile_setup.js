@@ -9,6 +9,36 @@ cr.define('mobile', function() {
 
   cr.addSingletonGetter(MobileSetup);
 
+  var WEBVIEW_REDIRECT_FUNCTION = '(function(form, paymentUrl, postData) {' +
+      'function addInputElement(form, name, value) {' +
+      '  var input = document.createElement(\'input\');' +
+      '  input.type = \'hidden\';' +
+      '  input.name = name;' +
+      '  input.value = value;' +
+      '  form.appendChild(input);' +
+      '}' +
+      'function initFormFromPostData(form, postData) {' +
+      '  var pairs = postData.split(\'&\');' +
+      '  pairs.forEach(pairStr => {' +
+      '    var pair = pairStr.split(\'=\');' +
+      '    if (pair.length == 2)' +
+      '      addInputElement(form, pair[0], pair[1]);' +
+      '    else if (pair.length == 1)' +
+      '      addInputElement(form, pair[0], true);' +
+      '  });' +
+      '}' +
+      'form.action = unescape(paymentUrl);' +
+      'form.method = \'POST\';' +
+      'initFormFromPostData(form, unescape(postData));' +
+      'form.submit();' +
+      '})';
+
+  var WEBVIEW_REDIRECT_FORM_ID = 'redirectForm';
+
+  var WEBVIEW_REDIRECT_HTML = '<html><body>' +
+      '<form id="' + WEBVIEW_REDIRECT_FORM_ID + '"></form>' +
+      '</body></html>';
+
   MobileSetup.PLAN_ACTIVATION_UNKNOWN = -2;
   MobileSetup.PLAN_ACTIVATION_PAGE_LOADING = -1;
   MobileSetup.PLAN_ACTIVATION_START = 0;
@@ -31,18 +61,13 @@ cr.define('mobile', function() {
       MobileSetup.EXTENSION_PAGE_URL + '/activation.html';
   MobileSetup.PORTAL_OFFLINE_PAGE_URL =
       MobileSetup.EXTENSION_PAGE_URL + '/portal_offline.html';
-  MobileSetup.REDIRECT_POST_PAGE_URL =
-      MobileSetup.EXTENSION_PAGE_URL + '/redirect.html';
 
   MobileSetup.prototype = {
     // Mobile device information.
     deviceInfo_: null,
-    frameName_: '',
     initialized_: false,
     fakedTransaction_: false,
     paymentShown_: false,
-    frameLoadError_: 0,
-    frameLoadIgnored_: true,
     carrierPageUrl_: null,
     spinnerInt_: -1,
     // UI states.
@@ -61,7 +86,6 @@ cr.define('mobile', function() {
       }
       this.initialized_ = true;
       self = this;
-      this.frameName_ = frame_name;
 
       cr.ui.dialogs.BaseDialog.OK_LABEL = loadTimeData.getString('ok_button');
       cr.ui.dialogs.BaseDialog.CANCEL_LABEL =
@@ -92,26 +116,63 @@ cr.define('mobile', function() {
       }
     },
 
-    onFrameLoaded_: function(success) {
-      chrome.send('paymentPortalLoad', [success ? 'ok' : 'failed']);
+    paymentLoadAborted_: function(paymentUrl, evt) {
+      if (!evt.isTopLevel)
+        return;
+      if (new URL(evt.url).origin != new URL(paymentUrl).origin)
+        return;
+      chrome.send('paymentPortalLoad', ['failed']);
+    },
+
+    paymentLoadCommitted_: function(deviceInfo, opt_redirectFrameUrl, evt) {
+      if (!evt.isTopLevel)
+        return;
+
+      if (new URL(evt.url).origin == new URL(deviceInfo.payment_url).origin) {
+        chrome.send('paymentPortalLoad', ['ok']);
+      } else if (opt_redirectFrameUrl && evt.url == opt_redirectFrameUrl) {
+        $('portalFrameWebview').executeScript({
+          code: WEBVIEW_REDIRECT_FUNCTION + '(' +
+              'document.getElementById(\'' + WEBVIEW_REDIRECT_FORM_ID + '\'),' +
+              ' \'' + escape(deviceInfo.payment_url) + '\',' +
+              ' \'' + escape(deviceInfo.post_data) + '\');'
+        });
+      }
     },
 
     loadPaymentFrame_: function(deviceInfo) {
-      if (deviceInfo) {
-        this.frameLoadError_ = 0;
-        this.deviceInfo_ = deviceInfo;
-        if (deviceInfo.post_data && deviceInfo.post_data.length) {
-          this.frameLoadIgnored_ = true;
-          $(this.frameName_).contentWindow.location.href =
-              MobileSetup.REDIRECT_POST_PAGE_URL +
-              '?post_data=' + escape(deviceInfo.post_data) +
-              '&formUrl=' + escape(deviceInfo.payment_url);
-        } else {
-          this.frameLoadIgnored_ = false;
-          $(this.frameName_).contentWindow.location.href =
-              deviceInfo.payment_url;
-        }
+      if (!deviceInfo)
+        return;
+      this.deviceInfo_ = deviceInfo;
+
+      var existingWebview = $('portalFrameWebview');
+      if (existingWebview)
+        existingWebview.remove();
+
+      var frame = document.createElement('webview');
+      frame.id = 'portalFrameWebview';
+
+      $('portalFrame').appendChild(frame);
+
+      var frameSrc = '';
+      var redirectFrameUrl;
+      if (deviceInfo.post_data && deviceInfo.post_data.length) {
+        frameSrc = 'data:text/html;charset=utf-8,' +
+            encodeURIComponent(WEBVIEW_REDIRECT_HTML);
+        redirectFrameUrl = frameSrc;
+      } else {
+        frameSrc = deviceInfo.payment_url;
       }
+
+      frame.addEventListener(
+          'loadabort',
+          this.paymentLoadAborted_.bind(this, deviceInfo.payment_url));
+
+      frame.addEventListener(
+          'loadcommit',
+          this.paymentLoadCommitted_.bind(this, deviceInfo, redirectFrameUrl));
+
+      frame.src = frameSrc;
     },
 
     onMessageReceived_: function(e) {
@@ -122,9 +183,6 @@ cr.define('mobile', function() {
 
       if (e.data.type == 'requestDeviceInfoMsg') {
         this.sendDeviceInfo_();
-      } else if (e.data.type == 'framePostReady') {
-        this.frameLoadIgnored_ = false;
-        this.sendPostFrame_(e.origin);
       } else if (e.data.type == 'reportTransactionStatusMsg') {
         console.log('calling setTransactionStatus from onMessageReceived_');
         chrome.send('setTransactionStatus', [e.data.status]);
@@ -153,14 +211,15 @@ cr.define('mobile', function() {
         case MobileSetup.PLAN_ACTIVATION_START_OTASP:
         case MobileSetup.PLAN_ACTIVATION_RECONNECTING:
         case MobileSetup.PLAN_ACTIVATION_RECONNECTING_PAYMENT:
-          // Activation page should not be shown for the simple activation flow.
+          // Activation page should not be shown for the simple activation
+          // flow.
           if (simpleActivationFlow)
             break;
 
           $('statusHeader').textContent =
               loadTimeData.getString('connecting_header');
           $('auxHeader').textContent = loadTimeData.getString('please_wait');
-          $('paymentForm').classList.add('hidden');
+          $('portalFrame').classList.add('hidden');
           $('finalStatus').classList.add('hidden');
           this.setCarrierPage_(MobileSetup.ACTIVATION_PAGE_URL);
           $('systemStatus').classList.remove('hidden');
@@ -170,14 +229,15 @@ cr.define('mobile', function() {
         case MobileSetup.PLAN_ACTIVATION_TRYING_OTASP:
         case MobileSetup.PLAN_ACTIVATION_INITIATING_ACTIVATION:
         case MobileSetup.PLAN_ACTIVATION_OTASP:
-          // Activation page should not be shown for the simple activation flow.
+          // Activation page should not be shown for the simple activation
+          // flow.
           if (simpleActivationFlow)
             break;
 
           $('statusHeader').textContent =
               loadTimeData.getString('activating_header');
           $('auxHeader').textContent = loadTimeData.getString('please_wait');
-          $('paymentForm').classList.add('hidden');
+          $('portalFrame').classList.add('hidden');
           $('finalStatus').classList.add('hidden');
           this.setCarrierPage_(MobileSetup.ACTIVATION_PAGE_URL);
           $('systemStatus').classList.remove('hidden');
@@ -185,12 +245,13 @@ cr.define('mobile', function() {
           this.startSpinner_();
           break;
         case MobileSetup.PLAN_ACTIVATION_PAYMENT_PORTAL_LOADING:
-          // Activation page should not be shown for the simple activation flow.
+          // Activation page should not be shown for the simple activation
+          // flow.
           if (!simpleActivationFlow) {
             $('statusHeader').textContent =
                 loadTimeData.getString('connecting_header');
             $('auxHeader').textContent = '';
-            $('paymentForm').classList.add('hidden');
+            $('portalFrame').classList.add('hidden');
             $('finalStatus').classList.add('hidden');
             this.setCarrierPage_(MobileSetup.ACTIVATION_PAGE_URL);
             $('systemStatus').classList.remove('hidden');
@@ -212,7 +273,7 @@ cr.define('mobile', function() {
           $('statusHeader').textContent = statusHeaderText;
           $('auxHeader').textContent = '';
           $('auxHeader').classList.add('hidden');
-          $('paymentForm').classList.add('hidden');
+          $('portalFrame').classList.add('hidden');
           $('finalStatus').classList.add('hidden');
           $('systemStatus').classList.remove('hidden');
           this.setCarrierPage_(carrierPage);
@@ -224,7 +285,7 @@ cr.define('mobile', function() {
           $('auxHeader').textContent = '';
           $('finalStatus').classList.add('hidden');
           $('systemStatus').classList.add('hidden');
-          $('paymentForm').classList.remove('hidden');
+          $('portalFrame').classList.remove('hidden');
           $('canvas').classList.add('hidden');
           this.stopSpinner_();
           this.paymentShown_ = true;
@@ -241,7 +302,7 @@ cr.define('mobile', function() {
           $('finalStatus').classList.remove('hidden');
           $('canvas').classList.add('hidden');
           $('closeButton').classList.toggle('hidden', !this.paymentShown_);
-          $('paymentForm').classList.toggle('hidden', !this.paymentShown_);
+          $('portalFrame').classList.toggle('hidden', !this.paymentShown_);
           this.stopSpinner_();
           break;
         case MobileSetup.PLAN_ACTIVATION_ERROR:
@@ -252,7 +313,7 @@ cr.define('mobile', function() {
           $('systemStatus').classList.add('hidden');
           $('canvas').classList.add('hidden');
           $('closeButton').classList.toggle('hidden', !this.paymentShown_);
-          $('paymentForm').classList.toggle('hidden', !this.paymentShown_);
+          $('portalFrame').classList.toggle('hidden', !this.paymentShown_);
           $('finalStatus').classList.remove('hidden');
           this.stopSpinner_();
           break;
@@ -264,30 +325,11 @@ cr.define('mobile', function() {
       if (this.carrierPageUrl_ == url)
         return;
       this.carrierPageUrl_ = url;
-      $('carrierPage').contentWindow.location.href = url;
+      $('carrierPage').src = url;
     },
 
     updateDeviceStatus_: function(deviceInfo) {
       this.changeState_(deviceInfo);
-    },
-
-    portalFrameLoadError_: function(errorCode) {
-      if (this.frameLoadIgnored_)
-        return;
-      console.log('Portal frame load error detected: ', errorCode);
-      this.frameLoadError_ = errorCode;
-    },
-
-    portalFrameLoadCompleted_: function() {
-      if (this.frameLoadIgnored_)
-        return;
-      console.log('Portal frame load completed!');
-      this.onFrameLoaded_(this.frameLoadError_ == 0);
-    },
-
-    sendPostFrame_: function(frameUrl) {
-      var msg = {type: 'postFrame'};
-      $(this.frameName_).contentWindow.postMessage(msg, frameUrl);
     },
 
     sendDeviceInfo_: function() {
@@ -301,7 +343,7 @@ cr.define('mobile', function() {
           'MDN': this.deviceInfo_.MDN
         }
       };
-      $(this.frameName_)
+      $('portalFrameWebview')
           .contentWindow.postMessage(msg, this.deviceInfo_.payment_url);
     }
 
@@ -351,17 +393,13 @@ cr.define('mobile', function() {
     MobileSetup.getInstance().updateDeviceStatus_(deviceInfo);
   };
 
-  MobileSetup.portalFrameLoadError = function(errorCode) {
-    MobileSetup.getInstance().portalFrameLoadError_(errorCode);
-  };
+  MobileSetup.portalFrameLoadError = function(errorCode) {};
 
-  MobileSetup.portalFrameLoadCompleted = function() {
-    MobileSetup.getInstance().portalFrameLoadCompleted_();
-  };
+  MobileSetup.portalFrameLoadCompleted = function() {};
 
   MobileSetup.loadPage = function() {
     mobile.MobileSetup.getInstance().initialize(
-        'paymentForm', mobile.MobileSetup.ACTIVATION_PAGE_URL);
+        mobile.MobileSetup.ACTIVATION_PAGE_URL);
   };
 
   // Export
