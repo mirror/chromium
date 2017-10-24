@@ -224,6 +224,7 @@ DisplayManager::DisplayManager(std::unique_ptr<Screen> screen)
   change_display_upon_host_resize_ = !configure_displays_;
   unified_desktop_enabled_ = base::CommandLine::ForCurrentProcess()->HasSwitch(
       ::switches::kEnableUnifiedDesktop);
+  touch_device_manager_.reset(new TouchDeviceManager());
 #endif
 }
 
