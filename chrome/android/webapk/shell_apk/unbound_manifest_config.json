@@ -17,5 +17,15 @@
   "web_manifest_url": "https://pwa.rocks/pwa.webmanifest",
   "version_code": "1",
   "version_name": "1.0",
-  "bound_webapk": false
+  "bound_webapk": false,
+  "share_template": [{
+	  "index": "0",
+	  "title": "Share Publicly",
+	  "template_url": "https://pwa.rocks/share_public?title={title}%26text={text}%26url={url}"
+  },
+  {
+	  "index": "1",
+	  "title": "Share Privately",
+	  "template_url": "https://pwa.rocks/share_private?title={title}"
+  }]
 }
