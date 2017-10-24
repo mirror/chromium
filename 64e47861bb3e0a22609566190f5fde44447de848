@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed374bd7_aa5520c5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ContextMenu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-24T23:08:11Z",
+      "side": 1,
+      "message": "This should go outside of if.",
+      "revId": "64e47861bb3e0a22609566190f5fde44447de848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
