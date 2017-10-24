@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8bb5bf9_6130c619",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_scanout_color_space.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-24T22:48:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f6a3ce3_a3e7734b",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b182ac16_51398adc",
         "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_scanout_color_space.txt",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75dd9fe9_8e1e9333",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_scanout_color_space.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-24T22:48:21Z",
+      "side": 1,
+      "message": "The serializing code is here: https://cs.chromium.org/chromium/src/ui/gfx/ipc/color/gfx_param_traits.cc?l\u003d12\n\nWe put the serialized bytes into a transfer buffer and pass the size as a command parameter: https://cs.chromium.org/chromium/src/gpu/command_buffer/client/gles2_implementation.cc?l\u003d4989",
+      "parentUuid": "b182ac16_51398adc",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "3f9ece9b_934d76c1",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_scanout_color_space.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-24T22:48:21Z",
+      "side": 1,
+      "message": "This needs a GLImage: https://cs.chromium.org/chromium/src/gpu/command_buffer/service/gles2_cmd_decoder.cc?rcl\u003de0754a932085aaa194b200bb9a60b091da7bdb89\u0026l\u003d12421",
+      "parentUuid": "7906b956_7c70215c",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2c9ea0c_0f404741",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_io_surface.cc",
         "patchSetId": 5
@@ -112,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "85f42999_11a1cbad",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_io_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-24T22:48:21Z",
+      "side": 1,
+      "message": "Actually, I went ahead and did this.",
+      "parentUuid": "6c2affb8_7a4d950c",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2cb2b99_789cae99",
         "filename": "ui/gl/gl_image.h",
         "patchSetId": 5
@@ -126,6 +204,24 @@
       "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3dc1665_484dd674",
+        "filename": "ui/gl/gl_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-24T22:48:21Z",
+      "side": 1,
+      "message": "Done. I\u0027ll rename the GMB method in a follow-up CL.",
+      "parentUuid": "e2cb2b99_789cae99",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +257,24 @@
       "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b9b455_be43fd83",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-24T22:48:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "323ce966_ce949464",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
