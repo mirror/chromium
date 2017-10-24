@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c60712b_e10e2fd9",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T23:48:56Z",
+      "side": 1,
+      "message": "Can we remove the check for provider_host_ and context_ here since they don\u0027t seem used?\n\nSame for UpdateComplete/UnregistrationComplete above.",
+      "revId": "efd73b4e1ec582290f4f58bb5a12776ebad466f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9946ac_38678881",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T23:48:56Z",
+      "side": 1,
+      "message": "setting navigation preload is complete",
+      "range": {
+        "startLine": 80,
+        "startChar": 48,
+        "endLine": 80,
+        "endChar": 77
+      },
+      "revId": "efd73b4e1ec582290f4f58bb5a12776ebad466f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02f808a_6ceee6e5",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T23:48:56Z",
+      "side": 1,
+      "message": "NavigationPreloadManager#enable()/disable().",
+      "revId": "efd73b4e1ec582290f4f58bb5a12776ebad466f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c21bdd0_02248cfa",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T23:48:56Z",
+      "side": 1,
+      "message": "Don\u0027t need line 68 as this Mojo interface isn\u0027t returning a promise.",
+      "revId": "efd73b4e1ec582290f4f58bb5a12776ebad466f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
