@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d13d04d7_3cbca5e5",
+        "filename": "third_party/WebKit/Source/platform/heap/BlinkGC.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T14:56:31Z",
+      "side": 1,
+      "message": "Add a comment about this flag. Also change it to 0 before landing.\n\nAlso can we remove the runtime flag for incremental marking in favor of this compile-time flag? (I\u0027m assuming that it needs to be a compile-time flag for performance reasons.)",
+      "revId": "6f80925ea1f5fdb67be0df7c3fc3cf21a65fe6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4ff8aa_4fec8345",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-24T14:56:31Z",
+      "side": 1,
+      "message": "Add DCHECK(ThreadState::Current()-\u003eIsIncrementalMarking()).",
+      "revId": "6f80925ea1f5fdb67be0df7c3fc3cf21a65fe6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
