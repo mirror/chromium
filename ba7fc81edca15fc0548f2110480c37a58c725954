@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d30f0b0_88e87a4a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 4385,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-24T15:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12329735_cc01c306",
+      "range": {
+        "startLine": 4385,
+        "startChar": 53,
+        "endLine": 4385,
+        "endChar": 55
+      },
+      "revId": "ba7fc81edca15fc0548f2110480c37a58c725954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e832ead_44af5e67",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-23T20:06:05Z",
       "side": 1,
       "message": "Instead of duplicating each check, do what we sometimes do in CC, put both scrollbars into a container and just loop over it.",
+      "range": {
+        "startLine": 4397,
+        "startChar": 2,
+        "endLine": 4397,
+        "endChar": 28
+      },
+      "revId": "ba7fc81edca15fc0548f2110480c37a58c725954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47bc448_50c79a2e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 4397,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-24T15:49:49Z",
+      "side": 1,
+      "message": "changed to a container in this method.",
+      "parentUuid": "2e832ead_44af5e67",
       "range": {
         "startLine": 4397,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1acc4f64_35a9538f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 4403,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-24T15:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c90ae971_64fc6910",
+      "range": {
+        "startLine": 4403,
+        "startChar": 8,
+        "endLine": 4403,
+        "endChar": 27
+      },
+      "revId": "ba7fc81edca15fc0548f2110480c37a58c725954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29834aad_127d9faf",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-23T20:06:05Z",
       "side": 1,
       "message": "If we turn on Android Emulation on a page with custom scrollbars - will this be !should_use_custom already? Would it hurt to just remove this and go through the check for different theme?",
+      "range": {
+        "startLine": 1301,
+        "startChar": 2,
+        "endLine": 1302,
+        "endChar": 17
+      },
+      "revId": "ba7fc81edca15fc0548f2110480c37a58c725954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce12b3d_e068ceca",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-24T15:49:49Z",
+      "side": 1,
+      "message": "Android only change root frame custom scrollbar to Android Overlay Scrollbar but keep PLSA custom scrollbar. Here Android Emulation same as Android.\n\nTest page:\n- root frame custom scrollbar: http://ht.chaopeng.me/custom-scrollbar.html\n- PLSA custom scrollbar: https://codepen.io/devstreak/pen/dMYgeO",
+      "parentUuid": "29834aad_127d9faf",
       "range": {
         "startLine": 1301,
         "startChar": 2,
