@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f5ca8de_838ea895",
+        "filename": "content/common/service_worker/service_worker_fetch_response_callback.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T07:49:22Z",
+      "side": 1,
+      "message": "We can remove this entirely once MojoBlob is fixed right, not just the \"\u003d\u003e ()\" part? Maybe:\n\n// Responds to the request with |response|. The body is provided as a non-Mojo Blob via |response.blob_uuid|. The callback is useful for Blob lifetime management purposes and is called once the caller is done with the Blob.\n// TODO(kinuko): Remove this once MojoBlob is fully shipped.",
+      "range": {
+        "startLine": 28,
+        "startChar": 23,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "2d30ddeeba0f43f29c4a8e95bffcd08b0b627413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
