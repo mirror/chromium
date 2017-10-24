@@ -34,18 +34,6 @@ namespace {
 // Five fixed position ratios of the divider.
 constexpr float kFixedPositionRatios[] = {0.0f, 0.33f, 0.5f, 0.67f, 1.0f};
 
-float FindClosestFixedPositionRatio(float distance, float length) {
-  float current_ratio = distance / length;
-  float closest_ratio = 0.f;
-  for (float ratio : kFixedPositionRatios) {
-    if (std::abs(current_ratio - ratio) <
-        std::abs(current_ratio - closest_ratio)) {
-      closest_ratio = ratio;
-    }
-  }
-  return closest_ratio;
-}
-
 gfx::Point GetBoundedPosition(const gfx::Point& location_in_screen,
                               const gfx::Rect& bounds_in_screen) {
   return gfx::Point(
@@ -120,12 +108,6 @@ bool SplitViewController::IsCurrentScreenOrientationLandscape() const {
              blink::kWebScreenOrientationLockLandscapePrimary ||
          screen_orientation_ ==
              blink::kWebScreenOrientationLockLandscapeSecondary;
-}
-
-bool SplitViewController::IsCurrentScreenOrientationPrimary() const {
-  return screen_orientation_ ==
-             blink::kWebScreenOrientationLockLandscapePrimary ||
-         screen_orientation_ == blink::kWebScreenOrientationLockPortraitPrimary;
 }
 
 void SplitViewController::SnapWindow(aura::Window* window,
@@ -628,29 +610,63 @@ SplitViewController::SnapPosition SplitViewController::GetBlackScrimPosition(
   if (!work_area_bounds.Contains(location_in_screen))
     return position;
 
+  gfx::Size left_window_minimum_size, right_window_minimum_size;
+  if (left_window_ && left_window_->delegate())
+    left_window_minimum_size = left_window_->delegate()->GetMinimumSize();
+  if (right_window_ && right_window_->delegate())
+    right_window_minimum_size = right_window_->delegate()->GetMinimumSize();
+
+  const int one_third_of_work_area_width =
+      work_area_bounds.x() + work_area_bounds.width() * kFixedPositionRatios[1];
+  const int two_third_of_work_area_width =
+      work_area_bounds.x() + work_area_bounds.width() * kFixedPositionRatios[3];
+  const int one_third_of_work_area_height =
+      work_area_bounds.y() +
+      work_area_bounds.height() * kFixedPositionRatios[1];
+  const int two_third_of_work_area_height =
+      work_area_bounds.y() +
+      work_area_bounds.height() * kFixedPositionRatios[3];
+
   switch (screen_orientation_) {
     case blink::kWebScreenOrientationLockLandscapePrimary:
+      if (location_in_screen.x() < one_third_of_work_area_width ||
+          location_in_screen.x() < left_window_minimum_size.width()) {
+        position = LEFT;
+      } else if (location_in_screen.x() > two_third_of_work_area_width ||
+                 location_in_screen.x() > (work_area_bounds.width() -
+                                           right_window_minimum_size.width())) {
+        position = RIGHT;
+      }
+      break;
     case blink::kWebScreenOrientationLockLandscapeSecondary:
-      if (location_in_screen.x() <
-          work_area_bounds.x() +
-              work_area_bounds.width() * kFixedPositionRatios[1]) {
-        position = IsCurrentScreenOrientationPrimary() ? LEFT : RIGHT;
-      } else if (location_in_screen.x() >
-                 work_area_bounds.x() +
-                     work_area_bounds.width() * kFixedPositionRatios[3]) {
-        position = IsCurrentScreenOrientationPrimary() ? RIGHT : LEFT;
+      if (location_in_screen.x() < one_third_of_work_area_width ||
+          location_in_screen.x() < right_window_minimum_size.width()) {
+        position = RIGHT;
+      } else if (location_in_screen.x() > two_third_of_work_area_width ||
+                 location_in_screen.x() > (work_area_bounds.width() -
+                                           left_window_minimum_size.width())) {
+        position = LEFT;
       }
       break;
     case blink::kWebScreenOrientationLockPortraitPrimary:
+      if (location_in_screen.y() < one_third_of_work_area_height ||
+          location_in_screen.y() < right_window_minimum_size.height()) {
+        position = RIGHT;
+      } else if (location_in_screen.y() > two_third_of_work_area_height ||
+                 location_in_screen.y() > (work_area_bounds.height() -
+                                           left_window_minimum_size.height())) {
+        position = LEFT;
+      }
+      break;
     case blink::kWebScreenOrientationLockPortraitSecondary:
-      if (location_in_screen.y() >
-          work_area_bounds.y() +
-              work_area_bounds.height() * kFixedPositionRatios[3]) {
-        position = IsCurrentScreenOrientationPrimary() ? LEFT : RIGHT;
-      } else if (location_in_screen.y() <
-                 work_area_bounds.y() +
-                     work_area_bounds.height() * kFixedPositionRatios[1]) {
-        position = IsCurrentScreenOrientationPrimary() ? RIGHT : LEFT;
+      if (location_in_screen.y() < one_third_of_work_area_height ||
+          location_in_screen.y() < left_window_minimum_size.height()) {
+        position = LEFT;
+      } else if (location_in_screen.y() > two_third_of_work_area_height ||
+                 location_in_screen.y() >
+                     (work_area_bounds.height() -
+                      right_window_minimum_size.height())) {
+        position = RIGHT;
       }
       break;
     default:
@@ -774,6 +790,83 @@ void SplitViewController::OnSnappedWindowMinimizedOrDestroyed(
     NotifySplitViewStateChanged(previous_state, state_);
     Shell::Get()->window_selector_controller()->ToggleOverview();
   }
+}
+
+float SplitViewController::FindClosestFixedPositionRatio(float distance,
+                                                         float length) {
+  float current_ratio = distance / length;
+  float closest_ratio = 0.f;
+  for (float ratio : kFixedPositionRatios) {
+    if (std::abs(current_ratio - ratio) <
+        std::abs(current_ratio - closest_ratio)) {
+      closest_ratio = ratio;
+    }
+  }
+
+  DCHECK(state_ != NO_SNAP);
+
+  gfx::Size left_window_minimum_size, right_window_minimum_size;
+  if (left_window_ && left_window_->delegate())
+    left_window_minimum_size = left_window_->delegate()->GetMinimumSize();
+  if (right_window_ && right_window_->delegate())
+    right_window_minimum_size = right_window_->delegate()->GetMinimumSize();
+
+  // If the snapped window's minimum size is larger than one third but smaller
+  // than half of the divider's end position. Adjust |closest_ratio| to make
+  // sure the divider will not be moved to a position that smaller than the
+  // window's minimum size.
+  int one_third_of_divider_end_position =
+      std::floor(GetDividerEndPosition() * kFixedPositionRatios[1]);
+  switch (screen_orientation_) {
+    case blink::kWebScreenOrientationLockLandscapePrimary:
+      if (closest_ratio == kFixedPositionRatios[1] &&
+          left_window_minimum_size.width() >
+              one_third_of_divider_end_position) {
+        closest_ratio = kFixedPositionRatios[2];
+      } else if (closest_ratio == kFixedPositionRatios[3] &&
+                 right_window_minimum_size.width() >
+                     one_third_of_divider_end_position) {
+        closest_ratio = kFixedPositionRatios[2];
+      }
+      break;
+    case blink::kWebScreenOrientationLockPortraitSecondary:
+      if (closest_ratio == kFixedPositionRatios[1] &&
+          left_window_minimum_size.height() >
+              one_third_of_divider_end_position) {
+        closest_ratio = kFixedPositionRatios[2];
+      } else if (closest_ratio == kFixedPositionRatios[3] &&
+                 right_window_minimum_size.height() >
+                     one_third_of_divider_end_position) {
+        closest_ratio = kFixedPositionRatios[2];
+      }
+      break;
+    case blink::kWebScreenOrientationLockLandscapeSecondary:
+      if (closest_ratio == kFixedPositionRatios[3] &&
+          left_window_minimum_size.width() >
+              one_third_of_divider_end_position) {
+        closest_ratio = kFixedPositionRatios[2];
+      } else if (closest_ratio == kFixedPositionRatios[1] &&
+                 right_window_minimum_size.width() >
+                     one_third_of_divider_end_position) {
+        closest_ratio = kFixedPositionRatios[2];
+      }
+      break;
+    case blink::kWebScreenOrientationLockPortraitPrimary:
+      if (closest_ratio == kFixedPositionRatios[3] &&
+          left_window_minimum_size.height() >
+              one_third_of_divider_end_position) {
+        closest_ratio = kFixedPositionRatios[2];
+      } else if (closest_ratio == kFixedPositionRatios[1] &&
+                 right_window_minimum_size.height() >
+                     one_third_of_divider_end_position) {
+        closest_ratio = kFixedPositionRatios[2];
+      }
+      break;
+    default:
+      break;
+  }
+
+  return closest_ratio;
 }
 
 }  // namespace ash
