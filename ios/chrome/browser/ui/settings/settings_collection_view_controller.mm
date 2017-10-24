@@ -53,6 +53,7 @@
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
+#import "ios/chrome/browser/ui/commands/show_signin_command.h"
 #import "ios/chrome/browser/ui/settings/about_chrome_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/accounts_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/autofill_collection_view_controller.h"
@@ -228,17 +229,14 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   CollectionViewDetailItem* _autoFillDetailItem;
 
   // YES if the user used at least once the sign-in promo view buttons.
-  BOOL _signinStarted;
+  BOOL _signinStartedAtLeastOnce;
+  // YES when the sign-in interaction controller is shown.
+  BOOL _signinInProgress;
   // YES if view has been dismissed.
   BOOL _settingsHasBeenDismissed;
 }
 
 @property(nonatomic, readonly, weak) id<ApplicationCommands> dispatcher;
-
-// The SigninInteractionCoordinator that presents Sign In UI for the
-// Settings page.
-@property(nonatomic, strong)
-    SigninInteractionCoordinator* signinInteractionCoordinator;
 
 // Stops observing browser state services. This is required during the shutdown
 // phase to avoid observing services for a profile that is being killed.
@@ -249,7 +247,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 @implementation SettingsCollectionViewController
 @synthesize settingsMainPageDispatcher = _settingsMainPageDispatcher;
 @synthesize dispatcher = _dispatcher;
-@synthesize signinInteractionCoordinator = _signinInteractionCoordinator;
 
 #pragma mark Initialization
 
@@ -1005,29 +1002,28 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 
 - (void)showSignInWithIdentity:(ChromeIdentity*)identity
                    promoAction:(signin_metrics::PromoAction)promoAction {
+  DCHECK(!_signinInProgress);
+  _signinInProgress = YES;
+  _signinStartedAtLeastOnce = YES;
   base::RecordAction(base::UserMetricsAction("Signin_Signin_FromSettings"));
-  DCHECK(!self.signinInteractionCoordinator.isActive);
-  if (!self.signinInteractionCoordinator) {
-    self.signinInteractionCoordinator = [[SigninInteractionCoordinator alloc]
-        initWithBrowserState:_browserState
-                  dispatcher:self.dispatcher];
-  }
-
   __weak SettingsCollectionViewController* weakSelf = self;
-  [self.signinInteractionCoordinator
-            signInWithIdentity:identity
-                   accessPoint:signin_metrics::AccessPoint::
-                                   ACCESS_POINT_SETTINGS
-                   promoAction:promoAction
-      presentingViewController:self.navigationController
-                    completion:^(BOOL success) {
-                      [weakSelf didFinishSignin:success];
-                    }];
+  ShowSigninCommand* command = [[ShowSigninCommand alloc]
+      initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
+               identity:nil
+            accessPoint:signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS
+            promoAction:signin_metrics::PromoAction::
+                            PROMO_ACTION_NO_SIGNIN_PROMO
+               callback:^(BOOL succeeded) {
+                 [weakSelf didFinishSignin];
+               }];
+  [self.dispatcher showSignin:command];
 }
 
-- (void)didFinishSignin:(BOOL)signedIn {
+- (void)didFinishSignin {
   // The sign-in is done. The sign-in promo cell or account cell can be
   // reloaded.
+  DCHECK(_signinInProgress);
+  _signinInProgress = NO;
   if (!_settingsHasBeenDismissed)
     [self reloadData];
 }
@@ -1048,7 +1044,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   // either while the sign in UI is appearing or while it is disappearing. The
   // collection view will be reloaded once the animation is finished.
   // See: -[SettingsCollectionViewController didFinishSignin:].
-  if (!self.signinInteractionCoordinator.isActive) {
+  if (!_signinInProgress) {
     // Sign in state changes are rare. Just reload the entire collection when
     // this happens.
     [self reloadData];
@@ -1060,7 +1056,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 - (void)settingsWillBeDismissed {
   DCHECK(!_settingsHasBeenDismissed);
   _settingsHasBeenDismissed = YES;
-  if (!_signinStarted && _signinPromoViewMediator) {
+  if (!_signinStartedAtLeastOnce && _signinPromoViewMediator) {
     PrefService* prefs = _browserState->GetPrefs();
     int displayedCount =
         prefs->GetInteger(prefs::kIosSettingsSigninPromoDisplayedCount);
@@ -1070,7 +1066,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   }
   [_signinPromoViewMediator signinPromoViewRemoved];
   _signinPromoViewMediator = nil;
-  [self.signinInteractionCoordinator cancel];
   [self stopBrowserStateServiceObservers];
 }
 
@@ -1180,7 +1175,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 - (void)configureSigninPromoWithConfigurator:
             (SigninPromoViewConfigurator*)configurator
                              identityChanged:(BOOL)identityChanged {
-  if (self.signinInteractionCoordinator.isActive) {
+  if (_signinInProgress) {
     // When sign-in is started in a cold state (no default account), the sign-in
     // interaction coordinator does the sign-in and then asks for sync
     // authorization. If the user cancels this operation, the coordinator
@@ -1251,7 +1246,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 #pragma mark - Metrics
 
 - (void)sendImpressionsTilSigninButtonsHistogram {
-  _signinStarted = YES;
   PrefService* prefs = _browserState->GetPrefs();
   int displayedCount =
       prefs->GetInteger(prefs::kIosSettingsSigninPromoDisplayedCount);
