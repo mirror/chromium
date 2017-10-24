@@ -1,0 +1,383 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f806e978_772133c0",
+        "filename": "ios/chrome/browser/web/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "Maybe s/apps/app ?",
+      "range": {
+        "startLine": 149,
+        "startChar": 5,
+        "endLine": 149,
+        "endChar": 40
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0c06bd_466f9bc7",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "Do you want to add comments to this method?",
+      "range": {
+        "startLine": 86,
+        "startChar": 20,
+        "endLine": 86,
+        "endChar": 21
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55aa211a_2ae91d9a",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "Would it be better to inject policy decider in init, so it can be mocked?",
+      "range": {
+        "startLine": 145,
+        "startChar": 23,
+        "endLine": 145,
+        "endChar": 54
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4e1ed0_28e144fa",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "No need for this. NO is already default value.",
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2705ba5c_52ebc340",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "d/laucnhes/launches",
+      "range": {
+        "startLine": 10,
+        "startChar": 45,
+        "endLine": 10,
+        "endChar": 53
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fc307d_a568db65",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "The order of the methods should be:\n\nclass methods\nproperties\ninstance methods",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 47
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022644b7_3b3806fa",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "Is lastAppLaunchTime called anywhere?",
+      "range": {
+        "startLine": 32,
+        "startChar": 39,
+        "endLine": 32,
+        "endChar": 56
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a498d5_66863d29",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "Please add comments for the public properties",
+      "range": {
+        "startLine": 32,
+        "startChar": 38,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d87f46e8_0359b43f",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "How about moving this out of implementation block and putting into anonymous namespace?",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 62
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fe25b2_4cf03dc9",
+        "filename": "ios/chrome/browser/web/external_app_launching_state_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "Please use SpinRunLoopWithMinDelay() instead",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961ce2f3_e98b0f59",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "1). From Coding Guidelines for Cocoa: \"The use of “get” is unnecessary, unless one or more values are returned indirectly.\"\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001751-BCIJHEDH\n\n2.) \"Make the word before the argument describe the argument.\"\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001751-BCIJHEDH\n\n3.) s/soureURL/sourceURL",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65500852_0340f19c",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "if (!_appLaunchingStates[key])",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 30
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224f37e0_8306cab6",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "Please add braces because condition statement is multiline",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 47
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab020b17_961fabce",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "No need for this check. Calling method on nil is no-op",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755a6d6f_fc4b9194",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "nit: s/URL/Url",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ef3050_183f93a0",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "s/Test/Tests \n\nSame comment for other places",
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2b791d_4a1beaa9",
+        "filename": "ios/chrome/browser/web/external_apps_launch_policy_decider_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T03:08:20Z",
+      "side": 1,
+      "message": "nit: No need to put all tests into anonymous namespace",
+      "range": {
+        "startLine": 149,
+        "startChar": 6,
+        "endLine": 149,
+        "endChar": 15
+      },
+      "revId": "ba352cc659182611b12cb1d0cfc091236db6961f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
