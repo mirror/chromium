@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e005d818_35363235",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 42
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-24T20:22:29Z",
+      "side": 1,
+      "message": "Done, removed.",
+      "parentUuid": "a3af4add_4c44bbcd",
+      "revId": "d3f81723bd041d8e5e54158b752d8f63fce33855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02e609ac_b4a796ab",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
         "patchSetId": 42
@@ -39,6 +57,30 @@
       "revId": "d3f81723bd041d8e5e54158b752d8f63fce33855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a22ec3_96674e55",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 42
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-24T20:22:29Z",
+      "side": 1,
+      "message": "Done, copied to core/animation/test_data/",
+      "parentUuid": "02e609ac_b4a796ab",
+      "range": {
+        "startLine": 329,
+        "startChar": 38,
+        "endLine": 329,
+        "endChar": 43
+      },
+      "revId": "d3f81723bd041d8e5e54158b752d8f63fce33855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
