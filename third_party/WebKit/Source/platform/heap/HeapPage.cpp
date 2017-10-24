@@ -260,7 +260,7 @@ Address BaseArena::LazySweep(size_t allocation_size, size_t gc_info_index) {
 
   TRACE_EVENT0("blink_gc", "BaseArena::lazySweepPages");
   ThreadState::SweepForbiddenScope sweep_forbidden(GetThreadState());
-  ScriptForbiddenIfMainThreadScope script_forbidden;
+  ScriptForbiddenScope script_forbidden;
 
   double start_time = WTF::MonotonicallyIncreasingTimeMS();
   Address result = LazySweepPages(allocation_size, gc_info_index);
