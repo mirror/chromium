@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9dbe240_900fd6f8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-24T02:15:31Z",
+      "side": 1,
+      "message": "Do we still hit this? If not, can we turn this to DCHECK?",
+      "revId": "2508970ffab83a355c7e94ff9d44018b51cce03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02cb6025_dc2c392b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-24T02:15:31Z",
+      "side": 1,
+      "message": "Can you leave comments that the static position is not implemented yet?",
+      "revId": "2508970ffab83a355c7e94ff9d44018b51cce03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50c3c6c_d61883f1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-24T02:15:31Z",
+      "side": 1,
+      "message": "Is it reasonable to add DCHECK for not having other types, to help when adding new types?",
+      "revId": "2508970ffab83a355c7e94ff9d44018b51cce03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
