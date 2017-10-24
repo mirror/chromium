@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7ee25a5_0086bd86",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-24T15:13:02Z",
+      "side": 1,
+      "message": "Is there a case where walking the accessibility tree wouldn\u0027t\ndo the right thing?\n\nIt seems like if the AXObjects for the subtree don\u0027t exist yet,\nwe\u0027d save some computation by not exploring them. If they do,\nthey ought to match, right?",
+      "revId": "20705a5fa01f43916bb47434e4f8bfed6fc830a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4e98d0_5dc9aef3",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-24T15:13:02Z",
+      "side": 1,
+      "message": "How about ChildrenChanged(obj-\u003eparentObject()) for those rare cases\nwhere the parent isn\u0027t a node?\n\nThe parent could be an aria-owns parent, or the parent could be an\nanonymous block.",
+      "revId": "20705a5fa01f43916bb47434e4f8bfed6fc830a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
