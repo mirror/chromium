@@ -11,12 +11,12 @@ layer at (8,26) size 141x32 clip at (9,27) size 124x30 transparent scrollY 39.00
   LayoutTextControl {TEXTAREA} at (0,18) size 141x32 [bgcolor=#D3D3D3] [border: (1px solid #000000)]
     LayoutBlockFlow {DIV} at (3,3) size 120x65
       LayoutText {#text} at (0,0) size 8x52
-        text run at (0,0) width 6: "1"
-        text run at (5,0) width 1: " "
-        text run at (0,13) width 7: "2"
-        text run at (6,13) width 1: " "
-        text run at (0,26) width 7: "3"
-        text run at (6,26) width 1: " "
+        text run at (0,0) width 8: "1"
+        text run at (7,0) width 1: " "
+        text run at (0,13) width 8: "2"
+        text run at (7,13) width 1: " "
+        text run at (0,26) width 8: "3"
+        text run at (7,26) width 1: " "
         text run at (0,39) width 8: "4"
         text run at (7,39) width 1: " "
       LayoutBR {BR} at (0,52) size 0x13
