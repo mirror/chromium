@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14962843_897accf4",
+        "filename": "content/browser/frame_host/render_widget_host_view_guest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-24T19:25:47Z",
+      "side": 1,
+      "message": "nit: should we set screen_info to a default-constructed one?",
+      "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81dfa90a_5d419b93",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-24T19:25:47Z",
+      "side": 1,
+      "message": "nit: ditto, set screen_info to default-constructed one?",
+      "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575611c3_3de00da1",
+        "filename": "content/renderer/browser_plugin/browser_plugin.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-24T19:25:47Z",
+      "side": 1,
+      "message": "nit: rule-of-3 (add copy-assign operator)",
+      "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048b0347_4ca5280d",
+        "filename": "content/renderer/browser_plugin/browser_plugin.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-24T19:25:47Z",
+      "side": 1,
+      "message": "Why is this optional?",
+      "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1d79e9_9f9dc3ec",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-24T19:25:47Z",
+      "side": 1,
+      "message": "ditto?",
+      "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
