@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69bbb7b6_a04f121b",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T18:29:05Z",
+      "side": 1,
+      "message": "can you add a comment describing when this is YES and when it is NO? Also, maybe we should use a name that better reflects its purpose. Something like... rendererDisabledOverscroll_? Not sure.",
+      "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3ce39f_e13a1619",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T18:29:05Z",
+      "side": 1,
+      "message": "can you add a comment describing when this is called?\n\nsomething like: This is called once (?) on every gesture.",
+      "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b606c308_c36585b8",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T18:29:05Z",
+      "side": 1,
+      "message": "why do we set this both here and on line 157? I thought we would only want to set this on #157?",
+      "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be537e1_1db799eb",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T18:29:05Z",
+      "side": 1,
+      "message": "update the comment?",
+      "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb1362e_d42c9291",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper_unit_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T18:29:05Z",
+      "side": 1,
+      "message": "optional nit: we don\u0027t support 10.6 anymore, so this isn\u0027t necessary. I realize the old tests also have the same code.",
+      "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
