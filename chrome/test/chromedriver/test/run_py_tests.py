@@ -74,6 +74,10 @@ _NEGATIVE_FILTER = [
     'PerfTest.testColdExecuteScript',
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1819
     'ChromeExtensionsCapabilityTest.testIFrameWithExtensionsSource',
+    # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2096
+    'ChromeDriverTest.testAlertHandlingOnPageUnload',
+    'ChromeDriverTest.testGoBackAndGoForward',
+    'ChromeDriverTest.testTabCrash',
 ]
 
 _VERSION_SPECIFIC_FILTER = {}
