@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8f4eef0_75fe36a5",
+        "filename": "docs/windows_build_instructions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-24T22:50:19Z",
+      "side": 1,
+      "message": "These are the main windows build instructions, we should strive for brevity here. I\u0027d remove the win_linker_timing one too.",
+      "revId": "b8a470c1ab522596d2606db32f97e3a62f23f933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
