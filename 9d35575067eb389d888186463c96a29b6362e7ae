@@ -70,6 +70,24 @@
       "revId": "9d35575067eb389d888186463c96a29b6362e7ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0f9cb9_fa08b2f4",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-24T10:39:08Z",
+      "side": 1,
+      "message": "I see.. Sorry I overlooked that actually most of the time |installing| and |waiting| should be null, although currently we\u0027re passing an invalid handle_id to indicate that. Yeah later with a follow-up CL I\u0027ll clean up all places passing ServiceWorkerObjectInfo with an invalid handle_id, we could just pass a nullptr instead.",
+      "parentUuid": "55e4fea3_ea6a3b12",
+      "revId": "9d35575067eb389d888186463c96a29b6362e7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
