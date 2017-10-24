@@ -571,3 +571,16 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
       e.consume(true);
   }
 };
+
+/**
+ * @interface
+ */
+SourceFrame.LineDecorator = function() {};
+
+SourceFrame.LineDecorator.prototype = {
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @param {!TextEditor.CodeMirrorTextEditor} textEditor
+   */
+  decorate(uiSourceCode, textEditor) {}
+};
