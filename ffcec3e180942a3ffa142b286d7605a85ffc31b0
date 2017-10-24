@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a75acf1_1159a54d",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-24T23:07:14Z",
+      "side": 1,
+      "message": "nit: May be expand on the comment a bit.\ne.g., it is not clear what metric is used to determine the order. I am assuming it is timestamp, but might be useful to specify it explicitly in the comment.",
+      "range": {
+        "startLine": 151,
+        "startChar": 48,
+        "endLine": 151,
+        "endChar": 76
+      },
+      "revId": "ffcec3e180942a3ffa142b286d7605a85ffc31b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
