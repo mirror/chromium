@@ -16,6 +16,24 @@
       "revId": "5f55af8456833ea292c39b761db03e79d6d5c542",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08681923_8552908b",
+        "filename": "chrome/browser/resources/pdf/gesture_detector.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-10-24T16:28:36Z",
+      "side": 1,
+      "message": "This is actually a cast.\n\nIf we had\n/** @type {function(!Event)} */\nlet boundOnTouch \u003d this.onTouch_.bind(this);\n\nclosure_compiler would give the following error\nERROR - initializing variable\n## found   : function (TouchEvent): undefined\n## required: function (Event): ?",
+      "parentUuid": "7e15cd45_420d6b24",
+      "revId": "5f55af8456833ea292c39b761db03e79d6d5c542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
