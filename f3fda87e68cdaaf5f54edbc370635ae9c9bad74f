@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4776dca8_6bf39a51",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 0,
+      "message": "Yes, it\u0027s safe. The new launcher has been enabled by default, we definitely have made plans to get rid of the old one.\n\ngo/launcher-tech-debt for specific launcher tech debt plans, including efforts to clean up the old launcher. I can include you on those CLs if you\u0027re interested.",
+      "parentUuid": "f281b869_04c59981",
+      "revId": "f3fda87e68cdaaf5f54edbc370635ae9c9bad74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6c92c76_3274b345",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e5355762_b785777e",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 0,
+      "message": "Thanks! This was unintentionally omitted. I\u0027ve added a test case for this.",
+      "parentUuid": "c6c92c76_3274b345",
+      "revId": "f3fda87e68cdaaf5f54edbc370635ae9c9bad74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76530a9a_73b2ed0a",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-23T18:40:57Z",
       "side": 0,
       "message": "q: Again, why inline these checks?",
+      "revId": "f3fda87e68cdaaf5f54edbc370635ae9c9bad74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b324a802_cbc11678",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 0,
+      "message": "Replied above.",
+      "parentUuid": "76530a9a_73b2ed0a",
       "revId": "f3fda87e68cdaaf5f54edbc370635ae9c9bad74f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

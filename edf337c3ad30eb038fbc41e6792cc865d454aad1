@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b6901d8_1fc93e5d",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d336988a_6ac5a292",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "717aa35e_e568e113",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2825be0e_1be19261",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "717aa35e_e568e113",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bda7d3b1_93b8ea64",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-23T18:40:57Z",
       "side": 1,
       "message": "Does this need to be restored on TearDown? Consider using a scoped helper?",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50590047_6843f699",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Good catch! I reset it to en-US in TearDown(). Same for your identical comment below.\n\nIt seems like gtest resets the language to en-US on global test environment setup, but in between global setup it is not reset.\n\nWhat\u0027s a scoped helper? (a helper function an an anonymous namespace?)",
+      "parentUuid": "bda7d3b1_93b8ea64",
       "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ae740e35_de26d5f3",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35cc321c_93becca0",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "891549e6_3d6d03d6",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ab475c_0c89ba31",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "891549e6_3d6d03d6",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "9e2ca0bc_98bbedfc",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74d6a6bd_8a89a258",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c8a8aba_9c7060cc",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a2e14a_2b7c5e13",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "I\u0027ve reduced it to 1 row(5) of apps where I can. Thanks!",
+      "parentUuid": "4c8a8aba_9c7060cc",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "90204276_110e3608",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "I\u0027ve added checks to tests which do not explicitly set the initial state.",
+      "parentUuid": "58e67917_e167cf87",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb6f2a2e_778c58fb",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
@@ -149,6 +293,24 @@
       "writtenOn": "2017-10-23T18:40:57Z",
       "side": 1,
       "message": "Call CheckSelectionAtSuggestionsContainer(0) instead of duplicating its contents here and similar comments for the other checks below with CheckNoSelection() and CheckSelectionAtAppsGridView()",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee0ae9c_05c32d84",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Xiyuan@ and I discussed this above.\n\nWhen we have all of our assertions in helpers, it\u0027s pretty hard to debug. For example, when the tests fail they fail at line ~200, instead of 828.\n\nI couldn\u0027t find anything in the style guide, but I did find some brief mentions of guidelines for using helper functions for assertions in google unit testing guide (there was no recommendation for/against). \n\nIs there a workaround for this, or is the workaround to paste the assertions into the tests when debugging?",
+      "parentUuid": "fb6f2a2e_778c58fb",
       "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "ce514e22_eb97d52c",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Please see comment below.",
+      "parentUuid": "adff113c_a9608e1d",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1fe421c_24f7c09e",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
@@ -183,6 +363,24 @@
       "writtenOn": "2017-10-23T18:40:57Z",
       "side": 1,
       "message": "This description is a little confusing, consider something like \"Tests that moving the selection backwards (eg. left in LTR) selects nothing.\" Again, I also wonder if this should focus the search box or something instead of focusing nothing, and it might be nice if this fixture also tested that immediately moving in the opposite direction restores the selection of the first app (ie. user isn\u0027t stuck in a no-selection/focus state), so maybe combine this fixture and the one below?",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810bcb8b_a7bbcf52",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Done (comment change and changing the intent of this unit test). \n\nIt should \"select\" the searchbox, but it is not testable here.\n\nWhen my and weidongg@\u0027s focus changes land so that \"selection\" is gone, and we use focus from FocusManager, this will be very easily testable. This feature is on track to be enabled by default in M64.\n\nCan we postpone testing SearchBoxView focus in AppsGridViewTest until then? \n\nDesign Doc: go/applist-focus\nfeature flag: app_list::features::kEnableAppListFocus",
+      "parentUuid": "b1fe421c_24f7c09e",
       "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "da21f2d2_0135acca",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "\" Why not repeat the key press and check for increasing selected indices? \"\nDone.\n\nWe already test most of those interactions here: MoveSelectedOnAllAppsTiles.\n \nWe also already have test cases that:\n - Tests that selection from the searchbox selects the first suggested app.\n - Hitting the arrow keys will continue to move selection through to the second page. \n - Moving selection from the last suggested app goes to the first in the app grid.\n - Moving selection with the arrow keys increases/decreases the indice.\n - Moving selection forward from the last element of the first page changes pages (and visa \n   versa).\n - Focus cycles from the last element to the first.\n \nWhat would we gain from duplicating the test coverage?",
+      "parentUuid": "d7665e54_847cdbbc",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4cd1703_4a500cf4",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
@@ -220,6 +436,24 @@
       "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1256dd5_65af3d08",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e4cd1703_4a500cf4",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "adf92f47_d30e83e0",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "0d8de33f_317922e2",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "459a0c84_edfec5c6",
         "filename": "ui/views/focus/focus_manager_unittest.cc",
         "patchSetId": 5
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "4f36b1b5_0857c47c",
+        "filename": "ui/views/focus/focus_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "459a0c84_edfec5c6",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc9d3715_fe1665ce",
         "filename": "ui/views/focus/focus_manager_unittest.cc",
         "patchSetId": 5
@@ -268,6 +538,24 @@
       "writtenOn": "2017-10-23T18:40:57Z",
       "side": 1,
       "message": "Ditto: Does this need to be restored on TearDown? Consider using a scoped helper?",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05b5cdd9_4534b01d",
+        "filename": "ui/views/focus/focus_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T17:34:39Z",
+      "side": 1,
+      "message": "Yes, done. Please see comment on scoped helper above.",
+      "parentUuid": "cc9d3715_fe1665ce",
       "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
