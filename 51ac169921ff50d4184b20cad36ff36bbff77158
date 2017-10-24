@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6974fdc7_9fa8d508",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2392,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-24T10:30:31Z",
+      "side": 1,
+      "message": "\"return nullptr\" is missing here.",
+      "revId": "51ac169921ff50d4184b20cad36ff36bbff77158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35bbed5_bfaa81d1",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2393,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-24T10:30:31Z",
+      "side": 1,
+      "message": "\"else if  \u003d\u003e if\" because the previous if can return early.",
+      "revId": "51ac169921ff50d4184b20cad36ff36bbff77158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
