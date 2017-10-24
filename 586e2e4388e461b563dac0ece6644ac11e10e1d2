@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "768c7d1e_93e900a2",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-24T14:05:37Z",
+      "side": 1,
+      "message": "BTW, this (and above enums) is almost just a simplified copy of protobuf.\nhttps://cs.chromium.org/chromium/src/third_party/cros_system_api/dbus/power_manager/switch_states.proto\n\nDo we want to define this here again? Or, to use protobuf as is instead?\n# TBH, I couldn\u0027t figure out the reason why we have enum class already defined above. So I just followed the existing manner, but welcome any comments from experts.",
+      "revId": "586e2e4388e461b563dac0ece6644ac11e10e1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
