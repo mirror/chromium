@@ -79,6 +79,24 @@
       "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cf28da_ade705d4",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-24T20:07:44Z",
+      "side": 1,
+      "message": "(Note: This is to keep the Resource alive, even after script execution, as long as ScriptLoader is alive. I\u0027ll update the comment and the CL description)\n\nBecause ClassicPendingScript no longer holds Resource reference after script execution,\nbecause ScriptLoader::ExecuteScriptBlock() calls PendingScript::Dispose() that eventually calls SetResource(nullptr).\nAlso, in the current code base, PendingScript is garbage collected after script execution.\n\nBy making this Member\u003cResourceOwner\u003cScriptResource\u003e\u003e or Member\u003cClassicPendingScript\u003e and not calling SetResource(nullptr), we can keep the Resource alive, but I feel this would result in more side effects (i.e. keeping PendingScript alive).",
+      "parentUuid": "2bb6aa7a_0fedc353",
+      "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
