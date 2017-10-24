@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b14fb7b1_74e16f03",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-24T21:10:43Z",
+      "side": 1,
+      "message": "nit: please use the same name as in the code :-)",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "5ba5c38e89102c026b14db6dee5541267d636988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f120c6d_ff6a2367",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-24T21:10:43Z",
+      "side": 1,
+      "message": "epsilon (or maybe ε)",
+      "range": {
+        "startLine": 9,
+        "startChar": 58,
+        "endLine": 9,
+        "endChar": 66
+      },
+      "revId": "5ba5c38e89102c026b14db6dee5541267d636988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e335dee1_740b48ec",
+        "filename": "ios/chrome/browser/ui/ui_util.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-24T21:10:43Z",
+      "side": 1,
+      "message": "nit: std::abs() is also overloaded for double/float\n\nhttp://en.cppreference.com/w/cpp/numeric/math/fabs",
+      "range": {
+        "startLine": 116,
+        "startChar": 14,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "5ba5c38e89102c026b14db6dee5541267d636988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
