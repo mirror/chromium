@@ -14,6 +14,7 @@ EnumTraits<spellcheck::mojom::Decoration, SpellCheckResult::Decoration>::
       return spellcheck::mojom::Decoration::kSpelling;
     case SpellCheckResult::GRAMMAR:
       return spellcheck::mojom::Decoration::kGrammar;
+    case SpellCheckResult::LAST:
   }
   NOTREACHED();
   return spellcheck::mojom::Decoration::kSpelling;
