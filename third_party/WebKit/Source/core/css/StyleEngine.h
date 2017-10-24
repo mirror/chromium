@@ -294,6 +294,9 @@ class CORE_EXPORT StyleEngine final
   void ClearWhitespaceReattachSet() { whitespace_reattach_set_.clear(); }
   void MarkForWhitespaceReattachment();
 
+  StyleRuleKeyframes* KeyframeStylesForAnimation(
+      const StringImpl* animation_name);
+
   DECLARE_VIRTUAL_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
@@ -366,6 +369,11 @@ class CORE_EXPORT StyleEngine final
   const MediaQueryEvaluator& EnsureMediaQueryEvaluator();
   void UpdateStyleSheetList(TreeScope&);
 
+  void ClearKeyframeRules() { keyframes_rule_map_.clear(); }
+
+  void AddKeyframeRules(const RuleSet&);
+  void AddKeyframeStyle(StyleRuleKeyframes*);
+
   Member<Document> document_;
   bool is_master_;
 
@@ -430,6 +438,10 @@ class CORE_EXPORT StyleEngine final
   unsigned style_for_element_count_ = 0;
 
   WebStyleSheetId user_sheets_id_count_ = 0;
+
+  using KeyframesRuleMap =
+      HeapHashMap<const StringImpl*, Member<StyleRuleKeyframes>>;
+  KeyframesRuleMap keyframes_rule_map_;
 
   friend class StyleEngineTest;
 };
