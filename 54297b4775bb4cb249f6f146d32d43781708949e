@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d119745b_6dae1712",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/elements-embedded.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-24T16:10:43Z",
+      "side": 1,
+      "message": "Does it mean that \"none\" is a valid keyword here?\nShould we add \"vibration\"?",
+      "revId": "54297b4775bb4cb249f6f146d32d43781708949e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
