@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d4de3df6_2ab0b620",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutInline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-24T15:28:27Z",
+      "side": 1,
+      "message": "This CL isn\u0027t really about fixing that though; it\u0027s about making virtual / override / final reflect the reality of what\u0027s already there.\n\nDestructors only need to be virtual if a class can be deleted polymorphically via a base class pointer. I don\u0027t know if this one should be or not, but making a change like that is outside the scope of this CL.",
+      "parentUuid": "05f7bf12_ecc669fe",
+      "revId": "02bad477feb3a556bb18513493f81d5f95c995bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23c723b1_4db18e6d",
         "filename": "third_party/WebKit/Source/core/layout/line/InlineBox.h",
         "patchSetId": 1
