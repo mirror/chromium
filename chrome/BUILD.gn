@@ -113,9 +113,6 @@ if (!is_android && !is_mac) {
     if (use_aura && (is_win || is_linux)) {
       data_deps += [ "//chrome/app:service_manifests" ]
     }
-    if (is_chromeos) {
-      data_deps += [ "//sandbox/linux:chrome_sandbox" ]
-    }
   }
 
   template("chrome_binary") {
@@ -211,6 +208,15 @@ if (!is_android && !is_mac) {
         data_deps = [
           "//chrome/app/version_assembly:version_assembly_manifest",
         ]
+
+        if (enable_native_notifications) {
+          sources += [
+            "app/chrome_native_notification_prep_win.cc",
+            "app/chrome_native_notification_prep_win.h",
+          ]
+
+          libs = [ "runtimeobject.lib" ]
+        }
 
         if (win_console_app) {
           defines += [ "WIN_CONSOLE_APP" ]
