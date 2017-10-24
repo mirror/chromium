@@ -11,24 +11,28 @@
 #include "modules/ModulesExport.h"
 #include "modules/presentation/Presentation.h"
 #include "modules/presentation/PresentationRequest.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
+#include "platform/weborigin/KURL.h"
+#include "platform/wtf/Vector.h"
 #include "public/platform/modules/presentation/WebPresentationClient.h"
-#include "public/platform/modules/presentation/WebPresentationController.h"
 #include "public/platform/modules/presentation/presentation.mojom-blink.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
 class ControllerPresentationConnection;
+class PresentationAvailabilityCallbacks;
+class PresentationAvailabilityObserver;
 
 // The coordinator between the various page exposed properties and the content
 // layer represented via |WebPresentationClient|.
-class MODULES_EXPORT PresentationController final
+class MODULES_EXPORT PresentationController
     : public GarbageCollectedFinalized<PresentationController>,
       public Supplement<LocalFrame>,
       public ContextLifecycleObserver,
-      public WebPresentationController {
+      public mojom::blink::PresentationController {
   USING_GARBAGE_COLLECTED_MIXIN(PresentationController);
   WTF_MAKE_NONCOPYABLE(PresentationController);
 
@@ -49,15 +53,6 @@ class MODULES_EXPORT PresentationController final
   // Implementation of Supplement.
   DECLARE_VIRTUAL_TRACE();
 
-  // Implementation of WebPresentationController.
-  WebPresentationConnection* DidStartDefaultPresentation(
-      const WebPresentationInfo&) override;
-  void DidChangeConnectionState(const WebPresentationInfo&,
-                                WebPresentationConnectionState) override;
-  void DidCloseConnection(const WebPresentationInfo&,
-                          WebPresentationConnectionCloseReason,
-                          const WebString& message) override;
-
   // Called by the Presentation object to advertize itself to the controller.
   // The Presentation object is kept as a WeakMember in order to avoid keeping
   // it alive when it is no longer in the tree.
@@ -66,10 +61,19 @@ class MODULES_EXPORT PresentationController final
   // Called by the Presentation object when the default request is updated
   // in order to notify the client about the change of default presentation
   // url.
-  void SetDefaultRequestUrl(const WTF::Vector<KURL>&);
+  void SetDefaultRequestUrl(const Vector<KURL>&);
 
   // Handling of running connections.
   void RegisterConnection(ControllerPresentationConnection*);
+
+  // Gets the overall ScreenAvailability value for the given Presentation URLs.
+  // The value is returned via the supplied callback.
+  void GetAvailability(const Vector<KURL>&,
+                       std::unique_ptr<PresentationAvailabilityCallbacks>);
+
+  // Registers the given observer to listens for ScreenAvailability updates.
+  virtual void StartListeningForAvailability(PresentationAvailabilityObserver*);
+  virtual void StopListeningForAvailability(PresentationAvailabilityObserver*);
 
   // Return a connection in |m_connections| with id equals to |presentationId|,
   // url equals to one of |presentationUrls|, and state is not terminated.
@@ -83,22 +87,78 @@ class MODULES_EXPORT PresentationController final
   // detached.
   mojom::blink::PresentationServicePtr& GetPresentationService();
 
- private:
+ protected:
   PresentationController(LocalFrame&, WebPresentationClient*);
+
+ private:
+  enum class ListeningState {
+    INACTIVE,
+    WAITING,
+    ACTIVE,
+  };
+
+  // Tracks listeners of presentation displays availability for
+  // |availability_urls|. Shared with PresentationRequest objects with the same
+  // set of URLs.
+  struct AvailabilityListener {
+    explicit AvailabilityListener(const Vector<KURL>& availability_urls);
+    ~AvailabilityListener();
+
+    const Vector<KURL> urls;
+    std::vector<std::unique_ptr<PresentationAvailabilityCallbacks>>
+        availability_callbacks;
+    std::set<PresentationAvailabilityObserver*> availability_observers;
+  };
+
+  // Tracks listening status of |availability_url|.
+  struct ListeningStatus {
+    explicit ListeningStatus(const KURL& availability_url);
+    ~ListeningStatus();
+
+    const KURL url;
+    mojom::blink::ScreenAvailability last_known_availability;
+    ListeningState listening_state;
+  };
 
   // Implementation of ContextLifecycleObserver.
   void ContextDestroyed(ExecutionContext*) override;
 
-  // Return the connection associated with the given |connectionClient| or
+  // mojom::blink::PresentationController implementation.
+  void OnScreenAvailabilityUpdated(const KURL&,
+                                   mojom::blink::ScreenAvailability) override;
+  void OnConnectionStateChanged(
+      mojom::blink::PresentationInfoPtr,
+      mojom::blink::PresentationConnectionState) override;
+  void OnConnectionClosed(mojom::blink::PresentationInfoPtr,
+                          mojom::blink::PresentationConnectionCloseReason,
+                          const String& message) override;
+  void OnDefaultPresentationStarted(mojom::blink::PresentationInfoPtr) override;
+
+  void StartListeningToURL(const KURL&);
+  void MaybeStopListeningToURL(const KURL&);
+  mojom::blink::ScreenAvailability GetScreenAvailability(
+      const Vector<KURL>&) const;
+  AvailabilityListener* GetAvailabilityListener(const Vector<KURL>&) const;
+  void TryRemoveAvailabilityListener(AvailabilityListener*);
+  PresentationController::ListeningStatus* GetListeningStatus(
+      const KURL&) const;
+
+  // Return the connection associated with the given |presentation_info| or
   // null if it doesn't exist.
   ControllerPresentationConnection* FindConnection(
-      const WebPresentationInfo&) const;
+      const mojom::blink::PresentationInfo&) const;
 
   // The WebPresentationClient which allows communicating with the embedder.
   // It is not owned by the PresentationController but the controller will
   // set it to null when the LocalFrame will be detached at which point the
   // client can't be used.
   WebPresentationClient* client_;
+
+  // ListeningStatus for known URLs.
+  std::vector<std::unique_ptr<ListeningStatus>> availability_listening_status_;
+
+  // Set of AvailabilityListener for known PresentationRequests.
+  std::vector<std::unique_ptr<AvailabilityListener>> availability_listeners_;
 
   // The Presentation instance associated with that frame.
   WeakMember<Presentation> presentation_;
@@ -108,6 +168,10 @@ class MODULES_EXPORT PresentationController final
 
   // Lazily-initialized pointer to PresentationService.
   mojom::blink::PresentationServicePtr presentation_service_;
+
+  // Lazily-initialized binding for mojom::blink::PresentationController. Sent
+  // to |presentation_service_|'s implementation.
+  mojo::Binding<mojom::blink::PresentationController> controller_binding_;
 };
 
 }  // namespace blink
