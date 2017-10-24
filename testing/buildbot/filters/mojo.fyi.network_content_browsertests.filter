@@ -47,7 +47,6 @@
 -DownloadContentTest.RecoverFromFinalRenameError
 -DownloadContentTest.RecoverFromInitFileError
 -DownloadContentTest.RecoverFromIntermediateFileRenameError
--DownloadContentTest.RedirectBeforeResume
 -DownloadContentTest.RedirectWhileResume
 -DownloadContentTest.ReferrerForHTTPS
 -DownloadContentTest.ReferrerForPartialResumption
