@@ -161,6 +161,8 @@ class PLATFORM_EXPORT ResourceFetcher
                                       WebURLRequest::RequestContext,
                                       const AtomicString& initiator_name);
 
+  void PreloadScannerProcessedChunk();
+
  private:
   friend class ResourceCacheValidationSuppressor;
   enum class StopFetchingTarget {
@@ -267,6 +269,8 @@ class PLATFORM_EXPORT ResourceFetcher
 
   HeapHashMap<PreloadKey, Member<Resource>> preloads_;
   HeapVector<Member<Resource>> matched_preloads_;
+  HeapVector<Member<Resource>> deferred_resources_;
+  bool defer_non_critical_resources_;
   Member<MHTMLArchive> archive_;
 
   TaskRunnerTimer<ResourceFetcher> resource_timing_report_timer_;
