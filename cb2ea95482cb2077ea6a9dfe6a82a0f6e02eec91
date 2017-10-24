@@ -236,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "8b3b7b45_8995ca91",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T03:28:48Z",
+      "side": 1,
+      "message": "\u003e It was extensively tested on both Mac and Linux, and the unit tests put a simple default match first. Are you perhaps thinking that it\u0027s [0] *\u0026\u0026* [1] ?\n\nRight you are.  I was thinking it was *\u0026\u0026*.\n\nI\u0027m really nervous about this test and its ranking implications.  Most of the time a user is looking for an obscure page from their history by typing in the title, tail suggest will trigger.  If it triggers and happens to score higher than the page from the user\u0027s history, then we\u0027ll filter all non-tail suggestions.  This will kill the page from the user\u0027s history.\n\nI would suggest a stricter test, say, if tail suggest isn\u0027t \"enough\" of the dropdown, delete all tail suggest.  Never delete other types of suggestions.  Tail suggest, almost by definition, is guaranteed to be worse quality than any ordinary suggestions that match the input.  Thus, regardless of tail suggestion scores, it shouldn\u0027t cause the removal of ordinary suggestions.",
+      "parentUuid": "ece3ce17_452a7e5f",
+      "range": {
+        "startLine": 146,
+        "startChar": 73,
+        "endLine": 146,
+        "endChar": 0
+      },
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5d60d2f_44c98dd5",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 2
@@ -265,6 +289,24 @@
       "side": 1,
       "message": "I didn\u0027t understand this example or the phrase \"not enough tail suggestions\". It\u0027s particularly confusing since deuping is done up on line 133.",
       "parentUuid": "b5d60d2f_44c98dd5",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a343fb81_1344d7ee",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-24T03:28:48Z",
+      "side": 1,
+      "message": "\u003e I didn\u0027t understand this example or the phrase \"not enough tail suggestions\". It\u0027s particularly confusing since deuping is done up on line 133.\n\nSuppose the input is \"X Y Z\".\nSearch history returns the  suggestion \"X Y Z A\" with score 1000.\nTail suggest returns the suggestion \"X Y Z A\" with score of 1100.\nThey get marked as dups.\nThe tail suggest one becomes the canonical.\nThen this filtering code activates.\nSuppose it finds some other non-tail suggestions and decides to filter tail suggestions.\nIt will filter \"X Y Z A\" because it\u0027s marked as a tail suggestion.\n\nThat\u0027s what I mean: if tail suggest triggers on a suggestion that is then removed, it\u0027s possible the net effect is deleting regular, useful suggestions.  We will need to keep an eye out for this when looking at eval data.",
+      "parentUuid": "463a4fd9_bdc4f4cb",
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
