@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35c1d074_f37636da",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-24T14:14:54Z",
+      "side": 1,
+      "message": "Nope: When the StackView is owning the WebToolbar, the StackView wants to set the height of the WebToolbar to something different from |preferredToolbarHeightWhenAlignedToTopOfScreen|.",
+      "parentUuid": "c0bbbe7f_3e61e4f1",
+      "range": {
+        "startLine": 1316,
+        "startChar": 4,
+        "endLine": 1318,
+        "endChar": 64
+      },
+      "revId": "d028a95e7f18ea210ca12337603e934c18defd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c990c40a_ec05f6c3",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "d028a95e7f18ea210ca12337603e934c18defd92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f4beb7_14359f10",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-24T14:14:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c990c40a_ec05f6c3",
+      "range": {
+        "startLine": 768,
+        "startChar": 31,
+        "endLine": 768,
+        "endChar": 45
+      },
+      "revId": "d028a95e7f18ea210ca12337603e934c18defd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "79199be6_6c78f69e",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-24T14:14:54Z",
+      "side": 1,
+      "message": "I put \"100\" out of precaution, but it seems like we can just set 0 and not have any broken constraints.",
+      "parentUuid": "5c707dda_943df8a4",
+      "range": {
+        "startLine": 134,
+        "startChar": 54,
+        "endLine": 134,
+        "endChar": 57
+      },
+      "revId": "d028a95e7f18ea210ca12337603e934c18defd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5096f587_125c7de1",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_view.h",
         "patchSetId": 7
@@ -114,6 +186,30 @@
       "revId": "d028a95e7f18ea210ca12337603e934c18defd92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb8c2ea_7ef335ab",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-24T14:14:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5096f587_125c7de1",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "d028a95e7f18ea210ca12337603e934c18defd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "ddda422f_4d905762",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-24T14:14:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "372c0697_691c4ba1",
+      "range": {
+        "startLine": 24,
+        "startChar": 26,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "d028a95e7f18ea210ca12337603e934c18defd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0229a1dd_4fa3356f",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_view.mm",
         "patchSetId": 7
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "c7958d01_c0e6daf7",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-24T14:14:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0229a1dd_4fa3356f",
+      "range": {
+        "startLine": 25,
+        "startChar": 67,
+        "endLine": 25,
+        "endChar": 70
+      },
+      "revId": "d028a95e7f18ea210ca12337603e934c18defd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2f27de5_6029a588",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_view.mm",
         "patchSetId": 7
@@ -183,6 +327,30 @@
       "revId": "d028a95e7f18ea210ca12337603e934c18defd92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b80700_5511984e",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-24T14:14:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2f27de5_6029a588",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 7
+      },
+      "revId": "d028a95e7f18ea210ca12337603e934c18defd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
