@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb28e9ed_6da67416",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-24T16:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a548732c_045a9395",
+      "range": {
+        "startLine": 13,
+        "startChar": 25,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d29773fa_d8d10f55",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8261455a_b7ccd319",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-24T16:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d29773fa_d8d10f55",
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "84d4ee75_86765eec",
+        "filename": "chrome/app/nibs/MainMenu.xib",
+        "patchSetId": 11
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-24T16:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7feee03e_3ec6e72e",
+      "range": {
+        "startLine": 395,
+        "startChar": 89,
+        "endLine": 395,
+        "endChar": 116
+      },
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b61ef65_63c22d04",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 11
@@ -79,6 +145,24 @@
       "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f56d32_6c65b38a",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-24T16:42:24Z",
+      "side": 1,
+      "message": "Aw snap, yes! Thanks for pointing this out",
+      "parentUuid": "6b61ef65_63c22d04",
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "94f26e5e_24f930ef",
+        "filename": "chrome/browser/ui/cocoa/applescript/bookmark_item_applescript_browsertest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-24T16:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71e01a2c_eae67a62",
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31443e52_e8417ba8",
         "filename": "chrome/browser/ui/cocoa/applescript/tab_applescript.mm",
         "patchSetId": 11
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "9b8c31dc_f4853af1",
+        "filename": "chrome/browser/ui/cocoa/applescript/tab_applescript.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-24T16:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31443e52_e8417ba8",
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "513d1940_be280d7d",
         "filename": "chrome/browser/ui/cocoa/applescript/tab_applescript_browsertest.mm",
         "patchSetId": 11
@@ -130,6 +250,24 @@
       "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1eee37e_28bdddde",
+        "filename": "chrome/browser/ui/cocoa/applescript/tab_applescript_browsertest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-24T16:42:24Z",
+      "side": 1,
+      "message": "Done. Also changed the one in BookmarkItemApplescriptBrowserTest",
+      "parentUuid": "513d1940_be280d7d",
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
