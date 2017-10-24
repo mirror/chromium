@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f14ff55_7fd00fdb",
+        "filename": "components/exo/wayland/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T23:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21be67c5_dc01efc3",
+      "revId": "088f21cb4297b2c787e650beeacceb773bea638e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09efa750_a1b8ef72",
         "filename": "components/exo/wayland/clients/blur.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "088f21cb4297b2c787e650beeacceb773bea638e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89456c36_1a584ae8",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T23:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09efa750_a1b8ef72",
+      "revId": "088f21cb4297b2c787e650beeacceb773bea638e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5cd6c67e_05cb1434",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T23:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a86d457_576621b6",
+      "revId": "088f21cb4297b2c787e650beeacceb773bea638e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c285650_2f9af15a",
         "filename": "components/exo/wayland/clients/perftests.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-24T23:14:49Z",
       "side": 1,
       "message": "Why did you decide not to have one test per sigma configuration?",
+      "revId": "088f21cb4297b2c787e650beeacceb773bea638e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91038b9b_03767329",
+        "filename": "components/exo/wayland/clients/perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-24T23:25:39Z",
+      "side": 1,
+      "message": "For now, yes. We can change this in the future if needed.",
+      "parentUuid": "0c285650_2f9af15a",
       "revId": "088f21cb4297b2c787e650beeacceb773bea638e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
