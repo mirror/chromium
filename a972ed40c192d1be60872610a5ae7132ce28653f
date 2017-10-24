@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d34c37ad_9625fd56",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4124,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-24T21:14:42Z",
+      "side": 0,
+      "message": "nit: also cite chromium:459812 in BUG\u003d, mark each bug fixed as appropriate",
+      "revId": "a972ed40c192d1be60872610a5ae7132ce28653f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

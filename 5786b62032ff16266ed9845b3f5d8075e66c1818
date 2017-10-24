@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "00be9cf2_246ed9e9",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4153,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-24T21:14:42Z",
+      "side": 1,
+      "message": "optional nit: inline below",
+      "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb35191_312a6f8f",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4159,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-24T21:14:42Z",
+      "side": 1,
+      "message": "ditto optional nit: inline these two ints",
+      "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edeca6fa_cc5bc8d6",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4169,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-24T21:14:42Z",
+      "side": 1,
+      "message": "This is checking the left side, why change to \"right\"?",
+      "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12b99246_46db9e58",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 5
@@ -13,6 +64,29 @@
       "writtenOn": "2017-10-24T20:52:30Z",
       "side": 1,
       "message": "Nit: One of \"takes into account\" or \"only uses\".",
+      "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4637bf4d_df093735",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4182,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-24T21:14:42Z",
+      "side": 1,
+      "message": "q: Why does Chrome OS now need to allow painting a pixel to the right?",
+      "range": {
+        "startLine": 4182,
+        "startChar": 15,
+        "endLine": 4182,
+        "endChar": 37
+      },
       "revId": "5786b62032ff16266ed9845b3f5d8075e66c1818",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
