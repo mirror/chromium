@@ -13348,6 +13348,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DataUse.Sync.Download.Bytes" enum="SyncModelTypes">
+  <obsolete>
+    Deprecated 2017/10. Bytes are logged to DataUse.Sync.Download.KB.
+  </obsolete>
   <owner>amohammadkhan@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -13367,7 +13370,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="DataUse.Sync.Download.KB" enum="SyncModelTypes">
+  <owner>pnoland@chromium.org</owner>
+  <summary>
+    Number of downloaded KB of different data types in Sync service for received
+    updates. It is updated when an update message is received from sync server.
+  </summary>
+</histogram>
+
 <histogram name="DataUse.Sync.ProgressMarker.Bytes" enum="SyncModelTypes">
+  <obsolete>
+    Deprecated 2017/10. Bytes are logged to DataUse.Sync.ProgressMarker.KB.
+  </obsolete>
   <owner>amohammadkhan@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -13377,7 +13391,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="DataUse.Sync.ProgressMarker.KB" enum="SyncModelTypes">
+  <owner>pnoland@chromium.org</owner>
+  <summary>
+    Number of downloaded KB of ProgressMarker of different data types in Sync
+    service for received updates. It is updated when an update message is
+    received from sync server.
+  </summary>
+</histogram>
+
 <histogram name="DataUse.Sync.Upload.Bytes" enum="SyncModelTypes">
+  <obsolete>
+    Deprecated 2017/10. Bytes are logged to DataUse.Sync.Upload.KB.
+  </obsolete>
   <owner>amohammadkhan@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -13391,6 +13417,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>bengr@chromium.org</owner>
   <summary>
     Number of uploaded entities of different data types in Sync service for sent
+    commits. Updated when a commit message is sent to sync server.
+  </summary>
+</histogram>
+
+<histogram name="DataUse.Sync.Upload.KB" enum="SyncModelTypes">
+  <owner>pnoland@chromium.org</owner>
+  <summary>
+    Number of uploaded KB of different data types in Sync service for sent
     commits. Updated when a commit message is sent to sync server.
   </summary>
 </histogram>

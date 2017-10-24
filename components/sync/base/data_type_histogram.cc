@@ -6,13 +6,25 @@
 
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/sparse_histogram.h"
+#include "base/rand_util.h"
 
 const char kModelTypeMemoryHistogramPrefix[] = "Sync.ModelTypeMemoryKB.";
 
-void SyncRecordDatatypeBin(const std::string& name, int sample, int value) {
+void SyncRecordKbDatatypeBin(const std::string& name, int sample, int value) {
+  // Convert raw value to KiB and probabilistically round up/down if the
+  // remainder is more than a random number [0, 1KiB). This gives a more
+  // accurate count when there are a large number of records. RandInt is
+  // "inclusive", hence the -1 for the max value.
+  int64_t value_kb = value >> 10;
+  if (value - (value_kb << 10) > base::RandInt(0, (1 << 10) - 1))
+    value_kb += 1;
+  if (value_kb == 0)
+    return;
+
   base::HistogramBase* histogram = base::SparseHistogram::FactoryGet(
       name, base::HistogramBase::kUmaTargetedHistogramFlag);
-  histogram->AddCount(sample, value);
+
+  histogram->AddCount(sample, value_kb);
 }
 
 void SyncRecordMemoryKbHistogram(const std::string& histogram_name_prefix,

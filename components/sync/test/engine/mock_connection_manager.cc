@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/location.h"
+#include "base/rand_util.h"
 #include "base/strings/stringprintf.h"
 #include "components/sync/engine_impl/syncer_proto_util.h"
 #include "components/sync/protocol/bookmark_specifics.pb.h"
@@ -235,6 +236,9 @@ void MockConnectionManager::AddDefaultBookmarkData(sync_pb::SyncEntity* entity,
       entity->mutable_specifics()->mutable_bookmark()->set_url(
           "http://google.com");
     }
+    constexpr int kFaviconDataSize = 1024;
+    std::string favicon_data = base::RandBytesAsString(kFaviconDataSize);
+    entity->mutable_specifics()->mutable_bookmark()->set_favicon(favicon_data);
   }
 }
 
@@ -508,7 +512,8 @@ void MockConnectionManager::SetLastUpdatePosition(int64_t server_position) {
 }
 
 void MockConnectionManager::SetNewTimestamp(int ts) {
-  next_token_ = base::StringPrintf("mock connection ts = %d", ts);
+  constexpr int kTokenSize = 1024;
+  next_token_ = base::RandBytesAsString(kTokenSize);
   ApplyToken();
 }
 

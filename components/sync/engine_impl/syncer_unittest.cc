@@ -20,6 +20,7 @@
 #include "base/compiler_specific.h"
 #include "base/location.h"
 #include "base/message_loop/message_loop.h"
+#include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/time/time.h"
@@ -637,6 +638,10 @@ TEST_F(SyncerTest, DataUseHistogramsTest) {
   sync_pb::EntitySpecifics bookmark_data;
   AddDefaultFieldValue(BOOKMARKS, &bookmark_data);
 
+  constexpr int kFaviconDataSize = 1024;
+  std::string favicon_data = base::RandBytesAsString(kFaviconDataSize);
+  bookmark_data.mutable_bookmark()->set_favicon(favicon_data);
+
   mock_server_->AddUpdateDirectory(1, 0, "A", 10, 10, foreign_cache_guid(),
                                    "-1");
   int download_bytes_bookmark = 0;
@@ -646,18 +651,17 @@ TEST_F(SyncerTest, DataUseHistogramsTest) {
   EXPECT_TRUE(SyncShareNudge());
   {
     histogram_tester.ExpectTotalCount("DataUse.Sync.Upload.Count", 0);
-    histogram_tester.ExpectTotalCount("DataUse.Sync.Upload.Bytes", 0);
+    histogram_tester.ExpectTotalCount("DataUse.Sync.Upload.KB", 0);
     histogram_tester.ExpectTotalCount("DataUse.Sync.Download.Count", 1);
     histogram_tester.ExpectUniqueSample("DataUse.Sync.Download.Count",
                                         BOOKMARKS, 1);
-    samples = histogram_tester.GetAllSamples("DataUse.Sync.Download.Bytes");
+    samples = histogram_tester.GetAllSamples("DataUse.Sync.Download.KB");
     EXPECT_EQ(1u, samples.size());
     EXPECT_EQ(BOOKMARKS, samples.at(0).min);
     EXPECT_GE(samples.at(0).count, 0);
     download_bytes_bookmark = samples.at(0).count;
 
-    samples =
-        histogram_tester.GetAllSamples("DataUse.Sync.ProgressMarker.Bytes");
+    samples = histogram_tester.GetAllSamples("DataUse.Sync.ProgressMarker.KB");
 
     for (const base::Bucket& bucket : samples) {
       if (bucket.min == BOOKMARKS)
@@ -685,18 +689,17 @@ TEST_F(SyncerTest, DataUseHistogramsTest) {
   {
     // Nothing should have been committed as bookmarks is throttled.
     histogram_tester.ExpectTotalCount("DataUse.Sync.Upload.Count", 0);
-    histogram_tester.ExpectTotalCount("DataUse.Sync.Upload.Bytes", 0);
+    histogram_tester.ExpectTotalCount("DataUse.Sync.Upload.KB", 0);
     histogram_tester.ExpectTotalCount("DataUse.Sync.Download.Count", 1);
     histogram_tester.ExpectUniqueSample("DataUse.Sync.Download.Count",
                                         BOOKMARKS, 1);
 
-    samples = histogram_tester.GetAllSamples("DataUse.Sync.Download.Bytes");
+    samples = histogram_tester.GetAllSamples("DataUse.Sync.Download.KB");
     EXPECT_EQ(1u, samples.size());
     EXPECT_EQ(BOOKMARKS, samples.at(0).min);
     EXPECT_EQ(download_bytes_bookmark, samples.at(0).count);
 
-    samples =
-        histogram_tester.GetAllSamples("DataUse.Sync.ProgressMarker.Bytes");
+    samples = histogram_tester.GetAllSamples("DataUse.Sync.ProgressMarker.KB");
     for (const base::Bucket& bucket : samples) {
       if (bucket.min == BOOKMARKS)
         progress_bookmark.at(1) += bucket.count;
@@ -714,20 +717,19 @@ TEST_F(SyncerTest, DataUseHistogramsTest) {
     histogram_tester.ExpectTotalCount("DataUse.Sync.Upload.Count", 1);
     histogram_tester.ExpectUniqueSample("DataUse.Sync.Upload.Count", BOOKMARKS,
                                         1);
-    samples = histogram_tester.GetAllSamples("DataUse.Sync.Upload.Bytes");
+    samples = histogram_tester.GetAllSamples("DataUse.Sync.Upload.KB");
     EXPECT_EQ(1u, samples.size());
     EXPECT_EQ(BOOKMARKS, samples.at(0).min);
     EXPECT_GE(samples.at(0).count, 0);
 
-    samples = histogram_tester.GetAllSamples("DataUse.Sync.Download.Bytes");
+    samples = histogram_tester.GetAllSamples("DataUse.Sync.Download.KB");
     EXPECT_EQ(1u, samples.size());
     EXPECT_EQ(BOOKMARKS, samples.at(0).min);
     EXPECT_EQ(download_bytes_bookmark, samples.at(0).count);
 
     histogram_tester.ExpectTotalCount("DataUse.Sync.Download.Count", 1);
 
-    samples =
-        histogram_tester.GetAllSamples("DataUse.Sync.ProgressMarker.Bytes");
+    samples = histogram_tester.GetAllSamples("DataUse.Sync.ProgressMarker.KB");
     for (const base::Bucket& bucket : samples) {
       if (bucket.min == BOOKMARKS)
         progress_bookmark.at(2) += bucket.count;

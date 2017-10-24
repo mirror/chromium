@@ -60,9 +60,9 @@ SyncerError DirectoryUpdateHandler::ProcessGetUpdatesResponse(
     StatusController* status) {
   syncable::ModelNeutralWriteTransaction trans(FROM_HERE, SYNCER, dir_);
   if (progress_marker.ByteSize() > 0) {
-    SyncRecordDatatypeBin("DataUse.Sync.ProgressMarker.Bytes",
-                          ModelTypeToHistogramInt(type_),
-                          progress_marker.ByteSize());
+    SyncRecordKbDatatypeBin("DataUse.Sync.ProgressMarker.KB",
+                            ModelTypeToHistogramInt(type_),
+                            progress_marker.ByteSize());
   }
   if (mutated_context.has_context()) {
     sync_pb::DataTypeContext local_context;

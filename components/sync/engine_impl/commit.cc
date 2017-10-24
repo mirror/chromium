@@ -102,8 +102,8 @@ std::unique_ptr<Commit> Commit::Init(ModelTypeSet requested_types,
     previous_message_size = message.ByteSize();
     int local_integer_model_type = ModelTypeToHistogramInt(contribution.first);
     if (current_entry_size > 0) {
-      SyncRecordDatatypeBin("DataUse.Sync.Upload.Bytes",
-                            local_integer_model_type, current_entry_size);
+      SyncRecordKbDatatypeBin("DataUse.Sync.Upload.KB",
+                              local_integer_model_type, current_entry_size);
     }
     UMA_HISTOGRAM_SPARSE_SLOWLY("DataUse.Sync.Upload.Count",
                                 local_integer_model_type);
