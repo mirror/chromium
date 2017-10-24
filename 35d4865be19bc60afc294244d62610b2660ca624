@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd2e076f_cc4282db",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/css_properties.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-24T01:51:22Z",
+      "side": 1,
+      "message": "yay! this makes things much clearer",
+      "revId": "35d4865be19bc60afc294244d62610b2660ca624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36e5e611_fdd93fd1",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/make_cssom_types.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-24T01:51:22Z",
+      "side": 1,
+      "message": "Interesting, so CSSProperties is now more like a \"Reader\". I quite like this design.",
+      "revId": "35d4865be19bc60afc294244d62610b2660ca624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8da68308_ac0523a2",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/make_style_shorthands.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-24T01:51:22Z",
+      "side": 1,
+      "message": "We should probably eventually remove this constructor.",
+      "revId": "35d4865be19bc60afc294244d62610b2660ca624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550a365e_d0569444",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-24T01:51:22Z",
+      "side": 1,
+      "message": "Yeah we\u0027ll still have to find a better way to read the extra fields stuff. Possibly by moving this to an ExtraFields class that parses the extra fields stuff (sharing the parameters is still a problem tho).",
+      "revId": "35d4865be19bc60afc294244d62610b2660ca624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
