@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "827d2cb5_32e0aa23",
+        "filename": "chrome/browser/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-10-24T16:19:12Z",
+      "side": 0,
+      "message": "calamity@ is in PLATFORM_OWNERS, so there\u0027s probably no need to call him out explicitly here.",
+      "revId": "6cdd9804e35ef714b8aa99d347e4eb17e0595a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
