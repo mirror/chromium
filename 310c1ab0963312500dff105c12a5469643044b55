@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b62609c0_111887a5",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-24T20:03:17Z",
+      "side": 1,
+      "message": "LOG(ERROR) \u003c\u003c \"Using FakeConnectivityChecker\", and a crbug here and in the CL description.",
+      "revId": "310c1ab0963312500dff105c12a5469643044b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
