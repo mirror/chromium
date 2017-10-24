@@ -114,6 +114,7 @@ static const char* const kSwitchNames[] = {
     switches::kDisableBreakpad,
     switches::kDisableGpuRasterization,
     switches::kDisableGpuSandbox,
+    switches::kDisableGpuWatchdog,
     switches::kDisableGLExtensions,
     switches::kDisableLogging,
     switches::kDisableSeccompFilterSandbox,
@@ -129,8 +130,10 @@ static const char* const kSwitchNames[] = {
     switches::kEnableLogging,
     switches::kEnableOOPRasterization,
     switches::kEnableViz,
+    switches::kGpuStartupDialog,
     switches::kGpuSandboxAllowSysVShm,
     switches::kGpuSandboxFailuresFatal,
+    switches::kGpuSandboxStartEarly,
     switches::kHeadless,
     switches::kLoggingLevel,
     switches::kEnableLowEndDeviceMode,
@@ -864,8 +867,10 @@ void GpuProcessHost::DidInitialize(
 
   GpuDataManagerImpl* gpu_data_manager = GpuDataManagerImpl::GetInstance();
   if (!gpu_data_manager->ShouldUseSwiftShader()) {
-    gpu_data_manager->UpdateGpuInfo(gpu_info);
+    // UpdateGpuFeatureInfo() needs to be called before UpdateGpuInfo() because
+    // the latter will trigger registered callbacks waiting for the update.
     gpu_data_manager->UpdateGpuFeatureInfo(gpu_feature_info);
+    gpu_data_manager->UpdateGpuInfo(gpu_info);
   }
   RunRequestGPUInfoCallbacks(gpu_data_manager->GetGPUInfo());
 }
