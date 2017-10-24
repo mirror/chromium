@@ -949,6 +949,7 @@ jint WebContentsAccessibilityAndroid::FindElementType(
                                : OneShotAccessibilityTreeSearch::BACKWARDS);
   tree_search.SetResultLimit(1);
   tree_search.SetImmediateDescendantsOnly(false);
+  tree_search.SetIsAndroid(true);
   tree_search.SetVisibleOnly(false);
   tree_search.AddPredicate(predicate);
 

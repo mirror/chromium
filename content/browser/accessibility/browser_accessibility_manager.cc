@@ -816,9 +816,18 @@ BrowserAccessibility* BrowserAccessibilityManager::NextInTreeOrder(
 // static
 // Previous object in tree using depth-first pre-order traversal.
 BrowserAccessibility* BrowserAccessibilityManager::PreviousInTreeOrder(
-    const BrowserAccessibility* object) {
+    const BrowserAccessibility* object,
+    bool is_android) {
   if (!object)
     return nullptr;
+
+  // For android, this needs to be handled carefully. If not, there is a chance
+  // of getting into infinite loop.
+  if (is_android && object->GetRole() == ui::AX_ROLE_ROOT_WEB_AREA &&
+      object->PlatformChildCount() != 0) {
+    // LOG(ERROR) << "ibobra return deepest child";
+    return object->PlatformDeepestLastChild();
+  }
 
   BrowserAccessibility* sibling = object->GetPreviousSibling();
   if (!sibling)
@@ -833,9 +842,9 @@ BrowserAccessibility* BrowserAccessibilityManager::PreviousInTreeOrder(
 // static
 BrowserAccessibility* BrowserAccessibilityManager::PreviousTextOnlyObject(
     const BrowserAccessibility* object) {
-  BrowserAccessibility* previous_object = PreviousInTreeOrder(object);
+  BrowserAccessibility* previous_object = PreviousInTreeOrder(object, false);
   while (previous_object && !previous_object->IsTextOnlyObject())
-    previous_object = PreviousInTreeOrder(previous_object);
+    previous_object = PreviousInTreeOrder(previous_object, false);
 
   return previous_object;
 }
