@@ -46,6 +46,30 @@
       "revId": "32ea4cbe9f93cd7a45e7b3a5018df3053ad98926",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7954a50d_fa62151d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-24T21:19:46Z",
+      "side": 1,
+      "message": "Should we set it to something like 0 and have a inline comment saying it gets overridden?",
+      "parentUuid": "682072f7_6148224e",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 66
+      },
+      "revId": "32ea4cbe9f93cd7a45e7b3a5018df3053ad98926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
