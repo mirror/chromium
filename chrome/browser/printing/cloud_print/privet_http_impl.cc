@@ -95,9 +95,8 @@ GURL CreatePrivetParamURL(const std::string& path,
 
 PrivetInfoOperationImpl::PrivetInfoOperationImpl(
     PrivetHTTPClient* privet_client,
-    const PrivetJSONOperation::ResultCallback& callback)
-    : privet_client_(privet_client), callback_(callback) {
-}
+    PrivetJSONOperation::ResultCallback callback)
+    : privet_client_(privet_client), callback_(std::move(callback)) {}
 
 PrivetInfoOperationImpl::~PrivetInfoOperationImpl() {
 }
@@ -118,13 +117,13 @@ PrivetHTTPClient* PrivetInfoOperationImpl::GetHTTPClient() {
 
 void PrivetInfoOperationImpl::OnError(PrivetURLFetcher* fetcher,
                                       PrivetURLFetcher::ErrorType error) {
-  callback_.Run(NULL);
+  std::move(callback_).Run(NULL);
 }
 
 void PrivetInfoOperationImpl::OnParsedJson(PrivetURLFetcher* fetcher,
                                            const base::DictionaryValue& value,
                                            bool has_error) {
-  callback_.Run(&value);
+  std::move(callback_).Run(&value);
 }
 
 PrivetRegisterOperationImpl::PrivetRegisterOperationImpl(
@@ -357,12 +356,11 @@ PrivetJSONOperationImpl::PrivetJSONOperationImpl(
     PrivetHTTPClient* privet_client,
     const std::string& path,
     const std::string& query_params,
-    const PrivetJSONOperation::ResultCallback& callback)
+    PrivetJSONOperation::ResultCallback callback)
     : privet_client_(privet_client),
       path_(path),
       query_params_(query_params),
-      callback_(callback) {
-}
+      callback_(std::move(callback)) {}
 
 PrivetJSONOperationImpl::~PrivetJSONOperationImpl() {
 }
@@ -381,13 +379,13 @@ PrivetHTTPClient* PrivetJSONOperationImpl::GetHTTPClient() {
 void PrivetJSONOperationImpl::OnError(
     PrivetURLFetcher* fetcher,
     PrivetURLFetcher::ErrorType error) {
-  callback_.Run(NULL);
+  std::move(callback_).Run(NULL);
 }
 
 void PrivetJSONOperationImpl::OnParsedJson(PrivetURLFetcher* fetcher,
                                            const base::DictionaryValue& value,
                                            bool has_error) {
-  callback_.Run(&value);
+  std::move(callback_).Run(&value);
 }
 
 void PrivetJSONOperationImpl::OnNeedPrivetToken(
@@ -714,8 +712,8 @@ const std::string& PrivetHTTPClientImpl::GetName() {
 }
 
 std::unique_ptr<PrivetJSONOperation> PrivetHTTPClientImpl::CreateInfoOperation(
-    const PrivetJSONOperation::ResultCallback& callback) {
-  return base::MakeUnique<PrivetInfoOperationImpl>(this, callback);
+    PrivetJSONOperation::ResultCallback callback) {
+  return base::MakeUnique<PrivetInfoOperationImpl>(this, std::move(callback));
 }
 
 std::unique_ptr<PrivetURLFetcher> PrivetHTTPClientImpl::CreateURLFetcher(
@@ -803,8 +801,8 @@ const std::string& PrivetV1HTTPClientImpl::GetName() {
 
 std::unique_ptr<PrivetJSONOperation>
 PrivetV1HTTPClientImpl::CreateInfoOperation(
-    const PrivetJSONOperation::ResultCallback& callback) {
-  return info_client()->CreateInfoOperation(callback);
+    PrivetJSONOperation::ResultCallback callback) {
+  return info_client()->CreateInfoOperation(std::move(callback));
 }
 
 std::unique_ptr<PrivetRegisterOperation>
@@ -817,9 +815,9 @@ PrivetV1HTTPClientImpl::CreateRegisterOperation(
 
 std::unique_ptr<PrivetJSONOperation>
 PrivetV1HTTPClientImpl::CreateCapabilitiesOperation(
-    const PrivetJSONOperation::ResultCallback& callback) {
+    PrivetJSONOperation::ResultCallback callback) {
   return base::MakeUnique<PrivetJSONOperationImpl>(
-      info_client(), kPrivetCapabilitiesPath, "", callback);
+      info_client(), kPrivetCapabilitiesPath, "", std::move(callback));
 }
 
 std::unique_ptr<PrivetLocalPrintOperation>
