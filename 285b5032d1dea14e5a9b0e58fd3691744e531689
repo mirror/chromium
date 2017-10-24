@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0fd99e0a_c8e9418c",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-24T18:11:07Z",
+      "side": 1,
+      "message": "As per discussion offline, we might end up having a CTM matrix set that converts from sRGB to monitor color space.\nIf we land this, we\u0027ll have Skia already producing content in the target display color space, and, if we didn\u0027t miss anything, we should have CTM being an identity matrix.\n\nWe should evaluate disabling the quirks code first.",
+      "parentUuid": "27d87757_537a7087",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a74bacc_8048d78a",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 4
@@ -153,6 +171,24 @@
       "side": 1,
       "message": "Yeah, cleanup got the best of me, will split into a\nseparate CL :-)",
       "parentUuid": "7a74bacc_8048d78a",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f5489f2_043cafdf",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-24T18:11:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8dda760a_c5b8ce3b",
       "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
