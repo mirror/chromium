@@ -16,7 +16,7 @@
 #include "ui/base/user_activity/user_activity_detector.h"
 #include "ui/display/display.h"
 #include "ui/display/display_layout.h"
-#include "ui/display/manager/chromeos/touchscreen_util.h"
+#include "ui/display/manager/chromeos/touch_device_manager.h"
 #include "ui/display/manager/display_layout_store.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/display_manager_utilities.h"
@@ -180,7 +180,7 @@ void DisplayChangeObserver::OnDisplayModeChanged(
     displays.emplace_back(CreateManagedDisplayInfo(state, mode_info));
   }
 
-  AssociateTouchscreens(
+  display_manager_->touch_device_manager()->AssociateTouchscreens(
       &displays,
       ui::InputDeviceManager::GetInstance()->GetTouchscreenDevices());
   display_manager_->OnNativeDisplaysChanged(displays);
