@@ -133,10 +133,14 @@
 (allow ipc-posix-shm-read-data 
   (ipc-posix-name "apple.cfprefs.317580v1")
   (ipc-posix-name "apple.cfprefs.daemonv1")
+  (ipc-posix-name "apple.shm.cfprefsd.501")
+  (ipc-posix-name "apple.shm.cfprefsd.daemon")
   (ipc-posix-name "apple.shm.notification_center"))
 
 ; mach IPC
 (allow mach-lookup 
+  (global-name "com.apple.cfprefsd.daemon")
+  (global-name "com.apple.cfprefsd.agent")
   (global-name "com.apple.distributed_notifications@Uv3")
   (global-name "com.apple.fonts")
   (global-name "com.apple.logd")
