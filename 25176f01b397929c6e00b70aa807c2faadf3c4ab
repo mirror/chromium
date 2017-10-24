@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "879920a5_f833b756",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-24T20:13:37Z",
+      "side": 1,
+      "message": "nit: Update the comment.",
+      "range": {
+        "startLine": 196,
+        "startChar": 29,
+        "endLine": 196,
+        "endChar": 38
+      },
+      "revId": "25176f01b397929c6e00b70aa807c2faadf3c4ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
