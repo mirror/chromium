@@ -11,3 +11,4 @@ Local Modifications:
 - src/ots.cc: Changed include path to woff2_dec.h.
 - BUILD.gn: Added.
 - fuzz/: Added.
+- Renamed htons and friends - patches/0000-byteorder-macros.patch

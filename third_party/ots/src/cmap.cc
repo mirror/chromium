@@ -234,7 +234,7 @@ bool ParseFormat4(ots::Font *font, int platform, int encoding,
         }
         uint16_t glyph;
         std::memcpy(&glyph, data + glyph_id_offset, 2);
-        glyph = ntohs(glyph);
+        glyph = ots_ntohs(glyph);
         if (glyph >= num_glyphs) {
           return OTS_FAILURE_MSG("Range glyph reference too high (%d > %d)", glyph, num_glyphs - 1);
         }
