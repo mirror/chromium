@@ -52,6 +52,24 @@
       "revId": "9d35575067eb389d888186463c96a29b6362e7ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e4fea3_ea6a3b12",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-24T07:13:17Z",
+      "side": 1,
+      "message": "Not sure I understand this... most of the time |installing| and |waiting| is null unless you\u0027re doing a new registration or update... so I\u0027d think most of the time these attributes are null.\n\nUsing a null ptr seems like it\u0027d be cleaner than having to check handle_id or version_id for -1. But anyway still lgtm for now, I think we can iterate on this later.",
+      "parentUuid": "54185b66_02ba79bd",
+      "revId": "9d35575067eb389d888186463c96a29b6362e7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
