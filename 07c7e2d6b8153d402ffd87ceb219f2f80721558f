@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37044d07_77979eb6",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T21:03:02Z",
+      "side": 1,
+      "message": "What makes Unretained(this) safe?",
+      "revId": "07c7e2d6b8153d402ffd87ceb219f2f80721558f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4e816e_e6966e62",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-24T21:03:02Z",
+      "side": 1,
+      "message": "How would you get here with a null client?",
+      "revId": "07c7e2d6b8153d402ffd87ceb219f2f80721558f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
