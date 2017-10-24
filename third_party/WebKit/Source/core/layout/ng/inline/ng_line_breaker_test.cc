@@ -29,8 +29,7 @@ class NGLineBreakerTest : public NGBaseLayoutAlgorithmTest {
                                          LayoutUnit available_width) {
     DCHECK(node);
 
-    if (!node.IsPrepareLayoutFinished())
-      node.PrepareLayout();
+    node.PrepareLayoutIfNeeded();
 
     scoped_refptr<NGConstraintSpace> space =
         NGConstraintSpaceBuilder(
