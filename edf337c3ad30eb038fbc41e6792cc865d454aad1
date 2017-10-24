@@ -494,6 +494,24 @@
     },
     {
       "key": {
+        "uuid": "e307989f_a05526c7",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-24T19:14:38Z",
+      "side": 1,
+      "message": "Understood. I definitely agree these need work. This is actually one of the big items in the launcher tech debt (firming up these tests). I\u0027ll spend some time really digging into these to see what we are missing.",
+      "parentUuid": "0b071d4f_bf80e7b5",
+      "revId": "edf337c3ad30eb038fbc41e6792cc865d454aad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4cd1703_4a500cf4",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 5
