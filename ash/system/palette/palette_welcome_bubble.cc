@@ -115,19 +115,7 @@ void PaletteWelcomeBubble::RegisterProfilePrefs(PrefRegistrySimple* registry) {
 void PaletteWelcomeBubble::OnWidgetClosing(views::Widget* widget) {
   widget->RemoveObserver(this);
   bubble_view_ = nullptr;
-  active_user_pref_service_->SetBoolean(prefs::kShownPaletteWelcomeBubble,
-                                        true);
   ShellPort::Get()->RemovePointerWatcher(this);
-}
-
-void PaletteWelcomeBubble::OnPointerEventObserved(
-    const ui::PointerEvent& event,
-    const gfx::Point& location_in_screen,
-    gfx::NativeView target) {
-  if (bubble_view_ &&
-      !bubble_view_->GetBoundsInScreen().Contains(location_in_screen)) {
-    bubble_view_->GetWidget()->Close();
-  }
 }
 
 void PaletteWelcomeBubble::OnActiveUserPrefServiceChanged(
@@ -139,9 +127,15 @@ void PaletteWelcomeBubble::ShowIfNeeded() {
   DCHECK(active_user_pref_service_);
   if (!active_user_pref_service_->GetBoolean(
           prefs::kShownPaletteWelcomeBubble) &&
-      !BubbleShown()) {
+      !bubble_shown()) {
     Show();
   }
+}
+
+void PaletteWelcomeBubble::MarkAsShown() {
+  DCHECK(active_user_pref_service_);
+  return active_user_pref_service_->SetBoolean(
+      prefs::kShownPaletteWelcomeBubble, true);
 }
 
 views::ImageButton* PaletteWelcomeBubble::GetCloseButtonForTest() {
@@ -164,15 +158,40 @@ void PaletteWelcomeBubble::Show() {
     bubble_view_ =
         new WelcomeBubbleView(tray_, views::BubbleBorder::BOTTOM_RIGHT);
   }
+  active_user_pref_service_->SetBoolean(prefs::kShownPaletteWelcomeBubble,
+                                        true);
   bubble_view_->GetWidget()->Show();
   bubble_view_->GetWidget()->AddObserver(this);
   ShellPort::Get()->AddPointerWatcher(this,
                                       views::PointerWatcherEventTypes::BASIC);
+  ignore_stylus_up_event_ = true;
 }
 
 void PaletteWelcomeBubble::Hide() {
   if (bubble_view_)
     bubble_view_->GetWidget()->Close();
+}
+
+void PaletteWelcomeBubble::OnPointerEventObserved(
+    const ui::PointerEvent& event,
+    const gfx::Point& location_in_screen,
+    gfx::NativeView target) {
+  if (!bubble_view_)
+    return;
+
+  // Only look for up events, otherwise the bubble may show on the down event,
+  // and close right away on the up event.
+  if (event.type() != ui::ET_POINTER_UP)
+    return;
+
+  if (ignore_stylus_up_event_) {
+    ignore_stylus_up_event_ = false;
+    return;
+  }
+
+  if (!bubble_view_->GetBoundsInScreen().Contains(location_in_screen)) {
+    bubble_view_->GetWidget()->Close();
+  }
 }
 
 }  // namespace ash
