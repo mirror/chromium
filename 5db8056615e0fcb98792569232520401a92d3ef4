@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa9441df_00e08c97",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ChromeHomeDownloadManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-24T17:20:24Z",
+      "side": 1,
+      "message": "This catches the original NPE, but it passes whether using tabbedActivity or appContext to fire the intent to bring ChromeTabbedActivity to the foreground.",
+      "range": {
+        "startLine": 112,
+        "startChar": 16,
+        "endLine": 112,
+        "endChar": 84
+      },
+      "revId": "5db8056615e0fcb98792569232520401a92d3ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
