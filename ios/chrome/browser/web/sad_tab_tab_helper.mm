@@ -39,6 +39,7 @@ SadTabTabHelper::SadTabTabHelper(web::WebState* web_state,
                                  double repeat_failure_interval,
                                  id<SadTabTabHelperDelegate> delegate)
     : web::WebStateObserver(web_state),
+      web_state_(web_state),
       repeat_failure_interval_(repeat_failure_interval),
       delegate_(delegate) {
   AddApplicationDidBecomeActiveObserver();
@@ -70,6 +71,10 @@ void SadTabTabHelper::CreateForWebState(web::WebState* web_state,
 
 void SadTabTabHelper::SetDelegate(id<SadTabTabHelperDelegate> delegate) {
   delegate_ = delegate;
+}
+
+web::WebState* SadTabTabHelper::GetWebState() {
+  return web_state_;
 }
 
 void SadTabTabHelper::WasShown(web::WebState* web_state) {
@@ -119,7 +124,8 @@ void SadTabTabHelper::PresentSadTab(const GURL& url_causing_failure) {
       (url_causing_failure.EqualsIgnoringRef(last_failed_url_) &&
        seconds_since_last_failure < repeat_failure_interval_);
 
-  [delegate_ presentSadTabForRepeatedFailure:repeated_failure];
+  [delegate_ sadTabTabHelper:this
+      presentSadTabForRepeatedFailure:repeated_failure];
 
   last_failed_url_ = url_causing_failure;
   last_failed_timer_ = base::MakeUnique<base::ElapsedTimer>();
