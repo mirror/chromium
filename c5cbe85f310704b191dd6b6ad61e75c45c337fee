@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9203be16_53ff854f",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-24T03:31:30Z",
+      "side": 0,
+      "message": "I\u0027d like to keep this as restrictive as possible - can we add the following?\n\nurl::Origin origin(source_url());\n// The chrome://extensions page uses toggles which, when slid, do not invoke\n// a user gesture. Work around this for the chrome://extensions page.\n// TODO(crbug.com/...): Remove this exemption when sliding a toggle counts\n// as a gesture.\nbool allowed \u003d (origin.scheme() \u003d\u003d kChromeUIScheme \u0026\u0026\n                origin.host() \u003d\u003d kChromeUIExtensionsHost) ||\n               user_gesture();\nif (!allowed)\n  return RespondNow(Error(kRequiresUserGestureError));\n\n(and then update tests accordingly)",
+      "revId": "c5cbe85f310704b191dd6b6ad61e75c45c337fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
