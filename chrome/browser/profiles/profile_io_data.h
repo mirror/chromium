@@ -67,6 +67,10 @@ namespace data_reduction_proxy {
 class DataReductionProxyIOData;
 }
 
+namespace domain_reliability {
+class DomainReliabilityMonitor;
+}
+
 namespace extensions {
 class ExtensionThrottleManager;
 class InfoMap;
@@ -619,6 +623,9 @@ class ProfileIOData {
   mutable std::unique_ptr<certificate_transparency::TreeStateTracker>
       ct_tree_tracker_;
   mutable base::Closure ct_tree_tracker_unregistration_;
+
+  mutable domain_reliability::DomainReliabilityMonitor*
+      domain_reliability_monitor_unowned_;
 
   const Profile::ProfileType profile_type_;
 
