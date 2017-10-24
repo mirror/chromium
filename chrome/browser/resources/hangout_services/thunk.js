@@ -194,6 +194,9 @@ chrome.runtime.onMessageExternal.addListener(function(
           requestInfo, origin, experiments);
       doSendResponse();
       return false;
+    } else if (method == 'test.getRequestInfo') {
+      doSendResponse(requestInfo);
+      return false;
     }
 
     throw new Error('Unknown method: ' + method);
