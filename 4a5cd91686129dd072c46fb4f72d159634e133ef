@@ -45,6 +45,40 @@
       "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507aaafb_e968aefa",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-24T19:57:38Z",
+      "side": 1,
+      "message": "nit: adjust this comment to clarify how it should be used in test? (exactly matching the description for Fetch above is surprising)",
+      "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb6aa7a_0fedc353",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-24T19:57:38Z",
+      "side": 1,
+      "message": "Why is this necessary? Shouldn\u0027t the ResourceOwner\u003cScriptResource\u003e (i.e. PendingScript) suffice to keep it alive?",
+      "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
