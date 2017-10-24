@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "dcce0a7b_3de498e1",
+        "filename": "headless/public/util/compositor_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-24T13:16:55Z",
+      "side": 1,
+      "message": "See comment in implementation of WaitForCompositorReady. It\u0027s to avoid sending a flood of BeginFrames -- it can take a few hundred millisecs until the compositor is ready. Virtual time is likely paused until the compositor is ready, so this has to be real time. I\u0027d like to replace this with a different mechanism that doesn\u0027t need to send BeginFrames eventually.",
+      "parentUuid": "cabb84d3_1230b511",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "fcf1607a39f4fc0d4c618d6b21efbad26dedb4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac7a7c03_02ef7163",
         "filename": "headless/public/util/compositor_controller.h",
         "patchSetId": 4
@@ -68,6 +92,30 @@
       "revId": "fcf1607a39f4fc0d4c618d6b21efbad26dedb4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f2eb0f_357a1079",
+        "filename": "headless/public/util/compositor_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-24T13:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac7a7c03_02ef7163",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 29
+      },
+      "revId": "fcf1607a39f4fc0d4c618d6b21efbad26dedb4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "8aa37d75_503f9d68",
+        "filename": "headless/public/util/compositor_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-24T13:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d54e33d1_d58afb99",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "fcf1607a39f4fc0d4c618d6b21efbad26dedb4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "179459d5_45bcc286",
         "filename": "headless/public/util/compositor_controller.h",
         "patchSetId": 4
@@ -114,6 +186,30 @@
       "revId": "fcf1607a39f4fc0d4c618d6b21efbad26dedb4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbb2701_395fe236",
+        "filename": "headless/public/util/compositor_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-24T13:16:55Z",
+      "side": 1,
+      "message": "Nah, this needs to be public. We can only call this if we know that a main frame update is required - and only the embedder would know. It\u0027s intended for situations where e.g. the main frame size changes and we need to wait for the update to propagate down into a new surface before taking a screenshot.\n\nI\u0027m hoping we can remove the need for this at some point as well - maybe surface sync will help in these situations. Added a comment.",
+      "parentUuid": "179459d5_45bcc286",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 36
+      },
+      "revId": "fcf1607a39f4fc0d4c618d6b21efbad26dedb4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
