@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f70b38dc_ebb73d68",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T03:17:43Z",
+      "side": 1,
+      "message": "We probably don\u0027t need to commit error or do anything in this case, but can also note that in the comment? (E.g. \u0027we don\u0027t need to return an error as the client must be shutting down\u0027)",
+      "revId": "48be4a7c585eaa8fa9fb89a858108a4377a76022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9ceb9f_632d434f",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T03:17:43Z",
+      "side": 1,
+      "message": "nit: slightly prefer \u0027\u003e 1\u0027, or if it\u0027s just on/off make it a bool (e.g. fetch_request_restarted_) which saves readers from thinking about how many is too many",
+      "revId": "48be4a7c585eaa8fa9fb89a858108a4377a76022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b339812_3acbeab4",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-24T03:17:43Z",
+      "side": 1,
+      "message": "// Loading another resource reuses the existing connection to the ControllerServiceWorker\n// (i.e. it doesn\u0027t increase the get controller service worker count).",
+      "revId": "48be4a7c585eaa8fa9fb89a858108a4377a76022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
