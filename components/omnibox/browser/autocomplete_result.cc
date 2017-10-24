@@ -124,6 +124,26 @@ void AutocompleteResult::AppendMatches(const AutocompleteInput& input,
   alternate_nav_url_ = GURL();
 }
 
+// static
+void AutocompleteResult::MakeTailSuggestionsMutuallyExclusive(
+    ACMatches* matches) {
+  if (matches->size() >= 2) {
+    std::function<bool(const AutocompleteMatch&)> is_tail =
+        [](const AutocompleteMatch& match) {
+          return match.type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL;
+        };
+    if (is_tail((*matches)[0]) || is_tail((*matches)[1])) {
+      matches->erase(std::remove_if(std::next(matches->begin()), matches->end(),
+                                    std::not1(is_tail)),
+                     matches->end());
+    } else {
+      matches->erase(std::remove_if(std::next(matches->begin(), 2),
+                                    matches->end(), is_tail),
+                     matches->end());
+    }
+  }
+}
+
 void AutocompleteResult::SortAndCull(
     const AutocompleteInput& input,
     TemplateURLService* template_url_service) {
@@ -133,7 +153,6 @@ void AutocompleteResult::SortAndCull(
   SortAndDedupMatches(input.current_page_classification(), &matches_);
 
   // Sort and trim to the most relevant GetMaxMatches() matches.
-  size_t max_num_matches = std::min(GetMaxMatches(), matches_.size());
   CompareWithDemoteByType<AutocompleteMatch> comparing_object(
       input.current_page_classification());
   std::sort(matches_.begin(), matches_.end(), comparing_object);
@@ -142,8 +161,12 @@ void AutocompleteResult::SortAndCull(
   ACMatches::iterator it = FindTopMatch(&matches_);
   if (it != matches_.end())
     std::rotate(matches_.begin(), it, it + 1);
+#if !(defined(OS_ANDROID) || defined(OS_IOS))
+  MakeTailSuggestionsMutuallyExclusive(&matches_);
+#endif
   // In the process of trimming, drop all matches with a demoted relevance
   // score of 0.
+  size_t max_num_matches = std::min(GetMaxMatches(), matches_.size());
   size_t num_matches;
   for (num_matches = 0u; (num_matches < max_num_matches) &&
        (comparing_object.GetDemotedRelevance(*match_at(num_matches)) > 0);

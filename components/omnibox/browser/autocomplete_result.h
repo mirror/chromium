@@ -45,9 +45,15 @@ class AutocompleteResult {
   void AppendMatches(const AutocompleteInput& input,
                      const ACMatches& matches);
 
+  // If one of the first two matches are tail suggestions, removes all matches
+  // which aren't tail suggestions. Vice-versa if not tail suggestions.
+  static void MakeTailSuggestionsMutuallyExclusive(ACMatches* matches);
+
   // Removes duplicates, puts the list in sorted order and culls to leave only
-  // the best GetMaxMatches() matches.  Sets the default match to the best match
-  // and updates the alternate nav URL.
+  // the best GetMaxMatches() matches. Sets the default match to the best match
+  // and updates the alternate nav URL. On desktop, it filters the matches to be
+  // either all tail suggestions (except for the first match) or no tail
+  // suggestions.
   void SortAndCull(const AutocompleteInput& input,
                    TemplateURLService* template_url_service);
 
