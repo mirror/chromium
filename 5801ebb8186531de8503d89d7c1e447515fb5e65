@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0223ab0d_8f2e2e05",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-24T20:53:59Z",
+      "side": 1,
+      "message": "It will be moved to protected.",
+      "parentUuid": "630c9cfe_4fde5610",
+      "revId": "5801ebb8186531de8503d89d7c1e447515fb5e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acc8ef13_a2cea9b9",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-24T16:13:02Z",
       "side": 1,
       "message": "This will also go away eventually?",
+      "revId": "5801ebb8186531de8503d89d7c1e447515fb5e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a52625d6_23001281",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-24T20:53:59Z",
+      "side": 1,
+      "message": "I think we still want to make CU |A| be able to set property |x| on another type of CU |B| when property |y| is changed. And I think we prefer not to set property to CU from CUGObserver.",
+      "parentUuid": "acc8ef13_a2cea9b9",
       "revId": "5801ebb8186531de8503d89d7c1e447515fb5e65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
