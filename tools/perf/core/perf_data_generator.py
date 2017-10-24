@@ -32,6 +32,8 @@ from core.sharding_map_generator import load_benchmark_sharding_map
 
 
 _UNSCHEDULED_TELEMETRY_BENCHMARKS = set([
+  'v8.speedometer-future',
+  'v8.speedometer2-future'
   ])
 
 
