@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42a6af5a_ad9b4413",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T12:17:55Z",
+      "side": 1,
+      "message": "You\u0027re not really taking ownership of the string here, just make the parameter a const std::string\u0026 or base::StringPiece (latter is probably better).",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 3
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9483a7_3107d7f2",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T12:17:55Z",
+      "side": 1,
+      "message": "also const-ref / base::StringPiece here.",
+      "range": {
+        "startLine": 28,
+        "startChar": 18,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ef06e9_e668d73a",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T12:17:55Z",
+      "side": 1,
+      "message": "Judging by the name of the class I assume this is intended to be temporary, correct? We want to replace this by a proper U2fBleDevice class, similarly to the one you introduced in the prototype, right?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 2
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50fe0c3_22f444c4",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T12:17:55Z",
+      "side": 1,
+      "message": "Make this a private member to avoid duplication here and in DeviceAdded.",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 47
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6123287a_c83ab577",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T12:17:55Z",
+      "side": 1,
+      "message": "This can be inlined",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 40
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1daa5735_db19ed21",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T12:17:55Z",
+      "side": 1,
+      "message": "I\u0027d drop the const and remove |devices_|, i.e. shorten this to\n\n  std::string address \u003d device-\u003eGetAddress();\n  VLOG(2) \u003c\u003c \"U2F BLE device: \" \u003c\u003c address;\n  delegate_-\u003eOndeviceAdded(std::make_unique\u003cU2fFakeBleDevice\u003e(address);\n\n(without the VLOG it could be one line)",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 50
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cf22e8_ac9c3860",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T12:17:55Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0630a21f_f24040c2",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T12:17:55Z",
+      "side": 1,
+      "message": "Same here as in line 110.",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 48
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d004ab6_68c1479d",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T12:17:55Z",
+      "side": 1,
+      "message": "Replace this with\n\nif (base::ContainsKey(device-\u003eGetUUIDs(), service_uuid)) {",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 45
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0de8553_16201181",
+        "filename": "device/u2f/u2f_ble_discovery.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T12:17:55Z",
+      "side": 1,
+      "message": "Do we still need this?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0a1266_76a9ea6a",
+        "filename": "device/u2f/u2f_ble_uuids.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-24T12:17:55Z",
+      "side": 1,
+      "message": "Could you leave a reference where you got these UUIDs from?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 3
+      },
+      "revId": "8e31b46f35cafdd47c4e1055a1b91a334ca87abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
