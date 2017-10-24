@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72e43de4_fd7b513a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-24T00:52:47Z",
+      "side": 1,
+      "message": "update cl description :)",
+      "revId": "d56e87ef8cb7a1276af129ef39e9891fa73ad190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7550dc2a_56893309",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-24T00:52:47Z",
+      "side": 1,
+      "message": "revert this?",
+      "revId": "d56e87ef8cb7a1276af129ef39e9891fa73ad190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
