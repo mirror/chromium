@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c93df7e4_da22c31b",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-24T21:44:06Z",
+      "side": 1,
+      "message": "Does it not work to just move the hover block below the button down/up block? Don\u0027t think we need to call the hover functions multiple times.",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 16
+      },
+      "revId": "ee4c8c6362d563a6cb8c2650b03ab1aafd70a1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
