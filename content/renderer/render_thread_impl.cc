@@ -70,7 +70,7 @@
 #include "content/child/resource_scheduling_filter.h"
 #include "content/child/runtime_features.h"
 #include "content/child/thread_safe_sender.h"
-#include "content/child/web_database_impl.h"
+// #include "content/child/web_database_impl.h"
 #include "content/child/web_database_observer_impl.h"
 #include "content/child/worker_thread_registry.h"
 #include "content/common/child_process_messages.h"
@@ -756,8 +756,8 @@ void RenderThreadImpl::Init(
 
   {
     auto registry = std::make_unique<service_manager::BinderRegistry>();
-    registry->AddInterface(base::Bind(&WebDatabaseImpl::Create),
-                           GetIOTaskRunner());
+    // registry->AddInterface(base::Bind(&WebDatabaseImpl::Create),
+    //                        GetIOTaskRunner());
     registry->AddInterface(base::Bind(&SharedWorkerFactoryImpl::Create),
                            base::ThreadTaskRunnerHandle::Get());
     GetServiceManagerConnection()->AddConnectionFilter(
