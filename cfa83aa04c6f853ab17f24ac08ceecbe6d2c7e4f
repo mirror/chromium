@@ -118,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "fd864cd3_54df1cf3",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-24T09:12:15Z",
+      "side": 1,
+      "message": "The same discussion would happen with object grouping. For each CL we should know the object relationship, i.e., which object owns what.\n\nVRSession is a EventTargetWithInlineData which is a SW; so yeah, V8\u0027s wrapper will keep it alive if it is reachable. We only would need tracing if the Blink-side requires it for some other processing, otherwise V8 will trace it if(f) it is reachable there.\n\nI agree that unified GC will solve this by having everything traced. However, I also believe that for each of those CLs we should think through object relationship to understand what we are actually building :)",
+      "parentUuid": "6e52c733_2984bf6b",
+      "revId": "cfa83aa04c6f853ab17f24ac08ceecbe6d2c7e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a9b814e_011e2d2a",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
         "patchSetId": 7
