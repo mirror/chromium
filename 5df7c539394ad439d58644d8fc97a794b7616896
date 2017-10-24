@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3127963c_fd05e745",
+        "filename": "ios/chrome/browser/open_url_util.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-24T23:49:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e8d4096_f34606ff",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "5df7c539394ad439d58644d8fc97a794b7616896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d4952bd_e62df701",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fdc084b4_ccf88905",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-24T23:49:57Z",
+      "side": 1,
+      "message": "Yes, completionHandler should be called. Please see Patchset 11.",
+      "parentUuid": "6d4952bd_e62df701",
+      "range": {
+        "startLine": 730,
+        "startChar": 4,
+        "endLine": 730,
+        "endChar": 10
+      },
+      "revId": "5df7c539394ad439d58644d8fc97a794b7616896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75895857_246cd795",
         "filename": "ios/chrome/browser/web/external_app_launcher.h",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-24T11:24:24Z",
       "side": 1,
       "message": "This comment may be read as implying that the completion handler is not called if an app is not launched, maybe rephrase to make that clearer?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 74
+      },
+      "revId": "5df7c539394ad439d58644d8fc97a794b7616896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759569ec_5106680c",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-24T23:49:57Z",
+      "side": 1,
+      "message": "Rephrased, and also clarified that completionHandler will run on main thread.",
+      "parentUuid": "75895857_246cd795",
       "range": {
         "startLine": 21,
         "startChar": 0,
