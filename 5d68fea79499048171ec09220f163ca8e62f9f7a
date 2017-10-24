@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "0d0e75c2_d1196246",
+        "filename": "chrome/common/profiling/memlog_sender_pipe.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T23:43:44Z",
+      "side": 1,
+      "message": "sigh. I changed to a full blown class with accessors.",
+      "parentUuid": "ad156e60_229ee884",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 36
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04915013_9fedd6a3",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 25
@@ -226,6 +250,24 @@
     },
     {
       "key": {
+        "uuid": "9c35a1f9_757f6289",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T23:43:44Z",
+      "side": 1,
+      "message": "Okay. I made everything a local. Now everything is guarded by the lock at the beginning of Send().",
+      "parentUuid": "d9993b4d_40ffccb0",
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ad081e7_644b26a0",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 25
@@ -237,6 +279,30 @@
       "writtenOn": "2017-10-24T21:03:45Z",
       "side": 1,
       "message": "const?  Or just remove all these extra constants that have only one user?",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 18
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2754c2f_821aba42",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T23:43:44Z",
+      "side": 1,
+      "message": "shrug, removed constants. I think they\u0027re clearer, but don\u0027t really care. this code was copy-pastaed from PlatformChannelPair [discussed this with rockot@, decided this was better than extending the existing logic.",
+      "parentUuid": "2ad081e7_644b26a0",
       "range": {
         "startLine": 43,
         "startChar": 8,
@@ -266,6 +332,24 @@
     },
     {
       "key": {
+        "uuid": "42c3c2f6_713594ce",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T23:43:44Z",
+      "side": 1,
+      "message": "behold the wonder of clang format. I am a slave.",
+      "parentUuid": "63531d3d_3a334ddb",
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0272e357_e201c851",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 25
@@ -280,6 +364,24 @@
       "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b95c162_4acf21a2",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T23:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0272e357_e201c851",
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -306,6 +408,30 @@
     },
     {
       "key": {
+        "uuid": "22faf781_e2a37d4e",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T23:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ca640b5_da5dec7f",
+      "range": {
+        "startLine": 74,
+        "startChar": 55,
+        "endLine": 74,
+        "endChar": 62
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c67bd88_03b9c066",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 25
@@ -317,6 +443,30 @@
       "writtenOn": "2017-10-24T21:03:45Z",
       "side": 1,
       "message": "I *think* you\u0027re using g_waiting_for_write to synchronize with the global callback on the assumption that the lock serializes all callers. Thus, I think you should DCHECK this is false?\n\nAlso, can this timeout logic just be done via SetCommTimeouts() on the handle instead of moving to async writes?\n  https://msdn.microsoft.com/en-us/library/windows/desktop/aa365747(v\u003dvs.85).aspx\n \n(FYI, I\u0027m just reading the docs so I have no experience here...)",
+      "range": {
+        "startLine": 100,
+        "startChar": 5,
+        "endLine": 100,
+        "endChar": 11
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e76ce27_6376238c",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T23:43:44Z",
+      "side": 1,
+      "message": "Can\u0027t use SetCommTimeouts with named pipes:\nhttps://stackoverflow.com/questions/13767989/named-pipe-reading-timeout\n\nswitched to a local, so everything is guarded by lock_",
+      "parentUuid": "5c67bd88_03b9c066",
       "range": {
         "startLine": 100,
         "startChar": 5,
@@ -352,6 +502,30 @@
     },
     {
       "key": {
+        "uuid": "ea40092c_ebbed37e",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T23:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fcacf61_bc5259e6",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 21
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bee98495_626d29be",
         "filename": "chrome/common/profiling/profiling_client.cc",
         "patchSetId": 25
@@ -372,6 +546,30 @@
       "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f1e7bb_cf183012",
+        "filename": "chrome/common/profiling/profiling_client.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T23:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bee98495_626d29be",
+      "range": {
+        "startLine": 56,
+        "startChar": 62,
+        "endLine": 56,
+        "endChar": 63
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
