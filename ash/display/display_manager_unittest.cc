@@ -1350,7 +1350,7 @@ TEST_F(DisplayManagerTest, TestNativeDisplaysChanged) {
   EXPECT_EQ("0,0 500x500",
             GetDisplayForId(internal_display_id).bounds().ToString());
   EXPECT_EQ(2U, display_manager()->num_connected_displays());
-  EXPECT_EQ(11U, display_manager()->mirroring_display_id());
+  EXPECT_EQ(11U, display_manager()->GetMirroringDisplayIdList()[0]);
   EXPECT_TRUE(display_manager()->IsInMirrorMode());
 
   // Test display name.

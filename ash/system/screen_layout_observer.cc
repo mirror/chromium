@@ -51,18 +51,20 @@ base::string16 GetDisplayName(int64_t display_id) {
 base::string16 GetDisplaySize(int64_t display_id) {
   display::DisplayManager* display_manager = GetDisplayManager();
 
-  const display::Display* display =
-      &display_manager->GetDisplayForId(display_id);
+  const display::Display& display =
+      display_manager->GetDisplayForId(display_id);
 
   // We don't show display size for mirrored display. Fallback
   // to empty string if this happens on release build.
-  bool mirroring = display_manager->mirroring_display_id() == display_id;
+  bool mirroring =
+      display_manager->IsInMirrorMode() &&
+      display_manager->GetMirroringDisplayIdList()[0] == display_id;
   DCHECK(!mirroring);
   if (mirroring)
     return base::string16();
 
-  DCHECK(display->is_valid());
-  return base::UTF8ToUTF16(display->size().ToString());
+  DCHECK(display.is_valid());
+  return base::UTF8ToUTF16(display.size().ToString());
 }
 
 // Callback to handle a user selecting the notification view.
@@ -134,7 +136,9 @@ base::string16 GetEnterMirrorModeMessage() {
   if (display::Display::HasInternalDisplay()) {
     return l10n_util::GetStringFUTF16(
         IDS_ASH_STATUS_TRAY_DISPLAY_MIRRORING,
-        GetDisplayName(GetDisplayManager()->mirroring_display_id()));
+        GetDisplayName(GetDisplayManager()->IsInMirrorMode()
+                           ? GetDisplayManager()->GetMirroringDisplayIdList()[0]
+                           : display::kInvalidDisplayId));
   }
 
   return l10n_util::GetStringUTF16(
