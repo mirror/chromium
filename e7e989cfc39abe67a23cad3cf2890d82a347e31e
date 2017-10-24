@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f30335e2_6c597eb1",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-10-24T12:55:16Z",
+      "side": 1,
+      "message": "(I don\u0027t know this code very well, so please feel free to ignore...)\n\nI\u0027m skeptical here... The code below (particularly whatever happens in c-\u003eSetCSSSTyleSheet(.) may very well rely on the decoding to have happened. Of course, if it\u0027s actually an unused preload, then that won\u0027t happen because it won\u0027t have any clients. But... if that\u0027s the fact we\u0027re relying on [ \u003c---- not sure about that bit ], then it would be much cleaner to just to\n   if(IsUnusedPreload()) return;\n\nSo... the question is: Are we sure that\u0027s identical? If not, then I suggest that whatever problem the version with the immediate return causes would probably end up as (more subtle) bugs in the version you proposed. (Unfortunately, I don\u0027t understand the code enough to be sure either way...)",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 27
+      },
+      "revId": "e7e989cfc39abe67a23cad3cf2890d82a347e31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
