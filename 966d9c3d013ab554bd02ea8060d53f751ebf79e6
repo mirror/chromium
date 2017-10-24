@@ -16,6 +16,47 @@
       "revId": "966d9c3d013ab554bd02ea8060d53f751ebf79e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407852e9_4ecf2645",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2303,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T02:44:25Z",
+      "side": 1,
+      "message": "This is moot now.",
+      "parentUuid": "b01d47c7_38b6ce07",
+      "revId": "966d9c3d013ab554bd02ea8060d53f751ebf79e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "099509f7_b7c4ab5f",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 3912,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-24T02:44:25Z",
+      "side": 1,
+      "message": "We chatted with Sylvain and I learned that Prerender tab is not discarded even if the load has not been finished. Also tabLoadComplete:withSuccess: will be removed very soon, that\u0027s why Sylvain offered to use PageLoaded WebStateObserver callback. With that here is Sylvain\u0027s suggestion:\n\n\nclass TabHelper {\n  public:\n    DidInitiatePageLoad() {\n      StartTimer();\n    }\n\n    DidPromotePreload() {\n      if (webState-\u003eIsLoading())\n        StartTimer();  // prerender did not finish loading yet\n      else\n        RecordTime(0);  // prerender did finish loading\n    }\n\n  // WebStateObserver callbacks:\n    PageLoaded(bool success) {\n      if (success)\n        RecordTime(timer.Elapsed());\n      ResetTimer(); \n    }\n\n}\n\nThere will be no ResetAndReportLoadTime and Reset methods and DidPromotePreload will be called on line 3913. Sorry for misleading you with y initial suggestion.",
+      "range": {
+        "startLine": 3912,
+        "startChar": 29,
+        "endLine": 3912,
+        "endChar": 41
+      },
+      "revId": "966d9c3d013ab554bd02ea8060d53f751ebf79e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
