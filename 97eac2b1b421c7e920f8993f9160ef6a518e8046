@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "affb0993_6f2147f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-24T23:01:59Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "97eac2b1b421c7e920f8993f9160ef6a518e8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73e120d_3e89bdd9",
+        "filename": "components/viz/common/frame_sinks/copy_output_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-24T23:01:59Z",
+      "side": 1,
+      "message": "bikeshed: How about calling this set_scaled_output_subrect? (Or set_output_subrect?) set_area is just a little too vague.",
+      "revId": "97eac2b1b421c7e920f8993f9160ef6a518e8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
