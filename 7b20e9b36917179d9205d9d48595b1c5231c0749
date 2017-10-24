@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6e6ce1f_15881e57",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-24T04:33:47Z",
+      "side": 1,
+      "message": "The null-checking of mWebappHelper is somewhat inelegant. It would be cleaner if the helper itself just did the right thing and was never null.\n\nMore concretely, the helper would be something like:\n\nclass Helper {\n  public Helper(ScopePolicy scopePolicy, boolean requiresUnboundDisclosure, ...)\n\n  etc.\n}\n\nAnd then its methods would no-op or do something based on the options passed in at construction. WDYT?",
+      "range": {
+        "startLine": 317,
+        "startChar": 12,
+        "endLine": 317,
+        "endChar": 33
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f9587d3_18d14374",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-24T04:33:47Z",
+      "side": 1,
+      "message": "I think this should be in the helper, where you specify in the constructor the specific scope you want to use.",
+      "range": {
+        "startLine": 670,
+        "startChar": 4,
+        "endLine": 674,
+        "endChar": 0
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf8d98a_461d36b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-24T04:33:47Z",
+      "side": 1,
+      "message": "This name is a little generic. Specifically, this class is meant to manage the installed, user-visible behaviour (as opposed to the implementation details like processes, etc.).\n\nSomething like a WebappUxDelegate? Or WebappBehaviorDelegate? Naming is hard. :(",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
