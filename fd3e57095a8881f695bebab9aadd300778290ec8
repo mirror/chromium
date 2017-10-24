@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bc10019_cbd18a75",
+        "filename": "headless/public/util/compositor_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-24T15:48:50Z",
+      "side": 1,
+      "message": "typo: exhausted",
+      "range": {
+        "startLine": 35,
+        "startChar": 69,
+        "endLine": 35,
+        "endChar": 77
+      },
+      "revId": "fd3e57095a8881f695bebab9aadd300778290ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3fb6a43_6125f8bd",
+        "filename": "headless/public/util/compositor_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-24T15:48:50Z",
+      "side": 1,
+      "message": "Could this be a base::TimeDelta? We can\u0027t get very close to 1/60 otherwise.",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 41
+      },
+      "revId": "fd3e57095a8881f695bebab9aadd300778290ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4cdbb04_e338001b",
+        "filename": "headless/public/util/compositor_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-24T15:48:50Z",
+      "side": 1,
+      "message": "WaitUntilIdle",
+      "range": {
+        "startLine": 301,
+        "startChar": 58,
+        "endLine": 301,
+        "endChar": 68
+      },
+      "revId": "fd3e57095a8881f695bebab9aadd300778290ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
