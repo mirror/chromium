@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ead723e_31e1747a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "nit: add new line before.",
+      "range": {
+        "startLine": 345,
+        "startChar": 2,
+        "endLine": 345,
+        "endChar": 3
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68aadf9a_b5d944ab",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "you may update this.",
+      "range": {
+        "startLine": 32,
+        "startChar": 24,
+        "endLine": 32,
+        "endChar": 42
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c510d0c8_c8cede0a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "not you, but please add \".\" :)",
+      "range": {
+        "startLine": 59,
+        "startChar": 45,
+        "endLine": 59,
+        "endChar": 46
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31326a30_01f129e7",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "push-to-refresh",
+      "range": {
+        "startLine": 136,
+        "startChar": 25,
+        "endLine": 136,
+        "endChar": 38
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d1cf6f_335da9e0",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "movable-only",
+      "range": {
+        "startLine": 176,
+        "startChar": 48,
+        "endLine": 176,
+        "endChar": 55
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2589f92a_540775e6",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "Pointer to unique_ptr feels quite unusual. Why not just RemoteSuggestion*? I.e. remote_suggestion.get()?",
+      "range": {
+        "startLine": 178,
+        "startChar": 8,
+        "endLine": 178,
+        "endChar": 26
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8279211f_3332e4ca",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "Why not simply \"On\"? Same for the test below.",
+      "range": {
+        "startLine": 960,
+        "startChar": 46,
+        "endLine": 960,
+        "endChar": 50
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95bc3de9_c65f555d",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "that\u0027s risky :) this test may start to fail in 2018 (e.g. if we decide to ignore expired suggestions). Use 2100 instead.",
+      "range": {
+        "startLine": 971,
+        "startChar": 30,
+        "endLine": 971,
+        "endChar": 54
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101d1937_67a348a2",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "you don\u0027t need this.",
+      "range": {
+        "startLine": 974,
+        "startChar": 10,
+        "endLine": 977,
+        "endChar": 12
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f4b788_4634378a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "Move this up please.",
+      "range": {
+        "startLine": 981,
+        "startChar": 2,
+        "endLine": 982,
+        "endChar": 57
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc13fd72_f1bc692c",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "Please move this right above OnMessage (i.e. where you actually expect this call), it makes much easier to understand the test.",
+      "range": {
+        "startLine": 993,
+        "startChar": 2,
+        "endLine": 993,
+        "endChar": 71
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14dcb5a_77e8fd14",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "Same as above, please move right before OnMessage.",
+      "range": {
+        "startLine": 1020,
+        "startChar": 2,
+        "endLine": 1020,
+        "endChar": 13
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae68d8c8_604d95ba",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "Update, e.g.\n\n\"start listening for pushed breaking news or refresh requests\"",
+      "range": {
+        "startLine": 23,
+        "startChar": 48,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1bc0de3_042e7d1c",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49470cc_df33fa1d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 48854,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-24T08:39:14Z",
+      "side": 1,
+      "message": "It is important to say that you record missing action or invalid action value as well.",
+      "range": {
+        "startLine": 48854,
+        "startChar": 43,
+        "endLine": 48854,
+        "endChar": 44
+      },
+      "revId": "fef777e9c4a43b1ec6389bbcf79cd24c04fc8b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
