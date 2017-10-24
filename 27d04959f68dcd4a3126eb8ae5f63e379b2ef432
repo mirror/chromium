@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5adb0e93_61ad5be9",
+        "filename": "base/trace_event/memory_dump_request_args.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-24T13:19:34Z",
+      "side": 1,
+      "message": "not a huge deal but can you move it between light and detailed, just to keep this ordered by increasing richness of the equivalent values..",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 44
+      },
+      "revId": "27d04959f68dcd4a3126eb8ae5f63e379b2ef432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4cde4c2_6507d845",
+        "filename": "base/trace_event/memory_dump_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-24T13:19:34Z",
+      "side": 1,
+      "message": "I think the right comment here is: there is no use case to request a periodic dump which contains details that are useful only for the heap-profiler. Or something along those lines.",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 69
+      },
+      "revId": "27d04959f68dcd4a3126eb8ae5f63e379b2ef432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f6f3b8_af098b05",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-24T13:19:34Z",
+      "side": 1,
+      "message": "Lol yeah, no idea how we ended up with the negated logic here. Thanks for fixing this. Is way more readable.",
+      "range": {
+        "startLine": 179,
+        "startChar": 5,
+        "endLine": 180,
+        "endChar": 60
+      },
+      "revId": "27d04959f68dcd4a3126eb8ae5f63e379b2ef432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
