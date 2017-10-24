@@ -22,6 +22,30 @@
       "revId": "08d45cd1b978ffaa3b5a935876f7594312c7d372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4909d3_615b7fed",
+        "filename": "ui/base/test/user_interactive_test_case.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-24T22:45:35Z",
+      "side": 0,
+      "message": "\u003e Trent, where we intending to use this anywhere else? I would be inclined to move it to the single test that actually uses it.\n\nNothing else needs it (it predates TestBrowserDialog - the other thing using it switched to TestBrowserDialog instead).\n\nRemoving it from ui/base sgtm.\n\nThe objective C code can go to something like\n\nchrome/browser/ui/test/test_browser_dialog_mac.mm",
+      "parentUuid": "8c0c1e7f_2b328135",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "08d45cd1b978ffaa3b5a935876f7594312c7d372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
