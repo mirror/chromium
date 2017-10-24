@@ -93,7 +93,7 @@ TEST_F(FakeVideoCaptureDeviceTest,
 
   fake_device_proxy_.reset();
   factory_.reset();
-  factory_provider_.reset();
+  service_.reset();
 
   wait_loop.Run();
 }

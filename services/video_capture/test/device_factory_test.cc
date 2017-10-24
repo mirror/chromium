@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "services/video_capture/test/device_factory_provider_test.h"
+#include "services/video_capture/test/device_factory_test.h"
 
 #include "base/command_line.h"
 #include "media/base/media_switches.h"
@@ -19,12 +19,12 @@ ServiceManagerListenerImpl::ServiceManagerListenerImpl(
 
 ServiceManagerListenerImpl::~ServiceManagerListenerImpl() = default;
 
-DeviceFactoryProviderTest::DeviceFactoryProviderTest()
+DeviceFactoryTest::DeviceFactoryTest()
     : service_manager::test::ServiceTest("video_capture_unittests") {}
 
-DeviceFactoryProviderTest::~DeviceFactoryProviderTest() = default;
+DeviceFactoryTest::~DeviceFactoryTest() = default;
 
-void DeviceFactoryProviderTest::SetUp() {
+void DeviceFactoryTest::SetUp() {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kUseFakeDeviceForMediaStream);
 
@@ -40,9 +40,9 @@ void DeviceFactoryProviderTest::SetUp() {
   service_manager->AddListener(std::move(listener));
   loop.Run();
 
-  connector()->BindInterface(mojom::kServiceName, &factory_provider_);
-  factory_provider_->SetShutdownDelayInSeconds(0.0f);
-  factory_provider_->ConnectToDeviceFactory(mojo::MakeRequest(&factory_));
+  connector()->BindInterface(mojom::kServiceName, &service_);
+  service_->SetShutdownDelayInSeconds(0.0f);
+  service_->ConnectToDeviceFactory(mojo::MakeRequest(&factory_));
 }
 
 }  // namespace video_capture

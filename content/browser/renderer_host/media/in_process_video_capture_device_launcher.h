@@ -16,7 +16,7 @@
 
 namespace content {
 
-// Implementation of BuildableVideoCaptureDevice that creates capture devices
+// Implementation of VideoCaptureDeviceLauncher that creates capture devices
 // in the same process as it is being operated on, which must be the Browser
 // process. The devices are operated on the given |device_task_runner|.
 // Instances of this class must be operated from the Browser process IO thread.

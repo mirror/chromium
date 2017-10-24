@@ -12,7 +12,7 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
-#include "services/video_capture/public/interfaces/device_factory_provider.mojom.h"
+#include "services/video_capture/public/interfaces/service_entry_point.mojom.h"
 #include "services/video_capture/public/interfaces/testing_controls.mojom.h"
 
 #if defined(OS_WIN)
@@ -34,8 +34,7 @@ class ServiceImpl : public service_manager::Service {
   bool OnServiceManagerConnectionLost() override;
 
  private:
-  void OnDeviceFactoryProviderRequest(
-      mojom::DeviceFactoryProviderRequest request);
+  void OnServiceEntryPointRequest(mojom::ServiceEntryPointRequest request);
   void OnTestingControlsRequest(mojom::TestingControlsRequest request);
   void SetShutdownDelayInSeconds(float seconds);
   void MaybeRequestQuitDelayed();

@@ -13,7 +13,7 @@ enum DeviceAccessResultCode {
   ERROR_DEVICE_NOT_FOUND
 };
 
-// Enables access to a set of video capture devices.
+// Enables (single-client) access to a set of video capture devices.
 // Typical operation is to first call GetDeviceInfos() to obtain
 // information about available devices. The |device_id| of the infos can
 // subsequently be used to create an instance of

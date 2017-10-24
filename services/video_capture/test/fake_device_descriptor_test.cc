@@ -12,12 +12,12 @@ using testing::Invoke;
 namespace video_capture {
 
 FakeDeviceDescriptorTest::FakeDeviceDescriptorTest()
-    : video_capture::DeviceFactoryProviderTest() {}
+    : video_capture::DeviceFactoryTest() {}
 
 FakeDeviceDescriptorTest::~FakeDeviceDescriptorTest() = default;
 
 void FakeDeviceDescriptorTest::SetUp() {
-  video_capture::DeviceFactoryProviderTest::SetUp();
+  video_capture::DeviceFactoryTest::SetUp();
 
   base::RunLoop wait_loop;
   EXPECT_CALL(device_info_receiver_, Run(_))

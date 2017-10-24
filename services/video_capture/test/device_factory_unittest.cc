@@ -7,7 +7,7 @@
 #include "base/test/mock_callback.h"
 #include "services/video_capture/public/interfaces/constants.mojom.h"
 #include "services/video_capture/public/interfaces/device_factory.mojom.h"
-#include "services/video_capture/test/device_factory_provider_test.h"
+#include "services/video_capture/test/device_factory_test.h"
 
 using testing::Exactly;
 using testing::_;
@@ -18,12 +18,11 @@ namespace video_capture {
 
 // This alias ensures test output is easily attributed to this service's tests.
 // TODO(rockot/chfremer): Consider just renaming the type.
-using VideoCaptureServiceDeviceFactoryProviderTest = DeviceFactoryProviderTest;
+using VideoCaptureServiceDeviceFactoryTest = DeviceFactoryTest;
 
 // Tests that an answer arrives from the service when calling
 // GetDeviceInfos().
-TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
-       GetDeviceInfosCallbackArrives) {
+TEST_F(VideoCaptureServiceDeviceFactoryTest, GetDeviceInfosCallbackArrives) {
   base::RunLoop wait_loop;
   EXPECT_CALL(device_info_receiver_, Run(_))
       .Times(Exactly(1))
@@ -33,7 +32,7 @@ TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
   wait_loop.Run();
 }
 
-TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
+TEST_F(VideoCaptureServiceDeviceFactoryTest,
        FakeDeviceFactoryEnumeratesOneDevice) {
   base::RunLoop wait_loop;
   size_t num_devices_enumerated = 0;
@@ -53,7 +52,7 @@ TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
 
 // Tests that VideoCaptureDeviceFactory::CreateDeviceProxy() returns an error
 // code when trying to create a device for an invalid descriptor.
-TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
+TEST_F(VideoCaptureServiceDeviceFactoryTest,
        ErrorCodeOnCreateDeviceForInvalidDescriptor) {
   const std::string invalid_device_id = "invalid";
   base::RunLoop wait_loop;
@@ -74,7 +73,7 @@ TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
 // Tests that the service requests to be closed when the last client disconnects
 // after not having done anything other than obtaining a connection to the
 // fake device factory.
-TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
+TEST_F(VideoCaptureServiceDeviceFactoryTest,
        ServiceQuitsWhenNoClientConnected) {
   base::RunLoop wait_loop;
   EXPECT_CALL(*service_state_observer_, OnServiceStopped(_))
@@ -85,7 +84,7 @@ TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
 
   // Exercise: Disconnect from service by discarding our references to it.
   factory_.reset();
-  factory_provider_.reset();
+  service_.reset();
 
   wait_loop.Run();
 }

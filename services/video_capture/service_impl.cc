@@ -6,9 +6,9 @@
 
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/service_context.h"
-#include "services/video_capture/device_factory_provider_impl.h"
 #include "services/video_capture/public/interfaces/constants.mojom.h"
 #include "services/video_capture/public/uma/video_capture_service_event.h"
+#include "services/video_capture/service_entry_point_impl.h"
 #include "services/video_capture/testing_controls_impl.h"
 
 namespace video_capture {
@@ -30,9 +30,9 @@ void ServiceImpl::OnStart() {
   ref_factory_ =
       base::MakeUnique<service_manager::ServiceContextRefFactory>(base::Bind(
           &ServiceImpl::MaybeRequestQuitDelayed, base::Unretained(this)));
-  registry_.AddInterface<mojom::DeviceFactoryProvider>(
+  registry_.AddInterface<mojom::ServiceEntryPoint>(
       // Unretained |this| is safe because |registry_| is owned by |this|.
-      base::Bind(&ServiceImpl::OnDeviceFactoryProviderRequest,
+      base::Bind(&ServiceImpl::OnServiceEntryPointRequest,
                  base::Unretained(this)));
   registry_.AddInterface<mojom::TestingControls>(
       // Unretained |this| is safe because |registry_| is owned by |this|.
@@ -54,11 +54,11 @@ bool ServiceImpl::OnServiceManagerConnectionLost() {
   return true;
 }
 
-void ServiceImpl::OnDeviceFactoryProviderRequest(
-    mojom::DeviceFactoryProviderRequest request) {
+void ServiceImpl::OnServiceEntryPointRequest(
+    mojom::ServiceEntryPointRequest request) {
   DCHECK(thread_checker_.CalledOnValidThread());
   mojo::MakeStrongBinding(
-      base::MakeUnique<DeviceFactoryProviderImpl>(
+      base::MakeUnique<ServiceEntryPointImpl>(
           ref_factory_->CreateRef(),
           // Use of unretained |this| is safe, because the
           // VideoCaptureServiceImpl has shared ownership of |this| via the

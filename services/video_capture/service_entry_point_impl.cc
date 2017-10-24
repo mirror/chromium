@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "services/video_capture/device_factory_provider_impl.h"
+#include "services/video_capture/service_entry_point_impl.h"
 
 #include "base/memory/ptr_util.h"
 #include "media/capture/video/fake_video_capture_device_factory.h"
@@ -24,25 +24,30 @@ std::unique_ptr<media::VideoCaptureJpegDecoder> CreateJpegDecoder() {
 
 namespace video_capture {
 
-DeviceFactoryProviderImpl::DeviceFactoryProviderImpl(
+ServiceEntryPointImpl::ServiceEntryPointImpl(
     std::unique_ptr<service_manager::ServiceContextRef> service_ref,
     base::Callback<void(float)> set_shutdown_delay_cb)
     : service_ref_(std::move(service_ref)),
       set_shutdown_delay_cb_(std::move(set_shutdown_delay_cb)) {}
 
-DeviceFactoryProviderImpl::~DeviceFactoryProviderImpl() {}
+ServiceEntryPointImpl::~ServiceEntryPointImpl() {}
 
-void DeviceFactoryProviderImpl::ConnectToDeviceFactory(
+void ServiceEntryPointImpl::ConnectToDeviceFactory(
     mojom::DeviceFactoryRequest request) {
   LazyInitializeDeviceFactory();
   factory_bindings_.AddBinding(device_factory_.get(), std::move(request));
 }
 
-void DeviceFactoryProviderImpl::SetShutdownDelayInSeconds(float seconds) {
+void ServiceEntryPointImpl::ConnectToCaptureSessionFactory(
+    mojom::CaptureSessionFactoryRequest request) {
+  NOTIMPLEMENTED();
+}
+
+void ServiceEntryPointImpl::SetShutdownDelayInSeconds(float seconds) {
   set_shutdown_delay_cb_.Run(seconds);
 }
 
-void DeviceFactoryProviderImpl::LazyInitializeDeviceFactory() {
+void ServiceEntryPointImpl::LazyInitializeDeviceFactory() {
   if (device_factory_)
     return;
 

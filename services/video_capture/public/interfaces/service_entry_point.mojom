@@ -5,13 +5,22 @@
 module video_capture.mojom;
 
 import "services/video_capture/public/interfaces/device_factory.mojom";
+import "services/video_capture/public/interfaces/capture_session_factory.mojom";
 
 // Entry point to the Video Capture Service API.
 // The factory provides access to the capture devices connected to the system.
 // By using command-line switches, it is possible to replace this with a "fake"
 // factory, which provides access to fake devices that generates test frames.
-interface DeviceFactoryProvider  {
+interface ServiceEntryPoint  {
+  // Obtains a handle to a singleton DeviceFactory provided by the service.
+  // The DeviceFactory can be used for single-client access to the video capture
+  // devices.
   ConnectToDeviceFactory(DeviceFactory& request);
+
+  // Obtains a handle to a singleton CaptureSessionFactory provided by the
+  // service. The CaptureSessionFactory can be used for multi-client access to
+  // the video capture devices.
+  ConnectToCaptureSessionFactory(CaptureSessionFactory& request);
 
   // The service shuts down after a certain delay when no client is connected.
   // This method allows clients to customize this delay.

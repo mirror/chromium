@@ -33,10 +33,17 @@
 #include "base/android/application_status_listener.h"
 #endif
 
+// In order to make multi-client distribution part of the video capture service,
+// the public API of VideoCaptureManager must no longer know about
+// VideoCaptureController. Instead, connecting to a session should return a
+// SessionConnection handle.
+
 namespace content {
 class VideoCaptureController;
 class VideoCaptureControllerEventHandler;
 
+// TODO: Update the class description to reflect what its actual
+// responsibilities are.
 // VideoCaptureManager is used to open/close, start/stop, enumerate available
 // video capture devices, and manage VideoCaptureController's.
 // In its main usage in production, an instance is created by MediaStreamManager
@@ -48,12 +55,11 @@ class CONTENT_EXPORT VideoCaptureManager
  public:
   using VideoCaptureDevice = media::VideoCaptureDevice;
 
-  // Callback used to signal the completion of a controller lookup.
-  using DoneCB =
-      base::Callback<void(const base::WeakPtr<VideoCaptureController>&)>;
+  using ConnectClientCallback =
+      base::OnceCallback<void(const base::WeakPtr<VideoCaptureSession>&)>;
 
   explicit VideoCaptureManager(
-      std::unique_ptr<VideoCaptureProvider> video_capture_provider,
+      std::unique_ptr<MultiClientVideoCaptureProvider> video_capture_provider,
       base::RepeatingCallback<void(const std::string&)> emit_log_message_cb);
 
   // AddVideoCaptureObserver() can be called only before any devices are opened.
@@ -89,42 +95,7 @@ class CONTENT_EXPORT VideoCaptureManager
                      const media::VideoCaptureParams& capture_params,
                      VideoCaptureControllerID client_id,
                      VideoCaptureControllerEventHandler* client_handler,
-                     const DoneCB& done_cb);
-
-  // Called by VideoCaptureHost to remove |client_handler|. If this is the last
-  // client of the device, the |controller| and its VideoCaptureDevice may be
-  // destroyed. The client must not access |controller| after calling this
-  // function.
-  void DisconnectClient(VideoCaptureController* controller,
-                        VideoCaptureControllerID client_id,
-                        VideoCaptureControllerEventHandler* client_handler,
-                        bool aborted_due_to_error);
-
-  // Called by VideoCaptureHost to pause to update video buffer specified by
-  // |client_id| and |client_handler|. If all clients of |controller| are
-  // paused, the corresponding device will be closed.
-  void PauseCaptureForClient(
-      VideoCaptureController* controller,
-      VideoCaptureControllerID client_id,
-      VideoCaptureControllerEventHandler* client_handler);
-
-  // Called by VideoCaptureHost to resume to update video buffer specified by
-  // |client_id| and |client_handler|. The |session_id| and |params| should be
-  // same as those used in ConnectClient().
-  // If this is first active client of |controller|, device will be allocated
-  // and it will take a little time to resume.
-  // Allocating device could failed if other app holds the camera, the error
-  // will be notified through VideoCaptureControllerEventHandler::OnError().
-  void ResumeCaptureForClient(
-      media::VideoCaptureSessionId session_id,
-      const media::VideoCaptureParams& params,
-      VideoCaptureController* controller,
-      VideoCaptureControllerID client_id,
-      VideoCaptureControllerEventHandler* client_handler);
-
-  // Called by VideoCaptureHost to request a refresh frame from the video
-  // capture device.
-  void RequestRefreshFrameForClient(VideoCaptureController* controller);
+                     ConnectClientCallback done_cb);
 
   // Retrieves all capture supported formats for a particular device. Returns
   // false if the |capture_session_id| is not found. The supported formats are
@@ -178,12 +149,6 @@ class CONTENT_EXPORT VideoCaptureManager
   // As a side-effect, updates |devices_info_cache_|.
   void EnumerateDevices(const EnumerationCallback& client_callback);
 
-  // VideoCaptureDeviceLaunchObserver implementation:
-  void OnDeviceLaunched(VideoCaptureController* controller) override;
-  void OnDeviceLaunchFailed(VideoCaptureController* controller) override;
-  void OnDeviceLaunchAborted() override;
-  void OnDeviceConnectionLost(VideoCaptureController* controller) override;
-
   // Retrieves camera calibration information for a particular device. Returns
   // nullopt_t if the |device_id| is not found or camera calibration information
   // is not available for the device.  Camera calibration is cached during
@@ -194,7 +159,6 @@ class CONTENT_EXPORT VideoCaptureManager
  private:
   class CaptureDeviceStartRequest;
 
-  using SessionMap = std::map<media::VideoCaptureSessionId, MediaStreamDevice>;
   using DeviceStartQueue = std::list<CaptureDeviceStartRequest>;
   using VideoCaptureDeviceDescriptor = media::VideoCaptureDeviceDescriptor;
   using VideoCaptureDeviceDescriptors = media::VideoCaptureDeviceDescriptors;
@@ -212,44 +176,8 @@ class CONTENT_EXPORT VideoCaptureManager
   void OnClosed(MediaStreamType type,
                 media::VideoCaptureSessionId capture_session_id);
 
-  // Checks to see if |controller| has no clients left. If so, remove it from
-  // the list of controllers, and delete it asynchronously. |controller| may be
-  // freed by this function.
-  void DestroyControllerIfNoClients(VideoCaptureController* controller);
-
-  // Finds a VideoCaptureController in different ways: by |session_id|, by its
-  // |device_id| and |type| (if it is already opened), by its |controller| or by
-  // its |serial_id|. In all cases, if not found, nullptr is returned.
-  VideoCaptureController* LookupControllerBySessionId(int session_id);
-  VideoCaptureController* LookupControllerByMediaTypeAndDeviceId(
-      MediaStreamType type,
-      const std::string& device_id) const;
-  bool IsControllerPointerValid(const VideoCaptureController* controller) const;
-  scoped_refptr<VideoCaptureController> GetControllerSharedRef(
-      VideoCaptureController* controller) const;
-
   // Finds the device info by |id| in |devices_info_cache_|, or nullptr.
   media::VideoCaptureDeviceInfo* GetDeviceInfoById(const std::string& id);
-
-  // Finds a VideoCaptureController for the indicated |capture_session_id|,
-  // creating a fresh one if necessary. Returns nullptr if said
-  // |capture_session_id| is invalid.
-  VideoCaptureController* GetOrCreateController(
-      media::VideoCaptureSessionId capture_session_id,
-      const media::VideoCaptureParams& params);
-
-  // Starting a capture device can take 1-2 seconds.
-  // To avoid multiple unnecessary start/stop commands to the OS, each start
-  // request is queued in |device_start_request_queue_|.
-  // QueueStartDevice creates a new entry in |device_start_request_queue_| and
-  // posts a
-  // request to start the device on the device thread unless there is
-  // another request pending start.
-  void QueueStartDevice(media::VideoCaptureSessionId session_id,
-                        VideoCaptureController* controller,
-                        const media::VideoCaptureParams& params);
-  void DoStopDevice(VideoCaptureController* controller);
-  void ProcessDeviceStartRequestQueue();
 
   void MaybePostDesktopCaptureWindowId(media::VideoCaptureSessionId session_id);
 
@@ -272,21 +200,18 @@ class CONTENT_EXPORT VideoCaptureManager
   // the Open() entry point. The keys are session_id's. This map is used to
   // determine which device to use when ConnectClient() occurs. Used
   // only on the IO thread.
-  SessionMap sessions_;
+  std::map<media::VideoCaptureSessionId, MediaStreamDevice> sessions_;
 
   // Currently opened VideoCaptureController instances. The device may or may
   // not be started. This member is only accessed on IO thread.
   std::vector<scoped_refptr<VideoCaptureController>> controllers_;
 
-  // TODO(chfremer): Consider using CancellableTaskTracker, see
-  // crbug.com/598465.
-  DeviceStartQueue device_start_request_queue_;
-
   // Queue to keep photo-associated requests waiting for a device to initialize,
   // bundles a session id integer and an associated photo-related request.
   std::list<std::pair<int, base::Closure>> photo_request_queue_;
 
-  const std::unique_ptr<VideoCaptureProvider> video_capture_provider_;
+  const std::unique_ptr<MultiClientVideoCaptureProvider>
+      video_capture_provider_;
   base::RepeatingCallback<void(const std::string&)> emit_log_message_cb_;
 
   base::ObserverList<media::VideoCaptureObserver> capture_observers_;

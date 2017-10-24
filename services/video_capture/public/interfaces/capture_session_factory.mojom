@@ -1,0 +1,70 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module video_capture.mojom;
+
+import "media/capture/mojo/video_capture_types.mojom";
+import "services/video_capture/public/interfaces/receiver.mojom";
+
+enum ConnectToDeviceAnswerType {
+  DeviceNotFound,
+  ConnectionEstablishedWithDesiredSettings,
+  ConnectionEstablishedWithDifferentSettings,
+};
+
+struct ConnectToDeviceAnswer {
+  ConnectToDeviceAnswerType answer_type;
+  media.mojom.VideoCaptureParams settings;
+};
+
+interface CaptureSession {
+  Suspend();
+  Resume();
+  // Closes the session. As soon as the callback is received, it is guaranteed
+  // that no more frames are sent to the corresponding Receiver. Note:
+  // Discarding the CaptureSession instance also closes the session, but does
+  // not produce an event indicating when it is safe to assume that no more
+  // frames arrive at the Receiver.
+  Close() => ();
+};
+
+// Provides multi-client access to a set of video capture devices.
+interface CaptureSessionFactory {
+  // Returns a list of all devices and corresponding supported formats. Note,
+  // that this includes devices that are currently in use and, for such devices,
+  // may include formats that are not currently eligible. Clients are expected
+  // to call method GetEligibleFormats() to query which formats are currently
+  // eligible.
+  GetDeviceInfos()
+      => (array<media.mojom.VideoCaptureDeviceInfo> device_infos);
+
+  // Returns a list of formats that a newly connecting client is currently able
+  // to obtain. In case that the device is already serving frames to another
+  // client, the eligible formats may consist of just the single same format
+  // that it is currently being served. If |device_id| does not correspond to
+  // any known device, the returned |formats| is empty.
+  GetEligibleFormats(string device_id)
+      => (array<media.mojom.VideoCaptureFormat> formats);
+
+  // Establishes a connection to a device, which may or may not be already in
+  // use by different clients. Note that, since other clients may start using
+  // a device at any time, it cannot be guaranteed that the connection will
+  // deliver the |desired_settings|, even if they have been reported as eligible
+  // in a previous call to GetEligibleFormats().
+  // Clients need to check the |answer| to find out what settings they actually
+  // obtained. Upon a successful connection, the provided |session| request will
+  // be bound to a CaptureSession that is initially suspended. This allows
+  // clients to abandon the session without receiving any frames in case they
+  // received settings they cannot work with.
+  // After the client closes (= releases) the |session| the |receiver| may still
+  // receive frames, because of the asynchronous nature of the calls. If clients
+  // require an event indicating that no more frames will be sent to |receiver|,
+  // they are expected to call method Close() on the |session|.
+  ConnectToDevice(
+      string device_id,
+      media.mojom.VideoCaptureParams desired_settings,
+      video_capture.mojom.Receiver receiver,
+      CaptureSession& session)
+          => (ConnectToDeviceAnswer answer);
+};

@@ -29,12 +29,12 @@ source_set("lib") {
   sources = [
     "device_factory_media_to_mojo_adapter.cc",
     "device_factory_media_to_mojo_adapter.h",
-    "device_factory_provider_impl.cc",
-    "device_factory_provider_impl.h",
     "device_media_to_mojo_adapter.cc",
     "device_media_to_mojo_adapter.h",
     "receiver_mojo_to_media_adapter.cc",
     "receiver_mojo_to_media_adapter.h",
+    "service_entry_point_impl.cc",
+    "service_entry_point_impl.h",
     "service_impl.cc",
     "service_impl.h",
     "testing_controls_impl.cc",
@@ -60,9 +60,9 @@ source_set("tests") {
   testonly = true
 
   sources = [
-    "test/device_factory_provider_test.cc",
-    "test/device_factory_provider_test.h",
-    "test/device_factory_provider_unittest.cc",
+    "test/device_factory_test.cc",
+    "test/device_factory_test.h",
+    "test/device_factory_unittest.cc",
     "test/fake_device_descriptor_test.cc",
     "test/fake_device_descriptor_test.h",
     "test/fake_device_descriptor_unittest.cc",

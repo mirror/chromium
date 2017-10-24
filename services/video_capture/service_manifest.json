@@ -7,7 +7,7 @@
       "provides" : {
         "capture" : ["video_capture::mojom::DeviceFactoryProvider"],
         "tests" : [
-          "video_capture::mojom::DeviceFactoryProvider",
+          "video_capture::mojom::ServiceEntryPoint",
           "video_capture::mojom::TestingControls"
         ]
       },

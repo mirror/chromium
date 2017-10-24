@@ -10,21 +10,23 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
-#include "services/video_capture/public/interfaces/device_factory_provider.mojom.h"
+#include "services/video_capture/public/interfaces/service_entry_point.mojom.h"
 
 namespace video_capture {
 
 class DeviceFactoryMediaToMojoAdapter;
 
-class DeviceFactoryProviderImpl : public mojom::DeviceFactoryProvider {
+class ServiceEntryPointImpl : public mojom::ServiceEntryPoint {
  public:
-  DeviceFactoryProviderImpl(
+  ServiceEntryPointImpl(
       std::unique_ptr<service_manager::ServiceContextRef> service_ref,
       base::Callback<void(float)> set_shutdown_delay_cb);
-  ~DeviceFactoryProviderImpl() override;
+  ~ServiceEntryPointImpl() override;
 
-  // mojom::DeviceFactoryProvider implementation.
+  // mojom::ServiceEntryPoint implementation.
   void ConnectToDeviceFactory(mojom::DeviceFactoryRequest request) override;
+  void ConnectToCaptureSessionFactory(
+      mojom::CaptureSessionFactoryRequest request) override;
   void SetShutdownDelayInSeconds(float seconds) override;
 
  private:
@@ -36,7 +38,7 @@ class DeviceFactoryProviderImpl : public mojom::DeviceFactoryProvider {
   const std::unique_ptr<service_manager::ServiceContextRef> service_ref_;
   base::Callback<void(float)> set_shutdown_delay_cb_;
 
-  DISALLOW_COPY_AND_ASSIGN(DeviceFactoryProviderImpl);
+  DISALLOW_COPY_AND_ASSIGN(ServiceEntryPointImpl);
 };
 
 }  // namespace video_capture

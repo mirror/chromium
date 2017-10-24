@@ -10,7 +10,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/service_manager/public/cpp/service_test.h"
 #include "services/service_manager/public/interfaces/service_manager.mojom.h"
-#include "services/video_capture/public/interfaces/device_factory_provider.mojom.h"
+#include "services/video_capture/public/interfaces/service_entry_point.mojom.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 namespace video_capture {
@@ -46,15 +46,15 @@ class ServiceManagerListenerImpl
 };
 
 // Basic test fixture that sets up a connection to the fake device factory.
-class DeviceFactoryProviderTest : public service_manager::test::ServiceTest {
+class DeviceFactoryTest : public service_manager::test::ServiceTest {
  public:
-  DeviceFactoryProviderTest();
-  ~DeviceFactoryProviderTest() override;
+  DeviceFactoryTest();
+  ~DeviceFactoryTest() override;
 
   void SetUp() override;
 
  protected:
-  mojom::DeviceFactoryProviderPtr factory_provider_;
+  mojom::ServiceEntryPointPtr service_;
   mojom::DeviceFactoryPtr factory_;
   base::MockCallback<mojom::DeviceFactory::GetDeviceInfosCallback>
       device_info_receiver_;
