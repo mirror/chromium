@@ -709,3 +709,13 @@ set_defaults("component") {
     configs = default_compiler_configs
   }
 }
+
+template("executable") {
+  _target_name = target_name
+  executable(_target_name) {
+    forward_variables_from(invoker, "*")
+    write_runtime_deps = "${root_out_dir}/${_target_name}.runtime_deps"
+  }
+  write_file("${root_out_dir}/${_target_name}.label",
+             get_label_info(_target_name, "label_no_toolchain"))
+}
