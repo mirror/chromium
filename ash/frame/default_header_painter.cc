@@ -225,6 +225,11 @@ SkColor DefaultHeaderPainter::GetInactiveFrameColor() const {
   return inactive_frame_color_;
 }
 
+bool DefaultHeaderPainter::ShouldUseLightImages() {
+  return color_utils::IsDark(mode_ == MODE_INACTIVE ? inactive_frame_color_
+                                                    : active_frame_color_);
+}
+
 void DefaultHeaderPainter::UpdateLeftHeaderView(views::View* left_header_view) {
   left_header_view_ = left_header_view;
 }
@@ -286,11 +291,6 @@ void DefaultHeaderPainter::PaintHeaderContentSeparator(gfx::Canvas* canvas) {
   flags.setColor((mode_ == MODE_ACTIVE) ? kHeaderContentSeparatorColor
                                         : kHeaderContentSeparatorInactiveColor);
   canvas->sk_canvas()->drawRect(gfx::RectFToSkRect(rect), flags);
-}
-
-bool DefaultHeaderPainter::ShouldUseLightImages() {
-  return color_utils::IsDark(mode_ == MODE_INACTIVE ? inactive_frame_color_
-                                                    : active_frame_color_);
 }
 
 void DefaultHeaderPainter::UpdateAllButtonImages() {
