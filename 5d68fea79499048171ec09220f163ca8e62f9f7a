@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2a9e91f2_65fdadf6",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T20:52:57Z",
+      "side": 1,
+      "message": "thanks, atomics are hard. Switched to Acquire_load and Release_Store semantics.",
+      "parentUuid": "61b2a19e_0b338ab2",
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8c8c89b_4d7c91a9",
         "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
         "patchSetId": 25
@@ -113,6 +131,30 @@
       "writtenOn": "2017-10-24T20:44:05Z",
       "side": 1,
       "message": "move these behind functions?",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 36
+      },
+      "revId": "5d68fea79499048171ec09220f163ca8e62f9f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943fbd8f_2e0c201b",
+        "filename": "chrome/common/profiling/memlog_sender_pipe.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-24T20:52:57Z",
+      "side": 1,
+      "message": "Is that going to improve readability? I\u0027d prefer to keep as is.",
+      "parentUuid": "81b27cf6_61069ae2",
       "range": {
         "startLine": 23,
         "startChar": 15,
