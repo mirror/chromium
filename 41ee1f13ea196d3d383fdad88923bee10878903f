@@ -318,6 +318,41 @@
     },
     {
       "key": {
+        "uuid": "10dfefde_7be0903f",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-24T17:48:57Z",
+      "side": 1,
+      "message": "If we think it\u0027s possible that we\u0027ll receive a corrupt response from the network, and we don\u0027t want to crash the browser, that\u0027s dealing with an \"exceptional\" scenario, and we should not be [D]CHECKing. The guidance is pretty clear on this [1].\n\nHowever, I don\u0027t think you\u0027re in that scenario. Your client_tag_hash is being set by NonBlockingTypeCommitContribution, from pre-commit data. I\u0027d be perfectly happy if you kept the NOTREACHED() and removed the continue.\n\nAlternatively, you could go the other way here, and say this piece of code shouldn\u0027t completely trust it\u0027s callers to always do exactly the right thing.\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#check_dcheck_and-notreached",
+      "parentUuid": "2a721986_ee456efe",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c013e5_b32c3061",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-24T17:48:57Z",
+      "side": 1,
+      "message": "This is going to get hit on any non-success entry response type, right? Doesn\u0027t seem like DCHECK is correct, especially given we\u0027re still going to get called here when all response entries are in an error state.",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d664f8af_eb2e0305",
         "filename": "components/sync/engine_impl/model_type_worker.h",
         "patchSetId": 1
