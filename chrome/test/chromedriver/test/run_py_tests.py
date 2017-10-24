@@ -92,6 +92,10 @@ _OS_SPECIFIC_FILTER['win'] = [
     'ChromeDownloadDirTest.testDownloadDirectoryOverridesExistingPreferences',
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1945
     'ChromeDriverTest.testWindowFullScreen',
+    # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2096
+    'ChromeDriverTest.testAlertHandlingOnPageUnload',
+    'ChromeDriverTest.testGoBackAndGoForward',
+    'ChromeDriverTest.testTabCrash',
 ]
 _OS_SPECIFIC_FILTER['linux'] = [
     # Xvfb doesn't support maximization.
@@ -243,18 +247,20 @@ _ANDROID_NEGATIVE_FILTER['chromedriver_webview_shell'] = (
     ]
 )
 
-
 class ChromeDriverBaseTest(unittest.TestCase):
   """Base class for testing chromedriver functionalities."""
 
   def __init__(self, *args, **kwargs):
     super(ChromeDriverBaseTest, self).__init__(*args, **kwargs)
     self._drivers = []
+    self.sessions = 0
 
   def tearDown(self):
     for driver in self._drivers:
       try:
         driver.Quit()
+        if( self.sessions > 0 ):
+            self.sessions -= 1
       except:
         pass
 
@@ -279,6 +285,8 @@ class ChromeDriverBaseTest(unittest.TestCase):
                                        download_dir=download_dir,
                                        **kwargs)
     self._drivers += [driver]
+    self.sessions += 1
+
     return driver
 
   def WaitForNewWindow(self, driver, old_handles, check_closed_windows=True):
@@ -2447,12 +2455,10 @@ class SessionHandlingTest(ChromeDriverBaseTest):
   def testGetSessions(self):
     driver = self.CreateDriver()
     response = driver.GetSessions()
-    self.assertEqual(1, len(response))
-
+    self.assertEqual(self.sessions, len(response))
     driver2 = self.CreateDriver()
     response = driver2.GetSessions()
-    self.assertEqual(2, len(response))
-
+    self.assertEqual(self.sessions, len(response))
 
 class RemoteBrowserTest(ChromeDriverBaseTest):
   """Tests for ChromeDriver remote browser capability."""
