@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "607b743c_b45d16d3",
+        "filename": "components/download/in_progress_metadata/in_progress_metadata_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-24T19:46:17Z",
+      "side": 1,
+      "message": "I know we chatted about this briefly, but perhaps it might make sense to do something like namespace in_progress, class MetadataCache, methods Add/Update/... so it would look more like in_progress::MetadataCache-\u003eAdd()? Or would that be simplifying too much away?",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2afdce8e_26f64380",
         "filename": "components/download/in_progress_metadata/proto/download_entry.proto",
         "patchSetId": 3
