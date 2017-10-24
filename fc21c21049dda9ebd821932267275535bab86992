@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91356482_c69d53aa",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-24T05:41:11Z",
+      "side": 1,
+      "message": "Is the height of keyboard_bounds set correctly in this case?",
+      "range": {
+        "startLine": 90,
+        "startChar": 75,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "fc21c21049dda9ebd821932267275535bab86992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
