@@ -84,6 +84,8 @@ class GpuBrowserCompositorOutputSurface : public BrowserCompositorOutputSurface,
   void SetNeedsVSync(bool needs_vsync) override;
 
  protected:
+  void OnVSyncParametersUpdated(base::TimeTicks timebase,
+                                base::TimeDelta interval);
   gpu::CommandBufferProxyImpl* GetCommandBufferProxy();
 
   viz::OutputSurfaceClient* client_ = nullptr;
