@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7869358e_7098c169",
+        "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T22:38:29Z",
+      "side": 1,
+      "message": "Can we include this from a separate .js file so that it can be shared with mobile_setup.js?",
+      "revId": "5968b984d62086cc55d4a2fd9bc6b8373326e5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42737bb1_46c42d0f",
+        "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-24T22:38:29Z",
+      "side": 1,
+      "message": "Maybe put this in a helper function in the shared JS also?",
+      "revId": "5968b984d62086cc55d4a2fd9bc6b8373326e5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
