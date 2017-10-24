@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "326fff8d_9737ffc3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-24T19:58:07Z",
+      "side": 1,
+      "message": "There are two checks that has to happen eventually, one on the AndroidManifest which is happening in WebappInfo.create and the other on the website through OriginVerifier which should still be added to this.\n\nI will move the manifest one out to the launching checks.",
+      "parentUuid": "ceb2689c_8ad50a1d",
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6e6ce1f_15881e57",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 2
@@ -53,6 +71,30 @@
       "writtenOn": "2017-10-24T19:49:27Z",
       "side": 1,
       "message": "pretty weird to move this now without larger merging of webapk/webapp :/",
+      "range": {
+        "startLine": 505,
+        "startChar": 18,
+        "endLine": 505,
+        "endChar": 38
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786d7476_8e77d751",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-24T19:58:07Z",
+      "side": 1,
+      "message": "I moved this become the \"Helper\" (to be renamed) needs it, but I agree the name stands out now. Would we be OK with a rename but still keeping it here?",
+      "parentUuid": "7503f57f_46dd1c18",
       "range": {
         "startLine": 505,
         "startChar": 18,
