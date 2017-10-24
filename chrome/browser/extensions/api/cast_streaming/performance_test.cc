@@ -18,6 +18,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/test/trace_event_analyzer.h"
 #include "base/time/default_tick_clock.h"
+#include "build/build_config.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/tab_helper.h"
@@ -703,7 +704,14 @@ class CastV2PerformanceTest
 
 }  // namespace
 
-IN_PROC_BROWSER_TEST_P(CastV2PerformanceTest, Performance) {
+// Flaky on Windows (see crbug.com/759866).
+#if defined(OS_WIN)
+#define MAYBE_CastV2PerformanceTest DISABLED_CastV2PerformanceTest
+#else
+#define MAYBE_CastV2PerformanceTest CastV2PerformanceTest
+#endif
+
+IN_PROC_BROWSER_TEST_P(MAYBE_CastV2PerformanceTest, Performance) {
   RunTest("CastV2Performance");
 }
 
@@ -711,7 +719,7 @@ IN_PROC_BROWSER_TEST_P(CastV2PerformanceTest, Performance) {
 // (it's a prefix for the generated test cases)
 INSTANTIATE_TEST_CASE_P(
     ,
-    CastV2PerformanceTest,
+    MAYBE_CastV2PerformanceTest,
     testing::Values(kUseGpu | k24fps,
                     kUseGpu | k30fps,
                     kUseGpu | k60fps,
