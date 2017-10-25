@@ -19,6 +19,7 @@ import org.chromium.chrome.browser.LaunchIntentDispatcher;
 public class ChromeLauncherActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        PureJavaExceptionHandler.installHandler();
         // Third-party code adds disk access to Activity.onCreate. http://crbug.com/619824
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         TraceEvent.begin("ChromeLauncherActivity.onCreate");
