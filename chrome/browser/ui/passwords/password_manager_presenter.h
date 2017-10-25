@@ -54,15 +54,9 @@ class PasswordManagerPresenter
 
   void Initialize();
 
-  // Gets the password entry at |index|.
-  const autofill::PasswordForm* GetPassword(size_t index);
-
   // CredentialProviderInterface:
   std::vector<std::unique_ptr<autofill::PasswordForm>> GetAllPasswords()
       override;
-
-  // Gets the password exception entry at |index|.
-  const autofill::PasswordForm* GetPasswordException(size_t index);
 
   // Removes the saved password entry at |index|.
   // |index| the entry index to be removed.

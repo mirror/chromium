@@ -358,30 +358,6 @@ PasswordManagerPresenter::GetAllPasswords() {
   return ret_val;
 }
 
-const autofill::PasswordForm* PasswordManagerPresenter::GetPassword(
-    size_t index) {
-  if (index >= password_list_.size()) {
-    // |index| out of bounds might come from a compromised renderer
-    // (http://crbug.com/362054), or the user requested to get a password while
-    // a request to the store is in progress (i.e. |password_list_|
-    // is empty). Don't let it crash the browser.
-    return NULL;
-  }
-  return password_list_[index].get();
-}
-
-const autofill::PasswordForm* PasswordManagerPresenter::GetPasswordException(
-    size_t index) {
-  if (index >= password_exception_list_.size()) {
-    // |index| out of bounds might come from a compromised renderer
-    // (http://crbug.com/362054), or the user requested to get a password
-    // exception while a request to the store is in progress (i.e.
-    // |password_exception_list_| is empty). Don't let it crash the browser.
-    return NULL;
-  }
-  return password_exception_list_[index].get();
-}
-
 void PasswordManagerPresenter::SetPasswordList() {
   password_view_->SetPasswordList(password_list_);
 }
