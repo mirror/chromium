@@ -6,6 +6,7 @@
 
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#import "ios/web_view/shell/shell_autofill_delegate.h"
 #import "ios/web_view/shell/shell_translation_delegate.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -19,7 +20,8 @@ NSString* const kWebViewShellAddressFieldAccessibilityLabel = @"Address field";
 NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
     @"WebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier";
 
-@interface ShellViewController ()<CWVNavigationDelegate,
+@interface ShellViewController ()<CWVAutofillControllerDelegate,
+                                  CWVNavigationDelegate,
                                   CWVUIDelegate,
                                   UITextFieldDelegate>
 // Container for |webView|.
@@ -34,6 +36,8 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 @property(nonatomic, strong) UIToolbar* toolbar;
 // Handles the translation of the content displayed in |webView|.
 @property(nonatomic, strong) ShellTranslationDelegate* translationDelegate;
+// Handles the autofill of the content displayed in |webView|.
+@property(nonatomic, strong) ShellAutofillDelegate* autofillDelegate;
 
 - (void)back;
 - (void)forward;
@@ -53,6 +57,7 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 @synthesize toolbar = _toolbar;
 @synthesize webView = _webView;
 @synthesize translationDelegate = _translationDelegate;
+@synthesize autofillDelegate = _autofillDelegate;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -250,7 +255,9 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
   _webView.navigationDelegate = self;
   _webView.UIDelegate = self;
   _translationDelegate = [[ShellTranslationDelegate alloc] init];
+  _autofillDelegate = [[ShellAutofillDelegate alloc] init];
   _webView.translationController.delegate = _translationDelegate;
+  _webView.autofillController.delegate = _autofillDelegate;
 
   [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                 UIViewAutoresizingFlexibleHeight];
@@ -279,8 +286,15 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField*)field {
-  NSURLRequest* request =
-      [NSURLRequest requestWithURL:[NSURL URLWithString:[field text]]];
+  NSURL* fileURL = [[NSBundle mainBundle] URLForResource:@"autofill_multi_test"
+                                           withExtension:@"html"];
+  NSData* data = [NSData dataWithContentsOfURL:fileURL options:0 error:nil];
+  NSString* base64 = [data base64EncodedStringWithOptions:0];
+
+  NSString* dataString =
+      [NSString stringWithFormat:@"data:text/html;base64,%@", base64];
+  NSURL* dataURL = [NSURL URLWithString:dataString];
+  NSURLRequest* request = [NSURLRequest requestWithURL:dataURL];
   [_webView loadRequest:request];
   [field resignFirstResponder];
   [self updateToolbar];
