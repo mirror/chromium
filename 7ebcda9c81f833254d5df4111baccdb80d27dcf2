@@ -88,6 +88,24 @@
       "revId": "7ebcda9c81f833254d5df4111baccdb80d27dcf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62e1e66_5bc8cd0a",
+        "filename": "chrome/test/data/webui/webui_test_util.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-25T05:07:55Z",
+      "side": 1,
+      "message": "mocha does some weird stuff with stack traces.\n\nhttps://github.com/mochajs/mocha/blob/16ffca210267b06300c9c54f886a031ea6a9030d/lib/runner.js#L234\n\nthe filter function tries to remove the CWD from the file path: https://github.com/mochajs/mocha/blob/92beda983f0cfa98541a816b6a1beaf0b64f260e/lib/utils.js#L600\n\nand I don\u0027t even know how our js2gtest importing affects what the test file names are.\n\nyou can try setting the fullTrace option in our mocha.setup() call, but that might generate a really ugly stack trace with a bunch of mocha-internal stuff. we already try to remove some of it in BrowserTestReporter.\n\nAnyway, I don\u0027t think it necessitates using parts of the path in the file name. And personally I\u0027d prefer to keep file names short. It might be different if we were using a \"webui\" namespace or had a \u003cwebui-test-util\u003e element or something, but this is the only place we use cr.define(\u0027test_util\u0027, ... which makes sense from the top-level webui test directory.",
+      "parentUuid": "bef8034e_28f88fc9",
+      "revId": "7ebcda9c81f833254d5df4111baccdb80d27dcf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
