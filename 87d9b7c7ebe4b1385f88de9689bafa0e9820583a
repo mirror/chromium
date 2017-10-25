@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "300df00b_b58c43ec",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-25T18:47:35Z",
+      "side": 1,
+      "message": "There\u0027s a lot of strings here.  Would it make sense to have one message for all of chrome.loadTimes() and save some space in the binary?",
+      "range": {
+        "startLine": 618,
+        "startChar": 30,
+        "endLine": 618,
+        "endChar": 41
+      },
+      "revId": "87d9b7c7ebe4b1385f88de9689bafa0e9820583a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
