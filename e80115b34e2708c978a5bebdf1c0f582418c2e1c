@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "f22f5e00_33caa7d9",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-25T17:08:08Z",
+      "side": 1,
+      "message": "\u003e Please just call it something that emphasises on the difference in lifetime, which is the important bit here. Neither \"Simple\" nor \"Browser\" do.\n\nI disagree. How many pieces of browser ui outlive the browser?\n\n\u003e Both \"Ephemeral\" and \"Transient\" do. Find a different word on that spectrum if you don\u0027t like those.\n\nI object to the entire spectrum, but this conversation isn\u0027t going anywhere, so I\u0027ll pick one. Are you planning to rename the ones for web notifications any time soon? I maintain that having both TRANSIENT and PERSISTENT/NON_PERSISTENT is incredibly unhelpful nomenclature.",
+      "parentUuid": "9bd3d726_12adc541",
+      "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "211b149a_44b93f3a",
         "filename": "chrome/browser/notifications/notification_display_service.cc",
         "patchSetId": 4
