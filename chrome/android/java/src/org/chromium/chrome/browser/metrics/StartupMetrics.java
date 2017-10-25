@@ -125,7 +125,7 @@ public class StartupMetrics {
             long lastUsedTimeMilli = ContextUtils.getAppSharedPreferences().getLong(
                     UmaSessionStats.LAST_USED_TIME_PREF, 0);
             if (mIsMainIntent && (lastUsedTimeMilli > 0) && (mStartTimeMilli > lastUsedTimeMilli)
-                    && (mStartTimeMilli - lastUsedTimeMilli > Integer.MAX_VALUE)) {
+                    && (mStartTimeMilli - lastUsedTimeMilli < Integer.MAX_VALUE)) {
                 // Measured in minutes and capped at a day with a bucket precision of 6 minutes.
                 RecordHistogram.recordCustomCountHistogram("MobileStartup.TimeSinceLastUse",
                         (int) (mStartTimeMilli - lastUsedTimeMilli) / MILLI_SEC_PER_MINUTE, 1,
