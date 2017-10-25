@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c2a1683_89cff801",
+        "filename": "tools/perf/contrib/heap_profiling/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-25T15:16:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52c669eb_9531b0d4",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eda5b92_5906999e",
         "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
         "patchSetId": 1
@@ -213,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "43743c5e_de632194",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-25T15:16:43Z",
+      "side": 1,
+      "message": "We\u0027ll need all these benchmarks on dashboard. So it should be distinguishable by name.\n+1 to omit contrib benchmarks from the list (or introduce an option to hide benchmark)",
+      "parentUuid": "01bf28bb_ec6fba5c",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "875baf13_b35758ed",
         "filename": "tools/perf/page_sets/heap_profiling_page_set.py",
         "patchSetId": 1
@@ -245,6 +281,24 @@
       "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee2b4f9_352207e0",
+        "filename": "tools/perf/page_sets/heap_profiling_page_set.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-25T15:16:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5915833f_2c3fdea5",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
