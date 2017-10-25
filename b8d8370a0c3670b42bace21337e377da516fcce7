@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdcb6e64_95f5305e",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3386,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "Nope, this implements a //content interface which isn\u0027t used on iOS.",
+      "range": {
+        "startLine": 3386,
+        "startChar": 0,
+        "endLine": 3386,
+        "endChar": 20
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a5d309_09b12edb",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "optional nit: this type is a mouthful, maybe typedef it as SSLErrorHandler::BlockingPageCallback?",
+      "range": {
+        "startLine": 397,
+        "startChar": 6,
+        "endLine": 398,
+        "endChar": 77
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1673d343_95ac92c5",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be renamed, it\u0027s a different callback",
+      "range": {
+        "startLine": 419,
+        "startChar": 29,
+        "endLine": 419,
+        "endChar": 46
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3f4402_3829d415",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "This naming + comment is a little confusing because we only \"show\" interstitials in the old code path; in the new path, we construct them and extract their HTML. How about renaming to OnInterstitialPageReady?",
+      "range": {
+        "startLine": 428,
+        "startChar": 2,
+        "endLine": 428,
+        "endChar": 76
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7201cfc4_67368284",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "Does this need to be public?",
+      "range": {
+        "startLine": 429,
+        "startChar": 2,
+        "endLine": 429,
+        "endChar": 24
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e352be5c_b64ed5df",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "Add a blank line above since this isn\u0027t a Delegate override",
+      "range": {
+        "startLine": 429,
+        "startChar": 7,
+        "endLine": 429,
+        "endChar": 23
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fbf1d6_59bda6c2",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "ditto about the naming",
+      "range": {
+        "startLine": 446,
+        "startChar": 6,
+        "endLine": 446,
+        "endChar": 24
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc039c6d_acbb9804",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "|on_allow_certificate| ?\nthough I think |decision_callback| is clearer; I think this is called on both proceeding and going back so it\u0027s not just on_allow",
+      "range": {
+        "startLine": 589,
+        "startChar": 8,
+        "endLine": 589,
+        "endChar": 26
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156964f2_9e345eed",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "It\u0027s hard to tell from the .h files what |throttle_callback| actually is. Is this the callback that receives a constructed blocking page when it\u0027s ready? If so, I\u0027d suggest saying that:\n\"When --committed-interstitials is disabled, this function creates and shows an interstitial page. When --committed-interstitials is enabled, the function creates a blocking page object but does not show it, and instead returns it to the caller via |throttle_callback|.\"",
+      "range": {
+        "startLine": 116,
+        "startChar": 46,
+        "endLine": 118,
+        "endChar": 19
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3580e51c_f96fbddf",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "is this meant to refer to line 127?",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 39
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b0e0e7_4cc82a68",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "Since, IIRC, the throttle depends on SSLErrorHandler and not the other way around, we should avoid coupling this to the throttle. |blocking_page_ready_callback| ?",
+      "range": {
+        "startLine": 132,
+        "startChar": 10,
+        "endLine": 132,
+        "endChar": 27
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa53dd2b_1da59155",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "This is fine for now but in future I\u0027d suggest doing this as a separate CL, since this one is already large.",
+      "range": {
+        "startLine": 221,
+        "startChar": 8,
+        "endLine": 221,
+        "endChar": 18
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27f8ea40_a5366fe2",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "nit: add a comment explaining why we post a task for this",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 47
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80633ad_eaed23f1",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "Why does this need to be stored in a member? Can we just pass in handle-\u003eGetSSLInfo().value() directly here?",
+      "range": {
+        "startLine": 89,
+        "startChar": 59,
+        "endLine": 89,
+        "endChar": 68
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb63e583_84800e0d",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "We need to bail out early from this method if the navigation didn\u0027t commit (navigation_handle-\u003eHasCommitted), or if it was not a main-frame navigation (IsSameDocument). In those cases the error page would still be showing so we\u0027d want to keep the blocking page around.",
+      "range": {
+        "startLine": 18,
+        "startChar": 51,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cd60ed_1867d7ef",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "What happens if this key doesn\u0027t exist?",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5eecb7_b430f7fe",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T16:28:18Z",
+      "side": 1,
+      "message": "should go in chrome/common/chrome_switches.h if it\u0027s only used from //chrome",
+      "range": {
+        "startLine": 29,
+        "startChar": 33,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
