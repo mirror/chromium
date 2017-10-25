@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81c7eaf2_b4150300",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 11
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-10-25T05:47:46Z",
+      "side": 1,
+      "message": "This is not acceptable.  We must not add new -webkit-* pseudo class.",
+      "revId": "962a26fe7d0355903d4c2721faddcbe51e0ee45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
