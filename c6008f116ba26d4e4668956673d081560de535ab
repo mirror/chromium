@@ -34,6 +34,24 @@
       "revId": "c6008f116ba26d4e4668956673d081560de535ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02741558_5945975e",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-10-25T03:13:05Z",
+      "side": 1,
+      "message": "@Xianzhu, and @Mohammad, Thank you for review! According to the comments, I update that each test calls the ScopedExperimentalCanvasFeaturesForTest directly. PTAL!",
+      "parentUuid": "be735af5_7a651fcb",
+      "revId": "c6008f116ba26d4e4668956673d081560de535ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
