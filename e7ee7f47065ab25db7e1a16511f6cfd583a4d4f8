@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4600a9b_dc9e65bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T00:18:35Z",
+      "side": 1,
+      "message": "do we need to keep this boolean?  Could we not just query ViewCompat.isAttachedToWindow(getView()) like we used to but just trigger the boolean to be recalculated in your attach state listener (i.e. delete the boolean and simply call updateInteractableState() there)?",
+      "range": {
+        "startLine": 488,
+        "startChar": 20,
+        "endLine": 488,
+        "endChar": 43
+      },
+      "revId": "e7ee7f47065ab25db7e1a16511f6cfd583a4d4f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87adde25_f2b3c227",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2234,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T00:18:35Z",
+      "side": 1,
+      "message": "should this just return mInteractableState here?\n\nThen maybe updateInteractableState would be in charge of updating this value?",
+      "range": {
+        "startLine": 2234,
+        "startChar": 29,
+        "endLine": 2234,
+        "endChar": 36
+      },
+      "revId": "e7ee7f47065ab25db7e1a16511f6cfd583a4d4f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c7d417_57e72ba8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2660,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T00:18:35Z",
+      "side": 1,
+      "message": "is it worth short circuiting the case where\n\nif (!enableFullscreen \u0026\u0026 mEnterFullscreenRunnable !\u003d null) {\n    mEnterFullscreenRunnable \u003d null;\n    return;\n}\n\nIn that case, we never entered fullscreen before and we don\u0027t necessarily need to call toggleFullscreenInternal in the case where we never set it to true.",
+      "revId": "e7ee7f47065ab25db7e1a16511f6cfd583a4d4f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4251fb5_b33cead6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2670,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T00:18:35Z",
+      "side": 1,
+      "message": "I was thinking we could move everything but the observer broadcast to mTabObserver in Tab and then it could be localized where it would also listen for interactability changes for the new observer method you added.\n\nBut then I don\u0027t know what impact that has on other callers of toggleFullscreenMode and what they actually expect.\n\nI don\u0027t know if we need to go down this route just quite yet, but with the goal of slimming Tab over time, I do wonder if we should have a TabFullscreenHelper or something (out of scope of this CL).",
+      "range": {
+        "startLine": 2670,
+        "startChar": 12,
+        "endLine": 2670,
+        "endChar": 30
+      },
+      "revId": "e7ee7f47065ab25db7e1a16511f6cfd583a4d4f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
