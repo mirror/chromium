@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e1857a5_7f364f46",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T16:48:41Z",
+      "side": 1,
+      "message": "That\u0027s fair. In this case, the callback is only invoked once and is not yet used to ignore multiple errors.\n\nI assume you want a decent name for this function and frankly I\u0027m having difficulty working out when it\u0027s actually used. I think it\u0027s finally invoked when the Registration is deleted after finishing.\n\nBut it\u0027s seemingly only called with the result of the deletion itself. (Possibly I lost the thread after the many indirection steps...) So it\u0027s RecordRegistrationDeletedErrorAfterFinished?\nUgh.",
+      "parentUuid": "69aaf815_98fc7a2f",
+      "revId": "fe2148b9b17510f78c5ef74a7d5209b1bd8f1e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67115be4_88d7bd20",
         "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "fe2148b9b17510f78c5ef74a7d5209b1bd8f1e2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3528ac_16ca566d",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T16:48:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67115be4_88d7bd20",
+      "revId": "fe2148b9b17510f78c5ef74a7d5209b1bd8f1e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3ff848b6_0241d2f3",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T16:48:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be5727d5_add896bc",
+      "revId": "fe2148b9b17510f78c5ef74a7d5209b1bd8f1e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4c5d5af_8814eac7",
         "filename": "content/browser/background_fetch/background_fetch_registration_notifier_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "fe2148b9b17510f78c5ef74a7d5209b1bd8f1e2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fb8508_b9e0b728",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T16:48:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4c5d5af_8814eac7",
+      "revId": "fe2148b9b17510f78c5ef74a7d5209b1bd8f1e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
