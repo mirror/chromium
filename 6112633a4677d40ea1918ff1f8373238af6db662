@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45f90561_f2c6398b",
+        "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T22:28:20Z",
+      "side": 1,
+      "message": "nit: \"Non-null if this suggestion is created from a credit card or address profile.\"?",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "6112633a4677d40ea1918ff1f8373238af6db662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3715d0b2_737c66a3",
+        "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T22:28:20Z",
+      "side": 1,
+      "message": "What clients suppose to do with this property? Display in UI? Is it localized? Can you give one or two concrete examples?",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "6112633a4677d40ea1918ff1f8373238af6db662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
