@@ -46,6 +46,30 @@
       "revId": "82637b718a58fdc78032a1f525b801f3152e2be2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708c753e_8b12de29",
+        "filename": "chrome/browser/shell_integration_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-10-25T22:58:24Z",
+      "side": 0,
+      "message": "Thanks for the details.\n\nFor the taskbar pinning issues you\u0027ve encountered I\u0027m not sure what\u0027s happening. It happens to work for me. Do you actually have a chromium installation in your local appdata folder? We\u0027ve seen issues with shortcut where Windows tries to be \"helpful\" and mess with shortcuts. I don\u0027t remember the reason why though :S",
+      "parentUuid": "1c314c3f_e46497bf",
+      "range": {
+        "startLine": 500,
+        "startChar": 17,
+        "endLine": 500,
+        "endChar": 36
+      },
+      "revId": "82637b718a58fdc78032a1f525b801f3152e2be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

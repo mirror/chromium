@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2960b64_e4c54895",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 11068,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-10-25T22:58:24Z",
+      "side": 1,
+      "message": "nit: Windows",
+      "range": {
+        "startLine": 11068,
+        "startChar": 121,
+        "endLine": 11068,
+        "endChar": 125
+      },
+      "revId": "8c2c723a61e791024b67df02d8275903e23b002a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
