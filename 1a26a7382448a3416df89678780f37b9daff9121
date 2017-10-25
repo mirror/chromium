@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb0f8cee_a62f9ec8",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-25T21:40:07Z",
+      "side": 1,
+      "message": "The macro MAYBE_KeyboardAppearanceOnFullscreenPage always expands to KeyboardAppearanceOnFullscreenPage. Please remove the macro and use KeyboardAppearanceOnFullscreenPage directly.",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 322,
+        "endChar": 0
+      },
+      "revId": "1a26a7382448a3416df89678780f37b9daff9121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50589273_6c26c542",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-25T21:40:07Z",
+      "side": 1,
+      "message": "ditto, for KeyboardStayOnUserScrollOnNonFullscreenPage.",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 59
+      },
+      "revId": "1a26a7382448a3416df89678780f37b9daff9121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
