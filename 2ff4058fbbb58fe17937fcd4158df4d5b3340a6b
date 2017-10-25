@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "33c5ec24_067cd39f",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T22:32:50Z",
+      "side": 1,
+      "message": "This (and errorPage()) below look like dead code. Should I fix them or remove them or leave them for a separate CL?",
+      "parentUuid": "5292b2a8_de5cf9be",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc6a3a21_f5862624",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 5
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "edc57876_e915e3af",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T22:32:50Z",
+      "side": 1,
+      "message": "Empirically, that the fade-out animation doesn\u0027t appear to be affected.\n\nIs there a specific thing I should look for (other than just trying it)",
+      "parentUuid": "bc6a3a21_f5862624",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92054249_3884bf72",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 5
@@ -81,6 +117,24 @@
       "writtenOn": "2017-10-25T22:13:10Z",
       "side": 1,
       "message": "How does this work? We are dynamically augmenting |this|, but the resulting variables are not declared as Polymer properties in the \"properties\" section. Shouldn\u0027t we declare all properties for polymer bindings to work?\n\nAlso, would this endup setting a itemsListShowPage_ boolean, which is actually not used anywhere?",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05322821_fec473e9",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T22:32:50Z",
+      "side": 1,
+      "message": "Yes it\u0027s dynamically augmenting the instance. We can declare them as a formality, but it\u0027s not necessary (you\u0027re call, it\u0027s easy to define them).\n\nitemsListShowPage_ was used up until we just decided not to wrap the itemsList in a dom-if. So it would add a var for that. I could add code to check for that page (and not set it) or make a lookup of vars to set (like a whitelist). Adding one var to one instance seems low overhead, but it\u0027s your call - I\u0027ll change it how you\u0027d like it to be.",
+      "parentUuid": "92054249_3884bf72",
       "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
