@@ -21,8 +21,8 @@
 
 namespace display {
 namespace {
-uint32_t ToIdentifier(const ui::TouchscreenDevice& device) {
-  return TouchCalibrationData::GenerateTouchDeviceIdentifier(device);
+TouchDeviceIdentifier ToIdentifier(const ui::TouchscreenDevice& device) {
+  return TouchDeviceIdentifier(device);
 }
 
 ui::TouchscreenDevice CreateTouchscreenDevice(int id,
