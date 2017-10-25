@@ -46,6 +46,30 @@
       "revId": "87e77588a8ab08dd16c47c9cbc332e369c872728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a058d8_d014bef7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-25T15:06:05Z",
+      "side": 1,
+      "message": "I understood that to refer to using multiple filter values for comparison (e.g. compare Chrome 63 to 64), whereas with tags I was thinking about using a different matching function for filtering just a single view (\"does the list of tags include X\" as opposed to \"does property Y equal exactly Z\").",
+      "parentUuid": "99dd36ff_b8d85bcc",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "87e77588a8ab08dd16c47c9cbc332e369c872728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
