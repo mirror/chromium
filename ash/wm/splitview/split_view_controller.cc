@@ -12,6 +12,9 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/screen_util.h"
 #include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
+#include "ash/system/toast/toast_data.h"
+#include "ash/system/toast/toast_manager.h"
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/overview/window_selector_controller.h"
 #include "ash/wm/splitview/split_view_divider.h"
@@ -20,8 +23,10 @@
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
 #include "base/command_line.h"
+#include "base/optional.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_delegate.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/layer.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
@@ -33,6 +38,10 @@ namespace {
 
 // Five fixed position ratios of the divider.
 constexpr float kFixedPositionRatios[] = {0.0f, 0.33f, 0.5f, 0.67f, 1.0f};
+
+// Toast data.
+constexpr char kAppCannotSnapToastId[] = "split_view_app_cannot_snap";
+constexpr int kAppCannotSnapToastDuration = 2500;
 
 float FindClosestFixedPositionRatio(float distance, float length) {
   float current_ratio = distance / length;
@@ -313,6 +322,14 @@ void SplitViewController::EndResize(const gfx::Point& location_in_screen) {
   } else {
     UpdateSnappedWindowsAndDividerBounds();
   }
+}
+
+void SplitViewController::ShowAppCannotSnapToast() {
+  ash::ToastData toast(
+      kAppCannotSnapToastId,
+      l10n_util::GetStringUTF16(IDS_ASH_SPLIT_VIEW_CANNOT_SNAP),
+      kAppCannotSnapToastDuration, base::Optional<base::string16>());
+  ash::Shell::Get()->toast_manager()->Show(toast);
 }
 
 void SplitViewController::EndSplitView() {
