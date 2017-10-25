@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fc2d7ef_ac67e4d2",
+        "filename": "cc/trees/layer_tree_host_pixeltest_filters.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T20:01:29Z",
+      "side": 1,
+      "message": "If the layer has an offset, and the filter has an offset, how come the filter output isn\u0027t double-offset?",
+      "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e7cacc_9a69d9b2",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T20:01:29Z",
+      "side": 1,
+      "message": "This comment seems like it should be updated and/or partially moved?",
+      "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd091dcf_389baa02",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T20:01:29Z",
+      "side": 1,
+      "message": "These deserve comments",
+      "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618dc823_4594d476",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T20:01:29Z",
+      "side": 1,
+      "message": "This comment is just literally saying the same thing as the code below. Comments should explain \"why\" not \"what\" - such as why we don\u0027t want to delete the background texture if we have no mask but it\u0027s \u003d\u003d background_image_id?",
+      "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd6c4e6_e2db05c5",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T20:01:29Z",
+      "side": 1,
+      "message": "This is no longer true, so the comment needs to be updated? But also why isn\u0027t this code changing?",
+      "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
