@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bd52ec2_3ece28a5",
+        "filename": "ash/frame/caption_buttons/frame_back_button.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T18:24:12Z",
+      "side": 1,
+      "message": "nit: put \"\u003d default\" in the .cc file",
+      "revId": "422273b7f4fb3c8a5c0c510a37a77156a0a6817f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a2a71f_c382218b",
+        "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T18:24:12Z",
+      "side": 1,
+      "message": "This comment mentions clicking on the button, but the test does not do any clicking. I would either add a click in the top-left-ish corner of the frame and expect that nothing happens, or remove this section of the test.",
+      "revId": "422273b7f4fb3c8a5c0c510a37a77156a0a6817f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30591c2_cad14824",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T18:24:12Z",
+      "side": 1,
+      "message": "Add bug number.",
+      "revId": "422273b7f4fb3c8a5c0c510a37a77156a0a6817f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
