@@ -15,7 +15,6 @@
 #include "content/shell/test_runner/event_sender.h"
 #include "content/shell/test_runner/mock_color_chooser.h"
 #include "content/shell/test_runner/mock_screen_orientation_client.h"
-#include "content/shell/test_runner/mock_web_user_media_client.h"
 #include "content/shell/test_runner/test_common.h"
 #include "content/shell/test_runner/test_interfaces.h"
 #include "content/shell/test_runner/test_plugin.h"
@@ -384,7 +383,9 @@ void WebFrameTestClient::ShowContextMenu(
 }
 
 blink::WebUserMediaClient* WebFrameTestClient::UserMediaClient() {
-  return test_runner()->getMockWebUserMediaClient();
+  CHECK(false) << "Mock webUserMediaClient is deleted";
+  // return test_runner()->getMockWebUserMediaClient();
+  return nullptr;
 }
 
 void WebFrameTestClient::DownloadURL(const blink::WebURLRequest& request,
