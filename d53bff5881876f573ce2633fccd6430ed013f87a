@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53bd9745_11b7d5f9",
+        "filename": "media/formats/mp4/box_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "Since we exited the loop, we know that |pos_ \u003e\u003d box_size_|. The only question is whether it was possible to go beyond |box_size_| on line 200, which should be impossible since ReadHeader() validates that the box contents are in the buffer.\n\nAs such this is just a loop post-condition, which is documented by means of a DCHECK().",
+      "parentUuid": "ceb1130a_f196ab10",
+      "range": {
+        "startLine": 203,
+        "startChar": 2,
+        "endLine": 203,
+        "endChar": 8
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb4db17f_29c479be",
         "filename": "media/formats/mp4/box_reader_unittest.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fb4714_1a4921fc",
+        "filename": "media/formats/mp4/box_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb4db17f_29c479be",
+      "range": {
+        "startLine": 161,
+        "startChar": 21,
+        "endLine": 161,
+        "endChar": 24
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a926e960_dd5b6b99",
+        "filename": "media/formats/mp4/box_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cbf08e6_246a4454",
+      "range": {
+        "startLine": 190,
+        "startChar": 20,
+        "endLine": 190,
+        "endChar": 21
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd3fda25_2a7ccdf2",
         "filename": "media/formats/mp4/box_reader_unittest.cc",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d94cfc2a_8b8817ba",
+        "filename": "media/formats/mp4/box_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd3fda25_2a7ccdf2",
+      "range": {
+        "startLine": 221,
+        "startChar": 22,
+        "endLine": 221,
+        "endChar": 25
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dd937ca_2bfb537f",
         "filename": "media/formats/mp4/mp4_stream_parser.cc",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-25T00:12:40Z",
       "side": 1,
       "message": "This method retains a bit of the previous ugliness.\nCan result be changed simply to ParseResult, and logic adjusted to manage it using the enum values rather than two bools?",
+      "range": {
+        "startLine": 160,
+        "startChar": 8,
+        "endLine": 160,
+        "endChar": 14
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443ec879_d7a1fcef",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "That was my original goal, but it resulted in such significant changes that I decided not to try to include it in this CL. The end result is indeed that I reconstruct the old interface on top of the new API :-(",
+      "parentUuid": "7dd937ca_2bfb537f",
       "range": {
         "startLine": 160,
         "startChar": 8,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ac0392c6_f64bdbaa",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "That\u0027s correct, ParseBox() is called only from Parse(), which immediately calls Reset() on kError. The end property is actually reasonable here too; we don\u0027t mutate any state in any kError paths in this method.",
+      "parentUuid": "373b19f6_6fd42af0",
+      "range": {
+        "startLine": 218,
+        "startChar": 13,
+        "endLine": 218,
+        "endChar": 24
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7dc41cf_618fbc4d",
         "filename": "media/formats/mp4/mp4_stream_parser.cc",
         "patchSetId": 6
@@ -151,6 +295,24 @@
       "writtenOn": "2017-10-25T00:12:40Z",
       "side": 1,
       "message": "Since uncertain about related logic, either:\n1) leave previous logic (return NeedMoreData here if !Trim here) (and update comment), or\n2) use a CHECK and reword this comment to indicate we think this Trim is unnecessary (since we think EnqueueSample is followed always by updating tail to and discard/trim in caller (and older logic that apparently allowed emission when partial MDATs were appended seems no longer to allow until full MDATs are appended), even when !runs_-\u003eIsRunValid() here) and to drop the CHECK and Trim completely once certain.",
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5abd1608_938aea3e",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "Done. (Implemented option 1)",
+      "parentUuid": "e7dc41cf_618fbc4d",
       "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "1eeda7c4_2151df0c",
+        "filename": "media/formats/mp4/parse_result.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c88fee6_f8419868",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c29b5dc_7cddd7ec",
         "filename": "media/formats/mp4/rcheck.h",
         "patchSetId": 6
@@ -200,6 +386,30 @@
       "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc911d28_49b7a68c",
+        "filename": "media/formats/mp4/rcheck.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c29b5dc_7cddd7ec",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "60c65391_dba269b4",
+        "filename": "media/formats/mp4/rcheck.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6420fe14_3bec6bc5",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8201e99a_73aa5f4c",
         "filename": "testing/libfuzzer/fuzzers/mp4_box_reader_fuzzer.cc",
         "patchSetId": 6
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "68acffde_f64a2761",
+        "filename": "testing/libfuzzer/fuzzers/mp4_box_reader_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8201e99a_73aa5f4c",
+      "range": {
+        "startLine": 31,
+        "startChar": 11,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73cfa7c_435aeeb7",
         "filename": "testing/libfuzzer/fuzzers/mp4_box_reader_fuzzer.cc",
         "patchSetId": 6
@@ -269,6 +527,30 @@
       "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10d0824_6e935321",
+        "filename": "testing/libfuzzer/fuzzers/mp4_box_reader_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-25T23:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73cfa7c_435aeeb7",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
