@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8168e423_efa81a2b",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-25T21:01:09Z",
+      "side": 1,
+      "message": "It\u0027s better to cite a crbug.com link, if possible.",
+      "revId": "82033b649e014d353f636afb75779ec41e449be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
