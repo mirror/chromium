@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "7a94b4e4_91445333",
+        "filename": "build/android/download_from_maven.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-10-25T22:38:48Z",
+      "side": 1,
+      "message": "Just curious, where did you get the artifact names? I got the GMS artifact format by asking GMS people, since I didn\u0027t see a way to browse the artifacts anywhere.",
+      "revId": "846f4f32787f8040b8929425bf9731b405643a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99745804_54f9969b",
         "filename": "build/android/play_services/update.py",
         "patchSetId": 3
@@ -89,6 +106,23 @@
         "endLine": 269,
         "endChar": 48
       },
+      "revId": "846f4f32787f8040b8929425bf9731b405643a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aad82fc_78404d9b",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-10-25T22:38:48Z",
+      "side": 1,
+      "message": "It looks like this error is already handled in download_from_maven (as it should be). Remove?",
       "revId": "846f4f32787f8040b8929425bf9731b405643a69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
