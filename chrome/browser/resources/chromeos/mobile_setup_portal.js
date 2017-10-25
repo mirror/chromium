@@ -7,7 +7,6 @@ cr.define('mobile', function() {
   // TODO(tbarzic): Share code with mobile_setup.js.
   var EXTENSION_BASE_URL =
       'chrome-extension://iadeocfgjdjdmpenejdbfeaocpbikmab/';
-  var REDIRECT_POST_PAGE_URL = EXTENSION_BASE_URL + 'redirect.html?autoPost=1';
   var PORTAL_OFFLINE_PAGE_URL = EXTENSION_BASE_URL + 'portal_offline.html';
   var INVALID_DEVICE_INFO_PAGE_URL =
       EXTENSION_BASE_URL + 'invalid_device_info.html';
@@ -72,6 +71,7 @@ cr.define('mobile', function() {
         // If the portal is reachable and device info is valid, set and show
         // portalFrame; and hide system status displaying 'offline portal' page.
         this.setPortalFrameIfNeeded_(this.deviceInfo_);
+        this.setCarrierPage_(CarrierPageType.NOT_SET);
         $('portalFrame').hidden = false;
         $('systemStatus').hidden = true;
         this.stopSpinner_();
@@ -85,21 +85,19 @@ cr.define('mobile', function() {
 
       switch (type) {
         case CarrierPageType.PORTAL_OFFLINE:
-          $('carrierPage').contentWindow.location.href =
-              PORTAL_OFFLINE_PAGE_URL;
+          $('carrierPage').src = PORTAL_OFFLINE_PAGE_URL;
           $('statusHeader').textContent =
               loadTimeData.getString('portal_unreachable_header');
           this.startSpinner_();
           break;
         case CarrierPageType.INVALID_DEVICE_INFO:
-          $('carrierPage').contentWindow.location.href =
-              INVALID_DEVICE_INFO_PAGE_URL;
+          $('carrierPage').src = INVALID_DEVICE_INFO_PAGE_URL;
           $('statusHeader').textContent =
               loadTimeData.getString('invalid_device_info_header');
           this.stopSpinner_();
           break;
         case CarrierPageType.NOT_SET:
-          $('carrierPage').contentWindow.location.href = 'about:blank';
+          $('carrierPage').src = 'about:blank';
           $('statusHeader').textContent = '';
           this.stopSpinner_();
           break;
@@ -115,12 +113,7 @@ cr.define('mobile', function() {
       if (this.portalFrameSet_)
         return;
 
-      var postData = '';
-      if (deviceInfo.post_data && deviceInfo.post_data.length)
-        postData = '&post_data=' + encodeURIComponent(deviceInfo.post_data);
-
-      $('portalFrame').contentWindow.location.href = REDIRECT_POST_PAGE_URL +
-          postData + '&formUrl=' + encodeURIComponent(deviceInfo.payment_url);
+      mobile.util.postDeviceDataToWebview($('portalFrame'), deviceInfo);
 
       this.portalFrameSet_ = true;
     },
