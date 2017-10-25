@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "14231231_daa7a59f",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-25T22:33:33Z",
+      "side": 1,
+      "message": "Given offline conversations w.r.t. dependency patchsets can you do this in this CL? It is good to reduce CL churn.",
+      "parentUuid": "46087d3a_4b62880f",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18b125ce_060f9e22",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 4
