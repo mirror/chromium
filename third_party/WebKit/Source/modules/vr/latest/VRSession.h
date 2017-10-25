@@ -15,9 +15,10 @@
 
 namespace blink {
 
+class V8VRFrameRequestCallback;
 class VRDevice;
 class VRFrameOfReferenceOptions;
-class V8VRFrameRequestCallback;
+class VRPresentationFrame;
 
 class VRSession final : public EventTargetWithInlineData {
   DEFINE_WRAPPERTYPEINFO();
@@ -69,6 +70,8 @@ class VRSession final : public EventTargetWithInlineData {
  private:
   const Member<VRDevice> device_;
   const bool exclusive_;
+
+  Member<VRPresentationFrame> presentation_frame_;
 
   VRFrameRequestCallbackCollection callback_collection_;
 

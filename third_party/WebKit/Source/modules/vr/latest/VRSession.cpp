@@ -14,6 +14,7 @@
 #include "modules/vr/latest/VRFrameOfReference.h"
 #include "modules/vr/latest/VRFrameOfReferenceOptions.h"
 #include "modules/vr/latest/VRFrameProvider.h"
+#include "modules/vr/latest/VRPresentationFrame.h"
 #include "modules/vr/latest/VRSessionEvent.h"
 #include "platform/wtf/AutoReset.h"
 
@@ -33,7 +34,9 @@ const char kNonEmulatedStageNotSupported[] =
 VRSession::VRSession(VRDevice* device, bool exclusive)
     : device_(device),
       exclusive_(exclusive),
-      callback_collection_(device->GetExecutionContext()) {}
+      callback_collection_(device->GetExecutionContext()) {
+  presentation_frame_ = new VRPresentationFrame(this);
+}
 
 void VRSession::setDepthNear(double value) {
   depth_near_ = value;
@@ -165,7 +168,7 @@ void VRSession::OnFrame(
   if (detached_)
     return;
 
-  // TODO: Use the base_pose_matrix to produce a VRPresentationFrame
+  presentation_frame_->UpdateBasePose(std::move(base_pose_matrix));
 
   if (pending_frame_) {
     pending_frame_ = false;
@@ -174,12 +177,13 @@ void VRSession::OnFrame(
     // within these calls. resolving_frame_ will be true for the duration of the
     // callbacks.
     AutoReset<bool> resolving(&resolving_frame_, true);
-    callback_collection_.ExecuteCallbacks();
+    callback_collection_.ExecuteCallbacks(this, presentation_frame_);
   }
 }
 
 void VRSession::Trace(blink::Visitor* visitor) {
   visitor->Trace(device_);
+  visitor->Trace(presentation_frame_);
   visitor->Trace(callback_collection_);
   EventTargetWithInlineData::Trace(visitor);
 }
