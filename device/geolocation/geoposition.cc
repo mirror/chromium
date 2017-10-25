@@ -4,6 +4,8 @@
 
 #include "device/geolocation/geoposition.h"
 
+#include "device/geolocation/public/interfaces/geoposition.mojom.h"
+
 namespace {
 // Sentinel values to mark invalid data. (WebKit carries companion is_valid
 // bools for this purpose; we may eventually follow that approach, but
@@ -33,6 +35,22 @@ Geoposition::Geoposition(const Geoposition& other) = default;
 bool Geoposition::Validate() const {
   return latitude >= -90. && latitude <= 90. && longitude >= -180. &&
          longitude <= 180. && accuracy >= 0. && !timestamp.is_null();
+}
+
+void FillMojomGeoposition(const Geoposition& geoposition,
+                          mojom::Geoposition* const mojom_geoposition) {
+  mojom_geoposition->valid = geoposition.Validate();
+  mojom_geoposition->latitude = geoposition.latitude;
+  mojom_geoposition->longitude = geoposition.longitude;
+  mojom_geoposition->altitude = geoposition.altitude;
+  mojom_geoposition->accuracy = geoposition.accuracy;
+  mojom_geoposition->altitude_accuracy = geoposition.altitude_accuracy;
+  mojom_geoposition->heading = geoposition.heading;
+  mojom_geoposition->speed = geoposition.speed;
+  mojom_geoposition->timestamp = geoposition.timestamp.ToDoubleT();
+  mojom_geoposition->error_code =
+      mojom::Geoposition::ErrorCode(geoposition.error_code);
+  mojom_geoposition->error_message = geoposition.error_message;
 }
 
 }  // namespace device
