@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "32fe2083_e5ba8d1c",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-25T12:14:18Z",
+      "side": 1,
+      "message": "Currently, the callback will be called from [1]. It is a Chrome IPC message handler. The handler will only be called when the handler is not null and the CommandBufferProxyImpl is alive. And for SwapBuffersCompletionCallback, it is also called by a Chrome IPC message handler. It should be safe to use Unretained(this) here too. Do you want to remove the weak_ptr_factory_? \n\n[1] https://cs.chromium.org/chromium/src/gpu/ipc/client/command_buffer_proxy_impl.cc?type\u003dcs\u0026l\u003d800.",
+      "parentUuid": "277ea585_adddf40d",
+      "revId": "07c7e2d6b8153d402ffd87ceb219f2f80721558f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe4e816e_e6966e62",
         "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
         "patchSetId": 13
