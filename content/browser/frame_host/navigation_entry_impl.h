@@ -146,6 +146,8 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   int GetHttpStatusCode() const override;
   void SetRedirectChain(const std::vector<GURL>& redirects) override;
   const std::vector<GURL>& GetRedirectChain() const override;
+  void SetReplacedEntryURLs(const std::vector<GURL>& replaced_urls) override;
+  const std::vector<GURL>& GetReplacedEntryURLs() const override;
   bool IsRestored() const override;
   std::string GetExtraHeaders() const override;
   void AddExtraHeaders(const std::string& extra_headers) override;
@@ -553,6 +555,12 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   // Set to true if the navigation controller gets notified about a SSL error
   // for a pending navigation. Defaults to false.
   bool ssl_error_;
+
+  // Stores replaced URLs for navigations that replaced a previous entry, e.g.
+  // history.replaceState().
+  // It is preserved after commit (session sync for offline analysis) but should
+  // not be persisted.
+  std::vector<GURL> replaced_entry_urls_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationEntryImpl);
 };
