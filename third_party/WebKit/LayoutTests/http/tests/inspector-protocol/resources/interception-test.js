@@ -13,6 +13,7 @@
     this._consoleLogs = [];
     this._idToCanoncalId = {};
     this._nextId = 1;
+    this._originatorIdToURL = new Map();
   }
 
   _getNextId() {
@@ -75,19 +76,22 @@
             JSON.stringify(event.params));
         return;
       }
+      var originatorURL = this._originatorIdToURL.get(event.params.originatorURL);
       if (event.params.hasOwnProperty('authChallenge')) {
-        this._log(id, 'Auth required for ' + id);
+        this._log(id, `Auth required for ${id} sent by ${originatorURL}`);
         requestInterceptedDict[filename + '+Auth'](event);
         return;
       } else if (event.params.hasOwnProperty('redirectUrl')) {
-        this._log(id, 'Network.requestIntercepted ' + id + ' ' +
+        this._log(id, 'Network.requestIntercepted ' + id +
+            ' sent by ' + originatorURL + ' ' +
             event.params.redirectStatusCode + ' redirect ' +
             this._interceptionRequestParams[id].url.split('/').pop() +
             ' -> ' + event.params.redirectUrl.split('/').pop());
         this._interceptionRequestParams[id].url = event.params.redirectUrl;
       } else {
         this._interceptionRequestParams[id] = event.params.request;
-        this._log(id, 'Network.requestIntercepted ' + id + ' ' +
+        this._log(id, 'Network.requestIntercepted ' + id +
+            ' sent by ' + originatorURL + ' ' +
             event.params.request.method + ' ' + filename + ' type: ' +
             event.params.resourceType);
       }
@@ -119,6 +123,10 @@
       this._consoleLogs.push(messageObject.params.args[0].value);
       numConsoleLogsToWaitFor--;
       maybeCompleteTest();
+    });
+
+    this._session.protocol.Page.onFrameScheduledNavigation(event => {
+      this._originatorIdToURL.set(event.params.frameId, event.params.url);
     });
 
     this._session.protocol.Page.onFrameStoppedLoading(() => {
