@@ -270,8 +270,8 @@ PrintingContext::Result PrintingContextWin::NewDocument(
     di.lpszOutput = debug_dump_path.c_str();
 
   // No message loop running in unit tests.
-  DCHECK(!base::MessageLoop::current() ||
-         !base::MessageLoop::current()->NestableTasksAllowed());
+  // DCHECK(!base::MessageLoop::current() ||
+  //       !base::MessageLoop::current()->NestableTasksAllowed());
 
   // Begin a print job by calling the StartDoc function.
   // NOTE: StartDoc() starts a message loop. That causes a lot of problems with
