@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1124cc97_5eff3dc1",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-25T08:17:10Z",
+      "side": 1,
+      "message": "Nit: please add comment above explaining the purpose of these ON_CALL, namely to bypass TopSites during testing.",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 9
+      },
+      "revId": "826218fcb1ff51961095f57df43dc5d5d9d1aa4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7cb6da_7b66a5dc",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-25T08:17:10Z",
+      "side": 1,
+      "message": "You may want to do here:\nEXPECT_CALL(*thumbnail_service(), SetPageThumbnail(...about_blank_url..., _)).Times(0);\n\nOtherwise there\u0027s IMO no point in specifying ON_CALL for about_blank_url.\n\nTwo alternatives:\n1. Remove all expectations and fixture for about_blank_url (that\u0027s not the main purpose of the test anyway).\n2. EXPECT_CALL(..., SetPageThumbnail(_, _)).Times(0); --\u003e I think this is compatible with later overriding the specific call for simple_url.",
+      "range": {
+        "startLine": 127,
+        "startChar": 27,
+        "endLine": 127,
+        "endChar": 0
+      },
+      "revId": "826218fcb1ff51961095f57df43dc5d5d9d1aa4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

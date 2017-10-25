@@ -315,6 +315,30 @@
     },
     {
       "key": {
+        "uuid": "b6c5c325_4e4f3700",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-25T08:17:10Z",
+      "side": 1,
+      "message": "I think this comment is coupled with the idea of adopting the real ThumbnailServiceImpl (subclass or delegate to it). If you\u0027re not convinced about that, then I agree leaving the QuitClosure() call as is would be best. I\u0027m quite fine in the current form too considering how concise it is.",
+      "parentUuid": "022fd1b2_35469b18",
+      "range": {
+        "startLine": 136,
+        "startChar": 25,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfbfba51_549cb58d",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 5
@@ -478,6 +502,30 @@
       "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65f65707_53d20524",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-25T08:17:10Z",
+      "side": 1,
+      "message": "It\u0027d be interesting to document those findings in a comment or in the CL description. I guess the question is, does it then make sense to submit the test without image verification? It depends on how confident you are that the flakiness is specific to tests, and not the actual feature.",
+      "parentUuid": "f4091126_9b776cf3",
+      "range": {
+        "startLine": 142,
+        "startChar": 79,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
