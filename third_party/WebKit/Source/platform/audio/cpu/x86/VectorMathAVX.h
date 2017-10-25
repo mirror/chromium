@@ -24,6 +24,12 @@ void Vadd(const float* source1p,
           float* dest_p,
           size_t frames_to_process);
 
+void Vclip(const float* source_p,
+           const float* low_threshold_p,
+           const float* high_threshold_p,
+           float* dest_p,
+           size_t frames_to_process);
+
 void Vmaxmgv(const float* source_p, float* max_p, size_t frames_to_process);
 
 void Vmul(const float* source1p,
