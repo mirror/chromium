@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4bdbf5f_329940a9",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-25T21:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b7da51_8996d601",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bb7bd2a_295a9290",
         "filename": "content/browser/media/cdm_storage_impl.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cbba12ca_4c5275e0",
+        "filename": "content/browser/media/cdm_storage_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-25T21:13:14Z",
+      "side": 1,
+      "message": "Done (for the remaining one).",
+      "parentUuid": "2bb7bd2a_295a9290",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b1257c7_4b976da3",
         "filename": "content/browser/media/cdm_storage_impl.h",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7115af_41a04450",
+        "filename": "content/browser/media/cdm_storage_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-25T21:13:14Z",
+      "side": 1,
+      "message": "Removed most of them.",
+      "parentUuid": "2b1257c7_4b976da3",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
