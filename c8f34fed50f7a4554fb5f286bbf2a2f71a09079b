@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebaf8839_d1ed448c",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T20:04:21Z",
+      "side": 1,
+      "message": "when the user\u0027s blacklist status changes?",
+      "range": {
+        "startLine": 52,
+        "startChar": 23,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "c8f34fed50f7a4554fb5f286bbf2a2f71a09079b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
