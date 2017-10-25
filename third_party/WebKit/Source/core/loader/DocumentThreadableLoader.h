@@ -126,7 +126,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // It's used for CORS check.
   void HandleResponse(unsigned long identifier,
                       network::mojom::FetchRequestMode,
-                      WebURLRequest::FetchCredentialsMode,
+                      network::mojom::FetchCredentialsMode,
                       const ResourceResponse&,
                       std::unique_ptr<WebDataConsumerHandle>);
   void HandleReceivedData(const char* data, size_t data_length);
@@ -152,7 +152,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
                                       const ResourceResponse&);
   void HandleResponseOutOfBlinkCORS(unsigned long identifier,
                                     network::mojom::FetchRequestMode,
-                                    WebURLRequest::FetchCredentialsMode,
+                                    network::mojom::FetchCredentialsMode,
                                     const ResourceResponse&,
                                     std::unique_ptr<WebDataConsumerHandle>);
   // TODO(hintzed): CORS handled in Blink. Methods below named *BlinkCORS are to
@@ -166,7 +166,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
                                  const ResourceResponse&);
   void HandleResponseBlinkCORS(unsigned long identifier,
                                network::mojom::FetchRequestMode,
-                               WebURLRequest::FetchCredentialsMode,
+                               network::mojom::FetchCredentialsMode,
                                const ResourceResponse&,
                                std::unique_ptr<WebDataConsumerHandle>);
 
@@ -265,7 +265,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // ResponseReceived() where |resource| might be a reused one (e.g. preloaded
   // resource) which can have different modes.
   network::mojom::FetchRequestMode fetch_request_mode_;
-  WebURLRequest::FetchCredentialsMode fetch_credentials_mode_;
+  network::mojom::FetchCredentialsMode fetch_credentials_mode_;
 
   // Holds the original request for fallback in case the Service Worker
   // does not respond.

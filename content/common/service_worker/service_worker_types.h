@@ -119,7 +119,7 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   uint64_t blob_size;
   scoped_refptr<storage::BlobHandle> blob;
   Referrer referrer;
-  FetchCredentialsMode credentials_mode;
+  network::mojom::FetchCredentialsMode credentials_mode;
   FetchRedirectMode redirect_mode;
   std::string integrity;
   std::string client_id;

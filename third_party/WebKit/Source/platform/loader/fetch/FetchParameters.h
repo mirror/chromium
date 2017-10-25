@@ -153,7 +153,7 @@ class PLATFORM_EXPORT FetchParameters {
   // Configures the request to use the "cors" mode and the specified
   // credentials mode.
   void SetCrossOriginAccessControl(SecurityOrigin*,
-                                   WebURLRequest::FetchCredentialsMode);
+                                   network::mojom::FetchCredentialsMode);
   OriginRestriction GetOriginRestriction() const { return origin_restriction_; }
   void SetOriginRestriction(OriginRestriction restriction) {
     origin_restriction_ = restriction;

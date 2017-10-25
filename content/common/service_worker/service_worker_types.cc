@@ -28,7 +28,7 @@ ServiceWorkerFetchRequest::ServiceWorkerFetchRequest()
       request_context_type(REQUEST_CONTEXT_TYPE_UNSPECIFIED),
       frame_type(REQUEST_CONTEXT_FRAME_TYPE_NONE),
       blob_size(0),
-      credentials_mode(FETCH_CREDENTIALS_MODE_OMIT),
+      credentials_mode(network::mojom::FetchCredentialsMode::kOmit),
       redirect_mode(FetchRedirectMode::FOLLOW_MODE),
       is_reload(false),
       fetch_type(ServiceWorkerFetchType::FETCH) {}
@@ -48,7 +48,7 @@ ServiceWorkerFetchRequest::ServiceWorkerFetchRequest(
       headers(headers),
       blob_size(0),
       referrer(referrer),
-      credentials_mode(FETCH_CREDENTIALS_MODE_OMIT),
+      credentials_mode(network::mojom::FetchCredentialsMode::kOmit),
       redirect_mode(FetchRedirectMode::FOLLOW_MODE),
       is_reload(is_reload),
       fetch_type(ServiceWorkerFetchType::FETCH) {}
