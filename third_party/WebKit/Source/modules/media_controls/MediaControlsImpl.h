@@ -306,6 +306,8 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
 
 DEFINE_ELEMENT_TYPE_CASTS(MediaControlsImpl, IsMediaControls());
 
+bool IsModern();
+
 }  // namespace blink
 
 #endif

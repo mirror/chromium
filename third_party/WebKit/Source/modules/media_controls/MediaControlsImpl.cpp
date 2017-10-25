@@ -80,14 +80,6 @@
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/runtime_enabled_features.h"
 
-namespace {
-
-bool IsModern() {
-  return blink::RuntimeEnabledFeatures::ModernMediaControlsEnabled();
-}
-
-}  // namespace.
-
 namespace blink {
 
 namespace {
@@ -1433,6 +1425,10 @@ void MediaControlsImpl::Trace(blink::Visitor* visitor) {
   visitor->Trace(media_button_panel_);
   MediaControls::Trace(visitor);
   HTMLDivElement::Trace(visitor);
+}
+
+bool IsModern() {
+  return blink::RuntimeEnabledFeatures::ModernMediaControlsEnabled();
 }
 
 }  // namespace blink

@@ -26,10 +26,6 @@
 
 namespace {
 
-bool IsModern() {
-  return blink::RuntimeEnabledFeatures::ModernMediaControlsEnabled();
-}
-
 const double kCurrentTimeBufferedDelta = 1.0;
 
 }  // namespace.

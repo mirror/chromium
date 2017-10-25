@@ -14,14 +14,6 @@
 #include "platform/runtime_enabled_features.h"
 #include "public/platform/Platform.h"
 
-namespace {
-
-bool IsModern() {
-  return blink::RuntimeEnabledFeatures::ModernMediaControlsEnabled();
-}
-
-}  // namespace.
-
 namespace blink {
 
 // The DOM structure looks like:
