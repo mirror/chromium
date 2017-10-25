@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "283d9c50_5ecf29e3",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-25T11:37:08Z",
+      "side": 1,
+      "message": "Passing as an argument was the first version of this CL. There were two major problems with that:\n(1) passing it to IsPasswordManagementEnabledForCurrentPage also required passing it to IsFillingEnabledForCurrentPage and IsSavingAndFillingEnabledForCurrentPage; this changes a lot of callsites\n(2) all those callsites need to be able to determine the right navigation entry; PasswordManager is in a good position to do that, so ultimately the callsites would end up querying it, which has just been pulled into the method here\n\nThe notion of \"current page\" is vague here to begin with. As the need for this change implies, \"current page\" depends on the processed credentials and stage of loading. The current code was trying to get lucky with picking the committed entry\u0027s URL, and failed.",
+      "parentUuid": "c117b462_72edce90",
+      "range": {
+        "startLine": 203,
+        "startChar": 10,
+        "endLine": 203,
+        "endChar": 42
+      },
+      "revId": "aa6c01e5a1a790de59ebf06b7a445c03c5b9d518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca2cbf5d_1bbaa771",
         "filename": "components/password_manager/core/browser/password_manager.h",
         "patchSetId": 4
