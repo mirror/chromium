@@ -30,6 +30,7 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content_public.browser.SelectionClient;
+import org.chromium.content_public.browser.SelectionMetricsLogger;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 
 import java.util.concurrent.Callable;
@@ -62,6 +63,7 @@ public class ContentViewCoreSelectionTest {
     private static class TestSelectionClient implements SelectionClient {
         private SelectionClient.Result mResult;
         private SelectionClient.ResultCallback mResultCallback;
+        private SmartSelectionMetricsLogger mSmartSelectionMetricLogger;
 
         @Override
         public void onSelectionChanged(String selection) {}
@@ -91,12 +93,25 @@ public class ContentViewCoreSelectionTest {
         @Override
         public void cancelAllRequests() {}
 
+        @Override
+        public SelectionMetricsLogger getSelectionMetricsLogger() {
+            return mSmartSelectionMetricLogger;
+        }
+
         public void setResult(SelectionClient.Result result) {
             mResult = result;
         }
 
         public void setResultCallback(SelectionClient.ResultCallback callback) {
             mResultCallback = callback;
+        }
+
+        public void setSmartSelectionMetricsLogger(SmartSelectionMetricsLogger logger) {
+            mSmartSelectionMetricLogger = logger;
+        }
+
+        public SmartSelectionMetricsLogger getSmartSelectionMetricsLogger() {
+            return mSmartSelectionMetricLogger;
         }
     }
 
