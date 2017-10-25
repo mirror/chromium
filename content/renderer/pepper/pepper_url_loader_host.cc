@@ -257,7 +257,7 @@ int32_t PepperURLLoaderHost::InternalOnHostMsgOpen(
   }
 
   web_request.SetRequestContext(WebURLRequest::kRequestContextPlugin);
-  web_request.SetRequestorProcessID(renderer_ppapi_host_->GetPluginPID());
+
   // The requests from the plugins with private permission which can bypass same
   // origin must skip the ServiceWorker.
   web_request.SetServiceWorkerMode(

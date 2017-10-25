@@ -271,11 +271,6 @@ class WebURLRequest {
   BLINK_PLATFORM_EXPORT int RequestorID() const;
   BLINK_PLATFORM_EXPORT void SetRequestorID(int);
 
-  // A consumer controlled value intended to be used to identify the
-  // process of the requestor.
-  BLINK_PLATFORM_EXPORT int RequestorProcessID() const;
-  BLINK_PLATFORM_EXPORT void SetRequestorProcessID(int);
-
   // Allows the request to be matched up with its app cache host.
   BLINK_PLATFORM_EXPORT int AppCacheHostID() const;
   BLINK_PLATFORM_EXPORT void SetAppCacheHostID(int);

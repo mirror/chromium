@@ -108,10 +108,6 @@ class ResourceRequestInfo {
   // The globally unique identifier for this request.
   virtual GlobalRequestID GetGlobalRequestID() const = 0;
 
-  // The pid of the originating process, if the request is sent on behalf of a
-  // another process.  Otherwise it is 0.
-  virtual int GetOriginPID() const = 0;
-
   // Returns the FrameTreeNode ID for this frame. This ID is browser-global and
   // uniquely identifies a frame that hosts content.
   // Note: Returns -1 for all requests except PlzNavigate requests.

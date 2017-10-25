@@ -9,6 +9,7 @@
 #include "content/browser/download/url_download_handler.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/public/browser/ssl_status.h"
+#include "content/public/common/child_process_host.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -90,6 +91,10 @@ class ResourceDownloader : public UrlDownloadHandler,
   // ID of the download, or DownloadItem::kInvalidId if this is a new
   // download.
   uint32_t download_id_;
+
+  // The RenderProcessHost id of the process from which this request originated,
+  // if it originated from a frame.
+  int render_process_host_id_ = ChildProcessHost::kInvalidUniqueID;
 
   // GUID of the download, or empty if this is a new download.
   std::string guid_;

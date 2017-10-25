@@ -269,14 +269,6 @@ void WebURLRequest::SetRequestorID(int requestor_id) {
   resource_request_->SetRequestorID(requestor_id);
 }
 
-int WebURLRequest::RequestorProcessID() const {
-  return resource_request_->RequestorProcessID();
-}
-
-void WebURLRequest::SetRequestorProcessID(int requestor_process_id) {
-  resource_request_->SetRequestorProcessID(requestor_process_id);
-}
-
 int WebURLRequest::AppCacheHostID() const {
   return resource_request_->AppCacheHostID();
 }

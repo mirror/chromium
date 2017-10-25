@@ -61,7 +61,6 @@ void ResourceRequestInfo::AllocateForTesting(net::URLRequest* request,
           render_process_id),                 // resource_requester_info
       render_view_id,                         // route_id
       -1,                                     // frame_tree_node_id
-      0,                                      // origin_pid
       0,                                      // request_id
       render_frame_id,                        // render_frame_id
       is_main_frame,                          // is_main_frame
@@ -128,7 +127,6 @@ ResourceRequestInfoImpl::ResourceRequestInfoImpl(
     scoped_refptr<ResourceRequesterInfo> requester_info,
     int route_id,
     int frame_tree_node_id,
-    int origin_pid,
     int request_id,
     int render_frame_id,
     bool is_main_frame,
@@ -155,7 +153,6 @@ ResourceRequestInfoImpl::ResourceRequestInfoImpl(
       requester_info_(std::move(requester_info)),
       route_id_(route_id),
       frame_tree_node_id_(frame_tree_node_id),
-      origin_pid_(origin_pid),
       request_id_(request_id),
       render_frame_id_(render_frame_id),
       is_main_frame_(is_main_frame),
@@ -240,10 +237,6 @@ int ResourceRequestInfoImpl::GetRouteID() const {
 
 GlobalRequestID ResourceRequestInfoImpl::GetGlobalRequestID() const {
   return GlobalRequestID(GetChildID(), request_id_);
-}
-
-int ResourceRequestInfoImpl::GetOriginPID() const {
-  return origin_pid_;
 }
 
 int ResourceRequestInfoImpl::GetRenderFrameID() const {
@@ -340,14 +333,12 @@ GlobalRoutingID ResourceRequestInfoImpl::GetGlobalRoutingID() const {
 void ResourceRequestInfoImpl::UpdateForTransfer(
     int route_id,
     int render_frame_id,
-    int origin_pid,
     int request_id,
     ResourceRequesterInfo* requester_info,
     mojom::URLLoaderRequest url_loader_request,
     mojom::URLLoaderClientPtr url_loader_client) {
   route_id_ = route_id;
   render_frame_id_ = render_frame_id;
-  origin_pid_ = origin_pid;
   request_id_ = request_id;
   requester_info_ = requester_info;
 

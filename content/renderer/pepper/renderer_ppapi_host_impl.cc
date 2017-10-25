@@ -177,12 +177,6 @@ blink::WebPluginContainer* RendererPpapiHostImpl::GetContainerForInstance(
   return instance_object->container();
 }
 
-base::ProcessId RendererPpapiHostImpl::GetPluginPID() const {
-  if (dispatcher_)
-    return dispatcher_->peer_pid();
-  return base::kNullProcessId;
-}
-
 bool RendererPpapiHostImpl::HasUserGesture(PP_Instance instance) const {
   PepperPluginInstanceImpl* instance_object = GetAndValidateInstance(instance);
   if (!instance_object)

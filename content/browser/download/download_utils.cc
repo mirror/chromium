@@ -174,12 +174,12 @@ std::unique_ptr<ResourceRequest> CreateResourceRequest(
   request->allow_download = true;
 
   if (params->render_process_host_id()) {
-    request->origin_pid = params->render_process_host_id();
     RenderFrameHost* render_frame_host =
         RenderFrameHost::FromID(params->render_process_host_id(),
                                 params->render_frame_host_routing_id());
     request->is_main_frame = !render_frame_host->GetParent();
 
+    // TODO(nick): Can we get rid of request->render_frame_id too?
     request->render_frame_id = params->render_frame_host_routing_id();
   }
 

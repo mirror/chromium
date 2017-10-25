@@ -31,9 +31,7 @@ class TaskProvider {
   // |route_id| is the ID of the IPC route for the URLRequest (this identifies
   // the RenderView or like-thing in the renderer that the request gets routed
   // to).
-  virtual Task* GetTaskOfUrlRequest(int origin_pid,
-                                    int child_id,
-                                    int route_id) = 0;
+  virtual Task* GetTaskOfUrlRequest(int child_id, int route_id) = 0;
 
   // Set the sole observer of this provider. It's an error to set an observer
   // if there's already one there.

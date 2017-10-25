@@ -67,10 +67,6 @@ struct CONTENT_EXPORT ResourceRequest {
   // net::URLRequest load flags (0 by default).
   int load_flags = 0;
 
-  // Process ID from which this request originated, or zero if it originated
-  // in the renderer itself.
-  int origin_pid = 0;
-
   // What this resource load is for (main frame, sub-frame, sub-resource,
   // object).
   ResourceType resource_type = RESOURCE_TYPE_MAIN_FRAME;

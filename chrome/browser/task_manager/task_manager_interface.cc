@@ -23,22 +23,20 @@ namespace task_manager {
 namespace {
 BytesTransferredKey KeyForRequest(const net::URLRequest& request) {
   // Only net::URLRequestJob instances created by the ResourceDispatcherHost
-  // have an associated ResourceRequestInfo and a render frame associated.
-  // All other jobs will have -1 returned for the render process child and
-  // routing ids - the jobs may still match a resource based on their origin id,
-  // otherwise BytesRead() will attribute the activity to the Browser resource.
+  // have an associated ResourceRequestInfo and a render frame associated. Other
+  // jobs may have a child ID (e.g. plugin processes) but an invalid route ID.
   const content::ResourceRequestInfo* info =
       content::ResourceRequestInfo::ForRequest(&request);
-  int child_id = -1;
-  int route_id = -1;
+  BytesTransferredKey result = {-1, -1};
+  if (info) {
+    result.child_id = info->GetChildID();
+    if (info->GetRenderFrameID() != MSG_ROUTING_NONE)
+      result.route_id = info->GetRenderFrameID();
+    else
+      result.route_id = info->GetRouteID();
+  }
 
-  if (info)
-    info->GetAssociatedRenderFrame(&child_id, &route_id);
-
-  // Get the origin PID of the request's originator.  This will only be set for
-  // plugins - for renderer or browser initiated requests it will be zero.
-  int origin_pid = info ? info->GetOriginPID() : 0;
-  return {origin_pid, child_id, route_id};
+  return result;
 }
 }  // namespace
 

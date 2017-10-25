@@ -586,10 +586,6 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
 
   resource_request->headers = GetWebURLRequestHeaders(request);
   resource_request->load_flags = GetLoadFlagsForWebURLRequest(request);
-  // origin_pid only needs to be non-zero if the request originates outside
-  // the render process, so we can use requestorProcessID even for requests
-  // from in-process plugins.
-  resource_request->origin_pid = request.RequestorProcessID();
   resource_request->resource_type = WebURLRequestToResourceType(request);
   resource_request->priority =
       ConvertWebKitPriorityToNetPriority(request.GetPriority());
