@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6f7ded7d_e93b0668",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-25T02:07:19Z",
+      "side": 1,
+      "message": "Still, it won\u0027t be true that the \"client requires a key frame once per 3 seconds\", so I think we should at least update the comment. Is 3 seconds close to what H264 will do? Maybe just say something like:\n\"A key-frame is assumed to be generated roughly every \u003cN\u003e seconds, though the actual frequency is dependent on host/client software versions, the encoder being used, and the quality of the network.\"\nAnd then just pick a value of N that you like :)",
+      "parentUuid": "eedbc614_4cb35f1e",
+      "range": {
+        "startLine": 17,
+        "startChar": 35,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "577fb99e_b6f24db9",
         "filename": "remoting/codec/frame_processing_time_estimator.cc",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbfd78db_80b30a5a",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-25T02:07:19Z",
+      "side": 1,
+      "message": "Ack, my mistake!",
+      "parentUuid": "60abe55f_ab204fe4",
+      "range": {
+        "startLine": 18,
+        "startChar": 66,
+        "endLine": 18,
+        "endChar": 67
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "8dbfbdc0_14365a17",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-25T02:07:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7e83128_07d9027c",
+      "range": {
+        "startLine": 26,
+        "startChar": 61,
+        "endLine": 26,
+        "endChar": 75
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b49d923_05e87592",
         "filename": "remoting/codec/frame_processing_time_estimator.cc",
         "patchSetId": 3
@@ -178,6 +250,30 @@
       "side": 1,
       "message": "Yes. Done.",
       "parentUuid": "4b49d923_05e87592",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 31
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d041fcd0_d88f62d9",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-25T02:07:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e1244058_81204a33",
       "range": {
         "startLine": 27,
         "startChar": 18,
@@ -237,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "643aed0f_3db6c0a2",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-25T02:07:19Z",
+      "side": 1,
+      "message": "You\u0027re right, I misunderstood the code!",
+      "parentUuid": "3fe6e21c_6cc82b6d",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 55
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80bad3de_46b1c381",
         "filename": "remoting/codec/frame_processing_time_estimator.cc",
         "patchSetId": 3
@@ -272,6 +392,24 @@
     },
     {
       "key": {
+        "uuid": "963e4098_b7bd0ed4",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-25T02:07:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af8c000c_bccb4374",
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7550530f_efce5cf4",
         "filename": "remoting/codec/frame_processing_time_estimator.h",
         "patchSetId": 3
@@ -304,6 +442,24 @@
       "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85252cb_306f8bef",
+        "filename": "remoting/codec/frame_processing_time_estimator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-25T02:07:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "116aab64_c747ab56",
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
