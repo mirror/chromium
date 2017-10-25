@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29c77e16_0b1adcbb",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-25T20:32:26Z",
+      "side": 1,
+      "message": "nit: comma splice. \", this\" -\u003e \". This\"",
+      "revId": "8768bd9fddcc6792a88b6c9f5a4af1e07d224c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946fb752_283d6bb9",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_posix.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-25T20:32:26Z",
+      "side": 1,
+      "message": "hrm. This should check that sz \u003c\u003d numeric_limits\u003cint\u003e::max and return an error. Alternately, use https://chromium.googlesource.com/chromium/src/base/+/master/numerics/README.md checked_cast.",
+      "revId": "8768bd9fddcc6792a88b6c9f5a4af1e07d224c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2f5d4a_d44a35f4",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-25T20:32:26Z",
+      "side": 1,
+      "message": "Hmmm...in the current code overlap.hEvent is uninitialized so I you\u0027re gonna be waiting on a random pointer.\n\nWriteEx()\u0027s documentation in particular says it doesn\u0027t use overlap.hEvent().\n\nMy reading of the docs makes it look like CancelIo pairs with GetOverlappedResult and that these two (along with WriteFile/ReadFile) communicate via an implicit windows Event object that is attached to the file handle if the event isn\u0027t set.\n\nThus, I think either we want to explicitly zero the hEvent because CancelIO may read it even if WriteEx doesn\u0027t...and then synchronize by calling GetOverlappedResult(), or we should initialize the hEvent and do what you\u0027re doing here.\n\nIn other news...I hate this API.",
+      "revId": "8768bd9fddcc6792a88b6c9f5a4af1e07d224c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
