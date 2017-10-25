@@ -16,9 +16,9 @@
 
 namespace {
 
-bool IsModern() {
+/*bool IsModern() {
   return blink::RuntimeEnabledFeatures::ModernMediaControlsEnabled();
-}
+}*/
 
 }  // namespace.
 
