@@ -57,7 +57,6 @@ import javax.annotation.Nullable;
  */
 public class SelectableListToolbar<E> extends Toolbar implements SelectionObserver<E>,
         OnClickListener, OnEditorActionListener, DisplayStyleObserver {
-
     /**
      * A delegate that handles searching the list of selectable items associated with this toolbar.
      */

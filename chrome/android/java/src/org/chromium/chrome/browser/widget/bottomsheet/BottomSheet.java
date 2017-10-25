@@ -274,6 +274,9 @@ public class BottomSheet
     /** A help bubble that points to the bottom sheet, helping users find bookmarks, et. al. */
     private ViewAnchoredTextBubble mHelpBubble;
 
+    /** Whether the toolbar handle is currently hidden. */
+    private boolean mHandleHidden;
+
     /**
      * An interface defining content that can be displayed inside of the bottom sheet for Chrome
      * Home.
@@ -1668,7 +1671,7 @@ public class BottomSheet
 
         return !isToolbarAndroidViewHidden()
                 && (!isInOverviewMode() || mNtpController.isShowingNewTabUi())
-                && !isFindInPageVisible;
+                && !isFindInPageVisible && !mHandleHidden;
     }
 
     /**
