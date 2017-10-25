@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf57b4df_297763e2",
+        "filename": "content/renderer/render_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-10-25T18:41:56Z",
+      "side": 1,
+      "message": "I can see why this would look like an improvement, and maybe I\u0027m just stuck in the past, but living in a world where non-ASCII charsets are used all the time, I have encountered too many times where non-ASCII in source code has backfired.\n\nIt might be diff tools, analyzers, custom python scripts, version control systems, IDEs, almost anything, but eventually strings like this seem to come back and bite you.\n\nIn this very particular case, the test is about decoding a very special sequence of bytes. Who knows how those characters will be encoded in the future, by every tool.",
+      "revId": "22e31e4ba56adbe42f53ffce270162e2b5c49dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
