@@ -7217,7 +7217,7 @@ void SerializeRecursive(const cc::PaintOpBuffer* buffer,
   cc::PlaybackParams params(nullptr, serializer->canvas()->getTotalMatrix());
   int save_count = serializer->canvas()->getSaveCount();
 
-  for (cc::PaintOpBuffer::CompositeIterator iter(buffer, indices); iter;
+  for (cc::PaintOpBuffer::PlaybackFoldingIterator iter(buffer, indices); iter;
        ++iter) {
     const cc::PaintOp* op = *iter;
     if (op->GetType() == cc::PaintOpType::DrawRecord) {
