@@ -103,7 +103,8 @@ class TouchCalibratorControllerTest : public AshTestBase {
     ui::DeviceDataManager::CreateInstance();
     ui::TouchscreenDevice touchdevice(
         12, ui::InputDeviceType::INPUT_DEVICE_EXTERNAL,
-        std::string("test touch device"), gfx::Size(1000, 1000), 1);
+        std::string("test touch device"), gfx::Size(1000, 1000), 1,
+        false /* has_stylus */);
 
     ui::test::DeviceDataManagerTestAPI devices_test_api;
     devices_test_api.SetTouchscreenDevices({touchdevice});

@@ -109,7 +109,8 @@ TEST_F(InputDeviceTest, DeviceListsCompleteTwoClients) {
 
 TEST_F(InputDeviceTest, AddDevices) {
   const TouchscreenDevice touchscreen(100, INPUT_DEVICE_INTERNAL, "Touchscreen",
-                                      gfx::Size(2600, 1700), 3);
+                                      gfx::Size(2600, 1700), 3,
+                                      false /* has_stylus */);
 
   TestInputDeviceClient client;
   AddClientAsObserver(&client);

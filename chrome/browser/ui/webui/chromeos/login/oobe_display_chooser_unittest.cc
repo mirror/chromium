@@ -71,9 +71,9 @@ TEST_F(OobeDisplayChooserTest, PreferTouchAsPrimary) {
   ash::Shell::Get()->window_tree_host_manager()->SetPrimaryDisplayId(1);
 
   // Setup corresponding TouchscreenDevice object
-  ui::TouchscreenDevice touchscreen =
-      ui::TouchscreenDevice(1, ui::InputDeviceType::INPUT_DEVICE_EXTERNAL,
-                            "Touchscreen", gfx::Size(800, 600), 1);
+  ui::TouchscreenDevice touchscreen(
+      1, ui::InputDeviceType::INPUT_DEVICE_EXTERNAL, "Touchscreen",
+      gfx::Size(800, 600), 1, false /* has_stylus */);
   touchscreen.vendor_id = kWhitelistedId;
   UpdateTouchscreenDevices(touchscreen);
   base::RunLoop().RunUntilIdle();
@@ -107,9 +107,9 @@ TEST_F(OobeDisplayChooserTest, DontSwitchFromTouch) {
   ash::Shell::Get()->window_tree_host_manager()->SetPrimaryDisplayId(1);
 
   // Setup corresponding TouchscreenDevice object
-  ui::TouchscreenDevice touchscreen =
-      ui::TouchscreenDevice(1, ui::InputDeviceType::INPUT_DEVICE_EXTERNAL,
-                            "Touchscreen", gfx::Size(800, 600), 1);
+  ui::TouchscreenDevice touchscreen(
+      1, ui::InputDeviceType::INPUT_DEVICE_EXTERNAL, "Touchscreen",
+      gfx::Size(800, 600), 1, false /* has_stylus */);
   touchscreen.vendor_id = kWhitelistedId;
   UpdateTouchscreenDevices(touchscreen);
   base::RunLoop().RunUntilIdle();

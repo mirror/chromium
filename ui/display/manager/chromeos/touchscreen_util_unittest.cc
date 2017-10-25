@@ -27,7 +27,8 @@ uint32_t ToIdentifier(const ui::TouchscreenDevice& device) {
 ui::TouchscreenDevice CreateTouchscreenDevice(int id,
                                               ui::InputDeviceType type,
                                               const gfx::Size& size) {
-  ui::TouchscreenDevice device(id, type, base::IntToString(id), size, 0);
+  ui::TouchscreenDevice device(id, type, base::IntToString(id), size, 0,
+                               false /* has_stylus */);
   device.vendor_id = id * id;
   device.product_id = device.vendor_id * id;
   return device;
