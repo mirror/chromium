@@ -22,6 +22,30 @@
       "revId": "11f41605d7f9023990eaea5172590cc67ff4aa46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de81da81_eb8bcdd5",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-25T13:48:21Z",
+      "side": 1,
+      "message": "Why risk the possibility of getting the wrong icon? If this code is triggered from session restore there is a high likelihood the favicon for the exact url has been downloaded.",
+      "parentUuid": "64c19eee_a508805a",
+      "range": {
+        "startLine": 1207,
+        "startChar": 33,
+        "endLine": 1207,
+        "endChar": 72
+      },
+      "revId": "11f41605d7f9023990eaea5172590cc67ff4aa46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
