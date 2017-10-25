@@ -14,6 +14,16 @@
 
 namespace content {
 
+LevelDBWrapperImpl::Control::Control(LevelDBWrapperImpl* wrapper)
+    : wrapper_(wrapper) {}
+LevelDBWrapperImpl::Control::~Control() {}
+
+void LevelDBWrapperImpl::Control::CopyToNewPrefix(const std::string& prefix) {
+  DCHECK(wrapper_->commit_batch_);
+  wrapper_->commit_batch_->copy_to_prefix =
+      leveldb::StdStringToUint8Vector(prefix);
+}
+
 void LevelDBWrapperImpl::Delegate::MigrateData(
     base::OnceCallback<void(std::unique_ptr<ValueMap>)> callback) {
   std::move(callback).Run(nullptr);
@@ -469,9 +479,11 @@ void LevelDBWrapperImpl::CommitChanges() {
 
   commit_rate_limiter_.add_samples(1);
 
+  Control control(this);
+
   // Commit all our changes in a single batch.
   std::vector<leveldb::mojom::BatchedOperationPtr> operations =
-      delegate_->PrepareToCommit();
+      delegate_->PrepareToCommit(&control);
   if (commit_batch_->clear_all_first) {
     leveldb::mojom::BatchedOperationPtr item =
         leveldb::mojom::BatchedOperation::New();
@@ -480,12 +492,14 @@ void LevelDBWrapperImpl::CommitChanges() {
     operations.push_back(std::move(item));
   }
   size_t data_size = 0;
+  const std::vector<uint8_t>& prefix =
+      commit_batch_->copy_to_prefix.value_or(prefix_);
   for (const auto& key : commit_batch_->changed_keys) {
     data_size += key.size();
     leveldb::mojom::BatchedOperationPtr item =
         leveldb::mojom::BatchedOperation::New();
-    item->key.reserve(prefix_.size() + key.size());
-    item->key.insert(item->key.end(), prefix_.begin(), prefix_.end());
+    item->key.reserve(prefix.size() + key.size());
+    item->key.insert(item->key.end(), prefix.begin(), prefix.end());
     item->key.insert(item->key.end(), key.begin(), key.end());
     auto it = map_->find(key);
     if (it == map_->end()) {
@@ -497,15 +511,45 @@ void LevelDBWrapperImpl::CommitChanges() {
     }
     operations.push_back(std::move(item));
   }
+  base::Optional<std::vector<uint8_t>> copy_to_prefix =
+      std::move(commit_batch_->copy_to_prefix);
   commit_batch_.reset();
 
   data_rate_limiter_.add_samples(data_size);
 
   ++commit_batches_in_flight_;
 
-  // TODO(michaeln): Currently there is no guarantee LevelDBDatabaseImp::Write
+  // TODO(dmurph): Currently there is no guarantee
+  // LevelDBDatabaseImpl::CopyPrefixed will run during a clean shutdown. We
+  // need that to avoid dataloss.
+  if (copy_to_prefix) {
+    database_->CopyPrefixed(
+        std::move(prefix_), copy_to_prefix.value(),
+        base::BindOnce(&LevelDBWrapperImpl::OnPrefixChangeComplete,
+                       weak_ptr_factory_.GetWeakPtr(),
+                       base::Passed(&operations)));
+    prefix_ = std::move(copy_to_prefix.value());
+    return;
+  }
+
+  // TODO(michaeln): Currently there is no guarantee LevelDBDatabaseImpl::Write
   // will run during a clean shutdown. We need that to avoid dataloss.
   database_->Write(std::move(operations),
+                   base::BindOnce(&LevelDBWrapperImpl::OnCommitComplete,
+                                  weak_ptr_factory_.GetWeakPtr()));
+}
+
+void LevelDBWrapperImpl::OnPrefixChangeComplete(
+    std::vector<leveldb::mojom::BatchedOperationPtr> next_operations,
+    leveldb::mojom::DatabaseError error) {
+  if (error != leveldb::mojom::DatabaseError::OK) {
+    OnCommitComplete(error);
+    return;
+  }
+
+  // TODO(michaeln): Currently there is no guarantee LevelDBDatabaseImpl::Write
+  // will run during a clean shutdown. We need that to avoid dataloss.
+  database_->Write(std::move(next_operations),
                    base::BindOnce(&LevelDBWrapperImpl::OnCommitComplete,
                                   weak_ptr_factory_.GetWeakPtr()));
 }

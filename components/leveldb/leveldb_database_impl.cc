@@ -5,6 +5,7 @@
 #include "components/leveldb/leveldb_database_impl.h"
 
 #include <inttypes.h>
+#include <algorithm>
 #include <map>
 #include <string>
 #include <utility>
@@ -27,8 +28,10 @@ template <typename FunctionType>
 leveldb::Status ForEachWithPrefix(leveldb::DB* db,
                                   const leveldb::Slice& key_prefix,
                                   FunctionType function) {
-  std::unique_ptr<leveldb::Iterator> it(
-      db->NewIterator(leveldb::ReadOptions()));
+  leveldb::ReadOptions prefix_read_options;
+  // Since we're doing a bulk scan, disable filling the cache.
+  prefix_read_options.fill_cache = false;
+  std::unique_ptr<leveldb::Iterator> it(db->NewIterator(prefix_read_options));
   it->Seek(key_prefix);
   for (; it->Valid(); it->Next()) {
     if (!it->key().starts_with(key_prefix))
@@ -141,6 +144,30 @@ void LevelDBDatabaseImpl::GetPrefixed(const std::vector<uint8_t>& key_prefix,
         data.push_back(std::move(kv));
       });
   std::move(callback).Run(LeveldbStatusToError(status), std::move(data));
+}
+
+void LevelDBDatabaseImpl::CopyPrefixed(
+    const std::vector<uint8_t>& source_key_prefix,
+    const std::vector<uint8_t>& destination_key_prefix,
+    CopyPrefixedCallback callback) {
+  leveldb::WriteBatch batch;
+  std::vector<uint8_t> new_prefix = destination_key_prefix;
+  size_t source_key_prefix_size = source_key_prefix.size();
+  size_t destination_key_prefix_size = destination_key_prefix.size();
+  leveldb::Status status = ForEachWithPrefix(
+      db_.get(), GetSliceFor(source_key_prefix),
+      [&batch, &new_prefix, source_key_prefix_size,
+       destination_key_prefix_size](const leveldb::Slice& key,
+                                    const leveldb::Slice& value) {
+        size_t excess_key = key.size() - source_key_prefix_size;
+        new_prefix.resize(destination_key_prefix_size + excess_key);
+        std::copy(key.data() + source_key_prefix_size, key.data() + key.size(),
+                  new_prefix.begin() + destination_key_prefix_size);
+        batch.Put(GetSliceFor(new_prefix), value);
+      });
+  if (status.ok())
+    status = db_->Write(leveldb::WriteOptions(), &batch);
+  std::move(callback).Run(LeveldbStatusToError(status));
 }
 
 void LevelDBDatabaseImpl::GetSnapshot(GetSnapshotCallback callback) {

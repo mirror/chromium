@@ -43,11 +43,29 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   using Change =
       std::pair<std::vector<uint8_t>, base::Optional<std::vector<uint8_t>>>;
 
+  // Exposes controls of LevelDBWrapperImpl to Delegate during
+  // |PrepareToCommit|.
+  class CONTENT_EXPORT Control {
+   public:
+    void CopyToNewPrefix(const std::string& prefix);
+
+   private:
+    friend class LevelDBWrapperImpl;
+
+    explicit Control(LevelDBWrapperImpl* wrapper);
+    ~Control();
+
+    LevelDBWrapperImpl* wrapper_;
+
+    DISALLOW_COPY_AND_ASSIGN(Control);
+  };
+
   class CONTENT_EXPORT Delegate {
    public:
     virtual void OnNoBindings() = 0;
-    virtual std::vector<leveldb::mojom::BatchedOperationPtr>
-    PrepareToCommit() = 0;
+    // Control is only valid during this method call.
+    virtual std::vector<leveldb::mojom::BatchedOperationPtr> PrepareToCommit(
+        Control* control) = 0;
     virtual void DidCommit(leveldb::mojom::DatabaseError error) = 0;
     // Called during loading if no data was found. Needs to call |callback|.
     virtual void MigrateData(ValueMapCallback callback);
@@ -140,6 +158,7 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   };
 
   struct CommitBatch {
+    base::Optional<std::vector<uint8_t>> copy_to_prefix;
     bool clear_all_first;
     std::set<std::vector<uint8_t>> changed_keys;
 
@@ -157,6 +176,9 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   void StartCommitTimer();
   base::TimeDelta ComputeCommitDelay() const;
   void CommitChanges();
+  void OnPrefixChangeComplete(
+      std::vector<leveldb::mojom::BatchedOperationPtr> next_operations,
+      leveldb::mojom::DatabaseError error);
   void OnCommitComplete(leveldb::mojom::DatabaseError error);
 
   std::vector<uint8_t> prefix_;

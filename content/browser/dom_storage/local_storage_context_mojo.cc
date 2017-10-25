@@ -197,7 +197,8 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
     level_db_wrapper()->ScheduleImmediateCommit();
   }
 
-  std::vector<leveldb::mojom::BatchedOperationPtr> PrepareToCommit() override {
+  std::vector<leveldb::mojom::BatchedOperationPtr> PrepareToCommit(
+      LevelDBWrapperImpl::Control*) override {
     std::vector<leveldb::mojom::BatchedOperationPtr> operations;
 
     // Write schema version if not already done so before.
