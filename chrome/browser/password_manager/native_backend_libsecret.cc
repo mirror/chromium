@@ -342,6 +342,7 @@ bool NativeBackendLibsecret::AddUpdateLoginSearch(
 }
 
 bool NativeBackendLibsecret::RawAddLogin(const PasswordForm& form) {
+  VLOG(0) << "RawAddLogin ";
   int64_t date_created = form.date_created.ToInternalValue();
   // If we are asked to save a password with 0 date, use the current time.
   // We don't want to actually save passwords as though on January 1, 1601.
