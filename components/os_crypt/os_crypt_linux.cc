@@ -70,6 +70,7 @@ base::LazyInstance<Cache>::Leaky g_cache = LAZY_INSTANCE_INITIALIZER;
 // set before every call to this function.
 std::unique_ptr<KeyStorageLinux> CreateKeyStorage() {
   DCHECK(g_cache.Get().config);
+  VLOG(0) << "CreateKeyStorage";
   std::unique_ptr<KeyStorageLinux> key_storage =
       KeyStorageLinux::CreateService(*g_cache.Get().config);
   g_cache.Get().config.reset();

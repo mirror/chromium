@@ -24,6 +24,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "chrome/grit/chromium_strings.h"
 #include "components/autofill/core/common/password_form.h"
+#include "components/os_crypt/os_crypt.h"
 #include "components/password_manager/core/browser/password_manager_util.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
@@ -318,6 +319,12 @@ NativeBackendKWallet::~NativeBackendKWallet() {
 }
 
 bool NativeBackendKWallet::Init() {
+  // Force OSCrypt to initialise itself before Password Manager uses its
+  // backends. This removes any racing calls to Keyring/KWallet between
+  // Password Manager and OSCrypt.
+  std::string encrypted;
+  OSCrypt::EncryptString("Not an interesting value", &encrypted);
+
   // Without the |optional_bus| parameter, a real bus will be instantiated.
   return InitWithBus(scoped_refptr<dbus::Bus>());
 }
