@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cd068518_c37e1ce5",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/multicol-as-paint-container-expected.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T04:21:55Z",
+      "side": 1,
+      "message": "It\u0027s fine to address this (as well as thouse in the vertical-rl test) in followups.",
+      "parentUuid": "314a6bf8_bef2cf5a",
+      "revId": "6faa4117bbfebad7e5a79558a7f420fa5d7e99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2240d9b7_0a3f519b",
         "filename": "third_party/WebKit/Source/core/paint/BlockPainter.cpp",
         "patchSetId": 15
