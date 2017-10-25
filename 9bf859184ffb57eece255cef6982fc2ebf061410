@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89533539_040a4c1c",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-25T15:10:04Z",
+      "side": 1,
+      "message": "nit: BindRepeating to be future-proof?",
+      "range": {
+        "startLine": 527,
+        "startChar": 12,
+        "endLine": 527,
+        "endChar": 16
+      },
+      "revId": "9bf859184ffb57eece255cef6982fc2ebf061410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6749163_b894477e",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-25T15:10:04Z",
+      "side": 1,
+      "message": "What is the guarantee that the offline_page_model will still exist when this gets invoked? Unless trivial, can you add a comment explaining that, please?",
+      "range": {
+        "startLine": 534,
+        "startChar": 17,
+        "endLine": 534,
+        "endChar": 35
+      },
+      "revId": "9bf859184ffb57eece255cef6982fc2ebf061410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603ce43f_4bbe6b1a",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-25T15:10:04Z",
+      "side": 1,
+      "message": "nit: the two negations looks too complex, why not \"if (bookmarks_provider_registration_callback_)\"?",
+      "range": {
+        "startLine": 456,
+        "startChar": 7,
+        "endLine": 456,
+        "endChar": 61
+      },
+      "revId": "9bf859184ffb57eece255cef6982fc2ebf061410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
