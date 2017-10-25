@@ -154,8 +154,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   void WasResized();
 
-  gfx::Rect frame_rect() const {
-    return pending_resize_params_.frame_rect.value_or(gfx::Rect());
+  const gfx::Rect& frame_rect() const {
+    return pending_resize_params_.frame_rect;
   }
 
   const ScreenInfo& screen_info() const {
@@ -257,10 +257,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
     ResizeParams& operator=(const ResizeParams& other);
 
-    // We want to distinguish between objects with an empty size and a
-    // undetermined size. If base::nullopt, then the |frame_rect| is not yet
-    // known whereas an empty frame_rect is acceptable.
-    base::Optional<gfx::Rect> frame_rect;
+    gfx::Rect frame_rect;
     ScreenInfo screen_info;
   };
 

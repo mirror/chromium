@@ -214,12 +214,9 @@ void BrowserPlugin::DidCommitCompositorFrame() {
 }
 
 void BrowserPlugin::WasResized() {
-  if (!pending_resize_params_.frame_rect)
-    return;
-
   bool size_changed =
-      !sent_resize_params_ || sent_resize_params_->frame_rect->size() !=
-                                  pending_resize_params_.frame_rect->size();
+      !sent_resize_params_ || sent_resize_params_->frame_rect.size() !=
+                                  pending_resize_params_.frame_rect.size();
 
   bool synchronized_params_changed =
       !sent_resize_params_ || size_changed ||
@@ -240,8 +237,8 @@ void BrowserPlugin::WasResized() {
   }
 
   bool position_changed =
-      !sent_resize_params_ || sent_resize_params_->frame_rect->origin() !=
-                                  pending_resize_params_.frame_rect->origin();
+      !sent_resize_params_ || sent_resize_params_->frame_rect.origin() !=
+                                  pending_resize_params_.frame_rect.origin();
   bool resize_params_changed = synchronized_params_changed || position_changed;
 
   if (resize_params_changed && attached()) {
