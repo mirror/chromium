@@ -30,6 +30,7 @@
 #include "extensions/common/constants.h"
 
 #if defined(OS_CHROMEOS)
+#include "components/feedback/feedback_util_chromeos.h"
 #include "extensions/browser/api/feedback_private/log_source_access_manager.h"
 #endif  // defined(OS_CHROMEOS)
 
@@ -194,6 +195,13 @@ void FeedbackPrivateGetSystemInformationFunction::OnCompleted(
       SystemInformation sys_info_entry;
       sys_info_entry.key = std::move(itr.first);
       sys_info_entry.value = std::move(itr.second);
+#if defined(OS_CHROMEOS)
+      auto display_value = std::make_unique<std::string>();
+      if (feedback_util::GetDisplayValue(sys_info_entry.key,
+                                         display_value.get())) {
+        sys_info_entry.display_value = std::move(display_value);
+      }
+#endif  // defined(OS_CHROMEOS)
       sys_info_list.emplace_back(std::move(sys_info_entry));
     }
   }
