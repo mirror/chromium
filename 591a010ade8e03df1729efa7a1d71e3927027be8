@@ -70,6 +70,30 @@
       "revId": "591a010ade8e03df1729efa7a1d71e3927027be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586bacaa_374797c3",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-25T19:24:55Z",
+      "side": 1,
+      "message": "Oh, I misunderstood what it is doing.  You are correct.\n\npdr: consider moving the point_in_document declaration below the if (RLS) block, to make it clearer that it is only used without RLS.",
+      "parentUuid": "8d3b88af_db1b32dd",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 49
+      },
+      "revId": "591a010ade8e03df1729efa7a1d71e3927027be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
