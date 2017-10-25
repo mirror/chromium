@@ -540,9 +540,9 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTestCacheUpdate,
 // Tests for crbug.com/339576. Wallpaper cache should be updated in
 // multi-profile mode when user:
 // 1. chooses an online wallpaper from wallpaper
-//    picker (calls SetWallpaperFromImageSkia);
+//    picker (calls SetWallpaperFromUrl);
 // 2. chooses a custom wallpaper from wallpaper
-//    picker (calls SetCustomWallpaper);
+//    picker (calls SetWallpaperFromFile);
 // 3. reverts to a default wallpaper.
 // Also, when user login at multi-profile mode, previous logged in users'
 // wallpaper cache should not be deleted.
@@ -577,24 +577,25 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTestCacheUpdate,
   EXPECT_EQ(original_path, path);
 
   gfx::ImageSkia red_wallpaper = CreateTestImage(SK_ColorRED);
-  wallpaper_manager->SetWallpaperFromImageSkia(test_account_id1_, red_wallpaper,
-                                               WALLPAPER_LAYOUT_CENTER, true);
+  wallpaper_manager->SetWallpaperFromUrl(test_account_id1_, red_wallpaper,
+                                         "dummy" /* dummy url */,
+                                         WALLPAPER_LAYOUT_CENTER, true);
   wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
-  // SetWallpaperFromImageSkia should update wallpaper cache when multi-profile
-  // is turned on.
+  // SetWallpaperFromUrl should update wallpaper cache when multi-profile is
+  // turned on.
   EXPECT_TRUE(
       test_api->GetWallpaperFromCache(test_account_id1_, &cached_wallpaper));
   EXPECT_TRUE(test_api->GetPathFromCache(test_account_id1_, &path));
   EXPECT_TRUE(cached_wallpaper.BackedBySameObjectAs(red_wallpaper));
 
   gfx::ImageSkia green_wallpaper = CreateTestImage(SK_ColorGREEN);
-  wallpaper_manager->SetCustomWallpaper(
+  wallpaper_manager->SetWallpaperFromFile(
       test_account_id1_, test_account1_wallpaper_files_id_,
-      "dummy",  // dummy file name
-      WALLPAPER_LAYOUT_CENTER, wallpaper::CUSTOMIZED, green_wallpaper, true);
+      "dummy" /* dummy file name */, WALLPAPER_LAYOUT_CENTER,
+      wallpaper::CUSTOMIZED, green_wallpaper, true);
   wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
-  // SetCustomWallpaper should also update wallpaper cache when multi-profile is
-  // turned on.
+  // SetWallpaperFromFile should also update wallpaper cache when multi-profile
+  // is turned on.
   EXPECT_TRUE(
       test_api->GetWallpaperFromCache(test_account_id1_, &cached_wallpaper));
   EXPECT_TRUE(cached_wallpaper.BackedBySameObjectAs(green_wallpaper));
@@ -820,7 +821,7 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest,
   // wallpaper load task.
   gfx::ImageSkia image = wallpaper_manager_test_utils::CreateTestImage(
       640, 480, wallpaper_manager_test_utils::kCustomWallpaperColor);
-  WallpaperManager::Get()->SetCustomWallpaper(
+  WallpaperManager::Get()->SetWallpaperFromFile(
       user_manager::StubAccountId(),
       wallpaper::WallpaperFilesId::FromString("test_hash"), "test-nofile.jpeg",
       WALLPAPER_LAYOUT_STRETCH, wallpaper::CUSTOMIZED, image, true);
@@ -851,7 +852,7 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest, IsPendingWallpaper) {
       640, 480, wallpaper_manager_test_utils::kCustomWallpaperColor);
   EXPECT_FALSE(WallpaperManager::Get()->IsPendingWallpaper(
       wallpaper::WallpaperResizer::GetImageId(image)));
-  WallpaperManager::Get()->SetCustomWallpaper(
+  WallpaperManager::Get()->SetWallpaperFromFile(
       user_manager::StubAccountId(),
       wallpaper::WallpaperFilesId::FromString("test_hash"), "test-nofile.jpeg",
       WALLPAPER_LAYOUT_STRETCH, wallpaper::CUSTOMIZED, image, true);

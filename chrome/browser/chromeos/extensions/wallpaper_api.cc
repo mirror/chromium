@@ -162,7 +162,7 @@ void WallpaperSetWallpaperFunction::OnWallpaperDecoded(
   bool update_wallpaper =
       account_id_ ==
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId();
-  wallpaper_manager->SetCustomWallpaper(
+  wallpaper_manager->SetWallpaperFromFile(
       account_id_, wallpaper_files_id_, params_->details.filename, layout,
       wallpaper::CUSTOMIZED, image, update_wallpaper);
   unsafe_wallpaper_decoder_ = NULL;
