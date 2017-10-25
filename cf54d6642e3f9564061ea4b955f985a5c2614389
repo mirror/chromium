@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08883a20_23596cd5",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-25T20:13:24Z",
+      "side": 1,
+      "message": "Tab\u0027s implementation of WebStateObserver callbacks sends out |-notifyTabChanged:|, and receivers of that callback expect isVoiceSearchResultsTab to be correct.  This means that VoiceSearchNavigations needs to finish the model updates in its WebStateObserve callbacks before Tab.  Since VoiceSearchNavigations registers itself as a WebStateObserver when created, that means it needs to get initialized here.",
+      "parentUuid": "305a1a36_d9683eaf",
+      "revId": "cf54d6642e3f9564061ea4b955f985a5c2614389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcad76ae_18c6e058",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-24T01:29:25Z",
       "side": 1,
       "message": "Is this logic that could move into the tab helper too?",
+      "range": {
+        "startLine": 384,
+        "startChar": 0,
+        "endLine": 393,
+        "endChar": 14
+      },
+      "revId": "cf54d6642e3f9564061ea4b955f985a5c2614389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a029383_1ef8b151",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-25T20:13:24Z",
+      "side": 1,
+      "message": "I think it\u0027s better to leave that logic as-is.  That way, VoiceSearchNavigations clearly has an intended purpose of storing which NavigationItems were created for voice searches.  This specific logic of not using history navigations is specific to the UI and whether to display the voice search bar.  This will ultimately be moved to the VoiceSearchBarCoordinator\u0027s parent coordinator.",
+      "parentUuid": "dcad76ae_18c6e058",
       "range": {
         "startLine": 384,
         "startChar": 0,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5b6179cf_5dbe3bb9",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3942,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-25T20:13:24Z",
+      "side": 1,
+      "message": "Yep, that\u0027s correct.  This also fixes a long-standing UI glitch where sometimes we were attempting to animate in the voice search bar while the voice input view was being dismissed.",
+      "parentUuid": "22c4f8f5_a2488b14",
+      "revId": "cf54d6642e3f9564061ea4b955f985a5c2614389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6153a4b1_934e7c75",
         "filename": "ios/chrome/browser/voice/voice_search_navigations.h",
         "patchSetId": 1
@@ -70,6 +130,30 @@
       "writtenOn": "2017-10-24T15:08:42Z",
       "side": 1,
       "message": "Should this be a TabHelper?",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "cf54d6642e3f9564061ea4b955f985a5c2614389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131bc5cf_3bc1f63a",
+        "filename": "ios/chrome/browser/voice/voice_search_navigations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-25T20:13:24Z",
+      "side": 1,
+      "message": "It\u0027s performing the logic of a \"tab helper\", but is not explicitly named as such.  I\u0027m not really sure what value is added by renaming this class to reference Tab since A) we\u0027re trying to eliminate Tab, and B) in the future WebStateListDelegate will set up a bunch of WebStateUserData objects, so it\u0027s not even related to Tab at all.  If anything, maybe we should start calling these classes WebStateHelpers?",
+      "parentUuid": "6153a4b1_934e7c75",
       "range": {
         "startLine": 17,
         "startChar": 6,

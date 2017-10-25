@@ -16,6 +16,24 @@
       "revId": "f9974a8c5369686a01afbcc685351549d8202239",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed7ff05_90ed919a",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-25T20:13:24Z",
+      "side": 0,
+      "message": "This interim gap between kicking off a load and actually committing it exists on all platforms, so we should probably be consistent.  The logic can still be accomplished by storing a flag and updating NavigationItems when they\u0027re committed, so I don\u0027t know if it\u0027s strictly necessary.  If other platforms agree that a OnNavigationStarted() though, it would clean this code up a bit.",
+      "parentUuid": "48799d8e_0ae16b60",
+      "revId": "f9974a8c5369686a01afbcc685351549d8202239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
