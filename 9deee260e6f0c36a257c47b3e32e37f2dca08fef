@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87ff4585_727b54f1",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-25T20:41:40Z",
+      "side": 1,
+      "message": "HostFrameSinkManager receives the the HitTestQuery right?",
+      "range": {
+        "startLine": 555,
+        "startChar": 69,
+        "endLine": 555,
+        "endChar": 73
+      },
+      "revId": "9deee260e6f0c36a257c47b3e32e37f2dca08fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1c00ae_3cb2ad9e",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-25T20:41:40Z",
+      "side": 1,
+      "message": "Maybe \"after HitTestQuery was deleted.\"",
+      "range": {
+        "startLine": 556,
+        "startChar": 17,
+        "endLine": 556,
+        "endChar": 39
+      },
+      "revId": "9deee260e6f0c36a257c47b3e32e37f2dca08fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f62e5c_b0df79d0",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-25T20:41:40Z",
+      "side": 1,
+      "message": "You probably don\u0027t need to check this in this test.",
+      "revId": "9deee260e6f0c36a257c47b3e32e37f2dca08fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c519242_96fe6e15",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-25T20:41:40Z",
+      "side": 1,
+      "message": "Just saying dropped is enough.",
+      "range": {
+        "startLine": 592,
+        "startChar": 60,
+        "endLine": 592,
+        "endChar": 75
+      },
+      "revId": "9deee260e6f0c36a257c47b3e32e37f2dca08fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
