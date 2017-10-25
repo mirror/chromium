@@ -42,6 +42,7 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/context_menu_params.h"
 #include "content/public/common/drop_data.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/renderer/cursor_utils.h"
 #include "content/renderer/devtools/render_widget_screen_metrics_emulator.h"
@@ -67,6 +68,8 @@
 #include "ipc/ipc_message_start.h"
 #include "ipc/ipc_sync_message.h"
 #include "ppapi/features/features.h"
+#include "services/metrics/public/cpp/mojo_ukm_recorder.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "skia/ext/platform_canvas.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/WebCursorInfo.h"
@@ -1414,6 +1417,8 @@ blink::WebLayerTreeView* RenderWidget::InitializeLayerTreeView() {
     }
   }
 
+  UpdateURLForCompositorUkm();
+
   return compositor_.get();
 }
 
@@ -2491,6 +2496,23 @@ void RenderWidget::DidResizeOrRepaintAck() {
   Send(new ViewHostMsg_ResizeOrRepaint_ACK(routing_id_, params));
   next_paint_flags_ = 0;
   need_update_rect_for_auto_resize_ = false;
+}
+
+void RenderWidget::UpdateURLForCompositorUkm() {
+  if (!compositor_ || !GetWebWidget())
+    return;
+
+  ukm::mojom::UkmRecorderInterfacePtr interface;
+  RenderThreadImpl::current()->GetConnector()->BindInterface(
+      mojom::kBrowserServiceName, mojo::MakeRequest(&interface));
+  auto ukm_recorder =
+      std::make_unique<ukm::MojoUkmRecorder>(std::move(interface));
+
+  auto source_id = ukm_recorder->GetNewSourceID();
+  auto* render_frame = RenderFrameImpl::FromWebFrame(
+      static_cast<blink::WebFrameWidget*>(GetWebWidget())->LocalRoot());
+  ukm_recorder->UpdateSourceURL(source_id, render_frame->GetLoadingUrl());
+  compositor_->SetUkmRecorderAndSource(std::move(ukm_recorder), source_id);
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)

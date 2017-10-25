@@ -407,6 +407,8 @@ class CONTENT_EXPORT RenderWidget
   uint32_t GetContentSourceId();
   void IncrementContentSourceId();
 
+  void UpdateURLForCompositorUkm();
+
   // MainThreadEventQueueClient overrides.
 
   // Requests a BeginMainFrame callback from the compositor.
