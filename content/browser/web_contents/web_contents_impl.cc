@@ -137,6 +137,7 @@
 #include "ui/accessibility/ax_tree_combiner.h"
 #include "ui/base/layout.h"
 #include "ui/events/blink/web_input_event_traits.h"
+#include "ui/gfx/image/image_png_rep.h"
 #include "ui/gl/gl_switches.h"
 
 #if defined(OS_WIN)
@@ -3833,6 +3834,8 @@ void WebContentsImpl::DidNavigateMainFramePostCommit(
     theme_color_ = SK_ColorTRANSPARENT;
   }
 
+  view_->RemoveImageOverlay(/* animate */ true);
+
   if (delegate_)
     delegate_->DidNavigateMainFramePostCommit(this);
   view_->SetOverscrollControllerEnabled(CanOverscrollContent());
@@ -4307,6 +4310,9 @@ void WebContentsImpl::OnFirstVisuallyNonEmptyPaint(RenderViewHostImpl* source) {
   // |source| is the main frame.
   for (auto& observer : observers_)
     observer.DidFirstVisuallyNonEmptyPaint();
+
+  // Animate out the image overlay to reveal the page content.
+  view_->RemoveImageOverlay(/* animate */ true);
 
   did_first_visually_non_empty_paint_ = true;
 
@@ -5914,18 +5920,34 @@ int WebContentsImpl::GetCurrentlyPlayingVideoCount() {
 
 void WebContentsImpl::UpdateWebContentsVisibility(bool visible) {
   if (!did_first_set_visible_) {
-    // If this WebContents has not yet been set to be visible for the first
-    // time, ignore any requests to make it hidden, since resources would
-    // immediately be destroyed and only re-created after content loaded. In
-    // this state the window content is undefined and can show garbage.
-    // However, the page load mechanism requires an activation call through a
-    // visibility call to (re)load.
-    if (visible) {
-      did_first_set_visible_ = true;
-      WasShown();
+    // If this WebContents has not been shown yet, ignore any requests to make
+    // it hidden, since resources would immediately be destroyed and only re-
+    // created after content loaded. In this state the window content is
+    // undefined and can show garbage. However, the page load mechanism requires
+    // an activation call through a visibility call to (re)load.
+    if (!visible)
+      return;
+
+    // If the first paint hasn't occurred yet and a screenshot of the last
+    // committed entry is available, display it. The screenshot will be animated
+    // out when the first paint occurs.
+    if (!did_first_visually_non_empty_paint_) {
+      NavigationEntryImpl* entry = controller_.GetLastCommittedEntry();
+      if (entry) {
+        scoped_refptr<base::RefCountedBytes> screenshot = entry->screenshot();
+        if (screenshot) {
+          std::vector<gfx::ImagePNGRep> image_reps;
+          image_reps.push_back(gfx::ImagePNGRep(screenshot, 1.0f));
+          view_->AddImageOverlay(gfx::Image(image_reps));
+        }
+      }
     }
+
+    did_first_set_visible_ = true;
+    WasShown();
     return;
   }
+
   if (visible == should_normally_be_visible_)
     return;
 

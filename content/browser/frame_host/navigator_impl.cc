@@ -569,8 +569,10 @@ void NavigatorImpl::DidNavigate(
         // want same-document navigations to be super fast, and taking a
         // screenshot currently blocks GPU for a longer time than we are willing
         // to tolerate in this use case.
-        if (!params.was_within_same_document)
-          controller_->TakeScreenshot();
+        if (!params.was_within_same_document) {
+          controller_->TakeScreenshot(
+              NavigationController::TakeScreenshotCallback());
+        }
       }
 
       // Run tasks that must execute just before the commit.

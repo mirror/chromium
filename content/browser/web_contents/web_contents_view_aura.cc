@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <utility>
+
 #include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/files/file_util.h"
@@ -29,6 +31,7 @@
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/render_widget_host_view_aura.h"
 #include "content/browser/web_contents/aura/gesture_nav_simple.h"
+#include "content/browser/web_contents/aura/image_overlay.h"
 #include "content/browser/web_contents/aura/overscroll_navigation_overlay.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/content_browser_client.h"
@@ -877,6 +880,17 @@ RenderWidgetHostViewBase* WebContentsViewAura::CreateViewForWidget(
     InstallOverscrollControllerDelegate(view);
   }
 
+  // The image overlay window is a child of |view->GetNativeView()| so that it
+  // moves with it.
+  if (image_overlay_) {
+    aura::Window* image_overlay_window = image_overlay_->window();
+    aura::Window* content_window = view->GetNativeView();
+    if (image_overlay_window &&
+        image_overlay_window->parent() != content_window) {
+      content_window->AddChild(image_overlay_window);
+    }
+  }
+
   return view;
 }
 
@@ -911,6 +925,23 @@ void WebContentsViewAura::SetOverscrollControllerEnabled(bool enabled) {
     navigation_overlay_.reset(
         new OverscrollNavigationOverlay(web_contents_, window_.get()));
   }
+}
+
+void WebContentsViewAura::AddImageOverlay(gfx::Image image) {
+  image_overlay_ = std::make_unique<ImageOverlay>(std::move(image));
+  aura::Window* image_overlay_window = image_overlay_->window();
+  aura::Window* contents_window = GetContentNativeView();
+  if (contents_window)
+    contents_window->AddChild(image_overlay_window);
+  else
+    window_->AddChild(image_overlay_window);
+}
+
+void WebContentsViewAura::RemoveImageOverlay(bool animate) {
+  if (animate && image_overlay_)
+    image_overlay_->AnimateOut();
+  else
+    image_overlay_.reset();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -115,6 +115,14 @@ void WebContentsViewChildFrame::SetOverscrollControllerEnabled(bool enabled) {
   // This is managed by the outer view.
 }
 
+void WebContentsViewChildFrame::AddImageOverlay(gfx::Image image) {
+  NOTREACHED();
+}
+
+void WebContentsViewChildFrame::RemoveImageOverlay(bool animate) {
+  NOTREACHED();
+}
+
 #if defined(OS_MACOSX)
 bool WebContentsViewChildFrame::IsEventTracking() const {
   return false;

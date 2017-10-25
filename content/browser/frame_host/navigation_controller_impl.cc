@@ -580,10 +580,6 @@ int NavigationControllerImpl::GetIndexForOffset(int offset) const {
   return GetCurrentEntryIndex() + offset;
 }
 
-void NavigationControllerImpl::TakeScreenshot() {
-  screenshot_manager_->TakeScreenshot();
-}
-
 void NavigationControllerImpl::SetScreenshotManager(
     std::unique_ptr<NavigationEntryScreenshotManager> manager) {
   if (manager.get())
@@ -1776,6 +1772,10 @@ void NavigationControllerImpl::PruneAllButLastCommittedInternal() {
                  entries_.begin() + last_committed_entry_index_);
   entries_.erase(entries_.begin() + 1, entries_.end());
   last_committed_entry_index_ = 0;
+}
+
+void NavigationControllerImpl::TakeScreenshot(TakeScreenshotCallback callback) {
+  screenshot_manager_->TakeScreenshot(std::move(callback));
 }
 
 void NavigationControllerImpl::ClearAllScreenshots() {

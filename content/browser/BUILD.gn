@@ -1587,6 +1587,8 @@ source_set("browser") {
     "wake_lock/wake_lock_context_host.h",
     "web_contents/aura/gesture_nav_simple.cc",
     "web_contents/aura/gesture_nav_simple.h",
+    "web_contents/aura/image_overlay.cc",
+    "web_contents/aura/image_overlay.h",
     "web_contents/aura/overscroll_navigation_overlay.cc",
     "web_contents/aura/overscroll_navigation_overlay.h",
     "web_contents/aura/overscroll_window_animation.cc",

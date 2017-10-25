@@ -12,6 +12,7 @@
 #include "content/common/content_export.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/image/image.h"
 #include "ui/gfx/native_widget_types.h"
 
 namespace content {
@@ -114,6 +115,13 @@ class WebContentsView {
 
   // Invoked to enable/disable overscroll gesture navigation.
   virtual void SetOverscrollControllerEnabled(bool enabled) = 0;
+
+  // Adds an image overlay on top of the contents.
+  virtual void AddImageOverlay(gfx::Image image) = 0;
+
+  // Removes an image overlay previously added on top of the contents. If
+  // |animate| is true, the removal will be preceded by a short animation.
+  virtual void RemoveImageOverlay(bool animate) = 0;
 
 #if defined(OS_MACOSX)
   // Allowing other views disables optimizations which assume that only a single

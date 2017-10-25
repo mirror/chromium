@@ -173,6 +173,14 @@ void WebContentsViewGuest::SetOverscrollControllerEnabled(bool enabled) {
   // This should never override the setting of the embedder view.
 }
 
+void WebContentsViewGuest::AddImageOverlay(gfx::Image image) {
+  platform_view_->AddImageOverlay(std::move(image));
+}
+
+void WebContentsViewGuest::RemoveImageOverlay(bool animate) {
+  platform_view_->RemoveImageOverlay(animate);
+}
+
 #if defined(OS_MACOSX)
 bool WebContentsViewGuest::IsEventTracking() const {
   return false;

@@ -28,6 +28,7 @@
 #include "chrome/browser/ui/browser_tab_strip_tracker.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "content/public/browser/navigation_throttle.h"
+#include "content/public/browser/readback_types.h"
 #include "ui/gfx/native_widget_types.h"
 
 class BrowserList;
@@ -380,6 +381,11 @@ class TabManager : public TabStripModelObserver,
   content::WebContents* DiscardWebContentsAt(int index,
                                              TabStripModel* model,
                                              DiscardTabCondition condition);
+
+  void DiscardWebContentsAtAfterScreenshot(int index,
+                                           TabStripModel* model,
+                                           DiscardTabCondition condition,
+                                           content::ReadbackResponse response);
 
   // Pause or resume background tab opening according to memory pressure change
   // if there are pending background tabs.

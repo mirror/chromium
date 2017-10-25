@@ -47,6 +47,8 @@ class WebContentsViewChildFrame : public WebContentsView,
   void RenderViewCreated(RenderViewHost* host) override;
   void RenderViewSwappedIn(RenderViewHost* host) override;
   void SetOverscrollControllerEnabled(bool enabled) override;
+  void AddImageOverlay(gfx::Image image) override;
+  void RemoveImageOverlay(bool animate) override;
 #if defined(OS_MACOSX)
   void SetAllowOtherViews(bool allow) override;
   bool GetAllowOtherViews() const override;

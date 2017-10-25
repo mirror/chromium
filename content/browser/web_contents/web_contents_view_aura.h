@@ -33,6 +33,7 @@ class TouchSelectionController;
 
 namespace content {
 class GestureNavSimple;
+class ImageOverlay;
 class OverscrollNavigationOverlay;
 class RenderWidgetHostImpl;
 class RenderWidgetHostViewAura;
@@ -123,6 +124,8 @@ class CONTENT_EXPORT WebContentsViewAura
   void RenderViewCreated(RenderViewHost* host) override;
   void RenderViewSwappedIn(RenderViewHost* host) override;
   void SetOverscrollControllerEnabled(bool enabled) override;
+  void AddImageOverlay(gfx::Image image) override;
+  void RemoveImageOverlay(bool animate) override;
 
   // Overridden from RenderViewHostDelegateView:
   void ShowContextMenu(RenderFrameHost* render_frame_host,
@@ -241,6 +244,9 @@ class CONTENT_EXPORT WebContentsViewAura
   // This is the completed overscroll gesture. This is used for the animation
   // callback that happens in response to a completed overscroll gesture.
   OverscrollMode completed_overscroll_gesture_;
+
+  // Displays an image on top of the content.
+  std::unique_ptr<ImageOverlay> image_overlay_;
 
   // This manages the overlay window that shows the screenshot during a history
   // navigation triggered by the overscroll gesture.
