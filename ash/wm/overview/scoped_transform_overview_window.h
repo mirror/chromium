@@ -120,10 +120,8 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
 
   // Applies the |transform| to the overview window and all of its transient
   // children.
-  void SetTransform(aura::Window* root_window, const gfx::Transform& transform);
-
-  // Sets the opacity of the managed windows.
-  void SetOpacity(float opacity);
+  void SetTransform(const gfx::Transform& transform,
+                    bool adjust_original_window);
 
   // Hides the window header whose size is given in |TOP_VIEW_INSET| window
   // property.
@@ -131,6 +129,9 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
 
   // Shows the window header that is hidden by HideHeader().
   void ShowHeader();
+
+  // Sets the opacity of the managed windows.
+  void SetOpacity(float opacity);
 
   // Creates/Deletes a mirror window for minimized windows.
   void UpdateMirrorWindowForMinimizedState();
@@ -162,7 +163,7 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
   // Closes the window managed by |this|.
   void CloseWidget();
 
-  void CreateMirrorWindowForMinimizedState();
+  void CreateMirrorWindow();
 
   // Makes Close() execute synchronously when used in tests.
   static void SetImmediateCloseForTests();
@@ -172,13 +173,6 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
 
   // A weak pointer to the real window in the overview.
   aura::Window* window_;
-
-  // Original |window_|'s shape, if it was set on the window.
-  std::unique_ptr<ShapeRects> original_window_shape_;
-
-  // True after the |original_window_shape_| has been set or after it has
-  // been determined that window shape was not originally set on the |window_|.
-  bool determined_original_window_shape_;
 
   // Tracks if this window was ignored by the shelf.
   bool ignored_by_shelf_;
@@ -193,7 +187,9 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
   float original_opacity_;
 
   // A widget that holds the content for the minimized window.
-  std::unique_ptr<views::Widget> minimized_widget_;
+  std::unique_ptr<views::Widget> mirror_widget_;
+
+  int mirror_window_for_hiding_caption_;
 
   // The observers associated with the layers we requested caching render
   // surface and trilinear filtering. The requests will be removed in dtor if

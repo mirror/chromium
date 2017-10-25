@@ -673,7 +673,7 @@ void WindowSelectorItem::SetItemBounds(const gfx::Rect& target_bounds,
       screen_rect, selector_item_bounds);
   ScopedTransformOverviewWindow::ScopedAnimationSettings animation_settings;
   transform_window_.BeginScopedAnimation(animation_type, &animation_settings);
-  transform_window_.SetTransform(root_window_, transform);
+  transform_window_.SetTransform(transform, true /*adjust_original_window*/);
 }
 
 void WindowSelectorItem::SetOpacity(float opacity) {

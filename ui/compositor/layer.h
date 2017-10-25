@@ -267,10 +267,6 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // are visible.
   bool IsDrawn() const;
 
-  // Returns true if this layer can have a texture (has_texture_ is true)
-  // and is not completely obscured by a child.
-  bool ShouldDraw() const;
-
   // Converts a point from the coordinates of |source| to the coordinates of
   // |target|. Necessarily, |source| and |target| must inhabit the same Layer
   // tree.
@@ -440,6 +436,8 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // Request trilinear filtering for layer.
   void AddTrilinearFilteringRequest();
   void RemoveTrilinearFilteringRequest();
+
+  void SetIsDrawable(bool draw);
 
   // The back link from the mask layer to it's associated masked layer.
   // We keep this reference for the case that if the mask layer gets deleted
