@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "993c2627_4fab0d6e",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T23:06:14Z",
+      "side": 1,
+      "message": "Ah, I see that this CL is making keyboardShortcuts() dead code. I\u0027ve removed these.\n(errorPage() is bonus cleanup).\n\nDone",
+      "parentUuid": "33c5ec24_067cd39f",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc6a3a21_f5862624",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 5
