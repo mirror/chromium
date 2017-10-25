@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5eac8d8_3291d7e1",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:38:15Z",
+      "side": 1,
+      "message": "This change is good but means we\u0027re leaking the shared buffer mapping sometimes. Since all the existing callers create a FakePlatformSensor instance by default can we instead have the mock method do something like take a new FakePlatformSensor and |callback| and decide to either run it with the sensor, nullptr, or not call it at all?",
+      "revId": "2a4f0b5586469730a8c23fab3bd1085dff391e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
