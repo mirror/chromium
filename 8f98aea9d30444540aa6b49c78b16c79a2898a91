@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4156e04a_06d9101e",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-25T18:43:05Z",
+      "side": 1,
+      "message": "what is the meaning of \"test\" in this comment and below?",
+      "range": {
+        "startLine": 41,
+        "startChar": 56,
+        "endLine": 41,
+        "endChar": 61
+      },
+      "revId": "8f98aea9d30444540aa6b49c78b16c79a2898a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c66a764_0fc901be",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-25T18:43:05Z",
+      "side": 1,
+      "message": "maybe const several of the local variables in this function where applicable?",
+      "revId": "8f98aea9d30444540aa6b49c78b16c79a2898a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b17a315_dae2ad6f",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-25T18:43:05Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "8f98aea9d30444540aa6b49c78b16c79a2898a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
