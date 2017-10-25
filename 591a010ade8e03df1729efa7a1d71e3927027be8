@@ -22,6 +22,30 @@
       "revId": "591a010ade8e03df1729efa7a1d71e3927027be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3b88af_db1b32dd",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-25T19:12:57Z",
+      "side": 1,
+      "message": "@skobes I don\u0027t really agree.  This method will only apply a scroll offset from the FrameView.  If RLS is enabled, it will never add a scroll offset.  Giving it a generic name gives the mistaken impression that the \"root scroll offset\", wherever that comes from, will always be applied.\n\nIt may be more accurate to call it something like FrameContentPointWithZoom.",
+      "parentUuid": "b24c7bf9_f908f830",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 49
+      },
+      "revId": "591a010ade8e03df1729efa7a1d71e3927027be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
