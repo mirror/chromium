@@ -16,6 +16,24 @@
       "revId": "18c11e4e701625abaffddd2e0559c4459c7dfcbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0351829_4e35f308",
+        "filename": "components/machine_intelligence/assist_ranker_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-25T05:31:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad698d66_7d3383dc",
+      "revId": "18c11e4e701625abaffddd2e0559c4459c7dfcbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

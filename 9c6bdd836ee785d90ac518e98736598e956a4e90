@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd44f6fb_67e1cccf",
+        "filename": "components/machine_intelligence/assist_ranker_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-25T05:31:25Z",
+      "side": 1,
+      "message": "In the current state, the feature code (e.g. Contextual Search) owns the predictor. But you raise a good point. There is no logic in place to guarantee that there is a single predictor for a model. There would be a conflict if two predictors are created to point to the same cache. It would be okay, but wasteful, if two predictor point to the same url but have a different filename.\n\nWe could redesign this so that the predictors are owned by AssistRankerService and kept in a map keyed by filename.\n\nI was also thinking that Ranker could own configs for each models, so that the FetchPredictor would only need to receive a string that points to a config. This would ensure that model filenames and urls are consistent. However, that would mean that Ranker would need to own the Finch features that holds the url params. I think that this might be the right thing in the long run. \n\nI added a comment and a TODO for now. Let me know if you think I should refactor now.",
+      "parentUuid": "2d0c98f8_d9e5705d",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b1468b5_99ff0f01",
         "filename": "components/machine_intelligence/assist_ranker_service.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71060e0_aba00274",
+        "filename": "components/machine_intelligence/assist_ranker_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-25T05:31:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b1468b5_99ff0f01",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bfc13186_c6ac370b",
+        "filename": "components/machine_intelligence/assist_ranker_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-25T05:31:25Z",
+      "side": 1,
+      "message": "See response in other comment",
+      "parentUuid": "d79f67ea_2f33e0a8",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33d6c53f_87737539",
         "filename": "components/machine_intelligence/base_predictor.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-24T20:14:17Z",
       "side": 1,
       "message": "maybe the model_loader should be passed via the constructor so there\u0027s no way to misuse this entrypoint?\n\nthis would simplify to just calling NotifyOfRankerActivity()\n\nhmmm... the loader constructor needs the predictor to already exist to that it can know who to notify OnModelAvailable and moving this to the constructor would create a circular dependency.  :(\n\nmaybe make this private and make it\u0027s caller a friend?\n\nbetter yet, make this protected and add a factory function to the derived classes:\n\ni.e....\n\n  static unique_ptr\u003cBinaryPredictor\u003e BinaryPredictor::Create(....) {\n    auto predictor \u003d MakeUnique\u003cBinaryPredictor\u003e();\n    auto loader \u003d ...;  // Copied from service impl.\n    predictor-\u003eLoadModel(std::move(loader));  // accessible since we\u0027re in the subclass.\n    return predictor;\n  }",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0402bf5_060f4a61",
+        "filename": "components/machine_intelligence/base_predictor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-25T05:31:25Z",
+      "side": 1,
+      "message": "The reason I moved the instantiation of the RankerModelLoader out of the BasePredictor constructor and exposed LoadModel() is to be able to inject a fake model loader for testing.\n\nIt makes testing derived predictor classes easier if we can call DerivedPredictor-\u003eLoadModel(MockModelLoader). We can do this with Friends, but we will have to friend every derived class, which is probably ok and safer than having LoadModel public.\n\nOne downside of the static factory, is that you have to repeat that boilerplate code in each derived class. Not really a big deal. Another downside is that we have to pass the url_request_context down the predictor factory, which makes it a bit less elegant in my opinion. Also, with the current implementation, it should be relatively easy to template the Fetch method so that it will work for every Predictor class.\n\nSo, I prefer the \"friend\" solution. Let me know what you think.",
+      "parentUuid": "33d6c53f_87737539",
       "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f1bdbd_c20429e5",
+        "filename": "components/machine_intelligence/generic_logistic_regression_inference.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-25T05:31:25Z",
+      "side": 1,
+      "message": "Right, clang format messed it up. Fixed.",
+      "parentUuid": "94ddc681_cd49c1e2",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
