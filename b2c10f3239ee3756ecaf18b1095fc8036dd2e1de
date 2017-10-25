@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ab0540d_045d3839",
+        "filename": "ash/system/screen_layout_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "Move these lines below, right above the DCHECK(display.is_valid());\n\nKeep declarations right next to their uses.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae28fa35_643dba82",
+        "filename": "ash/system/screen_layout_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "Why do you need this condition? This function is supposed to be called only when you are currently in mirror mode.\n\nIf your goal is to make sure that the mirroring list is not empty, then I would add a DCHECK.",
+      "range": {
+        "startLine": 139,
+        "startChar": 23,
+        "endLine": 139,
+        "endChar": 60
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93148e7_ce2cdca1",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "Here too.",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5108e38a_49e33f8e",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "Thanks for fixing this.",
+      "range": {
+        "startLine": 613,
+        "startChar": 45,
+        "endLine": 613,
+        "endChar": 64
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d396ed07_7b10d2d6",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "No else after return.",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 308,
+        "endChar": 8
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c6078f_c050aa11",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "This is shared in this case and all following cases. extract outside.",
+      "range": {
+        "startLine": 314,
+        "startChar": 36,
+        "endLine": 314,
+        "endChar": 78
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4641d418_0310a4be",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 8
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3c5ba3_be6537d1",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 8
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23e0a93_a3ad9231",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "You are already searching through the set\u003c\u003e to find the origin, so how about switching the set\u003c\u003e  to a map\u003c\u003e? Mapping origins to the first display id with that origin. Something like this:\n\nconst auto iter \u003d map.find(origin);\nif (iter !\u003d map.end()) {\n  // ...\n  if (hw_list_.empty() \u0026\u0026 mirroring_src_id_ \u003d\u003d kInvalidId)\n    mirroring_src_id_ \u003d iter-\u003esecond;\n} else {\n  map.emplace(origin, display_info.id());\n  // ....\n}",
+      "range": {
+        "startLine": 683,
+        "startChar": 0,
+        "endLine": 695,
+        "endChar": 42
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f40bab_d510c229",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "You don\u0027t want to do this if it\u0027s the source display.",
+      "range": {
+        "startLine": 697,
+        "startChar": 6,
+        "endLine": 697,
+        "endChar": 74
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6706c24_40c7d9f1",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "Isn\u0027t that a change in the logic?\n\nIsInSoftwareMirrorMode() means software mirroring is active, but it used to be software_mirroring_enabled(), which as I understood from you used to mean enabled but not necessarily active, correct?",
+      "range": {
+        "startLine": 1248,
+        "startChar": 6,
+        "endLine": 1248,
+        "endChar": 28
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2449af56_a6cbd286",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "I don\u0027t see a need for using this local variable. You can just assign to the new |mirroring_source_id_|.",
+      "range": {
+        "startLine": 1352,
+        "startChar": 14,
+        "endLine": 1352,
+        "endChar": 23
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ae5454_07546c73",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "You don\u0027t need this find at all now.",
+      "range": {
+        "startLine": 1362,
+        "startChar": 0,
+        "endLine": 1367,
+        "endChar": 47
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31390a4_8f0f03ec",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "Add comment that you are removing all destination displays.",
+      "range": {
+        "startLine": 1378,
+        "startChar": 6,
+        "endLine": 1378,
+        "endChar": 23
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0bd41e_70829950",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "Nit: You don\u0027t need braces here.",
+      "range": {
+        "startLine": 1510,
+        "startChar": 4,
+        "endLine": 1510,
+        "endChar": 5
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c41a353_ace9866e",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-25T20:38:49Z",
+      "side": 1,
+      "message": "Nit: display(s).",
+      "range": {
+        "startLine": 521,
+        "startChar": 72,
+        "endLine": 521,
+        "endChar": 79
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
