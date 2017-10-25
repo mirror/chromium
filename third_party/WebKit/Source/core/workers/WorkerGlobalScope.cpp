@@ -165,10 +165,19 @@ WorkerNavigator* WorkerGlobalScope::navigator() const {
   return navigator_.Get();
 }
 
+// https://html.spec.whatwg.org/multipage/workers.html#close-a-worker
 void WorkerGlobalScope::close() {
+  // Step 1: "Discard any tasks that have been added to workerGlobal's event
+  // loop's task queues."
+  //
+  // WorkerThread::DidProcessTask() will discard tasks.
+
+  // Step 2: "Set workerGlobal's closing flag to true. (This prevents any
+  // further tasks from being queued.)"
+  closing_ = true;
+
   // Let current script run to completion, but tell the worker micro task
   // runner to tear down the thread after this task.
-  closing_ = true;
 }
 
 String WorkerGlobalScope::origin() const {
