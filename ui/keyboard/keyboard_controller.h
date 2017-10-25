@@ -13,7 +13,9 @@
 #include "ui/base/ime/input_method_observer.h"
 #include "ui/base/ime/text_input_type.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/vector2d.h"
 #include "ui/keyboard/container_behavior.h"
+#include "ui/keyboard/drag_descriptor.h"
 #include "ui/keyboard/keyboard_event_filter.h"
 #include "ui/keyboard/keyboard_export.h"
 #include "ui/keyboard/keyboard_layout_delegate.h"
@@ -147,6 +149,11 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // container behavior.
   bool IsOverscrollAllowed() const;
 
+  // Handle mouse and touch events on the keyboard. The effects of this method
+  // will not stop propagation to the keyboard extension.
+  void HandleMouseEvent(bool isMouseButtonPressed,
+                        const gfx::Vector2d& kb_scoped_location);
+
  private:
   // For access to Observer methods for simulation.
   friend class KeyboardControllerTest;
@@ -221,6 +228,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   // Current active visual behavior for the keyboard container.
   std::unique_ptr<ContainerBehavior> container_behavior_;
+
+  // Current state of a cursor drag to move the keyboard, if one exists.
+  // Otherwise nullptr.
+  std::unique_ptr<DragDescriptor> drag_descriptor_;
 
   // If true, show the keyboard window when keyboard UI content updates.
   bool show_on_content_update_;

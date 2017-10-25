@@ -78,4 +78,14 @@ bool ContainerFullWidthBehavior::IsOverscrollAllowed() const {
          !KeyboardController::GetInstance()->keyboard_locked();
 }
 
+void ContainerFullWidthBehavior::SavePosition(const gfx::Point& position) {
+  // No-op. Nothing to save.
+}
+
+bool ContainerFullWidthBehavior::IsDragHandle(
+    const gfx::Vector2d& offset,
+    const gfx::Size& keyboard_size) const {
+  return false;
+}
+
 }  //  namespace keyboard
