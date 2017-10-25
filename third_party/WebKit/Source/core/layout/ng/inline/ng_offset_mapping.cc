@@ -13,12 +13,37 @@ namespace blink {
 
 namespace {
 
+// Offset mapping APIs accept only two types of positions:
+// 1. Offset-in-anchor in a text node
+// 2. Before/After-anchor to an atomic inline
+void AssertValidPositionForOffsetMapping(const Position& position) {
+#if DCHECK_IS_ON()
+  DCHECK(position.IsNotNull());
+  if (position.AnchorNode()->IsTextNode()) {
+    DCHECK(position.IsOffsetInAnchor());
+    return;
+  }
+  DCHECK(position.IsBeforeAnchor() || position.IsAfterAnchor());
+  DCHECK(position.AnchorNode()->GetLayoutObject());
+  DCHECK(position.AnchorNode()->GetLayoutObject()->IsAtomicInlineLevel());
+#endif
+}
+
 Position CreatePositionForOffsetMapping(const Node& node, unsigned dom_offset) {
   if (node.IsTextNode())
     return Position(&node, dom_offset);
   // For non-text-anchored position, the offset must be either 0 or 1.
   DCHECK_LE(dom_offset, 1u);
   return dom_offset ? Position::AfterNode(node) : Position::BeforeNode(node);
+}
+
+std::pair<const Node&, unsigned> ToNodeOffsetPair(const Position& position) {
+  AssertValidPositionForOffsetMapping(position);
+  if (position.AnchorNode()->IsTextNode())
+    return {*position.AnchorNode(), position.OffsetInContainerNode()};
+  if (position.IsBeforeAnchor())
+    return {*position.AnchorNode(), 0};
+  return {*position.AnchorNode(), 1};
 }
 
 }  // namespace
@@ -82,9 +107,11 @@ unsigned NGOffsetMappingUnit::ConvertTextContentToLastDOMOffset(
 }
 
 // static
-const NGOffsetMapping* NGOffsetMapping::GetFor(const Node& node,
-                                               unsigned offset) {
-  const LayoutObject* layout_object = AssociatedLayoutObjectOf(node, offset);
+const NGOffsetMapping* NGOffsetMapping::GetFor(const Position& position) {
+  AssertValidPositionForOffsetMapping(position);
+  auto node_offset_pair = ToNodeOffsetPair(position);
+  const LayoutObject* layout_object =
+      AssociatedLayoutObjectOf(node_offset_pair.first, node_offset_pair.second);
   if (!layout_object || !layout_object->IsInline())
     return nullptr;
   LayoutBlockFlow* block_flow = layout_object->EnclosingNGBlockFlow();
