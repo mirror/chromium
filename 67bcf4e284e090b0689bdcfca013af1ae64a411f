@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20df0c21_d5dfc99d",
+        "filename": "device/gamepad/public/interfaces/gamepad.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:21:46Z",
+      "side": 1,
+      "message": "haptic_actuator?",
+      "range": {
+        "startLine": 60,
+        "startChar": 25,
+        "endLine": 60,
+        "endChar": 43
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427cc9f2_96f00532",
+        "filename": "device/gamepad/public/interfaces/gamepad.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:21:46Z",
+      "side": 1,
+      "message": "GamepadHapticEffectParameters?",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 30
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6f008a_3f5e5ff3",
+        "filename": "device/gamepad/public/interfaces/gamepad.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:21:46Z",
+      "side": 1,
+      "message": "This feels more like a \"manager\" than a \"listener\".",
+      "range": {
+        "startLine": 101,
+        "startChar": 10,
+        "endLine": 101,
+        "endChar": 32
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de8ae33_29ce488d",
+        "filename": "device/gamepad/public/interfaces/gamepad.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:21:46Z",
+      "side": 1,
+      "message": "PlayEffectOnce or PlayHapticEffectOnce",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9becca_150e7847",
+        "filename": "device/gamepad/public/interfaces/gamepad.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:21:46Z",
+      "side": 1,
+      "message": "ResetHapticActuator",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 24
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c842467_90f832b9",
+        "filename": "device/gamepad/public/interfaces/gamepad.typemap",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:21:46Z",
+      "side": 1,
+      "message": "If possible avoid adding typemaps when using the Mojo type in new code works just as well. This is especially true of enums.",
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea0afda_722777c4",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:21:46Z",
+      "side": 1,
+      "message": "Typemapping should make this function unnecessary but the better question is why bother having two enum types to begin with.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 1
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54c4fb5_89b7f532",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:21:46Z",
+      "side": 1,
+      "message": "If possible build these kinds of connections lazily so that we don\u0027t allocate resources for pages that don\u0027t use them.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2928c5d_40c4f6b5",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:21:46Z",
+      "side": 1,
+      "message": "PlayHapticEffectOnce",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 30
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d1ab03f_fdc16e29",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:21:46Z",
+      "side": 1,
+      "message": "ResetHapticActuator",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
