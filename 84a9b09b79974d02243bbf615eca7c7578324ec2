@@ -22,6 +22,30 @@
       "revId": "84a9b09b79974d02243bbf615eca7c7578324ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaeed71b_bce30341",
+        "filename": "chrome/browser/resources/settings/on_startup_page/startup_urls_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T20:15:02Z",
+      "side": 1,
+      "message": "It was done by eye to show six entries and a little more to see that there are more entries.",
+      "parentUuid": "e59cb322_b686957c",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "84a9b09b79974d02243bbf615eca7c7578324ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
