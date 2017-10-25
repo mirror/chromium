@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f62ac9f_1bf2f390",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T16:11:24Z",
+      "side": 1,
+      "message": "This prototype should be removed.",
+      "revId": "a87da656bf1e2de34e097b934ca066af14bd1d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
