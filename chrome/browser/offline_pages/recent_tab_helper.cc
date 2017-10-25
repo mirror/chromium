@@ -147,8 +147,16 @@ void RecentTabHelper::ObserveAndDownloadCurrentPage(const ClientId& client_id,
   // Stores the new snapshot info.
   downloads_ongoing_snapshot_info_ = std::move(new_downloads_snapshot_info);
 
+  // If we have stopped the snapshot because we have an error page, don't save
+  // it.
+  if (snapshot_controller_->state() == SnapshotController::State::STOPPED)
+    return;
+
   // If the page is not yet ready for a snapshot return now as it will be
   // started later, once page loading advances.
+  DVLOG(0) << "@@@@@@ page quality "
+           << (int)snapshot_controller_->current_page_quality() << " "
+           << __func__;
   if (PageQuality::POOR == snapshot_controller_->current_page_quality()) {
     DVLOG(1) << "Waiting for the page to load before fulfilling download "
              << "request for: " << web_contents()->GetLastCommittedURL().spec();
