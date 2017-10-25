@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27b8aeb0_9863ac57",
+        "filename": "chrome/browser/signin/dice_response_handler_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-25T11:36:13Z",
+      "side": 1,
+      "message": "nit: add a blank line before this comment.",
+      "range": {
+        "startLine": 397,
+        "startChar": 27,
+        "endLine": 397,
+        "endChar": 40
+      },
+      "revId": "994629740ad1f4fb0812637e51b9f51fa98addc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736e619d_11403da0",
+        "filename": "chrome/browser/signin/dice_response_handler_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-25T11:36:13Z",
+      "side": 1,
+      "message": "Clean-up for a future CL:\nUpdateCredentials takes in general a Chrome account id (not a GAIA id). On desktop and mobile, these 2 should match, but for the sake of the code it would be better if we could use the account ID here. \n\nThus, throughout this file, we should probably use AccountTrackerService::GetAccountInfo(gaia_id, email).account_id or SigninManager::GetAuthenticatedAccountId()",
+      "range": {
+        "startLine": 402,
+        "startChar": 47,
+        "endLine": 402,
+        "endChar": 59
+      },
+      "revId": "994629740ad1f4fb0812637e51b9f51fa98addc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031cb0c6_8110fb68",
+        "filename": "chrome/browser/signin/dice_response_handler_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-25T11:36:13Z",
+      "side": 1,
+      "message": "Same here: The API expects an account id, not a GAIA ID for this call to UpdateCredentials.",
+      "range": {
+        "startLine": 404,
+        "startChar": 35,
+        "endLine": 404,
+        "endChar": 51
+      },
+      "revId": "994629740ad1f4fb0812637e51b9f51fa98addc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb70e71_f49b3258",
+        "filename": "chrome/browser/signin/dice_response_handler_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-25T11:36:13Z",
+      "side": 1,
+      "message": "nit: add a blank line before this comment.",
+      "range": {
+        "startLine": 408,
+        "startChar": 14,
+        "endLine": 408,
+        "endChar": 29
+      },
+      "revId": "994629740ad1f4fb0812637e51b9f51fa98addc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670fb8ca_87a48ece",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-25T11:36:13Z",
+      "side": 1,
+      "message": "We need some UMA metrics for this - it is important to know how often we migrate profiles to DICE.",
+      "range": {
+        "startLine": 598,
+        "startChar": 14,
+        "endLine": 598,
+        "endChar": 34
+      },
+      "revId": "994629740ad1f4fb0812637e51b9f51fa98addc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f8f225_13a0985d",
+        "filename": "components/signin/core/browser/dice_header_helper.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-25T11:36:13Z",
+      "side": 1,
+      "message": "Personal pref: I think I would prefer this to be an enum and not a boolean. Maybe something named SignoutMode.",
+      "range": {
+        "startLine": 161,
+        "startChar": 9,
+        "endLine": 161,
+        "endChar": 34
+      },
+      "revId": "994629740ad1f4fb0812637e51b9f51fa98addc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
