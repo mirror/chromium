@@ -29,12 +29,21 @@ declare_args() {
 
   # Enable multidex in release builds.
   multidex_in_release = false
+
+  gbiv_no_sandbox = false
+}
+
+if (gbiv_no_sandbox) {
+  gbiv_isolated_process = "isolatedProcess=false"
+} else {
+  gbiv_isolated_process = "isolatedProcess=true"
 }
 
 default_chrome_public_jinja_variables = [
   "channel=$android_channel",
   "enable_leakcanary=$enable_leakcanary",
   "enable_vr=$enable_vr",
+  gbiv_isolated_process,
 ]
 
 if (use_order_profiling) {
