@@ -9,6 +9,10 @@
 #include "services/service_manager/sandbox/export.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 
+#if defined(OS_LINUX)
+#include "services/service_manager/sandbox/linux/sandbox_linux.h"
+#endif
+
 #if defined(OS_MACOSX)
 #include "base/callback.h"
 #include "base/files/file_path.h"
@@ -60,6 +64,10 @@ class SERVICE_MANAGER_SANDBOX_EXPORT Sandbox {
     // A flag that denotes an invalid sandbox status.
     kInvalid = 1 << 31,
   };
+
+  static bool Initialize(SandboxType sandbox_type,
+                         SandboxSeccompBPF::PreSandboxHook hook,
+                         const SandboxSeccompBPF::Options& options);
 #endif  // defined(OS_LINUX)
 
 #if defined(OS_MACOSX)
@@ -67,13 +75,13 @@ class SERVICE_MANAGER_SANDBOX_EXPORT Sandbox {
   // directory specified by |allowed_dir| if non-empty. Runs |post_warmup_hook|
   // if non-empty after performing any sandbox warmup but immediately before
   // engaging the sandbox. Return true on success, false otherwise.
-  static bool Initialize(service_manager::SandboxType sandbox_type,
+  static bool Initialize(SandboxType sandbox_type,
                          const base::FilePath& allowed_dir,
                          base::OnceClosure post_warmup_hook);
 #endif  // defined(OS_MACOSX)
 
 #if defined(OS_WIN)
-  static bool Initialize(service_manager::SandboxType sandbox_type,
+  static bool Initialize(SandboxType sandbox_type,
                          sandbox::SandboxInterfaceInfo* sandbox_info);
 #endif  // defined(OS_WIN)
 };

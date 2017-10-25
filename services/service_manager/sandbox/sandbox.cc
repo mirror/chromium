@@ -6,6 +6,10 @@
 
 #include "build/build_config.h"
 
+#if defined(OS_LINUX)
+#include "services/service_manager/sandbox/linux/sandbox_linux.h"
+#endif  // defined(OS_LINUX)
+
 #if defined(OS_MACOSX)
 #include "services/service_manager/sandbox/mac/sandbox_mac.h"
 #endif  // defined(OS_MACOSX)
@@ -16,6 +20,15 @@
 #endif  // defined(OS_WIN)
 
 namespace service_manager {
+
+#if defined(OS_LINUX)
+bool Sandbox::Initialize(SandboxType sandbox_type,
+                         SandboxSeccompBPF::PreSandboxHook hook,
+                         const SandboxSeccompBPF::Options& options) {
+  return SandboxLinux::InitializeSandbox(sandbox_type, std::move(hook),
+                                         options);
+}
+#endif  // defined(OS_LINUX)
 
 #if defined(OS_MACOSX)
 bool Sandbox::Initialize(SandboxType sandbox_type,
