@@ -73,7 +73,8 @@ class GIN_EXPORT PerIsolateData {
 
   v8::Isolate* isolate() { return isolate_; }
   v8::ArrayBuffer::Allocator* allocator() { return allocator_; }
-  base::SingleThreadTaskRunner* task_runner() { return task_runner_.get(); }
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner();
+
   V8IdleTaskRunner* idle_task_runner() {
     return idle_task_runner_.get();
   }

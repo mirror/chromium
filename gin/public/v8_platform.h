@@ -8,10 +8,32 @@
 #include "base/compiler_specific.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "gin/gin_export.h"
+#include "gin/public/isolate_holder.h"
 #include "v8/include/v8-platform.h"
 
+namespace base {
+class SingleThreadTaskRunner;
+}
+
 namespace gin {
+
+class V8TaskRunner : public v8::TaskRunner {
+ public:
+  explicit V8TaskRunner(v8::Isolate* isolate,
+                        scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+                        IsolateHolder::AccessMode access_mode);
+
+  ~V8TaskRunner() override;
+
+  void PostTask(v8::Task*) override;
+
+ private:
+  v8::Isolate* isolate_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  IsolateHolder::AccessMode access_mode_;
+};
 
 // A v8::Platform implementation to use with gin.
 class GIN_EXPORT V8Platform : public v8::Platform {
@@ -21,6 +43,7 @@ class GIN_EXPORT V8Platform : public v8::Platform {
   // v8::Platform implementation.
   void OnCriticalMemoryPressure() override;
   size_t NumberOfAvailableBackgroundThreads() override;
+  std::unique_ptr<v8::TaskRunner> GetTaskRunner(v8::Isolate* isolate) override;
   void CallOnBackgroundThread(
       v8::Task* task,
       v8::Platform::ExpectedRuntime expected_runtime) override;

@@ -10,12 +10,14 @@
 #include "base/bind.h"
 #include "base/debug/stack_trace.h"
 #include "base/location.h"
+#include "base/single_thread_task_runner.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_scheduler.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "gin/per_isolate_data.h"
+#include "gin/public/isolate_holder.h"
 
 namespace gin {
 
@@ -190,6 +192,25 @@ class V8Platform::TracingControllerImpl : public v8::TracingController {
   DISALLOW_COPY_AND_ASSIGN(TracingControllerImpl);
 };
 
+V8TaskRunner::V8TaskRunner(
+    v8::Isolate* isolate,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    IsolateHolder::AccessMode access_mode)
+    : isolate_(isolate), task_runner_(task_runner), access_mode_(access_mode) {}
+
+V8TaskRunner::~V8TaskRunner() {}
+
+void V8TaskRunner::PostTask(v8::Task* task) {
+  if (access_mode_ == IsolateHolder::kUseLocker) {
+    task_runner_->PostTask(FROM_HERE,
+                           base::Bind(RunWithLocker, base::Unretained(isolate_),
+                                      base::Owned(task)));
+  } else {
+    task_runner_->PostTask(FROM_HERE,
+                           base::Bind(&v8::Task::Run, base::Owned(task)));
+  }
+}
+
 // static
 V8Platform* V8Platform::Get() { return g_v8_platform.Pointer(); }
 
@@ -209,6 +230,13 @@ size_t V8Platform::NumberOfAvailableBackgroundThreads() {
   return std::max(1, base::TaskScheduler::GetInstance()
                          ->GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
                              kBackgroundThreadTaskTraits));
+}
+
+std::unique_ptr<v8::TaskRunner> V8Platform::GetTaskRunner(
+    v8::Isolate* isolate) {
+  PerIsolateData* data = PerIsolateData::From(isolate);
+  return std::unique_ptr<v8::TaskRunner>(
+      new V8TaskRunner(isolate, data->task_runner(), data->access_mode()));
 }
 
 void V8Platform::CallOnBackgroundThread(

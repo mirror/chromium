@@ -123,4 +123,7 @@ void PerIsolateData::EnableIdleTasks(
   idle_task_runner_ = std::move(idle_task_runner);
 }
 
+scoped_refptr<base::SingleThreadTaskRunner> PerIsolateData::task_runner() {
+  return task_runner_;
+}
 }  // namespace gin
