@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be392d07_d6480db6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-25T18:06:20Z",
+      "side": 1,
+      "message": "Nit: Mention chrome://usb-internals so that testers don\u0027t give control of something like their keyboard to a site (assuming they even have anything plugged in).",
+      "revId": "359939d80657a02e8de07b7245fd77f3437b39ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
