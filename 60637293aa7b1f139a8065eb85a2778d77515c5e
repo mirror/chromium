@@ -164,6 +164,30 @@
       "revId": "60637293aa7b1f139a8065eb85a2778d77515c5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fd0bd8_8eda7f34",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-25T23:51:03Z",
+      "side": 1,
+      "message": "Yes, google style guide suggests avoid fwd declarations, but they are preferred in Chromium.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#forward-declarations-vs_includes\n\nChromium styleguide overrides Google style guide.",
+      "parentUuid": "c85a7f86_5bae118c",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 80
+      },
+      "revId": "60637293aa7b1f139a8065eb85a2778d77515c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
