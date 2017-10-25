@@ -16,6 +16,24 @@
       "revId": "612e5de902fec1430b1788eea724b60250894ec0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095b9b21_7daa32aa",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-25T21:54:04Z",
+      "side": 1,
+      "message": "Actually no; this is just to have the ScopedAllowBlocking here to make clear that we\u0027re making the assumption, and prevent Debug builds from bailing when they reach here - this code is already running in Release and we seem happy with that.\n\nsemenzato (CC\u0027d) may have a more up to date idea of whether this might actually block, or not.",
+      "parentUuid": "01ee5242_5a0c033b",
+      "revId": "612e5de902fec1430b1788eea724b60250894ec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
