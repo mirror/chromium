@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5664c9f4_05ea9de7",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "508ef48a_311ca95b",
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75be5e09_9cd78a26",
         "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
         "patchSetId": 30
@@ -39,6 +57,30 @@
       "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6431f7b5_bf1d9792",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75be5e09_9cd78a26",
+      "range": {
+        "startLine": 98,
+        "startChar": 39,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "dc09fb6c_47992e62",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "In that case just leaving it as is.",
+      "parentUuid": "802650ff_3f0f82d2",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 34
+      },
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6314b147_985d2cfb",
         "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
         "patchSetId": 30
@@ -79,6 +145,24 @@
       "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc19c74_df8b1762",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6314b147_985d2cfb",
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "d34a7dd1_8d863cae",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "878f5783_14f8f999",
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38b37b01_10ca4aa9",
         "filename": "chrome/common/profiling/memlog_sender_pipe.h",
         "patchSetId": 30
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "890cc3fd_1bccd463",
+        "filename": "chrome/common/profiling/memlog_sender_pipe.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "switching to a more expansive Context object allowed all these to be removed.",
+      "parentUuid": "38b37b01_10ca4aa9",
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7079aaf_9c0831f2",
         "filename": "chrome/common/profiling/memlog_sender_pipe_unittest.cc",
         "patchSetId": 30
@@ -127,6 +247,30 @@
       "writtenOn": "2017-10-25T06:42:35Z",
       "side": 1,
       "message": "Is this test going to cost 10 seconds of waiting per run?",
+      "range": {
+        "startLine": 80,
+        "startChar": 19,
+        "endLine": 80,
+        "endChar": 20
+      },
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f799ec_df18fcfa",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "no, we use a timeout of 1ms in the test.",
+      "parentUuid": "a7079aaf_9c0831f2",
       "range": {
         "startLine": 80,
         "startChar": 19,
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "254a753e_5134439b",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f026eba6_7b3521bc",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2d7a6ff_1975f9af",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 30
@@ -173,6 +341,30 @@
       "writtenOn": "2017-10-25T06:42:35Z",
       "side": 1,
       "message": "DCHECK_FALSE(waiting_for_write_)?\n\nAlternately, why not just put all this state into OverlappedExtension and rename that sucker OverlappedWriteContext?\n\nThen you don\u0027t need to store any state that\u0027s behaving effectively as a local in MemlogSenderPipe.  \n\nstruct OverlappedWriteContext {\n  OverlappedWriteContext()\n    : waiting_for_write(false),\n      bytes_written(0),\n      error(ERROR_SUCCESS) {\n    overlap.Offset \u003d 0xFFFFFFFF;\n    overlap.OffsetHigh \u003d 0xFFFFFFFF;\n  }\n\n  OVERLAPPED overlap;\n  bool waiting_for_write;\n  int bytes_written;\n  int error;\n};\n\nHeck, I think you could even use WriteFile() instead of WriteFileEx() and call GetOverlappedResultEx() to make this all work without the containing context... so\n\nstatic HANDLE event; // Only one thread ever uses this at a time due to |lock_|.\nif (!event) {\n  event \u003d CreateEvent(nullptr, FALSE, FALSE, nullptr);\n}\nOVERLAPPED overlap;\noverlap.Offset \u003d 0xFFFFFFFF;\noverlap.OffsetHigh \u003d 0xFFFFFFFF;\noverlap.hEvent \u003d event;\n\nBOOL write_result \u003d ::WriteFile(file_.Get(), data, static_cast\u003cDWORD\u003e(size),\n                                \u0026overlap);\nDWORD bytes_written \u003d 0;\nBOOL result \u003d GetOverlappedResultEx(file_.Get(), \u0026overlap, \u0026bytes_written, timeout_ms,\n  /* Not sure about this FALSE */ FALSE);\nif (!result) {\n  switch (GetLastError()) {\n     case ERROR_IO_INCOMPLETE:\n       return Result::kTimeout;\n      ....\n  }\n}\n\nYou could probably even get away without the CreateEvent() since only one thread in one process ever gets to access this handle at a time due to the lock thus using the file handle\u0027s object as the event (which is the default apparently if hEvent is nullptr) is good enough.",
+      "range": {
+        "startLine": 105,
+        "startChar": 14,
+        "endLine": 105,
+        "endChar": 26
+      },
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a0fb88_0f49821b",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "Good suggestion. Expanded the members of the context object.\n\nChatted with Rob - there are several ways of accomplishing the 10s wait. The current solution is fine.",
+      "parentUuid": "a2d7a6ff_1975f9af",
       "range": {
         "startLine": 105,
         "startChar": 14,
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "a22b8510_04fe22fc",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9cc9a52_63056751",
+      "range": {
+        "startLine": 118,
+        "startChar": 36,
+        "endLine": 118,
+        "endChar": 52
+      },
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e102d16b_4962ff77",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 30
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "aa9f4881_3a32b9f9",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "updated hte comment to be more clear.",
+      "parentUuid": "e102d16b_4962ff77",
+      "range": {
+        "startLine": 128,
+        "startChar": 19,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3761effb_e2b1273e",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 30
@@ -242,6 +482,24 @@
       "writtenOn": "2017-10-25T06:42:35Z",
       "side": 1,
       "message": "hmm... so per\n https://msdn.microsoft.com/en-us/library/windows/desktop/aa363791(v\u003dvs.85).aspx\n\n\"All I/O operations that are canceled complete with the error ERROR_OPERATION_ABORTED, and all completion notifications for the I/O operations occur normally.\"\n\nDoes this mean that the Overlap struct is still in use after cancelation until it\u0027s been signaled?\n\nI think it does... see https://blogs.msdn.microsoft.com/oldnewthing/20110202-00/?p\u003d11613",
+      "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ec676e_3c0912d7",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T19:24:41Z",
+      "side": 1,
+      "message": "good catch, fixed",
+      "parentUuid": "3761effb_e2b1273e",
       "revId": "6794068e37c6da8f8e3e3a8e1c2640692b5a1063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
