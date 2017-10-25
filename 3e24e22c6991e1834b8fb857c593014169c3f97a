@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb0cc4f_5406e59e",
+        "filename": "ui/keyboard/keyboard_event_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-25T06:58:46Z",
+      "side": 1,
+      "message": "nit: You can remove {} for single line if statement.",
+      "range": {
+        "startLine": 36,
+        "startChar": 18,
+        "endLine": 36,
+        "endChar": 19
+      },
+      "revId": "3e24e22c6991e1834b8fb857c593014169c3f97a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
