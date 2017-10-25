@@ -335,6 +335,8 @@ cc_component("cc") {
     "trees/transform_node.h",
     "trees/tree_synchronizer.cc",
     "trees/tree_synchronizer.h",
+    "trees/ukm_manager.cc",
+    "trees/ukm_manager.h",
   ]
 
   if (current_cpu == "x86" || current_cpu == "x64") {
@@ -356,6 +358,7 @@ cc_component("cc") {
     "//base",
     "//base/third_party/dynamic_annotations",
     "//cc/paint",
+    "//components/ukm",
     "//components/viz/common",
     "//gpu",
     "//gpu/command_buffer/client:gles2_implementation",
@@ -365,6 +368,7 @@ cc_component("cc") {
     "//gpu/vulkan:features",
     "//media",
     "//mojo/public/cpp/bindings:struct_traits",
+    "//services/metrics/public/cpp:ukm_builders",
     "//third_party/libyuv",
     "//ui/events:events_base",
     "//ui/gfx",
@@ -671,6 +675,7 @@ cc_test("cc_unittests") {
     "trees/property_tree_unittest.cc",
     "trees/swap_promise_manager_unittest.cc",
     "trees/tree_synchronizer_unittest.cc",
+    "trees/ukm_manager_unittest.cc",
 
     # Animation test files.
     "animation/animation_host_unittest.cc",
@@ -704,6 +709,7 @@ cc_test("cc_unittests") {
     "//base/test:test_support",
     "//cc/ipc",
     "//cc/paint",
+    "//components/ukm:test_support",
     "//components/viz/common",
     "//components/viz/service",
     "//components/viz/test:test_support",

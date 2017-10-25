@@ -125,6 +125,8 @@ class TestUkmRecorder : public UkmRecorderImpl {
   static const mojom::UkmMetric* FindMetric(const mojom::UkmEntry* entry,
                                             const char* metric_name);
 
+  using UkmRecorderImpl::DetachFromSequenceForTesting;
+
  private:
   ukm::mojom::UkmEntryPtr GetMergedEntryForSourceID(
       ukm::SourceId source_id,

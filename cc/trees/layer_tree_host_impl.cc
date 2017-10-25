@@ -1044,6 +1044,11 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
     active_tree()->set_needs_update_draw_properties();
   }
 
+  ukm_manager_.AddCheckerboardStatsForFrame(
+      checkerboarded_no_recording_content_area +
+          checkerboarded_needs_raster_content_area,
+      num_missing_tiles);
+
   if (active_tree_->has_ever_been_drawn()) {
     UMA_HISTOGRAM_COUNTS_100(
         "Compositing.RenderPass.AppendQuadData.NumMissingTiles",
@@ -3839,6 +3844,7 @@ void LayerTreeHostImpl::PinchGestureEnd() {
   viewport()->PinchEnd();
   browser_controls_offset_manager_->PinchEnd();
   client_->SetNeedsCommitOnImplThread();
+  client_->RenewTreePriority();
   // When a pinch ends, we may be displaying content cached at incorrect scales,
   // so updating draw properties and drawing will ensure we are using the right
   // scales that we want when we're not inside a pinch.

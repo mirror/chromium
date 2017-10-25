@@ -57,6 +57,7 @@
 #include "cc/trees/swap_promise.h"
 #include "cc/trees/swap_promise_manager.h"
 #include "cc/trees/transform_node.h"
+#include "components/ukm/test_ukm_recorder.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/frame_sinks/copy_output_result.h"
@@ -83,6 +84,9 @@ using testing::Mock;
 
 namespace cc {
 namespace {
+const char kUserInteraction[] = "Compositor.UserInteraction";
+const char kCheckerboardArea[] = "CheckerboardedContentArea";
+const char kMissingTiles[] = "NumMissingTiles";
 
 class LayerTreeHostTest : public LayerTreeTest {};
 
@@ -8184,5 +8188,62 @@ class LayerTreeHostTestImageDecodingHints : public LayerTreeHostTest {
 };
 
 MULTI_THREAD_TEST_F(LayerTreeHostTestImageDecodingHints);
+
+class LayerTreeHostScrollTestCheckerboardUkm : public LayerTreeHostTest {
+ public:
+  void BeginTest() override {
+    PostSetNeedsCommitToMainThread();
+
+    auto owned_recorder = std::make_unique<ukm::TestUkmRecorder>();
+    source_id_ = owned_recorder->GetNewSourceID();
+    static_cast<ukm::UkmRecorder*>(owned_recorder.get())
+        ->UpdateSourceURL(source_id_, GURL("test"));
+    layer_tree_host()->SetUkmRecorderAndSource(std::move(owned_recorder),
+                                               source_id_);
+  }
+
+  void DidActivateTreeOnThread(LayerTreeHostImpl* impl) override {
+    if (impl->active_tree()->source_frame_number() != 0)
+      return;
+
+    // Detach the recorder since it should only be used on the compositor thread
+    // now.
+    auto* recorder = static_cast<ukm::TestUkmRecorder*>(
+        impl->ukm_manager()->recorder_for_testing());
+    recorder->DetachFromSequenceForTesting();
+
+    // We have an active tree. Start a pinch gesture so we start recording
+    // stats.
+    impl->PinchGestureBegin();
+  }
+
+  void DrawLayersOnThread(LayerTreeHostImpl* impl) override {
+    if (!impl->pinch_gesture_active())
+      return;
+
+    // We just drew a frame, stats for it should have been recorded. End the
+    // gesture so they are flushed to the recorder.
+    impl->PinchGestureEnd();
+    auto* recorder = static_cast<ukm::TestUkmRecorder*>(
+        impl->ukm_manager()->recorder_for_testing());
+    auto* source = recorder->GetSourceForSourceId(source_id_);
+    ASSERT_TRUE(source);
+
+    EXPECT_EQ(recorder->entries_count(), 1u);
+    recorder->ExpectMetric(*source, kUserInteraction, kCheckerboardArea, 0);
+    recorder->ExpectMetric(*source, kUserInteraction, kMissingTiles, 0);
+
+    EndTest();
+  }
+
+  void AfterTest() override {}
+
+ private:
+  ukm::SourceId source_id_;
+};
+
+// Only multi-thread mode needs to record UKMs.
+MULTI_THREAD_TEST_F(LayerTreeHostScrollTestCheckerboardUkm);
+
 }  // namespace
 }  // namespace cc

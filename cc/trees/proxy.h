@@ -17,10 +17,15 @@
 #include "cc/input/browser_controls_state.h"
 #include "cc/trees/task_runner_provider.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
+#include "services/metrics/public/cpp/ukm_source_id.h"
 
 namespace gfx {
 class Rect;
 }
+
+namespace ukm {
+class UkmRecorder;
+}  // namespace ukm
 
 namespace cc {
 class LayerTreeFrameSink;
@@ -74,6 +79,10 @@ class CC_EXPORT Proxy {
 
   // Testing hooks
   virtual bool MainFrameWillHappenForTesting() = 0;
+
+  virtual void SetUkmRecorderAndSource(
+      std::unique_ptr<ukm::UkmRecorder> recorder,
+      ukm::SourceId source_id) = 0;
 };
 
 }  // namespace cc

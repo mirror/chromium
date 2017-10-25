@@ -20,6 +20,7 @@
 #include "cc/trees/proxy_impl.h"
 #include "cc/trees/scoped_abort_remaining_swap_promises.h"
 #include "cc/trees/swap_promise.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace cc {
 
@@ -539,6 +540,16 @@ bool ProxyMain::IsImplThread() const {
 
 base::SingleThreadTaskRunner* ProxyMain::ImplThreadTaskRunner() {
   return task_runner_provider_->ImplThreadTaskRunner();
+}
+
+void ProxyMain::SetUkmRecorderAndSource(
+    std::unique_ptr<ukm::UkmRecorder> recorder,
+    ukm::SourceId source_id) {
+  DCHECK(IsMainThread());
+  ImplThreadTaskRunner()->PostTask(
+      FROM_HERE, base::BindOnce(&ProxyImpl::SetUkmRecorderAndSource,
+                                base::Unretained(proxy_impl_.get()),
+                                base::Passed(&recorder), source_id));
 }
 
 }  // namespace cc
