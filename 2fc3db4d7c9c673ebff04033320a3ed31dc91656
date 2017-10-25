@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69c96200_85521552",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-25T21:58:41Z",
+      "side": 1,
+      "message": "nit: I believe this function shouldn\u0027t be inlined as per style guide guidance:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#inline-functions\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Stop-inlining-code-in-headers",
+      "revId": "2fc3db4d7c9c673ebff04033320a3ed31dc91656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
