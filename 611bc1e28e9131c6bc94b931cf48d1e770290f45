@@ -16,6 +16,24 @@
       "revId": "611bc1e28e9131c6bc94b931cf48d1e770290f45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af123c68_8f9b0156",
+        "filename": "remoting/codec/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-25T00:42:24Z",
+      "side": 0,
+      "message": "This two lines were unexpectedly added by https://chromium-review.googlesource.com/c/chromium/src/+/731795.\nIf you have a strong opinion, I will remove them. Otherwise, since I am changing this file, it seems not worthy to create a different CL for these two lines.",
+      "parentUuid": "be9a1312_c3625200",
+      "revId": "611bc1e28e9131c6bc94b931cf48d1e770290f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

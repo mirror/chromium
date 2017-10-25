@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eedbc614_4cb35f1e",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-25T00:42:24Z",
+      "side": 1,
+      "message": "The problem is that tracking a very old frame is not helpful -- a rapid changing screen 5 minutes ago does not implicit the screen is also rapidly changing now.\nSo instead of how many frames we are tracking, we care about how \"old\" the frames we are tracking. This is the reason I am using time instead of count to decide the size of the window.\n\nIf my understanding is correctly, sending empty deltas is a temporary workaround: ideally we should not waste data just to avoid some unknown issues in WebRTC.",
+      "parentUuid": "8c284f88_dc190bb9",
+      "range": {
+        "startLine": 17,
+        "startChar": 35,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "577fb99e_b6f24db9",
         "filename": "remoting/codec/frame_processing_time_estimator.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-24T22:49:59Z",
       "side": 1,
       "message": "6 / 3 !\u003d 3",
+      "range": {
+        "startLine": 18,
+        "startChar": 66,
+        "endLine": 18,
+        "endChar": 67
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60abe55f_ab204fe4",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-25T00:42:24Z",
+      "side": 1,
+      "message": "Yes, 2 is expected.",
+      "parentUuid": "577fb99e_b6f24db9",
       "range": {
         "startLine": 18,
         "startChar": 66,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d7e83128_07d9027c",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-25T00:42:24Z",
+      "side": 1,
+      "message": "This is not a member function.",
+      "parentUuid": "78a67957_d8719f10",
+      "range": {
+        "startLine": 26,
+        "startChar": 61,
+        "endLine": 26,
+        "endChar": 75
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b49d923_05e87592",
         "filename": "remoting/codec/frame_processing_time_estimator.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e1244058_81204a33",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-25T00:42:24Z",
+      "side": 1,
+      "message": "Yes. Done.",
+      "parentUuid": "4b49d923_05e87592",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 31
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61e1008c_ccfb2eda",
         "filename": "remoting/codec/frame_processing_time_estimator.cc",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-24T22:49:59Z",
       "side": 1,
       "message": "Doesn\u0027t make sense: parameter is a dimensionless count, but |..._us_| is in microseconds.",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 55
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe6e21c_6cc82b6d",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-25T00:42:24Z",
+      "side": 1,
+      "message": "Sorry, I have not got the point. \"us\" indicates the value saving in the |delta_frame_processing_us_| is in microseconds.",
+      "parentUuid": "61e1008c_ccfb2eda",
       "range": {
         "startLine": 37,
         "startChar": 6,
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "af8c000c_bccb4374",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-25T00:42:24Z",
+      "side": 1,
+      "message": "The caller should always schedule next frame EstimatedProcessingTime() earlier.\n\nIn WebrtcFrameSchedulerSimple, we subtract the \"EstimatedProcessingTime()\" from |target_capture_time| (https://cs.chromium.org/chromium/src/remoting/protocol/webrtc_frame_scheduler_simple.cc?rcl\u003d3d9b0c1fee36d170de3ca009a8344d5f6cf68f21\u0026l\u003d306), but select the max between |target_capture_time| and |last_capture_started_time_| + kTargetFrameInterval.\nSo subtracting a fairly large value will cause the |target_capture_time| to be smaller than |last_capture_start_time_| + kTargetFrameIntervale.",
+      "parentUuid": "80bad3de_46b1c381",
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7550530f_efce5cf4",
         "filename": "remoting/codec/frame_processing_time_estimator.h",
         "patchSetId": 3
@@ -145,6 +283,24 @@
       "writtenOn": "2017-10-24T22:49:59Z",
       "side": 1,
       "message": "This interface prevents callers from caching Now() as an optimization, forcing a system clock lookup each time. Instead, I think it\u0027s better to pass the current time to StartFrame() and FinishFrame(), as we do in many other places. The planned call-sites already have pre-computed TimeTicks::Now() so it\u0027s easy for them to pass to this object.",
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116aab64_c747ab56",
+        "filename": "remoting/codec/frame_processing_time_estimator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-25T00:42:24Z",
+      "side": 1,
+      "message": "I believe caching base::TimeTicks::Now() is not necessary. I won\u0027t say it\u0027s a no-op, but executing it 1M times takes less than 60 milliseconds. (See FrameProcessingTimeEstimatorTest.DISABLED_TimeTicksNow_Performance.)\n\nQueryPerformanceCounter on Windows is backed by a processor instruction, it\u0027s fast enough.",
+      "parentUuid": "7550530f_efce5cf4",
       "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -171,6 +327,30 @@
       "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa26681_7d14abdb",
+        "filename": "remoting/codec/frame_processing_time_estimator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-25T00:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fcf20f7_64ab8a2f",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "3d8b4a97b767c54ac52ab984ea46c92d0d9e6665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
