@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "604adaff_21e7b1f4",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-25T17:03:20Z",
+      "side": 1,
+      "message": "Use cr-icon-size, see https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/shared_vars_css.html?l\u003d23",
+      "revId": "865586aa91b81a36e9f3f021e91e8564495d65b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

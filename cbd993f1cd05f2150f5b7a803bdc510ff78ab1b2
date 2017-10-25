@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fcba31dd_bad5ef82",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-25T17:03:20Z",
+      "side": 1,
+      "message": "Nit: Do we even need this class? Is the following selector equivalent?\n\n#allow-incognito iron-icon { ... }",
+      "revId": "cbd993f1cd05f2150f5b7a803bdc510ff78ab1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7dd39ad_bbe37999",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2017-10-25T05:35:33Z",
       "side": 1,
       "message": "I will double check these values with bettes@. They are not available on the mocks.",
+      "revId": "cbd993f1cd05f2150f5b7a803bdc510ff78ab1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbd52f3_52e4044f",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-25T17:03:20Z",
+      "side": 1,
+      "message": "Note that margin-left, margin-right are (usually) breaking RTL. Instead always use -webkit-margin-start, -webkit-margin-end (unless both left and right have the same value, in which case it does not matter).",
+      "parentUuid": "b7dd39ad_bbe37999",
       "revId": "cbd993f1cd05f2150f5b7a803bdc510ff78ab1b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +71,23 @@
         "endLine": 310,
         "endChar": 69
       },
+      "revId": "cbd993f1cd05f2150f5b7a803bdc510ff78ab1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48efaf02_1fc76cf9",
+        "filename": "ui/webui/resources/cr_elements/icons.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-25T17:03:20Z",
+      "side": 1,
+      "message": "Now that error-outline is added to cr_elements/icons.html, can you ensure that we don\u0027t have copies of it elsewhere? For example one copy I found is at [1] and is being used at [2]\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/icons.html?type\u003dcs\u0026q\u003d%22M11+15h2v2h-2zm0-8h2v6h-2zm%22\u0026sq\u003dpackage:chromium\u0026l\u003d67\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/people_page/setup_pin_dialog.html?l\u003d58",
       "revId": "cbd993f1cd05f2150f5b7a803bdc510ff78ab1b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
