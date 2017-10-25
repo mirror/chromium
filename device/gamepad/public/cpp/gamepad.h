@@ -21,6 +21,16 @@ class GamepadButton {
   double value;
 };
 
+enum class GamepadHapticActuatorType { kVibration = 0, kDualRumble = 1 };
+
+class GamepadHapticActuator {
+ public:
+  GamepadHapticActuator() : not_null(false) {}
+
+  bool not_null;
+  GamepadHapticActuatorType type;
+};
+
 class GamepadVector {
  public:
   GamepadVector() : not_null(false) {}
@@ -97,6 +107,8 @@ class Gamepad {
 
   // Button states
   GamepadButton buttons[kButtonsLengthCap];
+
+  GamepadHapticActuator vibration_actuator;
 
   // Mapping type (for example "standard")
   UChar mapping[kMappingLengthCap];
