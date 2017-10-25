@@ -260,6 +260,17 @@ String GetTextForInlineCollection<NGOffsetMappingBuilder>(
   return ToText(node)->data();
 }
 
+bool CanUseNewLayout(const LayoutObject& node) {
+  const ComputedStyle& style = node.StyleRef();
+  if (style.UserModify() != EUserModify::kReadOnly)
+    return false;
+
+  if (node.IsRuby())
+    return false;
+
+  return true;
+}
+
 // The function is templated to indicate the purpose of collected inlines:
 // - With EmptyOffsetMappingBuilder: updating layout;
 // - With NGOffsetMappingBuilder: building offset mapping on clean layout.
@@ -271,12 +282,11 @@ String GetTextForInlineCollection<NGOffsetMappingBuilder>(
 // There are also performance considerations, since template saves the overhead
 // for condition checking and branching.
 template <typename OffsetMappingBuilder>
-LayoutBox* CollectInlinesInternal(
+bool CollectInlinesInternal(
     LayoutBlockFlow* block,
     NGInlineItemsBuilderTemplate<OffsetMappingBuilder>* builder) {
   builder->EnterBlock(block->Style());
   LayoutObject* node = GetLayoutObjectForFirstChildNode(block);
-  LayoutBox* next_box = nullptr;
   while (node) {
     if (node->IsText()) {
       LayoutText* layout_text = ToLayoutText(node);
@@ -316,8 +326,12 @@ LayoutBox* CollectInlinesInternal(
 
     } else if (!node->IsInline()) {
       // A block box found. End inline and transit to block layout.
-      next_box = ToLayoutBox(node);
+      // next_box = ToLayoutBox(node);
+      NOTREACHED();
       break;
+
+    } else if (!CanUseNewLayout(*node)) {
+      return false;
 
     } else {
       builder->EnterInline(node);
@@ -353,7 +367,7 @@ LayoutBox* CollectInlinesInternal(
     }
   }
   builder->ExitBlock();
-  return next_box;
+  return true;
 }
 
 }  // namespace
@@ -425,7 +439,8 @@ void NGInlineNode::CollectInlines() {
   block->WillCollectInlines();
   NGInlineNodeData* data = MutableData();
   NGInlineItemsBuilder builder(&data->items_);
-  data->next_sibling_ = CollectInlinesInternal(block, &builder);
+  data->next_sibling_ = nullptr;
+  data->use_new_layout_ = CollectInlinesInternal(block, &builder);
   data->text_content_ = builder.ToString();
   data->is_bidi_enabled_ =
       !Data().text_content_.IsEmpty() &&
@@ -759,7 +774,7 @@ Optional<NGInlineNode> GetNGInlineNodeFor(const Node& node, unsigned offset) {
   if (!layout_object || !layout_object->IsInline())
     return WTF::nullopt;
   LayoutBlockFlow* block_flow = layout_object->EnclosingNGBlockFlow();
-  if (!block_flow)
+  if (!block_flow || !NGBlockNode::CanUseNewLayout(block_flow))
     return WTF::nullopt;
   DCHECK(block_flow->ChildrenInline());
   return NGInlineNode(block_flow);

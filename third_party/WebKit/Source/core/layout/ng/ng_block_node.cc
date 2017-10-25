@@ -269,11 +269,22 @@ NGLayoutInputNode NGBlockNode::FirstChild() {
   return NGBlockNode(ToLayoutBox(child));
 }
 
-bool NGBlockNode::CanUseNewLayout() const {
-  if (!box_->IsLayoutNGMixin())
+bool NGBlockNode::CanUseNewLayout(const LayoutBox* box) {
+  if (!box->IsLayoutNGMixin())
     return false;
 
-  return RuntimeEnabledFeatures::LayoutNGEnabled();
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return false;
+
+  const ComputedStyle& style = box->StyleRef();
+  if (style.UserModify() != EUserModify::kReadOnly)
+    return false;
+
+  return true;
+}
+
+bool NGBlockNode::CanUseNewLayout() const {
+  return CanUseNewLayout(box_);
 }
 
 String NGBlockNode::ToString() const {

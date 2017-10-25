@@ -4314,6 +4314,11 @@ bool LayoutBlockFlow::CreatesNewFormattingContext() const {
     return true;
   }
 
+  if (RuntimeEnabledFeatures::LayoutNGEnabled() &&
+      !NGBlockNode::CanUseNewLayout(this)) {
+    return true;
+  }
+
   if (IsRenderedLegend())
     return true;
 
