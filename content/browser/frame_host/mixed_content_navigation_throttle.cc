@@ -26,8 +26,6 @@
 
 namespace {
 
-using namespace content;
-
 // Should return the same value as SchemeRegistry::shouldTreatURLSchemeAsSecure.
 bool IsSecureScheme(const std::string& scheme) {
   return base::ContainsValue(url::GetSecureSchemes(), scheme);
@@ -54,7 +52,7 @@ bool IsOriginSecure(const GURL& url) {
       return true;
   }
 
-  return IsOriginWhiteListedTrustworthy(url::Origin::Create(url));
+  return content::IsOriginWhiteListedTrustworthy(url::Origin::Create(url));
 }
 
 // Should return the same value as the resource URL checks assigned to
@@ -62,10 +60,10 @@ bool IsOriginSecure(const GURL& url) {
 bool IsUrlPotentiallySecure(const GURL& url) {
   // blob: and filesystem: URLs never hit the network, and access is restricted
   // to same-origin contexts, so they are not blocked.
-  bool is_secure = url.SchemeIs(url::kBlobScheme) ||
-                   url.SchemeIs(url::kFileSystemScheme) ||
-                   IsOriginSecure(url) ||
-                   IsPotentiallyTrustworthyOrigin(url::Origin::Create(url));
+  bool is_secure =
+      url.SchemeIs(url::kBlobScheme) || url.SchemeIs(url::kFileSystemScheme) ||
+      IsOriginSecure(url) ||
+      content::IsPotentiallyTrustworthyOrigin(url::Origin::Create(url));
 
   // TODO(mkwst): Remove this once the following draft is implemented:
   // https://tools.ietf.org/html/draft-west-let-localhost-be-localhost-03. See:
@@ -84,16 +82,17 @@ bool DoesOriginSchemeRestrictMixedContent(const url::Origin& origin) {
   return origin.scheme() == url::kHttpsScheme;
 }
 
-void UpdateRendererOnMixedContentFound(NavigationHandleImpl* navigation_handle,
-                                       const GURL& mixed_content_url,
-                                       bool was_allowed,
-                                       bool for_redirect) {
+void UpdateRendererOnMixedContentFound(
+    content::NavigationHandleImpl* navigation_handle,
+    const GURL& mixed_content_url,
+    bool was_allowed,
+    bool for_redirect) {
   // TODO(carlosk): the root node should never be considered as being/having
   // mixed content for now. Once/if the browser should also check form submits
   // for mixed content than this will be allowed to happen and this DCHECK
   // should be updated.
   DCHECK(navigation_handle->frame_tree_node()->parent());
-  RenderFrameHost* rfh =
+  content::RenderFrameHost* rfh =
       navigation_handle->frame_tree_node()->current_frame_host();
   FrameMsg_MixedContentFound_Params params;
   params.main_resource_url = mixed_content_url;
