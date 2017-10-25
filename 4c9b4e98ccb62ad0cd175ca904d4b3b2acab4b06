@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6261624d_98e9633a",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T00:21:19Z",
+      "side": 1,
+      "message": "s/after masked contents/after clipped contents/?",
+      "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2e258b_0b747232",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T00:21:19Z",
+      "side": 1,
+      "message": "Please also update FindPropertiesNeedingUpdate.h.",
+      "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc643a39_5dad653c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T00:21:19Z",
+      "side": 1,
+      "message": "Nit: replace \"layoutObject()\", \"scopedPaintChunkProperties\" with new names.",
+      "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2a71ae_c8969f46",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T00:21:19Z",
+      "side": 1,
+      "message": "Optional: As REFERENCE is not completely implemented in this CL, you can omit this part in this CL and include it in the CL implementing REFERENCE.",
+      "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
