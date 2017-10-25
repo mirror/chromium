@@ -13,10 +13,13 @@ namespace media {
 
 // This is soon to be deprecated in favor of VideoFrame destruction CBs.
 // Please do not use this.
-using OutputWithReleaseMailboxCB =
-    base::Callback<void(VideoFrame::ReleaseMailboxCB,
-                        const scoped_refptr<VideoFrame>&)>;
 
+namespace deprecated {
+// Similar to VideoFrame::ReleaseMailboxCB for now.
+using ReleaseMailboxCB = base::OnceCallback<void(const gpu::SyncToken&)>;
+using OutputWithReleaseMailboxCB =
+    base::Callback<void(ReleaseMailboxCB, const scoped_refptr<VideoFrame>&)>;
+}  // namespace deprecated
 }  // namespace media
 
 #endif  // MEDIA_BASE_OUTPUT_WITH_RELEASE_MAILBOX_CB_H_
