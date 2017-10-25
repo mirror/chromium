@@ -7,16 +7,20 @@
 #include "base/macros.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/service.h"
+#include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/public/interfaces/connector.mojom.h"
 
 namespace service_manager {
 
-namespace {
-
-class TestConnectorImpl : public mojom::Connector {
+class TestConnectorFactory::TestConnectorImpl : public mojom::Connector {
  public:
   TestConnectorImpl(TestConnectorFactory* factory, Service* service)
-      : factory_(factory), service_(service) {}
+      : service_context_(std::make_unique<Service>(), mojom::ServiceRequest()),
+        factory_(factory),
+        service_(service) {
+    service_->SetContext(&service_context_);
+    service_->OnStart();
+  }
 
   ~TestConnectorImpl() override = default;
 
@@ -60,14 +64,13 @@ class TestConnectorImpl : public mojom::Connector {
   }
 
  private:
+  service_manager::ServiceContext service_context_;
   TestConnectorFactory* const factory_;
   Service* const service_;
   mojo::BindingSet<mojom::Connector> bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(TestConnectorImpl);
 };
-
-}  // namespace
 
 TestConnectorFactory::TestConnectorFactory(Service* service)
     : source_identity_("TestConnectorFactory"),

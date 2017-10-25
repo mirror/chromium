@@ -59,6 +59,8 @@ class TestConnectorFactory {
   std::unique_ptr<Connector> CreateConnector();
 
  private:
+  class TestConnectorImpl;
+
   Identity source_identity_;
 
   std::unique_ptr<mojom::Connector> impl_;
