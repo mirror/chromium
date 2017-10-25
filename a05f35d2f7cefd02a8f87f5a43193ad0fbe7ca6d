@@ -16,6 +16,24 @@
       "revId": "a05f35d2f7cefd02a8f87f5a43193ad0fbe7ca6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce4636a_aee8f3ff",
+        "filename": "third_party/WebKit/Source/core/animation/css/CSSAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-25T21:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d778562_200d31f0",
+      "revId": "a05f35d2f7cefd02a8f87f5a43193ad0fbe7ca6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
