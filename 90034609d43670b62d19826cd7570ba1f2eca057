@@ -22,6 +22,30 @@
       "revId": "90034609d43670b62d19826cd7570ba1f2eca057",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50307c2e_8f38dd16",
+        "filename": "base/trace_event/heap_profiler_allocation_context_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T23:32:35Z",
+      "side": 0,
+      "message": "Removing no_stack mode.\nhm not sure if i should mention thread name on each of the other modes.",
+      "parentUuid": "d1776b78_986aa465",
+      "range": {
+        "startLine": 30,
+        "startChar": 47,
+        "endLine": 30,
+        "endChar": 60
+      },
+      "revId": "90034609d43670b62d19826cd7570ba1f2eca057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
