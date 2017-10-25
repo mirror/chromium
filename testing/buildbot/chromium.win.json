@@ -138,6 +138,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "crashpad_util_test"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "crypto_unittests"
       },
       {
@@ -1264,6 +1270,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "crashpad_util_test"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "crypto_unittests"
       },
       {
@@ -1824,6 +1836,12 @@
           "can_use_on_swarming_builders": true
         },
         "test": "courgette_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "crashpad_util_test"
       },
       {
         "swarming": {
