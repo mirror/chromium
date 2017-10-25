@@ -201,7 +201,7 @@ class ReticleRenderer : public BaseQuadRenderer {
   ReticleRenderer();
   ~ReticleRenderer() override;
 
-  void Draw(const gfx::Transform& view_proj_matrix);
+  void Draw(float opacity, const gfx::Transform& view_proj_matrix);
 
  private:
   GLuint model_view_proj_matrix_handle_;
@@ -212,6 +212,7 @@ class ReticleRenderer : public BaseQuadRenderer {
   GLuint inner_ring_thickness_handle_;
   GLuint mid_ring_end_handle_;
   GLuint mid_ring_opacity_handle_;
+  GLuint opacity_handle_;
 
   DISALLOW_COPY_AND_ASSIGN(ReticleRenderer);
 };

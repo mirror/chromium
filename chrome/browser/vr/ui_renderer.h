@@ -5,6 +5,9 @@
 #ifndef CHROME_BROWSER_VR_UI_RENDERER_H_
 #define CHROME_BROWSER_VR_UI_RENDERER_H_
 
+#include "base/time/time.h"
+#include "cc/animation/animation_target.h"
+#include "chrome/browser/vr/animation_player.h"
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/transform.h"
@@ -26,6 +29,7 @@ struct ControllerInfo {
   gfx::Transform transform;
   float opacity = 1.0f;
   UiElement* reticle_render_target = nullptr;
+  bool quiescent = false;
 };
 
 // Provides information for rendering such as the viewport and view/projection
@@ -46,14 +50,15 @@ struct RenderInfo {
 };
 
 // Renders a UI scene.
-class UiRenderer {
+class UiRenderer : public cc::AnimationTarget {
  public:
   UiRenderer(UiScene* scene,
              VrShellRenderer* vr_shell_renderer);
-  ~UiRenderer();
+  ~UiRenderer() override;
 
   void Draw(const RenderInfo& render_info,
-            const ControllerInfo& controller_info);
+            const ControllerInfo& controller_info,
+            base::TimeTicks current_time);
 
   // This is exposed separately because we do a separate pass to render this
   // content into an optimized viewport.
@@ -92,8 +97,16 @@ class UiRenderer {
                       const RenderInfo& render_info,
                       const ControllerInfo& controller_info);
 
+  void NotifyClientFloatAnimated(float value,
+                                 int target_property_id,
+                                 cc::Animation* animation) override;
+
   UiScene* scene_ = nullptr;
   VrShellRenderer* vr_shell_renderer_ = nullptr;
+
+  // HACK. should be in the tree.
+  AnimationPlayer animation_player_;
+  float controller_quiescence_opacity_ = 1.0f;
 };
 
 }  // namespace vr

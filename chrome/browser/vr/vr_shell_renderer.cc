@@ -204,6 +204,7 @@ static constexpr char const* kReticleFragmentShader = SHADER(
   uniform mediump float inner_ring_thickness;
   uniform mediump float mid_ring_end;
   uniform mediump float mid_ring_opacity;
+  uniform mediump float opacity;
 
   void main() {
     mediump float r = length(v_TexCoordinate - vec2(0.5, 0.5));
@@ -222,7 +223,7 @@ static constexpr char const* kReticleFragmentShader = SHADER(
     mediump float black_alpha_factor =
         mid_ring_opacity * (1.0 - (r - black_radius) * black_feather);
     mediump float alpha = clamp(
-        min(hole_alpha, max(color1, black_alpha_factor)), 0.0, 1.0);
+        min(hole_alpha, max(color1, black_alpha_factor)) * opacity, 0.0, 1.0);
     lowp vec3 color_rgb = color1 * color.xyz;
     gl_FragColor = vec4(color_rgb * color.w * alpha, color.w * alpha);
   }
@@ -750,9 +751,11 @@ ReticleRenderer::ReticleRenderer()
   mid_ring_end_handle_ = glGetUniformLocation(program_handle_, "mid_ring_end");
   mid_ring_opacity_handle_ =
       glGetUniformLocation(program_handle_, "mid_ring_opacity");
+  opacity_handle_ = glGetUniformLocation(program_handle_, "opacity");
 }
 
-void ReticleRenderer::Draw(const gfx::Transform& view_proj_matrix) {
+void ReticleRenderer::Draw(float opacity,
+                           const gfx::Transform& view_proj_matrix) {
   PrepareToDraw(model_view_proj_matrix_handle_, view_proj_matrix);
 
   glUniform4f(color_handle_, kReticleColor[0], kReticleColor[1],
@@ -763,6 +766,7 @@ void ReticleRenderer::Draw(const gfx::Transform& view_proj_matrix) {
   glUniform1f(inner_ring_thickness_handle_, kInnerRingThickness);
   glUniform1f(mid_ring_end_handle_, kMidRingEnd);
   glUniform1f(mid_ring_opacity_handle_, kMidRingOpacity);
+  glUniform1f(opacity_handle_, opacity);
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_);
   glDrawElements(GL_TRIANGLES, arraysize(kQuadIndices), GL_UNSIGNED_SHORT, 0);

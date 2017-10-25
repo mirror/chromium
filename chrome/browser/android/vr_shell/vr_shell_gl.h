@@ -130,17 +130,20 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
                       int viewport_offset,
                       const gfx::Size& render_size,
                       vr::RenderInfo* out_render_info);
-  void DrawFrame(int16_t frame_index);
-  void DrawIntoAcquiredFrame(int16_t frame_index);
+  void DrawFrame(int16_t frame_index, base::TimeTicks current_time);
+  void DrawIntoAcquiredFrame(int16_t frame_index, base::TimeTicks current_time);
   void DrawFrameSubmitWhenReady(int16_t frame_index,
                                 const gfx::Transform& head_pose,
                                 std::unique_ptr<gl::GLFenceEGL> fence);
-  void DrawFrameSubmitNow(int16_t frame_index, const gfx::Transform& head_pose);
+  void DrawFrameSubmitNow(int16_t frame_index,
+                          const gfx::Transform& head_pose,
+                          base::TimeTicks current_time);
   bool ShouldDrawWebVr();
   void DrawWebVr();
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
-  void UpdateController(const gfx::Transform& head_pose);
+  void UpdateController(const gfx::Transform& head_pose,
+                        base::TimeTicks current_time);
   std::unique_ptr<blink::WebMouseEvent> MakeMouseEvent(
       blink::WebInputEvent::Type type,
       const gfx::PointF& normalized_web_content_location);
@@ -165,7 +168,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
                           const gfx::PointF& normalized_hit_point) override;
 
   void SendImmediateExitRequestIfNecessary();
-  void HandleControllerInput(const gfx::Vector3dF& head_direction);
+  void HandleControllerInput(const gfx::Vector3dF& head_direction,
+                             base::TimeTicks current_time);
   void HandleControllerAppButtonActivity(
       const gfx::Vector3dF& controller_direction);
   void SendGestureToContent(std::unique_ptr<blink::WebInputEvent> event);
@@ -280,8 +284,11 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   gfx::Point3F pointer_start_;
 
-  vr::ControllerInfo controller_info_;
   vr::RenderInfo render_info_primary_;
+
+  vr::ControllerInfo controller_info_;
+  base::TimeTicks last_significant_controller_update_time_;
+  vr::ControllerInfo last_significant_controller_info_;
 
   AndroidVSyncHelper vsync_helper_;
 
