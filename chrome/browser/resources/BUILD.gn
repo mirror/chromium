@@ -113,6 +113,20 @@ if (!is_android) {
   }
 }
 
+if (enable_print_preview) {
+  grit("print_preview_resources") {
+    source = "print_preview/print_preview_resources.grd"
+    defines = chrome_grit_defines
+    outputs = [
+      "grit/print_preview_resources.h",
+      "grit/print_preview_resources_map.cc",
+      "grit/print_preview_resources_map.h",
+      "print_preview_resources.pak",
+    ]
+    output_dir = "$root_gen_dir/chrome"
+  }
+}
+
 if (enable_extensions) {
   grit("extensions_resources") {
     if (optimize_webui) {
