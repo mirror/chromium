@@ -272,6 +272,7 @@ source_set("material_components_ios") {
     ":material_collection_cells_bundle",
     ":material_collections_bundle",
     ":material_component_ic_arrow_back_bundle",
+    "//ios/third_party/material_internationalization_ios:material_internationalization_ios+link",
     "//ios/third_party/material_text_accessibility_ios",
   ]
 
