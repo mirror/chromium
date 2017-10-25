@@ -18,6 +18,7 @@
 #include "chromeos/components/tether/ble_advertisement_device_queue.h"
 #include "chromeos/components/tether/ble_advertiser.h"
 #include "chromeos/components/tether/ble_scanner.h"
+#include "chromeos/components/tether/connection_priority.h"
 #include "chromeos/components/tether/proto/tether.pb.h"
 #include "components/cryptauth/remote_device.h"
 #include "components/cryptauth/secure_channel.h"
@@ -152,6 +153,7 @@ class BleConnectionManager : public BleScanner::Observer {
 
     void RegisterConnectionReason(const MessageType& connection_reason);
     void UnregisterConnectionReason(const MessageType& connection_reason);
+    ConnectionPriority GetConnectionPriority();
     bool HasReasonForConnection() const;
 
     bool HasEstablishedConnection() const;
