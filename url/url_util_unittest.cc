@@ -465,4 +465,8 @@ TEST(URLUtilTest, TestDomainIs) {
   }
 }
 
+TEST(URLUtilTest, TestNewlyAddedFunction) {
+  NewlyAddedFunction(10);
+}
+
 }  // namespace url
