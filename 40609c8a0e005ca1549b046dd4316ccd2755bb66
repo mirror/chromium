@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd56fb72_400023a4",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-25T15:29:48Z",
+      "side": 1,
+      "message": "This value is not defined in the v26 of the SDK for some reason. See bot failure. The value is in the XML we get in the SDK, but not in R.class. Is there anyway we could inherit from something else? That would avoid having workaround hacks.",
+      "range": {
+        "startLine": 409,
+        "startChar": 16,
+        "endLine": 409,
+        "endChar": 74
+      },
+      "revId": "40609c8a0e005ca1549b046dd4316ccd2755bb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
