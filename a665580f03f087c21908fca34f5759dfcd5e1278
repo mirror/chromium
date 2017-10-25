@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "d128ab36_9c3d6266",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-10-25T17:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31cf4320_824c2544",
+      "revId": "a665580f03f087c21908fca34f5759dfcd5e1278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b388e07b_46abc79f",
         "filename": "components/autofill/core/browser/form_structure.h",
         "patchSetId": 4
@@ -172,6 +190,30 @@
       "side": 1,
       "message": "nit: double plural\n\nRationalizePhoneNumberFieldPredictions",
       "parentUuid": "241fc24b_0f9c1d8b",
+      "range": {
+        "startLine": 267,
+        "startChar": 7,
+        "endLine": 267,
+        "endChar": 36
+      },
+      "revId": "a665580f03f087c21908fca34f5759dfcd5e1278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64fe22f4_26eea581",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-10-25T17:59:07Z",
+      "side": 1,
+      "message": "fixed.",
+      "parentUuid": "af75184b_e8057a64",
       "range": {
         "startLine": 267,
         "startChar": 7,
