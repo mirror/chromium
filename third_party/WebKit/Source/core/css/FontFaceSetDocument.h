@@ -39,23 +39,15 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Vector.h"
 
-// Mac OS X 10.6 SDK defines check() macro that interferes with our check()
-// method
-#ifdef check
-#undef check
-#endif
-
 namespace blink {
 
 class ExceptionState;
 class Font;
 class FontFaceCache;
-class ExecutionContext;
 
 class CORE_EXPORT FontFaceSetDocument final
     : public FontFaceSet,
       public Supplement<Document>,
-      public SuspendableObject,
       public FontFace::LoadFontCallback {
   USING_GARBAGE_COLLECTED_MIXIN(FontFaceSetDocument);
   WTF_MAKE_NONCOPYABLE(FontFaceSetDocument);
@@ -77,8 +69,6 @@ class CORE_EXPORT FontFaceSetDocument final
   size_t size() const override;
   AtomicString status() const override;
 
-  ExecutionContext* GetExecutionContext() const override;
-
   Document* GetDocument() const;
 
   void DidLayout();
@@ -89,11 +79,6 @@ class CORE_EXPORT FontFaceSetDocument final
   void NotifyError(FontFace*) override;
 
   size_t ApproximateBlankCharacterCount() const;
-
-  // SuspendableObject
-  void Suspend() override;
-  void Resume() override;
-  void ContextDestroyed(ExecutionContext*) override;
 
   static FontFaceSetDocument* From(Document&);
   static void DidLayout(Document&);
@@ -115,6 +100,28 @@ class CORE_EXPORT FontFaceSetDocument final
     return new FontFaceSetDocument(document);
   }
 
+  explicit FontFaceSetDocument(Document&);
+
+  bool InActiveDocumentContext() const;
+  void AddToLoadingFonts(FontFace*);
+  void RemoveFromLoadingFonts(FontFace*);
+  void FireDoneEventIfPossible() override;
+  bool ResolveFontStyle(const String&, Font&);
+  const HeapListHashSet<Member<FontFace>>& CssConnectedFontFaceList() const;
+  bool IsCSSConnectedFontFace(FontFace*) const;
+  bool ShouldSignalReady() const;
+
+  using ReadyProperty = ScriptPromiseProperty<Member<FontFaceSetDocument>,
+                                              Member<FontFaceSetDocument>,
+                                              Member<DOMException>>;
+
+  HeapHashSet<Member<FontFace>> loading_fonts_;
+  bool is_loading_;
+  Member<ReadyProperty> ready_;
+  FontFaceArray loaded_fonts_;
+  FontFaceArray failed_fonts_;
+  HeapListHashSet<Member<FontFace>> non_css_connected_faces_;
+
   class FontLoadHistogram {
     DISALLOW_NEW();
 
@@ -130,35 +137,6 @@ class CORE_EXPORT FontFaceSetDocument final
     int count_;
     bool recorded_;
   };
-
-  explicit FontFaceSetDocument(Document&);
-
-  bool InActiveDocumentContext() const;
-  void AddToLoadingFonts(FontFace*);
-  void RemoveFromLoadingFonts(FontFace*);
-  void FireLoadingEvent();
-  void FireDoneEventIfPossible();
-  bool ResolveFontStyle(const String&, Font&);
-  void HandlePendingEventsAndPromisesSoon();
-  void HandlePendingEventsAndPromises();
-  const HeapListHashSet<Member<FontFace>>& CssConnectedFontFaceList() const;
-  bool IsCSSConnectedFontFace(FontFace*) const;
-  bool ShouldSignalReady() const;
-
-  using ReadyProperty = ScriptPromiseProperty<Member<FontFaceSetDocument>,
-                                              Member<FontFaceSetDocument>,
-                                              Member<DOMException>>;
-
-  HeapHashSet<Member<FontFace>> loading_fonts_;
-  bool should_fire_loading_event_;
-  bool is_loading_;
-  Member<ReadyProperty> ready_;
-  FontFaceArray loaded_fonts_;
-  FontFaceArray failed_fonts_;
-  HeapListHashSet<Member<FontFace>> non_css_connected_faces_;
-
-  Member<AsyncMethodRunner<FontFaceSetDocument>> async_runner_;
-
   FontLoadHistogram histogram_;
 };
 

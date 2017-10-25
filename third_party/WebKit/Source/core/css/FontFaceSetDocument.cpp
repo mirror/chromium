@@ -26,7 +26,6 @@
 #include "core/css/FontFaceSetDocument.h"
 
 #include "bindings/core/v8/Dictionary.h"
-#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/css/CSSFontSelector.h"
 #include "core/css/CSSSegmentedFontFace.h"
 #include "core/css/FontFaceCache.h"
@@ -47,82 +46,13 @@ namespace blink {
 static const int kDefaultFontSize = 10;
 static const char kDefaultFontFamily[] = "sans-serif";
 
-class LoadFontPromiseResolver final
-    : public GarbageCollectedFinalized<LoadFontPromiseResolver>,
-      public FontFace::LoadFontCallback {
-  USING_GARBAGE_COLLECTED_MIXIN(LoadFontPromiseResolver);
-
- public:
-  static LoadFontPromiseResolver* Create(FontFaceArray faces,
-                                         ScriptState* script_state) {
-    return new LoadFontPromiseResolver(faces, script_state);
-  }
-
-  void LoadFonts();
-  ScriptPromise Promise() { return resolver_->Promise(); }
-
-  void NotifyLoaded(FontFace*) override;
-  void NotifyError(FontFace*) override;
-
-  virtual void Trace(blink::Visitor*);
-
- private:
-  LoadFontPromiseResolver(FontFaceArray faces, ScriptState* script_state)
-      : num_loading_(faces.size()),
-        error_occured_(false),
-        resolver_(ScriptPromiseResolver::Create(script_state)) {
-    font_faces_.swap(faces);
-  }
-
-  HeapVector<Member<FontFace>> font_faces_;
-  int num_loading_;
-  bool error_occured_;
-  Member<ScriptPromiseResolver> resolver_;
-};
-
-void LoadFontPromiseResolver::LoadFonts() {
-  if (!num_loading_) {
-    resolver_->Resolve(font_faces_);
-    return;
-  }
-
-  for (size_t i = 0; i < font_faces_.size(); i++)
-    font_faces_[i]->LoadWithCallback(this);
-}
-
-void LoadFontPromiseResolver::NotifyLoaded(FontFace* font_face) {
-  num_loading_--;
-  if (num_loading_ || error_occured_)
-    return;
-
-  resolver_->Resolve(font_faces_);
-}
-
-void LoadFontPromiseResolver::NotifyError(FontFace* font_face) {
-  num_loading_--;
-  if (!error_occured_) {
-    error_occured_ = true;
-    resolver_->Reject(font_face->GetError());
-  }
-}
-
-void LoadFontPromiseResolver::Trace(blink::Visitor* visitor) {
-  visitor->Trace(font_faces_);
-  visitor->Trace(resolver_);
-  LoadFontCallback::Trace(visitor);
-}
-
 FontFaceSetDocument::FontFaceSetDocument(Document& document)
-    : Supplement<Document>(document),
-      SuspendableObject(&document),
-      should_fire_loading_event_(false),
+    : FontFaceSet(document),
+      Supplement<Document>(document),
       is_loading_(false),
       ready_(new ReadyProperty(GetExecutionContext(),
                                this,
-                               ReadyProperty::kReady)),
-      async_runner_(AsyncMethodRunner<FontFaceSetDocument>::Create(
-          this,
-          &FontFaceSetDocument::HandlePendingEventsAndPromises)) {
+                               ReadyProperty::kReady)) {
   SuspendIfNeeded();
 }
 
@@ -143,19 +73,10 @@ void FontFaceSetDocument::AddFontFacesToFontFaceCache(
     font_face_cache->AddFontFace(font_face, false);
 }
 
-ExecutionContext* FontFaceSetDocument::GetExecutionContext() const {
-  return SuspendableObject::GetExecutionContext();
-}
-
 AtomicString FontFaceSetDocument::status() const {
   DEFINE_STATIC_LOCAL(AtomicString, loading, ("loading"));
   DEFINE_STATIC_LOCAL(AtomicString, loaded, ("loaded"));
   return is_loading_ ? loading : loaded;
-}
-
-void FontFaceSetDocument::HandlePendingEventsAndPromisesSoon() {
-  // async_runner_ will be automatically stopped on destruction.
-  async_runner_->RunAsync();
 }
 
 void FontFaceSetDocument::DidLayout() {
@@ -170,31 +91,6 @@ bool FontFaceSetDocument::ShouldSignalReady() const {
   if (!loading_fonts_.IsEmpty())
     return false;
   return is_loading_ || ready_->GetState() == ReadyProperty::kPending;
-}
-
-void FontFaceSetDocument::HandlePendingEventsAndPromises() {
-  FireLoadingEvent();
-  FireDoneEventIfPossible();
-}
-
-void FontFaceSetDocument::FireLoadingEvent() {
-  if (should_fire_loading_event_) {
-    should_fire_loading_event_ = false;
-    DispatchEvent(
-        FontFaceSetLoadEvent::CreateForFontFaces(EventTypeNames::loading));
-  }
-}
-
-void FontFaceSetDocument::Suspend() {
-  async_runner_->Suspend();
-}
-
-void FontFaceSetDocument::Resume() {
-  async_runner_->Resume();
-}
-
-void FontFaceSetDocument::ContextDestroyed(ExecutionContext*) {
-  async_runner_->Stop();
 }
 
 void FontFaceSetDocument::BeginFontLoading(FontFace* font_face) {
@@ -235,8 +131,9 @@ void FontFaceSetDocument::AddToLoadingFonts(FontFace* font_face) {
 
 void FontFaceSetDocument::RemoveFromLoadingFonts(FontFace* font_face) {
   loading_fonts_.erase(font_face);
-  if (loading_fonts_.IsEmpty())
+  if (loading_fonts_.IsEmpty()) {
     HandlePendingEventsAndPromisesSoon();
+  }
 }
 
 ScriptPromise FontFaceSetDocument::ready(ScriptState* script_state) {
@@ -486,30 +383,6 @@ bool FontFaceSetDocument::ResolveFontStyle(const String& font_string,
   return true;
 }
 
-void FontFaceSetDocument::FontLoadHistogram::UpdateStatus(FontFace* font_face) {
-  if (status_ == kReported)
-    return;
-  if (font_face->HadBlankText())
-    status_ = kHadBlankText;
-  else if (status_ == kNoWebFonts)
-    status_ = kDidNotHaveBlankText;
-}
-
-void FontFaceSetDocument::FontLoadHistogram::Record() {
-  if (!recorded_) {
-    recorded_ = true;
-    DEFINE_STATIC_LOCAL(CustomCountHistogram, web_fonts_in_page_histogram,
-                        ("WebFont.WebFontsInPage", 1, 100, 50));
-    web_fonts_in_page_histogram.Count(count_);
-  }
-  if (status_ == kHadBlankText || status_ == kDidNotHaveBlankText) {
-    DEFINE_STATIC_LOCAL(EnumerationHistogram, had_blank_text_histogram,
-                        ("WebFont.HadBlankText", 2));
-    had_blank_text_histogram.Count(status_ == kHadBlankText ? 1 : 0);
-    status_ = kReported;
-  }
-}
-
 FontFaceSetDocument* FontFaceSetDocument::From(Document& document) {
   FontFaceSetDocument* fonts = static_cast<FontFaceSetDocument*>(
       Supplement<Document>::From(document, SupplementName()));
@@ -554,25 +427,13 @@ FontFaceSetIterable::IterationSource* FontFaceSetDocument::StartIteration(
   return new IterationSource(font_faces);
 }
 
-bool FontFaceSetDocument::IterationSource::Next(ScriptState*,
-                                                Member<FontFace>& key,
-                                                Member<FontFace>& value,
-                                                ExceptionState&) {
-  if (font_faces_.size() <= index_)
-    return false;
-  key = value = font_faces_[index_++];
-  return true;
-}
-
 void FontFaceSetDocument::Trace(blink::Visitor* visitor) {
   visitor->Trace(ready_);
   visitor->Trace(loading_fonts_);
   visitor->Trace(loaded_fonts_);
   visitor->Trace(failed_fonts_);
   visitor->Trace(non_css_connected_faces_);
-  visitor->Trace(async_runner_);
   Supplement<Document>::Trace(visitor);
-  SuspendableObject::Trace(visitor);
   FontFace::LoadFontCallback::Trace(visitor);
   FontFaceSet::Trace(visitor);
 }
@@ -581,6 +442,30 @@ void FontFaceSetDocument::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
   FontFaceSet::TraceWrappers(visitor);
   Supplement<Document>::TraceWrappers(visitor);
+}
+
+void FontFaceSetDocument::FontLoadHistogram::UpdateStatus(FontFace* font_face) {
+  if (status_ == kReported)
+    return;
+  if (font_face->HadBlankText())
+    status_ = kHadBlankText;
+  else if (status_ == kNoWebFonts)
+    status_ = kDidNotHaveBlankText;
+}
+
+void FontFaceSetDocument::FontLoadHistogram::Record() {
+  if (!recorded_) {
+    recorded_ = true;
+    DEFINE_STATIC_LOCAL(CustomCountHistogram, web_fonts_in_page_histogram,
+                        ("WebFont.WebFontsInPage", 1, 100, 50));
+    web_fonts_in_page_histogram.Count(count_);
+  }
+  if (status_ == kHadBlankText || status_ == kDidNotHaveBlankText) {
+    DEFINE_STATIC_LOCAL(EnumerationHistogram, had_blank_text_histogram,
+                        ("WebFont.HadBlankText", 2));
+    had_blank_text_histogram.Count(status_ == kHadBlankText ? 1 : 0);
+    status_ = kReported;
+  }
 }
 
 }  // namespace blink
