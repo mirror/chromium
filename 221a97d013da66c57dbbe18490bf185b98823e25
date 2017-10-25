@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a16bf2f4_798f6898",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6653,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-25T18:21:19Z",
+      "side": 1,
+      "message": "Too terse of a variable name, how about context?",
+      "range": {
+        "startLine": 6653,
+        "startChar": 7,
+        "endLine": 6653,
+        "endChar": 8
+      },
+      "revId": "221a97d013da66c57dbbe18490bf185b98823e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c36b2f_49e2a797",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-25T18:21:19Z",
+      "side": 1,
+      "message": "We discussed that as a followup CL we could remove ShouldKeepEntry() and pass the value as a parameters to HC::WritersDoneWritingToEntry. That way we don\u0027t have to worry about consumers calling ShouldKeepEntry() at an inappropriate time and it removes a public method.\n\nCan you create a bug for this?",
+      "range": {
+        "startLine": 261,
+        "startChar": 4,
+        "endLine": 261,
+        "endChar": 22
+      },
+      "revId": "221a97d013da66c57dbbe18490bf185b98823e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fef312_dc376b0e",
+        "filename": "net/http/http_transaction_test_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-25T18:21:19Z",
+      "side": 1,
+      "message": "remove \"not\" from sentence",
+      "range": {
+        "startLine": 271,
+        "startChar": 60,
+        "endLine": 271,
+        "endChar": 63
+      },
+      "revId": "221a97d013da66c57dbbe18490bf185b98823e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
