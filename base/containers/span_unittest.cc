@@ -344,6 +344,8 @@ TEST(SpanTest, Iterator) {
   EXPECT_THAT(results, ElementsAre(1, 6, 1, 8, 0));
 }
 
+// C++14 not supported yet in chromeos. crbug.com/778227.
+#if !defined(OS_CHROMEOS)
 TEST(SpanTest, ReverseIterator) {
   static constexpr int kArray[] = {1, 6, 1, 8, 0};
   constexpr span<const int> span(kArray);
@@ -353,6 +355,7 @@ TEST(SpanTest, ReverseIterator) {
   EXPECT_TRUE(std::equal(std::crbegin(kArray), std::crend(kArray),
                          span.crbegin(), span.crend()));
 }
+#endif
 
 TEST(SpanTest, Equality) {
   static constexpr int kArray1[] = {3, 1, 4, 1, 5};

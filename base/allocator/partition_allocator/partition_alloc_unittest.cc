@@ -307,7 +307,7 @@ constexpr size_t kEasyAllocSize =
     (1024 * 1024) & ~(kPageAllocationGranularity - 1);
 
 // A huge amount of memory, greater than or equal to the ASLR space.
-constexpr size_t kHugeMemoryAmount =
+const size_t kHugeMemoryAmount =
     std::max(base::internal::kASLRMask,
              std::size_t{2} * base::internal::kASLRMask);
 
