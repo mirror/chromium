@@ -205,7 +205,7 @@ public final class SyncTestUtil {
         if (clientId == null) {
             throw new IllegalArgumentException("Client entity ID cannot be null.");
         } else if (clientId.isEmpty()) {
-            throw new IllegalArgumentException("Client ID cannot be empty.");
+            return clientId;
         } else if (!clientId.startsWith("s") && !clientId.startsWith("c")) {
             throw new IllegalArgumentException(String.format(
                     "Client ID (%s) must start with c or s.", clientId));
@@ -246,7 +246,8 @@ public final class SyncTestUtil {
                 new ArrayList<Pair<String, JSONObject>>(datatypeNodes.length());
         for (int i = 0; i < datatypeNodes.length(); i++) {
             JSONObject entity = datatypeNodes.getJSONObject(i);
-            if (!entity.getString("UNIQUE_SERVER_TAG").isEmpty()) {
+            if (entity.has("UNIQUE_SERVER_TAG")
+                    && !entity.getString("UNIQUE_SERVER_TAG").isEmpty()) {
                 // Ignore permanent items (e.g., root datatype folders).
                 continue;
             }

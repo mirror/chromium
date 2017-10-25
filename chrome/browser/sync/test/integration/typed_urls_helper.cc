@@ -8,6 +8,7 @@
 
 #include <memory>
 
+#include "base/big_endian.h"
 #include "base/compiler_specific.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/waitable_event.h"
@@ -19,6 +20,8 @@
 #include "chrome/browser/sync/test/integration/sync_test.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/history/core/browser/history_backend.h"
+#include "components/history/core/browser/history_backend_observer.h"
+#include "components/history/core/browser/history_database.h"
 #include "components/history/core/browser/history_db_task.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/sync/syncable/read_node.h"
@@ -160,6 +163,29 @@ void WaitForHistoryDBThread(int index) {
   wait_event.Wait();
 }
 
+class GetTypedUrlsMetadataTask : public history::HistoryDBTask {
+ public:
+  GetTypedUrlsMetadataTask(syncer::MetadataBatch* metadata_batch,
+                           base::WaitableEvent* event)
+      : metadata_batch_(metadata_batch), wait_event_(event) {}
+
+  bool RunOnDBThread(history::HistoryBackend* backend,
+                     history::HistoryDatabase* db) override {
+    // Fetch the typed URLs.
+    db->GetAllSyncMetadata(metadata_batch_);
+    wait_event_->Signal();
+    return true;
+  }
+
+  void DoneRunOnMainThread() override {}
+
+ private:
+  ~GetTypedUrlsMetadataTask() override {}
+
+  syncer::MetadataBatch* metadata_batch_;
+  base::WaitableEvent* wait_event_;
+};
+
 // Creates a URLRow in the specified HistoryService with the passed transition
 // type.
 void AddToHistory(history::HistoryService* service,
@@ -230,6 +256,24 @@ void RemoveVisitsFromHistoryService(history::HistoryService* service,
   wait_event.Wait();
 }
 
+void GetMetadataBatchFromHistoryService(history::HistoryService* service,
+                                        syncer::MetadataBatch* batch) {
+  base::CancelableTaskTracker tracker;
+  base::WaitableEvent wait_event(
+      base::WaitableEvent::ResetPolicy::MANUAL,
+      base::WaitableEvent::InitialState::NOT_SIGNALED);
+
+  service->ScheduleDBTask(std::unique_ptr<history::HistoryDBTask>(
+                              new GetTypedUrlsMetadataTask(batch, &wait_event)),
+                          &tracker);
+  wait_event.Wait();
+}
+
+history::HistoryService* GetHistoryServiceFromClient(int index) {
+  return HistoryServiceFactory::GetForProfileWithoutCreating(
+      test()->GetProfile(index));
+}
+
 static base::Time* timestamp = nullptr;
 
 }  // namespace
@@ -237,30 +281,23 @@ static base::Time* timestamp = nullptr;
 namespace typed_urls_helper {
 
 history::URLRows GetTypedUrlsFromClient(int index) {
-  history::HistoryService* service =
-      HistoryServiceFactory::GetForProfileWithoutCreating(
-          test()->GetProfile(index));
+  history::HistoryService* service = GetHistoryServiceFromClient(index);
+
   return GetTypedUrlsFromHistoryService(service);
 }
 
 bool GetUrlFromClient(int index, const GURL& url, history::URLRow* row) {
-  history::HistoryService* service =
-      HistoryServiceFactory::GetForProfileWithoutCreating(
-          test()->GetProfile(index));
+  history::HistoryService* service = GetHistoryServiceFromClient(index);
   return GetUrlFromHistoryService(service, url, row);
 }
 
 history::VisitVector GetVisitsFromClient(int index, history::URLID id) {
-  history::HistoryService* service =
-      HistoryServiceFactory::GetForProfileWithoutCreating(
-          test()->GetProfile(index));
+  history::HistoryService* service = GetHistoryServiceFromClient(index);
   return GetVisitsFromHistoryService(service, id);
 }
 
 history::VisitVector GetVisitsForURLFromClient(int index, const GURL& url) {
-  history::HistoryService* service =
-      HistoryServiceFactory::GetForProfileWithoutCreating(
-          test()->GetProfile(index));
+  history::HistoryService* service = GetHistoryServiceFromClient(index);
   history::URLRow url_row;
   if (!GetUrlFromHistoryService(service, url, &url_row))
     return history::VisitVector();
@@ -268,9 +305,7 @@ history::VisitVector GetVisitsForURLFromClient(int index, const GURL& url) {
 }
 
 void RemoveVisitsFromClient(int index, const history::VisitVector& visits) {
-  history::HistoryService* service =
-      HistoryServiceFactory::GetForProfileWithoutCreating(
-          test()->GetProfile(index));
+  history::HistoryService* service = GetHistoryServiceFromClient(index);
   RemoveVisitsFromHistoryService(service, visits);
 }
 
@@ -302,11 +337,7 @@ void AddUrlToHistoryWithTimestamp(int index,
                                   ui::PageTransition transition,
                                   history::VisitSource source,
                                   const base::Time& timestamp) {
-  AddToHistory(HistoryServiceFactory::GetForProfileWithoutCreating(
-                   test()->GetProfile(index)),
-               url,
-               transition,
-               source,
+  AddToHistory(GetHistoryServiceFromClient(index), url, transition, source,
                timestamp);
   if (test()->use_verifier())
     AddToHistory(HistoryServiceFactory::GetForProfile(
@@ -320,8 +351,7 @@ void AddUrlToHistoryWithTimestamp(int index,
 }
 
 void DeleteUrlFromHistory(int index, const GURL& url) {
-  HistoryServiceFactory::GetForProfileWithoutCreating(
-      test()->GetProfile(index))->DeleteURL(url);
+  GetHistoryServiceFromClient(index)->DeleteURL(url);
   if (test()->use_verifier())
     HistoryServiceFactory::GetForProfile(
         test()->verifier(), ServiceAccessType::IMPLICIT_ACCESS)->DeleteURL(url);
@@ -329,8 +359,7 @@ void DeleteUrlFromHistory(int index, const GURL& url) {
 }
 
 void DeleteUrlsFromHistory(int index, const std::vector<GURL>& urls) {
-  HistoryServiceFactory::GetForProfileWithoutCreating(
-      test()->GetProfile(index))->DeleteURLsForTest(urls);
+  GetHistoryServiceFromClient(index)->DeleteURLsForTest(urls);
   if (test()->use_verifier())
     HistoryServiceFactory::GetForProfile(test()->verifier(),
                                          ServiceAccessType::IMPLICIT_ACCESS)
@@ -422,12 +451,29 @@ bool CheckAllProfilesHaveSameURLs() {
   return true;
 }
 
-bool CheckSyncDirectoryHasURL(int index, const GURL& url) {
-  syncer::ReadTransaction trans(FROM_HERE,
-                                test()->GetSyncService(index)->GetUserShare());
-  syncer::ReadNode node(&trans);
-  return syncer::BaseNode::INIT_OK ==
-         node.InitByClientTagLookup(syncer::TYPED_URLS, url.spec());
+bool CheckSyncHasURLMetadata(int index, const GURL& url) {
+  history::URLRow row;
+  history::HistoryService* service = GetHistoryServiceFromClient(index);
+  if (!GetUrlFromHistoryService(service, url, &row))
+    return false;
+
+  syncer::MetadataBatch batch;
+  GetMetadataBatchFromHistoryService(service, &batch);
+
+  std::string storage_key(sizeof(row.id()), 0);
+  base::WriteBigEndian<history::URLID>(&storage_key[0], row.id());
+
+  syncer::EntityMetadataMap metadata_map(batch.TakeAllMetadata());
+  for (const auto& kv : metadata_map) {
+    if (kv.first == storage_key)
+      return true;
+  }
+  return false;
+}
+
+history::HistoryBackend* GetHistoryBackend(
+    const history::TypedURLSyncBridge* bridge) {
+  return bridge->history_backend_;
 }
 
 }  // namespace typed_urls_helper
@@ -442,4 +488,59 @@ bool ProfilesHaveSameURLsChecker::IsExitConditionSatisfied() {
 
 std::string ProfilesHaveSameURLsChecker::GetDebugMessage() const {
   return "Waiting for matching typed urls profiles";
+}
+
+TypedURLChecker::TypedURLChecker(int index, const std::string& url)
+    : index_(index), url_(url), history_backend_observer_(this) {
+  history::HistoryService* service = GetHistoryServiceFromClient(index);
+
+  history::TypedURLSyncBridge* bridge = service->GetTypedURLSyncBridge();
+  history::HistoryBackend* history_backend =
+      typed_urls_helper::GetHistoryBackend(bridge);
+  history_backend_observer_.Add(history_backend);
+
+  origin_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+}
+
+TypedURLChecker::~TypedURLChecker() {}
+
+bool TypedURLChecker::IsExitConditionSatisfied() {
+  history::URLRows rows = typed_urls_helper::GetTypedUrlsFromClient(index_);
+
+  for (auto row : rows) {
+    if (row.url().spec() == url_)
+      return true;
+  }
+  return false;
+}
+
+std::string TypedURLChecker::GetDebugMessage() const {
+  return "Waiting for data for url '" + url_ + "' to be populated.";
+}
+
+void TypedURLChecker::OnURLVisited(history::HistoryBackend* history_backend,
+                                   ui::PageTransition transition,
+                                   const history::URLRow& row,
+                                   const history::RedirectList& redirects,
+                                   base::Time visit_time) {
+  origin_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&TypedURLChecker::CheckExitCondition, base::Unretained(this)));
+}
+
+void TypedURLChecker::OnURLsModified(history::HistoryBackend* history_backend,
+                                     const history::URLRows& changed_urls) {
+  origin_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&TypedURLChecker::CheckExitCondition, base::Unretained(this)));
+}
+
+void TypedURLChecker::OnURLsDeleted(history::HistoryBackend* history_backend,
+                                    bool all_history,
+                                    bool expired,
+                                    const history::URLRows& deleted_rows,
+                                    const std::set<GURL>& favicon_urls) {
+  origin_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&TypedURLChecker::CheckExitCondition, base::Unretained(this)));
 }
