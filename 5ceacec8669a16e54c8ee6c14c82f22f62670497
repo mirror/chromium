@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42a9bed8_6f7f597c",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-25T06:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4917d3e2_c16842f5",
+      "range": {
+        "startLine": 713,
+        "startChar": 75,
+        "endLine": 713,
+        "endChar": 0
+      },
+      "revId": "5ceacec8669a16e54c8ee6c14c82f22f62670497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9de3e73_ed799d4f",
         "filename": "ui/keyboard/keyboard_controller.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5ceacec8669a16e54c8ee6c14c82f22f62670497",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f696e6_77df6439",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-25T06:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9de3e73_ed799d4f",
+      "range": {
+        "startLine": 154,
+        "startChar": 13,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "5ceacec8669a16e54c8ee6c14c82f22f62670497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
