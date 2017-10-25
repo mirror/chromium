@@ -107,13 +107,15 @@ class WebFrameTestProxy : public Base, public WebFrameTestProxyBase {
 
   void DidFailProvisionalLoad(
       const blink::WebURLError& error,
-      blink::WebHistoryCommitType commit_type) override {
-    test_client()->DidFailProvisionalLoad(error, commit_type);
+      blink::WebHistoryCommitType commit_type,
+      const base::Optional<std::string>& error_page_content) override {
+    test_client()->DidFailProvisionalLoad(error, commit_type,
+                                          error_page_content);
     // If the test finished, don't notify the embedder of the failed load,
     // as we already destroyed the document loader.
     if (!web_frame()->GetProvisionalDocumentLoader())
       return;
-    Base::DidFailProvisionalLoad(error, commit_type);
+    Base::DidFailProvisionalLoad(error, commit_type, error_page_content);
   }
 
   void DidCommitProvisionalLoad(

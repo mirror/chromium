@@ -438,7 +438,8 @@ void WebFrameTestClient::DidReceiveServerRedirectForProvisionalLoad() {
 
 void WebFrameTestClient::DidFailProvisionalLoad(
     const blink::WebURLError& error,
-    blink::WebHistoryCommitType commit_type) {
+    blink::WebHistoryCommitType commit_type,
+    const base::Optional<std::string>& error_page_content) {
   if (test_runner()->shouldDumpFrameLoadCallbacks()) {
     PrintFrameDescription(delegate_, web_frame_test_proxy_base_->web_frame());
     delegate_->PrintMessage(" - didFailProvisionalLoadWithError\n");
