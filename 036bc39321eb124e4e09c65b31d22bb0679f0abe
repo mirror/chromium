@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "06cce9e1_73c72b50",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-25T03:41:06Z",
+      "side": 1,
+      "message": "We should probably call this something else, since it lives beyond the app menu and someone might come along and try to use it for the isAppMenuShowing() method?  Maybe we have a method/variable talking about isAppMenuDismissing and use that in conjunction with isAppMenuShowing()?",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 37
+      },
+      "revId": "036bc39321eb124e4e09c65b31d22bb0679f0abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b119e473_34782be2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuHandler.java",
         "patchSetId": 2
