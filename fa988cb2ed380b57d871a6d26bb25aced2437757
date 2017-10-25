@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "86c63da1_a0cac7e7",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-25T12:31:41Z",
+      "side": 1,
+      "message": "Another variant, which I now uploaded, is more readable but comes with a minor (likely negligible) behavioral change. By adopting flat_set in SetFaviconMappingsForPages()\u0027s signature, the iteration order of the writes changes (note however that notifications are unaffected). PTAL and let me know which variant you prefer.\n\nIf you prefer reviewing these refactoring changes separately, consider reviewing a patch that I split from this one: https://chromium-review.googlesource.com/#/c/chromium/src/+/738191",
+      "parentUuid": "3a56ca42_bcfe7a7e",
+      "revId": "fa988cb2ed380b57d871a6d26bb25aced2437757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db99ba01_e1a40be4",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 13
