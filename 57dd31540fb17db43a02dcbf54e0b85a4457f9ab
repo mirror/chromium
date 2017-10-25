@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0a21070b_5112d084",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/multicol-with-overflowing-block-rl-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T03:05:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "810ae4d7_d13e2c7d",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e11af5d6_09ef579b",
         "filename": "third_party/WebKit/Source/core/editing/CaretDisplayItemClient.cpp",
         "patchSetId": 13
@@ -380,6 +398,24 @@
       "side": 1,
       "message": "I can\u0027t right now. See line 330.",
       "parentUuid": "edc82131_6f48562c",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff85239a_9b4fe3a4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T03:05:29Z",
+      "side": 1,
+      "message": "I wonder if this is the callsite causing null fragment_data:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/paint/PaintLayer.cpp?rcl\u003d1d8d471ba1d7ee5327b40a4537e12a4275db4b8f\u0026l\u003d1741.\nIt seems so because it always passes null fragment_data regardless of geometry_mapper_option.",
+      "parentUuid": "b171eaef_8f8353f9",
       "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
