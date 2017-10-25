@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e65b4afb_d3bd2646",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-25T10:59:32Z",
+      "side": 1,
+      "message": "wdyt of just \"HighlightProtocolInWindowsSettings\"?",
+      "range": {
+        "startLine": 768,
+        "startChar": 16,
+        "endLine": 768,
+        "endChar": 23
+      },
+      "revId": "16e1393536a2fe05c51ba2e1a87c91c37c68ec7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
