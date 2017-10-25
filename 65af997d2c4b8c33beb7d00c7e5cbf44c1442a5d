@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d037af92_6727bb22",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-25T20:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3d8d0b5_741a9e68",
+      "revId": "65af997d2c4b8c33beb7d00c7e5cbf44c1442a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "982fa836_7c432a08",
         "filename": "/COMMIT_MSG",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e2b6167a_50a6874d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-25T20:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "982fa836_7c432a08",
+      "revId": "65af997d2c4b8c33beb7d00c7e5cbf44c1442a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd7eec7d_513ce25b",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-25T11:45:33Z",
       "side": 1,
       "message": "CreateInline?\n\nPendingScript\u0027s class comment says it\u0027s \"A container for an external script which may be loaded and executed\". Maybe that comment is stale, right?",
+      "revId": "65af997d2c4b8c33beb7d00c7e5cbf44c1442a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07448b9c_a3dbca45",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-25T20:40:22Z",
+      "side": 1,
+      "message": "Renamed \u003e CreateInline.\n\nAlso updated the stale PendingScript.h class comment.",
+      "parentUuid": "cd7eec7d_513ce25b",
       "revId": "65af997d2c4b8c33beb7d00c7e5cbf44c1442a5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
