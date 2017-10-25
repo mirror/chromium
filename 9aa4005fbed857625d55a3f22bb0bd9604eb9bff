@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb9748ea_a03ae5d7",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-25T00:55:11Z",
+      "side": 1,
+      "message": "I asked Gary to split out the browser-side of the change, so presumably we will add the corresponding PermissionType enums in a followup.",
+      "parentUuid": "6c7c3fa0_cfb3ec70",
+      "revId": "9aa4005fbed857625d55a3f22bb0bd9604eb9bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2ab20b7_d93f4ee3",
         "filename": "third_party/WebKit/Source/modules/permissions/ClipboardPermissionDescriptor.idl",
         "patchSetId": 6
