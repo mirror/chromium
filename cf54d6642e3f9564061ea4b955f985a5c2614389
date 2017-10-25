@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fdc577a9_6c62eb38",
+        "filename": "ios/chrome/browser/voice/voice_search_navigations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T20:29:53Z",
+      "side": 1,
+      "message": "If something performs logic of a \"tab helper\" then it should probably be named as TabHelper. The value would be consistent naming. It is true that Tab will be removed, but all TabHelpers are part of chrome architecture in //chrome layer, so TabHelper pattern will stay.",
+      "parentUuid": "131bc5cf_3bc1f63a",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "cf54d6642e3f9564061ea4b955f985a5c2614389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1471a10c_386a4a15",
         "filename": "ios/chrome/browser/voice/voice_search_navigations_unittest.mm",
         "patchSetId": 1

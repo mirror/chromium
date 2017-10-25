@@ -34,6 +34,24 @@
       "revId": "f9974a8c5369686a01afbcc685351549d8202239",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47a5e5d_3a4fc695",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T20:29:53Z",
+      "side": 0,
+      "message": "Sorry, I did not propose to change didStartNavigation: behavior, I proposed a new callback (even though content does not have it). New code looks a little bit complex than the old one and I believe that deviation from //content is justifiable if it helps with reducing code complexity.",
+      "parentUuid": "fed7ff05_90ed919a",
+      "revId": "f9974a8c5369686a01afbcc685351549d8202239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
