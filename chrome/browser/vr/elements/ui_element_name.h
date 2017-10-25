@@ -54,6 +54,7 @@ enum UiElementName {
   kBackgroundTop,
   kBackgroundBottom,
   kUnderDevelopmentNotice,
+  kSuggestionLayout,
 };
 
 }  // namespace vr
