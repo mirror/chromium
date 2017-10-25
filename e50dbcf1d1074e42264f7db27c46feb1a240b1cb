@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfdaa2e5_560cab2a",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T21:15:09Z",
+      "side": 1,
+      "message": "Do you want to elaborate on specifics? Does this class autofills only Addresses? Or there is more?",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "e50dbcf1d1074e42264f7db27c46feb1a240b1cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82d6be4_8c50059b",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T21:15:09Z",
+      "side": 1,
+      "message": "Is this important information? I think I understand what does it mean (not every suggestion is returned), but after reading this I had to process the sentence for some time.\n\nIf you think this information is important then maybe we should reword the comment? F.e. \"|completionHandler| will provide suggestions which match the existing form field input or all possible suggestions if form field is empty\"",
+      "range": {
+        "startLine": 31,
+        "startChar": 61,
+        "endLine": 31,
+        "endChar": 68
+      },
+      "revId": "e50dbcf1d1074e42264f7db27c46feb1a240b1cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc9f72c_28c47fd9",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T21:15:09Z",
+      "side": 1,
+      "message": "Would it be better to pass BOOL to completion handler, indicating success or failure?",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "e50dbcf1d1074e42264f7db27c46feb1a240b1cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2441517_9774e1b8",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T21:15:09Z",
+      "side": 1,
+      "message": "Maybe \u003cinput name\u003d\"fieldName\"\u003e ?",
+      "range": {
+        "startLine": 19,
+        "startChar": 69,
+        "endLine": 19,
+        "endChar": 76
+      },
+      "revId": "e50dbcf1d1074e42264f7db27c46feb1a240b1cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b10c3f_f59ff091",
+        "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T21:15:09Z",
+      "side": 1,
+      "message": "Instance methods should be declared after properties.",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "e50dbcf1d1074e42264f7db27c46feb1a240b1cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
