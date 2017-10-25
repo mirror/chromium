@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4998044_2101bf44",
+        "filename": "chrome/browser/resources/settings/languages_page/languages.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-25T22:35:32Z",
+      "side": 1,
+      "message": "The old logic allows for movement by any amount, but the new logic just allows for -1 or +1. Is this ok? Can you update the comment (and function signature, if possible)?",
+      "range": {
+        "startLine": 617,
+        "startChar": 5,
+        "endLine": 617,
+        "endChar": 0
+      },
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6e0ec1_a2e39ad5",
+        "filename": "chrome/common/extensions/api/language_settings_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-25T22:35:32Z",
+      "side": 1,
+      "message": "Nit: all other function declarations have blank lines separating them; consider adding that here.",
+      "range": {
+        "startLine": 94,
+        "startChar": 1,
+        "endLine": 94,
+        "endChar": 2
+      },
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed52340_4bba19c0",
+        "filename": "chrome/test/data/webui/settings/fake_language_settings_private.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-25T22:35:32Z",
+      "side": 1,
+      "message": "Why is it that these functions need dummy arguments but none of the others do?",
+      "range": {
+        "startLine": 211,
+        "startChar": 57,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf89eae_b10955b9",
+        "filename": "chrome/test/data/webui/settings/fake_language_settings_private.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-25T22:35:32Z",
+      "side": 1,
+      "message": "Nit: this logic belonged to the previous codeblock in the function above - it would be nicer if the positioning was consistent.",
+      "range": {
+        "startLine": 251,
+        "startChar": 42,
+        "endLine": 251,
+        "endChar": 0
+      },
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e939905_863d8532",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-25T22:35:32Z",
+      "side": 1,
+      "message": "Nit: move all the mutable variables into one block.",
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61fc3c7f_0f55e352",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-25T22:35:32Z",
+      "side": 1,
+      "message": "I think it will be clearer if you assign all 3 variables in each case instead of using some defaults and overwriting others.",
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0834edce_77193ae1",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-25T22:35:32Z",
+      "side": 1,
+      "message": "I have a strong preference for e.g.\n  a \u003d ...\n  while (...) {\n    --a;\n  }\n\nwhich is (arguably) more idiomatic and makes it clear that updating |a| is the point of the loop.",
+      "range": {
+        "startLine": 300,
+        "startChar": 35,
+        "endLine": 300,
+        "endChar": 0
+      },
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47264503_388e2228",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-25T22:35:32Z",
+      "side": 1,
+      "message": "If you wanted, you could have e.g.\n  operation_valid \u003d a \u003e\u003d 0;\nwhich would compliment my suggestion above (about assigning each variable in each case).",
+      "range": {
+        "startLine": 304,
+        "startChar": 30,
+        "endLine": 304,
+        "endChar": 0
+      },
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ea80083_aba25632",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-25T22:35:32Z",
+      "side": 1,
+      "message": "This behaviour will also execute if |where| is invalid. Consider\nelse if (where \u003d\u003d TOP) {\n  ...\n} else {\n  NOTREACHED();\n  operation_valid \u003d false;\n}",
+      "range": {
+        "startLine": 315,
+        "startChar": 38,
+        "endLine": 315,
+        "endChar": 0
+      },
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd62fc14_f87f9ad4",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-25T22:35:32Z",
+      "side": 1,
+      "message": "Note that for up/down: if |language| is a disabled language, calling this function will swap it with other disabled languages but make no \"visible\" changes to the language list ordering.\n\nIs this intended? You might want to make a comment about it.",
+      "range": {
+        "startLine": 147,
+        "startChar": 53,
+        "endLine": 147,
+        "endChar": 0
+      },
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3615436d_4995d14f",
+        "filename": "third_party/closure_compiler/externs/language_settings_private.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-25T22:35:32Z",
+      "side": 1,
+      "message": "I see these links are not yet active - do you need to do anything to create them?",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
