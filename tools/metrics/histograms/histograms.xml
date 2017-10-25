@@ -85505,6 +85505,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Tabs.Discard.DiscardInLastMinute" enum="BooleanTabDiscard">
+  <obsolete>
+    Deprecated 10/2017. Average number of minutes between discard events is
+    available in Tabs.Discard.InitialTime2 and Tabs.Discard.IntervalTime2.
+  </obsolete>
   <owner>jamescook@chromium.org</owner>
   <summary>
     Whether or not a tab was discarded in the last minute of usage. Total count
