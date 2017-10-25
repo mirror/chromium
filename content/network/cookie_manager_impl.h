@@ -55,7 +55,7 @@ class CONTENT_EXPORT CookieManagerImpl : public network::mojom::CookieManager {
                            network::mojom::CookieChangeNotificationPtr
                                notification_pointer) override;
   void CloneInterface(
-      network::mojom::CookieManagerRequest new_interface) override;
+      network::mojom::CookieManagerRequest new_interface_provider) override;
 
   uint32_t GetClientsBoundForTesting() const { return bindings_.size(); }
   uint32_t GetNotificationsBoundForTesting() const {

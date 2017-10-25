@@ -96,6 +96,7 @@ TestRenderFrameHost* TestRenderFrameHost::AppendChild(
     const std::string& frame_name) {
   std::string frame_unique_name = base::GenerateGUID();
   OnCreateChildFrame(GetProcess()->GetNextRoutingID(),
+                     CreateIsolatedInterfaceProviderRequest(),
                      blink::WebTreeScopeType::kDocument, frame_name,
                      frame_unique_name, base::UnguessableToken::Create(),
                      FramePolicy(), FrameOwnerProperties());
@@ -527,6 +528,13 @@ void TestRenderFrameHost::SimulateWillStartRequest(
   navigation_handle()->CallWillStartRequestForTesting(
       false /* is_post */, Referrer(GURL(), blink::kWebReferrerPolicyDefault),
       true /* user_gesture */, transition, false /* is_external_protocol */);
+}
+
+// static
+service_manager::mojom::InterfaceProviderRequest
+TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest() {
+  ::service_manager::mojom::InterfaceProviderPtr dead_interface_provider_proxy;
+  return mojo::MakeRequest(&dead_interface_provider_proxy);
 }
 
 }  // namespace content
