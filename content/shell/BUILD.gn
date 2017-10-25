@@ -587,6 +587,13 @@ if (is_android) {
       configs += [ "//build/config/gcc:rpath_for_built_shared_libraries" ]
     }
   }
+
+  if (is_fuchsia) {
+    fuchsia_executable_runner("content_shell_fuchsia") {
+      testonly = true
+      exe_target = ":content_shell"
+    }
+  }
 }
 
 if (is_win) {
