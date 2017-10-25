@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60014e67_8179478d",
+        "filename": "ui/aura/mus/text_input_client_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-10-25T05:45:29Z",
+      "side": 1,
+      "message": "Can you please explain the reason why this is not delegating to text_input_client_-\u003eGetTextInputClientInfo()?",
+      "range": {
+        "startLine": 61,
+        "startChar": 26,
+        "endLine": 61,
+        "endChar": 48
+      },
+      "revId": "f1552015b26a106bc13e2db06bc4ca954420f3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
