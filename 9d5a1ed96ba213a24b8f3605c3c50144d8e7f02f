@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68f4a724_29f5b8c4",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T01:01:56Z",
+      "side": 1,
+      "message": "This could actually still fail for component builds because the destructor can only set a single protected memory section read-only without additional component build special-casing. If there isn\u0027t a way to make writers per-DSO then we have to just disable protected memory for component builds.",
+      "revId": "9d5a1ed96ba213a24b8f3605c3c50144d8e7f02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
