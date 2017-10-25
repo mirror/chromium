@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "2381839b_c0433b3a",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T21:17:41Z",
+      "side": 1,
+      "message": "Noting that it\u0027s arbitrary and reasonable unique per thread would be useful then.",
+      "parentUuid": "b1dd30fd_c6a9c0de",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce1224d_4e032b6f",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 28
@@ -281,6 +305,30 @@
       "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e47719_d25e70e9",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T21:17:41Z",
+      "side": 1,
+      "message": "Resolving",
+      "parentUuid": "a5c9ae7e_f8cffa4e",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -472,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "9062762c_fa075f1e",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T21:17:41Z",
+      "side": 1,
+      "message": "Resolving",
+      "parentUuid": "3160b6e7_0ba247ab",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 64
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0d7b081_81311550",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 28
@@ -657,6 +729,30 @@
       "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe016119_9f40c79f",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T21:17:41Z",
+      "side": 1,
+      "message": "Resolved in latest patchset",
+      "parentUuid": "8c9fbca3_159673cd",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 45
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
