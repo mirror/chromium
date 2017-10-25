@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80ee6a4b_e77d8e75",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-25T10:13:15Z",
+      "side": 1,
+      "message": "We used to store a reference like this before moving to all id lookups. I think this field should be in TextFieldInputType, and it should be accessed through a method on InputTypeView.",
+      "range": {
+        "startLine": 206,
+        "startChar": 22,
+        "endLine": 206,
+        "endChar": 35
+      },
+      "revId": "c705001e6d1fc9a892666234eb5a124539065908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
