@@ -64,7 +64,7 @@ class DialogOverlayImpl : public ui::ViewAndroidObserver,
 
  private:
   // Signals the overlay should be cleaned up and no longer used.
-  void Stop();
+  void Stop(bool sync);
 
   // Java object that owns us.
   JavaObjectWeakGlobalRef obj_;

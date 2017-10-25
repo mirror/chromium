@@ -17,6 +17,8 @@ import android.view.WindowManager;
 import org.chromium.gfx.mojom.Rect;
 import org.chromium.media.mojom.AndroidOverlayConfig;
 
+import java.util.concurrent.Semaphore;
+
 /**
  * Core class for control of a single Dialog-based AndroidOverlay instance.  Everything runs on the
  * overlay thread, which is not the Browser UI thread.
@@ -155,31 +157,35 @@ class DialogOverlayCore {
         public void surfaceRedrawNeeded(SurfaceHolder holder) {}
     }
 
-    public void onWindowToken(IBinder token) {
-        if (mDialog == null || mHost == null) return;
+    public void onWindowToken(IBinder token, Semaphore semaphore) {
+        try {
+            if (mDialog == null || mHost == null) return;
 
-        if (token == null || (mLayoutParams.token != null && token != mLayoutParams.token)) {
-            // We've lost the token, if we had one, or we got a new one.
-            // Notify the client.
-            mHost.onOverlayDestroyed();
-            mHost = null;
-            if (mDialog.isShowing()) mDialog.dismiss();
-            return;
+            if (token == null || (mLayoutParams.token != null && token != mLayoutParams.token)) {
+                // We've lost the token, if we had one, or we got a new one.
+                // Notify the client.
+                mHost.onOverlayDestroyed();
+                mHost = null;
+                if (mDialog.isShowing()) mDialog.dismiss();
+                return;
+            }
+
+            if (mLayoutParams.token == token) {
+                // Same token, do nothing.
+                return;
+            }
+
+            // We have a token, so layout the dialog.
+            mLayoutParams.token = token;
+            mDialog.getWindow().setAttributes(mLayoutParams);
+            mDialogCallbacks = new Callbacks();
+            mDialog.getWindow().takeSurface(mDialogCallbacks);
+            mDialog.show();
+
+            // We don't notify the client here.  We'll wait until the Android Surface is created.
+        } finally {
+            if (semaphore != null) semaphore.release(1);
         }
-
-        if (mLayoutParams.token == token) {
-            // Same token, do nothing.
-            return;
-        }
-
-        // We have a token, so layout the dialog.
-        mLayoutParams.token = token;
-        mDialog.getWindow().setAttributes(mLayoutParams);
-        mDialogCallbacks = new Callbacks();
-        mDialog.getWindow().takeSurface(mDialogCallbacks);
-        mDialog.show();
-
-        // We don't notify the client here.  We'll wait until the Android Surface is created.
     }
 
     @SuppressLint("RtlHardcoded")

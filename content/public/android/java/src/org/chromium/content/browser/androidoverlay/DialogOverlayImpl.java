@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.view.Surface;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -19,6 +20,9 @@ import org.chromium.media.mojom.AndroidOverlayClient;
 import org.chromium.media.mojom.AndroidOverlayConfig;
 import org.chromium.mojo.system.MojoException;
 
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Default AndroidOverlay impl.  Uses a separate (shared) overlay thread to own a Dialog instance,
  * probably via a separate object that operates only on that thread.  We will post messages to /
@@ -27,6 +31,9 @@ import org.chromium.mojo.system.MojoException;
 @JNINamespace("content")
 public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host {
     private static final String TAG = "DialogOverlayImpl";
+
+    // Wait this long for synchronous surface destruction.
+    private static final int CLEANUP_TIMEOUT_MSEC = 500;
 
     private AndroidOverlayClient mClient;
     private Handler mOverlayHandler;
@@ -223,7 +230,7 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
     /**
      * Send |token| to the |mDialogCore| on the overlay thread.
      */
-    private void sendWindowTokenToCore(final IBinder token) {
+    private void sendWindowTokenToCore(final IBinder token, final Semaphore semaphore) {
         ThreadUtils.assertOnUiThread();
 
         if (mDialogCore != null) {
@@ -231,7 +238,7 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
             mOverlayHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    dialogCore.onWindowToken(token);
+                    dialogCore.onWindowToken(token, semaphore);
                 }
             });
         }
@@ -251,23 +258,38 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         // skipping sending null if we haven't sent any non-null token yet.  If we're transitioning
         // between windows, that might make the client's job easier. It wouldn't have to guess when
         // a new token is available.
-        sendWindowTokenToCore(token);
+        sendWindowTokenToCore(token, null);
     }
 
     /**
      * Callback from native that we will be getting no additional tokens.
      */
     @CalledByNative
-    public void onDismissed() {
+    public void onDismissed(boolean sync) {
         ThreadUtils.assertOnUiThread();
 
         // Notify the client that the overlay is going away.
         if (mClient != null) mClient.onDestroyed();
 
+        // If we're supposed to synchronize destruction, then allocate a semaphore to wait on.
+        Semaphore semaphore = null;
+        if (sync) semaphore = new Semaphore(0);
+
         // Notify |mDialogCore| that it lost the token, if it had one.
-        sendWindowTokenToCore(null);
+        sendWindowTokenToCore(null, semaphore);
 
         cleanup();
+
+        if (semaphore == null) return;
+
+        while (true) {
+            try {
+                if (!semaphore.tryAcquire(CLEANUP_TIMEOUT_MSEC, TimeUnit.MILLISECONDS))
+                    Log.d(TAG, "onDismissed wait timed out.");
+                break;
+            } catch (InterruptedException e) {
+            }
+        }
     }
 
     /**

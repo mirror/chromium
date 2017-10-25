@@ -92,7 +92,8 @@ void DialogOverlayImpl::CompleteInit(JNIEnv* env,
   WebContentsDelegate* delegate = web_contents()->GetDelegate();
 
   if (!delegate) {
-    Stop();
+    LOG(ERROR) << "AVDA: " << __func__;
+    Stop(false);
     return;
   }
 
@@ -115,13 +116,13 @@ DialogOverlayImpl::~DialogOverlayImpl() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-void DialogOverlayImpl::Stop() {
+void DialogOverlayImpl::Stop(bool sync) {
   UnregisterForTokensIfNeeded();
 
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> obj = obj_.get(env);
   if (!obj.is_null())
-    Java_DialogOverlayImpl_onDismissed(env, obj);
+    Java_DialogOverlayImpl_onDismissed(env, obj, sync);
 
   obj_.reset();
 }
@@ -163,31 +164,39 @@ void DialogOverlayImpl::UnregisterForTokensIfNeeded() {
 
 void DialogOverlayImpl::RenderFrameDeleted(RenderFrameHost* render_frame_host) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (render_frame_host == rfhi_)
-    Stop();
+  if (render_frame_host == rfhi_) {
+    LOG(ERROR) << "AVDA: " << __func__;
+    Stop(false);
+  }
 }
 
 void DialogOverlayImpl::RenderFrameHostChanged(RenderFrameHost* old_host,
                                                RenderFrameHost* new_host) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (old_host == rfhi_)
-    Stop();
+  if (old_host == rfhi_) {
+    LOG(ERROR) << "AVDA: " << __func__;
+    Stop(false);
+  }
 }
 
 void DialogOverlayImpl::FrameDeleted(RenderFrameHost* render_frame_host) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (render_frame_host == rfhi_)
-    Stop();
+  if (render_frame_host == rfhi_) {
+    LOG(ERROR) << "AVDA: " << __func__;
+    Stop(false);
+  }
 }
 
 void DialogOverlayImpl::WasHidden() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  Stop();
+  LOG(ERROR) << "AVDA: " << __func__;
+  Stop(false);
 }
 
 void DialogOverlayImpl::WebContentsDestroyed() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  Stop();
+  LOG(ERROR) << "AVDA: " << __func__;
+  Stop(false);
 }
 
 void DialogOverlayImpl::DidToggleFullscreenModeForTab(bool entered_fullscreen,
