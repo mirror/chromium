@@ -113,7 +113,7 @@ public class TabLoadObserver extends EmptyTabObserver {
                         return false;
                     }
 
-                    float scale = mTab.getContentViewCore().getPageScaleFactor();
+                    float scale = mTab.getWebContents().getPageScaleFactor();
                     if (Math.abs(mExpectedScale - scale) >= FLOAT_EPSILON) {
                         updateFailureReason(String.format(
                                 Locale.ENGLISH,

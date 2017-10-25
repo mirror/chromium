@@ -107,15 +107,11 @@ public class ContentViewScrollingTest {
                 final int maxThreshold = 100;
 
                 boolean xCorrect = hugLeft
-                        ? mActivityTestRule.getContentViewCore().getNativeScrollXForTest()
-                                < minThreshold
-                        : mActivityTestRule.getContentViewCore().getNativeScrollXForTest()
-                                > maxThreshold;
+                        ? mActivityTestRule.getWebContents().getScrollXPixInt() < minThreshold
+                        : mActivityTestRule.getWebContents().getScrollXPixInt() > maxThreshold;
                 boolean yCorrect = hugTop
-                        ? mActivityTestRule.getContentViewCore().getNativeScrollYForTest()
-                                < minThreshold
-                        : mActivityTestRule.getContentViewCore().getNativeScrollYForTest()
-                                > maxThreshold;
+                        ? mActivityTestRule.getWebContents().getScrollYPixInt() < minThreshold
+                        : mActivityTestRule.getWebContents().getScrollYPixInt() > maxThreshold;
                 return xCorrect && yCorrect;
             }
         });
@@ -125,7 +121,7 @@ public class ContentViewScrollingTest {
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return mActivityTestRule.getContentViewCore().getLastFrameViewportWidthCss() != 0;
+                return mActivityTestRule.getWebContents().getLastFrameViewportWidthCss() != 0;
             }
         });
     }
@@ -181,8 +177,8 @@ public class ContentViewScrollingTest {
         mActivityTestRule.waitForActiveShellToBeDoneLoading();
         waitForViewportInitialization();
 
-        Assert.assertEquals(0, mActivityTestRule.getContentViewCore().getNativeScrollXForTest());
-        Assert.assertEquals(0, mActivityTestRule.getContentViewCore().getNativeScrollYForTest());
+        Assert.assertEquals(0, mActivityTestRule.getWebContents().getScrollXPixInt());
+        Assert.assertEquals(0, mActivityTestRule.getWebContents().getScrollYPixInt());
     }
 
     @Test
@@ -351,10 +347,8 @@ public class ContentViewScrollingTest {
     @Feature({"Main"})
     @RetryOnFailure
     public void testOnScrollChanged() throws Throwable {
-        final int scrollToX =
-                mActivityTestRule.getContentViewCore().getNativeScrollXForTest() + 2500;
-        final int scrollToY =
-                mActivityTestRule.getContentViewCore().getNativeScrollYForTest() + 2500;
+        final int scrollToX = mActivityTestRule.getWebContents().getScrollXPixInt() + 2500;
+        final int scrollToY = mActivityTestRule.getWebContents().getScrollYPixInt() + 2500;
         final TestInternalAccessDelegate containerViewInternals = new TestInternalAccessDelegate();
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
