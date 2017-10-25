@@ -1,0 +1,249 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "507f1c9b_7f619ab3",
+        "filename": "chrome/browser/ui/cocoa/find_bar/find_bar_cocoa_controller.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "Since it\u0027s only used in this file,\n\n - (void)updateFindBarVisibility;\n\nshould go here with a comment (the implementation should move to match order too).\n\n(alternatively, just inline the code in animationDidEnd: for now?)",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9d62ab_c54716c4",
+        "filename": "chrome/browser/ui/cocoa/find_bar/find_bar_cocoa_controller.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "This should check `if (findBarBridge_)`  (similar to other methods on this class -- Obj-C has fun lifetime issues due to pervasive ref-counting :/).",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575a0fac_68750080",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "The pattern for this usually goes something like\n\n  // TODO(crbug/651643): Implement for mac.\n  NOTIMPLEMENTED();",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b468293a_af8e9b4a",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "visiblity -\u003e visibility",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 18
+      },
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290a9a62_8ece4881",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "FindBarVisiblityChanged() -\u003e FindBarVisibilityChanged()",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e47007_4a33aad1",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "nit: no initializer required",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3587c775_996cebe2",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "Does this do the correct thing in fullscreen? I think fullscreen browsers still say they support FEATURE_LOCATIONBAR, even though it\u0027s not visible. ZoomBubbleView::ShowBubble() may have the logic you need",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a93570_4a706992",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "nit: no (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24fedd1_dd978edb",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "does/should this dismiss the find bar if the user clicks the icon? (maybe TODO?). Not sure if it needs to be in OnExecuting or OnPressed  (seems giving the icon focus and pressing SPACE/ENTER might not send OnPressed)",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca87cbd5_eab6092d",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "is this required to be non-null to reposition the bubble when the browser window changes size?",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1fc369b_0533eb5b",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "nit: no (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde09622_d201f9d7",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "is this override needed? Seems it will just call OnExecuting since the base class is initialized with nullptr",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c816d0e_4b8f1f87",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T23:11:14Z",
+      "side": 1,
+      "message": "optional-nit: perhaps a minor improvement:\n\n for (auto i \u003d content_setting_views_.crbegin(); i !\u003d content_setting_views_.crend(); ++i)\n\nbut maybe the single letter `r` in the method names is too subtle that it\u0027s a reverse iterator.",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
