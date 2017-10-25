@@ -1057,7 +1057,8 @@ void MediaControlsImpl::OnTimeUpdate() {
 
 void MediaControlsImpl::OnDurationChange() {
   const double duration = MediaElement().duration();
-
+  bool update_button = (!std::isfinite(duration_display_->CurrentValue()) &&
+                        std::isfinite(duration));
   // Update the displayed current time/duration.
   duration_display_->SetCurrentValue(duration);
   duration_display_->SetIsWanted(std::isfinite(duration));
@@ -1067,6 +1068,8 @@ void MediaControlsImpl::OnDurationChange() {
 
   // Update the timeline (the UI with the seek marker).
   timeline_->SetDuration(duration);
+  if (update_button)
+    OnControlsListUpdated();
 }
 
 void MediaControlsImpl::OnPlay() {
