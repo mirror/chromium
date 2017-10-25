@@ -23,6 +23,11 @@ void FakeImageLoaderClient::LoadComponent(
     DBusMethodCallback<std::string> callback) {
   std::move(callback).Run(base::nullopt);
 }
+void FakeImageLoaderClient::RemoveComponent(
+    const std::string& name,
+    DBusMethodCallback<bool> callback) {
+  std::move(callback).Run(base::nullopt);
+}
 void FakeImageLoaderClient::RequestComponentVersion(
     const std::string& name,
     DBusMethodCallback<std::string> callback) {
