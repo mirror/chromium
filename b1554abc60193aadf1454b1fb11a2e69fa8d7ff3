@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ec16077_ca7a0f6f",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T03:12:18Z",
+      "side": 1,
+      "message": "This line looks a little weird.. could the break be on a separate line than the brace? or did git-cl format do it this way?",
+      "revId": "b1554abc60193aadf1454b1fb11a2e69fa8d7ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08162de5_0acd9f78",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T03:12:18Z",
+      "side": 1,
+      "message": "I\u0027d move this the \"common\" section around line 206, instead of here after the response mode custom members",
+      "revId": "b1554abc60193aadf1454b1fb11a2e69fa8d7ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff32339_c440b09c",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T03:12:18Z",
+      "side": 1,
+      "message": "optional nit: these asserts are kind of overkill, i think we can just let the test binary crash if there\u0027s a programming error in the test code itself.",
+      "revId": "b1554abc60193aadf1454b1fb11a2e69fa8d7ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424bd496_271dd3a8",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T03:12:18Z",
+      "side": 1,
+      "message": "Can you add a comment about why we\u0027re checking this? It\u0027s to test that OnComplete() is called before OnReceiveResponse() is called? That seems a bit strange since OnComplete() should be the last one called. Should we check completion status also?",
+      "revId": "b1554abc60193aadf1454b1fb11a2e69fa8d7ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
