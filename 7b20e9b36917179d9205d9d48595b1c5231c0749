@@ -106,6 +106,30 @@
     },
     {
       "key": {
+        "uuid": "32a24f38_d4b0d9f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-25T16:56:23Z",
+      "side": 1,
+      "message": "I suspect WebApkUpdateManager will ignore TWAs due to package name not being \"org.chromium.webapk.*\" (i.e. matching bound-webapks) but perhaps my mental model doesn\u0027t match reality at the moment.",
+      "parentUuid": "2785d0bf_c3df7552",
+      "range": {
+        "startLine": 456,
+        "startChar": 36,
+        "endLine": 456,
+        "endChar": 78
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7503f57f_46dd1c18",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 2
