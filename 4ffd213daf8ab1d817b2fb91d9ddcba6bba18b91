@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41cca806_17e2e51f",
+        "filename": "device/gamepad/gamepad_haptics_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T23:31:05Z",
+      "side": 1,
+      "message": "No \"(c)\" in new files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "4ffd213daf8ab1d817b2fb91d9ddcba6bba18b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a5c0b1_d2ddf1f1",
+        "filename": "device/gamepad/public/interfaces/gamepad_struct_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T23:31:05Z",
+      "side": 1,
+      "message": "No braces for single-line ifs here and below.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 3
+      },
+      "revId": "4ffd213daf8ab1d817b2fb91d9ddcba6bba18b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106dabb0_ac6ceff3",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T23:31:05Z",
+      "side": 1,
+      "message": "This will never be true because mojo::MakeRequest() always initializes |gamepad_haptics_manager_| even if the Mojo connection ultimately fails.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "4ffd213daf8ab1d817b2fb91d9ddcba6bba18b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
