@@ -24,8 +24,8 @@ class PasswordExporter {
  public:
   // Exports |passwords| into a file at |path|, overwriting any existing file.
   // The format of the export will be selected based on the file extension in
-  // |path|.
-  static void Export(
+  // |path|. Returns true on success.
+  static bool Export(
       const base::FilePath& path,
       const std::vector<std::unique_ptr<autofill::PasswordForm>>& passwords);
 

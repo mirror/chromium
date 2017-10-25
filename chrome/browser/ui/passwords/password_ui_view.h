@@ -48,6 +48,12 @@ class PasswordUIView {
   virtual void SetPasswordExceptionList(
       const std::vector<std::unique_ptr<autofill::PasswordForm>>&
           password_exception_list) = 0;
+
+  // Updates the export dialog with info of the passwords read.
+  virtual void NotifyPasswordsReadyForExport() = 0;
+
+  // Updates the export dialog with the result of the export.
+  virtual void NotifyPasswordsExported(bool success) = 0;
 #if !defined(OS_ANDROID)
   // Returns the top level NativeWindow for the view.
   virtual gfx::NativeWindow GetNativeWindow() const = 0;

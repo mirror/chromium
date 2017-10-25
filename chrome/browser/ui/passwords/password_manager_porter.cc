@@ -4,13 +4,19 @@
 
 #include "chrome/browser/ui/passwords/password_manager_porter.h"
 
+#include <utility>
+
+#include "base/bind.h"
+#include "base/location.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
+#include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/chrome_select_file_policy.h"
 #include "chrome/browser/ui/passwords/credential_provider_interface.h"
+#include "chrome/browser/ui/passwords/password_ui_view.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/password_manager/core/browser/export/password_exporter.h"
@@ -80,8 +86,11 @@ void PasswordImportConsumer::ConsumePassword(
 }  // namespace
 
 PasswordManagerPorter::PasswordManagerPorter(
-    CredentialProviderInterface* credential_provider_interface)
-    : credential_provider_interface_(credential_provider_interface) {}
+    CredentialProviderInterface* credential_provider_interface,
+    PasswordUIView* password_view)
+    : credential_provider_interface_(credential_provider_interface),
+      password_view_(password_view),
+      weak_factory_(this) {}
 
 PasswordManagerPorter::~PasswordManagerPorter() {}
 
@@ -131,6 +140,11 @@ void PasswordManagerPorter::PresentFileSelector(
 #endif
 }
 
+void PasswordManagerPorter::ReadPasswordsForExport() {
+  password_list_ = credential_provider_interface_->GetAllPasswords();
+  password_view_->NotifyPasswordsReadyForExport();
+}
+
 void PasswordManagerPorter::FileSelected(const base::FilePath& path,
                                          int index,
                                          void* params) {
@@ -155,9 +169,17 @@ void PasswordManagerPorter::ImportPasswordsFromPath(
 }
 
 void PasswordManagerPorter::ExportPasswordsToPath(const base::FilePath& path) {
-  std::vector<std::unique_ptr<autofill::PasswordForm>> password_list =
-      credential_provider_interface_->GetAllPasswords();
   UMA_HISTOGRAM_COUNTS("PasswordManager.ExportedPasswordsPerUserInCSV",
-                       password_list.size());
-  password_manager::PasswordExporter::Export(path, std::move(password_list));
+                       password_list_.size());
+
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
+      base::BindOnce(&password_manager::PasswordExporter::Export, path,
+                     base::Passed(&password_list_)),
+      base::BindOnce(&PasswordManagerPorter::ExportReply,
+                     weak_factory_.GetWeakPtr()));
+}
+
+void PasswordManagerPorter::ExportReply(bool success) {
+  password_view_->NotifyPasswordsExported(true);
 }

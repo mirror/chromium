@@ -114,11 +114,19 @@ chrome.passwordsPrivate.getSavedPasswordList = function(callback) {};
 chrome.passwordsPrivate.getPasswordExceptionList = function(callback) {};
 
 /**
+ * Triggers the Password Manager password import functionality.
  * @see https://developer.chrome.com/extensions/passwordsPrivate#method-importPasswords
  */
 chrome.passwordsPrivate.importPasswords = function() {};
 
 /**
+ * Triggers the reading of passwords to be exported.
+ * @see https://developer.chrome.com/extensions/passwordsPrivate#method-preparePasswordsForExport
+ */
+chrome.passwordsPrivate.preparePasswordsForExport = function() {};
+
+/**
+ * Triggers the exporting of previously read passwords to filesystem.
  * @see https://developer.chrome.com/extensions/passwordsPrivate#method-exportPasswords
  */
 chrome.passwordsPrivate.exportPasswords = function() {};
@@ -146,3 +154,17 @@ chrome.passwordsPrivate.onPasswordExceptionsListChanged;
  * @see https://developer.chrome.com/extensions/passwordsPrivate#event-onPlaintextPasswordRetrieved
  */
 chrome.passwordsPrivate.onPlaintextPasswordRetrieved;
+
+/**
+ * Fired when all the passwords have been read from the store.
+ * @type {!ChromeEvent}
+ * @see https://developer.chrome.com/extensions/passwordsPrivate#event-onPasswordsReadyForExport
+ */
+chrome.passwordsPrivate.onPasswordsReadyForExport;
+
+/**
+ * Fired when the passwords have been written to the destination.
+ * @type {!ChromeEvent}
+ * @see https://developer.chrome.com/extensions/passwordsPrivate#event-onPasswordsExported
+ */
+chrome.passwordsPrivate.onPasswordsExported;
