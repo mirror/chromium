@@ -10,12 +10,29 @@
 
 #include <algorithm>
 
+#if defined(__AVX__)
+#include <immintrin.h>
+#else
 #include <xmmintrin.h>
+#endif
 
 namespace blink {
 namespace VectorMath {
+
+#if defined(__AVX__)
+namespace AVX {
+#else
 namespace SSE {
+#endif
+
 namespace {
+#if defined(__AVX__)
+
+#define MM_PS(name) _mm256_##name##_ps
+
+using MType = __m256;
+
+#else
 
 #define MM_PS(name) _mm_##name##_ps
 
@@ -24,9 +41,13 @@ using MType = __m128;
 constexpr size_t kBitsPerPack = 128u;
 constexpr size_t kFloatsPerPack = kBitsPerPack / 32u;
 constexpr size_t kFramesToProcessMask = ~(kFloatsPerPack - 1u);
+
+#endif
 }
 
+#if !defined(__AVX__)
 namespace {
+#endif  // !defined(__AVX__)
 
 bool IsAligned(const float* p) {
   constexpr size_t kBytesPerPack = kBitsPerPack / 8u;
@@ -326,8 +347,16 @@ void Zvmul(const float* real1p,
 
 #undef MM_PS
 
+#if !defined(__AVX__)
 }  // namespace
+#endif  // !defined(__AVX__)
+
+#if defined(__AVX__)
+}  // namespace AVX
+#else
 }  // namespace SSE
+#endif
+
 }  // namespace VectorMath
 }  // namespace blink
 

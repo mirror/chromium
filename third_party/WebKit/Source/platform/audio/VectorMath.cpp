@@ -27,16 +27,16 @@
 
 #include <stdint.h>
 #include "build/build_config.h"
+#if defined(ARCH_CPU_X86_FAMILY) && !defined(OS_MACOSX)
+#include "base/cpu.h"
+#include "platform/audio/cpu/x86/VectorMathAVX.h"
+#endif
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/CPU.h"
 #include "platform/wtf/MathExtras.h"
 
 #if defined(OS_MACOSX)
 #include <Accelerate/Accelerate.h>
-#endif
-
-#if defined(ARCH_CPU_X86_FAMILY)
-#include <emmintrin.h>
 #endif
 
 #if WTF_CPU_ARM_NEON
@@ -175,6 +175,31 @@ void Vclip(const float* source_p,
 }
 #else
 
+#if defined(ARCH_CPU_X86_FAMILY)
+namespace {
+
+bool CPUSupportsAVX() {
+  static bool supports = ::base::CPU().has_avx();
+  return supports;
+}
+
+bool UseAVX(size_t frames_to_process, bool source_is_avx_aligned) {
+  if (source_is_avx_aligned) {
+    if (frames_to_process < AVX::kFloatsPerPack)
+      return false;
+  } else {
+    // The first SSE::kFloatsPerPack frames should be processed separately
+    // using SSE. Check if there are at least AVX::kFloatsPerPack frames after
+    // them.
+    if (frames_to_process < SSE::kFloatsPerPack + AVX::kFloatsPerPack)
+      return false;
+  }
+  return CPUSupportsAVX();
+}
+
+}  // namespace
+#endif
+
 void Vsma(const float* source_p,
           int source_stride,
           const float* scale,
@@ -192,6 +217,20 @@ void Vsma(const float* source_p,
     for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
       dest_p[i] += *scale * source_p[i];
 
+    bool source_is_avx_aligned = AVX::IsAligned(source_p + i);
+    if (UseAVX(frames_to_process - i, source_is_avx_aligned)) {
+      // If the source_p+i address is not 32-byte aligned, the first
+      // SSE::kFloatsPerPack frames should be processed separately using SSE.
+      if (!source_is_avx_aligned) {
+        SSE::Vsma(source_p + i, scale, dest_p + i, SSE::kFloatsPerPack);
+        i += SSE::kFloatsPerPack;
+      }
+      // Now the source_p+i address is 32-byte aligned. Start to apply AVX.
+      size_t avx_frames_to_process =
+          (frames_to_process - i) & AVX::kFramesToProcessMask;
+      AVX::Vsma(source_p + i, scale, dest_p + i, avx_frames_to_process);
+      i += avx_frames_to_process;
+    }
     // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
     size_t sse_frames_to_process =
         (frames_to_process - i) & SSE::kFramesToProcessMask;
@@ -269,6 +308,20 @@ void Vsmul(const float* source_p,
     for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
       dest_p[i] = *scale * source_p[i];
 
+    bool source_is_avx_aligned = AVX::IsAligned(source_p + i);
+    if (UseAVX(frames_to_process - i, source_is_avx_aligned)) {
+      // If the source_p+i address is not 32-byte aligned, the first
+      // SSE::kFloatsPerPack frames should be processed separately using SSE.
+      if (!source_is_avx_aligned) {
+        SSE::Vsmul(source_p + i, scale, dest_p + i, SSE::kFloatsPerPack);
+        i += SSE::kFloatsPerPack;
+      }
+      // Now the source_p+i address is 32-byte aligned. Start to apply AVX.
+      size_t avx_frames_to_process =
+          (frames_to_process - i) & AVX::kFramesToProcessMask;
+      AVX::Vsmul(source_p + i, scale, dest_p + i, avx_frames_to_process);
+      i += avx_frames_to_process;
+    }
     // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
     size_t sse_frames_to_process =
         (frames_to_process - i) & SSE::kFramesToProcessMask;
@@ -341,6 +394,20 @@ void Vadd(const float* source1p,
     for (; !SSE::IsAligned(source1p + i) && i < frames_to_process; ++i)
       dest_p[i] = source1p[i] + source2p[i];
 
+    bool source1_is_avx_aligned = AVX::IsAligned(source1p + i);
+    if (UseAVX(frames_to_process - i, source1_is_avx_aligned)) {
+      // If the source1p+i address is not 32-byte aligned, the first
+      // SSE::kFloatsPerPack frames should be processed separately using SSE.
+      if (!source1_is_avx_aligned) {
+        SSE::Vadd(source1p + i, source2p + i, dest_p + i, SSE::kFloatsPerPack);
+        i += SSE::kFloatsPerPack;
+      }
+      // Now the source1p+i address is 32-byte aligned. Start to apply AVX.
+      size_t avx_frames_to_process =
+          (frames_to_process - i) & AVX::kFramesToProcessMask;
+      AVX::Vadd(source1p + i, source2p + i, dest_p + i, avx_frames_to_process);
+      i += avx_frames_to_process;
+    }
     // Now the source1p+i address is 16-byte aligned. Start to apply SSE.
     size_t sse_frames_to_process =
         (frames_to_process - i) & SSE::kFramesToProcessMask;
@@ -417,6 +484,20 @@ void Vmul(const float* source1p,
     for (; !SSE::IsAligned(source1p + i) && i < frames_to_process; ++i)
       dest_p[i] = source1p[i] * source2p[i];
 
+    bool source1_is_avx_aligned = AVX::IsAligned(source1p + i);
+    if (UseAVX(frames_to_process - i, source1_is_avx_aligned)) {
+      // If the source1p+i address is not 32-byte aligned, the first
+      // SSE::kFloatsPerPack frames should be processed separately using SSE.
+      if (!source1_is_avx_aligned) {
+        SSE::Vmul(source1p + i, source2p + i, dest_p + i, SSE::kFloatsPerPack);
+        i += SSE::kFloatsPerPack;
+      }
+      // Now the source1p+i address is 32-byte aligned. Start to apply AVX.
+      size_t avx_frames_to_process =
+          (frames_to_process - i) & AVX::kFramesToProcessMask;
+      AVX::Vmul(source1p + i, source2p + i, dest_p + i, avx_frames_to_process);
+      i += avx_frames_to_process;
+    }
     // Now the source1p+i address is 16-byte aligned. Start to apply SSE.
     size_t sse_frames_to_process =
         (frames_to_process - i) & SSE::kFramesToProcessMask;
@@ -490,6 +571,26 @@ void Zvmul(const float* real1p,
   if (SSE::IsAligned(real1p) && SSE::IsAligned(imag1p) &&
       SSE::IsAligned(real2p) && SSE::IsAligned(imag2p) &&
       SSE::IsAligned(real_dest_p) && SSE::IsAligned(imag_dest_p)) {
+    bool is_avx_aligned = AVX::IsAligned(real1p);
+    if (AVX::IsAligned(imag1p) == is_avx_aligned &&
+        AVX::IsAligned(real2p) == is_avx_aligned &&
+        AVX::IsAligned(imag2p) == is_avx_aligned &&
+        AVX::IsAligned(real_dest_p) == is_avx_aligned &&
+        AVX::IsAligned(imag_dest_p) == is_avx_aligned &&
+        UseAVX(frames_to_process, is_avx_aligned)) {
+      // If none of the addresses are 32-byte aligned, the first
+      // SSE::kFloatsPerPack frames should be processed separately using SSE.
+      if (!is_avx_aligned) {
+        SSE::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i,
+                   real_dest_p + i, imag_dest_p + i, SSE::kFloatsPerPack);
+        i += SSE::kFloatsPerPack;
+      }
+      size_t avx_frames_to_process =
+          (frames_to_process - i) & AVX::kFramesToProcessMask;
+      AVX::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i,
+                 real_dest_p + i, imag_dest_p + i, avx_frames_to_process);
+      i += avx_frames_to_process;
+    }
     size_t sse_frames_to_process =
         (frames_to_process - i) & SSE::kFramesToProcessMask;
     if (sse_frames_to_process > 0u) {
@@ -542,6 +643,20 @@ void Vsvesq(const float* source_p,
     for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
       sum += source_p[i] * source_p[i];
 
+    bool source_is_avx_aligned = AVX::IsAligned(source_p + i);
+    if (UseAVX(frames_to_process - i, source_is_avx_aligned)) {
+      // If the source_p+i address is not 32-byte aligned, the first
+      // SSE::kFloatsPerPack frames should be processed separately using SSE.
+      if (!source_is_avx_aligned) {
+        SSE::Vsvesq(source_p + i, &sum, SSE::kFloatsPerPack);
+        i += SSE::kFloatsPerPack;
+      }
+      // Now the source_p+i address is 32-byte aligned. Start to apply AVX.
+      size_t avx_frames_to_process =
+          (frames_to_process - i) & AVX::kFramesToProcessMask;
+      AVX::Vsvesq(source_p + i, &sum, avx_frames_to_process);
+      i += avx_frames_to_process;
+    }
     // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
     size_t sse_frames_to_process =
         (frames_to_process - i) & SSE::kFramesToProcessMask;
@@ -601,6 +716,20 @@ void Vmaxmgv(const float* source_p,
     for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
       max = std::max(max, fabsf(source_p[i]));
 
+    bool source_is_avx_aligned = AVX::IsAligned(source_p + i);
+    if (UseAVX(frames_to_process - i, source_is_avx_aligned)) {
+      // If the source_p+i address is not 32-byte aligned, the first
+      // SSE::kFloatsPerPack frames should be processed separately using SSE.
+      if (!source_is_avx_aligned) {
+        SSE::Vmaxmgv(source_p + i, &max, SSE::kFloatsPerPack);
+        i += SSE::kFloatsPerPack;
+      }
+      // Now the source_p+i address is 32-byte aligned. Start to apply AVX.
+      size_t avx_frames_to_process =
+          (frames_to_process - i) & AVX::kFramesToProcessMask;
+      AVX::Vmaxmgv(source_p + i, &max, avx_frames_to_process);
+      i += avx_frames_to_process;
+    }
     // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
     size_t sse_frames_to_process =
         (frames_to_process - i) & SSE::kFramesToProcessMask;
@@ -685,6 +814,22 @@ void Vclip(const float* source_p,
     for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
       dest_p[i] = clampTo(source_p[i], low_threshold, high_threshold);
 
+    bool source_is_avx_aligned = AVX::IsAligned(source_p + i);
+    if (UseAVX(frames_to_process - i, source_is_avx_aligned)) {
+      // If the source_p+i address is not 32-byte aligned, the first
+      // SSE::kFloatsPerPack frames should be processed separately using SSE.
+      if (!source_is_avx_aligned) {
+        SSE::Vclip(source_p + i, low_threshold_p, high_threshold_p, dest_p + i,
+                   SSE::kFloatsPerPack);
+        i += SSE::kFloatsPerPack;
+      }
+      // Now the source_p+i address is 32-byte aligned. Start to apply AVX.
+      size_t avx_frames_to_process =
+          (frames_to_process - i) & AVX::kFramesToProcessMask;
+      AVX::Vclip(source_p + i, low_threshold_p, high_threshold_p, dest_p + i,
+                 avx_frames_to_process);
+      i += avx_frames_to_process;
+    }
     // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
     size_t sse_frames_to_process =
         (frames_to_process - i) & SSE::kFramesToProcessMask;
