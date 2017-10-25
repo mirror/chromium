@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a015a0e4_248e1cb5",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-25T04:51:28Z",
+      "side": 1,
+      "message": "Done. In doing so, this exposed some weird bugs and stuff. FaviconDownloader now posts a task for its callback so that the callback is always run on the next task (which avoids an issue where the callback deletes the downloader and then segfaults).",
+      "parentUuid": "92a31fea_63107fb8",
+      "range": {
+        "startLine": 647,
+        "startChar": 2,
+        "endLine": 647,
+        "endChar": 6
+      },
+      "revId": "b55fcbb4fef9d3c9e2f4ed722398c58ff2db2b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcb0938d_53ed7442",
         "filename": "chrome/browser/extensions/bookmark_app_helper_unittest.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "da68c74d_a035a501",
+        "filename": "chrome/browser/extensions/bookmark_app_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-25T04:51:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcb0938d_53ed7442",
+      "range": {
+        "startLine": 402,
+        "startChar": 35,
+        "endLine": 402,
+        "endChar": 45
+      },
+      "revId": "b55fcbb4fef9d3c9e2f4ed722398c58ff2db2b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b25a6fe_6dbc6266",
         "filename": "chrome/browser/ui/views/extensions/bookmark_app_confirmation_view.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "b55fcbb4fef9d3c9e2f4ed722398c58ff2db2b64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07559680_bf147143",
+        "filename": "chrome/browser/ui/views/extensions/bookmark_app_confirmation_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-25T04:51:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b25a6fe_6dbc6266",
+      "range": {
+        "startLine": 109,
+        "startChar": 30,
+        "endLine": 109,
+        "endChar": 39
+      },
+      "revId": "b55fcbb4fef9d3c9e2f4ed722398c58ff2db2b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
