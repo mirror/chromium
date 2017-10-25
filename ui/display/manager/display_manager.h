@@ -399,6 +399,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // it.
   const Display& GetSecondaryDisplay() const;
 
+  bool is_multi_mirroring_enabled() const {
+    return is_multi_mirroring_enabled_;
+  }
+
  private:
   friend class test::DisplayManagerTestApi;
 
@@ -549,6 +553,9 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // when destroyed. BeginEndNotifier uses this to track when it should call
   // OnWillProcessDisplayChanges() and OnDidProcessDisplayChanges().
   int notify_depth_ = 0;
+
+  // Whether mirroring across multiple displays is enabled.
+  bool is_multi_mirroring_enabled_;
 
   base::WeakPtrFactory<DisplayManager> weak_ptr_factory_;
 

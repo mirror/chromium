@@ -5,6 +5,7 @@
 #include "ui/display/manager/display_manager.h"
 
 #include "ash/accelerators/accelerator_commands.h"
+#include "ash/display/cursor_window_controller.h"
 #include "ash/display/display_configuration_controller.h"
 #include "ash/display/display_util.h"
 #include "ash/display/mirror_window_controller.h"
@@ -977,6 +978,7 @@ TEST_F(DisplayManagerTest, NoOverlappedDisplaysWithDetachedDisplays) {
   EXPECT_TRUE(layout.HasSamePlacementList(*(expected_layout_builder.Build())));
 }
 
+// TODO(weidongg/774795) Remove test when multi mirroring is enabled by default.
 TEST_F(DisplayManagerTest, NoMirrorInThreeDisplays) {
   UpdateDisplay("640x480,320x200,400x300");
   ash::Shell::Get()->display_configuration_controller()->SetMirrorMode(true);
@@ -2281,6 +2283,7 @@ TEST_F(DisplayManagerTest, SingleDisplayToSoftwareMirroring) {
   EXPECT_TRUE(windows.empty());
 }
 
+// TODO(weidongg/774795) Remove test when multi mirroring is enabled by default.
 // Make sure this does not cause any crashes. See http://crbug.com/412910
 TEST_F(DisplayManagerTest, SoftwareMirroringWithCompositingCursor) {
   UpdateDisplay("300x400,400x500");
@@ -3450,6 +3453,341 @@ TEST_F(DisplayManagerOrientationTest, DisplayChangeShouldNotSaveUserRotation) {
 
   Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(false);
   EXPECT_EQ(display::Display::ROTATE_0, screen->GetPrimaryDisplay().rotation());
+}
+
+class MultiMirroringTest : public DisplayManagerTest {
+ public:
+  MultiMirroringTest() = default;
+  ~MultiMirroringTest() override = default;
+
+  void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        ::switches::kEnableMultiMirroring);
+    DisplayManagerTest::SetUp();
+  }
+};
+
+TEST_F(MultiMirroringTest, MirrorInThreeDisplays) {
+  UpdateDisplay("640x480,320x200,400x300");
+  ash::Shell::Get()->display_configuration_controller()->SetMirrorMode(true);
+  EXPECT_TRUE(display_manager()->IsInMirrorMode());
+  EXPECT_EQ(1u, display_manager()->GetNumDisplays());
+  EXPECT_EQ(base::string16(), GetDisplayErrorNotificationMessageForTest());
+}
+
+TEST_F(MultiMirroringTest, HardwareMirrorMode) {
+  const int64_t internal_display_id =
+      display::test::DisplayManagerTestApi(display_manager())
+          .SetFirstDisplayAsInternalDisplay();
+  const int first_mirror_id = 11;
+  const int second_mirror_id = 12;
+  const display::ManagedDisplayInfo internal_display_info =
+      CreateDisplayInfo(internal_display_id, gfx::Rect(0, 0, 500, 500));
+  const display::ManagedDisplayInfo first_mirroring_display_info =
+      CreateDisplayInfo(first_mirror_id, gfx::Rect(0, 0, 500, 500));
+  const display::ManagedDisplayInfo second_mirroring_display_info =
+      CreateDisplayInfo(second_mirror_id, gfx::Rect(0, 0, 500, 500));
+  std::vector<display::ManagedDisplayInfo> display_info_list;
+
+  // mirrored across 3 displays...
+  display_info_list.push_back(internal_display_info);
+  display_info_list.push_back(first_mirroring_display_info);
+  display_info_list.push_back(second_mirroring_display_info);
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  EXPECT_EQ(1U, display_manager()->GetNumDisplays());
+  EXPECT_EQ(3U, display_manager()->num_connected_displays());
+  EXPECT_EQ(internal_display_id, display_manager()->mirroring_source_id());
+  EXPECT_EQ("0,0 500x500",
+            GetDisplayForId(internal_display_id).bounds().ToString());
+  std::vector<int64_t> id_list = display_manager()->GetMirroringDisplayIdList();
+  EXPECT_EQ(2U, id_list.size());
+  EXPECT_EQ(11U, id_list[0]);
+  EXPECT_EQ(12U, id_list[1]);
+  EXPECT_FALSE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_TRUE(display_manager()->IsInHardwareMirrorMode());
+}
+
+TEST_F(MultiMirroringTest, SoftwareMirrorModeBasics) {
+  UpdateDisplay("300x400,400x500,500x600");
+
+  // There's not mirror window by default.
+  MirrorWindowTestApi test_api;
+  std::vector<aura::WindowTreeHost*> host_list;
+  test_api.GetHosts(&host_list);
+  EXPECT_TRUE(host_list.empty());
+
+  TestDisplayObserver display_observer;
+  display::Screen::GetScreen()->AddObserver(&display_observer);
+
+  // Turn on mirror mode.
+  display_manager()->SetMirrorMode(true);
+  RunAllPendingInMessageLoop();
+
+  EXPECT_TRUE(display_observer.changed_and_reset());
+  EXPECT_EQ(1U, display_manager()->GetNumDisplays());
+  EXPECT_EQ(
+      "0,0 300x400",
+      display::Screen::GetScreen()->GetPrimaryDisplay().bounds().ToString());
+
+  host_list.clear();
+  test_api.GetHosts(&host_list);
+  EXPECT_EQ(2U, host_list.size());
+  EXPECT_EQ("400x500", host_list[0]->GetBoundsInPixels().size().ToString());
+  EXPECT_EQ("300x400", host_list[0]->window()->bounds().size().ToString());
+  EXPECT_EQ("500x600", host_list[1]->GetBoundsInPixels().size().ToString());
+  EXPECT_EQ("300x400", host_list[1]->window()->bounds().size().ToString());
+
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+
+  // Turn off mirror mode.
+  display_manager()->SetMirrorMode(false);
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(display_observer.changed_and_reset());
+
+  host_list.clear();
+  test_api.GetHosts(&host_list);
+  EXPECT_TRUE(host_list.empty());
+  EXPECT_EQ(3U, display_manager()->GetNumDisplays());
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+
+  // Make sure the mirror window has the pixel size of the
+  // source display.
+  display_manager()->SetMirrorMode(true);
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(display_observer.changed_and_reset());
+
+  UpdateDisplay("300x400@0.5,400x500,500x600,600x700");
+  EXPECT_FALSE(display_observer.changed_and_reset());
+  host_list.clear();
+  test_api.GetHosts(&host_list);
+  EXPECT_EQ("300x400", host_list[0]->window()->bounds().size().ToString());
+  EXPECT_EQ("300x400", host_list[1]->window()->bounds().size().ToString());
+
+  UpdateDisplay("310x410*2,400x500,500x600,600x700");
+  EXPECT_FALSE(display_observer.changed_and_reset());
+  host_list.clear();
+  test_api.GetHosts(&host_list);
+  EXPECT_EQ("310x410", host_list[0]->window()->bounds().size().ToString());
+  EXPECT_EQ("310x410", host_list[1]->window()->bounds().size().ToString());
+
+  UpdateDisplay("320x420/r,400x500,500x600,600x700");
+  EXPECT_FALSE(display_observer.changed_and_reset());
+  host_list.clear();
+  test_api.GetHosts(&host_list);
+  EXPECT_EQ("320x420", host_list[0]->window()->bounds().size().ToString());
+  EXPECT_EQ("320x420", host_list[1]->window()->bounds().size().ToString());
+
+  UpdateDisplay("330x440/r,400x500,500x600,600x700");
+  EXPECT_FALSE(display_observer.changed_and_reset());
+  host_list.clear();
+  test_api.GetHosts(&host_list);
+  EXPECT_EQ("330x440", host_list[0]->window()->bounds().size().ToString());
+  EXPECT_EQ("330x440", host_list[1]->window()->bounds().size().ToString());
+
+  // Overscan insets are ignored.
+  UpdateDisplay("400x600/o,600x800/o,500x600/o,600x700/o");
+  EXPECT_FALSE(display_observer.changed_and_reset());
+  host_list.clear();
+  test_api.GetHosts(&host_list);
+  EXPECT_EQ("400x600", host_list[0]->window()->bounds().size().ToString());
+  EXPECT_EQ("400x600", host_list[1]->window()->bounds().size().ToString());
+
+  display::Screen::GetScreen()->RemoveObserver(&display_observer);
+}
+
+TEST_F(MultiMirroringTest, SwitchToAndFromMultiSoftwareMirroring) {
+  // Don't check root window destruction in unified mode.
+  Shell::GetPrimaryRootWindow()->RemoveObserver(this);
+
+  UpdateDisplay("300x400,400x500,500x600");
+
+  // Switch from extended to mirroring.
+  display_manager()->SetMirrorMode(true);
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_FALSE(display_manager()->IsInUnifiedMode());
+
+  // Switch from mirroring to extended.
+  display_manager()->SetMirrorMode(false);
+  RunAllPendingInMessageLoop();
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+  EXPECT_FALSE(display_manager()->IsInUnifiedMode());
+
+  // Switch from mirroring to unified, but it fails.
+  display_manager()->SetMirrorMode(true);
+  RunAllPendingInMessageLoop();
+  display_manager()->SetUnifiedDesktopEnabled(true);
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_FALSE(display_manager()->IsInUnifiedMode());
+
+  // Turn off mirroring, it switches to unified.
+  display_manager()->SetMirrorMode(false);
+  RunAllPendingInMessageLoop();
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+  EXPECT_TRUE(display_manager()->IsInUnifiedMode());
+
+  // Switch from unified to mirroring.
+  display_manager()->SetMirrorMode(true);
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_FALSE(display_manager()->IsInUnifiedMode());
+}
+
+TEST_F(MultiMirroringTest, AddAndRemoveDisplayInMultiSoftwareMirroring) {
+  const int64_t internal_display_id =
+      display::test::DisplayManagerTestApi(display_manager())
+          .SetFirstDisplayAsInternalDisplay();
+  const int first_external_display_id = 10;
+  const int second_external_display_id = 11;
+  const int third_external_display_id = 12;
+  const display::ManagedDisplayInfo internal_display_info =
+      CreateDisplayInfo(internal_display_id, gfx::Rect(0, 0, 500, 500));
+  const display::ManagedDisplayInfo first_external_display_info =
+      CreateDisplayInfo(first_external_display_id, gfx::Rect(1, 1, 100, 100));
+  const display::ManagedDisplayInfo second_external_display_info =
+      CreateDisplayInfo(second_external_display_id, gfx::Rect(2, 2, 500, 500));
+  const display::ManagedDisplayInfo third_external_display_info =
+      CreateDisplayInfo(third_external_display_id, gfx::Rect(3, 3, 500, 500));
+
+  // Only the primary display connected, enable mirror mode but it fails.
+  std::vector<display::ManagedDisplayInfo> display_info_list;
+  display_info_list.push_back(internal_display_info);
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  RunAllPendingInMessageLoop();
+  display_manager()->SetMirrorMode(true);
+  RunAllPendingInMessageLoop();
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+  EXPECT_EQ(1U, display_manager()->GetNumDisplays());
+  MirrorWindowController* mirror_window_controller =
+      ash::Shell::Get()->window_tree_host_manager()->mirror_window_controller();
+  aura::Window::Windows window_list;
+  mirror_window_controller->GetWindows(&window_list);
+  EXPECT_TRUE(window_list.empty());
+  EXPECT_EQ(display::kInvalidDisplayId,
+            display_manager()->mirroring_source_id());
+
+  // Add the first external display, mirror mode is off by default.
+  display_info_list.push_back(first_external_display_info);
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  RunAllPendingInMessageLoop();
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+  EXPECT_EQ(2U, display_manager()->GetNumDisplays());
+  window_list.clear();
+  mirror_window_controller->GetWindows(&window_list);
+  EXPECT_TRUE(window_list.empty());
+  EXPECT_EQ(display::kInvalidDisplayId,
+            display_manager()->mirroring_source_id());
+
+  // Turn on mirror mode.
+  display_manager()->SetMirrorMode(true);
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_EQ(1U, display_manager()->GetNumDisplays());
+  window_list.clear();
+  mirror_window_controller->GetWindows(&window_list);
+  EXPECT_EQ(1U, window_list.size());
+  EXPECT_EQ(internal_display_id, display_manager()->mirroring_source_id());
+
+  // Add the second and third external displays, mirror mode stays on.
+  display_info_list.push_back(second_external_display_info);
+  display_info_list.push_back(third_external_display_info);
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_EQ(1U, display_manager()->GetNumDisplays());
+  window_list.clear();
+  mirror_window_controller->GetWindows(&window_list);
+  EXPECT_EQ(3U, window_list.size());
+  EXPECT_EQ(internal_display_id, display_manager()->mirroring_source_id());
+
+  // Remove the third external display, mirror mode stays on.
+  display_info_list.erase(display_info_list.end() - 1);
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_EQ(1U, display_manager()->GetNumDisplays());
+  window_list.clear();
+  mirror_window_controller->GetWindows(&window_list);
+  EXPECT_EQ(2U, window_list.size());
+  EXPECT_EQ(internal_display_id, display_manager()->mirroring_source_id());
+
+  // Remove the internal display, mirror mode stays on. (Enter Dock mode)
+  display_info_list.erase(display_info_list.begin());
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_EQ(1U, display_manager()->GetNumDisplays());
+  window_list.clear();
+  mirror_window_controller->GetWindows(&window_list);
+  EXPECT_EQ(1U, window_list.size());
+  EXPECT_EQ(first_external_display_id,
+            display_manager()->mirroring_source_id());
+
+  // Remove first display, mirror mode becomes off because there's only 1
+  // connected display.
+  display_info_list.erase(display_info_list.begin());
+  RunAllPendingInMessageLoop();
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+  EXPECT_EQ(1U, display_manager()->GetNumDisplays());
+  window_list.clear();
+  mirror_window_controller->GetWindows(&window_list);
+  EXPECT_TRUE(window_list.empty());
+  EXPECT_EQ(display::kInvalidDisplayId,
+            display_manager()->mirroring_source_id());
+}
+
+TEST_F(MultiMirroringTest, CompositingCursorInMultiSoftwareMirroring) {
+  const int64_t internal_display_id =
+      display::test::DisplayManagerTestApi(display_manager())
+          .SetFirstDisplayAsInternalDisplay();
+  const int first_external_display_id = 10;
+  const int second_external_display_id = 11;
+  const display::ManagedDisplayInfo internal_display_info =
+      CreateDisplayInfo(internal_display_id, gfx::Rect(0, 0, 500, 500));
+  const display::ManagedDisplayInfo first_external_display_info =
+      CreateDisplayInfo(first_external_display_id, gfx::Rect(1, 1, 100, 100));
+  const display::ManagedDisplayInfo second_external_display_info =
+      CreateDisplayInfo(second_external_display_id, gfx::Rect(2, 2, 500, 500));
+  std::vector<display::ManagedDisplayInfo> display_info_list;
+  display_info_list.push_back(internal_display_info);
+  display_info_list.push_back(first_external_display_info);
+  display_info_list.push_back(second_external_display_info);
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  RunAllPendingInMessageLoop();
+
+  // Cursor compositing is disabled by default.
+  CursorWindowController* cursor_window_controller =
+      Shell::Get()->window_tree_host_manager()->cursor_window_controller();
+  EXPECT_FALSE(cursor_window_controller->is_cursor_compositing_enabled());
+  MirrorWindowTestApi test_api;
+  EXPECT_EQ(nullptr, test_api.GetCursorWindow());
+
+  // Turn on mirror mode, cursor compositing is enabled and cursor window is
+  // composited in primary root window.
+  display_manager()->SetMirrorMode(true);
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(cursor_window_controller->is_cursor_compositing_enabled());
+  EXPECT_TRUE(
+      Shell::GetPrimaryRootWindow()->Contains(test_api.GetCursorWindow()));
+
+  // Remove internal display (Primary display) and primary display changes, but
+  // cursor compositing stays on and cursor window is in updated primary root
+  // window.
+  display_info_list.erase(display_info_list.begin());
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(cursor_window_controller->is_cursor_compositing_enabled());
+  EXPECT_TRUE(
+      Shell::GetPrimaryRootWindow()->Contains(test_api.GetCursorWindow()));
+
+  // Turn off mirror mode, cursor compositing is disabled and cursor window does
+  // not exist.
+  display_manager()->SetMirrorMode(false);
+  RunAllPendingInMessageLoop();
+  EXPECT_FALSE(cursor_window_controller->is_cursor_compositing_enabled());
+  EXPECT_EQ(nullptr, test_api.GetCursorWindow());
 }
 
 }  // namespace ash

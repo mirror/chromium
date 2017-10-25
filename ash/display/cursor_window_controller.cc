@@ -126,10 +126,14 @@ bool CursorWindowController::ShouldEnableCursorCompositing() {
     // The active pref service can be null early in startup.
     return false;
   }
-  return prefs->GetBoolean(prefs::kAccessibilityLargeCursorEnabled) ||
+  display::DisplayManager* display_manager = Shell::Get()->display_manager();
+  return is_cursor_compositing_enabled_for_test_ ||
+         prefs->GetBoolean(prefs::kAccessibilityLargeCursorEnabled) ||
          prefs->GetBoolean(prefs::kAccessibilityHighContrastEnabled) ||
          prefs->GetBoolean(prefs::kAccessibilityScreenMagnifierEnabled) ||
-         prefs->GetBoolean(prefs::kNightLightEnabled);
+         prefs->GetBoolean(prefs::kNightLightEnabled) ||
+         (display_manager->is_multi_mirroring_enabled() &&
+          display_manager->IsInSoftwareMirrorMode());
 }
 
 void CursorWindowController::SetCursorCompositingEnabled(bool enabled) {

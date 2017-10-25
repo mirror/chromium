@@ -53,17 +53,18 @@ base::string16 GetDisplaySize(int64_t display_id) {
 
   const display::Display& display =
       display_manager->GetDisplayForId(display_id);
+  DCHECK(display.is_valid());
 
   // We don't show display size for mirrored display. Fallback
   // to empty string if this happens on release build.
+  std::vector<int64_t>&& id_list = display_manager->GetMirroringDisplayIdList();
   bool mirroring =
       display_manager->IsInMirrorMode() &&
-      display_manager->GetMirroringDisplayIdList()[0] == display_id;
+      std::find(id_list.begin(), id_list.end(), display_id) != id_list.end();
   DCHECK(!mirroring);
   if (mirroring)
     return base::string16();
 
-  DCHECK(display.is_valid());
   return base::UTF8ToUTF16(display.size().ToString());
 }
 

@@ -74,6 +74,12 @@
 -MirrorWindowControllerTest.MirrorCursorMoveOnEnter
 -MirrorWindowControllerTest.MirrorCursorRotate
 -MouseCursorEventFilterTest.CursorDeviceScaleFactor
+-MultiMirroringTest.AddAndRemoveDisplayInMultiSoftwareMirroring
+-MultiMirroringTest.CompositingCursorInMultiSoftwareMirroring
+-MultiMirroringTest.HardwareMirrorMode
+-MultiMirroringTest.MirrorInThreeDisplays
+-MultiMirroringTest.SoftwareMirrorModeBasics
+-MultiMirroringTest.SwitchToAndFromMultiSoftwareMirroring
 # TODO: MultiWindowResizeController. http://crbug.com/699172
 -MultiWindowResizeControllerTest.BasicTests
 -MultiWindowResizeControllerTest.ClickOutside
