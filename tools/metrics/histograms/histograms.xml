@@ -21891,6 +21891,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Extensions.DeclarativeNetRequest.LoadRulesetResult"
+    enum="LoadRulesetResult">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Records the result of loading an extension ruleset for the Declarative Net
+    Request API. Emitted whenever an extension with a ruleset is loaded.
+  </summary>
+</histogram>
+
 <histogram name="Extensions.DeclarativeNetRequest.ManifestRulesCount"
     units="rules">
   <owner>karandeepb@chromium.org</owner>
@@ -21900,6 +21909,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     json ruleset is indexed. This may happen when a packed extension is
     installed, an unpacked extension is loaded, an extension's ruleset is re-
     indexed, due to corruption, etc.
+  </summary>
+</histogram>
+
+<histogram name="Extensions.DeclarativeNetRequest.ShouldBlockRequestDuration"
+    units="ms">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Measures the time taken to evaluate whether a network request should be
+    blocked considering the Declarative Net Request ruleset for a single
+    extension. Emitted whenever a network request is matched against the
+    declarative rules for a given extension.
   </summary>
 </histogram>
 
@@ -21923,6 +21943,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Time taken to evaluate whether a network request should be blocked for a
     single extension ruleset. Emitted for each network request that is visible
     to the extension.
+  </summary>
+</histogram>
+
+<histogram
+    name="Extensions.DeclarativeNetRequest.ShouldRedirectRequestDuration"
+    units="ms">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Measures the time taken to evaluate whether a network request should be
+    redirected considering the Declarative Net Request ruleset for a single
+    extension. Emitted whenever a network request is matched against the
+    declarative rules for a given extension.
   </summary>
 </histogram>
 
