@@ -164,6 +164,11 @@
   self.alertCoordinator = nil;
 }
 
+- (void)showAccountsSettings {
+  [self.dispatcher
+      showAccountsSettingsFromViewController:self.presentingViewController];
+}
+
 - (BOOL)isPresenting {
   return self.presentingViewController.presentedViewController != nil;
 }

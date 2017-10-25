@@ -17,8 +17,9 @@
 // may also be forwarded directly to a settings navigation controller.
 @protocol ApplicationSettingsCommands
 
-// Shows the accounts settings.
-- (void)showAccountsSettings;
+// Shows the accounts settings UI, presenting from |baseViewController|.
+- (void)showAccountsSettingsFromViewController:
+    (UIViewController*)baseViewController;
 
 // Shows the sync settings UI.
 - (void)showSyncSettings;
