@@ -45,6 +45,75 @@
       "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8be60682_cda469a2",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-25T01:06:44Z",
+      "side": 1,
+      "message": "nit: remote_devices_out",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 50
+      },
+      "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f765d39b_4bd4020b",
+        "filename": "chromeos/components/tether/connection_priority.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-25T01:06:44Z",
+      "side": 1,
+      "message": "Do you need to explicitly list the value? If so, should this start at 0?",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50620627_7ae343c3",
+        "filename": "chromeos/components/tether/connection_priority.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-25T01:06:44Z",
+      "side": 1,
+      "message": "Please also list DisconnectTetheringRequest.",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
