@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2574f687_bf2af1dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/WebsitePermissionsFetcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-25T09:18:12Z",
+      "side": 1,
+      "message": "s/specialisation/specialization/",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "16553b860d962180d437209205a408ad300a0921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
