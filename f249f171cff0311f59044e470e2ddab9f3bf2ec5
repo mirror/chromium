@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1625d0d_9059f8f2",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T05:03:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure where this shmem handle comes from; can we trust the sender to never pass invalid arguments, such that Unwrap fails?\n\nAlso, I double-checked and I misread the Mojo code: Mojo\u0027s wrap and unwrap functions don\u0027t do anything special for invalid handles--which makes sense. But we still don\u0027t need to do anything special; Map() will return false in that case \u003d)",
+      "revId": "f249f171cff0311f59044e470e2ddab9f3bf2ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
