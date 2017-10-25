@@ -16,6 +16,24 @@
       "revId": "925d3c2e9a6591cf5047cddf89972debf9a0de22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ae47c3_4a62e56a",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintArtifact.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T18:52:52Z",
+      "side": 1,
+      "message": "I keep the event names as-is in the new patch.",
+      "parentUuid": "d5a52659_44fb452c",
+      "revId": "925d3c2e9a6591cf5047cddf89972debf9a0de22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
