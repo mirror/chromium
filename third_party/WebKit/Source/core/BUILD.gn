@@ -16,6 +16,7 @@ import("//third_party/WebKit/Source/core/core.gni")
 import("//third_party/WebKit/Source/build/scripts/scripts.gni")
 import("//third_party/WebKit/Source/modules/modules_idl_files.gni")
 import("//third_party/WebKit/Source/platform/platform_generated.gni")
+import("//third_party/protobuf/proto_library.gni")
 
 visibility = [
   "//third_party/WebKit/Source/*",
@@ -1821,4 +1822,34 @@ fuzzer_test("content_security_policy_fuzzer") {
   ]
   dict = "//testing/libfuzzer/fuzzers/dicts/content_security_policy.dict"
   seed_corpus = "//testing/libfuzzer/fuzzers/content_security_policy_corpus"
+}
+
+fuzzer_test("css_parser_proto_fuzzer") {
+  sources = [
+    "css/parser/CSSParserProtoConverter.cpp",
+    "css/parser/CSSParserProtoConverter.h",
+    "css/parser/CSSParserProtoFuzzer.cpp",
+  ]
+  deps = [
+    ":core",
+    ":css_proto",
+    "//third_party/WebKit/Source/platform:blink_fuzzer_test_support",
+    "//third_party/libprotobuf-mutator",
+  ]
+}
+
+proto_library("css_proto") {
+  sources = [
+    "css/parser/CSS.proto",
+  ]
+}
+
+fuzzer_test("css_parser_fuzzer") {
+  sources = [
+    "css/parser/CSSParserFuzzer.cpp",
+  ]
+  deps = [
+    ":core",
+    "//third_party/WebKit/Source/platform:blink_fuzzer_test_support",
+  ]
 }
