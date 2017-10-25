@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e261bd47_043ed866",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-25T21:10:06Z",
+      "side": 0,
+      "message": "This CL supplies ScriptFetchOptions with credentials mode determined in PrepareScript()\n(\"module script credentials mode\" in Step 16 in \"prepare a script\"), as specced.\n\nHowever, the credentials mode was WebURLRequest::kFetchCredentialsModeOmit here.\nDoes this cause behavior change?",
+      "revId": "a190c253b8efe727801315929a14412d4d91af0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
