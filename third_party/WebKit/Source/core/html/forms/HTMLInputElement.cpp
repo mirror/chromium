@@ -1642,9 +1642,12 @@ void HTMLInputElement::SetListAttributeTargetObserver(
 }
 
 void HTMLInputElement::ResetListAttributeTargetObserver() {
+  const AtomicString& value = FastGetAttribute(listAttr);
+  if (value.IsNull())
+    return;
   if (isConnected()) {
     SetListAttributeTargetObserver(
-        ListAttributeTargetObserver::Create(FastGetAttribute(listAttr), this));
+        ListAttributeTargetObserver::Create(value, this));
   } else {
     SetListAttributeTargetObserver(nullptr);
   }
