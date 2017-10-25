@@ -33,6 +33,23 @@
       "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b0aa4d_ea17ea62",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2513,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-25T16:58:47Z",
+      "side": 1,
+      "message": "This does not seem correct to me. The LocalRoot can be in a completely different URL than an iframe, which can be on a different origin.",
+      "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
