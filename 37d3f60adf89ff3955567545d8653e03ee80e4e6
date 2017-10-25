@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19713239_575e696d",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T20:38:30Z",
+      "side": 1,
+      "message": "afaict this isn\u0027t actually used on android. so then android works as expected that it never falls back to software. so.. great :)",
+      "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718839c9_19850206",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T20:38:30Z",
+      "side": 1,
+      "message": "should we crash on android whenever this sets to false? or do you expect browser side to crash first, which brings down renderer anyway?",
+      "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa69783_1fc1b902",
+        "filename": "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T20:38:30Z",
+      "side": 1,
+      "message": "there is no remove? does anything ever get removed from watchers_ vector?",
+      "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
