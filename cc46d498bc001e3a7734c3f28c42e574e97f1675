@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1cabb310_cc86433b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-25T05:16:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bc56f8c6_a3ee584c",
+      "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab5ed2d7_1deec301",
         "filename": "components/arc/arc_session.cc",
         "patchSetId": 1
@@ -148,6 +166,24 @@
       "side": 1,
       "message": "This runs on another (i.e. non-UI) thread, while this object is designed to be alive on UI, so no weakptr, here.",
       "parentUuid": "8b10d17d_0383bfe8",
+      "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9265ca_c868acf2",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-25T05:16:33Z",
+      "side": 1,
+      "message": "Ah ok, of course. Thanks.",
+      "parentUuid": "a1fd1415_c9bf0afb",
       "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
