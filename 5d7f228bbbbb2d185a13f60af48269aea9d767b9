@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76c045ba_b64a1471",
+        "filename": "third_party/WebKit/Source/core/events/PageTransitionEvent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-25T22:48:23Z",
+      "side": 1,
+      "message": "Have this constructor call the 3-arg variant so that they don\u0027t get out of sync?",
+      "revId": "5d7f228bbbbb2d185a13f60af48269aea9d767b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3028ef_3114db71",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-25T22:48:23Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed?",
+      "revId": "5d7f228bbbbb2d185a13f60af48269aea9d767b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
