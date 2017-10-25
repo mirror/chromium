@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b06c1ad_f5cac9da",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-25T23:05:51Z",
+      "side": 1,
+      "message": "There is code duplication here. However, combing them might need more if-else conditions in the logic..",
+      "revId": "1c9292e4bed2011e16f1a6b027ecb8de2717946a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
