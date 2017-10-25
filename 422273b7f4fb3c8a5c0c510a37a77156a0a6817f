@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e4ce335c_109f51d9",
+        "filename": "ash/frame/caption_buttons/frame_back_button.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T20:54:25Z",
+      "side": 1,
+      "message": "I put them in the .cc file because the compiler must generate code for the function. If it\u0027s in the header, then the compiler may have to generate multiple copies of the code, one per translation unit, which increases the work for the linker. In this case it probably doesn\u0027t matter, because the function is empty, but I think it does matter for functions with non-trivial destructors, so I do it everywhere.",
+      "parentUuid": "a96b7190_0677d39e",
+      "revId": "422273b7f4fb3c8a5c0c510a37a77156a0a6817f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64a2a71f_c382218b",
         "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
         "patchSetId": 16
