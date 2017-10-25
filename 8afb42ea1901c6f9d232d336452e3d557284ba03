@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "affa4d03_5b741d30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:02:13Z",
+      "side": 1,
+      "message": "I don\u0027t think this is true anymore.",
+      "revId": "8afb42ea1901c6f9d232d336452e3d557284ba03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209d888e_8a006f90",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:02:13Z",
+      "side": 1,
+      "message": "Nit: s/auto/const auto\u0026/ to avoid a copy.",
+      "revId": "8afb42ea1901c6f9d232d336452e3d557284ba03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1d3949_9cd572b6",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:02:13Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "8afb42ea1901c6f9d232d336452e3d557284ba03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bbbe9d_bc32d5f0",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:02:13Z",
+      "side": 1,
+      "message": "Let\u0027s soften this a bit. :)\n\n\"\"\"\n// TODO(mkwst): We should be reusing existing types here, like `blink::mojom::ContentSecurityPolicyType`.\n\"\"\"",
+      "revId": "8afb42ea1901c6f9d232d336452e3d557284ba03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb78e4f4_aa18976d",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:02:13Z",
+      "side": 1,
+      "message": "Style nit: Move this below the enums.",
+      "revId": "8afb42ea1901c6f9d232d336452e3d557284ba03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6fd6fb_ed4604b4",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:02:13Z",
+      "side": 1,
+      "message": "`const std::string\u0026`",
+      "range": {
+        "startLine": 40,
+        "startChar": 32,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "8afb42ea1901c6f9d232d336452e3d557284ba03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21066393_f65b5d69",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:02:13Z",
+      "side": 1,
+      "message": "This could be a `const` method.",
+      "range": {
+        "startLine": 45,
+        "startChar": 38,
+        "endLine": 45,
+        "endChar": 39
+      },
+      "revId": "8afb42ea1901c6f9d232d336452e3d557284ba03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e000912b_5c277963",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:02:13Z",
+      "side": 1,
+      "message": "Nit: Drop commented-out code.",
+      "revId": "8afb42ea1901c6f9d232d336452e3d557284ba03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f630c36c_f0810c2b",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:02:13Z",
+      "side": 1,
+      "message": "Nit: `const auto\u0026`",
+      "revId": "8afb42ea1901c6f9d232d336452e3d557284ba03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01c60ba_c7a5c1be",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:02:13Z",
+      "side": 1,
+      "message": "Nit: This bit should be in a separate test. You can reuse the test cases if you like by extracting them out to a constant in an anonymous namespace.",
+      "revId": "8afb42ea1901c6f9d232d336452e3d557284ba03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3711d477_042db7f5",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:02:13Z",
+      "side": 1,
+      "message": "Rather than hard-coding these, perhaps you could accumulate the expected results from the various tests in the loop above?",
+      "revId": "8afb42ea1901c6f9d232d336452e3d557284ba03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
