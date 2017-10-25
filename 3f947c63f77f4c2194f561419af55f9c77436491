@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bb552955_25b11d1d",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-25T21:20:55Z",
+      "side": 1,
+      "message": "Thinking forward to tabs, would a Tab struct also want to be in the vr/ rather than model/ directory? I\u0027m wondering what sorts of things are appropriate to go in the model/ directory if not this.",
+      "parentUuid": "2cee4ef1_43c0421c",
+      "revId": "3f947c63f77f4c2194f561419af55f9c77436491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6ab1916_a572b6ce",
         "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
         "patchSetId": 2
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Done.  This code is smaller, but I find it really hard to read.  That\u0027ll probably change after looking at it more.",
       "parentUuid": "eae2a29a_860096ac",
+      "revId": "3f947c63f77f4c2194f561419af55f9c77436491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "244418c7_6823f323",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-25T21:20:55Z",
+      "side": 1,
+      "message": "It\u0027s a fair point. My hope is that this stuff makes bindings easier to set up, but if these continue to feel cryptic maybe we can roll it all back in a follow up CL.",
+      "parentUuid": "6cbd3d99_202b42c6",
       "revId": "3f947c63f77f4c2194f561419af55f9c77436491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
