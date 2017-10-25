@@ -16,6 +16,24 @@
       "revId": "b8e471180e6cedd7929e706f1087a1468143ecac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573221dc_5260d2cc",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-25T09:47:33Z",
+      "side": 0,
+      "message": "Exactly.\n\nMore specifically, when it was an a, but wasn\u0027t necessarily an a:link, due to absence of a[href].",
+      "parentUuid": "9981115c_d859a6fc",
+      "revId": "b8e471180e6cedd7929e706f1087a1468143ecac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
