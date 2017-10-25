@@ -41,7 +41,9 @@ class PermissionManager : public KeyedService,
   // take the actual origin and do the canonicalization internally. You only
   // need to call this directly if you do something else with the origin, such
   // as display it in the UI.
-  GURL GetCanonicalOrigin(const GURL& url) const;
+  GURL GetCanonicalOrigin(ContentSettingsType permission,
+                          const GURL& requesting_origin,
+                          const GURL& embedding_origin) const;
 
   // Callers from within chrome/ should use the methods which take the
   // ContentSettingsType enum. The methods which take PermissionType values

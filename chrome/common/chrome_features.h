@@ -234,6 +234,8 @@ extern const base::Feature kStaggeredBackgroundTabOpeningExperiment;
 
 extern const base::Feature kSupervisedUserCreation;
 
+extern const base::Feature kPermissionDelegation;
+
 #if defined(OS_CHROMEOS)
 extern const base::Feature kSysInternals;
 #endif

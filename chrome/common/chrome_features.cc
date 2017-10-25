@@ -456,6 +456,11 @@ const base::Feature kStaggeredBackgroundTabOpeningExperiment{
 const base::Feature kSupervisedUserCreation{"SupervisedUserCreation",
                                             base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Delegate permissions to cross-origin iframes when the feature has been
+// allowed by feature policy.
+const base::Feature kPermissionDelegation{"PermissionDelegation",
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
+
 #if defined(OS_CHROMEOS)
 // Enables or disables chrome://sys-internals.
 const base::Feature kSysInternals{"SysInternals",
@@ -532,6 +537,7 @@ const base::Feature kEasyUnlockPromotions{"EasyUnlockPromotions",
 // Enables or disables TPM firmware update capability on Chrome OS.
 const base::Feature kTPMFirmwareUpdate{"TPMFirmwareUpdate",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
+
 #endif  // defined(OS_CHROMEOS)
 
 }  // namespace features
