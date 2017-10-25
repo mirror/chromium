@@ -3253,12 +3253,11 @@ void SetEnableDCLayersCHROMIUM(GLboolean enabled) {
 }
 
 void InitializeDiscardableTextureCHROMIUM(GLuint texture_id,
-                                          uint32_t shm_id,
-                                          uint32_t shm_offset) {
+                                          uint64_t handle_id) {
   gles2::cmds::InitializeDiscardableTextureCHROMIUM* c =
       GetCmdSpace<gles2::cmds::InitializeDiscardableTextureCHROMIUM>();
   if (c) {
-    c->Init(texture_id, shm_id, shm_offset);
+    c->Init(texture_id, handle_id);
   }
 }
 

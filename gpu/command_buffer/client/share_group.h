@@ -157,6 +157,10 @@ class GLES2_IMPL_EXPORT ShareGroup
     return &discardable_manager_;
   }
 
+  ClientDiscardableTextureManager* discardable_texture_manager() {
+    return &discardable_texture_manager_;
+  }
+
   // Mark the ShareGroup as lost when an error occurs on any context in the
   // group. This is thread safe as contexts may be on different threads.
   void Lose();
@@ -178,6 +182,7 @@ class GLES2_IMPL_EXPORT ShareGroup
       range_id_handlers_[id_namespaces::kNumRangeIdNamespaces];
   std::unique_ptr<ProgramInfoManager> program_info_manager_;
   ClientDiscardableManager discardable_manager_;
+  ClientDiscardableTextureManager discardable_texture_manager_;
 
   bool bind_generates_resource_;
   uint64_t tracing_guid_;

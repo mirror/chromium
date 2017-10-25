@@ -5331,15 +5331,13 @@ TEST_F(GLES2FormatTest, InitializeDiscardableTextureCHROMIUM) {
   cmds::InitializeDiscardableTextureCHROMIUM& cmd =
       *GetBufferAs<cmds::InitializeDiscardableTextureCHROMIUM>();
   void* next_cmd =
-      cmd.Set(&cmd, static_cast<GLuint>(11), static_cast<uint32_t>(12),
-              static_cast<uint32_t>(13));
+      cmd.Set(&cmd, static_cast<GLuint>(11), static_cast<uint64_t>(12));
   EXPECT_EQ(
       static_cast<uint32_t>(cmds::InitializeDiscardableTextureCHROMIUM::kCmdId),
       cmd.header.command);
   EXPECT_EQ(sizeof(cmd), cmd.header.size * 4u);
   EXPECT_EQ(static_cast<GLuint>(11), cmd.texture_id);
-  EXPECT_EQ(static_cast<uint32_t>(12), cmd.shm_id);
-  EXPECT_EQ(static_cast<uint32_t>(13), cmd.shm_offset);
+  EXPECT_EQ(static_cast<uint64_t>(12), cmd.handle_id);
   CheckBytesWrittenMatchesExpectedSize(next_cmd, sizeof(cmd));
 }
 
