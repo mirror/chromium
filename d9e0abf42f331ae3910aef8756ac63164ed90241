@@ -16,6 +16,24 @@
       "revId": "d9e0abf42f331ae3910aef8756ac63164ed90241",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1154c2_9d31c933",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-25T22:12:38Z",
+      "side": 1,
+      "message": "GetTopInsets is also being used for other things. I didn\u0027t dig deep into it, but if you move 294 - 299 to GetTopInsets, the title bar does not drop when you try to immersive reveal.",
+      "parentUuid": "4e13f890_ce873509",
+      "revId": "d9e0abf42f331ae3910aef8756ac63164ed90241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
