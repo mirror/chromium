@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5b286d9_1f0bffc9",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-25T03:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e90a8bb_674bfdc3",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56d3a7b6_dedcf3c5",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 5
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ae8ecebe_def295a2",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-25T03:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5435f086_c79649cc",
+      "range": {
+        "startLine": 723,
+        "startChar": 0,
+        "endLine": 723,
+        "endChar": 19
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6f5af86_0da3d0ae",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 5
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "5e0171fd_0fe6bd27",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-25T03:04:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c6f5af86_0da3d0ae",
+      "range": {
+        "startLine": 727,
+        "startChar": 4,
+        "endLine": 727,
+        "endChar": 70
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c55c118_ee1d59d8",
         "filename": "chrome/browser/ssl/ssl_error_handler.h",
         "patchSetId": 5
@@ -115,6 +187,30 @@
       "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582db15a_0d038971",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-25T03:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c55c118_ee1d59d8",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 2
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "769cb2ed_89ce8f4a",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-25T03:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7928fc0_51efb711",
+      "range": {
+        "startLine": 124,
+        "startChar": 14,
+        "endLine": 124,
+        "endChar": 46
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67aecb0a_07097b81",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
         "patchSetId": 5
@@ -232,6 +352,30 @@
       "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc1416e_2c7ee95d",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-25T03:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67aecb0a_07097b81",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "4ca79cfb_7a3b92b7",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-25T03:04:42Z",
+      "side": 1,
+      "message": "Done\n\n(The navigation throttle now takes care to handle these net error codes correctly.)",
+      "parentUuid": "ae5c4ca3_592045ec",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05bb047c_6862b1af",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
         "patchSetId": 5
@@ -278,6 +446,30 @@
       "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8319ce71_be0463f1",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-25T03:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05bb047c_6862b1af",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 16
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -328,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "970ee738_738a1e69",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-25T03:04:42Z",
+      "side": 1,
+      "message": "Handled in separate CLs.",
+      "parentUuid": "66deab41_f47bc6cb",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 65
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b961a5eb_0ec855e3",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
         "patchSetId": 5
@@ -348,6 +564,30 @@
       "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bfee3e2_b1584622",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-25T03:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b961a5eb_0ec855e3",
+      "range": {
+        "startLine": 114,
+        "startChar": 60,
+        "endLine": 114,
+        "endChar": 64
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
