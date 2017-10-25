@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56572969_98f287d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-25T04:01:36Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me what true and false mean in this context.  When I looked at the code on line 91 I thought based on this comment we should return false (same with the variable name using this in the service manager).  Could you rework the wording a bit (unless I\u0027m wrong about my assumptions!)?",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 72,
+        "endChar": 91
+      },
+      "revId": "f29c1ff07dc8d10795dbbf601e21a951e38f1c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

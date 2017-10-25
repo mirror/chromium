@@ -281,6 +281,30 @@
       "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5737f6d_0af55777",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-25T04:01:36Z",
+      "side": 1,
+      "message": "Ack thanks for the clarification!",
+      "parentUuid": "6c54b4c7_dea33771",
+      "range": {
+        "startLine": 626,
+        "startChar": 16,
+        "endLine": 631,
+        "endChar": 96
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
