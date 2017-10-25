@@ -27,6 +27,7 @@ extern const char kManagedDefaultGeolocationSetting[];
 extern const char kManagedDefaultNotificationsSetting[];
 extern const char kManagedDefaultMediaStreamSetting[];
 extern const char kManagedDefaultWebBluetoothGuardSetting[];
+extern const char kManagedDefaultAdsSetting[];
 
 extern const char kManagedCookiesAllowedForUrls[];
 extern const char kManagedCookiesBlockedForUrls[];

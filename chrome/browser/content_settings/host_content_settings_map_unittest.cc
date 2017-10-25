@@ -110,6 +110,9 @@ class TesterForType {
       case CONTENT_SETTINGS_TYPE_POPUPS:
         policy_default_setting_ = prefs::kManagedDefaultPopupsSetting;
         break;
+      case CONTENT_SETTINGS_TYPE_ADS:
+        policy_default_setting_ = prefs::kManagedDefaultAdsSetting;
+        break;
       default:
         // Add support as needed.
         NOTREACHED();
