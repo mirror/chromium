@@ -18,6 +18,10 @@
 namespace mojo {
 namespace internal {
 
+void ReportNonNullableValidationError(ValidationContext* validation_context, ValidationError error, 
+                                const char* field_name,
+                                const char* object_name);
+
 // Checks whether decoding the pointer will overflow and produce a pointer
 // smaller than |offset|.
 inline bool ValidateEncodedPointer(const uint64_t* offset) {
@@ -85,27 +89,23 @@ bool ValidateMessagePayload(const Message* message,
 // |input| is not null/invalid.
 template <typename T>
 bool ValidatePointerNonNullable(const T& input,
-                                const char* error_message,
+                                const char* field_name,
+                                const char* object_name,
                                 ValidationContext* validation_context) {
   if (input.offset)
     return true;
-
-  ReportValidationError(validation_context,
-                        VALIDATION_ERROR_UNEXPECTED_NULL_POINTER,
-                        error_message);
+  ReportNonNullableValidationError(validation_context, VALIDATION_ERROR_UNEXPECTED_NULL_POINTER, field_name, object_name);
   return false;
 }
 
 template <typename T>
 bool ValidateInlinedUnionNonNullable(const T& input,
-                                     const char* error_message,
+                                     const char* field_name,
+                                     const char* object_name,
                                      ValidationContext* validation_context) {
   if (!input.is_null())
     return true;
-
-  ReportValidationError(validation_context,
-                        VALIDATION_ERROR_UNEXPECTED_NULL_POINTER,
-                        error_message);
+  ReportNonNullableValidationError(validation_context, VALIDATION_ERROR_UNEXPECTED_NULL_POINTER, field_name, object_name);
   return false;
 }
 
@@ -120,19 +120,23 @@ MOJO_CPP_BINDINGS_EXPORT bool IsHandleOrInterfaceValid(
 
 MOJO_CPP_BINDINGS_EXPORT bool ValidateHandleOrInterfaceNonNullable(
     const AssociatedInterface_Data& input,
-    const char* error_message,
+    const char* field_name,
+    const char* object_name,
     ValidationContext* validation_context);
 MOJO_CPP_BINDINGS_EXPORT bool ValidateHandleOrInterfaceNonNullable(
     const AssociatedEndpointHandle_Data& input,
-    const char* error_message,
+    const char* field_name,
+    const char* object_name,
     ValidationContext* validation_context);
 MOJO_CPP_BINDINGS_EXPORT bool ValidateHandleOrInterfaceNonNullable(
     const Interface_Data& input,
-    const char* error_message,
+    const char* field_name,
+    const char* object_name,
     ValidationContext* validation_context);
 MOJO_CPP_BINDINGS_EXPORT bool ValidateHandleOrInterfaceNonNullable(
     const Handle_Data& input,
-    const char* error_message,
+    const char* field_name,
+    const char* object_name,
     ValidationContext* validation_context);
 
 template <typename T>

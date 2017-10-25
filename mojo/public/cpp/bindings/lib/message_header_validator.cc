@@ -74,7 +74,7 @@ bool IsValidMessageHeader(const internal::MessageHeader* header,
   // - Validation of the payload contents will be done separately based on the
   //   payload type.
   if (!internal::ValidatePointerNonNullable(header_v2->payload,
-                                            "null payload in message header",
+                                            "payload", "header",
                                             validation_context) ||
       !internal::ValidatePointer(header_v2->payload, validation_context) ||
       !validation_context->ClaimMemory(header_v2->payload.Get(), 1)) {

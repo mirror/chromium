@@ -8,13 +8,13 @@
 {%-   if not kind|is_nullable_kind %}
 {%-     if kind|is_union_kind and union_is_inlined %}
   if (!mojo::internal::ValidateInlinedUnionNonNullable(
-          {{field_expr}}, "null {{name}} field in {{object_name}}",
+          {{field_expr}}, "{{name}}", "{{object_name}}",
           validation_context)) {
     return false;
   }
 {%-     else %}
   if (!mojo::internal::ValidatePointerNonNullable(
-          {{field_expr}}, "null {{name}} field in {{object_name}}",
+          {{field_expr}}, "{{name}}", "{{object_name}}",
           validation_context)) {
     return false;
   }
@@ -53,7 +53,7 @@
 {%-   if not kind|is_nullable_kind %}
   if (!mojo::internal::ValidateHandleOrInterfaceNonNullable(
           {{field_expr}},
-          "invalid {{name}} field in {{object_name}}", validation_context)) {
+          "{{name}}", "{{object_name}}", validation_context)) {
     return false;
   }
 {%-   endif %}
