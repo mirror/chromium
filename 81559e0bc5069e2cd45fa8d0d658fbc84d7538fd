@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "3250db1b_fdd2cdad",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-25T19:00:02Z",
+      "side": 1,
+      "message": "I understand what you said, but I think we should still do the tests in premul. Only here (on CompareColorCorrectedPixels). Convert everything to premul, and test with a tolerance of 1.\n\nI think this would simplify a lot this code. And I\u0027m still not sure SRGBColorCorrectionTolerance is doing the right thing. Imagine that you have unpremul color 100 and alpha 1. Your result here will be tolerance of 101. Does this look right to you? :P",
+      "revId": "81559e0bc5069e2cd45fa8d0d658fbc84d7538fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b33346e8_56f71aac",
         "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
         "patchSetId": 3
