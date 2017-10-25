@@ -91,6 +91,7 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   bool HasCurrentFrame() override;
   scoped_refptr<VideoFrame> GetCurrentFrame() override;
   void PutCurrentFrame() override;
+  scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner() override;
 
   // VideoRendererSink implementation. These methods must be called from the
   // same thread (typically the media thread).
