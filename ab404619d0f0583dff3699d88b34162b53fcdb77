@@ -70,6 +70,30 @@
       "revId": "ab404619d0f0583dff3699d88b34162b53fcdb77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "276a2e79_76d025a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/fullscreen/FullscreenHtmlApiHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-10-25T01:12:17Z",
+      "side": 1,
+      "message": "Moved the code to Tab#toggleFullscreenMode - not sure how to check if the call came from video though.",
+      "parentUuid": "93efd405_4a9db767",
+      "range": {
+        "startLine": 261,
+        "startChar": 8,
+        "endLine": 261,
+        "endChar": 23
+      },
+      "revId": "ab404619d0f0583dff3699d88b34162b53fcdb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
