@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7758b1b_997def3b",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "this is more appropriate than including that stuff in header.",
+      "range": {
+        "startLine": 17,
+        "startChar": 46,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b743514_ec0626a5",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "return SavePageResult ...\n\ndrop break; from all",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334477b3_8964ca87",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "Why bother providing a callback then?\nShould we change the interface?\nDo we report UMA in archive manager?",
+      "range": {
+        "startLine": 84,
+        "startChar": 20,
+        "endLine": 84,
+        "endChar": 28
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28da333d_e98d5d92",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "did you considered DCHECK of observer?",
+      "range": {
+        "startLine": 90,
+        "startChar": 54,
+        "endLine": 90,
+        "endChar": 62
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8ef854_90ced3ab",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "If we move this check outside, we can have the method in anonymous namespace.",
+      "range": {
+        "startLine": 210,
+        "startChar": 32,
+        "endLine": 210,
+        "endChar": 55
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c395d97_cfbe334c",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "extract to a method, unless you remove the parameters.\nOtherwise, this will get harder to manager, if we decide to have callback that is not empty.",
+      "range": {
+        "startLine": 211,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 68
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be69132f_54ea45b7",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "Extract to a method.\nswitch-case-return will work here as well.",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 3
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb597f2_f09ae89d",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "nit: would it be more readable if you switch 266 and 267?",
+      "range": {
+        "startLine": 266,
+        "startChar": 2,
+        "endLine": 266,
+        "endChar": 30
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae940c50_61e45a1b",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "could this go into anonymous namespace?",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 52
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ccac39_ab2c7e12",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "this for has more than one line, please use {}",
+      "range": {
+        "startLine": 304,
+        "startChar": 2,
+        "endLine": 304,
+        "endChar": 5
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048dcaff_024cbebc",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "would it make sense to remove this variable from the task and simply use it when postponing\nOfflinePageModelTaskfiied::ClearCachedPages?\n\ne.g.\n\nvoid OfflinePageModelTaskified::PostClearCachedPagesTask(bool is_delayed) {\n  // Will ensure that final delay is at least 0.\n  base::TimeDelta min_delay \u003d\n      is_delayed ? kClearStorageStartingDelay : base::TimeDelta();\n  // Checks whether clear storage interval already passed since last delay.\n  base::TimeDelta min_delay_to_next_cleanup \u003d\n      kClearStorageInterval - (base::Time::Now() - last_clear_cached_pages_time_);\n  // Final delay is max(min_delay, min_delay_to_next_cleanup).\n  base::TimeDelta delay \u003d min_delay \u003e min_delay_to_next_cleanup\n      ? min_delay : min_delay_to_next_cleanup;\n\n  base::ThreadTaskRunnerHandle::Get()-\u003ePostDelayedTask(\n      FROM_HERE,\n      base::Bind(\u0026OfflinePageModelTaskified::ClearCachedPages,\n                 weak_ptr_factory_.GetWeakPtr()),\n      delay);\n\n\nThat way you don\u0027t have to do all the checking work in the task, because you know the earliest it can run, it will have met the minimum interval constrain or passing in base::Time::Now() I believe... Smaller task.",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 35
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e577a80_b729a2eb",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "this is inconsistent with how you wrote code in other methods.",
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2afe549_67809fee",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "why do we need to know the tasks in header?",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3238dc_9c4f5164",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "How about ...MatchingUrlAndNamespace ?",
+      "range": {
+        "startLine": 163,
+        "startChar": 18,
+        "endLine": 163,
+        "endChar": 35
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb45974_fe617058",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-25T21:42:04Z",
+      "side": 1,
+      "message": "Because tasks in task_queue_ are holding a raw pointer to the archivers, I would like the archivers to be destroyed later. Please put this line above task queue.",
+      "range": {
+        "startLine": 181,
+        "startChar": 52,
+        "endLine": 181,
+        "endChar": 70
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
