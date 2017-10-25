@@ -11,10 +11,13 @@ namespace media {
 MojoAudioOutputStreamProvider::MojoAudioOutputStreamProvider(
     mojom::AudioOutputStreamProviderRequest request,
     CreateDelegateCallback create_delegate_callback,
-    DeleterCallback deleter_callback)
+    DeleterCallback deleter_callback,
+    std::unique_ptr<media::mojom::AudioOutputStreamObserver> observer)
     : binding_(this, std::move(request)),
       create_delegate_callback_(std::move(create_delegate_callback)),
-      deleter_callback_(std::move(deleter_callback)) {
+      deleter_callback_(std::move(deleter_callback)),
+      observer_(std::move(observer)),
+      observer_binding_(observer_.get()) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // Unretained is safe since |this| owns |binding_|.
   binding_.set_connection_error_handler(base::Bind(
@@ -36,17 +39,23 @@ void MojoAudioOutputStreamProvider::Acquire(
   if (audio_output_) {
     LOG(ERROR) << "Output acquired twice.";
     binding_.Unbind();
+    observer_binding_.Unbind();
     std::move(deleter_callback_).Run(this);  // deletes |this|.
     return;
   }
 
-  // Unretained is safe since |this| owns |audio_output_|.
-  audio_output_.emplace(
-      std::move(stream_request), std::move(client),
-      base::BindOnce(std::move(create_delegate_callback_), params),
-      std::move(callback),
-      base::BindOnce(&MojoAudioOutputStreamProvider::OnError,
-                     base::Unretained(this)));
+  mojom::AudioOutputStreamObserverPtr observer;
+  observer_binding_.Bind(mojo::MakeRequest(&observer));
+  // Unretained is safe since |this| owns |observer_binding_| and
+  // |audio_output_|.
+  observer_binding_.set_connection_error_handler(base::Bind(
+      &MojoAudioOutputStreamProvider::OnError, base::Unretained(this)));
+  audio_output_.emplace(std::move(stream_request), std::move(client),
+                        base::BindOnce(std::move(create_delegate_callback_),
+                                       params, std::move(observer)),
+                        std::move(callback),
+                        base::BindOnce(&MojoAudioOutputStreamProvider::OnError,
+                                       base::Unretained(this)));
 }
 
 void MojoAudioOutputStreamProvider::OnError() {

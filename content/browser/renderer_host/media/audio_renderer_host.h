@@ -51,6 +51,7 @@
 #include "content/public/browser/browser_message_filter.h"
 #include "content/public/browser/render_process_host.h"
 #include "media/audio/audio_output_delegate.h"
+#include "media/mojo/interfaces/audio_output_stream.mojom.h"
 
 namespace base {
 class SharedMemory;
@@ -103,8 +104,8 @@ class CONTENT_EXPORT AudioRendererHost
   FRIEND_TEST_ALL_PREFIXES(AudioRendererHostTest, CreateMockStream);
   FRIEND_TEST_ALL_PREFIXES(AudioRendererHostTest, MockStreamDataConversation);
 
-  using AudioOutputDelegateVector =
-      std::vector<std::unique_ptr<media::AudioOutputDelegate>>;
+  class DelegateInfo;
+  using AudioOutputDelegateVector = std::vector<std::unique_ptr<DelegateInfo>>;
 
   // The type of a function that is run on the UI thread to check whether the
   // routing IDs reference a valid RenderFrameHost. The function then runs

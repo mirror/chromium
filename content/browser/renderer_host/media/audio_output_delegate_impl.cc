@@ -19,6 +19,9 @@
 
 namespace content {
 
+const float kSilenceThresholdDBFS = -72.24719896f;
+const int kPowerMeasurementsPerSecond = 15;
+
 // This class trampolines callbacks from the controller to the delegate. Since
 // callbacks from the controller are stopped asynchronously, this class holds
 // a weak pointer to the delegate, allowing the delegate to stop callbacks
@@ -91,6 +94,7 @@ std::unique_ptr<media::AudioOutputDelegate> AudioOutputDelegateImpl::Create(
     int render_frame_id,
     int render_process_id,
     const media::AudioParameters& params,
+    media::mojom::AudioOutputStreamObserverPtr observer,
     const std::string& output_device_id) {
   auto socket = base::MakeUnique<base::CancelableSyncSocket>();
   auto reader = AudioSyncReader::Create(params, socket.get());
@@ -100,7 +104,8 @@ std::unique_ptr<media::AudioOutputDelegate> AudioOutputDelegateImpl::Create(
   return base::MakeUnique<AudioOutputDelegateImpl>(
       std::move(reader), std::move(socket), handler, audio_manager,
       std::move(audio_log), mirroring_manager, media_observer, stream_id,
-      render_frame_id, render_process_id, params, output_device_id);
+      render_frame_id, render_process_id, params, std::move(observer),
+      output_device_id);
 }
 
 AudioOutputDelegateImpl::AudioOutputDelegateImpl(
@@ -115,6 +120,7 @@ AudioOutputDelegateImpl::AudioOutputDelegateImpl(
     int render_frame_id,
     int render_process_id,
     const media::AudioParameters& params,
+    media::mojom::AudioOutputStreamObserverPtr observer,
     const std::string& output_device_id)
     : subscriber_(handler),
       audio_log_(std::move(audio_log)),
@@ -124,6 +130,7 @@ AudioOutputDelegateImpl::AudioOutputDelegateImpl(
       stream_id_(stream_id),
       render_frame_id_(render_frame_id),
       render_process_id_(render_process_id),
+      observer_(std::move(observer)),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(subscriber_);
@@ -215,17 +222,18 @@ void AudioOutputDelegateImpl::UpdatePlayingState(bool playing) {
 
   playing_ = playing;
   if (playing) {
-    // Note that this takes a reference to |controller_|, and
-    // (Start|Stop)MonitoringStream calls are async, so we don't have a
-    // guarantee for when the controller is destroyed.
-    AudioStreamMonitor::StartMonitoringStream(
-        render_process_id_, render_frame_id_, stream_id_,
-        base::BindRepeating(
-            &media::AudioOutputController::ReadCurrentPowerAndClip,
-            controller_));
+    DCHECK(!poll_timer_.IsRunning());
+    // base::Unretained is safe in this case because |this| owns |poll_timer_|.
+    poll_timer_.Start(FROM_HERE,
+                      base::TimeDelta::FromSeconds(1) /
+                          static_cast<int>(kPowerMeasurementsPerSecond),
+                      base::Bind(&AudioOutputDelegateImpl::PollAudioLevel,
+                                 base::Unretained(this)));
+    observer_->DidStartPlaying(IsAudible());
   } else {
-    AudioStreamMonitor::StopMonitoringStream(render_process_id_,
-                                             render_frame_id_, stream_id_);
+    DCHECK(poll_timer_.IsRunning());
+    poll_timer_.Stop();
+    observer_->DidStopPlaying();
   }
 }
 
@@ -239,6 +247,21 @@ void AudioOutputDelegateImpl::OnError() {
 media::AudioOutputController* AudioOutputDelegateImpl::GetControllerForTesting()
     const {
   return controller_.get();
+}
+
+void AudioOutputDelegateImpl::PollAudioLevel() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  bool was_audible = is_audible_;
+  is_audible_ = IsAudible();
+
+  if (is_audible_ != was_audible)
+    observer_->DidChangeAudibleState(is_audible_);
+}
+
+bool AudioOutputDelegateImpl::IsAudible() const {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  float power_dbfs = controller_->ReadCurrentPowerAndClip().first;
+  return power_dbfs >= kSilenceThresholdDBFS;
 }
 
 }  // namespace content

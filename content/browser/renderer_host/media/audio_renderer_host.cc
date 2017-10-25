@@ -17,6 +17,7 @@
 #include "content/browser/media/media_internals.h"
 #include "content/browser/renderer_host/media/audio_input_device_manager.h"
 #include "content/browser/renderer_host/media/audio_output_delegate_impl.h"
+#include "content/browser/renderer_host/media/audio_output_stream_observer_impl.h"
 #include "content/browser/renderer_host/media/audio_sync_reader.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/common/media/audio_messages.h"
@@ -27,6 +28,7 @@
 #include "media/audio/audio_device_description.h"
 #include "media/base/audio_bus.h"
 #include "media/base/limits.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 using media::AudioBus;
 using media::AudioManager;
@@ -55,6 +57,28 @@ void ValidateRenderFrameId(int render_process_id,
 }
 
 }  // namespace
+
+class AudioRendererHost::DelegateInfo {
+ public:
+  DelegateInfo(int render_process_id, int render_frame_id, int stream_id)
+      : observer_(render_process_id, render_frame_id, stream_id),
+        observer_binding_(&observer_) {}
+
+  media::AudioOutputDelegate* delegate() { return delegate_.get(); }
+  void set_delegate(std::unique_ptr<media::AudioOutputDelegate> delegate) {
+    delegate_ = std::move(delegate);
+  }
+
+  void Bind(media::mojom::AudioOutputStreamObserverRequest request) {
+    observer_binding_.Bind(std::move(request));
+  }
+
+ private:
+  std::unique_ptr<media::AudioOutputDelegate> delegate_;
+  AudioOutputStreamObserverImpl observer_;
+  mojo::Binding<media::mojom::AudioOutputStreamObserver> observer_binding_;
+  DISALLOW_COPY_AND_ASSIGN(DelegateInfo);
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 // AudioRendererHost implementations.
@@ -283,12 +307,17 @@ void AudioRendererHost::OnCreateStream(int stream_id,
   audio_log->OnCreated(stream_id, params, device_unique_id);
   media_internals->SetWebContentsTitleForAudioLogEntry(
       stream_id, render_process_id_, render_frame_id, audio_log.get());
-  auto delegate = AudioOutputDelegateImpl::Create(
+
+  std::unique_ptr<DelegateInfo> delegate_info = base::MakeUnique<DelegateInfo>(
+      render_process_id_, render_frame_id, stream_id);
+  media::mojom::AudioOutputStreamObserverPtr observer_ptr;
+  delegate_info->Bind(mojo::MakeRequest(&observer_ptr));
+  delegate_info->set_delegate(AudioOutputDelegateImpl::Create(
       this, audio_manager_, std::move(audio_log), mirroring_manager_,
       media_observer, stream_id, render_frame_id, render_process_id_, params,
-      device_unique_id);
-  if (delegate)
-    delegates_.push_back(std::move(delegate));
+      std::move(observer_ptr), device_unique_id));
+  if (delegate_info->delegate())
+    delegates_.push_back(std::move(delegate_info));
   else
     SendErrorMessage(stream_id);
 }
@@ -355,18 +384,17 @@ AudioRendererHost::AudioOutputDelegateVector::iterator
 AudioRendererHost::LookupIteratorById(int stream_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  return std::find_if(
-      delegates_.begin(), delegates_.end(),
-      [stream_id](const std::unique_ptr<media::AudioOutputDelegate>& d) {
-        return d->GetStreamId() == stream_id;
-      });
+  return std::find_if(delegates_.begin(), delegates_.end(),
+                      [stream_id](const std::unique_ptr<DelegateInfo>& d) {
+                        return d->delegate()->GetStreamId() == stream_id;
+                      });
 }
 
 media::AudioOutputDelegate* AudioRendererHost::LookupById(int stream_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   auto i = LookupIteratorById(stream_id);
-  return i != delegates_.end() ? i->get() : nullptr;
+  return i != delegates_.end() ? (*i)->delegate() : nullptr;
 }
 
 bool AudioRendererHost::IsAuthorizationStarted(int stream_id) {
