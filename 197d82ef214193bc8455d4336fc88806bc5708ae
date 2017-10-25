@@ -70,6 +70,24 @@
       "revId": "197d82ef214193bc8455d4336fc88806bc5708ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "252c54c8_e5511950",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 14594,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-25T18:39:42Z",
+      "side": 1,
+      "message": "I\u0027ve checked with alexmos@ and currently port *is* taken into account by --isolate-origins (port is part of an origin, but not part of a \"site\").  When running |third_party/WebKit/Tools/Scripts/run-webkit-tests ... external/wpt| I see that the content seems to be served on ports 8001, 8081 and 8444 - let me use these number for now.",
+      "parentUuid": "4746e516_23888a5c",
+      "revId": "197d82ef214193bc8455d4336fc88806bc5708ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
