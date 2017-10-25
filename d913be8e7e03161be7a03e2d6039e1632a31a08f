@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11775524_c51bfbe9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-25T15:51:22Z",
+      "side": 0,
+      "message": "I think this comment still applies, it just happens via a lambda, so it\u0027s less visible.",
+      "range": {
+        "startLine": 1237,
+        "startChar": 69,
+        "endLine": 1238,
+        "endChar": 65
+      },
+      "revId": "d913be8e7e03161be7a03e2d6039e1632a31a08f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc03f973_fbd1358b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-25T15:51:22Z",
+      "side": 0,
+      "message": "Can you change this one to #mTouchExplorationStateChangeListener maybe? The code path that calls this still exists, it\u0027s just a lambda now.",
+      "range": {
+        "startLine": 1241,
+        "startChar": 12,
+        "endLine": 1241,
+        "endChar": 52
+      },
+      "revId": "d913be8e7e03161be7a03e2d6039e1632a31a08f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

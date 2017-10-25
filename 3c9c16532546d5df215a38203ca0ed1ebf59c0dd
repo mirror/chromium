@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "113984d2_67b688ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-25T15:51:22Z",
+      "side": 1,
+      "message": "Wait, isn\u0027t that this very method? :) I think this is supposed to refer to onAccessibility*State*Changed, which calls this.\n\nAlso, unless it\u0027s necessary for disambiguation, the preferred Javadoc style is to leave out the parameters. (See http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#styleguide).",
+      "range": {
+        "startLine": 1236,
+        "startChar": 12,
+        "endLine": 1236,
+        "endChar": 48
+      },
+      "revId": "3c9c16532546d5df215a38203ca0ed1ebf59c0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d3a811_08201323",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-25T15:51:22Z",
+      "side": 1,
+      "message": "(And this method now has accessibility*Status*, just to confuse things :) )",
+      "range": {
+        "startLine": 1241,
+        "startChar": 53,
+        "endLine": 1241,
+        "endChar": 81
+      },
+      "revId": "3c9c16532546d5df215a38203ca0ed1ebf59c0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
