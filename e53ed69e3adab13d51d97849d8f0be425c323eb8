@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11ff5b13_e48e92a4",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-25T02:49:40Z",
+      "side": 1,
+      "message": "Not related to this CL, but there is an interesting scenario that downloads can actually start in cleanup task but the lifetime of the process is controlled by cleanup task.",
+      "range": {
+        "startLine": 1038,
+        "startChar": 6,
+        "endLine": 1038,
+        "endChar": 73
+      },
+      "revId": "e53ed69e3adab13d51d97849d8f0be425c323eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83e0611_f21b729f",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-25T02:49:40Z",
+      "side": 1,
+      "message": "nit: Maybe we can do this\n\nif (has_actionable_downloads) \n  break;",
+      "revId": "e53ed69e3adab13d51d97849d8f0be425c323eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d0cef9_ba9e9727",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-25T02:49:40Z",
+      "side": 1,
+      "message": "nit: It might be good to add comment here since this logic is only for user launch chrome, or inside cleanup task JobScheduler launch, and we schedule the first download task.",
+      "revId": "e53ed69e3adab13d51d97849d8f0be425c323eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
