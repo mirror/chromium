@@ -11,6 +11,7 @@
 #include "core/dom/AnimationWorkletProxyClient.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/workers/WorkerClients.h"
+#include "platform/WaitableEvent.h"
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 
@@ -74,9 +75,16 @@ void AnimationWorkletGlobalScope::Dispose() {
   ThreadedWorkletGlobalScope::Dispose();
 }
 
-void AnimationWorkletGlobalScope::Mutate() {
-  DCHECK(IsContextThread());
+void AnimationWorkletGlobalScope::MutateWithEvent(
+    AnimationWorkletGlobalScope* global,
+    WaitableEvent* when_done) {
+  DCHECK(global->IsContextThread());
+  global->MutateInternal();
+  when_done->Signal();
+}
 
+void AnimationWorkletGlobalScope::MutateInternal() {
+  DCHECK(IsContextThread());
   ScriptState* script_state = ScriptController()->GetScriptState();
   ScriptState::Scope scope(script_state);
 

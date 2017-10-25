@@ -43,7 +43,7 @@ void ThreadedWorkletGlobalScope::Dispose() {
 }
 
 bool ThreadedWorkletGlobalScope::IsContextThread() const {
-  return GetThread()->IsCurrentThread();
+  return GetThread() && GetThread()->IsCurrentThread();
 }
 
 void ThreadedWorkletGlobalScope::AddConsoleMessage(

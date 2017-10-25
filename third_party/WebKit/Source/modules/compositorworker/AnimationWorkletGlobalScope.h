@@ -16,6 +16,7 @@ namespace blink {
 
 class ExceptionState;
 class WorkerClients;
+class WaitableEvent;
 
 // Represents the animation worklet global scope and implements all methods that
 // the global scope exposes to user script (See
@@ -47,7 +48,9 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
   Animator* CreateInstance(const String& name);
 
   // Invokes the |animate| function of all of its active animators.
-  void Mutate();
+  static void MutateWithEvent(AnimationWorkletGlobalScope*,
+                              WaitableEvent* when_done);
+  void MutateInternal();
 
   // Registers a animator definition with the given name and constructor.
   void registerAnimator(const String& name,

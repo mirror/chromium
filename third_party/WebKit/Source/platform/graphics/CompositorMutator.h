@@ -10,12 +10,9 @@
 
 namespace blink {
 
-class PLATFORM_EXPORT CompositorMutator
-    : public GarbageCollectedFinalized<CompositorMutator> {
+class PLATFORM_EXPORT CompositorMutator {
  public:
   virtual ~CompositorMutator() {}
-
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   // Called from compositor thread to run the animation frame callbacks from all
   // connected AnimationWorklets.

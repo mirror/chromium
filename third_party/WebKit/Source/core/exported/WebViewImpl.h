@@ -679,7 +679,7 @@ class CORE_EXPORT WebViewImpl final
   // This is owned by the LayerTreeHostImpl, and should only be used on the
   // compositor thread. The LayerTreeHostImpl is indirectly owned by this
   // class so this pointer should be valid until this class is destructed.
-  CrossThreadPersistent<CompositorMutatorImpl> mutator_;
+  CompositorMutatorImpl* mutator_;
 
   Persistent<EventListener> popup_mouse_wheel_event_listener_;
 
