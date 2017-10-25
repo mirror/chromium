@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "65318f90_7c6dcc5e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T00:29:10Z",
+      "side": 1,
+      "message": "I think one point in my first comment was whether this is dismissing the dialog more proactively then it should.  Doesn\u0027t hitting the home icon cause the dialog to be dismissed because the Window would have INVISIBLE as the state (or would it be GONE)?\n\nIf you hit home and come back to chrome, is the dialog gone?",
+      "parentUuid": "5829d2c4_f57f2c8b",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 22
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01a05fe8_419e8c57",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachine.java",
         "patchSetId": 5
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "15779771_622d10ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T00:29:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "093500b7_5503f2c0",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3382822b_c6f2f721",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
         "patchSetId": 5
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "There\u0027s at least on situation in which savedInstanceState is not null:\n1. DialogFragment is opened.\n2. User presses \"Home\".\n3. Android invokes onSaveInstanceState().\n4. User opens some other app.\n5. Under memory pressure Android kills Chrome process without calling onDestroy (it is explicitly said in documentation that Android can kill process without calling this method: https://developer.android.com/reference/android/app/Activity.html#onDestroy() ).\n6. User returns to Chrome process.\n7. Android Framework recreates dialogs that were saved by onSaveInstanceState().\n\nIdeally, I would like to reimplement AccountSigninView as a Fragment instead of View, so all the dialogs created by ConfirmSyncDataStateMachine could obtain their listeners by casting the result of getTargetFragment(). This way there will be no need for explicit setListener methods, and saving/restoring states will work without any crutches like checking whether savedInstanceState is null.",
       "parentUuid": "3382822b_c6f2f721",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0539f8_ede0e968",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T00:29:10Z",
+      "side": 1,
+      "message": "Gotcha...makes sense.\n\nNow, could we get by with just adding this line of code w/o any of the other cancel calls in the controller?\n\nWouldn\u0027t this handle the case always that it hides itself after coming back and by switching over to the DialogFragment you fixed the issue where the dialog is not leaked on destroy?\n\nSeems like the other stuff \"might\" be overkill if we\u0027ve already got to add this logic.",
+      "parentUuid": "58e40deb_b453b544",
       "range": {
         "startLine": 64,
         "startChar": 16,
