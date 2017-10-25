@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e1b1ed6_2c1193ba",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-25T00:08:30Z",
+      "side": 1,
+      "message": "stopped \u003d true is essentially unstop or resume;\nlifecycle state should fall back to page-visibility state in this case.",
+      "range": {
+        "startLine": 952,
+        "startChar": 46,
+        "endLine": 952,
+        "endChar": 47
+      },
+      "revId": "e143a206dceba7ac68289119cf5acdb06555a316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
