@@ -6,18 +6,24 @@
 
 #include "content/public/common/origin_util.h"
 #include "third_party/WebKit/public/platform/WebClientHintsType.h"
+#include "third_party/WebKit/public/platform/WebURL.h"
 #include "url/gurl.h"
 
 namespace client_hints {
 
+template <typename URL>
 void GetAllowedClientHintsFromSource(
-    const GURL& url,
+    const URL& url,
     const ContentSettingsForOneType& client_hints_rules,
     blink::WebEnabledClientHints* client_hints) {
-  if (!content::IsOriginSecure(url))
+  if (client_hints_rules.size() == 0)
     return;
 
-  const GURL origin = GURL(url).GetOrigin();
+  const GURL& gurl = GURL(url);
+  if (!content::IsOriginSecure(gurl))
+    return;
+
+  const GURL& origin = gurl.GetOrigin();
 
   for (const auto& rule : client_hints_rules) {
     // Look for an exact match since persisted client hints are disabled by
@@ -53,5 +59,14 @@ void GetAllowedClientHintsFromSource(
     return;
   }
 }
+
+template void GetAllowedClientHintsFromSource<blink::WebURL>(
+    const blink::WebURL& url,
+    const ContentSettingsForOneType& client_hints_rules,
+    blink::WebEnabledClientHints* client_hints);
+template void GetAllowedClientHintsFromSource<GURL>(
+    const GURL& url,
+    const ContentSettingsForOneType& client_hints_rules,
+    blink::WebEnabledClientHints* client_hints);
 
 }  // namespace client_hints
