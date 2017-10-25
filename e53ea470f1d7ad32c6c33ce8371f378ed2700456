@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb8f6760_cd68eb6d",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-25T19:25:26Z",
+      "side": 1,
+      "message": "Ok, so here\u0027s a bug, but I want to know what you think should happen for fixing this.\n\nIf we want to both \u0027clear all\u0027 and \u0027change the prefix\u0027, this gives us an opportunity to do less operations (mainly, we don\u0027t need to copy). Options:\n1. Don\u0027t do any copying, remove the \u0027clear all\u0027 operation, and we\u0027re done (con - if we\u0027re changing the prefix to one that is already used then that data isn\u0027t cleared)\n2. Same as 1, but we keep the \u0027clear all\u0027 operation, to clear any data that was previously at the new prefix.\n\nWDYT?",
+      "range": {
+        "startLine": 491,
+        "startChar": 0,
+        "endLine": 491,
+        "endChar": 24
+      },
+      "revId": "e53ea470f1d7ad32c6c33ce8371f378ed2700456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
