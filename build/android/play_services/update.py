@@ -17,6 +17,7 @@ import sys
 import zipfile
 
 sys.path.append(os.path.join(os.path.dirname(__file__), os.pardir))
+import download_from_maven
 import devil_chromium
 from devil.utils import cmd_helper
 from play_services import utils
@@ -262,42 +263,24 @@ def UpdateSdk(args):
   breakpad.IS_ENABLED = False
 
   config = utils.ConfigParser(args.config)
+  target_repo = os.path.join(args.sdk_root, EXTRAS_GOOGLE_M2REPOSITORY)
 
   # Remove the old SDK.
-  shutil.rmtree(os.path.join(args.sdk_root, EXTRAS_GOOGLE_M2REPOSITORY))
+  shutil.rmtree(target_repo, ignore_errors=True)
 
-  with tempfile_ext.NamedTemporaryDirectory() as temp_dir:
-    # Configure temp_dir as the Maven repository.
-    settings_path = os.path.join(temp_dir, 'settings.xml')
-    with open(settings_path, 'w') as settings:
-      settings.write(MAVEN_SETTINGS_TEMPLATE.format(temp_dir))
+  downloader = download_from_maven.MavenDownloader()
+  artifact_list = [
+      'com.google.android.gms:{}:{}:aar'.format(client, config.version_number)
+      for client in config.clients]
 
-    for client in config.clients:
-      # Download the client.
-      artifact = 'com.google.android.gms:{}:{}:aar'.format(
-          client, config.version_number)
-      try:
-        cmd_helper.Call([
-            'mvn', '--global-settings', settings_path,
-            'org.apache.maven.plugins:maven-dependency-plugin:2.1:get',
-            '-DrepoUrl=https://maven.google.com', '-Dartifact=' + artifact])
-      except OSError as e:
-        if e.errno == os.errno.ENOENT:
-          logging.error('mvn command not found. Please install Maven.')
-          return -1
-        else:
-          raise
-
-      # Copy the client .aar file from temp_dir into the tree.
-      src_path = os.path.join(
-          temp_dir, COM_GOOGLE_ANDROID_GMS,
-          client, config.version_number,
-          '{}-{}.aar'.format(client, config.version_number))
-      dst_path = os.path.join(
-          args.sdk_root, EXTRAS_GOOGLE_M2REPOSITORY, COM_GOOGLE_ANDROID_GMS,
-          client, config.version_number)
-      _MakeDirIfAbsent(dst_path)
-      shutil.copy(src_path, dst_path)
+  try:
+    downloader.Install(target_repo, artifact_list)
+  except OSError as e:
+    if e.errno == os.errno.ENOENT:
+      logging.error('mvn command not found. Please install Maven.')
+      return -1
+    else:
+      raise
 
   return 0
 
