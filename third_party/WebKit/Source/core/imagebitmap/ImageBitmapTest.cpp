@@ -245,9 +245,6 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
   options.setColorSpaceConversion(
       kConversions[static_cast<uint8_t>(color_space_conversion)]);
 
-  // Set the runtime flags
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-
   return options;
 }
 
@@ -262,6 +259,10 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
 #endif
 
 TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionHTMLImageElement) {
+  // Enable experimental canvas features and color canvas extensions for this
+  // test
+  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
+
   HTMLImageElement* image_element =
       HTMLImageElement::Create(*Document::CreateForTest());
 
@@ -382,6 +383,10 @@ TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionHTMLImageElement) {
 #endif
 
 TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionImageBitmap) {
+  // Enable experimental canvas features and color canvas extensions for this
+  // test
+  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
+
   HTMLImageElement* image_element =
       HTMLImageElement::Create(*Document::CreateForTest());
 
@@ -500,6 +505,10 @@ TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionImageBitmap) {
 
 TEST_F(ImageBitmapTest,
        MAYBE_ImageBitmapColorSpaceConversionStaticBitmapImage) {
+  // Enable experimental canvas features and color canvas extensions for this
+  // test
+  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
+
   SkPaint p;
   p.setColor(SK_ColorRED);
   sk_sp<SkColorSpace> src_rgb_color_space = SkColorSpace::MakeSRGB();
@@ -597,6 +606,10 @@ TEST_F(ImageBitmapTest,
 }
 
 TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionImageData) {
+  // Enable experimental canvas features and color canvas extensions for this
+  // test
+  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
+
   sk_sp<SkColorSpace> src_rgb_color_space = SkColorSpace::MakeSRGB();
   unsigned char data_buffer[4] = {32, 96, 160, 255};
   DOMUint8ClampedArray* data = DOMUint8ClampedArray::Create(data_buffer, 4);
