@@ -46,6 +46,30 @@
       "revId": "a69dad79408d3c7fb3bb0b94ccfd266336b2215b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763a8ca0_4935818d",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-25T19:07:44Z",
+      "side": 1,
+      "message": "I didn\u0027t mean to make you work that hard ;) Haha I thought this might be the case.",
+      "parentUuid": "8cd2978e_cfa5d9ac",
+      "range": {
+        "startLine": 1556,
+        "startChar": 2,
+        "endLine": 1559,
+        "endChar": 21
+      },
+      "revId": "a69dad79408d3c7fb3bb0b94ccfd266336b2215b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
