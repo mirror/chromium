@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/profile_chooser_constants.h"
 #include "chrome/browser/ui/signin_view_controller_delegate.h"
+#include "components/web_modal/web_contents_modal_dialog_host.h"
 #include "ui/views/window/dialog_delegate.h"
 
 class Browser;
@@ -28,8 +29,10 @@ class WebView;
 // managing the Signin and Sync Confirmation tab-modal dialogs.
 // Instances of this class delete themselves when the window they're managing
 // closes (in the DeleteDelegate callback).
-class SigninViewControllerDelegateViews : public views::DialogDelegateView,
-                                          public SigninViewControllerDelegate {
+class SigninViewControllerDelegateViews
+    : public views::DialogDelegateView,
+      public SigninViewControllerDelegate,
+      public web_modal::WebContentsModalDialogHost {
  public:
   // Creates the web view that contains the signin flow in |mode| using
   // |profile| as the web content's profile, then sets |delegate| as the created
@@ -54,6 +57,18 @@ class SigninViewControllerDelegateViews : public views::DialogDelegateView,
   ui::ModalType GetModalType() const override;
   bool ShouldShowCloseButton() const override;
   int GetDialogButtons() const override;
+
+  web_modal::WebContentsModalDialogHost* GetWebContentsModalDialogHost()
+      override;
+
+  // web_modal::WebContentsModalDialogHost overrides
+  gfx::NativeView GetHostView() const override;
+  gfx::Point GetDialogPosition(const gfx::Size& size) override;
+  gfx::Size GetMaximumDialogSize() override;
+  gfx::Size GetMaximumDialogSize(
+      const gfx::Size& dialog_preferred_size) override;
+  void AddObserver(web_modal::ModalDialogHostObserver* observer) override;
+  void RemoveObserver(web_modal::ModalDialogHostObserver* observer) override;
 
  private:
   friend SigninViewControllerDelegate;
@@ -83,6 +98,8 @@ class SigninViewControllerDelegateViews : public views::DialogDelegateView,
   views::WebView* content_view_;
   views::Widget* modal_signin_widget_;  // Not owned.
   ui::ModalType dialog_modal_type_;
+
+  base::ObserverList<web_modal::ModalDialogHostObserver> host_observer_list_;
 
   DISALLOW_COPY_AND_ASSIGN(SigninViewControllerDelegateViews);
 };

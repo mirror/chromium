@@ -23,6 +23,9 @@ class WebContentsModalDialogHost : public ModalDialogHost {
 
   // Returns the maximum dimensions a dialog can have.
   virtual gfx::Size GetMaximumDialogSize() = 0;
+
+  virtual gfx::Size GetMaximumDialogSize(
+      const gfx::Size& dialog_preferred_size);
 };
 
 }  // namespace web_modal

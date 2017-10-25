@@ -20,6 +20,8 @@
 #include "ui/views/controls/webview/webview.h"
 #include "ui/views/widget/widget.h"
 
+#include <algorithm>
+
 namespace {
 
 const int kFixedGaiaViewHeight = 612;
@@ -55,7 +57,10 @@ SigninViewControllerDelegateViews::SigninViewControllerDelegateViews(
     DisplayModal();
 }
 
-SigninViewControllerDelegateViews::~SigninViewControllerDelegateViews() {}
+SigninViewControllerDelegateViews::~SigninViewControllerDelegateViews() {
+  for (web_modal::ModalDialogHostObserver& observer : host_observer_list_)
+    observer.OnHostDestroying();
+}
 
 // views::DialogDelegateView:
 views::View* SigninViewControllerDelegateViews::GetContentsView() {
@@ -182,6 +187,48 @@ std::unique_ptr<views::WebView>
 SigninViewControllerDelegateViews::CreateSigninErrorWebView(Browser* browser) {
   return CreateDialogWebView(browser, chrome::kChromeUISigninErrorURL,
                              kSigninErrorDialogHeight);
+}
+
+web_modal::WebContentsModalDialogHost*
+SigninViewControllerDelegateViews::GetWebContentsModalDialogHost() {
+  return this;
+  // return SigninViewControllerDelegate::GetWebContentsModalDialogHost();
+}
+
+// web_modal::WebContentsModalDialogHost overrides
+gfx::NativeView SigninViewControllerDelegateViews::GetHostView() const {
+  return modal_signin_widget_->GetNativeView();
+}
+
+gfx::Point SigninViewControllerDelegateViews::GetDialogPosition(
+    const gfx::Size& size) {
+  // Center the widget.
+  gfx::Size widget_size =
+      modal_signin_widget_->GetWindowBoundsInScreen().size();
+  return gfx::Point(widget_size.width() / 2 - size.width() / 2, 0);
+}
+
+gfx::Size SigninViewControllerDelegateViews::GetMaximumDialogSize() {
+  return modal_signin_widget_->GetWindowBoundsInScreen().size();
+}
+
+gfx::Size SigninViewControllerDelegateViews::GetMaximumDialogSize(
+    const gfx::Size& dialog_preferred_size) {
+  gfx::Size widget_size =
+      modal_signin_widget_->GetWindowBoundsInScreen().size();
+  int width = std::max(dialog_preferred_size.width(), widget_size.width());
+  widget_size.set_width(width);
+  modal_signin_widget_->SetSize(widget_size);
+  return modal_signin_widget_->GetWindowBoundsInScreen().size();
+}
+
+void SigninViewControllerDelegateViews::AddObserver(
+    web_modal::ModalDialogHostObserver* observer) {
+  host_observer_list_.AddObserver(observer);
+}
+void SigninViewControllerDelegateViews::RemoveObserver(
+    web_modal::ModalDialogHostObserver* observer) {
+  host_observer_list_.RemoveObserver(observer);
 }
 
 // static

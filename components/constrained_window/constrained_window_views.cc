@@ -159,7 +159,7 @@ void UpdateWebContentsModalDialogPosition(
     views::Widget* widget,
     web_modal::WebContentsModalDialogHost* dialog_host) {
   gfx::Size size = widget->GetRootView()->GetPreferredSize();
-  gfx::Size max_size = dialog_host->GetMaximumDialogSize();
+  gfx::Size max_size = dialog_host->GetMaximumDialogSize(size);
   // Enlarge the max size by the top border, as the dialog will be shifted
   // outside the area specified by the dialog host by this amount later.
   views::Border* border =

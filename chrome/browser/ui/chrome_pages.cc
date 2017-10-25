@@ -20,6 +20,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
+#include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
@@ -365,41 +366,39 @@ void ShowBrowserSignin(Browser* browser,
   SigninManagerBase* manager =
       SigninManagerFactory::GetForProfile(original_profile);
   DCHECK(manager->IsSigninAllowed());
-  // If the browser's profile is an incognito profile, make sure to use
-  // a browser window from the original profile.  The user cannot sign in
-  // from an incognito window.
-  bool switched_browser = false;
-  std::unique_ptr<ScopedTabbedBrowserDisplayer> displayer;
-  if (browser->profile()->IsOffTheRecord()) {
-    switched_browser = true;
-    displayer.reset(new ScopedTabbedBrowserDisplayer(original_profile));
+
+  {
+    // If the browser's profile is an incognito profile, make sure to use
+    // a browser window from the original profile. The user cannot sign in
+    // from an incognito window.
+    std::unique_ptr<ScopedTabbedBrowserDisplayer> displayer =
+        base::MakeUnique<ScopedTabbedBrowserDisplayer>(
+            browser->profile()->GetOriginalProfile());
     browser = displayer->browser();
+    if (browser->tab_strip_model()->empty())
+      chrome::AddTabAt(browser, GURL(), -1, true);
+    displayer.reset();
   }
 
+  // bool show_avatar_bubble = !browser->tab_strip_model()->empty();
+
+  // if (show_avatar_bubble) {
   // Since the extension is a separate application, it might steal focus
   // away from Chrome, and accidentally close the avatar bubble. The same will
   // happen if we had to switch browser windows to show the sign in page. In
   // this case, fallback to the full-tab signin page.
-  bool show_avatar_bubble =
-      access_point != signin_metrics::AccessPoint::ACCESS_POINT_EXTENSIONS &&
-      !switched_browser;
-#if defined(OS_CHROMEOS)
-  // ChromeOS doesn't have the avatar bubble.
-  show_avatar_bubble = false;
-#endif
-
-  if (show_avatar_bubble) {
-    browser->window()->ShowAvatarBubbleFromAvatarButton(
-        BrowserWindow::AVATAR_BUBBLE_MODE_SIGNIN,
-        signin::ManageAccountsParams(), access_point, false);
-  } else {
-    NavigateToSingletonTab(
-        browser,
-        signin::GetPromoURL(
-            access_point, signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
-            false));
-    DCHECK_GT(browser->tab_strip_model()->count(), 0);
-  }
+  browser->window()->ShowAvatarBubbleFromAvatarButton(
+      BrowserWindow::AVATAR_BUBBLE_MODE_SIGNIN, signin::ManageAccountsParams(),
+      access_point, false);
+  //}
+  // else {
+  //  NavigateToSingletonTab(
+  //    browser,
+  //    signin::GetPromoURL(
+  //      access_point, signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
+  //      false, true));
+  //  DCHECK_GT(browser->tab_strip_model()->count(), 0);
+  //}
 }
 
 void ShowBrowserSigninOrSettings(Browser* browser,
