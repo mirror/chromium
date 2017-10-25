@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5de0898_671e4c60",
+        "filename": "headless/public/util/compositor_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-25T12:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bc10019_cbd18a75",
+      "range": {
+        "startLine": 35,
+        "startChar": 69,
+        "endLine": 35,
+        "endChar": 77
+      },
+      "revId": "fd3e57095a8881f695bebab9aadd300778290ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3fb6a43_6125f8bd",
         "filename": "headless/public/util/compositor_controller.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1c9aab93_3b2f2e55",
+        "filename": "headless/public/util/compositor_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-25T12:42:26Z",
+      "side": 1,
+      "message": "Sadly not at the moment, since the DevTools virtual time API only accepts milliseconds. We should change that at some point. Added a TODO in the header.",
+      "parentUuid": "d3fb6a43_6125f8bd",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 41
+      },
+      "revId": "fd3e57095a8881f695bebab9aadd300778290ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4cdbb04_e338001b",
         "filename": "headless/public/util/compositor_controller.cc",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "fd3e57095a8881f695bebab9aadd300778290ec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307d6710_6b32fa71",
+        "filename": "headless/public/util/compositor_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-25T12:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4cdbb04_e338001b",
+      "range": {
+        "startLine": 301,
+        "startChar": 58,
+        "endLine": 301,
+        "endChar": 68
+      },
+      "revId": "fd3e57095a8881f695bebab9aadd300778290ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
