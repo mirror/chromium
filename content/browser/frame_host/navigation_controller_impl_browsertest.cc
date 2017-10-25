@@ -71,6 +71,9 @@ static const char kRemoveFrameScript[] =
     "var f = document.querySelector('iframe');"
     "f.parentNode.removeChild(f);";
 
+using testing::ElementsAre;
+using testing::IsEmpty;
+
 }  // namespace
 
 namespace content {
@@ -3705,6 +3708,56 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(0U, entry2->root_node()->children.size());
   EXPECT_EQ(3, controller.GetEntryCount());
   EXPECT_EQ(1, controller.GetLastCommittedEntryIndex());
+}
+
+// Verify that history.replaceState() populates the navigation entry's replaced
+// URLs.
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       FrameNavigationEntry_ReplaceState) {
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  const NavigationControllerImpl& controller =
+      static_cast<const NavigationControllerImpl&>(
+          shell()->web_contents()->GetController());
+  GURL url1(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_1.html"));
+
+  // Test fixture: start with typing a URL.
+  {
+    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+  }
+
+  {
+    // Reload from the renderer side.
+    FrameNavigateParamsCapturer capturer(root);
+    ASSERT_TRUE(ExecuteScript(root, "location.reload()"));
+    capturer.Wait();
+    ASSERT_FALSE(capturer.is_same_document());
+    EXPECT_EQ(1, controller.GetEntryCount());
+    EXPECT_THAT(controller.GetEntryAtIndex(0)->GetReplacedEntryURLs(),
+                ElementsAre(url1));
+  }
+
+  {
+    // history.replaceState().
+    FrameNavigateParamsCapturer capturer(root);
+    std::string script =
+        "history.replaceState({}, 'page 2', 'simple_page_2.html')";
+    ASSERT_TRUE(ExecuteScript(root, script));
+    capturer.Wait();
+    ASSERT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_type());
+    ASSERT_TRUE(capturer.is_same_document());
+
+    EXPECT_EQ(1, controller.GetEntryCount());
+    EXPECT_THAT(controller.GetEntryAtIndex(0)->GetReplacedEntryURLs(),
+                ElementsAre(url1, url1));
+  }
 }
 
 // Verify that subframes can be restored in a new NavigationController using the

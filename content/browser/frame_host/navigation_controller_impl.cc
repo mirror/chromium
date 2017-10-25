@@ -1383,6 +1383,10 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
     // which land us at the last committed entry.
     entry = GetLastCommittedEntry();
 
+    std::vector<GURL> replaced_entry_urls = entry->GetReplacedEntryURLs();
+    replaced_entry_urls.push_back(entry->GetURL());
+    entry->SetReplacedEntryURLs(replaced_entry_urls);
+
     // If this is a same document navigation, then there's no SSLStatus in the
     // NavigationHandle so don't overwrite the existing entry's SSLStatus.
     if (!is_same_document)

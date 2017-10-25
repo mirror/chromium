@@ -477,6 +477,12 @@ sync_pb::TabNavigation SerializedNavigationEntry::ToSyncData() const {
     }
   }
 
+  for (const GURL& replaced_entry_url : replaced_entry_urls_) {
+    sync_pb::ReplacedNavigation* replaced_navigation =
+        sync_data.add_replaced_navigation();
+    replaced_navigation->set_url(replaced_entry_url.spec());
+  }
+
   sync_data.set_is_restored(is_restored_);
 
   return sync_data;
@@ -484,17 +490,16 @@ sync_pb::TabNavigation SerializedNavigationEntry::ToSyncData() const {
 
 size_t SerializedNavigationEntry::EstimateMemoryUsage() const {
   using base::trace_event::EstimateMemoryUsage;
-  return
-      EstimateMemoryUsage(referrer_url_) +
-      EstimateMemoryUsage(virtual_url_) +
-      EstimateMemoryUsage(title_) +
-      EstimateMemoryUsage(encoded_page_state_) +
-      EstimateMemoryUsage(original_request_url_) +
-      EstimateMemoryUsage(search_terms_) +
-      EstimateMemoryUsage(favicon_url_) +
-      EstimateMemoryUsage(redirect_chain_) +
-      EstimateMemoryUsage(content_pack_categories_) +
-      EstimateMemoryUsage(extended_info_map_);
+  return EstimateMemoryUsage(referrer_url_) +
+         EstimateMemoryUsage(virtual_url_) + EstimateMemoryUsage(title_) +
+         EstimateMemoryUsage(encoded_page_state_) +
+         EstimateMemoryUsage(original_request_url_) +
+         EstimateMemoryUsage(search_terms_) +
+         EstimateMemoryUsage(favicon_url_) +
+         EstimateMemoryUsage(redirect_chain_) +
+         EstimateMemoryUsage(replaced_entry_urls_) +
+         EstimateMemoryUsage(content_pack_categories_) +
+         EstimateMemoryUsage(extended_info_map_);
 }
 
 }  // namespace sessions
