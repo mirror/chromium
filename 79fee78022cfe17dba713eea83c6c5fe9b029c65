@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a07dc44_b1e41423",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-25T20:32:17Z",
+      "side": 1,
+      "message": "Let\u0027s call it frameId and update description.",
+      "range": {
+        "startLine": 1931,
+        "startChar": 31,
+        "endLine": 1931,
+        "endChar": 41
+      },
+      "revId": "79fee78022cfe17dba713eea83c6c5fe9b029c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
