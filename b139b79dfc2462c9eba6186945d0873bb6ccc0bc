@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "636a1ac2_5bd6f76f",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8DOMActivityLogger.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-25T21:48:03Z",
+      "side": 1,
+      "message": "If this is still hot, looking at something like DomActivityLoggersForIsolatedWorld().empty() might be even faster. It may be that in common cases there the global activity logger is off in the browser process.\n\nI think this is ultimately controlled by ActivityLog::is_active_.",
+      "revId": "b139b79dfc2462c9eba6186945d0873bb6ccc0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
