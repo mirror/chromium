@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29d1cc61_0952bb95",
+        "filename": "components/viz/service/display/software_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-25T05:41:37Z",
+      "side": 1,
+      "message": "In PS1, the CQ dry-run failed. Turns out there were tests I hadn\u0027t run on my desktop that showed I made an incorrect assumption. So, I fixed the math here (and in gl_renderer.cc) to make them green.\n\nMore detail: I had assumed that CopyOutputRequest::area was relative to the upper-left corner of the Render Pass\u0027s output_rect. However, it is not; they are in the same coordinate system. Thus, for example, if output_rect is \"-100,-100 200x200\" and the CopyOutputRequest::area is set to \"0,0 100x100,\" the correct interpretation is \"copy the lower-right quadrant of the Render Pass\u0027s output,\" and NOT \"copy the upper-right quadrant.\"",
+      "range": {
+        "startLine": 594,
+        "startChar": 43,
+        "endLine": 594,
+        "endChar": 54
+      },
+      "revId": "f4fc8731ca6de4eb5e0ac7ae154f5591e2fab1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
