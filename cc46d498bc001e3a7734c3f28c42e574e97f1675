@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc56f8c6_a3ee584c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-25T05:01:39Z",
+      "side": 1,
+      "message": "I\u0027m planning to extract ArcSessionImpl into its dedicated files, like arc_session_impl.{h,cc}, then it can be easily unittested.\n\nBecause emulating mojo\u0027s socket operation looks more complicated, I\u0027ve just moved that specific part into a Delegate as preparation, so that we can inject fake impl when adding unittests.",
+      "parentUuid": "ababdd48_8efb4375",
+      "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab5ed2d7_1deec301",
         "filename": "components/arc/arc_session.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b809d148_a80f2095",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-25T05:01:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab5ed2d7_1deec301",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 72
+      },
+      "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e87915f_3d79dd83",
         "filename": "components/arc/arc_session.cc",
         "patchSetId": 1
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "52f7d479_eb4737d4",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-25T05:01:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e87915f_3d79dd83",
+      "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b10d17d_0383bfe8",
         "filename": "components/arc/arc_session.cc",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-10-24T23:37:23Z",
       "side": 1,
       "message": "nit/optional: not a new issue but isn\u0027t it better to weak-bind this since there\u0027s no reason to execute the function when |this| is already freed?",
+      "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1fd1415_c9bf0afb",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-25T05:01:39Z",
+      "side": 1,
+      "message": "This runs on another (i.e. non-UI) thread, while this object is designed to be alive on UI, so no weakptr, here.",
+      "parentUuid": "8b10d17d_0383bfe8",
       "revId": "cc46d498bc001e3a7734c3f28c42e574e97f1675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
