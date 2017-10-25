@@ -22,6 +22,30 @@
       "revId": "0cda6b26a5e78dda3df47b72c7fc314bd74792a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb81af9_3fd05378",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-25T12:01:38Z",
+      "side": 1,
+      "message": "Yeah, we\u0027re in the land of intersecting hacks here.\n\nCan you instead have ToolsMenuViewItem vend a \"canExecuteCommand\" boolean, which in the base case is just \u0027return self.selector !\u003d nullptr;\u0027, and for NewTabMenuViewItem is just \u0027YES\u0027?",
+      "parentUuid": "867f94da_b9d555bb",
+      "range": {
+        "startLine": 602,
+        "startChar": 8,
+        "endLine": 603,
+        "endChar": 59
+      },
+      "revId": "0cda6b26a5e78dda3df47b72c7fc314bd74792a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
