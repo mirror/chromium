@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "3a12522d_43e78fd4",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T20:37:30Z",
+      "side": 1,
+      "message": "Sorry, I am confused. All layer properties can animate, but if you just set them they immediately change, is my understanding?\n\nhttps://cs.chromium.org/chromium/src/ui/compositor/layer_unittest.cc?rcl\u003d0b91fe0b1b7ae2edcfafef5aaa1cf041f8fdf157\u0026l\u003d1037",
+      "parentUuid": "0c8c12ec_8f1f7869",
+      "revId": "982b404583196658076122785177edb79a9836b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a5b25fd_b4ead3f8",
         "filename": "ui/compositor/layer.h",
         "patchSetId": 6
