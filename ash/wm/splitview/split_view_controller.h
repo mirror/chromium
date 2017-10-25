@@ -38,6 +38,10 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
                                        public display::DisplayObserver,
                                        public TabletModeObserver {
  public:
+  // Five fixed position ratios of the divider.
+  static constexpr float kFixedPositionRatios[] = {0.0f, 0.33f, 0.5f, 0.67f,
+                                                   1.0f};
+
   enum State { NO_SNAP, LEFT_SNAPPED, RIGHT_SNAPPED, BOTH_SNAPPED };
 
   // "LEFT" and "RIGHT" are the snap positions corresponding to "primary
@@ -73,7 +77,6 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   bool IsSplitViewModeActive() const;
 
   bool IsCurrentScreenOrientationLandscape() const;
-  bool IsCurrentScreenOrientationPrimary() const;
 
   // Snaps window to left/right.
   void SnapWindow(aura::Window* window, SnapPosition snap_position);
@@ -214,6 +217,10 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   // will end split view mode and adjust the overview window grid bounds if the
   // overview mode is active at that moment.
   void OnSnappedWindowMinimizedOrDestroyed(aura::Window* window);
+
+  // Returns the closest fixed divider position in |kFixedPositionRatios|
+  // according to |distance| and |length|.
+  float FindClosestFixedPositionRatio(float distance, float length);
 
   // The current left/right snapped window.
   aura::Window* left_window_ = nullptr;
