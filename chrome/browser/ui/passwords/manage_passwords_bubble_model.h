@@ -94,6 +94,10 @@ class ManagePasswordsBubbleModel {
   // clicked.
   void OnSkipSignInClicked();
 
+  // Returns true iff passwords viewing is allowed. If viewing is locked, the
+  // method calls re-authentication.
+  bool TryToViewPasswords();
+
   password_manager::ui::State state() const { return state_; }
 
   const base::string16& title() const { return title_; }
@@ -117,10 +121,10 @@ class ManagePasswordsBubbleModel {
   }
 
 #if defined(UNIT_TEST)
-  void set_hide_eye_icon(bool hide) { hide_eye_icon_ = hide; }
-#endif
+  void allow_passwords_viewing() { passwords_viewing_is_locked_ = false; }
 
-  bool hide_eye_icon() const { return hide_eye_icon_; }
+  bool passwords_viewing_is_locked() { return passwords_viewing_is_locked_; }
+#endif
 
   bool enable_editing() const { return enable_editing_; }
 
@@ -172,8 +176,8 @@ class ManagePasswordsBubbleModel {
   // A bridge to ManagePasswordsUIController instance.
   base::WeakPtr<PasswordsModelDelegate> delegate_;
 
-  // True iff the eye icon should be hidden for privacy reasons.
-  bool hide_eye_icon_;
+  // True iff password viewing should require re-auth for privacy reasons.
+  bool passwords_viewing_is_locked_;
 
   // True iff username/password editing should be enabled.
   bool enable_editing_;

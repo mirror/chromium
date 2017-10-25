@@ -14,6 +14,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/default_clock.h"
+#include "build/build_config.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
@@ -33,6 +34,12 @@
 
 #if defined(OS_WIN)
 #include "chrome/browser/ui/desktop_ios_promotion/desktop_ios_promotion_util.h"
+#endif
+
+#if defined(OS_WIN)
+#include "chrome/browser/password_manager/password_manager_util_win.h"
+#elif defined(OS_MACOSX)
+#include "chrome/browser/password_manager/password_manager_util_mac.h"
 #endif
 
 namespace metrics_util = password_manager::metrics_util;
@@ -291,9 +298,10 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
         interaction_stats.dismissal_count = stats->dismissal_count;
       }
     }
-    hide_eye_icon_ = delegate_->BubbleIsManualFallbackForSaving()
-                         ? pending_password_.form_has_autofilled_value
-                         : display_reason == USER_ACTION;
+    passwords_viewing_is_locked_ =
+        delegate_->BubbleIsManualFallbackForSaving()
+            ? pending_password_.form_has_autofilled_value
+            : display_reason == USER_ACTION;
     enable_editing_ = delegate_->GetCredentialSource() !=
                       password_manager::metrics_util::CredentialSourceType::
                           kCredentialManagementAPI;
@@ -504,6 +512,21 @@ void ManagePasswordsBubbleModel::OnSkipSignInClicked() {
       metrics_util::CHROME_SIGNIN_CANCEL);
   GetProfile()->GetPrefs()->SetBoolean(
       password_manager::prefs::kWasSignInPasswordPromoClicked, true);
+}
+
+bool ManagePasswordsBubbleModel::TryToViewPasswords() {
+  if (!passwords_viewing_is_locked_)
+    return true;
+  bool authenticated = true;
+#if defined(OS_WIN)
+  authenticated = password_manager_util_win::AuthenticateUser(
+      GetWebContents()->GetNativeView());
+#elif defined(OS_MACOSX)
+  authenticated = password_manager_util_mac::AuthenticateUser();
+#endif
+  if (authenticated)
+    passwords_viewing_is_locked_ = false;
+  return authenticated;
 }
 
 Profile* ManagePasswordsBubbleModel::GetProfile() const {
