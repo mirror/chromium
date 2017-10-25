@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71fc278f_f170c2e4",
+        "filename": "chrome/browser/ui/webui/certificate_viewer_webui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T06:06:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56f407a2_92b11c9e",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 79
+      },
+      "revId": "d54e7f38a4a7a4bb277d58fa6b6e5fb3022047e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac32b97_6dcadf9e",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
         "patchSetId": 1
@@ -42,6 +66,47 @@
         "endLine": 274,
         "endChar": 58
       },
+      "revId": "d54e7f38a4a7a4bb277d58fa6b6e5fb3022047e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3c1b45_11c9bd9a",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T06:06:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac32b97_6dcadf9e",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 58
+      },
+      "revId": "d54e7f38a4a7a4bb277d58fa6b6e5fb3022047e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43911e45_0b660cf6",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T06:06:57Z",
+      "side": 1,
+      "message": "I\u0027ll rewrite these in a separate CL.",
       "revId": "d54e7f38a4a7a4bb277d58fa6b6e5fb3022047e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "6781a468_93e33ece",
+        "filename": "chrome/test/chromedriver/commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T06:06:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8eb74acb_44e5020a",
+      "range": {
+        "startLine": 98,
+        "startChar": 18,
+        "endLine": 98,
+        "endChar": 66
+      },
+      "revId": "d54e7f38a4a7a4bb277d58fa6b6e5fb3022047e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78275cd5_b3b00b86",
         "filename": "extensions/browser/api/usb/usb_api.cc",
         "patchSetId": 1
@@ -91,6 +180,30 @@
       "revId": "d54e7f38a4a7a4bb277d58fa6b6e5fb3022047e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21535966_a31bdf38",
+        "filename": "extensions/browser/api/usb/usb_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T06:06:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78275cd5_b3b00b86",
+      "range": {
+        "startLine": 1260,
+        "startChar": 16,
+        "endLine": 1260,
+        "endChar": 23
+      },
+      "revId": "d54e7f38a4a7a4bb277d58fa6b6e5fb3022047e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "338c34f7_e5942dab",
+        "filename": "extensions/browser/api/usb/usb_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1262,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T06:06:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "479ff9d4_7cc0d29a",
+      "range": {
+        "startLine": 1262,
+        "startChar": 16,
+        "endLine": 1262,
+        "endChar": 23
+      },
+      "revId": "d54e7f38a4a7a4bb277d58fa6b6e5fb3022047e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82d104_fe516d60",
         "filename": "extensions/browser/guest_view/web_view/web_view_find_helper.cc",
         "patchSetId": 1
@@ -137,6 +274,30 @@
       "revId": "d54e7f38a4a7a4bb277d58fa6b6e5fb3022047e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f0c392_3395e6ac",
+        "filename": "extensions/browser/guest_view/web_view/web_view_find_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T06:06:57Z",
+      "side": 1,
+      "message": "Ya, I\u0027m not sure where I saw SetPath() used, but reading base/values.h again, the documentation clearly recommends SetKey() for the common usage case.",
+      "parentUuid": "3d82d104_fe516d60",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 67
+      },
+      "revId": "d54e7f38a4a7a4bb277d58fa6b6e5fb3022047e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
