@@ -2,6 +2,143 @@
   "comments": [
     {
       "key": {
+        "uuid": "0a97cb43_78fa47af",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-25T23:26:56Z",
+      "side": 1,
+      "message": "CdmFileImpl",
+      "range": {
+        "startLine": 33,
+        "startChar": 26,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3826cb99_92d7f849",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-25T23:26:56Z",
+      "side": 1,
+      "message": "Needs to be updated.",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845b57c7_4b727881",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-25T23:26:56Z",
+      "side": 1,
+      "message": "Add a comment that this is a global lock map shared by all CdmFileImpl instances.",
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7eaa713_ddfe34bd",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-25T23:26:56Z",
+      "side": 1,
+      "message": "We are binding the |callback| deep in the callback chain, IMHO this has a few issues:\n1. It\u0027s hard to read.\n2. We depend on FileUtil to always fire the callback to the correct thread. This is fine, but we could be hit by FileUtil bugs, e.g. during tear down.\n3. BUG: if |this| is destroyed before OnFileOpenedForRead() runs, the callback will be dropped without running.\n\nOne common pattern in media/ code is that we store the callback as a class memeber variable, e.g. open_cb_, and we DCHECK it wherever possible. Then we don\u0027t need to pass it anywhere. In dtor, if it\u0027s not null, we fire it.",
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea712a8a_66f22c9b",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-25T23:26:56Z",
+      "side": 1,
+      "message": "If |this| is destroyed before this method runs, the |on_close_callback| will be dropped. File a bug and add a TODO here?",
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894b2a50_170042c2",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-25T23:26:56Z",
+      "side": 1,
+      "message": "ditto about binding the callback in the callback chain...",
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc735ae_5c75c944",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-25T23:26:56Z",
+      "side": 1,
+      "message": "tiny nit: auto would work here :)",
+      "range": {
+        "startLine": 261,
+        "startChar": 2,
+        "endLine": 261,
+        "endChar": 24
+      },
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66e1ccc8_b3e69eb2",
         "filename": "content/browser/media/cdm_file_impl.h",
         "patchSetId": 13
@@ -18,6 +155,29 @@
         "startChar": 62,
         "endLine": 29,
         "endChar": 59
+      },
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c9a172_c96c670f",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-25T23:26:56Z",
+      "side": 1,
+      "message": "nit: Move this to before Initialize()?",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 24
       },
       "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -42,6 +202,47 @@
         "endLine": 35,
         "endChar": 68
       },
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ca8ced_0faabcf2",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-25T23:26:56Z",
+      "side": 1,
+      "message": "Actually now it\u0027s a struct and you can just remove the word \"tuple\".",
+      "parentUuid": "c115d0bf_77c832d2",
+      "range": {
+        "startLine": 35,
+        "startChar": 25,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3112211_d411344c",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-25T23:26:56Z",
+      "side": 1,
+      "message": "It looks like you can move FileLockKey to the .cc file? Then the whole locking business because impl detail of the .cc file.",
       "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +317,23 @@
       "writtenOn": "2017-10-25T22:16:58Z",
       "side": 1,
       "message": "Add a comment that |this| could be destroyed when running the callback in failure cases.",
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18b1168_54b9c56f",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-25T23:26:56Z",
+      "side": 1,
+      "message": "Add a comment that base::File::FILE_ERROR_IN_USE in the returned file means the file is in use by other CDMs or by the system.",
       "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
