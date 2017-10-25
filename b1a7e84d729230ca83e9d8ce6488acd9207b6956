@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac2b223b_cc0b122a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-25T19:20:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb3579db_7471c801",
+      "revId": "b1a7e84d729230ca83e9d8ce6488acd9207b6956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df8db157_32baf7f4",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b1a7e84d729230ca83e9d8ce6488acd9207b6956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f7c2cf_a4cb9184",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-25T19:20:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df8db157_32baf7f4",
+      "revId": "b1a7e84d729230ca83e9d8ce6488acd9207b6956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
