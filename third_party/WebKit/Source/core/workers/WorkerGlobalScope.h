@@ -218,6 +218,10 @@ class CORE_EXPORT WorkerGlobalScope
 
   WorkerThread* thread_;
 
+  // "Each WorkerGlobalScope object also has a closing flag, which must
+  // initially be false, but which can get set to true by the algorithms in the
+  // processing model section below."
+  // https://html.spec.whatwg.org/multipage/workers.html#dom-workerglobalscope-closing
   bool closing_ = false;
 
   Member<WorkerEventQueue> event_queue_;
