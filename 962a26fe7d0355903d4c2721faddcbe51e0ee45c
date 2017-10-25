@@ -16,6 +16,24 @@
       "revId": "962a26fe7d0355903d4c2721faddcbe51e0ee45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43fba17_1a8cce71",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 11
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-10-25T05:55:37Z",
+      "side": 1,
+      "message": "We already a concept of \"internal pseudo\", which can be used only in User-Agent stylesheet.  We should adopt it.\n-webkit-input-suggested is not acceptable because it\u0027s web-exposed.",
+      "parentUuid": "81c7eaf2_b4150300",
+      "revId": "962a26fe7d0355903d4c2721faddcbe51e0ee45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
