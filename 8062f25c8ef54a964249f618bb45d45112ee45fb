@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e15e871_c7ee7bd3",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-25T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f1b0eaa_a8efa7d9",
+      "range": {
+        "startLine": 346,
+        "startChar": 55,
+        "endLine": 346,
+        "endChar": 60
+      },
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd5f9050_9ba53a1c",
         "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "05974093_bb2884ff",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-25T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd5f9050_9ba53a1c",
+      "range": {
+        "startLine": 348,
+        "startChar": 2,
+        "endLine": 352,
+        "endChar": 76
+      },
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b10005b_c3dad132",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 3
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b3136ecd_db928783",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-25T18:27:49Z",
+      "side": 1,
+      "message": "I just tried to maintain exactly the same logic, but I\u0027m not sure why in the case of SetWallpaperFromImageSkia we did not have the policy check.",
+      "parentUuid": "5b10005b_c3dad132",
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "104b2ef9_d7f1c602",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 3
@@ -76,6 +142,24 @@
       "writtenOn": "2017-10-25T01:31:38Z",
       "side": 1,
       "message": "What is the reason SetUserWallpaperInfo(account_id, info, is_persistent); is not called in this case (I\u0027m not saying it\u0027s wrong, I\u0027m just curious :) )?",
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68ea52e_49511ce0",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-25T18:27:49Z",
+      "side": 1,
+      "message": "It\u0027s added now. I think it was forgotten before..",
+      "parentUuid": "104b2ef9_d7f1c602",
       "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "76e30efd_b2e2d0c5",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-25T18:27:49Z",
+      "side": 1,
+      "message": "On a second thought, since the two functions have clearly separate use cases, maybe we don\u0027t need to combine them. But I think it\u0027s necessary to rename them as the current names are ambiguous.",
+      "parentUuid": "7c86098e_96ea740e",
+      "range": {
+        "startLine": 767,
+        "startChar": 12,
+        "endLine": 767,
+        "endChar": 13
+      },
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1f686c8_18ce31bc",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 3
@@ -119,6 +227,24 @@
       "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38259ddd_78db3eb6",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-25T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1f686c8_18ce31bc",
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
