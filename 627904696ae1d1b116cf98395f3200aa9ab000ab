@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc26470b_9fc6f2d4",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-25T01:32:58Z",
+      "side": 1,
+      "message": "No, I didn\u0027t see any test coverage for \u0027perf_tests\u0027 either, so I wasn\u0027t sure how to make the test.",
+      "parentUuid": "35c82970_704d67ca",
+      "range": {
+        "startLine": 452,
+        "startChar": 9,
+        "endLine": 452,
+        "endChar": 29
+      },
+      "revId": "627904696ae1d1b116cf98395f3200aa9ab000ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf151df4_82d536a3",
         "filename": "tools/perf/core/perf_data_generator.py",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-25T00:05:36Z",
       "side": 1,
       "message": "Why not just handle this all in the existing perf_tests/generate_cplusplus_isolate_script_test?",
+      "range": {
+        "startLine": 934,
+        "startChar": 26,
+        "endLine": 934,
+        "endChar": 74
+      },
+      "revId": "627904696ae1d1b116cf98395f3200aa9ab000ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b2fc6d_f0b71d89",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-25T01:32:58Z",
+      "side": 1,
+      "message": "I tried something like that at first, but the code looked pretty ugly. I can upload the old code if you are interested.",
+      "parentUuid": "bf151df4_82d536a3",
       "range": {
         "startLine": 934,
         "startChar": 26,
