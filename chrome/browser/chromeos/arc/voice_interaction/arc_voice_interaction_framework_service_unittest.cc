@@ -12,6 +12,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/highlighter_controller_client.h"
+#include "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_cras_audio_client.h"
@@ -87,6 +88,57 @@ class TestHighlighterController : public ash::mojom::HighlighterController,
   DISALLOW_COPY_AND_ASSIGN(TestHighlighterController);
 };
 
+class TestVoiceInteractionController
+    : public ash::mojom::VoiceInteractionController {
+ public:
+  TestVoiceInteractionController() : binding_(this) {}
+  ~TestVoiceInteractionController() override = default;
+
+  ash::mojom::VoiceInteractionControllerPtr CreateInterfacePtrAndBind() {
+    ash::mojom::VoiceInteractionControllerPtr ptr;
+    binding_.Bind(mojo::MakeRequest(&ptr));
+    return ptr;
+  }
+
+  // ash::mojom::VoiceInteractionController
+  void NotifyStatusChanged(ash::VoiceInteractionState state) override {
+    voice_interaction_state_ = state;
+  }
+  void NotifySettingsEnabled(bool enabled) override {
+    voice_interaction_settings_enabled_ = enabled;
+  }
+  void NotifyContextEnabled(bool enabled) override {
+    voice_interaction_context_enabled_ = enabled;
+  }
+  void NotifySetupCompleted(bool completed) override {
+    voice_interaction_setup_completed_ = completed;
+  }
+
+  ash::VoiceInteractionState voice_interaction_state() const {
+    return voice_interaction_state_;
+  }
+  bool voice_interaction_settings_enabled() const {
+    return voice_interaction_settings_enabled_;
+  }
+  bool voice_interaction_context_enabled() const {
+    return voice_interaction_context_enabled_;
+  }
+  bool voice_interaction_setup_completed() const {
+    return voice_interaction_setup_completed_;
+  }
+
+ private:
+  ash::VoiceInteractionState voice_interaction_state_ =
+      ash::VoiceInteractionState::STOPPED;
+  bool voice_interaction_settings_enabled_ = false;
+  bool voice_interaction_context_enabled_ = false;
+  bool voice_interaction_setup_completed_ = false;
+
+  mojo::Binding<ash::mojom::VoiceInteractionController> binding_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestVoiceInteractionController);
+};
+
 }  // namespace
 
 class ArcVoiceInteractionFrameworkServiceTest : public ash::AshTestBase {
@@ -109,10 +161,14 @@ class ArcVoiceInteractionFrameworkServiceTest : public ash::AshTestBase {
         std::make_unique<ArcSessionRunner>(base::Bind(FakeArcSession::Create)));
     arc_bridge_service_ = std::make_unique<ArcBridgeService>();
     highlighter_controller_ = std::make_unique<TestHighlighterController>();
+    voice_interaction_controller_ =
+        std::make_unique<TestVoiceInteractionController>();
     framework_service_ = std::make_unique<ArcVoiceInteractionFrameworkService>(
         profile_.get(), arc_bridge_service_.get());
     framework_service_->GetHighlighterClientForTesting()
         ->SetConnectorForTesting(highlighter_controller_->connector());
+    voice_interaction_controller_client()->SetControllerForTesting(
+        voice_interaction_controller_->CreateInterfacePtrAndBind());
     framework_instance_ =
         std::make_unique<FakeVoiceInteractionFrameworkInstance>();
     arc_bridge_service_->voice_interaction_framework()->SetInstance(
@@ -122,6 +178,9 @@ class ArcVoiceInteractionFrameworkServiceTest : public ash::AshTestBase {
     FlushHighlighterControllerMojo();
 
     framework_service()->SetVoiceInteractionSetupCompleted();
+    // Flushing is required for the notify mojo call to get through to the voice
+    // interaction controller.
+    FlushVoiceInteractionControllerMojo();
   }
 
   void TearDown() override {
@@ -149,8 +208,20 @@ class ArcVoiceInteractionFrameworkServiceTest : public ash::AshTestBase {
     return highlighter_controller_.get();
   }
 
+  TestVoiceInteractionController* voice_interaction_controller() {
+    return voice_interaction_controller_.get();
+  }
+
+  VoiceInteractionControllerClient* voice_interaction_controller_client() {
+    return framework_service_->GetVoiceInteractionControllerClientForTesting();
+  }
+
   void FlushHighlighterControllerMojo() {
     framework_service_->GetHighlighterClientForTesting()->FlushMojoForTesting();
+  }
+
+  void FlushVoiceInteractionControllerMojo() {
+    voice_interaction_controller_client()->FlushMojoForTesting();
   }
 
  private:
@@ -160,6 +231,7 @@ class ArcVoiceInteractionFrameworkServiceTest : public ash::AshTestBase {
   std::unique_ptr<ArcBridgeService> arc_bridge_service_;
   std::unique_ptr<ArcSessionManager> arc_session_manager_;
   std::unique_ptr<TestHighlighterController> highlighter_controller_;
+  std::unique_ptr<TestVoiceInteractionController> voice_interaction_controller_;
   std::unique_ptr<ArcVoiceInteractionFrameworkService> framework_service_;
   std::unique_ptr<FakeVoiceInteractionFrameworkInstance> framework_instance_;
 
@@ -180,6 +252,10 @@ TEST_F(ArcVoiceInteractionFrameworkServiceTest, ShowSettings) {
 
 TEST_F(ArcVoiceInteractionFrameworkServiceTest, StartSession) {
   framework_service()->StartSessionFromUserInteraction(gfx::Rect());
+  // A notification should be sent if the container is not ready yet.
+  FlushVoiceInteractionControllerMojo();
+  EXPECT_EQ(ash::VoiceInteractionState::NOT_READY,
+            voice_interaction_controller()->voice_interaction_state());
   // The signal to start voice interaction session should be sent.
   EXPECT_EQ(1u, framework_instance()->start_session_count());
 }
@@ -199,12 +275,20 @@ TEST_F(ArcVoiceInteractionFrameworkServiceTest, StartSessionWithoutInstance) {
   arc_bridge_service()->voice_interaction_framework()->SetInstance(nullptr);
 
   framework_service()->StartSessionFromUserInteraction(gfx::Rect());
+  // A notification should be sent if the container is not ready yet.
+  FlushVoiceInteractionControllerMojo();
+  EXPECT_EQ(ash::VoiceInteractionState::NOT_READY,
+            voice_interaction_controller()->voice_interaction_state());
   // The signal should not be sent when framework instance not ready.
   EXPECT_EQ(0u, framework_instance()->start_session_count());
 }
 
 TEST_F(ArcVoiceInteractionFrameworkServiceTest, ToggleSession) {
   framework_service()->ToggleSessionFromUserInteraction();
+  // A notification should be sent if the container is not ready yet.
+  FlushVoiceInteractionControllerMojo();
+  EXPECT_EQ(ash::VoiceInteractionState::NOT_READY,
+            voice_interaction_controller()->voice_interaction_state());
   // The signal to toggle voice interaction session should be sent.
   EXPECT_EQ(1u, framework_instance()->toggle_session_count());
 }
@@ -275,6 +359,40 @@ TEST_F(ArcVoiceInteractionFrameworkServiceTest, HighlighterControllerClient) {
   highlighter_controller()->CallHandleEnabledStateChange(true);
   EXPECT_EQ(1u, framework_instance()->set_metalayer_visibility_count());
   EXPECT_TRUE(framework_instance()->metalayer_visible());
+}
+
+TEST_F(ArcVoiceInteractionFrameworkServiceTest,
+       VoiceInteractionControllerClient) {
+  TestVoiceInteractionController* controller = voice_interaction_controller();
+  VoiceInteractionControllerClient* controller_client =
+      voice_interaction_controller_client();
+  // The voice interaction flags should be set after the initial setup.
+  EXPECT_TRUE(controller->voice_interaction_settings_enabled());
+  EXPECT_TRUE(controller->voice_interaction_context_enabled());
+  EXPECT_TRUE(controller->voice_interaction_setup_completed());
+  EXPECT_EQ(controller->voice_interaction_state(),
+            ash::VoiceInteractionState::STOPPED);
+
+  // Send the signal to disable voice interaction settings.
+  controller_client->NotifySettingsEnabled(false);
+  FlushVoiceInteractionControllerMojo();
+  EXPECT_FALSE(controller->voice_interaction_settings_enabled());
+
+  // Send the signal to disable voice interaction context.
+  controller_client->NotifyContextEnabled(false);
+  FlushVoiceInteractionControllerMojo();
+  EXPECT_FALSE(controller->voice_interaction_context_enabled());
+
+  // Send the signal to disable the voice interaction setup completed flag.
+  controller_client->NotifySetupCompleted(false);
+  FlushVoiceInteractionControllerMojo();
+  EXPECT_FALSE(controller->voice_interaction_setup_completed());
+
+  // Send the signal to set the voice interaction state.
+  controller_client->NotifyStatusChanged(ash::VoiceInteractionState::RUNNING);
+  FlushVoiceInteractionControllerMojo();
+  EXPECT_EQ(controller->voice_interaction_state(),
+            ash::VoiceInteractionState::RUNNING);
 }
 
 }  // namespace arc

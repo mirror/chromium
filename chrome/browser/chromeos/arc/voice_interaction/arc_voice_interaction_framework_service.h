@@ -33,6 +33,7 @@ namespace arc {
 
 class ArcBridgeService;
 class HighlighterControllerClient;
+class VoiceInteractionControllerClient;
 
 // This provides voice interaction context (currently screenshots)
 // to ARC to be used by VoiceInteractionSession. This class lives on the UI
@@ -127,6 +128,11 @@ class ArcVoiceInteractionFrameworkService
     return highlighter_client_.get();
   }
 
+  VoiceInteractionControllerClient*
+  GetVoiceInteractionControllerClientForTesting() const {
+    return voice_interaction_controller_client_.get();
+  }
+
   // For supporting ArcServiceManager::GetService<T>().
   static const char kArcServiceName[];
 
@@ -171,6 +177,9 @@ class ArcVoiceInteractionFrameworkService
   int32_t context_request_remaining_count_ = 0;
 
   std::unique_ptr<HighlighterControllerClient> highlighter_client_;
+
+  std::unique_ptr<VoiceInteractionControllerClient>
+      voice_interaction_controller_client_;
 
   base::WeakPtrFactory<ArcVoiceInteractionFrameworkService> weak_ptr_factory_;
 

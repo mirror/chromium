@@ -1,0 +1,9 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//ash/public/interfaces/voice_interaction_controller.mojom"
+public_headers = [ "//ash/public/cpp/voice_interaction_state.h" ]
+traits_headers = [ "//ash/voice_interaction/voice_interaction_struct_traits.h" ]
+sources = []
+type_mappings = [ "ash.mojom.VoiceInteractionState=ash::VoiceInteractionState" ]

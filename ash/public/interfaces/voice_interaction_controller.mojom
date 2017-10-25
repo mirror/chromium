@@ -1,0 +1,30 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module ash.mojom;
+
+[Extensible]
+enum VoiceInteractionState {
+  NOT_READY = 0,
+  STOPPED,
+  RUNNING
+};
+
+// Interface for ash client (Chrome) to connect to the voice interaction
+// controller, which notifies changes of voice interaction related flags.
+interface VoiceInteractionController {
+  // Called when the voice interaction state is changed.
+  NotifyStatusChanged(VoiceInteractionState state);
+
+  // Called when the voice interaction settings is enabled/disabled.
+  NotifySettingsEnabled(bool enabled);
+
+  // Called when the voice interaction context is enabled/disabled.
+  // If context is enabled the screenshot will be passed in voice
+  // interaction session.
+  NotifyContextEnabled(bool enabled);
+
+  // Called when the voice interaction setup complete status is changed.
+  NotifySetupCompleted(bool completed);
+};

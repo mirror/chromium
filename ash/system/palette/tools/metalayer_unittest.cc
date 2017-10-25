@@ -14,6 +14,7 @@
 #include "ash/system/palette/tools/metalayer_mode.h"
 #include "ash/system/tray/hover_highlight_view.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/voice_interaction/voice_interaction_controller.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -73,9 +74,12 @@ TEST_F(MetalayerToolTest, PaletteMenuState) {
         const bool ready = state != VoiceInteractionState::NOT_READY;
         const bool selectable = enabled && context && ready;
 
-        Shell::Get()->NotifyVoiceInteractionStatusChanged(state);
-        Shell::Get()->NotifyVoiceInteractionEnabled(enabled);
-        Shell::Get()->NotifyVoiceInteractionContextEnabled(context);
+        Shell::Get()->voice_interaction_controller()->NotifyStatusChanged(
+            state);
+        Shell::Get()->voice_interaction_controller()->NotifySettingsEnabled(
+            enabled);
+        Shell::Get()->voice_interaction_controller()->NotifyContextEnabled(
+            context);
 
         std::unique_ptr<views::View> view =
             base::WrapUnique(tool_->CreateView());
@@ -117,25 +121,25 @@ TEST_F(MetalayerToolTest, EnablingDisablingMetalayerEnablesDisablesController) {
 
 // Verifies that disabling the metalayer support disables the tool.
 TEST_F(MetalayerToolTest, MetalayerUnsupportedDisablesPaletteTool) {
-  Shell::Get()->NotifyVoiceInteractionStatusChanged(
+  Shell::Get()->voice_interaction_controller()->NotifyStatusChanged(
       VoiceInteractionState::RUNNING);
-  Shell::Get()->NotifyVoiceInteractionEnabled(true);
-  Shell::Get()->NotifyVoiceInteractionContextEnabled(true);
+  Shell::Get()->voice_interaction_controller()->NotifySettingsEnabled(true);
+  Shell::Get()->voice_interaction_controller()->NotifyContextEnabled(true);
 
   // Disabling the user prefs individually should disable the tool.
   tool_->OnEnable();
   EXPECT_CALL(*palette_tool_delegate_.get(),
               DisableTool(PaletteToolId::METALAYER));
-  Shell::Get()->NotifyVoiceInteractionEnabled(false);
+  Shell::Get()->voice_interaction_controller()->NotifySettingsEnabled(false);
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
-  Shell::Get()->NotifyVoiceInteractionEnabled(true);
+  Shell::Get()->voice_interaction_controller()->NotifySettingsEnabled(true);
 
   tool_->OnEnable();
   EXPECT_CALL(*palette_tool_delegate_.get(),
               DisableTool(PaletteToolId::METALAYER));
-  Shell::Get()->NotifyVoiceInteractionContextEnabled(false);
+  Shell::Get()->voice_interaction_controller()->NotifyContextEnabled(false);
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
-  Shell::Get()->NotifyVoiceInteractionContextEnabled(true);
+  Shell::Get()->voice_interaction_controller()->NotifyContextEnabled(true);
 
   // Test VoiceInteractionState changes.
   tool_->OnEnable();
@@ -145,16 +149,16 @@ TEST_F(MetalayerToolTest, MetalayerUnsupportedDisablesPaletteTool) {
   EXPECT_CALL(*palette_tool_delegate_.get(),
               DisableTool(PaletteToolId::METALAYER))
       .Times(0);
-  Shell::Get()->NotifyVoiceInteractionStatusChanged(
+  Shell::Get()->voice_interaction_controller()->NotifyStatusChanged(
       VoiceInteractionState::STOPPED);
-  Shell::Get()->NotifyVoiceInteractionStatusChanged(
+  Shell::Get()->voice_interaction_controller()->NotifyStatusChanged(
       VoiceInteractionState::RUNNING);
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
 
   // Changing the state to NOT_READY should disable the tool.
   EXPECT_CALL(*palette_tool_delegate_.get(),
               DisableTool(PaletteToolId::METALAYER));
-  Shell::Get()->NotifyVoiceInteractionStatusChanged(
+  Shell::Get()->voice_interaction_controller()->NotifyStatusChanged(
       VoiceInteractionState::NOT_READY);
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
 }

@@ -26,6 +26,7 @@
 #include "ash/system/night_light/night_light_controller.h"
 #include "ash/system/tray/system_tray_controller.h"
 #include "ash/tray_action/tray_action.h"
+#include "ash/voice_interaction/voice_interaction_controller.h"
 #include "ash/wallpaper/wallpaper_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/bind.h"
@@ -125,6 +126,11 @@ void BindTrayActionRequestOnMainThread(mojom::TrayActionRequest request) {
   Shell::Get()->tray_action()->BindRequest(std::move(request));
 }
 
+void BindVoiceInteractionControllerRequestOnMainThread(
+    mojom::VoiceInteractionControllerRequest request) {
+  Shell::Get()->voice_interaction_controller()->BindRequest(std::move(request));
+}
+
 void BindVpnListRequestOnMainThread(mojom::VpnListRequest request) {
   Shell::Get()->vpn_list()->BindRequest(std::move(request));
 }
@@ -184,6 +190,9 @@ void RegisterInterfaces(
                          main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindTrayActionRequestOnMainThread),
                          main_thread_task_runner);
+  registry->AddInterface(
+      base::Bind(&BindVoiceInteractionControllerRequestOnMainThread),
+      main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindVpnListRequestOnMainThread),
                          main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindWallpaperRequestOnMainThread),
