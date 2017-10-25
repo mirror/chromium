@@ -11,7 +11,6 @@
 #include "base/numerics/math_constants.h"
 #include "chrome/browser/vr/databinding/binding.h"
 #include "chrome/browser/vr/elements/button.h"
-#include "chrome/browser/vr/elements/close_button_texture.h"
 #include "chrome/browser/vr/elements/content_element.h"
 #include "chrome/browser/vr/elements/draw_phase.h"
 #include "chrome/browser/vr/elements/exclusive_screen_toast.h"
@@ -22,6 +21,7 @@
 #include "chrome/browser/vr/elements/invisible_hit_target.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/rect.h"
+#include "chrome/browser/vr/elements/speech_recognition_prompt.h"
 #include "chrome/browser/vr/elements/spinner.h"
 #include "chrome/browser/vr/elements/system_indicator.h"
 #include "chrome/browser/vr/elements/text.h"
@@ -32,6 +32,7 @@
 #include "chrome/browser/vr/elements/ui_texture.h"
 #include "chrome/browser/vr/elements/url_bar.h"
 #include "chrome/browser/vr/elements/vector_icon.h"
+#include "chrome/browser/vr/elements/vector_icon_button_texture.h"
 #include "chrome/browser/vr/elements/viewport_aware_root.h"
 #include "chrome/browser/vr/elements/webvr_url_toast.h"
 #include "chrome/browser/vr/model/model.h"
@@ -86,7 +87,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
       showing_web_vr_splash_screen_(
           ui_initial_state.web_vr_autopresentation_expected),
       browsing_disabled_(ui_initial_state.browsing_disabled) {
-  Create2dBrowsingSubtreeRoots();
+  Create2dBrowsingSubtreeRoots(model);
   CreateWebVrRoot();
   CreateBackground();
   CreateViewportAwareRoot();
@@ -101,14 +102,14 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateToasts(model);
   CreateSplashScreen(model);
   CreateUnderDevelopmentNotice();
-  CreateVoiceSearchButton();
+  CreateVoiceSearchUiGroup(model);
 
   ConfigureScene();
 }
 
 UiSceneManager::~UiSceneManager() {}
 
-void UiSceneManager::Create2dBrowsingSubtreeRoots() {
+void UiSceneManager::Create2dBrowsingSubtreeRoots(Model* model) {
   auto element = base::MakeUnique<UiElement>();
   element->set_name(k2dBrowsingRoot);
   element->SetVisible(true);
@@ -123,8 +124,16 @@ void UiSceneManager::Create2dBrowsingSubtreeRoots() {
 
   element = base::MakeUnique<UiElement>();
   element->set_name(k2dBrowsingForeground);
-  element->SetVisible(true);
   element->set_hit_testable(false);
+  element->AddBinding(base::MakeUnique<Binding<bool>>(
+      base::Bind([](Model* m) { return m->recognizing_speech; },
+                 base::Unretained(model)),
+      base::Bind(
+          [](UiElement* element, const bool& value) {
+            // Hide itself if speech recognition UI is showing.
+            element->SetVisible(!value);
+          },
+          base::Unretained(element.get()))));
   scene_->AddUiElement(k2dBrowsingRoot, std::move(element));
 
   element = base::MakeUnique<UiElement>();
@@ -371,7 +380,7 @@ void UiSceneManager::CreateSplashScreen(Model* model) {
 
   auto button = base::MakeUnique<Button>(
       base::Bind(&UiSceneManager::OnWebVrTimedOut, base::Unretained(this)),
-      base::MakeUnique<CloseButtonTexture>());
+      base::MakeUnique<VectorIconButtonTexture>(vector_icons::kClose16Icon));
   button->set_name(kWebVrTimeoutMessageButton);
   button->set_draw_phase(kPhaseOverlayForeground);
   button->SetTranslate(0, kTimeoutButtonVerticalOffset,
@@ -487,19 +496,53 @@ void UiSceneManager::CreateViewportAwareRoot() {
   scene_->AddUiElement(k2dBrowsingRoot, std::move(element));
 }
 
-void UiSceneManager::CreateVoiceSearchButton() {
-  // TODO(bshe): Use a proper microphone button and update size and translation
-  // according to UX.
-  auto element = base::MakeUnique<Button>(
+void UiSceneManager::CreateVoiceSearchUiGroup(Model* model) {
+  std::unique_ptr<UiElement> element;
+
+  auto voice_search_button = base::MakeUnique<Button>(
       base::Bind(&UiSceneManager::OnVoiceSearchButtonClicked,
                  base::Unretained(this)),
-      base::MakeUnique<CloseButtonTexture>());
+      base::MakeUnique<VectorIconButtonTexture>(vector_icons::kMicrophoneIcon));
+  voice_search_button_ = voice_search_button.get();
+  element = std::move(voice_search_button);
   element->set_name(kVoiceSearchButton);
   element->set_draw_phase(kPhaseForeground);
-  element->SetTranslate(0.f, 0.f, -kCloseButtonDistance);
+  element->SetTranslate(kVoiceSearchButtonXOffset, 0.f, 0.f);
   element->SetSize(kCloseButtonWidth, kCloseButtonHeight);
-  voice_search_button_ = element.get();
-  scene_->AddUiElement(k2dBrowsingForeground, std::move(element));
+  element->set_x_anchoring(XAnchoring::XRIGHT);
+  control_elements_.push_back(element.get());
+  scene_->AddUiElement(kUrlBar, std::move(element));
+
+  auto speech_recognition_prompt =
+      base::MakeUnique<SpeechRecognitionPrompt>(256);
+  speech_recognition_prompt_ = speech_recognition_prompt.get();
+  speech_recognition_prompt_->AddBinding(base::MakeUnique<Binding<int>>(
+      base::Bind([](Model* m) { return m->speech_recognition_state; },
+                 base::Unretained(model)),
+      base::Bind(
+          [](SpeechRecognitionPrompt* prompt, const int& value) {
+            prompt->OnSpeechRecognitionStateChanged(value);
+          },
+          base::Unretained(speech_recognition_prompt_))));
+  speech_recognition_prompt_->AddBinding(
+      VR_BIND_FUNC(bool, Model, model, recognizing_speech, UiElement,
+                   speech_recognition_prompt_, SetVisible));
+  element = std::move(speech_recognition_prompt);
+  element->set_name(kSpeechRecognitionPrompt);
+  element->set_draw_phase(kPhaseForeground);
+  element->SetSize(kCloseButtonWidth * 2, kCloseButtonHeight * 2);
+  element->SetTranslate(0.f, 0.f, -kContentDistance);
+  scene_->AddUiElement(k2dBrowsingRoot, std::move(element));
+
+  auto backplane = base::MakeUnique<ExitPromptBackplane>(base::Bind(
+      &UiSceneManager::OnExitRecognizingSpeechClicked, base::Unretained(this)));
+  speech_recognition_prompt_backplane_ = backplane.get();
+  element = std::move(backplane);
+  element->set_name(kSpeechRecognitionPromptBackplane);
+  element->set_draw_phase(kPhaseForeground);
+  element->SetSize(kExitPromptBackplaneSize, kExitPromptBackplaneSize);
+  element->SetTranslate(0.0, 0.0, -kTextureOffset);
+  scene_->AddUiElement(kSpeechRecognitionPrompt, std::move(element));
 }
 
 void UiSceneManager::CreateUrlBar(Model* model) {
@@ -594,7 +637,7 @@ void UiSceneManager::CreateWebVrUrlToast() {
 void UiSceneManager::CreateCloseButton() {
   std::unique_ptr<Button> element = base::MakeUnique<Button>(
       base::Bind(&UiSceneManager::OnCloseButtonClicked, base::Unretained(this)),
-      base::MakeUnique<CloseButtonTexture>());
+      base::MakeUnique<VectorIconButtonTexture>(vector_icons::kClose16Icon));
   element->set_name(kCloseButton);
   element->set_draw_phase(kPhaseForeground);
   element->SetTranslate(0, kContentVerticalOffset - (kContentHeight / 2) - 0.3f,
@@ -803,18 +846,19 @@ void UiSceneManager::ConfigureScene() {
   scene_->GetUiElementByName(k2dBrowsingRoot)->SetVisible(browsing_mode);
   scene_->GetUiElementByName(kWebVrRoot)->SetVisible(!browsing_mode);
 
-  // Controls (URL bar, loading progress, etc).
+  // Controls (URL bar, loading progress, voice search button etc).
   bool controls_visible = browsing_mode && !fullscreen_ && !prompting_to_exit_;
   for (UiElement* element : control_elements_) {
     element->SetVisible(controls_visible);
   }
 
+  if (!base::FeatureList::IsEnabled(features::kExperimentalVRFeatures)) {
+    voice_search_button_->SetVisible(false);
+  }
+
   // Close button is a special control element that needs to be hidden when in
   // WebVR, but it needs to be visible when in cct or fullscreen.
   close_button_->SetVisible(browsing_mode && (fullscreen_ || in_cct_));
-  voice_search_button_->SetVisible(
-      browsing_mode &&
-      base::FeatureList::IsEnabled(features::kExperimentalVRFeatures));
 
   // Content elements.
   for (UiElement* element : content_elements_) {
@@ -1014,6 +1058,10 @@ void UiSceneManager::OnExitPromptBackplaneClicked() {
                                  ExitVrPromptChoice::CHOICE_NONE);
 }
 
+void UiSceneManager::OnExitRecognizingSpeechClicked() {
+  browser_->SetVoiceSearchActive(false);
+}
+
 void UiSceneManager::OnExitPromptChoice(bool chose_exit) {
   browser_->OnExitVrPromptResult(exit_vr_prompt_reason_,
                                  chose_exit ? ExitVrPromptChoice::CHOICE_EXIT
@@ -1047,8 +1095,7 @@ void UiSceneManager::OnCloseButtonClicked() {
 }
 
 void UiSceneManager::OnVoiceSearchButtonClicked() {
-  recognizing_speech_ = !recognizing_speech_;
-  browser_->SetVoiceSearchActive(recognizing_speech_);
+  browser_->SetVoiceSearchActive(true);
 }
 
 void UiSceneManager::OnUnsupportedMode(UiUnsupportedMode mode) {

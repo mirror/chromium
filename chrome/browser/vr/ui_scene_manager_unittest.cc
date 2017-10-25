@@ -59,6 +59,8 @@ const std::set<UiElementName> kHitTestableElements = {
     kWebVrTimeoutMessageButton,
     kWebVrTimeoutMessageButtonText,
     kVoiceSearchButton,
+    kSpeechRecognitionPrompt,
+    kSpeechRecognitionPromptBackplane,
 };
 const std::set<UiElementName> kElementsVisibleWithExitWarning = {
     kScreenDimmer, kExitWarning,
