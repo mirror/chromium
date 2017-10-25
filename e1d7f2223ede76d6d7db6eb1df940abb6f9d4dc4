@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57e069f8_9d2c60dd",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_posix.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T23:54:07Z",
+      "side": 1,
+      "message": "Official Linux bot does not like this, because it doesn\u0027t check the return result.",
+      "revId": "e1d7f2223ede76d6d7db6eb1df940abb6f9d4dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
