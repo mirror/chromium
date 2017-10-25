@@ -5,4 +5,4 @@
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller_base_feature.h"
 
 const base::Feature kSafeAreaCompatibleToolbar{
-    "SafeAreaCompatibleToolbar", base::FEATURE_DISABLED_BY_DEFAULT};
+    "SafeAreaCompatibleToolbar", base::FEATURE_ENABLED_BY_DEFAULT};
