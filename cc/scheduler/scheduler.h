@@ -179,6 +179,7 @@ class CC_EXPORT Scheduler : public viz::BeginFrameObserverBase {
 
   bool skipped_last_frame_missed_exceeded_deadline_ = false;
   bool skipped_last_frame_to_reduce_latency_ = false;
+  bool using_implicit_deadline_on_next_begin_frame_ = false;
 
   std::unique_ptr<CompositorTimingHistory> compositor_timing_history_;
 
