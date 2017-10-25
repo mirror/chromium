@@ -311,6 +311,8 @@ HRESULT NotificationPlatformBridgeWin::OnActivated(
   bool incognito = false;
   GURL origin_url;
 
+  MessageBoxA(NULL, "OnActivated()", "Title", MB_OK);
+
   NotificationData* data =
       FindNotificationData(notification_id, profile_id, origin_url, incognito);
   if (data)
@@ -328,6 +330,8 @@ HRESULT NotificationPlatformBridgeWin::OnDismissed(
   std::string profile_id = "";
   bool incognito = false;
   GURL origin_url;
+
+  MessageBoxA(NULL, "OnDismissed()", "Title", MB_OK);
 
   NotificationData* data =
       FindNotificationData(notification_id, profile_id, origin_url, incognito);
