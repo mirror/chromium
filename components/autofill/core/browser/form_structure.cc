@@ -1058,7 +1058,7 @@ bool FormStructure::operator!=(const FormData& form) const {
   return !operator==(form);
 }
 
-void FormStructure::RationalizeFieldTypePredictions() {
+void FormStructure::RationalizeCreditCardFieldsPredictions() {
   bool cc_first_name_found = false;
   bool cc_last_name_found = false;
   bool cc_num_found = false;
@@ -1198,6 +1198,147 @@ void FormStructure::RationalizeFieldTypePredictions() {
         break;
     }
   }
+}
+
+void FormStructure::RationalizePhoneNumberFieldsPredictions() {
+  AutofillField* found_number_field = nullptr;
+  AutofillField* found_number_field_second = nullptr;
+  AutofillField* found_city_code_field = nullptr;
+  AutofillField* found_country_code_field = nullptr;
+  AutofillField* found_city_and_number_field = nullptr;
+  AutofillField* found_whole_number_field = nullptr;
+  bool phone_number_found = false;
+  bool phone_number_separate_fields = false;
+  // Iterate through all fields. Iteration stops when it first finds a valid
+  // set of fields that can compose a whole number. The |found_*| pointers
+  // will be set to that set of fields when iteration finishes.
+  for (const auto& field : fields_) {
+    ServerFieldType current_field_type = field->Type().GetStorableType();
+    switch (current_field_type) {
+      case PHONE_HOME_NUMBER:
+      case PHONE_BILLING_NUMBER:
+        if (!found_number_field) {
+          found_number_field = field.get();
+          if (field->max_length < 5) {
+            phone_number_separate_fields = true;
+          } else if (found_city_code_field) {
+            phone_number_found = true;
+          }
+          break;
+        }
+        // If the form has phone number separated into exchange and subscriber
+        // number we mark both of them as number fields.
+        // TODO(wuandy): A less hacky solution to have dedicated enum for
+        // exchange and subscriber number.
+        if (phone_number_separate_fields && !found_number_field_second) {
+          found_number_field_second = field.get();
+          if (found_city_code_field)
+            phone_number_found = true;
+        }
+        break;
+      case PHONE_HOME_CITY_CODE:
+      case PHONE_BILLING_CITY_CODE:
+        if (!phone_number_found && !found_city_code_field)
+          found_city_code_field = field.get();
+        break;
+      case PHONE_HOME_COUNTRY_CODE:
+      case PHONE_BILLING_COUNTRY_CODE:
+        if (!phone_number_found && !found_country_code_field)
+          found_country_code_field = field.get();
+        break;
+      case PHONE_HOME_CITY_AND_NUMBER:
+      case PHONE_BILLING_CITY_AND_NUMBER:
+        if (!phone_number_found && !found_city_and_number_field) {
+          found_city_and_number_field = field.get();
+          phone_number_found = true;
+        }
+        break;
+      case PHONE_HOME_WHOLE_NUMBER:
+      case PHONE_BILLING_WHOLE_NUMBER:
+        if (!phone_number_found && !found_whole_number_field) {
+          found_whole_number_field = field.get();
+          phone_number_found = true;
+        }
+        break;
+      default:
+        break;
+    }
+    if (phone_number_found)
+      break;
+  }
+
+  // unset pointers pointing to fields that don't compose a first complete
+  // phone number.
+  if (found_whole_number_field) {
+    found_number_field = nullptr;
+    found_number_field_second = nullptr;
+    found_city_code_field = nullptr;
+    found_city_and_number_field = nullptr;
+    found_country_code_field = nullptr;
+  } else if (found_city_and_number_field) {
+    found_number_field = nullptr;
+    found_number_field_second = nullptr;
+    found_city_code_field = nullptr;
+  }
+
+  // A second update pass.
+  // At this point, either |phone_number_found| is false and we should do a
+  // best-effort filling for the field whose types we have seen a first time.
+  // Or |phone_number_found| is true and the pointers to the fields that
+  // compose the first valid phone number are set to not-NULL, specifically:
+  // 1. |found_whole_number_field| is not NULL, other pointers set to NULL, or
+  // 2. |found_city_and_number_field| is not NULL, |found_country_code_field| is
+  //    probably not NULL, and other pointers set to NULL, or
+  // 3. |found_city_code_field| and |found_number_field| are not NULL,
+  //    |found_country_code_field| is probably not NULL, and other pointers are
+  //    NULL.
+  // 4. |found_city_code_field|, |found_number_field| and
+  // |found_number_field_second|
+  //    are not NULL, |found_country_code_field| is probably not NULL, and other
+  //    pointers are NULL.
+
+  // For all above cases, in the update pass, if one field is phone
+  // number related but not one of the found fields from first pass, set their
+  // |only_fill_when_focused| field to true.
+  for (auto it = fields_.begin(); it != fields_.end(); ++it) {
+    auto& field = *it;
+    ServerFieldType current_field_type = field->Type().GetStorableType();
+    switch (current_field_type) {
+      case PHONE_HOME_NUMBER:
+      case PHONE_BILLING_NUMBER:
+        if (field.get() != found_number_field &&
+            field.get() != found_number_field_second)
+          field->set_only_fill_when_focused(true);
+        break;
+      case PHONE_HOME_CITY_CODE:
+      case PHONE_BILLING_CITY_CODE:
+        if (field.get() != found_city_code_field)
+          field->set_only_fill_when_focused(true);
+        break;
+      case PHONE_HOME_COUNTRY_CODE:
+      case PHONE_BILLING_COUNTRY_CODE:
+        if (field.get() != found_country_code_field)
+          field->set_only_fill_when_focused(true);
+        break;
+      case PHONE_HOME_CITY_AND_NUMBER:
+      case PHONE_BILLING_CITY_AND_NUMBER:
+        if (field.get() != found_city_and_number_field)
+          field->set_only_fill_when_focused(true);
+        break;
+      case PHONE_HOME_WHOLE_NUMBER:
+      case PHONE_BILLING_WHOLE_NUMBER:
+        if (field.get() != found_whole_number_field)
+          field->set_only_fill_when_focused(true);
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+void FormStructure::RationalizeFieldTypePredictions() {
+  RationalizeCreditCardFieldsPredictions();
+  RationalizePhoneNumberFieldsPredictions();
 }
 
 void FormStructure::EncodeFormForQuery(
