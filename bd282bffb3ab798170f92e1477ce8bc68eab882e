@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd7a7e2b_5120c45c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/ImageView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-25T16:47:19Z",
+      "side": 1,
+      "message": "Let\u0027s have a helper function, so that all decisions about extension vs mime type are centralized somewhere?",
+      "revId": "bd282bffb3ab798170f92e1477ce8bc68eab882e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
