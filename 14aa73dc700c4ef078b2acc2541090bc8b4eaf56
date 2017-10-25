@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "320c6ba7_f9a56ed0",
+        "filename": "chrome/browser/resources/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:24:09Z",
+      "side": 1,
+      "message": "Move down to in between enable_{extensions,vr} to keep it in alphabetical order?",
+      "revId": "14aa73dc700c4ef078b2acc2541090bc8b4eaf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af04e8fc_a875ee26",
+        "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:24:09Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "14aa73dc700c4ef078b2acc2541090bc8b4eaf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda82aa5_2aa2852b",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:24:09Z",
+      "side": 1,
+      "message": "Note: You have room for 40 IDs. Hope that\u0027s enough. Otherwise, we\u0027ll have to change all the numbers below.",
+      "revId": "14aa73dc700c4ef078b2acc2541090bc8b4eaf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
