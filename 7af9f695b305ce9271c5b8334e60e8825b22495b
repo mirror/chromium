@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3637280_cb9afbbc",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:07:44Z",
+      "side": 1,
+      "message": "Is this required in the .h? If not, move it to the cpp file.",
+      "revId": "7af9f695b305ce9271c5b8334e60e8825b22495b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79a59b8_e8e99c56",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:07:44Z",
+      "side": 1,
+      "message": "Forward declare IntRect instead.",
+      "revId": "7af9f695b305ce9271c5b8334e60e8825b22495b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c718ff29_12eb71b6",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:07:44Z",
+      "side": 1,
+      "message": "Please document the other parameters.",
+      "revId": "7af9f695b305ce9271c5b8334e60e8825b22495b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88fe2112_eaac865c",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:07:44Z",
+      "side": 1,
+      "message": "What is a color bucket? Is this defined somewhere? Either here or in a README / document.",
+      "revId": "7af9f695b305ce9271c5b8334e60e8825b22495b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd221f0_168a88b7",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:07:44Z",
+      "side": 1,
+      "message": "Please document the parameters.",
+      "revId": "7af9f695b305ce9271c5b8334e60e8825b22495b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
