@@ -178,11 +178,11 @@ cr.define('extensions', function() {
     },
 
     get keyboardShortcuts() {
-      return this.$['keyboard-shortcuts'];
+      return this.$.keyboardShortcuts;
     },
 
     get errorPage() {
-      return this.$['error-page'];
+      return this.$.errorPage;
     },
 
     /**
@@ -334,13 +334,13 @@ cr.define('extensions', function() {
     getPage_: function(page) {
       switch (page) {
         case Page.LIST:
-          return this.$['items-list'];
+          return this.$.itemsList;
         case Page.DETAILS:
-          return this.$['details-view'];
+          return this.$.detailsView;
         case Page.SHORTCUTS:
-          return this.$['keyboard-shortcuts'];
+          return this.$.keyboardShortcuts;
         case Page.ERRORS:
-          return this.$['error-page'];
+          return this.$.errorPage;
       }
       assertNotReached();
     },
@@ -365,33 +365,41 @@ cr.define('extensions', function() {
 
       const fromPage = this.currentPage_ ? this.currentPage_.page : null;
       const toPage = newPage.page;
-      let data;
-      if (newPage.extensionId)
-        data = assert(this.getData_(newPage.extensionId));
 
-      if (toPage == Page.DETAILS)
-        this.detailViewItem_ = assert(data);
-      else if (toPage == Page.ERRORS)
-        this.errorPageItem_ = assert(data);
-
-      if (fromPage != toPage) {
-        /** @type {extensions.ViewManager} */ (this.$.viewManager)
-            .switchView(toPage);
-      } else {
-        /** @type {extensions.ViewManager} */ (this.$.viewManager)
-            .animateCurrentView('fade-in');
+      if (this.currentPage_) {
+        this[this.currentPage_.page + 'ShowPage_'] = false;
       }
+      this[newPage.page + 'ShowPage_'] = true;
+      this.async(() => {
+        let data;
+        if (newPage.extensionId)
+          data = assert(this.getData_(newPage.extensionId));
 
-      if (newPage.subpage) {
-        assert(newPage.subpage == Dialog.OPTIONS);
-        assert(newPage.extensionId);
-        this.showOptionsDialog_ = true;
-        this.async(() => {
-          this.$$('#options-dialog').show(data);
-        });
-      }
+        if (toPage == Page.DETAILS)
+          this.detailViewItem_ = assert(data);
+        else if (toPage == Page.ERRORS)
+          this.errorPageItem_ = assert(data);
 
-      this.currentPage_ = newPage;
+        if (fromPage != toPage) {
+          /** @type {extensions.ViewManager} */ (this.$.viewManager)
+              .switchView(toPage);
+        } else {
+          /** @type {extensions.ViewManager} */ (this.$.viewManager)
+              .animateCurrentView('fade-in');
+        }
+
+        if (newPage.subpage) {
+          assert(newPage.subpage == Dialog.OPTIONS);
+          assert(newPage.extensionId);
+          this.showOptionsDialog_ = true;
+          this.async(() => {
+            this.$$('#options-dialog').show(data);
+          });
+        }
+
+        this.currentPage_ = newPage;
+        this.fire('extensions-manager-page-ready');
+      });
     },
 
     /** @private */
