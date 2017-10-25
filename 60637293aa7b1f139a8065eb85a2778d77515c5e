@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "f0bb8b71_c000dd40",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-25T23:22:56Z",
+      "side": 1,
+      "message": "Good point, sorry I missed this.\nI\u0027d say it would be sufficient to call RemoveEffectiveConnectionTypeObserver on the page_handler_ in this class\u0027s destructor as the page_handler_\u0027s destructor won\u0027t have run yet.",
+      "parentUuid": "27d0f13c_0b9e5417",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 53
+      },
+      "revId": "60637293aa7b1f139a8065eb85a2778d77515c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e34e3e1_21f835b0",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.h",
         "patchSetId": 5
