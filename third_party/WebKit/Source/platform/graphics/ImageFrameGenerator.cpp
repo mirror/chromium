@@ -199,13 +199,11 @@ bool ImageFrameGenerator::DecodeToYUV(SegmentReader* data,
       data, true, ImageDecoder::kAlphaPremultiplied, decoder_color_behavior_);
   // getYUVComponentSizes was already called and was successful, so
   // ImageDecoder::create must succeed.
-  DCHECK(decoder);
+  DCHECK(decoder && decoder->CanDecodeToYUV());
 
   std::unique_ptr<ImagePlanes> image_planes =
       std::make_unique<ImagePlanes>(planes, row_bytes);
   decoder->SetImagePlanes(std::move(image_planes));
-
-  DCHECK(decoder->CanDecodeToYUV());
 
   if (decoder->DecodeToYUV()) {
     SetHasAlpha(0, false);  // YUV is always opaque
