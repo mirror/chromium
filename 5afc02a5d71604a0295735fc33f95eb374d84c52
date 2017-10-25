@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "fbfc14b8_82d7deb9",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-25T06:17:49Z",
+      "side": 1,
+      "message": "why not use the cache dir? or files dir?",
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b379fb_f06fbc1f",
+        "filename": "components/download/in_progress_metadata/download_entry.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-25T06:17:49Z",
+      "side": 1,
+      "message": "default?",
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f430273e_13fe2c02",
         "filename": "components/download/in_progress_metadata/in_progress_metadata_cache.cc",
         "patchSetId": 3
@@ -71,6 +105,23 @@
     },
     {
       "key": {
+        "uuid": "b18e8734_538ee942",
+        "filename": "components/download/in_progress_metadata/in_progress_metadata_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-25T06:17:49Z",
+      "side": 1,
+      "message": "why does this takes a pointer rather than a const reference, like the one above? Does this entry has to be in the entries? or we will do a search and update the entry that was found?",
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2afdce8e_26f64380",
         "filename": "components/download/in_progress_metadata/proto/download_entry.proto",
         "patchSetId": 3
@@ -88,6 +139,23 @@
         "endLine": 11,
         "endChar": 1
       },
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a67a85_857a8d64",
+        "filename": "components/download/in_progress_metadata/proto/download_entry.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-25T06:17:49Z",
+      "side": 1,
+      "message": "is this really optional?",
       "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
