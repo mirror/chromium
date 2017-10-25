@@ -116,7 +116,8 @@ Layer::Layer()
       device_scale_factor_(1.0f),
       cache_render_surface_requests_(0),
       deferred_paint_requests_(0),
-      trilinear_filtering_request_(0) {
+      trilinear_filtering_request_(0),
+      hide_layer_and_subtree_(false) {
   CreateCcLayer();
 }
 
@@ -146,7 +147,8 @@ Layer::Layer(LayerType type)
       device_scale_factor_(1.0f),
       cache_render_surface_requests_(0),
       deferred_paint_requests_(0),
-      trilinear_filtering_request_(0) {
+      trilinear_filtering_request_(0),
+      hide_layer_and_subtree_(false) {
   CreateCcLayer();
 }
 
@@ -568,10 +570,6 @@ bool Layer::IsDrawn() const {
   return layer == nullptr;
 }
 
-bool Layer::ShouldDraw() const {
-  return type_ != LAYER_NOT_DRAWN && GetCombinedOpacity() > 0.0f;
-}
-
 // static
 void Layer::ConvertPointToLayer(const Layer* source,
                                 const Layer* target,
@@ -654,7 +652,7 @@ void Layer::SwitchToLayer(scoped_refptr<cc::Layer> new_layer) {
   cc_layer_->SetTransformOrigin(gfx::Point3F());
   cc_layer_->SetContentsOpaque(fills_bounds_opaquely_);
   cc_layer_->SetIsDrawable(type_ != LAYER_NOT_DRAWN);
-  cc_layer_->SetHideLayerAndSubtree(!visible_);
+  cc_layer_->SetHideLayerAndSubtree(hide_layer_and_subtree_ || !visible_);
   cc_layer_->SetElementId(cc::ElementId(cc_layer_->id()));
 
   SetLayerFilters();
@@ -727,6 +725,11 @@ void Layer::RemoveTrilinearFilteringRequest() {
                     trilinear_filtering_request_);
   if (trilinear_filtering_request_ == 0)
     cc_layer_->SetTrilinearFiltering(false);
+}
+
+void Layer::SetHideLayerAndSubtree(bool hide) {
+  hide_layer_and_subtree_ = hide;
+  cc_layer_->SetHideLayerAndSubtree(hide);
 }
 
 void Layer::SetTextureMailbox(

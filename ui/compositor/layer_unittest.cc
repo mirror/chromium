@@ -762,6 +762,7 @@ TEST_F(LayerWithDelegateTest, Cloning) {
   layer->SetLayerTemperature(temperature);
   layer->AddCacheRenderSurfaceRequest();
   layer->AddTrilinearFilteringRequest();
+  layer->SetHideLayerAndSubtree(true);
 
   auto clone = layer->Clone();
 
@@ -777,6 +778,9 @@ TEST_F(LayerWithDelegateTest, Cloning) {
   // Cloning should not preserve trilinear_filtering flag.
   EXPECT_NE(layer->cc_layer_for_testing()->trilinear_filtering(),
             clone->cc_layer_for_testing()->trilinear_filtering());
+  // Cloning should not preserve hide_layer_and_subtree flag.
+  EXPECT_NE(layer->cc_layer_for_testing()->hide_layer_and_subtree(),
+            clone->cc_layer_for_testing()->hide_layer_and_subtree());
 
   layer->SetTransform(gfx::Transform());
   layer->SetColor(SK_ColorGREEN);
@@ -2114,6 +2118,25 @@ TEST_F(LayerWithRealCompositorTest, SwitchCCLayerTrilinearFiltering) {
 
   // Ensure that the trilinear_filtering flag is maintained.
   EXPECT_TRUE(l1->cc_layer_for_testing()->trilinear_filtering());
+}
+
+// Tests that when a layer with hide_layer_and_subtree flag has its CC layer
+// switched, that the hide_layer_and_subtree flag is maintained.
+TEST_F(LayerWithRealCompositorTest, SwitchCCLayerSetHideLayerAndSubtree) {
+  std::unique_ptr<Layer> root(CreateLayer(LAYER_TEXTURED));
+  std::unique_ptr<Layer> l1(CreateLayer(LAYER_TEXTURED));
+  GetCompositor()->SetRootLayer(root.get());
+  root->Add(l1.get());
+
+  EXPECT_FALSE(l1->cc_layer_for_testing()->hide_layer_and_subtree());
+  l1->SetHideLayerAndSubtree(true);
+  EXPECT_TRUE(l1->cc_layer_for_testing()->hide_layer_and_subtree());
+
+  // Change l1's cc::Layer.
+  l1->SwitchCCLayerForTest();
+
+  // Ensure that the hide_layer_and_subtree flag is maintained.
+  EXPECT_TRUE(l1->cc_layer_for_testing()->hide_layer_and_subtree());
 }
 
 // Tests that the animators in the layer tree is added to the
