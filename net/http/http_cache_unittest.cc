@@ -6638,6 +6638,48 @@ TEST(HttpCache, MAYBE_RangeGET_Cancel) {
 
 // Fails only on bots. crbug.com/533640
 #if defined(OS_ANDROID)
+#define MAYBE_RangeGET_CancelWhileReading DISABLED_RangeGET_CancelWhileReading
+#else
+#define MAYBE_RangeGET_CancelWhileReading RangeGET_CancelWhileReading
+#endif
+// Tests that we don't mark an entry as truncated if it is partial and not
+// already truncated.
+TEST(HttpCache, MAYBE_RangeGET_CancelWhileReading) {
+  MockHttpCache cache;
+  AddMockTransaction(&kRangeGET_TransactionOK);
+
+  MockHttpRequest request(kRangeGET_TransactionOK);
+
+  auto c = std::make_unique<Context>();
+  int rv = cache.CreateTransaction(&c->trans);
+  ASSERT_THAT(rv, IsOk());
+
+  rv = c->trans->Start(&request, c->callback.callback(), NetLogWithSource());
+  if (rv == ERR_IO_PENDING)
+    rv = c->callback.WaitForResult();
+
+  EXPECT_EQ(1, cache.network_layer()->transaction_count());
+  EXPECT_EQ(0, cache.disk_cache()->open_count());
+  EXPECT_EQ(1, cache.disk_cache()->create_count());
+
+  // Start Read.
+  scoped_refptr<IOBufferWithSize> buf(new IOBufferWithSize(5));
+  rv = c->trans->Read(buf.get(), buf->size(), c->callback.callback());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+
+  // Destroy the transaction.
+  c.reset();
+
+  // Complete Read.
+  base::RunLoop().RunUntilIdle();
+
+  // Verify that the entry has not been marked as truncated.
+  VerifyTruncatedFlag(&cache, kRangeGET_TransactionOK.url, false, 0);
+  RemoveMockTransaction(&kRangeGET_TransactionOK);
+}
+
+// Fails only on bots. crbug.com/533640
+#if defined(OS_ANDROID)
 #define MAYBE_RangeGET_Cancel2 DISABLED_RangeGET_Cancel2
 #else
 #define MAYBE_RangeGET_Cancel2 RangeGET_Cancel2
@@ -7229,7 +7271,8 @@ TEST(HttpCache, SetTruncatedFlag) {
   VerifyTruncatedFlag(&cache, kSimpleGET_Transaction.url, true, 0);
 }
 
-// Tests that we mark an entry as incomplete when the request is cancelled.
+// Tests that we do not mark an entry as truncated when the request is
+// cancelled.
 TEST(HttpCache, DontSetTruncatedFlagForGarbledResponseCode) {
   MockHttpCache cache;
 

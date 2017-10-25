@@ -251,6 +251,17 @@ void HttpCache::Writers::ProcessFailure(int error) {
 }
 
 bool HttpCache::Writers::InitiateTruncateEntry() {
+  // Check the response headers for strong validators.
+  // Note that if this is a 206, content-length was already fixed after calling
+  // PartialData::ResponseHeadersOK().
+  if (response_info_truncation_.headers->GetContentLength() <= 0 ||
+      response_info_truncation_.headers->HasHeaderValue("Accept-Ranges",
+                                                        "none") ||
+      !response_info_truncation_.headers->HasStrongValidators()) {
+    should_keep_entry_ = false;
+    return false;
+  }
+
   // If there is already an operation ongoing in the state machine, queue the
   // truncation to happen after the outstanding operation is complete by setting
   // the state.
@@ -261,19 +272,7 @@ bool HttpCache::Writers::InitiateTruncateEntry() {
     return true;
   }
 
-  // Don't set the flag for sparse entries or for entries that cannot be
-  // resumed.
-  if (!should_keep_entry_ || partial_do_not_truncate_)
-    return false;
-
-  if (!CanResume()) {
-    should_keep_entry_ = false;
-    return false;
-  }
-
-  int current_size = entry_->disk_entry->GetDataSize(kResponseContentIndex);
-  int64_t body_size = response_info_truncation_.headers->GetContentLength();
-  if (body_size >= 0 && body_size <= current_size)
+  if (!ShouldTruncate())
     return false;
 
   next_state_ = State::CACHE_WRITE_TRUNCATED_RESPONSE;
@@ -283,19 +282,21 @@ bool HttpCache::Writers::InitiateTruncateEntry() {
   return true;
 }
 
-bool HttpCache::Writers::CanResume() const {
-  // Double check that there is something worth keeping.
-  if (!entry_->disk_entry->GetDataSize(kResponseContentIndex))
+bool HttpCache::Writers::ShouldTruncate() const {
+  // Don't set the flag for sparse entries or for entries that cannot be
+  // resumed.
+  if (!should_keep_entry_ || partial_do_not_truncate_)
     return false;
 
-  // Note that if this is a 206, content-length was already fixed after calling
-  // PartialData::ResponseHeadersOK().
-  if (response_info_truncation_.headers->GetContentLength() <= 0 ||
-      response_info_truncation_.headers->HasHeaderValue("Accept-Ranges",
-                                                        "none") ||
-      !response_info_truncation_.headers->HasStrongValidators()) {
+  // Double check that there is something worth keeping.
+  int current_size = entry_->disk_entry->GetDataSize(kResponseContentIndex);
+  if (!current_size)
     return false;
-  }
+
+  int64_t content_length =
+      response_info_truncation_.headers->GetContentLength();
+  if (content_length >= 0 && content_length <= current_size)
+    return false;
 
   return true;
 }
@@ -377,6 +378,7 @@ int HttpCache::Writers::DoLoop(int result) {
       DCHECK(cache_callback_);
       network_transaction_.reset();
     }
+
     if (cache_callback_)
       std::move(cache_callback_).Run();
     // |this| may have been destroyed in the cache_callback_.
@@ -473,9 +475,13 @@ int HttpCache::Writers::DoCacheWriteDataComplete(int result) {
 int HttpCache::Writers::DoAsyncOpCompletePreTruncate(int result) {
   DCHECK(all_writers_.empty() && !active_transaction_);
 
-  // Even if cache write was a failure, it should be ok to still attempt to mark
-  // the response as trucated.
-  next_state_ = State::CACHE_WRITE_TRUNCATED_RESPONSE;
+  if (ShouldTruncate()) {
+    next_state_ = State::CACHE_WRITE_TRUNCATED_RESPONSE;
+  } else {
+    next_state_ = State::NONE;
+    SetCacheCallback(false, TransactionSet());
+  }
+
   return OK;
 }
 
