@@ -5,24 +5,23 @@
   <template>
     <style>
       :host {
-        --drawer-width: 256px;
         --transition-timing: 200ms ease;
         background-color: #fff;
         border: none;
         bottom: 0;
-        left: calc(-1 * var(--drawer-width));
+        left: calc(-100%);
         margin: 0;
         overflow: hidden;
         padding: 0;
         position: absolute;
         top: 0;
         transition: left var(--transition-timing);
-        width: var(--drawer-width);
       }
 
       :host,
       #container {
         height: 100%;
+        min-width: 256px;
       }
 
       :host(.opening) {
@@ -31,7 +30,7 @@
 
       :host([align=rtl]) {
         left: auto;
-        right: calc(-1 * var(--drawer-width));
+        right: calc(-100%);
         transition: right var(--transition-timing);
       }
 
@@ -59,7 +58,7 @@
         align-items: center;
         border-bottom: var(--cr-separator-line);
         display: flex;
-        font-size: 123.08%; /* go to 16px from 13px */
+        font-size: 123.08%;  /* go to 16px from 13px */
         min-height: 56px;
         outline: none;
       }
