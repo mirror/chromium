@@ -533,8 +533,7 @@ void HTMLParserScriptRunner::ProcessScriptElementInternal(
         //  Document of the parser that created the element.
         //  (There can only be one such script per Document at a time.)"
         CHECK(!parser_blocking_script_);
-        parser_blocking_script_ =
-            ClassicPendingScript::Create(element, script_start_position);
+        parser_blocking_script_ = script_loader->TakePendingScript();
       } else {
         // 6th Clause of Step 23.
         // "Immediately execute the script block,
@@ -544,9 +543,8 @@ void HTMLParserScriptRunner::ProcessScriptElementInternal(
         if (parser_blocking_script_)
           parser_blocking_script_->Dispose();
         parser_blocking_script_ = nullptr;
-        DoExecuteScript(
-            ClassicPendingScript::Create(element, script_start_position),
-            DocumentURLForScriptExecution(document_));
+        DoExecuteScript(script_loader->TakePendingScript(),
+                        DocumentURLForScriptExecution(document_));
       }
     } else {
       // 2nd Clause of Step 23.
