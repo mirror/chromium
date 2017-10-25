@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6dacf3fa_e3ade941",
+        "filename": "ash/public/interfaces/voice_interaction_controller.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-25T17:16:14Z",
+      "side": 1,
+      "message": "I think this enum is originally defined in a different file that\u0027s shared between Chrome and ARC++.  It\u0027s recommended during the original code review to add extensible to allow the async mojo file updates between ARC++ and Chrome binaries. If this enum is still going to be used in ARC++ we may want to keep it as extensible.",
+      "parentUuid": "97efa868_ce3db8aa",
+      "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea09a469_a598a7cc",
         "filename": "ash/voice_interaction/voice_interaction_struct_traits.h",
         "patchSetId": 2
