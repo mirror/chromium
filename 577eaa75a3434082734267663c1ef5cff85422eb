@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ebdfa26_b7d9f9b0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/runtime/runtime-es6-setSymbolPropertyValue-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-25T22:17:31Z",
+      "side": 1,
+      "message": "This was manually done to print console messages in the right place.",
+      "revId": "577eaa75a3434082734267663c1ef5cff85422eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
