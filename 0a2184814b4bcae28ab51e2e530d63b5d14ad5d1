@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "5b86fee4_0029ca2b",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T17:43:19Z",
+      "side": 1,
+      "message": "Please do not mention \"being observed by SadTabHelper\" Sylvain changing WebStateObserver to allow observing of multiple WebStates.",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab12e75_410abf4d",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T17:43:19Z",
+      "side": 1,
+      "message": "nit: It would be better to use web_state() name to communicate that the method is cheap. This is a suggestion from Style Guide, not a rule, so feel free to keep the name as it is.",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef689301_1ef42fce",
         "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
         "patchSetId": 5
@@ -100,6 +146,24 @@
       "writtenOn": "2017-10-25T00:24:48Z",
       "side": 1,
       "message": "I think we should capture tabHelper/webState and check they have expected values.",
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf91776_cdfe0227",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T17:43:19Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "b72c17f2_af84e3d0",
       "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
