@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9935cd64_e3306f51",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-25T20:51:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c367253_5bb1fce3",
+      "revId": "a0be9724f3ebcd6a707ea932ad3e7583a1639d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec7ff1ac_d1fe9298",
         "filename": "ash/system/palette/palette_welcome_bubble.h",
         "patchSetId": 8
