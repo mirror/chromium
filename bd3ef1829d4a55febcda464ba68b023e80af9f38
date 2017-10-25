@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "568fe054_3939975a",
+        "filename": "gpu/command_buffer/service/program_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T18:28:24Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "bd3ef1829d4a55febcda464ba68b023e80af9f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
