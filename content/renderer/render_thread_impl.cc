@@ -1734,8 +1734,8 @@ bool RenderThreadImpl::OnControlMessageReceived(const IPC::Message& msg) {
   return false;
 }
 
-void RenderThreadImpl::OnProcessBackgrounded(bool backgrounded) {
-  ChildThreadImpl::OnProcessBackgrounded(backgrounded);
+void RenderThreadImpl::SetProcessBackgrounded(bool backgrounded) {
+  ChildThreadImpl::SetProcessBackgrounded(backgrounded);
 
   renderer_scheduler_->SetRendererBackgrounded(backgrounded);
   if (backgrounded) {
@@ -1764,8 +1764,8 @@ void RenderThreadImpl::OnProcessBackgrounded(bool backgrounded) {
   }
 }
 
-void RenderThreadImpl::OnProcessPurgeAndSuspend() {
-  ChildThreadImpl::OnProcessPurgeAndSuspend();
+void RenderThreadImpl::ProcessPurgeAndSuspend() {
+  ChildThreadImpl::ProcessPurgeAndSuspend();
   if (!RendererIsHidden())
     return;
 

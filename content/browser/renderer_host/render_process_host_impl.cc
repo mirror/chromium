@@ -1575,6 +1575,8 @@ void RenderProcessHostImpl::InitializeChannelProxy() {
       IPC::ChannelMojo::CreateServerFactory(std::move(pipe.handle0),
                                             io_task_runner);
 
+  content::BindInterface(this, &child_control_interface_);
+
   ResetChannelProxy();
 
   // Do NOT expand ifdef or run time condition checks here! Synchronous
@@ -2102,11 +2104,11 @@ bool RenderProcessHostImpl::IsKeepAliveRefCountDisabled() {
 }
 
 void RenderProcessHostImpl::PurgeAndSuspend() {
-  Send(new ChildProcessMsg_PurgeAndSuspend());
+  child_control_interface_->ProcessPurgeAndSuspend();
 }
 
 void RenderProcessHostImpl::Resume() {
-  Send(new ChildProcessMsg_Resume());
+  child_control_interface_->ProcessResume();
 }
 
 mojom::Renderer* RenderProcessHostImpl::GetRendererInterface() {
@@ -2912,8 +2914,8 @@ void RenderProcessHostImpl::OnChannelConnected(int32_t peer_pid) {
   }
 
 #if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
-  Send(new ChildProcessMsg_SetIPCLoggingEnabled(
-      IPC::Logging::GetInstance()->Enabled()));
+  child_control_interface_->SetIPCLoggingEnabled(
+      IPC::Logging::GetInstance()->Enabled());
 #endif
 }
 
@@ -3730,7 +3732,7 @@ void RenderProcessHostImpl::OnShutdownRequest() {
   for (auto& observer : observers_)
     observer.RenderProcessWillExit(this);
 
-  Send(new ChildProcessMsg_Shutdown());
+  child_control_interface_->ProcessShutdown();
 }
 
 void RenderProcessHostImpl::SuddenTerminationChanged(bool enabled) {
@@ -3790,8 +3792,9 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
   // Notify the child process of background state. Note
   // |priority_.boost_for_pending_views| state is not sent to renderer simply
   // due to lack of need.
-  if (should_background_changed)
-    Send(new ChildProcessMsg_SetProcessBackgrounded(priority.background));
+  if (should_background_changed) {
+    child_control_interface_->SetProcessBackgrounded(priority.background);
+  }
 }
 
 void RenderProcessHostImpl::OnProcessLaunched() {
