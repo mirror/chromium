@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e365ac35_35350e21",
+        "filename": "tools/traffic_annotation/auditor/tests/annotations_diff12.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-25T13:37:10Z",
+      "side": 1,
+      "message": "I know that this doesn\u0027t matter here, but shouldn\u0027t the hash codes be numeric? It\u0027s generally good if the tests illustrate real-life scenarios.",
+      "range": {
+        "startLine": 2,
+        "startChar": 37,
+        "endLine": 2,
+        "endChar": 38
+      },
+      "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346330d5_3fca8b63",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-25T13:37:10Z",
+      "side": 1,
+      "message": "nit: How about \"old_keys\" / \"new_keys\" rather than \"old_set\" and \"new_set\"? It\u0027s generally clear that it\u0027s a set from the surrounding code, the question is what\u0027s in it.",
+      "range": {
+        "startLine": 332,
+        "startChar": 28,
+        "endLine": 332,
+        "endChar": 31
+      },
+      "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cffe10f_d61e96e6",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-25T13:37:10Z",
+      "side": 1,
+      "message": "style: Braces {} after for, especially the mutli-line one below.",
+      "range": {
+        "startLine": 356,
+        "startChar": 2,
+        "endLine": 356,
+        "endChar": 43
+      },
+      "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd28148_cdd55da9",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-25T13:37:10Z",
+      "side": 1,
+      "message": "This looks like it doesn\u0027t need to be public, in fact, it doesn\u0027t even need to be a member function. Can we just put it to the anonymous namespace?",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74babdbf_14d356f6",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-25T13:37:10Z",
+      "side": 1,
+      "message": "Ditto here.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
