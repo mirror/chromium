@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de0a8de8_f7d43039",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-25T00:27:44Z",
+      "side": 1,
+      "message": "This is only to be called to trigger a change in the connection state.  Given that we don\u0027t ever report a change in the connection state, I don\u0027t think we should call it.",
+      "parentUuid": "750ed217_f8e32b7b",
+      "range": {
+        "startLine": 279,
+        "startChar": 54,
+        "endLine": 279,
+        "endChar": 70
+      },
+      "revId": "9e4b7f3c83e242769393cd3e102b456479a8b45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bce543f4_be9b361c",
         "filename": "device/bluetooth/bluetooth_device_win.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9e4b7f3c83e242769393cd3e102b456479a8b45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4bd568_3dab4390",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-25T00:27:44Z",
+      "side": 1,
+      "message": "Our own book keeping decides when to call it, so yes it will be called.\nhttps://cs.chromium.org/chromium/src/device/bluetooth/bluetooth_device.cc?l\u003d511",
+      "parentUuid": "bce543f4_be9b361c",
+      "range": {
+        "startLine": 282,
+        "startChar": 25,
+        "endLine": 282,
+        "endChar": 39
+      },
+      "revId": "9e4b7f3c83e242769393cd3e102b456479a8b45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
