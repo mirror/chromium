@@ -592,7 +592,17 @@ NS_INLINE void AnimateInViews(NSArray* views,
         // menu, is no longer supported.
         DCHECK([menuItem tag] < 0);
         [_delegate commandWasSelected:[menuItem tag]];
-        [menuItem executeCommandWithDispatcher:self.dispatcher];
+
+        // The menuItem will handle the dispatching if there is a selector
+        // or if the item opens a new tab or new incognito tab.
+        // Otherwise, the dispatching should have been handled by the preceding
+        // -commandWasSelected: call on |_delegate|.
+        // This is so that a baseViewController can be sent with the dispatch
+        // command.
+        if ([menuItem selector] || [menuItem tag] == TOOLS_NEW_TAB_ITEM ||
+            [menuItem tag] == TOOLS_NEW_INCOGNITO_TAB_ITEM) {
+          [menuItem executeCommandWithDispatcher:self.dispatcher];
+        }
       });
 }
 

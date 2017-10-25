@@ -340,7 +340,6 @@ using ios::material::TimingFunction;
   toolsPopupController_ =
       [[ToolsPopupController alloc] initWithConfiguration:configuration
                                                dispatcher:self.dispatcher];
-
   [toolsPopupController_ setDelegate:self];
 
   [[NSNotificationCenter defaultCenter]
