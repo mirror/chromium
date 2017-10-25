@@ -46,6 +46,30 @@
       "revId": "eee1a288f697786081fcd71258623deda378dfba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235ce639_9e3c4398",
+        "filename": "ui/arc/notification/arc_notification_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-25T02:07:26Z",
+      "side": 1,
+      "message": "Does this address your concern, or do you have another idea for where to put the initialization?",
+      "parentUuid": "09212305_6024ec7b",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 3
+      },
+      "revId": "eee1a288f697786081fcd71258623deda378dfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
