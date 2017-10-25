@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52535b3e_d0ca6794",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1917,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T23:21:03Z",
+      "side": 1,
+      "message": "When doing IPC validation, we need to actually handle the case where it fails these checks: a compromised renderer can send anything.",
+      "revId": "6be5dc6745061cf2e82480103b6c1d64ffb88378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
