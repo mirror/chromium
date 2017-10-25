@@ -82,7 +82,8 @@
           <template is="dom-repeat" items="[[apps_]]">
             <div class="list-item">
               <div class="item-name">
-                <img class="item-icon" src="[[item.iconURL]]">
+                <img class="item-icon" alt="$i18n{itemIcon}"
+                    src="[[item.iconURL]]">
                 [[item.name]]
                 <span hidden="[[!item.autoLaunch]]">
                   $i18n{kioskAutoLaunch}
