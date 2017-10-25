@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9740fed_60e0352a",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-25T15:47:10Z",
+      "side": 1,
+      "message": "i\u0027m not sure that these Unretained are safe.  how do we know that ~VideoFrameCompositor won\u0027t happen first?",
+      "revId": "bc8d3e39cc700fcf263c31d899f33d51ee248ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a2dd5e_f0533733",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-25T15:47:10Z",
+      "side": 1,
+      "message": "who calls this?",
+      "range": {
+        "startLine": 122,
+        "startChar": 27,
+        "endLine": 122,
+        "endChar": 54
+      },
+      "revId": "bc8d3e39cc700fcf263c31d899f33d51ee248ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33c600d_7344f940",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-25T15:47:10Z",
+      "side": 1,
+      "message": "i\u0027m not sure about the safety of this and other base::Unretained uses.",
+      "revId": "bc8d3e39cc700fcf263c31d899f33d51ee248ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
