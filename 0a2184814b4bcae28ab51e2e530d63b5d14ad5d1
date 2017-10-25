@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "c1feddff_2142fc3c",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-25T17:36:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cf874024_b602a7bd",
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b72c17f2_af84e3d0",
         "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
         "patchSetId": 5
