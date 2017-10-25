@@ -68,6 +68,24 @@
       "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67503ea_6dc58bce",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2513,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-25T18:42:37Z",
+      "side": 1,
+      "message": "This isn\u0027t great, but I\u0027m not sure what better options are. An issue with using the local root\u0027s URL is that it can be a different value depending on whether there are OOPIFs present or not, which doesn\u0027t seem right. Using the main frame URL seems like it would be desirable, but I don\u0027t think that\u0027s currently available in OOPIF processes (within Blink we can always access the origin of the main frame on the frame\u0027s SecurityContext, but I don\u0027t think the full URL is replicated to every process).\n\nWould it add to much complexity to have the service keep track of the main frame\u0027s URL, and use that for all records from subframes?",
+      "parentUuid": "6491886d_02982de9",
+      "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
