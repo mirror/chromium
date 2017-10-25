@@ -856,6 +856,10 @@ class LargeObjectArena final : public BaseArena {
 
 // Mask an address down to the enclosing oilpan heap base page. All Oilpan heap
 // pages are aligned at |blinkPageBase| plus the size of a guard size.
+// This will work with GarbageCollectedMixin pointers to disallow
+// GarbageCollectedMixin objects from being a large object. This will not work
+// with pointers that do not point to the heap, or with internal pointers into a
+// collection backing.
 //
 // FIXME: Remove PLATFORM_EXPORT once we get a proper public interface to our
 // typed arenas. This is only exported to enable tests in HeapTest.cpp.
