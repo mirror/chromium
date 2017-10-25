@@ -23,11 +23,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// https://html.spec.whatwg.org/multipage/browsers.html#the-pagetransitionevent-interface
+// https://html.spec.whatwg.org/multipage/browsing-the-web.html#the-pagetransitionevent-interface
 
 [
     Constructor(DOMString type, optional PageTransitionEventInit eventInitDict)
     // TODO(foolip): Exposed=(Window,Worker)
 ] interface PageTransitionEvent : Event {
     readonly attribute boolean persisted;
+    [RuntimeEnabled=PageLifecycle] readonly attribute DOMString reason;
 };
