@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6e4087a_538a0c43",
+        "filename": "third_party/libxml/src/encoding.c",
+        "patchSetId": 10
+      },
+      "lineNbr": 1895,
+      "author": {
+        "id": 1249238
+      },
+      "writtenOn": "2017-10-25T05:30:24Z",
+      "side": 1,
+      "message": "Something just occurred to me: Somewhere, probably around here (eg before this line), the pivot buffer needs to be reset so that the object is ready for converting another stream. Something like\n  if (flush) {\n    cd-\u003epivot_source \u003d cd-\u003epivot_target \u003d cd-\u003epivot_buf;\n  }",
+      "range": {
+        "startLine": 1895,
+        "startChar": 4,
+        "endLine": 1895,
+        "endChar": 23
+      },
+      "revId": "22cefe604416c85c420a124fd95f9fa5bc4b4622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
