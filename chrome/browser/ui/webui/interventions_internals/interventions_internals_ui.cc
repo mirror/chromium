@@ -52,9 +52,10 @@ InterventionsInternalsUI::InterventionsInternalsUI(content::WebUI* web_ui)
     content::WebUIDataSource::Add(profile, GetUnsupportedSource());
     return;
   }
-
   content::WebUIDataSource::Add(profile, GetSource());
   logger_ = previews_service->previews_ui_service()->previews_logger();
+  ui_nqe_service_ =
+      UINetworkQualityEstimatorServiceFactory::GetForProfile(profile);
 }
 
 InterventionsInternalsUI::~InterventionsInternalsUI() {}
@@ -62,6 +63,8 @@ InterventionsInternalsUI::~InterventionsInternalsUI() {}
 void InterventionsInternalsUI::BindUIHandler(
     mojom::InterventionsInternalsPageHandlerRequest request) {
   DCHECK(logger_);
+  DCHECK(ui_nqe_service_);
   page_handler_.reset(
       new InterventionsInternalsPageHandler(std::move(request), logger_));
+  ui_nqe_service_->AddEffectiveConnectionTypeObserver(page_handler_.get());
 }

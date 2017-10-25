@@ -112,6 +112,17 @@ InterventionsInternalPageImpl.prototype = {
 
     logsTable.appendChild(tableRow);
   },
+
+  /**
+   * Update the page with the new value of estimated effective connection type.
+   *
+   * @override
+   * @param {string} type The string representation of estimated ECT.
+   */
+  onEffectiveConnectionTypeChanged: function(type) {
+    let ectType = $('nqe-type');
+    ectType.textContent = type;
+  },
 };
 
 cr.define('interventions_internals', () => {
