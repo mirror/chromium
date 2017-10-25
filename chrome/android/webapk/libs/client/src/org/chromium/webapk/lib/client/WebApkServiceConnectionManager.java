@@ -89,6 +89,12 @@ public class WebApkServiceConnectionManager {
         mConnections.remove(webApkName);
     }
 
+    public IBinder getService(String webApkPackage) {
+        Connection connection = mConnections.get(webApkPackage);
+        if (connection == null) return null;
+        return connection.getService();
+    }
+
     /**
      * Connects Chrome application to WebAPK service. Can be called from any thread.
      * @param appContext Application context.

@@ -53,6 +53,7 @@ android_library("webapk_java") {
     "src/org/chromium/webapk/shell_apk/MainActivity.java",
     "src/org/chromium/webapk/shell_apk/IdentityService.java",
     "src/org/chromium/webapk/shell_apk/InstallHostBrowserDialog.java",
+    "src/org/chromium/webapk/shell_apk/PermissionActivity.java",
     "src/org/chromium/webapk/shell_apk/WebApkSandboxedProcessService.java",
     "src/org/chromium/webapk/shell_apk/WebApkSandboxedProcessService0.java",
     "src/org/chromium/webapk/shell_apk/WebApkSandboxedProcessService1.java",

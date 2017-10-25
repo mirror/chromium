@@ -11,7 +11,8 @@
 
 namespace device {
 
-GeolocationContext::GeolocationContext() {}
+GeolocationContext::GeolocationContext(const std::string& package_name)
+    : package_name_(package_name) {}
 
 GeolocationContext::~GeolocationContext() {}
 
