@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7be1e2ba_f6084c15",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7233,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-25T13:26:04Z",
+      "side": 1,
+      "message": "I\u0027d like to see a reproduction test to verify that a 206 was truncated before but no longer is.",
+      "range": {
+        "startLine": 7232,
+        "startChar": 0,
+        "endLine": 7233,
+        "endChar": 13
+      },
+      "revId": "3f07763222ecb1a006c9a004a73b00527c11a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32e4212_218d306d",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-25T13:26:04Z",
+      "side": 1,
+      "message": "As a minor optimization, can we instead DCHECK(ShouldTruncate()) and verify ShouldTruncate before setting the next state to ASYNC_OP_COMPLETE_PRE_TRUNCATE? Or is it necessary to wait for this point before determining if we can truncate?\n\nI mostly care because InitiateTruncateEntry() is returning true when it sets the next state to ASYNC_OP_COMPLETE_PRE_TRUNCATE but it may in fact not wind up truncating the entry, which seems weird.",
+      "range": {
+        "startLine": 484,
+        "startChar": 6,
+        "endLine": 484,
+        "endChar": 20
+      },
+      "revId": "3f07763222ecb1a006c9a004a73b00527c11a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd3f21f_f47531bd",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-25T13:26:04Z",
+      "side": 1,
+      "message": "It\u0027s strange that this isn\u0027t const. Can you rework it so that it can be const?",
+      "range": {
+        "startLine": 220,
+        "startChar": 23,
+        "endLine": 220,
+        "endChar": 24
+      },
+      "revId": "3f07763222ecb1a006c9a004a73b00527c11a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
