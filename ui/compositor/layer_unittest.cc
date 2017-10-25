@@ -762,6 +762,7 @@ TEST_F(LayerWithDelegateTest, Cloning) {
   layer->SetLayerTemperature(temperature);
   layer->AddCacheRenderSurfaceRequest();
   layer->AddTrilinearFilteringRequest();
+  layer->SetIsDrawable(false);
 
   auto clone = layer->Clone();
 
@@ -777,6 +778,9 @@ TEST_F(LayerWithDelegateTest, Cloning) {
   // Cloning should not preserve trilinear_filtering flag.
   EXPECT_NE(layer->cc_layer_for_testing()->trilinear_filtering(),
             clone->cc_layer_for_testing()->trilinear_filtering());
+  // Cloning should not preserve is_drawable flag.
+  EXPECT_NE(layer->cc_layer_for_testing()->DrawsContent(),
+            clone->cc_layer_for_testing()->DrawsContent());
 
   layer->SetTransform(gfx::Transform());
   layer->SetColor(SK_ColorGREEN);
@@ -2114,6 +2118,25 @@ TEST_F(LayerWithRealCompositorTest, SwitchCCLayerTrilinearFiltering) {
 
   // Ensure that the trilinear_filtering flag is maintained.
   EXPECT_TRUE(l1->cc_layer_for_testing()->trilinear_filtering());
+}
+
+// Tests that when a layer with is_drawable flag has its CC layer
+// switched, that the is_drawable flag is maintained.
+TEST_F(LayerWithRealCompositorTest, SwitchCCLayerIsDrawable) {
+  std::unique_ptr<Layer> root(CreateLayer(LAYER_TEXTURED));
+  std::unique_ptr<Layer> l1(CreateLayer(LAYER_TEXTURED));
+  GetCompositor()->SetRootLayer(root.get());
+  root->Add(l1.get());
+
+  EXPECT_TRUE(l1->cc_layer_for_testing()->DrawsContent());
+  l1->SetIsDrawable(false);
+  EXPECT_FALSE(l1->cc_layer_for_testing()->DrawsContent());
+
+  // Change l1's cc::Layer.
+  l1->SwitchCCLayerForTest();
+
+  // Ensure that the is_drawable flag is maintained.
+  EXPECT_FALSE(l1->cc_layer_for_testing()->DrawsContent());
 }
 
 // Tests that the animators in the layer tree is added to the
