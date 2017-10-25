@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d73486ab_fc45d93e",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T23:07:50Z",
+      "side": 1,
+      "message": "please update the comment here to indicate what your posted in your latest comment, something along the lines of...\n\nwhen a webpage decides to use the overscroll API to prevent overscroll, the InputEventAck will report that the gesture event is unhandled. This might cause history swiping to start.\n\nThis code makes the assumption that the DidOverscroll event will arrive before *any* [unprocessed] InputEventAcks are returned from the renderer. As such, it\u0027s safe to just set a flag and prevent history swipe from starting.\n\nIf this assumption ever becomes false, we will need to update the logic of this method to also cancel any ongoing history swipes.",
+      "revId": "1406bd6ccd4cb13acfcbe1a626c86c51bfb76dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
