@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff4b534_aad86bd8",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-25T16:19:33Z",
+      "side": 1,
+      "message": "I\u0027d prefer using an enum class (TextType::NORMAL, TextType::ATTRIBUTION?) over a boolean for readability. If you decide to go with booleans, please annotate them like this:\n\nfalse /* attribution */\n\n(I\u0027d prefer is_attribution in that case.)",
+      "revId": "1cfe93db2f360b27fadd37a6f4fab4fbcda596c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
