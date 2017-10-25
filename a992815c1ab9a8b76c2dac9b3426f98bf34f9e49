@@ -16,6 +16,24 @@
       "revId": "a992815c1ab9a8b76c2dac9b3426f98bf34f9e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468395a5_cd731649",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_blocking.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-25T21:12:09Z",
+      "side": 1,
+      "message": "Ha!  Good point.  IIUC, setting it to undefined should be equivalent to just removing it from this file, so I\u0027ve cleaned it up.  (I confirmed that the test passes in both modes with the fix, and fails in --disable-browser-side-navigation if I put Nasko\u0027s old code back because the initiator is present and the updated test expects none.)",
+      "parentUuid": "55f4c33d_227e6ffd",
+      "revId": "a992815c1ab9a8b76c2dac9b3426f98bf34f9e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
