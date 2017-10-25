@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbbc17a6_81793a7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-10-25T04:15:41Z",
+      "side": 1,
+      "message": "remove trailing spaces at line 9, 10, 14",
+      "revId": "77a7bc8988889fd3290dc8b31cdcc901259d7687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24bbb67f_48b04b79",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-10-25T04:15:41Z",
+      "side": 1,
+      "message": "How about\nmake_linked_ptr(new VaapiDrmPicture(....));\n\nI don\u0027t have strong opinion about this. It\u0027s up to you.",
+      "revId": "77a7bc8988889fd3290dc8b31cdcc901259d7687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
