@@ -31,6 +31,7 @@
 #include "cc/trees/proxy_impl.h"
 #include "cc/trees/proxy_main.h"
 #include "cc/trees/single_thread_proxy.h"
+#include "components/ukm/test_ukm_recorder.h"
 #include "components/viz/common/resources/buffer_to_texture_target_map.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/test_layer_tree_frame_sink.h"
@@ -91,6 +92,18 @@ void CreateVirtualViewportLayers(Layer* root_layer,
   outer_viewport_scroll_layer->SetIsDrawable(true);
   CreateVirtualViewportLayers(root_layer, outer_viewport_scroll_layer,
                               inner_bounds, outer_bounds, host);
+}
+
+class TestUkmRecorderFactory : public UkmRecorderFactory {
+ public:
+  ~TestUkmRecorderFactory() override = default;
+  std::unique_ptr<ukm::UkmRecorder> CreateRecorder() override {
+    return std::make_unique<ukm::TestUkmRecorder>();
+  }
+};
+
+std::unique_ptr<UkmRecorderFactory> CreateUkmRecorderFactory() {
+  return std::make_unique<TestUkmRecorderFactory>();
 }
 
 // Adapts LayerTreeHostImpl for test. Runs real code, then invokes test hooks.
@@ -406,6 +419,7 @@ class LayerTreeHostForTesting : public LayerTreeHost {
     params.settings = &settings;
     params.mutator_host = mutator_host;
     params.image_worker_task_runner = std::move(image_worker_task_runner);
+    params.ukm_recorder_factory = std::make_unique<TestUkmRecorderFactory>();
 
     std::unique_ptr<LayerTreeHostForTesting> layer_tree_host(
         new LayerTreeHostForTesting(test_hooks, &params, mode));
@@ -436,6 +450,8 @@ class LayerTreeHostForTesting : public LayerTreeHost {
             test_hooks_, GetSettings(), host_impl_client,
             GetTaskRunnerProvider(), task_graph_runner(),
             rendering_stats_instrumentation(), image_worker_task_runner_);
+
+    host_impl->InitializeUkm(ukm_recorder_factory_->CreateRecorder());
     input_handler_weak_ptr_ = host_impl->AsWeakPtr();
     return host_impl;
   }
