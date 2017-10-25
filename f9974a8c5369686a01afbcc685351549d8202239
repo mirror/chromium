@@ -52,6 +52,24 @@
       "revId": "f9974a8c5369686a01afbcc685351549d8202239",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059d1939_0ceba6be",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-25T22:06:55Z",
+      "side": 0,
+      "message": "Right, I wasn\u0027t thinking of a the existing one, but a new one for \"navigation started, pending NavigationItem created, but no WKNavigationCallbacks have been received\" state.  This could be useful, but not in the scope of this CL.  I\u0027m wondering if content also has this issue, or if blink synchronously sends signals so that the WebContentsObservers can handle this more gracefully.",
+      "parentUuid": "a47a5e5d_3a4fc695",
+      "revId": "f9974a8c5369686a01afbcc685351549d8202239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
