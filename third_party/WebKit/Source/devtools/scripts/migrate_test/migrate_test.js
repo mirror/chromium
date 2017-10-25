@@ -391,7 +391,9 @@ function getPanels(inputPath, inputCode) {
   const folder = inputPath.indexOf('LayoutTests/inspector') === -1 ? components[4] : components[2];
   if (folder.endsWith('.html'))
     return;
-  panels.add(panelByFolder[folder]);
+  const panel = panelByFolder[folder];
+  if (panel)
+    panels.add(panel);
   return Array.from(panels);
 }
 
