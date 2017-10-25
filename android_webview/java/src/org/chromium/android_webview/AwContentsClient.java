@@ -210,8 +210,15 @@ public abstract class AwContentsClient {
         // same application can be opened in the same tab.
         intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
 
+        // Check whether the context is activity context.
+        Activity activity = (Activity) context;
+        if (activity == null) {
+            Log.w(TAG, "WebView is created by non-activity context.");
+            return false;
+        }
+
         try {
-            context.startActivity(intent);
+            activity.startActivity(intent);
         } catch (ActivityNotFoundException ex) {
             Log.w(TAG, "No application can handle %s", url);
             return false;
