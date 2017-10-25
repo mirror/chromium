@@ -87,6 +87,7 @@ gfx::Image ContentFaviconDriver::GetFavicon() const {
   entry = controller.GetLastCommittedEntry();
   if (entry)
     return entry->GetFavicon().image;
+
   return gfx::Image();
 }
 
