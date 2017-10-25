@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e011cbae_4c26021a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-25T02:08:35Z",
+      "side": 1,
+      "message": "You are right. But then again the call to add observer is not clear as |this| will be added as observer if DisplayVirtualKeyboard returns true. That being said, when it returns false |this| is not added as observer and we should perhaps delete it.\n\nIf we do delete the observe when the call to DisplayVirtualKeyboard fails, then !!|keyboard_observer_.get()| is the same as |virtual_keyboard_requested_|.\n\nRight now as things are, FocusedNodeTouched will create an observer which might potentially be unused for the duration of its lifetime so it might be good to consider |keyboard_observer_.reset()| when DisplayVirtualKeyboard fails.",
+      "parentUuid": "6c1db7d2_24380325",
+      "revId": "60e2bf58794110f70dbc7bce9d0c300714e133e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0122b35_81d92f16",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "60e2bf58794110f70dbc7bce9d0c300714e133e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590438c7_1af9d646",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1706,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-25T02:08:35Z",
+      "side": 1,
+      "message": "Yes exactly (my guess). I posted the steps (which I believe will lead to crash) in crbug.com/775973 #16. The stack trace in crbug.com/692495 seems to be very similar.",
+      "parentUuid": "c0122b35_81d92f16",
+      "revId": "60e2bf58794110f70dbc7bce9d0c300714e133e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
