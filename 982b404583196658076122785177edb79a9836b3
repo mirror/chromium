@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "e397e439_72ae1d10",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T20:15:58Z",
+      "side": 1,
+      "message": "I\u0027m wondering why not just call ui::Layer::SetVisible?",
+      "parentUuid": "dacfd285_53d78900",
+      "revId": "982b404583196658076122785177edb79a9836b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a5b25fd_b4ead3f8",
         "filename": "ui/compositor/layer.h",
         "patchSetId": 6
