@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e13f890_ce873509",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T20:19:40Z",
+      "side": 1,
+      "message": "It looks to me that GetTpoInsets should do the right thing. Can you check why it\u0027s not returning 0 in this case?",
+      "revId": "d9e0abf42f331ae3910aef8756ac63164ed90241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
