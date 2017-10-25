@@ -29,7 +29,6 @@ class WebControllerObserverBridge : public WebStateObserver {
   // outlive this WebControllerObserverBridge.
   WebControllerObserverBridge(
       id<CRWWebControllerObserver> web_controller_observer,
-      WebState* web_state,
       CRWWebController* web_controller);
 
   ~WebControllerObserverBridge() override;
@@ -43,6 +42,7 @@ class WebControllerObserverBridge : public WebStateObserver {
   // WebStateObserver implementation.
   void PageLoaded(WebState* web_state,
                   PageLoadCompletionStatus load_completion_status) override;
+  void WebStateDestroyed(WebState* web_state) override;
 
   __weak id<CRWWebControllerObserver> web_controller_observer_ = nil;
   __weak CRWWebController* web_controller_ = nil;
