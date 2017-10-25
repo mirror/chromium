@@ -4570,8 +4570,7 @@ _FUNCTION_INFO = {
   },
   'InitializeDiscardableTextureCHROMIUM': {
     'type': 'Custom',
-    'cmd_args': 'GLuint texture_id, uint32_t shm_id, '
-                'uint32_t shm_offset',
+    'cmd_args': 'GLuint texture_id, uint64_t handle_id',
     'impl_func': False,
     'client_test': False,
     'extension': True,
