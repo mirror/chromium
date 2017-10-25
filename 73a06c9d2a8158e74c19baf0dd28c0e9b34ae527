@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b873907d_b9bc57f2",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-25T20:03:07Z",
+      "side": 1,
+      "message": "nit: unnecessary line?",
+      "revId": "73a06c9d2a8158e74c19baf0dd28c0e9b34ae527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
