@@ -16,6 +16,24 @@
       "revId": "d7b19dd0be5d3c5538dfa71c9108139ea21ce00a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f9f10f_ea2bb243",
+        "filename": "ui/base/resource/resource_bundle.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T01:33:43Z",
+      "side": 1,
+      "message": "Next try: https://chromium-review.googlesource.com/737190",
+      "parentUuid": "653e97b2_a2f82d68",
+      "revId": "d7b19dd0be5d3c5538dfa71c9108139ea21ce00a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
