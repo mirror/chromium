@@ -19,6 +19,7 @@ import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.blink_public.web.WebCursorInfoType;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
+import org.chromium.content.browser.test.util.Coordinates;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content_shell.ShellViewAndroidDelegate.OnCursorUpdateHelper;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
@@ -72,12 +73,9 @@ public class ContentViewPointerTypeTest {
         mActivityTestRule.runOnUiThreadForTestCommon(new Runnable() {
             @Override
             public void run() {
-                float x = mActivityTestRule.getContentViewCore()
-                                  .getRenderCoordinates()
-                                  .fromLocalCssToPix((float) (rect.left + rect.right) / 2.0f);
-                float y = mActivityTestRule.getContentViewCore()
-                                  .getRenderCoordinates()
-                                  .fromLocalCssToPix((float) (rect.top + rect.bottom) / 2.0f);
+                Coordinates coord = Coordinates.createFor(mActivityTestRule.getWebContents());
+                float x = coord.fromLocalCssToPix((float) (rect.left + rect.right) / 2.0f);
+                float y = coord.fromLocalCssToPix((float) (rect.top + rect.bottom) / 2.0f);
                 moveCursor(x, y);
             }
         });

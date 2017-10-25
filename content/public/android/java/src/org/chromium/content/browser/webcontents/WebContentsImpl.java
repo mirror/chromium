@@ -5,6 +5,7 @@
 package org.chromium.content.browser.webcontents;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -55,9 +56,7 @@ import java.util.UUID;
  * object.
  */
 @JNINamespace("content")
-// TODO(tedchoc): Remove the package restriction once this class moves to a non-public content
-//               package whose visibility will be enforced via DEPS.
-/* package */ class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
+public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     private static final String PARCEL_VERSION_KEY = "version";
     private static final String PARCEL_WEBCONTENTS_KEY = "webcontents";
     private static final String PARCEL_PROCESS_GUARD_KEY = "processguard";
@@ -167,6 +166,9 @@ import java.util.UUID;
     private static class WebContentsInternalsImpl implements WebContentsInternals {
         public HashSet<Object> retainedObjects;
         public HashMap<String, Pair<Object, Class>> injectedObjects;
+
+        // Cached copy of all positions and scales as reported by the renderer.
+        public RenderCoordinates renderCoordinates;
     }
 
     private WebContentsImpl(
@@ -180,6 +182,9 @@ import java.util.UUID;
         WebContentsInternalsImpl internals = new WebContentsInternalsImpl();
         internals.retainedObjects = new HashSet<Object>();
         internals.injectedObjects = new HashMap<String, Pair<Object, Class>>();
+        internals.renderCoordinates = new RenderCoordinates();
+        internals.renderCoordinates.reset();
+
         nativeCreateJavaBridgeDispatcherHost(mNativeWebContentsAndroid, internals.retainedObjects);
         mInternalsHolder = new DefaultInternalsHolder();
         mInternalsHolder.set(internals);
@@ -502,10 +507,10 @@ import java.util.UUID;
     }
 
     @Override
-    public void requestSmartClipExtract(
-            int x, int y, int width, int height, RenderCoordinates coordinateSpace) {
+    public void requestSmartClipExtract(int x, int y, int width, int height) {
         if (mSmartClipCallback == null) return;
         mSmartClipCallback.storeRequestRect(new Rect(x, y, x + width, y + height));
+        RenderCoordinates coordinateSpace = getRenderCoordinates();
         float dpi = coordinateSpace.getDeviceScaleFactor();
         y -= coordinateSpace.getContentOffsetYPix();
         nativeRequestSmartClipExtract(mNativeWebContentsAndroid, mSmartClipCallback,
@@ -724,6 +729,118 @@ import java.util.UUID;
         if (mNativeWebContentsAndroid != 0) {
             nativeRemoveJavascriptInterface(mNativeWebContentsAndroid, name);
         }
+    }
+
+    public RenderCoordinates getRenderCoordinates() {
+        WebContentsInternals internals = mInternalsHolder.get();
+        // Uses a default instance if not available, to avoid excessive null checking.
+        if (internals == null) return RenderCoordinates.DEFAULT;
+        return ((WebContentsInternalsImpl) internals).renderCoordinates;
+    }
+
+    public float getLastFrameViewportWidthCss() {
+        return getRenderCoordinates().getLastFrameViewportWidthCss();
+    }
+
+    public float getLastFrameViewportHeightCss() {
+        return getRenderCoordinates().getLastFrameViewportHeightCss();
+    }
+
+    public int getLastFrameViewportWidthPixInt() {
+        return getRenderCoordinates().getLastFrameViewportWidthPixInt();
+    }
+
+    public int getLastFrameViewportHeightPixInt() {
+        return getRenderCoordinates().getLastFrameViewportHeightPixInt();
+    }
+
+    public float getContentOffsetYPix() {
+        return getRenderCoordinates().getContentOffsetYPix();
+    }
+
+    public float getPageScaleFactor() {
+        return getRenderCoordinates().getPageScaleFactor();
+    }
+
+    public float getMinPageScaleFactor() {
+        return getRenderCoordinates().getMinPageScaleFactor();
+    }
+
+    public float getMaxPageScaleFactor() {
+        return getRenderCoordinates().getMaxPageScaleFactor();
+    }
+
+    public float getDeviceScaleFactor() {
+        return getRenderCoordinates().getDeviceScaleFactor();
+    }
+
+    public float getWheelScrollFactor() {
+        return getRenderCoordinates().getWheelScrollFactor();
+    }
+
+    public float fromLocalCssToPix(float css) {
+        return getRenderCoordinates().fromLocalCssToPix(css);
+    }
+
+    public float getScrollX() {
+        return getRenderCoordinates().getScrollX();
+    }
+
+    public float getScrollY() {
+        return getRenderCoordinates().getScrollY();
+    }
+
+    public float getScrollXPix() {
+        return getRenderCoordinates().getScrollXPix();
+    }
+
+    public float getScrollYPix() {
+        return getRenderCoordinates().getScrollYPix();
+    }
+
+    public int getScrollXPixInt() {
+        return getRenderCoordinates().getScrollXPixInt();
+    }
+
+    public int getScrollYPixInt() {
+        return getRenderCoordinates().getScrollYPixInt();
+    }
+
+    public float getContentWidthCss() {
+        return getRenderCoordinates().getContentWidthCss();
+    }
+
+    public float getContentHeightCss() {
+        return getRenderCoordinates().getContentHeightCss();
+    }
+
+    public float getContentWidthPix() {
+        return getRenderCoordinates().getContentWidthPix();
+    }
+
+    public float getContentHeightPix() {
+        return getRenderCoordinates().getContentHeightPix();
+    }
+
+    public int getContentWidthPixInt() {
+        return getRenderCoordinates().getContentWidthPixInt();
+    }
+
+    public int getContentHeightPixInt() {
+        return getRenderCoordinates().getContentHeightPixInt();
+    }
+
+    public void setDeviceScaleFactor(float dipScale, Context context) {
+        getRenderCoordinates().setDeviceScaleFactor(dipScale, context);
+    }
+
+    @CalledByNative
+    private void updateFrameInfo(float scrollOffsetX, float scrollOffsetY, float contentWidth,
+            float contentHeight, float viewportWidth, float viewportHeight, float pageScaleFactor,
+            float minPageScaleFactor, float maxPageScaleFactor, float topBarShownPix) {
+        getRenderCoordinates().updateFrameInfo(scrollOffsetX, scrollOffsetY, contentWidth,
+                contentHeight, viewportWidth, viewportHeight, pageScaleFactor, minPageScaleFactor,
+                maxPageScaleFactor, topBarShownPix);
     }
 
     // This is static to avoid exposing a public destroy method on the native side of this class.
