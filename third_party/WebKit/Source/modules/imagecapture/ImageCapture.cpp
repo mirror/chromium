@@ -673,7 +673,7 @@ void ImageCapture::OnMojoGetPhotoState(
     return;
   }
 
-  resolve_function(resolver);
+  std::move(resolve_function).Run(resolver);
   service_requests_.erase(resolver);
 }
 
