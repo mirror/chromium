@@ -35,7 +35,8 @@ CommonNavigationParams::CommonNavigationParams()
       previews_state(PREVIEWS_UNSPECIFIED),
       navigation_start(base::TimeTicks::Now()),
       method("GET"),
-      should_check_main_world_csp(CSPDisposition::CHECK) {}
+      should_check_main_world_csp(CSPDisposition::CHECK),
+      has_user_gesture(false) {}
 
 CommonNavigationParams::CommonNavigationParams(
     const GURL& url,
@@ -53,7 +54,8 @@ CommonNavigationParams::CommonNavigationParams(
     std::string method,
     const scoped_refptr<ResourceRequestBody>& post_data,
     base::Optional<SourceLocation> source_location,
-    CSPDisposition should_check_main_world_csp)
+    CSPDisposition should_check_main_world_csp,
+    bool has_user_gesture)
     : url(url),
       referrer(referrer),
       transition(transition),
@@ -69,7 +71,8 @@ CommonNavigationParams::CommonNavigationParams(
       method(method),
       post_data(post_data),
       source_location(source_location),
-      should_check_main_world_csp(should_check_main_world_csp) {
+      should_check_main_world_csp(should_check_main_world_csp),
+      has_user_gesture(has_user_gesture) {
   // |method != "POST"| should imply absence of |post_data|.
   if (method != "POST" && post_data) {
     NOTREACHED();
@@ -85,7 +88,6 @@ CommonNavigationParams::~CommonNavigationParams() {
 
 BeginNavigationParams::BeginNavigationParams()
     : load_flags(0),
-      has_user_gesture(false),
       skip_service_worker(false),
       request_context_type(REQUEST_CONTEXT_TYPE_LOCATION),
       mixed_content_context_type(blink::WebMixedContentContextType::kBlockable),
@@ -94,7 +96,6 @@ BeginNavigationParams::BeginNavigationParams()
 BeginNavigationParams::BeginNavigationParams(
     std::string headers,
     int load_flags,
-    bool has_user_gesture,
     bool skip_service_worker,
     RequestContextType request_context_type,
     blink::WebMixedContentContextType mixed_content_context_type,
@@ -102,7 +103,6 @@ BeginNavigationParams::BeginNavigationParams(
     const base::Optional<url::Origin>& initiator_origin)
     : headers(headers),
       load_flags(load_flags),
-      has_user_gesture(has_user_gesture),
       skip_service_worker(skip_service_worker),
       request_context_type(request_context_type),
       mixed_content_context_type(mixed_content_context_type),
@@ -148,9 +148,7 @@ RequestNavigationParams::RequestNavigationParams()
       should_clear_history_list(false),
       should_create_service_worker(false),
       service_worker_provider_id(kInvalidServiceWorkerProviderId),
-      appcache_host_id(kAppCacheNoHostId),
-      has_user_gesture(false) {
-}
+      appcache_host_id(kAppCacheNoHostId) {}
 
 RequestNavigationParams::RequestNavigationParams(
     bool is_overriding_user_agent,
@@ -168,8 +166,7 @@ RequestNavigationParams::RequestNavigationParams(
     int current_history_list_offset,
     int current_history_list_length,
     bool is_view_source,
-    bool should_clear_history_list,
-    bool has_user_gesture)
+    bool should_clear_history_list)
     : is_overriding_user_agent(is_overriding_user_agent),
       redirects(redirects),
       original_url(original_url),
@@ -188,8 +185,7 @@ RequestNavigationParams::RequestNavigationParams(
       should_clear_history_list(should_clear_history_list),
       should_create_service_worker(false),
       service_worker_provider_id(kInvalidServiceWorkerProviderId),
-      appcache_host_id(kAppCacheNoHostId),
-      has_user_gesture(has_user_gesture) {}
+      appcache_host_id(kAppCacheNoHostId) {}
 
 RequestNavigationParams::RequestNavigationParams(
     const RequestNavigationParams& other) = default;
