@@ -159,6 +159,30 @@
       "revId": "8a8997210055ba84753f6a333def51f830006bf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34e43ee9_728ecf2f",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-25T16:52:38Z",
+      "side": 0,
+      "message": "So - if we created a brand new WebContents, then there would be no need to call into the SessionService?  Arthur is taking this step in a follow-up CL @ https://chromium-review.googlesource.com/c/chromium/src/+/725812, so maybe I can address the feedback here by integrating his changes into the current CL.\n\nDoes that sound good?",
+      "parentUuid": "8c68b667_2d2a54c1",
+      "range": {
+        "startLine": 1262,
+        "startChar": 2,
+        "endLine": 1263,
+        "endChar": 62
+      },
+      "revId": "8a8997210055ba84753f6a333def51f830006bf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
