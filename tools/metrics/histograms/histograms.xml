@@ -17396,6 +17396,62 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The write size for calls to BaseFile::AppendDataTofile().</summary>
 </histogram>
 
+<histogram name="DownloadableStrings.InstallTime" units="ms">
+  <owner>digit@chromium.org</owner>
+  <summary>
+    The time to succesfully download and install the DownloadableStrings
+    component on Android.
+  </summary>
+</histogram>
+
+<histogram name="DownloadableStrings.LocaleIndex">
+  <owner>digit@chromium.org</owner>
+  <summary>
+    Index of the locale currently used by Chrome on the current device.
+  </summary>
+</histogram>
+
+<histogram name="DownloadableStrings.RetryLaterTimeout" units="ms">
+  <owner>digit@chromium.org</owner>
+  <summary>
+    The timeout reported by the component updater when trying to install the
+    DownloadableStrings component fails with a RETRY_LATER status.
+  </summary>
+</histogram>
+
+<histogram name="DownloadableStrings.ServiceErrorTimeout" units="ms">
+  <owner>digit@chromium.org</owner>
+  <summary>
+    The timeout reported by the component updater when trying to install the
+    DownloadableStrings component fails with a SERVICE_ERROR status.
+  </summary>
+</histogram>
+
+<histogram name="DownloadableStrings.SimCountryCode">
+  <owner>digit@chromium.org</owner>
+  <summary>
+    The mobile country code (MCC) of the device's SIM card, if available (in the
+    [200..999] range), or 0 for &quot;undetermined&quot;.
+  </summary>
+</histogram>
+
+<histogram name="DownloadableStrings.Status"
+    enum="DownloadableStringsInstallStatus">
+  <owner>digit@chromium.org</owner>
+  <summary>
+    The status code returned after trying to install and update the
+    DownloadableStrings component.
+  </summary>
+</histogram>
+
+<histogram name="DownloadableStrings.UpdateCheckTimeout" units="ms">
+  <owner>digit@chromium.org</owner>
+  <summary>
+    The timeout reported by the component updater when trying to install the
+    DownloadableStrings component fails with an UPDATE_CHECK_ERROR status.
+  </summary>
+</histogram>
+
 <histogram name="Drive.BatchUploadResponseCode" enum="HttpResponseCode">
   <owner>hirono@chromium.org</owner>
   <summary>Respose code of batch upload request.</summary>

@@ -55,6 +55,7 @@
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/chrome_browser_main_extra_parts.h"
 #include "chrome/browser/component_updater/crl_set_component_installer.h"
+#include "chrome/browser/component_updater/downloadable_strings_component_installer.h"
 #include "chrome/browser/component_updater/file_type_policies_component_installer.h"
 #include "chrome/browser/component_updater/origin_trials_component_installer.h"
 #include "chrome/browser/component_updater/pepper_flash_component_installer.h"
@@ -528,6 +529,10 @@ void RegisterComponentsForUpdate() {
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
     RegisterSSLErrorAssistantComponent(cus, path);
+#endif
+
+#if BUILDFLAG(ENABLE_DOWNLOADABLE_STRINGS)
+    RegisterDownloadableStringsComponent(cus);
 #endif
   }
 
@@ -1139,11 +1144,6 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
 
   SetupOriginTrialsCommandLine();
 
-#if BUILDFLAG(ENABLE_VR)
-  content::WebvrServiceProvider::SetWebvrServiceCallback(
-      base::Bind(&vr::VRServiceImpl::Create));
-#endif
-
   // Now that the command line has been mutated based on about:flags, we can
   // initialize field trials. The field trials are needed by IOThread's
   // initialization which happens in BrowserProcess:PreCreateThreads. Metrics
@@ -1607,11 +1607,6 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
     // Note: this can pop the first run consent dialog on linux.
     first_run::DoPostImportTasks(profile_,
                                  master_prefs_->make_chrome_default_for_user);
-
-    // The first run dialog is modal, and spins a RunLoop, which could receive
-    // a SIGTERM, and call chrome::AttemptExit(). Exit cleanly in that case.
-    if (browser_shutdown::IsTryingToQuit())
-      return content::RESULT_CODE_NORMAL_EXIT;
 
     if (!master_prefs_->suppress_first_run_default_browser_prompt) {
       browser_creator_->set_show_main_browser_window(
