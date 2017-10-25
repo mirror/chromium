@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "8b5048b7_68817ddb",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-25T07:32:49Z",
+      "side": 1,
+      "message": "Can we run WebDatabaseImpl on a sequence instead?",
+      "range": {
+        "startLine": 290,
+        "startChar": 6,
+        "endLine": 290,
+        "endChar": 45
+      },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd8a19b_02e4975c",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/WebDatabaseImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-25T07:32:49Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 41
+      },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8ed3c4_8edfd665",
+        "filename": "third_party/WebKit/public/web/WebKit.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-25T07:32:49Z",
+      "side": 1,
+      "message": "It feels a bit messy to forward declare this. Can we not just include the header?\n\nAlternatively, maybe a binder_registry_forward.h might be worthwhile.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 29
+      },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8354f76_4fd5808d",
         "filename": "third_party/WebKit/public/web/WebKit.h",
         "patchSetId": 12
@@ -13,6 +82,30 @@
       "writtenOn": "2017-10-25T06:45:59Z",
       "side": 1,
       "message": "Maybe we\u0027re better off moving these to BlinkInitializer as member functions?",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 12
+      },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80095802_415aa478",
+        "filename": "third_party/WebKit/public/web/WebKit.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-25T07:32:49Z",
+      "side": 1,
+      "message": "You\u0027ll still need them in a public header somewhere to share them outside blink, unless you want to make BlinkInitializer public.\n\nI don\u0027t have a good feel for how this should be structured though.",
+      "parentUuid": "f8354f76_4fd5808d",
       "range": {
         "startLine": 55,
         "startChar": 0,
