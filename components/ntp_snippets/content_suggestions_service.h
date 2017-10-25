@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/callback_forward.h"
 #include "base/observer_list.h"
 #include "base/optional.h"
@@ -96,6 +97,8 @@ class ContentSuggestionsService : public KeyedService,
     ENABLED,
     DISABLED,
   };
+
+  using ProviderRegistrationCallback = base::Callback<void()>;
 
   ContentSuggestionsService(
       State state,
@@ -188,6 +191,15 @@ class ContentSuggestionsService : public KeyedService,
 
   // Must be called when Chrome Home is turned on or off.
   void OnChromeHomeStatusChanged(bool is_chrome_home_enabled);
+
+  // Callbacks to recreate the providers (e.g. when disabling Chrome Home).
+  // First, they must check whether conditions are met:
+  // - if yes, they must build the provider and register it with this service.
+  // - if not, they do nothing.
+  void SetBookmarksProviderRegistrationCallback(
+      ProviderRegistrationCallback callback);
+  void SetDownloadsProviderRegistrationCallback(
+      ProviderRegistrationCallback callback);
 
   // Observer accessors.
   void AddObserver(Observer* observer);
@@ -425,6 +437,13 @@ class ContentSuggestionsService : public KeyedService,
   std::unique_ptr<CategoryRanker> category_ranker_;
 
   std::unique_ptr<Logger> debug_logger_;
+
+  // Callbacks used to recreate providers e.g. when disabling Chrome Home.
+  // First, they must check whether conditions are met:
+  // - if yes, they must build the provider and register it with this service.
+  // - if not, they do nothing.
+  ProviderRegistrationCallback bookmarks_provider_registration_callback_;
+  ProviderRegistrationCallback downloads_provider_registration_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentSuggestionsService);
 };

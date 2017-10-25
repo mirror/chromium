@@ -452,7 +452,24 @@ void ContentSuggestionsService::OnChromeHomeStatusChanged(
         Category::FromKnownCategory(KnownCategories::BOOKMARKS));
     DestroyCategoryAndItsProvider(
         Category::FromKnownCategory(KnownCategories::DOWNLOADS));
+  } else {
+    if (!bookmarks_provider_registration_callback_.is_null()) {
+      bookmarks_provider_registration_callback_.Run();
+    }
+    if (!downloads_provider_registration_callback_.is_null()) {
+      downloads_provider_registration_callback_.Run();
+    }
   }
+}
+
+void ContentSuggestionsService::SetBookmarksProviderRegistrationCallback(
+    ProviderRegistrationCallback callback) {
+  bookmarks_provider_registration_callback_ = callback;
+}
+
+void ContentSuggestionsService::SetDownloadsProviderRegistrationCallback(
+    ProviderRegistrationCallback callback) {
+  downloads_provider_registration_callback_ = callback;
 }
 
 bool ContentSuggestionsService::AreRemoteSuggestionsEnabled() const {

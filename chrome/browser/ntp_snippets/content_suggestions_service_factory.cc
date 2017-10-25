@@ -523,10 +523,15 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
                                    user_classifier_raw, offline_page_model,
                                    raw_debug_logger);
   RegisterBookmarkProviderIfEnabled(service, profile);
+  service->SetBookmarksProviderRegistrationCallback(
+      base::Bind(RegisterBookmarkProviderIfEnabled, service, profile));
   RegisterForeignSessionsProviderIfEnabled(service, profile);
 
 #if defined(OS_ANDROID)
   RegisterDownloadsProviderIfEnabled(service, profile, offline_page_model);
+  service->SetDownloadsProviderRegistrationCallback(
+      base::Bind(RegisterDownloadsProviderIfEnabled, service, profile,
+                 offline_page_model));
   RegisterPhysicalWebPageProviderIfEnabled(service, profile);
 #endif  // OS_ANDROID
 

@@ -927,4 +927,26 @@ TEST_F(ContentSuggestionsServiceTest,
   service()->RemoveObserver(&observer);
 }
 
+TEST_F(ContentSuggestionsServiceTest,
+       ShouldAttemptToRecreateBookmarksProviderWhenChromeHomeTurnedOff) {
+  base::MockCallback<ContentSuggestionsService::ProviderRegistrationCallback>
+      mock_registration_callback;
+  service()->SetBookmarksProviderRegistrationCallback(
+      mock_registration_callback.Get());
+
+  EXPECT_CALL(mock_registration_callback, Run());
+  service()->OnChromeHomeStatusChanged(/*is_chrome_home_enabled=*/false);
+}
+
+TEST_F(ContentSuggestionsServiceTest,
+       ShouldAttemptToRecreateDownloadsProviderWhenChromeHomeTurnedOff) {
+  base::MockCallback<ContentSuggestionsService::ProviderRegistrationCallback>
+      mock_registration_callback;
+  service()->SetDownloadsProviderRegistrationCallback(
+      mock_registration_callback.Get());
+
+  EXPECT_CALL(mock_registration_callback, Run());
+  service()->OnChromeHomeStatusChanged(/*is_chrome_home_enabled=*/false);
+}
+
 }  // namespace ntp_snippets
