@@ -16,6 +16,24 @@
       "revId": "491d1b27f96fec10b473822fe4aad1dddb868412",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ef3b75_b6c48c14",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-25T19:09:27Z",
+      "side": 1,
+      "message": "Renamed as NGOffsetMapping::GetFor(node, offset).",
+      "parentUuid": "396499e0_e794ed97",
+      "revId": "491d1b27f96fec10b473822fe4aad1dddb868412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
