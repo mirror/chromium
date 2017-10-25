@@ -479,6 +479,24 @@
     },
     {
       "key": {
+        "uuid": "51ba31c8_b0d7a455",
+        "filename": "ash/voice_interaction/voice_interaction_struct_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T14:16:02Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "9d3c4565_e3534600",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d98e2892_27b330bc",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 1
@@ -777,6 +795,24 @@
       "side": 1,
       "message": "It seems most code in //chrome/browser/chromeos/arc/* is in namespace arc. I do not know the reason of that or what is the case for other directories though.",
       "parentUuid": "d3fb4c6a_24330f03",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ca586af_d3772c89",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T14:16:02Z",
+      "side": 1,
+      "message": "Yeah, putting it in namespace arc is wrong. It shouldn\u0027t be in any namespace. They probably did that so they didn\u0027t have to type arc:: when accessing code in //components/arc. However, I\u0027m OK with keeping this, just for consistency with the other arc code.",
+      "parentUuid": "3712bc76_8854820b",
       "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

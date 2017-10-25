@@ -50,6 +50,23 @@
       "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68f3a9c_29427ba5",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T14:16:02Z",
+      "side": 1,
+      "message": "typo: Notify",
+      "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
