@@ -16,6 +16,24 @@
       "revId": "3c4bfb65147ad1ffb79f0b9be3802ef572eda489",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe54855_29005724",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-25T13:27:11Z",
+      "side": 1,
+      "message": "Yep. This seems to have been lost during the materialization of the history page on Android.",
+      "parentUuid": "7ad3ae5d_ec936e56",
+      "revId": "3c4bfb65147ad1ffb79f0b9be3802ef572eda489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
