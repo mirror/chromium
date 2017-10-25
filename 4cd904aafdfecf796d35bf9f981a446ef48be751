@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "be7fc496_587ad3af",
+        "filename": "ui/gfx/native_pixmap.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-25T13:17:56Z",
+      "side": 1,
+      "message": "\u003e - GetUniqueId() is needed because we currently track of non-drm buffers that are identified by gem handles. See shared memory buffers in ProtectedBufferManager.cc/h.\n\u003e - I think we agree that using gem handles to identify protected posix shared memory is confusing and something we should try to remove asap. I already filed crbug.com/771863 for this and suggested a way to solve it.\n\nThe suggestion above is (to my knowledge) unfortunately not sufficient. The main issue is not sharing/identifying the memory, but removing access to it when sharing. \n\nThe client must not have any access to the buffer shared with it. I am not aware of any way to share memory while completely removing access to it (both read and write) from other processes we share to, unless we implement a new type of shared memory with corresponding kernel functionality to support it.",
+      "parentUuid": "4129483b_1abe2047",
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73ba6b00_b7e50033",
         "filename": "ui/ozone/platform/drm/gpu/gbm_surface_factory.cc",
         "patchSetId": 7
