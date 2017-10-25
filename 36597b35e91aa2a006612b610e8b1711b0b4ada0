@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5360031f_51639afd",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-25T13:07:39Z",
+      "side": 1,
+      "message": "Done, your understanding is correct.",
+      "parentUuid": "73b477e6_ff226ebe",
+      "revId": "36597b35e91aa2a006612b610e8b1711b0b4ada0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e234bb77_7c98b72a",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
         "patchSetId": 29
@@ -33,6 +51,24 @@
       "revId": "36597b35e91aa2a006612b610e8b1711b0b4ada0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d58a59_405d737b",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-25T13:07:39Z",
+      "side": 1,
+      "message": "NGPaintFragment tree is at maximum the same as NGPhysicalFragment tree, which is almost the same as LayoutObject tree at this point. It\u0027s just:\n1. Allow mutation for paint-related properties when NGPhysicalFragment is immutable.\n2. The subtree of NGPhysicalFragment tree can be shared in future. In this case, multiple NGPaintFragment can share one NGPhysicalFragment.\n\nAt the phase 1, it\u0027s even shorter; we limit NGPaintFragment tree only for inline, so the recursion is only for the depth of inline tree. We run this recursion for every block that has inline children.\n\nThis is not double recursion, it\u0027s a simple tree structure.",
+      "parentUuid": "e234bb77_7c98b72a",
+      "revId": "36597b35e91aa2a006612b610e8b1711b0b4ada0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
