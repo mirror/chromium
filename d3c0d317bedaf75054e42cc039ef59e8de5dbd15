@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "80a54d0e_54e1d936",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-25T14:31:28Z",
+      "side": 1,
+      "message": "What\u0027s going on with this file? Why are we storing the bool here?",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "d3c0d317bedaf75054e42cc039ef59e8de5dbd15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "001d09a8_e081147f",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
         "patchSetId": 14
