@@ -123,6 +123,10 @@ class WebFrameWidget : public WebWidget {
   // input.
   virtual void SetIsInert(bool) {}
 
+  // TODO(kenrb): Comments, comments.
+  virtual void UpdateRenderThrottlingStatus(bool is_throttled,
+                                            bool subtree_throttled) {}
+
   // Called to inform the WebFrameWidget that a wheel fling animation was
   // started externally (for instance by the compositor) but must be completed
   // by the WebFrameWidget.

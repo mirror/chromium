@@ -471,6 +471,7 @@ class CORE_EXPORT EmptyRemoteFrameClient : public RemoteFrameClient {
   void AdvanceFocus(WebFocusType, LocalFrame* source) override {}
   void VisibilityChanged(bool visible) override {}
   void SetIsInert(bool) override {}
+  void UpdateRenderThrottlingStatus(bool, bool) override {}
 
   // FrameClient implementation.
   bool InShadowTree() const override { return false; }
