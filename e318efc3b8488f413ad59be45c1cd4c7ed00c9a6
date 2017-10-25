@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "d1df6d02_4c3b0bd8",
+        "filename": "ppapi/api/dev/pp_print_settings_dev.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-25T23:13:26Z",
+      "side": 1,
+      "message": "This bitfield may potentially have all bits set, so any switch on these values would have to handle all cases. I admit, I scratched my head at first with this enum, but came to the conclusion that a \u0027last\u0027 value makes sense here.",
+      "parentUuid": "25411d8d_f9af9699",
+      "revId": "e318efc3b8488f413ad59be45c1cd4c7ed00c9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4371a3f_671e84eb",
         "filename": "ppapi/c/dev/pp_print_settings_dev.h",
         "patchSetId": 8
