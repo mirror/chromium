@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fab23227_6df70812",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-10-25T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69bbb7b6_a04f121b",
+      "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f3ce39f_e13a1619",
         "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a082e2b_2bdabbab",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-10-25T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f3ce39f_e13a1619",
+      "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "918f9905_aa49dbbb",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-10-25T20:55:33Z",
+      "side": 1,
+      "message": "This was set because the other history_swiper tests don\u0027t send didOverscroll message so I wanted to set it to YES.\n\nAnyway, as I set the default value to NO (as we changed the name from canNavigate_ to rendererDisabledOverscroll_) in this patch, we don\u0027t need this line anymore.",
+      "parentUuid": "b606c308_c36585b8",
+      "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5be537e1_1db799eb",
         "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.mm",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6bec5afa_8a8e8a4f",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-10-25T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5be537e1_1db799eb",
+      "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbb1362e_d42c9291",
         "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper_unit_test.mm",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7c7b4e_9b78ce76",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper_unit_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-10-25T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbb1362e_d42c9291",
+      "revId": "a7003bc2f412e24013aca80c61483c955dd70f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
