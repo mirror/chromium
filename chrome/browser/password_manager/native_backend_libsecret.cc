@@ -20,6 +20,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/os_crypt/os_crypt.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/password_manager_util.h"
 #include "url/origin.h"
@@ -172,6 +173,12 @@ NativeBackendLibsecret::~NativeBackendLibsecret() {
 }
 
 bool NativeBackendLibsecret::Init() {
+  // Force OSCrypt to initialise itself before Password Manager uses its
+  // backends. This removes any racing calls to Keyring between
+  // Password Manager and OSCrypt.
+  std::string encrypted;
+  OSCrypt::EncryptString("Not an interesting value", &encrypted);
+
   return LibsecretLoader::EnsureLibsecretLoaded();
 }
 

@@ -5,6 +5,7 @@
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <utility>
 
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
@@ -18,6 +19,7 @@
 #include "chrome/browser/password_manager/native_backend_libsecret.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/autofill/core/common/password_form.h"
+#include "components/os_crypt/os_crypt_mocker.h"
 #include "components/password_manager/core/browser/psl_matching_helper.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/prefs/pref_service.h"
@@ -277,6 +279,8 @@ class NativeBackendLibsecretTest : public testing::Test {
             base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
 
   void SetUp() override {
+    OSCryptMocker::SetUp();
+
     ASSERT_FALSE(global_mock_libsecret_items);
     global_mock_libsecret_items = &mock_libsecret_items_;
 
@@ -338,6 +342,7 @@ class NativeBackendLibsecretTest : public testing::Test {
   }
 
   void TearDown() override {
+    OSCryptMocker::TearDown();
     scoped_task_environment_.RunUntilIdle();
     ASSERT_TRUE(global_mock_libsecret_items);
     global_mock_libsecret_items = nullptr;
