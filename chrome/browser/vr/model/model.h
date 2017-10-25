@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_VR_MODEL_MODEL_H_
 #define CHROME_BROWSER_VR_MODEL_MODEL_H_
 
+#include "chrome/browser/vr/omnibox_suggestions.h"
+
 namespace vr {
 
 // As we wait for WebVR frames, we may pass through the following states.
@@ -24,11 +26,16 @@ enum WebVrTimeoutState {
 };
 
 struct Model {
+  Model();
+  ~Model();
+
   bool loading = false;
   float load_progress = 0.0f;
 
   WebVrTimeoutState web_vr_timeout_state = kWebVrNoTimeoutPending;
   bool started_for_autopresentation = false;
+
+  std::vector<OmniboxSuggestion> omnibox_suggestions;
 };
 
 }  // namespace vr
