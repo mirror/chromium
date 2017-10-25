@@ -182,6 +182,7 @@
 #include "media/media_features.h"
 #include "net/base/net_errors.h"
 #include "net/base/url_util.h"
+#include "net/dns/mock_host_resolver.h"
 #include "net/http/http_stream_factory.h"
 #include "net/http/transport_security_state.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
@@ -316,17 +317,6 @@ void RedirectHostsToTestData(const char* const urls[], size_t size) {
   }
 }
 
-// Remove filters for requests to the hosts in |urls|.
-void UndoRedirectHostsToTestData(const char* const urls[], size_t size) {
-  // Map the given hosts to the test data dir.
-  net::URLRequestFilter* filter = net::URLRequestFilter::GetInstance();
-  for (size_t i = 0; i < size; ++i) {
-    const GURL url(urls[i]);
-    EXPECT_TRUE(url.is_valid());
-    filter->RemoveUrlHandler(url);
-  }
-}
-
 // Fails requests using ERR_CONNECTION_RESET.
 class FailedJobInterceptor : public net::URLRequestInterceptor {
  public:
@@ -387,7 +377,7 @@ class MakeRequestFail {
 
 // Verifies that the given url |spec| can be opened. This assumes that |spec|
 // points at empty.html in the test data dir.
-void CheckCanOpenURL(Browser* browser, const char* spec) {
+void CheckCanOpenURL(Browser* browser, const std::string& spec) {
   GURL url(spec);
   ui_test_utils::NavigateToURL(browser, url);
   content::WebContents* contents =
@@ -405,7 +395,7 @@ void CheckCanOpenURL(Browser* browser, const char* spec) {
 }
 
 // Verifies that access to the given url |spec| is blocked.
-void CheckURLIsBlocked(Browser* browser, const char* spec) {
+void CheckURLIsBlocked(Browser* browser, const std::string& spec) {
   GURL url(spec);
   ui_test_utils::NavigateToURL(browser, url);
   content::WebContents* contents =
@@ -657,6 +647,10 @@ class PolicyTest : public InProcessBrowserTest {
   }
 
   void SetUpOnMainThread() override {
+    host_resolver()->AddRule("*", "127.0.0.1");
+    embedded_test_server()->ServeFilesFromDirectory(
+        GetDirectoryForTestServer());
+    ASSERT_TRUE(embedded_test_server()->Start());
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(chrome_browser_net::SetUrlRequestMocksEnabled, true));
@@ -666,16 +660,12 @@ class PolicyTest : public InProcessBrowserTest {
     }
   }
 
-  // Makes URLRequestMockHTTPJobs serve data from content::DIR_TEST_DATA
-  // instead of chrome::DIR_TEST_DATA.
-  void ServeContentTestData() {
-    base::FilePath root_http;
-    PathService::Get(content::DIR_TEST_DATA, &root_http);
-    BrowserThread::PostTaskAndReply(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(URLRequestMockHTTPJob::AddUrlHandlers, root_http),
-        base::MessageLoop::current()->QuitWhenIdleClosure());
-    content::RunMessageLoop();
+  // Subclasses can override this method to serve files from a different
+  // directory. The default is to serve from chrome::DIR_TEST_DATA.
+  virtual base::FilePath GetDirectoryForTestServer() {
+    base::FilePath base_path;
+    PathService::Get(chrome::DIR_TEST_DATA, &base_path);
+    return base_path;
   }
 
   void SetScreenshotPolicy(bool enabled) {
@@ -2360,23 +2350,13 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklist) {
   // Checks that URLs can be blacklisted, and that exceptions can be made to
   // the blacklist.
 
-  // Filter |kURLS| on IO thread, so that requests to those hosts end up
-  // as URLRequestMockHTTPJobs.
-  const char* kURLS[] = {
-    "http://aaa.com/empty.html",
-    "http://bbb.com/empty.html",
-    "http://sub.bbb.com/empty.html",
-    "http://bbb.com/policy/blank.html",
-    "http://bbb.com./policy/blank.html",
+  const std::string kURLS[] = {
+      embedded_test_server()->GetURL("aaa.com", "/empty.html").spec(),
+      embedded_test_server()->GetURL("bbb.com", "/empty.html").spec(),
+      embedded_test_server()->GetURL("sub.bbb.com", "/empty.html").spec(),
+      embedded_test_server()->GetURL("bbb.com", "/policy/blank.html").spec(),
+      embedded_test_server()->GetURL("bbb.com.", "/policy/blank.html").spec(),
   };
-  {
-    base::RunLoop loop;
-    BrowserThread::PostTaskAndReply(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(RedirectHostsToTestData, kURLS, arraysize(kURLS)),
-        loop.QuitClosure());
-    loop.Run();
-  }
 
   // Verify that "bbb.com" opens before applying the blacklist.
   CheckCanOpenURL(browser(), kURLS[1]);
@@ -2406,34 +2386,11 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklist) {
   CheckCanOpenURL(browser(), kURLS[2]);
   CheckCanOpenURL(browser(), kURLS[3]);
   CheckCanOpenURL(browser(), kURLS[4]);
-
-  {
-    base::RunLoop loop;
-    BrowserThread::PostTaskAndReply(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(UndoRedirectHostsToTestData, kURLS, arraysize(kURLS)),
-        loop.QuitClosure());
-    loop.Run();
-  }
 }
 
 IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklistAndWhitelist) {
   // Regression test for http://crbug.com/755256. Blacklisting * and
   // whitelisting an origin should work.
-
-  // Filter |kURLS| on IO thread, so that requests to those hosts end up
-  // as URLRequestMockHTTPJobs.
-  const char* kURLS[] = {
-      "http://aaa.com/empty.html",
-  };
-  {
-    base::RunLoop loop;
-    BrowserThread::PostTaskAndReply(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(RedirectHostsToTestData, kURLS, arraysize(kURLS)),
-        loop.QuitClosure());
-    loop.Run();
-  }
 
   base::ListValue blacklist;
   blacklist.AppendString("*");
@@ -2447,7 +2404,9 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklistAndWhitelist) {
                POLICY_SOURCE_CLOUD, whitelist.CreateDeepCopy(), nullptr);
   UpdateProviderPolicy(policies);
   FlushBlacklistPolicy();
-  CheckCanOpenURL(browser(), kURLS[0]);
+  CheckCanOpenURL(
+      browser(),
+      embedded_test_server()->GetURL("aaa.com", "/empty.html").spec());
 }
 
 IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklistSubresources) {
@@ -2455,9 +2414,9 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklistSubresources) {
   // blacklisted URL is not.
 
   GURL main_url =
-      URLRequestMockHTTPJob::GetMockUrl("policy/blacklist-subresources.html");
-  GURL image_url = URLRequestMockHTTPJob::GetMockUrl("policy/pixel.png");
-  GURL subframe_url = URLRequestMockHTTPJob::GetMockUrl("policy/blank.html");
+      embedded_test_server()->GetURL("/policy/blacklist-subresources.html");
+  GURL image_url = embedded_test_server()->GetURL("/policy/pixel.png");
+  GURL subframe_url = embedded_test_server()->GetURL("/policy/blank.html");
 
   // Set a blacklist containing the image and the iframe which are used by the
   // main document.
@@ -2504,8 +2463,8 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, MAYBE_FileURLBlacklist) {
   const std::string file_path1 = base_path + "title1.html";
   const std::string file_path2 = folder_path + "basic.html";
 
-  CheckCanOpenURL(browser(), file_path1.c_str());
-  CheckCanOpenURL(browser(), file_path2.c_str());
+  CheckCanOpenURL(browser(), file_path1);
+  CheckCanOpenURL(browser(), file_path2);
 
   // Set a blacklist for all the files.
   base::ListValue blacklist;
@@ -2516,8 +2475,8 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, MAYBE_FileURLBlacklist) {
   UpdateProviderPolicy(policies);
   FlushBlacklistPolicy();
 
-  CheckURLIsBlocked(browser(), file_path1.c_str());
-  CheckURLIsBlocked(browser(), file_path2.c_str());
+  CheckURLIsBlocked(browser(), file_path1);
+  CheckURLIsBlocked(browser(), file_path2);
 
   // Replace the URLblacklist with disabling the file scheme.
   blacklist.Remove(base::Value("file://*"), NULL);
@@ -2551,8 +2510,8 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, MAYBE_FileURLBlacklist) {
   UpdateProviderPolicy(policies);
   FlushBlacklistPolicy();
 
-  CheckCanOpenURL(browser(), file_path1.c_str());
-  CheckURLIsBlocked(browser(), file_path2.c_str());
+  CheckCanOpenURL(browser(), file_path1);
+  CheckURLIsBlocked(browser(), file_path2);
 }
 
 #if !defined(OS_MACOSX)
@@ -3182,7 +3141,6 @@ class MediaStreamDevicesControllerBrowserTest
   void SetUpOnMainThread() override {
     PolicyTest::SetUpOnMainThread();
 
-    ASSERT_TRUE(embedded_test_server()->Start());
     request_url_ = embedded_test_server()->GetURL("/simple.html");
     request_pattern_ = request_url_.GetOrigin().spec();
     ui_test_utils::NavigateToURL(browser(), request_url_);
@@ -3418,6 +3376,12 @@ class WebBluetoothPolicyTest : public PolicyTest {
         switches::kEnableExperimentalWebPlatformFeatures);
     PolicyTest::SetUpCommandLine(command_line);
   }
+
+  base::FilePath GetDirectoryForTestServer() override {
+    base::FilePath root_http;
+    PathService::Get(content::DIR_TEST_DATA, &root_http);
+    return root_http;
+  }
 };
 
 IN_PROC_BROWSER_TEST_F(WebBluetoothPolicyTest, Block) {
@@ -3431,8 +3395,6 @@ IN_PROC_BROWSER_TEST_F(WebBluetoothPolicyTest, Block) {
   device::BluetoothAdapterFactory::SetAdapterForTesting(adapter);
 
   // Navigate to a secure context.
-  embedded_test_server()->ServeFilesFromSourceDirectory("content/test/data");
-  ASSERT_TRUE(embedded_test_server()->Start());
   ui_test_utils::NavigateToURL(
       browser(),
       embedded_test_server()->GetURL("localhost", "/simple_page.html"));
@@ -4388,6 +4350,9 @@ class NetworkTimePolicyTest : public PolicyTest {
     parameters["FetchBehavior"] = "on-demand-only";
     scoped_feature_list_.InitAndEnableFeatureWithParameters(
         network_time::kNetworkTimeServiceQuerying, parameters);
+    embedded_test_server()->RegisterRequestHandler(
+        base::Bind(&NetworkTimePolicyTest::CountingRequestHandler,
+                   base::Unretained(this)));
     PolicyTest::SetUpOnMainThread();
   }
 
@@ -4424,9 +4389,6 @@ IN_PROC_BROWSER_TEST_F(NetworkTimePolicyTest, NetworkTimeQueriesDisabled) {
                base::MakeUnique<base::Value>(false), nullptr);
   UpdateProviderPolicy(policies);
 
-  embedded_test_server()->RegisterRequestHandler(base::Bind(
-      &NetworkTimePolicyTest::CountingRequestHandler, base::Unretained(this)));
-  ASSERT_TRUE(embedded_test_server()->Start());
   g_browser_process->network_time_tracker()->SetTimeServerURLForTesting(
       embedded_test_server()->GetURL("/"));
 
