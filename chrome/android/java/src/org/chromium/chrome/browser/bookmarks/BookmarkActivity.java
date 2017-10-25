@@ -36,7 +36,7 @@ public class BookmarkActivity extends SnackbarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mBookmarkManager.destroy();
+        mBookmarkManager.onDestroyed();
     }
 
     @Override
