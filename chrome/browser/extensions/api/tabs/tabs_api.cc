@@ -11,6 +11,7 @@
 #include <utility>
 #include <vector>
 
+#include "ash/wm/window_util.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/location.h"
@@ -102,6 +103,10 @@ using content::OpenURLParams;
 using content::Referrer;
 using content::WebContents;
 using zoom::ZoomController;
+
+namespace aura {
+class Window;
+}
 
 namespace extensions {
 
@@ -211,6 +216,11 @@ ui::WindowShowState ConvertToWindowShowState(windows::WindowState state) {
       return ui::SHOW_STATE_MAXIMIZED;
     case windows::WINDOW_STATE_FULLSCREEN:
       return ui::SHOW_STATE_FULLSCREEN;
+    case windows::WINDOW_STATE_LOCKED:
+      // TODO(isandrk): Introduce a new ui::SHOW_STATE_FULLSCREEN_LOCKED which
+      // will be returned here (to be used in shortcut handling & context menu
+      // code to detect when we're in locked mode).
+      return ui::SHOW_STATE_FULLSCREEN;
     case windows::WINDOW_STATE_NONE:
       return ui::SHOW_STATE_DEFAULT;
   }
@@ -234,6 +244,7 @@ bool IsValidStateForWindowsCreateFunction(
              !is_panel;
     case windows::WINDOW_STATE_MAXIMIZED:
     case windows::WINDOW_STATE_FULLSCREEN:
+    case windows::WINDOW_STATE_LOCKED:
       // If maximised/fullscreen, default focused state should be focused.
       return !(create_data->focused && !*create_data->focused) && !has_bound &&
              !is_panel;
@@ -560,11 +571,24 @@ ExtensionFunction::ResponseAction WindowsCreateFunction::Run() {
   }
   create_params.initial_show_state = ui::SHOW_STATE_NORMAL;
   if (create_data && create_data->state) {
+    if (create_data->state == windows::WINDOW_STATE_LOCKED &&
+        !extension()->permissions_data()->HasAPIPermission(
+            APIPermission::kLockWindowFullscreenPrivate)) {
+      return RespondNow(
+          Error(keys::kMissingLockWindowFullscreenPrivatePermission));
+    }
     create_params.initial_show_state =
         ConvertToWindowShowState(create_data->state);
   }
 
   Browser* new_window = new Browser(create_params);
+
+#if defined(OS_CHROMEOS)
+  if (create_data && create_data->state == windows::WINDOW_STATE_LOCKED) {
+    aura::Window* window = new_window->window()->GetNativeWindow();
+    ash::wm::PinWindow(window, true /* trusted */);
+  }
+#endif
 
   for (const GURL& url : urls) {
     chrome::NavigateParams navigate_params(new_window, url,
@@ -641,12 +665,26 @@ ExtensionFunction::ResponseAction WindowsUpdateFunction::Run() {
   // state (crbug.com/703733).
   ReportRequestedWindowState(params->update_info.state);
 
+  if (params->update_info.state == windows::WINDOW_STATE_LOCKED &&
+      !extension()->permissions_data()->HasAPIPermission(
+          APIPermission::kLockWindowFullscreenPrivate)) {
+    return RespondNow(
+        Error(keys::kMissingLockWindowFullscreenPrivatePermission));
+  }
+
   ui::WindowShowState show_state =
       ConvertToWindowShowState(params->update_info.state);
 
   if (show_state != ui::SHOW_STATE_FULLSCREEN &&
       show_state != ui::SHOW_STATE_DEFAULT)
     controller->SetFullscreenMode(false, extension()->url());
+
+#if defined(OS_CHROMEOS)
+  if (params->update_info.state == windows::WINDOW_STATE_LOCKED) {
+    aura::Window* window = controller->window()->GetNativeWindow();
+    ash::wm::PinWindow(window, true /* trusted */);
+  }
+#endif
 
   switch (show_state) {
     case ui::SHOW_STATE_MINIMIZED:
