@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b728b9ff_6fb1416a",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T20:40:34Z",
+      "side": 1,
+      "message": "In the last patch set this is never given to the renderer on android. And yes browser crashes to decide we\u0027re done trying now so no need in renderer to know about it at all.",
+      "parentUuid": "718839c9_19850206",
+      "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afa69783_1fc1b902",
         "filename": "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom",
         "patchSetId": 5
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-25T20:38:30Z",
       "side": 1,
       "message": "there is no remove? does anything ever get removed from watchers_ vector?",
+      "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65a3765_6d91bdb3",
+        "filename": "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T20:40:34Z",
+      "side": 1,
+      "message": "OH good thought.. heh. I guess we\u0027d have a bunch of dead mojo pointers in there over time. Will add, thank you!",
+      "parentUuid": "afa69783_1fc1b902",
       "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
