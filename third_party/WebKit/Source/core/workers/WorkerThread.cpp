@@ -187,20 +187,42 @@ void WorkerThread::WillProcessTask() {
   DCHECK(!GlobalScope()->IsClosing());
 }
 
+// https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model
 void WorkerThread::DidProcessTask() {
   DCHECK(IsCurrentThread());
+  if (IsForciblyTerminated()) {
+    // The script has been terminated forcibly, which means we need to
+    // ask objects in the thread to stop working as soon as possible.
+    PrepareForShutdownOnWorkerThread();
+    return;
+  }
+
+  // Step 6: "Microtasks: Perform a microtask checkpoint."
   Microtask::PerformCheckpoint(GetIsolate());
   GlobalScope()->ScriptController()->GetRejectedPromises()->ProcessQueue();
+
+  // Step 7: "Update the rendering: If this event loop is a browsing context
+  // event loop (as opposed to a worker event loop), then run the following
+  // substeps.)"
+  // This step is not applicable for workers.
+
+  // Step 8: "If this is a worker event loop (i.e. one running for a
+  // WorkerGlobalScope), but there are no tasks in the event loop's task queues
+  // and the WorkerGlobalScope object's closing flag is true, then destroy the
+  // event loop, aborting these steps, resuming the run a worker steps described
+  // in the Web workers section below."
+  //
+  // Against the step 8, we can abort all remaining tasks in the event loop's
+  // task queues here because the tasks in the queues are supposed to be
+  // discarded in WorkerGlobalScope::close() according to the spec. See comments
+  // on WorkerGlobalScope::close().
   if (GlobalScope()->IsClosing()) {
     // This WorkerThread will eventually be requested to terminate.
     GetWorkerReportingProxy().DidCloseWorkerGlobalScope();
 
     // Stop further worker tasks to run after this point.
     PrepareForShutdownOnWorkerThread();
-  } else if (IsForciblyTerminated()) {
-    // The script has been terminated forcibly, which means we need to
-    // ask objects in the thread to stop working as soon as possible.
-    PrepareForShutdownOnWorkerThread();
+    return;
   }
 }
 
