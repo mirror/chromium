@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55c53050_058a648d",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-25T03:11:41Z",
+      "side": 1,
+      "message": "Yeah I think it works like:\n\nEvery time a download finishes, we try to post a clean-up task with the current parameters.  Now we don\u0027t actually queue the task until it completes (if we have a job of this type running).",
+      "parentUuid": "11ff5b13_e48e92a4",
+      "range": {
+        "startLine": 1038,
+        "startChar": 6,
+        "endLine": 1038,
+        "endChar": 73
+      },
+      "revId": "e53ed69e3adab13d51d97849d8f0be425c323eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e83e0611_f21b729f",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "dc085aea_2677451f",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-25T03:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e83e0611_f21b729f",
+      "revId": "e53ed69e3adab13d51d97849d8f0be425c323eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8d0cef9_ba9e9727",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "e53ed69e3adab13d51d97849d8f0be425c323eb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eee3e41_88f75d0a",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-25T03:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8d0cef9_ba9e9727",
+      "revId": "e53ed69e3adab13d51d97849d8f0be425c323eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
