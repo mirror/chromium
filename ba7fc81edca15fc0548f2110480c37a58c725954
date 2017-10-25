@@ -211,6 +211,30 @@
       "revId": "ba7fc81edca15fc0548f2110480c37a58c725954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949db037_ba6b8987",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-25T03:26:41Z",
+      "side": 1,
+      "message": "Yes, I also confirmed root-layer-scrolls.",
+      "parentUuid": "de7b9283_2f9f5821",
+      "range": {
+        "startLine": 1301,
+        "startChar": 2,
+        "endLine": 1302,
+        "endChar": 17
+      },
+      "revId": "ba7fc81edca15fc0548f2110480c37a58c725954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
