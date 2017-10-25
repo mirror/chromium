@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd037b45_c4cfeb86",
+        "filename": "content/browser/download/parallel_download_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-25T16:49:50Z",
+      "side": 1,
+      "message": "nit: probably kDownloadJobVerboseLevel is better, hopefully that won\u0027t cause any more conflicts later on",
+      "revId": "bea602bfbb0b45efaaf69c69ba5ece918d531055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
