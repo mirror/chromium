@@ -32,7 +32,8 @@ TEST_F(DefaultHeaderPainterTest, TitleIconAlignment) {
   w->Show();
 
   DefaultHeaderPainter painter;
-  painter.Init(w.get(), w->non_client_view()->frame_view(), &container);
+  painter.Init(w.get(), w->non_client_view()->frame_view(), &container,
+               nullptr);
   painter.UpdateLeftHeaderView(&window_icon);
   painter.LayoutHeader();
   gfx::Rect title_bounds = painter.GetTitleBounds();
@@ -51,7 +52,8 @@ TEST_F(DefaultHeaderPainterTest, LightIcons) {
   w->Show();
 
   DefaultHeaderPainter painter;
-  painter.Init(w.get(), w->non_client_view()->frame_view(), &container);
+  painter.Init(w.get(), w->non_client_view()->frame_view(), &container,
+               nullptr);
 
   // Check by default light icons are not used.
   painter.mode_ = HeaderPainter::MODE_ACTIVE;
