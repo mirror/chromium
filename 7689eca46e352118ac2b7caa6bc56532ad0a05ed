@@ -16,6 +16,24 @@
       "revId": "7689eca46e352118ac2b7caa6bc56532ad0a05ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5caea0b5_9a406ff1",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-25T17:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c653c36_2ad64b33",
+      "revId": "7689eca46e352118ac2b7caa6bc56532ad0a05ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
