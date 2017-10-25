@@ -10,6 +10,7 @@
 
 #include <memory>
 
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
@@ -24,6 +25,11 @@
 #include "third_party/skia/include/core/SkImageInfo.h"
 
 class SkImage;
+
+namespace viz {
+class ContextProvider;
+class GLHelper;
+}  // namespace viz
 
 namespace content {
 
@@ -48,8 +54,10 @@ class CONTENT_EXPORT CanvasCaptureHandler final
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
       blink::WebMediaStreamTrack* track);
 
-  // blink::WebCanvasCaptureHandler Implementation.
-  void SendNewFrame(const SkImage* image) override;
+  // blink::WebCanvasCaptureHandler implementation.
+  void SendNewFrame(
+      sk_sp<SkImage> image,
+      blink::WebGraphicsContext3DProvider* context_provider) override;
   bool NeedsNewFrame() const override;
 
   // Functions called by media::VideoCapturerSource implementation.
@@ -60,9 +68,10 @@ class CONTENT_EXPORT CanvasCaptureHandler final
       const media::VideoCapturerSource::RunningCallback& running_callback);
   void RequestRefreshFrame();
   void StopVideoCapture();
-  blink::WebSize GetSourceSize() const { return size_; }
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(CanvasCaptureHandlerTest, HandlesContextLoss);
+
   // A VideoCapturerSource instance is created, which is responsible for handing
   // stop&start callbacks back to CanvasCaptureHandler. That VideoCapturerSource
   // is then plugged into a MediaStreamTrack passed as |track|, and it is owned
@@ -73,10 +82,30 @@ class CONTENT_EXPORT CanvasCaptureHandler final
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
       blink::WebMediaStreamTrack* track);
 
-  void CreateNewFrame(const SkImage* image);
+  void SendAsYUVFrame(bool isOpaque,
+                      bool flip,
+                      const uint8_t* source_ptr,
+                      const gfx::Size& image_size,
+                      int stride,
+                      SkColorType source_color_type);
+  void ReadPixelsSync(sk_sp<SkImage> image,
+                      const scoped_refptr<media::VideoFrame> temp_frame);
+  void ReadPixelsAsync(sk_sp<SkImage> image,
+                       const scoped_refptr<media::VideoFrame> temp_frame,
+                       bool flip,
+                       bool success);
+
+  void SetGLHelper(viz::ContextProvider* context_provider);
+  void OnContextLost();
+
   void AddVideoCapturerSourceToVideoTrack(
       std::unique_ptr<media::VideoCapturerSource> source,
       blink::WebMediaStreamTrack* web_track);
+
+  // Helper method to be used by CanvasCaptureHandlerTest.
+  void SendNewFrameForTesting(sk_sp<SkImage> image,
+                              blink::WebGraphicsContext3DProvider* fake_impl,
+                              viz::ContextProvider* test_provider);
 
   // Object that does all the work of running |new_frame_callback_|.
   // Destroyed on |frame_callback_task_runner_| after the class is destroyed.
@@ -85,13 +114,8 @@ class CONTENT_EXPORT CanvasCaptureHandler final
   media::VideoCaptureFormat capture_format_;
   bool ask_for_new_frame_;
 
-  const blink::WebSize size_;
-  gfx::Size last_size;
-  std::vector<uint8_t> temp_data_;
-  size_t temp_data_stride_;
-  SkImageInfo image_info_;
   media::VideoFramePool frame_pool_;
-
+  std::unique_ptr<viz::GLHelper> gl_helper_;
   scoped_refptr<media::VideoFrame> last_frame_;
 
   const scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
