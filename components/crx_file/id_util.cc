@@ -39,10 +39,21 @@ namespace id_util {
 // First 16 bytes of SHA256 hashed public key.
 const size_t kIdSize = 16;
 
-std::string GenerateId(const std::string& input) {
+std::string GenerateId(base::StringPiece input) {
   uint8_t hash[kIdSize];
   crypto::SHA256HashString(input, hash, sizeof(hash));
-  return GenerateIdFromHex(base::HexEncode(hash, sizeof(hash)));
+  return GenerateIdFromHash(hash, sizeof(hash));
+}
+
+std::string GenerateIdFromHash(const uint8_t* hash, size_t hash_size) {
+  CHECK_GE(hash_size, kIdSize);
+  char buffer[kIdSize * 2] = {};
+  for (size_t n = 0; n < kIdSize; ++n) {
+    const uint8_t val = hash[n];
+    buffer[n * 2] = static_cast<char>('a' + ((val >> 4) & 15));
+    buffer[n * 2 + 1] = static_cast<char>('a' + (val & 15));
+  }
+  return std::string(buffer, sizeof(buffer));
 }
 
 std::string GenerateIdFromHex(const std::string& input) {
@@ -53,9 +64,9 @@ std::string GenerateIdFromHex(const std::string& input) {
 
 std::string GenerateIdForPath(const base::FilePath& path) {
   base::FilePath new_path = MaybeNormalizePath(path);
-  std::string path_bytes =
-      std::string(reinterpret_cast<const char*>(new_path.value().data()),
-                  new_path.value().size() * sizeof(base::FilePath::CharType));
+  const base::StringPiece path_bytes(
+      reinterpret_cast<const char*>(new_path.value().data()),
+      new_path.value().size() * sizeof(base::FilePath::CharType));
   return GenerateId(path_bytes);
 }
 
@@ -86,12 +97,11 @@ bool IdIsValid(const std::string& id) {
   if (id.size() != (crx_file::id_util::kIdSize * 2))
     return false;
 
-  // We only support lowercase IDs, because IDs can be used as URL components
-  // (where GURL will lowercase it).
-  std::string temp = base::ToLowerASCII(id);
-  for (size_t i = 0; i < temp.size(); i++)
-    if (temp[i] < 'a' || temp[i] > 'p')
+  for (size_t i = 0; i < id.size(); i++) {
+    const char ch = base::ToLowerASCII(id[i]);
+    if (ch < 'a' || ch > 'p')
       return false;
+  }
 
   return true;
 }
