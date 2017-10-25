@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d8d397d_72ed0962",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bfab846_004ead79",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "070d10c3_467822d9",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c7aefaa3_9c2b634b",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "070d10c3_467822d9",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e669676f_caddcc8c",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5358e67_fe7e9db9",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e669676f_caddcc8c",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +154,24 @@
       "side": 1,
       "message": "\u003e ProtectedMemoryStart/End are not for testing only (they are used in SetReadOnly()). Neither is AssertMemoryIsReadOnly(), it\u0027s used to DCHECK() in SetReadWrite/SetReadOnly.\n\nRight, OK. Then this entire thing won’t work as-is for the component\u003dshared_library build.",
       "parentUuid": "bdd9b63c_be614da5",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bd94b62_6f860313",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0cf50e5_00ac0fa7",
       "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -159,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "feed0208_773fb05b",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc695ab2_e9f5242e",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "425aca44_7ff4661c",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 7
@@ -209,6 +299,24 @@
       "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b524dcc_776aeb52",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d0c37b6_bd84ede4",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -283,6 +391,24 @@
     },
     {
       "key": {
+        "uuid": "9e0da9d7_c1af938f",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62215710_98e2a6e2",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c368c46_2ba129df",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 7
@@ -318,6 +444,24 @@
     },
     {
       "key": {
+        "uuid": "ff81f8dc_c45d3f54",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d9ddf94_02e52361",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f649dba4_ad4f2680",
         "filename": "base/memory/protected_memory_cfi.h",
         "patchSetId": 7
@@ -332,6 +476,24 @@
       "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5eb36bf_cde2ede8",
+        "filename": "base/memory/protected_memory_cfi.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f649dba4_ad4f2680",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -355,6 +517,30 @@
       "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e08bcdd_f7889f3d",
+        "filename": "base/memory/protected_memory_cfi.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d17ab8a_567a7bb1",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -447,6 +633,24 @@
     },
     {
       "key": {
+        "uuid": "809fe1f4_cdf791b8",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c07cb43e_b911fd68",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d893c5ce_570a55ad",
         "filename": "base/memory/protected_memory_posix.cc",
         "patchSetId": 7
@@ -464,6 +668,24 @@
     },
     {
       "key": {
+        "uuid": "9fc3e460_f21fdd60",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d893c5ce_570a55ad",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07bd7b73_fac48c68",
         "filename": "base/memory/protected_memory_posix.cc",
         "patchSetId": 7
@@ -478,6 +700,24 @@
       "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7843e05d_fae333b1",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07bd7b73_fac48c68",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -516,6 +756,24 @@
     },
     {
       "key": {
+        "uuid": "a6815e1a_b69fb635",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44218aa6_8d7c7041",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15332c80_8732f96a",
         "filename": "build/config/mac/BUILD.gn",
         "patchSetId": 7
@@ -548,6 +806,24 @@
       "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19395a05_684a3c0a",
+        "filename": "build/config/mac/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-25T00:49:02Z",
+      "side": 1,
+      "message": "Can you think of an example where a build target does not get this linker flag? I looked around a bit and it seems like this is applied to all link targets, but I\u0027m probably just not familiar enough with Chromium\u0027s build system to think of a counter-example.",
+      "parentUuid": "5542b46a_51c25107",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
