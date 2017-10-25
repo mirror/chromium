@@ -72,6 +72,40 @@ void Vadd(const float* source1p,
 #undef ADD_ALL
 }
 
+// dest[k] = clip(source[k], low_threshold, high_threshold)
+//         = max(low_threshold, min(high_threshold, source[k]))
+void Vclip(const float* source_p,
+           const float* low_threshold_p,
+           const float* high_threshold_p,
+           float* dest_p,
+           size_t frames_to_process) {
+  const float* const source_end_p = source_p + frames_to_process;
+
+  DCHECK(IsAligned(source_p));
+  DCHECK_EQ(0u, frames_to_process % kPackedFloatsPerRegister);
+
+  MType m_low_threshold = MM_PS(set1)(*low_threshold_p);
+  MType m_high_threshold = MM_PS(set1)(*high_threshold_p);
+
+#define CLIP_ALL(storeDest)                                                  \
+  while (source_p < source_end_p) {                                          \
+    MType m_source = MM_PS(load)(source_p);                                  \
+    MType m_dest =                                                           \
+        MM_PS(max)(m_low_threshold, MM_PS(min)(m_high_threshold, m_source)); \
+    MM_PS(storeDest)(dest_p, m_dest);                                        \
+    source_p += kPackedFloatsPerRegister;                                    \
+    dest_p += kPackedFloatsPerRegister;                                      \
+  }
+
+  if (IsAligned(dest_p)) {
+    CLIP_ALL(store);
+  } else {
+    CLIP_ALL(storeu);
+  }
+
+#undef CLIP_ALL
+}
+
 // max = max(abs(source[k])) for all k
 void Vmaxmgv(const float* source_p, float* max_p, size_t frames_to_process) {
   constexpr uint32_t kMask = 0x7FFFFFFFu;
@@ -89,7 +123,7 @@ void Vmaxmgv(const float* source_p, float* max_p, size_t frames_to_process) {
     // Calculate the absolute value by ANDing the source with the mask,
     // which will set the sign bit to 0.
     m_source = MM_PS(and)(m_source, m_mask);
-    m_max = MM_PS(max)(m_max, m_source);
+    m_max = MM_PS(max)(m_source, m_max);
     source_p += kPackedFloatsPerRegister;
   }
 
