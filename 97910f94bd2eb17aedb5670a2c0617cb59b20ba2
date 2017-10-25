@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad13d4c0_08683d60",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-25T19:27:01Z",
+      "side": 1,
+      "message": "Idea: This could be a way for us to get better randomization than we\u0027ve had before. As you can see in the `ranval` code, it uses iffy things like the address of a stack local, the PID, and the time. With OS-level ASLR, that stack local\u0027s address might actually be slightly strongly unpredictable, which is nice. But the other things are not really unpredictable.\n\nInstead, we could get a true random number at process start time (`base::RandBytes`), or the static/predictable/user-provided seed when the right command-line flag is passed in. Doing that could be in a follow-up CL, if we decide to do it.\n\nThat would mean we\u0027d need to change this documentation somewhat, perhaps along the lines of:\n\n// Sets the seed for the random number generator that |GetRandomPageBase| uses.\n// May be called multiple times.\n//\n// |seed| MUST be a random value in production (use |base::RandBytes|). But for\n// debugging (controlled by e.g. a command line flag), it could be a static or\n// otherwise predictable value.",
+      "revId": "97910f94bd2eb17aedb5670a2c0617cb59b20ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03919ec2_0dff55d4",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-25T19:27:01Z",
+      "side": 1,
+      "message": "EXTREMELY MINOR nits :)\n\n* I\u0027d put a blank line between lines 102 and 103; this seems like a new stanza to me.\n\n* You can leave out the 4 in the `random[4]` declarations if you want. On the other hand, maybe it\u0027s good documentation/compiler-enforced sanity.\n\n* You can use the `arraysize(...)` macro from base/macros.h instead of hard-coded 4 on line 113.\n\nThese nits were very minor and were brought to you by too much coffee. :)",
+      "revId": "97910f94bd2eb17aedb5670a2c0617cb59b20ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
