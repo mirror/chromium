@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06d56b76_f2828167",
+        "filename": "chrome/browser/resources/settings/settings_menu/settings_menu.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T01:25:34Z",
+      "side": 1,
+      "message": "large font sizes push the text right up to the edge, let\u0027s have a little padding instead. This makes no difference in the normal case were more than 20px is available.",
+      "revId": "09743c7601b8cf5a081e833d78593f7dcf9a29b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb71a38d_56387f57",
+        "filename": "ui/webui/resources/cr_elements/cr_drawer/cr_drawer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T01:25:34Z",
+      "side": 1,
+      "message": "i.e. left by the full width.",
+      "revId": "09743c7601b8cf5a081e833d78593f7dcf9a29b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e09f93b_438c53b0",
+        "filename": "ui/webui/resources/cr_elements/cr_drawer/cr_drawer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T01:25:34Z",
+      "side": 1,
+      "message": "Keep the \u0027normal\u0027 width at 256px, but that\u0027s only the minimum.",
+      "revId": "09743c7601b8cf5a081e833d78593f7dcf9a29b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
