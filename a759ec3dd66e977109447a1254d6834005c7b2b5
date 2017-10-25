@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95c2c96a_e2b2002b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-25T23:26:35Z",
+      "side": 1,
+      "message": "Does it mean that |next_sibling_| is a redundant member? Can we remove it?",
+      "range": {
+        "startLine": 442,
+        "startChar": 8,
+        "endLine": 442,
+        "endChar": 21
+      },
+      "revId": "a759ec3dd66e977109447a1254d6834005c7b2b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
