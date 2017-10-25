@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f898312e_76dc97ce",
+        "filename": "components/machine_intelligence/assist_ranker_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T15:32:51Z",
+      "side": 1,
+      "message": "I think the TODO is fine, since the final solution is still TBD. Maybe file a bug and TODO(crbug/NNNNN) instead of TODO(hamelphi)?",
+      "parentUuid": "fd44f6fb_67e1cccf",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b1468b5_99ff0f01",
         "filename": "components/machine_intelligence/assist_ranker_service.h",
         "patchSetId": 8
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "The reason I moved the instantiation of the RankerModelLoader out of the BasePredictor constructor and exposed LoadModel() is to be able to inject a fake model loader for testing.\n\nIt makes testing derived predictor classes easier if we can call DerivedPredictor-\u003eLoadModel(MockModelLoader). We can do this with Friends, but we will have to friend every derived class, which is probably ok and safer than having LoadModel public.\n\nOne downside of the static factory, is that you have to repeat that boilerplate code in each derived class. Not really a big deal. Another downside is that we have to pass the url_request_context down the predictor factory, which makes it a bit less elegant in my opinion. Also, with the current implementation, it should be relatively easy to template the Fetch method so that it will work for every Predictor class.\n\nSo, I prefer the \"friend\" solution. Let me know what you think.",
       "parentUuid": "33d6c53f_87737539",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b6f5e4_c0967a55",
+        "filename": "components/machine_intelligence/base_predictor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T15:32:51Z",
+      "side": 1,
+      "message": "Re: Injection\n\nAnother alternative would be to use net::TestUrlFetcher (see test_url_fetcher_factory.h) to create a response for your model\u0027s URL. This would let you get unit-test coverage for the creation process, which is currently uncovered.\n\nRe: Downsides\n\nI don\u0027t follow the boilerplate argument. Won\u0027t you just be moving the creation code from living in AssistRankerServerceImpl::FetchBlah to living in Blah::Create?\n\nFetchBlah could, if it always has a fixed signature, be templatized by model type to call the static Create function.",
+      "parentUuid": "b0402bf5_060f4a61",
       "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
