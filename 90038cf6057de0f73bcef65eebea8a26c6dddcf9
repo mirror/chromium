@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "710ada72_2e049c07",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-25T02:39:46Z",
+      "side": 1,
+      "message": "Thanks, added the comment. Also, adding RunUntilFetchEvent() to fake_controller_ sounds good! Done.",
+      "parentUuid": "b22c5ce3_9b14833d",
+      "revId": "90038cf6057de0f73bcef65eebea8a26c6dddcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33ed9b0e_ad53f301",
         "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "90038cf6057de0f73bcef65eebea8a26c6dddcf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8310513_9a17fc01",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-25T02:39:46Z",
+      "side": 1,
+      "message": "Actually, in my thought, they are a kind of remote thing connected to the URLLoaderImpl which could be in another process because it\u0027s connected over Mojo, but the SubresourceLoader is in the same process by change (by design).\nAnyway, I removed them and replaced it by out params. Thanks.",
+      "parentUuid": "33ed9b0e_ad53f301",
+      "revId": "90038cf6057de0f73bcef65eebea8a26c6dddcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1a098558_c1664fbb",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-25T02:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2247e0d7_04a0d352",
+      "revId": "90038cf6057de0f73bcef65eebea8a26c6dddcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0943a206_6ff56470",
         "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "90038cf6057de0f73bcef65eebea8a26c6dddcf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ff686f_60aead58",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-25T02:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0943a206_6ff56470",
+      "revId": "90038cf6057de0f73bcef65eebea8a26c6dddcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
