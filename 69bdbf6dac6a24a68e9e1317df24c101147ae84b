@@ -131,6 +131,23 @@
       "revId": "69bdbf6dac6a24a68e9e1317df24c101147ae84b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900f6aea_41f4672e",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T17:19:05Z",
+      "side": 1,
+      "message": "SwitchToCCLayer would clobber this. Should be easily demonstrated with unit tests.\n\nPresumably you want this state preserved if the layer type switches, and switches back? Or if not please document the expected behaviours on the function declaration.",
+      "revId": "69bdbf6dac6a24a68e9e1317df24c101147ae84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
