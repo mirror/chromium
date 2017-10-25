@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55948e80_e8e9b69b",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T15:33:02Z",
+      "side": 1,
+      "message": "You can shorten this back to \"await videoTrack.applyConstraints(constraits)\" as the forced garbage collection is no longer doing anything interesting. It existed to make sure that the object being saved to return from the Promise was not being freed early.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "48581a55fc8271a834be71f6aaddbd6b66c970cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693fd2a1_a369853b",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T15:33:02Z",
+      "side": 1,
+      "message": "This object is now unused.",
+      "range": {
+        "startLine": 542,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 55
+      },
+      "revId": "48581a55fc8271a834be71f6aaddbd6b66c970cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ecd2dc_0d2b4ddf",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T15:33:02Z",
+      "side": 1,
+      "message": "This can be cleaned up further because we can use ResolveWithNothing here. Since all calls to OnMojoSetOptions will now be passed a callback bound to ResolveWithNothing we can update OnMojoSetOptions to create this callback before calling GetPhotoState() instead and simplify these call sites.",
+      "revId": "48581a55fc8271a834be71f6aaddbd6b66c970cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
