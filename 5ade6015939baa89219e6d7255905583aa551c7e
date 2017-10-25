@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b174eac1_34ae2f02",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-25T20:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1eccecd_b5fd2312",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 68
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a523db3_0000bfc1",
         "filename": "ios/web_view/public/cwv_autofill_controller.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90de6032_3094c325",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-25T20:18:06Z",
+      "side": 1,
+      "message": "oh nice. thanks.",
+      "parentUuid": "6a523db3_0000bfc1",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 53
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "91768c53_78c60a2a",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-25T20:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be433f46_38a86ca2",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34b6a285_9bcdf3a7",
         "filename": "ios/web_view/public/cwv_autofill_controller.h",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e22409_7bd332f5",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-25T20:18:06Z",
+      "side": 1,
+      "message": "Originally I thought this was used for prefix matching in autofill, but actually that\u0027s done no matter what value you put in here. Instead, this value is used to remove autocomplete (single field) suggestions if it is zero-length. I guess the rationale is they don\u0027t want to show any suggestions unless you typed something? I\u0027ll remove this for us though so the client can choose whatever they want to do. I\u0027ll also add a comment that results are filtered based on the existing value.",
+      "parentUuid": "34b6a285_9bcdf3a7",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d245543b_9cf92b9c",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-25T20:18:06Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "a075ebed_eb3dc0e3",
+      "range": {
+        "startLine": 34,
+        "startChar": 41,
+        "endLine": 34,
+        "endChar": 49
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95682dda_354270e4",
         "filename": "ios/web_view/public/cwv_autofill_controller.h",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0599ebd8_6fa23fb9",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-25T20:18:06Z",
+      "side": 1,
+      "message": "I suppose I should just add completionHandlers for the sake of flexibility.",
+      "parentUuid": "95682dda_354270e4",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 24
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,54 @@
     },
     {
       "key": {
+        "uuid": "d01a4eb7_36196980",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-25T20:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7adabea0_7f38f941",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 8
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "722c8800_873109e1",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-25T20:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e564f7cc_57c77320",
+      "range": {
+        "startLine": 22,
+        "startChar": 44,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b64fe8e_4047bc10",
         "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
         "patchSetId": 10
@@ -206,6 +398,30 @@
       "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245f1587_918d079f",
+        "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-25T20:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b64fe8e_4047bc10",
+      "range": {
+        "startLine": 21,
+        "startChar": 36,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "ca099a6d_aca34e83",
+        "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-25T20:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "576aae38_780382bd",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b094f043_caf5a568",
         "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
         "patchSetId": 10
@@ -252,6 +492,30 @@
       "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f26c19_2f86734a",
+        "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-25T20:18:06Z",
+      "side": 1,
+      "message": "I copied this comment over, but I\u0027ll explain in more detail here.",
+      "parentUuid": "b094f043_caf5a568",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
