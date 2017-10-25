@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59dd8890_7e4ff243",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-25T02:40:02Z",
+      "side": 1,
+      "message": "Hmmm, invalidating if the main thread didn\u0027t respond within the last frame\u0027s deadline does sound like a good idea. But it will also be set if there was a pending tree when the draw happened. I\u0027m thinking whether there could be any case where this would put the main thread perpetually in this mode. For instance, consider the following case:\n\n1) Main thread is late, we do an invalidation.\n2) Now the main thread wants to commit, but it is blocked on the impl-side pending tree.\n3) This tree is activated. The next action we take is to commit and release the main thread, which creates another pending tree.\n4) At draw time, we set |main_thread_missed_last_deadline|.\n\nOptimizing for the case where the main thread is blocking and we don\u0027t wait until the draw deadline definitely sounds like something that should be taken up next. But I was avoiding handling that in this change to iron out all such cases in more detail.",
+      "parentUuid": "e6f5fef1_a799856c",
+      "revId": "4f122e10b12d90f186ceed8e1b177d3c32a3ec40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42b09c5b_9c591e3c",
         "filename": "cc/scheduler/scheduler_state_machine.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-25T02:07:39Z",
       "side": 1,
       "message": "nit: Call this LastFrameState or PreviousFrameState maybe? ImplFrameState isn\u0027t right because the state is about commit and we use \"Impl\" for compositor thread stuff. (Let\u0027s also avoid \"Impl\" for naming things in general as it\u0027s confusing.)",
+      "revId": "4f122e10b12d90f186ceed8e1b177d3c32a3ec40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f67603_c21b7e89",
+        "filename": "cc/scheduler/scheduler_state_machine.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-25T02:40:02Z",
+      "side": 1,
+      "message": "I had originally named it Last* but I was thinking about having 2 copies of this struct, one for the last frame and one for the current one. Right now those are kept as bare members on this class but figured it would be nice to have a struct for state we collect during the impl frame that we want to retain for the next frame.\n\nHow about FrameEvents? Since that\u0027s basically what its capturing, events that happened during the impl frame.",
+      "parentUuid": "42b09c5b_9c591e3c",
       "revId": "4f122e10b12d90f186ceed8e1b177d3c32a3ec40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
