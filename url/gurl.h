@@ -29,7 +29,7 @@
 // spec will assert if the URL is invalid to help protect against malicious
 // URLs. If you want the "best effort" canonicalization of an invalid URL, you
 // can use possibly_invalid_spec(). Test validity with is_valid(). Data and
-// javascript URLs use GetContent() to extract the data.
+// javascript URLs use GetContentWithoutRef() to extract the data.
 //
 // This class has existence checkers and getters for the various components of
 // a URL. Existence is different than being nonempty. "http://www.google.com/?"
@@ -270,6 +270,10 @@ class URL_EXPORT GURL {
   // scheme delimiting colon). It is an error to get the content of an invalid
   // URL: the result will be an empty string.
   std::string GetContent() const;
+
+  // Returns the "content" of the URL (see GetContent()), except for the ref
+  // part including the '#' character (if any).
+  std::string GetContentWithoutRef() const;
 
   // Returns true if the hostname is an IP address. Note: this function isn't
   // as cheap as a simple getter because it re-parses the hostname to verify.

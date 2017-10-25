@@ -473,6 +473,15 @@ std::string GURL::GetContent() const {
   return is_valid_ ? ComponentString(parsed_.GetContent()) : std::string();
 }
 
+std::string GURL::GetContentWithoutRef() const {
+  if (!is_valid_)
+    return std::string();
+  std::string content = GetContent();
+  if (parsed_.ref.len >= 0)
+    content.erase(content.size() - parsed_.ref.len - 1);
+  return content;
+}
+
 bool GURL::HostIsIPAddress() const {
   return is_valid_ && url::HostIsIPAddress(host_piece());
 }
