@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba56e19c_a905a8ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-25T11:19:50Z",
+      "side": 1,
+      "message": "nit: Servicification",
+      "range": {
+        "startLine": 9,
+        "startChar": 39,
+        "endLine": 9,
+        "endChar": 55
+      },
+      "revId": "f414edba871bd76f6277d35cb8d58ab45b3c2580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b833a62_a029dd71",
+        "filename": "device/geolocation/public/interfaces/geolocation_context.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-25T11:19:50Z",
+      "side": 1,
+      "message": "nit: at the interface level, let\u0027s talk just in terms of Geolocation, e.g. \"Geolocation instance\".",
+      "revId": "f414edba871bd76f6277d35cb8d58ab45b3c2580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390dc711_98896504",
+        "filename": "device/geolocation/public/interfaces/geolocation_context.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-25T11:19:50Z",
+      "side": 1,
+      "message": "nit: s/interfaces/methods",
+      "range": {
+        "startLine": 10,
+        "startChar": 31,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "f414edba871bd76f6277d35cb8d58ab45b3c2580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e30db8e_1919593d",
+        "filename": "device/geolocation/public/interfaces/geolocation_context.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-25T11:19:50Z",
+      "side": 1,
+      "message": "nit: \"and to set/clear overrides of geoposition that will apply to all Geolocation instances created by this context.\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "f414edba871bd76f6277d35cb8d58ab45b3c2580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

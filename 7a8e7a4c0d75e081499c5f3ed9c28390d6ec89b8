@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0ae0484d_df9c7cce",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2740,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-25T11:19:50Z",
+      "side": 1,
+      "message": "D\u0027oh, I missed reading the lines that early-return out if |geolocation_context_| is initialized. Seeing that code at the top of the method I now prefer your initial version, since the code already has an early-return in any case. Sorry for the churn!",
+      "parentUuid": "b71077a1_27d50b64",
+      "revId": "7a8e7a4c0d75e081499c5f3ed9c28390d6ec89b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5496ba8_0ca44c61",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 2
