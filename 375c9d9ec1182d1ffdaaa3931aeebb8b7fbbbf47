@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "f2cb02df_9d63a455",
+        "filename": "chrome/common/instant_struct_traits.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T22:38:32Z",
+      "side": 1,
+      "message": "Note that enforcing MAX_VALUE doesn\u0027t add much here, given the gap in the values.\n\nThat being said, I suppose it\u0027s OK to leave this... and it will be useful once we change how this enum is defined.",
+      "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f44d5d3_4c69f1da",
         "filename": "components/favicon_base/favicon_types.h",
         "patchSetId": 22
@@ -120,6 +137,24 @@
       "side": 1,
       "message": "Hm, ok. It\u0027s not ideal, but yeah, this is not something we need to change in this CL.",
       "parentUuid": "0d4b473a_6a05dbb7",
+      "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20742a5c_d794fe69",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T22:38:32Z",
+      "side": 1,
+      "message": "I think the way this is structured makes it harder to understand overall: it\u0027s not really obvious that written in enum form, the values will never be bitmasked. Will there be any followup work to improve this? At the very least, we should have a TODO...\n\nI don\u0027t think the compatibility issue should be a problem; we can find (and break the casts) by making this an enum class with sequentially ordered fields, and then have a conversion method to turn the enum value into a bitmask value as suggested by bauerb@. As long as we do this work uniformly, it seems like the behavior should stay the same.",
+      "parentUuid": "95ce4382_e5853500",
       "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
