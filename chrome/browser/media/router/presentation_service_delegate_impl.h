@@ -38,6 +38,7 @@ class Origin;
 namespace media_router {
 
 class MediaRoute;
+class OffscreenPresentationManager;
 class PresentationFrame;
 class RouteRequestResult;
 
@@ -188,9 +189,15 @@ class PresentationServiceDelegateImpl
 
   void OnStartPresentationSucceeded(
       const RenderFrameHostId& render_frame_host_id,
+      int64_t display_id,
       content::PresentationConnectionCallback success_cb,
       const content::PresentationInfo& new_presentation_info,
       const MediaRoute& route);
+
+  void OnStartPresentationFailed(
+      int64_t display_id,
+      content::PresentationConnectionErrorCallback error_cb,
+      const content::PresentationError& error);
 
   // Notifies the PresentationFrame of |render_frame_host_id| that a
   // presentation and its corresponding MediaRoute has been created.
@@ -224,6 +231,10 @@ class PresentationServiceDelegateImpl
   // browser profile's MediaRouter instance.
   content::WebContents* const web_contents_;
   MediaRouter* router_;
+
+  // Presentation manager that keeps track of presentation controllers and
+  // receivers.
+  OffscreenPresentationManager* offscreen_presentation_manager_;
 
   // References to the observers listening for changes to the default
   // presentation of the associated WebContents.
