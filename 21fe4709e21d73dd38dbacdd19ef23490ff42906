@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f3c2f842_30b914ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-25T15:48:46Z",
+      "side": 1,
+      "message": "Please update",
+      "range": {
+        "startLine": 7,
+        "startChar": 50,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "21fe4709e21d73dd38dbacdd19ef23490ff42906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84830df2_ab2ba033",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 3
@@ -16,6 +39,47 @@
       "revId": "21fe4709e21d73dd38dbacdd19ef23490ff42906",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6835b3e3_d8bfea15",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-25T15:48:46Z",
+      "side": 1,
+      "message": "Hm, so now, if the metadata changes but the image stays the same, we\u0027d log another impression? I guess that\u0027s rare enough that we don\u0027t need to worry about it...",
+      "parentUuid": "84830df2_ab2ba033",
+      "revId": "21fe4709e21d73dd38dbacdd19ef23490ff42906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63d3ab65_94ec8394",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-25T15:48:46Z",
+      "side": 1,
+      "message": "Ah, so showLogoOrDoodle gets called twice because we start the fadeout twice and thus call onDoodleFadeOutComplete twice.\nInstead, could we early-out in startFadeOut if CLASSES.SHOW_LOGO isn\u0027t set on element?",
+      "range": {
+        "startLine": 888,
+        "startChar": 35,
+        "endLine": 888,
+        "endChar": 0
+      },
+      "revId": "21fe4709e21d73dd38dbacdd19ef23490ff42906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
