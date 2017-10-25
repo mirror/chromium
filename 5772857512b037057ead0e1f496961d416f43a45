@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd4d7551_9607e565",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-25T18:06:00Z",
+      "side": 1,
+      "message": "Would it help to add a comment explaining how it can be null, along the lines of your example?  (I.e., this process could\u0027ve hidden the frame soon after the OOPIF initiated scrolling.)",
+      "revId": "5772857512b037057ead0e1f496961d416f43a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
