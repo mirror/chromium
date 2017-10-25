@@ -246,11 +246,15 @@ public final class SyncTestUtil {
                 new ArrayList<Pair<String, JSONObject>>(datatypeNodes.length());
         for (int i = 0; i < datatypeNodes.length(); i++) {
             JSONObject entity = datatypeNodes.getJSONObject(i);
-            if (!entity.getString("UNIQUE_SERVER_TAG").isEmpty()) {
+            if (entity.has("UNIQUE_SERVER_TAG")
+                    && !entity.getString("UNIQUE_SERVER_TAG").isEmpty()) {
                 // Ignore permanent items (e.g., root datatype folders).
                 continue;
             }
-            String id = convertToServerId(entity.getString("ID"));
+            String id = "";
+            if (entity.has("ID")) {
+                id = convertToServerId(entity.getString("ID"));
+            }
             localDataForDatatype.add(Pair.create(id, extractSpecifics(entity)));
         }
         return localDataForDatatype;
