@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35f5b111_0c3a7b10",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-25T05:20:23Z",
+      "side": 1,
+      "message": "Do you intend to match \":\" with the scheme part of the URL? If so, \"absolute\" wouldn\u0027t be appropriate because it sounds like \"absolute path\". Maybe \"is_not_url\"?\n\nThis could overlook the case where the path/query parts contain \":\" but doesn\u0027t start with \"./\" etc.",
+      "revId": "38a8990ed848f1862c3e93c29061ecc5932e4be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
