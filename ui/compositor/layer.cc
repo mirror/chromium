@@ -568,10 +568,6 @@ bool Layer::IsDrawn() const {
   return layer == nullptr;
 }
 
-bool Layer::ShouldDraw() const {
-  return type_ != LAYER_NOT_DRAWN && GetCombinedOpacity() > 0.0f;
-}
-
 // static
 void Layer::ConvertPointToLayer(const Layer* source,
                                 const Layer* target,
@@ -727,6 +723,12 @@ void Layer::RemoveTrilinearFilteringRequest() {
                     trilinear_filtering_request_);
   if (trilinear_filtering_request_ == 0)
     cc_layer_->SetTrilinearFiltering(false);
+}
+
+void Layer::SetIsDrawable(bool draw) {
+  cc_layer_->SetIsDrawable(draw && type_ != LAYER_NOT_DRAWN);
+  for (auto* child : children_)
+    child->SetIsDrawable(draw);
 }
 
 void Layer::SetTextureMailbox(

@@ -130,6 +130,12 @@ class WindowSelectorTest : public AshTestBase {
     return window;
   }
 
+  aura::Window* CreateWindowNoInset(const gfx::Rect& bounds) {
+    aura::Window* window =
+        CreateTestWindowInShellWithDelegate(&delegate_, -1, bounds);
+    return window;
+  }
+
   aura::Window* CreateWindowWithId(const gfx::Rect& bounds, int id) {
     aura::Window* window =
         CreateTestWindowInShellWithDelegate(&delegate_, id, bounds);
@@ -189,10 +195,9 @@ class WindowSelectorTest : public AshTestBase {
 
   void ToggleOverview() { window_selector_controller()->ToggleOverview(); }
 
-  aura::Window* GetOverviewWindowForMinimizedState(int index,
-                                                   aura::Window* window) {
+  aura::Window* GetMirroredOverviewWindow(int index, aura::Window* window) {
     WindowSelectorItem* selector = GetWindowItemForWindow(index, window);
-    return selector->GetOverviewWindowForMinimizedStateForTest();
+    return selector->GetMirroredOverviewWindowForTest();
   }
 
   gfx::Rect GetTransformedBounds(aura::Window* window) {
@@ -495,7 +500,7 @@ TEST_F(WindowSelectorTest, ActivateMinimized) {
   EXPECT_EQ(0.f, window->layer()->GetTargetOpacity());
   EXPECT_EQ(mojom::WindowStateType::MINIMIZED, window_state->GetStateType());
   aura::Window* window_for_minimized_window =
-      GetOverviewWindowForMinimizedState(0, window.get());
+      GetMirroredOverviewWindow(0, window.get());
   EXPECT_TRUE(window_for_minimized_window);
 
   const gfx::Point point =
@@ -592,8 +597,8 @@ TEST_F(WindowSelectorTest, ActiveWindowChangedUserActionRecorded) {
 
   base::UserActionTester user_action_tester;
   gfx::Rect bounds(0, 0, 400, 400);
-  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
-  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window1(CreateWindowNoInset(bounds));
+  std::unique_ptr<aura::Window> window2(CreateWindowNoInset(bounds));
 
   // Tap on |window2| to activate it and exit overview.
   wm::ActivateWindow(window1.get());
@@ -806,8 +811,7 @@ TEST_F(WindowSelectorTest, CloseButton) {
   EXPECT_TRUE(IsSelecting());
 
   aura::Window* window_for_minimized_window =
-      GetOverviewWindowForMinimizedState(0,
-                                         minimized_widget->GetNativeWindow());
+      GetMirroredOverviewWindow(0, minimized_widget->GetNativeWindow());
   ASSERT_TRUE(window_for_minimized_window);
   const gfx::Rect rect =
       GetTransformedBoundsInRootWindow(window_for_minimized_window);
@@ -832,17 +836,17 @@ TEST_F(WindowSelectorTest, MinimizeUnminimize) {
 
   ToggleOverview();
 
-  EXPECT_FALSE(GetOverviewWindowForMinimizedState(0, window));
+  EXPECT_TRUE(GetMirroredOverviewWindow(0, window));
   widget->Minimize();
   EXPECT_TRUE(widget->IsMinimized());
   EXPECT_TRUE(IsSelecting());
 
-  EXPECT_TRUE(GetOverviewWindowForMinimizedState(0, window));
+  EXPECT_TRUE(GetMirroredOverviewWindow(0, window));
 
   widget->Restore();
   EXPECT_FALSE(widget->IsMinimized());
 
-  EXPECT_FALSE(GetOverviewWindowForMinimizedState(0, window));
+  EXPECT_FALSE(GetMirroredOverviewWindow(0, window));
   EXPECT_TRUE(IsSelecting());
 }
 
@@ -1706,9 +1710,15 @@ TEST_F(WindowSelectorTest, BasicTextFiltering) {
 
   FilterItems("Foo");
 
-  EXPECT_NE(1.0f, window0->layer()->GetTargetOpacity());
-  EXPECT_NE(1.0f, window1->layer()->GetTargetOpacity());
-  EXPECT_NE(1.0f, window2->layer()->GetTargetOpacity());
+  EXPECT_NE(1.0f, GetMirroredOverviewWindow(grid_index, window0.get())
+                      ->layer()
+                      ->GetTargetOpacity());
+  EXPECT_NE(1.0f, GetMirroredOverviewWindow(grid_index, window1.get())
+                      ->layer()
+                      ->GetTargetOpacity());
+  EXPECT_NE(1.0f, GetMirroredOverviewWindow(grid_index, window2.get())
+                      ->layer()
+                      ->GetTargetOpacity());
 
   ToggleOverview();
 

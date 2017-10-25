@@ -673,7 +673,7 @@ void WindowSelectorItem::SetItemBounds(const gfx::Rect& target_bounds,
       screen_rect, selector_item_bounds);
   ScopedTransformOverviewWindow::ScopedAnimationSettings animation_settings;
   transform_window_.BeginScopedAnimation(animation_type, &animation_settings);
-  transform_window_.SetTransform(root_window_, transform);
+  transform_window_.SetTransform(transform, true /*adjust_original_window*/);
 }
 
 void WindowSelectorItem::SetOpacity(float opacity) {
@@ -833,8 +833,8 @@ gfx::SlideAnimation* WindowSelectorItem::GetBackgroundViewAnimation() {
   return background_view_ ? background_view_->animation() : nullptr;
 }
 
-aura::Window* WindowSelectorItem::GetOverviewWindowForMinimizedStateForTest() {
-  return transform_window_.GetOverviewWindowForMinimizedState();
+aura::Window* WindowSelectorItem::GetMirroredOverviewWindowForTest() {
+  return transform_window_.GetMirroredOverviewWindow();
 }
 
 void WindowSelectorItem::StartDrag() {
