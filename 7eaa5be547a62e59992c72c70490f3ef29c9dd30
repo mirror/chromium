@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fcfbb2a_a9c5964b",
+        "filename": "content/browser/gpu/gpu_ipc_browsertests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T18:13:05Z",
+      "side": 1,
+      "message": "not 100% this is the best way to get the IO thread here. There\u0027s a GpuChannelHostFactory that exposes it also, but I don\u0027t have access to it here unless I BrowserGpuChannelHostFactory::instance().. which kinda doesn\u0027t seem any different than using BrowserThread.",
+      "revId": "7eaa5be547a62e59992c72c70490f3ef29c9dd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
