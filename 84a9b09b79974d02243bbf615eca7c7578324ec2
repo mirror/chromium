@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e59cb322_b686957c",
+        "filename": "chrome/browser/resources/settings/on_startup_page/startup_urls_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-25T17:38:08Z",
+      "side": 1,
+      "message": "Each item is 56px + 1px dividing line, should this be 342px?\nMaybe in a separate CL it would be good to remove this magic number",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "84a9b09b79974d02243bbf615eca7c7578324ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
