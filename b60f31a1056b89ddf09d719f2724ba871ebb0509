@@ -634,6 +634,24 @@
     },
     {
       "key": {
+        "uuid": "17a21706_7a43bcf4",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T23:47:09Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "2cf0d82f_fd7534de",
+      "revId": "b60f31a1056b89ddf09d719f2724ba871ebb0509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90a25a34_0b53db3c",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
         "patchSetId": 17

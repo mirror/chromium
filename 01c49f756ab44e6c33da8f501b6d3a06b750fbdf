@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ed71a15_3b910996",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T23:47:09Z",
+      "side": 1,
+      "message": "Always sending invalid IDs to CreatePrinterQuery() will ultimately result in PrintingContextDelegate::GetWebContents() always returning nullptr, and that feels suspicious. Want to look into what\u0027s going here?",
+      "revId": "01c49f756ab44e6c33da8f501b6d3a06b750fbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
