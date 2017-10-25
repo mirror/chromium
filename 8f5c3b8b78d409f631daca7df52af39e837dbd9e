@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a895e5bb_1a89d32f",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3847,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-25T01:45:03Z",
+      "side": 1,
+      "message": "I\u0027ve pulled this out to a separate change.",
+      "range": {
+        "startLine": 3847,
+        "startChar": 2,
+        "endLine": 3847,
+        "endChar": 31
+      },
+      "revId": "8f5c3b8b78d409f631daca7df52af39e837dbd9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
