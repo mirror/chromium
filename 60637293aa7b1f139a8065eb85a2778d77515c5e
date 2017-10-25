@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "542c04c3_f3ee7c26",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-25T23:15:57Z",
+      "side": 1,
+      "message": "this can be a private (or protected) method.",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "60637293aa7b1f139a8065eb85a2778d77515c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d0f13c_0b9e5417",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-25T23:15:57Z",
+      "side": 1,
+      "message": "Ideally, |page_handler_| should be removed as the ECT observer before it is destroyed. Is it possible to pass ui_nqe_service_ in the |page_handler_| constructor? Then, |page_handler_| can remove itself as an observer in its own destructor?",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 53
+      },
+      "revId": "60637293aa7b1f139a8065eb85a2778d77515c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e34e3e1_21f835b0",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-25T23:15:57Z",
+      "side": 1,
+      "message": "nit: move these 2 includes to .cc file.\nHere, it is sufficient to just forward declare class UINetworkQualityEstimatorService.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 80
+      },
+      "revId": "60637293aa7b1f139a8065eb85a2778d77515c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
