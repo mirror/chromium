@@ -534,10 +534,6 @@ void Vp9Parser::SetupSegmentationDequant() {
   const Vp9QuantizationParams& quant = curr_frame_header_.quant_params;
   Vp9SegmentationParams& segmentation = context_.segmentation_;
 
-  DLOG_IF(ERROR, curr_frame_header_.bit_depth > 8)
-      << "bit_depth > 8 is not supported "
-         "yet, kDcQLookup and kAcQLookup "
-         "need extended";
   if (segmentation.enabled) {
     for (size_t i = 0; i < Vp9SegmentationParams::kNumSegments; ++i) {
       const size_t q_index = GetQIndex(quant, i);
