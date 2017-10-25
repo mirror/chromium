@@ -122,7 +122,8 @@ void DrawBlobs(PaintCanvas* canvas,
       canvas->concat(m);
     }
 
-    canvas->drawTextBlob(blob_info.blob, point.X(), point.Y(), flags);
+    canvas->drawTextBlob(blob_info.blob, point.X(), point.Y(), flags,
+                         blob_info.paint_typefaces);
   }
 }
 

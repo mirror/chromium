@@ -1460,10 +1460,23 @@ std::vector<std::vector<SkPoint>> test_point_arrays = {
      SkPoint::Make(9, 9), SkPoint::Make(50, 50), SkPoint::Make(100, 100)},
 };
 
+std::vector<std::vector<PaintTypeface>> test_typefaces = {
+    [] {
+      return std::vector<PaintTypeface>{
+          PaintTypeface::FromSkTypeface(SkTypeface::MakeDefault())};
+    }(),
+    [] {
+      return std::vector<PaintTypeface>{
+          PaintTypeface::FromSkTypeface(SkTypeface::MakeDefault()),
+          PaintTypeface::FromSkTypeface(SkTypeface::MakeDefault())};
+    }(),
+};
+
 std::vector<sk_sp<SkTextBlob>> test_blobs = {
     [] {
       SkPaint font;
       font.setTextEncoding(SkPaint::kGlyphID_TextEncoding);
+      font.setTypeface(test_typefaces[0][0].sk_typeface());
 
       SkTextBlobBuilder builder;
       builder.allocRun(font, 5, 1.2f, 2.3f, &test_rects[0]);
@@ -1472,10 +1485,12 @@ std::vector<sk_sp<SkTextBlob>> test_blobs = {
     [] {
       SkPaint font;
       font.setTextEncoding(SkPaint::kGlyphID_TextEncoding);
+      font.setTypeface(test_typefaces[1][0].sk_typeface());
 
       SkTextBlobBuilder builder;
       builder.allocRun(font, 5, 1.2f, 2.3f, &test_rects[0]);
       builder.allocRunPos(font, 16, &test_rects[1]);
+      font.setTypeface(test_typefaces[1][1].sk_typeface());
       builder.allocRunPosH(font, 8, 0, &test_rects[2]);
       return builder.make();
     }(),
@@ -1762,8 +1777,13 @@ void PushDrawTextBlobOps(PaintOpBuffer* buffer) {
   size_t len = std::min(std::min(test_blobs.size(), test_flags.size()),
                         test_floats.size() - 1);
   for (size_t i = 0; i < len; ++i) {
-    buffer->push<DrawTextBlobOp>(test_blobs[i], test_floats[i],
-                                 test_floats[i + 1], test_flags[i]);
+    std::unique_ptr<PaintTypeface[]> typefaces(
+        new PaintTypeface[test_typefaces[i].size()]);
+    for (size_t j = 0; j < test_typefaces[i].size(); ++j)
+      typefaces[j] = test_typefaces[i][j];
+    buffer->push<DrawTextBlobOp>(
+        test_blobs[i], test_floats[i], test_floats[i + 1], test_flags[i],
+        std::move(typefaces), static_cast<uint32_t>(test_typefaces[i].size()));
   }
   ValidateOps<DrawTextBlobOp>(buffer);
 }

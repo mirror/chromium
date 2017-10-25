@@ -88,6 +88,7 @@ FontPlatformData::FontPlatformData(float size,
 
 FontPlatformData::FontPlatformData(const FontPlatformData& source)
     : typeface_(source.typeface_),
+      paint_typeface_(source.paint_typeface_),
 #if !defined(OS_WIN)
       family_(source.family_),
 #endif
@@ -110,6 +111,7 @@ FontPlatformData::FontPlatformData(const FontPlatformData& source)
 
 FontPlatformData::FontPlatformData(const FontPlatformData& src, float text_size)
     : typeface_(src.typeface_),
+      paint_typeface_(src.paint_typeface_),
 #if !defined(OS_WIN)
       family_(src.family_),
 #endif
@@ -135,13 +137,14 @@ FontPlatformData::FontPlatformData(const FontPlatformData& src, float text_size)
 #endif
 }
 
-FontPlatformData::FontPlatformData(sk_sp<SkTypeface> tf,
+FontPlatformData::FontPlatformData(const PaintTypeface& paint_tf,
                                    const char* family,
                                    float text_size,
                                    bool synthetic_bold,
                                    bool synthetic_italic,
                                    FontOrientation orientation)
-    : typeface_(std::move(tf)),
+    : typeface_(paint_tf.sk_typeface()),
+      paint_typeface_(paint_tf),
 #if !defined(OS_WIN)
       family_(family),
 #endif
@@ -187,6 +190,7 @@ const FontPlatformData& FontPlatformData::operator=(
     return *this;
 
   typeface_ = other.typeface_;
+  paint_typeface_ = other.paint_typeface_;
 #if !defined(OS_WIN)
   family_ = other.family_;
 #endif
@@ -348,6 +352,10 @@ Vector<char> FontPlatformData::OpenTypeTable(SkFontTableTag tag) const {
     typeface_->getTableData(tag, 0, table_size, &table_buffer[0]);
   }
   return table_buffer;
+}
+
+const PaintTypeface& FontPlatformData::GetPaintTypeface() const {
+  return paint_typeface_;
 }
 
 }  // namespace blink
