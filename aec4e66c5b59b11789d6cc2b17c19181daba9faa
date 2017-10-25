@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "cadc8df2_5bcb2412",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-25T16:27:13Z",
+      "side": 1,
+      "message": "My first implementation was indeed dismissing the dialog more proactively, but my last patch calls cancel only when onDetachedFromView is invoked, so dialog will not be dismissed by tapping Home button and returning back. Sorry, I should\u0027ve made it clear in my previous comment.",
+      "parentUuid": "65318f90_7c6dcc5e",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 22
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01a05fe8_419e8c57",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachine.java",
         "patchSetId": 5
@@ -203,6 +227,30 @@
       "side": 1,
       "message": "Gotcha...makes sense.\n\nNow, could we get by with just adding this line of code w/o any of the other cancel calls in the controller?\n\nWouldn\u0027t this handle the case always that it hides itself after coming back and by switching over to the DialogFragment you fixed the issue where the dialog is not leaked on destroy?\n\nSeems like the other stuff \"might\" be overkill if we\u0027ve already got to add this logic.",
       "parentUuid": "58e40deb_b453b544",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d991457a_5b1ec2b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-25T16:27:13Z",
+      "side": 1,
+      "message": "Sorry, which cancel calls do you refer to? The one from onDetachedFromWindow is necessary to avoid yet another crash that can happen in the following circumstances:\n\n1. User selects managed account in AccountSigninView and taps \"Continue\".\n2. ConfirmSyncDataStateMachine starts and requests account management policy.\n3. User taps Home button.\n4. Android destroys activity to save memory (without killing the whole process).\n5. Native code finishes fetching account management policy and invokes callback provided by ConfirmSyncDataStateMachine.\n6. ConfirmSyncDataStateMachine tries to show ConfirmManagedSyncDataDialog.\n7. ConfirmManagedSyncDataDialog crashes because Activity is destroyed.\n\nStep 4 can be triggered by turning on \"Don\u0027t keep activities\" option in Developer Options.",
+      "parentUuid": "cd0539f8_ede0e968",
       "range": {
         "startLine": 64,
         "startChar": 16,
