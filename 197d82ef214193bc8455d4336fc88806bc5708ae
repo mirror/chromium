@@ -52,6 +52,24 @@
       "revId": "197d82ef214193bc8455d4336fc88806bc5708ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4746e516_23888a5c",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 14594,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-25T17:57:50Z",
+      "side": 1,
+      "message": "Yes, from my reading, you don\u0027t get https, only http. According to the doc, wpt serve will allocate 2 ports that you can access from the test with {{ports[\u0027http\u0027][0 or 1]}}.\n\nFrom my understanding, the port does not get taken into account when it comes to site isolation.",
+      "parentUuid": "81140362_143ccb72",
+      "revId": "197d82ef214193bc8455d4336fc88806bc5708ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
