@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5c9f0c_5456f69c",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-25T21:01:29Z",
+      "side": 1,
+      "message": "Would it be 1 or |unique|?",
+      "range": {
+        "startLine": 500,
+        "startChar": 60,
+        "endLine": 500,
+        "endChar": 61
+      },
+      "revId": "0b37651361bd33a983a2cf07a5675f50270fcddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6821857d_2d7665bd",
+        "filename": "tools/binary_size/libsupersize/models.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-25T21:01:29Z",
+      "side": 1,
+      "message": "Just double-checking that you intend users to explicitly specify\n\n  GroupedByPath(..., fallback\u003dNone, ...)\n\nto trigger line 949?",
+      "range": {
+        "startLine": 925,
+        "startChar": 44,
+        "endLine": 925,
+        "endChar": 55
+      },
+      "revId": "0b37651361bd33a983a2cf07a5675f50270fcddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
