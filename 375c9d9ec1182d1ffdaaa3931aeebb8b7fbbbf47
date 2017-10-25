@@ -105,6 +105,24 @@
       "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95ce4382_e5853500",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-25T09:16:56Z",
+      "side": 1,
+      "message": "Hm, ok. It\u0027s not ideal, but yeah, this is not something we need to change in this CL.",
+      "parentUuid": "0d4b473a_6a05dbb7",
+      "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
