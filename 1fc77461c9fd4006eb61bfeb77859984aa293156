@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8463e4cd_315ec7e9",
+        "filename": "components/payments/content/payment_request_spec.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-25T18:41:37Z",
+      "side": 1,
+      "message": "I would avoid the word \"State\" which conflicts with PaymentRequestState.",
+      "range": {
+        "startLine": 73,
+        "startChar": 20,
+        "endLine": 73,
+        "endChar": 25
+      },
+      "revId": "1fc77461c9fd4006eb61bfeb77859984aa293156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4edd6f50_98b079e5",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestUpdateEvent.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-25T18:41:37Z",
+      "side": 1,
+      "message": "can you comment this member?",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 24
+      },
+      "revId": "1fc77461c9fd4006eb61bfeb77859984aa293156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c860d70_a70f0f16",
+        "filename": "third_party/WebKit/public/platform/modules/payments/payment_request.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-25T18:41:37Z",
+      "side": 1,
+      "message": "There\u0027s no comment of that function anywhere. Also, I\u0027m not a big fan of the name. How about\n\nNoUpdatedPaymentDetails\n\nor something like that.",
+      "revId": "1fc77461c9fd4006eb61bfeb77859984aa293156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
