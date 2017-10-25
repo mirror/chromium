@@ -643,6 +643,7 @@ void WindowSelectorItem::HandlePressEvent(
 void WindowSelectorItem::HandleReleaseEvent(
     const gfx::Point& location_in_screen) {
   EndDrag();
+  window_grid_->SetSelectionWidgetVisibility(true);
   window_selector_->CompleteDrag(this, location_in_screen);
 }
 
