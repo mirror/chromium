@@ -68,6 +68,29 @@
       "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385709bf_6b6cf25a",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRPresentationFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-25T23:02:32Z",
+      "side": 1,
+      "message": "For my own information: What is this?",
+      "range": {
+        "startLine": 37,
+        "startChar": 40,
+        "endLine": 37,
+        "endChar": 57
+      },
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
