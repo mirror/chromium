@@ -168,7 +168,9 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   void NotifyObserversOfEntries(PerformanceEntryVector&);
   bool HasObserverFor(PerformanceEntry::EntryType) const;
 
+  void DeliverObservations();
   void DeliverObservationsTimerFired(TimerBase*);
+  void DeliverObservationsIdleCallback(double deadline);
 
   PerformanceEntryVector frame_timing_buffer_;
   unsigned frame_timing_buffer_size_;

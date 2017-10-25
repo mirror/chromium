@@ -64,6 +64,7 @@
 #include "public/platform/WebImageLayer.h"
 #include "public/platform/WebRuntimeFeatures.h"
 #include "public/platform/WebScrollbarLayer.h"
+#include "public/platform/scheduler/test/renderer_scheduler_test_support.h"
 
 namespace blink {
 
@@ -257,6 +258,11 @@ void TestingPlatformSupportWithMockScheduler::RunSingleTask() {
 
 void TestingPlatformSupportWithMockScheduler::RunUntilIdle() {
   mock_task_runner_->RunUntilIdle();
+}
+
+void TestingPlatformSupportWithMockScheduler::ExecuteIdleTasks() {
+  blink::scheduler::RunIdleTasksForTesting(scheduler_.get(), base::Bind([] {}));
+  RunUntilIdle();
 }
 
 void TestingPlatformSupportWithMockScheduler::RunForPeriodSeconds(

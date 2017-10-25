@@ -43,12 +43,15 @@
 #include "core/timing/PerformanceObserver.h"
 #include "core/timing/PerformanceResourceTiming.h"
 #include "core/timing/PerformanceUserTiming.h"
+#include "platform/Platform.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/StdLibExtras.h"
+#include "public/platform/Platform.h"
 
 namespace blink {
 
@@ -503,8 +506,22 @@ bool PerformanceBase::HasObserverFor(
 }
 
 void PerformanceBase::ActivateObserver(PerformanceObserver& observer) {
-  if (active_observers_.IsEmpty())
-    deliver_observations_timer_.StartOneShot(0, BLINK_FROM_HERE);
+  if (active_observers_.IsEmpty()) {
+    if (first_paint_timing_ || first_contentful_paint_timing_) {
+      // Paint timing information should be delivered immediately. If there are
+      // other performance entries, we deliver them at the same time in order to
+      // preserve their order, and because once the main thread is processing
+      // performance entries, it isn't much more expensive to deliver all of
+      // them.
+      deliver_observations_timer_.StartOneShot(0, BLINK_FROM_HERE);
+    } else {
+      deliver_observations_timer_.StartOneShot(0.1, BLINK_FROM_HERE);
+      Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
+          BLINK_FROM_HERE,
+          WTF::Bind(&PerformanceBase::DeliverObservationsIdleCallback,
+                    WrapPersistent(this)));
+    }
+  }
 
   active_observers_.insert(&observer);
 }
@@ -523,7 +540,7 @@ void PerformanceBase::ResumeSuspendedObservers() {
   }
 }
 
-void PerformanceBase::DeliverObservationsTimerFired(TimerBase*) {
+void PerformanceBase::DeliverObservations() {
   PerformanceObservers observers;
   active_observers_.Swap(observers);
   for (const auto& observer : observers) {
@@ -532,6 +549,18 @@ void PerformanceBase::DeliverObservationsTimerFired(TimerBase*) {
     else
       observer->Deliver();
   }
+}
+
+void PerformanceBase::DeliverObservationsTimerFired(TimerBase*) {
+  DeliverObservations();
+}
+
+void PerformanceBase::DeliverObservationsIdleCallback(double deadline) {
+  // If the timer has already delivered the observations, we don't need to.
+  if (!deliver_observations_timer_.IsActive())
+    return;
+  deliver_observations_timer_.Stop();
+  DeliverObservations();
 }
 
 // static
