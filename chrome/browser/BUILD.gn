@@ -852,6 +852,8 @@ split_static_library("browser") {
     "ntp_tiles/chrome_popular_sites_factory.h",
     "offline_items_collection/offline_content_aggregator_factory.cc",
     "offline_items_collection/offline_content_aggregator_factory.h",
+    "origin_manifest/origin_manifest_url_loader_throttle.cc",
+    "origin_manifest/origin_manifest_url_loader_throttle.h",
     "page_load_metrics/browser_page_track_decider.cc",
     "page_load_metrics/browser_page_track_decider.h",
     "page_load_metrics/experiments/delay_navigation_throttle.cc",

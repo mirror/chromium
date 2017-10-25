@@ -58,6 +58,7 @@
 #include "chrome/browser/nacl_host/nacl_browser_delegate_impl.h"
 #include "chrome/browser/net_benchmarking.h"
 #include "chrome/browser/notifications/platform_notification_service_impl.h"
+#include "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.h"
 #include "chrome/browser/page_load_metrics/experiments/delay_navigation_throttle.h"
 #include "chrome/browser/page_load_metrics/metrics_navigation_throttle.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
@@ -3560,6 +3561,9 @@ ChromeContentBrowserClient::CreateURLLoaderThrottles(
           GetSafeBrowsingUrlCheckerDelegate(), wc_getter);
   if (safe_browsing_throttle)
     result.push_back(std::move(safe_browsing_throttle));
+
+  if (base::FeatureList::IsEnabled(features::kOriginManifest))
+    result.push_back(OriginManifestURLLoaderThrottle::Create());
 
   return result;
 }
