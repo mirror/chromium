@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e80cc77_0587237a",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-25T23:41:29Z",
+      "side": 1,
+      "message": "This is not the only place that handles navigations with replacement.  RendererDidNavigateToNewPage can also do it if replace_entry is true, plus there are similar subframe cases in RendererDidNavigateNewSubframe and probably RendererDidNavigateAutoSubframe.",
+      "revId": "bfc61493d554af7ddf3e1b326e1d83313e87dbf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
