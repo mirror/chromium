@@ -26,5 +26,6 @@ blink_modules_sources("gamepad") {
 
   deps = [
     "//device/gamepad/public/cpp:shared_with_blink",
+    "//device/gamepad/public/interfaces:interfaces_blink",
   ]
 }
