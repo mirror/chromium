@@ -59,6 +59,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
                                         ServiceWorkerProviderContextDeleter>,
       public mojom::ServiceWorkerContainer {
  public:
+  // Constructor for service worker clients.
+  //
   // |provider_id| is used to identify this provider in IPC messages to the
   // browser process. |request| is an endpoint which is connected to
   // the content::ServiceWorkerProviderHost that notifies of changes to the
@@ -73,11 +75,19 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // e.g. a frame, provides the default URLLoaderFactoryGetter.
   ServiceWorkerProviderContext(
       int provider_id,
+      const GURL& client_url,
       ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerContainerAssociatedRequest request,
       mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
       ServiceWorkerDispatcher* dispatcher,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
+
+  // Constructor for service worker contexts.
+  ServiceWorkerProviderContext(
+      int provider_id,
+      mojom::ServiceWorkerContainerAssociatedRequest request,
+      mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
+      ServiceWorkerDispatcher* dispatcher);
 
   ServiceWorkerProviderType provider_type() const { return provider_type_; }
 
@@ -109,8 +119,9 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
 
   // S13nServiceWorker:
   // For service worker clients. Returns URLLoaderFactory for loading
-  // subresources with the controller ServiceWorker.
-  mojom::URLLoaderFactory* subresource_loader_factory();
+  // subresources with the controller ServiceWorker, or nullptr if
+  // no controller is attached.
+  mojom::URLLoaderFactory* GetSubresourceLoaderFactory();
 
   // For service worker clients. Keeps track of feature usage for UseCounter.
   void CountFeature(uint32_t feature);

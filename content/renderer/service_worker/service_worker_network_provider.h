@@ -57,6 +57,7 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   static std::unique_ptr<blink::WebServiceWorkerNetworkProvider>
   CreateForNavigation(
       int route_id,
+      const GURL& url_to_navigate,
       const RequestNavigationParams& request_params,
       blink::WebLocalFrame* frame,
       bool content_initiated,
@@ -67,7 +68,8 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   // TODO(kinuko): This should also take ChildURLLoaderFactoryGetter associated
   // with the SharedWorker.
   static std::unique_ptr<ServiceWorkerNetworkProvider> CreateForSharedWorker(
-      int route_id);
+      int route_id,
+      const GURL& worker_url);
 
   // Creates a ServiceWorkerNetworkProvider for a "controller" (i.e.
   // a service worker execution context).
@@ -94,7 +96,8 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   ServiceWorkerNetworkProvider();
 
   // This is for service worker clients (used in CreateForNavigation and
-  // CreateForSharedWorker). |provider_id| is provided by the browser process
+  // CreateForSharedWorker). |url| is the URL of the client that is being
+  // initialized. |provider_id| is provided by the browser process
   // for navigations (with PlzNavigate, which is default).
   // |type| must be either one of SERVICE_WORKER_PROVIDER_FOR_{WINDOW,
   // SHARED_WORKER,WORKER} (while currently we don't have code for WORKER).
@@ -108,6 +111,7 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   // e.g. a frame, provides the loading factory getter for default loaders.
   ServiceWorkerNetworkProvider(
       int route_id,
+      const GURL& url,
       ServiceWorkerProviderType type,
       int provider_id,
       bool is_parent_frame_secure,

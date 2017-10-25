@@ -3536,8 +3536,8 @@ void RenderFrameImpl::DidCreateDocumentLoader(
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   document_loader->SetServiceWorkerNetworkProvider(
       ServiceWorkerNetworkProvider::CreateForNavigation(
-          routing_id_, navigation_state->request_params(), frame_,
-          content_initiated,
+          routing_id_, navigation_state->common_params().url,
+          navigation_state->request_params(), frame_, content_initiated,
           render_thread ? GetDefaultURLLoaderFactoryGetter() : nullptr));
 }
 

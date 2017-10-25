@@ -32,11 +32,11 @@ class CONTENT_EXPORT ControllerServiceWorkerConnector
 
   void OnContainerHostConnectionClosed();
 
+  void OnControllerConnectionClosed();
+
  private:
   friend class base::RefCounted<ControllerServiceWorkerConnector>;
   ~ControllerServiceWorkerConnector();
-
-  void OnControllerConnectionClosed();
 
   // Connection to the ServiceWorkerProviderHost that lives in the
   // browser process. This is used to (re-)obtain Mojo connection to
