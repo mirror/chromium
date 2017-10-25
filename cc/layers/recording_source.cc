@@ -150,6 +150,9 @@ void RecordingSource::DetermineIfSolidColor() {
   is_solid_color_ = false;
   solid_color_ = SK_ColorTRANSPARENT;
 
+  if (display_list_->HasDiscardableImages())
+    return;
+
   if (display_list_->op_count() > kMaxOpsToAnalyzeForLayer)
     return;
 
