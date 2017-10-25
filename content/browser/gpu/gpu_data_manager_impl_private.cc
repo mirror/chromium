@@ -1043,6 +1043,11 @@ GpuDataManagerImplPrivate::GpuDataManagerImplPrivate(GpuDataManagerImpl* owner)
   DCHECK(owner_);
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kUseGL)) {
+    std::string use_gl = command_line->GetSwitchValueASCII(switches::kUseGL);
+    if (use_gl == "any")
+      DCHECK(false);
+  }
   if (ShouldDisableHardwareAcceleration())
     DisableHardwareAcceleration();
 
