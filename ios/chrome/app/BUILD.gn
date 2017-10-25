@@ -137,6 +137,7 @@ source_set("app_internal") {
     "//components/prefs",
     "//components/proxy_config",
     "//components/signin/core/browser",
+    "//components/signin/ios/browser:active_state_manager",
     "//components/suggestions",
     "//components/sync",
     "//components/url_formatter",
