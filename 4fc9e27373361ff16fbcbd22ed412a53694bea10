@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4775acb6_0014dfd7",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-25T15:59:08Z",
+      "side": 1,
+      "message": "What is a \"range\"?  Please add a little bit more documentation.",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd217eea_34f7bdef",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-25T15:59:08Z",
+      "side": 1,
+      "message": "Are these \"using\" statements actually used?",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4bcba6_61699205",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-25T15:59:08Z",
+      "side": 1,
+      "message": "Are these actually used?",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28206025_cce842bc",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-25T15:59:08Z",
+      "side": 1,
+      "message": "Is this how clang-format formats these lines (99-104)?",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f532e27b_8f2525af",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-25T15:59:08Z",
+      "side": 1,
+      "message": "Does it matter if these are signed or unsigned constants?",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bc6727_9b5912e5",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-25T15:59:08Z",
+      "side": 1,
+      "message": "Are source1 and source2 initialized to zero?  If so, I think that\u0027s wrong. You should initialize them to an array of random values, possibly including denormals, NaN, and/or infinity.",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1cb0a33_b6cc8b61",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-25T15:59:08Z",
+      "side": 1,
+      "message": "Why 1e-6?  Can we use the actual minimum value for this?",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
