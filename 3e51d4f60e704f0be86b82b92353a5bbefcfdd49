@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40cd53e1_47421e53",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/buffer-usage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-25T21:32:13Z",
+      "side": 1,
+      "message": "Yup: \n\nI\u0027m using some basic heuristics to automatically clean up the test descriptions as much as possible in my migration script, but it doesn\u0027t work for every test. I will do all of test description \u0026 link references cleanup later. I should be able to clean the rest of this up later automatically.",
+      "parentUuid": "05650c6b_12f59778",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c94b0aef_8624b97e",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/hit-test.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-25T20:38:08Z",
       "side": 1,
       "message": "nit: inline?",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77953f7_4e1ab754",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/hit-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-25T21:32:13Z",
+      "side": 1,
+      "message": "Yeah, lots of places that we should inline, but let\u0027s defer all these types of improvements until post-migration.",
+      "parentUuid": "c94b0aef_8624b97e",
       "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "f47200a2_c08cf61f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/tracing-timeline-load.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-25T21:32:13Z",
+      "side": 1,
+      "message": "I think this is OK for now, especially since it\u0027s just for one test, but feel free to rename after this.",
+      "parentUuid": "5db7e810_29cfe182",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06a2462f_79d6f406",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/worker-events.js",
         "patchSetId": 2
@@ -84,6 +138,24 @@
       "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26462b2c_ea8d79ca",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/worker-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-25T21:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a2462f_79d6f406",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "b23f6549_f3c339ee",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/worker-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-25T21:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2e123e4_02c32e2a",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "201d5f97_ab595900",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/worker-events.js",
         "patchSetId": 2
@@ -115,6 +205,24 @@
       "writtenOn": "2017-10-25T20:38:08Z",
       "side": 1,
       "message": "formatting problem.",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdd95e8_f3c559e1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/worker-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-25T21:32:13Z",
+      "side": 1,
+      "message": "Done. I think it\u0027s because of missing semicolon :o",
+      "parentUuid": "201d5f97_ab595900",
       "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -135,6 +243,24 @@
       "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2827bf_dc5af218",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/worker-js-frames.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-25T21:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09d127ea_41d8bc2e",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
