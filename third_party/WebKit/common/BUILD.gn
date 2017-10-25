@@ -24,6 +24,7 @@ component("blink_common") {
     "client_hints/client_hints.cc",
     "client_hints/client_hints.h",
     "common_export.h",
+    "content_security_policy.h",
     "device_memory/approximated_device_memory.cc",
     "device_memory/approximated_device_memory.h",
     "message_port/cloneable_message.cc",
