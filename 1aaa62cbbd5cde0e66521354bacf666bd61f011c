@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7b1c4f0_3531d958",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "s/logical or/bitwise OR/",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f1e731_0b5204af",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "less repetitions would be with:\n\nassert len(set([len(d) for d in dumps])) \u003d\u003d 1",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 65
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906f3ca8_2b72e8e1",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "since you refer to it as SymbolInfo, maybe help reading by:\nfrom symbol_extractor import SymbolInfo\n\n?\n\nnittish",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 15
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab977734_d37dbb06",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "GetReachedSymbolsFromDump()\n\notherwise, the result of \u0027match\u0027 is non-intuitive",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 23
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158f6ddf_37fa87f1",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "can this function be unit-tested please?",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 44
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0871f98c_862bf014",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "s/of/if/ ? also, what does it mean to be \u0027OK\u0027? What is being done in this case?",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 40
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa999e55_0bba6d24",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "did we use \u0027Canonical\u0027 somewhere else? I forgot. Maybe \u0027Primary\u0027 matches the meaning better?",
+      "range": {
+        "startLine": 108,
+        "startChar": 16,
+        "endLine": 108,
+        "endChar": 25
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36530089_33a12981",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "also somewhat unittestable ..",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 21
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41e8c2c_151758af",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "can we produce a warning/error if we could not find something? or at least count+log how many things we did not find?",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 79
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954b5923_60854849",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "nit: prefer dashes in options to avoid a mix of dashes and underscores, and also for consistency with other scripts",
+      "range": {
+        "startLine": 170,
+        "startChar": 25,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e98a2099_fe263533",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "A comma-separated list of files with instrumentation dumps",
+      "range": {
+        "startLine": 172,
+        "startChar": 61,
+        "endLine": 172,
+        "endChar": 65
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90fefa84_ea08d222",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-25T15:44:11Z",
+      "side": 1,
+      "message": "maybe wrap this and below into a function so that this can be imported from another script and called directly to avoid serializing into arguments and calling another process? (one-liner, I know, but harder to refactor, \u003cinsert other aesthetic pseudo-reasons here\u003e)\n\n+1 to keeping the standalone usecase",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 42
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
