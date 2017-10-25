@@ -13,6 +13,7 @@
 #include <stdint.h>
 #include <sys/sysctl.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 #include "base/logging.h"
 #include "base/mac/mac_util.h"
@@ -87,6 +88,11 @@ void SysInfo::OperatingSystemVersionNumbers(int32_t* major_version,
             reinterpret_cast<SInt32*>(bugfix_version));
 #pragma clang diagnostic pop
   }
+}
+
+// static
+static size_t SysInfo::VMAllocationGranularity() {
+  return getpagesize();
 }
 
 // static
