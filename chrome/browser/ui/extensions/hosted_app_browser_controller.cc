@@ -23,6 +23,8 @@
 #include "ui/gfx/image/image_skia.h"
 #include "url/gurl.h"
 
+#include "chrome/browser/ui/bookmark_app_error.h"
+
 namespace extensions {
 
 namespace {
@@ -74,7 +76,9 @@ HostedAppBrowserController::HostedAppBrowserController(Browser* browser)
       extension_id_(
           web_app::GetExtensionIdFromApplicationName(browser->app_name())) {}
 
-HostedAppBrowserController::~HostedAppBrowserController() {}
+HostedAppBrowserController::~HostedAppBrowserController() {
+  LOG(ERROR) << "destryoing";
+}
 
 bool HostedAppBrowserController::ShouldShowLocationBar() const {
   const Extension* extension =
@@ -113,9 +117,20 @@ bool HostedAppBrowserController::ShouldShowLocationBar() const {
 }
 
 void HostedAppBrowserController::UpdateLocationBarVisibility(
-    bool animate) const {
+    bool animate) {
   browser_->window()->GetLocationBar()->UpdateLocationBarVisibility(
-      ShouldShowLocationBar(), animate);
+      false, animate);
+  if (!ShouldShowLocationBar()) {
+    bookmark_app_error_.reset();
+    return;
+  }
+
+  content::WebContents* web_contents =
+      browser_->tab_strip_model()->GetActiveWebContents();
+  if (!web_contents)
+    return;
+
+  bookmark_app_error_.reset(chrome::BookmarkAppError::Create(web_contents, browser->app_name()));
 }
 
 gfx::ImageSkia HostedAppBrowserController::GetWindowAppIcon() const {

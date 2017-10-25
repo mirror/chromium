@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/optional.h"
+#include "chrome/browser/ui/bookmark_app_error.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 class Browser;
@@ -38,7 +39,7 @@ class HostedAppBrowserController {
   // Updates the location bar visibility based on whether it should be
   // currently visible or not. If |animate| is set, the change will be
   // animated.
-  void UpdateLocationBarVisibility(bool animate) const;
+  void UpdateLocationBarVisibility(bool animate);
 
   // Returns the app icon for the window to use in the task list.
   gfx::ImageSkia GetWindowAppIcon() const;
@@ -52,6 +53,8 @@ class HostedAppBrowserController {
  private:
   Browser* browser_;
   const std::string extension_id_;
+
+  std::unique_ptr<chrome::BookmarkAppError> bookmark_app_error_;
 
   DISALLOW_COPY_AND_ASSIGN(HostedAppBrowserController);
 };
