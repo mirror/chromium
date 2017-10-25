@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d778562_200d31f0",
+        "filename": "third_party/WebKit/Source/core/animation/css/CSSAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-25T16:30:54Z",
+      "side": 1,
+      "message": "Worth noting EffectInput.cpp defines a comparison function in an anonymous namespace[1]. I think having a static comparator in the header to share a commonly needed comparison makes sense. Can we switch [1] to use Keyframe::CompareOffsets instead?\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/animation/EffectInput.cpp?type\u003dcs\u0026q\u003dOffset%5C(%5C)%5C+%3C%5C+.*Offset%5C(%5C)\u0026sq\u003dpackage:chromium\u0026l\u003d57",
+      "revId": "a05f35d2f7cefd02a8f87f5a43193ad0fbe7ca6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
