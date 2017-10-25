@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c16c0ebb_b0eb214e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-25T00:24:48Z",
+      "side": 1,
+      "message": "nit: trailing whitespace",
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef689301_1ef42fce",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-25T00:24:48Z",
+      "side": 1,
+      "message": "WebStateObserver can already return this via web_state() accessor, so no need to store it again in the instance. Remove.",
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68d8515_fd0fa1d8",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-25T00:24:48Z",
+      "side": 1,
+      "message": "I think it would be better to pass the WebState to this method since it need it. One particular reason is that I\u0027m trying to change WebStateObserver to not have a web_state() getter.",
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72c17f2_af84e3d0",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-25T00:24:48Z",
+      "side": 1,
+      "message": "I think we should capture tabHelper/webState and check they have expected values.",
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
