@@ -33,12 +33,15 @@ function verifyPreExistingIndex()
     request2.onerror = function () {
         debug("request2 received error event");
         shouldBe("++state", "2");
+        waitForError(/ConstraintError/, function() {
+            shouldBe("++state", "3");
+        });
     };
 
     trans.oncomplete = unexpectedCompleteCallback;
     trans.onabort = function () {
         debug("transaction aborted");
-        shouldBe("++state", "3");
+        shouldBe("++state", "4");
         shouldBe("trans.error.name", "'ConstraintError'");
         verifyCreateThenPut();
     };
@@ -76,19 +79,24 @@ function verifyCreateThenPut()
         request2.onerror = function () {
             debug("request2 (index2) received error event");
             shouldBe("++state", "2");
+            waitForError(/ConstraintError/, function() {
+                shouldBe("++state", "3");
+            });
         };
 
         trans.oncomplete = unexpectedCompleteCallback;
         trans.onabort = function () {
             debug("transaction aborted");
-            shouldBe("++state", "3");
+            shouldBe("++state", "4");
             shouldBe("trans.error.name", "'ConstraintError'");
         };
     };
 }
 
-function verifyPutThenCreate()
+function verifyPutThenCreate(evt)
 {
+    evt.preventDefault();
+
     debug("");
     debug("Verify that uniqueness constraints are enforced when index is created after puts:");
 
@@ -129,8 +137,10 @@ function verifyPutThenCreate()
     };
 }
 
-function verifyPutThenCreateThenPut()
+function verifyPutThenCreateThenPut(evt)
 {
+    evt.preventDefault();
+
     debug("");
     debug("Verify that uniqueness constraints are enforced when index is created between puts:");
 
@@ -160,12 +170,15 @@ function verifyPutThenCreateThenPut()
         request2.onerror = function () {
             debug("request2 received error event");
             shouldBe("++state", "2");
+            waitForError(/ConstraintError/, function() {
+                shouldBe("++state", "3");
+            });
         };
 
         trans.oncomplete = unexpectedCompleteCallback;
         trans.onabort = function () {
             debug("transaction aborted");
-            shouldBe("++state", "3");
+            shouldBe("++state", "4");
             shouldBe("trans.error.name", "'ConstraintError'");
         };
     };

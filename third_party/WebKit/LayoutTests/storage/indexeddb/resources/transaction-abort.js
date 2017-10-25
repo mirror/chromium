@@ -33,8 +33,10 @@ function startTest()
     abortFired = false;
 }
 
-function firstAdd()
+function firstAdd(evt)
 {
+    evt.preventDefault();
+
     shouldBe("event.target.error.name", "'AbortError'");
     shouldBeNull("trans.error");
     shouldBeFalse("firstError");
@@ -45,8 +47,10 @@ function firstAdd()
     evalAndExpectException("store.add({x: 'value4', y: 'zzz4'}, 'key4')", "0", "'TransactionInactiveError'");
 }
 
-function secondAdd()
+function secondAdd(evt)
 {
+    evt.preventDefault();
+
     shouldBe("event.target.error.name", "'AbortError'");
     shouldBeNull("trans.error");
     shouldBeTrue("firstError");

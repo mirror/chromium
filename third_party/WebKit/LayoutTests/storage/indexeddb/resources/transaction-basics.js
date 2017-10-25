@@ -37,14 +37,15 @@ function addRemoveIDBObjects()
     trans.abort();
 }
 
-function testSetVersionAbort2()
+function testSetVersionAbort2(evt)
 {
-    debug("");
-    debug("testSetVersionAbort2():");
+    preamble(evt);
+    evt.preventDefault();
+
     checkMetadataEmpty();
     evalAndLog("request = newConnection()");
     request.onupgradeneeded = addRemoveAddIDBObjects;
-    request.onerror = null;
+    request.onerror = function(e) { e.preventDefault(); };
 }
 
 function addRemoveAddIDBObjects()
@@ -53,7 +54,7 @@ function addRemoveAddIDBObjects()
     db = event.target.result;
     var trans = evalAndLog("trans = event.target.transaction");
     shouldBeNonNull("trans");
-    trans.addEventListener('abort', testSetVersionAbort3, false);
+    trans.onabort = testSetVersionAbort3;
     trans.oncomplete = unexpectedCompleteCallback;
 
     var store = evalAndLog("store = db.createObjectStore('storeFail', null)");
@@ -62,16 +63,16 @@ function addRemoveAddIDBObjects()
     evalAndLog("db.deleteObjectStore('storeFail')");
     evalAndExpectException("store.deleteIndex('indexFail')", "DOMException.INVALID_STATE_ERR", "'InvalidStateError'");
 
-    var store = evalAndLog("store = db.createObjectStore('storeFail', null)");
-    var index = evalAndLog("index = store.createIndex('indexFail', 'x')");
+    store = evalAndLog("store = db.createObjectStore('storeFail', null)");
+    index = evalAndLog("index = store.createIndex('indexFail', 'x')");
 
     trans.abort();
 }
 
-function testSetVersionAbort3()
+function testSetVersionAbort3(evt)
 {
-    debug("");
-    debug("testSetVersionAbort3():");
+    preamble(evt);
+
     shouldBeFalse("event.cancelable");
     checkMetadataEmpty();
     evalAndLog("request = newConnection()");
@@ -114,10 +115,11 @@ function testInactiveAbortedTransaction()
     evalAndExpectException("store.openCursor()", "11", "'InvalidStateError'");
 }
 
-function testSetVersionAbort4()
+function testSetVersionAbort4(evt)
 {
-    debug("");
-    debug("testSetVersionAbort4():");
+    preamble(evt);
+    evt.preventDefault();
+
     checkMetadataEmpty();
     evalAndLog("request = newConnection()");
     request.onupgradeneeded = addIDBObjectsAndCommit;
@@ -183,10 +185,11 @@ function removeIDBObjects()
     trans.abort();
 }
 
-function testSetVersionAbort6()
+function testSetVersionAbort6(evt)
 {
-    debug("");
-    debug("testSetVersionAbort6():");
+    preamble(evt);
+    evt.preventDefault();
+
     checkMetadataExistingObjectStore();
     evalAndLog("request = newConnection()");
     request.onupgradeneeded = setVersionSuccess;

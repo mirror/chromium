@@ -42,6 +42,7 @@ function onError(evt)
 {
     preamble(evt);
     shouldBe("db.version", "0");
+    evt.preventDefault();
 }
 
 function onUpgradeNeeded2(evt)

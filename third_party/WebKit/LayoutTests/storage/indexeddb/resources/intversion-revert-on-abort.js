@@ -54,6 +54,8 @@ function errorAfterAbortCallback(evt)
 {
     preamble(evt);
     shouldBe("db.version", "2");
+    evt.preventDefault();
+
     evalAndLog("request = indexedDB.open(dbname)");
     evalAndLog("request.onsuccess = finalSuccessCallback");
     request.onerror = unexpectedErrorCallback;

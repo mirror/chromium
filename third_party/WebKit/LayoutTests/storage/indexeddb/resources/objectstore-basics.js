@@ -120,9 +120,11 @@ function checkMetadata()
 var testDate = new Date("August 25, 1991 20:57:08");
 var testDateB = new Date("Wed Jan 05 2011 15:54:49");
 
-function openAgain()
+function openAgain(evt)
 {
-    preamble();
+    preamble(evt);
+    evt.preventDefault();
+
     request = evalAndLog('indexedDB.open(dbname)');
     request.onerror = unexpectedErrorCallback;
     request.onblocked = unexpectedBlockedCallback;

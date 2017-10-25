@@ -34,9 +34,9 @@ function openNextDatabase()
 {
     debug("opening a database named " + testData[nextToOpen].description);
     request = evalAndLog("indexedDB.open(testData[nextToOpen].name, 1)");
-    request.onsuccess = unexpectedSuccessCallback;
     request.onblocked = unexpectedBlockedCallback;
     request.onupgradeneeded = addAKey;
+    request.onsuccess = closeDatabase;
 }
 
 function addAKey()
@@ -46,7 +46,6 @@ function addAKey()
     evalAndLog("index = objectStore.createIndex(testData[nextToOpen].name, 'keyPath');");
     evalAndLog("key = testData[nextToOpen].name");
     evalAndLog("request = objectStore.add(key, key);");
-    request.onsuccess = closeDatabase;
     request.onerror = unexpectedErrorCallback;
 }
 

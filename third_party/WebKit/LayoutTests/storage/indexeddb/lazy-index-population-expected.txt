@@ -1,3 +1,6 @@
+CONSOLE ERROR: line 1: ConstraintError: Unable to add key to index 'index1': at least one key does not satisfy the uniqueness requirements.
+CONSOLE ERROR: line 1: ConstraintError: Unable to add key to index 'index2': at least one key does not satisfy the uniqueness requirements.
+CONSOLE ERROR: line 1: ConstraintError: Unable to add key to index 'index4': at least one key does not satisfy the uniqueness requirements.
 Verify edge cases that lazy index population in an IndexedDB implementation might reveal.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
@@ -19,8 +22,10 @@ request1 received success event
 PASS ++state is 1
 request2 received error event
 PASS ++state is 2
-transaction aborted
+PASS Got expected error: 'ConstraintError: Unable to add key to index 'index1': at least one key does not satisfy the uniqueness requirements.'
 PASS ++state is 3
+transaction aborted
+PASS ++state is 4
 PASS trans.error.name is 'ConstraintError'
 
 Verify that uniqueness constraints are enforced when index is created before puts:
@@ -37,8 +42,10 @@ request1 (index2) received success event
 PASS ++state is 1
 request2 (index2) received error event
 PASS ++state is 2
-transaction aborted
+PASS Got expected error: 'ConstraintError: Unable to add key to index 'index2': at least one key does not satisfy the uniqueness requirements.'
 PASS ++state is 3
+transaction aborted
+PASS ++state is 4
 PASS trans.error.name is 'ConstraintError'
 
 Verify that uniqueness constraints are enforced when index is created after puts:
@@ -71,8 +78,10 @@ request1 received success event
 PASS ++state is 1
 request2 received error event
 PASS ++state is 2
-transaction aborted
+PASS Got expected error: 'ConstraintError: Unable to add key to index 'index4': at least one key does not satisfy the uniqueness requirements.'
 PASS ++state is 3
+transaction aborted
+PASS ++state is 4
 PASS trans.error.name is 'ConstraintError'
 PASS successfullyParsed is true
 

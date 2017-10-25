@@ -12,7 +12,8 @@ function prepareDatabase()
     var db = request.result;
     var trans = request.transaction;
     trans.abort();
-    request.onerror = function() {
+    request.onerror = function(evt) {
+        evt.preventDefault();
         db.close();
         first();
     };

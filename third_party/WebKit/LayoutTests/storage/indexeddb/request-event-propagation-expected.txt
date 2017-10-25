@@ -1,3 +1,5 @@
+CONSOLE ERROR: line 1: ConstraintError: Key already exists in the object store.
+CONSOLE ERROR: line 1: ConstraintError: Key already exists in the object store.
 Test event propogation on IDBRequest.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".

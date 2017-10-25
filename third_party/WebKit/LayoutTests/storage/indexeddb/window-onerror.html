@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<title>IndexedDB: Unprevented errors trigger window.onerror</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+
+setup({allow_uncaught_exception: true});
+
+var t = async_test('Unprevented error on request causes window.onerror to fire');
+t.step(function() {
+    var onerrorCalled = false;
+    var dbName = location.pathname;
+    var deleteRequest = indexedDB.deleteDatabase(dbName);
+    deleteRequest.onsuccess = t.step_func(function() {
+        var openRequest = indexedDB.open(dbName);
+        openRequest.onupgradeneeded = t.step_func(function() {
+            var db = openRequest.result;
+            var store = db.createObjectStore('store');
+        });
+        openRequest.onsuccess = t.step_func(function() {
+            var db = openRequest.result;
+            var tx = db.transaction('store', 'readwrite');
+            var store = tx.objectStore('store');
+            store.add({}, 'k1');
+            store.add({}, 'k1');
+            tx.oncomplete = t.step_func(function() {
+                assert_unreached('transaction should have aborted');
+            });
+            tx.onabort = t.step_func(function() {
+                assert_true(onerrorCalled, 'onerror should have been called');
+                t.done();
+            });
+        });
+    });
+
+    window.onerror = t.step_func(function(message, url, line, column) {
+        onerrorCalled = true;
+        assert_regexp_match(message, /ConstraintError/);
+        assert_equals(line, 25);
+        assert_equals(column, 19);
+    });
+});
+
+</script>
