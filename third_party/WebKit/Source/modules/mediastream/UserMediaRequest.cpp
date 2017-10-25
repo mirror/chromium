@@ -48,7 +48,7 @@
 #include "modules/mediastream/UserMediaController.h"
 #include "platform/mediastream/MediaStreamCenter.h"
 #include "platform/mediastream/MediaStreamDescriptor.h"
-#include "public/platform/WebFeaturePolicyFeature.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
 
 namespace blink {
 
@@ -405,11 +405,11 @@ bool UserMediaRequest::IsSecureContextUse(String& error_message) {
         *document, WebFeature::kGetUserMediaSecureOriginIframe);
     if (Audio()) {
       Deprecation::CountDeprecationFeaturePolicy(
-          *document, WebFeaturePolicyFeature::kMicrophone);
+          *document, FeaturePolicyFeature::kMicrophone);
     }
     if (Video()) {
-      Deprecation::CountDeprecationFeaturePolicy(
-          *document, WebFeaturePolicyFeature::kCamera);
+      Deprecation::CountDeprecationFeaturePolicy(*document,
+                                                 FeaturePolicyFeature::kCamera);
     }
 
     HostsUsingFeatures::CountAnyWorld(
