@@ -2962,15 +2962,6 @@ crbug.com/626703 [ Win7 ] external/wpt/html/semantics/embedded-content/the-img-e
 # For Skia roll
 crbug.com/630695 fast/css/transformed-mask.html [ NeedsManualRebaseline ]
 
-crbug.com/774474 virtual/gpu-rasterization/images/imagemap-focus-ring-in-positioned-container.html [ NeedsManualRebaseline ]
-crbug.com/774474 virtual/gpu-rasterization/images/imagemap-focus-ring-outline-color-explicitly-inherited-from-map.html [ NeedsManualRebaseline ]
-crbug.com/774474 virtual/gpu-rasterization/images/imagemap-focus-ring-outline-color-not-inherited-from-map.html [ NeedsManualRebaseline ]
-crbug.com/774474 virtual/gpu-rasterization/images/imagemap-focus-ring-outline-color.html [ NeedsManualRebaseline ]
-crbug.com/774474 virtual/gpu-rasterization/images/imagemap-focus-ring-with-paint-root-offset.html [ NeedsManualRebaseline ]
-crbug.com/774474 virtual/gpu-rasterization/images/imagemap-focus-ring.html [ NeedsManualRebaseline ]
-crbug.com/774474 virtual/gpu-rasterization/images/imagemap-overflowing-polygon-focus-ring.html [ NeedsManualRebaseline ]
-crbug.com/774474 virtual/gpu-rasterization/images/imagemap-polygon-focus-ring.html [ NeedsManualRebaseline ]
-
 crbug.com/778109 [ Mac ] virtual/gpu-rasterization/images/color-profile-background-image-cross-fade.html [ Failure Pass ]
 crbug.com/778109 [ Mac ] virtual/gpu-rasterization/images/color-profile-mask-image-svg.html [ Failure Pass ]
 
