@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51c68ff8_f283513e",
+        "filename": "ui/events/devices/mojo/input_devices.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T21:32:09Z",
+      "side": 1,
+      "message": "I don\u0027t think the stylus will have a type. I\u0027ve seen code that mentions \"eraser\", but I that\u0027s an additional input type (like a screen would support both stylus and eraser, so probably would have multiple bools here). Let me know if you feel strongly about this and I can switch to an enum like STYLUS_NONE/STYLUS_NORMAL in a follow-up.",
+      "parentUuid": "fb459779_dc15845d",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 6
+      },
+      "revId": "95743b03cceee69a8fb4cd2095ce47d955c1bd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ddd253c_1379c76f",
         "filename": "ui/events/devices/touchscreen_device.h",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7ea3f416_503bb8bc",
+        "filename": "ui/events/devices/touchscreen_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T21:32:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ddd253c_1379c76f",
+      "revId": "95743b03cceee69a8fb4cd2095ce47d955c1bd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04247d5d_48db5ab3",
         "filename": "ui/events/devices/touchscreen_device.h",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "95743b03cceee69a8fb4cd2095ce47d955c1bd35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a85d11f_f85a04d1",
+        "filename": "ui/events/devices/touchscreen_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T21:32:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04247d5d_48db5ab3",
+      "revId": "95743b03cceee69a8fb4cd2095ce47d955c1bd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
