@@ -146,6 +146,7 @@ void RenderWidgetHostViewGuest::Hide() {
 }
 
 void RenderWidgetHostViewGuest::SetSize(const gfx::Size& size) {
+  host_->WasResized();
 }
 
 void RenderWidgetHostViewGuest::SetBounds(const gfx::Rect& rect) {
@@ -699,10 +700,12 @@ InputEventAckState RenderWidgetHostViewGuest::FilterInputEvent(
 }
 
 void RenderWidgetHostViewGuest::GetScreenInfo(ScreenInfo* screen_info) {
-  if (!guest_)
+  DCHECK(screen_info);
+  if (!guest_) {
+    *screen_info = ScreenInfo();
     return;
-  if (screen_info)
-    *screen_info = guest_->screen_info();
+  }
+  *screen_info = guest_->screen_info();
 }
 
 bool RenderWidgetHostViewGuest::IsRenderWidgetHostViewGuest() {

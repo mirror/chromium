@@ -936,7 +936,7 @@ RenderWidgetHostViewChildFrame::CreateBrowserAccessibilityManager(
 }
 
 void RenderWidgetHostViewChildFrame::GetScreenInfo(ScreenInfo* screen_info) {
-  if (screen_info && frame_connector_)
+  if (frame_connector_)
     *screen_info = frame_connector_->screen_info();
 }
 

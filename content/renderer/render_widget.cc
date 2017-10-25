@@ -390,6 +390,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       current_content_source_id_(0),
       widget_binding_(this, std::move(widget_request)),
       weak_ptr_factory_(this) {
+  base::debug::StackTrace().Print();
   DCHECK_NE(routing_id_, MSG_ROUTING_NONE);
   if (!swapped_out)
     RenderProcess::current()->AddRefProcess();
@@ -1258,6 +1259,8 @@ void RenderWidget::Resize(const ResizeParams& params) {
       screen_info_.orientation_angle != params.screen_info.orientation_angle ||
       screen_info_.orientation_type != params.screen_info.orientation_type;
 
+  bool screen_info_changed = screen_info_ != params.screen_info;
+
   screen_info_ = params.screen_info;
 
   if (device_scale_factor_ != screen_info_.device_scale_factor) {
@@ -1341,12 +1344,14 @@ void RenderWidget::Resize(const ResizeParams& params) {
   if (orientation_changed)
     OnOrientationChange();
 
-  for (auto& observer : render_frame_proxies_)
-    observer.OnScreenInfoChanged(params.screen_info);
+  if (screen_info_changed) {
+    for (auto& observer : render_frame_proxies_)
+      observer.OnScreenInfoChanged(params.screen_info);
 
-  // Notify all BrowserPlugins of the updated ScreenInfo.
-  if (BrowserPluginManager::Get())
-    BrowserPluginManager::Get()->ScreenInfoChanged(params.screen_info);
+    // Notify all BrowserPlugins of the updated ScreenInfo.
+    if (BrowserPluginManager::Get())
+      BrowserPluginManager::Get()->ScreenInfoChanged(params.screen_info);
+  }
 
   // If a resize ack is requested and it isn't set-up, then no more resizes will
   // come in and in general things will go wrong.
@@ -2282,6 +2287,7 @@ blink::WebScreenInfo RenderWidget::GetScreenInfo() {
       break;
   }
   web_screen_info.orientation_angle = screen_info_.orientation_angle;
+
   return web_screen_info;
 }
 

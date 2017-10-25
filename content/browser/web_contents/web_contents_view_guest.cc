@@ -64,12 +64,10 @@ gfx::NativeWindow WebContentsViewGuest::GetTopLevelNativeWindow() const {
 }
 
 void WebContentsViewGuest::GetScreenInfo(ScreenInfo* screen_info) const {
-  RenderWidgetHostView* rwhv = web_contents_->GetRenderWidgetHostView();
-  if (!rwhv) {
+  if (guest_->embedder_web_contents())
+    guest_->embedder_web_contents()->GetView()->GetScreenInfo(screen_info);
+  else
     WebContentsView::GetDefaultScreenInfo(screen_info);
-    return;
-  }
-  rwhv->GetScreenInfo(screen_info);
 }
 
 void WebContentsViewGuest::OnGuestAttached(WebContentsView* parent_view) {
@@ -106,6 +104,9 @@ void WebContentsViewGuest::GetContainerBounds(gfx::Rect* out) const {
 
 void WebContentsViewGuest::SizeContents(const gfx::Size& size) {
   size_ = size;
+  RenderWidgetHostView* rwhv = web_contents_->GetRenderWidgetHostView();
+  if (rwhv)
+    rwhv->SetSize(size);
 }
 
 void WebContentsViewGuest::SetInitialFocus() {

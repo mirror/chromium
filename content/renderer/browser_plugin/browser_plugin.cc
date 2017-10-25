@@ -692,4 +692,7 @@ BrowserPlugin::ResizeParams::ResizeParams(const ResizeParams& other) = default;
 
 BrowserPlugin::ResizeParams::~ResizeParams() = default;
 
+BrowserPlugin::ResizeParams& BrowserPlugin::ResizeParams::ResizeParams::
+operator=(const ResizeParams& other) = default;
+
 }  // namespace content

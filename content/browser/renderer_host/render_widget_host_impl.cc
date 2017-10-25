@@ -735,7 +735,10 @@ void RenderWidgetHostImpl::SetImportance(ChildProcessImportance importance) {
 bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
   *resize_params = ResizeParams();
 
-  GetScreenInfo(&resize_params->screen_info);
+  if (view_ && view_->IsRenderWidgetHostViewChildFrame())
+    view_->GetScreenInfo(&resize_params->screen_info);
+  else
+    GetScreenInfo(&resize_params->screen_info);
 
   if (delegate_) {
     resize_params->is_fullscreen_granted =

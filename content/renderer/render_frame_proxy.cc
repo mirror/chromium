@@ -688,4 +688,7 @@ RenderFrameProxy::ResizeParams::ResizeParams(const ResizeParams& other) =
 
 RenderFrameProxy::ResizeParams::~ResizeParams() = default;
 
+RenderFrameProxy::ResizeParams& RenderFrameProxy::ResizeParams::operator=(
+    const ResizeParams& other) = default;
+
 }  // namespace

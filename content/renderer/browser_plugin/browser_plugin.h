@@ -217,6 +217,12 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
     ResizeParams();
     ResizeParams(const ResizeParams& other);
     ~ResizeParams();
+
+    ResizeParams& operator=(const ResizeParams& other);
+
+    // We want to distinguish between objects with an empty size and a
+    // undetermined size. If base::nullopt, then the |frame_rect| is not yet
+    // known whereas an empty frame_rect is acceptable.
     base::Optional<gfx::Rect> frame_rect;
     ScreenInfo screen_info;
   };
