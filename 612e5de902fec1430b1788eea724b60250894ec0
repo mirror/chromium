@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01ee5242_5a0c033b",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-25T19:12:12Z",
+      "side": 1,
+      "message": "it sounds like you\u0027re doing this TODO, so remove TODO and insert justification for why this is ok.",
+      "revId": "612e5de902fec1430b1788eea724b60250894ec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
