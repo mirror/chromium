@@ -190,6 +190,8 @@ base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
     switch (op->GetType()) {
       case PaintOpType::DrawRecord: {
         const DrawRecordOp* record_op = static_cast<const DrawRecordOp*>(op);
+        if (record_op->HasDiscardableImages())
+          return base::nullopt;
         stack.emplace_back(
             PaintOpBuffer::CompositeIterator(record_op->record.get(), nullptr),
             canvas.getTotalMatrix(), canvas.getSaveCount());
