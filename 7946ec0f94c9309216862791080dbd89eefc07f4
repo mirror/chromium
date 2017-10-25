@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a97e6a6a_8ea18101",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-25T23:02:38Z",
+      "side": 1,
+      "message": "Update comment? This returns devices.end() if device is not found.",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16ed3a5_f3ec8120",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-25T23:02:38Z",
+      "side": 1,
+      "message": "Maybe add a\n\n  // TODO: replace with std::max_element when C++17 is available\n\nUp to you.",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb57cb6f_80ec077d",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-25T23:02:38Z",
+      "side": 1,
+      "message": "nit: you could just name these a and b, a bit shorter. pair_1 and pair_2 convey no semantic meaning.",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee8a879_ad3db5f4",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-25T23:02:38Z",
+      "side": 1,
+      "message": "Nice",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c16bbd_6cda9be8",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-25T23:02:38Z",
+      "side": 1,
+      "message": "Keep static methods together (move constructors below static block?) - see CalibrationPointPairCompare.",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330b9123_bf6c8799",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-25T23:02:38Z",
+      "side": 1,
+      "message": "Will this comment be valid later on? Maybe update it in a future patchset?",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0b22a3_2f2ea637",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-25T23:02:38Z",
+      "side": 1,
+      "message": "This seems like a really unusual pattern. What about passing nullptr for non-cros platforms? Or passing an argument struct that contains the data?",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

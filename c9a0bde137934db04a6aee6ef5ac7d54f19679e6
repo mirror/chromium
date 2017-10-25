@@ -318,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "5c71f1bf_bb516f93",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-25T23:02:38Z",
+      "side": 1,
+      "message": "Ah, fair enough, I didn\u0027t realize this was moved code.",
+      "parentUuid": "a4c45adb_a60ccc76",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18b125ce_060f9e22",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 4
