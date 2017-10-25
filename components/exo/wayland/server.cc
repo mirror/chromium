@@ -2420,6 +2420,12 @@ void HandleRemoteSurfaceStateChangedCallback(
     case ash::mojom::WindowStateType::TRUSTED_PINNED:
       state_type = ZCR_REMOTE_SHELL_V1_STATE_TYPE_TRUSTED_PINNED;
       break;
+    case ash::mojom::WindowStateType::LEFT_SNAPPED:
+      state_type = ZCR_REMOTE_SHELL_V1_STATE_TYPE_LEFT_SNAPPED;
+      break;
+    case ash::mojom::WindowStateType::RIGHT_SNAPPED:
+      state_type = ZCR_REMOTE_SHELL_V1_STATE_TYPE_RIGHT_SNAPPED;
+      break;
     default:
       break;
   }

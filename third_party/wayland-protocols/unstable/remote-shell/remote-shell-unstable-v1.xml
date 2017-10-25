@@ -65,6 +65,8 @@
       <entry name="pinned" value="5" summary="pinned window state"/>
       <entry name="trusted_pinned" value="6" summary="trusted pinned window state"/>
       <entry name="moving" value="7" summary="moving window state"/>
+      <entry name="left_snapped" value="8" summary="left snapped window state"/>
+      <entry name="right_snapped" value="9" summary="right snapped window state"/>
     </enum>
 
     <enum name="error">

@@ -195,6 +195,14 @@ enum zcr_remote_shell_v1_state_type {
 	 * moving window state
 	 */
 	ZCR_REMOTE_SHELL_V1_STATE_TYPE_MOVING = 7,
+	/**
+	 * left snapped window state
+	 */
+	ZCR_REMOTE_SHELL_V1_STATE_TYPE_LEFT_SNAPPED = 8,
+	/**
+	 * right snapped window state
+	 */
+	ZCR_REMOTE_SHELL_V1_STATE_TYPE_RIGHT_SNAPPED = 9,
 };
 #endif /* ZCR_REMOTE_SHELL_V1_STATE_TYPE_ENUM */
 
@@ -525,8 +533,8 @@ struct zcr_remote_surface_v1_interface {
 	/**
 	 * suggests the window's background opacity
 	 *
-	 * Suggests the window's background opacity when the shadow is
-	 * requested.
+	 * [Deprecated] Suggests the window's background opacity when the
+	 * shadow is requested.
 	 */
 	void (*set_rectangular_shadow_background_opacity)(struct wl_client *client,
 							  struct wl_resource *resource,
