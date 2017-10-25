@@ -10,6 +10,7 @@
 #include "base/observer_list.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/dom_distiller/core/pref_names.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 
@@ -46,6 +47,9 @@ void DistilledPagePrefs::RegisterProfilePrefs(
   registry->RegisterDoublePref(
       kFontScalePref,
       1.0);
+  registry->RegisterBooleanPref(
+      prefs::kReaderForAccessibility, false,
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 }
 
 void DistilledPagePrefs::SetFontFamily(
