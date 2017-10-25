@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04595cc5_92a20638",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "sorry fixed.",
+      "parentUuid": "32b370a8_25c9d226",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48363549_09f3b37f",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a629bcde_3159f39e",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "yes.",
+      "parentUuid": "48363549_09f3b37f",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f362c83d_99781735",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "993e292b_6cfd5110",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 15
+      },
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e423d55_cd6241dc",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 7
@@ -73,6 +133,24 @@
       "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0595706_79f5c84d",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e423d55_cd6241dc",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "f9478fa5_c8d07d2a",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c67d9d9_9d0f9072",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a5f6289_a4f3713e",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 7
@@ -107,6 +203,24 @@
       "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bc648e_ed5cb31d",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a5f6289_a4f3713e",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "33b72a80_1af7c4c8",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a70969b5_110eca02",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb095c31_0b3576a4",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 7
@@ -141,6 +273,24 @@
       "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd013a21_f79ee214",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb095c31_0b3576a4",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "07847470_8c8e7bf0",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "There is a check at start of the function for unloaded.",
+      "parentUuid": "c6adc561_94ecc4a0",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ef39ad1_f4157f3c",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 7
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "e317862d_0487eb4f",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ef39ad1_f4157f3c",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24984e80_99abeefb",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 7
@@ -189,6 +375,24 @@
       "writtenOn": "2017-10-24T18:22:30Z",
       "side": 1,
       "message": "How about setting a flag, and then the in-flight commit batch can unload when finished?",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f17931d_602702c4",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Isn\u0027t it better to check in this function if we have commit_batch before clearing instead of letting the caller handle the safety?\n\nThe current code calls UnloadIfPossible() from both where the load state changed and commit_batch_ is deleted. This function only clears if both conditions are met. This is easier to read code than setting a bool at changing load state and checking it when commit happens?",
+      "parentUuid": "24984e80_99abeefb",
       "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "397fc091_906da619",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d513534_2905dcdc",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f0978cf_3e812d5f",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 7
@@ -226,6 +448,24 @@
       "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307b9837_187a6d24",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "The loop actually moves the value to avoid copying. So non-const",
+      "parentUuid": "8f0978cf_3e812d5f",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -246,6 +486,24 @@
     },
     {
       "key": {
+        "uuid": "292bf9c7_9a372081",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1770f43_28581d80",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "717a17a7_d2fa689a",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 7
@@ -260,6 +518,24 @@
       "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389b70f3_a6007374",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "717a17a7_d2fa689a",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -280,6 +556,24 @@
     },
     {
       "key": {
+        "uuid": "1554cb50_9779764a",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fda4e15_f05a7264",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c15a6dcd_3f83c7af",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 7
@@ -294,6 +588,24 @@
       "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c1f8ec_3524e64f",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c15a6dcd_3f83c7af",
+      "revId": "c3d0a71c3e9f0be290ce709febde99ad4ac11ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

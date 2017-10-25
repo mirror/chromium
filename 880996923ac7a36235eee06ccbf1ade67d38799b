@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f31667f4_c7e8de5a",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-25T22:52:57Z",
+      "side": 1,
+      "message": "I do not understand how GetMaxRendererProcessCount() would help. It always returns 100 for Linux and 20 for Android. How can I use that?\n\nThe change is to clear cache when only one renderer process is using the local storage. When more processes try to use we switch to storing the full cache. This saves memory and affects performance a little (extra loading the database from disk when second process opens the storage).\n\nGiven the metrics on Android the users have only one renderer process 90% of the times. So, this change would work very well on Android since the reload performance is not significant compared to memory usage.\nOn any other desktop platforms we might regress performance due to disk loads since typical user has many renderer processes. If you think this characteristic about Android would change then maybe I can make this behavior a Finch experiment and if it changes in future we can switch to storing cache for Android. I believe that this behavior won\u0027t change and it saves memory for these devices as such.\n\nSince you said we have other low-end devices than Android I made the else part check for low-end devices.\n\nI could also try some more complicated behavior here to store the history of the current user to see if in the past we had too many extra disk loads and use this factor to store values. But, it seems complicated and may not be worth it. If you feel strongly about the behavior change I can give this a try.",
+      "parentUuid": "f4bf885e_6bb87e8d",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76677d8a_03d54990",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
