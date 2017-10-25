@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19ca9ddf_ad62e7ae",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 2328,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-25T20:57:38Z",
+      "side": 1,
+      "message": "Here and below, I think the disabled_tester_configs section is unnecessary given the gpu and os specializations in tester_configs.",
+      "revId": "8baa54751dc8f6f380ac60e7f395ef0106aec030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
