@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d17ec2b3_6d5aa558",
+        "filename": "base/containers/span_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-25T22:18:31Z",
+      "side": 1,
+      "message": "Maybe just make this test pass, e.g. by comparing against an array initialized to {0, 8, 1, 6, 1}? The CrOS issues are the reason why std::cbegin et al aren\u0027t used yet in Chromium.",
+      "revId": "509dab2d874971ae9221e76a629169065b2f3b12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
