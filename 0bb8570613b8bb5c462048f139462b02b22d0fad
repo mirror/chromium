@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc6f46cd_5ef1d158",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-25T12:23:05Z",
+      "side": 1,
+      "message": "this seems a bit cumbersome for consumers of FaceDetectionImplWin. how about making this here look like so:\n\n  auto impl \u003d FaceDetectionImplWin::Create();\n  if (!impl)\n    return;\n  ...\n\nand add this to FaceDetectionImplWin (without the inlining, of course):\n\n public:\n  static std::unique_ptr\u003cFaceDetectionImplWin\u003e Create() {\n    auto factory \u003d GetFactory();\n    if (!factory)\n      return std::unique_ptr\u003cFaceDetectionImplWin\u003e();\n    return std::make_unique\u003cFaceDetectionImplWin\u003e(std::move(factory));\n  }\n\n private:\n  explicit FaceDetectionImplWin(Microsoft::WRL::ComPtr\u003cIFaceDetectorStatics\u003e factory) : face_detector_factory_(std::move(factory)) {}",
+      "revId": "0bb8570613b8bb5c462048f139462b02b22d0fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f0e9ad9_3066cea0",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-25T12:23:05Z",
+      "side": 1,
+      "message": "does something need to happen with |request| in this case, or does mojo magically handle the failure case?",
+      "revId": "0bb8570613b8bb5c462048f139462b02b22d0fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78fe32b5_3f3e2e56",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-25T12:23:05Z",
+      "side": 1,
+      "message": "\\ -\u003e /",
+      "revId": "0bb8570613b8bb5c462048f139462b02b22d0fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
