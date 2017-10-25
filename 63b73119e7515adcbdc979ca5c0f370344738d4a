@@ -141,6 +141,24 @@
       "revId": "63b73119e7515adcbdc979ca5c0f370344738d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f89e9d7_98ea1aa7",
+        "filename": "components/bookmarks/browser/titled_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-10-25T20:01:21Z",
+      "side": 1,
+      "message": "\"Equivalent to\" does mean that operations have to happen in the same order, since doing them in a different order is user-visible.",
+      "parentUuid": "f8af7f79_72610bd1",
+      "revId": "63b73119e7515adcbdc979ca5c0f370344738d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
