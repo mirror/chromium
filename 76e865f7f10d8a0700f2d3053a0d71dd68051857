@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38e42e5c_cb05bb4a",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/getDevicePose_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-25T21:48:39Z",
+      "side": 1,
+      "message": "Aren\u0027t we doing this in assert_matrices_approx_equal?",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb9622a_53dfa739",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-25T21:48:39Z",
+      "side": 1,
+      "message": "Nit: This and assert_matrices_approx_equal feel like they should go elsewhere, although I would vote to keep them here (at least for now) if the alternative is creating another file in resources/ that needs to be included in tests.",
+      "range": {
+        "startLine": 206,
+        "startChar": 9,
+        "endLine": 206,
+        "endChar": 25
+      },
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c79ae6_2c57a21b",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-25T21:48:39Z",
+      "side": 1,
+      "message": "Nit: Use a default value for epsilon instead of setting here?",
+      "range": {
+        "startLine": 250,
+        "startChar": 6,
+        "endLine": 250,
+        "endChar": 13
+      },
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
