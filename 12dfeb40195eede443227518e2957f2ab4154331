@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f855c1cc_25b707b6",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 0,
+      "message": "Acknowledged; indeed.  Thanks for the diff hint! :)",
+      "parentUuid": "4aa59080_d5cb36c5",
+      "range": {
+        "startLine": 1326,
+        "startChar": 4,
+        "endLine": 1401,
+        "endChar": 3
+      },
+      "revId": "12dfeb40195eede443227518e2957f2ab4154331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cbd1c22_cb8126c5",
         "filename": "components/autofill/core/browser/autofill_manager.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "12dfeb40195eede443227518e2957f2ab4154331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827449bd_3dd72cf0",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 0,
+      "message": "Thanks for noticing.  This is indeed intentional; there was an extremely short discussion in the autofill chat about it back at the beginning of October.",
+      "parentUuid": "9cbd1c22_cb8126c5",
+      "range": {
+        "startLine": 496,
+        "startChar": 0,
+        "endLine": 499,
+        "endChar": 6
+      },
+      "revId": "12dfeb40195eede443227518e2957f2ab4154331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5f0ff264_faee1719",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 0,
+      "message": ":D!",
+      "parentUuid": "c104eeb7_8ca86514",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 1
+      },
+      "revId": "12dfeb40195eede443227518e2957f2ab4154331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef9587ed_0236a222",
         "filename": "components/autofill/core/browser/personal_data_manager.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "12dfeb40195eede443227518e2957f2ab4154331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c88ed00_ffb3dfa2",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 0,
+      "message": "Dang this tool is handy!",
+      "parentUuid": "ef9587ed_0236a222",
+      "range": {
+        "startLine": 1646,
+        "startChar": 0,
+        "endLine": 1882,
+        "endChar": 1
+      },
+      "revId": "12dfeb40195eede443227518e2957f2ab4154331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

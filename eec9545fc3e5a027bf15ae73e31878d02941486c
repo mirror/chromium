@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "548a8bbf_d3116c51",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Interesting.  Changed this one since I\u0027m editing the code.  There\u0027s over ten more elsewhere in this file; I\u0027ll change those as part of the next refactor step (this CL is intended to be as much pure-moving as possible).",
+      "parentUuid": "09e76165_201b3457",
+      "range": {
+        "startLine": 209,
+        "startChar": 10,
+        "endLine": 209,
+        "endChar": 26
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74dff685_c96a7125",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 2
@@ -84,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "13d14a87_fc2b7fe7",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Mathieu: Done.\n\nKumar: Chrome\u0027s standard seems to be to use curlies only if it\u0027s 2+ lines.  Looks like lines 427 and 419 were maybe not supposed to have them.  (Though if it were up to me I\u0027d always keep them just for readability\u0027s sake a la Java)",
+      "parentUuid": "507c02ea_a2601b65",
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bc81db0_5eca7dd3",
         "filename": "components/autofill/core/browser/autofill_manager.h",
         "patchSetId": 2
@@ -104,6 +146,30 @@
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75dd8a04_e26ca62a",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "No idea.  Something of Sashi\u0027s?  We could investigate if it should stick around as a later refactor step, if you wish.",
+      "parentUuid": "0bc81db0_5eca7dd3",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 38,
+        "endChar": 8
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -130,6 +196,30 @@
     },
     {
       "key": {
+        "uuid": "ae268c7e_bf5cfb8c",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Technically still true.  AutofillManager owns the FormDataImporter (which owns the CreditCardSaveManager) that do the heavy lifting.",
+      "parentUuid": "c146f40f_a8cea873",
+      "range": {
+        "startLine": 68,
+        "startChar": 1,
+        "endLine": 68,
+        "endChar": 2
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aed6c10_868b5ff7",
         "filename": "components/autofill/core/browser/autofill_merge_unittest.cc",
         "patchSetId": 2
@@ -153,6 +243,30 @@
     },
     {
       "key": {
+        "uuid": "f011b38a_25501cda",
+        "filename": "components/autofill/core/browser/autofill_merge_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aed6c10_868b5ff7",
+      "range": {
+        "startLine": 207,
+        "startChar": 28,
+        "endLine": 207,
+        "endChar": 48
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cbbfc2b_a56ce8d0",
         "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
         "patchSetId": 2
@@ -167,6 +281,24 @@
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582f4ade_045fe569",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cbbfc2b_a56ce8d0",
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -193,6 +325,30 @@
     },
     {
       "key": {
+        "uuid": "d1c9f074_6393588c",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Still seems to want it; expects 0 arguments otherwise and tells me to add ::autofill::.",
+      "parentUuid": "b29d5521_b1e1e75c",
+      "range": {
+        "startLine": 216,
+        "startChar": 9,
+        "endLine": 216,
+        "endChar": 21
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a71caf5_03cb8b58",
         "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
         "patchSetId": 2
@@ -213,6 +369,30 @@
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808989cb_bb140498",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "I don\u0027t know if it\u0027s standard either.  I\u0027ll add it to my list of refactorable things; trying to keep this CL as much a simple move as possible.",
+      "parentUuid": "7a71caf5_03cb8b58",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 3
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -239,6 +419,30 @@
     },
     {
       "key": {
+        "uuid": "2d30d476_1caed13d",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Acknowledged (and agreed)",
+      "parentUuid": "da3e7878_99f4a319",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 3
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95801391_6fe1866c",
         "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
         "patchSetId": 2
@@ -259,6 +463,30 @@
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f2eb57_d11f35a0",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95801391_6fe1866c",
+      "range": {
+        "startLine": 325,
+        "startChar": 17,
+        "endLine": 325,
+        "endChar": 33
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -285,6 +513,30 @@
     },
     {
       "key": {
+        "uuid": "1ae804db_fd3c7261",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Not going to make logic changes in this CL.\n\nAlso I looked at some StackOverflow questions on this; sounds like push_back is regarded as the safer option unless you *specifically* need emplace_back.  Compilers optimize it down to the same result, and emplace_back is apparently incorrect in MSVS 2015.",
+      "parentUuid": "062938c6_9091ce43",
+      "range": {
+        "startLine": 339,
+        "startChar": 41,
+        "endLine": 339,
+        "endChar": 50
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b49266d1_1d76da92",
         "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
         "patchSetId": 2
@@ -308,6 +560,30 @@
     },
     {
       "key": {
+        "uuid": "bac3f7f5_7bd43f64",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b49266d1_1d76da92",
+      "range": {
+        "startLine": 489,
+        "startChar": 2,
+        "endLine": 489,
+        "endChar": 4
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dce826f_6864ba04",
         "filename": "components/autofill/core/browser/credit_card_save_manager.h",
         "patchSetId": 2
@@ -322,6 +598,24 @@
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa20339e_7d5467c0",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Good point, clarified.",
+      "parentUuid": "9dce826f_6864ba04",
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -348,6 +642,30 @@
     },
     {
       "key": {
+        "uuid": "58bb3ede_b954eff0",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Named it this way because FormDataImporter is saying \"Go ahead and offer upload credit card save\", but CreditCardSaveImporter can still decide NOT to do that for many reasons (missing data, Google Payments said no, etc.)  Because of that, I can\u0027t name it \"OfferCardUploadSave\" because it might not actually do that.  I\u0027m open to suggestions.",
+      "parentUuid": "6bd2efb5_9aa78f9b",
+      "range": {
+        "startLine": 54,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 2
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33967140_332f38a6",
         "filename": "components/autofill/core/browser/credit_card_save_manager.h",
         "patchSetId": 2
@@ -368,6 +686,30 @@
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d46b37e_2dc54adc",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Yep, the unit test overrides it and the tests fail otherwise.  It was virtual in AutofillManager as well.",
+      "parentUuid": "33967140_332f38a6",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 10
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -394,6 +736,30 @@
     },
     {
       "key": {
+        "uuid": "ff214789_cb76fe3f",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98d5debb_7d7ccf58",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8242180a_603b35f6",
         "filename": "components/autofill/core/browser/credit_card_save_manager.h",
         "patchSetId": 2
@@ -414,6 +780,30 @@
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464ee492_6e249926",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8242180a_603b35f6",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 38
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -488,6 +878,30 @@
     },
     {
       "key": {
+        "uuid": "7faf3783_46b36e47",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Found it; thanks!",
+      "parentUuid": "a3bbc0b0_5a5f5b6b",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 38
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d74cdbc_13b61045",
         "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
         "patchSetId": 2
@@ -523,6 +937,24 @@
     },
     {
       "key": {
+        "uuid": "26299077_a1b4bbf1",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Created crbug.com/778436.",
+      "parentUuid": "7313d64f_09963396",
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12ea7ffd_97e33130",
         "filename": "components/autofill/core/browser/form_data_importer.h",
         "patchSetId": 2
@@ -546,6 +978,30 @@
     },
     {
       "key": {
+        "uuid": "552e6e51_d2216d75",
+        "filename": "components/autofill/core/browser/form_data_importer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12ea7ffd_97e33130",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 30
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baa84edb_6c68d22e",
         "filename": "components/autofill/core/browser/form_data_importer.h",
         "patchSetId": 2
@@ -566,6 +1022,30 @@
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38dda5d_c2c5f003",
+        "filename": "components/autofill/core/browser/form_data_importer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Good catch.  Was required for testing, but I moved this into the private section and just friended those test methods.",
+      "parentUuid": "baa84edb_6c68d22e",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -640,6 +1120,30 @@
     },
     {
       "key": {
+        "uuid": "f6d162a9_122d503d",
+        "filename": "components/autofill/core/browser/form_data_importer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Thanks so much for the draft CL--looks like it worked!  Please keep the draft CL around for now and I\u0027ll include it in a refactor of PersonalDataManager as well after this.",
+      "parentUuid": "f23f363a_40f7aefe",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 49
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "755d0abe_88da3256",
         "filename": "components/autofill/core/browser/payments/payments_client.h",
         "patchSetId": 2
@@ -654,6 +1158,24 @@
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f502b05_5c57cfb0",
+        "filename": "components/autofill/core/browser/payments/payments_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Ew, indeed.  Also added surrounding pipe characters.",
+      "parentUuid": "755d0abe_88da3256",
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -677,6 +1199,30 @@
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d64aca_b559e81b",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-25T23:54:33Z",
+      "side": 1,
+      "message": "Good point about the name; changed.\n\nDon\u0027t know about the TODO to remove though.  I don\u0027t get the impression this function is supposed to be temporary.",
+      "parentUuid": "f0d829c0_fb5ae797",
+      "range": {
+        "startLine": 523,
+        "startChar": 26,
+        "endLine": 523,
+        "endChar": 55
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
