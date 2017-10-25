@@ -122,6 +122,24 @@
       "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7143aa_b3a0db2e",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2513,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-25T19:04:09Z",
+      "side": 1,
+      "message": "That could be a reasonable option, you can check if the main frame is local and return early if not. Just note that the frequency of OOPIFs on all Chrome channels will be increasing considerably over the next several months (except on Android), so it might cause some skew over time.",
+      "parentUuid": "bf2296ed_ab02d2f2",
+      "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
