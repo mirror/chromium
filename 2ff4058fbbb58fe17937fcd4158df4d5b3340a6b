@@ -36,6 +36,57 @@
     },
     {
       "key": {
+        "uuid": "5292b2a8_de5cf9be",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-25T22:13:10Z",
+      "side": 1,
+      "message": "I thought that this.$ did not work with IDs that exist behind dom-ifs. Is that not the case?",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6a3a21_f5862624",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-25T22:13:10Z",
+      "side": 1,
+      "message": "Is this immediately removing the current page, without letting the fade-out animation finish first?",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92054249_3884bf72",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-25T22:13:10Z",
+      "side": 1,
+      "message": "How does this work? We are dynamically augmenting |this|, but the resulting variables are not declared as Polymer properties in the \"properties\" section. Shouldn\u0027t we declare all properties for polymer bindings to work?\n\nAlso, would this endup setting a itemsListShowPage_ boolean, which is actually not used anywhere?",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "447f8da0_6e47f589",
         "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
         "patchSetId": 5
