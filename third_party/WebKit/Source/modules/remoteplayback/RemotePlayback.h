@@ -10,6 +10,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/events/EventTarget.h"
 #include "modules/ModulesExport.h"
+#include "modules/presentation/PresentationAvailabilityObserver.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
@@ -20,7 +21,6 @@
 #include "public/platform/WebCallbacks.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebVector.h"
-#include "public/platform/modules/presentation/WebPresentationAvailabilityObserver.h"
 #include "public/platform/modules/presentation/WebPresentationConnection.h"
 #include "public/platform/modules/presentation/presentation.mojom-blink.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackAvailability.h"
@@ -47,7 +47,7 @@ class MODULES_EXPORT RemotePlayback final
       public ContextLifecycleObserver,
       public ActiveScriptWrappable<RemotePlayback>,
       public WebRemotePlaybackClient,
-      public WebPresentationAvailabilityObserver,
+      public PresentationAvailabilityObserver,
       public WebPresentationConnection,
       public mojom::blink::PresentationConnection {
   DEFINE_WRAPPERTYPEINFO();
@@ -102,9 +102,9 @@ class MODULES_EXPORT RemotePlayback final
   void OnConnectionSuccess(const WebPresentationInfo&);
   void OnConnectionError(const WebPresentationError&);
 
-  // WebPresentationAvailabilityObserver implementation.
-  void AvailabilityChanged(mojom::ScreenAvailability) override;
-  const WebVector<WebURL>& Urls() const override;
+  // PresentationAvailabilityObserver implementation.
+  void AvailabilityChanged(mojom::blink::ScreenAvailability) override;
+  Vector<KURL> Urls() const override;
 
   // WebPresentationConnection implementation.
   void Init() override;
