@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd3bafc2_529332a8",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-25T23:52:18Z",
+      "side": 1,
+      "message": "Updating with weakptr.",
+      "parentUuid": "b9740fed_60e0352a",
+      "revId": "bc8d3e39cc700fcf263c31d899f33d51ee248ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02a2dd5e_f0533733",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 18
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-25T15:47:10Z",
       "side": 1,
       "message": "who calls this?",
+      "range": {
+        "startLine": 122,
+        "startChar": 27,
+        "endLine": 122,
+        "endChar": 54
+      },
+      "revId": "bc8d3e39cc700fcf263c31d899f33d51ee248ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00aeb1c6_6f258db6",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-25T23:52:18Z",
+      "side": 1,
+      "message": "VideoFrameProviderClientImpl.",
+      "parentUuid": "02a2dd5e_f0533733",
       "range": {
         "startLine": 122,
         "startChar": 27,
@@ -56,6 +98,24 @@
       "revId": "bc8d3e39cc700fcf263c31d899f33d51ee248ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60b8fbd_776b39f2",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-25T23:52:18Z",
+      "side": 1,
+      "message": "using a weak ptr here too.",
+      "parentUuid": "e33c600d_7344f940",
+      "revId": "bc8d3e39cc700fcf263c31d899f33d51ee248ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
