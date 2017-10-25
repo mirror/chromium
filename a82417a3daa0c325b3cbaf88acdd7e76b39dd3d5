@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2787d11_38d2dab5",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-25T10:52:40Z",
+      "side": 1,
+      "message": "In a layered component, the core/ subdirectory is by definition code that\u0027s shared with all platforms, including iOS. The unittests of that code should then also be able to build and run on iOS. What\u0027s the problem that you\u0027re seeing here?",
+      "range": {
+        "startLine": 214,
+        "startChar": 29,
+        "endLine": 214,
+        "endChar": 44
+      },
+      "revId": "a82417a3daa0c325b3cbaf88acdd7e76b39dd3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
