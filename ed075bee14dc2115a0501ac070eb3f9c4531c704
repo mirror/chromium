@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0cc04da_88d53008",
+        "filename": "components/autofill/content/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-25T05:22:54Z",
+      "side": 1,
+      "message": "Yes. we need to add this new dependency everywhere we use the device::Validate().\nI think it cannot pass build if I missed somewhere.",
+      "parentUuid": "e3c85a09_706c8f45",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "202ae6ef_75768d5b",
         "filename": "components/autofill/content/browser/risk/fingerprint.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-24T12:57:38Z",
       "side": 1,
       "message": "Is this the same functionality as the previous form of validation?",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b55c62_7c859430",
+        "filename": "components/autofill/content/browser/risk/fingerprint.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-25T05:22:54Z",
+      "side": 1,
+      "message": "Yes, it is.",
+      "parentUuid": "202ae6ef_75768d5b",
       "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "69c3d5eb_84991ac8",
+        "filename": "components/autofill/content/browser/risk/fingerprint.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-25T05:22:54Z",
+      "side": 1,
+      "message": "I feel it is ok to keep those conversions. \nOr, maybe add a \"base::Time getTimefromGeoposition(const mojom::Geoposition\u0026)\" in //device/geolocation/public/cpp?",
+      "parentUuid": "63b61981_287e25bd",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "147a7c56_846e51d5",
         "filename": "device/geolocation/geolocation_impl.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-24T12:57:38Z",
       "side": 1,
       "message": "this assignment is setting all the fields that were being manually set before?",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40da9a0e_13e406a9",
+        "filename": "device/geolocation/geolocation_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-25T05:22:54Z",
+      "side": 1,
+      "message": "Yes, the structure assignment is same as assigning fields one by one.",
+      "parentUuid": "147a7c56_846e51d5",
       "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8e27012e_abf8e4ee",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-25T05:22:54Z",
+      "side": 1,
+      "message": "This call creates an \"empty\" mojom::Geoposition on stack, while the mojom::Geoposition::New() creates a mojom::GeopositionPtr, it allocates memory in heap.",
+      "parentUuid": "aee1208b_e72b9d06",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6c37a87_6ad15873",
         "filename": "device/geolocation/public/cpp/geoposition.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f28528_ed2aecad",
+        "filename": "device/geolocation/public/cpp/geoposition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-25T05:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6c37a87_6ad15873",
+      "revId": "ed075bee14dc2115a0501ac070eb3f9c4531c704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
