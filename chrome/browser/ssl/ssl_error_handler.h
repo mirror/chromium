@@ -16,17 +16,20 @@
 #include "chrome/browser/ssl/common_name_mismatch_handler.h"
 #include "chrome/browser/ssl/ssl_cert_reporter.h"
 #include "chrome/browser/ssl/ssl_error_assistant.pb.h"
+#include "components/security_interstitials/content/security_interstitial_page.h"
 #include "components/ssl_errors/error_classification.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/restore_type.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "net/base/net_errors.h"
 #include "net/ssl/ssl_info.h"
 #include "url/gurl.h"
 
 class CommonNameMismatchHandler;
 class Profile;
+class SSLErrorNavigationThrottle;
 
 namespace base {
 class Clock;
@@ -108,18 +111,24 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
         ssl_errors::ClockState clock_state) = 0;
   };
 
-  // Entry point for the class. The parameters are the same as SSLBlockingPage
-  // constructor.
+  // Entry point for the class. All parameters except |throttle_callback| are
+  // the same as SSLBlockingPage constructor. |throttle_callback| is a callback
+  // to SSLErrorNavigationThrottle::ShowInterstitial(), for committed
+  // interstitials.
   static void HandleSSLError(
       content::WebContents* web_contents,
-      int cert_error,
+      net::Error cert_error,
       const net::SSLInfo& ssl_info,
       const GURL& request_url,
       bool should_ssl_errors_be_fatal,
       bool expired_previous_decision,
       std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
       const base::Callback<void(content::CertificateRequestResultType)>&
-          callback);
+          decision_callback,
+      // TODO: Make this a OnceCallback
+      base::OnceCallback<void(
+          std::unique_ptr<security_interstitials::SecurityInterstitialPage>)>
+          throttle_callback);
 
   // Sets the binary proto for SSL error assistant. The binary proto
   // can be downloaded by the component updater, or set by tests.
@@ -149,7 +158,7 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
       std::unique_ptr<Delegate> delegate,
       content::WebContents* web_contents,
       Profile* profile,
-      int cert_error,
+      net::Error cert_error,
       const net::SSLInfo& ssl_info,
       const GURL& request_url,
       const base::Callback<void(content::CertificateRequestResultType)>&
@@ -199,7 +208,7 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
   bool IsOnlyCertError(net::CertStatus only_cert_error_expected) const;
 
   // Calculates a mask encoded using flags in SSLErrorUI::SSLErrorOptionsMask.
-  static int CalculateOptionsMask(int cert_error,
+  static int CalculateOptionsMask(net::Error cert_error,
                                   bool hard_override_disabled,
                                   bool should_ssl_errors_be_fatal,
                                   bool is_superfish,
@@ -208,10 +217,11 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
   std::unique_ptr<Delegate> delegate_;
   content::WebContents* const web_contents_;
   Profile* const profile_;
-  const int cert_error_;
+  const net::Error cert_error_;
   const net::SSLInfo ssl_info_;
   const GURL request_url_;
-  base::Callback<void(content::CertificateRequestResultType)> callback_;
+  base::Callback<void(content::CertificateRequestResultType)>
+      decision_callback_;
 
   content::NotificationRegistrar registrar_;
   base::OneShotTimer timer_;

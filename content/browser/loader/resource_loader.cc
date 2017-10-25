@@ -43,6 +43,9 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_status.h"
 
+// TODO: For testing. Do not submit.
+#include "net/cert/cert_status_flags.h"
+
 using base::TimeDelta;
 using base::TimeTicks;
 
@@ -411,6 +414,11 @@ void ResourceLoader::OnCertificateRequested(
 void ResourceLoader::OnSSLCertificateError(net::URLRequest* request,
                                            const net::SSLInfo& ssl_info,
                                            bool fatal) {
+  // TODO: For testing. Do not submit.
+  CancelSSLRequest(net::MapCertStatusToNetError(ssl_info.cert_status),
+                   &ssl_info);
+  return;
+
   ResourceRequestInfoImpl* info = GetRequestInfo();
 
   SSLManager::OnSSLCertificateError(
