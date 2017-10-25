@@ -50,6 +50,23 @@
       "revId": "982b404583196658076122785177edb79a9836b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0d825f_5b0ae732",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T18:55:18Z",
+      "side": 1,
+      "message": "Can you test this before the switch also? And also show that SetIsDrawable changed something from the default?",
+      "revId": "982b404583196658076122785177edb79a9836b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
