@@ -31,7 +31,6 @@ void FaviconDownloader::SkipPageFavicons() {
 }
 
 void FaviconDownloader::Start() {
-  FetchIcons(extra_favicon_urls_);
   // If the candidates aren't loaded, icons will be fetched when
   // DidUpdateFaviconURL() is called.
 
@@ -43,6 +42,8 @@ void FaviconDownloader::Start() {
       FetchIcons(favicon_tab_helper_urls);
     }
   }
+
+  FetchIcons(extra_favicon_urls_);
 }
 
 int FaviconDownloader::DownloadImage(const GURL& url) {
