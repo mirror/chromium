@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24fc636d_00c55a18",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-25T22:17:43Z",
+      "side": 1,
+      "message": "Does \u0027\u0027 have special meaning or is it an arbitrary name? I\u0027d prefer a generic name like \u0027datachannel\u0027 (etc) if empty string isn\u0027t part of what we\u0027re testing.",
+      "revId": "6c375ade23273b3ee486ed919318f6741742bcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2d83a5_e7ce6c76",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-25T22:17:43Z",
+      "side": 1,
+      "message": "Is there any reason for changing this test? If not, can you revert the change?\nIt looks like the generateOffer() function is doing the same thing except for the data channel\u0027s name being different, which I assume doesn\u0027t matter?",
+      "revId": "6c375ade23273b3ee486ed919318f6741742bcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a443e49a_4c3c9f3a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-25T22:17:43Z",
+      "side": 1,
+      "message": "In this and the next test: If the key is to do pc.setLocalDescription between multiple offers, can you instead modify RTCPeerConnection-helper.js\u0027s generateOffer() to do pc.setLocalDescription() before returning?\n\nSomething like this to have the promise return the offer when SLD is done:\n\nreturn pc.setLocalDescription(offer)\n.then(() \u003d\u003e {\n  return offer;\n});",
+      "revId": "6c375ade23273b3ee486ed919318f6741742bcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
