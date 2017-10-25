@@ -15,17 +15,14 @@ namespace web {
 
 WebControllerObserverBridge::WebControllerObserverBridge(
     id<CRWWebControllerObserver> web_controller_observer,
-    WebState* web_state,
     CRWWebController* web_controller)
-    : WebStateObserver(web_state),
-      web_controller_observer_(web_controller_observer),
+    : web_controller_observer_(web_controller_observer),
       web_controller_(web_controller) {
   DCHECK(web_controller_observer_);
   DCHECK(web_controller_);
 }
 
-WebControllerObserverBridge::~WebControllerObserverBridge() {
-}
+WebControllerObserverBridge::~WebControllerObserverBridge() = default;
 
 void WebControllerObserverBridge::PageLoaded(
     WebState* web_state,
@@ -33,6 +30,13 @@ void WebControllerObserverBridge::PageLoaded(
   if (load_completion_status == PageLoadCompletionStatus::SUCCESS &&
       [web_controller_observer_ respondsToSelector:@selector(pageLoaded:)])
     [web_controller_observer_ pageLoaded:web_controller_];
+}
+
+void WebControllerObserverBridge::WebStateDestroyed(WebState* web_state) {
+  // WebControllerObserverBridge is owned by CRWWebController. It should be
+  // unregistered from WebState observer list in CRWWebController -close,
+  // the WebStateDestroyed should never be called.
+  NOTREACHED();
 }
 
 }  // namespace web

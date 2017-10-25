@@ -1146,6 +1146,11 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
       [it webControllerWillClose:self];
   }
 
+  for (const auto& observerBridge : _observerBridges) {
+    _webStateImpl->RemoveObserver(observerBridge.get());
+  }
+  _observerBridges.clear();
+
   if (!_isHalted) {
     [self terminateNetworkActivity];
   }
@@ -5298,8 +5303,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
   }
   DCHECK(![_observers containsObject:observer]);
   [_observers addObject:observer];
-  _observerBridges.push_back(base::MakeUnique<web::WebControllerObserverBridge>(
-      observer, self.webStateImpl, self));
+
+  auto observerBridge =
+      std::make_unique<web::WebControllerObserverBridge>(observer, self);
+  _webStateImpl->AddObserver(observerBridge.get());
+  _observerBridges.push_back(std::move(observerBridge));
 
   if ([observer respondsToSelector:@selector(setWebViewProxy:controller:)])
     [observer setWebViewProxy:_webViewProxy controller:self];
@@ -5316,6 +5324,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
         return bridge->web_controller_observer() == observer;
       });
   DCHECK(it != _observerBridges.end());
+  _webStateImpl->RemoveObserver(it->get());
   _observerBridges.erase(it);
 }
 
