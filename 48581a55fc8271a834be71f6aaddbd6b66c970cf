@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "732d153e_b976de81",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-25T15:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55948e80_e8e9b69b",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "48581a55fc8271a834be71f6aaddbd6b66c970cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "693fd2a1_a369853b",
         "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "762b6e8e_0bb6d490",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-25T15:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "693fd2a1_a369853b",
+      "range": {
+        "startLine": 542,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 55
+      },
+      "revId": "48581a55fc8271a834be71f6aaddbd6b66c970cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88ecd2dc_0d2b4ddf",
         "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "48581a55fc8271a834be71f6aaddbd6b66c970cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78979cd7_4dd97197",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-25T15:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88ecd2dc_0d2b4ddf",
+      "revId": "48581a55fc8271a834be71f6aaddbd6b66c970cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
