@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11d35ab8_54ded5b0",
+        "filename": "build/android/download_from_maven.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-25T17:23:12Z",
+      "side": 1,
+      "message": "Not used for now, but the play_services script used to do this. I currently use the default location, which allows to have the artifacts cached and saves a lot of time when running the script repeatedly.",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "846f4f32787f8040b8929425bf9731b405643a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5022388c_5df841ce",
+        "filename": "build/android/download_from_maven.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-25T17:23:12Z",
+      "side": 1,
+      "message": "Planning to update that script as part of the current CL too. But it is in a very different place and on its own... should I consolidate the files? there or here?",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 22
+      },
+      "revId": "846f4f32787f8040b8929425bf9731b405643a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99745804_54f9969b",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-25T17:23:12Z",
+      "side": 1,
+      "message": "That deletes LICENSE and other files, and we don\u0027t have a way to generate them for now, unlike what the updated instructions at go/chrome-gms say... @paulmiller: is that WAI?",
+      "range": {
+        "startLine": 269,
+        "startChar": 2,
+        "endLine": 269,
+        "endChar": 48
+      },
+      "revId": "846f4f32787f8040b8929425bf9731b405643a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
