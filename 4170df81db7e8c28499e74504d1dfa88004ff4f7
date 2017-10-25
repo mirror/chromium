@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "974a3189_2cbca87c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "Ah, I thought this was an existing method and missed that it was added in this CL.  That explains it.",
+      "parentUuid": "a6e9b1c5_c4dd7353",
+      "range": {
+        "startLine": 247,
+        "startChar": 32,
+        "endLine": 247,
+        "endChar": 44
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a3d3fc4_c6a048d6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagementDelegate.java",
         "patchSetId": 2
@@ -575,6 +599,30 @@
       "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861e96b0_a70cfed3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "95856d31_cc0470d6",
+      "range": {
+        "startLine": 586,
+        "startChar": 33,
+        "endLine": 586,
+        "endChar": 35
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

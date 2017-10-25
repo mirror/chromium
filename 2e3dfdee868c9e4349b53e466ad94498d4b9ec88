@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd50115f_e53c8b46",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "Nit: capitalize \"The\" since these comments should be complete sentences.\n\nAlso change \"which\" to \"where the\" and remove \"in\".",
+      "range": {
+        "startLine": 642,
+        "startChar": 15,
+        "endLine": 642,
+        "endChar": 18
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cacff20d_c9adb1e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "Maybe remove this and instead divide by mPxToDp?",
+      "range": {
+        "startLine": 645,
+        "startChar": 14,
+        "endLine": 645,
+        "endChar": 20
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4faabb70_2f3e0e54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "We need to calculate or fetch this number from resources instead of hard-coding.  Maybe write a quick email to Matt and cc Theresa and me to see how we can get the shadow height.",
+      "range": {
+        "startLine": 648,
+        "startChar": 12,
+        "endLine": 648,
+        "endChar": 30
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9cb7bc_d194db2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "Let\u0027s try to make this class and non-private methods package-private rather than having everything public (like the ContextualSearchPolicy.java does) to limit visiblity.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73bf3a17_bc1087e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "Make these 3 members final and move above mHelpBubble, also it looks like mStringId can be final.",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 4
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b33400c_f1d9106d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "I think it\u0027s confusing to have a separate variable here when it always has the same value as mStringId.  We can just pass mStringId for both unless there\u0027s some value we can use to indicate we don\u0027t have any accessibility string.",
+      "range": {
+        "startLine": 27,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1509bb_b66cce7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "Nit: add \"The\" before the first \"{\".",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f78478_9f467f9e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "nit: add a \".\" at the end.",
+      "range": {
+        "startLine": 69,
+        "startChar": 71,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac066ea_1e0983e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "Maybe also check if the parentView is null here?",
+      "range": {
+        "startLine": 73,
+        "startChar": 59,
+        "endLine": 73,
+        "endChar": 60
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926597cb_b22e27b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "This should never be true, unless we have a bug, right?  If so, make this an assert?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 82
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47b88c8_89422587",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-25T23:09:39Z",
+      "side": 1,
+      "message": "Usage of \"-\u003e\": very nice.  I learned something here, thanks!",
+      "range": {
+        "startLine": 90,
+        "startChar": 20,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
