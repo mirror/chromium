@@ -396,6 +396,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
       "FeaturePolicyForPermissions",
       base::FeatureList::IsEnabled(features::kUseFeaturePolicyForPermissions));
 
+  if (base::FeatureList::IsEnabled(features::kLazyFrameLoading))
+    WebRuntimeFeatures::EnableLazyFrameLoading(true);
+
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.
   for (const std::string& feature :

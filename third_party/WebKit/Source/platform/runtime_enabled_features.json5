@@ -534,6 +534,10 @@
       name: "LayoutNGPaintFragments",
     },
     {
+      name: "LazyFrameLoading",
+      status: "experimental",
+    },
+    {
       name: "LazyInitializeMediaControls",
       // This is enabled by features::kLazyInitializeMediaControls.
     },
