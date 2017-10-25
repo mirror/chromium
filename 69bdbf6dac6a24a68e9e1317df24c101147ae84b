@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c397d6f_1ec78c62",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-25T12:57:05Z",
+      "side": 1,
+      "message": "nit: transient_transform",
+      "range": {
+        "startLine": 419,
+        "startChar": 19,
+        "endLine": 419,
+        "endChar": 24
+      },
+      "revId": "69bdbf6dac6a24a68e9e1317df24c101147ae84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136fe95a_10786e63",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-25T12:57:05Z",
+      "side": 1,
+      "message": "nit: please add comment here to explain this and rename it to better reflect that it\u0027s a distance. maybe y_offset_used_to_hide_header? fyi, \"header\" is used in the code to refer to caption so preferred to use that term",
+      "revId": "69bdbf6dac6a24a68e9e1317df24c101147ae84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
