@@ -6,6 +6,8 @@
 #define CHROME_BROWSER_UI_WEBUI_INTERVENTIONS_INTERNALS_INTERVENTIONS_INTERNALS_UI_H_
 
 #include "base/macros.h"
+#include "chrome/browser/net/nqe/ui_network_quality_estimator_service.h"
+#include "chrome/browser/net/nqe/ui_network_quality_estimator_service_factory.h"
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom.h"
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h"
 #include "chrome/browser/ui/webui/mojo_web_ui_controller.h"
@@ -25,6 +27,10 @@ class InterventionsInternalsUI
 
   // The PreviewsLogger that this handler is listening to.
   previews::PreviewsLogger* logger_;
+
+  // The network quality estimator service for getting the estimate effective
+  // conntection type.
+  UINetworkQualityEstimatorService* ui_nqe_service_;
 
   std::unique_ptr<InterventionsInternalsPageHandler> page_handler_;
 

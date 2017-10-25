@@ -4,7 +4,9 @@
 
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h"
 
+#include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/run_loop.h"
@@ -53,15 +55,26 @@ class TestInterventionsInternalsPage
   void LogNewMessage(mojom::MessageLogPtr message) override {
     message_ = base::MakeUnique<mojom::MessageLogPtr>(std::move(message));
   }
+  void OnEffectiveConnectionTypeChanged(const std::string& type) override {
+    effective_connection_type_ = type;
+  }
 
   // Expose passed in message in LogNewMessage for testing.
   mojom::MessageLogPtr* message() const { return message_.get(); }
+
+  // Expose passed in ETC in OnEffectiveConnectionTypeChanged for testing.
+  std::string effective_connection_type() const {
+    return effective_connection_type_;
+  }
 
  private:
   mojo::Binding<mojom::InterventionsInternalsPage> binding_;
 
   // The MessageLogPtr passed in LogNewMessage method.
   std::unique_ptr<mojom::MessageLogPtr> message_;
+
+  // The passed in string representation of the ETC.
+  std::string effective_connection_type_;
 };
 
 // Mock class to test interaction between the PageHandler and the
@@ -239,6 +252,25 @@ TEST_F(InterventionsInternalsPageHandlerTest, ObserverIsRemovedWhenDestroyed) {
   EXPECT_FALSE(logger_->RemovedObserverIsCalled());
   page_handler_.reset();
   EXPECT_TRUE(logger_->RemovedObserverIsCalled());
+}
+
+TEST_F(InterventionsInternalsPageHandlerTest, OnNewETCUpdatePage) {
+  std::vector<std::pair<net::EffectiveConnectionType, std::string>>
+      expect_types = {
+          {net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN, "Unknown"},
+          {net::EFFECTIVE_CONNECTION_TYPE_OFFLINE, "Offline"},
+          {net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G, "Slow-2G"},
+          {net::EFFECTIVE_CONNECTION_TYPE_2G, "2G"},
+          {net::EFFECTIVE_CONNECTION_TYPE_3G, "3G"},
+          {net::EFFECTIVE_CONNECTION_TYPE_4G, "4G"},
+      };
+
+  for (auto expected : expect_types) {
+    page_handler_->OnEffectiveConnectionTypeChanged(expected.first);
+    base::RunLoop().RunUntilIdle();
+    std::string actual = page_->effective_connection_type();
+    EXPECT_EQ(expected.second, actual);
+  }
 }
 
 }  // namespace
