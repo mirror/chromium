@@ -204,17 +204,6 @@ bool ImeObserver::HasListener(const std::string& event_name) const {
 
 std::string ImeObserver::ConvertInputContextType(
     ui::IMEEngineHandlerInterface::InputContext input_context) {
-  // This is a hack, but tricking the virtual keyboard to think the
-  // current input context is password will disable all keyboard features
-  // that are not supported in restricted keyboard mode.
-  // TODO(oka): Remove this hack once VK extension starts to honor the
-  // virtualKeyboardPrivate.GetKeyboardConfig parameters.
-  if (IsKeyboardRestricted() &&
-      input_context.type != ui::TEXT_INPUT_TYPE_TELEPHONE &&
-      input_context.type != ui::TEXT_INPUT_TYPE_NUMBER) {
-    return "password";
-  }
-
   std::string input_context_type = "text";
   switch (input_context.type) {
     case ui::TEXT_INPUT_TYPE_SEARCH:
