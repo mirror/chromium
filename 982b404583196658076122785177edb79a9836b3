@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "dacfd285_53d78900",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-25T20:14:33Z",
+      "side": 1,
+      "message": "Thanks! Current visible_ is only changed by SetVisibilityFromAnimation(). Do I reuse this visible_ or still with a temporarily new variable is_drawable_ and setter for it?\nvoid Layer::SetIsDrawable(bool draw) {\n  is_drawable_ \u003d draw;\n  cc_layer_-\u003eSetHideLayerAndSubtree(!draw || !visible_);\n}",
+      "parentUuid": "8803e903_33c0c82f",
+      "revId": "982b404583196658076122785177edb79a9836b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a5b25fd_b4ead3f8",
         "filename": "ui/compositor/layer.h",
         "patchSetId": 6
