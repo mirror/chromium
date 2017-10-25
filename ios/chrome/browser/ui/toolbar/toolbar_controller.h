@@ -135,11 +135,10 @@ class ReadingListModel;
 // attention.
 - (void)triggerToolsMenuButtonAnimation;
 
+// TODO(crbug.com/778236): Remove this declaration once it is a
+// UIViewController.
 // Update the view's layout to take into account the new safe area insets.
-- (void)safeAreaInsetsDidChange;
-
-// Returns the preferred toolbar height in the current orientation.
-- (CGFloat)preferredToolbarHeightWhenAlignedToTopOfScreen;
+- (void)viewSafeAreaInsetsDidChange;
 
 @end
 
