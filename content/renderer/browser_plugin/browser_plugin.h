@@ -214,12 +214,6 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
 
   // TODO(fsamuel): We might want to unify this with content::ResizeParams.
   struct ResizeParams {
-    ResizeParams();
-    ResizeParams(const ResizeParams& other);
-    ~ResizeParams();
-
-    ResizeParams& operator=(const ResizeParams& other);
-
     gfx::Rect frame_rect;
     ScreenInfo screen_info;
   };

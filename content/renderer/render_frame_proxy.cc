@@ -678,14 +678,4 @@ void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(
 }
 #endif
 
-RenderFrameProxy::ResizeParams::ResizeParams() = default;
-
-RenderFrameProxy::ResizeParams::ResizeParams(const ResizeParams& other) =
-    default;
-
-RenderFrameProxy::ResizeParams::~ResizeParams() = default;
-
-RenderFrameProxy::ResizeParams& RenderFrameProxy::ResizeParams::operator=(
-    const ResizeParams& other) = default;
-
 }  // namespace
