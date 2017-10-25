@@ -12,6 +12,10 @@ class WebGestureEvent;
 class WebMouseWheelEvent;
 }
 
+namespace ui {
+struct DidOverscrollParams;
+}
+
 @class HistorySwiper;
 @protocol HistorySwiperDelegate
 // Return NO from this method if the view/render_widget_host should not
@@ -162,6 +166,10 @@ enum RecognitionState {
   // This variables defaults to NO for new gestures.
   BOOL firstScrollUnconsumed_;
 
+  // Whether the renderer disables the overscroll effect, e.g. by
+  // scroll_boundary_behavior.
+  BOOL rendererDisabledOverscroll_;
+
   // Whether we have received a gesture scroll begin and are awiting on the
   // first gesture scroll update to deteremine of the event was consumed by
   // the renderer.
@@ -184,6 +192,10 @@ enum RecognitionState {
                          consumed:(BOOL)consumed;
 - (void)rendererHandledGestureScrollEvent:(const blink::WebGestureEvent&)event
                                  consumed:(BOOL)consumed;
+
+// This is called whenever an overscroll event is generated at the renderer
+// side.
+- (void)onOverscrolled:(const ui::DidOverscrollParams&)params;
 
 // The event passed in is a gesture event, and has touch data associated with
 // the trackpad.
