@@ -1,0 +1,359 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63b7c366_7187df22",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3365,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "nit: remember to remove the debugging logs before commit. :)",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2fd19e_ed07603b",
+        "filename": "services/resource_coordinator/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "I see there is process_coordination_unit_impl_unittest.cc, but cannot find it in any BUILD.gn. Maybe it was forgotten somehow before. Can you add it here?",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a648bb8_5fe45d22",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "add a const here?",
+      "range": {
+        "startLine": 101,
+        "startChar": 37,
+        "endLine": 101,
+        "endChar": 38
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad377c11_204162ea",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "add a const here?",
+      "range": {
+        "startLine": 107,
+        "startChar": 31,
+        "endLine": 107,
+        "endChar": 32
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37107abd_3704103c",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "nit: wrong indentation. Run \"git cl format\" before commit.",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6001e1ed_1829bcf9",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "nit: remove those 2 lines.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 77
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421f75cb_c2d873f4",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_test_harness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "nit: this can be removed now.",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79469509_78acb1e7",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "nit: This variable is not needed. You can just return it.",
+      "range": {
+        "startLine": 160,
+        "startChar": 7,
+        "endLine": 160,
+        "endChar": 14
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a67866_cd6ebf63",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "Where is this defined?",
+      "range": {
+        "startLine": 42,
+        "startChar": 39,
+        "endLine": 42,
+        "endChar": 69
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59bb249_6539efcc",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "Is this duplicated? We can use GetChildFrameCoordinationUnits(), right?",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379fabe0_20e48568",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "I think some comment is needed here. They are not supposed to be called directly, even within FrameCU. Instead, they are only supposed to be called by ProcessCU::AddFrame|RemoveFrame and PageCU::AddFrame|RemoveFrame.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 78
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53942367_bd9844c3",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "Also worth checking the parent frame.",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9c16d7_fdd7caf8",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "I think this comment should go to the .h file.",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 10
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8300e3_d50ec484",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "ditto. return directly.",
+      "range": {
+        "startLine": 141,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e552a9_188d7e7d",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "I don\u0027t remember exactly now. Is OOPIF handled correctly in GRC? I guess yes?",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 3
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1483a4c_900191d1",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "Some comments for this function would be helpful.",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbcde19b_447e5d4a",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T01:20:36Z",
+      "side": 1,
+      "message": "Can we define this multiplier somewhere to reuse the same value? This needs to be consistent with the one used in process_coordination_unit_impl.cc.",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 32
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
