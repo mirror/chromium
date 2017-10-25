@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00ed6aff_25b6aba7",
+        "filename": "device/gamepad/gamepad_haptics_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-25T23:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41cca806_17e2e51f",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "4ffd213daf8ab1d817b2fb91d9ddcba6bba18b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23a5c0b1_d2ddf1f1",
         "filename": "device/gamepad/public/interfaces/gamepad_struct_traits.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "38d27fda_0d163969",
+        "filename": "device/gamepad/public/interfaces/gamepad_struct_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-25T23:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23a5c0b1_d2ddf1f1",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 3
+      },
+      "revId": "4ffd213daf8ab1d817b2fb91d9ddcba6bba18b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "106dabb0_ac6ceff3",
         "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.cpp",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "4ffd213daf8ab1d817b2fb91d9ddcba6bba18b91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e429be2a_2a17750f",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-25T23:48:30Z",
+      "side": 1,
+      "message": "Ah, I see...\n\n\"The client may begin to issue calls even before an implementation has been bound, since messages sent over the pipe will just queue up until they are consumed by the implementation.\"",
+      "parentUuid": "106dabb0_ac6ceff3",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "4ffd213daf8ab1d817b2fb91d9ddcba6bba18b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
