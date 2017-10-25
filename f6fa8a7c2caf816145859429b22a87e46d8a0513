@@ -802,6 +802,24 @@
     },
     {
       "key": {
+        "uuid": "08613dc0_a5d7c2a9",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T07:14:36Z",
+      "side": 1,
+      "message": "I think this might have gotten missed by accident, I still see interfaces_provider in a few places.",
+      "parentUuid": "993487d4_f85dc46b",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84cb2566_2a0b2f31",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 19
@@ -849,6 +867,24 @@
       "side": 1,
       "message": "That\u0027s right, we need to move out the |interfaces| at frame construction, so the only nice option is to make CreateParams a moveable type and pass it around by value. (Not a particularly big fan of passing it by pointer give because of the unclear ownership.)",
       "parentUuid": "94e73c8c_46cd59c5",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab07e33b_6784278f",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T07:14:36Z",
+      "side": 1,
+      "message": "I would argue that the ownership for pass by pointer is pretty clear: you don\u0027t own it \u003d)\n\nCertainly it\u0027s no different from passing by const ref in that respect.",
+      "parentUuid": "06fdab45_3aa4dc95",
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
