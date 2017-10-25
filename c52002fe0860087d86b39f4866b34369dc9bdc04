@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c2a1ea_7919c444",
+        "filename": "chrome/browser/ui/views/dropdown_bar_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T00:11:28Z",
+      "side": 1,
+      "message": "I think widgets of TYPE_CONTROL should never get a shadow (i.e. SHADOW_TYPE_DEFAULT for a TYPE_CONTROL, should be NONE), so this can be moved into BridgedNativeWidget::Init where it checks Widget::InitParams::SHADOW_TYPE_DEFAULT",
+      "revId": "c52002fe0860087d86b39f4866b34369dc9bdc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7bf9cd2_4f79951d",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T00:11:28Z",
+      "side": 1,
+      "message": "hum, for this one it\u0027s trickier. I would actually leave this for now. We won\u0027t be using this UI on Mac for a while. Things like autofill popups have no shadow at all. The omnibox popup has a shadow, but it should only be along the bottom. The fix here might be a bit more complicated.",
+      "revId": "c52002fe0860087d86b39f4866b34369dc9bdc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12ff20a_6ffc530f",
+        "filename": "ui/views/bubble/bubble_border.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T00:11:28Z",
+      "side": 1,
+      "message": "nit: move above `DIALOG_SHADOW \u003d NO_ASSETS,` so clang-format indents it nicely. (also re-wrap).",
+      "revId": "c52002fe0860087d86b39f4866b34369dc9bdc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
