@@ -46,6 +46,30 @@
       "revId": "40609c8a0e005ca1549b046dd4316ccd2755bb66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5dbcd9_cfb44d73",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-25T19:44:19Z",
+      "side": 1,
+      "message": "No, that doesn\u0027t work because @dimen/notification_subtext_size is marked private and causes a compilation error. Maybe there is a way around that, not sure.",
+      "parentUuid": "aeac0f6e_2ee46f4d",
+      "range": {
+        "startLine": 409,
+        "startChar": 16,
+        "endLine": 409,
+        "endChar": 74
+      },
+      "revId": "40609c8a0e005ca1549b046dd4316ccd2755bb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
