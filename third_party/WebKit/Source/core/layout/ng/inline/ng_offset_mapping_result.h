@@ -151,7 +151,8 @@ class CORE_EXPORT NGOffsetMappingResult {
   DISALLOW_COPY_AND_ASSIGN(NGOffsetMappingResult);
 };
 
-const NGOffsetMappingResult* GetNGOffsetMappingFor(const Node&, unsigned);
+CORE_EXPORT const NGOffsetMappingResult* GetNGOffsetMappingFor(const Node&,
+                                                               unsigned);
 
 }  // namespace blink
 
