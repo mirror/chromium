@@ -231,33 +231,33 @@ void FakeDebugDaemonClient::CupsAddManuallyConfiguredPrinter(
     const std::string& name,
     const std::string& uri,
     const std::string& ppd_contents,
-    const DebugDaemonClient::CupsAddPrinterCallback& callback,
-    const base::Closure& error_callback) {
+    DebugDaemonClient::CupsAddPrinterCallback callback,
+    base::OnceClosure error_callback) {
   printers_.insert(name);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(callback, 0));
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(std::move(callback), 0));
 }
 
 void FakeDebugDaemonClient::CupsAddAutoConfiguredPrinter(
     const std::string& name,
     const std::string& uri,
-    const DebugDaemonClient::CupsAddPrinterCallback& callback,
-    const base::Closure& error_callback) {
+    DebugDaemonClient::CupsAddPrinterCallback callback,
+    base::OnceClosure error_callback) {
   printers_.insert(name);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(callback, 0));
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(std::move(callback), 0));
 }
 
 void FakeDebugDaemonClient::CupsRemovePrinter(
     const std::string& name,
-    const DebugDaemonClient::CupsRemovePrinterCallback& callback,
-    const base::Closure& error_callback) {
+    DebugDaemonClient::CupsRemovePrinterCallback callback,
+    base::OnceClosure error_callback) {
   const bool has_printer = base::ContainsKey(printers_, name);
   if (has_printer)
     printers_.erase(name);
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(callback, has_printer));
+      FROM_HERE, base::BindOnce(std::move(callback), has_printer));
 }
 
 }  // namespace chromeos

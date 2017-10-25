@@ -216,7 +216,7 @@ class CHROMEOS_EXPORT DebugDaemonClient
   // A callback to handle the result of CupsAdd[Auto|Manually]ConfiguredPrinter.
   // A zero status means success, non-zero statuses are used to convey different
   // errors.
-  using CupsAddPrinterCallback = base::Callback<void(int32_t status)>;
+  using CupsAddPrinterCallback = base::OnceCallback<void(int32_t status)>;
 
   // Calls CupsAddManuallyConfiguredPrinter.  |name| is the printer
   // name. |uri| is the device.  |ppd_contents| is the contents of the
@@ -228,8 +228,8 @@ class CHROMEOS_EXPORT DebugDaemonClient
       const std::string& name,
       const std::string& uri,
       const std::string& ppd_contents,
-      const CupsAddPrinterCallback& callback,
-      const base::Closure& error_callback) = 0;
+      CupsAddPrinterCallback callback,
+      base::OnceClosure error_callback) = 0;
 
   // Calls CupsAddAutoConfiguredPrinter.  |name| is the printer
   // name. |uri| is the device.  |callback| is called with true if
@@ -239,19 +239,19 @@ class CHROMEOS_EXPORT DebugDaemonClient
   virtual void CupsAddAutoConfiguredPrinter(
       const std::string& name,
       const std::string& uri,
-      const CupsAddPrinterCallback& callback,
-      const base::Closure& error_callback) = 0;
+      CupsAddPrinterCallback callback,
+      base::OnceClosure error_callback) = 0;
 
   // A callback to handle the result of CupsRemovePrinter.
-  using CupsRemovePrinterCallback = base::Callback<void(bool success)>;
+  using CupsRemovePrinterCallback = base::OnceCallback<void(bool success)>;
 
   // Calls CupsRemovePrinter.  |name| is the printer name as registered in
   // CUPS.  |callback| is called with true if removing the printer from CUPS was
   // successful and false if there was an error.  |error_callback| will be
   // called if there was an error in communicating with debugd.
   virtual void CupsRemovePrinter(const std::string& name,
-                                 const CupsRemovePrinterCallback& callback,
-                                 const base::Closure& error_callback) = 0;
+                                 CupsRemovePrinterCallback callback,
+                                 base::OnceClosure error_callback) = 0;
 
   // Factory function, creates a new instance and returns ownership.
   // For normal usage, access the singleton via DBusThreadManager::Get().
