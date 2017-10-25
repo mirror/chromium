@@ -119,11 +119,13 @@
 #   Supporting dynamic refresh means that Chrome respects the changes to the
 #   policy immediately, without the need for restart.
 #   'can_be_mandatory' can be set to False to exclude that policy in the
-#   mandatory policies template. This only affects the template generation;
-#   The default is True.
+#   mandatory policies template. This only affects the templates and
+#   documentation generation as the hints for administrators. The default value
+#   of this property is True.
 #   'can_be_recommended' can be set to True to include that policy in the
-#   recommended policies templates. This only affects the template generation;
-#   all policies can be at the recommended level. The default is False.
+#   recommended policies templates. This only affects the templates and
+#   documentation generation as the hints for administrators. The default value
+#   of this property is False.
 #   'per_profile' controls whether a user policy applies to every user logging
 #   into the browser or only one profile.
 #
