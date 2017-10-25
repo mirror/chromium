@@ -1,0 +1,232 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79d3b499_e646d276",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "not sure about this \"if condition\".\n\nA) it seems strange to get a related area code after the main number.\n\nB) I don\u0027t think you get a city code field for international numbers. Though I would hope we could classify an international number field as WHOLE_NUMBER or CITY_AND_NUMBER.\n\n\nMaybe it\u0027s better to set phone_number_found to true with an unconditional else?",
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377738d9_c4c35531",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "This if is redundant. The loop terminates the first time this if would evaluate to false.\n\nDCHECK instead?",
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa87e54_7e07985f",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "This if is redundant. The loop terminates the first time this if would evaluate to false.\n\nDCHECK instead?",
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ef98a6_75632be8",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "I think this break means you don\u0027t need to check phone_number_found at lines 1241, 1246 and 1258. I.e., on entry to the switch and to every case !phone_number_found is always true.",
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02531069_f80cde9a",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "maybe comment:\n\nPrefer to fill the first complete phone number found. The whole number\nand city_and_number fields are only set if they represent the first\ncomplete number found; otherwise, a complete number is present as\ncomponent input fields. These scenarios are mutually exclusive, so\nclean up any inconsistencies.",
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71c5a59_ab265739",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "this should never be non-nullptr if you\u0027re in this branch.\n\nmaybe add a DCHECK in between the end of the loop and the if?\n\n// The first number of found may be the whole number field, the\n// city and number field, or neither. But it cannot be both.\nDCHECK(!(found_whole_number_field \u0026\u0026 !found_city_and_number_field));",
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a7555c_981aac60",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4211,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "fullName?",
+      "range": {
+        "startLine": 4211,
+        "startChar": 29,
+        "endLine": 4211,
+        "endChar": 37
+      },
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d46f642_78351abe",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4330,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "fullName?",
+      "range": {
+        "startLine": 4330,
+        "startChar": 29,
+        "endLine": 4330,
+        "endChar": 37
+      },
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59129e8_2a78dba3",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4364,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "for code coverage, maybe switch this to city and number. Otherwise, I think this covers the same code paths as FillFirstWholePhoneNumberOnly",
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2820b04b_754a0bea",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4451,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "fullName",
+      "range": {
+        "startLine": 4451,
+        "startChar": 29,
+        "endLine": 4451,
+        "endChar": 37
+      },
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d73a42b_86daeb3c",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4557,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "fullName?",
+      "range": {
+        "startLine": 4557,
+        "startChar": 29,
+        "endLine": 4557,
+        "endChar": 37
+      },
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890aa487_321b90ba",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4684,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-25T14:36:11Z",
+      "side": 1,
+      "message": "maybe add an additional city code field here and validate that only the first gets filled int the best effort scenario.",
+      "revId": "fdde5fe27ebb360dd2f4af45cc7c74a78e4aa117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
