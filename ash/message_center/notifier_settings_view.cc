@@ -102,7 +102,6 @@ const int kQuietModeViewSpacing = 18;
 
 constexpr gfx::Insets kHeaderViewPadding(4, 0, 4, 0);
 constexpr gfx::Insets kQuietModeViewPadding(16, 18, 15, 14);
-constexpr SkColor kQuietModeIconColor = SkColorSetARGB(0x8A, 0x5A, 0x5A, 0x5A);
 constexpr SkColor kTopLabelColor = SkColorSetRGB(0x42, 0x85, 0xF4);
 constexpr SkColor kLabelColor = SkColorSetARGB(0xDE, 0x0, 0x0, 0x0);
 const int kLabelFontSize = 13;
@@ -429,6 +428,8 @@ void NotifierSettingsView::NotifierButton::GridChanged(bool has_learn_more) {
 
 NotifierSettingsView::NotifierSettingsView(NotifierSettingsProvider* provider)
     : title_arrow_(nullptr),
+      quiet_mode_icon_(nullptr),
+      quiet_mode_toggle_(nullptr),
       header_view_(nullptr),
       top_label_(nullptr),
       scroller_(nullptr),
@@ -454,11 +455,8 @@ NotifierSettingsView::NotifierSettingsView(NotifierSettingsProvider* provider)
                            kQuietModeViewSpacing);
   quiet_mode_view->SetLayoutManager(quiet_mode_layout);
 
-  views::ImageView* quiet_mode_icon = new views::ImageView();
-  quiet_mode_icon->SetImage(gfx::CreateVectorIcon(
-      kNotificationCenterDoNotDisturbOffIcon,
-      message_center_style::kActionIconSize, kQuietModeIconColor));
-  quiet_mode_view->AddChildView(quiet_mode_icon);
+  quiet_mode_icon_ = new views::ImageView();
+  quiet_mode_view->AddChildView(quiet_mode_icon_);
 
   views::Label* quiet_mode_label = new views::Label(l10n_util::GetStringUTF16(
       IDS_ASH_MESSAGE_CENTER_QUIET_MODE_BUTTON_TOOLTIP));
@@ -520,6 +518,17 @@ bool NotifierSettingsView::IsScrollable() {
 
 void NotifierSettingsView::SetQuietModeState(bool is_quiet_mode) {
   quiet_mode_toggle_->SetIsOn(is_quiet_mode, false /* animate */);
+  if (is_quiet_mode) {
+    quiet_mode_icon_->SetImage(
+        gfx::CreateVectorIcon(kNotificationCenterDoNotDisturbOnIcon,
+                              message_center_style::kActionIconSize,
+                              message_center_style::kActiveButtonColor));
+  } else {
+    quiet_mode_icon_->SetImage(
+        gfx::CreateVectorIcon(kNotificationCenterDoNotDisturbOffIcon,
+                              message_center_style::kActionIconSize,
+                              message_center_style::kInactiveButtonColor));
+  }
 }
 
 void NotifierSettingsView::UpdateIconImage(const NotifierId& notifier_id,
