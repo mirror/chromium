@@ -208,9 +208,30 @@ void PasswordsPrivateDelegateImpl::SetPasswordExceptionList(
   get_password_exception_list_callbacks_.clear();
 }
 
+void PasswordsPrivateDelegateImpl::NotifyPasswordsReadyForExport() {
+  PasswordsPrivateEventRouter* router =
+      PasswordsPrivateEventRouterFactory::GetForProfile(profile_);
+  if (router) {
+    router->OnPasswordsReadyForExport();
+  }
+}
+
+void PasswordsPrivateDelegateImpl::NotifyPasswordsExported(bool success) {
+  PasswordsPrivateEventRouter* router =
+      PasswordsPrivateEventRouterFactory::GetForProfile(profile_);
+  if (router) {
+    router->OnPasswordsExported(success);
+  }
+}
+
 void PasswordsPrivateDelegateImpl::ImportPasswords(
     content::WebContents* web_contents) {
   password_manager_presenter_->ImportPasswords(web_contents);
+}
+
+void PasswordsPrivateDelegateImpl::PreparePasswordsForExport(
+    content::WebContents* web_contents) {
+  password_manager_presenter_->PreparePasswordsForExport(web_contents);
 }
 
 void PasswordsPrivateDelegateImpl::ExportPasswords(

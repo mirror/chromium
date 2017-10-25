@@ -216,7 +216,7 @@ PasswordManagerPresenter::PasswordManagerPresenter(
     : populater_(this),
       exception_populater_(this),
       password_view_(password_view),
-      password_manager_porter_(this) {
+      password_manager_porter_(this, password_view) {
   DCHECK(password_view_);
 }
 
@@ -447,6 +447,11 @@ void PasswordManagerPresenter::ImportPasswords(
     content::WebContents* web_contents) {
   password_manager_porter_.PresentFileSelector(
       web_contents, PasswordManagerPorter::Type::PASSWORD_IMPORT);
+}
+
+void PasswordManagerPresenter::PreparePasswordsForExport(
+    content::WebContents* web_contents) {
+  password_manager_porter_.ReadPasswordsForExport();
 }
 
 void PasswordManagerPresenter::ExportPasswords(

@@ -85,6 +85,9 @@ class PasswordManagerPresenter
   // from a file.
   void ImportPasswords(content::WebContents* web_contents);
 
+  // Trigger the reading of passwords to be exported.
+  void PreparePasswordsForExport(content::WebContents* web_contents);
+
   // Trigger the password export procedure, allowing the user to save all their
   // passwords to a file.
   void ExportPasswords(content::WebContents* web_contents);

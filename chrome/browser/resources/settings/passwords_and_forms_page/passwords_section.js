@@ -81,11 +81,6 @@ class PasswordManager {
    * Triggers the dialogue for importing passwords.
    */
   importPasswords() {}
-
-  /**
-   * Triggers the dialogue for exporting passwords.
-   */
-  exportPasswords() {}
 }
 
 /** @typedef {chrome.passwordsPrivate.PasswordUiEntry} */
@@ -171,11 +166,6 @@ class PasswordManagerImpl {
   importPasswords() {
     chrome.passwordsPrivate.importPasswords();
   }
-
-  /** @override */
-  exportPasswords() {
-    chrome.passwordsPrivate.exportPasswords();
-  }
 }
 
 cr.addSingletonGetter(PasswordManagerImpl);
@@ -256,6 +246,9 @@ Polymer({
 
     /** @private */
     showPasswordEditDialog_: Boolean,
+
+    /** @private */
+    showPasswordsExportDialog_: Boolean,
 
     /** Filter on the saved passwords and exceptions. */
     filter: {
@@ -366,6 +359,11 @@ Polymer({
     this.activeDialogAnchor_ = null;
   },
 
+  /** @private */
+  onPasswordsExportDialogClosed_: function() {
+    this.showPasswordsExportDialog_ = false;
+  },
+
   /**
    * @param {!Array<!chrome.passwordsPrivate.PasswordUiEntry>} savedPasswords
    * @param {string} filter
@@ -458,7 +456,7 @@ Polymer({
    * @private
    */
   onExportTap_: function() {
-    this.passwordManager_.exportPasswords();
+    this.showPasswordsExportDialog_ = true;
   },
 
   /**

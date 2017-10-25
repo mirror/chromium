@@ -49,6 +49,7 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   void RequestShowPassword(size_t index,
                            content::WebContents* web_contents) override;
   void ImportPasswords(content::WebContents* web_contents) override;
+  void PreparePasswordsForExport(content::WebContents* web_contents) override;
   void ExportPasswords(content::WebContents* web_contents) override;
 
   // PasswordUIView implementation.
@@ -62,6 +63,8 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   void SetPasswordExceptionList(
       const std::vector<std::unique_ptr<autofill::PasswordForm>>&
           password_exception_list) override;
+  void NotifyPasswordsReadyForExport() override;
+  void NotifyPasswordsExported(bool success) override;
 #if !defined(OS_ANDROID)
   gfx::NativeWindow GetNativeWindow() const override;
 #endif
