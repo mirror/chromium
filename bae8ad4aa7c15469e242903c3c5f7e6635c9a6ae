@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "fdae9173_35607c99",
+        "filename": "ash/frame/caption_buttons/frame_back_button.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "The chrome\u0027s accelerator triggers on press.",
+      "parentUuid": "012c9f2b_127366af",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cb6cedb_43f50a72",
         "filename": "ash/frame/caption_buttons/frame_back_button.h",
         "patchSetId": 15
@@ -50,6 +68,24 @@
       "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47decffe_406a2984",
+        "filename": "ash/frame/caption_buttons/frame_back_button.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb6cedb_43f50a72",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "a28f1b7c_66d2d309",
+        "filename": "ash/frame/caption_buttons/frame_back_button.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc77a4ef_b5a919b3",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea91b5e7_fb16b8f3",
         "filename": "ash/frame/custom_frame_view_ash.cc",
         "patchSetId": 15
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "0c5a9f58_2fe60dbd",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea91b5e7_fb16b8f3",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "233c247b_d3abbe3f",
         "filename": "ash/frame/custom_frame_view_ash.cc",
         "patchSetId": 15
@@ -98,6 +170,24 @@
       "writtenOn": "2017-10-25T00:36:50Z",
       "side": 1,
       "message": "Comment why this needs to check visibility (it\u0027s not obvious to me).",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379cd772_2179ba14",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "\u003e Comment why this needs to check visibility (it\u0027s not obvious to me).\n\nI thought it\u0027s pretty clear (not visible means no height) :), done.",
+      "parentUuid": "233c247b_d3abbe3f",
       "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "8b8f55c0_dcf75504",
+        "filename": "ash/frame/custom_frame_view_ash.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "I wanted to avoid making them order dependent or adding extra enabled_ flag in headerView. Switched to enum.",
+      "parentUuid": "7460ef17_168a3f03",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44605794_b4e0c975",
         "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
         "patchSetId": 15
@@ -132,6 +240,24 @@
       "writtenOn": "2017-10-25T00:36:50Z",
       "side": 1,
       "message": "super-nit: No \"\u003d\" in the comments",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8144766c_63c933e0",
+        "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "\u003e super-nit: No \"\u003d\" in the comments\n\nI thought this is new style, no? example:\n\nhttps://cs.chromium.org/chromium/src/pdf/out_of_process_instance.cc?rcl\u003d74e8a0f74fc589a58258655f59aa7f1efa666155\u0026l\u003d447",
+      "parentUuid": "44605794_b4e0c975",
       "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "85da20cc_446a2225",
+        "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "\u003e Shouldn\u0027t this simulate a click?\n\nThe button is disabled, as mentioned in the comment above.",
+      "parentUuid": "ab4a2169_60573db2",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "938fc37e_b068b0a9",
         "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
         "patchSetId": 15
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "a64efb38_cbfd4d58",
+        "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "938fc37e_b068b0a9",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12484003_ccf2c608",
         "filename": "ash/frame/default_header_painter_unittest.cc",
         "patchSetId": 15
@@ -183,6 +345,41 @@
       "writtenOn": "2017-10-25T00:36:50Z",
       "side": 1,
       "message": "How about a test with a non-null back button view?",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b87af85_891b9d00",
+        "filename": "ash/frame/default_header_painter_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "\u003e How about a test with a non-null back button view?\n\nThis test does not involves back button (nor container, but it is added because it shouldn\u0027t be nullptr)",
+      "parentUuid": "12484003_ccf2c608",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581f47ff_92e5e422",
+        "filename": "ash/frame/header_painter_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "removed",
       "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +420,24 @@
     },
     {
       "key": {
+        "uuid": "a28aa36f_7eb8f769",
+        "filename": "ash/resources/vector_icons/window_control_back.1x.icon",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a92fa5bc_b2931b3f",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb5f9cee_d3cec2f1",
         "filename": "ash/resources/vector_icons/window_control_back.icon",
         "patchSetId": 15
@@ -237,6 +452,24 @@
       "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788202b1_df5e56eb",
+        "filename": "ash/resources/vector_icons/window_control_back.icon",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb5f9cee_d3cec2f1",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +490,24 @@
     },
     {
       "key": {
+        "uuid": "6ff62b5b_985865bd",
+        "filename": "chrome/browser/ui/views/frame/browser_header_painter_ash.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91e2ee01_5cd7d26f",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f8a192e_dbe07414",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 15
@@ -274,6 +525,24 @@
     },
     {
       "key": {
+        "uuid": "ac88c6aa_2e5ad919",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f8a192e_dbe07414",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a86c21a8_b6b68aaf",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 15
@@ -288,6 +557,24 @@
       "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80560a6_b0632106",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T17:24:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a86c21a8_b6b68aaf",
+      "revId": "bae8ad4aa7c15469e242903c3c5f7e6635c9a6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
