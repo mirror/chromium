@@ -9,7 +9,9 @@
     android:versionCode="{{{version_code}}}"
     android:versionName="{{{version_name}}}" >
 
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -36,6 +38,11 @@
             </intent-filter>
             {{/intent_filters}}
             {{{raw_intent_filters}}}
+        </activity>
+        <activity android:name="org.chromium.webapk.shell_apk.PermissionActivity"
+                  android:exported="true"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                  android:excludeFromRecents="true">
         </activity>
         <meta-data android:name="org.chromium.webapk.shell_apk.shellApkVersion" android:value="{{{shell_apk_version}}}" />
         {{#bound_webapk}}

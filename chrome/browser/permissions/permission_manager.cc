@@ -352,7 +352,7 @@ int PermissionManager::RequestPermissions(
     return kNoPendingOperation;
   }
 
-  GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
+//  GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
   GURL canonical_requesting_origin = GetCanonicalOrigin(requesting_origin);
 
   int request_id = pending_requests_.Add(base::MakeUnique<PendingRequest>(
@@ -386,6 +386,15 @@ PermissionResult PermissionManager::GetPermissionStatus(
     const GURL& requesting_origin,
     const GURL& embedding_origin) {
   return GetPermissionStatusHelper(permission, nullptr /* render_frame_host */,
+                                   requesting_origin, embedding_origin);
+}
+
+PermissionResult PermissionManager::GetPermissionStatus(
+    ContentSettingsType permission,
+    content::RenderFrameHost* render_frame_host,
+    const GURL& requesting_origin,
+    const GURL& embedding_origin) {
+  return GetPermissionStatusHelper(permission, render_frame_host,
                                    requesting_origin, embedding_origin);
 }
 
@@ -493,13 +502,24 @@ void PermissionManager::ResetPermission(PermissionType permission,
                            embedding_origin.GetOrigin());
 }
 
+
 PermissionStatus PermissionManager::GetPermissionStatus(
     PermissionType permission,
+    const GURL& requesting_origin,
+    const GURL& embedding_origin) {
+  return GetPermissionStatus(permission, nullptr, requesting_origin, embedding_origin);
+}
+
+
+PermissionStatus PermissionManager::GetPermissionStatus(
+    PermissionType permission,
+    content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   PermissionResult result =
       GetPermissionStatus(PermissionTypeToContentSetting(permission),
+                          render_frame_host,
                           requesting_origin, embedding_origin);
 
   // TODO(benwells): split this into two functions, GetPermissionStatus and
@@ -516,6 +536,7 @@ PermissionStatus PermissionManager::GetPermissionStatus(
 
 int PermissionManager::SubscribePermissionStatusChange(
     PermissionType permission,
+    content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin,
     const base::Callback<void(PermissionStatus)>& callback) {
@@ -531,7 +552,7 @@ int PermissionManager::SubscribePermissionStatusChange(
   subscription->callback = base::Bind(&SubscriptionCallbackWrapper, callback);
 
   subscription->current_value =
-      GetPermissionStatus(content_type, requesting_origin, embedding_origin)
+      GetPermissionStatus(content_type, render_frame_host, requesting_origin, embedding_origin)
           .content_setting;
 
   return subscriptions_.Add(std::move(subscription));

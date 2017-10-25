@@ -21,4 +21,6 @@ interface IWebApkApi {
 
     // Cancel a notification.
     void cancelNotification(String platformTag, int platformID);
+
+    void requestPermission(IPermissionRequestCallback callback, in String[] permissions);
 }

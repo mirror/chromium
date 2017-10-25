@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.RemoteException;
 
 import org.chromium.base.ContextUtils;
@@ -17,6 +18,7 @@ import org.chromium.base.Log;
 import org.chromium.chrome.browser.metrics.WebApkUma;
 import org.chromium.chrome.browser.notifications.NotificationBuilderBase;
 import org.chromium.webapk.lib.client.WebApkServiceConnectionManager;
+import org.chromium.webapk.lib.runtime_library.IPermissionRequestCallback;
 import org.chromium.webapk.lib.runtime_library.IWebApkApi;
 
 /**
@@ -104,6 +106,20 @@ public class WebApkServiceClient {
             @Override
             public void useApi(IWebApkApi api) throws RemoteException {
                 api.cancelNotification(platformTag, platformID);
+            }
+        };
+
+        mConnectionManager.connect(
+                ContextUtils.getApplicationContext(), webApkPackage, connectionCallback);
+    }
+
+    public void requestPermission(String webApkPackage, final IPermissionRequestCallback callback,
+            final String[] permissions) {
+        final ApiUseCallback connectionCallback = new ApiUseCallback() {
+            @Override
+            public void useApi(IWebApkApi api) throws RemoteException {
+                Log.e("ABCD", "webapkserviceclient is on main thread?" +(Looper.getMainLooper().getThread() == Thread.currentThread()));
+                api.requestPermission(callback, permissions);
             }
         };
 
