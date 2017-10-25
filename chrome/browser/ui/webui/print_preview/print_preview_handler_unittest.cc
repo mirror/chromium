@@ -77,7 +77,7 @@ base::Value GetPrintTicket(printing::PrinterType type, bool cloud) {
   bool is_privet_printer = !cloud && type == printing::kPrivetPrinter;
   bool is_extension_printer = !cloud && type == printing::kExtensionPrinter;
   base::Value::DictStorage ticket;
-
+  ticket["pageRange"] = std::make_unique<base::Value>();  // entire document
   // Letter
   base::Value::DictStorage media_size;
   media_size["is_default"] = std::make_unique<base::Value>(true);
@@ -507,8 +507,8 @@ TEST_F(PrintPreviewHandlerTest, Print) {
     handler()->HandlePrint(&args);
 
     // Verify correct PrinterHandler was called or that no handler was requested
-    // for local and cloud printers.
-    if (cloud || type == printing::kLocalPrinter) {
+    // for cloud printers.
+    if (cloud) {
       EXPECT_TRUE(handler()->NotCalled());
     } else {
       EXPECT_TRUE(handler()->CalledOnlyForType(type));
