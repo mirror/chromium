@@ -55,6 +55,9 @@ class NotificationPlatformBridgeChromeOsImpl
   void HandleNotificationClicked(const std::string& id) override;
   void HandleNotificationButtonClicked(const std::string& id,
                                        int button_index) override;
+  void SetNotifierEnabled(const NotifierId& notifier_id, bool enabled);
+  void HandleNotifierAdvancedSettingsRequested(const NotifierId& notifier_id);
+  void GetNotifierList(GetNotifierListCallback callback);
 
  private:
   NotificationPlatformBridgeDelegate* delegate_;

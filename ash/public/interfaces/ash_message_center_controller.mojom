@@ -4,7 +4,9 @@
 
 module ash.mojom;
 
+import "ui/gfx/image/mojo/image.mojom";
 import "ui/message_center/mojo/notification.mojom";
+import "ui/message_center/mojo/notifier_settings.mojom";
 
 // The message center controller funnels notification requests from the client
 // to the MessageCenter.
@@ -12,6 +14,9 @@ interface AshMessageCenterController {
   SetClient(associated AshMessageCenterClient client);
 
   ShowClientNotification(message_center.mojom.Notification notification);
+
+  UpdateNotifierIcon(message_center.mojom.NotifierId notifier_id,
+                     gfx.mojom.ImageSkia icon);
 };
 
 // The message center client interface mimics
@@ -28,4 +33,13 @@ interface AshMessageCenterClient {
   // Called when a notification that has buttons (e.g., "Learn more") receives a
   // click on one of the buttons.
   HandleNotificationButtonClicked(string id, int32 button_index);
+
+  // FIXME
+  SetNotifierEnabled(message_center.mojom.NotifierId notifier_id, bool enabled);
+
+  // FIXME
+  HandleNotifierAdvancedSettingsRequested(
+      message_center.mojom.NotifierId notifier_id);
+
+  GetNotifierList() => (array<message_center.mojom.NotifierUiData>? notifiers);
 };

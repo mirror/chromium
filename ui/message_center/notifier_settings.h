@@ -32,14 +32,6 @@ class MessagePopupCollectionTest;
 class MessageCenterNotificationManagerTest;
 class Notification;
 class NotifierSettingsDelegate;
-class NotifierSettingsProvider;
-
-// Brings up the settings dialog and returns a weak reference to the delegate,
-// which is typically the view. If the dialog already exists, it is brought to
-// the front, otherwise it is created.
-MESSAGE_CENTER_EXPORT NotifierSettingsDelegate* ShowSettings(
-    NotifierSettingsProvider* provider,
-    gfx::NativeView context);
 
 // A struct that identifies the source of notifications. For example, a web page
 // might send multiple notifications but they'd all have the same NotifierId.
@@ -128,6 +120,7 @@ struct MESSAGE_CENTER_EXPORT NotifierUiData {
 
 // An observer class implemented by the view of the NotifierSettings to get
 // notified when the controller has changed data.
+// TODO(estade): this is Chrome OS only. Remove it.
 class MESSAGE_CENTER_EXPORT NotifierSettingsObserver {
  public:
   // Called when an icon in the controller has been updated.
@@ -141,6 +134,7 @@ class MESSAGE_CENTER_EXPORT NotifierSettingsObserver {
 
 // A class used by NotifierSettingsView to integrate with a setting system
 // for the clients of this module.
+// TODO(estade): this is Chrome OS only. Remove it.
 class MESSAGE_CENTER_EXPORT NotifierSettingsProvider {
  public:
   virtual ~NotifierSettingsProvider() {}

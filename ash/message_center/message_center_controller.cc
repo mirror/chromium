@@ -8,6 +8,7 @@
 #include "ui/message_center/notification_delegate.h"
 
 using message_center::MessageCenter;
+using message_center::NotifierId;
 
 namespace ash {
 
@@ -53,6 +54,17 @@ MessageCenterController::MessageCenterController()
 
 MessageCenterController::~MessageCenterController() {}
 
+void MessageCenterController::SetNotifierEnabled(
+    const NotifierId& notifier_id,
+    bool enabled) {
+  client_->SetNotifierEnabled(notifier_id, enabled);
+}
+
+void MessageCenterController::OnNotifierAdvancedSettingsRequested(
+    const NotifierId& notifier_id) {
+  client_->HandleNotifierAdvancedSettingsRequested(notifier_id);
+}
+
 void MessageCenterController::BindRequest(
     mojom::AshMessageCenterControllerRequest request) {
   binding_.Bind(std::move(request));
@@ -72,6 +84,35 @@ void MessageCenterController::ShowClientNotification(
   message_center_notification->set_delegate(base::WrapRefCounted(
       new AshClientNotificationDelegate(notification.id(), client_.get())));
   MessageCenter::Get()->AddNotification(std::move(message_center_notification));
+}
+
+void MessageCenterController::UpdateIconImage(
+    const NotifierId& notifier_id,
+    const gfx::Image& icon) {
+  if (notifier_settings_)
+    notifier_settings_->UpdateIconImage(notifier_id, icon);
+}
+
+void MessageCenterController::NotifierEnabledChanged(
+    const NotifierId& notifier_id,
+    bool enabled) {
+  if (!enabled)
+    MessageCenter::Get()->RemoveNotificationsForNotifierId(notifier_id);
+}
+
+void MessageCenterController::SetNotifierSettingsListener(
+    NotifierSettingsListener* listener) {
+  DCHECK(!listener || !notifier_settings_);
+  notifier_settings_ = listener;
+
+  client_->GetNotifierList(base::Bind(
+      &MessageCenterController::OnGotNotifierList, base::Unretained(this)));
+}
+
+void MessageCenterController::OnGotNotifierList(
+    const std::vector<message_center::NotifierUiData>& notifiers) {
+  if (notifier_settings_)
+    notifier_settings_->SetNotifierList(notifiers);
 }
 
 }  // namespace ash
