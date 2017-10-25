@@ -85,6 +85,10 @@
   [self showAlert:@"showAccountsSettings"];
 }
 
+- (void)showAccountsSettings:(UIViewController*)presentingViewController {
+  [self showAlert:@"showAccountsSettings:"];
+}
+
 - (void)showSyncSettings {
   [self showAlert:@"showSyncSettings"];
 }
