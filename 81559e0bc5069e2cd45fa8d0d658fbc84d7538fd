@@ -207,6 +207,30 @@
     },
     {
       "key": {
+        "uuid": "42b3fe80_380493ef",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-25T19:25:57Z",
+      "side": 1,
+      "message": "Then you use a simple function like:\nToImageDataStorageFormat(CanvasPixelFormat fmt) {\n  switch (fmt) ...\n}",
+      "parentUuid": "25182e3d_bc86be43",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "81559e0bc5069e2cd45fa8d0d658fbc84d7538fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5aa07df_35b550eb",
         "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
         "patchSetId": 3
