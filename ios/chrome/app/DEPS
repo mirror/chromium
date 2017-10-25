@@ -17,6 +17,7 @@ include_rules = [
   "+components/prefs",
   "+components/reading_list/core",
   "+components/signin/core/browser",
+  "+components/signin/ios/browser",
   "+components/suggestions",
   "+components/task_scheduler_util",
   "+components/url_formatter",
