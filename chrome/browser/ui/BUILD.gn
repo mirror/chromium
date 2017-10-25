@@ -3657,6 +3657,8 @@ static_library("test_support") {
       "passwords/manage_passwords_ui_controller_mock.h",
       "passwords/password_dialog_controller_mock.cc",
       "passwords/password_dialog_controller_mock.h",
+      "passwords/password_ui_view_mock.cc",
+      "passwords/password_ui_view_mock.h",
       "passwords/passwords_model_delegate_mock.cc",
       "passwords/passwords_model_delegate_mock.h",
       "test/test_confirm_bubble_model.cc",
