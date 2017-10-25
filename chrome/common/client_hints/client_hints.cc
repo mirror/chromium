@@ -17,7 +17,7 @@ void GetAllowedClientHintsFromSource(
   if (!content::IsOriginSecure(url))
     return;
 
-  const GURL origin = GURL(url).GetOrigin();
+  const GURL& origin = url.GetOrigin();
 
   for (const auto& rule : client_hints_rules) {
     // Look for an exact match since persisted client hints are disabled by
