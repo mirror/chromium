@@ -129,8 +129,7 @@ RendererSchedulerImpl::RendererSchedulerImpl(
       NewLoadingTaskQueue(MainThreadTaskQueue::QueueType::DEFAULT_LOADING);
   default_timer_task_queue_ =
       NewTimerTaskQueue(MainThreadTaskQueue::QueueType::DEFAULT_TIMER);
-  v8_task_queue_ = NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
-      MainThreadTaskQueue::QueueType::V8));
+  v8_task_queue_ = NewV8TaskQueue();
 
   TRACE_EVENT_OBJECT_CREATED_WITH_ID(
       TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"), "RendererScheduler",
@@ -404,6 +403,12 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
                           .SetCanBePaused(true)
                           .SetCanBeStopped(true)
                           .SetCanBeDeferred(true)
+                          .SetCanBeThrottled(true));
+}
+
+scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewV8TaskQueue() {
+  return NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
+                          MainThreadTaskQueue::QueueType::V8)
                           .SetCanBeThrottled(true));
 }
 

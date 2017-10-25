@@ -528,6 +528,9 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void PauseRendererImpl();
   void ResumeRendererImpl();
 
+  // Returns a new V8 task queue.
+  scoped_refptr<MainThreadTaskQueue> NewV8TaskQueue();
+
   MainThreadSchedulerHelper helper_;
   IdleHelper idle_helper_;
   IdleCanceledDelayedTaskSweeper idle_canceled_delayed_task_sweeper_;
