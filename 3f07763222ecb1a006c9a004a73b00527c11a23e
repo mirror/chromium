@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a9bdd9c_9072ee70",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7233,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-25T16:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7be1e2ba_f6084c15",
+      "range": {
+        "startLine": 7232,
+        "startChar": 0,
+        "endLine": 7233,
+        "endChar": 13
+      },
+      "revId": "3f07763222ecb1a006c9a004a73b00527c11a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c32e4212_218d306d",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8a0f01df_8882f0ab",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-25T16:23:37Z",
+      "side": 1,
+      "message": "The conditions might change after the async op is complete like the size of the stored entry, thus its important to check them just before starting to truncate. Also from a correctness perspective it is more consistent that we check the latest state of things.",
+      "parentUuid": "c32e4212_218d306d",
+      "range": {
+        "startLine": 484,
+        "startChar": 6,
+        "endLine": 484,
+        "endChar": 20
+      },
+      "revId": "3f07763222ecb1a006c9a004a73b00527c11a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fd3f21f_f47531bd",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "3f07763222ecb1a006c9a004a73b00527c11a23e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f283a2_e30288b4",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-25T16:23:37Z",
+      "side": 1,
+      "message": "I don\u0027t see how since a specific condition needs to set should_keep_entry_ to false and not all conditions that return a false.",
+      "parentUuid": "3fd3f21f_f47531bd",
+      "range": {
+        "startLine": 220,
+        "startChar": 23,
+        "endLine": 220,
+        "endChar": 24
+      },
+      "revId": "3f07763222ecb1a006c9a004a73b00527c11a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
