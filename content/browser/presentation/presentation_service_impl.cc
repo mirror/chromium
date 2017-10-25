@@ -110,10 +110,10 @@ void PresentationServiceImpl::Bind(
   bindings_.AddBinding(this, std::move(request));
 }
 
-void PresentationServiceImpl::SetClient(
-    blink::mojom::PresentationServiceClientPtr client) {
-  DCHECK(!client_.get());
-  client_ = std::move(client);
+void PresentationServiceImpl::SetController(
+    blink::mojom::PresentationControllerPtr controller) {
+  DCHECK(!controller_);
+  controller_ = std::move(controller);
 }
 
 void PresentationServiceImpl::SetReceiver(
@@ -142,7 +142,7 @@ void PresentationServiceImpl::SetReceiver(
 void PresentationServiceImpl::ListenForScreenAvailability(const GURL& url) {
   DVLOG(2) << "ListenForScreenAvailability " << url.spec();
   if (!controller_delegate_ || !url.is_valid()) {
-    client_->OnScreenAvailabilityUpdated(
+    controller_->OnScreenAvailabilityUpdated(
         url, blink::mojom::ScreenAvailability::UNAVAILABLE);
     return;
   }
@@ -361,11 +361,12 @@ void PresentationServiceImpl::OnConnectionStateChanged(
   DVLOG(2) << "PresentationServiceImpl::OnConnectionStateChanged "
            << "[presentation_id]: " << connection.presentation_id
            << " [state]: " << info.state;
-  DCHECK(client_.get());
+  DCHECK(controller_);
   if (info.state == PRESENTATION_CONNECTION_STATE_CLOSED) {
-    client_->OnConnectionClosed(connection, info.close_reason, info.message);
+    controller_->OnConnectionClosed(connection, info.close_reason,
+                                    info.message);
   } else {
-    client_->OnConnectionStateChanged(connection, info.state);
+    controller_->OnConnectionStateChanged(connection, info.state);
   }
 }
 
@@ -458,8 +459,8 @@ void PresentationServiceImpl::OnDelegateDestroyed() {
 
 void PresentationServiceImpl::OnDefaultPresentationStarted(
     const PresentationInfo& connection) {
-  DCHECK(client_.get());
-  client_->OnDefaultPresentationStarted(connection);
+  DCHECK(controller_.get());
+  controller_->OnDefaultPresentationStarted(connection);
   ListenForConnectionStateChange(connection);
 }
 
@@ -469,7 +470,7 @@ PresentationServiceImpl::ScreenAvailabilityListenerImpl::
     : availability_url_(availability_url), service_(service) {
   DCHECK(availability_url_.is_valid());
   DCHECK(service_);
-  DCHECK(service_->client_.get());
+  DCHECK(service_->controller_.get());
 }
 
 PresentationServiceImpl::ScreenAvailabilityListenerImpl::
@@ -482,8 +483,8 @@ GURL PresentationServiceImpl::ScreenAvailabilityListenerImpl::
 
 void PresentationServiceImpl::ScreenAvailabilityListenerImpl::
     OnScreenAvailabilityChanged(blink::mojom::ScreenAvailability availability) {
-  service_->client_->OnScreenAvailabilityUpdated(availability_url_,
-                                                 availability);
+  service_->controller_->OnScreenAvailabilityUpdated(availability_url_,
+                                                     availability);
 }
 
 PresentationServiceImpl::NewPresentationCallbackWrapper::
