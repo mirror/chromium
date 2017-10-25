@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12c0579b_a021273e",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfbde2fb_b5dda37f",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63995e08_491a13a2",
         "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bea93a_c23d25f2",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63995e08_491a13a2",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4b7d89e5_ddf199d7",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffb55c88_637aab96",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0d4811d_1add3463",
         "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4497a86_bf98781c",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0d4811d_1add3463",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "28aea1d4_e24c55c6",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd147823_50ee2243",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "228cbdd8_6adf8da4",
         "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398beafd_9ffebf5e",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "228cbdd8_6adf8da4",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e257b898_a095bd0c",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9998a81c_24cf306a",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e106c4a_ccf14d99",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-24T21:41:23Z",
       "side": 1,
       "message": "Use a struct?",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46087d3a_4b62880f",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "Will add a TODO for this as it is used in numerous places as of now. Will need a CL of its own.",
+      "parentUuid": "1e106c4a_ccf14d99",
       "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "fe294c58_2fdfcad5",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18b125ce_060f9e22",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e14f36b_8c7bbd47",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 4
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "d3501ab9_fff6edd7",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e14f36b_8c7bbd47",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "858043aa_2f15fc37",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 4
@@ -183,6 +363,24 @@
       "writtenOn": "2017-10-24T21:55:25Z",
       "side": 1,
       "message": "do these have to be here? It\u0027s a bit uncommon for struct to have a static members.",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ecab27_7162de52",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "No. They are moved to a strongly typed class for TouchDeviceIdentifier in the subsequent CL.\nSee https://chromium-review.googlesource.com/c/chromium/src/+/708044/22/ui/display/manager/chromeos/touch_device_manager.h#42\n\nRight now we are only migrating without changing functionality.",
+      "parentUuid": "858043aa_2f15fc37",
       "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "63aa9953_0973e9b2",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "This class will hold data (See https://chromium-review.googlesource.com/c/chromium/src/+/708044 for complete list of functionality this class introduces.)",
+      "parentUuid": "edbb8fa9_22525e30",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a594b5b9_62b39a81",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 4
@@ -220,6 +436,24 @@
       "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6063fc_e817c4e0",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a594b5b9_62b39a81",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

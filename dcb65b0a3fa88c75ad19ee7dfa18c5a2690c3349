@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c40f6122_88901e6e",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "These will no longer be required in the subsequent patches.",
+      "revId": "dcb65b0a3fa88c75ad19ee7dfa18c5a2690c3349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6436a757_d575ca94",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T00:54:38Z",
+      "side": 1,
+      "message": "These will no longer be required in subsequent patches.",
+      "revId": "dcb65b0a3fa88c75ad19ee7dfa18c5a2690c3349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
