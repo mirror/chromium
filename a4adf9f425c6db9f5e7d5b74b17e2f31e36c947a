@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74ac9d06_2d2e728e",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-10-25T01:00:06Z",
+      "side": 1,
+      "message": "Note that we\u0027re keying by the entire device again here. Does this have the same problem you were talking about today where if any device metadata changes, we\u0027re screwed?",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dd76387_e631acac",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-10-25T01:00:06Z",
+      "side": 1,
+      "message": "This return indicates that we\u0027ll only move a device to the back of the list for the first priority with which it\u0027s registered. Is that what we want, or should this just keep going and move it to the back of every priority list?\n\nEither way, I think the documentation for this function should be updated to reflect this behavior.",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 10
+      },
+      "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
