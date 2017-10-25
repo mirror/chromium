@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8700eba8_4fa1a8c7",
+        "filename": "content/browser/cache_storage/cache_storage_cache_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-25T18:49:33Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "revId": "a0b1f100f773bf5ea0498a9ba2e7ecd3434b31dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
