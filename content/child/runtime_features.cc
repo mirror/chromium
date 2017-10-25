@@ -405,6 +405,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   if (base::FeatureList::IsEnabled(features::kV8ContextSnapshot))
     WebRuntimeFeatures::EnableV8ContextSnapshot(true);
+
+  if (base::FeatureList::IsEnabled(features::kStopLoadingInBackground))
+    WebRuntimeFeatures::EnableStopLoadingInBackgroundAndroid(true);
 };
 
 }  // namespace content
