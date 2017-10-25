@@ -353,6 +353,8 @@ void WebRemoteFrameImpl::ScrollRectToVisible(
     const WebRemoteScrollProperties& properties) {
   Element* owner_element = frame_->DeprecatedLocalOwner();
   LayoutObject* owner_object = owner_element->GetLayoutObject();
+  if (!owner_object)
+    return;
 
   // Schedule the scroll.
   auto* scroll_sequencer =
