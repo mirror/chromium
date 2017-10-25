@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0eecbbd_fdad4414",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2312,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T00:05:55Z",
+      "side": 1,
+      "message": "is_selection (no \"_\")",
+      "revId": "8a33d92c442799bdc91cd9f523c2dff15dbeab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
