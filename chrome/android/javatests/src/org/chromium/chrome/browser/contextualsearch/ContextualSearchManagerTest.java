@@ -2470,16 +2470,16 @@ public class ContextualSearchManagerTest {
         // Long press and make sure the Promo shows.
         longPressNode("intelligence");
         waitForPanelToPeek();
-        Assert.assertTrue(mPanel.isPeekPromoVisible());
+        Assert.assertTrue(mPanel.isBarBannerVisible());
 
         // After expanding the Panel the Promo should be invisible.
         flingPanelUp();
         waitForPanelToExpand();
-        Assert.assertFalse(mPanel.isPeekPromoVisible());
+        Assert.assertFalse(mPanel.isBarBannerVisible());
 
         // After closing the Panel the Promo should still be invisible.
         tapBasePageToClosePanel();
-        Assert.assertFalse(mPanel.isPeekPromoVisible());
+        Assert.assertFalse(mPanel.isBarBannerVisible());
 
         // Click elsewhere to clear the selection.
         clickNode("question-mark");
@@ -2488,7 +2488,7 @@ public class ContextualSearchManagerTest {
         // Now that the Panel was opened at least once, the Promo should not show again.
         longPressNode("intelligence");
         waitForPanelToPeek();
-        Assert.assertFalse(mPanel.isPeekPromoVisible());
+        Assert.assertFalse(mPanel.isBarBannerVisible());
     }
 
     //============================================================================================

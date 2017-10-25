@@ -137,6 +137,7 @@ public class ContextualSearchManager
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
     private FindToolbarManager mFindToolbarManager;
     private FindToolbarObserver mFindToolbarObserver;
+    private ContextualSearchIPH mInProductHelp;
 
     private boolean mDidStartLoadingResolvedSearchRequest;
     private long mLoadedSearchUrlTimeMs;
@@ -147,6 +148,7 @@ public class ContextualSearchManager
 
     private boolean mWasActivatedByTap;
     private boolean mIsInitialized;
+    private boolean mReceivedContextualCardsEntityData;
 
     // The current search context, or null.
     private ContextualSearchContext mContext;
@@ -157,8 +159,6 @@ public class ContextualSearchManager
      */
     private boolean mShouldLoadDelayedSearch;
 
-    private boolean mIsShowingPeekPromo;
-    private boolean mWouldShowPeekPromo;
     private boolean mIsShowingPromo;
     private boolean mIsMandatoryPromo;
     private boolean mDidLogPromoOutcome;
@@ -398,8 +398,9 @@ public class ContextualSearchManager
 
         mSearchRequest = null;
 
-        if (mIsShowingPeekPromo || mWouldShowPeekPromo) {
-            mPolicy.logPeekPromoMetrics(mIsShowingPeekPromo, mWouldShowPeekPromo);
+        if (mInProductHelp != null) {
+            mInProductHelp.dismiss();
+            mInProductHelp = null;
         }
 
         if (mIsShowingPromo && !mDidLogPromoOutcome && mSearchPanel.wasPromoInteractive()) {
@@ -450,6 +451,7 @@ public class ContextualSearchManager
         }
 
         mSearchPanel.destroyContent();
+        mReceivedContextualCardsEntityData = false;
 
         String selection = mSelectionController.getSelectedText();
         boolean isTap = mSelectionController.getSelectionType() == SelectionType.TAP;
@@ -483,15 +485,10 @@ public class ContextualSearchManager
         }
         mWereSearchResultsSeen = false;
 
-        // Show the Peek Promo only when the Panel wasn't previously visible, provided
-        // the policy allows it.
-        if (!mSearchPanel.isShowing()) {
-            mWouldShowPeekPromo = mPolicy.isPeekPromoConditionSatisfied();
-            mIsShowingPeekPromo = mPolicy.isPeekPromoAvailable();
-            if (mIsShowingPeekPromo) {
-                mSearchPanel.showPeekPromo();
-                mPolicy.registerPeekPromoSeen();
-            }
+        Tracker tracker =
+                TrackerFactory.getTrackerForProfile(mActivity.getActivityTab().getProfile());
+        if (!mWasActivatedByTap && mPolicy.isTapSupported()) {
+            maybeShowInProductHelp(FeatureConstants.CONTEXTUAL_SEARCH_TAP_FEATURE);
         }
 
         // Note: now that the contextual search has properly started, set the promo involvement.
@@ -510,8 +507,6 @@ public class ContextualSearchManager
         assert mSelectionController.getSelectionType() != SelectionType.UNDETERMINED;
         mWasActivatedByTap = mSelectionController.getSelectionType() == SelectionType.TAP;
 
-        Tracker tracker =
-                TrackerFactory.getTrackerForProfile(mActivity.getActivityTab().getProfile());
         tracker.notifyEvent(mWasActivatedByTap
                         ? EventConstants.CONTEXTUAL_SEARCH_TRIGGERED_BY_TAP
                         : EventConstants.CONTEXTUAL_SEARCH_TRIGGERED_BY_LONGPRESS);
@@ -522,6 +517,14 @@ public class ContextualSearchManager
                     tracker.getTriggerState(FeatureConstants.CONTEXTUAL_SEARCH_TAP_FEATURE)
                     == TriggerState.HAS_BEEN_DISPLAYED);
         }
+    }
+
+    private void maybeShowInProductHelp(String featureName) {
+        if (mInProductHelp != null && mInProductHelp.isShowing()) return;
+
+        mInProductHelp = new ContextualSearchIPH(
+                mSearchPanel, featureName, mActivity.getActivityTab().getProfile());
+        mInProductHelp.maybeShow(mParentView);
     }
 
     @Override
@@ -721,17 +724,20 @@ public class ContextualSearchManager
 
         boolean quickActionShown =
                 mSearchPanel.getSearchBarControl().getQuickActionControl().hasQuickAction();
-        boolean receivedContextualCardsEntityData = !quickActionShown && receivedCaptionOrThumbnail;
+        mReceivedContextualCardsEntityData = !quickActionShown && receivedCaptionOrThumbnail;
 
-        if (receivedContextualCardsEntityData) {
+        if (mReceivedContextualCardsEntityData) {
             Tracker tracker =
                     TrackerFactory.getTrackerForProfile(mActivity.getActivityTab().getProfile());
             tracker.notifyEvent(EventConstants.CONTEXTUAL_SEARCH_ENTITY_RESULT);
+            if (mWasActivatedByTap) {
+                maybeShowInProductHelp(FeatureConstants.CONTEXTUAL_SEARCH_PANEL_FEATURE);
+            }
         }
 
-        ContextualSearchUma.logContextualCardsDataShown(receivedContextualCardsEntityData);
+        ContextualSearchUma.logContextualCardsDataShown(mReceivedContextualCardsEntityData);
         mSearchPanel.getPanelMetrics().setWasContextualCardsDataShown(
-                receivedContextualCardsEntityData);
+                mReceivedContextualCardsEntityData);
 
         if (ContextualSearchFieldTrial.isContextualSearchSingleActionsEnabled()) {
             ContextualSearchUma.logQuickActionShown(quickActionShown, quickActionCategory);
@@ -1234,6 +1240,23 @@ public class ContextualSearchManager
     @Override
     public void dismissContextualSearchBar() {
         hideContextualSearch(StateChangeReason.UNKNOWN);
+    }
+
+    @Override
+    public void onPanelShown() {
+        if (!mWasActivatedByTap) {
+            maybeShowInProductHelp(FeatureConstants.CONTEXTUAL_SEARCH_FEATURE);
+        }
+    }
+
+    @Override
+    public boolean wasTriggeredByTap() {
+        return mWasActivatedByTap;
+    }
+
+    @Override
+    public boolean isEntityDataShown() {
+        return mWasActivatedByTap && mReceivedContextualCardsEntityData;
     }
 
     /**
