@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6f5fef1_a799856c",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-25T02:07:39Z",
+      "side": 1,
+      "message": "nit: Might make sense to check main_thread_missed_last_deadline_ too, and invalidate if that\u0027s the case.",
+      "revId": "4f122e10b12d90f186ceed8e1b177d3c32a3ec40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b09c5b_9c591e3c",
+        "filename": "cc/scheduler/scheduler_state_machine.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-25T02:07:39Z",
+      "side": 1,
+      "message": "nit: Call this LastFrameState or PreviousFrameState maybe? ImplFrameState isn\u0027t right because the state is about commit and we use \"Impl\" for compositor thread stuff. (Let\u0027s also avoid \"Impl\" for naming things in general as it\u0027s confusing.)",
+      "revId": "4f122e10b12d90f186ceed8e1b177d3c32a3ec40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
