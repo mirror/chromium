@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82564e5f_cde8bf2b",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T20:53:27Z",
+      "side": 1,
+      "message": "is this needed for tests?\n(it seems that these are stored by account_id, which is also passed in here, so the method could technically use account_id to get wallpaper_files_id)",
+      "range": {
+        "startLine": 254,
+        "startChar": 40,
+        "endLine": 254,
+        "endChar": 59
+      },
+      "revId": "8f05275276f4058e02d37bee076d588098337e3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

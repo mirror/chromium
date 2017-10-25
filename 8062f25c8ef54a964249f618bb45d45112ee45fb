@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9e6db0b0_b50486b7",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T20:53:27Z",
+      "side": 1,
+      "message": "There\u0027s still a lot of code duplication, and it would be nice to avoid it.\n\nbasically, the main differences are:\n* SetWallpaperFromUrl ignores policy (though, I\u0027m not sure why, nor whether it should)\n* SetWallpaperFromPath has an additional step to save the wallpaper on disk and calculate wallpaper paths (maybe this could be moved to another method, or just bypassed when setting wallpaper with ONLINE type)?\n\nThough, feedback with someone more familiar with wallpapers might be useful here :)",
+      "parentUuid": "76e30efd_b2e2d0c5",
+      "range": {
+        "startLine": 767,
+        "startChar": 12,
+        "endLine": 767,
+        "endChar": 13
+      },
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1f686c8_18ce31bc",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 3
