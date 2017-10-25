@@ -526,6 +526,30 @@
       "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914cfe96_8085aa10",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-25T09:54:58Z",
+      "side": 1,
+      "message": "My current theory is that it is, in fact, racy in real live too, but it works out okay in practice. Maybe the embedded_test_server is faster than any real server can be or something along those lines. Anyway, I might have figured out a way to make things safe, I\u0027ll follow up on the other CL. In the meantime, I\u0027ll land this one so we\u0027ll see if at least this part is non-flaky.",
+      "parentUuid": "65f65707_53d20524",
+      "range": {
+        "startLine": 142,
+        "startChar": 79,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
