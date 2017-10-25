@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f22d9f32_ac5689f9",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1655,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-25T00:31:39Z",
+      "side": 1,
+      "message": "Since this part of the test is doing a browser-initiated reload, the logic to put the error page in the same process as the starting one is not taking effect. It is only applied to renderer-initiated navigation.\nI think it is fine to change the expectations in this case, as it is our current error page commit policy.",
+      "revId": "c679cd3808da1430ca5c0f77e5db5fdbc0d0caee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
