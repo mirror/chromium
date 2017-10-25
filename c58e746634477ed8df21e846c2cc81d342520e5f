@@ -46,6 +46,30 @@
       "revId": "c58e746634477ed8df21e846c2cc81d342520e5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e710b1d6_0d235526",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-25T16:58:37Z",
+      "side": 1,
+      "message": "Thanks gchatz@ for the excellent suggestion. Done.",
+      "parentUuid": "99f6a611_4861a272",
+      "range": {
+        "startLine": 383,
+        "startChar": 4,
+        "endLine": 384,
+        "endChar": 65
+      },
+      "revId": "c58e746634477ed8df21e846c2cc81d342520e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
