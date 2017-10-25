@@ -390,7 +390,6 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       current_content_source_id_(0),
       widget_binding_(this, std::move(widget_request)),
       weak_ptr_factory_(this) {
-  base::debug::StackTrace().Print();
   DCHECK_NE(routing_id_, MSG_ROUTING_NONE);
   if (!swapped_out)
     RenderProcess::current()->AddRefProcess();

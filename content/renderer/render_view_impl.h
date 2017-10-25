@@ -545,6 +545,7 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void OnSetZoomLevel(PageMsg_SetZoomLevel_Command command, double zoom_level);
   void OnPageWasHidden();
   void OnPageWasShown();
+  void OnUpdateScreenInfo(const ScreenInfo& screen_info);
 
   // Adding a new message handler? Please add it in alphabetical order above
   // and put it in the same position in the .cc file.
