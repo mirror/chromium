@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afcec432_42de07e6",
+        "filename": "third_party/WebKit/Source/core/html/forms/ListedElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-25T21:39:42Z",
+      "side": 1,
+      "message": "Could we just make ResetFormOwner faster in all cases, by passing the values it has already computed (form ID, form ancestor) into FindAssociatedForm? That avoids 90% of the work this CL does but seems cleaner.",
+      "revId": "514923e8c4dd04c3139e6964e5bc05afef78ea67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
