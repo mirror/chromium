@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "37c9f865_a970c454",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeSwitches.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-25T21:53:50Z",
+      "side": 1,
+      "message": "nit: add a space before \"Switch\"",
+      "range": {
+        "startLine": 189,
+        "startChar": 7,
+        "endLine": 189,
+        "endChar": 13
+      },
+      "revId": "6d397b98c5a850e2eb309ebcfc0b2a9c61f5e401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb31122_683c92e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeSwitches.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-25T21:53:50Z",
+      "side": 1,
+      "message": "CHROME_HOME_FORCE_ENABLE_SURVEY would better match the other chrome home switches",
+      "range": {
+        "startLine": 190,
+        "startChar": 31,
+        "endLine": 190,
+        "endChar": 57
+      },
+      "revId": "6d397b98c5a850e2eb309ebcfc0b2a9c61f5e401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25aa2dfe_562b2775",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 12
@@ -18,6 +64,29 @@
         "startChar": 10,
         "endLine": 34,
         "endChar": 11
+      },
+      "revId": "6d397b98c5a850e2eb309ebcfc0b2a9c61f5e401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "526ba1d4_27fc6178",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-25T21:53:50Z",
+      "side": 1,
+      "message": "Let\u0027s put ForTests() at the end of the method name so it\u0027s extra clear that this should only be used for testing.",
+      "range": {
+        "startLine": 158,
+        "startChar": 45,
+        "endLine": 158,
+        "endChar": 78
       },
       "revId": "6d397b98c5a850e2eb309ebcfc0b2a9c61f5e401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

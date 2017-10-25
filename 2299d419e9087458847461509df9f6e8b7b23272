@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb31b27b_207a3357",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-25T21:53:50Z",
+      "side": 0,
+      "message": "nit: revert this since it landed in a different patch set",
+      "range": {
+        "startLine": 40,
+        "startChar": 44,
+        "endLine": 40,
+        "endChar": 66
+      },
+      "revId": "2299d419e9087458847461509df9f6e8b7b23272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
