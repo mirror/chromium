@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "27ebb4d9_0b170e10",
+        "filename": "ios/chrome/browser/prerender/preload_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-25T22:23:16Z",
+      "side": 1,
+      "message": "How will those helpers know whether or not to defer the action due to prerendering?  Will they each have a \"SetDelayFooNotification()\" method?",
+      "parentUuid": "4688487b_fec16777",
+      "revId": "d8688e4f5d7572f0beb70fb31d14eaab252cc15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a6e242_83c7db64",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-25T22:23:16Z",
+      "side": 1,
+      "message": "Why did all of these change to calls on self instead?",
+      "revId": "d8688e4f5d7572f0beb70fb31d14eaab252cc15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "804fe116_8f2834b4",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
