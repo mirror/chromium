@@ -39,7 +39,8 @@ import java.util.List;
 public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistoryObserver {
     private static final String EMPTY_QUERY = "";
     private static final String GOOGLE_HISTORY_LINK = "history.google.com";
-    private static final String MY_ACTIVITY_LINK = "myactivity.google.com";
+    private static final String MY_ACTIVITY_LINK =
+            "https://myactivity.google.com/myactivity/?utm_source=chrome_h";
 
     private final SelectionDelegate<HistoryItem> mSelectionDelegate;
     private final HistoryProvider mHistoryProvider;
