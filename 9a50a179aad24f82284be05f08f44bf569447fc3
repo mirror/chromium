@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d94c758_850a8715",
+        "filename": "content/browser/media/audio_stream_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-25T14:01:36Z",
+      "side": 1,
+      "message": "Is this still used?",
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac290450_b802602a",
+        "filename": "content/browser/media/audio_stream_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-25T14:01:36Z",
+      "side": 1,
+      "message": "Maybe names like StreamStarted/StreamStopped would make more sense?",
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31cfcb3_3b2cbde0",
+        "filename": "content/browser/renderer_host/media/audio_output_stream_observer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-25T14:01:36Z",
+      "side": 1,
+      "message": "There\u0027s no reason for this class to be IO thread only, I think. How about using a sequence checker instead?",
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080a1862_302d2ff4",
+        "filename": "content/browser/renderer_host/media/audio_renderer_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-25T14:01:36Z",
+      "side": 1,
+      "message": "If you instead put the Observer in a strong binding (https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/strong_binding.h), it would be owned by the InterfacePtr in the delegate, which seems simpler. You could do this for the ARH case without changing the code for the mojo case.",
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58fba0d_09e2a872",
+        "filename": "content/browser/renderer_host/media/audio_renderer_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-25T14:01:36Z",
+      "side": 1,
+      "message": "Is this used here?",
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
