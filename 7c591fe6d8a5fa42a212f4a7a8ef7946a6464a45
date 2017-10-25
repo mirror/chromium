@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26942667_2cb1e517",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/StartupMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T18:25:55Z",
+      "side": 1,
+      "message": "Hmm...that indeed doesn\u0027t look right.  I\u0027m surprised we\u0027re getting any metrics.\n\nLooking at the cases that fall into this make me think it\u0027s not that hard to repro though (assuming my math is right-ish):\n\nMAX_VALUE ~\u003d 2,000,000,000\n\n2B / 60,000 (MILLI_SEC_PER_MINUTE) \u003d 33,333.333333....\n\n33,333 / (60 * 24 (MIN_PER_DAY)) \u003d 23 days\n\nI guess we\u0027re only recording metrics here when we exceed 23 days?\n\n-------------\n\nThat being said, I wonder if we shouldn\u0027t check that here.\n\nShould we instead do something like the following in the if:\n\nlong elapsedMinutes \u003d (mStartTimeMilli - lastUsedTimeMilli) / MILLI_SEC_PER_MINUTE;\nif (elapsedMinutes \u003e Integer.MAX_VALUE) elapsedMinutes \u003d Integer.MAX_VALUE;\nRecordHistogram.recordCustomCountHistogram(\n    \"MobileStartup.TimeSinceLastUse\", (int) elapsedMinutes, 1, MINUTES_PER_30DAYS, NUM_BUCKETS);\n\nIf the elapsedMinutes is greater than MAX_VALUE then that is ~3800 years, so we can probably safely ignore them or cap it to some value (I think that\u0027s harder to hit than 23 days :-P)",
+      "range": {
+        "startLine": 128,
+        "startChar": 70,
+        "endLine": 128,
+        "endChar": 79
+      },
+      "revId": "7c591fe6d8a5fa42a212f4a7a8ef7946a6464a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
