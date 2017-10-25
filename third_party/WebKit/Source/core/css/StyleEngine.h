@@ -284,6 +284,9 @@ class CORE_EXPORT StyleEngine final
   void ClearWhitespaceReattachSet() { whitespace_reattach_set_.clear(); }
   void MarkForWhitespaceReattachment();
 
+  StyleRuleKeyframes* KeyframeStylesForAnimation(
+      const AtomicString& animation_name);
+
   virtual void Trace(blink::Visitor*);
   void TraceWrappers(const ScriptWrappableVisitor*) const;
 
@@ -361,6 +364,11 @@ class CORE_EXPORT StyleEngine final
   const MediaQueryEvaluator& EnsureMediaQueryEvaluator();
   void UpdateStyleSheetList(TreeScope&);
 
+  void ClearKeyframeRules() { keyframes_rule_map_.clear(); }
+
+  void AddKeyframeRules(const RuleSet&);
+  void AddKeyframeStyle(StyleRuleKeyframes*);
+
   Member<Document> document_;
   bool is_master_;
 
@@ -425,6 +433,10 @@ class CORE_EXPORT StyleEngine final
   unsigned style_for_element_count_ = 0;
 
   WebStyleSheetId user_sheets_id_count_ = 0;
+
+  using KeyframesRuleMap =
+      HeapHashMap<AtomicString, Member<StyleRuleKeyframes>>;
+  KeyframesRuleMap keyframes_rule_map_;
 
   friend class StyleEngineTest;
 };
