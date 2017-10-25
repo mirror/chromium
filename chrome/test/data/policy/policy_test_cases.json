@@ -1348,6 +1348,24 @@
     ]
   },
 
+  "DefaultAdsSetting": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": { "DefaultAdsSetting": 1 },
+    "pref_mappings": [
+      { "pref": "profile.managed_default_content_settings.ads",
+        "indicator_selector": "[content-setting=ads]",
+        "indicator_tests": [
+          { "policy": { "DefaultAdsSetting": 1 },
+            "value": "block"},
+          { "policy": { "DefaultAdsSetting": 2 },
+            "value": "allow"}
+        ]
+      }
+    ],
+
+    "note": "TODO(bartfab): Flag this with can_be_recommended when http://crbug.com/106682 is fixed."
+  },
+
   "AudioCaptureAllowed": {
     "os": ["win", "linux", "mac", "chromeos"],
     "test_policy": { "AudioCaptureAllowed": false },

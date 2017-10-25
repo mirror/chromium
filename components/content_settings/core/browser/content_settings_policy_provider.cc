@@ -89,6 +89,7 @@ const PolicyProvider::PrefsForManagedDefaultMapEntry
         {CONTENT_SETTINGS_TYPE_POPUPS, prefs::kManagedDefaultPopupsSetting},
         {CONTENT_SETTINGS_TYPE_BLUETOOTH_GUARD,
          prefs::kManagedDefaultWebBluetoothGuardSetting},
+        {CONTENT_SETTINGS_TYPE_ADS, prefs::kManagedDefaultAdsSetting},
 };
 
 // static
@@ -127,6 +128,8 @@ void PolicyProvider::RegisterProfilePrefs(
   registry->RegisterIntegerPref(prefs::kManagedDefaultPopupsSetting,
                                 CONTENT_SETTING_DEFAULT);
   registry->RegisterIntegerPref(prefs::kManagedDefaultWebBluetoothGuardSetting,
+                                CONTENT_SETTING_DEFAULT);
+  registry->RegisterIntegerPref(prefs::kManagedDefaultAdsSetting,
                                 CONTENT_SETTING_DEFAULT);
 }
 
@@ -175,6 +178,7 @@ PolicyProvider::PolicyProvider(PrefService* prefs) : prefs_(prefs) {
   pref_change_registrar_.Add(prefs::kManagedDefaultPopupsSetting, callback);
   pref_change_registrar_.Add(prefs::kManagedDefaultWebBluetoothGuardSetting,
                              callback);
+  pref_change_registrar_.Add(prefs::kManagedDefaultAdsSetting, callback);
 }
 
 PolicyProvider::~PolicyProvider() {
