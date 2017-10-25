@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_COMMON_SANDBOX_LINUX_SANDBOX_SECCOMP_BPF_LINUX_H_
-#define CONTENT_COMMON_SANDBOX_LINUX_SANDBOX_SECCOMP_BPF_LINUX_H_
+#ifndef SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_SANDBOX_SECCOMP_BPF_LINUX_H_
+#define SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_SANDBOX_SECCOMP_BPF_LINUX_H_
 
 #include <memory>
 #include <string>
@@ -15,7 +15,7 @@
 #include "sandbox/linux/bpf_dsl/policy.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 
-namespace content {
+namespace service_manager {
 
 // This class has two main sets of APIs. One can be used to start the sandbox
 // for internal content process types, the other is indirectly exposed as
@@ -76,6 +76,6 @@ class SandboxSeccompBPF {
   DISALLOW_IMPLICIT_CONSTRUCTORS(SandboxSeccompBPF);
 };
 
-}  // namespace content
+}  // namespace service_manager
 
-#endif  // CONTENT_COMMON_SANDBOX_LINUX_SANDBOX_SECCOMP_BPF_LINUX_H_
+#endif  // SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_SANDBOX_SECCOMP_BPF_LINUX_H_
