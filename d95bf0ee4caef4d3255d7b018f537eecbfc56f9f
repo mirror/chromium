@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "d59fa404_39cba374",
+        "filename": "components/crx_file/id_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-25T17:46:32Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll get it back. Thanks.",
+      "parentUuid": "fc703e58_7b9defb2",
+      "range": {
+        "startLine": 51,
+        "startChar": 40,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2092c720_0f7aa388",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
