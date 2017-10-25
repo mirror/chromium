@@ -198,8 +198,8 @@ bool BackgroundTracingManagerImpl::SetActiveScenario(
   }
 
   // Notify observers before starting tracing.
-  for (auto* observer : background_tracing_observers_)
-    observer->OnScenarioActivated(config_.get());
+  // for (auto* observer : background_tracing_observers_)
+  //   observer->OnScenarioActivated(config_.get());
 
   StartTracingIfConfigNeedsIt();
   RecordBackgroundTracingMetric(SCENARIO_ACTIVATED_SUCCESSFULLY);
