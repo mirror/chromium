@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3f61833_d3642a69",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-25T14:47:50Z",
+      "side": 1,
+      "message": "Another way to potentially think about this would be to treat \"tags\" as another filter property, but use a different matching algorithm than string equality. Having flexibility in matching for different filter properties might be useful in general: for example, you could imagine filtering by locale with a prefix, i.e. en_*, or filtering by version with a comparison, i.e. all versions after 63.0.1234.0.",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "87e77588a8ab08dd16c47c9cbc332e369c872728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
