@@ -112,6 +112,7 @@ void UpdateDisplayConfigurationTask::OnStateEntered(
   if (new_display_state_ == MULTIPLE_DISPLAY_STATE_DUAL_MIRROR &&
       status == ConfigureDisplaysTask::PARTIAL_SUCCESS)
     success = false;
+  LOG(ERROR) << "new state: " << new_display_state_;
 
   if (layout_manager_->GetSoftwareMirroringController()) {
     bool enable_software_mirroring = false;
@@ -124,6 +125,7 @@ void UpdateDisplayConfigurationTask::OnStateEntered(
         EnterState(base::Bind(
             &UpdateDisplayConfigurationTask::OnEnableSoftwareMirroring,
             weak_ptr_factory_.GetWeakPtr()));
+        LOG(ERROR) << "oringal is mirror ";
         return;
       }
 
@@ -133,6 +135,9 @@ void UpdateDisplayConfigurationTask::OnStateEntered(
       if (success)
         new_display_state_ = MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
     }
+
+    LOG(ERROR) << "updated new state: " << new_display_state_;
+    LOG(ERROR) << "configurator set software : " << enable_software_mirroring;
 
     layout_manager_->GetSoftwareMirroringController()->SetSoftwareMirroring(
         enable_software_mirroring);
@@ -193,13 +198,16 @@ MultipleDisplayState UpdateDisplayConfigurationTask::ChooseDisplayState()
     return MULTIPLE_DISPLAY_STATE_SINGLE;
   }
 
-  if (num_displays == 2 || num_on_displays == 2) {
+  if (num_displays >= 2 || num_on_displays >= 2) {
     // Try to use the saved configuration; otherwise, default to extended.
     DisplayConfigurator::StateController* state_controller =
         layout_manager_->GetStateController();
-
+    LOG(ERROR) << "state controller: " << state_controller;
     if (!state_controller)
       return MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
+    LOG(ERROR) << "get state:"
+               << state_controller->GetStateForDisplayIds(cached_displays_);
+    LOG(ERROR) << "now state: " << layout_manager_->GetDisplayState();
     return state_controller->GetStateForDisplayIds(cached_displays_);
   }
 

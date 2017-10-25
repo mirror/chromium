@@ -218,6 +218,9 @@ int64_t DisplayManager::kUnifiedDisplayId = -10;
 DisplayManager::DisplayManager(std::unique_ptr<Screen> screen)
     : screen_(std::move(screen)),
       layout_store_(new DisplayLayoutStore),
+      is_multi_mirroring_enabled_(
+          base::CommandLine::ForCurrentProcess()->HasSwitch(
+              ::switches::kEnableMultiMirroring)),
       weak_ptr_factory_(this) {
 #if defined(OS_CHROMEOS)
   configure_displays_ = chromeos::IsRunningAsSystemCompositor();
@@ -306,10 +309,12 @@ DisplayIdList DisplayManager::GetCurrentDisplayIdList() const {
   if (IsInUnifiedMode()) {
     return CreateDisplayIdList(software_mirroring_display_list_);
   } else if (IsInSoftwareMirrorMode()) {
-    CHECK_EQ(2u, num_connected_displays());
-    // This comment is to make it easy to distinguish the crash
-    // between two checks.
-    CHECK_EQ(1u, active_display_list_.size());
+    if (!is_multi_mirroring_enabled_) {
+      CHECK_EQ(2u, num_connected_displays());
+      // This comment is to make it easy to distinguish the crash
+      // between two checks.
+      CHECK_EQ(1u, active_display_list_.size());
+    }
 
     DisplayIdList display_id_list = CreateDisplayIdList(active_display_list_);
     DisplayIdList software_mirroring_display_id_list =
@@ -1083,8 +1088,9 @@ int64_t DisplayManager::GetDisplayIdForUIScaling() const {
 }
 
 void DisplayManager::SetMirrorMode(bool mirror) {
-  // TODO(oshima): Enable mirror mode for 2> displays. crbug.com/589319.
-  if (num_connected_displays() != 2)
+  if (is_multi_mirroring_enabled_ && num_connected_displays() < 2)
+    return;
+  if (!is_multi_mirroring_enabled_ && num_connected_displays() != 2)
     return;
 
 #if defined(OS_CHROMEOS)
@@ -1346,7 +1352,9 @@ void DisplayManager::CreateSoftwareMirroringDisplayInfo(
   // mirrored.
   switch (multi_display_mode_) {
     case MIRRORING: {
-      if (display_info_list->size() != 2)
+      if (is_multi_mirroring_enabled_ && display_info_list->size() < 2)
+        return;
+      if (!is_multi_mirroring_enabled_ && display_info_list->size() != 2)
         return;
 
       int64_t source_id = kInvalidDisplayId;
@@ -1364,7 +1372,17 @@ void DisplayManager::CreateSoftwareMirroringDisplayInfo(
                        [source_id](const ManagedDisplayInfo& info) {
                          return info.id() == source_id;
                        });
-      DCHECK(iter != display_info_list->end());
+      if (iter == display_info_list->end()) {
+        // It is possible that internal display is removed. In this case, we use
+        // the first connected display as mirroring source.
+        source_id = first_display_id_;
+        iter =
+            std::find_if(display_info_list->begin(), display_info_list->end(),
+                         [source_id](const ManagedDisplayInfo& info) {
+                           return info.id() == source_id;
+                         });
+        DCHECK(iter != display_info_list->end());
+      }
 
       for (auto& info : *display_info_list) {
         if (source_id == info.id())
