@@ -49,6 +49,8 @@ class PtrSet {
     ptrs_.clear();
   }
 
+  bool empty() { return ptrs_.empty(); }
+
  private:
   class Element {
    public:
