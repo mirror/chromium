@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e04888dc_a221d4f1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 49158,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-25T13:46:57Z",
+      "side": 1,
+      "message": "I don\u0027t like describing this as  number of recieved actions - that\u0027s just a statistic across this metric. I would describe this just based on a single emission of the metric.",
+      "revId": "9f560dd15bdf5eb2fb07d67904c59c8f53d7e3bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
