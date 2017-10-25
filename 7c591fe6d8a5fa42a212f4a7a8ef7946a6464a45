@@ -22,6 +22,30 @@
       "revId": "7c591fe6d8a5fa42a212f4a7a8ef7946a6464a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e4f5bf_ad08348f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/StartupMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-10-25T20:31:28Z",
+      "side": 1,
+      "message": "Your math is correct, we are indeed recording this metric only if we exceed 23 days. And it\u0027s easily explainable why we have so many counts in the first bucket: the elapsed time gets negative after the cast to int with high probability and all negative samples fall into the first bucket.\n\nI agree that it\u0027s better to record metrics in the case when we exceed 23 days. Anecdotally, all such values fall into the last bucket anyway.\n\nDone",
+      "parentUuid": "26942667_2cb1e517",
+      "range": {
+        "startLine": 128,
+        "startChar": 70,
+        "endLine": 128,
+        "endChar": 79
+      },
+      "revId": "7c591fe6d8a5fa42a212f4a7a8ef7946a6464a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
