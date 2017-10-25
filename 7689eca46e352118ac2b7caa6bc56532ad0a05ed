@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c653c36_2ad64b33",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T16:24:43Z",
+      "side": 1,
+      "message": "It should update this vale instead when entering/exiting immersive fullscreen.\n(see https://cs.chromium.org/chromium/src/ash/frame/custom_frame_view_ash.cc?rcl\u003d1c3e6c9460e94549284268db28e0eec81ac21738\u0026l\u003d411)\n\nMaybe it\u0027s not happening for v2 apps?",
+      "revId": "7689eca46e352118ac2b7caa6bc56532ad0a05ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
