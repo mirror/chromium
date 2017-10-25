@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "315d9beb_aeaf7c9e",
+        "filename": "third_party/WebKit/Source/platform/mojo/KURLStructTraitsTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-25T01:24:31Z",
+      "side": 1,
+      "message": "I know almost nothing about mojo serialization so please bear with some simple questions...\n\nHaving serialization not round-trip seems like it could lead to some very subtle bugs. Would it be possible to fail-fast and [D]CHECK when serializing a null KURL?\n\nIs there precedent for this sort of round-trip behavior in mojom? For example, other structures with WTFString?",
+      "revId": "849c0fa0324dd3b2350479d887422639ba2f83ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
