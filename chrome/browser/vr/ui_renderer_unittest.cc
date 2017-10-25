@@ -71,9 +71,11 @@ TestParams params[] = {
          kLoadingIndicator,
          kLoadingIndicatorForeground,
          kUnderDevelopmentNotice,
+         kVoiceSearchButton,
          kCloseButton,
          kExclusiveScreenToast,
-         kVoiceSearchButton,
+         kSpeechRecognitionPrompt,
+         kSpeechRecognitionPromptBackplane,
      }},
     {&UiScene::GetVisible2dBrowsingOverlayElements,
      {
