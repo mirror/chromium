@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6f325a4_a56e2cc9",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-25T01:18:09Z",
+      "side": 1,
+      "message": "Yes, but that refactor is really big, and there\u0027s no way we can get it fixed for 62. However, the problem isn\u0027t as severe as it seems. Example:\n\n(1) Start up host scan. Register device A, B, C.\n(2) Get CryptAuth sync.\n(3) Start up new operation. Register updated device A.\n(4) Host scan finishes and unregisters original device A.\n(5) New operation finishes and unregisters updated device A.\n\nSo, there is a problem between steps 3 and 4, but it corrects itself eventually.",
+      "parentUuid": "74ac9d06_2d2e728e",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dd76387_e631acac",
         "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-25T01:00:06Z",
       "side": 1,
       "message": "This return indicates that we\u0027ll only move a device to the back of the list for the first priority with which it\u0027s registered. Is that what we want, or should this just keep going and move it to the back of every priority list?\n\nEither way, I think the documentation for this function should be updated to reflect this behavior.",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 10
+      },
+      "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9be963e7_dcc0b02b",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-25T01:18:09Z",
+      "side": 1,
+      "message": "Theoretically, there should be no duplicate entries with different priorities. However, the API of this class does not enforce that, so for now, I\u0027ll just move each priority to the end of its respective deque.\n\nI\u0027ll fix this more robustly when I fix https://bugs.chromium.org/p/chromium/issues/detail?id\u003d777610.",
+      "parentUuid": "3dd76387_e631acac",
       "range": {
         "startLine": 99,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "25f3bfc8_b489aa1c",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-25T01:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8be60682_cda469a2",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 50
+      },
+      "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f765d39b_4bd4020b",
         "filename": "chromeos/components/tether/connection_priority.h",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-25T01:06:44Z",
       "side": 1,
       "message": "Do you need to explicitly list the value? If so, should this start at 0?",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457b9a8d_4a89485d",
+        "filename": "chromeos/components/tether/connection_priority.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-25T01:18:09Z",
+      "side": 1,
+      "message": "The starting value doesn\u0027t matter. The value does matter since we compare high \u003e low.",
+      "parentUuid": "f765d39b_4bd4020b",
       "range": {
         "startLine": 22,
         "startChar": 28,
@@ -114,6 +210,30 @@
       "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007bcb0b_a073725f",
+        "filename": "chromeos/components/tether/connection_priority.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-25T01:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50620627_7ae343c3",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "a4adf9f425c6db9f5e7d5b74b17e2f31e36c947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

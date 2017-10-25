@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d7cd82b_948f06ec",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-25T01:18:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d95893f8_f5739b45",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "d7550a886a5c2ff3797b3d64d6a31ea4d9c56d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a20bc3b_bdfc5614",
         "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "d7550a886a5c2ff3797b3d64d6a31ea4d9c56d9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460897ad_46ad5c56",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-25T01:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a20bc3b_bdfc5614",
+      "range": {
+        "startLine": 64,
+        "startChar": 48,
+        "endLine": 64,
+        "endChar": 57
+      },
+      "revId": "d7550a886a5c2ff3797b3d64d6a31ea4d9c56d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "49bbb4b6_8a7c43df",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-25T01:18:09Z",
+      "side": 1,
+      "message": "It\u0027s not a deque for the priority, though. It\u0027s a map entry which contains both the deque and the priority.",
+      "parentUuid": "90f1b0b9_5f09ef59",
+      "range": {
+        "startLine": 65,
+        "startChar": 13,
+        "endLine": 65,
+        "endChar": 22
+      },
+      "revId": "d7550a886a5c2ff3797b3d64d6a31ea4d9c56d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a7f5d9_de0f554c",
         "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "d7550a886a5c2ff3797b3d64d6a31ea4d9c56d9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb8b65a_4a16527b",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-25T01:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77a7f5d9_de0f554c",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 66,
+        "endChar": 11
+      },
+      "revId": "d7550a886a5c2ff3797b3d64d6a31ea4d9c56d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e9a4c15d_dad66ac5",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-25T01:18:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1596f84b_ada16d6f",
+      "range": {
+        "startLine": 68,
+        "startChar": 43,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "d7550a886a5c2ff3797b3d64d6a31ea4d9c56d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be682889_e3d47311",
         "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-25T01:06:44Z",
       "side": 1,
       "message": "Can a device can be present across multiple priorities? If not, are there checks to prevent that? If so, it seems this early return will prevent moving this same device in another priority to the back.",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 10
+      },
+      "revId": "d7550a886a5c2ff3797b3d64d6a31ea4d9c56d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179bc283_17c77d2a",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-25T01:18:09Z",
+      "side": 1,
+      "message": "Theoretically, there should be no duplicate entries with different priorities. However, the API of this class does not enforce that, so for now, I\u0027ll just move each priority to the end of its respective deque.\n\nI\u0027ll fix this more robustly when I fix https://bugs.chromium.org/p/chromium/issues/detail?id\u003d777610.",
+      "parentUuid": "be682889_e3d47311",
       "range": {
         "startLine": 99,
         "startChar": 4,
