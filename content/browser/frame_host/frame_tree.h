@@ -17,6 +17,7 @@
 #include "base/macros.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/common/content_export.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 
 namespace content {
 
@@ -122,15 +123,21 @@ class CONTENT_EXPORT FrameTree {
   // Adds a new child frame to the frame tree. |process_id| is required to
   // disambiguate |new_routing_id|, and it must match the process of the
   // |parent| node. Otherwise no child is added and this method returns false.
-  bool AddFrame(FrameTreeNode* parent,
-                int process_id,
-                int new_routing_id,
-                blink::WebTreeScopeType scope,
-                const std::string& frame_name,
-                const std::string& frame_unique_name,
-                const base::UnguessableToken& devtools_frame_token,
-                const FramePolicy& frame_policy,
-                const FrameOwnerProperties& frame_owner_properties);
+  // |interfaces_request| is the request end of the InterfaceProvider
+  // interface through which the child RenderFrame can access Mojo services
+  // exposed by the corresponding RenderFrameHost. The caller takes care of
+  // sending the client end of the interface down to the RenderFrame.
+  bool AddFrame(
+      FrameTreeNode* parent,
+      int process_id,
+      int new_routing_id,
+      service_manager::mojom::InterfaceProviderRequest interfaces_request,
+      blink::WebTreeScopeType scope,
+      const std::string& frame_name,
+      const std::string& frame_unique_name,
+      const base::UnguessableToken& devtools_frame_token,
+      const FramePolicy& frame_policy,
+      const FrameOwnerProperties& frame_owner_properties);
 
   // Removes a frame from the frame tree. |child|, its children, and objects
   // owned by their RenderFrameHostManagers are immediately deleted. The root

@@ -53,6 +53,7 @@
 #include "net/http/http_response_headers.h"
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
 #include "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h"
@@ -131,7 +132,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
     : public RenderFrameHost,
       public base::SupportsUserData,
       public mojom::FrameHost,
-      public mojom::FrameHostInterfaceBroker,
       public BrowserAccessibilityDelegate,
       public SiteInstanceImpl::Observer,
       public service_manager::mojom::InterfaceProvider,
@@ -213,10 +213,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) override;
 
-  // mojom::FrameHostInterfaceBroker
-  void GetInterfaceProvider(
-      service_manager::mojom::InterfaceProviderRequest interfaces) override;
-
   // IPC::Sender
   bool Send(IPC::Message* msg) override;
 
@@ -277,13 +273,19 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // that was partially handled on the IO thread (to allocate |new_routing_id|
   // and |devtools_frame_token|), and is forwarded here. The renderer has
   // already been told to create a RenderFrame with the specified ID values.
-  void OnCreateChildFrame(int new_routing_id,
-                          blink::WebTreeScopeType scope,
-                          const std::string& frame_name,
-                          const std::string& frame_unique_name,
-                          const base::UnguessableToken& devtools_frame_token,
-                          const FramePolicy& frame_policy,
-                          const FrameOwnerProperties& frame_owner_properties);
+  // |interfaces_request| is the request end of the InterfaceProvider interface
+  // that the RenderFrameHost corresponding to the child frame should bind to
+  // expose services to the renderer process. The caller takes care of sending
+  // down the client end of the pipe to the child RenderFrame to use.
+  void OnCreateChildFrame(
+      int new_routing_id,
+      service_manager::mojom::InterfaceProviderRequest interfaces_request,
+      blink::WebTreeScopeType scope,
+      const std::string& frame_name,
+      const std::string& frame_unique_name,
+      const base::UnguessableToken& devtools_frame_token,
+      const FramePolicy& frame_policy,
+      const FrameOwnerProperties& frame_owner_properties);
 
   // Update this frame's last committed origin.
   void SetLastCommittedOrigin(const url::Origin& origin);
@@ -661,6 +663,13 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // sending a mojo overlay factory.
   const base::UnguessableToken& GetOverlayRoutingToken();
 
+  // Binds the request end of the InterfaceProvider interface through which
+  // services provided by this RenderFrameHost are exposed to the correponding
+  // RenderFrame. The caller is responsible for plumbing the client end to the
+  // the renderer process.
+  void BindInterfacesRequest(
+      service_manager::mojom::InterfaceProviderRequest interfaces_request);
+
   const StreamHandle* stream_handle_for_testing() const {
     return stream_handle_.get();
   }
@@ -842,7 +851,21 @@ class CONTENT_EXPORT RenderFrameHostImpl
                            const gfx::Rect& initial_rect,
                            bool user_gesture);
 
-  // mojom::FrameHost
+  // Takes the |request| end of an InterfaceProvider interface and routes it
+  // through the Service Manager to apply service manifest capability-based
+  // filtering; and returns the request end of an InterfaceProvider interface to
+  // which only allowed interface requests will be delivered. Virtual so that it
+  // can be mocked out for tests that do not have a service_manager::Connector.
+  //
+  // TODO(rockot): Re-evaluate whether this layer of defense is really
+  // worthwhile. Perhaps it would be better replaced by a similarly declarative
+  // but browser-defined spec exclusively for context-bound interface policy,
+  // leaving the Service Manager out of these decisions entirely.
+  virtual service_manager::mojom::InterfaceProviderRequest
+  RouteThroughCapabilityFilter(
+      service_manager::mojom::InterfaceProviderRequest request);
+
+  // mojom::FrameHost:
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override;
   void IssueKeepAliveHandle(mojom::KeepAliveHandleRequest request) override;
@@ -1245,8 +1268,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // same Previews status as the top-level frame.
   PreviewsState last_navigation_previews_state_;
 
-  mojo::Binding<mojom::FrameHostInterfaceBroker>
-      frame_host_interface_broker_binding_;
   mojo::AssociatedBinding<mojom::FrameHost> frame_host_associated_binding_;
   mojom::FramePtr frame_;
   mojom::FrameBindingsControlAssociatedPtr frame_bindings_control_;
@@ -1303,8 +1324,17 @@ class CONTENT_EXPORT RenderFrameHostImpl
   std::unique_ptr<JavaInterfaceProvider> java_interface_registry_;
 #endif
 
-  mojo::BindingSet<service_manager::mojom::InterfaceProvider>
-      interface_provider_bindings_;
+  // Binding for the InterfaceProvider through which this RFHI exposes Mojo
+  // services to the corresonding RenderFrame.
+  //
+  // Normally, whoever creates this RFHI, is responsible for creating a message
+  // pipe, then supplying the request end to BindInterfacesRequest(), and
+  // plumbing the client end to the RenderFrame in the renderer process.
+  //
+  // Currently the only exception to this rule are out-of-process iframes, where
+  // the child RFHI takes care of this internally in CreateRenderFrame().
+  mojo::Binding<service_manager::mojom::InterfaceProvider>
+      interface_provider_binding_;
 
   // IPC-friendly token that represents this host for AndroidOverlays, if we
   // have created one yet.
