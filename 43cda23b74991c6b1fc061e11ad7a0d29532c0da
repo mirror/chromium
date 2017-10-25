@@ -51,6 +51,24 @@
       "revId": "43cda23b74991c6b1fc061e11ad7a0d29532c0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bae92c4_02dd3a83",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-25T20:12:25Z",
+      "side": 1,
+      "message": "Addressed in https://chromium-review.googlesource.com/c/chromium/src/+/734700",
+      "parentUuid": "2ca32b16_f8f4416c",
+      "revId": "43cda23b74991c6b1fc061e11ad7a0d29532c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
