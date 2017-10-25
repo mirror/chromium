@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb3579db_7471c801",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-25T09:57:04Z",
+      "side": 1,
+      "message": "Can we DCHECK if result is not units_.end()?",
+      "revId": "b1a7e84d729230ca83e9d8ce6488acd9207b6956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8db157_32baf7f4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-25T09:57:04Z",
+      "side": 1,
+      "message": "Can check not begin before prev()?",
+      "revId": "b1a7e84d729230ca83e9d8ce6488acd9207b6956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
