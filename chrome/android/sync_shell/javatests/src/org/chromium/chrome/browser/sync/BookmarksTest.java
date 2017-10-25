@@ -53,6 +53,9 @@ public class BookmarksTest {
 
     private static final String BOOKMARKS_TYPE_STRING = "Bookmarks";
 
+    // From ModelTypeInfo::notification_type
+    private static final String BOOKMARK_NOTIFICATION_STRING = "bookmark";
+
     private static final String URL = "http://chromium.org/";
     private static final String TITLE = "Chromium";
     private static final String MODIFIED_TITLE = "Chromium2";
@@ -482,7 +485,8 @@ public class BookmarksTest {
 
     private List<Bookmark> getClientBookmarks() throws JSONException {
         List<Pair<String, JSONObject>> rawBookmarks =
-                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING);
+                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING,
+                        BOOKMARK_NOTIFICATION_STRING);
         List<Bookmark> bookmarks = new ArrayList<Bookmark>(rawBookmarks.size());
         for (Pair<String, JSONObject> rawBookmark : rawBookmarks) {
             String id = rawBookmark.first;
@@ -508,7 +512,9 @@ public class BookmarksTest {
 
     private void assertClientBookmarkCount(int count) throws JSONException {
         Assert.assertEquals("There should be " + count + " local bookmarks.", count,
-                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING)
+                SyncTestUtil
+                        .getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING,
+                                BOOKMARK_NOTIFICATION_STRING)
                         .size());
     }
 
@@ -523,7 +529,8 @@ public class BookmarksTest {
             @Override
             public Integer call() throws Exception {
                 return SyncTestUtil
-                        .getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING)
+                        .getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING,
+                                BOOKMARK_NOTIFICATION_STRING)
                         .size();
             }
         }));
