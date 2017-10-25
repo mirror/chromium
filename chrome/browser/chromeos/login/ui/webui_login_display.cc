@@ -223,14 +223,15 @@ void WebUILoginDisplay::MigrateUserData(const std::string& old_password) {
 }
 
 void WebUILoginDisplay::LoadWallpaper(const AccountId& account_id) {
-  WallpaperManager::Get()->SetUserWallpaperDelayed(account_id);
+  WallpaperManager::Get()->SetUserWallpaper(account_id);
 }
 
 void WebUILoginDisplay::LoadSigninWallpaper() {
   if (!WallpaperManager::Get()->SetDeviceWallpaperIfApplicable(
           user_manager::SignInAccountId())) {
-    WallpaperManager::Get()->SetDefaultWallpaperDelayed(
-        user_manager::SignInAccountId());
+    WallpaperManager::Get()->SetDefaultWallpaper(
+        user_manager::SignInAccountId(), true /* update_wallpaper */,
+        false /* remove_custom_wallpaper */);
   }
 }
 
