@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90562c73_79e59514",
+        "filename": "chrome/installer/linux/common/chrome_symbol_export_whitelist.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T01:16:56Z",
+      "side": 1,
+      "message": "Add a TODO to file a bug with https://github.com/cisco/openh264/issues, since we pull in from GH via DEPS, which makes it harder to patch our copy.",
+      "revId": "a27536f2dcb81929a312a2b6b047e9e0346aabad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7ffff6_89cd7e32",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T01:16:56Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 379,
+        "startChar": 17,
+        "endLine": 379,
+        "endChar": 24
+      },
+      "revId": "a27536f2dcb81929a312a2b6b047e9e0346aabad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
