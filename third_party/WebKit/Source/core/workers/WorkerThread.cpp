@@ -190,8 +190,8 @@ void WorkerThread::WillProcessTask() {
 // https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model
 void WorkerThread::DidProcessTask() {
   DCHECK(IsCurrentThread());
-  if (IsForciblyTerminated()) {
-    // The script has been terminated forcibly, which means we need to
+  if (CheckRequestedToTerminateOnWorkerThread()) {
+    // The V8 Isolate has been requested to terminate, which means we need to
     // ask objects in the thread to stop working as soon as possible.
     PrepareForShutdownOnWorkerThread();
     return;
