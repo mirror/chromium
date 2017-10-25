@@ -25,10 +25,11 @@ class PaletteTray;
 
 // The PaletteWelcomeBubble handles displaying a warm welcome bubble letting
 // users know about the PaletteTray the first time a stylus is ejected, or if an
-// external stylus is detected.
+// external stylus is detected. PaletteTray controls the visibility of the
+// bubble.
 class ASH_EXPORT PaletteWelcomeBubble : public SessionObserver,
-                                        public views::PointerWatcher,
-                                        public views::WidgetObserver {
+                                        public views::WidgetObserver,
+                                        public views::PointerWatcher {
  public:
   explicit PaletteWelcomeBubble(PaletteTray* tray);
   ~PaletteWelcomeBubble() override;
@@ -36,20 +37,19 @@ class ASH_EXPORT PaletteWelcomeBubble : public SessionObserver,
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);
 
   // Show the welcome bubble iff it has not been shown before.
-  void ShowIfNeeded();
+  void ShowIfNeeded(bool shown_by_stylus);
 
-  bool BubbleShown() { return bubble_view_ != nullptr; }
+  // Set the pref which stores whether the bubble has been shown before as true.
+  // The bubble will not be shown after this is called.
+  void MarkAsShown();
+
+  bool bubble_shown() { return bubble_view_ != nullptr; }
 
   // SessionObserver:
   void OnActiveUserPrefServiceChanged(PrefService* pref_service) override;
 
   // views::WidgetObserver:
   void OnWidgetClosing(views::Widget* widget) override;
-
-  // views::PointerWatcher:
-  void OnPointerEventObserved(const ui::PointerEvent& event,
-                              const gfx::Point& location_in_screen,
-                              gfx::NativeView target) override;
 
   // Returns the close button on the bubble if it exists.
   views::ImageButton* GetCloseButtonForTest();
@@ -61,8 +61,21 @@ class ASH_EXPORT PaletteWelcomeBubble : public SessionObserver,
   friend class PaletteWelcomeBubbleTest;
   class WelcomeBubbleView;
 
-  void Show();
+  void Show(bool shown_by_stylus);
+
+  // Hides the welcome bubble.
   void Hide();
+
+  // views::PointerWatcher:
+  void OnPointerEventObserved(const ui::PointerEvent& event,
+                              const gfx::Point& location_in_screen,
+                              gfx::NativeView target) override;
+
+  // Flag which determines whether a pointer event should be ignored. This is
+  // set when this is first registered as a pointer watcher, so the same event
+  // which caused the bubble to show does not also cause the bubble to be
+  // hidden.
+  bool ignore_stylus_event_ = false;
 
   // The PaletteTray this bubble is associated with. Serves as the anchor for
   // the bubble. Not owned.
