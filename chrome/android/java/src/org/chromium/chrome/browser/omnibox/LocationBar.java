@@ -102,6 +102,12 @@ public interface LocationBar extends UrlBarDelegate {
     void setUrlFocusChangeListener(UrlFocusChangeListener listener);
 
     /**
+     * Adds a URL focus change listener that will be notified when the URL gains or loses focus.
+     * @param listener The listener to be registered.
+     */
+    void addUrlFocusChangeListener(UrlFocusChangeListener listener);
+
+    /**
      * Signal a {@link UrlBar} focus change request.
      * @param shouldBeFocused Whether the focus should be requested or cleared. True requests focus
      *        and False clears focus.
