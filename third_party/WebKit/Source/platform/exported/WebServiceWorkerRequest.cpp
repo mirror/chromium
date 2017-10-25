@@ -8,8 +8,6 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/RefCounted.h"
 #include "public/platform/WebHTTPHeaderVisitor.h"
-#include "public/platform/WebString.h"
-#include "public/platform/WebURLRequest.h"
 
 namespace blink {
 
@@ -30,6 +28,7 @@ class WebServiceWorkerRequestPrivate
   WebString method_;
   HTTPHeaderMap headers_;
   RefPtr<BlobDataHandle> blob_data_handle;
+  WebVector<WebString> body_;
   Referrer referrer_;
   WebURLRequest::FetchRequestMode mode_;
   bool is_main_resource_load_;
@@ -109,6 +108,14 @@ void WebServiceWorkerRequest::SetBlob(const WebString& uuid,
   SetBlob(uuid, size,
           mojom::blink::BlobPtrInfo(std::move(blob_pipe),
                                     mojom::blink::Blob::Version_));
+}
+
+void WebServiceWorkerRequest::SetBody(const WebVector<WebString>& body) {
+  private_->body_ = body;
+}
+
+const WebVector<WebString>& WebServiceWorkerRequest::Body() const {
+  return private_->body_;
 }
 
 void WebServiceWorkerRequest::SetBlob(const WebString& uuid,

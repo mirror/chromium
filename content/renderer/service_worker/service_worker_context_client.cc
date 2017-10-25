@@ -209,6 +209,16 @@ void ToWebServiceWorkerRequest(const ServiceWorkerFetchRequest& request,
     web_request->SetHeader(blink::WebString::FromUTF8(pair.first),
                            blink::WebString::FromUTF8(pair.second));
   }
+
+  // S13nServiceWorker: Body is usually sent as a vector of DataElements.
+  std::vector<blink::WebString> web_vector;
+  for (const std::string& str : request.body) {
+    web_vector.push_back(blink::WebString::FromUTF8(str));
+  }
+  web_request->SetBody(web_vector);
+
+  // Body is sent instead as a Blob in non-S13nServiceWorker and sometimes even
+  // in S13nServiceWorker.
   if (!request.blob_uuid.empty()) {
     DCHECK_EQ(request.blob != nullptr, features::IsMojoBlobsEnabled());
     mojo::ScopedMessagePipeHandle blob_pipe;

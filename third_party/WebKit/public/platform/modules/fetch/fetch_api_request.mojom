@@ -124,6 +124,13 @@ enum ServiceWorkerFetchType {
   FETCH,
   FOREIGN_FETCH,
 };
+/*
+union DataElement {
+  string str;
+  handle<data_pipe_producer> pipe;
+  // TODO(falken): Add file.
+}
+*/
 
 struct FetchAPIRequest {
   FetchRequestMode mode;
@@ -133,9 +140,21 @@ struct FetchAPIRequest {
   url.mojom.Url url;
   string method;
   map<string, string> headers;
+
+  // Body can be transferred as:
+  // 1. DataElements. This is the preferred way of transferring body. Only
+  // enabled in S13nServiceWorker.
+  array<string> body;
+
+  // 2. A Blob. This is the legacy way of transferring body. Always used in
+  // non-S13nServiceWorker.  Also, sometimes Blink creates a Blob on its own
+  // and only sends the data this way. There are two variants:
+  // 2a. A non-MojoBlob.
   string? blob_uuid;
   uint64 blob_size;
+  // 2b. A MojoBlob.
   Blob? blob;
+
   Referrer referrer;
   FetchCredentialsMode credentials_mode;
   FetchRedirectMode redirect_mode;

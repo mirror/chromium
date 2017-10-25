@@ -132,8 +132,8 @@ class PLATFORM_EXPORT EncodedFormData : public RefCounted<EncodedFormData> {
                                 long long length,
                                 double expected_modification_time);
 
-  void Flatten(Vector<char>&) const;  // omits files
-  String FlattenToString() const;     // omits files
+  void Flatten(Vector<char>&) const;  // omits files and blobs
+  String FlattenToString() const;     // omits files and blobs
 
   bool IsEmpty() const { return elements_.IsEmpty(); }
   const Vector<FormDataElement>& Elements() const { return elements_; }

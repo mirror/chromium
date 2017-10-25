@@ -26,6 +26,7 @@ bool IsSimple(const EncodedFormData* form_data) {
   return true;
 }
 
+// Used when the form data is only strings.
 class SimpleFormDataBytesConsumer : public BytesConsumer {
  public:
   explicit SimpleFormDataBytesConsumer(scoped_refptr<EncodedFormData> form_data)
@@ -100,6 +101,7 @@ class SimpleFormDataBytesConsumer : public BytesConsumer {
   PublicState state_ = PublicState::kReadableOrWaiting;
 };
 
+// Used when the form data is not only strings.
 class ComplexFormDataBytesConsumer final : public BytesConsumer {
  public:
   ComplexFormDataBytesConsumer(ExecutionContext* execution_context,

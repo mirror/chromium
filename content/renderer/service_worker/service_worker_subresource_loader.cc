@@ -182,12 +182,27 @@ void ServiceWorkerSubresourceLoader::DeleteSoon() {
 
 void ServiceWorkerSubresourceLoader::StartRequest(
     const ResourceRequest& resource_request) {
-  // TODO(kinuko): Implement request.request_body handling.
-  DCHECK(!resource_request.request_body);
-  std::unique_ptr<ServiceWorkerFetchRequest> request =
-      ServiceWorkerLoaderHelpers::CreateFetchRequest(resource_request);
   DCHECK_EQ(Status::kNotStarted, status_);
   status_ = Status::kStarted;
+
+  // TODO(kinuko): Implement request.request_body handling.
+  // DCHECK(!resource_request.request_body);
+  std::unique_ptr<ServiceWorkerFetchRequest> request =
+      ServiceWorkerLoaderHelpers::CreateFetchRequest(resource_request);
+  if (resource_request.request_body) {
+    for (const storage::DataElement& element :
+         *resource_request.request_body->elements()) {
+      switch (element.type()) {
+        case storage::DataElement::TYPE_BYTES:
+          request->body.emplace_back(element.bytes(), element.length());
+          break;
+        default:
+          // TODO(falken): Support data pipe and file types.
+          CHECK(false);
+          return;
+      }
+    }
+  }
 
   mojom::ServiceWorkerFetchResponseCallbackPtr response_callback_ptr;
   response_callback_binding_.Bind(mojo::MakeRequest(&response_callback_ptr));
