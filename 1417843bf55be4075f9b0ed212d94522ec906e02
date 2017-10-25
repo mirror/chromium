@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "910f67d4_91ebc7e7",
+        "filename": "ui/base/ime/input_method_auralinux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-10-25T18:51:12Z",
+      "side": 1,
+      "message": "Is this still necessary? I don\u0027t really understand what it\u0027s doing.",
+      "revId": "1417843bf55be4075f9b0ed212d94522ec906e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b350e96e_0ff398a8",
+        "filename": "ui/base/ime/input_method_auralinux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-10-25T18:51:12Z",
+      "side": 1,
+      "message": "Ok, now we\u0027re only starting the timer if the IME has a nonempty preedit string.",
+      "revId": "1417843bf55be4075f9b0ed212d94522ec906e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
