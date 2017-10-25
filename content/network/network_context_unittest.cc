@@ -17,9 +17,11 @@
 #include "base/run_loop.h"
 #include "base/strings/string_split.h"
 #include "base/test/mock_entropy_provider.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "components/network_error_logging/network_error_logging_service.h"
 #include "components/network_session_configurator/browser/network_session_configurator.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "content/network/network_context.h"
@@ -535,6 +537,34 @@ TEST_F(NetworkContextTest, CookieManager) {
   run_loop2.Run();
   ASSERT_EQ(1u, cookies.size());
   EXPECT_EQ("TestCookie", cookies[0].Name());
+}
+
+// Note: The next two tests also test the code in
+// NetworkErrorLoggingService::Create and URLRequestContextBuilder that
+// touches the NetworkErrorLoggingService.
+
+TEST_F(NetworkContextTest, NetworkErrorLoggingDisabled) {
+  base::test::ScopedFeatureList feature_list_;
+  feature_list_.InitAndDisableFeature(features::kNetworkErrorLogging);
+
+  std::unique_ptr<NetworkContext> network_context =
+      CreateContextWithParams(mojom::NetworkContextParams::New());
+
+  EXPECT_EQ(
+      nullptr,
+      network_context->url_request_context()->network_error_logging_delegate());
+}
+
+TEST_F(NetworkContextTest, NetworkErrorLoggingEnabled) {
+  base::test::ScopedFeatureList feature_list_;
+  feature_list_.InitAndEnableFeature(features::kNetworkErrorLogging);
+
+  std::unique_ptr<NetworkContext> network_context =
+      CreateContextWithParams(mojom::NetworkContextParams::New());
+
+  EXPECT_NE(
+      nullptr,
+      network_context->url_request_context()->network_error_logging_delegate());
 }
 
 }  // namespace
