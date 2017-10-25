@@ -12,6 +12,8 @@
 
 namespace cc {
 
+struct ScrollTimeline;
+
 // A WorkletAnimationPlayer is an animations player that allows its animation
 // timing to be controlled by an animator instance that is running in a
 // AnimationWorkletGlobalScope.
@@ -19,12 +21,20 @@ class CC_ANIMATION_EXPORT WorkletAnimationPlayer final
     : public AnimationPlayer,
       AnimationTicker::AnimationTimeProvider {
  public:
-  WorkletAnimationPlayer(int id, const std::string& name);
-  static scoped_refptr<WorkletAnimationPlayer> Create(int id,
-                                                      const std::string& name);
+  WorkletAnimationPlayer(int id,
+                         const std::string& name,
+                         std::unique_ptr<ScrollTimeline> scroll_timeline);
+  static scoped_refptr<WorkletAnimationPlayer> Create(
+      int id,
+      const std::string& name,
+      std::unique_ptr<ScrollTimeline> scroll_timeline);
   scoped_refptr<AnimationPlayer> CreateImplInstance() const override;
 
   const std::string& name() const { return name_; }
+  const ScrollTimeline* scroll_timeline() const {
+    return scroll_timeline_.get();
+  }
+
   void SetLocalTime(base::TimeDelta local_time);
   bool IsWorkletAnimationPlayer() const override;
 
@@ -40,6 +50,7 @@ class CC_ANIMATION_EXPORT WorkletAnimationPlayer final
   ~WorkletAnimationPlayer() override;
 
   std::string name_;
+  std::unique_ptr<ScrollTimeline> scroll_timeline_;
   base::TimeDelta local_time_;
 };
 

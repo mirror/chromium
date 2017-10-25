@@ -53,6 +53,45 @@ bool ValidateTimelines(HeapVector<DocumentTimelineOrScrollTimeline>& timelines,
   }
   return true;
 }
+
+CompositorElementId GetCompositorScrollElementId(const Element& element) {
+  DCHECK(element.GetLayoutObject());
+  DCHECK(element.GetLayoutObject()->HasLayer());
+  return CompositorElementIdFromUniqueObjectId(
+      element.GetLayoutObject()->UniqueId(),
+      CompositorElementIdNamespace::kScroll);
+}
+
+CompositorScrollTimeline::ScrollDirection ConvertOrientation(
+    ScrollTimeline::ScrollDirection orientation) {
+  switch (orientation) {
+    case ScrollTimeline::Block:
+      return CompositorScrollTimeline::Block;
+    case ScrollTimeline::Inline:
+      return CompositorScrollTimeline::Inline;
+    default:
+      NOTREACHED();
+      return CompositorScrollTimeline::Block;
+  }
+}
+
+std::unique_ptr<CompositorScrollTimeline> ToCompositorScrollTimeline(
+    const DocumentTimelineOrScrollTimeline& timeline) {
+  if (!timeline.IsScrollTimeline())
+    return nullptr;
+
+  // TODO(smcgruer): We need to force the scrollSource to be composited.
+  ScrollTimeline* scroll_timeline = timeline.GetAsScrollTimeline();
+  CompositorElementId element_id =
+      GetCompositorScrollElementId(*scroll_timeline->scrollSource());
+  DoubleOrScrollTimelineAutoKeyword time_range;
+  scroll_timeline->timeRange(time_range);
+  // TODO(smcgruer): Handle 'auto' time range value.
+  DCHECK(time_range.IsDouble());
+  return std::make_unique<CompositorScrollTimeline>(
+      element_id, ConvertOrientation(scroll_timeline->GetOrientation()),
+      time_range.GetAsDouble());
+}
 }  // namespace
 
 WorkletAnimation* WorkletAnimation::Create(
@@ -100,8 +139,8 @@ WorkletAnimation::WorkletAnimation(
   DCHECK(Platform::Current()->IsThreadedAnimationEnabled());
   DCHECK(Platform::Current()->CompositorSupport());
 
-  compositor_player_ =
-      CompositorAnimationPlayer::CreateWorkletPlayer(animator_name_);
+  compositor_player_ = CompositorAnimationPlayer::CreateWorkletPlayer(
+      animator_name_, ToCompositorScrollTimeline(timeline_));
   compositor_player_->SetAnimationDelegate(this);
 }
 
