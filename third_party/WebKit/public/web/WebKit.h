@@ -34,6 +34,13 @@
 #include "public/platform/Platform.h"
 #include "v8/include/v8.h"
 
+namespace service_manager {
+template <typename... BinderArgs>
+class BinderRegistryWithArgs;
+
+using BinderRegistry = BinderRegistryWithArgs<>;
+}  // namespace service_manager
+
 namespace blink {
 
 // Initialize the entire Blink (wtf, platform, core, modules and web).
@@ -43,6 +50,8 @@ namespace blink {
 // using any other public APIs. The provided Platform; must be
 // non-null and must remain valid until the current thread calls shutdown.
 BLINK_EXPORT void Initialize(Platform*);
+
+BLINK_EXPORT void RegisterInterfaces(service_manager::BinderRegistry&);
 
 // Get the V8 Isolate for the main thread.
 // initialize must have been called first.
