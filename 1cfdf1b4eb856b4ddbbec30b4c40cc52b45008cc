@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04ccd286_3a7b5847",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T01:20:33Z",
+      "side": 1,
+      "message": "Are these codec lists intentionally incomplete w.r.t. what Chrome can actually decode?",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f08736_80197199",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T01:20:33Z",
+      "side": 1,
+      "message": "This seems a separate rename versus \"add MSE tests\". Are those two different concerns merged into this one CL intentionally (or perhaps am I misunderstanding and there aren\u0027t two different concerns here?) Should this python file and the subfolder similarly be renamed in the same CL as renaming this class?",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
