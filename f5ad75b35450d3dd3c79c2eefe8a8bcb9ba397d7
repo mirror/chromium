@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "7c2d7dfe_9dd9867a",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1423,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T22:36:50Z",
+      "side": 1,
+      "message": "Should this be testing the kEnableViz switch too?",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6264f57d_d70959bc",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T22:36:50Z",
+      "side": 1,
+      "message": "Isn\u0027t this covered by the code in GPTF?",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc45539_dc718816",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T22:36:50Z",
+      "side": 1,
+      "message": "Maybe call DisableGpuCompositing instead so that the CompositingModeReporterImpl is in the right mode?",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e8284f_5e6f1afe",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T22:36:50Z",
+      "side": 1,
+      "message": "Is there a chance that some of these compositors are still in the process of (re-)creating their FrameSink, wouldn\u0027t it cause similar crashes as above?",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3adfc9_e3fbaa29",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T22:36:50Z",
+      "side": 1,
+      "message": "Should we only do this if it was visible before?",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79f7258_0b97e12b",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2756,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T22:36:50Z",
+      "side": 1,
+      "message": "I think this is redundant wrt the next line, since kDisableGpuCompositing causes GpuDataManagerImplPrivate::CanUseGpuBrowserCompositor to return false, so GPTF disables it right away (and we should probably make sure VPTF behaves the same).",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b892a08_4edd1311",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2758,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T22:36:50Z",
+      "side": 1,
+      "message": "GpuDataManagerImplPrivate::AppendRendererCommandLine also adds this flag (on Aura only, for some reason), so we can probably remove it from there (and will make zmo happy).",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57fb97d2_984ca921",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 8
@@ -13,6 +132,24 @@
       "writtenOn": "2017-10-25T22:21:57Z",
       "side": 1,
       "message": "I had the thought that none of this software compositing stuff needs to be compiled on android or chromeos. But I\u0027m not sure if it\u0027s a good idea to ifdef out. I could remove all the members and code in this class, as well as GpuProcessTransportFactory code in chromeos, as well as the mojom and the reporterimpl files.. feelings piman/boliu?",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31149a0a_a0f2dac8",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T22:36:50Z",
+      "side": 1,
+      "message": "I generally prefer leaving it in, unless there is a significant code size difference.",
+      "parentUuid": "57fb97d2_984ca921",
       "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
