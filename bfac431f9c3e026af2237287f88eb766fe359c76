@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "55af0ee4_24d26189",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-25T22:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31d0133f_3c1f6451",
+      "revId": "bfac431f9c3e026af2237287f88eb766fe359c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af192932_50280109",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
         "patchSetId": 6
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "45573d56_b918c1ec",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-25T22:15:56Z",
+      "side": 1,
+      "message": "Added comments in both places.",
+      "parentUuid": "af192932_50280109",
+      "revId": "bfac431f9c3e026af2237287f88eb766fe359c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52ffbefc_eef0ff69",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
         "patchSetId": 6
@@ -67,6 +103,24 @@
       "revId": "bfac431f9c3e026af2237287f88eb766fe359c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5836e985_129c966d",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-25T22:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ffbefc_eef0ff69",
+      "revId": "bfac431f9c3e026af2237287f88eb766fe359c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
