@@ -27,17 +27,17 @@ void WorkletModuleScriptFetcher::Fetch(FetchParameters& fetch_params,
 
 void WorkletModuleScriptFetcher::OnRead(
     const ModuleScriptCreationParams& params) {
-  Finalize(params, nullptr /* error_message */);
+  Finalize(params, nullptr /* error_messages */);
 }
 
 void WorkletModuleScriptFetcher::OnFailed() {
-  Finalize(WTF::nullopt, nullptr /* error_message */);
+  Finalize(WTF::nullopt, nullptr /* error_messages */);
 }
 
 void WorkletModuleScriptFetcher::Finalize(
     const WTF::Optional<ModuleScriptCreationParams>& params,
-    ConsoleMessage* error_message) {
-  NotifyFetchFinished(params, error_message);
+    const HeapVector<Member<ConsoleMessage>>* error_messages) {
+  NotifyFetchFinished(params, error_messages);
 }
 
 }  // namespace blink
