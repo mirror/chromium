@@ -323,6 +323,9 @@ int ScopedTransformOverviewWindow::GetTopInset() const {
   // Mirror window doesn't have insets.
   if (minimized_widget_)
     return 0;
+  // Windows which are in immersive fullscreen mode don't have insets.
+  if (wm::GetWindowState(window_)->in_immersive_fullscreen())
+    return 0;
   for (auto* window : GetTransientTreeIterator(window_)) {
     // If there are regular windows in the transient ancestor tree, all those
     // windows are shown in the same overview item and the header is not masked.
