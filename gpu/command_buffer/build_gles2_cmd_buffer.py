@@ -9941,7 +9941,9 @@ def CreateArg(arg_string):
 class GLGenerator(object):
   """A class to generate GL command buffers."""
 
-  _function_re = re.compile(r'GL_APICALL(.*?)GL_APIENTRY (.*?) \((.*?)\);')
+  _whitespace_re = re.compile(r'^\w*$')
+  _comment_re = re.compile(r'^//.*$')
+  _function_re = re.compile(r'^GL_APICALL(.*?)GL_APIENTRY (.*?) \((.*?)\);$')
 
   def __init__(self, verbose):
     self.original_functions = []
@@ -9988,6 +9990,8 @@ class GLGenerator(object):
     with open(filename, "r") as f:
       functions = f.read()
     for line in functions.splitlines():
+      if self._whitespace_re.match(line) or self._comment_re.match(line):
+        continue
       match = self._function_re.match(line)
       if match:
         func_name = match.group(2)[2:]
@@ -10025,6 +10029,9 @@ class GLGenerator(object):
               self.AddFunction(f)
           else:
             self.AddFunction(f)
+      else:
+        self.Error("Could not parse function: %s using regex: %s" %
+                   (line, self._function_re.pattern))
 
     self.Log("Auto Generated Functions    : %d" %
              len([f for f in self.functions if f.can_auto_generate or
