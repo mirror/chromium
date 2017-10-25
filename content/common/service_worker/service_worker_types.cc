@@ -67,6 +67,9 @@ size_t ServiceWorkerFetchRequest::EstimatedStructSize() {
   size += blob_uuid.size();
   size += client_id.size();
 
+  for (const auto& str : body)
+    size += str.size();
+
   for (const auto& key_and_value : headers) {
     size += key_and_value.first.size();
     size += key_and_value.second.size();

@@ -115,6 +115,7 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   GURL url;
   std::string method;
   ServiceWorkerHeaderMap headers;
+  std::vector<std::string> body;
   std::string blob_uuid;
   uint64_t blob_size;
   scoped_refptr<storage::BlobHandle> blob;
