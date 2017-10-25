@@ -32,8 +32,6 @@ class PaletteTrayTestApi {
     return palette_tray_->bubble_.get();
   }
 
-  bool IsStylusWatcherActive() { return !!palette_tray_->watcher_; }
-
  private:
   PaletteTray* palette_tray_ = nullptr;
 
