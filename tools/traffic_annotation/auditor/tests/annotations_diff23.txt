@@ -1,0 +1,8 @@
+
+	Add line: ' <item id="G" hash_code="G" content_hash_code="G" os_list="linux,windows"/>'
+	Remove line: ' <item id="A" hash_code="A" content_hash_code="A" os_list="linux,windows"/>'
+	Remove line: ' <item id="C" hash_code="C" content_hash_code="C" os_list="linux,windows"/>'
+	Remove line: ' <item id="E" hash_code="E" content_hash_code="E" os_list="linux,windows"/>'
+	Remove line: ' <item id="M" hash_code="N" content_hash_code="N" os_list="linux,windows"/>'
+	Remove line: ' <item id="X" hash_code="X" content_hash_code="X" os_list="linux,windows"/>'
+	Remove line: ' <item id="Z" hash_code="Z" content_hash_code="Z" os_list="linux,windows"/>'
