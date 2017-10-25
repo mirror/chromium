@@ -134,9 +134,9 @@ class VirtualKeyboardControllerAutoTest : public VirtualKeyboardControllerTest,
 // present and tablet mode is disabled.
 TEST_F(VirtualKeyboardControllerAutoTest, DisabledIfInternalKeyboardPresent) {
   std::vector<ui::TouchscreenDevice> screens;
-  screens.push_back(
-      ui::TouchscreenDevice(1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL,
-                            "Touchscreen", gfx::Size(1024, 768), 0));
+  screens.push_back(ui::TouchscreenDevice(
+      1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL, "Touchscreen",
+      gfx::Size(1024, 768), 0, false /* has_stylus */));
   UpdateTouchscreenDevices(screens);
   std::vector<ui::InputDevice> keyboard_devices;
   keyboard_devices.push_back(ui::InputDevice(
@@ -154,9 +154,9 @@ TEST_F(VirtualKeyboardControllerAutoTest, DisabledIfInternalKeyboardPresent) {
 TEST_F(VirtualKeyboardControllerAutoTest, DisabledIfNoTouchScreen) {
   std::vector<ui::TouchscreenDevice> devices;
   // Add a touchscreen. Keyboard should deploy.
-  devices.push_back(
-      ui::TouchscreenDevice(1, ui::InputDeviceType::INPUT_DEVICE_EXTERNAL,
-                            "Touchscreen", gfx::Size(800, 600), 0));
+  devices.push_back(ui::TouchscreenDevice(
+      1, ui::InputDeviceType::INPUT_DEVICE_EXTERNAL, "Touchscreen",
+      gfx::Size(800, 600), 0, false /* has_stylus */));
   UpdateTouchscreenDevices(devices);
   EXPECT_TRUE(keyboard::IsKeyboardEnabled());
   // Remove touchscreen. Keyboard should hide.
@@ -166,9 +166,9 @@ TEST_F(VirtualKeyboardControllerAutoTest, DisabledIfNoTouchScreen) {
 
 TEST_F(VirtualKeyboardControllerAutoTest, SuppressedIfExternalKeyboardPresent) {
   std::vector<ui::TouchscreenDevice> screens;
-  screens.push_back(
-      ui::TouchscreenDevice(1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL,
-                            "Touchscreen", gfx::Size(1024, 768), 0));
+  screens.push_back(ui::TouchscreenDevice(
+      1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL, "Touchscreen",
+      gfx::Size(1024, 768), 0, false /* has_stylus */));
   UpdateTouchscreenDevices(screens);
   std::vector<ui::InputDevice> keyboard_devices;
   keyboard_devices.push_back(ui::InputDevice(
@@ -214,9 +214,9 @@ TEST_F(VirtualKeyboardControllerAutoTest, HandleMultipleKeyboardsPresent) {
 // Tests tablet mode interaction without disabling the internal keyboard.
 TEST_F(VirtualKeyboardControllerAutoTest, EnabledDuringTabletMode) {
   std::vector<ui::TouchscreenDevice> screens;
-  screens.push_back(
-      ui::TouchscreenDevice(1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL,
-                            "Touchscreen", gfx::Size(1024, 768), 0));
+  screens.push_back(ui::TouchscreenDevice(
+      1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL, "Touchscreen",
+      gfx::Size(1024, 768), 0, false /* has_stylus */));
   UpdateTouchscreenDevices(screens);
   std::vector<ui::InputDevice> keyboard_devices;
   keyboard_devices.push_back(ui::InputDevice(
@@ -234,9 +234,9 @@ TEST_F(VirtualKeyboardControllerAutoTest, EnabledDuringTabletMode) {
 // Tests that keyboard gets suppressed in tablet mode.
 TEST_F(VirtualKeyboardControllerAutoTest, SuppressedInMaximizedMode) {
   std::vector<ui::TouchscreenDevice> screens;
-  screens.push_back(
-      ui::TouchscreenDevice(1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL,
-                            "Touchscreen", gfx::Size(1024, 768), 0));
+  screens.push_back(ui::TouchscreenDevice(
+      1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL, "Touchscreen",
+      gfx::Size(1024, 768), 0, false /* has_stylus */));
   UpdateTouchscreenDevices(screens);
   std::vector<ui::InputDevice> keyboard_devices;
   keyboard_devices.push_back(ui::InputDevice(
@@ -295,9 +295,9 @@ class VirtualKeyboardControllerAlwaysEnabledTest
 // keyboard always enabled flag is active.
 TEST_F(VirtualKeyboardControllerAlwaysEnabledTest, DoesNotSuppressKeyboard) {
   std::vector<ui::TouchscreenDevice> screens;
-  screens.push_back(
-      ui::TouchscreenDevice(1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL,
-                            "Touchscreen", gfx::Size(1024, 768), 0));
+  screens.push_back(ui::TouchscreenDevice(
+      1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL, "Touchscreen",
+      gfx::Size(1024, 768), 0, false /* has_stylus */));
   UpdateTouchscreenDevices(screens);
   std::vector<ui::InputDevice> keyboard_devices;
   keyboard_devices.push_back(ui::InputDevice(
