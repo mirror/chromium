@@ -17,7 +17,8 @@ AudioDecoderConfig::AudioDecoderConfig()
       channel_layout_(CHANNEL_LAYOUT_UNSUPPORTED),
       samples_per_second_(0),
       bytes_per_frame_(0),
-      codec_delay_(0) {}
+      codec_delay_(0),
+      should_discard_decoder_delay_(true) {}
 
 AudioDecoderConfig::AudioDecoderConfig(
     AudioCodec codec,
