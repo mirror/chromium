@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05883c6b_3710de85",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T04:42:10Z",
+      "side": 1,
+      "message": "or goog:chromeOptions",
+      "range": {
+        "startLine": 386,
+        "startChar": 19,
+        "endLine": 386,
+        "endChar": 32
+      },
+      "revId": "424a60164feb083008adedaa84e0e193a4e3b6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d1cf9b_667b63bd",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T04:42:10Z",
+      "side": 1,
+      "message": "Some of the capabilities validation/processing code is redundant with existing code in capabilities.cpp. Maybe it would make sense to move bulk of this code to capabilities.cc? And maybe the output of successful ProcessCapabilities should be a Capabilities object?",
+      "range": {
+        "startLine": 475,
+        "startChar": 7,
+        "endLine": 475,
+        "endChar": 26
+      },
+      "revId": "424a60164feb083008adedaa84e0e193a4e3b6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba917d4_e60b982d",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T04:42:10Z",
+      "side": 1,
+      "message": "For output parameter, prefer using pointer instead of reference.",
+      "range": {
+        "startLine": 476,
+        "startChar": 27,
+        "endLine": 476,
+        "endChar": 49
+      },
+      "revId": "424a60164feb083008adedaa84e0e193a4e3b6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c49704_c2881d38",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T04:42:10Z",
+      "side": 1,
+      "message": "|alwaysMatch| is optional, so no need to issue warning if it is missing. To be more spec compliant, we should first check if |alwaysMatch| exists, and use empty dictionary if it is missing. If it is specified, it must be a dictionary, or it is an error.",
+      "range": {
+        "startLine": 483,
+        "startChar": 4,
+        "endLine": 484,
+        "endChar": 43
+      },
+      "revId": "424a60164feb083008adedaa84e0e193a4e3b6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e11f4fe_38d99217",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T04:42:10Z",
+      "side": 1,
+      "message": "No need for warning",
+      "range": {
+        "startLine": 501,
+        "startChar": 4,
+        "endLine": 502,
+        "endChar": 65
+      },
+      "revId": "424a60164feb083008adedaa84e0e193a4e3b6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fad812_316ace71",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T04:42:10Z",
+      "side": 1,
+      "message": "Remove before CQ",
+      "range": {
+        "startLine": 527,
+        "startChar": 4,
+        "endLine": 527,
+        "endChar": 71
+      },
+      "revId": "424a60164feb083008adedaa84e0e193a4e3b6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c353e4_3d89315a",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T04:42:10Z",
+      "side": 1,
+      "message": "What if MatchCapabilities returned false for all first_match candidates?",
+      "range": {
+        "startLine": 549,
+        "startChar": 2,
+        "endLine": 549,
+        "endChar": 21
+      },
+      "revId": "424a60164feb083008adedaa84e0e193a4e3b6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3079dd8_16ac4558",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T04:42:10Z",
+      "side": 1,
+      "message": "This would cause an early return if the app uses old style \"desiredCapabilities\". We should still handle the old cases for some time.\n\nOn the other hand, if the apps uses new style capabilities but it contains errors, we should catch the error and report it.",
+      "range": {
+        "startLine": 562,
+        "startChar": 2,
+        "endLine": 563,
+        "endChar": 18
+      },
+      "revId": "424a60164feb083008adedaa84e0e193a4e3b6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
