@@ -94,6 +94,30 @@
       "revId": "eee1a288f697786081fcd71258623deda378dfba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0c0569_c371d73b",
+        "filename": "ui/arc/notification/arc_notification_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-25T16:10:54Z",
+      "side": 1,
+      "message": "moved to ArcNotificationManager",
+      "parentUuid": "a6640a3a_ec981ca9",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 3
+      },
+      "revId": "eee1a288f697786081fcd71258623deda378dfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
