@@ -22,6 +22,30 @@
       "revId": "8b3764806d1b0dd303dcdea48e595d22ee353a59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a59823_25ba0577",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-10-25T13:42:22Z",
+      "side": 1,
+      "message": "Yes, I already started a cl to remove the old Android code.",
+      "parentUuid": "957f634e_b53aaf48",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 51
+      },
+      "revId": "8b3764806d1b0dd303dcdea48e595d22ee353a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
