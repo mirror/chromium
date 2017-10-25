@@ -3839,6 +3839,7 @@ void LayerTreeHostImpl::PinchGestureEnd() {
   viewport()->PinchEnd();
   browser_controls_offset_manager_->PinchEnd();
   client_->SetNeedsCommitOnImplThread();
+  client_->RenewTreePriority();
   // When a pinch ends, we may be displaying content cached at incorrect scales,
   // so updating draw properties and drawing will ensure we are using the right
   // scales that we want when we're not inside a pinch.
