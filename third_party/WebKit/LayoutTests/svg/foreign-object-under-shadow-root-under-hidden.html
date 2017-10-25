@@ -1,0 +1,19 @@
+<style>
+* {  column-count: 28; }
+</style>
+<script>
+function jsfuzzer() {
+  var shadow_root = svgvar00023.createShadowRoot();
+  var outer_html = foreign.outerHTML;
+  shadow_root.innerHTML = outer_html;
+}
+</script>
+Passes if it does not crash.
+<body onload=jsfuzzer()>
+  <svg>
+    <foreignObject id=foreign>
+      <input>
+    </foreignObject>
+  <clipPath id=svgvar00023>
+  </svg>
+</body>
