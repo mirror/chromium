@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_COMMON_SANDBOX_LINUX_SANDBOX_DEBUG_HANDLING_LINUX_H_
-#define CONTENT_COMMON_SANDBOX_LINUX_SANDBOX_DEBUG_HANDLING_LINUX_H_
+#ifndef SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_SANDBOX_DEBUG_HANDLING_LINUX_H_
+#define SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_SANDBOX_DEBUG_HANDLING_LINUX_H_
 
 #include "base/macros.h"
 
-namespace content {
+namespace service_manager {
 
 class SandboxDebugHandling {
  public:
@@ -20,6 +20,6 @@ class SandboxDebugHandling {
   DISALLOW_IMPLICIT_CONSTRUCTORS(SandboxDebugHandling);
 };
 
-}  // namespace content
+}  // namespace service_manager
 
-#endif  // CONTENT_COMMON_SANDBOX_LINUX_SANDBOX_DEBUG_HANDLING_LINUX_H_
+#endif  // SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_SANDBOX_DEBUG_HANDLING_LINUX_H_
