@@ -62,6 +62,11 @@ void BleConnectionManager::ConnectionMetadata::UnregisterConnectionReason(
   active_connection_reasons_.erase(connection_reason);
 }
 
+ConnectionPriority
+BleConnectionManager::ConnectionMetadata::GetConnectionPriority() {
+  return HighestPriorityForMessageTypes(active_connection_reasons_);
+}
+
 bool BleConnectionManager::ConnectionMetadata::HasReasonForConnection() const {
   return !active_connection_reasons_.empty();
 }
@@ -399,7 +404,7 @@ void BleConnectionManager::UpdateConnectionAttempts() {
 }
 
 void BleConnectionManager::UpdateAdvertisementQueue() {
-  std::vector<cryptauth::RemoteDevice> devices_for_queue;
+  std::vector<BleAdvertisementDeviceQueue::PrioritizedDevice> devices;
   for (const auto& map_entry : device_to_metadata_map_) {
     if (map_entry.second->HasEstablishedConnection()) {
       // If there is already an active connection to the device, there is no
@@ -407,10 +412,11 @@ void BleConnectionManager::UpdateAdvertisementQueue() {
       continue;
     }
 
-    devices_for_queue.push_back(map_entry.first);
+    devices.emplace_back(map_entry.first,
+                         map_entry.second->GetConnectionPriority());
   }
 
-  ble_advertisement_device_queue_->SetDevices(devices_for_queue);
+  ble_advertisement_device_queue_->SetDevices(devices);
 }
 
 void BleConnectionManager::StartConnectionAttempt(
