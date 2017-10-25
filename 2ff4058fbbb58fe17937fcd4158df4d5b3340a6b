@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f26c2c6_fde8702b",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T22:00:31Z",
+      "side": 1,
+      "message": "It\u0027s intentional that the main extensions list page is not wrapped in a dom-if.",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5cd499_1764ec7a",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T22:00:31Z",
+      "side": 1,
+      "message": "It\u0027s intentional that these dom-ifs don\u0027t restamp like the other ones below.",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447f8da0_6e47f589",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T22:00:31Z",
+      "side": 1,
+      "message": "We use camel case for ids to make use of Polymer\u0027s this.$.foo notation and making derived names.",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a609e4f_82f5e596",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T22:00:31Z",
+      "side": 1,
+      "message": "The code above is moved from service.js (not new code).",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ef25ca_2f78da4d",
+        "filename": "chrome/test/data/webui/extensions/cr_extensions_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T22:00:31Z",
+      "side": 1,
+      "message": "There is precedence for revering into ../settings:\n\nhttps://cs.chromium.org/chromium/src/chrome/test/data/webui/cr_elements/cr_elements_browsertest.js?type\u003dcs\u0026q\u003dcr_elements_brow\u0026sq\u003dpackage:chromium\u0026l\u003d316\n\nhttps://cs.chromium.org/chromium/src/chrome/test/data/webui/extensions/cr_extensions_browsertest.js?type\u003dcs\u0026q\u003dcr_exten\u0026sq\u003dpackage:chromium\u0026l\u003d577\n\nAnd there\u0027s a CL to eventually move this up one directory here:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/736775",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

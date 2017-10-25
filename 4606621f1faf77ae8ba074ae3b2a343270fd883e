@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37206136_d2de8a0a",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T22:00:31Z",
+      "side": 0,
+      "message": "Moved to shortcut_input.js file.",
+      "revId": "4606621f1faf77ae8ba074ae3b2a343270fd883e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff82cf8_686cb916",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T22:00:31Z",
+      "side": 0,
+      "message": "moved to shortcut_input.js file (since this is shortcut code).",
+      "revId": "4606621f1faf77ae8ba074ae3b2a343270fd883e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
