@@ -217,6 +217,7 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   bool ContainsOnlyIdleWriters() const;
 
   // Returns true if its worth marking the entry as truncated.
+  bool ShouldTruncate();
   bool CanResume() const;
 
   // Invoked for truncating the entry either internally within DoLoop or through

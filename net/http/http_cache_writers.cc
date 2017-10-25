@@ -261,6 +261,17 @@ bool HttpCache::Writers::InitiateTruncateEntry() {
     return true;
   }
 
+  if (!ShouldTruncate())
+    return false;
+
+  next_state_ = State::CACHE_WRITE_TRUNCATED_RESPONSE;
+  // If not in do loop, initiate do loop.
+  if (!in_do_loop_)
+    DoLoop(OK);
+  return true;
+}
+
+bool HttpCache::Writers::ShouldTruncate() {
   // Don't set the flag for sparse entries or for entries that cannot be
   // resumed.
   if (!should_keep_entry_ || partial_do_not_truncate_)
@@ -276,10 +287,6 @@ bool HttpCache::Writers::InitiateTruncateEntry() {
   if (body_size >= 0 && body_size <= current_size)
     return false;
 
-  next_state_ = State::CACHE_WRITE_TRUNCATED_RESPONSE;
-  // If not in do loop, initiate do loop.
-  if (!in_do_loop_)
-    DoLoop(OK);
   return true;
 }
 
@@ -377,6 +384,7 @@ int HttpCache::Writers::DoLoop(int result) {
       DCHECK(cache_callback_);
       network_transaction_.reset();
     }
+
     if (cache_callback_)
       std::move(cache_callback_).Run();
     // |this| may have been destroyed in the cache_callback_.
@@ -473,9 +481,13 @@ int HttpCache::Writers::DoCacheWriteDataComplete(int result) {
 int HttpCache::Writers::DoAsyncOpCompletePreTruncate(int result) {
   DCHECK(all_writers_.empty() && !active_transaction_);
 
-  // Even if cache write was a failure, it should be ok to still attempt to mark
-  // the response as trucated.
-  next_state_ = State::CACHE_WRITE_TRUNCATED_RESPONSE;
+  if (ShouldTruncate()) {
+    next_state_ = State::CACHE_WRITE_TRUNCATED_RESPONSE;
+  } else {
+    next_state_ = State::NONE;
+    SetCacheCallback(false, TransactionSet());
+  }
+
   return OK;
 }
 
