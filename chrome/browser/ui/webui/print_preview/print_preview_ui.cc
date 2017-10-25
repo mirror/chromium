@@ -166,6 +166,9 @@ bool HandleRequestCallback(
 content::WebUIDataSource* CreateNewPrintPreviewUISource(Profile* profile) {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIPrintHost);
+  source->AddResourcePath("app.html", IDR_NEW_PRINT_PREVIEW_APP_HTML);
+  source->AddResourcePath("app.js", IDR_NEW_PRINT_PREVIEW_APP_JS);
+
   source->SetDefaultResource(IDR_NEW_PRINT_PREVIEW_HTML);
   return source;
 }
