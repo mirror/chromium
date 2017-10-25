@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c43a304_2531e227",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-25T19:16:33Z",
+      "side": 1,
+      "message": "Done, I\u0027ll run it through the trybots.",
+      "parentUuid": "e9dbe240_900fd6f8",
+      "revId": "2508970ffab83a355c7e94ff9d44018b51cce03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02cb6025_dc2c392b",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "937af749_8ad96264",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-25T19:16:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02cb6025_dc2c392b",
+      "revId": "2508970ffab83a355c7e94ff9d44018b51cce03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d50c3c6c_d61883f1",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-24T02:15:31Z",
       "side": 1,
       "message": "Is it reasonable to add DCHECK for not having other types, to help when adding new types?",
+      "revId": "2508970ffab83a355c7e94ff9d44018b51cce03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8866878_dcdeaa0b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-25T19:16:33Z",
+      "side": 1,
+      "message": "Added the simple ones that make sense.\n\nI think I\u0027ll need to factor out the \"IsItemEmpty\" function in the next patch, so I\u0027ll try and replace it with that later.",
+      "parentUuid": "d50c3c6c_d61883f1",
       "revId": "2508970ffab83a355c7e94ff9d44018b51cce03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
