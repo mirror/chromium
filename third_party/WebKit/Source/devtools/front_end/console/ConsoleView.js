@@ -174,7 +174,9 @@ Console.ConsoleView = class extends UI.VBox {
 
     this._messagesElement.addEventListener('contextmenu', this._handleContextMenuEvent.bind(this), false);
 
-    this._linkifier = new Components.Linkifier(Console.ConsoleViewMessage.MaxLengthForLinks);
+    this._linkifier = new Components.Linkifier(
+        Console.ConsoleViewMessage.MaxLengthForLinks, false /* useLinkDecorator */,
+        Console.ConsoleViewMessage.onAnchorUpdated);
 
     /** @type {!Array.<!Console.ConsoleViewMessage>} */
     this._consoleMessages = [];
