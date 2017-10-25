@@ -168,6 +168,8 @@ class LayoutTestFinder(object):
         if self._options.skip_failing_tests:
             tests_to_skip.update(expectations.get_tests_with_result_type(test_expectations.FAIL))
             tests_to_skip.update(expectations.get_tests_with_result_type(test_expectations.FLAKY))
+        if self._options.skip_virtual:
+            tests_to_skip.update([test for test in all_tests if test.startswith('virtual/')])
 
         if self._options.skipped == 'only':
             tests_to_skip = all_tests - tests_to_skip

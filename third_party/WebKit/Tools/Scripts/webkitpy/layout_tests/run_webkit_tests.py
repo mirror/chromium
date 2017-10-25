@@ -423,8 +423,12 @@ def parse_args(args):
                 '--skip-timeouts',
                 action='store_true',
                 default=False,
-                help=('Skip tests marked TIMEOUT. Use it to speed up running the entire '
-                      'test suite.')),
+                help='Skip tests marked TIMEOUT. Use to speed up running all tests.'),
+            optparse.make_option(
+                '--skip-virtual',
+                action='store_true',
+                default=False,
+                help='Skip virtual layout tests. Use to speed up running all tests.'),
             optparse.make_option(
                 '--fastest',
                 action='store',
