@@ -18,6 +18,7 @@ var windowFunctions = [
     "resizeBy",
     "resizeTo",
     "getComputedStyle",
+    "getMatchedCSSRules",
     "openDatabase",
     "postMessage",
 
