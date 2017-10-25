@@ -197,9 +197,9 @@ ScriptPromise PresentationRequest::reconnect(ScriptState* script_state,
 }
 
 ScriptPromise PresentationRequest::getAvailability(ScriptState* script_state) {
-  WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
-  if (!client)
+  PresentationController* controller =
+      PresentationController::FromContext(GetExecutionContext());
+  if (!controller)
     return ScriptPromise::RejectWithDOMException(
         script_state,
         DOMException::Create(
@@ -211,9 +211,9 @@ ScriptPromise PresentationRequest::getAvailability(ScriptState* script_state) {
         ExecutionContext::From(script_state), this,
         PresentationAvailabilityProperty::kReady);
 
-    client->GetAvailability(urls_,
-                            WTF::MakeUnique<PresentationAvailabilityCallbacks>(
-                                availability_property_, urls_));
+    controller->GetAvailability(
+        urls_, std::make_unique<PresentationAvailabilityCallbacksImpl>(
+                   availability_property_, urls_));
   }
   return availability_property_->Promise(script_state->World());
 }
