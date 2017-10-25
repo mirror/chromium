@@ -34,6 +34,24 @@
       "revId": "8f7cc1e8738ab8f9fbdd6ecb01da47cfa4245ef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c8113c_6cf1c104",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-25T08:31:25Z",
+      "side": 1,
+      "message": "Either is fine, but it could be slightly better to include this cleanup in this CL because it\u0027s relevant to pure-virtualization.",
+      "parentUuid": "ddc07781_b765ebdf",
+      "revId": "8f7cc1e8738ab8f9fbdd6ecb01da47cfa4245ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
