@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f454854_6cc59d95",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-25T16:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3c2f842_30b914ac",
+      "range": {
+        "startLine": 7,
+        "startChar": 50,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "21fe4709e21d73dd38dbacdd19ef23490ff42906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84830df2_ab2ba033",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 3
@@ -80,6 +104,30 @@
       "revId": "21fe4709e21d73dd38dbacdd19ef23490ff42906",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11a9ddd_b8c35085",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-25T16:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63d3ab65_94ec8394",
+      "range": {
+        "startLine": 888,
+        "startChar": 35,
+        "endLine": 888,
+        "endChar": 0
+      },
+      "revId": "21fe4709e21d73dd38dbacdd19ef23490ff42906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
