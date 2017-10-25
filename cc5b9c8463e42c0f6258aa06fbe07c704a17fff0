@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c42867f_b2ca2b5f",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T15:42:20Z",
+      "side": 1,
+      "message": "nit: this sentence is a little hard to parse, I\u0027d suggest \"Notify the page that a host has been blacklisted.\"",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d06352_7f49dd06",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T15:42:20Z",
+      "side": 1,
+      "message": "\"These methods\" refers to all the methods below this point? Maybe pull this out into a separate comment above line 45, and say \"The methods below are called by...\"",
+      "range": {
+        "startLine": 45,
+        "startChar": 57,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bbfc69_8669b1aa",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T15:42:20Z",
+      "side": 1,
+      "message": "Is |time| the time at which the host was blacklisted? Would be good to describe this in the comment.",
+      "range": {
+        "startLine": 49,
+        "startChar": 39,
+        "endLine": 49,
+        "endChar": 43
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d295b1_0d622d32",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T15:42:20Z",
+      "side": 1,
+      "message": "Can this be of type mojo.common.mojom.Time instead?",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699ce443_e8676997",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T15:42:20Z",
+      "side": 1,
+      "message": "nit: missing word, \"|blacklisted| indicates whether\" ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 61,
+        "endLine": 51,
+        "endChar": 62
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116fb47a_67f3e867",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T15:42:20Z",
+      "side": 1,
+      "message": "Not sure but it sounds like this describes the implementation rather than the interface. Should the method be named \"ClearBlacklistedHostsUI\" or something?\n\nAlso please describe what |time| is.",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 11
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a965e53f_87f96d56",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-25T15:42:20Z",
+      "side": 1,
+      "message": "ditto about the type",
+      "range": {
+        "startLine": 57,
+        "startChar": 21,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
