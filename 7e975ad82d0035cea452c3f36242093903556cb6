@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08161012_043b71af",
+        "filename": "build/android/gyp/create_test_runner_script.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-25T16:46:27Z",
+      "side": 1,
+      "message": "I think this is a bug -- bool(\u00270\u0027) is True.",
+      "revId": "7e975ad82d0035cea452c3f36242093903556cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b009c8_166ca537",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-25T16:46:27Z",
+      "side": 1,
+      "message": "Is this something we should be handling somewhere else? DO we want to be doing this gn variable -\u003e config translation on a per-target basis?",
+      "revId": "7e975ad82d0035cea452c3f36242093903556cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19f5c6e_c7565f2b",
+        "filename": "chrome/android/chrome_public_apk_tmpl.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-25T16:46:27Z",
+      "side": 1,
+      "message": "Curious about this -- what\u0027s the motivation for turning on relocation packing if lld is off and requires_sdk_api_level_23 is set? That appears to be a behavior change, and a bit of an inversion of https://codesearch.chromium.org/chromium/src/build/config/android/rules.gni?rcl\u003d8d03446dde8241267009f8ad0671924b566d4bca\u0026l\u003d1823",
+      "revId": "7e975ad82d0035cea452c3f36242093903556cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
