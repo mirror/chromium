@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4def461d_ffaeed27",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-25T13:48:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a082d0a0_e8b1605d",
+      "revId": "1ad7bdd4edf580bf45e12eb8491857af8e612c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca807b63_f77dbf8c",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "1ad7bdd4edf580bf45e12eb8491857af8e612c5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3306fb_549edfe5",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-25T13:48:22Z",
+      "side": 1,
+      "message": "Yes. Added comment.",
+      "parentUuid": "ca807b63_f77dbf8c",
+      "revId": "1ad7bdd4edf580bf45e12eb8491857af8e612c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
