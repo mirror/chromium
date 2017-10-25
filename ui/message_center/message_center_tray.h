@@ -34,11 +34,11 @@ class MESSAGE_CENTER_EXPORT MessageCenterTray : public MessageCenterObserver {
   // |show_by_click| to true if bubble is shown by mouse or gesture click.
   // Returns whether the message center is visible after the call, whether or
   // not it was visible before.
-  bool ShowMessageCenterBubble(bool show_by_click);
+  bool ShowMessageCenter(bool show_by_click);
 
   // Hides the message center if visible and returns whether the message center
   // was visible before.
-  bool HideMessageCenterBubble();
+  bool HideMessageCenter();
 
   // Marks the message center as "not visible" (this method will not hide the
   // message center).
@@ -51,7 +51,7 @@ class MESSAGE_CENTER_EXPORT MessageCenterTray : public MessageCenterObserver {
   bool HidePopupBubble();
 
   // Toggles the visibility of the settings view in the message center bubble.
-  void ShowNotifierSettingsBubble();
+  void ShowMessageCenterWithNotifierSettingsTab();
 
   // Creates a model for the context menu for a notification card.
   std::unique_ptr<ui::MenuModel> CreateNotificationMenuModel(

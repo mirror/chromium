@@ -204,9 +204,8 @@ TEST_F(WebNotificationTrayTest, WebNotificationPopupBubble) {
   AddNotification("test_id5");
   EXPECT_TRUE(GetTray()->IsPopupVisible());
 
-  GetTray()->message_center_tray_->ShowMessageCenterBubble(
-      false /* show_by_click */);
-  GetTray()->message_center_tray_->HideMessageCenterBubble();
+  GetTray()->message_center_tray_->ShowMessageCenter(false /* show_by_click */);
+  GetTray()->message_center_tray_->HideMessageCenter();
 
   EXPECT_FALSE(GetTray()->IsPopupVisible());
 }
@@ -220,7 +219,7 @@ TEST_F(WebNotificationTrayTest, ManyMessageCenterNotifications) {
     std::string id = base::StringPrintf("test_id%d", static_cast<int>(i));
     AddNotification(id);
   }
-  bool shown = GetTray()->message_center_tray_->ShowMessageCenterBubble(
+  bool shown = GetTray()->message_center_tray_->ShowMessageCenter(
       false /* show_by_click */);
   EXPECT_TRUE(shown);
   RunAllPendingInMessageLoop();
