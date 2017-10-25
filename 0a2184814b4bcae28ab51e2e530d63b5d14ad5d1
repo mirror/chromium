@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "cf874024_b602a7bd",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T17:21:36Z",
+      "side": 1,
+      "message": "We can always add web_state() getter to SadTabTabHelper, that\u0027s what Sergio actually did. Personally I don\u0027t think there is a practical difference between passing webState as an argument vs. adding web_state() getter to SadTabTabHelper. It\u0027s more like a personal preference.",
+      "parentUuid": "a68d8515_fd0fa1d8",
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b72c17f2_af84e3d0",
         "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
         "patchSetId": 5
