@@ -185,8 +185,7 @@ class CONTENT_EXPORT RenderWidgetCompositor
   void RequestDecode(const PaintImage& image,
                      const base::Callback<void(bool)>& callback) override;
 
-  void SetScrollBoundaryBehavior(
-      const blink::WebScrollBoundaryBehavior&) override;
+  void SetOverscrollBehavior(const blink::WebOverscrollBehavior&) override;
 
   // cc::LayerTreeHostClient implementation.
   void WillBeginMainFrame() override;
