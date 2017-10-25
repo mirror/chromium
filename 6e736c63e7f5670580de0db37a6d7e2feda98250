@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f08ae62c_4e1cea30",
+        "filename": "third_party/WebKit/Source/core/paint/SVGInlineTextBoxPainterTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-25T19:16:52Z",
+      "side": 0,
+      "message": "Should we check the visual rect here and below instead? Is it updated as part of UpdateAllLifecyclePhases?",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 47
+      },
+      "revId": "6e736c63e7f5670580de0db37a6d7e2feda98250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6a2f38_1b684e4e",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-25T19:16:52Z",
+      "side": 0,
+      "message": "I interpret this comment to mean that the visual rect is at least sometimes not in the same space as this bounds was. But, the shift to use the item\u0027s VisualRect in lieu of GetPaintRecordBounds does not produce any test failures.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "6e736c63e7f5670580de0db37a6d7e2feda98250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8898d71c_631316ca",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingRecorder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-25T19:16:52Z",
+      "side": 0,
+      "message": "I\u0027m not sure whether it\u0027s worth restoring this. Part of the reason we can remove the bounds param is that we\u0027re no longer doing (at least some of) the cull rect checking we were doing in the past.\n\nPerhaps we should remove this RuntimeEnabledFeatures flag and associated logic. Can pursue that in separate patch if appropriate, seeking feedback for now.",
+      "range": {
+        "startLine": 59,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 71
+      },
+      "revId": "6e736c63e7f5670580de0db37a6d7e2feda98250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

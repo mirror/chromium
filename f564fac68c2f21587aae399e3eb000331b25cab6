@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92263883_66cc5319",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingRecorder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-25T19:16:52Z",
+      "side": 1,
+      "message": "This is the crux of the naive application of approach #2 described by enne in http://crbug.com/771401#c1. Is this actually doing what\u0027s described there? I think so, tracing GraphicsContext::BeginRecording to PaintRecorder::beginRecording to which fiddles a canvas which is a RecordPaintCanvas as cited in aforementioned comment.\n\nNot yet done from that same comment, the portion re: \u0027...don\u0027t expect anything useful back from clip-related functions.  We could make these assert if recording_bounds_ is empty to make this a more explicit \"don\u0027t do this\".\u0027\n\nI thought to pursue that as a separate patch if this one goes forth, but could add to this one if preferred (and to validate that we aren\u0027t getting lucky test-wise while using bad data elsewhere in cc).",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 38
+      },
+      "revId": "f564fac68c2f21587aae399e3eb000331b25cab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc578d0_1335cccc",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintArtifact.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-25T19:16:52Z",
+      "side": 1,
+      "message": "Seeking feedback here re: whether the visual rect is in the right space for its use here.",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "f564fac68c2f21587aae399e3eb000331b25cab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
