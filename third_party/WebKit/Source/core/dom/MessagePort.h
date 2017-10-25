@@ -38,6 +38,7 @@
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "third_party/WebKit/public/platform/WebVector.h"
 
 namespace blink {
 
