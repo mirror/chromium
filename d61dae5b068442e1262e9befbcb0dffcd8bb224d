@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "fdb13479_ff953ef9",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-25T20:48:59Z",
+      "side": 1,
+      "message": "\u003e\u003eIf it was shutdown, then we wouldn\u0027t be here after shutdown, right?\nDo you know if shutdown is the only case where a PostTask might fail?\n\nChanged to DCHECKs.",
+      "parentUuid": "63fe914b_68917e99",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 56
+      },
+      "revId": "d61dae5b068442e1262e9befbcb0dffcd8bb224d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "171c9186_d1c18ae2",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
         "patchSetId": 6
@@ -250,6 +274,30 @@
       "side": 1,
       "message": "Great. However, these are quite expensive to call afaik, and should be called sparingly. One scenario where we might want to be careful is during browser startup. Startup will cause each DNR extension to call ClearRendererCacheOnNavigation, where only one call at the end would have sufficed.",
       "parentUuid": "40c79ce3_46d93b21",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 49
+      },
+      "revId": "d61dae5b068442e1262e9befbcb0dffcd8bb224d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "747f637f_08ea0cb9",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-25T20:48:59Z",
+      "side": 1,
+      "message": "This calls WebCacheManager::ClearCacheOnNavigation, which clears the cache only the next time the renderer navigates. So the only redundant work during startup would be the extra tasks posted to the UI thread to clear the cache. The cache clearing itself won\u0027t be redundant.\n\nI am not sure if it\u0027s worth optimizing to try and not post these redundant tasks during startup.",
+      "parentUuid": "c95a7c5f_37b58344",
       "range": {
         "startLine": 102,
         "startChar": 2,
@@ -459,6 +507,30 @@
       "revId": "d61dae5b068442e1262e9befbcb0dffcd8bb224d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62acc466_6a97b3a4",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-25T20:48:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8a703b17_4a118685",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "d61dae5b068442e1262e9befbcb0dffcd8bb224d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
