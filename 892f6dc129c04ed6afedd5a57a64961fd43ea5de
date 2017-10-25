@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c9ba0a7_528bf2ec",
+        "filename": "content/browser/frame_host/render_widget_host_view_guest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-25T19:00:29Z",
+      "side": 1,
+      "message": "Sure. It doesn\u0027t hurt to do so. I think this only happens in the teardown case.",
+      "parentUuid": "14962843_897accf4",
+      "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81dfa90a_5d419b93",
         "filename": "content/browser/renderer_host/render_widget_host_view_base.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96dbe449_7441d43c",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-25T19:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81dfa90a_5d419b93",
+      "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "853da451_0f94309a",
+        "filename": "content/renderer/browser_plugin/browser_plugin.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-25T19:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "575611c3_3de00da1",
+      "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "048b0347_4ca5280d",
         "filename": "content/renderer/browser_plugin/browser_plugin.h",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6f38ca7e_5afe87e2",
+        "filename": "content/renderer/browser_plugin/browser_plugin.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-25T19:00:29Z",
+      "side": 1,
+      "message": "It turns out that PDFs occasionally have a 0x0 size. I wanted to distinguish between 0 size and unspecified size.I added a comment.",
+      "parentUuid": "048b0347_4ca5280d",
+      "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e1d79e9_9f9dc3ec",
         "filename": "content/renderer/render_frame_proxy.h",
         "patchSetId": 10
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-24T19:25:47Z",
       "side": 1,
       "message": "ditto?",
+      "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cded14_0574940a",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-25T19:00:29Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "5e1d79e9_9f9dc3ec",
       "revId": "892f6dc129c04ed6afedd5a57a64961fd43ea5de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
