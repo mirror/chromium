@@ -16,6 +16,24 @@
       "revId": "cfd8819e7bdf86e772ba7120cc7de5dbca914261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f3cdd3_b42d42e1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-25T19:20:11Z",
+      "side": 1,
+      "message": "Fixed. Thanks!",
+      "parentUuid": "70aeb452_82bf7567",
+      "revId": "cfd8819e7bdf86e772ba7120cc7de5dbca914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
