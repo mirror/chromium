@@ -15,7 +15,12 @@ image.onload = function() {
     var canvas = document.querySelector('canvas');
     canvas.width = this.width;
     canvas.height = this.height;
-    canvas.getContext('2d').drawImage(this, 0, 0);
+    var ctx = canvas.getContext('2d');
+    // Drawing canvas onto itself will force allocation of the backing store
+    // and prevent toDataURL from switching out of gpu-acceleration when
+    // running this test under virtual/gpu
+    ctx.drawImage(canvas, 0, 0);
+    ctx.drawImage(this, 0, 0);
 
     var dataURL = canvas.toDataURL('image/webp', 0.3); // low quality
 

@@ -35,6 +35,7 @@
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebTaskRunner.h"
+#include "platform/graphics/CanvasResourceProvider.cpp"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
@@ -221,20 +222,20 @@ class Canvas2DLayerBridgeTest : public Test {
         CanvasColorParams(), IsUnitTest())));
     EXPECT_TRUE(bridge->IsValid());
     PaintFlags flags;
-    uint32_t gen_id = bridge->GetOrCreateSurface()->generationID();
+    uint32_t gen_id = bridge->GetOrCreateResourceProvider()->ContentUniqueID();
     bridge->Canvas()->drawRect(SkRect::MakeXYWH(0, 0, 1, 1), flags);
-    EXPECT_EQ(gen_id, bridge->GetOrCreateSurface()->generationID());
+    EXPECT_EQ(gen_id, bridge->GetOrCreateResourceProvider()->ContentUniqueID());
     gl_.SetIsContextLost(true);
-    EXPECT_EQ(gen_id, bridge->GetOrCreateSurface()->generationID());
+    EXPECT_EQ(gen_id, bridge->GetOrCreateResourceProvider()->ContentUniqueID());
     bridge->Canvas()->drawRect(SkRect::MakeXYWH(0, 0, 1, 1), flags);
-    EXPECT_EQ(gen_id, bridge->GetOrCreateSurface()->generationID());
+    EXPECT_EQ(gen_id, bridge->GetOrCreateResourceProvider()->ContentUniqueID());
     // This results in the internal surface being torn down in response to the
     // context loss.
     EXPECT_FALSE(bridge->IsValid());
-    EXPECT_EQ(nullptr, bridge->GetOrCreateSurface());
+    EXPECT_EQ(nullptr, bridge->GetOrCreateResourceProvider());
     // The following passes by not crashing
     bridge->Canvas()->drawRect(SkRect::MakeXYWH(0, 0, 1, 1), flags);
-    bridge->Flush(kFlushReasonUnknown);
+    bridge->NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnitTests);
   }
 
   void PrepareMailboxWhenContextIsLost() {
@@ -259,7 +260,7 @@ class Canvas2DLayerBridgeTest : public Test {
         IntSize(300, 150), 0, Canvas2DLayerBridge::kForceAccelerationForTesting,
         CanvasColorParams(), IsUnitTest())));
 
-    bridge->GetOrCreateSurface();
+    bridge->GetOrCreateResourceProvider();
     EXPECT_TRUE(bridge->IsValid());
     // When the context is lost we are not sure if we should still be producing
     // GL frames for the compositor or not, so fail to generate frames.
@@ -428,7 +429,8 @@ class MockImageBuffer : public ImageBuffer {
 void DrawSomething(Canvas2DLayerBridgePtr& bridge) {
   bridge->DidDraw(FloatRect(0, 0, 1, 1));
   bridge->FinalizeFrame();
-  bridge->Flush(kFlushReasonUnknown);
+  // Grabbing an image forces a flush
+  bridge->NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnitTests);
 }
 
 #if CANVAS2D_HIBERNATION_ENABLED
@@ -1092,57 +1094,6 @@ TEST_F(Canvas2DLayerBridgeTest, DeleteGpuMemoryBufferAfterTeardown) {
   EXPECT_EQ(0u, gl_.CreateImageCount());
   EXPECT_EQ(0u, gl_.DestroyImageCount());
 #endif
-}
-
-TEST_F(Canvas2DLayerBridgeTest, NoUnnecessaryFlushes) {
-  EXPECT_CALL(gl_, Flush()).Times(0);
-  Canvas2DLayerBridgePtr bridge(WTF::WrapUnique(new Canvas2DLayerBridge(
-      IntSize(300, 150), 0, Canvas2DLayerBridge::kForceAccelerationForTesting,
-      CanvasColorParams(), IsUnitTest())));
-  EXPECT_FALSE(bridge->HasRecordedDrawCommands());
-  ::testing::Mock::VerifyAndClearExpectations(&gl_);
-
-  EXPECT_CALL(gl_, Flush()).Times(0);
-  bridge->DidDraw(FloatRect(0, 0, 1, 1));
-  EXPECT_TRUE(bridge->HasRecordedDrawCommands());
-  ::testing::Mock::VerifyAndClearExpectations(&gl_);
-
-  EXPECT_CALL(gl_, Flush()).Times(1);
-  bridge->FlushGpu(kFlushReasonUnknown);
-  EXPECT_FALSE(bridge->HasRecordedDrawCommands());
-  ::testing::Mock::VerifyAndClearExpectations(&gl_);
-
-  EXPECT_CALL(gl_, Flush()).Times(0);
-  bridge->DidDraw(FloatRect(0, 0, 1, 1));
-  EXPECT_TRUE(bridge->HasRecordedDrawCommands());
-  ::testing::Mock::VerifyAndClearExpectations(&gl_);
-
-  EXPECT_CALL(gl_, Flush()).Times(1);
-  bridge->FlushGpu(kFlushReasonUnknown);
-  EXPECT_FALSE(bridge->HasRecordedDrawCommands());
-  ::testing::Mock::VerifyAndClearExpectations(&gl_);
-
-  // No flush because already flushed since last draw
-  EXPECT_CALL(gl_, Flush()).Times(0);
-  bridge->FlushGpu(kFlushReasonUnknown);
-  EXPECT_FALSE(bridge->HasRecordedDrawCommands());
-  ::testing::Mock::VerifyAndClearExpectations(&gl_);
-
-  EXPECT_CALL(gl_, Flush()).Times(0);
-  bridge->DidDraw(FloatRect(0, 0, 1, 1));
-  EXPECT_TRUE(bridge->HasRecordedDrawCommands());
-  ::testing::Mock::VerifyAndClearExpectations(&gl_);
-
-  // Flushes recording, but not the gpu
-  EXPECT_CALL(gl_, Flush()).Times(0);
-  bridge->Flush(kFlushReasonUnknown);
-  EXPECT_FALSE(bridge->HasRecordedDrawCommands());
-  ::testing::Mock::VerifyAndClearExpectations(&gl_);
-
-  EXPECT_CALL(gl_, Flush()).Times(1);
-  bridge->FlushGpu(kFlushReasonUnknown);
-  EXPECT_FALSE(bridge->HasRecordedDrawCommands());
-  ::testing::Mock::VerifyAndClearExpectations(&gl_);
 }
 
 }  // namespace blink
