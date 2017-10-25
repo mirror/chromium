@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3a29a424_a2093387",
+        "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-25T17:29:36Z",
+      "side": 1,
+      "message": "Thanks! LGTM",
+      "parentUuid": "407b45ea_736ff7f3",
+      "revId": "5968b984d62086cc55d4a2fd9bc6b8373326e5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42737bb1_46c42d0f",
         "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
         "patchSetId": 4
