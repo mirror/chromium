@@ -16,6 +16,24 @@
       "revId": "cfa855eabf0a55163928bf78caa4012cbcf37eb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d01e46_a0c22ed9",
+        "filename": "chrome/browser/media/router/receiver_presentation_service_delegate_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-25T21:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b7495e1_6677931e",
+      "revId": "cfa855eabf0a55163928bf78caa4012cbcf37eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
