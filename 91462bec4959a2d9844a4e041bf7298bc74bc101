@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "047d67f3_e491bdc5",
+        "filename": "content/renderer/browser_plugin/browser_plugin.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T19:15:19Z",
+      "side": 1,
+      "message": "I\u0027m still not sure I understand the full state matrix. Why is this optional and treated specially but not screen_info?",
+      "revId": "91462bec4959a2d9844a4e041bf7298bc74bc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
