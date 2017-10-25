@@ -184,7 +184,10 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
       const cc::FilterOperations& background_filters,
       uint32_t background_texture,
       const gfx::Rect& rect,
-      const gfx::Rect& unclipped_rect);
+      const gfx::Rect& unclipped_rect,
+      SkIPoint* offset,
+      SkIRect* subset,
+      bool flip_texture);
 
   const TileDrawQuad* CanPassBeDrawnDirectly(const RenderPass* pass) override;
 

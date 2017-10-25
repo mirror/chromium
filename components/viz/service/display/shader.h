@@ -248,6 +248,7 @@ class VIZ_SERVICE_EXPORT FragmentShader {
   int backdrop_location_ = -1;
   int original_backdrop_location_ = -1;
   int backdrop_rect_location_ = -1;
+  int original_backdrop_rect_location_ = -1;
 
   // Used only if |input_color_type_| is INPUT_COLOR_SOURCE_RGBA_TEXTURE.
   bool has_rgba_fragment_tex_transform_ = false;
