@@ -263,6 +263,23 @@ void HeadlessContentBrowserClient::AppendExtraCommandLineSwitches(
       }
     }
   }
+
+  if (browser_->options()->append_command_line_flags_callback) {
+    HeadlessBrowserContextImpl* headless_browser_context_impl = nullptr;
+    if (command_line->GetSwitchValueASCII(::switches::kProcessType) ==
+        ::switches::kRendererProcess) {
+      content::RenderProcessHost* render_process_host =
+          content::RenderProcessHost::FromID(child_process_id);
+      if (render_process_host) {
+        headless_browser_context_impl = HeadlessBrowserContextImpl::From(
+            render_process_host->GetBrowserContext());
+      }
+    }
+    browser_->options()->append_command_line_flags_callback.Run(
+        command_line, headless_browser_context_impl,
+        command_line->GetSwitchValueASCII(::switches::kProcessType),
+        child_process_id);
+  }
 }
 
 void HeadlessContentBrowserClient::AllowCertificateError(
