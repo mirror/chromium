@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "23871534_ecb0ab4f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/make_style_shorthands.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-25T07:08:34Z",
+      "side": 1,
+      "message": "Ack. Will do in a follow up CL.",
+      "parentUuid": "8da68308_ac0523a2",
+      "revId": "35d4865be19bc60afc294244d62610b2660ca624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "550a365e_d0569444",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 1
@@ -67,6 +85,24 @@
       "revId": "35d4865be19bc60afc294244d62610b2660ca624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b98c1c_81f59244",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-25T07:08:34Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m working on this in a separate CL.",
+      "parentUuid": "550a365e_d0569444",
+      "revId": "35d4865be19bc60afc294244d62610b2660ca624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
