@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5deaeea2_06e3b2b7",
+        "filename": "cc/trees/ukm_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-25T18:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca24af95_0333bc38",
+      "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50b0aa4d_ea17ea62",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 6
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "This isn\u0027t great, but I\u0027m not sure what better options are. An issue with using the local root\u0027s URL is that it can be a different value depending on whether there are OOPIFs present or not, which doesn\u0027t seem right. Using the main frame URL seems like it would be desirable, but I don\u0027t think that\u0027s currently available in OOPIF processes (within Blink we can always access the origin of the main frame on the frame\u0027s SecurityContext, but I don\u0027t think the full URL is replicated to every process).\n\nWould it add to much complexity to have the service keep track of the main frame\u0027s URL, and use that for all records from subframes?",
       "parentUuid": "6491886d_02982de9",
+      "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2296ed_ab02d2f2",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2513,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-25T18:52:46Z",
+      "side": 1,
+      "message": "I\u0027d also be fine with just checking if the root is the main frame and only logging ukm if that\u0027s the case. Adding complexity to record data from OOPIF doesn\u0027t seem worth it.",
+      "parentUuid": "a67503ea_6dc58bce",
       "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
