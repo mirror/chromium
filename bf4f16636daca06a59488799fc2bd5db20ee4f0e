@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b11c4f39_7ab15625",
+        "filename": "third_party/libxml/src/encoding.c",
+        "patchSetId": 11
+      },
+      "lineNbr": 1897,
+      "author": {
+        "id": 1249238
+      },
+      "writtenOn": "2017-10-25T15:46:05Z",
+      "side": 1,
+      "message": "One more thing... I apologize -- it\u0027s been years since I have worked with these functions :-/\n\nWe should only reset the pivot buffer if we are actually done, including all internal state has been flushed out to the output buffer. I think the best way to do this is to move these lines inside the if (U_SUCCESS(err)) and before the return 0; -- remember to add { curly braces }.",
+      "range": {
+        "startLine": 1895,
+        "startChar": 0,
+        "endLine": 1897,
+        "endChar": 60
+      },
+      "revId": "bf4f16636daca06a59488799fc2bd5db20ee4f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
