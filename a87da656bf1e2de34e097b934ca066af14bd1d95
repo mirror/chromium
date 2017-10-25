@@ -16,6 +16,24 @@
       "revId": "a87da656bf1e2de34e097b934ca066af14bd1d95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb1d29f_3316842f",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-25T16:18:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f62ac9f_1bf2f390",
+      "revId": "a87da656bf1e2de34e097b934ca066af14bd1d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
