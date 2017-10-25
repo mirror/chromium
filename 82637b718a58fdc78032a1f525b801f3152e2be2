@@ -22,6 +22,30 @@
       "revId": "82637b718a58fdc78032a1f525b801f3152e2be2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c314c3f_e46497bf",
+        "filename": "chrome/browser/shell_integration_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-25T17:26:58Z",
+      "side": 0,
+      "message": "A service\u0027s level of sandboxing is configured in the service manifest. The chrome_win_util manifest has \"none\" for sandbox, so the code runs without a sandbox as is the case today with this set_disable_sandbox() call.\n\nI have checked that the code in the service gets called and returns correctly, but I have trouble with the pinning part. When I pin my local build on the taskbar (right click, then pin on the chrome icon in the taskbar), it is reported in the C:\\Users\\jcivelli\\AppData\\Roaming\\Microsoft\\Internet Explorer\\Quick Launch\\User Pinned\\TaskBar as C:\\Users\\jcivelli\\AppData\\Local\\Chromium\\Application\\chrome.exe when my local build is at D:\\chromium\\src\\out\\Default. So my local build is never reported as pinned because of the location mismatch.\nDo you know how to pin a local build correctly?",
+      "parentUuid": "6a10fb3f_eb6e1f10",
+      "range": {
+        "startLine": 500,
+        "startChar": 17,
+        "endLine": 500,
+        "endChar": 36
+      },
+      "revId": "82637b718a58fdc78032a1f525b801f3152e2be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
