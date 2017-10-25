@@ -924,6 +924,9 @@ void RenderWidgetHostViewAura::SubmitCompositorFrame(
   UpdateBackgroundColorFromRenderer(frame.metadata.root_background_color);
 
   last_scroll_offset_ = frame.metadata.root_scroll_offset;
+  if (IsUseZoomForDSFEnabled())
+    last_scroll_offset_.Scale(1.0f / current_device_scale_factor_);
+
   if (delegated_frame_host_) {
     delegated_frame_host_->SubmitCompositorFrame(local_surface_id,
                                                  std::move(frame));
