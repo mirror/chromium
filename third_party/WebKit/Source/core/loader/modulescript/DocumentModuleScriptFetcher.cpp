@@ -6,6 +6,7 @@
 
 #include "core/dom/ExecutionContext.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/loader/SubresourceIntegrityHelper.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 
@@ -19,8 +20,15 @@ bool WasModuleLoadSuccessful(
   // Implements conditions in Step 7 of
   // https://html.spec.whatwg.org/#fetch-a-single-module-script
 
+  if (error_messages && resource) {
+    SubresourceIntegrityHelper::GetConsoleMessages(
+        resource->IntegrityReportInfo(), error_messages);
+  }
+
   // - response's type is "error"
-  if (!resource || resource->ErrorOccurred()) {
+  if (!resource || resource->ErrorOccurred() ||
+      resource->IntegrityDisposition() !=
+          ResourceIntegrityDisposition::kPassed) {
     return false;
   }
 
@@ -98,7 +106,7 @@ void DocumentModuleScriptFetcher::NotifyFinished(Resource* resource) {
       script_resource->GetResponse().Url(), script_resource->SourceText(),
       script_resource->GetResourceRequest().GetFetchCredentialsMode(),
       script_resource->CalculateAccessControlStatus());
-  Finalize(params, nullptr /* error_messages */);
+  Finalize(params, &error_messages);
 }
 
 void DocumentModuleScriptFetcher::Finalize(
