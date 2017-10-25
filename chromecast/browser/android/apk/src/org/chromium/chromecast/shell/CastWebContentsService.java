@@ -4,8 +4,10 @@
 
 package org.chromium.chromecast.shell;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.IBinder;
 import android.widget.Toast;
@@ -28,6 +30,7 @@ import org.chromium.ui.base.WindowAndroid;
 public class CastWebContentsService extends Service {
     private static final String TAG = "cr_CastWebService";
     private static final boolean DEBUG = true;
+    private static final int CAST_NOTIFICATION_ID = 100;
 
     private String mInstanceId;
     private AudioManager mAudioManager;
@@ -94,6 +97,9 @@ public class CastWebContentsService extends Service {
     private void showWebContents(WebContents webContents) {
         if (DEBUG) Log.d(TAG, "showWebContents");
 
+        Notification notification = new Notification.Builder(this).build();
+        startForeground(CAST_NOTIFICATION_ID, notification);
+
         // TODO(derekjchow): productVersion
         mContentViewCore = new ContentViewCore(this, "");
         mContentView = ContentView.createContentView(this, mContentViewCore);
@@ -106,6 +112,9 @@ public class CastWebContentsService extends Service {
     // Remove the currently displayed webContents. no-op if nothing is being displayed.
     private void detachWebContentsIfAny() {
         if (DEBUG) Log.d(TAG, "detachWebContentsIfAny");
+
+        stopForeground(true /*removeNotification*/ );
+
         if (mContentView != null) {
             mContentView = null;
             mContentViewCore = null;
