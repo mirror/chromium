@@ -29,6 +29,21 @@
 #include "storage/browser/quota/special_storage_policy.h"
 #include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/leveldb_chrome.h"
+// third_party/webrtc/base/thread_checker.h leaks the define
+// EXCLUSIVE_LOCKS_REQUIRED and more which collide with the same define in
+// third_party/leveldatabase/src/port/thread_annotations.
+#undef EXCLUSIVE_LOCKS_REQUIRED
+#undef SHARED_LOCKS_REQUIRED
+#undef LOCKS_EXCLUDED
+#undef LOCK_RETURNED
+#undef LOCKABLE
+#undef SCOPED_LOCKABLE
+#undef EXCLUSIVE_LOCK_FUNCTION
+#undef SHARED_LOCK_FUNCTION
+#undef EXCLUSIVE_TRYLOCK_FUNCTION
+#undef SHARED_TRYLOCK_FUNCTION
+#undef UNLOCK_FUNCTION
+#undef NO_THREAD_SAFETY_ANALYSIS
 
 namespace content {
 
@@ -61,10 +76,10 @@ const int kCommitErrorThreshold = 8;
 // Limits on the cache size and number of areas in memory, over which the areas
 // are purged.
 #if defined(OS_ANDROID)
-const unsigned kMaxStorageAreaCount = 10;
+const unsigned kMaxLocalStorageAreaCount = 10;
 const size_t kMaxLocalStorageCacheSize = 2 * 1024 * 1024;
 #else
-const unsigned kMaxStorageAreaCount = 50;
+const unsigned kMaxLocalStorageAreaCount = 50;
 const size_t kMaxLocalStorageCacheSize = 20 * 1024 * 1024;
 #endif
 
@@ -500,7 +515,7 @@ void LocalStorageContextMojo::PurgeUnusedWrappersIfNeeded() {
 
   if (total_cache_size > kMaxLocalStorageCacheSize)
     purge_reason = CachePurgeReason::SizeLimitExceeded;
-  else if (level_db_wrappers_.size() > kMaxStorageAreaCount)
+  else if (level_db_wrappers_.size() > kMaxLocalStorageAreaCount)
     purge_reason = CachePurgeReason::AreaCountLimitExceeded;
   else if (is_low_end_device_)
     purge_reason = CachePurgeReason::InactiveOnLowEndDevice;

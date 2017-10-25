@@ -4,6 +4,7 @@
 
 import("//build/buildflag_header.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/linux/pangocairo/pangocairo.gni")
 import("//build/config/ui.gni")
 import("//gpu/vulkan/features.gni")
@@ -13,7 +14,7 @@ import("//printing/features/features.gni")
 import("//third_party/WebKit/public/public_features.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
 
-source_set("browser") {
+jumbo_source_set("browser") {
   # Only the public target should depend on this. All other targets (even
   # internal content ones) should depend on the public one.
   visibility = [
@@ -1660,6 +1661,29 @@ source_set("browser") {
     "zygote_host/zygote_host_impl_linux.h",
   ]
 
+  jumbo_excluded_sources = [
+    # If someone includes net/url_request/url_request_context_getter.h
+    # in this file, then Bind generation fails when binding
+    # NavigationURLLoaderImplCore::Start.
+    "loader/navigation_url_loader_impl.cc",
+
+    # Too many kNoDocumentURLErrorMessage, kShutdownErrorMessage,
+    # GetWebContents()
+    "service_worker/service_worker_provider_host.cc",
+    "service_worker/service_worker_registration_handle.cc",
+  ]
+
+  if (is_win) {
+    jumbo_excluded_sources += [
+      # Mojo header node.h undefs SendMessage so things that include
+      # Windows headers can't be grouped with anything that might
+      # include node.h from mojo. Until we have figured out a way
+      # for mojo headers and Windows headers to live side by side.
+      "renderer_host/legacy_render_widget_host_win.cc",
+      "renderer_host/render_widget_host_view_aura.cc",
+    ]
+  }
+
   if (toolkit_views) {
     deps += [ "//ui/events" ]
   }
@@ -1799,6 +1823,9 @@ source_set("browser") {
       # This prevents the inclusion of atlhost.h which paired
       # with the windows 8 sdk it does the wrong thing.
       "__ATLHOST_H__",
+
+      # Must be defined to get access to M_PI and M_PI_2 in VS.
+      "_USE_MATH_DEFINES",
     ]
     deps += [
       "//third_party/iaccessible2",
@@ -2043,6 +2070,18 @@ source_set("browser") {
       "web_contents/web_contents_android.h",
       "web_contents/web_contents_view_android.cc",
       "web_contents/web_contents_view_android.h",
+    ]
+
+    jumbo_excluded_sources += [
+      # Symbols
+      "accessibility/web_contents_accessibility_android.cc",
+      "android/ime_adapter_android.cc",
+      "android/java/java_method.cc",
+      "android/nfc_host.cc",
+      "android/popup_zoomer.cc",
+      "android/selection_popup_controller.cc",
+      "android/smart_selection_client.cc",
+      "web_contents/web_contents_android.cc",
     ]
 
     set_sources_assignment_filter([])

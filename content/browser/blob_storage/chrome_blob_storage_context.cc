@@ -35,7 +35,8 @@ using storage::BlobStorageContext;
 namespace content {
 
 namespace {
-const FilePath::CharType kBlobStorageContextKeyName[] =
+  // FIXME: Identical to the constant in resource_context_impl.cc
+const FilePath::CharType kBlobStorageContextKeyNameFoo[] =
     FILE_PATH_LITERAL("content_blob_storage_context");
 const FilePath::CharType kBlobStorageParentDirectory[] =
     FILE_PATH_LITERAL("blob_storage");
@@ -82,11 +83,11 @@ ChromeBlobStorageContext* ChromeBlobStorageContext::GetFor(
     BrowserContext* context) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (!context->GetUserData(kBlobStorageContextKeyName)) {
+  if (!context->GetUserData(kBlobStorageContextKeyNameFoo)) {
     scoped_refptr<ChromeBlobStorageContext> blob =
         new ChromeBlobStorageContext();
     context->SetUserData(
-        kBlobStorageContextKeyName,
+        kBlobStorageContextKeyNameFoo,
         base::MakeUnique<UserDataAdapter<ChromeBlobStorageContext>>(
             blob.get()));
 
@@ -126,7 +127,7 @@ ChromeBlobStorageContext* ChromeBlobStorageContext::GetFor(
   }
 
   return UserDataAdapter<ChromeBlobStorageContext>::Get(
-      context, kBlobStorageContextKeyName);
+      context, kBlobStorageContextKeyNameFoo);
 }
 
 void ChromeBlobStorageContext::InitializeOnIOThread(
