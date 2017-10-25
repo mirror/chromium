@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "acf7f04d_e7771b2d",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-25T22:47:05Z",
+      "side": 1,
+      "message": "We\u0027ll paint inlines in phase 1 and all regular blockflow in phase 2.",
+      "parentUuid": "9d51a40e_e0eae227",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16611c17_672090c3",
         "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
         "patchSetId": 3
