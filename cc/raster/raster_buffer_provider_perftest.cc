@@ -117,8 +117,7 @@ class PerfContextProvider : public viz::ContextProvider {
       gr_context_.get()->resetContext(state);
   }
   base::Lock* GetLock() override { return &context_lock_; }
-  void AddObserver(viz::ContextLostObserver* obs) override {}
-  void RemoveObserver(viz::ContextLostObserver* obs) override {}
+  void SetLostContextCallback(const LostContextCallback& cb) override {}
 
  private:
   ~PerfContextProvider() override {}

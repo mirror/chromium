@@ -67,9 +67,8 @@ class DataReductionProxyConfiguratorTest : public testing::Test {
 };
 
 TEST_F(DataReductionProxyConfiguratorTest, TestUnrestricted) {
-  config_->Enable(
-      false, false,
-      BuildProxyList("https://www.foo.com:443", "http://www.bar.com:80"));
+  config_->Enable(false, BuildProxyList("https://www.foo.com:443",
+                                        "http://www.bar.com:80"));
   CheckProxyConfig(net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME,
                    "HTTPS www.foo.com:443;PROXY www.bar.com:80;DIRECT",
                    std::string());
@@ -77,8 +76,7 @@ TEST_F(DataReductionProxyConfiguratorTest, TestUnrestricted) {
 
 TEST_F(DataReductionProxyConfiguratorTest, TestUnrestrictedQuic) {
   config_->Enable(
-      false, false,
-      BuildProxyList("quic://www.foo.com:443", "http://www.bar.com:80"));
+      false, BuildProxyList("quic://www.foo.com:443", "http://www.bar.com:80"));
   CheckProxyConfig(net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME,
                    "QUIC www.foo.com:443;PROXY www.bar.com:80;DIRECT",
                    std::string());
@@ -87,9 +85,8 @@ TEST_F(DataReductionProxyConfiguratorTest, TestUnrestrictedQuic) {
 TEST_F(DataReductionProxyConfiguratorTest, TestUnrestrictedWithBypassRule) {
   config_->AddHostPatternToBypass("<local>");
   config_->AddHostPatternToBypass("*.goo.com");
-  config_->Enable(
-      false, false,
-      BuildProxyList("https://www.foo.com:443", "http://www.bar.com:80"));
+  config_->Enable(false, BuildProxyList("https://www.foo.com:443",
+                                        "http://www.bar.com:80"));
   CheckProxyConfig(net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME,
                    "HTTPS www.foo.com:443;PROXY www.bar.com:80;DIRECT",
                    "<local>;*.goo.com;");
@@ -99,15 +96,14 @@ TEST_F(DataReductionProxyConfiguratorTest, TestUnrestrictedWithBypassRuleQuic) {
   config_->AddHostPatternToBypass("<local>");
   config_->AddHostPatternToBypass("*.goo.com");
   config_->Enable(
-      false, false,
-      BuildProxyList("quic://www.foo.com:443", "http://www.bar.com:80"));
+      false, BuildProxyList("quic://www.foo.com:443", "http://www.bar.com:80"));
   CheckProxyConfig(net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME,
                    "QUIC www.foo.com:443;PROXY www.bar.com:80;DIRECT",
                    "<local>;*.goo.com;");
 }
 
 TEST_F(DataReductionProxyConfiguratorTest, TestUnrestrictedWithoutFallback) {
-  config_->Enable(false, false,
+  config_->Enable(false,
                   BuildProxyList("https://www.foo.com:443", std::string()));
   CheckProxyConfig(net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME,
                    "HTTPS www.foo.com:443;DIRECT", std::string());
@@ -115,48 +111,29 @@ TEST_F(DataReductionProxyConfiguratorTest, TestUnrestrictedWithoutFallback) {
 
 TEST_F(DataReductionProxyConfiguratorTest,
        TestUnrestrictedWithoutFallbackQuic) {
-  config_->Enable(false, false,
+  config_->Enable(false,
                   BuildProxyList("quic://www.foo.com:443", std::string()));
   CheckProxyConfig(net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME,
                    "QUIC www.foo.com:443;DIRECT", std::string());
 }
 
-TEST_F(DataReductionProxyConfiguratorTest, TestSecureRestricted) {
+TEST_F(DataReductionProxyConfiguratorTest, TestRestricted) {
   config_->Enable(
-      true, false,
-      BuildProxyList("https://www.foo.com:443", "http://www.bar.com:80"));
+      true, BuildProxyList("https://www.foo.com:443", "http://www.bar.com:80"));
   CheckProxyConfig(net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME,
                    "PROXY www.bar.com:80;DIRECT", std::string());
 }
 
-TEST_F(DataReductionProxyConfiguratorTest, TestInsecureRestricted) {
-  config_->Enable(
-      false, true,
-      BuildProxyList("https://www.foo.com:443", "http://www.bar.com:80"));
-  CheckProxyConfig(net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME,
-                   "HTTPS www.foo.com:443;DIRECT", std::string());
-}
-
-TEST_F(DataReductionProxyConfiguratorTest, TestSecureInsecureRestricted) {
-  config_->Enable(
-      true, true,
-      BuildProxyList("https://www.foo.com:443", "http://www.bar.com:80"));
-  CheckProxyConfig(net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME, "",
-                   std::string());
-}
-
 TEST_F(DataReductionProxyConfiguratorTest, TestRestrictedQuic) {
   config_->Enable(
-      true, false,
-      BuildProxyList("quic://www.foo.com:443", "http://www.bar.com:80"));
+      true, BuildProxyList("quic://www.foo.com:443", "http://www.bar.com:80"));
   CheckProxyConfig(net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME,
                    "PROXY www.bar.com:80;DIRECT", std::string());
 }
 
 TEST_F(DataReductionProxyConfiguratorTest, TestDisable) {
-  config_->Enable(
-      false, false,
-      BuildProxyList("https://www.foo.com:443", "http://www.bar.com:80"));
+  config_->Enable(false, BuildProxyList("https://www.foo.com:443",
+                                        "http://www.bar.com:80"));
   config_->Disable();
   CheckProxyConfig(net::ProxyConfig::ProxyRules::TYPE_NO_RULES, std::string(),
                    std::string());

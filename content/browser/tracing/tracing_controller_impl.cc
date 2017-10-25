@@ -108,60 +108,8 @@ std::string GetClockString() {
   return std::string();
 }
 
-}  // namespace
-
-TracingController* TracingController::GetInstance() {
-  return TracingControllerImpl::GetInstance();
-}
-
-TracingControllerImpl::TracingControllerImpl()
-    : delegate_(GetContentClient()->browser()->GetTracingDelegate()) {
-  DCHECK(!g_tracing_controller);
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  // Deliberately leaked, like this class.
-  base::FileTracing::SetProvider(new FileTracingProviderImpl);
-  AddAgents();
-  g_tracing_controller = this;
-}
-
-TracingControllerImpl::~TracingControllerImpl() = default;
-
-void TracingControllerImpl::AddAgents() {
-  auto* connector =
-      content::ServiceManagerConnection::GetForProcess()->GetConnector();
-  connector->BindInterface(resource_coordinator::mojom::kServiceName,
-                           &coordinator_);
-
-// Register tracing agents.
-#if defined(ENABLE_POWER_TRACING)
-  agents_.push_back(base::MakeUnique<PowerTracingAgent>(connector));
-#endif
-
-#if defined(OS_CHROMEOS)
-  agents_.push_back(base::MakeUnique<CrOSTracingAgent>(connector));
-  agents_.push_back(base::MakeUnique<ArcTracingAgentImpl>(connector));
-#elif defined(OS_WIN)
-  agents_.push_back(base::MakeUnique<EtwTracingAgent>(connector));
-#endif
-
-  auto chrome_agent =
-      base::MakeUnique<tracing::ChromeTraceEventAgent>(connector);
-  // For adding general CPU, network, OS, and other system information to the
-  // metadata.
-  chrome_agent->AddMetadataGeneratorFunction(base::BindRepeating(
-      &TracingControllerImpl::GenerateMetadataDict, base::Unretained(this)));
-  if (delegate_) {
-    chrome_agent->AddMetadataGeneratorFunction(
-        base::BindRepeating(&TracingDelegate::GenerateMetadataDict,
-                            base::Unretained(delegate_.get())));
-  }
-  agents_.push_back(std::move(chrome_agent));
-}
-
-std::unique_ptr<base::DictionaryValue>
-TracingControllerImpl::GenerateMetadataDict() const {
+std::unique_ptr<base::DictionaryValue> GenerateSystemMetadataDict() {
   auto metadata_dict = base::MakeUnique<base::DictionaryValue>();
-  metadata_dict->SetString("trace-config", trace_config_->ToString());
 
   metadata_dict->SetString("network-type", GetNetworkTypeString());
   metadata_dict->SetString("product-version", GetContentClient()->GetProduct());
@@ -240,24 +188,66 @@ TracingControllerImpl::GenerateMetadataDict() const {
       ctime.hour, ctime.minute, ctime.second);
   metadata_dict->SetString("trace-capture-datetime", time_string);
 
-  // TODO(crbug.com/737049): The central controller doesn't know about
-  // metadata filters, so we temporarily filter here as the controller is
-  // what assembles the full trace data.
-  MetadataFilterPredicate metadata_filter;
-  if (trace_config_->IsArgumentFilterEnabled()) {
-    if (delegate_)
-      metadata_filter = delegate_->GetMetadataFilterPredicate();
-  }
+  return metadata_dict;
+}
 
-  if (!metadata_filter.is_null()) {
-    for (base::DictionaryValue::Iterator it(*metadata_dict); !it.IsAtEnd();
-         it.Advance()) {
-      if (!metadata_filter.Run(it.key())) {
-        metadata_dict->SetString(it.key(), "__stripped__");
-      }
-    }
-  }
+}  // namespace
 
+TracingController* TracingController::GetInstance() {
+  return TracingControllerImpl::GetInstance();
+}
+
+TracingControllerImpl::TracingControllerImpl()
+    : delegate_(GetContentClient()->browser()->GetTracingDelegate()) {
+  DCHECK(!g_tracing_controller);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // Deliberately leaked, like this class.
+  base::FileTracing::SetProvider(new FileTracingProviderImpl);
+  AddAgents();
+  g_tracing_controller = this;
+}
+
+TracingControllerImpl::~TracingControllerImpl() = default;
+
+void TracingControllerImpl::AddAgents() {
+  auto* connector =
+      content::ServiceManagerConnection::GetForProcess()->GetConnector();
+  connector->BindInterface(resource_coordinator::mojom::kServiceName,
+                           &coordinator_);
+
+// Register tracing agents.
+#if defined(ENABLE_POWER_TRACING)
+  agents_.push_back(base::MakeUnique<PowerTracingAgent>(connector));
+#endif
+
+#if defined(OS_CHROMEOS)
+  agents_.push_back(base::MakeUnique<CrOSTracingAgent>(connector));
+  agents_.push_back(base::MakeUnique<ArcTracingAgentImpl>(connector));
+#elif defined(OS_WIN)
+  agents_.push_back(base::MakeUnique<EtwTracingAgent>(connector));
+#endif
+
+  auto chrome_agent =
+      base::MakeUnique<tracing::ChromeTraceEventAgent>(connector);
+  // For adding general CPU, network, OS, and other system information to the
+  // metadata.
+  chrome_agent->AddMetadataGeneratorFunction(
+      base::BindRepeating(&GenerateSystemMetadataDict));
+  // For adding controller information to the metadata.
+  chrome_agent->AddMetadataGeneratorFunction(base::BindRepeating(
+      &TracingControllerImpl::GenerateMetadataDict, base::Unretained(this)));
+  if (delegate_) {
+    chrome_agent->AddMetadataGeneratorFunction(
+        base::BindRepeating(&TracingDelegate::GenerateMetadataDict,
+                            base::Unretained(delegate_.get())));
+  }
+  agents_.push_back(std::move(chrome_agent));
+}
+
+std::unique_ptr<base::DictionaryValue>
+TracingControllerImpl::GenerateMetadataDict() const {
+  auto metadata_dict = base::MakeUnique<base::DictionaryValue>();
+  metadata_dict->SetString("trace-config", trace_config_->ToString());
   return metadata_dict;
 }
 

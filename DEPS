@@ -55,11 +55,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': 'd52c6c27b748ca32453261179e621665e2864a6a',
+  'skia_revision': 'd204eb80abb0172b024664cf9f05d66d15574a24',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'eaa6bd423e81aeff3c4b07e9b4de9758573c5291',
+  'v8_revision': 'c9734fe0cc2bdd402eeb968063b8675e7a24cfef',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -79,7 +79,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '5daf07afe5b76e702d053aaca648b977ec3bb663',
+  'pdfium_revision': 'e85107bc8ab5bbd5b2d3f97fd6071d7ce4a78bcc',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -111,7 +111,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '82a3ab85e2bed537caa824698fd8d4fbc44e7072',
+  'catapult_revision': '40d0e648f8925445cd3b4d55e14ba7ed46b05ad5',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -173,7 +173,7 @@ deps = {
   },
 
   'src/ios/third_party/material_components_ios/src': {
-      'url': Var('chromium_git') + '/external/github.com/material-components/material-components-ios.git' + '@' + '97c6738501082716b216db1bd880565815758c1b',
+      'url': Var('chromium_git') + '/external/github.com/material-components/material-components-ios.git' + '@' + 'fe66153a064fd2faf16c4d5d4486d8b54932533c',
       'condition': 'checkout_ios',
   },
 
@@ -595,7 +595,7 @@ deps = {
     Var('chromium_git') + '/external/khronosgroup/webgl.git' + '@' + '34842fa3c36988840c89f5bc6a68503175acf7d9',
 
   'src/third_party/webrtc':
-    Var('webrtc_git') + '/src.git' + '@' + 'a194e58e799ccab6c999998e5d0f75725aa3f748', # commit position 20237
+    Var('webrtc_git') + '/src.git' + '@' + '47d3a0197f38dfa06a236f934541d8f4f4ca83c9', # commit position 20237
 
   'src/third_party/xdg-utils': {
       'url': Var('chromium_git') + '/chromium/deps/xdg-utils.git' + '@' + 'd80274d5869b17b8c9067a1022e4416ee7ed5e0d',

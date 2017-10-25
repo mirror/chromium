@@ -46,7 +46,7 @@ MessageListView::MessageListView()
   SetBackground(
       views::CreateSolidBackground(MessageCenterView::kBackgroundColor));
   SetBorder(views::CreateEmptyBorder(
-      gfx::Insets(message_center::kMarginBetweenItemsInList)));
+      gfx::Insets(message_center_style::kMarginBetweenItems)));
   animator_.AddObserver(this);
 }
 
@@ -67,7 +67,7 @@ void MessageListView::Layout() {
       continue;
     int height = child->GetHeightForWidth(child_area.width());
     child->SetBounds(child_area.x(), top, child_area.width(), height);
-    top += height + message_center::kMarginBetweenItemsInList;
+    top += height + message_center_style::kMarginBetweenItems;
   }
 }
 
@@ -197,7 +197,7 @@ int MessageListView::GetHeightForWidth(int width) const {
     if (!IsValidChild(child))
       continue;
     height += child->GetHeightForWidth(width) + padding;
-    padding = message_center::kMarginBetweenItemsInList;
+    padding = message_center_style::kMarginBetweenItems;
   }
 
   return height + GetInsets().height();
@@ -477,7 +477,7 @@ std::vector<int> MessageListView::ComputeRepositionOffsets(
 
 void MessageListView::AnimateNotifications() {
   int target_index = -1;
-  int padding = message_center::kMarginBetweenItemsInList;
+  int padding = message_center_style::kMarginBetweenItems;
   gfx::Rect child_area = GetContentsBounds();
   if (reposition_top_ >= 0) {
     // Find the target item.
@@ -563,7 +563,7 @@ void MessageListView::AnimateClearingOneNotification() {
   // Slide from left to right.
   gfx::Rect new_bounds = child->bounds();
   new_bounds.set_x(new_bounds.right() +
-                   message_center::kMarginBetweenItemsInList);
+                   message_center_style::kMarginBetweenItems);
   animator_.AnimateViewTo(child, new_bounds);
 
   // Schedule to start sliding out next notification after a short delay.

@@ -60,7 +60,7 @@ class UiInputManager {
   void SendButtonDown(UiElement* target,
                       const gfx::PointF& target_point,
                       ButtonState button_state);
-  bool SendButtonUp(UiElement* target,
+  void SendButtonUp(UiElement* target,
                     const gfx::PointF& target_point,
                     ButtonState button_state);
   void GetVisualTargetElement(const gfx::Vector3dF& laser_direction,
@@ -71,12 +71,14 @@ class UiInputManager {
                               gfx::PointF* out_target_local_point) const;
 
   UiScene* scene_;
-  int hover_target_id_ = 0;
+  // TODO(mthiesse): We need to handle elements being removed, and update this
+  // state appropriately.
+  UiElement* hover_target_ = nullptr;
   // TODO(mthiesse): We shouldn't have a fling target. Elements should fling
   // independently and we should only cancel flings on the relevant element
   // when we do cancel flings.
-  int fling_target_id_ = 0;
-  int input_locked_element_id_ = 0;
+  UiElement* fling_target_ = nullptr;
+  UiElement* input_locked_element_ = nullptr;
   bool in_click_ = false;
   bool in_scroll_ = false;
 

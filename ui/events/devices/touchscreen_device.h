@@ -25,30 +25,24 @@ struct EVENTS_DEVICES_EXPORT TouchscreenDevice : public InputDevice {
                     InputDeviceType type,
                     const std::string& name,
                     const gfx::Size& size,
-                    int touch_points,
-                    bool has_stylus = false);
+                    int touch_points);
 
   TouchscreenDevice(const InputDevice& input_device,
                     const gfx::Size& size,
-                    int touch_points,
-                    bool has_stylus = false);
-
-  TouchscreenDevice(const TouchscreenDevice& other);
+                    int touch_points);
 
   ~TouchscreenDevice() override;
 
   gfx::Size size;    // Size of the touch screen area.
-  // Number of touch points this device supports (0 if unknown).
-  int touch_points = 0;
+  int touch_points;  // The number of touch points this device supports (0 if
+                     // unknown).
   // True if the specified touchscreen device is stylus capable.
-  bool has_stylus = false;
+  bool is_stylus = false;
   // Id of the display the touch device targets.
   // NOTE: when obtaining TouchscreenDevice from InputDeviceManager this value
   // may not have been updated. See
   // InputDeviceManager::AreTouchscreenTargetDisplaysValid() for details.
   int64_t target_display_id = display::kInvalidDisplayId;
-
-  // NOTE: If adding fields please update mojo/input_devices.mojom.
 };
 
 }  // namespace ui

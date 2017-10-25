@@ -102,7 +102,7 @@ crbug.com/726075 [ Linux ] shapedetection/detection-HTMLVideoElement.html [ Time
 crbug.com/774567 [ Win Linux ] external/wpt/webvtt/rendering/cues-with-video/processing-model/dom_override_remove_cue_while_paused.html [ Failure ]
 
 # Fails because the manual test hasn't been automated yet
-crbug.com/762054 external/wpt/cssom-view/scrollBoundaryBehavior-manual.html [ Skip ]
+crbug.com/762054 external/wpt/cssom-view/overscrollBehavior-manual.html [ Skip ]
 
 # Fails consistently on WebKit Mac10.10, WebKit Mac10.11 (retina) and mac10.10_blink_rel tryserver, but not on other Mac bots.
 crbug.com/614910 [ Mac ] virtual/gpu-rasterization/images/pixel-crack-image-background-webkit-transform-scale.html [ Pass Failure ]
@@ -575,15 +575,10 @@ crbug.com/728378 virtual/layout_ng/overflow/overflow-position-003.html [ Failure
 crbug.com/667560 http/tests/devtools/console/console-search.js [ Skip ]
 crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-search.js [ Skip ]
 
-crbug.com/667560 http/tests/devtools/elements/styles-3/styles-change-node-while-editing.js [ Pass Failure ]
-crbug.com/667560 virtual/mojo-loading/http/tests/devtools/elements/styles-3/styles-change-node-while-editing.js [ Pass Failure ]
+crbug.com/667560 http/tests/devtools/elements/styles-3/styles-change-node-while-editing.html [ Pass Failure ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/elements/styles-3/styles-change-node-while-editing.html [ Pass Failure ]
 
 # ====== DevTools test migration failures until here ======
-
-crbug.com/778391 http/tests/devtools/elements/styles-3/styles-add-new-rule-tab.js [ Pass Failure ]
-crbug.com/778391 http/tests/devtools/elements/styles-3/styles-disable-inherited.js [ Pass Failure ]
-crbug.com/778391 virtual/mojo-loading/http/tests/devtools/elements/styles-3/styles-add-new-rule.js [ Pass Failure ]
-crbug.com/778391 virtual/mojo-loading/http/tests/devtools/elements/styles-3/styles-disable-inherited.js [ Pass Failure ]
 
 crbug.com/773353 [ Mac ] http/tests/devtools/coverage/coverage-view.html [ Pass Failure ]
 crbug.com/773353 [ Mac ] virtual/mojo-loading/http/tests/devtools/coverage/coverage-view.html [ Pass Failure ]
@@ -1713,7 +1708,6 @@ crbug.com/751952 virtual/origin-trials-runtimeflags-disabled/http/tests/origin_t
 crbug.com/771729 [ Win Debug ] external/wpt/html/semantics/scripting-1/the-script-element/execution-timing/039.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
-crbug.com/626703 [ Linux Mac10.10 Mac10.11 Mac10.12 Retina Win ] external/wpt/requestidlecallback/idlharness.html [ Timeout ]
 crbug.com/626703 [ Android Linux Mac10.10 Mac10.11 Mac10.12 Retina Win ] external/wpt/acid/acid2/reftest.html [ Failure ]
 crbug.com/626703 [ Android Linux Mac10.10 Mac10.11 Mac10.12 Retina Win ] external/wpt/acid/acid3/test.html [ Failure ]
 crbug.com/626703 [ Android Linux Mac10.10 Mac10.11 Mac10.12 Retina Win ] external/wpt/css/css-ui-3/cursor-auto-006.html [ Skip ]
@@ -2392,8 +2386,8 @@ crbug.com/671478 fast/table/percent-height-replaced-content-in-cell.html [ Pass 
 crbug.com/671478 virtual/mojo-loading/fast/table/percent-height-replaced-content-in-cell.html [ Pass Failure ]
 crbug.com/663858 fast/text/selection/emphasis.html [ Pass Failure ]
 crbug.com/663858 fast/text/emphasis-vertical.html [ Pass Failure ]
-crbug.com/663876 http/tests/doc-write-intervention/doc-write-sync-third-party-script-block-effectively-2g.html [ Pass Failure ]
-crbug.com/663876 virtual/mojo-loading/http/tests/doc-write-intervention/doc-write-sync-third-party-script-block-effectively-2g.html [ Pass Failure ]
+crbug.com/663876 http/tests/loading/doc-write-sync-third-party-script-block-effectively-2g.html [ Pass Failure ]
+crbug.com/663876 virtual/mojo-loading/http/tests/loading/doc-write-sync-third-party-script-block-effectively-2g.html [ Pass Failure ]
 crbug.com/664816 http/tests/security/contentSecurityPolicy/require-sri-for/require-sri-for-script-reportonly-blocked.php [ Pass Failure ]
 crbug.com/664819 http/tests/security/isolatedWorld/bypass-main-world-csp-for-inline-style.html [ Pass Failure ]
 crbug.com/664819 virtual/mojo-loading/http/tests/security/isolatedWorld/bypass-main-world-csp-for-inline-style.html [ Pass Failure ]
@@ -3516,8 +3510,8 @@ crbug.com/667560 [ Win7 Debug ] virtual/mojo-loading/http/tests/devtools/sources
 crbug.com/757955 [ Win7 ] media/color-profile-video-seek-filter.html [ Pass Timeout ]
 crbug.com/757955 [ Win7 Debug ] virtual/threaded/animations/composited-animations-rotate-zero-degrees.html [ Pass Timeout ]
 crbug.com/757955 [ Win7 Debug ] external/wpt/encoding/legacy-mb-japanese/shift_jis/sjis-encode-form-errors-han.html [ Pass Timeout ]
-crbug.com/757955 [ Win7 Debug ] http/tests/devtools/tracing/frame-model-instrumentation.html [ Pass Timeout ]
-crbug.com/667560 [ Win7 Debug ] virtual/mojo-loading/http/tests/devtools/tracing/frame-model-instrumentation.html [ Pass Timeout ]
+crbug.com/778271 [ Win Debug ] http/tests/devtools/tracing/frame-model-instrumentation.html [ Pass Failure ]
+crbug.com/778271 [ Win Debug ] virtual/mojo-loading/http/tests/devtools/tracing/frame-model-instrumentation.html [ Pass Failure ]
 crbug.com/757955 [ Win7 Debug ] storage/indexeddb/mozilla/cursors.html [ Pass Timeout ]
 crbug.com/757955 [ Win7 Debug ] storage/indexeddb/objectstore-cursor.html [ Pass Timeout ]
 crbug.com/757955 [ Win7 Debug ] http/tests/devtools/tracing/timeline-paint/layer-tree.html [ Pass Failure Timeout ]
@@ -3557,15 +3551,8 @@ crbug.com/760543 [ Linux Release ] virtual/mojo-loading/http/tests/devtools/trac
 
 crbug.com/769347 [ Mac ] fast/dom/inert/inert-node-is-uneditable.html [ Failure ]
 
-crbug.com/769056 fast/text/emoji-web-font.html [ Failure ]
-
 # Paint-timing tests timeout without threaded-compositing, so skip them.
 crbug.com/720047 external/wpt/paint-timing [ Skip ]
-
-crbug.com/770232 [ Win10 ] editing/selection/paint-hyphen.html [ Failure ]
-crbug.com/770232 [ Win10 ] fast/text/hyphenate-character.html [ Failure ]
-crbug.com/770232 [ Win10 ] fast/text/unicode-fallback-font.html [ Failure ]
-crbug.com/770232 [ Mac ] virtual/mojo-loading/http/tests/devtools/tracing/console-timeline.html [ Pass Failure ]
 
 # Test flaky (crashing) on WebKit Android (Nexus4)
 crbug.com/762008 [ Android ] http/tests/appcache/abort-cache-onchecking-resource-404.html [ Pass Crash ]

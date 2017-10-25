@@ -125,7 +125,6 @@ void LockScreen::OnLockScreenNoteStateChanged(mojom::TrayActionState state) {
 void LockScreen::OnLockStateChanged(bool locked) {
   if (!locked)
     Destroy();
-  Shell::Get()->metrics()->login_metrics_recorder()->Reset();
 }
 
 }  // namespace ash

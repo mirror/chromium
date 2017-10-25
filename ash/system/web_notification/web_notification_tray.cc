@@ -84,8 +84,7 @@ class WebNotificationBubbleWrapper {
     init_params.anchor_view = anchor_tray->GetBubbleAnchor();
     init_params.anchor_alignment = tray->GetAnchorAlignment();
     const int width = message_center::kNotificationWidth +
-                      message_center::kNotificationBorderThickness * 2 +
-                      message_center::kMarginBetweenItemsInList * 2;
+                      message_center::kMarginBetweenItems * 2;
     init_params.min_width = width;
     init_params.max_width = width;
     init_params.max_height = bubble->max_height();
@@ -589,8 +588,6 @@ void WebNotificationTray::ClickedOutsideBubble() {
 }
 
 bool WebNotificationTray::PerformAction(const ui::Event& event) {
-  UserMetricsRecorder::RecordUserClick(
-      LoginMetricsRecorder::LockScreenUserClickTarget::kNotificationTray);
   if (message_center_bubble())
     CloseBubble();
   else

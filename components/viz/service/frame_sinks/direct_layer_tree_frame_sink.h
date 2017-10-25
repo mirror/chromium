@@ -78,9 +78,6 @@ class VIZ_SERVICE_EXPORT DirectLayerTreeFrameSink
   // ExternalBeginFrameSourceClient implementation:
   void OnNeedsBeginFrames(bool needs_begin_frame) override;
 
-  // ContextLostObserver implementation:
-  void OnContextLost() override;
-
   // This class is only meant to be used on a single thread.
   THREAD_CHECKER(thread_checker_);
 

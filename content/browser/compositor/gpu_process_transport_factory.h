@@ -17,7 +17,6 @@
 #include "base/observer_list.h"
 #include "build/build_config.h"
 #include "components/viz/common/display/renderer_settings.h"
-#include "components/viz/common/gpu/context_lost_observer.h"
 #include "components/viz/common/surfaces/frame_sink_id_allocator.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "content/browser/compositor/image_transport_factory.h"
@@ -52,8 +51,7 @@ namespace content {
 
 class GpuProcessTransportFactory : public ui::ContextFactory,
                                    public ui::ContextFactoryPrivate,
-                                   public ImageTransportFactory,
-                                   public viz::ContextLostObserver {
+                                   public ImageTransportFactory {
  public:
   GpuProcessTransportFactory(
       gpu::GpuChannelEstablishFactory* gpu_channel_factory,
@@ -116,13 +114,11 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
       bool create_gpu_output_surface,
       scoped_refptr<gpu::GpuChannelHost> established_channel_host);
 
+  void OnLostMainThreadSharedContextInsideCallback();
   void OnLostMainThreadSharedContext();
 
   scoped_refptr<viz::VulkanInProcessContextProvider>
   SharedVulkanContextProvider();
-
-  // viz::ContextLostObserver implementation.
-  void OnContextLost() override;
 
   viz::FrameSinkIdAllocator frame_sink_id_allocator_;
 

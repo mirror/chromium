@@ -10,7 +10,6 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/observer_list.h"
 #include "base/threading/thread_checker.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "gpu/ipc/in_process_command_buffer.h"
@@ -56,8 +55,8 @@ class AwRenderThreadContextProvider : public viz::ContextProvider {
   viz::ContextCacheController* CacheController() override;
   void InvalidateGrContext(uint32_t state) override;
   base::Lock* GetLock() override;
-  void AddObserver(viz::ContextLostObserver* obs) override;
-  void RemoveObserver(viz::ContextLostObserver* obs) override;
+  void SetLostContextCallback(
+      const LostContextCallback& lost_context_callback) override;
 
   void OnLostContext();
 
@@ -68,7 +67,7 @@ class AwRenderThreadContextProvider : public viz::ContextProvider {
   sk_sp<class GrContext> gr_context_;
   std::unique_ptr<viz::ContextCacheController> cache_controller_;
 
-  base::ObserverList<viz::ContextLostObserver> observers_;
+  LostContextCallback lost_context_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(AwRenderThreadContextProvider);
 };

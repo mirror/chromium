@@ -182,7 +182,6 @@ void PrintSettings::Clear() {
   print_text_with_gdi_ = false;
   printer_type_ = PrintSettings::PrinterType::TYPE_NONE;
 #endif
-  is_modifiable_ = true;
 }
 
 void PrintSettings::SetPrinterPrintableArea(

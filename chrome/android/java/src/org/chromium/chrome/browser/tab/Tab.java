@@ -2590,10 +2590,6 @@ public class Tab
             mFullscreenManager.setPersistentFullscreenMode(enableFullscreen);
         }
 
-        if (enableFullscreen && mContentViewCore != null) {
-            mContentViewCore.destroySelectActionMode();
-        }
-
         // When going into fullscreen, we want to remove any cached thumbnail of the Tab.
         if (enableFullscreen && mNativeTabAndroid != 0) {
             nativeClearThumbnailPlaceholder(mNativeTabAndroid);

@@ -19,8 +19,6 @@ GPU_EXPORT extern const base::Feature kDefaultEnableGpuRasterization;
 
 GPU_EXPORT extern const base::Feature kGpuScheduler;
 
-GPU_EXPORT extern const base::Feature kDefaultPassthroughCommandDecoder;
-
 }  // namespace features
 
 #endif  // GPU_CONFIG_GPU_FEATURES_H_

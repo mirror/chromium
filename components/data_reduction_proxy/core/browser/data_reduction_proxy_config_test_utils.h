@@ -104,7 +104,6 @@ class TestDataReductionProxyConfig : public DataReductionProxyConfig {
   void SetShouldAddDefaultProxyBypassRules(bool add_default_proxy_bypass_rules);
 
   using DataReductionProxyConfig::UpdateConfigForTesting;
-  using DataReductionProxyConfig::OnInsecureProxyAllowedStatusChange;
 
  private:
   bool GetIsCaptivePortal() const override;

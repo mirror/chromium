@@ -54,7 +54,6 @@ enum PointerKind {
   MOUSE,
   PEN,
   TOUCH,
-  ERASER,
 };
 
 enum WheelMode {

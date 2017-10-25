@@ -57,7 +57,7 @@ class AutofillProviderAndroid : public AutofillProvider {
                       size_t index,
                       const gfx::RectF& bounding_box);
 
-  bool IsCurrentlyLinkedHandler(AutofillHandlerProxy* handler);
+  bool ValidateHandler(AutofillHandlerProxy* handler);
 
   bool IsCurrentlyLinkedForm(const FormData& form);
 

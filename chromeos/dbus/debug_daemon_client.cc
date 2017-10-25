@@ -452,7 +452,8 @@ class DebugDaemonClientImpl : public DebugDaemonClient {
       const std::string& name,
       const std::string& uri,
       const std::string& ppd_contents,
-      DebugDaemonClient::CupsAddPrinterCallback callback) override {
+      const DebugDaemonClient::CupsAddPrinterCallback& callback,
+      const base::Closure& error_callback) override {
     dbus::MethodCall method_call(debugd::kDebugdInterface,
                                  debugd::kCupsAddManuallyConfiguredPrinter);
     dbus::MessageWriter writer(&method_call);
@@ -465,13 +466,15 @@ class DebugDaemonClientImpl : public DebugDaemonClient {
     debugdaemon_proxy_->CallMethod(
         &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         base::BindOnce(&DebugDaemonClientImpl::OnPrinterAdded,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback,
+                       error_callback));
   }
 
   void CupsAddAutoConfiguredPrinter(
       const std::string& name,
       const std::string& uri,
-      DebugDaemonClient::CupsAddPrinterCallback callback) override {
+      const DebugDaemonClient::CupsAddPrinterCallback& callback,
+      const base::Closure& error_callback) override {
     dbus::MethodCall method_call(debugd::kDebugdInterface,
                                  debugd::kCupsAddAutoConfiguredPrinter);
     dbus::MessageWriter writer(&method_call);
@@ -481,7 +484,8 @@ class DebugDaemonClientImpl : public DebugDaemonClient {
     debugdaemon_proxy_->CallMethod(
         &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         base::BindOnce(&DebugDaemonClientImpl::OnPrinterAdded,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback,
+                       error_callback));
   }
 
   void CupsRemovePrinter(
@@ -723,14 +727,15 @@ class DebugDaemonClientImpl : public DebugDaemonClient {
       callback.Run(false, "");
   }
 
-  void OnPrinterAdded(CupsAddPrinterCallback callback,
+  void OnPrinterAdded(const CupsAddPrinterCallback& callback,
+                      const base::Closure& error_callback,
                       dbus::Response* response) {
     int32_t result;
     dbus::MessageReader reader(response);
     if (response && reader.PopInt32(&result)) {
-      std::move(callback).Run(result);
+      callback.Run(result);
     } else {
-      std::move(callback).Run(base::nullopt);
+      error_callback.Run();
     }
   }
 

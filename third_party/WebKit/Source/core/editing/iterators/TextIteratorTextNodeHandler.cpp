@@ -10,7 +10,14 @@
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/line/InlineTextBox.h"
 #include "core/layout/line/RootInlineBox.h"
+#include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_offset_mapping.h"
+
+// TODO(layout-dev): Try not to include them. They are not needed by this file,
+// but are only included from ng_inline_node.h as partial classes.
+// However, Windows debug compiler requires complete classes to compile.
+#include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_unpositioned_float.h"
 
 namespace blink {
 
@@ -35,9 +42,8 @@ bool ShouldSkipInvisibleTextAt(const Text& text,
   return layout_object->Style()->Visibility() != EVisibility::kVisible;
 }
 
-// TODO(xiaochengh): Use a return type with better clarity
 std::pair<String, std::pair<unsigned, unsigned>>
-ComputeTextAndOffsetsForEmission(const NGOffsetMapping& mapping,
+ComputeTextAndOffsetsForEmission(const NGInlineNode& inline_node,
                                  const NGOffsetMappingUnit& unit,
                                  unsigned run_start,
                                  unsigned run_end,
@@ -45,12 +51,13 @@ ComputeTextAndOffsetsForEmission(const NGOffsetMapping& mapping,
   // TODO(xiaochengh): Handle EmitsOriginalText.
   unsigned text_content_start = unit.ConvertDOMOffsetToTextContent(run_start);
   unsigned text_content_end = unit.ConvertDOMOffsetToTextContent(run_end);
-  unsigned length = text_content_end - text_content_start;
   if (behavior.EmitsSpaceForNbsp()) {
-    String string = mapping.GetText().Substring(text_content_start, length);
+    String string = inline_node.Text(text_content_start, text_content_end)
+                        .ToString()
+                        .Replace(kNoBreakSpaceCharacter, kSpaceCharacter);
     return {string, {0u, 0u}};
   }
-  return {mapping.GetText(), {text_content_start, text_content_end}};
+  return {inline_node.Text(), {text_content_start, text_content_end}};
 }
 
 }  // namespace
@@ -91,19 +98,21 @@ void TextIteratorTextNodeHandler::HandleTextNodeWithLayoutNG() {
   }
 
   while (offset_ < end_offset_ && !text_state_.PositionNode()) {
-    // We may go through multiple mappings, which happens when there is
+    // We may go through multiple inline nodes, which happens when there is
     // ::first-letter and blockifying style.
-    const NGOffsetMapping* mapping =
-        NGOffsetMapping::GetFor(*text_node_, offset_);
-    if (!mapping) {
+    Optional<NGInlineNode> inline_node =
+        GetNGInlineNodeFor(*text_node_, offset_);
+    if (!inline_node) {
       offset_ = end_offset_;
       return;
     }
 
+    const NGOffsetMapping& mapping =
+        inline_node->ComputeOffsetMappingIfNeeded();
     const unsigned initial_offset = offset_;
     for (const NGOffsetMappingUnit& unit :
-         mapping->GetMappingUnitsForDOMOffsetRange(*text_node_, offset_,
-                                                   end_offset_)) {
+         mapping.GetMappingUnitsForDOMOffsetRange(*text_node_, offset_,
+                                                  end_offset_)) {
       const unsigned run_start = std::max(offset_, unit.DOMStart());
       const unsigned run_end = std::min(end_offset_, unit.DOMEnd());
       if (run_start >= run_end ||
@@ -114,7 +123,7 @@ void TextIteratorTextNodeHandler::HandleTextNodeWithLayoutNG() {
       }
 
       auto string_and_offsets = ComputeTextAndOffsetsForEmission(
-          *mapping, unit, run_start, run_end, behavior_);
+          *inline_node, unit, run_start, run_end, behavior_);
       const String& string = string_and_offsets.first;
       const unsigned text_content_start = string_and_offsets.second.first;
       const unsigned text_content_end = string_and_offsets.second.second;
@@ -230,7 +239,7 @@ void TextIteratorTextNodeHandler::HandleTextNodeInRange(Text* node,
   first_letter_text_ = nullptr;
   uses_layout_ng_ = false;
 
-  if (NGOffsetMapping::GetFor(*node, offset_)) {
+  if (GetNGInlineNodeFor(*node, offset_)) {
     // Restore end offset from magic value.
     if (end_offset_ == kMaxOffset)
       end_offset_ = node->data().length();

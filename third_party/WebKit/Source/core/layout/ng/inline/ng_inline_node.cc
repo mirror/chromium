@@ -561,7 +561,10 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
           .SetAvailableSize({available_inline_size, NGSizeIndefinite})
           .ToConstraintSpace(writing_mode);
 
-  Vector<NGPositionedFloat> positioned_floats;
+  NGLineBoxFragmentBuilder container_builder(
+      node, &node.Style(), space->WritingMode(), TextDirection::kLtr);
+  container_builder.SetBfcOffset(NGBfcOffset{LayoutUnit(), LayoutUnit()});
+
   Vector<scoped_refptr<NGUnpositionedFloat>> unpositioned_floats;
 
   scoped_refptr<NGInlineBreakToken> break_token;
@@ -569,9 +572,10 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
   NGExclusionSpace empty_exclusion_space;
   LayoutUnit result;
   while (!break_token || !break_token->IsFinished()) {
-    NGLineBreaker line_breaker(node, *space, &positioned_floats,
+    NGLineBreaker line_breaker(node, *space, &container_builder,
                                &unpositioned_floats, break_token.get());
-    if (!line_breaker.NextLine(empty_exclusion_space, &line_info))
+    if (!line_breaker.NextLine(NGLogicalOffset(), empty_exclusion_space,
+                               &line_info))
       break;
 
     break_token = line_breaker.CreateBreakToken(nullptr);
@@ -742,6 +746,23 @@ void NGInlineNode::CheckConsistency() const {
 
 String NGInlineNode::ToString() const {
   return String::Format("NGInlineNode");
+}
+
+// static
+Optional<NGInlineNode> GetNGInlineNodeFor(const Node& node) {
+  return GetNGInlineNodeFor(node, 0);
+}
+
+// static
+Optional<NGInlineNode> GetNGInlineNodeFor(const Node& node, unsigned offset) {
+  const LayoutObject* layout_object = AssociatedLayoutObjectOf(node, offset);
+  if (!layout_object || !layout_object->IsInline())
+    return WTF::nullopt;
+  LayoutBlockFlow* block_flow = layout_object->EnclosingNGBlockFlow();
+  if (!block_flow)
+    return WTF::nullopt;
+  DCHECK(block_flow->ChildrenInline());
+  return NGInlineNode(block_flow);
 }
 
 }  // namespace blink

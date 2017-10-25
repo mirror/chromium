@@ -15,7 +15,6 @@ cr.define('print_preview', function() {
         'getPrinterCapabilities',
         'hidePreview',
         'print',
-        'saveAppState',
         'setupPrinter',
       ]);
 
@@ -161,9 +160,7 @@ cr.define('print_preview', function() {
     recordInHistogram() {}
 
     /** @override */
-    saveAppState(appState) {
-      this.methodCalled('saveAppState', appState);
-    }
+    saveAppState() {}
 
     /**
      * @param {!print_preview.NativeInitialSettings} settings The settings

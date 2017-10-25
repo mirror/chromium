@@ -128,4 +128,7 @@ const gpu::GpuFeatureInfo& TestInProcessContextProvider::GetGpuFeatureInfo()
   return gpu_feature_info_;
 }
 
+void TestInProcessContextProvider::SetLostContextCallback(
+    const LostContextCallback& lost_context_callback) {}
+
 }  // namespace cc

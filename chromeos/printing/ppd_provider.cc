@@ -331,7 +331,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       return;
     }
     while (!ppd_resolution_queue_.empty()) {
-      auto& next = ppd_resolution_queue_.front();
+      const auto& next = ppd_resolution_queue_.front();
       if (!next.first.user_supplied_ppd_url.empty()) {
         DCHECK(next.first.effective_make_and_model.empty());
         GURL url(next.first.user_supplied_ppd_url);
@@ -357,7 +357,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       // thing if there is one.
       LOG(ERROR) << "PPD " << next.first.effective_make_and_model
                  << " not found in server index";
-      FinishPpdResolution(std::move(next.second), PpdProvider::INTERNAL_ERROR,
+      FinishPpdResolution(next.second, PpdProvider::INTERNAL_ERROR,
                           std::string());
       ppd_resolution_queue_.pop_front();
     }
@@ -400,20 +400,18 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   }
 
   void ResolvePpd(const Printer::PpdReference& reference,
-                  ResolvePpdCallback cb) override {
+                  const ResolvePpdCallback& cb) override {
     // Do a sanity check here, so we can assumed |reference| is well-formed in
     // the rest of this class.
     if (!PpdReferenceIsWellFormed(reference)) {
-      FinishPpdResolution(std::move(cb), PpdProvider::INTERNAL_ERROR,
-                          std::string());
+      FinishPpdResolution(cb, PpdProvider::INTERNAL_ERROR, std::string());
       return;
     }
     // First step, check the cache.  If the cache lookup fails, we'll (try to)
     // consult the server.
-    ppd_cache_->Find(
-        PpdReferenceToCacheKey(reference),
-        base::BindOnce(&PpdProviderImpl::ResolvePpdCacheLookupDone,
-                       weak_factory_.GetWeakPtr(), reference, std::move(cb)));
+    ppd_cache_->Find(PpdReferenceToCacheKey(reference),
+                     base::Bind(&PpdProviderImpl::ResolvePpdCacheLookupDone,
+                                weak_factory_.GetWeakPtr(), reference, cb));
   }
 
   void ReverseLookup(const std::string& effective_make_and_model,
@@ -533,19 +531,18 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
     OnURLFetchComplete(nullptr);
   }
 
-  void FinishPpdResolution(ResolvePpdCallback cb,
+  void FinishPpdResolution(const ResolvePpdCallback& cb,
                            PpdProvider::CallbackResultCode result_code,
                            const std::string& ppd_contents) {
     if (result_code == PpdProvider::SUCCESS) {
       base::SequencedTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE,
-          base::BindOnce(std::move(cb), PpdProvider::SUCCESS, ppd_contents,
-                         ExtractFiltersFromPpd(ppd_contents)));
+          FROM_HERE, base::Bind(cb, PpdProvider::SUCCESS, ppd_contents,
+                                ExtractFiltersFromPpd(ppd_contents)));
     } else {
       // Just post the failure.
       base::SequencedTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::BindOnce(std::move(cb), result_code, std::string(),
-                                    std::vector<std::string>()));
+          FROM_HERE, base::Bind(cb, result_code, std::string(),
+                                std::vector<std::string>()));
     }
   }
 
@@ -553,14 +550,14 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   // the cache, satisfy the resolution, otherwise kick it over to the fetcher
   // queue to be grabbed from a server.
   void ResolvePpdCacheLookupDone(const Printer::PpdReference& reference,
-                                 ResolvePpdCallback cb,
+                                 const ResolvePpdCallback& cb,
                                  const PpdCache::FindResult& result) {
     if (result.success) {
       // Cache hit.
-      FinishPpdResolution(std::move(cb), PpdProvider::SUCCESS, result.contents);
+      FinishPpdResolution(cb, PpdProvider::SUCCESS, result.contents);
     } else {
       // Cache miss.  Queue it to be satisfied by the fetcher queue.
-      ppd_resolution_queue_.push_back({reference, std::move(cb)});
+      ppd_resolution_queue_.push_back({reference, cb});
       MaybeStartFetch();
     }
   }
@@ -720,16 +717,16 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
     std::string contents;
 
     if ((ValidateAndGetResponseAsString(&contents) != PpdProvider::SUCCESS)) {
-      FinishPpdResolution(std::move(ppd_resolution_queue_.front().second),
+      FinishPpdResolution(ppd_resolution_queue_.front().second,
                           PpdProvider::SERVER_ERROR, std::string());
     } else if (contents.size() > kMaxPpdSizeBytes) {
-      FinishPpdResolution(std::move(ppd_resolution_queue_.front().second),
+      FinishPpdResolution(ppd_resolution_queue_.front().second,
                           PpdProvider::PPD_TOO_LARGE, std::string());
     } else {
       ppd_cache_->Store(
           PpdReferenceToCacheKey(ppd_resolution_queue_.front().first), contents,
           base::Bind(&OnPpdStored));
-      FinishPpdResolution(std::move(ppd_resolution_queue_.front().second),
+      FinishPpdResolution(ppd_resolution_queue_.front().second,
                           PpdProvider::SUCCESS, contents);
     }
     ppd_resolution_queue_.pop_front();
@@ -810,11 +807,11 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   void FailQueuedServerPpdResolutions(PpdProvider::CallbackResultCode code) {
     base::circular_deque<std::pair<Printer::PpdReference, ResolvePpdCallback>>
         filtered_queue;
-    for (auto& entry : ppd_resolution_queue_) {
+    for (const auto& entry : ppd_resolution_queue_) {
       if (!entry.first.user_supplied_ppd_url.empty()) {
-        filtered_queue.emplace_back(std::move(entry));
+        filtered_queue.push_back(entry);
       } else {
-        FinishPpdResolution(std::move(entry.second), code, std::string());
+        FinishPpdResolution(entry.second, code, std::string());
       }
     }
     ppd_resolution_queue_ = std::move(filtered_queue);

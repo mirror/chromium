@@ -48,8 +48,6 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
      */
     private static final String PREF_SEARCH_HISTORY = "bookmark_search_history";
 
-    private static boolean sPreventLoadingForTesting;
-
     private Activity mActivity;
     private ViewGroup mMainView;
     private BookmarkModel mBookmarkModel;
@@ -166,9 +164,7 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
         mUndoController = new BookmarkUndoController(activity, mBookmarkModel, snackbarManager);
         mBookmarkModel.addObserver(mBookmarkModelObserver);
         initializeToLoadingState();
-        if (!sPreventLoadingForTesting) {
-            mBookmarkModel.finishLoadingBookmarkModel(mModelLoadedRunnable);
-        }
+        mBookmarkModel.finishLoadingBookmarkModel(mModelLoadedRunnable);
 
         mLargeIconBridge = new LargeIconBridge(Profile.getLastUsedProfile().getOriginalProfile());
         ActivityManager activityManager = ((ActivityManager) ContextUtils
@@ -486,13 +482,5 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
      */
     public void scrollToTop() {
         mRecyclerView.smoothScrollToPosition(0);
-    }
-
-    /**
-     * @param preventLoading Whether to prevent the bookmark model from fully loading for testing.
-     */
-    @VisibleForTesting
-    public static void preventLoadingForTesting(boolean preventLoading) {
-        sPreventLoadingForTesting = preventLoading;
     }
 }

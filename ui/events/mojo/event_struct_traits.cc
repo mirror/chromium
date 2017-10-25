@@ -200,13 +200,7 @@ StructTraits<ui::mojom::EventDataView, EventUniquePtr>::pointer_data(
     case ui::EventPointerType::POINTER_TYPE_TOUCH:
       pointer_data->kind = ui::mojom::PointerKind::TOUCH;
       break;
-    case ui::EventPointerType::POINTER_TYPE_PEN:
-      pointer_data->kind = ui::mojom::PointerKind::PEN;
-      break;
-    case ui::EventPointerType::POINTER_TYPE_ERASER:
-      pointer_data->kind = ui::mojom::PointerKind::ERASER;
-      break;
-    case ui::EventPointerType::POINTER_TYPE_UNKNOWN:
+    default:
       NOTREACHED();
   }
 
@@ -218,7 +212,6 @@ StructTraits<ui::mojom::EventDataView, EventUniquePtr>::pointer_data(
   brush_data->pressure = pointer_details->force;
   brush_data->tilt_x = pointer_details->tilt_x;
   brush_data->tilt_y = pointer_details->tilt_y;
-  // TODO(jamescook): Pen tangential_pressure and twist.
   pointer_data->brush_data = std::move(brush_data);
 
   // TODO(rjkroege): Plumb raw pointer events on windows.
@@ -336,7 +329,7 @@ bool StructTraits<ui::mojom::EventDataView, EventUniquePtr>::Read(
               screen_location, event.flags(),
               pointer_data->changed_button_flags,
               ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH,
-                                 pointer_data->pointer_id,
+                                 /* pointer_id*/ pointer_data->pointer_id,
                                  pointer_data->brush_data->width,
                                  pointer_data->brush_data->height,
                                  pointer_data->brush_data->pressure,
@@ -346,21 +339,6 @@ bool StructTraits<ui::mojom::EventDataView, EventUniquePtr>::Read(
           break;
         }
         case ui::mojom::PointerKind::PEN:
-          *out = std::make_unique<ui::PointerEvent>(
-              MojoPointerEventTypeToUIEvent(event.action()), location,
-              screen_location, event.flags(),
-              pointer_data->changed_button_flags,
-              ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_PEN,
-                                 pointer_data->pointer_id,
-                                 pointer_data->brush_data->width,
-                                 pointer_data->brush_data->height,
-                                 pointer_data->brush_data->pressure,
-                                 pointer_data->brush_data->tilt_x,
-                                 pointer_data->brush_data->tilt_y),
-              time_stamp);
-          break;
-        case ui::mojom::PointerKind::ERASER:
-          // TODO(jamescook): Eraser support.
           NOTIMPLEMENTED();
           return false;
       }

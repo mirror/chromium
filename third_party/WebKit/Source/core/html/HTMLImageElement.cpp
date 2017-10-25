@@ -374,9 +374,16 @@ void HTMLImageElement::AttachLayoutTree(AttachContext& context) {
   if (GetLayoutObject() && GetLayoutObject()->IsImage()) {
     LayoutImage* layout_image = ToLayoutImage(GetLayoutObject());
     LayoutImageResource* layout_image_resource = layout_image->ImageResource();
-    if (is_fallback_image_)
-      layout_image_resource->UseBrokenImage();
-
+    if (is_fallback_image_) {
+      float device_scale_factor =
+          blink::DeviceScaleFactorDeprecated(layout_image->GetFrame());
+      std::pair<Image*, float> broken_image_and_image_scale_factor =
+          ImageResourceContent::BrokenImage(device_scale_factor);
+      ImageResourceContent* new_image_resource =
+          ImageResourceContent::CreateLoaded(
+              broken_image_and_image_scale_factor.first);
+      layout_image->ImageResource()->SetImageResource(new_image_resource);
+    }
     if (layout_image_resource->HasImage())
       return;
 
@@ -519,12 +526,12 @@ const String& HTMLImageElement::currentSrc() const {
   // Return the picked URL string in case of load error.
   if (GetImageLoader().HadError())
     return best_fit_image_url_;
-  // Initially, the pending request turns into current request when it is
-  // either available or broken. Check for the resource being in error or
-  // having an image to determine these states.
+  // Initially, the pending request turns into current request when it is either
+  // available or broken.  We use the image's dimensions as a proxy to it being
+  // in any of these states.
   ImageResourceContent* image_content = GetImageLoader().GetContent();
-  if (!image_content ||
-      (!image_content->ErrorOccurred() && !image_content->HasImage()))
+  if (!image_content || !image_content->GetImage() ||
+      !image_content->GetImage()->width())
     return g_empty_atom;
 
   return image_content->Url().GetString();

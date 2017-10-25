@@ -106,7 +106,6 @@ bool StructTraits<ui::mojom::TouchscreenDeviceDataView, ui::TouchscreenDevice>::
     return false;
 
   out->touch_points = data.touch_points();
-  out->has_stylus = data.has_stylus();
 
   return true;
 }

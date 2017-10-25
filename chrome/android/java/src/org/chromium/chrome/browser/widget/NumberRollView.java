@@ -12,7 +12,6 @@ import android.util.Property;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.ui.interpolators.BakedBezierInterpolator;
 
@@ -133,11 +132,5 @@ public class NumberRollView extends FrameLayout {
 
         mUpNumber.setAlpha(offset);
         mDownNumber.setAlpha(1.0f - offset);
-    }
-
-    /** Ends any in-progress animations. */
-    @VisibleForTesting
-    public void endAnimationsForTesting() {
-        if (mLastRollAnimator != null) mLastRollAnimator.end();
     }
 }

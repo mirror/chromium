@@ -73,10 +73,6 @@ struct StructTraits<ui::mojom::TouchscreenDeviceDataView,
     return device.touch_points;
   }
 
-  static bool has_stylus(const ui::TouchscreenDevice& device) {
-    return device.has_stylus;
-  }
-
   static bool Read(ui::mojom::TouchscreenDeviceDataView data,
                    ui::TouchscreenDevice* out);
 };

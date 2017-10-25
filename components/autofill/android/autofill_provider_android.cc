@@ -58,12 +58,10 @@ void AutofillProviderAndroid::OnQueryFormFieldAutofill(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   id_ = id;
 
-  // Only start a new session when form or handler is changed, the change of
-  // handler indicates query from other frame and a new session is needed.
-  //
-  // Focus or field value change will also trigger the query, so it should be
-  // ignored if the form is same.
-  if (IsCurrentlyLinkedForm(form) && IsCurrentlyLinkedHandler(handler)) {
+  // Only start a new session when form is changed, the focus or feild value
+  // change will also trigger the query, so it is safe to ignore the query
+  // for the same form.
+  if (IsCurrentlyLinkedForm(form)) {
     return;
   }
 
@@ -106,7 +104,7 @@ void AutofillProviderAndroid::OnTextFieldDidChange(
     const base::TimeTicks timestamp) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   size_t index;
-  if (!IsCurrentlyLinkedHandler(handler) || !IsCurrentlyLinkedForm(form) ||
+  if (!ValidateHandler(handler) || !IsCurrentlyLinkedForm(form) ||
       !form_->GetSimilarFieldIndex(field, &index))
     return;
 
@@ -127,7 +125,7 @@ bool AutofillProviderAndroid::OnWillSubmitForm(
     const FormData& form,
     const base::TimeTicks timestamp) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (!IsCurrentlyLinkedHandler(handler) || !IsCurrentlyLinkedForm(form))
+  if (!ValidateHandler(handler) || !IsCurrentlyLinkedForm(form))
     return false;
 
   JNIEnv* env = AttachCurrentThread();
@@ -142,7 +140,7 @@ bool AutofillProviderAndroid::OnWillSubmitForm(
 void AutofillProviderAndroid::OnFocusNoLongerOnForm(
     AutofillHandlerProxy* handler) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (!IsCurrentlyLinkedHandler(handler))
+  if (!ValidateHandler(handler))
     return;
 
   OnFocusChanged(false, 0, RectF());
@@ -156,7 +154,7 @@ void AutofillProviderAndroid::OnFocusOnFormField(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   size_t index;
-  if (!IsCurrentlyLinkedHandler(handler) || !IsCurrentlyLinkedForm(form) ||
+  if (!ValidateHandler(handler) || !IsCurrentlyLinkedForm(form) ||
       !form_->GetSimilarFieldIndex(field, &index))
     return;
 
@@ -212,9 +210,12 @@ void AutofillProviderAndroid::Reset(AutofillHandlerProxy* handler) {
   }
 }
 
-bool AutofillProviderAndroid::IsCurrentlyLinkedHandler(
-    AutofillHandlerProxy* handler) {
-  return handler == handler_.get();
+bool AutofillProviderAndroid::ValidateHandler(AutofillHandlerProxy* handler) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  bool ret = handler == handler_.get();
+  if (!ret)
+    handler_.reset();
+  return ret;
 }
 
 bool AutofillProviderAndroid::IsCurrentlyLinkedForm(const FormData& form) {

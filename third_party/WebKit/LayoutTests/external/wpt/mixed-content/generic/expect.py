@@ -73,7 +73,7 @@ def main(request, response):
                                                   "smiley.png"), "rb").read()
             elif content_type == "audio/wav":
                 response_data = open(os.path.join(request.doc_root,
-                                                  "webaudio", "resources", "sin_440Hz_-6dBFS_1s.wav"), "rb").read()
+                                                  "media", "smallest.wav"), "rb").read()
             elif content_type == "video/ogg":
                 response_data = open(os.path.join(request.doc_root,
                                                   "media",

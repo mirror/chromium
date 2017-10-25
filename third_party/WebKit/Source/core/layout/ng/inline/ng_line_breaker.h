@@ -19,8 +19,8 @@ namespace blink {
 class Hyphenation;
 class NGInlineBreakToken;
 class NGInlineItem;
+class NGLineBoxFragmentBuilder;
 class NGInlineLayoutStateStack;
-struct NGPositionedFloat;
 
 // Represents a line breaker.
 //
@@ -32,14 +32,16 @@ class CORE_EXPORT NGLineBreaker {
  public:
   NGLineBreaker(NGInlineNode,
                 const NGConstraintSpace&,
-                Vector<NGPositionedFloat>*,
+                NGLineBoxFragmentBuilder*,
                 Vector<scoped_refptr<NGUnpositionedFloat>>*,
                 const NGInlineBreakToken* = nullptr);
   ~NGLineBreaker() {}
 
   // Compute the next line break point and produces NGInlineItemResults for
   // the line.
-  bool NextLine(const NGExclusionSpace&, NGLineInfo*);
+  bool NextLine(const NGLogicalOffset& content_offset,
+                const NGExclusionSpace&,
+                NGLineInfo*);
 
   // Create an NGInlineBreakToken for the last line returned by NextLine().
   scoped_refptr<NGInlineBreakToken> CreateBreakToken(
@@ -57,7 +59,7 @@ class CORE_EXPORT NGLineBreaker {
     LayoutUnit position;
 
     // The current opportunity.
-    NGLayoutOpportunity opportunity;
+    WTF::Optional<NGLayoutOpportunity> opportunity;
 
     std::unique_ptr<NGExclusionSpace> exclusion_space;
 
@@ -72,7 +74,8 @@ class CORE_EXPORT NGLineBreaker {
     // the next line.
     bool is_after_forced_break = false;
 
-    LayoutUnit AvailableWidth() const { return opportunity.InlineSize(); }
+    bool HasAvailableWidth() const { return opportunity.has_value(); }
+    LayoutUnit AvailableWidth() const { return opportunity->InlineSize(); }
     bool CanFit() const { return position <= AvailableWidth(); }
     bool CanFit(LayoutUnit extra) const {
       return position + extra <= AvailableWidth();
@@ -140,12 +143,12 @@ class CORE_EXPORT NGLineBreaker {
   LineData line_;
   NGInlineNode node_;
   const NGConstraintSpace& constraint_space_;
-  Vector<NGPositionedFloat>* positioned_floats_;
+  NGLineBoxFragmentBuilder* container_builder_;
   Vector<scoped_refptr<NGUnpositionedFloat>>* unpositioned_floats_;
   unsigned item_index_ = 0;
   unsigned offset_ = 0;
   bool previous_line_had_forced_break_ = false;
-  LayoutUnit bfc_block_offset_;
+  NGLogicalOffset content_offset_;
   LazyLineBreakIterator break_iterator_;
   HarfBuzzShaper shaper_;
   ShapeResultSpacing<String> spacing_;

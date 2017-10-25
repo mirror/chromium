@@ -13,29 +13,13 @@ Polymer((function() {
     behaviors: [I18nBehavior],
 
     properties: {
-      disabled: {
-        type: Boolean,
-        value: false,
-      },
+      disabled: {type: Boolean, value: false},
 
-      showEnterpriseMessage: {
-        type: Boolean,
-        value: false,
-      },
+      showEnterpriseMessage: {type: Boolean, value: false},
 
-      domain: {
-        type: String,
-        observer: 'onDomainChanged_',
-      },
+      domain: {type: String, observer: 'onDomainChanged_'},
 
       emailDomain: String,
-
-      activeSection: {
-        type: String,
-        value: 'emailSection',
-      },
-
-      animationInProgress: Boolean,
 
       /**
        * Controls GLIF MM mode.
@@ -46,9 +30,22 @@ Polymer((function() {
       },
     },
 
-    attached: function() {
-      if (this.isRTL_())
-        this.setAttribute('rtl', '');
+    ready: function() {
+      /**
+       * Workaround for
+       * https://github.com/PolymerElements/neon-animation/issues/32
+       * TODO(dzhioev): Remove when fixed in Polymer.
+       */
+      var pages = this.$$('#animatedPages');
+      if (!pages)
+        return;
+
+      delete pages._squelchNextFinishEvent;
+      Object.defineProperty(pages, '_squelchNextFinishEvent', {
+        get: function() {
+          return false;
+        }
+      });
     },
 
     focus: function() {
@@ -94,7 +91,6 @@ Polymer((function() {
       if (email) {
         if (this.emailDomain)
           email = email.replace(this.emailDomain, '');
-
         this.switchToPasswordCard(email, false /* animated */);
         this.$$('#passwordInput').isInvalid = true;
         this.fire('backButton', true);
@@ -109,7 +105,7 @@ Polymer((function() {
     },
 
     isEmailSectionActive_: function() {
-      return this.activeSection == 'emailSection';
+      return this.$$('#animatedPages').selected == 'emailSection';
     },
 
     switchToEmailCard(animated) {
@@ -118,9 +114,12 @@ Polymer((function() {
       this.$$('#emailInput').isInvalid = false;
       if (this.isEmailSectionActive_())
         return;
-
-      this.animationInProgress = animated;
-      this.activeSection = 'emailSection';
+      this.setUpPageTransitions_(
+          animated ? TRANSITION_TYPE.BACKWARD : TRANSITION_TYPE.NONE);
+      this.$$('#animatedPages').selected = 'emailSection';
+      var animatedHeaders = this.$$('#animatedHeaders');
+      if (animatedHeaders)
+        animatedHeaders.selected = 'emailSection';
     },
 
     switchToPasswordCard(email, animated) {
@@ -134,13 +133,12 @@ Polymer((function() {
       this.$$('#passwordHeader').email = email;
       if (!this.isEmailSectionActive_())
         return;
-
-      this.animationInProgress = animated;
-      this.activeSection = 'passwordSection';
-    },
-
-    onSlideAnimationEnd_: function() {
-      this.animationInProgress = false;
+      this.setUpPageTransitions_(
+          animated ? TRANSITION_TYPE.FORWARD : TRANSITION_TYPE.NONE);
+      this.$$('#animatedPages').selected = 'passwordSection';
+      var animatedHeaders = this.$$('#animatedHeaders');
+      if (animatedHeaders)
+        animatedHeaders.selected = 'passwordSection';
     },
 
     onEmailSubmitted_: function() {
@@ -164,10 +162,38 @@ Polymer((function() {
       this.fire('authCompleted', msg);
     },
 
+    setUpPageTransitions_: function(transitionType) {
+      var animatedPages = this.$$('#animatedPages');
+      var animatedHeaders = this.$$('#animatedHeaders');
+      if (transitionType === TRANSITION_TYPE.NONE) {
+        animatedPages.entryAnimation = '';
+        animatedPages.exitAnimation = '';
+        if (animatedHeaders) {
+          animatedHeaders.entryAnimation = '';
+          animatedHeaders.exitAnimation = '';
+        }
+        return;
+      }
+      var isForward = transitionType === TRANSITION_TYPE.FORWARD;
+      var isRTL = this.isRTL_();
+      var entryAnimation = 'slide-from-' +
+          (isForward === isRTL ? 'left' : 'right') + '-animation';
+      var exitAnimation =
+          'slide-' + (isForward === isRTL ? 'right' : 'left') + '-animation';
+      animatedPages.entryAnimation = entryAnimation;
+      animatedPages.exitAnimation = exitAnimation;
+      if (animatedHeaders) {
+        animatedHeaders.entryAnimation = entryAnimation;
+        animatedHeaders.exitAnimation = exitAnimation;
+      }
+    },
+
     onBackButtonClicked_: function() {
       if (!this.isEmailSectionActive_()) {
+        console.error('onBackButtonClicked_(): returning to e-mail card.');
         this.switchToEmailCard(true);
       } else {
+        console.error('onBackButtonClicked_(): firing cancel.');
         this.fire('offline-gaia-cancel');
       }
     },

@@ -5,7 +5,6 @@
 #include "core/layout/ng/inline/ng_offset_mapping.h"
 
 #include "core/dom/FirstLetterPseudoElement.h"
-#include "core/editing/Position.h"
 #include "core/layout/LayoutTestHelper.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
@@ -77,14 +76,6 @@ class NGOffsetMappingTest : public RenderingTest {
     return GetOffsetMapping().IsAfterNonCollapsedCharacter(node, offset);
   }
 
-  Position GetFirstPosition(unsigned offset) const {
-    return GetOffsetMapping().GetFirstPosition(offset);
-  }
-
-  Position GetLastPosition(unsigned offset) const {
-    return GetOffsetMapping().GetLastPosition(offset);
-  }
-
   scoped_refptr<const ComputedStyle> style_;
   LayoutNGBlockFlow* layout_block_flow_ = nullptr;
   LayoutObject* layout_object_ = nullptr;
@@ -112,6 +103,24 @@ TEST_F(NGOffsetMappingTest, StoredResult) {
   EXPECT_TRUE(IsOffsetMappingStored());
 }
 
+TEST_F(NGOffsetMappingTest, GetNGInlineNodeForText) {
+  SetupHtml("t", "<div id=t>foo</div>");
+  Element* div = GetDocument().getElementById("t");
+  Node* text = div->firstChild();
+
+  Optional<NGInlineNode> inline_node = GetNGInlineNodeFor(*text);
+  ASSERT_TRUE(inline_node.has_value());
+  EXPECT_EQ(layout_block_flow_, inline_node->GetLayoutBlockFlow());
+}
+
+TEST_F(NGOffsetMappingTest, CantGetNGInlineNodeForBody) {
+  SetupHtml("t", "<div id=t>foo</div>");
+  Element* div = GetDocument().getElementById("t");
+
+  Optional<NGInlineNode> inline_node = GetNGInlineNodeFor(*div);
+  EXPECT_FALSE(inline_node.has_value());
+}
+
 TEST_F(NGOffsetMappingTest, OneTextNode) {
   SetupHtml("t", "<div id=t>foo</div>");
   const Node* foo_node = layout_object_->GetNode();
@@ -135,16 +144,6 @@ TEST_F(NGOffsetMappingTest, OneTextNode) {
   EXPECT_EQ(1u, *GetTextContentOffset(*foo_node, 1));
   EXPECT_EQ(2u, *GetTextContentOffset(*foo_node, 2));
   EXPECT_EQ(3u, *GetTextContentOffset(*foo_node, 3));
-
-  EXPECT_EQ(Position(foo_node, 0), GetFirstPosition(0));
-  EXPECT_EQ(Position(foo_node, 1), GetFirstPosition(1));
-  EXPECT_EQ(Position(foo_node, 2), GetFirstPosition(2));
-  EXPECT_EQ(Position(foo_node, 3), GetFirstPosition(3));
-
-  EXPECT_EQ(Position(foo_node, 0), GetLastPosition(0));
-  EXPECT_EQ(Position(foo_node, 1), GetLastPosition(1));
-  EXPECT_EQ(Position(foo_node, 2), GetLastPosition(2));
-  EXPECT_EQ(Position(foo_node, 3), GetLastPosition(3));
 
   EXPECT_EQ(0u, *StartOfNextNonCollapsedCharacter(*foo_node, 0));
   EXPECT_EQ(1u, *StartOfNextNonCollapsedCharacter(*foo_node, 1));
@@ -206,9 +205,6 @@ TEST_F(NGOffsetMappingTest, TwoTextNodes) {
   EXPECT_EQ(4u, *GetTextContentOffset(*bar_node, 1));
   EXPECT_EQ(5u, *GetTextContentOffset(*bar_node, 2));
   EXPECT_EQ(6u, *GetTextContentOffset(*bar_node, 3));
-
-  EXPECT_EQ(Position(foo_node, 3), GetFirstPosition(3));
-  EXPECT_EQ(Position(bar_node, 0), GetLastPosition(3));
 
   EXPECT_TRUE(IsBeforeNonCollapsedCharacter(*foo_node, 0));
   EXPECT_TRUE(IsBeforeNonCollapsedCharacter(*foo_node, 1));
@@ -283,11 +279,6 @@ TEST_F(NGOffsetMappingTest, BRBetweenTextNodes) {
   EXPECT_EQ(5u, *GetTextContentOffset(*bar_node, 1));
   EXPECT_EQ(6u, *GetTextContentOffset(*bar_node, 2));
   EXPECT_EQ(7u, *GetTextContentOffset(*bar_node, 3));
-
-  EXPECT_EQ(Position(foo_node, 3), GetFirstPosition(3));
-  EXPECT_EQ(Position::BeforeNode(*br_node), GetLastPosition(3));
-  EXPECT_EQ(Position::AfterNode(*br_node), GetFirstPosition(4));
-  EXPECT_EQ(Position(bar_node, 0), GetLastPosition(4));
 }
 
 TEST_F(NGOffsetMappingTest, OneTextNodeWithCollapsedSpace) {
@@ -327,9 +318,6 @@ TEST_F(NGOffsetMappingTest, OneTextNodeWithCollapsedSpace) {
   EXPECT_EQ(5u, *GetTextContentOffset(*node, 6));
   EXPECT_EQ(6u, *GetTextContentOffset(*node, 7));
   EXPECT_EQ(7u, *GetTextContentOffset(*node, 8));
-
-  EXPECT_EQ(Position(node, 4), GetFirstPosition(4));
-  EXPECT_EQ(Position(node, 5), GetLastPosition(4));
 
   EXPECT_EQ(3u, *StartOfNextNonCollapsedCharacter(*node, 3));
   EXPECT_EQ(5u, *StartOfNextNonCollapsedCharacter(*node, 4));
@@ -414,9 +402,6 @@ TEST_F(NGOffsetMappingTest, FullyCollapsedWhiteSpaceNode) {
   EXPECT_EQ(6u, *GetTextContentOffset(*bar_node, 2));
   EXPECT_EQ(7u, *GetTextContentOffset(*bar_node, 3));
 
-  EXPECT_EQ(Position(foo_node, 4), GetFirstPosition(4));
-  EXPECT_EQ(Position(bar_node, 0), GetLastPosition(4));
-
   EXPECT_FALSE(EndOfLastNonCollapsedCharacter(*space_node, 1u));
   EXPECT_FALSE(StartOfNextNonCollapsedCharacter(*space_node, 0u));
 }
@@ -477,11 +462,6 @@ TEST_F(NGOffsetMappingTest, ReplacedElement) {
   EXPECT_EQ(7u, *GetTextContentOffset(*bar_node, 2));
   EXPECT_EQ(8u, *GetTextContentOffset(*bar_node, 3));
   EXPECT_EQ(9u, *GetTextContentOffset(*bar_node, 4));
-
-  EXPECT_EQ(Position(foo_node, 4), GetFirstPosition(4));
-  EXPECT_EQ(Position::BeforeNode(*img_node), GetLastPosition(4));
-  EXPECT_EQ(Position::AfterNode(*img_node), GetFirstPosition(5));
-  EXPECT_EQ(Position(bar_node, 0), GetLastPosition(5));
 }
 
 TEST_F(NGOffsetMappingTest, FirstLetter) {
@@ -506,9 +486,6 @@ TEST_F(NGOffsetMappingTest, FirstLetter) {
   EXPECT_EQ(0u, *GetTextContentOffset(*foo_node, 0));
   EXPECT_EQ(1u, *GetTextContentOffset(*foo_node, 1));
   EXPECT_EQ(2u, *GetTextContentOffset(*foo_node, 2));
-
-  EXPECT_EQ(Position(foo_node, 1), GetFirstPosition(1));
-  EXPECT_EQ(Position(foo_node, 1), GetLastPosition(1));
 }
 
 TEST_F(NGOffsetMappingTest, FirstLetterWithLeadingSpace) {
@@ -539,9 +516,6 @@ TEST_F(NGOffsetMappingTest, FirstLetterWithLeadingSpace) {
   EXPECT_EQ(0u, *GetTextContentOffset(*foo_node, 2));
   EXPECT_EQ(1u, *GetTextContentOffset(*foo_node, 3));
   EXPECT_EQ(2u, *GetTextContentOffset(*foo_node, 4));
-
-  EXPECT_EQ(Position(foo_node, 0), GetFirstPosition(0));
-  EXPECT_EQ(Position(foo_node, 2), GetLastPosition(0));
 }
 
 TEST_F(NGOffsetMappingTest, FirstLetterWithoutRemainingText) {
@@ -570,9 +544,6 @@ TEST_F(NGOffsetMappingTest, FirstLetterWithoutRemainingText) {
   EXPECT_EQ(0u, *GetTextContentOffset(*text_node, 1));
   EXPECT_EQ(0u, *GetTextContentOffset(*text_node, 2));
   EXPECT_EQ(1u, *GetTextContentOffset(*text_node, 3));
-
-  EXPECT_EQ(Position(text_node, 0), GetFirstPosition(0));
-  EXPECT_EQ(Position(text_node, 2), GetLastPosition(0));
 }
 
 TEST_F(NGOffsetMappingTest, FirstLetterInDifferentBlock) {
@@ -581,30 +552,35 @@ TEST_F(NGOffsetMappingTest, FirstLetterInDifferentBlock) {
   Element* div = GetDocument().getElementById("t");
   const Node* text_node = div->firstChild();
 
-  const NGOffsetMapping* mapping0 = NGOffsetMapping::GetFor(*text_node, 0);
-  const NGOffsetMapping* mapping1 = NGOffsetMapping::GetFor(*text_node, 1);
-  const NGOffsetMapping* mapping2 = NGOffsetMapping::GetFor(*text_node, 2);
-  const NGOffsetMapping* mapping3 = NGOffsetMapping::GetFor(*text_node, 3);
+  Optional<NGInlineNode> inline_node0 = GetNGInlineNodeFor(*text_node, 0);
+  Optional<NGInlineNode> inline_node1 = GetNGInlineNodeFor(*text_node, 1);
+  Optional<NGInlineNode> inline_node2 = GetNGInlineNodeFor(*text_node, 2);
+  Optional<NGInlineNode> inline_node3 = GetNGInlineNodeFor(*text_node, 3);
 
-  ASSERT_TRUE(mapping0);
-  ASSERT_TRUE(mapping1);
-  ASSERT_TRUE(mapping2);
-  ASSERT_TRUE(mapping3);
+  ASSERT_TRUE(inline_node0.has_value());
+  ASSERT_TRUE(inline_node1.has_value());
+  ASSERT_TRUE(inline_node2.has_value());
+  ASSERT_TRUE(inline_node3.has_value());
 
-  // GetNGOffsetmappingFor() returns different mappings for offset 0 and other
+  // GetNGInlineNodeFor() returns different inline nodes for offset 0 and other
   // offsets, because first-letter is laid out in a different block.
-  EXPECT_NE(mapping0, mapping1);
-  EXPECT_EQ(mapping1, mapping2);
-  EXPECT_EQ(mapping2, mapping3);
+  EXPECT_NE(inline_node0->GetLayoutBlockFlow(),
+            inline_node1->GetLayoutBlockFlow());
+  EXPECT_EQ(inline_node1->GetLayoutBlockFlow(),
+            inline_node2->GetLayoutBlockFlow());
+  EXPECT_EQ(inline_node2->GetLayoutBlockFlow(),
+            inline_node3->GetLayoutBlockFlow());
 
-  const NGOffsetMapping& first_letter_result = *mapping0;
+  const NGOffsetMapping& first_letter_result =
+      inline_node0->ComputeOffsetMappingIfNeeded();
   ASSERT_EQ(1u, first_letter_result.GetUnits().size());
   TEST_UNIT(first_letter_result.GetUnits()[0],
             NGOffsetMappingUnitType::kIdentity, text_node, 0u, 1u, 0u, 1u);
   ASSERT_EQ(1u, first_letter_result.GetRanges().size());
   TEST_RANGE(first_letter_result.GetRanges(), text_node, 0u, 1u);
 
-  const NGOffsetMapping& remaining_text_result = *mapping1;
+  const NGOffsetMapping& remaining_text_result =
+      inline_node1->ComputeOffsetMappingIfNeeded();
   ASSERT_EQ(1u, remaining_text_result.GetUnits().size());
   TEST_UNIT(remaining_text_result.GetUnits()[0],
             NGOffsetMappingUnitType::kIdentity, text_node, 1u, 3u, 1u, 3u);
@@ -624,11 +600,6 @@ TEST_F(NGOffsetMappingTest, FirstLetterInDifferentBlock) {
   EXPECT_EQ(1u, *remaining_text_result.GetTextContentOffset(*text_node, 1));
   EXPECT_EQ(2u, *remaining_text_result.GetTextContentOffset(*text_node, 2));
   EXPECT_EQ(3u, *remaining_text_result.GetTextContentOffset(*text_node, 3));
-
-  EXPECT_EQ(Position(text_node, 1), first_letter_result.GetFirstPosition(1));
-  EXPECT_EQ(Position(text_node, 1), first_letter_result.GetLastPosition(1));
-  EXPECT_EQ(Position(text_node, 1), remaining_text_result.GetFirstPosition(1));
-  EXPECT_EQ(Position(text_node, 1), remaining_text_result.GetLastPosition(1));
 }
 
 TEST_F(NGOffsetMappingTest, WhiteSpaceTextNodeWithoutLayoutText) {

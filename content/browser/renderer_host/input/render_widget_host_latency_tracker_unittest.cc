@@ -265,10 +265,6 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestWheelToFirstScrollHistograms) {
                              "TimeToScrollUpdateSwapBegin2",
                              0));
       EXPECT_TRUE(
-          RapporSampleAssert("Event.Latency.ScrollUpdate.Wheel."
-                             "TimeToScrollUpdateSwapBegin2",
-                             0));
-      EXPECT_TRUE(
           RapporSampleAssert("Event.Latency.ScrollBegin.Touch."
                              "TimeToScrollUpdateSwapBegin2",
                              0));
@@ -287,10 +283,6 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestWheelToFirstScrollHistograms) {
           HistogramSizeEq("Event.Latency.ScrollBegin.Wheel."
                           "TimeToScrollUpdateSwapBegin2",
                           1));
-      EXPECT_TRUE(
-          HistogramSizeEq("Event.Latency.ScrollUpdate.Wheel."
-                          "TimeToScrollUpdateSwapBegin2",
-                          0));
       EXPECT_TRUE(
           HistogramSizeEq("Event.Latency.ScrollBegin.Wheel.TimeToHandled2_Main",
                           rendering_on_main ? 1 : 0));
@@ -340,9 +332,6 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestWheelToFirstScrollHistograms) {
 }
 
 TEST_F(RenderWidgetHostLatencyTrackerTest, TestWheelToScrollHistograms) {
-  const GURL url(kUrl);
-  size_t total_ukm_entry_count = 0;
-  contents()->NavigateAndCommit(url);
   for (bool rendering_on_main : {false, true}) {
     ResetHistograms();
     {
@@ -365,32 +354,6 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestWheelToScrollHistograms) {
       tracker()->OnInputEventAck(wheel, &wheel_latency,
                                  INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
       tracker()->OnGpuSwapBuffersCompleted(wheel_latency);
-
-      // UKM metrics.
-      total_ukm_entry_count++;
-      EXPECT_TRUE(AssertUkmReported("Event.ScrollUpdate.Wheel",
-                                    "TimeToScrollUpdateSwapBegin"));
-      // Rappor metrics.
-      EXPECT_TRUE(
-          RapporSampleAssert("Event.Latency.ScrollUpdate.Touch."
-                             "TimeToScrollUpdateSwapBegin2",
-                             0));
-      EXPECT_TRUE(
-          RapporSampleAssert("Event.Latency.ScrollUpdate.Wheel."
-                             "TimeToScrollUpdateSwapBegin2",
-                             2));
-      EXPECT_TRUE(
-          RapporSampleAssert("Event.Latency.ScrollBegin.Touch."
-                             "TimeToScrollUpdateSwapBegin2",
-                             0));
-      EXPECT_TRUE(
-          RapporSampleAssert("Event.Latency.ScrollBegin.Wheel."
-                             "TimeToScrollUpdateSwapBegin2",
-                             0));
-      EXPECT_EQ(2,
-                test_browser_client_.getTestRapporService()->GetReportsCount());
-
-      // UMA histograms.
       EXPECT_TRUE(HistogramSizeEq("Event.Latency.Browser.WheelUI", 1));
       EXPECT_TRUE(HistogramSizeEq("Event.Latency.Browser.WheelAcked", 1));
 
@@ -398,11 +361,6 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestWheelToScrollHistograms) {
           HistogramSizeEq("Event.Latency.ScrollBegin.Wheel."
                           "TimeToScrollUpdateSwapBegin2",
                           0));
-      EXPECT_TRUE(
-          HistogramSizeEq("Event.Latency.ScrollUpdate.Wheel."
-                          "TimeToScrollUpdateSwapBegin2",
-                          1));
-
       EXPECT_TRUE(HistogramSizeEq(
           "Event.Latency.ScrollBegin.Wheel.TimeToHandled2_Main", 0));
       EXPECT_TRUE(HistogramSizeEq(
@@ -502,10 +460,6 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestTouchToFirstScrollHistograms) {
     // Rappor metrics.
     EXPECT_TRUE(
         RapporSampleAssert("Event.Latency.ScrollUpdate.Touch."
-                           "TimeToScrollUpdateSwapBegin2",
-                           0));
-    EXPECT_TRUE(
-        RapporSampleAssert("Event.Latency.ScrollUpdate.Wheel."
                            "TimeToScrollUpdateSwapBegin2",
                            0));
     EXPECT_TRUE(
@@ -633,10 +587,6 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestTouchToScrollHistograms) {
         RapporSampleAssert("Event.Latency.ScrollUpdate.Touch."
                            "TimeToScrollUpdateSwapBegin2",
                            2));
-    EXPECT_TRUE(
-        RapporSampleAssert("Event.Latency.ScrollUpdate.Wheel."
-                           "TimeToScrollUpdateSwapBegin2",
-                           0));
     EXPECT_TRUE(
         RapporSampleAssert("Event.Latency.ScrollBegin.Touch."
                            "TimeToScrollUpdateSwapBegin2",

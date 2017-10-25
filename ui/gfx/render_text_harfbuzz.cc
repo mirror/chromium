@@ -468,7 +468,6 @@ class HarfBuzzLineBreaker {
       }
     }
     line->segments.push_back(segment);
-    line->size.set_width(line->size.width() + segment.width());
 
     SkPaint paint;
     paint.setTypeface(run.skia_face);
@@ -477,10 +476,11 @@ class HarfBuzzLineBreaker {
     SkPaint::FontMetrics metrics;
     paint.getFontMetrics(&metrics);
 
-    // max_descent_ is y-down, fDescent is y-down, baseline_offset is y-down
-    max_descent_ = std::max(max_descent_, metrics.fDescent+run.baseline_offset);
-    // max_ascent_ is y-up, fAscent is y-down, baseline_offset is y-down
-    max_ascent_ = std::max(max_ascent_, -(metrics.fAscent+run.baseline_offset));
+    line->size.set_width(line->size.width() + segment.width());
+    // TODO(dschuyler): Account for stylized baselines in string sizing.
+    max_descent_ = std::max(max_descent_, metrics.fDescent);
+    // fAscent is always negative.
+    max_ascent_ = std::max(max_ascent_, -metrics.fAscent);
 
     if (run.is_rtl) {
       rtl_segments_.push_back(

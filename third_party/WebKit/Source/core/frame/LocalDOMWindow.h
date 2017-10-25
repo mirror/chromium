@@ -314,6 +314,8 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
 
   void AcceptLanguagesChanged();
 
+  FloatSize GetViewportSize(IncludeScrollbarsInRect) const;
+
  protected:
   // EventTarget overrides.
   void AddedEventListener(const AtomicString& event_type,
@@ -338,9 +340,6 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
 
   void DispatchLoadEvent();
   void ClearDocument();
-
-  // Return the viewport size including scrollbars.
-  IntSize GetViewportSize() const;
 
   TraceWrapperMember<Document> document_;
   Member<DOMVisualViewport> visualViewport_;

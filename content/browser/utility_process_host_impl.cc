@@ -289,7 +289,6 @@ bool UtilityProcessHostImpl::StartProcess() {
     // Browser command-line switches to propagate to the utility process.
     static const char* const kSwitchNames[] = {
       switches::kHostResolverRules,
-      switches::kIgnoreCertificateErrorsSPKIList,
       switches::kLogNetLog,
       switches::kNoSandbox,
       switches::kProxyServer,
@@ -298,9 +297,6 @@ bool UtilityProcessHostImpl::StartProcess() {
 #endif
       switches::kUseFakeDeviceForMediaStream,
       switches::kUseFileForFakeVideoCapture,
-#if defined(OS_WIN)
-      switches::kForceMediaFoundationVideoCapture,
-#endif  // defined(OS_WIN)
       switches::kUtilityStartupDialog,
     };
     cmd_line->CopySwitchesFrom(browser_command_line, kSwitchNames,

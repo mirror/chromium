@@ -90,6 +90,7 @@
 #include "content/renderer/pepper/plugin_power_saver_helper.h"
 #endif
 
+struct FrameMsg_CommitDataNetworkService_Params;
 struct FrameMsg_MixedContentFound_Params;
 struct FrameMsg_PostMessage_Params;
 struct FrameMsg_SerializeAsMHTML_Params;
@@ -178,7 +179,6 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::mojom::EngagementClient,
       blink::mojom::MediaEngagementClient,
       mojom::Frame,
-      mojom::FrameNavigationControl,
       mojom::HostZoom,
       mojom::FrameBindingsControl,
       public blink::WebFrameClient,
@@ -510,15 +510,6 @@ class CONTENT_EXPORT RenderFrameImpl
   // mojom::FrameBindingsControl implementation:
   void AllowBindings(int32_t enabled_bindings_flags) override;
 
-  // mojom::FrameNavigationControl implemenentation:
-  void CommitNavigation(const ResourceResponseHead& head,
-                        const GURL& body_url,
-                        const CommonNavigationParams& common_params,
-                        const RequestNavigationParams& request_params,
-                        mojo::ScopedDataPipeConsumerHandle body_data,
-                        mojom::URLLoaderFactoryPtr
-                            default_subresource_url_loader_factory) override;
-
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
 
@@ -751,8 +742,6 @@ class CONTENT_EXPORT RenderFrameImpl
 
   void BindFrameBindingsControl(
       mojom::FrameBindingsControlAssociatedRequest request);
-  void BindFrameNavigationControl(
-      mojom::FrameNavigationControlAssociatedRequest request);
 
   ManifestManager* manifest_manager();
 
@@ -828,7 +817,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void SyncSelectionIfRequired();
 
   // Sets the custom URLLoaderFactory instance to be used for network requests.
-  void SetCustomURLLoaderFactory(mojom::URLLoaderFactoryPtr factory);
+  void SetCustomURLLoadeFactory(
+      mojo::MessagePipeHandle custom_loader_factory_handle);
 
  protected:
   explicit RenderFrameImpl(const CreateParams& params);
@@ -1010,6 +1000,12 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnTextTrackSettingsChanged(
       const FrameMsg_TextTrackSettings_Params& params);
   void OnPostMessageEvent(const FrameMsg_PostMessage_Params& params);
+  void OnCommitNavigation(
+      const ResourceResponseHead& response,
+      const GURL& stream_url,
+      const FrameMsg_CommitDataNetworkService_Params& commit_data,
+      const CommonNavigationParams& common_params,
+      const RequestNavigationParams& request_params);
   void OnFailedNavigation(const CommonNavigationParams& common_params,
                           const RequestNavigationParams& request_params,
                           bool has_stale_copy_in_cache,
@@ -1069,7 +1065,7 @@ class CONTENT_EXPORT RenderFrameImpl
   // the current code path and the browser-side navigation path (in
   // development). Currently used by OnNavigate, with all *NavigationParams
   // provided by the browser. |stream_params| should be null.
-  // PlzNavigate: used by CommitNavigation, with |common_params| and
+  // PlzNavigate: used by OnCommitNavigation, with |common_params| and
   // |request_params| received by the browser. |stream_params| should be non
   // null and created from the information provided by the browser.
   // |start_params| is not used.
@@ -1468,8 +1464,6 @@ class CONTENT_EXPORT RenderFrameImpl
   mojo::AssociatedBinding<mojom::HostZoom> host_zoom_binding_;
   mojo::AssociatedBinding<mojom::FrameBindingsControl>
       frame_bindings_control_binding_;
-  mojo::AssociatedBinding<mojom::FrameNavigationControl>
-      frame_navigation_control_binding_;
   mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker_;
 
   // Indicates whether |didAccessInitialDocument| was called.

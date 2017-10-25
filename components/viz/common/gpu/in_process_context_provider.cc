@@ -118,9 +118,11 @@ const gpu::GpuFeatureInfo& InProcessContextProvider::GetGpuFeatureInfo() const {
   return context_->GetGpuFeatureInfo();
 }
 
-void InProcessContextProvider::AddObserver(ContextLostObserver* obs) {}
-
-void InProcessContextProvider::RemoveObserver(ContextLostObserver* obs) {}
+void InProcessContextProvider::SetLostContextCallback(
+    const LostContextCallback& lost_context_callback) {
+  // This code lives in the GPU process and so this would go away
+  // if the context is lost?
+}
 
 uint32_t InProcessContextProvider::GetCopyTextureInternalFormat() {
   if (attributes_.alpha_size > 0)

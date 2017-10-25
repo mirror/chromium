@@ -240,7 +240,7 @@ class DataReductionProxyConfigServiceClientTest : public testing::Test {
 
   void SetDataReductionProxyEnabled(bool enabled, bool secure_proxy_allowed) {
     test_context_->config()->UpdateConfigForTesting(enabled,
-                                                    secure_proxy_allowed, true);
+                                                    secure_proxy_allowed);
   }
 
   void ResetBackoffEntryReleaseTime() {
@@ -595,8 +595,7 @@ TEST_F(DataReductionProxyConfigServiceClientTest,
       ProxyServer::CORE));
 
   // Secure check failed.
-  configurator()->Enable(true /* secure_transport_restricted */, false,
-                         http_proxies);
+  configurator()->Enable(true /* secure_transport_restricted */, http_proxies);
   VerifyRemoteSuccess(false);
 }
 
@@ -730,8 +729,7 @@ TEST_F(DataReductionProxyConfigServiceClientTest,
       ProxyServer::CORE));
 
   // Secure check failed.
-  configurator()->Enable(true /* secure_transport_restricted */, false,
-                         http_proxies);
+  configurator()->Enable(true /* secure_transport_restricted */, http_proxies);
   VerifyRemoteSuccess(false);
 }
 

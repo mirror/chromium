@@ -238,9 +238,8 @@ double VisualViewport::VisibleWidthCSSPx() const {
 
   float zoom = MainFrame()->PageZoomFactor();
   float width_css_px = AdjustScrollForAbsoluteZoom(VisibleSize().Width(), zoom);
-  auto* scrollable_area = MainFrame()->View()->LayoutViewportScrollableArea();
   float scrollbar_thickness_css_px =
-      scrollable_area->VerticalScrollbarWidth() / (zoom * scale_);
+      MainFrame()->View()->VerticalScrollbarWidth() / (zoom * scale_);
   return width_css_px - scrollbar_thickness_css_px;
 }
 
@@ -251,9 +250,8 @@ double VisualViewport::VisibleHeightCSSPx() const {
   float zoom = MainFrame()->PageZoomFactor();
   float height_css_px =
       AdjustScrollForAbsoluteZoom(VisibleSize().Height(), zoom);
-  auto* scrollable_area = MainFrame()->View()->LayoutViewportScrollableArea();
   float scrollbar_thickness_css_px =
-      scrollable_area->HorizontalScrollbarHeight() / (zoom * scale_);
+      MainFrame()->View()->HorizontalScrollbarHeight() / (zoom * scale_);
   return height_css_px - scrollbar_thickness_css_px;
 }
 

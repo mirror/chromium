@@ -3244,24 +3244,6 @@
             ]
         }
     ],
-    "SignInProcessIsolation": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled_50_20171026",
-                    "enable_features": [
-                        "sign-in-process-isolation"
-                    ]
-                }
-            ]
-        }
-    ],
     "SimpleCacheTrial": [
         {
             "platforms": [
@@ -3409,13 +3391,13 @@
             ],
             "experiments": [
                 {
-                    "name": "Experiment2V2",
+                    "name": "Experiment2",
                     "params": {
                         "variant": "experiment2"
                     }
                 },
                 {
-                    "name": "ExperimentV2",
+                    "name": "Experiment",
                     "params": {
                         "variant": "experiment"
                     }
@@ -3427,7 +3409,7 @@
                     }
                 },
                 {
-                    "name": "Experiment3V2",
+                    "name": "Experiment3",
                     "params": {
                         "variant": "experiment3"
                     }

@@ -216,7 +216,7 @@ class CHROMEOS_EXPORT DebugDaemonClient
   // A callback to handle the result of CupsAdd[Auto|Manually]ConfiguredPrinter.
   // A zero status means success, non-zero statuses are used to convey different
   // errors.
-  using CupsAddPrinterCallback = DBusMethodCallback<int32_t>;
+  using CupsAddPrinterCallback = base::Callback<void(int32_t status)>;
 
   // Calls CupsAddManuallyConfiguredPrinter.  |name| is the printer
   // name. |uri| is the device.  |ppd_contents| is the contents of the
@@ -228,7 +228,8 @@ class CHROMEOS_EXPORT DebugDaemonClient
       const std::string& name,
       const std::string& uri,
       const std::string& ppd_contents,
-      CupsAddPrinterCallback callback) = 0;
+      const CupsAddPrinterCallback& callback,
+      const base::Closure& error_callback) = 0;
 
   // Calls CupsAddAutoConfiguredPrinter.  |name| is the printer
   // name. |uri| is the device.  |callback| is called with true if
@@ -238,7 +239,8 @@ class CHROMEOS_EXPORT DebugDaemonClient
   virtual void CupsAddAutoConfiguredPrinter(
       const std::string& name,
       const std::string& uri,
-      CupsAddPrinterCallback callback) = 0;
+      const CupsAddPrinterCallback& callback,
+      const base::Closure& error_callback) = 0;
 
   // A callback to handle the result of CupsRemovePrinter.
   using CupsRemovePrinterCallback = base::Callback<void(bool success)>;

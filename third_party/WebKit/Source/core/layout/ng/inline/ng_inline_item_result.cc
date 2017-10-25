@@ -47,9 +47,9 @@ void NGLineInfo::SetLineStyle(const NGInlineNode& node,
   }
 }
 
-void NGLineInfo::SetLineBfcOffset(NGBfcOffset line_bfc_offset,
-                                  LayoutUnit available_width) {
-  line_bfc_offset_ = line_bfc_offset;
+void NGLineInfo::SetLineOffset(NGLogicalOffset line_offset,
+                               LayoutUnit available_width) {
+  line_offset_ = line_offset;
   available_width_ = available_width;
 }
 

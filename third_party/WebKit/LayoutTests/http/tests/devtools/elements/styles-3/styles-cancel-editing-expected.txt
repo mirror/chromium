@@ -1,5 +1,6 @@
 Tests that editing is canceled properly after incremental editing.
 
+Text
 [expanded] 
 element.style { ()
     color: red;

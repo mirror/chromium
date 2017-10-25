@@ -60,6 +60,10 @@ class LoginPasswordViewTest : public LoginTestBase {
 
 // Verifies that password submit works with 'Enter'.
 TEST_F(LoginPasswordViewTest, PasswordSubmitIncludesPasswordText) {
+  // TODO: Renable in mash once crbug.com/725257 is fixed.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
   LoginPasswordView::TestApi test_api(view_);
 
   ui::test::EventGenerator& generator = GetEventGenerator();
@@ -75,6 +79,10 @@ TEST_F(LoginPasswordViewTest, PasswordSubmitIncludesPasswordText) {
 
 // Verifies that password submit works when clicking the submit button.
 TEST_F(LoginPasswordViewTest, PasswordSubmitViaButton) {
+  // TODO: Renable in mash once crbug.com/725257 is fixed.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
   LoginPasswordView::TestApi test_api(view_);
 
   ui::test::EventGenerator& generator = GetEventGenerator();
@@ -92,6 +100,10 @@ TEST_F(LoginPasswordViewTest, PasswordSubmitViaButton) {
 
 // Verifies that text is cleared after submitting a password.
 TEST_F(LoginPasswordViewTest, PasswordSubmitClearsPassword) {
+  // TODO: Renable in mash once crbug.com/725257 is fixed.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
   LoginPasswordView::TestApi test_api(view_);
   ui::test::EventGenerator& generator = GetEventGenerator();
 

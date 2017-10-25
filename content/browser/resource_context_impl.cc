@@ -22,6 +22,7 @@ using base::UserDataAdapter;
 namespace content {
 
 // Key names on ResourceContext.
+const char kBlobStorageContextKeyName[] = "content_blob_storage_context";
 const char kStreamContextKeyName[] = "content_stream_context";
 const char kURLDataManagerBackendKeyName[] = "url_data_manager_backend";
 

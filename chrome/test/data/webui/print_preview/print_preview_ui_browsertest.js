@@ -68,7 +68,6 @@ PrintPreviewUIBrowserTest.prototype = {
   'PrinterListCloudEmpty',
   'RestoreLocalDestination',
   'RestoreMultipleDestinations',
-  'SaveAppState',
   'DefaultDestinationSelectionRules',
   'SystemDialogLinkIsHiddenInAppKioskMode',
   'SectionsDisabled',
@@ -109,7 +108,6 @@ PrintPreviewUIBrowserTest.prototype = {
 
 // Disable accessibility errors for some tests.
 [
-  'RestoreAppState',
   'AdvancedSettings1Option',
   'AdvancedSettings2Options',
 ].forEach(function(testName) {

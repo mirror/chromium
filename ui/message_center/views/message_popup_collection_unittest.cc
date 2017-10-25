@@ -271,7 +271,7 @@ void MessagePopupCollectionTest::CheckedAnimationDelegate::
   auto poorly_aligned = std::adjacent_find(
       toasts_->begin(), toasts_->end(),
       [](ToastContentsView* top, ToastContentsView* bottom) {
-        return ComputeYDistance(*top, *bottom) != kMarginBetweenPopups;
+        return ComputeYDistance(*top, *bottom) != kMarginBetweenItems;
       });
   if (poorly_aligned != toasts_->end())
     error_msg_ = calling_func + " CheckToastsAreAligned: distance between: " +
@@ -279,7 +279,7 @@ void MessagePopupCollectionTest::CheckedAnimationDelegate::
                  (*std::next(poorly_aligned))->id() + ": " +
                  std::to_string(ComputeYDistance(**poorly_aligned,
                                                  **std::next(poorly_aligned))) +
-                 " expected: " + std::to_string(kMarginBetweenPopups) +
+                 " expected: " + std::to_string(kMarginBetweenItems) +
                  "\nLayout:\n" + YPositionsToString(*toasts_);
 }
 

@@ -85,6 +85,7 @@ class MODULES_EXPORT ImageCapture final
                            bool trigger_take_photo,
                            media::mojom::blink::PhotoStatePtr);
   void OnMojoSetOptions(ScriptPromiseResolver*,
+                        PromiseResolverFunction,
                         bool trigger_take_photo,
                         bool result);
   void OnMojoTakePhoto(ScriptPromiseResolver*, media::mojom::blink::BlobPtr);
@@ -95,6 +96,8 @@ class MODULES_EXPORT ImageCapture final
   void ResolveWithNothing(ScriptPromiseResolver*);
   void ResolveWithPhotoSettings(ScriptPromiseResolver*);
   void ResolveWithPhotoCapabilities(ScriptPromiseResolver*);
+  void ResolveWithMediaTrackConstraints(ScriptValue constraints,
+                                        ScriptPromiseResolver*);
 
   Member<MediaStreamTrack> stream_track_;
   std::unique_ptr<WebImageCaptureFrameGrabber> frame_grabber_;

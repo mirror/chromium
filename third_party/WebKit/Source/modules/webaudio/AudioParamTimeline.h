@@ -99,23 +99,6 @@ class AudioParamTimeline {
   float SmoothedValue() { return smoothed_value_; }
   void SetSmoothedValue(float v) { smoothed_value_ = v; }
 
-  // TODO(crbug.com/764396): Remove these two methods when the bug is
-  // fixed.
-
-  // |EventAtFrame| finds the current event that would run at the specified
-  // |frame|. The first return value is true if a setValueAtTime call would
-  // overlap some ongoing event.  The second return value is the index of the
-  // current event. The second value must be ignored if the first value is
-  // false.
-  std::tuple<bool, size_t> EventAtFrame(size_t frame, float sample_rate) const;
-
-  // Prints a console warning that a call to the AudioParam value setter
-  // overlaps the event at |event_index|.  |param_name| is the name of the
-  // AudioParam where the where this is happening.
-  void WarnSetterOverlapsEvent(String param_name,
-                               size_t event_index,
-                               BaseAudioContext&) const;
-
  private:
   class ParamEvent {
    public:
@@ -322,7 +305,7 @@ class AudioParamTimeline {
                                 double control_rate);
 
   // Produce a nice string describing the event in human-readable form.
-  String EventToString(const ParamEvent&) const;
+  String EventToString(const ParamEvent&);
 
   // Automation functions that compute the vlaue of the specified
   // automation at the specified time.
@@ -365,7 +348,7 @@ class AudioParamTimeline {
   bool IsEventCurrent(const ParamEvent* current_event,
                       const ParamEvent* next_event,
                       size_t current_frame,
-                      double sample_rate) const;
+                      double sample_rate);
 
   // Clamp event times to current time, if needed.
   void ClampToCurrentTime(int number_of_events,

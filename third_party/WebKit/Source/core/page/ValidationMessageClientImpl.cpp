@@ -34,13 +34,18 @@
 #include "core/page/ValidationMessageOverlayDelegate.h"
 #include "platform/LayoutTestSupport.h"
 #include "platform/PlatformChromeClient.h"
+#include "platform/wtf/CurrentTime.h"
+#include "public/platform/WebRect.h"
+#include "public/platform/WebString.h"
 #include "public/web/WebTextDirection.h"
+#include "public/web/WebViewClient.h"
 
 namespace blink {
 
 ValidationMessageClientImpl::ValidationMessageClientImpl(WebViewImpl& web_view)
     : web_view_(web_view),
       current_anchor_(nullptr),
+      last_page_scale_factor_(1),
       finish_time_(0) {}
 
 ValidationMessageClientImpl* ValidationMessageClientImpl::Create(
@@ -69,6 +74,12 @@ void ValidationMessageClientImpl::ShowValidationMessage(
   if (current_anchor_)
     HideValidationMessageImmediately(*current_anchor_);
   current_anchor_ = &anchor;
+  IntRect anchor_in_viewport =
+      CurrentView()->ContentsToViewport(anchor.PixelSnappedBoundingBox());
+  last_anchor_rect_in_screen_ =
+      CurrentView()->GetChromeClient()->ViewportToScreen(anchor_in_viewport,
+                                                         CurrentView());
+  last_page_scale_factor_ = web_view_.PageScaleFactor();
   message_ = message;
   const double kMinimumSecondToShowValidationMessage = 5.0;
   const double kSecondPerCharacter = 0.05;
@@ -77,6 +88,21 @@ void ValidationMessageClientImpl::ShowValidationMessage(
       std::max(kMinimumSecondToShowValidationMessage,
                (message.length() + sub_message.length()) * kSecondPerCharacter);
 
+  if (!RuntimeEnabledFeatures::ValidationBubbleInRendererEnabled()) {
+    web_view_.Client()->ShowValidationMessage(
+        anchor_in_viewport, message_, ToWebTextDirection(message_dir),
+        sub_message, ToWebTextDirection(sub_message_dir));
+    web_view_.GetChromeClient().RegisterPopupOpeningObserver(this);
+
+    // FIXME: We should invoke checkAnchorStatus actively when layout, scroll,
+    // or page scale change happen.
+    const double kStatusCheckInterval = 0.1;
+    timer_ = WTF::MakeUnique<TaskRunnerTimer<ValidationMessageClientImpl>>(
+        TaskRunnerHelper::Get(TaskType::kUnspecedTimer, &anchor.GetDocument()),
+        this, &ValidationMessageClientImpl::CheckAnchorStatus);
+    timer_->StartRepeating(kStatusCheckInterval, BLINK_FROM_HERE);
+    return;
+  }
   auto* target_frame =
       web_view_.MainFrameImpl()
           ? web_view_.MainFrameImpl()
@@ -93,7 +119,8 @@ void ValidationMessageClientImpl::ShowValidationMessage(
 }
 
 void ValidationMessageClientImpl::HideValidationMessage(const Element& anchor) {
-  if (LayoutTestSupport::IsRunningLayoutTest()) {
+  if (!RuntimeEnabledFeatures::ValidationBubbleInRendererEnabled() ||
+      LayoutTestSupport::IsRunningLayoutTest()) {
     HideValidationMessageImmediately(anchor);
     return;
   }
@@ -122,6 +149,8 @@ void ValidationMessageClientImpl::Reset(TimerBase*) {
   current_anchor_ = nullptr;
   message_ = String();
   finish_time_ = 0;
+  if (!RuntimeEnabledFeatures::ValidationBubbleInRendererEnabled())
+    web_view_.Client()->HideValidationMessage();
   overlay_ = nullptr;
   overlay_delegate_ = nullptr;
   web_view_.GetChromeClient().UnregisterPopupOpeningObserver(this);
@@ -152,6 +181,18 @@ void ValidationMessageClientImpl::CheckAnchorStatus(TimerBase*) {
     HideValidationMessage(*current_anchor_);
     return;
   }
+
+  if (RuntimeEnabledFeatures::ValidationBubbleInRendererEnabled())
+    return;
+  IntRect new_anchor_rect_in_viewport_in_screen =
+      CurrentView()->GetChromeClient()->ViewportToScreen(
+          new_anchor_rect_in_viewport, CurrentView());
+  if (new_anchor_rect_in_viewport_in_screen == last_anchor_rect_in_screen_ &&
+      web_view_.PageScaleFactor() == last_page_scale_factor_)
+    return;
+  last_anchor_rect_in_screen_ = new_anchor_rect_in_viewport_in_screen;
+  last_page_scale_factor_ = web_view_.PageScaleFactor();
+  web_view_.Client()->MoveValidationMessage(new_anchor_rect_in_viewport);
 }
 
 void ValidationMessageClientImpl::WillBeDestroyed() {

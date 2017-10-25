@@ -199,7 +199,7 @@ TEST_F(AshPopupAlignmentDelegateTest, TrayHeight) {
   alignment_delegate()->SetTrayBubbleHeight(kTrayHeight);
 
   EXPECT_EQ(origin_x, alignment_delegate()->GetToastOriginX(toast_size));
-  EXPECT_EQ(baseline - kTrayHeight - message_center::kMarginBetweenPopups,
+  EXPECT_EQ(baseline - kTrayHeight - message_center::kMarginBetweenItems,
             alignment_delegate()->GetBaseLine());
 }
 

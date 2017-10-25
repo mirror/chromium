@@ -32,39 +32,39 @@ class BrowserThreadTest : public testing::Test {
  protected:
   void SetUp() override {
     ui_thread_.reset(new BrowserThreadImpl(BrowserThread::UI));
-    io_thread_.reset(new BrowserThreadImpl(BrowserThread::IO));
+    file_thread_.reset(new BrowserThreadImpl(BrowserThread::FILE));
     ui_thread_->Start();
-    io_thread_->Start();
+    file_thread_->Start();
   }
 
   void TearDown() override {
     StopUIThread();
-    io_thread_->Stop();
+    file_thread_->Stop();
     ui_thread_ = nullptr;
-    io_thread_ = nullptr;
+    file_thread_ = nullptr;
     BrowserThreadImpl::ResetGlobalsForTesting(BrowserThread::UI);
-    BrowserThreadImpl::ResetGlobalsForTesting(BrowserThread::IO);
+    BrowserThreadImpl::ResetGlobalsForTesting(BrowserThread::FILE);
   }
 
   static void BasicFunction(base::MessageLoop* message_loop) {
-    CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
+    CHECK(BrowserThread::CurrentlyOn(BrowserThread::FILE));
     message_loop->task_runner()->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 
-  class DeletedOnIO
-      : public base::RefCountedThreadSafe<DeletedOnIO,
-                                          BrowserThread::DeleteOnIOThread> {
+  class DeletedOnFile
+      : public base::RefCountedThreadSafe<
+            DeletedOnFile, BrowserThread::DeleteOnFileThread> {
    public:
-    explicit DeletedOnIO(base::MessageLoop* message_loop)
+    explicit DeletedOnFile(base::MessageLoop* message_loop)
         : message_loop_(message_loop) {}
 
    private:
-    friend struct BrowserThread::DeleteOnThread<BrowserThread::IO>;
-    friend class base::DeleteHelper<DeletedOnIO>;
+    friend struct BrowserThread::DeleteOnThread<BrowserThread::FILE>;
+    friend class base::DeleteHelper<DeletedOnFile>;
 
-    ~DeletedOnIO() {
-      CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
+    ~DeletedOnFile() {
+      CHECK(BrowserThread::CurrentlyOn(BrowserThread::FILE));
       message_loop_->task_runner()->PostTask(
           FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
     }
@@ -74,7 +74,7 @@ class BrowserThreadTest : public testing::Test {
 
  private:
   std::unique_ptr<BrowserThreadImpl> ui_thread_;
-  std::unique_ptr<BrowserThreadImpl> io_thread_;
+  std::unique_ptr<BrowserThreadImpl> file_thread_;
   // It's kind of ugly to make this mutable - solely so we can post the Quit
   // Task from Release(). This should be fixed.
   mutable base::MessageLoop loop_;
@@ -120,7 +120,7 @@ class UIThreadDestructionObserver
 
 TEST_F(BrowserThreadTest, PostTask) {
   BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
+      BrowserThread::FILE, FROM_HERE,
       base::BindOnce(&BasicFunction, base::MessageLoop::current()));
   base::RunLoop().Run();
 }
@@ -132,15 +132,15 @@ TEST_F(BrowserThreadTest, Release) {
 
 TEST_F(BrowserThreadTest, ReleasedOnCorrectThread) {
   {
-    scoped_refptr<DeletedOnIO> test(
-        new DeletedOnIO(base::MessageLoop::current()));
+    scoped_refptr<DeletedOnFile> test(
+        new DeletedOnFile(base::MessageLoop::current()));
   }
   base::RunLoop().Run();
 }
 
 TEST_F(BrowserThreadTest, PostTaskViaTaskRunner) {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE);
   task_runner->PostTask(
       FROM_HERE, base::BindOnce(&BasicFunction, base::MessageLoop::current()));
   base::RunLoop().Run();
@@ -157,7 +157,7 @@ TEST_F(BrowserThreadTest, PostTaskAndReply) {
   // Most of the heavy testing for PostTaskAndReply() is done inside the
   // task runner test.  This just makes sure we get piped through at all.
   ASSERT_TRUE(BrowserThread::PostTaskAndReply(
-      BrowserThread::IO, FROM_HERE, base::BindOnce(&base::DoNothing),
+      BrowserThread::FILE, FROM_HERE, base::BindOnce(&base::DoNothing),
       base::BindOnce(&base::RunLoop::QuitCurrentWhenIdleDeprecated)));
   base::RunLoop().Run();
 }

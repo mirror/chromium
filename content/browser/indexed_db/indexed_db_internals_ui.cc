@@ -8,11 +8,8 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/bind_helpers.h"
-#include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
-#include "base/task_scheduler/post_task.h"
 #include "base/threading/platform_thread.h"
 #include "base/values.h"
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
@@ -228,7 +225,8 @@ void IndexedDBInternalsUI::DownloadOriginDataOnIndexedDBThread(
   if (!temp_dir.CreateUniqueTempDir())
     return;
 
-  // This will get cleaned up after the download has completed.
+  // This will get cleaned up on the File thread after the download
+  // has completed.
   base::FilePath temp_path = temp_dir.Take();
 
   std::string origin_id = storage::GetIdentifierFromOrigin(origin.GetURL());
@@ -348,7 +346,7 @@ void FileDeleter::OnDownloadUpdated(DownloadItem* item) {
     case DownloadItem::CANCELLED:
     case DownloadItem::INTERRUPTED: {
       item->RemoveObserver(this);
-      delete this;
+      BrowserThread::DeleteOnFileThread::Destruct(this);
       break;
     }
     default:
@@ -357,11 +355,9 @@ void FileDeleter::OnDownloadUpdated(DownloadItem* item) {
 }
 
 FileDeleter::~FileDeleter() {
-  base::PostTaskWithTraits(FROM_HERE,
-                           {base::MayBlock(), base::TaskPriority::BACKGROUND,
-                            base::TaskShutdownBehavior::BLOCK_SHUTDOWN},
-                           base::Bind(base::IgnoreResult(&base::DeleteFile),
-                                      std::move(temp_dir_), true));
+  base::ScopedTempDir path;
+  bool will_delete = path.Set(temp_dir_);
+  DCHECK(will_delete);
 }
 
 void IndexedDBInternalsUI::OnDownloadStarted(

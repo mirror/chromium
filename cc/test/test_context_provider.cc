@@ -249,8 +249,8 @@ base::Lock* TestContextProvider::GetLock() {
 
 void TestContextProvider::OnLostContext() {
   DCHECK(context_thread_checker_.CalledOnValidThread());
-  for (auto& observer : observers_)
-    observer.OnContextLost();
+  if (!lost_context_callback_.is_null())
+    lost_context_callback_.Run();
   if (gr_context_)
     gr_context_->get()->abandonContext();
 }
@@ -266,12 +266,11 @@ TestWebGraphicsContext3D* TestContextProvider::UnboundTestContext3d() {
   return context3d_.get();
 }
 
-void TestContextProvider::AddObserver(viz::ContextLostObserver* obs) {
-  observers_.AddObserver(obs);
-}
-
-void TestContextProvider::RemoveObserver(viz::ContextLostObserver* obs) {
-  observers_.RemoveObserver(obs);
+void TestContextProvider::SetLostContextCallback(
+    const LostContextCallback& cb) {
+  DCHECK(context_thread_checker_.CalledOnValidThread());
+  DCHECK(lost_context_callback_.is_null() || cb.is_null());
+  lost_context_callback_ = cb;
 }
 
 }  // namespace cc

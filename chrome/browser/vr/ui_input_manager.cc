@@ -125,18 +125,16 @@ void UiInputManager::HandleInput(const gfx::Vector3dF& laser_direction,
   UiElement* target_element = nullptr;
   // TODO(vollick): this should be replaced with a formal notion of input
   // capture.
-  if (input_locked_element_id_) {
-    target_element = scene_->GetUiElementById(input_locked_element_id_);
-    if (target_element) {
-      gfx::Point3F plane_intersection_point;
-      float distance_to_plane;
-      if (!GetTargetLocalPoint(eye_to_target, *target_element,
-                               2 * scene_->background_distance(),
-                               &target_local_point, &plane_intersection_point,
-                               &distance_to_plane)) {
-        target_local_point = kInvalidTargetPoint;
-      }
+  if (input_locked_element_) {
+    gfx::Point3F plane_intersection_point;
+    float distance_to_plane;
+    if (!GetTargetLocalPoint(eye_to_target, *input_locked_element_,
+                             2 * scene_->background_distance(),
+                             &target_local_point, &plane_intersection_point,
+                             &distance_to_plane)) {
+      target_local_point = kInvalidTargetPoint;
     }
+    target_element = input_locked_element_;
   } else if (!in_scroll_ && !in_click_) {
     // TODO(vollick): support multiple dispatch. We may want to, for example,
     // dispatch raw events to several elements we hit (imagine nested horizontal
@@ -172,11 +170,7 @@ void UiInputManager::HandleInput(const gfx::Vector3dF& laser_direction,
     SendHoverMove(target_local_point);
   }
   SendButtonDown(target_element, target_local_point, button_state);
-  if (SendButtonUp(target_element, target_local_point, button_state)) {
-    target_element = *out_reticle_render_target;
-    SendHoverLeave(target_element);
-    SendHoverEnter(target_element, target_local_point);
-  }
+  SendButtonUp(target_element, target_local_point, button_state);
 
   previous_button_state_ =
       (button_state == ButtonState::CLICKED) ? ButtonState::UP : button_state;
@@ -184,7 +178,7 @@ void UiInputManager::HandleInput(const gfx::Vector3dF& laser_direction,
 
 void UiInputManager::SendFlingCancel(GestureList* gesture_list,
                                      const gfx::PointF& target_point) {
-  if (!fling_target_id_) {
+  if (!fling_target_) {
     return;
   }
   if (gesture_list->empty() || (gesture_list->front()->GetType() !=
@@ -193,13 +187,10 @@ void UiInputManager::SendFlingCancel(GestureList* gesture_list,
   }
 
   // Scrolling currently only supported on content window.
-  UiElement* element = scene_->GetUiElementById(fling_target_id_);
-  if (element) {
-    DCHECK(element->scrollable());
-    element->OnFlingCancel(std::move(gesture_list->front()), target_point);
-  }
+  DCHECK(fling_target_->scrollable());
+  fling_target_->OnFlingCancel(std::move(gesture_list->front()), target_point);
   gesture_list->erase(gesture_list->begin());
-  fling_target_id_ = 0;
+  fling_target_ = nullptr;
 }
 
 void UiInputManager::SendScrollEnd(GestureList* gesture_list,
@@ -208,8 +199,7 @@ void UiInputManager::SendScrollEnd(GestureList* gesture_list,
   if (!in_scroll_) {
     return;
   }
-  DCHECK_GT(input_locked_element_id_, 0);
-  UiElement* element = scene_->GetUiElementById(input_locked_element_id_);
+  DCHECK_NE(input_locked_element_, nullptr);
 
   if (previous_button_state_ != button_state &&
       (button_state == ButtonState::DOWN ||
@@ -218,9 +208,7 @@ void UiInputManager::SendScrollEnd(GestureList* gesture_list,
     DCHECK_EQ(gesture_list->front()->GetType(),
               blink::WebInputEvent::kGestureScrollEnd);
   }
-  if (element) {
-    DCHECK(element->scrollable());
-  }
+  DCHECK(input_locked_element_->scrollable());
   if (gesture_list->empty() || (gesture_list->front()->GetType() !=
                                     blink::WebInputEvent::kGestureScrollEnd &&
                                 gesture_list->front()->GetType() !=
@@ -230,19 +218,16 @@ void UiInputManager::SendScrollEnd(GestureList* gesture_list,
   DCHECK_LE(gesture_list->size(), 2LU);
   if (gesture_list->front()->GetType() ==
       blink::WebInputEvent::kGestureScrollEnd) {
-    if (element) {
-      element->OnScrollEnd(std::move(gesture_list->front()), target_point);
-    }
+    input_locked_element_->OnScrollEnd(std::move(gesture_list->front()),
+                                       target_point);
   } else {
     DCHECK_EQ(gesture_list->front()->GetType(),
               blink::WebInputEvent::kGestureFlingStart);
-    fling_target_id_ = input_locked_element_id_;
-    if (element) {
-      element->OnFlingStart(std::move(gesture_list->front()), target_point);
-    }
+    fling_target_ = input_locked_element_;
+    fling_target_->OnFlingStart(std::move(gesture_list->front()), target_point);
   }
   gesture_list->erase(gesture_list->begin());
-  input_locked_element_id_ = 0;
+  input_locked_element_ = nullptr;
   in_scroll_ = false;
 }
 
@@ -260,9 +245,11 @@ bool UiInputManager::SendScrollBegin(UiElement* target,
                                 blink::WebInputEvent::kGestureScrollBegin)) {
     return false;
   }
-  input_locked_element_id_ = target->id();
+  input_locked_element_ = target;
   in_scroll_ = true;
-  target->OnScrollBegin(std::move(gesture_list->front()), target_point);
+
+  input_locked_element_->OnScrollBegin(std::move(gesture_list->front()),
+                                       target_point);
   gesture_list->erase(gesture_list->begin());
   return true;
 }
@@ -272,50 +259,38 @@ void UiInputManager::SendScrollUpdate(GestureList* gesture_list,
   if (!in_scroll_) {
     return;
   }
-  DCHECK(input_locked_element_id_);
+  DCHECK(input_locked_element_);
   if (gesture_list->empty() || (gesture_list->front()->GetType() !=
                                 blink::WebInputEvent::kGestureScrollUpdate)) {
     return;
   }
   // Scrolling currently only supported on content window.
-  UiElement* element = scene_->GetUiElementById(input_locked_element_id_);
-  if (element) {
-    DCHECK(element->scrollable());
-    element->OnScrollUpdate(std::move(gesture_list->front()), target_point);
-  }
+  DCHECK(input_locked_element_->scrollable());
+  input_locked_element_->OnScrollUpdate(std::move(gesture_list->front()),
+                                        target_point);
   gesture_list->erase(gesture_list->begin());
 }
 
 void UiInputManager::SendHoverLeave(UiElement* target) {
-  if (!hover_target_id_) {
+  if (!hover_target_ || (target == hover_target_)) {
     return;
   }
-  if (target && target->id() == hover_target_id_) {
-    return;
-  }
-  UiElement* element = scene_->GetUiElementById(hover_target_id_);
-  if (element) {
-    element->OnHoverLeave();
-  }
-  hover_target_id_ = 0;
+  hover_target_->OnHoverLeave();
+  hover_target_ = nullptr;
 }
 
 bool UiInputManager::SendHoverEnter(UiElement* target,
                                     const gfx::PointF& target_point) {
-  if (!target || target->id() == hover_target_id_) {
+  if (!target || target == hover_target_) {
     return false;
   }
   target->OnHoverEnter(target_point);
-  hover_target_id_ = target->id();
+  hover_target_ = target;
   return true;
 }
 
 void UiInputManager::SendHoverMove(const gfx::PointF& target_point) {
-  if (!hover_target_id_) {
-    return;
-  }
-  UiElement* element = scene_->GetUiElementById(hover_target_id_);
-  if (!element) {
+  if (!hover_target_) {
     return;
   }
 
@@ -323,11 +298,11 @@ void UiInputManager::SendHoverMove(const gfx::PointF& target_point) {
   // moves for how noisy the controller is. It's almost impossible to click a
   // link without unintentionally starting a drag event. For this reason we
   // disable mouse moves, only delivering a down and up event.
-  if (element->name() == kContentQuad && in_click_) {
+  if (hover_target_->name() == kContentQuad && in_click_) {
     return;
   }
 
-  element->OnMove(target_point);
+  hover_target_->OnMove(target_point);
 }
 
 void UiInputManager::SendButtonDown(UiElement* target,
@@ -341,36 +316,31 @@ void UiInputManager::SendButtonDown(UiElement* target,
        button_state != ButtonState::CLICKED)) {
     return;
   }
+  input_locked_element_ = target;
   in_click_ = true;
   if (target) {
     target->OnButtonDown(target_point);
-    input_locked_element_id_ = target->id();
-  } else {
-    input_locked_element_id_ = 0;
   }
 }
 
-bool UiInputManager::SendButtonUp(UiElement* target,
+void UiInputManager::SendButtonUp(UiElement* target,
                                   const gfx::PointF& target_point,
                                   ButtonState button_state) {
   if (!in_click_) {
-    return false;
+    return;
   }
   if (previous_button_state_ == button_state ||
       (button_state != ButtonState::UP &&
        button_state != ButtonState::CLICKED)) {
-    return false;
+    return;
   }
   in_click_ = false;
-  if (!input_locked_element_id_) {
-    return false;
+  if (!input_locked_element_) {
+    return;
   }
-  UiElement* element = scene_->GetUiElementById(input_locked_element_id_);
-  if (element) {
-    target->OnButtonUp(target_point);
-  }
-  input_locked_element_id_ = 0;
-  return true;
+  DCHECK(input_locked_element_ == target);
+  input_locked_element_ = nullptr;
+  target->OnButtonUp(target_point);
 }
 
 void UiInputManager::GetVisualTargetElement(

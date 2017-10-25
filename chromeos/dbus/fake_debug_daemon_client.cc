@@ -231,19 +231,21 @@ void FakeDebugDaemonClient::CupsAddManuallyConfiguredPrinter(
     const std::string& name,
     const std::string& uri,
     const std::string& ppd_contents,
-    DebugDaemonClient::CupsAddPrinterCallback callback) {
+    const DebugDaemonClient::CupsAddPrinterCallback& callback,
+    const base::Closure& error_callback) {
   printers_.insert(name);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), 0));
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                base::Bind(callback, 0));
 }
 
 void FakeDebugDaemonClient::CupsAddAutoConfiguredPrinter(
     const std::string& name,
     const std::string& uri,
-    DebugDaemonClient::CupsAddPrinterCallback callback) {
+    const DebugDaemonClient::CupsAddPrinterCallback& callback,
+    const base::Closure& error_callback) {
   printers_.insert(name);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), 0));
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                base::Bind(callback, 0));
 }
 
 void FakeDebugDaemonClient::CupsRemovePrinter(
