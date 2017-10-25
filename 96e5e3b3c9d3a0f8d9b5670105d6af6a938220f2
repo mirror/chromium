@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ba693c02_5d134874",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T22:53:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4df84bc0_4c620e28",
+      "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e99b518a_72e38460",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 3
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "mac_views_browser is still a work in progress and is not the default.",
       "parentUuid": "dd747156_1c781a17",
+      "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb59c7d_e0b4b882",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T22:53:01Z",
+      "side": 1,
+      "message": "For Mac, do you know which file I should update to make it work?",
+      "parentUuid": "c4ef1ae7_fc17c7e0",
       "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

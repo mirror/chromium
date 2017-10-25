@@ -566,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "672e3b9e_a19da31e",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T22:53:01Z",
+      "side": 1,
+      "message": "I see. But when a tab is moved into another tabstrip, it is supposed to be in the foreground. So it is not changed back to false and I think that should be fine?\n\nOr to be safer, I updated to only set the value if it is true (for the foreground tabs). WDYT?",
+      "parentUuid": "483be602_1df4c421",
+      "range": {
+        "startLine": 592,
+        "startChar": 0,
+        "endLine": 592,
+        "endChar": 66
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efe82f3a_58d05f9a",
         "filename": "components/favicon/content/content_favicon_driver.cc",
         "patchSetId": 4
@@ -672,6 +696,30 @@
       "side": 1,
       "message": "FaviconDriver wasn\u0027t really designed to be called like this, and I\u0027m worried it\u0027s going to get in a bad state. I think it would be better to make TabUIHelper call to the history service directly.",
       "parentUuid": "1e0a1be1_9bea29b1",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 62
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27c0a159_a03eff7b",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T22:53:01Z",
+      "side": 1,
+      "message": "Now updated to use favicon service inside TabUIHelper.",
+      "parentUuid": "b630aefa_fb907c24",
       "range": {
         "startLine": 160,
         "startChar": 2,
