@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c435e815_7d2ecd8e",
+        "filename": "content/browser/gpu/gpu_ipc_browsertests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T18:11:19Z",
+      "side": 0,
+      "message": "While here I noticed we have a class to make a member variable that is only used in the scope of the method, so I deleted the class..",
+      "revId": "9f6732d497dc292fef6ef6e7c63faca52ce43ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
