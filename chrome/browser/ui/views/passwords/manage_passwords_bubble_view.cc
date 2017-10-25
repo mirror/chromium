@@ -303,9 +303,13 @@ void BuildCredentialRows(views::GridLayout* layout,
                          views::View* password_field,
                          views::ToggleImageButton* password_view_button,
                          bool show_password_label) {
+  constexpr int kFontContext = views::style::CONTEXT_LABEL;
+  constexpr int kFontStyle = views::style::STYLE_PRIMARY;
+  const int row_height = views::LayoutProvider::GetControlHeightForFont(
+      kFontContext, kFontStyle, views::Combobox::GetFontList());
   // Username row.
   BuildColumnSet(layout, DOUBLE_VIEW_COLUMN_SET_USERNAME);
-  layout->StartRow(0, DOUBLE_VIEW_COLUMN_SET_USERNAME);
+  layout->StartRow(0, DOUBLE_VIEW_COLUMN_SET_USERNAME, row_height);
   std::unique_ptr<views::Label> username_label(new views::Label(
       l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_USERNAME_LABEL),
       views::style::CONTEXT_LABEL, views::style::STYLE_PRIMARY));
@@ -331,7 +335,7 @@ void BuildCredentialRows(views::GridLayout* layout,
   ColumnSetType type = password_view_button ? TRIPLE_VIEW_COLUMN_SET
                                             : DOUBLE_VIEW_COLUMN_SET_PASSWORD;
   BuildColumnSet(layout, type);
-  layout->StartRow(0, type);
+  layout->StartRow(0, type, row_height);
   layout->AddView(password_label.release(), 1, 1, views::GridLayout::LEADING,
                   views::GridLayout::FILL, labels_width, 0);
   layout->AddView(password_field, 1, 1, views::GridLayout::FILL,
@@ -501,7 +505,7 @@ ManagePasswordsBubbleView::PendingView::PendingView(
 
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnablePasswordSelection) &&
-      !parent_->model()->hide_eye_icon() && is_password_credential) {
+      is_password_credential) {
     password_view_button_ = CreatePasswordViewButton(this).release();
   }
 
@@ -591,6 +595,9 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
 }
 
 void ManagePasswordsBubbleView::PendingView::TogglePasswordVisibility() {
+  if (!password_visible_ && !parent_->model()->TryToViewPasswords())
+    return;
+
   UpdateUsernameAndPasswordInModel();
   password_visible_ = !password_visible_;
   password_view_button_->SetToggled(password_visible_);

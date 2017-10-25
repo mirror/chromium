@@ -210,7 +210,7 @@ NSButton* EyeIcon(id target, SEL action) {
                                       NSHeight([EditableField(
                                           form.password_value) frame])))];
       }
-      if (!self.model->hide_eye_icon()) {
+      if (!self.model->lock_passwords()) {
         passwordViewButton_.reset(
             [EyeIcon(self, @selector(onEyeClicked:)) retain]);
         [container addSubview:passwordViewButton_];
