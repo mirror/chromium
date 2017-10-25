@@ -112,6 +112,18 @@ static bool g_modify_layout_tree_structure_any_state = false;
 
 }  // namespace
 
+void LayoutObject::SetNeedsCollectInlines() {
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled() || NeedsCollectInlines() ||
+      (!IsInline() && !IsLayoutBlockFlow()))
+    return;
+  for (LayoutObject* object = this; object && !object->NeedsCollectInlines();
+       object = object->Parent()) {
+    object->SetNeedsCollectInlines(true);
+    if (object->IsLayoutBlockFlow())
+      break;
+  }
+}
+
 #if DCHECK_IS_ON()
 
 LayoutObject::SetLayoutNeededForbiddenScope::SetLayoutNeededForbiddenScope(
@@ -791,6 +803,8 @@ void LayoutObject::MarkContainerChainForLayout(bool schedule_relayout,
   bool simplified_normal_flow_layout = NeedsSimplifiedNormalFlowLayout() &&
                                        !SelfNeedsLayout() &&
                                        !NormalChildNeedsLayout();
+  if (object)
+    object->SetNeedsCollectInlines();
 
   while (object) {
     if (object->SelfNeedsLayout())
@@ -813,6 +827,7 @@ void LayoutObject::MarkContainerChainForLayout(bool schedule_relayout,
         return;
       object->SetNeedsSimplifiedNormalFlowLayout(true);
     } else {
+      object->SetNeedsCollectInlines();
       if (object->NormalChildNeedsLayout())
         return;
       object->SetNormalChildNeedsLayout(true);
@@ -2954,6 +2969,7 @@ void LayoutObject::ScheduleRelayout() {
 
 void LayoutObject::ForceLayout() {
   SetSelfNeedsLayout(true);
+  SetNeedsCollectInlines();
   SetShouldDoFullPaintInvalidation();
   UpdateLayout();
 }
@@ -2963,6 +2979,7 @@ void LayoutObject::ForceLayout() {
 // forceLayout.
 void LayoutObject::ForceChildLayout() {
   SetNormalChildNeedsLayout(true);
+  SetNeedsCollectInlines();
   UpdateLayout();
 }
 
