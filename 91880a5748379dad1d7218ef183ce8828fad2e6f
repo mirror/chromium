@@ -16,6 +16,24 @@
       "revId": "91880a5748379dad1d7218ef183ce8828fad2e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b74b5e_18df75fe",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-25T22:30:23Z",
+      "side": 0,
+      "message": "Agreed, though this CL probably makes it correct? SetResource() is now called before it.",
+      "parentUuid": "600f9120_d19ee71d",
+      "revId": "91880a5748379dad1d7218ef183ce8828fad2e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

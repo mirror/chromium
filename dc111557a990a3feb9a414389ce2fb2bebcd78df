@@ -34,6 +34,24 @@
       "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ab0b3c_b39344c7",
+        "filename": "third_party/WebKit/Source/core/loader/WorkletScriptLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-25T22:30:23Z",
+      "side": 1,
+      "message": "I think the right answer is for AddClient() to always be async, and I\u0027ve started patches to try to move us toward that. 4 Resource::Types have sync cache hits, so I\u0027m making them async one at a time, so that we can identify which ones are perf sensitive if regressions happen.\n\nDo you want those changes to block this one?",
+      "parentUuid": "eefc7ee2_3f317e59",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
