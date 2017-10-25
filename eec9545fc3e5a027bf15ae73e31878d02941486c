@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09e76165_201b3457",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-25T22:31:34Z",
+      "side": 1,
+      "message": "Was wondering why, but found https://cs.corp.google.com/eureka_internal/chromium/src/base/memory/ptr_util.h?q\u003dbase/memory/ptr_util.h\u0026dr\u0026l\u003d21",
+      "parentUuid": "e72107c1_25a7aeff",
+      "range": {
+        "startLine": 209,
+        "startChar": 10,
+        "endLine": 209,
+        "endChar": 26
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74dff685_c96a7125",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 2
@@ -36,6 +60,70 @@
       "writtenOn": "2017-10-23T19:15:28Z",
       "side": 1,
       "message": "you\u0027ll need curlies here",
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507c02ea_a2601b65",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-25T22:31:34Z",
+      "side": 1,
+      "message": "Nit : Also as a practice(my previous team made this rule), either I keep curlies always (which is what I do even for a single line ones) or follow no curlies for single lines. But consistently.\n\nLine 433 : no curlies\nLine 427 : curlies.\nLine 419 : curlies\nLine 413: no curlies.",
+      "parentUuid": "74dff685_c96a7125",
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc81db0_5eca7dd3",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-25T22:31:34Z",
+      "side": 1,
+      "message": "Curious, what is this :p",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 38,
+        "endChar": 8
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c146f40f_a8cea873",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-25T22:31:34Z",
+      "side": 1,
+      "message": "Is this description still upto date in the new world.",
+      "range": {
+        "startLine": 68,
+        "startChar": 1,
+        "endLine": 68,
+        "endChar": 2
+      },
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +193,52 @@
     },
     {
       "key": {
+        "uuid": "7a71caf5_03cb8b58",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-25T22:31:34Z",
+      "side": 1,
+      "message": "Not sure whether it is standard in chrome, but \nYou can do using AutofillClient::PaymentsRpcResult; and directly use PaymentsRpcResult everywhere.",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 3
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3e7878_99f4a319",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-25T22:31:34Z",
+      "side": 1,
+      "message": "\"payments::PaymentsClient::UploadRequestDetails\"\n\nwith using, these long names get super short and easy to read.",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 3
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95801391_6fe1866c",
         "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
         "patchSetId": 2
@@ -144,6 +278,69 @@
         "startChar": 41,
         "endLine": 339,
         "endChar": 50
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49266d1_1d76da92",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-25T22:31:34Z",
+      "side": 1,
+      "message": "Nit : Prefer curlies here.",
+      "range": {
+        "startLine": 489,
+        "startChar": 2,
+        "endLine": 489,
+        "endChar": 4
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dce826f_6864ba04",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-25T22:31:34Z",
+      "side": 1,
+      "message": "credit card save is available -\u003e To Google or Local or Both ?",
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd2efb5_9aa78f9b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-25T22:31:34Z",
+      "side": 1,
+      "message": "What is Attempt here.",
+      "range": {
+        "startLine": 54,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 2
       },
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
