@@ -67,36 +67,11 @@ class CONTENT_EXPORT BrowserThread {
     // The main thread in the browser.
     UI,
 
-    // This is the thread that interacts with the database.
-    DB,
-
-    // This is the thread that interacts with the file system.
-    // DEPRECATED: prefer base/task_scheduler/post_task.h for new classes
-    // requiring a background file I/O task runner, i.e.:
-    //   base::CreateSequencedTaskRunnerWithTraits(
-    //       {base::MayBlock(), base::TaskPriority::BACKGROUND})
-    //   Note: You can use base::TaskPriority::USER_VISIBLE instead of
-    //         base::TaskPriority::BACKGROUND if the latency of this operation
-    //         is visible but non-blocking to the user.
-    FILE,
-
-    // Used for file system operations that block user interactions.
-    // Responsiveness of this thread affect users.
-    // DEPRECATED: prefer base/task_scheduler/post_task.h for new classes
-    // requiring a user-blocking file I/O task runner, i.e.:
-    //   base::CreateSequencedTaskRunnerWithTraits(
-    //       {base::MayBlock(), base::TaskPriority::USER_BLOCKING})
-    FILE_USER_BLOCKING,
-
     // Used to launch and terminate Chrome processes.
     PROCESS_LAUNCHER,
 
-    // This is the thread to handle slow HTTP cache operations.
-    CACHE,
-
     // This is the thread that processes non-blocking IO, i.e. IPC and network.
-    // Blocking IO should happen on other threads like DB, FILE,
-    // FILE_USER_BLOCKING and CACHE depending on the usage.
+    // Blocking IO should happen in TaskScheduler.
     IO,
 
     // NOTE: do not add new threads here that are only used by a small number of
@@ -236,12 +211,14 @@ class CONTENT_EXPORT BrowserThread {
 
   // Use these templates in conjunction with RefCountedThreadSafe or scoped_ptr
   // when you want to ensure that an object is deleted on a specific thread.
-  // This is needed when an object can hop between threads
-  // (i.e. IO -> FILE -> IO), and thread switching delays can mean that the
-  // final IO tasks executes before the FILE task's stack unwinds.
-  // This would lead to the object destructing on the FILE thread, which often
-  // is not what you want (i.e. to unregister from NotificationService, to
-  // notify other objects on the creating thread etc).
+  // This is needed when an object can hop between threads (i.e. UI -> IO ->
+  // UI), and thread switching delays can mean that the final UI tasks executes
+  // before the IO task's stack unwinds. This would lead to the object
+  // destructing on the IO thread, which often is not what you want (i.e. to
+  // unregister from NotificationService, to notify other objects on the
+  // creating thread etc). Note: see base::OnTaskRunnerDeleter and
+  // base::RefCountedDeleteOnSequence to bind to SequencedTaskRunner instead of
+  // specific BrowserThreads.
   template<ID thread>
   struct DeleteOnThread {
     template<typename T>
@@ -280,13 +257,10 @@ class CONTENT_EXPORT BrowserThread {
   // Sample usage with scoped_ptr:
   // std::unique_ptr<Foo, BrowserThread::DeleteOnIOThread> ptr;
   //
-  // Note: when migrating BrowserThreads to TaskScheduler based
-  // SequencedTaskRunners these map to base::OnTaskRunnerDeleter and
-  // base::RefCountedDeleteOnSequence.
+  // Note: see base::OnTaskRunnerDeleter and base::RefCountedDeleteOnSequence to
+  // bind to SequencedTaskRunner instead of specific BrowserThreads.
   struct DeleteOnUIThread : public DeleteOnThread<UI> { };
   struct DeleteOnIOThread : public DeleteOnThread<IO> { };
-  struct DeleteOnFileThread : public DeleteOnThread<FILE> { };
-  struct DeleteOnDBThread : public DeleteOnThread<DB> { };
 
   // Returns an appropriate error message for when DCHECK_CURRENTLY_ON() fails.
   static std::string GetDCheckCurrentlyOnErrorMessage(ID expected);
