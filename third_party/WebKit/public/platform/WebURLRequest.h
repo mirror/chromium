@@ -35,6 +35,7 @@
 #include "WebCommon.h"
 #include "WebHTTPBody.h"
 #include "WebReferrerPolicy.h"
+#include "WebSecurityOrigin.h"
 
 namespace blink {
 
