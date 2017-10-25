@@ -20,20 +20,17 @@
 
 namespace gl {
 
-DriverGLX g_driver_glx;
+DriverGLX g_driver_glx;  // Exists in .bss
 
 void DriverGLX::InitializeStaticBindings() {
-  fn.glXBindTexImageEXTFn = 0;
   fn.glXChooseFBConfigFn = reinterpret_cast<glXChooseFBConfigProc>(
       GetGLProcAddress("glXChooseFBConfig"));
   fn.glXChooseVisualFn = reinterpret_cast<glXChooseVisualProc>(
       GetGLProcAddress("glXChooseVisual"));
   fn.glXCopyContextFn =
       reinterpret_cast<glXCopyContextProc>(GetGLProcAddress("glXCopyContext"));
-  fn.glXCopySubBufferMESAFn = 0;
   fn.glXCreateContextFn = reinterpret_cast<glXCreateContextProc>(
       GetGLProcAddress("glXCreateContext"));
-  fn.glXCreateContextAttribsARBFn = 0;
   fn.glXCreateGLXPixmapFn = reinterpret_cast<glXCreateGLXPixmapProc>(
       GetGLProcAddress("glXCreateGLXPixmap"));
   fn.glXCreateNewContextFn = reinterpret_cast<glXCreateNewContextProc>(
@@ -69,13 +66,10 @@ void DriverGLX::InitializeStaticBindings() {
           GetGLProcAddress("glXGetCurrentReadDrawable"));
   fn.glXGetFBConfigAttribFn = reinterpret_cast<glXGetFBConfigAttribProc>(
       GetGLProcAddress("glXGetFBConfigAttrib"));
-  fn.glXGetFBConfigFromVisualSGIXFn = 0;
   fn.glXGetFBConfigsFn = reinterpret_cast<glXGetFBConfigsProc>(
       GetGLProcAddress("glXGetFBConfigs"));
-  fn.glXGetMscRateOMLFn = 0;
   fn.glXGetSelectedEventFn = reinterpret_cast<glXGetSelectedEventProc>(
       GetGLProcAddress("glXGetSelectedEvent"));
-  fn.glXGetSyncValuesOMLFn = 0;
   fn.glXGetVisualFromFBConfigFn =
       reinterpret_cast<glXGetVisualFromFBConfigProc>(
           GetGLProcAddress("glXGetVisualFromFBConfig"));
@@ -98,18 +92,14 @@ void DriverGLX::InitializeStaticBindings() {
       GetGLProcAddress("glXQueryServerString"));
   fn.glXQueryVersionFn = reinterpret_cast<glXQueryVersionProc>(
       GetGLProcAddress("glXQueryVersion"));
-  fn.glXReleaseTexImageEXTFn = 0;
   fn.glXSelectEventFn =
       reinterpret_cast<glXSelectEventProc>(GetGLProcAddress("glXSelectEvent"));
   fn.glXSwapBuffersFn =
       reinterpret_cast<glXSwapBuffersProc>(GetGLProcAddress("glXSwapBuffers"));
-  fn.glXSwapIntervalEXTFn = 0;
-  fn.glXSwapIntervalMESAFn = 0;
   fn.glXUseXFontFn =
       reinterpret_cast<glXUseXFontProc>(GetGLProcAddress("glXUseXFont"));
   fn.glXWaitGLFn =
       reinterpret_cast<glXWaitGLProc>(GetGLProcAddress("glXWaitGL"));
-  fn.glXWaitVideoSyncSGIFn = 0;
   fn.glXWaitXFn = reinterpret_cast<glXWaitXProc>(GetGLProcAddress("glXWaitX"));
 }
 

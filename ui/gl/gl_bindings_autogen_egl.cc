@@ -20,7 +20,7 @@
 
 namespace gl {
 
-DriverEGL g_driver_egl;
+DriverEGL g_driver_egl;  // Exists in .bss
 
 void DriverEGL::InitializeStaticBindings() {
   fn.eglBindAPIFn =
@@ -35,7 +35,6 @@ void DriverEGL::InitializeStaticBindings() {
       reinterpret_cast<eglCopyBuffersProc>(GetGLProcAddress("eglCopyBuffers"));
   fn.eglCreateContextFn = reinterpret_cast<eglCreateContextProc>(
       GetGLProcAddress("eglCreateContext"));
-  fn.eglCreateImageKHRFn = 0;
   fn.eglCreatePbufferFromClientBufferFn =
       reinterpret_cast<eglCreatePbufferFromClientBufferProc>(
           GetGLProcAddress("eglCreatePbufferFromClientBuffer"));
@@ -43,16 +42,12 @@ void DriverEGL::InitializeStaticBindings() {
       GetGLProcAddress("eglCreatePbufferSurface"));
   fn.eglCreatePixmapSurfaceFn = reinterpret_cast<eglCreatePixmapSurfaceProc>(
       GetGLProcAddress("eglCreatePixmapSurface"));
-  fn.eglCreateStreamKHRFn = 0;
-  fn.eglCreateStreamProducerD3DTextureNV12ANGLEFn = 0;
   fn.eglCreateSyncKHRFn = reinterpret_cast<eglCreateSyncKHRProc>(
       GetGLProcAddress("eglCreateSyncKHR"));
   fn.eglCreateWindowSurfaceFn = reinterpret_cast<eglCreateWindowSurfaceProc>(
       GetGLProcAddress("eglCreateWindowSurface"));
   fn.eglDestroyContextFn = reinterpret_cast<eglDestroyContextProc>(
       GetGLProcAddress("eglDestroyContext"));
-  fn.eglDestroyImageKHRFn = 0;
-  fn.eglDestroyStreamKHRFn = 0;
   fn.eglDestroySurfaceFn = reinterpret_cast<eglDestroySurfaceProc>(
       GetGLProcAddress("eglDestroySurface"));
   fn.eglDestroySyncKHRFn = reinterpret_cast<eglDestroySyncKHRProc>(
@@ -60,8 +55,6 @@ void DriverEGL::InitializeStaticBindings() {
   fn.eglDupNativeFenceFDANDROIDFn =
       reinterpret_cast<eglDupNativeFenceFDANDROIDProc>(
           GetGLProcAddress("eglDupNativeFenceFDANDROID"));
-  fn.eglGetCompositorTimingANDROIDFn = 0;
-  fn.eglGetCompositorTimingSupportedANDROIDFn = 0;
   fn.eglGetConfigAttribFn = reinterpret_cast<eglGetConfigAttribProc>(
       GetGLProcAddress("eglGetConfigAttrib"));
   fn.eglGetConfigsFn =
@@ -76,52 +69,30 @@ void DriverEGL::InitializeStaticBindings() {
       reinterpret_cast<eglGetDisplayProc>(GetGLProcAddress("eglGetDisplay"));
   fn.eglGetErrorFn =
       reinterpret_cast<eglGetErrorProc>(GetGLProcAddress("eglGetError"));
-  fn.eglGetFrameTimestampsANDROIDFn = 0;
-  fn.eglGetFrameTimestampSupportedANDROIDFn = 0;
-  fn.eglGetNativeClientBufferANDROIDFn = 0;
-  fn.eglGetNextFrameIdANDROIDFn = 0;
-  fn.eglGetPlatformDisplayEXTFn = 0;
   fn.eglGetProcAddressFn = reinterpret_cast<eglGetProcAddressProc>(
       GetGLProcAddress("eglGetProcAddress"));
   fn.eglGetSyncAttribKHRFn = reinterpret_cast<eglGetSyncAttribKHRProc>(
       GetGLProcAddress("eglGetSyncAttribKHR"));
-  fn.eglGetSyncValuesCHROMIUMFn = 0;
-  fn.eglImageFlushExternalEXTFn = 0;
   fn.eglInitializeFn =
       reinterpret_cast<eglInitializeProc>(GetGLProcAddress("eglInitialize"));
   fn.eglMakeCurrentFn =
       reinterpret_cast<eglMakeCurrentProc>(GetGLProcAddress("eglMakeCurrent"));
-  fn.eglPostSubBufferNVFn = 0;
-  fn.eglProgramCacheGetAttribANGLEFn = 0;
-  fn.eglProgramCachePopulateANGLEFn = 0;
-  fn.eglProgramCacheQueryANGLEFn = 0;
-  fn.eglProgramCacheResizeANGLEFn = 0;
   fn.eglQueryAPIFn =
       reinterpret_cast<eglQueryAPIProc>(GetGLProcAddress("eglQueryAPI"));
   fn.eglQueryContextFn = reinterpret_cast<eglQueryContextProc>(
       GetGLProcAddress("eglQueryContext"));
-  fn.eglQueryStreamKHRFn = 0;
-  fn.eglQueryStreamu64KHRFn = 0;
   fn.eglQueryStringFn =
       reinterpret_cast<eglQueryStringProc>(GetGLProcAddress("eglQueryString"));
   fn.eglQuerySurfaceFn = reinterpret_cast<eglQuerySurfaceProc>(
       GetGLProcAddress("eglQuerySurface"));
-  fn.eglQuerySurfacePointerANGLEFn = 0;
   fn.eglReleaseTexImageFn = reinterpret_cast<eglReleaseTexImageProc>(
       GetGLProcAddress("eglReleaseTexImage"));
   fn.eglReleaseThreadFn = reinterpret_cast<eglReleaseThreadProc>(
       GetGLProcAddress("eglReleaseThread"));
-  fn.eglStreamAttribKHRFn = 0;
-  fn.eglStreamConsumerAcquireKHRFn = 0;
-  fn.eglStreamConsumerGLTextureExternalAttribsNVFn = 0;
-  fn.eglStreamConsumerGLTextureExternalKHRFn = 0;
-  fn.eglStreamConsumerReleaseKHRFn = 0;
-  fn.eglStreamPostD3DTextureNV12ANGLEFn = 0;
   fn.eglSurfaceAttribFn = reinterpret_cast<eglSurfaceAttribProc>(
       GetGLProcAddress("eglSurfaceAttrib"));
   fn.eglSwapBuffersFn =
       reinterpret_cast<eglSwapBuffersProc>(GetGLProcAddress("eglSwapBuffers"));
-  fn.eglSwapBuffersWithDamageKHRFn = 0;
   fn.eglSwapIntervalFn = reinterpret_cast<eglSwapIntervalProc>(
       GetGLProcAddress("eglSwapInterval"));
   fn.eglTerminateFn =
@@ -132,7 +103,6 @@ void DriverEGL::InitializeStaticBindings() {
       reinterpret_cast<eglWaitGLProc>(GetGLProcAddress("eglWaitGL"));
   fn.eglWaitNativeFn =
       reinterpret_cast<eglWaitNativeProc>(GetGLProcAddress("eglWaitNative"));
-  fn.eglWaitSyncKHRFn = 0;
 }
 
 void DriverEGL::InitializeClientExtensionBindings() {

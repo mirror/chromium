@@ -20,7 +20,7 @@
 
 namespace gl {
 
-DriverOSMESA g_driver_osmesa;
+DriverOSMESA g_driver_osmesa;  // Exists in .bss
 
 void DriverOSMESA::InitializeStaticBindings() {
   fn.OSMesaColorClampFn = reinterpret_cast<OSMesaColorClampProc>(

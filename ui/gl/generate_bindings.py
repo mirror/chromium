@@ -2679,7 +2679,8 @@ namespace gl {
 
   file.write('\n')
   if set_name != 'gl':
-    file.write('Driver%s g_driver_%s;\n' % (set_name.upper(), set_name.lower()))
+    file.write('Driver%s g_driver_%s;  // Exists in .bss\n' % (
+        set_name.upper(), set_name.lower()))
   file.write('\n')
 
   # Write stub functions that take the place of some functions before a context
@@ -2712,8 +2713,6 @@ namespace gl {
   for func in functions:
     if 'static_binding' in func:
       WriteFuncBinding(file, func['known_as'], func['static_binding'])
-    else:
-      file.write('  fn.%sFn = 0;\n' % func['known_as'])
 
   def GetGLVersionCondition(gl_version):
     if GLVersionBindAlways(gl_version):
@@ -2954,6 +2953,14 @@ void DriverEGL::InitializeExtensionBindings() {
 
   # Write NoContextGLApi functions
   if set_name.upper() == "GL":
+    file.write('namespace {\n')
+    file.write('void NoContextHelper(const char* method_name) {\n')
+    no_context_error = ('<< "Trying to call " << method_name << " without '
+                        'current GL context"')
+    file.write('  NOTREACHED() %s;\n' % no_context_error)
+    file.write('  LOG(ERROR) %s;\n' % no_context_error)
+    file.write('}\n')
+    file.write('}  // namespace\n')
     for func in functions:
       function_name = func['known_as']
       return_type = func['return_type']
@@ -2962,9 +2969,7 @@ void DriverEGL::InitializeExtensionBindings() {
       file.write('%s NoContextGLApi::%sFn(%s) {\n' %
           (return_type, function_name, arguments))
       argument_names = MakeArgNames(arguments)
-      no_context_error = "Trying to call %s() without current GL context" % function_name
-      file.write('  NOTREACHED() <<  "%s";\n' % no_context_error)
-      file.write('  LOG(ERROR) <<  "%s";\n' % no_context_error)
+      file.write('  NoContextHelper("%s");\n' % function_name)
       default_value = { 'GLenum': 'static_cast<GLenum>(0)',
                         'GLuint': '0U',
                         'GLint': '0',
