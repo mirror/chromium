@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43ca5fb2_a2e83f12",
+        "filename": "third_party/WebKit/Source/core/paint/SVGInlineTextBoxPainterTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T23:15:59Z",
+      "side": 0,
+      "message": "I think the intent was to check if the painting is correct, and checking visual rect seems to defeat the purpose. Perhaps MockPaintCanvas is the way to expect certain paint operations.",
+      "parentUuid": "f08ae62c_4e1cea30",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 47
+      },
+      "revId": "6e736c63e7f5670580de0db37a6d7e2feda98250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c6a2f38_1b684e4e",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f6d8cde2_4355541a",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T23:15:59Z",
+      "side": 0,
+      "message": "They can be in different spaces in SPv1 only, and GetPaintRecordBounds() is not used in SPv1. For SPv175+, both are in the space of containing transform node.",
+      "parentUuid": "9c6a2f38_1b684e4e",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "6e736c63e7f5670580de0db37a6d7e2feda98250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8898d71c_631316ca",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingRecorder.cpp",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-25T19:16:52Z",
       "side": 0,
       "message": "I\u0027m not sure whether it\u0027s worth restoring this. Part of the reason we can remove the bounds param is that we\u0027re no longer doing (at least some of) the cull rect checking we were doing in the past.\n\nPerhaps we should remove this RuntimeEnabledFeatures flag and associated logic. Can pursue that in separate patch if appropriate, seeking feedback for now.",
+      "range": {
+        "startLine": 59,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 71
+      },
+      "revId": "6e736c63e7f5670580de0db37a6d7e2feda98250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd92982e_f846b7c2",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingRecorder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T23:15:59Z",
+      "side": 0,
+      "message": "I think we can delete this. I don\u0027t know if anyone is using the feature.\n\nUsing visual rect as the bounds, SlimmingPaintStrictCullRectClipping alone might not discover all inadequate visual rects problems because we might not rasterize the part out of the visual rects because of rtree. We may need the feature along with rtree disabled to expose the inadequate visual rect problems. We can try to find an effective way later.",
+      "parentUuid": "8898d71c_631316ca",
       "range": {
         "startLine": 59,
         "startChar": 3,
