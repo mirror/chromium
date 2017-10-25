@@ -22,6 +22,30 @@
       "revId": "9bd45e835cb1512fdb3b24699c878ec5d3695f13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4fa299_205614c2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-25T13:20:14Z",
+      "side": 1,
+      "message": "There is a fix out to remove the duplicates https://chromium-review.googlesource.com/c/chromium/src/+/738201",
+      "parentUuid": "7ba7b1c4_37ac89a4",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 9
+      },
+      "revId": "9bd45e835cb1512fdb3b24699c878ec5d3695f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
