@@ -558,6 +558,11 @@ void PaintLayerClipper::CalculateBackgroundClipRect(
     const ClipRectsContext& context,
     ClipRect& output) const {
   if (use_geometry_mapper_) {
+    DCHECK(fragment_data);
+    // TODO(chrishtr): find the root cause of not having a fragment and fix
+    // it.
+    if (!fragment_data)
+      return;
     CalculateBackgroundClipRectWithGeometryMapper(
         context, *layer_.GetLayoutObject().FirstFragment(), output);
     return;
