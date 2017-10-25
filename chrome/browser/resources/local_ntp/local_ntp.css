@@ -78,6 +78,7 @@ body.hide-fakebox-logo #fakebox {
 
 #logo-default,
 #logo-doodle {
+  display: none;
   opacity: 0;
 }
 
