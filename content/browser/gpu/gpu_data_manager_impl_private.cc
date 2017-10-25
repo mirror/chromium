@@ -827,9 +827,6 @@ void GpuDataManagerImplPrivate::UpdateGpuPreferences(
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
 
-  if (base::FeatureList::IsEnabled(features::kGpuScheduler))
-    gpu_preferences->enable_gpu_scheduler = true;
-
   if (ShouldDisableAcceleratedVideoDecode(command_line))
     gpu_preferences->disable_accelerated_video_decode = true;
 

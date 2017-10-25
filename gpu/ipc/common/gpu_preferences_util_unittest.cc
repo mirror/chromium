@@ -46,7 +46,6 @@ TEST(GpuPreferencesUtilTest, EncodeDecode) {
     ScopedGpuPreferences scoped_input_prefs, scoped_decoded_prefs;
     GpuPreferences& input_prefs = scoped_input_prefs.Ref();
     GpuPreferences& decoded_prefs = scoped_decoded_prefs.Ref();
-    input_prefs.enable_gpu_scheduler = true;
     input_prefs.disable_gpu_program_cache = true;
     input_prefs.force_gpu_mem_available = 4096;
 #if defined(OS_WIN)
