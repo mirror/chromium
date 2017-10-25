@@ -29,7 +29,7 @@ KURL PreloadRequest::CompleteURL(Document* document) {
   return document->CompleteURL(resource_url_);
 }
 
-Resource* PreloadRequest::Start(Document* document) {
+Resource* PreloadRequest::Start(Document* document, ResourceClient* client) {
   DCHECK(IsMainThread());
 
   FetchInitiatorInfo initiator_info;
@@ -113,7 +113,7 @@ Resource* PreloadRequest::Start(Document* document) {
   }
   params.SetSpeculativePreloadType(speculative_preload_type, discovery_time_);
 
-  return document->Loader()->StartPreload(resource_type_, params);
+  return document->Loader()->StartPreload(resource_type_, params, client);
 }
 
 }  // namespace blink

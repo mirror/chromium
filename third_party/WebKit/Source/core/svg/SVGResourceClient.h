@@ -6,14 +6,13 @@
 #define SVGResourceClient_h
 
 #include "core/CoreExport.h"
-#include "core/loader/resource/DocumentResource.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
 class TreeScope;
 
-class CORE_EXPORT SVGResourceClient : public DocumentResourceClient {
+class CORE_EXPORT SVGResourceClient : public GarbageCollectedMixin {
  public:
   virtual ~SVGResourceClient() {}
 
@@ -24,9 +23,6 @@ class CORE_EXPORT SVGResourceClient : public DocumentResourceClient {
 
  protected:
   SVGResourceClient() {}
-
-  String DebugName() const override { return "SVGResourceClient"; }
-  void NotifyFinished(Resource*) override { ResourceElementChanged(); }
 };
 
 }  // namespace blink

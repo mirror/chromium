@@ -38,7 +38,9 @@ class XSLStyleSheetResource final : public StyleSheetResource {
  public:
   static XSLStyleSheetResource* FetchSynchronously(FetchParameters&,
                                                    ResourceFetcher*);
-  static XSLStyleSheetResource* Fetch(FetchParameters&, ResourceFetcher*);
+  static XSLStyleSheetResource* Fetch(FetchParameters&,
+                                      ResourceFetcher*,
+                                      ResourceClient*);
 
   const String& Sheet() const { return sheet_; }
 

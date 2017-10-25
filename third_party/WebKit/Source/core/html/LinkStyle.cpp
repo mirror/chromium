@@ -332,7 +332,8 @@ LinkStyle::LoadReturnValue LinkStyle::LoadStylesheetIfNeeded(
     params.SetIntegrityMetadata(metadata_set);
     params.MutableResourceRequest().SetFetchIntegrity(integrity_attr);
   }
-  SetResource(CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher()));
+  SetResource(
+      CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher(), this));
 
   if (loading_ && !GetResource()) {
     // The request may have been denied if (for example) the stylesheet is

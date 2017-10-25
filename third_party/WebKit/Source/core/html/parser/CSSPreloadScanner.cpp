@@ -257,17 +257,13 @@ void CSSPreloadScanner::EmitRule(const SegmentedString& source) {
 }
 
 CSSPreloaderResourceClient::CSSPreloaderResourceClient(
-    Resource* resource,
     HTMLResourcePreloader* preloader)
     : policy_(preloader->GetDocument()
                       ->GetSettings()
                       ->GetCSSExternalScannerPreload()
                   ? kScanAndPreload
                   : kScanOnly),
-      preloader_(preloader),
-      resource_(ToCSSStyleSheetResource(resource)) {
-  resource_->AddClient(this);
-}
+      preloader_(preloader) {}
 
 CSSPreloaderResourceClient::~CSSPreloaderResourceClient() {}
 
@@ -284,7 +280,9 @@ void CSSPreloaderResourceClient::SetCSSStyleSheet(
 // be (according to spec).
 void CSSPreloaderResourceClient::DidAppendFirstData(
     const CSSStyleSheetResource* resource) {
-  if (preloader_)
+  // if IsLoaded() is true, this is a cache hit. Don't scan, lest it trigger an
+  // infinite loop. See http://crbug.com/667753
+  if (preloader_ && !resource->IsLoaded())
     ScanCSS(resource);
   ClearResource();
 }
@@ -343,6 +341,13 @@ void CSSPreloaderResourceClient::FetchPreloads(PreloadRequestStream& preloads) {
     css_import_histogram.Count(preloader_->CountPreloads() -
                                current_preload_count);
   }
+}
+
+void CSSPreloaderResourceClient::SetResource(Resource* resource) {
+  DCHECK(!resource_);
+  DCHECK(!resource->IsLoaded());
+  DCHECK_EQ(Resource::kCSSStyleSheet, resource->GetType());
+  resource_ = ToCSSStyleSheetResource(resource);
 }
 
 void CSSPreloaderResourceClient::ClearResource() {
