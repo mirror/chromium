@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6422b597_9e52b474",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-25T00:45:32Z",
+      "side": 1,
+      "message": "optional: Becky recently added this method and I think we should start moving toward using getBoolean() -- and possibly setBoolean() using a C++ declared enum to make sure pref names stay in-sync. This will greatly reduce the with the proliferation of getters and setters in this class.",
+      "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9a3a25_72c3916f",
+        "filename": "components/dom_distiller/core/distilled_page_prefs_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-25T00:45:32Z",
+      "side": 1,
+      "message": "Is there another patch planned that\u0027s going to make use of these in DistilledPagePrefs.java?",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 55
+      },
+      "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
