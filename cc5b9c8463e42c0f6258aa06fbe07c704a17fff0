@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70806dbe_c786bb44",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-25T16:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c42867f_b2ca2b5f",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59d06352_7f49dd06",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8966b61_80242938",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-25T16:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d06352_7f49dd06",
+      "range": {
+        "startLine": 45,
+        "startChar": 57,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "c679d27b_dbb7299f",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-25T16:12:51Z",
+      "side": 1,
+      "message": "Some cumbersome issue include VALIDATION_ERROR_UNEXPECTED_STRUCT_HEADER and net::ERR_CONTENT_DECODING_FAILED. It feels like unnecessary work, while at the end, there is no representation of mojo Time type in Javascript since it is only millisecond. In my opinion, it is much simpler just to use the int64 millisecond representation of the time for now.",
+      "parentUuid": "84d295b1_0d622d32",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d21ee5_04819a3e",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-25T16:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53bbfc69_8669b1aa",
+      "range": {
+        "startLine": 49,
+        "startChar": 39,
+        "endLine": 49,
+        "endChar": 43
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "699ce443_e8676997",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
         "patchSetId": 17
@@ -114,6 +210,30 @@
       "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f688c71_0044d767",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-25T16:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "699ce443_e8676997",
+      "range": {
+        "startLine": 51,
+        "startChar": 61,
+        "endLine": 51,
+        "endChar": 62
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9c6590d4_613b4d98",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-25T16:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "116fb47a_67f3e867",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 11
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a965e53f_87f96d56",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
         "patchSetId": 17
@@ -160,6 +304,30 @@
       "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6b44ab_becae338",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-25T16:12:51Z",
+      "side": 1,
+      "message": "Similar reason.",
+      "parentUuid": "a965e53f_87f96d56",
+      "range": {
+        "startLine": 57,
+        "startChar": 21,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "cc5b9c8463e42c0f6258aa06fbe07c704a17fff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
