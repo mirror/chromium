@@ -22,6 +22,30 @@
       "revId": "aa44fff3a46b33ca022e8ba4dfea6fefaefff1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91dad7c6_4649615b",
+        "filename": "base/stl_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T21:41:48Z",
+      "side": 1,
+      "message": "Oops, yes it should be a pointer.",
+      "parentUuid": "7c6232c0_d81dd7b3",
+      "range": {
+        "startLine": 31,
+        "startChar": 23,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "aa44fff3a46b33ca022e8ba4dfea6fefaefff1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
