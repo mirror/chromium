@@ -275,7 +275,7 @@ void TestRenderFrameHost::SimulateFeaturePolicyHeader(
   header[0].feature = feature;
   header[0].matches_all_origins = false;
   header[0].origins = whitelist;
-  OnDidSetFeaturePolicyHeader(header);
+  OnDidSetFramePolicyHeaders(blink::WebSandboxFlags::kNone, header);
 }
 
 void TestRenderFrameHost::SendNavigate(int nav_entry_id,
@@ -529,4 +529,9 @@ void TestRenderFrameHost::SimulateWillStartRequest(
       true /* user_gesture */, transition, false /* is_external_protocol */);
 }
 
+void TestRenderFrameHost::SendFramePolicy(
+    blink::WebSandboxFlags sandbox_flags,
+    const ParsedFeaturePolicyHeader& declared_policy) {
+  OnDidSetFramePolicyHeaders(sandbox_flags, declared_policy);
+}
 }  // namespace content
