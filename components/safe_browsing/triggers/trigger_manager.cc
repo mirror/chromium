@@ -160,10 +160,12 @@ bool TriggerManager::StartCollectingThreatDetails(
 
   DataCollectorsContainer* collectors = &data_collectors_map_[web_contents];
   bool should_trim_threat_details = trigger_type == TriggerType::AD_SAMPLE;
+  ThreatDetailsDoneCallback done_callback =
+      base::Bind(&TriggerManager::ThreatDetailsDone, base::Unretained(this));
   collectors->threat_details =
       scoped_refptr<ThreatDetails>(ThreatDetails::NewThreatDetails(
           ui_manager_, web_contents, resource, request_context_getter,
-          history_service, should_trim_threat_details));
+          history_service, should_trim_threat_details, done_callback));
   return true;
 }
 
@@ -185,29 +187,35 @@ bool TriggerManager::FinishCollectingThreatDetails(
   // Determine whether a report should be sent.
   bool should_send_report = CanSendReport(error_display_options, trigger_type);
 
-  DataCollectorsContainer* collectors = &data_collectors_map_[web_contents];
-  // Find the data collector and tell it to finish collecting data, and then
-  // remove it from our map. We release ownership of the data collector here but
-  // it will live until the end of the FinishCollection call because it
-  // implements RefCountedThreadSafe.
   if (should_send_report) {
-    scoped_refptr<ThreatDetails> threat_details = collectors->threat_details;
+    // Find the data collector and tell it to finish collecting data. We expect
+    // it to notify us when it's finished so we can clean up references to it.
+    DataCollectorsContainer* collectors = &data_collectors_map_[web_contents];
     content::BrowserThread::PostDelayedTask(
         content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ThreatDetails::FinishCollection, threat_details,
-                       did_proceed, num_visits),
+        base::BindOnce(&ThreatDetails::FinishCollection,
+                       collectors->threat_details, did_proceed, num_visits),
         delay);
 
     // Record that this trigger fired and collected data.
     trigger_throttler_->TriggerFired(trigger_type);
+  } else {
+    // We aren't telling ThreatDetails to finish the report so we should clean
+    // up our map ourselves.
+    ThreatDetailsDone(web_contents);
   }
 
-  // Regardless of whether the report got sent, clean up the data collector on
-  // this tab.
+  return should_send_report;
+}
+
+void TriggerManager::ThreatDetailsDone(content::WebContents* web_contents) {
+  // Clean up the ThreatDetailsdata collector on the specified tab.
+  if (!base::ContainsKey(data_collectors_map_, web_contents))
+    return;
+
+  DataCollectorsContainer* collectors = &data_collectors_map_[web_contents];
   collectors->threat_details = nullptr;
   data_collectors_map_.erase(web_contents);
-
-  return should_send_report;
 }
 
 }  // namespace safe_browsing

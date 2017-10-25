@@ -45,7 +45,8 @@ class MockThreatDetailsFactory : public ThreatDetailsFactory {
       const security_interstitials::UnsafeResource& unsafe_resource,
       net::URLRequestContextGetter* request_context_getter,
       history::HistoryService* history_service,
-      bool trim_to_ad_tags) override {
+      bool trim_to_ad_tags,
+      ThreatDetailsDoneCallback done_callback) override {
     MockThreatDetails* threat_details = new MockThreatDetails();
     return threat_details;
   }
@@ -124,8 +125,10 @@ class TriggerManagerTest : public ::testing::Test {
     }
     SBErrorOptions options =
         TriggerManager::GetSBErrorDisplayOptions(pref_service_, *web_contents);
-    return trigger_manager_.FinishCollectingThreatDetails(
+    bool result = trigger_manager_.FinishCollectingThreatDetails(
         trigger_type, web_contents, base::TimeDelta(), false, 0, options);
+    trigger_manager_.ThreatDetailsDone(web_contents);
+    return result;
   }
 
   const DataCollectorsMap& data_collectors_map() {

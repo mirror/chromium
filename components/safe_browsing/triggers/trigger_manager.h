@@ -113,6 +113,10 @@ class TriggerManager {
       int num_visits,
       const SBErrorOptions& error_display_options);
 
+  // Called when a ThreatDetails report finishes for the specified
+  // |web_contents|.
+  void ThreatDetailsDone(content::WebContents* web_contents);
+
  private:
   friend class TriggerManagerTest;
 

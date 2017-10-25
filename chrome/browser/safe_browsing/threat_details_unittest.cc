@@ -170,7 +170,9 @@ class ThreatDetailsWrap : public ThreatDetails {
                       unsafe_resource,
                       request_context_getter,
                       history_service,
-                      /*trim_to_ad_tags=*/false) {}
+                      /*trim_to_ad_tags=*/false,
+                      base::Bind(&ThreatDetailsWrap::ThreatDetailsDone,
+                                 base::Unretained(this))) {}
 
   ThreatDetailsWrap(
       SafeBrowsingUIManager* ui_manager,
@@ -184,7 +186,11 @@ class ThreatDetailsWrap : public ThreatDetails {
                       unsafe_resource,
                       request_context_getter,
                       history_service,
-                      trim_to_ad_tags) {}
+                      trim_to_ad_tags,
+                      base::Bind(&ThreatDetailsWrap::ThreatDetailsDone,
+                                 base::Unretained(this))) {}
+
+  void ThreatDetailsDone(content::WebContents* web_contents) {}
 
  private:
   ~ThreatDetailsWrap() override {}
