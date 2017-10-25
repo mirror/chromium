@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7856552c_93b8a25a",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-25T07:34:00Z",
+      "side": 1,
+      "message": "Done, waiting for answer",
+      "parentUuid": "d62a8af0_8e98d6d1",
+      "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "104ba9a6_1cb82228",
         "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-25T06:51:45Z",
       "side": 1,
       "message": "This might throws error (accessing |volumeId| of null) when there is no Drive volume.\nCould you try disabling Google Drive from chrome://settings \u003d\u003e \"Downlaods\" in Advanced section \u003d\u003e \"Disconnect Google Drive account\" and see if there is any error?",
+      "range": {
+        "startLine": 1220,
+        "startChar": 8,
+        "endLine": 1220,
+        "endChar": 27
+      },
+      "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c93fba_9be37f9e",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-25T07:34:00Z",
+      "side": 1,
+      "message": "I have checked it, there is no error as cloud back up is not possible if Drive is not mounted - when checking back in the code, I found this line\n\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/import_controller.js?l\u003d347\u0026rcl\u003d549c712977c9bd8c81ac978548be8fa0f84fa7e9\n\nin the method that ultimately calls fitsInAvailableSpace_, which calls getFreeStorageSpace.\n\nThe check does, however, run forever if there Drive is available via the settings but if there is no internet connection - should I hide the back up option in this case (like in the above case), or show an error message saying that it can\u0027t connect to drive (see the screenshots in the bug for reference - I have also included my question there to get input from Weifang and Maria)?",
+      "parentUuid": "104ba9a6_1cb82228",
       "range": {
         "startLine": 1220,
         "startChar": 8,
