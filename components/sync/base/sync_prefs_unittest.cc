@@ -250,6 +250,23 @@ TEST_F(SyncPrefsTest, InvalidationVersions) {
   }
 }
 
+TEST_F(SyncPrefsTest, WalletDisabled) {
+  SyncPrefs sync_prefs(&pref_service_);
+  ModelTypeSet preferred_types = sync_prefs.GetPreferredDataTypes(UserTypes());
+
+  preferred_types = sync_prefs.GetPreferredDataTypes(UserTypes());
+  EXPECT_TRUE(preferred_types.Has(AUTOFILL_WALLET_DATA));
+  EXPECT_TRUE(preferred_types.Has(AUTOFILL_WALLET_METADATA));
+
+  sync_prefs.SetKeepEverythingSynced(false);  // TODO(caitkp): Should policy to
+  // disable sync specifically disable this pref too?
+  pref_service_.SetBoolean(prefs::kSyncAutofillWalletMetadata, false);
+  pref_service_.SetBoolean(prefs::kSyncAutofillWallet, false);
+  preferred_types = sync_prefs.GetPreferredDataTypes(UserTypes());
+  EXPECT_FALSE(preferred_types.Has(AUTOFILL_WALLET_DATA));
+  EXPECT_FALSE(preferred_types.Has(AUTOFILL_WALLET_METADATA));
+}
+
 }  // namespace
 
 }  // namespace syncer

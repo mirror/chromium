@@ -39,6 +39,10 @@ AutofillWalletDataTypeController::AutofillWalletDataTypeController(
       autofill::prefs::kAutofillWalletImportEnabled,
       base::Bind(&AutofillWalletDataTypeController::OnUserPrefChanged,
                  base::AsWeakPtr(this)));
+  pref_registrar_.Add(
+      autofill::prefs::kAutofillCreditCardEnabled,
+      base::Bind(&AutofillWalletDataTypeController::OnUserPrefChanged,
+                 base::AsWeakPtr(this)));
 }
 
 AutofillWalletDataTypeController::~AutofillWalletDataTypeController() {}
@@ -46,6 +50,9 @@ AutofillWalletDataTypeController::~AutofillWalletDataTypeController() {}
 bool AutofillWalletDataTypeController::StartModels() {
   DCHECK(CalledOnValidThread());
   DCHECK_EQ(state(), MODEL_STARTING);
+
+  if (!IsEnabled())
+    return false;
 
   if (!web_data_service_)
     return false;
@@ -105,6 +112,7 @@ void AutofillWalletDataTypeController::OnUserPrefChanged() {
     syncer::SyncService* sync_service = sync_client_->GetSyncService();
     sync_service->ReenableDatatype(type());
   } else {
+    Stop();
     // Report the error (which will stop the datatype asynchronously).
     if (state() != NOT_RUNNING && state() != STOPPING) {
       CreateErrorHandler()->OnUnrecoverableError(
@@ -119,7 +127,8 @@ bool AutofillWalletDataTypeController::IsEnabled() {
 
   // Require the user-visible pref to be enabled to sync Wallet data/metadata.
   PrefService* ps = sync_client_->GetPrefService();
-  return ps->GetBoolean(autofill::prefs::kAutofillWalletImportEnabled);
+  return ps->GetBoolean(autofill::prefs::kAutofillWalletImportEnabled) &&
+         ps->GetBoolean(autofill::prefs::kAutofillCreditCardEnabled);
 }
 
 }  // namespace browser_sync
