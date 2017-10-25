@@ -102,6 +102,44 @@ const MediaRoute* OffscreenPresentationManager::GetRoute(
              : nullptr;
 }
 
+bool OffscreenPresentationManager::HasPendingController(
+    int64_t display_id) const {
+  return displays_to_pending_controllers_.find(display_id) !=
+         displays_to_pending_controllers_.end();
+}
+
+void OffscreenPresentationManager::AddPendingController(int64_t display_id) {
+  auto it = displays_to_pending_controllers_.find(display_id);
+  if (it == displays_to_pending_controllers_.end()) {
+    displays_to_pending_controllers_[display_id] = 1;
+  } else {
+    it->second++;
+  }
+  for (auto& observer : observers_)
+    observer.OnPendingControllersUpdated();
+}
+
+void OffscreenPresentationManager::RemovePendingController(int64_t display_id) {
+  auto it = displays_to_pending_controllers_.find(display_id);
+  DCHECK(it != displays_to_pending_controllers_.end());
+  DCHECK(it->second > 0);
+  if (it->second == 1) {
+    displays_to_pending_controllers_.erase(it);
+  } else {
+    it->second--;
+  }
+  for (auto& observer : observers_)
+    observer.OnPendingControllersUpdated();
+}
+
+void OffscreenPresentationManager::AddObserver(Observer* observer) {
+  observers_.AddObserver(observer);
+}
+
+void OffscreenPresentationManager::RemoveObserver(Observer* observer) {
+  observers_.RemoveObserver(observer);
+}
+
 // OffscreenPresentation implementation.
 OffscreenPresentationManager::OffscreenPresentation::OffscreenPresentation(
     const content::PresentationInfo& presentation_info)
