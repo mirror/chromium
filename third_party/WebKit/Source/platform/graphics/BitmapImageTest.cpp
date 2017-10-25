@@ -493,7 +493,7 @@ TEST_F(BitmapImageTestWithMockDecoder, DontAdvanceToIncompleteFrame) {
 }
 
 TEST_F(BitmapImageTestWithMockDecoder, FrameSkipTracking) {
-  RuntimeEnabledFeatures::SetCompositorImageAnimationsEnabled(false);
+  ScopedCompositorImageAnimationsForTest compositor_image_animations(false);
 
   repetition_count_ = kAnimationLoopOnce;
   frame_count_ = 7u;
