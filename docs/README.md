@@ -16,6 +16,9 @@ below.
 Markdown documents must follow the
 [style guide](https://github.com/google/styleguide/tree/gh-pages/docguide).
 
+You can also edit the change in the markdown online editor, at
+https://paintbrush.googleplex.com
+
 ### Preview local changes using [md_browser](../tools/md_browser/):
 
 ```bash
