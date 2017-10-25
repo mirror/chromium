@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "d6c07539_21051320",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T16:14:45Z",
+      "side": 1,
+      "message": "target_origin_in_screen",
+      "revId": "69bdbf6dac6a24a68e9e1317df24c101147ae84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ff6947_fd883f2b",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T16:14:45Z",
+      "side": 1,
+      "message": "will \"target_origin - original_bounds.origin()\" work?",
+      "range": {
+        "startLine": 176,
+        "startChar": 39,
+        "endLine": 176,
+        "endChar": 52
+      },
+      "revId": "69bdbf6dac6a24a68e9e1317df24c101147ae84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c397d6f_1ec78c62",
         "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
         "patchSetId": 5
@@ -19,6 +59,40 @@
         "endLine": 419,
         "endChar": 24
       },
+      "revId": "69bdbf6dac6a24a68e9e1317df24c101147ae84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9148586_5a75b13c",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T16:14:45Z",
+      "side": 1,
+      "message": "why this change? (I\u0027m fine as reveman@ ok\u0027ed this, but just curious)",
+      "revId": "69bdbf6dac6a24a68e9e1317df24c101147ae84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b677f4d_8360662b",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T16:14:45Z",
+      "side": 1,
+      "message": "update the comment",
       "revId": "69bdbf6dac6a24a68e9e1317df24c101147ae84b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
