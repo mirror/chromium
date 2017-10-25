@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb8b7cdc_fdd2deff",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-10-25T03:20:55Z",
+      "side": 1,
+      "message": "We need to align marker\u0027s baseline to line_box_root\u0027s here. \nSo:\nmarker_-\u003eInlineBoxWrapper()-\u003eLogicalHeight \u003d line_box_root-\u003emax_ascent - marker_font_metrics.Ascent.\n\nBecause:\nline_box_root-\u003eLogicalTop \u003d line_box_root-\u003emax_ascent - line_box_font_metrics.Ascent.\n\nso:\nmarker_-\u003eInlineBoxWrapper()-\u003eLogicalHeight \u003d line_box_root-\u003eLogicalTop + line_box_font_metrics.Ascent - marker_font_metrics.Ascent.",
+      "revId": "7177b9dd2bd64d1cdbd4f6a80289e91f77fb6850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
