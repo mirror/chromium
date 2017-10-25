@@ -22,6 +22,7 @@ namespace {
 
 class FakeDiscardableManager {
  public:
+  void SetGLES2Interface(TestGLES2Interface* gl) { gl_ = gl; }
   void Initialize(GLuint texture_id) {
     EXPECT_EQ(textures_.end(), textures_.find(texture_id));
     textures_[texture_id] = kHandleLockedStart;
@@ -43,9 +44,11 @@ class FakeDiscardableManager {
     return false;
   }
 
-  void DeleteImage(GLuint texture_id) {
-    EXPECT_NE(textures_.end(), textures_.find(texture_id));
-    EXPECT_EQ(textures_[texture_id], kHandleUnlocked);
+  void DeleteTexture(GLuint texture_id) {
+    if (textures_.end() == textures_.find(texture_id))
+      return;
+
+    EXPECT_GE(textures_[texture_id], kHandleLockedStart);
     textures_[texture_id] = kHandleDeleted;
     live_textures_count_--;
   }
@@ -63,6 +66,7 @@ class FakeDiscardableManager {
         continue;
 
       it->second = kHandleDeleted;
+      gl_->TestGLES2Interface::DeleteTextures(1, &it->first);
       live_textures_count_--;
     }
   }
@@ -74,6 +78,7 @@ class FakeDiscardableManager {
   std::map<GLuint, int32_t> textures_;
   size_t live_textures_count_ = 0;
   size_t cached_textures_limit_ = std::numeric_limits<size_t>::max();
+  TestGLES2Interface* gl_ = nullptr;
 };
 
 class FakeDiscardableGLES2Interface : public TestGLES2Interface,
@@ -84,6 +89,15 @@ class FakeDiscardableGLES2Interface : public TestGLES2Interface,
       : extension_string_("GL_EXT_texture_format_BGRA8888 GL_OES_rgb8_rgba8"),
         discardable_manager_(discardable_manager) {}
 
+  ~FakeDiscardableGLES2Interface() override {
+    // All textures / framebuffers / renderbuffers should be cleaned up.
+    if (test_context_) {
+      EXPECT_EQ(0u, test_context_->NumTextures());
+      EXPECT_EQ(0u, test_context_->NumFramebuffers());
+      EXPECT_EQ(0u, test_context_->NumRenderbuffers());
+    }
+  }
+
   void InitializeDiscardableTextureCHROMIUM(GLuint texture_id) override {
     discardable_manager_->Initialize(texture_id);
   }
@@ -93,8 +107,6 @@ class FakeDiscardableGLES2Interface : public TestGLES2Interface,
   bool LockDiscardableTextureCHROMIUM(GLuint texture_id) override {
     return discardable_manager_->Lock(texture_id);
   }
-
-  void DeleteTextures(GLsizei n, const GLuint* textures) override {}
 
   bool ThreadSafeShallowLockDiscardableTexture(uint32_t texture_id) override {
     return discardable_manager_->Lock(texture_id);
@@ -130,6 +142,12 @@ class FakeDiscardableGLES2Interface : public TestGLES2Interface,
         break;
     }
     TestGLES2Interface::GetIntegerv(name, params);
+  }
+  void DeleteTextures(GLsizei n, const GLuint* textures) override {
+    for (GLsizei i = 0; i < n; i++) {
+      discardable_manager_->DeleteTexture(textures[i]);
+    }
+    TestGLES2Interface::DeleteTextures(n, textures);
   }
 
  private:
@@ -169,6 +187,7 @@ class GpuImageDecodeCacheTest : public ::testing::TestWithParam<SkColorType> {
   void SetUp() override {
     context_provider_ =
         DiscardableTextureMockContextProvider::Create(&discardable_manager_);
+    discardable_manager_->SetGLES2Interface(context_provider_->TestContextGL());
     context_provider_->BindToCurrentThread();
   }
   std::unique_ptr<GpuImageDecodeCache> CreateCache() {
