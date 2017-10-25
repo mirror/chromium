@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4aa284f_b092896d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T23:18:51Z",
+      "side": 1,
+      "message": "createSelectionStartedEvent\n\nsimilar below",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0392c235_c1627113",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T23:18:51Z",
+      "side": 1,
+      "message": "this looks unnecessary, it\u0027s only used to control the force parameter to updateSelectionState, which can just be computed in updateSelectionState instead.",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddbe2f1c_004d11d3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T23:18:51Z",
+      "side": 1,
+      "message": "visiblefortesting?\n\nactually, won\u0027t it be easier for test to override getTrackerClass and getSelectionEventClass instead?",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb76f4e_1f20b5fa",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T23:18:51Z",
+      "side": 1,
+      "message": "\u003c\u003d ? you said this is only available in omr1",
+      "range": {
+        "startLine": 106,
+        "startChar": 34,
+        "endLine": 106,
+        "endChar": 35
+      },
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02128b69_8ad2f472",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T23:18:51Z",
+      "side": 1,
+      "message": "there\u0027s already a constructor for testing, just pass this in that constructor, rather than making this public",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4eab27_93ce961a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T23:18:51Z",
+      "side": 1,
+      "message": "I\u0027m guessing the needsUpdate check isn\u0027t necessary for this if you reset mTracker to null if isTerminal?",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05118eb9_64d7c102",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T23:18:51Z",
+      "side": 1,
+      "message": "how can this happen in production (other than reflection look up failed)?\n\nsame this call below",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcba3718_3c1bf38a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T23:18:51Z",
+      "side": 1,
+      "message": "why do you need to case here and below? add it to the interface",
+      "range": {
+        "startLine": 162,
+        "startChar": 23,
+        "endLine": 162,
+        "endChar": 46
+      },
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca6a4b6_b8569624",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T23:18:51Z",
+      "side": 1,
+      "message": "general rule for reflection. look up classes/constructors/methods only once, and just save them in static variables. Then have the chance to bail out early if any of those fail, and can reuse them for each call\n\nwe probably should bail if any of these reflections raise any exceptions\n\nbail meaning disable logging together and never enabled it again for the duration of this process\n\nalso, comment where reflection happens that this code will be public in P",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e77b2ff_10c1994a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T23:18:51Z",
+      "side": 1,
+      "message": "how do you know it\u0027s the first one? seems better to just look this up with a hard coded name as well?",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
