@@ -16,6 +16,24 @@
       "revId": "8baa54751dc8f6f380ac60e7f395ef0106aec030",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bf0c9b_78e1992c",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 2328,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-25T21:04:36Z",
+      "side": 1,
+      "message": "Thanks, addressed in https://chromium-review.googlesource.com/c/chromium/src/+/738281",
+      "parentUuid": "19ca9ddf_ad62e7ae",
+      "revId": "8baa54751dc8f6f380ac60e7f395ef0106aec030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
