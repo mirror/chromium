@@ -5,14 +5,20 @@
 package org.chromium.chrome.browser.webapps;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.support.customtabs.CustomTabsSessionToken;
 import android.text.TextUtils;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.blink_public.platform.WebDisplayMode;
 import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.ShortcutSource;
+import org.chromium.chrome.browser.customtabs.CustomTabsConnection;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.content_public.common.ScreenOrientationValues;
 
@@ -101,6 +107,28 @@ public class WebappInfo {
     private static String shortNameFromIntent(Intent intent) {
         String shortName = IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_SHORT_NAME);
         return shortName == null ? titleFromIntent(intent) : shortName;
+    }
+
+    public static WebappInfo create(Intent intent, CustomTabsSessionToken session) {
+        CustomTabsConnection connection = CustomTabsConnection.getInstance();
+        String url = intent.getDataString();
+
+        PackageManager pm = ContextUtils.getApplicationContext().getPackageManager();
+        String packageName = connection.getClientPackageNameForSession(session);
+        intent.putExtra(ShortcutHelper.EXTRA_ID, packageName);
+        intent.putExtra(ShortcutHelper.EXTRA_URL, url);
+        intent.setClassName(ContextUtils.getApplicationContext(), WebappActivity.class.getName());
+        ApplicationInfo info = null;
+        try {
+            info = pm.getApplicationInfo(packageName, 0);
+            if (info != null) {
+                intent.putExtra(ShortcutHelper.EXTRA_NAME, pm.getApplicationLabel(info));
+            }
+        } catch (NameNotFoundException e) {
+            // Failing gracefully below. This is a best effort.
+        }
+
+        return create(intent);
     }
 
     /**
@@ -232,7 +260,7 @@ public class WebappInfo {
         return mDisplayMode;
     }
 
-    public String webApkPackageName() {
+    public String apkPackageName() {
         return null;
     }
 
