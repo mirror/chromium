@@ -86,6 +86,24 @@
       "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552fd26b_e4e9e0e9",
+        "filename": "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-25T20:48:50Z",
+      "side": 1,
+      "message": "When the pipe closes the binding gets removed from the BindingSet\u003c\u003e automagically.",
+      "parentUuid": "f65a3765_6d91bdb3",
+      "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
