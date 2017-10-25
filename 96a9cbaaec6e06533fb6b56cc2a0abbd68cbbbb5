@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae262fe_fe186dff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-25T15:33:21Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "96a9cbaaec6e06533fb6b56cc2a0abbd68cbbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60983204_a885b351",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-25T15:33:21Z",
+      "side": 1,
+      "message": "Please add a description like:\n\nGroup device policies in the same way as Help Center:\nhttps://support.google.com/chrome/a/answer/1375678?hl\u003den\n\nThis grouping is used in user-facing policy docs and ADMX templates. Having the groups match the Help Center structure lets administrators find what they are looking for more easily. In particular, this is true for administrator of Active Directory managed devices, who use ADMX templates to edit GPO.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "96a9cbaaec6e06533fb6b56cc2a0abbd68cbbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94461de_718ba822",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-25T15:33:21Z",
+      "side": 1,
+      "message": "Controls the behavior of the sign-in screen, where users log into their accounts. Settings include who can log in, what type of accounts are allowed, what authentication methods should be used, as well as general accessibility, input method and locale settings.",
+      "range": {
+        "startLine": 593,
+        "startChar": 17,
+        "endLine": 593,
+        "endChar": 21
+      },
+      "revId": "96a9cbaaec6e06533fb6b56cc2a0abbd68cbbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3baa0d_cf02e002",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-25T15:33:21Z",
+      "side": 1,
+      "message": "User and Device Reporting",
+      "range": {
+        "startLine": 615,
+        "startChar": 20,
+        "endLine": 615,
+        "endChar": 45
+      },
+      "revId": "96a9cbaaec6e06533fb6b56cc2a0abbd68cbbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd35ce6a_0a167f69",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-25T15:33:21Z",
+      "side": 1,
+      "message": "Controls what kind of device information is reported.",
+      "range": {
+        "startLine": 616,
+        "startChar": 17,
+        "endLine": 616,
+        "endChar": 21
+      },
+      "revId": "96a9cbaaec6e06533fb6b56cc2a0abbd68cbbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe81a91_b3863127",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-25T15:33:21Z",
+      "side": 1,
+      "message": "Controls device-wide network configuration.",
+      "range": {
+        "startLine": 637,
+        "startChar": 17,
+        "endLine": 637,
+        "endChar": 21
+      },
+      "revId": "96a9cbaaec6e06533fb6b56cc2a0abbd68cbbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036c185a_a55948ab",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-25T15:33:21Z",
+      "side": 1,
+      "message": "Controls how and when Chrome OS updates are applied.",
+      "range": {
+        "startLine": 648,
+        "startChar": 17,
+        "endLine": 648,
+        "endChar": 21
+      },
+      "revId": "96a9cbaaec6e06533fb6b56cc2a0abbd68cbbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8769831_45b08fb8",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-25T15:33:21Z",
+      "side": 1,
+      "message": "Controls settings related to power management and rebooting.",
+      "range": {
+        "startLine": 665,
+        "startChar": 17,
+        "endLine": 665,
+        "endChar": 21
+      },
+      "revId": "96a9cbaaec6e06533fb6b56cc2a0abbd68cbbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d7d35e_c51e4b4b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-25T15:33:21Z",
+      "side": 1,
+      "message": "Controls public session and kiosk account types.",
+      "range": {
+        "startLine": 674,
+        "startChar": 15,
+        "endLine": 674,
+        "endChar": 20
+      },
+      "revId": "96a9cbaaec6e06533fb6b56cc2a0abbd68cbbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8473da8b_f9bf1d28",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-25T15:33:21Z",
+      "side": 1,
+      "message": "Controls miscellaneous settings including clock and time zone, USB, bluetooth, policy refresh, developer mode as well as migration and update settings.",
+      "range": {
+        "startLine": 688,
+        "startChar": 15,
+        "endLine": 688,
+        "endChar": 20
+      },
+      "revId": "96a9cbaaec6e06533fb6b56cc2a0abbd68cbbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
