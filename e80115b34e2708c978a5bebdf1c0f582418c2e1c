@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "dfb14698_a5c907ea",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-25T16:38:21Z",
+      "side": 1,
+      "message": "\u003e The assumption we want to strive for is that notifications will be able to outlive their creator *unless* it\u0027s the new type, so we\u0027re adding the exception here.\n\u003e \n\u003e What about \"Transient\"?\n\nThat is more or less a synonym of ephemeral. I don\u0027t dislike the word ephemeral itself. I guess I actually don\u0027t care too much about this enum name, I only care about the name of the new NDS function since that is what callsites will use (and in turn be copy-pasted into new callsites). So as long as we can call that DisplayBrowserNotification or similar, I\u0027d be happy.",
+      "parentUuid": "51cbcf56_12ed50ae",
+      "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "211b149a_44b93f3a",
         "filename": "chrome/browser/notifications/notification_display_service.cc",
         "patchSetId": 4
