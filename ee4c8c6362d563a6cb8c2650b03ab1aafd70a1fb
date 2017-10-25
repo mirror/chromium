@@ -117,6 +117,30 @@
       "revId": "ee4c8c6362d563a6cb8c2650b03ab1aafd70a1fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63946f7a_21f36237",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-25T19:16:53Z",
+      "side": 1,
+      "message": "True enough.  I added this to the \"two element\" test below, so that test now covers hovering between elements, and clicking between elements.",
+      "parentUuid": "e799cf3a_0a6621fc",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 9
+      },
+      "revId": "ee4c8c6362d563a6cb8c2650b03ab1aafd70a1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
