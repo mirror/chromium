@@ -2261,8 +2261,6 @@ NON_TELEMETRY_ISOLATED_SCRIPT_TESTS = {
             'os': 'Ubuntu'
           },
           {
-            'device_type': 'bullhead',
-            'device_os': 'M',
             'os': 'Android'
           }
         ],
