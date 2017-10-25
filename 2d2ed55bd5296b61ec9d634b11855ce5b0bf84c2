@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4997e6e1_8bd85aa0",
+        "filename": "components/language/content/browser/geo_language_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-25T04:13:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "081938ee_4faa84db",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "2d2ed55bd5296b61ec9d634b11855ce5b0bf84c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bc2824b_7e383500",
         "filename": "components/language/content/browser/geo_language_provider.cc",
         "patchSetId": 12
@@ -69,6 +93,30 @@
       "revId": "2d2ed55bd5296b61ec9d634b11855ce5b0bf84c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6f291e_5f2adf17",
+        "filename": "components/language/content/browser/geo_language_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-25T04:13:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bc2824b_7e383500",
+      "range": {
+        "startLine": 85,
+        "startChar": 27,
+        "endLine": 85,
+        "endChar": 72
+      },
+      "revId": "2d2ed55bd5296b61ec9d634b11855ce5b0bf84c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +164,30 @@
       "revId": "2d2ed55bd5296b61ec9d634b11855ce5b0bf84c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b7342b_fc5f23d0",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-25T04:13:52Z",
+      "side": 1,
+      "message": "Done (removed)\n\nWhen a translate experiment is built using this in a later CL, the\n\n  using GeoLanguageProducer \u003d RepeatingCallback\u003cvector\u003cstring\u003e()\u003e\n\nwill have to be injected as described here.",
+      "parentUuid": "41235d31_ed97a6c5",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 9
+      },
+      "revId": "2d2ed55bd5296b61ec9d634b11855ce5b0bf84c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
