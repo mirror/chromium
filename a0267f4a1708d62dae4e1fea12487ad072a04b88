@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c55d3e2e_b5c9a437",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/ObjectPropertiesSection.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-25T16:36:31Z",
+      "side": 1,
+      "message": "I think we need to call onChange from onexpand/oncollapse as well.",
+      "revId": "a0267f4a1708d62dae4e1fea12487ad072a04b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cb34b8_d946bc29",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/ObjectPropertiesSection.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-25T16:36:31Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "a0267f4a1708d62dae4e1fea12487ad072a04b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b013ffa5_4278d366",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/ObjectPropertiesSection.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-25T16:36:31Z",
+      "side": 1,
+      "message": "Should we also call onChange from here?",
+      "revId": "a0267f4a1708d62dae4e1fea12487ad072a04b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba957c1_cb4a75e2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/ObjectPropertiesSection.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-25T16:36:31Z",
+      "side": 1,
+      "message": "And from here?",
+      "revId": "a0267f4a1708d62dae4e1fea12487ad072a04b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
