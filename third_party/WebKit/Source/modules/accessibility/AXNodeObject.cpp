@@ -1216,7 +1216,6 @@ AccessibilityOrientation AXNodeObject::Orientation() const {
     orientation = kAccessibilityOrientationVertical;
 
   switch (RoleValue()) {
-    case kComboBoxRole:
     case kListBoxRole:
     case kMenuRole:
     case kScrollBarRole:
@@ -1234,6 +1233,7 @@ AccessibilityOrientation AXNodeObject::Orientation() const {
         orientation = kAccessibilityOrientationHorizontal;
 
       return orientation;
+    case kComboBoxRole:
     case kRadioGroupRole:
     case kTreeGridRole:
       return orientation;
