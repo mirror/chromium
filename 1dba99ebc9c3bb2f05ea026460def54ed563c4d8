@@ -16,6 +16,24 @@
       "revId": "1dba99ebc9c3bb2f05ea026460def54ed563c4d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21dff0b_5cd9d45e",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-25T23:28:53Z",
+      "side": 1,
+      "message": "Done. Also did the same thing for CopyTex(Sub)Image, ScheduleOverlayPlane and Flush.",
+      "parentUuid": "376cb43a_94ea40d5",
+      "revId": "1dba99ebc9c3bb2f05ea026460def54ed563c4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
