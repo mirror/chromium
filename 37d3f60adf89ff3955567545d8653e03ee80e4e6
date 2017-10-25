@@ -104,6 +104,24 @@
       "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6b555f_6375d54b",
+        "filename": "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-25T23:33:54Z",
+      "side": 1,
+      "message": "\u003e When the pipe closes the binding gets removed from the BindingSet\u003c\u003e automagically.\n\nwatchers_ is a std::vector though. no magic there?\n\nBut Remove is probably not correct either given processes can crash. So I don\u0027t actually know the right mojo incantation to fix this",
+      "parentUuid": "552fd26b_e4e9e0e9",
+      "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
