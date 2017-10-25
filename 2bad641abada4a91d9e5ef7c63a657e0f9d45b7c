@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6b56108_466acd7d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-25T04:07:57Z",
+      "side": 1,
+      "message": "This list comes from |NGInlineNode::CollectInlines()|.\n\nFor float, text content of \"foo\u003cspan style\u003d\"float:right\u003ebar\u003c/span\u003ebaz\" is\n\"foo\\u{FFFC}baz\". Note: U+FFFC, object replacement character, can split\nword.\n\nAfter discussing kojii@ in offline, we agree to have some code point,\nother than ORC, for out-of-flow-position layout object, e.g.\nposition:absolute, fixed, etc.\n\nBecause of ORC causes line break, we can\u0027t use ORC for them.",
+      "parentUuid": "5b22e63e_fbd0bb84",
+      "range": {
+        "startLine": 569,
+        "startChar": 0,
+        "endLine": 576,
+        "endChar": 0
+      },
+      "revId": "2bad641abada4a91d9e5ef7c63a657e0f9d45b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f563429c_b3116cdf",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "2bad641abada4a91d9e5ef7c63a657e0f9d45b7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2629db0_76866c7e",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-25T04:07:57Z",
+      "side": 1,
+      "message": "TL;DR: Once |NGOffsetMapping| API supports |Position|, we don\u0027t need to have\n|AdjustPositionForMapping()|.\n\n\nCurrent Canon* is ad-hoc and does much more than locating selection\nboundary computed in LayoutSelection.\n\n|AdjustPositionForMapping()| doesn\u0027t do canonicalization, it attempts to\nmake offset-in-text or before/after-node. Note: |block| parameter should\nbe redundant.\n\nAs discussed offline, once |NGOffsetMapping| provide |Position| base API,\nwe don\u0027t need to have |AdjustPositionForMapping()|.",
+      "parentUuid": "f563429c_b3116cdf",
+      "revId": "2bad641abada4a91d9e5ef7c63a657e0f9d45b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +127,54 @@
       "revId": "2bad641abada4a91d9e5ef7c63a657e0f9d45b7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f0fdd3_9dfe4e07",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-25T04:07:57Z",
+      "side": 1,
+      "message": "Because of we don\u0027t expose layout order text content, |units_| is always\nin ascending order of text content. We should have a comment in\n\"ng_offset_mapping.h\" about this invariant.",
+      "parentUuid": "b8b799dc_d010f1e4",
+      "range": {
+        "startLine": 190,
+        "startChar": 23,
+        "endLine": 192,
+        "endChar": 51
+      },
+      "revId": "2bad641abada4a91d9e5ef7c63a657e0f9d45b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cb7499c_239d8d2a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-25T04:07:57Z",
+      "side": 1,
+      "message": "Because of we don\u0027t expose layout order text content, |units_| is always\nin ascending order of text content start offset. We should have a comment\nin \"ng_offset_mapping.h\" to describe this invariant.",
+      "parentUuid": "b8b799dc_d010f1e4",
+      "range": {
+        "startLine": 190,
+        "startChar": 23,
+        "endLine": 192,
+        "endChar": 51
+      },
+      "revId": "2bad641abada4a91d9e5ef7c63a657e0f9d45b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
