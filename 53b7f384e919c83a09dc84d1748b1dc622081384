@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d20c96e_a7a06043",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:20:09Z",
+      "side": 1,
+      "message": "Nit: s/goal/goals/",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f59480_edebe057",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:20:09Z",
+      "side": 1,
+      "message": "Are they 1:1?",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d51a40e_e0eae227",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:20:09Z",
+      "side": 1,
+      "message": "\"LayoutNG will be launched in phases. In the current phase\u0027s implementation, ...\"\nAlso, is there a name for this phase? If not, I recommend naming it. People sometimes\n make fun of SP\u0027s v1, v2, v1.75 naming, but it helps the paint team establish a\nvocabulary and classify things in steps.",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16611c17_672090c3",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:20:09Z",
+      "side": 1,
+      "message": "Does the box itself paint with the legacy paint system or the NG paint system?\nOr is it just the inlines that paint with the NG one?",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8955a1e8_8e5e6b96",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:20:09Z",
+      "side": 1,
+      "message": "Nit: s/an/a/",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6158f078_d9b0fbd0",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:20:09Z",
+      "side": 1,
+      "message": "\"contains only inline children\" ? Is \"only\" correct?",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0714313_c90f8781",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:20:09Z",
+      "side": 1,
+      "message": "What does it mean to \"split\" this tree?",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a88a17_a6a1a221",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:20:09Z",
+      "side": 1,
+      "message": "nit: \"another\"",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd8a2a4_5ac8d8ed",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:20:09Z",
+      "side": 1,
+      "message": "I think a simple example would help here.",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06251be_dabf2f76",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:20:09Z",
+      "side": 1,
+      "message": "Not sure what this paragraph is saying. If it\u0027s documenting just the current state\nof implementation details, maybe remove it?",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17285923_a23fd3e1",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:20:09Z",
+      "side": 1,
+      "message": "I\u0027m also not sure what this sentence means, could you explain?",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
