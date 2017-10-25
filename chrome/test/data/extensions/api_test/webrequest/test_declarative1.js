@@ -183,7 +183,8 @@ runTests([
 
   // Postpone cancelling of the request until onHeadersReceived by using
   // 'stages'. If not for the stages, the request would be already cancelled
-  // during onBeforeRequest.
+  // during onBeforeRequest. The initiator will only be present for browser-
+  // initiated navigations in PlzNavigate.
   function testPostponeCancelRequest() {
     ignoreUnexpected = false;
     expect(
@@ -193,21 +194,30 @@ runTests([
           details: {
             url: getURLHttpWithHeaders(),
             frameUrl: getURLHttpWithHeaders(),
-            initiator: getServerDomain(initiators.BROWSER_INITIATED)
+            initiator:
+                  (usingBrowserSideNavigation ?
+                       getServerDomain(initiators.BROWSER_INITIATED) :
+                       undefined)
           }
         },
         { label: "onBeforeSendHeaders",
           event: "onBeforeSendHeaders",
           details: {
             url: getURLHttpWithHeaders(),
-            initiator: getServerDomain(initiators.BROWSER_INITIATED)
+            initiator:
+                  (usingBrowserSideNavigation ?
+                       getServerDomain(initiators.BROWSER_INITIATED) :
+                       undefined)
           }
         },
         { label: "onSendHeaders",
           event: "onSendHeaders",
           details: {
             url: getURLHttpWithHeaders(),
-            initiator: getServerDomain(initiators.BROWSER_INITIATED)
+            initiator:
+                  (usingBrowserSideNavigation ?
+                       getServerDomain(initiators.BROWSER_INITIATED) :
+                       undefined)
           }
         },
         { label: "onHeadersReceived",
@@ -216,7 +226,10 @@ runTests([
             statusLine: "HTTP/1.1 200 OK",
             url: getURLHttpWithHeaders(),
             statusCode: 200,
-            initiator: getServerDomain(initiators.BROWSER_INITIATED)
+            initiator:
+                  (usingBrowserSideNavigation ?
+                       getServerDomain(initiators.BROWSER_INITIATED) :
+                       undefined)
           }
         },
         { label: "onErrorOccurred",
@@ -225,7 +238,10 @@ runTests([
             url: getURLHttpWithHeaders(),
             fromCache: false,
             error: "net::ERR_BLOCKED_BY_CLIENT",
-            initiator: getServerDomain(initiators.BROWSER_INITIATED)
+            initiator:
+                  (usingBrowserSideNavigation ?
+                       getServerDomain(initiators.BROWSER_INITIATED) :
+                       undefined)
           }
         },
       ],

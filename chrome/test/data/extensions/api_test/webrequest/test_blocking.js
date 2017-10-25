@@ -133,7 +133,8 @@ runTests([
   },
 
   // Navigates to a page and provides invalid header information. The request
-  // should continue as if the headers were not changed.
+  // should continue as if the headers were not changed. The initiator will only
+  // be present for browser-initiated navigations in PlzNavigate.
   function simpleLoadIgnoreOnBeforeSendHeadersInvalidHeaders() {
     expect(
       [  // events
@@ -144,7 +145,10 @@ runTests([
             type: "main_frame",
             url: getURLHttpSimpleLoad(),
             frameUrl: getURLHttpSimpleLoad(),
-            initiator: getServerDomain(initiators.BROWSER_INITIATED)
+            initiator:
+                  (usingBrowserSideNavigation ?
+                       getServerDomain(initiators.BROWSER_INITIATED) :
+                       undefined)
           },
         },
         { label: "onBeforeSendHeaders",
@@ -152,7 +156,10 @@ runTests([
           details: {
             url: getURLHttpSimpleLoad(),
             requestHeadersValid: true,
-            initiator: getServerDomain(initiators.BROWSER_INITIATED)
+            initiator:
+                  (usingBrowserSideNavigation ?
+                       getServerDomain(initiators.BROWSER_INITIATED) :
+                       undefined)
           },
           retval: {requestHeaders: [{name: "User-Agent"}]}
         },
@@ -163,7 +170,10 @@ runTests([
           details: {
             url: getURLHttpSimpleLoad(),
             requestHeadersValid: true,
-            initiator: getServerDomain(initiators.BROWSER_INITIATED)
+            initiator:
+                  (usingBrowserSideNavigation ?
+                       getServerDomain(initiators.BROWSER_INITIATED) :
+                       undefined)
           }
         },
         { label: "onHeadersReceived",
@@ -172,7 +182,10 @@ runTests([
             url: getURLHttpSimpleLoad(),
             statusLine: "HTTP/1.1 200 OK",
             statusCode: 200,
-            initiator: getServerDomain(initiators.BROWSER_INITIATED)
+            initiator:
+                  (usingBrowserSideNavigation ?
+                       getServerDomain(initiators.BROWSER_INITIATED) :
+                       undefined)
           }
         },
         { label: "onResponseStarted",
@@ -183,7 +196,10 @@ runTests([
             statusCode: 200,
             ip: "127.0.0.1",
             statusLine: "HTTP/1.1 200 OK",
-            initiator: getServerDomain(initiators.BROWSER_INITIATED)
+            initiator:
+                  (usingBrowserSideNavigation ?
+                       getServerDomain(initiators.BROWSER_INITIATED) :
+                       undefined)
           }
         },
         { label: "onCompleted",
@@ -194,7 +210,10 @@ runTests([
             statusCode: 200,
             ip: "127.0.0.1",
             statusLine: "HTTP/1.1 200 OK",
-            initiator: getServerDomain(initiators.BROWSER_INITIATED)
+            initiator:
+                  (usingBrowserSideNavigation ?
+                       getServerDomain(initiators.BROWSER_INITIATED) :
+                       undefined)
           }
         },
       ],
