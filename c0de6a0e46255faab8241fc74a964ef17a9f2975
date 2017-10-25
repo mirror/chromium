@@ -16,6 +16,24 @@
       "revId": "c0de6a0e46255faab8241fc74a964ef17a9f2975",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a402a75c_3e26c5ad",
+        "filename": "third_party/libdrm/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-10-25T23:09:02Z",
+      "side": 0,
+      "message": "It should and I have the rebase locally (it\u0027s actually just a hard reset to 2.4.85), but I\u0027m not sure how to land that. I think I have to update the gclient manifest file, but I\u0027m not sure about the process there.",
+      "parentUuid": "a837b862_b6adbf89",
+      "revId": "c0de6a0e46255faab8241fc74a964ef17a9f2975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
