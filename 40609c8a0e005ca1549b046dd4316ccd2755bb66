@@ -22,6 +22,30 @@
       "revId": "40609c8a0e005ca1549b046dd4316ccd2755bb66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeac0f6e_2ee46f4d",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-25T16:39:11Z",
+      "side": 1,
+      "message": "This may be a naive question --\n\nThe style is defined like this:\n\n\u003cstyle name\u003d\"TextAppearance.StatusBar.EventContent.Line2\"\u003e\n    \u003citem name\u003d\"textSize\"\u003e@dimen/notification_subtext_size\u003c/item\u003e\n\u003c/style\u003e\n\nCan we refer to the notification_subtext_size dimension as \"@android:dimen/notification_subtext_size\"? Just copying that \u003citem\u003e may be sufficient, as we primarily (solely?) care about that value here.",
+      "parentUuid": "bd56fb72_400023a4",
+      "range": {
+        "startLine": 409,
+        "startChar": 16,
+        "endLine": 409,
+        "endChar": 74
+      },
+      "revId": "40609c8a0e005ca1549b046dd4316ccd2755bb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
