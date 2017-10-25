@@ -22,7 +22,7 @@ namespace {
 
 class ResourceSchedulerBrowserTest : public ContentBrowserTest {
  protected:
-  ResourceSchedulerBrowserTest() : field_trial_list_(nullptr) {}
+  ResourceSchedulerBrowserTest() {}
 
   void SetUpInProcessBrowserTestFixture() override {
     ASSERT_TRUE(embedded_test_server()->Start());
@@ -56,7 +56,6 @@ class ResourceSchedulerBrowserTest : public ContentBrowserTest {
   }
 
  private:
-  base::FieldTrialList field_trial_list_;
   base::test::ScopedFeatureList feature_list_;
 };
 
