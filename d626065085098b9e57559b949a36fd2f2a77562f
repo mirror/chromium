@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c0d00ee_e10003e4",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-25T00:27:22Z",
+      "side": 1,
+      "message": "StringToBluetoothAddress needs to convert it to a c_str, so a copy would have to get made anyway.",
+      "parentUuid": "a53d1dc8_6f87b22e",
+      "revId": "d626065085098b9e57559b949a36fd2f2a77562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57722598_abf2e80d",
         "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "d626065085098b9e57559b949a36fd2f2a77562f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca4d18c_73108a4c",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-25T00:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57722598_abf2e80d",
+      "range": {
+        "startLine": 336,
+        "startChar": 5,
+        "endLine": 336,
+        "endChar": 118
+      },
+      "revId": "d626065085098b9e57559b949a36fd2f2a77562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
