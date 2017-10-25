@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ea38a49a_71373633",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-10-25T17:41:52Z",
+      "side": 1,
+      "message": "nit: I guess, this change is to show functionality? In case it isn\u0027t, I\u0027ll nit: why is this required? Could these log changes be reverted? (Similarly in other files).",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "385ebc57_0eefa62f",
         "filename": "ui/gfx/native_pixmap.h",
         "patchSetId": 7
@@ -89,6 +112,29 @@
         "startChar": 4,
         "endLine": 194,
         "endChar": 13
+      },
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e6ecd2_8a9233c7",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surface_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-10-25T17:41:52Z",
+      "side": 1,
+      "message": "Why is this necessary? Given that in the absence of a callback and if the callback returns nullptr, this is exactly CreateNativePixmapFromHandle(), why can\u0027t we rely on ProtectedBufferManager to return nullptr if we called CreateNativePixmapFromHandle() rather than this?",
+      "range": {
+        "startLine": 211,
+        "startChar": 19,
+        "endLine": 211,
+        "endChar": 61
       },
       "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
