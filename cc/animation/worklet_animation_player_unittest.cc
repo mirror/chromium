@@ -1,8 +1,10 @@
 // Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+
 #include "cc/animation/worklet_animation_player.h"
 
+#include "cc/animation/scroll_timeline.h"
 #include "cc/test/animation_test_common.h"
 #include "cc/test/animation_timelines_test_common.h"
 #include "cc/test/mock_layer_tree_mutator.h"
@@ -37,7 +39,7 @@ TEST_F(WorkletAnimationPlayerTest, LocalTimeIsUsedWithAnimations) {
       start_opacity + (end_opacity - start_opacity) / 2;
 
   scoped_refptr<WorkletAnimationPlayer> worklet_player_ =
-      WorkletAnimationPlayer::Create(worklet_player_id_, "test_name");
+      WorkletAnimationPlayer::Create(worklet_player_id_, "test_name", nullptr);
 
   worklet_player_->AttachElement(element_id_);
   host_->AddAnimationTimeline(timeline_);
@@ -88,7 +90,7 @@ TEST_F(WorkletAnimationPlayerTest,
   const double duration = 1.;
 
   scoped_refptr<WorkletAnimationPlayer> worklet_player_ =
-      WorkletAnimationPlayer::Create(worklet_player_id_, "test_name");
+      WorkletAnimationPlayer::Create(worklet_player_id_, "test_name", nullptr);
 
   worklet_player_->AttachElement(element_id_);
   host_->AddAnimationTimeline(timeline_);

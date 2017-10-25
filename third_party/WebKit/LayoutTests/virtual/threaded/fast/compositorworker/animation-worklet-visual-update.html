@@ -48,7 +48,7 @@ runInAnimationWorklet(
     }
   );
 
-  const animation = new WorkletAnimation('test_animator', [effect], [ document.timeline ], {});
+  const animation = new WorkletAnimation('test_animator', [effect], document.timeline, {});
   animation.play();
 
   if (window.testRunner) {
