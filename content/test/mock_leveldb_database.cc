@@ -110,6 +110,30 @@ void MockLevelDBDatabase::GetPrefixed(const std::vector<uint8_t>& key_prefix,
   std::move(callback).Run(leveldb::mojom::DatabaseError::OK, std::move(data));
 }
 
+void MockLevelDBDatabase::CopyPrefixed(
+    const std::vector<uint8_t>& source_key_prefix,
+    const std::vector<uint8_t>& destination_key_prefix,
+    CopyPrefixedCallback callback) {
+  size_t source_key_prefix_size = source_key_prefix.size();
+  size_t destination_key_prefix_size = destination_key_prefix.size();
+  std::vector<std::pair<std::vector<uint8_t>, std::vector<uint8_t>>>
+      write_batch;
+  for (const auto& row : mock_data_) {
+    if (!StartsWith(row.first, source_key_prefix))
+      continue;
+    size_t excess_key = row.first.size() - source_key_prefix_size;
+    std::vector<uint8_t> new_key(destination_key_prefix_size + excess_key);
+    std::copy(destination_key_prefix.begin(), destination_key_prefix.end(),
+              std::back_inserter(new_key));
+    std::copy(row.first.begin() + source_key_prefix_size, row.first.end(),
+              std::back_inserter(new_key));
+    write_batch.emplace_back(std::move(new_key), row.second);
+  }
+
+  mock_data_.insert(write_batch.begin(), write_batch.end());
+  std::move(callback).Run(leveldb::mojom::DatabaseError::OK);
+}
+
 void MockLevelDBDatabase::GetSnapshot(GetSnapshotCallback callback) {
   NOTREACHED();
 }

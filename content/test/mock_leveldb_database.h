@@ -32,6 +32,9 @@ class MockLevelDBDatabase : public leveldb::mojom::LevelDBDatabase {
   void Get(const std::vector<uint8_t>& key, GetCallback callback) override;
   void GetPrefixed(const std::vector<uint8_t>& key_prefix,
                    GetPrefixedCallback callback) override;
+  void CopyPrefixed(const std::vector<uint8_t>& source_key_prefix,
+                    const std::vector<uint8_t>& destination_key_prefix,
+                    CopyPrefixedCallback callback) override;
   void GetSnapshot(GetSnapshotCallback callback) override;
   void ReleaseSnapshot(const base::UnguessableToken& snapshot) override;
   void GetFromSnapshot(const base::UnguessableToken& snapshot,

@@ -21,6 +21,11 @@ namespace content {
 namespace {
 
 const char* kTestPrefix = "abc";
+const char* kTestKey1 = "def";
+const char* kTestValue1 = "defdata";
+const char* kTestKey2 = "123";
+const char* kTestValue2 = "123data";
+const char* kTestCopyPrefix = "zzz";
 const char* kTestSource = "source";
 const size_t kTestSizeLimit = 512;
 
@@ -52,7 +57,12 @@ class GetAllCallback : public mojom::LevelDBWrapperGetAllCallback {
 class MockDelegate : public LevelDBWrapperImpl::Delegate {
  public:
   void OnNoBindings() override {}
-  std::vector<leveldb::mojom::BatchedOperationPtr> PrepareToCommit() override {
+  std::vector<leveldb::mojom::BatchedOperationPtr> PrepareToCommit(
+      LevelDBWrapperImpl::Control* control) override {
+    if (copy_prefix_) {
+      control->CopyToNewPrefix(copy_prefix_.value());
+      copy_prefix_.reset();
+    }
     return std::vector<leveldb::mojom::BatchedOperationPtr>();
   }
   void DidCommit(leveldb::mojom::DatabaseError error) override {}
@@ -69,9 +79,14 @@ class MockDelegate : public LevelDBWrapperImpl::Delegate {
     mock_changes_ = std::move(changes);
   }
 
+  void set_copy_prefix(std::string copy_prefix) {
+    copy_prefix_ = std::move(copy_prefix);
+  }
+
  private:
   int map_load_count_ = 0;
   std::vector<LevelDBWrapperImpl::Change> mock_changes_;
+  base::Optional<std::string> copy_prefix_;
 };
 
 void GetCallback(const base::Closure& callback,
@@ -116,8 +131,8 @@ class LevelDBWrapperImplTest : public testing::Test,
                           60 /* max_commits_per_hour */,
                           &delegate_),
         observer_binding_(this) {
-    set_mock_data(std::string(kTestPrefix) + "def", "defdata");
-    set_mock_data(std::string(kTestPrefix) + "123", "123data");
+    set_mock_data(std::string(kTestPrefix) + kTestKey1, kTestValue1);
+    set_mock_data(std::string(kTestPrefix) + kTestKey2, kTestValue2);
     set_mock_data("123", "baddata");
 
     level_db_wrapper_.Bind(mojo::MakeRequest(&level_db_wrapper_ptr_));
@@ -572,6 +587,62 @@ TEST_F(LevelDBWrapperImplTest, FixUpData) {
   EXPECT_FALSE(has_mock_data(kTestPrefix + std::string("123")));
   EXPECT_EQ("foo", get_mock_data(kTestPrefix + std::string("def")));
   EXPECT_EQ("bla", get_mock_data(kTestPrefix + std::string("abc")));
+}
+
+TEST_F(LevelDBWrapperImplTest, CopyToNewPrefix) {
+  std::string key1 = kTestKey2;
+  std::string value1 = "foo";
+  std::string key2 = "abc";
+  std::string value2 = "data abc";
+
+  EXPECT_TRUE(PutSync(StdStringToUint8Vector(key1),
+                      StdStringToUint8Vector(value1),
+                      StdStringToUint8Vector("123data")));
+  EXPECT_TRUE(PutSync(StdStringToUint8Vector(key2),
+                      StdStringToUint8Vector("old value"), base::nullopt));
+  EXPECT_TRUE(PutSync(StdStringToUint8Vector(key2),
+                      StdStringToUint8Vector(value2),
+                      StdStringToUint8Vector("old value")));
+
+  delegate()->set_copy_prefix(kTestCopyPrefix);
+
+  CommitChanges();
+
+  const std::string kTestPrefixStr = std::string(kTestPrefix);
+  // Check to see if we still have old data.
+  EXPECT_TRUE(has_mock_data(kTestPrefixStr + kTestKey1));
+  EXPECT_EQ(kTestValue1, get_mock_data(kTestPrefixStr + kTestKey1));
+  EXPECT_TRUE(has_mock_data(kTestPrefixStr + kTestKey2));
+  EXPECT_EQ(kTestValue2, get_mock_data(kTestPrefixStr + kTestKey2));
+
+  const std::string kTestCopyPrefixStr = std::string(kTestCopyPrefix);
+  // Check to see if new data exists.
+  EXPECT_TRUE(has_mock_data(kTestCopyPrefixStr + key1));
+  EXPECT_EQ(value1, get_mock_data(kTestCopyPrefixStr + key1));
+  EXPECT_TRUE(has_mock_data(kTestCopyPrefixStr + key2));
+  EXPECT_EQ(value2, get_mock_data(kTestCopyPrefixStr + key2));
+
+  // Check to see if prefix changed.
+  leveldb::mojom::DatabaseError status;
+  std::vector<mojom::KeyValuePtr> data;
+  base::RunLoop run_loop;
+  bool result = false;
+  EXPECT_TRUE(wrapper()->GetAll(
+      GetAllCallback::CreateAndBind(&result, run_loop.QuitClosure()), &status,
+      &data));
+  EXPECT_EQ(leveldb::mojom::DatabaseError::OK, status);
+  EXPECT_EQ(3u, data.size());
+  EXPECT_FALSE(result);
+  run_loop.Run();
+  EXPECT_TRUE(result);
+
+  std::vector<uint8_t> value_result;
+  EXPECT_TRUE(GetSync(StdStringToUint8Vector(kTestKey1), &value_result));
+  EXPECT_EQ(StdStringToUint8Vector(kTestValue1), value_result);
+  EXPECT_TRUE(GetSync(StdStringToUint8Vector(key1), &value_result));
+  EXPECT_EQ(StdStringToUint8Vector(value1), value_result);
+  EXPECT_TRUE(GetSync(StdStringToUint8Vector(key2), &value_result));
+  EXPECT_EQ(StdStringToUint8Vector(value2), value_result);
 }
 
 }  // namespace content
