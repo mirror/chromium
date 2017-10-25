@@ -103,6 +103,10 @@ void Initialize(Platform* platform) {
   }
 }
 
+void RegisterInterfaces(service_manager::BinderRegistry& registry) {
+  GetBlinkInitializer().InitializeBindings(registry);
+}
+
 void BlinkInitializer::InitLocalFrame(LocalFrame& frame) const {
   ModulesInitializer::InitLocalFrame(frame);
 }
