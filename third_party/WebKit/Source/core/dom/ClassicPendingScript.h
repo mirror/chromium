@@ -7,6 +7,7 @@
 
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "core/dom/ClassicScript.h"
+#include "core/dom/ClassicScriptFetchRequest.h"
 #include "core/dom/PendingScript.h"
 #include "core/loader/resource/ScriptResource.h"
 #include "platform/MemoryCoordinator.h"
@@ -14,8 +15,6 @@
 #include "platform/loader/fetch/ResourceOwner.h"
 
 namespace blink {
-
-class ClassicScriptFetchRequest;
 
 // PendingScript for a classic script
 // https://html.spec.whatwg.org/#classic-script.
@@ -33,6 +32,16 @@ class CORE_EXPORT ClassicPendingScript final
   USING_PRE_FINALIZER(ClassicPendingScript, Prefinalize);
 
  public:
+  typedef ScriptResource* (*FetchClassicScriptHandler)(FetchParameters&,
+                                                       Document&,
+                                                       ClassicPendingScript*);
+
+  static ScriptResource* FetchClassicScript(FetchClassicScriptHandler,
+                                            Document&,
+                                            const ClassicScriptFetchRequest&,
+                                            FetchParameters::DeferOption,
+                                            ClassicPendingScript*);
+
   // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-classic-script
   //
   // For a script from an external file, calls ScriptResource::Fetch() and
@@ -76,6 +85,8 @@ class CORE_EXPORT ClassicPendingScript final
 
   void Prefinalize();
 
+  void SetIntervened(bool v) { intervened_ = v; }
+
  private:
   // See AdvanceReadyState implementation for valid state transitions.
   enum ReadyState {
@@ -91,8 +102,12 @@ class CORE_EXPORT ClassicPendingScript final
   ClassicPendingScript(ScriptElementBase*,
                        const TextPosition&,
                        bool is_external,
-                       const ScriptFetchOptions&);
+                       const ClassicScriptFetchRequest&);
   ClassicPendingScript() = delete;
+
+  static ScriptResource* FirstFetch(FetchParameters&,
+                                    Document&,
+                                    ClassicPendingScript*);
 
   // Advances the current state of the script, reporting to the client if
   // appropriate.
@@ -113,11 +128,13 @@ class CORE_EXPORT ClassicPendingScript final
   // MemoryCoordinatorClient
   void OnPurgeMemory() override;
 
-  const ScriptFetchOptions options_;
+  const ClassicScriptFetchRequest request_;
 
   const bool is_external_;
   ReadyState ready_state_;
   bool integrity_failure_;
+
+  bool intervened_ = false;
 
   Member<ScriptStreamer> streamer_;
   WTF::Closure streamer_done_;
