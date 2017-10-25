@@ -22,6 +22,30 @@
       "revId": "a82417a3daa0c325b3cbaf88acdd7e76b39dd3d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8ac32d_079f0d76",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-25T16:01:14Z",
+      "side": 1,
+      "message": "Thanks for that point - I moved it back.\n[I had seen some other core\u0027s in the non-ios and this component not used on ios]",
+      "parentUuid": "a2787d11_38d2dab5",
+      "range": {
+        "startLine": 214,
+        "startChar": 29,
+        "endLine": 214,
+        "endChar": 44
+      },
+      "revId": "a82417a3daa0c325b3cbaf88acdd7e76b39dd3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
