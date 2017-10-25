@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8bcb47a9_29cb0e39",
+        "filename": "base/debug/activity_tracker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-25T14:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da97d71_4512b38d",
+      "range": {
+        "startLine": 303,
+        "startChar": 2,
+        "endLine": 303,
+        "endChar": 13
+      },
+      "revId": "2801e93751e8e6224ecc751baadcf4be5aa58f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dd132ee_f04d7671",
         "filename": "base/debug/activity_tracker_unittest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-25T14:33:14Z",
       "side": 1,
       "message": "hah, this is a PITA to test. If this turns out to be occasionally flaky, then you can push down the flakiness probability by looping until you get the right result.",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 16
+      },
+      "revId": "2801e93751e8e6224ecc751baadcf4be5aa58f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930dfae4_9c151bd0",
+        "filename": "base/debug/activity_tracker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-25T14:49:09Z",
+      "side": 1,
+      "message": "I reduced it as much as possible by ensuring that the thread has started execution.  It\u0027s unlikely enough for the thread to be interrupted between setting the flag and doing the acquire but even if it is, it should get restarted within the 200ms.\n\nBut yes, it may need some kind of retry if it\u0027s problematic.",
+      "parentUuid": "7dd132ee_f04d7671",
       "range": {
         "startLine": 321,
         "startChar": 2,
