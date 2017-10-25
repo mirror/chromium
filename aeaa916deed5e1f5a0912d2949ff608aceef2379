@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "101fcd14_031a5eb9",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-25T01:01:09Z",
+      "side": 1,
+      "message": "Can you provide a screenshot of the final outcome? I am trying to figure out if position: fixed is appropriate here, or position: absolute would be better, or even better a native \u003cdialog\u003e element (see example https://jsfiddle.net/bkccrsd4/).\n\nI should have asked that earlier, but it did not occur to me until now.",
+      "revId": "aeaa916deed5e1f5a0912d2949ff608aceef2379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
