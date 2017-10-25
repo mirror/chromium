@@ -190,9 +190,9 @@ TEST(AutocompleteMatchTest, InlineTailPrefix) {
   } cases[] = {
       {"90123456",
        "1234567890123456",
-       // should prepend DIM and offset rest
+       // should prepend INVISIBLE and offset rest
        {{0, ACMatchClassification::NONE}, {2, ACMatchClassification::MATCH}},
-       {{0, ACMatchClassification::DIM},
+       {{0, ACMatchClassification::INVISIBLE},
         {8, ACMatchClassification::NONE},
         {10, ACMatchClassification::MATCH}}},
   };
