@@ -16,6 +16,24 @@
       "revId": "c3be6ac562e5c1a8815d505969b7d8077836d90c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b32a3d_4899cc30",
+        "filename": "build/android/tombstones.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-25T20:28:50Z",
+      "side": 0,
+      "message": "I believe so. Found that this arg was actually not used anywhere (there\u0027s not even a command-line flag for it in this script). So rather than update it, better to delete it as dead code.",
+      "parentUuid": "4f90617a_6a3d5ba2",
+      "revId": "c3be6ac562e5c1a8815d505969b7d8077836d90c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

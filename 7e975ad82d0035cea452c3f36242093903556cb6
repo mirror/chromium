@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7cdcba0_20a0fcd1",
+        "filename": "build/android/gyp/create_test_runner_script.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-25T20:28:50Z",
+      "side": 1,
+      "message": "Yikes! Fixed.",
+      "parentUuid": "08161012_043b71af",
+      "revId": "7e975ad82d0035cea452c3f36242093903556cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33b009c8_166ca537",
         "filename": "chrome/android/BUILD.gn",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3bbcb863_e352ddeb",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-25T20:28:50Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s really another option. We can\u0027t do it globally since remoting, cronet, etc might not want it, and we can\u0027t do it per-apk since the shared library is already built by the time it reaches the apk target.",
+      "parentUuid": "33b009c8_166ca537",
+      "revId": "7e975ad82d0035cea452c3f36242093903556cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d19f5c6e_c7565f2b",
         "filename": "chrome/android/chrome_public_apk_tmpl.gni",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-25T16:46:27Z",
       "side": 1,
       "message": "Curious about this -- what\u0027s the motivation for turning on relocation packing if lld is off and requires_sdk_api_level_23 is set? That appears to be a behavior change, and a bit of an inversion of https://codesearch.chromium.org/chromium/src/build/config/android/rules.gni?rcl\u003d8d03446dde8241267009f8ad0671924b566d4bca\u0026l\u003d1823",
+      "revId": "7e975ad82d0035cea452c3f36242093903556cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c634f89_eecc2e13",
+        "filename": "chrome/android/chrome_public_apk_tmpl.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-25T20:28:50Z",
+      "side": 1,
+      "message": "I think the logic is the same as what you pointed to:\nrequires_sdk_api_level_23 \u003d\u003d\u003e monochrome.\nmonochrome sets enable_relocation_packing \u003d true.\n\nI\u0027ve reworked it so that it\u0027s derived rather than explicitly set, but it matches the logic you pointed to I think.",
+      "parentUuid": "d19f5c6e_c7565f2b",
       "revId": "7e975ad82d0035cea452c3f36242093903556cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
