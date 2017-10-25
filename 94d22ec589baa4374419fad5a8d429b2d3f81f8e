@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbbd6bce_a59c4c9f",
+        "filename": "components/payments/content/service_worker_payment_app_factory_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-25T20:28:44Z",
+      "side": 1,
+      "message": "Can also use FRIEND_TEST_ALL_PREFIXES and avoid this whole test class probably.",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 39
+      },
+      "revId": "94d22ec589baa4374419fad5a8d429b2d3f81f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
