@@ -210,6 +210,30 @@
       "revId": "900af70e87e4a7fd85cce8dd28a1430fd58b89c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea301c27_b89962d6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-25T02:09:41Z",
+      "side": 1,
+      "message": "OK. Let\u0027s use PositionInDOMTree.\n\nIt seems current implementation holds\n  p_in_dom \u003d\u003d ToPositionInDOMTree(ToPositionInFlatTree(p_in_dom))\nwhere anchor node of |p_in_dom| appears in flat tree.\nunintentionally(?).",
+      "parentUuid": "a67a39ed_59a3bd14",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 40
+      },
+      "revId": "900af70e87e4a7fd85cce8dd28a1430fd58b89c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
