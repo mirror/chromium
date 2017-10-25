@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/chrome/browser/ui/fullscreen_controller.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
 
 #import "ios/web/public/test/fakes/test_web_view_content_view.h"
 #import "ios/web/public/web_state/ui/crw_web_view_content_view.h"
@@ -311,7 +311,6 @@ TEST_F(FullscreenControllerTest, KeyboardAppearanceOnNonFullscreenPage) {
   EXPECT_TRUE(IsHeaderVisible());
 }
 
-// TODO(lliabraa): Fails on Xcode 6 simulator (crbug.com/392433).
 #if TARGET_IPHONE_SIMULATOR
 #define MAYBE_KeyboardAppearanceOnFullscreenPage \
   KeyboardAppearanceOnFullscreenPage
@@ -339,7 +338,6 @@ TEST_F(FullscreenControllerTest, MAYBE_KeyboardAppearanceOnFullscreenPage) {
   EXPECT_FALSE(IsHeaderHidden());
 }
 
-// TODO(lliabraa): Fails on Xcode 6 simulator (crbug.com/392433).
 #if TARGET_IPHONE_SIMULATOR
 #define MAYBE_KeyboardStayOnUserScrollOnNonFullscreenPage \
   KeyboardStayOnUserScrollOnNonFullscreenPage
