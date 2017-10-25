@@ -36,8 +36,7 @@ public class SurveyController {
      * @param onSuccessRunnable The runnable to notify when the survey is ready.
      *                          If no survey is available, the runnable will not be run.
      */
-    public void downloadSurvey(
-            Context context, String siteId, String advertisingId, Runnable onSuccessRunnable) {}
+    public void downloadSurvey(Context context, String siteId, Runnable onSuccessRunnable) {}
 
     /**
      * Show the survey.
