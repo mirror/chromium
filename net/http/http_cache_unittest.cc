@@ -7229,7 +7229,8 @@ TEST(HttpCache, SetTruncatedFlag) {
   VerifyTruncatedFlag(&cache, kSimpleGET_Transaction.url, true, 0);
 }
 
-// Tests that we mark an entry as incomplete when the request is cancelled.
+// Tests that we do not mark an entry as truncated when the request is
+// cancelled.
 TEST(HttpCache, DontSetTruncatedFlagForGarbledResponseCode) {
   MockHttpCache cache;
 
