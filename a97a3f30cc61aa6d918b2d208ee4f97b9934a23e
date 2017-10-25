@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db36ca5c_de50679c",
+        "filename": "chrome/browser/printing/cloud_print/privet_http.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "Switch away from typedef while we are here?\n\nusing ResultCallback \u003d base::OnceCallback\u003cvoid(const base::DictionaryValue* /*value*/)\u003e;",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7bca8d_bcd39caf",
+        "filename": "chrome/browser/printing/cloud_print/privet_http_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "Change to nullptr while we are here?",
+      "range": {
+        "startLine": 120,
+        "startChar": 27,
+        "endLine": 120,
+        "endChar": 31
+      },
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef57756_60c7dab5",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "uncomment",
+      "range": {
+        "startLine": 215,
+        "startChar": 24,
+        "endLine": 215,
+        "endChar": 35
+      },
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5832c9ba_c066bc03",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "Put methods before member variables.",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8da997f_9f790c9b",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "Doesn\u0027t this already happen automatically on |weak_ptr_factory_| destruction?",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ad77ce_c1b33a68",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "Out of date comment?",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1433608f_79e10f20",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "Is it possible to pass in |callback_| directly to Convert() ?",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c175185_4e7336de",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is needed, right after std::move(done_callback_).",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234b92f9_66a4471c",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3201d6_91a69df1",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "Similarly, this may no longer be needed, if std::move(print_callback_) already resets it. More below.",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7438ca40_2fc95e74",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "This one can potentially be removed too. In the !done_callback_ case, Reset() is a no-op.",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a478293b_3dec8730",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-25T22:18:55Z",
+      "side": 1,
+      "message": "Can this still occur?",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
