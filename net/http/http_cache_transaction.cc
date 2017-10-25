@@ -2543,13 +2543,24 @@ bool HttpCache::Transaction::RequiresValidation() {
   //  - make sure we have a matching request method
   //  - watch out for cached responses that depend on authentication
 
-  if (!(effective_load_flags_ & LOAD_SKIP_VARY_CHECK) &&
-      response_.vary_data.is_valid() &&
-      !response_.vary_data.MatchesRequest(*request_,
-                                          *response_.headers.get())) {
-    vary_mismatch_ = true;
-    validation_cause_ = VALIDATION_CAUSE_VARY_MISMATCH;
-    return true;
+  if (!(effective_load_flags_ & LOAD_SKIP_VARY_CHECK)) {
+    if (response_.vary_data.is_valid() &&
+        !response_.vary_data.MatchesRequest(*request_,
+                                            *response_.headers.get())) {
+      vary_mismatch_ = true;
+      validation_cause_ = VALIDATION_CAUSE_VARY_MISMATCH;
+      return true;
+    }
+
+    size_t iter = 0;
+    std::string name = "vary", request_header;
+    while (response_.headers->EnumerateHeader(&iter, name, &request_header)) {
+      if (request_header == "*") {
+        vary_mismatch_ = true;
+        validation_cause_ = VALIDATION_CAUSE_VARY_MISMATCH;
+        return true;
+      }
+    }
   }
 
   if (effective_load_flags_ & LOAD_SKIP_CACHE_VALIDATION)
