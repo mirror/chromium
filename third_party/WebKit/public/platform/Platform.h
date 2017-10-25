@@ -43,7 +43,6 @@
 #include "WebCommon.h"
 #include "WebData.h"
 #include "WebDataConsumerHandle.h"
-#include "WebFeaturePolicy.h"
 #include "WebGamepadListener.h"
 #include "WebGestureDevice.h"
 #include "WebLocalizedString.h"
@@ -715,24 +714,6 @@ class BLINK_PLATFORM_EXPORT Platform {
   // tools/v8_context_snapshot/v8_context_snapshot_generator is running (which
   // runs during Chromium's build step).
   virtual bool IsTakingV8ContextSnapshot() { return false; }
-
-  // Feature Policy -----------------------------------------------------
-
-  // Create a new feature policy object for a document, given its parent
-  // document's policy (may be nullptr), its container policy (may be empty),
-  // the header policy with which it was delivered (may be empty), and the
-  // document's origin.
-  virtual std::unique_ptr<WebFeaturePolicy> CreateFeaturePolicy(
-      const WebFeaturePolicy* parent_policy,
-      const WebParsedFeaturePolicy& container_policy,
-      const WebParsedFeaturePolicy& policy_header,
-      const WebSecurityOrigin&);
-
-  // Create a new feature policy for a document whose origin has changed, given
-  // the previous policy object and the new origin.
-  virtual std::unique_ptr<WebFeaturePolicy> DuplicateFeaturePolicyWithOrigin(
-      const WebFeaturePolicy&,
-      const WebSecurityOrigin&);
 
  protected:
   Platform();

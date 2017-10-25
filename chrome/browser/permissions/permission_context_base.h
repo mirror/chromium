@@ -16,7 +16,7 @@
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "third_party/WebKit/public/platform/WebFeaturePolicyFeature.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
 
 class GURL;
 class PermissionRequestID;
@@ -57,7 +57,7 @@ class PermissionContextBase : public KeyedService {
  public:
   PermissionContextBase(Profile* profile,
                         ContentSettingsType content_settings_type,
-                        blink::WebFeaturePolicyFeature feature_policy_feature);
+                        blink::FeaturePolicyFeature feature_policy_feature);
   ~PermissionContextBase() override;
 
   // A field trial used to enable the global permissions kill switch.
@@ -197,7 +197,7 @@ class PermissionContextBase : public KeyedService {
 
   Profile* profile_;
   const ContentSettingsType content_settings_type_;
-  const blink::WebFeaturePolicyFeature feature_policy_feature_;
+  const blink::FeaturePolicyFeature feature_policy_feature_;
   std::unordered_map<std::string, std::unique_ptr<PermissionRequest>>
       pending_requests_;
 

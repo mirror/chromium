@@ -37,7 +37,7 @@
 #include "content/public/common/media_stream_request.h"
 #include "content/public/common/origin_util.h"
 #include "extensions/common/constants.h"
-#include "third_party/WebKit/public/platform/WebFeaturePolicyFeature.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_ANDROID)
@@ -307,8 +307,8 @@ MediaStreamDevicesController::MediaStreamDevicesController(
     DCHECK_NE(CONTENT_SETTING_DEFAULT, video_setting_);
     content::RenderFrameHost* rfh = content::RenderFrameHost::FromID(
         request.render_process_id, request.render_frame_id);
-    if (!rfh->IsFeatureEnabled(blink::WebFeaturePolicyFeature::kMicrophone) ||
-        !rfh->IsFeatureEnabled(blink::WebFeaturePolicyFeature::kCamera)) {
+    if (!rfh->IsFeatureEnabled(blink::FeaturePolicyFeature::kMicrophone) ||
+        !rfh->IsFeatureEnabled(blink::FeaturePolicyFeature::kCamera)) {
       rfh->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_WARNING,
                                kPepperMediaFeaturePolicyDeprecationMessage);
     }

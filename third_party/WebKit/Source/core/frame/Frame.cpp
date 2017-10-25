@@ -230,8 +230,8 @@ bool Frame::ConsumeTransientUserActivation(Frame* frame,
              : UserGestureIndicator::ConsumeUserGesture();
 }
 
-bool Frame::IsFeatureEnabled(WebFeaturePolicyFeature feature) const {
-  WebFeaturePolicy* feature_policy = GetSecurityContext()->GetFeaturePolicy();
+bool Frame::IsFeatureEnabled(FeaturePolicyFeature feature) const {
+  FeaturePolicy* feature_policy = GetSecurityContext()->GetFeaturePolicy();
   // The policy should always be initialized before checking it to ensure we
   // properly inherit the parent policy.
   DCHECK(feature_policy);

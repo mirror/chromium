@@ -4,14 +4,14 @@
 
 #include <vector>
 
-#include "content/common/feature_policy/feature_policy.h"
 #include "content/common/frame_policy.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_renderer_host.h"
 #include "content/test/test_render_frame_host.h"
-#include "third_party/WebKit/public/platform/WebFeaturePolicyFeature.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
 #include "third_party/WebKit/public/web/WebSandboxFlags.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -30,10 +30,10 @@ class RenderFrameHostFeaturePolicyTest
   static constexpr const char* kOrigin3 = "https://example.com";
   static constexpr const char* kOrigin4 = "https://test.com";
 
-  static const blink::WebFeaturePolicyFeature kDefaultEnabledFeature =
-      blink::WebFeaturePolicyFeature::kDocumentWrite;
-  static const blink::WebFeaturePolicyFeature kDefaultSelfFeature =
-      blink::WebFeaturePolicyFeature::kGeolocation;
+  static const blink::FeaturePolicyFeature kDefaultEnabledFeature =
+      blink::FeaturePolicyFeature::kDocumentWrite;
+  static const blink::FeaturePolicyFeature kDefaultSelfFeature =
+      blink::FeaturePolicyFeature::kGeolocation;
 
   RenderFrameHost* GetMainRFH(const char* origin) {
     RenderFrameHost* result = web_contents()->GetMainFrame();
@@ -53,7 +53,7 @@ class RenderFrameHostFeaturePolicyTest
   // The header policy should only be set once on page load, so we refresh the
   // page to simulate that.
   void RefreshPageAndSetHeaderPolicy(RenderFrameHost** rfh,
-                                     blink::WebFeaturePolicyFeature feature,
+                                     blink::FeaturePolicyFeature feature,
                                      const std::vector<std::string>& origins) {
     RenderFrameHost* current = *rfh;
     SimulateNavigation(&current, current->GetLastCommittedURL());
@@ -64,7 +64,7 @@ class RenderFrameHostFeaturePolicyTest
 
   void SetContainerPolicy(RenderFrameHost* parent,
                           RenderFrameHost* child,
-                          blink::WebFeaturePolicyFeature feature,
+                          blink::FeaturePolicyFeature feature,
                           const std::vector<std::string>& origins) {
     static_cast<TestRenderFrameHost*>(parent)->OnDidChangeFramePolicy(
         child->GetRoutingID(),
@@ -79,10 +79,10 @@ class RenderFrameHostFeaturePolicyTest
   }
 
  private:
-  ParsedFeaturePolicyHeader CreateFPHeader(
-      blink::WebFeaturePolicyFeature feature,
+  blink::ParsedFeaturePolicy CreateFPHeader(
+      blink::FeaturePolicyFeature feature,
       const std::vector<std::string>& origins) {
-    ParsedFeaturePolicyHeader result(1);
+    blink::ParsedFeaturePolicy result(1);
     result[0].feature = feature;
     result[0].matches_all_origins = false;
     for (const std::string& origin : origins)
