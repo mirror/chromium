@@ -513,7 +513,9 @@ void WebFrameSchedulerImpl::SetPageStopped(bool stopped) {
     return;
   DCHECK(!page_visible_);
   page_stopped_ = stopped;
-  UpdateThrottlingState();
+  // Notify throttling observers (loading) only if flag is enabled.
+  if (RuntimeEnabledFeatures::StopLoadingInBackgroundAndroidEnabled())
+    UpdateThrottlingState();
 }
 
 void WebFrameSchedulerImpl::UpdateThrottlingState() {
