@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ba7b1c4_37ac89a4",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-25T08:05:52Z",
+      "side": 1,
+      "message": "This breaks the Jumbo* build because this is already defined here: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp?q\u003dIsModern\u0026sq\u003dpackage:chromium\u0026l\u003d85\n\n* https://chromium.googlesource.com/chromium/src/+/master/docs/jumbo.md",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 9
+      },
+      "revId": "9bd45e835cb1512fdb3b24699c878ec5d3695f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
