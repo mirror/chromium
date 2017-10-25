@@ -1331,6 +1331,38 @@ IN_PROC_BROWSER_TEST_F(PDFExtensionTest, PostMessageForZeroSizedEmbed) {
   EXPECT_EQ("\"POST_MESSAGE_OK\"", message);
 }
 
+#if !defined(OS_MACOSX)
+// Ensure that ctrl-wheel events are handled by the PDF viewer.
+IN_PROC_BROWSER_TEST_F(PDFExtensionTest, CtrlWheelInvokesCustomZoom) {
+  GURL test_pdf_url(embedded_test_server()->GetURL("/pdf/test.pdf"));
+  WebContents* guest_contents = LoadPdfGetGuestContents(test_pdf_url);
+  ASSERT_TRUE(guest_contents);
+
+  ASSERT_TRUE(content::ExecuteScript(
+      guest_contents,
+      "var gestureDetector = new GestureDetector(viewer.plugin_); "
+      "var updatePromise = new Promise(function(resolve) { "
+      "  gestureDetector.addEventListener('pinchupdate', resolve); "
+      "});"));
+
+  const gfx::Rect guest_rect = guest_contents->GetContainerBounds();
+  const gfx::Point mouse_position(guest_rect.width() / 2,
+                                  guest_rect.height() / 2);
+  content::SimulateMouseWheelCtrlZoomEvent(
+      guest_contents, mouse_position, true,
+      blink::WebMouseWheelEvent::kPhaseBegan);
+
+  bool got_update;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractBool(
+      guest_contents,
+      "updatePromise.then(function(update) { "
+      "  window.domAutomationController.send(!!update); "
+      "});",
+      &got_update));
+  EXPECT_TRUE(got_update);
+}
+#endif
+
 #if defined(OS_MACOSX)
 // Test that "smart zoom" (double-tap with two fingers on Mac trackpad)
 // is disabled for the PDF viewer. This prevents the viewer's controls from
