@@ -116,17 +116,6 @@ using ios::material::TimingFunction;
 @synthesize style = style_;
 @synthesize dispatcher = dispatcher_;
 
-- (CGFloat)preferredToolbarHeightWhenAlignedToTopOfScreen {
-  DCHECK(base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar));
-  InterfaceIdiom idiom = IsIPadIdiom() ? IPAD_IDIOM : IPHONE_IDIOM;
-  CGRect frame = kToolbarFrame[idiom];
-  if (idiom == IPHONE_IDIOM) {
-    CGFloat statusBarOffset = [self statusBarOffset];
-    frame.size.height += statusBarOffset;
-  }
-  return frame.size.height;
-}
-
 - (instancetype)initWithStyle:(ToolbarControllerStyle)style
                    dispatcher:
                        (id<ApplicationCommands, BrowserCommands>)dispatcher {
@@ -298,7 +287,7 @@ using ios::material::TimingFunction;
 
 #pragma mark - Public API
 
-- (void)safeAreaInsetsDidChange {
+- (void)viewSafeAreaInsetsDidChange {
 }
 
 - (void)applicationDidEnterBackground:(NSNotification*)notify {

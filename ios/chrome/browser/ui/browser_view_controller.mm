@@ -164,6 +164,7 @@
 #include "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_delegate_ios.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
+#import "ios/chrome/browser/ui/toolbar/toolbar_utils.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_view_item.h"
@@ -1329,10 +1330,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     [self setUpViewLayout];
   }
   if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
-    [_toolbarCoordinator.webToolbarController safeAreaInsetsDidChange];
+    // TODO(crbug.com/778236): Check if this call can be removed once the
+    // Toolbar is a contained ViewController.
+    [_toolbarCoordinator.toolbarController viewSafeAreaInsetsDidChange];
     toolbarHeightConstraint_.constant =
-        [_toolbarCoordinator.webToolbarController
-                preferredToolbarHeightWhenAlignedToTopOfScreen];
+        ToolbarHeightWithTopOfScreenOffset(StatusBarHeight());
   }
 }
 
@@ -1918,10 +1920,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (void)addConstraintsToToolbar {
   toolbarHeightConstraint_ = [[_toolbarCoordinator view].heightAnchor
-      constraintEqualToConstant:
-          [_toolbarCoordinator.webToolbarController
-
-                  preferredToolbarHeightWhenAlignedToTopOfScreen]];
+      constraintEqualToConstant:ToolbarHeightWithTopOfScreenOffset(
+                                    StatusBarHeight())];
 
   [NSLayoutConstraint activateConstraints:@[
     [[_toolbarCoordinator view].leadingAnchor
