@@ -856,4 +856,18 @@ bool CompareSchemeComponent(const base::char16* spec,
   return DoCompareSchemeComponent(spec, component, compare_to);
 }
 
+int NewlyAddedFunction(int input) {
+  int return_value = -100;
+
+  for (int i = 0; i < 10; ++i) {
+    for (int j = i; j < 20; ++j) {
+      if (j == 15) {
+        return return_value;
+      }
+    }
+  }
+
+  return -1;
+}
+
 }  // namespace url
