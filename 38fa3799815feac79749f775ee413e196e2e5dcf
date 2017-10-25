@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a57d0faf_10435e61",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-25T02:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7329f3_12d0e918",
+      "range": {
+        "startLine": 140,
+        "startChar": 75,
+        "endLine": 140,
+        "endChar": 79
+      },
+      "revId": "38fa3799815feac79749f775ee413e196e2e5dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b580b301_3dd74f72",
         "filename": "components/pairing/bluetooth_host_pairing_controller.h",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "38fa3799815feac79749f775ee413e196e2e5dcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6865eb_a8aca433",
+        "filename": "components/pairing/bluetooth_host_pairing_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-25T02:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b580b301_3dd74f72",
+      "revId": "38fa3799815feac79749f775ee413e196e2e5dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
