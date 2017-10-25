@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2ba465c_df8b11a2",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3847,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-10-25T15:29:06Z",
+      "side": 1,
+      "message": "Looks like this change is already in a separate CL.",
+      "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca24af95_0333bc38",
+        "filename": "cc/trees/ukm_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-10-25T15:29:06Z",
+      "side": 1,
+      "message": "Would it be clearer to name these expected_final_checkerboard_ and expected_final_missing_tiles_?",
+      "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
