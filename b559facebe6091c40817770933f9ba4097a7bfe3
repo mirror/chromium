@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79200536_ad41d259",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-25T13:20:25Z",
+      "side": 1,
+      "message": "binded -\u003e bound",
+      "revId": "b559facebe6091c40817770933f9ba4097a7bfe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "942fde80_d2f86fee",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-25T13:20:25Z",
+      "side": 1,
+      "message": "I feel we should unify this code path both for document and worker cases, currently for document cases we expose two URLLoaderFactory to blink::FrameFetchContext while one to blink::WorkerFetchContext.  Hm... could we have some TODO comment around that here?  (E.g. \u0027Unify this code path with ServiceWorkerNetworkProvider::CreateURLLoader that is used for document cases\u0027.)",
+      "revId": "b559facebe6091c40817770933f9ba4097a7bfe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
