@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25aa2dfe_562b2775",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T21:52:28Z",
+      "side": 1,
+      "message": "do these need to be public or can they be package scoped?",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "6d397b98c5a850e2eb309ebcfc0b2a9c61f5e401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0bf187c_fe75c93d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T21:52:28Z",
+      "side": 1,
+      "message": "if you have a version of this downstream, you likely should keep the existing signature around as well since then it can be rolled in w/o sheriff involvement.  Then you\u0027d delete the old method once your change is available downstream.",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "6d397b98c5a850e2eb309ebcfc0b2a9c61f5e401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64d5217_dead26c9",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyControllerTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T21:52:28Z",
+      "side": 1,
+      "message": "I would do any() instead of explicit times(..) count where the number of times isn\u0027t a performance/validity concern",
+      "range": {
+        "startLine": 103,
+        "startChar": 21,
+        "endLine": 103,
+        "endChar": 26
+      },
+      "revId": "6d397b98c5a850e2eb309ebcfc0b2a9c61f5e401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
