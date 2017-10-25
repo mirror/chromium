@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efdd297f_83ecec9a",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-25T17:09:01Z",
+      "side": 1,
+      "message": "This doesn\u0027t add the new files in process/. Is that intentional?",
+      "revId": "b653292f3f8de3ac19374d12090c46dc20b4220f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
