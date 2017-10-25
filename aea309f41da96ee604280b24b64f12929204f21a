@@ -52,6 +52,24 @@
       "revId": "aea309f41da96ee604280b24b64f12929204f21a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6482ba_a33dddbb",
+        "filename": "chrome/browser/resources/settings/about_page/about_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-25T00:31:40Z",
+      "side": 1,
+      "message": "Changed to include the link in the HTML as suggested. See patchset 7.\n\nFWIW, the HTML error message is not currently built in the JS, instead it is coming straight from C++ as HTML. Specifically the code that produces the error message is (Mac-only) at https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/help/version_updater_mac.mm?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d225-235.\n\nI am suspecting (but don\u0027t know for sure), that the only reason this approach is used in the first place is such that the \"\\n\" line characters coming from Mac\u0027s keystone are preserved. Originally I was proposing appending the link in the HTML error coming from C++ as an appropriate fix for the given situation, not as a hack (point is irrelevant anymore, since patchset 7 is up).",
+      "parentUuid": "a432a13c_9979b7be",
+      "revId": "aea309f41da96ee604280b24b64f12929204f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
