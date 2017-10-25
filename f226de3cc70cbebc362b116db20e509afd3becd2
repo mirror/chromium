@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04063540_f8752fda",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1117049
+      },
+      "writtenOn": "2017-10-25T16:03:15Z",
+      "side": 1,
+      "message": "what is the plan when the UI lands?  Will we just turn the flag to enabled by default, or remove this code?  If we\u0027re going to just change the flag, please file a bug to remove this code eventually (M65?)",
+      "revId": "f226de3cc70cbebc362b116db20e509afd3becd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75578e45_acecc45d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1117049
+      },
+      "writtenOn": "2017-10-25T16:03:15Z",
+      "side": 1,
+      "message": "might want to update the bug which still references this will be enabled in M63",
+      "revId": "f226de3cc70cbebc362b116db20e509afd3becd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6495348_2bd76190",
+        "filename": "components/arc/arc_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117049
+      },
+      "writtenOn": "2017-10-25T16:03:15Z",
+      "side": 1,
+      "message": "could be more descriptive, eg: When enabled, Chrome traffic will be routed through VPNs connected in Android apps.",
+      "revId": "f226de3cc70cbebc362b116db20e509afd3becd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
