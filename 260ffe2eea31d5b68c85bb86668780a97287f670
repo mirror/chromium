@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b5fc3a3_9006fd65",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-25T19:31:37Z",
+      "side": 1,
+      "message": "nit: maybe bool dirty \u003d thing || other_thing || some_other_thing || etc; and compute all the things prior to the definition?",
+      "revId": "260ffe2eea31d5b68c85bb86668780a97287f670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
