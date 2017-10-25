@@ -212,7 +212,6 @@ blink::WebURL WebServiceWorkerRegistrationImpl::Scope() const {
 }
 
 void WebServiceWorkerRegistrationImpl::Update(
-    blink::WebServiceWorkerProvider* provider,
     std::unique_ptr<WebServiceWorkerUpdateCallbacks> callbacks) {
   GetRegistrationObjectHost()->Update(
       base::BindOnce(&WebServiceWorkerRegistrationImpl::OnUpdated,
@@ -220,7 +219,6 @@ void WebServiceWorkerRegistrationImpl::Update(
 }
 
 void WebServiceWorkerRegistrationImpl::Unregister(
-    blink::WebServiceWorkerProvider* provider,
     std::unique_ptr<WebServiceWorkerUnregistrationCallbacks> callbacks) {
   GetRegistrationObjectHost()->Unregister(
       base::BindOnce(&WebServiceWorkerRegistrationImpl::OnUnregistered,
@@ -229,7 +227,6 @@ void WebServiceWorkerRegistrationImpl::Unregister(
 
 void WebServiceWorkerRegistrationImpl::EnableNavigationPreload(
     bool enable,
-    blink::WebServiceWorkerProvider* provider,
     std::unique_ptr<WebEnableNavigationPreloadCallbacks> callbacks) {
   GetRegistrationObjectHost()->EnableNavigationPreload(
       enable,
