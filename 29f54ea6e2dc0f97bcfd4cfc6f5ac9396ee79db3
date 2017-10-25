@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2397368_8fc7b21d",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-25T13:25:53Z",
+      "side": 1,
+      "message": "There is already a function that does exactly what is described by this function name and comment - IsUserAllowed(). This one should be more specific to this exact policy.\n\nMinVersionConstraintsSatisfied() ?",
+      "range": {
+        "startLine": 239,
+        "startChar": 7,
+        "endLine": 239,
+        "endChar": 33
+      },
+      "revId": "29f54ea6e2dc0f97bcfd4cfc6f5ac9396ee79db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
