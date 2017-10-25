@@ -190,6 +190,30 @@
       "revId": "591a010ade8e03df1729efa7a1d71e3927027be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0d32a9_5f289e1a",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-25T19:54:49Z",
+      "side": 1,
+      "message": "No, you\u0027re applying the layout viewport scroll offset to that var so it is really point_in_document_content.\n\nBut the method overall converts frame coordinates to frame content coordinates, so it could be named something like PointInFrameContentIfVisible.",
+      "parentUuid": "872ccf52_dd450466",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 49
+      },
+      "revId": "591a010ade8e03df1729efa7a1d71e3927027be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
