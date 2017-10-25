@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f8222105_434eba82",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-25T18:46:41Z",
+      "side": 1,
+      "message": "Sorry, poor explanation on my part.\n\nWhatever the sample rate, provided that the sampling rate is more rapid than the window length then if we just average the levels across the samples, we should always get a nice transition from NONE-\u003eSUSPECTED-\u003eCONFIRMED-\u003eSUSPECTED-\u003eNONE.\n\ne.g. if we are being called to sample every second, and the window is 10s then if we have sustained thrashing and then it drops to zero, then the _average_ over those 10s will gradually drop to zero over the course of ten seconds, so we should pass through the SUSPECTED state without needing an explicit state-machine, if we want.",
+      "parentUuid": "10660707_65bfbe39",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d31ae44a_7df6a87f",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -860,6 +878,24 @@
     },
     {
       "key": {
+        "uuid": "909a6630_696aff48",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-25T18:46:41Z",
+      "side": 1,
+      "message": "As I commented on the algorithm itself, I don\u0027t think you need two instances here, just a single object for recording samples into, up to some window, and then a method that returns the average over a sub-set of that - that avoids duplicating sample data while providing the flexibility you\u0027re looking for, and in the special-case of the two windows being the same length you can call it once and translate the average directly into a level, if you want.",
+      "parentUuid": "f57f18e3_9fc3c606",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08d71bb0_7630a0e9",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -889,6 +925,24 @@
       "side": 1,
       "message": "Maybe, but at this point I\u0027m not entirely sure how this will be used? The Averager already looks at timestamps etc, so it could be redundant and we might want to wait for a specific use case before preemptively adding this?",
       "parentUuid": "08d71bb0_7630a0e9",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dffea72_c1e64201",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-25T18:46:41Z",
+      "side": 1,
+      "message": "My point is that the behaviour will be very different if the caller calls you once per second, or once per ten seconds; the current impl allows the state to change once-per-call, in effect.",
+      "parentUuid": "88a66289_41df799f",
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
