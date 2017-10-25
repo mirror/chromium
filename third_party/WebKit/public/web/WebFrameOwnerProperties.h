@@ -5,6 +5,7 @@
 #ifndef WebFrameOwnerProperties_h
 #define WebFrameOwnerProperties_h
 
+#include "public/platform/ActivationDelegationFlags.h"
 #include "public/platform/WebScrollbar.h"
 #include "public/platform/WebString.h"
 
@@ -21,6 +22,7 @@ struct WebFrameOwnerProperties {
   bool allow_payment_request;
   bool is_display_none;
   WebString required_csp;
+  ActivationDelegationFlags activation_delegation_flags;
 
  public:
   WebFrameOwnerProperties()
@@ -39,7 +41,8 @@ struct WebFrameOwnerProperties {
                           bool allow_fullscreen,
                           bool allow_payment_request,
                           bool is_display_none,
-                          const WebString& required_csp)
+                          const WebString& required_csp,
+                          ActivationDelegationFlags activation_delegation_flags)
       : name(name),
         scrolling_mode(static_cast<ScrollingMode>(scrolling_mode)),
         margin_width(margin_width),
@@ -47,7 +50,8 @@ struct WebFrameOwnerProperties {
         allow_fullscreen(allow_fullscreen),
         allow_payment_request(allow_payment_request),
         is_display_none(is_display_none),
-        required_csp(required_csp) {}
+        required_csp(required_csp),
+        activation_delegation_flags(activation_delegation_flags) {}
 #endif
 };
 

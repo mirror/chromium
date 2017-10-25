@@ -114,6 +114,7 @@
     "declare",
     "default",
     "defer",
+    "delegatestickyuseractivation",
     "dir",
     "direction",
     "dirname",
