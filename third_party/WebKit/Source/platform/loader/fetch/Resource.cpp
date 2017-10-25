@@ -828,7 +828,7 @@ bool Resource::CanReuse(const FetchParameters& params) const {
       GetResponse().ResponseTypeViaServiceWorker() ==
           network::mojom::FetchResponseType::kOpaque &&
       new_request.GetFetchRequestMode() !=
-          WebURLRequest::kFetchRequestModeNoCORS) {
+          network::mojom::FetchRequestMode::kNoCORS) {
     return false;
   }
 
@@ -900,13 +900,13 @@ bool Resource::CanReuse(const FetchParameters& params) const {
     return false;
 
   switch (new_mode) {
-    case WebURLRequest::kFetchRequestModeNoCORS:
-    case WebURLRequest::kFetchRequestModeNavigate:
+    case network::mojom::FetchRequestMode::kNoCORS:
+    case network::mojom::FetchRequestMode::kNavigate:
       break;
 
-    case WebURLRequest::kFetchRequestModeCORS:
-    case WebURLRequest::kFetchRequestModeSameOrigin:
-    case WebURLRequest::kFetchRequestModeCORSWithForcedPreflight:
+    case network::mojom::FetchRequestMode::kCORS:
+    case network::mojom::FetchRequestMode::kSameOrigin:
+    case network::mojom::FetchRequestMode::kCORSWithForcedPreflight:
       // We have two separate CORS handling logics in DocumentThreadableLoader
       // and ResourceLoader and sharing resources is difficult when they are
       // handled differently.
