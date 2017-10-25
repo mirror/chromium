@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79d84d60_21560e66",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-25T18:56:59Z",
+      "side": 1,
+      "message": "Can we move this logic in drm_util and add a test in drm_util_unittest?",
+      "revId": "8aefc437358f47ab2115e7cf970cb89bd5dedddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d57551_973436e4",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-25T18:56:59Z",
+      "side": 1,
+      "message": "static_cast should do it.",
+      "revId": "8aefc437358f47ab2115e7cf970cb89bd5dedddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1031c78_e4086452",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-25T18:56:59Z",
+      "side": 1,
+      "message": "I don\u0027t think struct is needed here.",
+      "revId": "8aefc437358f47ab2115e7cf970cb89bd5dedddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
