@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5a76f1d0_c5cfda9f",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-25T20:57:52Z",
+      "side": 1,
+      "message": "If the callback needs to be invoked before Tab\u0027s then it is better to create the tab helper in AttachTabHelper method (in tab_helper_util.mm), and put the call to VoiceSearchNavigations::CreateForWebState() before LegacyTabHelper::CreateForWebState(). You\u0027ll also have to put a comment explaining why it is created before LegacyTabHelper.\n\nIn general it is an error to create tab helpers outside of AttachTabHelper.",
+      "parentUuid": "08883a20_23596cd5",
+      "revId": "cf54d6642e3f9564061ea4b955f985a5c2614389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcad76ae_18c6e058",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 1
