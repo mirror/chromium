@@ -22,13 +22,14 @@ namespace wm {
 
 // A variety of canned animations for window transitions.
 enum WindowVisibilityAnimationType {
-  WINDOW_VISIBILITY_ANIMATION_TYPE_DEFAULT = 0,     // Default. Lets the system
-                                                    // decide based on window
-                                                    // type.
-  WINDOW_VISIBILITY_ANIMATION_TYPE_DROP,            // Window shrinks in.
-  WINDOW_VISIBILITY_ANIMATION_TYPE_VERTICAL,        // Vertical Glenimation.
-  WINDOW_VISIBILITY_ANIMATION_TYPE_FADE,            // Fades in/out.
-  WINDOW_VISIBILITY_ANIMATION_TYPE_ROTATE,          // Window rotates in.
+  WINDOW_VISIBILITY_ANIMATION_TYPE_DEFAULT = 0,  // Default. Lets the system
+                                                 // decide based on window
+                                                 // type.
+  WINDOW_VISIBILITY_ANIMATION_TYPE_DROP,         // Window shrinks in.
+  WINDOW_VISIBILITY_ANIMATION_TYPE_VERTICAL,     // Vertical Glenimation.
+  WINDOW_VISIBILITY_ANIMATION_TYPE_FADE,         // Fades in/out.
+  WINDOW_VISIBILITY_ANIMATION_TYPE_ROTATE,       // Window rotates in.
+  WINDOW_VISIBILITY_ANIMATION_TYPE_NONE,         // No animation.
 
   // Downstream library animations start above this point.
   WINDOW_VISIBILITY_ANIMATION_MAX

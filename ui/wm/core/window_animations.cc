@@ -303,7 +303,9 @@ void AnimateShowWindowCommon(aura::Window* window,
     // Property sets within this scope will be implicitly animated.
     ui::ScopedLayerAnimationSettings settings(window->layer()->GetAnimator());
     base::TimeDelta duration = GetWindowVisibilityAnimationDuration(*window);
-    if (duration > base::TimeDelta())
+    if (duration > base::TimeDelta() ||
+        GetWindowVisibilityAnimationType(window) ==
+            WINDOW_VISIBILITY_ANIMATION_TYPE_NONE)
       settings.SetTransitionDuration(duration);
 
     window->layer()->SetTransform(end_transform);

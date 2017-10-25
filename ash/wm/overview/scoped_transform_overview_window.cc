@@ -26,6 +26,7 @@
 #include "ui/gfx/transform_util.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
+#include "ui/wm/core/window_animations.h"
 #include "ui/wm/core/window_util.h"
 
 namespace ash {
@@ -163,6 +164,34 @@ TransientDescendantIteratorRange GetTransientTreeIterator(
       TransientDescendantIterator(GetTransientRoot(window)));
 }
 
+void SetTransformForTransientWindows(aura::Window* window,
+                                     const gfx::Point& target_origin_in_screen,
+                                     const gfx::Transform& transform) {
+  for (auto* window : GetTransientTreeIterator(window)) {
+    aura::Window* parent_window = window->parent();
+    gfx::Rect original_bounds(window->GetTargetBounds());
+    ::wm::ConvertRectToScreen(parent_window, &original_bounds);
+    gfx::Transform new_transform = TransformAboutPivot(
+        gfx::Point(target_origin_in_screen.x() - original_bounds.x(),
+                   target_origin_in_screen.y() - original_bounds.y()),
+        transform);
+    window->SetTransform(new_transform);
+  }
+}
+
+void BeginScopedAnimationForTransientWindows(
+    aura::Window* window,
+    OverviewAnimationType animation_type,
+    ScopedTransformOverviewWindow::ScopedAnimationSettings*
+        animation_settings) {
+  for (auto* window : GetTransientTreeIterator(window)) {
+    auto settings = std::make_unique<ScopedOverviewAnimationSettings>(
+        animation_type, window);
+    settings->DeferPaint();
+    animation_settings->push_back(std::move(settings));
+  }
+}
+
 }  // namespace
 
 class ScopedTransformOverviewWindow::LayerCachingAndFilteringObserver
@@ -198,11 +227,11 @@ ScopedTransformOverviewWindow::ScopedTransformOverviewWindow(
     aura::Window* window)
     : selector_item_(selector_item),
       window_(window),
-      determined_original_window_shape_(false),
       ignored_by_shelf_(wm::GetWindowState(window)->ignored_by_shelf()),
       overview_started_(false),
       original_transform_(window->layer()->GetTargetTransform()),
       original_opacity_(window->layer()->GetTargetOpacity()),
+      y_offset_used_to_hide_header(0),
       weak_ptr_factory_(this) {}
 
 ScopedTransformOverviewWindow::~ScopedTransformOverviewWindow() {}
@@ -210,16 +239,16 @@ ScopedTransformOverviewWindow::~ScopedTransformOverviewWindow() {}
 void ScopedTransformOverviewWindow::RestoreWindow() {
   ShowHeader();
   wm::GetWindowState(window_)->set_ignored_by_shelf(ignored_by_shelf_);
-  if (minimized_widget_) {
+  if (mirror_widget_) {
     // TODO(oshima): Use unminimize animation instead of hiding animation.
-    minimized_widget_->CloseNow();
-    minimized_widget_.reset();
+    mirror_widget_->CloseNow();
+    mirror_widget_.reset();
     return;
   }
   ScopedAnimationSettings animation_settings_list;
   BeginScopedAnimation(OverviewAnimationType::OVERVIEW_ANIMATION_RESTORE_WINDOW,
                        &animation_settings_list);
-  SetTransform(window()->GetRootWindow(), original_transform_);
+  SetTransform(original_transform_, false /*adjust_original_window*/);
   // Add requests to cache render surface and perform trilinear filtering for
   // the exit animation of overview mode. The requests will be removed when the
   // exit animation finishes.
@@ -237,12 +266,11 @@ void ScopedTransformOverviewWindow::RestoreWindow() {
 void ScopedTransformOverviewWindow::BeginScopedAnimation(
     OverviewAnimationType animation_type,
     ScopedAnimationSettings* animation_settings) {
-  for (auto* window : GetTransientTreeIterator(GetOverviewWindow())) {
-    auto settings = std::make_unique<ScopedOverviewAnimationSettings>(
-        animation_type, window);
-    settings->DeferPaint();
-    animation_settings->push_back(std::move(settings));
-  }
+  BeginScopedAnimationForTransientWindows(GetOverviewWindow(), animation_type,
+                                          animation_settings);
+  if (y_offset_used_to_hide_header)
+    BeginScopedAnimationForTransientWindows(window_, animation_type,
+                                            animation_settings);
 }
 
 bool ScopedTransformOverviewWindow::Contains(const aura::Window* target) const {
@@ -250,7 +278,7 @@ bool ScopedTransformOverviewWindow::Contains(const aura::Window* target) const {
     if (window->Contains(target))
       return true;
   }
-  aura::Window* mirror = GetOverviewWindowForMinimizedState();
+  aura::Window* mirror = GetMirroredOverviewWindow();
   return mirror && mirror->Contains(target);
 }
 
@@ -321,7 +349,7 @@ SkColor ScopedTransformOverviewWindow::GetTopColor() const {
 
 int ScopedTransformOverviewWindow::GetTopInset() const {
   // Mirror window doesn't have insets.
-  if (minimized_widget_)
+  if (mirror_widget_)
     return 0;
   for (auto* window : GetTransientTreeIterator(window_)) {
     // If there are regular windows in the transient ancestor tree, all those
@@ -379,28 +407,19 @@ gfx::Transform ScopedTransformOverviewWindow::GetTransformForRect(
 }
 
 void ScopedTransformOverviewWindow::SetTransform(
-    aura::Window* root_window,
-    const gfx::Transform& transform) {
+    const gfx::Transform& transform,
+    bool adjust_original_window) {
   DCHECK(overview_started_);
 
-  if (&transform != &original_transform_ &&
-      !determined_original_window_shape_) {
-    determined_original_window_shape_ = true;
-    const ShapeRects* window_shape = window()->layer()->alpha_shape();
-    if (!original_window_shape_ && window_shape)
-      original_window_shape_ = std::make_unique<ShapeRects>(*window_shape);
-  }
-
   gfx::Point target_origin(GetTargetBoundsInScreen().origin());
-  for (auto* window : GetTransientTreeIterator(GetOverviewWindow())) {
-    aura::Window* parent_window = window->parent();
-    gfx::Rect original_bounds(window->GetTargetBounds());
-    ::wm::ConvertRectToScreen(parent_window, &original_bounds);
-    gfx::Transform new_transform =
-        TransformAboutPivot(gfx::Point(target_origin.x() - original_bounds.x(),
-                                       target_origin.y() - original_bounds.y()),
-                            transform);
-    window->SetTransform(new_transform);
+  SetTransformForTransientWindows(GetOverviewWindow(), target_origin,
+                                  transform);
+
+  if (y_offset_used_to_hide_header && adjust_original_window) {
+    gfx::Transform transient_transform(transform);
+    transient_transform.Translate(0, -y_offset_used_to_hide_header);
+    SetTransformForTransientWindows(window_, target_origin,
+                                    transient_transform);
   }
 }
 
@@ -410,50 +429,32 @@ void ScopedTransformOverviewWindow::SetOpacity(float opacity) {
 }
 
 void ScopedTransformOverviewWindow::HideHeader() {
-  // Mirrored Window does not have a header.
-  if (minimized_widget_)
-    return;
-  gfx::Rect bounds(GetTargetBoundsInScreen().size());
-  const int inset = GetTopInset();
-  if (inset > 0) {
-    // Use alpha shape to hide the window header.
-    bounds.Inset(0, inset, 0, 0);
-    std::unique_ptr<ShapeRects> shape;
-    if (original_window_shape_) {
-      // When the |window| has a shape, use the new bounds to clip that shape.
-      shape = std::make_unique<ShapeRects>(*original_window_shape_);
-      for (auto& rect : *shape)
-        rect.Intersect(bounds);
-    } else {
-      shape = std::make_unique<ShapeRects>();
-      shape->push_back(bounds);
-    }
-    aura::Window* window = GetOverviewWindow();
-    window->layer()->SetAlphaShape(std::move(shape));
-    window->layer()->SetMasksToBounds(true);
+  if (y_offset_used_to_hide_header) {
+    for (auto* window : GetTransientTreeIterator(window_))
+      window->layer()->SetIsDrawable(false);
   }
 }
 
 void ScopedTransformOverviewWindow::ShowHeader() {
-  ui::Layer* layer = window()->layer();
-  layer->SetAlphaShape(original_window_shape_ ? std::make_unique<ShapeRects>(
-                                                    *original_window_shape_)
-                                              : nullptr);
-  layer->SetMasksToBounds(false);
+  if (y_offset_used_to_hide_header) {
+    mirror_widget_.reset();
+    for (auto* window : GetTransientTreeIterator(window_))
+      window->layer()->SetIsDrawable(true);
+  }
 }
 
 void ScopedTransformOverviewWindow::UpdateMirrorWindowForMinimizedState() {
   // TODO(oshima): Disable animation.
   if (window_->GetProperty(aura::client::kShowStateKey) ==
       ui::SHOW_STATE_MINIMIZED) {
-    if (!minimized_widget_)
-      CreateMirrorWindowForMinimizedState();
+    if (!mirror_widget_)
+      CreateMirrorWindow();
   } else {
     // If the original window is no longer minimized, make sure it will be
     // visible when we restore it when selection mode ends.
     EnsureVisible();
-    minimized_widget_->CloseNow();
-    minimized_widget_.reset();
+    mirror_widget_->CloseNow();
+    mirror_widget_.reset();
   }
 }
 
@@ -471,10 +472,13 @@ void ScopedTransformOverviewWindow::Close() {
 void ScopedTransformOverviewWindow::PrepareForOverview() {
   DCHECK(!overview_started_);
   overview_started_ = true;
+
+  y_offset_used_to_hide_header = GetTopInset();
   wm::GetWindowState(window_)->set_ignored_by_shelf(true);
   if (window_->GetProperty(aura::client::kShowStateKey) ==
-      ui::SHOW_STATE_MINIMIZED) {
-    CreateMirrorWindowForMinimizedState();
+          ui::SHOW_STATE_MINIMIZED ||
+      y_offset_used_to_hide_header) {
+    CreateMirrorWindow();
   }
   // Add requests to cache render surface and perform trilinear filtering. The
   // requests will be removed in dctor. So the requests will be valid during the
@@ -498,8 +502,8 @@ void ScopedTransformOverviewWindow::SetImmediateCloseForTests() {
 }
 
 aura::Window* ScopedTransformOverviewWindow::GetOverviewWindow() const {
-  if (minimized_widget_)
-    return GetOverviewWindowForMinimizedState();
+  if (mirror_widget_)
+    return GetMirroredOverviewWindow();
   return window_;
 }
 
@@ -508,9 +512,10 @@ void ScopedTransformOverviewWindow::EnsureVisible() {
 }
 
 void ScopedTransformOverviewWindow::OnGestureEvent(ui::GestureEvent* event) {
-  if (minimized_widget_ && SplitViewController::ShouldAllowSplitView()) {
+  if (mirror_widget_ && !y_offset_used_to_hide_header &&
+      SplitViewController::ShouldAllowSplitView()) {
     gfx::Point location(event->location());
-    ::wm::ConvertPointToScreen(minimized_widget_->GetNativeWindow(), &location);
+    ::wm::ConvertPointToScreen(mirror_widget_->GetNativeWindow(), &location);
     switch (event->type()) {
       case ui::ET_GESTURE_SCROLL_BEGIN:
       case ui::ET_GESTURE_TAP_DOWN:
@@ -534,9 +539,10 @@ void ScopedTransformOverviewWindow::OnGestureEvent(ui::GestureEvent* event) {
 }
 
 void ScopedTransformOverviewWindow::OnMouseEvent(ui::MouseEvent* event) {
-  if (minimized_widget_ && SplitViewController::ShouldAllowSplitView()) {
+  if (mirror_widget_ && !y_offset_used_to_hide_header &&
+      SplitViewController::ShouldAllowSplitView()) {
     gfx::Point location(event->location());
-    ::wm::ConvertPointToScreen(minimized_widget_->GetNativeWindow(), &location);
+    ::wm::ConvertPointToScreen(mirror_widget_->GetNativeWindow(), &location);
     switch (event->type()) {
       case ui::ET_MOUSE_PRESSED:
         selector_item_->HandlePressEvent(location);
@@ -559,13 +565,12 @@ void ScopedTransformOverviewWindow::OnMouseEvent(ui::MouseEvent* event) {
   }
 }
 
-aura::Window*
-ScopedTransformOverviewWindow::GetOverviewWindowForMinimizedState() const {
-  return minimized_widget_ ? minimized_widget_->GetNativeWindow() : nullptr;
+aura::Window* ScopedTransformOverviewWindow::GetMirroredOverviewWindow() const {
+  return mirror_widget_ ? mirror_widget_->GetNativeWindow() : nullptr;
 }
 
-void ScopedTransformOverviewWindow::CreateMirrorWindowForMinimizedState() {
-  DCHECK(!minimized_widget_.get());
+void ScopedTransformOverviewWindow::CreateMirrorWindow() {
+  DCHECK(!mirror_widget_.get());
   views::Widget::InitParams params;
   params.type = views::Widget::InitParams::TYPE_WINDOW_FRAMELESS;
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
@@ -574,14 +579,15 @@ void ScopedTransformOverviewWindow::CreateMirrorWindowForMinimizedState() {
   params.activatable = views::Widget::InitParams::Activatable::ACTIVATABLE_NO;
   params.accept_events = true;
   params.parent = window_->parent();
-  minimized_widget_ = std::make_unique<views::Widget>();
-  minimized_widget_->set_focus_on_creation(false);
-  minimized_widget_->Init(params);
+  mirror_widget_ = std::make_unique<views::Widget>();
+  mirror_widget_->set_focus_on_creation(false);
+  mirror_widget_->Init(params);
 
   views::View* mirror_view = new wm::WindowMirrorView(window_);
   mirror_view->SetVisible(true);
   mirror_view->SetTargetHandler(this);
-  minimized_widget_->SetContentsView(mirror_view);
+
+  mirror_widget_->SetContentsView(mirror_view);
   gfx::Rect bounds(window_->GetBoundsInScreen());
   gfx::Size preferred = mirror_view->GetPreferredSize();
   // In unit tests, the content view can have empty size.
@@ -589,8 +595,21 @@ void ScopedTransformOverviewWindow::CreateMirrorWindowForMinimizedState() {
     int inset = bounds.height() - preferred.height();
     bounds.Inset(0, 0, 0, inset);
   }
-  minimized_widget_->SetBounds(bounds);
-  minimized_widget_->Show();
+
+  if (y_offset_used_to_hide_header) {
+    gfx::Transform transform;
+    transform.Translate(0, y_offset_used_to_hide_header);
+    mirror_widget_->GetNativeWindow()->SetTransform(transform);
+  }
+
+  mirror_widget_->SetBounds(bounds);
+  window_->parent()->StackChildAbove(mirror_widget_->GetNativeWindow(),
+                                     window_);
+  // No Show() animation.
+  ::wm::SetWindowVisibilityAnimationType(
+      mirror_widget_->GetNativeWindow(),
+      ::wm::WINDOW_VISIBILITY_ANIMATION_TYPE_NONE);
+  mirror_widget_->Show();
 }
 
 }  // namespace ash
