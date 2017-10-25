@@ -16,6 +16,24 @@
       "revId": "608f091116fd7ed8c3fd85b91c1bba65184811ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e8cb6c_fd52c707",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-25T11:43:46Z",
+      "side": 1,
+      "message": "Thanks! I combined this with the valid check below after some thought, I think reasoning about the separate dumps for each IPC will be too complicated.",
+      "parentUuid": "f7e1258f_d5e7490d",
+      "revId": "608f091116fd7ed8c3fd85b91c1bba65184811ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
