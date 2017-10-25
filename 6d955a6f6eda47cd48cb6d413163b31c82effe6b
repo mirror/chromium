@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19d6f1ae_f4e18739",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/secure-contexts/basic-popup-and-iframe-tests.https.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-10-25T12:38:59Z",
+      "side": 1,
+      "message": "This nested if else logic is difficult to follow. Could you either refactor it or add some comments to the main branches?",
+      "revId": "6d955a6f6eda47cd48cb6d413163b31c82effe6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a6f211_e7c4221d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/secure-contexts/shared-worker-secure-first.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-10-25T12:38:59Z",
+      "side": 1,
+      "message": "The error messages on this assert and all the ones below could stand to be more descriptive.",
+      "revId": "6d955a6f6eda47cd48cb6d413163b31c82effe6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
