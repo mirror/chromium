@@ -122,8 +122,6 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
 
   void SetFetchDocWrittenScriptDeferIdle();
 
-  const String& Nonce() const { return nonce_; }
-
   // To support script streaming, the ScriptRunner may need to access the
   // PendingScript. This breaks the intended layering, so please use with
   // care. (Method is virtual to support testing.)
@@ -230,8 +228,6 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   // This is used only to keep the ScriptResource of a classic script alive,
   // even after script execution as long as ScriptLoader is alive.
   Member<ScriptResource> resource_keep_alive_;
-
-  String nonce_;
 
   // The context document at the time when PrepareScript() is executed.
   // This is only used to check whether the script element is moved between
