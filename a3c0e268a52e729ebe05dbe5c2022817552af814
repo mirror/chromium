@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20e42b2d_98078aea",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T23:32:31Z",
+      "side": 1,
+      "message": "fragment_data seems to be null from this callsite: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/paint/PaintLayer.cpp?rcl\u003d56492cddb800b52a36d378bb34424a5d25169577\u0026l\u003d1748.",
+      "range": {
+        "startLine": 329,
+        "startChar": 6,
+        "endLine": 329,
+        "endChar": 7
+      },
+      "revId": "a3c0e268a52e729ebe05dbe5c2022817552af814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
