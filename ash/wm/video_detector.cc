@@ -75,12 +75,13 @@ class VideoDetector::WindowInfo {
   DISALLOW_COPY_AND_ASSIGN(WindowInfo);
 };
 
-VideoDetector::VideoDetector()
+VideoDetector::VideoDetector(viz::mojom::VideoDetectorClientRequest request)
     : state_(State::NOT_PLAYING),
       video_is_playing_(false),
       window_observer_manager_(this),
       scoped_session_observer_(this),
-      is_shutting_down_(false) {
+      is_shutting_down_(false),
+      binding_(this, std::move(request)) {
   aura::Env::GetInstance()->AddObserver(this);
   Shell::Get()->AddShellObserver(this);
 }
@@ -189,9 +190,21 @@ void VideoDetector::UpdateState() {
 
   if (state_ != new_state) {
     state_ = new_state;
+    if (State::NOT_PLAYING == state_)
+      LOG(ERROR) << "[Legacy] Video activity ended";
+    else
+      LOG(ERROR) << "[Legacy] Video activity started";
     for (auto& observer : observers_)
       observer.OnVideoStateChanged(state_);
   }
+}
+
+void VideoDetector::OnVideoActivityStarted() {
+  LOG(ERROR) << "[Viz client] Video activity started";
+}
+
+void VideoDetector::OnVideoActivityEnded() {
+  LOG(ERROR) << "[Viz client] Video activity ended";
 }
 
 }  // namespace ash

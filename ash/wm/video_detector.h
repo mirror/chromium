@@ -18,6 +18,8 @@
 #include "base/scoped_observer.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "services/viz/public/interfaces/compositing/video_detector_client.mojom.h"
 #include "ui/aura/env_observer.h"
 #include "ui/aura/window_observer.h"
 
@@ -37,7 +39,8 @@ namespace ash {
 class ASH_EXPORT VideoDetector : public aura::EnvObserver,
                                  public aura::WindowObserver,
                                  public SessionObserver,
-                                 public ShellObserver {
+                                 public ShellObserver,
+                                 public viz::mojom::VideoDetectorClient {
  public:
   // State of detected video activity.
   enum class State {
@@ -76,7 +79,7 @@ class ASH_EXPORT VideoDetector : public aura::EnvObserver,
   // observers.
   static const int kMinVideoDurationMs;
 
-  VideoDetector();
+  VideoDetector(viz::mojom::VideoDetectorClientRequest request);
   ~VideoDetector() override;
 
   State state() const { return state_; }
@@ -105,6 +108,9 @@ class ASH_EXPORT VideoDetector : public aura::EnvObserver,
   // ShellObserver overrides.
   void OnFullscreenStateChanged(bool is_fullscreen,
                                 aura::Window* root_window) override;
+
+  void OnVideoActivityStarted() override;
+  void OnVideoActivityEnded() override;
 
  private:
   // Called when video activity is observed in |window|.
@@ -144,6 +150,8 @@ class ASH_EXPORT VideoDetector : public aura::EnvObserver,
   ScopedSessionObserver scoped_session_observer_;
 
   bool is_shutting_down_;
+
+  mojo::Binding<viz::mojom::VideoDetectorClient> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(VideoDetector);
 };
