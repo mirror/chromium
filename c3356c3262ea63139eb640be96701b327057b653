@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89e0e7c0_d76f8653",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T02:20:05Z",
+      "side": 1,
+      "message": "nit: confusing wording (Disable implicit...only enabled this...)",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "c3356c3262ea63139eb640be96701b327057b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb474c1_4a793e4c",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T02:20:05Z",
+      "side": 1,
+      "message": "Just to clarify my understanding: this hash changed in this CL because previously, both implicit discard of both appends and the test\u0027s explicit discard of adts_preroll_duration (by append window trimming) on the second append were discarded; but with this CL the only discard should be that explicit discard at the beginning of the second append, right?",
+      "range": {
+        "startLine": 1591,
+        "startChar": 2,
+        "endLine": 1591,
+        "endChar": 16
+      },
+      "revId": "c3356c3262ea63139eb640be96701b327057b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca9d3701_4c8ac839",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T02:20:05Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused here: why should full-file MSE playback of sfx.adts not match SRC\u003d playback of the same?",
+      "range": {
+        "startLine": 1613,
+        "startChar": 2,
+        "endLine": 1613,
+        "endChar": 16
+      },
+      "revId": "c3356c3262ea63139eb640be96701b327057b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
