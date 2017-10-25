@@ -73,7 +73,7 @@ void NGOutOfFlowLayoutPart::Run(bool update_legacy) {
 }
 
 scoped_refptr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
-    NGBlockNode descendant,
+    NGLayoutInputNode descendant,
     NGStaticPosition static_position,
     NGLogicalOffset* offset) {
   DCHECK(descendant);
@@ -159,7 +159,7 @@ bool NGOutOfFlowLayoutPart::IsContainingBlockForDescendant(
 // 2. To compute final fragment, when block size is known from the absolute
 //    position calculation.
 scoped_refptr<NGLayoutResult> NGOutOfFlowLayoutPart::GenerateFragment(
-    NGBlockNode descendant,
+    NGLayoutInputNode descendant,
     const Optional<LayoutUnit>& block_estimate,
     const NGAbsolutePhysicalPosition node_position) {
   // As the block_estimate is always in the descendant's writing mode, we build
@@ -190,7 +190,7 @@ scoped_refptr<NGLayoutResult> NGOutOfFlowLayoutPart::GenerateFragment(
   scoped_refptr<NGConstraintSpace> space =
       builder.ToConstraintSpace(writing_mode);
 
-  return descendant.Layout(*space);
+  return descendant.Layout(*space, nullptr);
 }
 
 }  // namespace blink
