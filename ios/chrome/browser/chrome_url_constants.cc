@@ -40,6 +40,8 @@ const char kChromeUINewTabHost[] = "newtab";
 const char kChromeUINTPTilesInternalsHost[] = "ntp-tiles-internals";
 const char kChromeUIOfflineHost[] = "offline";
 const char kChromeUIOmahaHost[] = "omaha";
+const char kChromeUIPasswordManagerInternalsHost[] =
+    "password-manager-internals";
 const char kChromeUIPhysicalWebHost[] = "physical-web";
 const char kChromeUIPolicyHost[] = "policy";
 const char kChromeUISignInInternalsHost[] = "signin-internals";
@@ -56,6 +58,7 @@ const char* const kChromeHostURLs[] = {
     kChromeUICreditsHost,         kChromeUIFlagsHost,
     kChromeUIHistogramHost,       kChromeUINetExportHost,
     kChromeUINewTabHost,          kChromeUINTPTilesInternalsHost,
+    kChromeUIPasswordManagerInternalsHost,
     kChromeUISignInInternalsHost, kChromeUISuggestionsHost,
     kChromeUISyncInternalsHost,   kChromeUIPhysicalWebHost,
     kChromeUITermsHost,           kChromeUIVersionHost,
