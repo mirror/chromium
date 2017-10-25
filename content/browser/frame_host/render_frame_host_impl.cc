@@ -1914,6 +1914,7 @@ void RenderFrameHostImpl::OnContextMenu(const ContextMenuParams& params) {
   // Validate the URLs in |params|.  If the renderer can't request the URLs
   // directly, don't show them in the context menu.
   ContextMenuParams validated_params(params);
+  DCHECK_GE(validated_params.selection_start_offset, 0);
   RenderProcessHost* process = GetProcess();
 
   // We don't validate |unfiltered_link_url| so that this field can be used

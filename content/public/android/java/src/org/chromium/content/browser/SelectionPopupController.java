@@ -125,6 +125,10 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
     private boolean mUnselectAllOnDismiss;
     private String mLastSelectedText;
+    private int mLastSelectionOffset;
+
+    // SelectAll action flag, to indicate current showSelectionMenu was from selection all.
+    private boolean mLoggingSelectAll;
 
     // Tracks whether a touch selection is currently active.
     private boolean mHasSelection;
@@ -134,9 +138,14 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private PastePopupMenu mPastePopupMenu;
     private boolean mWasPastePopupShowingOnInsertionDragStart;
 
-    /** The {@link SelectionClient} that processes textual selection, or {@code null} if none
-     * exists. */
+    /**
+     * The {@link SelectionClient} that processes textual selection, or {@code null} if none
+     * exists.
+     */
     private SelectionClient mSelectionClient;
+
+    // SelectionMetricsLogger, could be null.
+    private SmartSelectionMetricsLogger mSelectionMetricsLogger;
 
     // The classificaton result of the selected text if the selection exists and
     // SelectionClient was able to classify it, otherwise null.
@@ -260,17 +269,48 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     @VisibleForTesting
     @CalledByNative
     public void showSelectionMenu(int left, int top, int right, int bottom, boolean isEditable,
-            boolean isPasswordType, String selectionText, boolean canSelectAll,
+            boolean isPasswordType, String selectionText, int selectionOffset, boolean canSelectAll,
             boolean canRichlyEdit, boolean shouldSuggest, @MenuSourceType int sourceType) {
         mSelectionRect.set(left, top, right, bottom);
         mEditable = isEditable;
         mLastSelectedText = selectionText;
+        mLastSelectionOffset = selectionOffset;
         mHasSelection = selectionText.length() != 0;
         mIsPasswordType = isPasswordType;
         mCanSelectAllForPastePopup = canSelectAll;
         mCanEditRichly = canRichlyEdit;
         mUnselectAllOnDismiss = true;
+
         if (hasSelection()) {
+            if (mSelectionMetricsLogger != null) {
+                switch (sourceType) {
+                    case MenuSourceType.MENU_SOURCE_ADJUST_SELECTION:
+                        mSelectionMetricsLogger.logSelectionModified(
+                                selectionText, selectionOffset, mClassificationResult);
+                        break;
+                    case MenuSourceType.MENU_SOURCE_ADJUST_SELECTION_RESET:
+                        mSelectionMetricsLogger.logSelectionAction(selectionText, selectionOffset,
+                                SmartSelectionMetricsLogger.ActionType.RESET,
+                                /* SelectionClient.Result = */ null);
+                        break;
+                    case MenuSourceType.MENU_SOURCE_TOUCH_HANDLE:
+                        mSelectionMetricsLogger.logSelectionAction(selectionText, selectionOffset,
+                                SmartSelectionMetricsLogger.ActionType.DRAG, mClassificationResult);
+                        break;
+                    default:
+                        if (mLoggingSelectAll) {
+                            mLoggingSelectAll = false;
+                            mSelectionMetricsLogger.logSelectionAction(selectionText,
+                                    selectionOffset,
+                                    SmartSelectionMetricsLogger.ActionType.SELECT_ALL,
+                                    mClassificationResult);
+                        } else {
+                            mSelectionMetricsLogger.logSelectionStarted(
+                                    selectionText, selectionOffset, isEditable);
+                        }
+                }
+            }
+
             // From selection adjustment, show menu directly.
             if (sourceType == MenuSourceType.MENU_SOURCE_ADJUST_SELECTION) {
                 showActionModeOrClearOnFailure();
@@ -696,6 +736,9 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
         int id = item.getItemId();
         int groupId = item.getGroupId();
+        boolean hasSelectionBefore = hasSelection();
+        String lastSelection = mLastSelectedText;
+        int lastSelectionOffset = mLastSelectionOffset;
 
         if (BuildInfo.isAtLeastO() && id == android.R.id.textAssist) {
             doAssistAction();
@@ -726,6 +769,15 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
             // TextView in Android M.
         } else {
             return false;
+        }
+
+        if (hasSelectionBefore && mSelectionMetricsLogger != null) {
+            if (id == R.id.select_action_menu_select_all) {
+                mLoggingSelectAll = true;
+            } else {
+                mSelectionMetricsLogger.logSelectionAction(lastSelection, lastSelectionOffset,
+                        getActionType(id), mClassificationResult);
+            }
         }
         return true;
     }
@@ -765,6 +817,29 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         // coordinates relative to the containing View.
         viewSelectionRect.offset(0, (int) mRenderCoordinates.getContentOffsetYPix());
         return viewSelectionRect;
+    }
+
+    private int getActionType(int menuItemId) {
+        if (menuItemId == R.id.select_action_menu_select_all) {
+            return SmartSelectionMetricsLogger.ActionType.SELECT_ALL;
+        }
+        if (menuItemId == R.id.select_action_menu_cut) {
+            return SmartSelectionMetricsLogger.ActionType.CUT;
+        }
+        if (menuItemId == R.id.select_action_menu_copy) {
+            return SmartSelectionMetricsLogger.ActionType.COPY;
+        }
+        if (menuItemId == R.id.select_action_menu_paste
+                || menuItemId == R.id.select_action_menu_paste_as_plain_text) {
+            return SmartSelectionMetricsLogger.ActionType.PASTE;
+        }
+        if (menuItemId == R.id.select_action_menu_share) {
+            return SmartSelectionMetricsLogger.ActionType.SHARE;
+        }
+        if (menuItemId == R.id.select_action_menu_assist_items) {
+            return SmartSelectionMetricsLogger.ActionType.SMART_SHARE;
+        }
+        return SmartSelectionMetricsLogger.ActionType.OTHER;
     }
 
     /**
@@ -1008,10 +1083,12 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
             case SelectionEventType.SELECTION_HANDLES_CLEARED:
                 mLastSelectedText = "";
+                mLastSelectionOffset = 0;
                 mHasSelection = false;
                 mUnselectAllOnDismiss = false;
                 mSelectionRect.setEmpty();
                 if (mSelectionClient != null) mSelectionClient.cancelAllRequests();
+
                 finishActionMode();
                 break;
 
@@ -1098,6 +1175,11 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
     @CalledByNative
     private void onSelectionChanged(String text) {
+        if (text.length() == 0 && mHasSelection && mSelectionMetricsLogger != null) {
+            mSelectionMetricsLogger.logSelectionAction(mLastSelectedText, mLastSelectionOffset,
+                    SmartSelectionMetricsLogger.ActionType.ABANDON,
+                    /* SelectionClient.Result = */ null);
+        }
         mLastSelectedText = text;
         if (mSelectionClient != null) {
             mSelectionClient.onSelectionChanged(text);
@@ -1109,6 +1191,10 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      */
     void setSelectionClient(@Nullable SelectionClient selectionClient) {
         mSelectionClient = selectionClient;
+        if (mSelectionClient != null) {
+            mSelectionMetricsLogger =
+                    (SmartSelectionMetricsLogger) mSelectionClient.getSelectionMetricsLogger();
+        }
 
         mClassificationResult = null;
 
