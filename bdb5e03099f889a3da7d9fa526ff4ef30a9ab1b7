@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6e558_220e6069",
+        "filename": "components/ntp_snippets/content_suggestions_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-25T13:28:46Z",
+      "side": 1,
+      "message": "do we need to test this automatically? Shouldn\u0027t the heap checker detect if something does not get deleted?",
+      "range": {
+        "startLine": 839,
+        "startChar": 22,
+        "endLine": 839,
+        "endChar": 43
+      },
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
