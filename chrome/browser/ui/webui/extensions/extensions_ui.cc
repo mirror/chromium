@@ -166,6 +166,7 @@ content::WebUIDataSource* CreateMdExtensionsSource() {
                              IDS_MD_EXTENSIONS_DEPENDENT_ENTRY);
   source->AddLocalizedString("itemDetails", IDS_MD_EXTENSIONS_ITEM_DETAILS);
   source->AddLocalizedString("itemErrors", IDS_MD_EXTENSIONS_ITEM_ERRORS);
+  source->AddLocalizedString("itemIcon", IDS_MD_EXTENSIONS_ITEM_ICON);
   source->AddLocalizedString("itemIdHeading",
                              IDS_MD_EXTENSIONS_ITEM_ID_HEADING);
   source->AddLocalizedString("itemOff", IDS_MD_EXTENSIONS_ITEM_OFF);
