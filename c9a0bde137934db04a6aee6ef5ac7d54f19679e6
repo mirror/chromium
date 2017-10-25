@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "a4c45adb_a60ccc76",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-25T22:48:04Z",
+      "side": 1,
+      "message": "This is being used by the system display API and plumbed through in a few other places. The changes would include more files than what is included in this file and its dependency patch set. \nIt would be better to punt this change to a CL of its own and keep it compartmentalized to make it easier for future developers/debuggers. Its better to keep the CL sizes and the functionality its changing to a minimum.",
+      "parentUuid": "14231231_daa7a59f",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18b125ce_060f9e22",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 4
