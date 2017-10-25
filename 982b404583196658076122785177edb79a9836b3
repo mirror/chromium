@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d07091b5_1481e534",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-25T19:29:43Z",
+      "side": 1,
+      "message": "I have considered SetHideLayerAndSubtree and it also works. But it seems just set the EffectiveOpacity to 0.0f. It make create a render surface for it [1]. So I try to avoid it.\n[1] https://cs.chromium.org/chromium/src/cc/trees/property_tree_builder.cc?l\u003d826\u0026rcl\u003d99415a39c9e86e68fe3bbd135a4437c8dd20706a",
+      "parentUuid": "08a0d301_2d10f54b",
+      "revId": "982b404583196658076122785177edb79a9836b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a5b25fd_b4ead3f8",
         "filename": "ui/compositor/layer.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "982b404583196658076122785177edb79a9836b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b51bac0_eba07510",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-25T19:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a5b25fd_b4ead3f8",
+      "revId": "982b404583196658076122785177edb79a9836b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "40717b79_e740cace",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2136,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-25T19:29:43Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "d7d9e091_6d2cdbfa",
+      "revId": "982b404583196658076122785177edb79a9836b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e0d825f_5b0ae732",
         "filename": "ui/compositor/layer_unittest.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "982b404583196658076122785177edb79a9836b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "203e61a8_94dc8930",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-25T19:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e0d825f_5b0ae732",
+      "revId": "982b404583196658076122785177edb79a9836b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
