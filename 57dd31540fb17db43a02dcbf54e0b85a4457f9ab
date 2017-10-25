@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54f422a7_3f2fa278",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/become-unfragmented-with-lines.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f2f881_37f46dcf",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dc03d29_e23be22a",
         "filename": "third_party/WebKit/LayoutTests/paint/invalidation/multicol-with-overflowing-block-rl-expected.txt",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-24T16:58:45Z",
       "side": 1,
       "message": "These raster invalidations seems much bigger than the changed part [8,8,500,500]. Are they related to the TODOs in PaintLayerClipper about clipping of multiple fragmentation?",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810ae4d7_d13e2c7d",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/multicol-with-overflowing-block-rl-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "This particular output does look wrong, I agree. It\u0027s not related to the TODOs. I think\nit is a bug somewhere in flipped blocks. I\u0027d like to fix this one in a followup\nCL if that\u0027s ok with you, since vertical-rl is extremely rare and the other tests worok\nfine.",
+      "parentUuid": "7dc03d29_e23be22a",
       "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259c1a21_e09e835f",
+        "filename": "third_party/WebKit/Source/core/editing/CaretDisplayItemClient.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e11af5d6_09ef579b",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "3aad0bad_b67ea8b7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4df5447_10a5dd9b",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2515f819_1b208693",
         "filename": "third_party/WebKit/Source/core/paint/BlockPainter.cpp",
         "patchSetId": 13
@@ -101,6 +173,24 @@
       "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac9cec4_a3c3dcfd",
+        "filename": "third_party/WebKit/Source/core/paint/BlockPainter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2515f819_1b208693",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "af1ade26_f7444c09",
+        "filename": "third_party/WebKit/Source/core/paint/BlockPainter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8192ef07_c5fc2ef8",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ac919b8_83fb8b62",
         "filename": "third_party/WebKit/Source/core/paint/FragmentData.h",
         "patchSetId": 13
@@ -135,6 +243,24 @@
       "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57b5ebe_d447b252",
+        "filename": "third_party/WebKit/Source/core/paint/FragmentData.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ac919b8_83fb8b62",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "262346cb_33428001",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPainter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66a48dd3_7d184943",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e54e4a5_e1ed4983",
         "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
         "patchSetId": 13
@@ -169,6 +313,24 @@
       "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4787e1b6_648f0e93",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e54e4a5_e1ed4983",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +368,24 @@
     },
     {
       "key": {
+        "uuid": "b171eaef_8f8353f9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "I can\u0027t right now. See line 330.",
+      "parentUuid": "edc82131_6f48562c",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e1d521f_ceed1f63",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 13
@@ -223,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "d216be6d_32855bd3",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e1d521f_ceed1f63",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a6988dc_7026d582",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 13
@@ -237,6 +435,24 @@
       "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd662dc_0a5c89e9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1262,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a6988dc_7026d582",
+      "revId": "57dd31540fb17db43a02dcbf54e0b85a4457f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
