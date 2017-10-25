@@ -16,6 +16,24 @@
       "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd95fd3_19354a51",
+        "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T06:33:46Z",
+      "side": 1,
+      "message": "no, $(\u0027carrierPage\u0027) will only contain extension URLs",
+      "parentUuid": "b519ea83_9f6b027a",
+      "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
