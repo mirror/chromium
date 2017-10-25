@@ -26,6 +26,7 @@ function validTapResult(event) {
     assert_equals(event.clientY, y);  
     assert_equals(event.screenX, x+window.screenX);
     assert_equals(event.screenY, y+window.screenY);
+
 }
 
 var testTap = async_test('Send a tap event.');
