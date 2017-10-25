@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae35bc5e_583b0077",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-25T02:20:17Z",
+      "side": 1,
+      "message": "Leon told me that, and after investigation, I think they can be removed.\nThey became useless after this CL https://chromium-review.googlesource.com/c/chromium/src/+/662579.",
+      "parentUuid": "0c60712b_e10e2fd9",
+      "revId": "efd73b4e1ec582290f4f58bb5a12776ebad466f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc9946ac_38678881",
         "filename": "content/browser/service_worker/service_worker_registration_handle.h",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4cfdf094_56a14ad1",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-25T02:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc9946ac_38678881",
+      "range": {
+        "startLine": 80,
+        "startChar": 48,
+        "endLine": 80,
+        "endChar": 77
+      },
+      "revId": "efd73b4e1ec582290f4f58bb5a12776ebad466f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c02f808a_6ceee6e5",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 1
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "ffef983d_af1bb259",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-25T02:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c02f808a_6ceee6e5",
+      "revId": "efd73b4e1ec582290f4f58bb5a12776ebad466f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c21bdd0_02248cfa",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "efd73b4e1ec582290f4f58bb5a12776ebad466f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47647a4e_f8a68ddd",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-25T02:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c21bdd0_02248cfa",
+      "revId": "efd73b4e1ec582290f4f58bb5a12776ebad466f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
