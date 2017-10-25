@@ -367,7 +367,8 @@ bool ChildThreadImpl::ChildThreadMessageRouter::RouteMessage(
 }
 
 ChildThreadImpl::ChildThreadImpl()
-    : route_provider_binding_(this),
+    : child_control_binding_(this),
+      route_provider_binding_(this),
       router_(this),
       channel_connected_factory_(
           new base::WeakPtrFactory<ChildThreadImpl>(this)),
@@ -376,7 +377,8 @@ ChildThreadImpl::ChildThreadImpl()
 }
 
 ChildThreadImpl::ChildThreadImpl(const Options& options)
-    : route_provider_binding_(this),
+    : child_control_binding_(this),
+      route_provider_binding_(this),
       router_(this),
       browser_process_io_runner_(options.browser_process_io_runner),
       channel_connected_factory_(
@@ -715,24 +717,6 @@ void ChildThreadImpl::SetThreadPriority(base::PlatformThreadId id,
 #endif
 
 bool ChildThreadImpl::OnMessageReceived(const IPC::Message& msg) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(ChildThreadImpl, msg)
-    IPC_MESSAGE_HANDLER(ChildProcessMsg_Shutdown, OnShutdown)
-#if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
-    IPC_MESSAGE_HANDLER(ChildProcessMsg_SetIPCLoggingEnabled,
-                        OnSetIPCLoggingEnabled)
-#endif
-    IPC_MESSAGE_HANDLER(ChildProcessMsg_SetProcessBackgrounded,
-                        OnProcessBackgrounded)
-    IPC_MESSAGE_HANDLER(ChildProcessMsg_PurgeAndSuspend,
-                        OnProcessPurgeAndSuspend)
-    IPC_MESSAGE_HANDLER(ChildProcessMsg_Resume, OnProcessResume)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-
-  if (handled)
-    return true;
-
   if (msg.routing_id() == MSG_ROUTING_CONTROL)
     return OnControlMessageReceived(msg);
 
@@ -763,7 +747,7 @@ bool ChildThreadImpl::OnControlMessageReceived(const IPC::Message& msg) {
   return false;
 }
 
-void ChildThreadImpl::OnProcessBackgrounded(bool backgrounded) {
+void ChildThreadImpl::SetProcessBackgrounded(bool backgrounded) {
   // Set timer slack to maximum on main thread when in background.
   base::TimerSlack timer_slack = base::TIMER_SLACK_NONE;
   if (backgrounded)
@@ -771,23 +755,22 @@ void ChildThreadImpl::OnProcessBackgrounded(bool backgrounded) {
   base::MessageLoop::current()->SetTimerSlack(timer_slack);
 }
 
-void ChildThreadImpl::OnProcessPurgeAndSuspend() {
-}
+void ChildThreadImpl::ProcessPurgeAndSuspend() {}
 
-void ChildThreadImpl::OnProcessResume() {}
+void ChildThreadImpl::ProcessResume() {}
 
-void ChildThreadImpl::OnShutdown() {
+void ChildThreadImpl::ProcessShutdown() {
   base::RunLoop::QuitCurrentWhenIdleDeprecated();
 }
 
+void ChildThreadImpl::SetIPCLoggingEnabled(bool enable) {
 #if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
-void ChildThreadImpl::OnSetIPCLoggingEnabled(bool enable) {
   if (enable)
     IPC::Logging::GetInstance()->Enable();
   else
     IPC::Logging::GetInstance()->Disable();
-}
 #endif  //  IPC_MESSAGE_LOG_ENABLED
+}
 
 ChildThreadImpl* ChildThreadImpl::current() {
   return g_lazy_tls.Pointer()->Get();
