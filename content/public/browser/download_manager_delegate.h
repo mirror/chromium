@@ -16,6 +16,10 @@
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/save_page_type.h"
 
+namespace active_downloads {
+class InProgressMetadataCache;
+}  // namespace active_downloads
+
 namespace content {
 
 class BrowserContext;
@@ -122,6 +126,9 @@ class CONTENT_EXPORT DownloadManagerDelegate {
                           base::FilePath* website_save_dir,
                           base::FilePath* download_save_dir,
                           bool* skip_dir_check) {}
+
+  // Returns the metadata cache for in-progress downloads.
+  virtual active_downloads::InProgressMetadataCache* GetMetadataCache();
 
   // Asks the user for the path to save a page. The delegate calls the callback
   // to give the answer.
