@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fdbd058_42a5ceb2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2ed8c71_7c890981",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d3cd266_ef2fad47",
         "filename": "ash/accelerators/accelerator_controller.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T16:42:58Z",
       "side": 1,
       "message": "What does |voice_mode| mean?  Surely all the |accelerators| that this function handles are to do with voice mode, given the name of the handler function?",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac4116d_5364bd21",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "no.. VoiceInteraction means \"Assistant\", which is a terminology we are using here and is consistent with Android\u0027s naming (e.g. VoiceInteractionService \u003d\u003d Service to handle Assistant).\n\n|voice_mode| means whether we should launch Assistant in voice mode.",
+      "parentUuid": "4d3cd266_ef2fad47",
       "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c56de5ce_20cfa7e3",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19cb6808_48b5380f",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e66bf0cf_1020ec43",
         "filename": "ash/accelerators/accelerator_controller.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d940428_cd7888cd",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e66bf0cf_1020ec43",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "dc149e84_879949b6",
+        "filename": "ash/accelerators/accelerator_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8ea89af_5475649c",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19361734_536e1d89",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "966a6117_58fbfc94",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 18373,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19361734_536e1d89",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8e52c8d_e4c03b5c",
         "filename": "ui/events/keycodes/dom/dom_key_data.inc",
         "patchSetId": 6
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-23T16:42:58Z",
       "side": 1,
       "message": "As discussed offline, VoiceCommand is in the USB spec, so it is a standard key and we should give it a suitable name (e.g. just \"VoiceCommand\", or \"LaunchVoiceCommand\" - check w/ garykac@ for recommendations) so it\u0027s available for use on other platforms.",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3c4d50_834dfd7f",
+        "filename": "ui/events/keycodes/dom/dom_key_data.inc",
+        "patchSetId": 6
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "Please see the latest patchset.",
+      "parentUuid": "b8e52c8d_e4c03b5c",
       "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5e2664c2_0cea76ef",
+        "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "The latest patchset should have already addressed this.",
+      "parentUuid": "f9ed06a3_455a23b1",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c9f7e70_4cac7184",
         "filename": "ui/events/keycodes/dom_us_layout_data.h",
         "patchSetId": 6
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "9f91bec3_834f1201",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2c9f7e70_4cac7184",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "145fb2f1_d471b835",
         "filename": "ui/events/keycodes/keyboard_codes_posix.h",
         "patchSetId": 6
@@ -169,6 +331,24 @@
       "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da631afc_65b868dd",
+        "filename": "ui/events/keycodes/keyboard_codes_posix.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "145fb2f1_d471b835",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

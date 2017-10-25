@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b73647f_3a10c130",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47044022_90eef49b",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e9b700_de502cea",
         "filename": "ash/accelerators/accelerator_controller.cc",
         "patchSetId": 9
@@ -51,6 +69,24 @@
       "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e590d8_94a8c248",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-25T19:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a9cff0f_b86f5ced",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
