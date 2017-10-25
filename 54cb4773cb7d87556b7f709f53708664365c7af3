@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c77f3b4d_588ecb9e",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T23:20:31Z",
+      "side": 1,
+      "message": "nit: I think this is milliseconds, not microseconds? :)\n\nnit: can we make this, oneWeekAgo, and colors const?\nconst millisecondsPerWeek \u003d ...;\nconst oneWeekAgo \u003d (new Date()).getTime() - millisecondsPerWeek;\nconst colors \u003d ...;",
+      "revId": "54cb4773cb7d87556b7f709f53708664365c7af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e51f74_a67cd6d1",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T23:20:31Z",
+      "side": 1,
+      "message": "nit: just two-space indentation",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "54cb4773cb7d87556b7f709f53708664365c7af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6456b0c_de3a36fa",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T23:20:31Z",
+      "side": 1,
+      "message": "nit: comments should be full sentences, complete with capitalization and punctuation.  So here, just changing to\n// Select a random color for this item.\n\nThat said, generally avoid adding comments that are just describing the next line of code.  This one\u0027s a bit on the edge, but others, like grabbing the url of the page favicon, are self-explanatory from the code below.",
+      "revId": "54cb4773cb7d87556b7f709f53708664365c7af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57692697_948361de",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T23:20:31Z",
+      "side": 1,
+      "message": "If all we need is the host here, we could instead do:\nlet host \u003d new URL(historyItems[i].url).host;",
+      "revId": "54cb4773cb7d87556b7f709f53708664365c7af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae11b6c_afcbecd4",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T23:20:31Z",
+      "side": 1,
+      "message": "nit: generally, prefer\nfaviconImg.src \u003d faviconUrl;\nfor attributes that are directly available on the object and should be overridden.",
+      "revId": "54cb4773cb7d87556b7f709f53708664365c7af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5400396_772981d2",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T23:20:31Z",
+      "side": 1,
+      "message": "If we\u0027re just setting text, let\u0027s do something like:\ntitleText.textContent \u003d host;",
+      "revId": "54cb4773cb7d87556b7f709f53708664365c7af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e940ba_9cff4f4a",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T23:20:31Z",
+      "side": 1,
+      "message": "this is still a bit hard for me to parse.  I wonder if it would be more readable as an html template?\n\n// in the html\n\u003ctemplate id\u003d\"history-item\"\u003e\n  \u003cp class\u003d\"title\"\u003e\n    \u003ca\u003e\u003c/a\u003e\n  \u003c/p\u003e\n  \u003cdiv class\u003d\"favicon\"\u003e\n  ...\n\u003c/template\u003e\n\n// in the js\nfunction constructHistory(historyItems) {\n  let template \u003d document.getElementById(\u0027history-item\u0027);\n  let titleLink \u003d template.content.querySelector(\u0027.title a\u0027);\n  let favicon \u003d template.content.querySelector(\u0027.favicon\u0027);\n  ...\n  for (let item of historyItems) {\n    ...\n    titleLink.href \u003d item[i].url;\n    ...\n    historyDiv.appendChild(document.cloneNode(template.content, true));\n  }\n}\n\nWDYT?  That way, we don\u0027t have to construct the DOM in the JS, and only need to worry about setting the values themselves.",
+      "revId": "54cb4773cb7d87556b7f709f53708664365c7af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

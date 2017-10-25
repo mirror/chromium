@@ -299,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "34036f8d_80388a96",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T23:20:31Z",
+      "side": 1,
+      "message": "I think maybe just requesting \"chrome://favicon/\" will work?",
+      "parentUuid": "80d7d540_b6a15d24",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d090a2a_41cf8b8b",
         "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/manifest.json",
         "patchSetId": 2
