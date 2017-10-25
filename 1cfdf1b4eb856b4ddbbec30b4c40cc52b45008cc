@@ -45,6 +45,144 @@
       "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74d0475_19221413",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T03:49:52Z",
+      "side": 1,
+      "message": "nit: \u003d\u003d\u003d operator should be preferred.",
+      "range": {
+        "startLine": 34,
+        "startChar": 46,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411aba3a_8e303d49",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T03:49:52Z",
+      "side": 1,
+      "message": "Is the equal sign truly optional, as indicated by the question mark? My understand is the equal sign is required.",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 23
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e7cc1f_0bd73e8b",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T03:49:52Z",
+      "side": 1,
+      "message": "nit: I think value.includes(\u0027,\u0027) would be more clear.",
+      "range": {
+        "startLine": 55,
+        "startChar": 10,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456c9978_914f13fe",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T03:49:52Z",
+      "side": 1,
+      "message": "Consider using\n\nfor (const media_file of testParams.media)",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 43
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea0a05a_9e717b2b",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T03:49:52Z",
+      "side": 1,
+      "message": "It should also be useful to show error.message in some way.",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 24
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283d1984_e6572950",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-25T03:49:52Z",
+      "side": 1,
+      "message": "Any reason for not using window.setupTest? This looks inconsistent with the rest of the code.",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 21
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
