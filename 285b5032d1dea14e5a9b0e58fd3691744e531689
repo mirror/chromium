@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "902865cd_bf2d0d2c",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-25T18:03:37Z",
+      "side": 1,
+      "message": "Cool, tnx!",
+      "parentUuid": "5eaa0304_9e42df15",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a74bacc_8048d78a",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 4
