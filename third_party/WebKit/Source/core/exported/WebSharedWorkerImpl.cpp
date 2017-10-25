@@ -60,6 +60,7 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebContentSettingsClient.h"
@@ -312,6 +313,10 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
 
   ContentSecurityPolicy* content_security_policy =
       main_script_loader_->ReleaseContentSecurityPolicy();
+  ReferrerPolicy referrer_policy = kReferrerPolicyDefault;
+  SecurityPolicy::ReferrerPolicyFromHeaderValue(
+      main_script_loader_->GetReferrerPolicy(),
+      kDoNotSupportReferrerPolicyLegacyKeywords, &referrer_policy);
   auto worker_settings = std::make_unique<WorkerSettings>(
       shadow_page_->GetDocument()->GetFrame()->GetSettings());
   auto global_scope_creation_params =
@@ -320,8 +325,8 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
           nullptr /* cached_meta_data */,
           content_security_policy ? content_security_policy->Headers().get()
                                   : nullptr,
-          main_script_loader_->GetReferrerPolicy(), starter_origin,
-          worker_clients, main_script_loader_->ResponseAddressSpace(),
+          referrer_policy, starter_origin, worker_clients,
+          main_script_loader_->ResponseAddressSpace(),
           main_script_loader_->OriginTrialTokens(), std::move(worker_settings),
           kV8CacheOptionsDefault, std::move(pending_interface_provider_));
 
