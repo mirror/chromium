@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "3996ee9a_89e3f7ae",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3053,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T00:29:03Z",
+      "side": 1,
+      "message": "Would also link to bug 371690 so we know when the TODO is actionable.",
+      "parentUuid": "67b68091_38601b73",
+      "revId": "9a6a7d00bdec4073597e83049a7744991e9a2e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e6a744_d6dc57b4",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T00:29:03Z",
+      "side": 1,
+      "message": "sends -\u003e send (?)\n\n(Syntactically, it\u0027s unclear if sending the FetchEvents is done by CloneContainerHostPtrInfo() or by the caller of GetControllerServiceWorker().)",
+      "range": {
+        "startLine": 131,
+        "startChar": 30,
+        "endLine": 131,
+        "endChar": 36
+      },
+      "revId": "9a6a7d00bdec4073597e83049a7744991e9a2e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78f516a5_6a3c7fe1",
         "filename": "content/renderer/service_worker/worker_fetch_context_impl.cc",
         "patchSetId": 9
@@ -70,6 +111,23 @@
     },
     {
       "key": {
+        "uuid": "0204a08d_c7955c20",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T00:29:03Z",
+      "side": 1,
+      "message": "it\u0027s not really clear from the name this function is used for service worker interception... I\u0027d maybe name this MaybeInitializeSubresourceLoaderFactoryForServiceWorker()?",
+      "revId": "9a6a7d00bdec4073597e83049a7744991e9a2e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9cb0504_d56fbebf",
         "filename": "content/renderer/service_worker/worker_fetch_context_impl.h",
         "patchSetId": 9
@@ -81,6 +139,23 @@
       "writtenOn": "2017-10-24T16:13:58Z",
       "side": 1,
       "message": "nit: route -\u003e routes",
+      "revId": "9a6a7d00bdec4073597e83049a7744991e9a2e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f08a11_a86f809c",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T00:29:03Z",
+      "side": 1,
+      "message": "Could you add service_worker to the name so it\u0027s clear this is only for service worker interception?\n\nThis is the factory used for subresource loads when there is a controller service worker, imo \"controller service worker\" is the key bit of info rather than \"subresource\".\n\nservice_worker_subresource_loader_factory_ (mimicking the class name) or just service_worker_url_loader_factory_ ?\n\nCould also be good to have a comment taht it\u0027s only set when there is a controller service worker.\n\nAnd would it make sense to group these with lines 113-114?",
       "revId": "9a6a7d00bdec4073597e83049a7744991e9a2e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
