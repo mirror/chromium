@@ -54,6 +54,7 @@
       next();
     },
     async function selectingGroup(next) {
+      sidebar._treeElements[0].select();
       sidebar._tree.selectNext();
       TestRunner.addResult('Selecting item: ' + sidebar._selectedTreeElement.title);
       TestRunner.addResult('MESSAGES:');

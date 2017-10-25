@@ -44,7 +44,6 @@ Console.ConsoleSidebar = class extends UI.VBox {
     this._appendGroup(
         Console.ConsoleSidebar._groupSingularName.Verbose, [], Console.ConsoleFilter.singleLevelMask(Levels.Verbose),
         UI.Icon.create('mediumicon-bug'), badgePool);
-    this._treeElements[0].select();
   }
 
   /**
@@ -94,6 +93,7 @@ Console.ConsoleSidebar = class extends UI.VBox {
   _selectionChanged(event) {
     this._selectedTreeElement = /** @type {!UI.TreeElement} */ (event.data);
     this.dispatchEventToListeners(Console.ConsoleSidebar.Events.FilterSelected);
+    Host.userMetrics.actionTaken(Host.UserMetrics.Action.ConsoleSidebarItemSelected);
   }
 };
 

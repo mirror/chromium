@@ -8275,6 +8275,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="28" label="Coverage started"/>
   <int value="29" label="Audits started"/>
   <int value="30" label="Audits finished"/>
+  <int value="31" label="Console sidebar item selected"/>
 </enum>
 
 <enum name="DevToolsPanel">
