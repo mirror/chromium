@@ -50,6 +50,24 @@
       "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6491886d_02982de9",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2513,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-25T17:44:51Z",
+      "side": 1,
+      "message": "I\u0027d definitely appreciate some input on this. I\u0027m not very clear on the RenderFrame\u003c-\u003eRenderWidget relationship but my understanding was that the same widget/compositor can render a subtree of RenderFrames, which will have different URLs. So I wasn\u0027t sure what to use here. I tried looking at the scroll UKM for an example and looks like they just take the main frame URL irrespective of which frame the event went to (https://cs.chromium.org/chromium/src/content/browser/renderer_host/input/render_widget_host_latency_tracker.cc?dr\u0026l\u003d436).",
+      "parentUuid": "50b0aa4d_ea17ea62",
+      "revId": "bd7ebd9a8e10fd29b432514102440e0615636003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
