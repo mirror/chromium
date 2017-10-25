@@ -52,6 +52,24 @@
       "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede86b39_cb4b86b8",
+        "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T17:12:25Z",
+      "side": 1,
+      "message": "no, portalFrame should not contain extension URLs.\n\nportalFrame used to contain chrome-extension://\u003ccomponent_extension\u003e/redirect.html, but this cl is changing that - instead of embedding redirect.html, the redirect logic is implemented by mobile.util.postDataToWebview:\n1. initialize the webview with a data url\n2. run a script that initializes and submits the form loaded in the webview\n(the form action is set to the carrier specific URL)\n\nNote that this all is what redirect.html used to do.",
+      "parentUuid": "91c7b6cd_f4893001",
+      "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
