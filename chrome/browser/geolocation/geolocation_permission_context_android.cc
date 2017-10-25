@@ -15,6 +15,8 @@
 #include "chrome/browser/android/search_geolocation/search_geolocation_disclosure_tab_helper.h"
 #include "chrome/browser/android/search_geolocation/search_geolocation_service.h"
 #include "chrome/browser/android/tab_android.h"
+#include "chrome/browser/android/webapk/chrome_webapk_host.h"
+#include "chrome/browser/permissions/permission_apk_delegate_android.h"
 #include "chrome/browser/permissions/permission_request_id.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/permissions/permission_update_infobar_delegate_android.h"
@@ -74,6 +76,12 @@ void LogLocationSettingsMetric(
                                     LocationSettingsDialogBackOff::kCount);
 }
 
+std::string GetPackageName(const PermissionRequestID& id) {
+  content::RenderFrameHost* render_frame_host =
+      content::RenderFrameHost::FromID(id.render_process_id(), id.render_frame_id());
+  return render_frame_host != nullptr ? render_frame_host->GetPackageName() : "";
+}
+
 }  // namespace
 
 // static
@@ -100,9 +108,22 @@ ContentSetting GeolocationPermissionContextAndroid::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin) const {
+  LOG(ERROR) << "ABCD, GetPermissionStatusInternal step1!!";
   ContentSetting value =
       GeolocationPermissionContext::GetPermissionStatusInternal(
           render_frame_host, requesting_origin, embedding_origin);
+  std::string package_name = render_frame_host != nullptr
+      ? render_frame_host->GetPackageName() : "";
+  LOG(ERROR) << "ABCD, GetPermissionStatusInternal step1 with package_name =" << package_name <<"!!";
+  //base::debug::StackTrace().Print();
+  if (!package_name.empty()) {
+    std::vector<ContentSettingsType> content_settings_types;
+    content_settings_types.push_back(content_settings_type());
+    value = ChromeWebApkHost::GetPermissionStatus(
+        package_name, value, embedding_origin == requesting_origin,
+        content_settings_types);
+    LOG(ERROR) << "ABCD, GetPermissionStatusInternal with permission status = "<< value;
+  }
 
   if (value == CONTENT_SETTING_ASK && requesting_origin == embedding_origin) {
     // Consult the DSE Geolocation setting. Note that this only needs to be
@@ -111,6 +132,7 @@ ContentSetting GeolocationPermissionContextAndroid::GetPermissionStatusInternal(
     // consistent with the content setting.
     SearchGeolocationService* search_helper =
         SearchGeolocationService::Factory::GetForBrowserContext(profile());
+  LOG(ERROR) << "ABCD, GetPermissionStatusInternal step2 !!";
 
     // If the user is incognito, use the DSE Geolocation setting from the
     // original profile - but only if it is BLOCK.
@@ -125,13 +147,16 @@ ContentSetting GeolocationPermissionContextAndroid::GetPermissionStatusInternal(
       if (!search_helper->GetDSEGeolocationSetting()) {
         // If the DSE setting is off, always return BLOCK.
         value = CONTENT_SETTING_BLOCK;
+        LOG(ERROR) << "ABCD, GetPermissionStatusInternal step3.1 !!";
       } else if (!profile()->IsOffTheRecord()) {
         // Otherwise, return ALLOW only if this is not incognito.
         value = CONTENT_SETTING_ALLOW;
+        LOG(ERROR) << "ABCD, GetPermissionStatusInternal step3.2 !!";
       }
     }
   }
 
+        LOG(ERROR) << "ABCD, GetPermissionStatusInternal step4 with value =" << value << " !!!";
   return value;
 }
 
@@ -152,13 +177,16 @@ void GeolocationPermissionContextAndroid::RequestPermission(
     const GURL& requesting_frame_origin,
     bool user_gesture,
     const BrowserPermissionCallback& callback) {
+  LOG(ERROR) << "ABCD,  GeolocationPermissionContextAndroid::RequestPermission STEP1!!";
+  const std::string& package_name = GetPackageName(id);
   if (!IsLocationAccessPossible(web_contents, requesting_frame_origin,
-                                user_gesture)) {
+                                user_gesture, package_name)) {
     NotifyPermissionSet(id, requesting_frame_origin,
                         web_contents->GetLastCommittedURL().GetOrigin(),
                         callback, false /* persist */, CONTENT_SETTING_BLOCK);
     return;
   }
+  LOG(ERROR) << "ABCD,  GeolocationPermissionContextAndroid::RequestPermission STEP2!!";
 
   GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
   ContentSetting content_setting =
@@ -166,22 +194,45 @@ void GeolocationPermissionContextAndroid::RequestPermission(
           nullptr /* render_frame_host */, requesting_frame_origin,
           embedding_origin)
           .content_setting;
-  std::vector<ContentSettingsType> content_settings_types;
-  content_settings_types.push_back(CONTENT_SETTINGS_TYPE_GEOLOCATION);
-  if (content_setting == CONTENT_SETTING_ALLOW &&
-      PermissionUpdateInfoBarDelegate::ShouldShowPermissionInfobar(
-          web_contents, content_settings_types)) {
-    permission_update_infobar_ = PermissionUpdateInfoBarDelegate::Create(
-        web_contents, content_settings_types,
-        base::Bind(
-            &GeolocationPermissionContextAndroid
-                ::HandleUpdateAndroidPermissions,
-            weak_factory_.GetWeakPtr(), id, requesting_frame_origin,
-            embedding_origin, callback));
-
+    std::vector<ContentSettingsType> content_settings_types;
+    content_settings_types.push_back(CONTENT_SETTINGS_TYPE_GEOLOCATION);
+  if (!package_name.empty()) {
+    if (ChromeWebApkHost::GetPermissionStatus(
+         package_name, content_setting, embedding_origin == requesting_frame_origin,
+         content_settings_types) != CONTENT_SETTING_ALLOW) {
+      PermissionApkDelegateAndroid* delegate =
+          PermissionApkDelegateAndroid::Get(package_name);
+      delegate->RequestPermission(
+          content_settings_types,
+          base::Bind(&GeolocationPermissionContextAndroid
+                        ::HandleUpdateAndroidPermissions,
+                      weak_factory_.GetWeakPtr(), id, requesting_frame_origin,
+                      embedding_origin, callback));
+  LOG(ERROR) << "ABCD,  GeolocationPermissionContextAndroid::RequestPermission STEP3!!";
+      return;
+    }
+  LOG(ERROR) << "ABCD,  GeolocationPermissionContextAndroid::RequestPermission STEP4!!";
+    HandleUpdateAndroidPermissions(id, requesting_frame_origin, embedding_origin,
+                                   callback, true);
     return;
+  } else {
+  LOG(ERROR) << "ABCD,  GeolocationPermissionContextAndroid::RequestPermission STEP5!!";
+    if (content_setting == CONTENT_SETTING_ALLOW &&
+        PermissionUpdateInfoBarDelegate::ShouldShowPermissionInfobar(
+            web_contents, content_settings_types)) {
+      permission_update_infobar_ = PermissionUpdateInfoBarDelegate::Create(
+          web_contents, content_settings_types,
+          base::Bind(
+              &GeolocationPermissionContextAndroid
+                  ::HandleUpdateAndroidPermissions,
+              weak_factory_.GetWeakPtr(), id, requesting_frame_origin,
+              embedding_origin, callback));
+  LOG(ERROR) << "ABCD,  GeolocationPermissionContextAndroid::RequestPermission STEP6!!";
+      return;
+    }
   }
 
+  LOG(ERROR) << "ABCD,  GeolocationPermissionContextAndroid::RequestPermission STEP7!!";
   GeolocationPermissionContext::RequestPermission(
       web_contents, id, requesting_frame_origin, user_gesture, callback);
 }
@@ -189,6 +240,9 @@ void GeolocationPermissionContextAndroid::RequestPermission(
 void GeolocationPermissionContextAndroid::CancelPermissionRequest(
     content::WebContents* web_contents,
     const PermissionRequestID& id) {
+  if (!GetPackageName(id).empty())
+    return;
+
   // TODO(timloh): This could cancel a infobar from an unrelated request.
   if (permission_update_infobar_) {
     permission_update_infobar_->RemoveSelf();
@@ -396,7 +450,17 @@ GeolocationPermissionContextAndroid::LocationSettingsBackOffLevel(
 bool GeolocationPermissionContextAndroid::IsLocationAccessPossible(
     content::WebContents* web_contents,
     const GURL& requesting_origin,
-    bool user_gesture) {
+    bool user_gesture,
+    const std::string& package_name) {
+  if (!package_name.empty()) {
+    return
+        (ChromeWebApkHost::HasAndroidLocationPermission(package_name) ||
+            !ChromeWebApkHost::IsPermissionRevokedByPolicy(package_name)) &&
+        (location_settings_->IsSystemLocationSettingEnabled() ||
+        CanShowLocationSettingsDialog(requesting_origin, user_gesture,
+                                      true /* ignore_backoff */));
+  }
+
   return (location_settings_->HasAndroidLocationPermission() ||
           location_settings_->CanPromptForAndroidLocationPermission(
               web_contents)) &&
