@@ -281,6 +281,30 @@
     },
     {
       "key": {
+        "uuid": "77f5b07e_5de41dd6",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T07:22:55Z",
+      "side": 1,
+      "message": "I think this comment may have been overlooked.",
+      "parentUuid": "089cc359_05cf23fc",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72b667f4_1f67e670",
         "filename": "chrome/gpu/protected_buffer_manager.cc",
         "patchSetId": 6
