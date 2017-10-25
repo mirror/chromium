@@ -16,6 +16,24 @@
       "revId": "a6660b1e50c5e84643f8ce54fbf0e832658b5430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1882c4_e2e9ad9d",
+        "filename": "chrome/browser/extensions/process_manager_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-25T20:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70aacbf8_b7f15c47",
+      "revId": "a6660b1e50c5e84643f8ce54fbf0e832658b5430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
