@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5506d18_f920e9c8",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-25T01:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46479b14_8a5e1e87",
+      "range": {
+        "startLine": 75,
+        "startChar": 20,
+        "endLine": 75,
+        "endChar": 48
+      },
+      "revId": "590ce00deaedcf3478856abea72179780faa69fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55775378_e634874c",
         "filename": "ash/display/mirror_window_controller.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "590ce00deaedcf3478856abea72179780faa69fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec772017_76fdccbf",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-25T01:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55775378_e634874c",
+      "range": {
+        "startLine": 334,
+        "startChar": 13,
+        "endLine": 334,
+        "endChar": 37
+      },
+      "revId": "590ce00deaedcf3478856abea72179780faa69fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "94fb6296_c6db41e3",
+        "filename": "ash/display/window_tree_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-25T01:23:34Z",
+      "side": 1,
+      "message": "This enables cursor compositing, so that cursor could be mirrored to destination\ndisplays along with other display content through reflector.",
+      "parentUuid": "3cbcc483_63e726a0",
+      "range": {
+        "startLine": 730,
+        "startChar": 18,
+        "endLine": 730,
+        "endChar": 48
+      },
+      "revId": "590ce00deaedcf3478856abea72179780faa69fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0af6d431_7677f54c",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "590ce00deaedcf3478856abea72179780faa69fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49692819_bb186c3c",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-25T01:23:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0af6d431_7677f54c",
+      "revId": "590ce00deaedcf3478856abea72179780faa69fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
