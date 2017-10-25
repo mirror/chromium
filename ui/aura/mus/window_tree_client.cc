@@ -165,8 +165,8 @@ void DispatchEventToTarget(ui::Event* event, WindowMus* target) {
 
 // Use for acks from mus that are expected to always succeed and if they don't
 // a crash is triggered.
-void OnAckMustSucceed(bool success) {
-  CHECK(success);
+void OnAckMustSucceed(int context, bool success) {
+  CHECK(success) << "Context: " << context;
 }
 
 Id GetServerIdForWindow(Window* window) {
@@ -831,7 +831,7 @@ void WindowTreeClient::OnWindowMusCreated(WindowMus* window) {
       window_manager_client_->SetDisplayRoot(
           display, display_init_params->viewport_metrics.Clone(),
           display_init_params->is_primary_display, window->server_id(),
-          display_init_params->mirrors, base::Bind(&OnAckMustSucceed));
+          display_init_params->mirrors, base::Bind(&OnAckMustSucceed, 1));
     }
   }
 }
@@ -1641,7 +1641,7 @@ void WindowTreeClient::SetBlockingContainers(
   }
   window_manager_client_->SetBlockingContainers(
       std::move(transport_all_blocking_containers),
-      base::Bind(&OnAckMustSucceed));
+      base::Bind(&OnAckMustSucceed, 2));
 }
 
 void WindowTreeClient::GetWindowManager(
@@ -2098,7 +2098,7 @@ void WindowTreeClient::SetDisplayConfiguration(
             : display::kInvalidDisplayId;
     window_manager_client_->SetDisplayConfiguration(
         displays, std::move(viewport_metrics), primary_display_id,
-        internal_display_id, mirrors, base::Bind(&OnAckMustSucceed));
+        internal_display_id, mirrors, base::Bind(&OnAckMustSucceed, 3));
   }
 }
 
@@ -2117,7 +2117,7 @@ void WindowTreeClient::AddDisplayReusingWindowTreeHost(
     window_manager_client_->SetDisplayRoot(
         display, std::move(viewport_metrics), is_primary_display,
         display_root_window->server_id(), mirrors,
-        base::Bind(&OnAckMustSucceed));
+        base::Bind(&OnAckMustSucceed, 4));
     window_tree_host->compositor()->SetLocalSurfaceId(
         display_root_window->GetOrAllocateLocalSurfaceId(
             window_tree_host->GetBoundsInPixels().size()));
@@ -2134,7 +2134,7 @@ void WindowTreeClient::SwapDisplayRoots(WindowTreeHostMus* window_tree_host1,
   window_tree_host2->set_display_id(display_id1);
   if (window_manager_client_) {
     window_manager_client_->SwapDisplayRoots(display_id1, display_id2,
-                                             base::Bind(&OnAckMustSucceed));
+                                             base::Bind(&OnAckMustSucceed, 5));
   }
 }
 
