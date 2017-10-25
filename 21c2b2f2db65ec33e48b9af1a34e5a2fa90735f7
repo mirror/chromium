@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26106fcf_d46a8941",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T23:54:48Z",
+      "side": 1,
+      "message": "It looks like this PointerWatcher responds to any event, not just pen/stylus events. Do you need to check the event type, like the old code did?",
+      "revId": "21c2b2f2db65ec33e48b9af1a34e5a2fa90735f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37bfd512_82bae490",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T23:54:48Z",
+      "side": 1,
+      "message": "It looks like this PointerWatcher responds to any event, not just pen/stylus events. Do you need to check the event type, like the old code did?",
+      "revId": "21c2b2f2db65ec33e48b9af1a34e5a2fa90735f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2838be2_ee3e1b4d",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T23:54:48Z",
+      "side": 1,
+      "message": "Should this be !HasSeenStylus? It seems odd to check that the pref is true, then immediately set it to true.",
+      "revId": "21c2b2f2db65ec33e48b9af1a34e5a2fa90735f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d6e709_449fba29",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T23:54:48Z",
+      "side": 1,
+      "message": "Please add a test that a non-pen event does not show the bubble.",
+      "revId": "21c2b2f2db65ec33e48b9af1a34e5a2fa90735f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4305bbbb_660e9ad9",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-25T23:54:48Z",
+      "side": 1,
+      "message": "Should this check that the event is a stylus event?",
+      "revId": "21c2b2f2db65ec33e48b9af1a34e5a2fa90735f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
