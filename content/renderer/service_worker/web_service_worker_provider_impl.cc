@@ -258,16 +258,21 @@ void WebServiceWorkerProviderImpl::OnDidGetRegistration(
   }
 
   DCHECK(!error_msg);
-  DCHECK(registration);
-  DCHECK(attributes);
-  scoped_refptr<WebServiceWorkerRegistrationImpl> impl;
-  // The handle id is invalid if no corresponding registration has been found
-  // or the found one is uninstalling.
-  if (registration->handle_id !=
-      blink::mojom::kInvalidServiceWorkerRegistrationHandleId) {
-    impl = GetDispatcher()->GetOrCreateRegistrationForServiceWorkerClient(
-        std::move(registration), *attributes);
+  // |registration| is nullptr if there is no registration at the scope or it's
+  // uninstalling.
+  if (!registration) {
+    callbacks->OnSuccess(nullptr);
+    return;
   }
+  DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationId,
+            registration->registration_id);
+  DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationHandleId,
+            registration->handle_id);
+  DCHECK(attributes);
+  scoped_refptr<WebServiceWorkerRegistrationImpl> impl =
+      GetDispatcher()->GetOrCreateRegistrationForServiceWorkerClient(
+          std::move(registration), *attributes);
+  DCHECK(impl);
   callbacks->OnSuccess(
       WebServiceWorkerRegistrationImpl::CreateHandle(std::move(impl)));
 }
