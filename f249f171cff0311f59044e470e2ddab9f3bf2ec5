@@ -52,6 +52,24 @@
       "revId": "f249f171cff0311f59044e470e2ddab9f3bf2ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb734f7c_d4c303f4",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-25T16:43:56Z",
+      "side": 1,
+      "message": "Yes, the validation happens during deserialization. The new check I added (https://chromium-review.googlesource.com/c/chromium/src/+/699765/15/components/printing/browser/print_composite_client.cc#53) is for checking Upwrap() error. For example, since our handle is optional, it is possible to have mojo::kInvalidHandleValue, but still pass the deserialization validation. However it will fail in Upwrap()",
+      "parentUuid": "9d4b31b0_f656d741",
+      "revId": "f249f171cff0311f59044e470e2ddab9f3bf2ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
