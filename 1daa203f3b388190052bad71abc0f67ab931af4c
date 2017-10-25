@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8f4f510_c0f818b9",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-25T23:14:41Z",
+      "side": 1,
+      "message": "Send some comments over email with screencasts. Repeating here for posterity:\n\nThe fade-out animation is affected by the dom-if changes (revealed if you set the animation speed set to 10% to make it very obvious).\n\nNote how the dom-if is applying display: none, before the fade-out has finished, which is undesirable.\n\nI am thinking that a better approach is to listen for the events dispatched by the view-manager (see [1]) when an view has been exited, and change the boolean at that time, instead of changing the boolean before switchView() has been called.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/view_manager.js?sq\u003dpackage:chromium\u0026dr\u0026l\u003d69\n\nBasically the goal is that this optimization should not be causing any visual behavioral change.",
+      "revId": "1daa203f3b388190052bad71abc0f67ab931af4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
