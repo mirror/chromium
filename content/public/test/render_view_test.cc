@@ -111,15 +111,6 @@ bool GetWindowsKeyCode(char ascii_character, int* key_code) {
   }
 }
 
-// Returns an InterfaceProvider that is safe to call into, but will not actually
-// service any interface requests.
-service_manager::mojom::InterfaceProviderPtr CreateIsolatedInterfaceProvider() {
-  ::service_manager::mojom::InterfaceProviderPtr
-      isolated_interface_provider_proxy;
-  mojo::MakeRequest(&isolated_interface_provider_proxy);
-  return isolated_interface_provider_proxy;
-}
-
 }  // namespace
 
 namespace content {
@@ -308,15 +299,18 @@ void RenderViewTest::SetUp() {
   compositor_deps_.reset(new FakeCompositorDependencies);
   mock_process_.reset(new MockRenderProcess);
 
+  ::service_manager::mojom::InterfaceProviderPtr interface_provider;
+  main_frame_initial_interface_provider_request_ =
+      mojo::MakeRequest(&interface_provider);
+
   mojom::CreateViewParamsPtr view_params = mojom::CreateViewParams::New();
   view_params->opener_frame_route_id = MSG_ROUTING_NONE;
   view_params->window_was_created_with_opener = false;
   view_params->renderer_preferences = RendererPreferences();
   view_params->web_preferences = WebPreferences();
   view_params->view_id = kRouteId;
+  view_params->main_frame_interface_provider = std::move(interface_provider);
   view_params->main_frame_routing_id = kMainFrameRouteId;
-  view_params->main_frame_interface_provider =
-      CreateIsolatedInterfaceProvider();
   view_params->main_frame_widget_routing_id = kMainFrameWidgetRouteId;
   view_params->session_storage_namespace_id = kInvalidSessionStorageNamespaceId;
   view_params->swapped_out = false;

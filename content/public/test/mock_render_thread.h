@@ -128,6 +128,13 @@ class MockRenderThread : public RenderThread {
   void OnCreateWidget(int opener_id,
                       blink::WebPopupType popup_type,
                       int* route_id);
+
+  // Returns the request end of the InterfaceProvider interface whose client end
+  // was passed in to the constructor of RenderFrame with the given |routing_id|
+  // to service GetInterface requests for its initial empty document; if any.
+  service_manager::mojom::InterfaceProviderRequest
+  TakeInitialInterfaceProviderRequestForFrame(int32_t routing_id);
+
  protected:
   // This function operates as a regular IPC listener. Subclasses
   // overriding this should first delegate to this implementation.
@@ -157,6 +164,9 @@ class MockRenderThread : public RenderThread {
   int32_t new_window_main_frame_routing_id_;
   int32_t new_window_main_frame_widget_routing_id_;
   int32_t new_frame_routing_id_;
+
+  std::map<int32_t, service_manager::mojom::InterfaceProviderRequest>
+      frame_routing_id_to_initial_interface_provider_requests_;
 
   // The last known good deserializer for sync messages.
   std::unique_ptr<IPC::MessageReplyDeserializer> reply_deserializer_;

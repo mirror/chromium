@@ -20,6 +20,7 @@
 #include "content/public/common/page_state.h"
 #include "content/public/test/mock_render_thread.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
@@ -213,6 +214,11 @@ class RenderViewTest : public testing::Test, blink::WebLeakDetectorClient {
   // For Mojo.
   std::unique_ptr<base::TestIOThread> test_io_thread_;
   std::unique_ptr<mojo::edk::ScopedIPCSupport> ipc_support_;
+
+  // The request end of the InterfaceProvider interface servicing the initial
+  // empty document in the main frame.
+  service_manager::mojom::InterfaceProviderRequest
+      main_frame_initial_interface_provider_request_;
 
 #if defined(OS_MACOSX)
   std::unique_ptr<base::mac::ScopedNSAutoreleasePool> autorelease_pool_;
