@@ -14,6 +14,48 @@
 @synthesize tabModel = _tabModel;
 @synthesize webToolbarController = _webToolbarController;
 
+- (ToolbarController*)toolbarController {
+  return self.webToolbarController;
+}
+
+- (id<VoiceSearchControllerDelegate>)voiceSearchDelegate {
+  return self.webToolbarController;
+}
+
+- (id<ActivityServicePositioner>)activityServicePositioner {
+  return self.webToolbarController;
+}
+
+- (id<TabHistoryPositioner>)tabHistoryPositioner {
+  return self.webToolbarController;
+}
+
+- (id<TabHistoryUIUpdater>)tabHistoryUIUpdater {
+  return self.webToolbarController;
+}
+
+- (id<QRScannerResultLoading>)QRScannerResultLoader {
+  return self.webToolbarController;
+}
+
+- (void)setToolbarDelegate:(id<WebToolbarDelegate>)delegate {
+  self.webToolbarController.delegate = delegate;
+}
+
+#pragma mark - WebToolbarController interface
+
+- (void)createToolbarWithDelegate:(id<WebToolbarDelegate>)delegate
+                        urlLoader:(id<UrlLoader>)urlLoader
+                     browserState:(ios::ChromeBrowserState*)browserState
+                       dispatcher:(id<ApplicationCommands, BrowserCommands>)
+                                      dispatcher {
+  self.webToolbarController =
+      [[WebToolbarController alloc] initWithDelegate:delegate
+                                           urlLoader:urlLoader
+                                        browserState:browserState
+                                          dispatcher:dispatcher];
+}
+
 - (void)selectedTabChanged {
   [self.webToolbarController selectedTabChanged];
 }

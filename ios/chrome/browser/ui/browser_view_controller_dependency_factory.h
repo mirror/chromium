@@ -47,12 +47,6 @@ class ChromeBrowserState;
 - (ToolbarModelIOS*)newToolbarModelIOSWithDelegate:
     (ToolbarModelDelegateIOS*)delegate;
 
-- (WebToolbarController*)
-newWebToolbarControllerWithDelegate:(id<WebToolbarDelegate>)delegate
-                          urlLoader:(id<UrlLoader>)urlLoader
-                         dispatcher:(id<ApplicationCommands, BrowserCommands>)
-                                        dispatcher;
-
 // Returns a new keyboard commands coordinator to handle keyboard commands.
 - (KeyCommandsProvider*)newKeyCommandsProvider;
 
