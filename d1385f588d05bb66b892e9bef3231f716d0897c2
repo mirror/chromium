@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "967baf58_94f10aec",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T16:59:06Z",
+      "side": 1,
+      "message": "Add a comment explaining a bit.",
+      "revId": "d1385f588d05bb66b892e9bef3231f716d0897c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
