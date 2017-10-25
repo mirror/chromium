@@ -16,6 +16,24 @@
       "revId": "cf4c3f6e16880842dfaafd4c95dc5559554326b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab22a054_f8957997",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas-api/textMetrics.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-25T16:58:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd81d2b_96ba8061",
+      "revId": "cf4c3f6e16880842dfaafd4c95dc5559554326b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
