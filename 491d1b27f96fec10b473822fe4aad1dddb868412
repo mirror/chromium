@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "396499e0_e794ed97",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-25T10:07:14Z",
+      "side": 1,
+      "message": "Mildly prefer static function for the discoverability, unless you explicitly preferred this pattern?",
+      "revId": "491d1b27f96fec10b473822fe4aad1dddb868412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
