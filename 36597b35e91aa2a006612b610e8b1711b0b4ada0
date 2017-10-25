@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "bcbe75cd_033d6d04",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:35:13Z",
+      "side": 1,
+      "message": "Suggest changing the comment to:\n\n// Also update the visual rects of all line boxes below this box.",
+      "revId": "36597b35e91aa2a006612b610e8b1711b0b4ada0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e234bb77_7c98b72a",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
         "patchSetId": 29
@@ -66,6 +83,24 @@
       "side": 1,
       "message": "NGPaintFragment tree is at maximum the same as NGPhysicalFragment tree, which is almost the same as LayoutObject tree at this point. It\u0027s just:\n1. Allow mutation for paint-related properties when NGPhysicalFragment is immutable.\n2. The subtree of NGPhysicalFragment tree can be shared in future. In this case, multiple NGPaintFragment can share one NGPhysicalFragment.\n\nAt the phase 1, it\u0027s even shorter; we limit NGPaintFragment tree only for inline, so the recursion is only for the depth of inline tree. We run this recursion for every block that has inline children.\n\nThis is not double recursion, it\u0027s a simple tree structure.",
       "parentUuid": "e234bb77_7c98b72a",
+      "revId": "36597b35e91aa2a006612b610e8b1711b0b4ada0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40eb4196_2786e708",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:35:13Z",
+      "side": 1,
+      "message": "\u003e NGPaintFragment tree is at maximum the same as NGPhysicalFragment tree, which is almost the same as LayoutObject tree at this point. It\u0027s just:\n\u003e 1. Allow mutation for paint-related properties when NGPhysicalFragment is immutable.\n\u003e 2. The subtree of NGPhysicalFragment tree can be shared in future. In this case, multiple NGPaintFragment can share one NGPhysicalFragment.\n\u003e \n\u003e At the phase 1, it\u0027s even shorter; we limit NGPaintFragment tree only for inline, so the recursion is only for the depth of inline tree. We run this recursion for every block that has \ninline children.\n\nSo this recursion goes into the inline (inline text only, right? no inline boxes or floats?) tree underneath a single box? Equivalent to the InlineBox tree in the non-NG code?\n\n\u003e \n\u003e This is not double recursion, it\u0027s a simple tree structure.\n\nI said double recursion because you are calling into your new recursive algorithm from with\nthe recursive algorithm of the pre-paint tree walk. Wanted to make sure this is performant/\nwhat you wanted to do.",
+      "parentUuid": "14d58a59_405d737b",
       "revId": "36597b35e91aa2a006612b610e8b1711b0b4ada0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

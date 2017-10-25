@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6845dc9_2a564f97",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:35:13Z",
+      "side": 1,
+      "message": "When would this conditional return false? (Perhaps there is a good\nreason, partly trying to understand NG better.)\n\nAlso, I think it makes more sense to update this inside of PaintInvalidator::InvalidatePaint,\nafter visual rect update. In addition to matching the implementation pattern of the tree\nwalk, it should be able to take advantage of dirty bit avoidance for whether the visual\nrect needs updating.\n\nIs there a reason why you needed things from children? InlineBox,\nInlineTextBox, etc don\u0027t have their own VisualRects in non-NG mode anyway.",
+      "revId": "7fbdf45483b37b1c8053a69efb1a6106f690b259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41be0e83_8ec88d33",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T17:35:13Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like the right time to be creating the children and attaching them.\nThe NGPaintFragments for non-inline text is already populated before the pre-paint tree\nwalk, why not also inline text runs?",
+      "revId": "7fbdf45483b37b1c8053a69efb1a6106f690b259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
