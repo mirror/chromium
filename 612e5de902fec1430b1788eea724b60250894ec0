@@ -34,6 +34,24 @@
       "revId": "612e5de902fec1430b1788eea724b60250894ec0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52aef1d_8f07be24",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-25T22:03:54Z",
+      "side": 1,
+      "message": "An, in that case please file a bug for this and reference it here and in the header in base",
+      "parentUuid": "095b9b21_7daa32aa",
+      "revId": "612e5de902fec1430b1788eea724b60250894ec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
