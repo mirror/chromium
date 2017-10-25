@@ -122,6 +122,24 @@
       "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d095e0_654802e3",
+        "filename": "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T23:47:40Z",
+      "side": 1,
+      "message": "Mmmh you\u0027re right. I think it\u0027s simplest to just walk thru the vector and erase ptrs that have encountered_error() whenever we change mode or add a new watcher. Then when a RenderThreadImpl goes away, and it\u0027s pipe is closed, it\u0027ll get cleaned up eventually. Done in the last patchset.",
+      "parentUuid": "ea6b555f_6375d54b",
+      "revId": "37d3f60adf89ff3955567545d8653e03ee80e4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
