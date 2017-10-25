@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b2a79612_bfb67e01",
+        "filename": "chrome/browser/profiles/profile_io_data.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-25T12:50:29Z",
+      "side": 1,
+      "message": "Not done: To be consistent with the rest of file it has to be either:\ndice_enabled or enable_dice\n\nSee other members of the class:\nenable_referrers_, enable_do_not_track_, safe_browsing_enabled_\n\nI\u0027m ok doing a whole pass on the file to convert everything to is_XXX_enabled_ as another CL though",
+      "parentUuid": "930fc60c_c5a53c83",
+      "range": {
+        "startLine": 190,
+        "startChar": 21,
+        "endLine": 190,
+        "endChar": 33
+      },
+      "revId": "16423a02dc244b4f65f4ba4b633aaa9c5b6c283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6af8bff_310654ed",
         "filename": "chrome/browser/signin/dice_response_handler.cc",
         "patchSetId": 29
@@ -45,6 +69,30 @@
       "revId": "16423a02dc244b4f65f4ba4b633aaa9c5b6c283e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63051a97_0fd52eb3",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-25T12:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6af8bff_310654ed",
+      "range": {
+        "startLine": 321,
+        "startChar": 75,
+        "endLine": 321,
+        "endChar": 78
+      },
+      "revId": "16423a02dc244b4f65f4ba4b633aaa9c5b6c283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
