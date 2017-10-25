@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1652ee5_adc061ab",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-25T19:48:26Z",
+      "side": 1,
+      "message": "Hm, this is a great point. The main problem with moving to sequences is that I want the observer interface to work for all objects on the UI thread, without potentially posting N tasks for N observers.\n\nI could imagine an interface like:\n\nAddObserver(Observer* obs, scoped_refptr\u003cSequencedTaskRunner\u003e task_runner);\n\nWith an associated\nstd::map\u003cscoped_refptr\u003cSequencedTaskRunner\u003e, std::vector\u003cObserver*\u003e\u003e\n\nThen we\u0027d just post M tasks for M sequences. UI thread things would just pass in the single thread task runner for BrowserThread::UI.\n\nI\u0027m not sure if this is overkill though :D",
+      "parentUuid": "0c2d5ed8_237c2530",
+      "revId": "0884c9aec918f939ee51bc6d48bc6c48b5e94414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b6fc5fa_dfe629aa",
         "filename": "components/crash/content/browser/crash_dump_manager_android_unittest.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "0884c9aec918f939ee51bc6d48bc6c48b5e94414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d19290_d0f6b671",
+        "filename": "components/crash/content/browser/crash_dump_manager_android_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-25T19:48:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b6fc5fa_dfe629aa",
+      "revId": "0884c9aec918f939ee51bc6d48bc6c48b5e94414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
