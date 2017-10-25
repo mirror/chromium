@@ -22,6 +22,30 @@
       "revId": "87e77588a8ab08dd16c47c9cbc332e369c872728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99dd36ff_b8d85bcc",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-10-25T15:01:34Z",
+      "side": 1,
+      "message": "Yes, as I said, I am still thinking about the JSON format, and whether I need to separate the different types as I do now. The issue with doing something like this is that, from the email discussion thread https://groups.google.com/a/google.com/d/topic/clank-frontend/URtDW0QU4ac/discussion Max (who is, after all, one of the primary customers for this) seems to dislike ideas for multiple selections, or similar, in the viewer.",
+      "parentUuid": "a3f61833_d3642a69",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "87e77588a8ab08dd16c47c9cbc332e369c872728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
