@@ -35,6 +35,13 @@
 #include "core/CoreExport.h"
 #include "platform/wtf/Allocator.h"
 
+namespace service_manager {
+template <typename... BinderArgs>
+class BinderRegistryWithArgs;
+
+using BinderRegistry = BinderRegistryWithArgs<>;
+}  // namespace service_manager
+
 namespace blink {
 
 class Document;
@@ -75,6 +82,9 @@ class CORE_EXPORT CoreInitializer {
   // Should be called by clients before trying to create Frames.
   virtual void Initialize();
 
+  // Called on startup to register Mojo interfaces that for control messages,
+  // e.g. messages that are not routed to a specific frame.
+  virtual void RegisterInterfaces(service_manager::BinderRegistry&) = 0;
   // Methods defined in CoreInitializer and implemented by ModulesInitializer to
   // bypass the inverted dependency from core/ to modules/.
   // Mojo Interfaces registered with LocalFrame
