@@ -16,6 +16,24 @@
       "revId": "aeaa916deed5e1f5a0912d2949ff608aceef2379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ad9027_bdcdb810",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-25T01:29:42Z",
+      "side": 1,
+      "message": "Thanks for sharing a screenshot. Yes I do think that a \u003cdialog\u003e is more appropriate in this case, for multiple reasons.\n\n1) \u003cdialog\u003e is modal, which means that the user can\u0027t interact with the background (neither with the mouse or with tabbing their way to background elements).\n2) ESC key automatically closes the dialog (improves user experience).\n3) \u003cdialog\u003e is automatically centered.\n\nI expect the changes to be fairly small, and the final amount of code needed (especially CSS) to be less than currently in this CL. Can you give it a try?",
+      "parentUuid": "101fcd14_031a5eb9",
+      "revId": "aeaa916deed5e1f5a0912d2949ff608aceef2379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
