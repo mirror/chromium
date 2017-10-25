@@ -142,6 +142,12 @@
 # TODO: Fails because DeviceDataManager isn't created. http://crbug.com/734812
 -TrayIMETest.HidesOnA11yEnabled
 -TrayIMETest.PerformActionOnDetailedView
+# TODO: wire up mirroring and unified display.
+# http://crbug.com/770243.
+-UnifiedMouseWarpControllerTest.BoundaryTest
+-UnifiedMouseWarpControllerTest.BoundaryAndWarpSimpleTest
+-UnifiedMouseWarpControllerTest.BoundaryTestGrid
+-UnifiedMouseWarpControllerTest.WarpMouse
 -VirtualKeyboardAlwaysOnTopControllerTest.NotifyKeyboardBoundsChanged
 -VirtualKeyboardControllerAlwaysEnabledTest.DoesNotSuppressKeyboard
 -VirtualKeyboardControllerAutoTest.DisabledIfInternalKeyboardPresent
