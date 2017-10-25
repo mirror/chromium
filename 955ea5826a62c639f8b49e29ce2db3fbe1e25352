@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6b95edf_1570ebf2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-25T20:24:18Z",
+      "side": 1,
+      "message": "Could you please update the comment? The assumption about them being clustered is still relevant, but we count them now, rather than using the positions.",
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea0622b_a83caa13",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-25T20:24:18Z",
+      "side": 1,
+      "message": "Not a huge fan of this. For other purposes we don\u0027t consider that seen, so why change here? If it is an issue, should we update the thresholds? As seen in the tests it can get awkward to figure out what is happening because of it.",
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b09fbc_5fbf7573",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-25T20:24:18Z",
+      "side": 1,
+      "message": "We should run that before checking with the target size. Otherwise we might have duplicates between the new suggestions and the incoming ones, which is possible even if we have less suggestions than we would like to add in the first place.",
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c47c2a_67eedf78",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-25T20:24:18Z",
+      "side": 1,
+      "message": "is it still needed?",
+      "range": {
+        "startLine": 514,
+        "startChar": 8,
+        "endLine": 514,
+        "endChar": 23
+      },
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
