@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1373d6f6_83508da8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 28
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "This is not a pair of words you typically see together. It might be worth calling out that you use thread sleeping to maintain some sort of synchronous behavior.",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 71
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefb8bf8_18960ce8",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "Is this comment stale? I don\u0027t see the global variable used here.",
+      "range": {
+        "startLine": 31,
+        "startChar": 64,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f0e4737_81552c73",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "It might be useful to document how this pipe name was chosen.",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce1224d_4e032b6f",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "The W shouldn\u0027t be necessary.",
+      "range": {
+        "startLine": 48,
+        "startChar": 59,
+        "endLine": 48,
+        "endChar": 60
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8b1f5b_674a00fa",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "Nit: Remove extra period.",
+      "range": {
+        "startLine": 56,
+        "startChar": 50,
+        "endLine": 56,
+        "endChar": 51
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5d6606_2d67c933",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "You\u0027ll want to separate out the CreateNamedPipe and mojo:edk:PlatformHandle calls here.\nIf any call after CreateNamedPipe makes a Windows API call in the future, that API call could reset the last error and you\u0027d lose the reason why CreateNamePipe failed.",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2faba3_c1441c22",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "Convention is to set these values after declaring them, allowing you to do this...\nsecurity_attributes.nLength \u003d sizeof(security_attributes);\nsecurity_attributes.lpSecurityDescriptor \u003d nullptr;\nsecurity_attributes.bInheritHandle \u003d TRUE;\n\nIt also better documents in code what\u0027s going on and makes the leading comment redundant.",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 62,
+        "endChar": 60
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e9c503_137a0ab7",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "Remove the \u0027W\u0027.",
+      "range": {
+        "startLine": 63,
+        "startChar": 52,
+        "endLine": 63,
+        "endChar": 53
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8da6a3_9c6ac5b1",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "Same comment as above. regarding the PCHECK.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 8
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77b1106_d297e354",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "Use CHECK_EQ",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 64
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d7b081_81311550",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "Similarly, if CHECK does any Windows API call, The last error could be lost. Check the last error immediately after calling ConnectNamedPipe.",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08348695_2da35eab",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "It\u0027s worth calling out that the lifetime of this variable is maintained by the Sleep call below.",
+      "range": {
+        "startLine": 109,
+        "startChar": 36,
+        "endLine": 109,
+        "endChar": 78
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c0bca9_31d686fe",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "Document that we need to check the return code of SleepEx so that someone doesn\u0027t \"helpfully\" change this into a PlatformThread::Sleep.",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 53
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4f2201_1c0ec7e2",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-25T01:20:00Z",
+      "side": 1,
+      "message": "Has this been observed? Maybe we should DCHECK instead?",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 45
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
