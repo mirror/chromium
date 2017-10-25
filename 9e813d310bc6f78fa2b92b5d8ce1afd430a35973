@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "558364bb_c86023da",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:43:28Z",
+      "side": 1,
+      "message": "That\u0027s correct: something that uses WebContents directly can only live on the UI thread, and it\u0027s guaranteed that the callbacks invoked on the observer will also be on the UI thread.",
+      "parentUuid": "cb63ab99_0f173d30",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b87e966f_d4bbc7e0",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -81,6 +99,24 @@
       "writtenOn": "2017-10-24T17:12:54Z",
       "side": 1,
       "message": "Does this happen after the \u003cvideo\u003e element has been created?",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721bd00c_91063687",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:43:28Z",
+      "side": 1,
+      "message": "Also, is it possible for the user to trigger this too early by clicking \u0027stop\u0027?",
+      "parentUuid": "b87e966f_d4bbc7e0",
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -132,6 +168,29 @@
       "writtenOn": "2017-10-24T17:12:54Z",
       "side": 1,
       "message": "This method, along with MaybeReportFileInformation, is specific to casting of local media files.  I think we should eventually split the logic for the local media casting flow into a separate class from MediaRouterUI.",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097e9b83_f3779a25",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:43:28Z",
+      "side": 1,
+      "message": "Is this needed? Maybe just get rid of it?\n\n(I would have expected this in the header)",
+      "range": {
+        "startLine": 249,
+        "startChar": 22,
+        "endLine": 249,
+        "endChar": 29
+      },
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -270,6 +329,40 @@
       "side": 1,
       "message": "mojofication of per-RenderFrame functionality is pretty far along. In fact, using mojo ought to simplify this CL a bit.\n\nThe reason you don\u0027t see a lot of methods on the Frame/FrameHost mojo interface yet is that for the most part, the work has proceeded by creating small frame-associated interfaces. With mojo, it\u0027s not necessary to route messages through render_frame_host_impl.cc and the content/public/browser interfaces -- instead, RenderFrameImpl (or even blink) is allowed to expose an interface, and chrome/ would be allowed to talk to it directly. In short, mojo lets us drop the old pattern of a huge frame_messages.h that spans everything because routing ids are expensive.\n\nI think RenderFrameImpl::SetEngagementLevel works similarly to what you need here, so you can look to it for how to structure this (though hopefully not the part where you have to cache the origin for later use... that\u0027s gross): https://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?l\u003d2928",
       "parentUuid": "b43425a8_f6b679ed",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a48281_4715c8ce",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4815,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:43:28Z",
+      "side": 1,
+      "message": "How about frame_-\u003eGetDocument().QuerySelector(\"video\")?\n\nIt\u0027s probably not worth putting the WebString in static storage... I think?",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71e0141_c585d52e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4822,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:43:28Z",
+      "side": 1,
+      "message": "Is it possible to just instantiate this directly on the stack?",
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
