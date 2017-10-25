@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e53a0d42_ab7817d3",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T03:10:37Z",
+      "side": 1,
+      "message": "is this used?",
+      "revId": "79b932c80d571ea2d0860925b5773d3491f8e91c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f309e6_b5d6405e",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T03:10:37Z",
+      "side": 1,
+      "message": "ProfileAttributesStorage\u0026 - more below (it\u0027s only by-ref function arguments that are banned - local vars are fine)",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "79b932c80d571ea2d0860925b5773d3491f8e91c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8def2ba2_233b6153",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T03:10:37Z",
+      "side": 1,
+      "message": "constexpr const char kEmail (or kSignedInEmail)  (perhaps update signed_in_email above too)",
+      "range": {
+        "startLine": 127,
+        "startChar": 6,
+        "endLine": 127,
+        "endChar": 34
+      },
+      "revId": "79b932c80d571ea2d0860925b5773d3491f8e91c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b740ffdf_a04c8895",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T03:10:37Z",
+      "side": 1,
+      "message": "can this do\n\n    ProfileManager* profile_manager \u003d g_browser_process-\u003eprofile_manager();\n    CreateTestingProfile(profile_manager-\u003eGenerateNextProfileDirectoryPath());\n    CreateTestingProfile(profile_manager-\u003eGenerateNextProfileDirectoryPath());",
+      "revId": "79b932c80d571ea2d0860925b5773d3491f8e91c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3aea988_dc8d1529",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T03:10:37Z",
+      "side": 1,
+      "message": "nullptr should implicitly cast to any pointer type - does that not work?\n\nbut normally nullptr checks just EXPECT_TRUE anyway :)",
+      "range": {
+        "startLine": 149,
+        "startChar": 16,
+        "endLine": 149,
+        "endChar": 46
+      },
+      "revId": "79b932c80d571ea2d0860925b5773d3491f8e91c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60212363_7f4ac89a",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T03:10:37Z",
+      "side": 1,
+      "message": "i.e. just EXPECT_TRUE(guest) before this line",
+      "revId": "79b932c80d571ea2d0860925b5773d3491f8e91c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0884e0e7_0ebd487a",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T03:10:37Z",
+      "side": 1,
+      "message": "this override shouldn\u0027t be needed - I don\u0027t know why the old test had it",
+      "revId": "79b932c80d571ea2d0860925b5773d3491f8e91c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6615967f_694a77e0",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T03:10:37Z",
+      "side": 1,
+      "message": "this shouldn\u0027t be needed either",
+      "revId": "79b932c80d571ea2d0860925b5773d3491f8e91c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80804bab_ac5bb96a",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-25T03:10:37Z",
+      "side": 1,
+      "message": "why the re-wrapping here, and above?",
+      "revId": "79b932c80d571ea2d0860925b5773d3491f8e91c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
