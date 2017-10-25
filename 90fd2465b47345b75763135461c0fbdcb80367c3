@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a981cf28_006a1526",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-25T19:13:00Z",
+      "side": 1,
+      "message": "There should be no need to clear the map if no active sheets have changed.",
+      "revId": "90fd2465b47345b75763135461c0fbdcb80367c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ad220e_2c11eba6",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-25T19:13:00Z",
+      "side": 1,
+      "message": "This needs to be AtomicString\u0026 rather than StringImpl* so rules can be looked up from anywhere.\n\nI realized this when I was writing the tests.",
+      "revId": "90fd2465b47345b75763135461c0fbdcb80367c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
