@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc5dfe2a_6db0c2d3",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-25T22:20:12Z",
+      "side": 1,
+      "message": "We are having a file to write the protos to the disk. So we don\u0027t need a full directory?\n\nAlso I am not sure profile_-\u003eGetPath() will be non-empty. Not sure how to handle if it is not initialized yet?",
+      "parentUuid": "fbfc14b8_82d7deb9",
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2b379fb_f06fbc1f",
         "filename": "components/download/in_progress_metadata/download_entry.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd55ccc6_7d2808f1",
+        "filename": "components/download/in_progress_metadata/download_entry.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-25T22:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2b379fb_f06fbc1f",
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9d506618_a0649bee",
+        "filename": "components/download/in_progress_metadata/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-25T22:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f430273e_13fe2c02",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "374c901f_ad330a6e",
         "filename": "components/download/in_progress_metadata/in_progress_metadata_cache.cc",
         "patchSetId": 3
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "aef78431_afd7c4fd",
+        "filename": "components/download/in_progress_metadata/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-25T22:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "374c901f_ad330a6e",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 66
+      },
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "607b743c_b45d16d3",
         "filename": "components/download/in_progress_metadata/in_progress_metadata_cache.h",
         "patchSetId": 3
@@ -93,6 +177,30 @@
       "writtenOn": "2017-10-24T19:46:17Z",
       "side": 1,
       "message": "I know we chatted about this briefly, but perhaps it might make sense to do something like namespace in_progress, class MetadataCache, methods Add/Update/... so it would look more like in_progress::MetadataCache-\u003eAdd()? Or would that be simplifying too much away?",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbcfa36_ab5c8a5b",
+        "filename": "components/download/in_progress_metadata/in_progress_metadata_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-25T22:20:12Z",
+      "side": 1,
+      "message": "Not sure actually. Would like others to weigh in on the names.\nI also didn\u0027t find a more appropriate name for DownloadEntry struct :)",
+      "parentUuid": "607b743c_b45d16d3",
       "range": {
         "startLine": 15,
         "startChar": 10,
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "54c8bb7d_d32bb7b0",
+        "filename": "components/download/in_progress_metadata/in_progress_metadata_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-25T22:20:12Z",
+      "side": 1,
+      "message": "Ack. We should take const ref like the AddMetadata function. Actually I am thinking of merging this to AddOrUpdateMetadata",
+      "parentUuid": "b18e8734_538ee942",
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59206a9a_20938866",
         "filename": "components/download/in_progress_metadata/in_progress_metadata_cache.h",
         "patchSetId": 3
@@ -133,6 +259,30 @@
       "writtenOn": "2017-10-25T16:21:13Z",
       "side": 1,
       "message": "Let\u0027s also add a void ClearMetadata(); to clear all metadata.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c02d46_e014e358",
+        "filename": "components/download/in_progress_metadata/in_progress_metadata_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-25T22:20:12Z",
+      "side": 1,
+      "message": "Ok, but do we need one? We can add one later if we do though.",
+      "parentUuid": "59206a9a_20938866",
       "range": {
         "startLine": 36,
         "startChar": 2,
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "245b3198_acde911e",
+        "filename": "components/download/in_progress_metadata/proto/download_entry.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-25T22:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2afdce8e_26f64380",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62a67a85_857a8d64",
         "filename": "components/download/in_progress_metadata/proto/download_entry.proto",
         "patchSetId": 3
@@ -185,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "872beceb_41031292",
+        "filename": "components/download/in_progress_metadata/proto/download_entry.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-25T22:20:12Z",
+      "side": 1,
+      "message": "Changed to \"required\". I feel like I read somewhere that keep everything optional (but not sure:)). Actually even for our download service \"entry.proto\", we have all the fields including guid as optional.",
+      "parentUuid": "62a67a85_857a8d64",
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e6e32aa_b3d413e5",
         "filename": "components/download/in_progress_metadata/proto/download_entry.proto",
         "patchSetId": 3
@@ -196,6 +388,30 @@
       "writtenOn": "2017-10-24T23:10:36Z",
       "side": 1,
       "message": "entry because each one of the repeated fields is one entry.",
+      "range": {
+        "startLine": 41,
+        "startChar": 25,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "5afc02a5d71604a0295735fc33f95eb374d84c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f18199_3a90f732",
+        "filename": "components/download/in_progress_metadata/proto/download_entry.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-25T22:20:12Z",
+      "side": 1,
+      "message": "Good catch. It feels weird to me too, but I see most places in code they use plurals including the developer guide example.\nhttps://developers.google.com/protocol-buffers/docs/cpptutorial",
+      "parentUuid": "8e6e32aa_b3d413e5",
       "range": {
         "startLine": 41,
         "startChar": 25,
