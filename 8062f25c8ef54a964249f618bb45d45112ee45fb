@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f1b0eaa_a8efa7d9",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T01:31:38Z",
+      "side": 1,
+      "message": "I don\u0027t think we should use COUNT for anything than to get the number of available options",
+      "range": {
+        "startLine": 346,
+        "startChar": 55,
+        "endLine": 346,
+        "endChar": 60
+      },
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5f9050_9ba53a1c",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T01:31:38Z",
+      "side": 1,
+      "message": "can this be done as part of SetCustomWallpaper?",
+      "range": {
+        "startLine": 348,
+        "startChar": 2,
+        "endLine": 352,
+        "endChar": 76
+      },
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b10005b_c3dad132",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T01:31:38Z",
+      "side": 1,
+      "message": "should this be moved after POLICY/image.isNull check?\n\n\u003d",
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104b2ef9_d7f1c602",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T01:31:38Z",
+      "side": 1,
+      "message": "What is the reason SetUserWallpaperInfo(account_id, info, is_persistent); is not called in this case (I\u0027m not saying it\u0027s wrong, I\u0027m just curious :) )?",
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c86098e_96ea740e",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T01:31:38Z",
+      "side": 1,
+      "message": "I wonder if path with empty file could be integrated into the method better -\ni.e. to avoid wallpaper setup and early exit here.\n\nThough, I\u0027d wait for daisy\u0027s input on this :)",
+      "range": {
+        "startLine": 767,
+        "startChar": 12,
+        "endLine": 767,
+        "endChar": 13
+      },
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f686c8_18ce31bc",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T01:31:38Z",
+      "side": 1,
+      "message": "this before wallpaper_path \u003d ... ?",
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
