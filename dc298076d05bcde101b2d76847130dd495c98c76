@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "bb988291_ab12e8f5",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-25T18:09:33Z",
+      "side": 1,
+      "message": "nit: you can remove the empty lines inside the namespace declaration here since it\u0027s just a single forward declaration.",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f2fd19e_ed07603b",
         "filename": "services/resource_coordinator/BUILD.gn",
         "patchSetId": 3
@@ -30,6 +47,57 @@
       "writtenOn": "2017-10-25T01:20:36Z",
       "side": 1,
       "message": "I see there is process_coordination_unit_impl_unittest.cc, but cannot find it in any BUILD.gn. Maybe it was forgotten somehow before. Can you add it here?",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35536f5_93697112",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-25T18:09:33Z",
+      "side": 1,
+      "message": "nit: \"Add the newly created coordination unit to the global coordination unit storage.",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b2addb_678a1afd",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-25T18:09:33Z",
+      "side": 1,
+      "message": "nit: newline",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aaa33f0_abd4b86f",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-25T18:09:33Z",
+      "side": 1,
+      "message": "I would change the name of the templated types a bit, they read like class names right now.\n\nHow about:\nCoordinationUnitType\nMojoInterfaceType\nMojoRequestType",
       "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +201,40 @@
       "writtenOn": "2017-10-25T01:20:36Z",
       "side": 1,
       "message": "nit: this can be removed now.",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10350714_308a11ce",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_test_harness.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-25T18:09:33Z",
+      "side": 1,
+      "message": "Same as above, I would call this \"CoordinationUnitType\"",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1986714_2700e216",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_test_harness.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-25T18:09:33Z",
+      "side": 1,
+      "message": "nit: newline",
       "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -351,6 +453,40 @@
         "endLine": 80,
         "endChar": 32
       },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14abce9c_559c4d8f",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_interface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-25T18:09:33Z",
+      "side": 1,
+      "message": "If we never expect this to be called, it should probably be a NOTREACHED();",
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713fd44b_10bc11ee",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-25T18:09:33Z",
+      "side": 1,
+      "message": "nit/suggestion: Maybe \"SetNetworkIsAlmostIdle\"?",
       "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
