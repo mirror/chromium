@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "368b6b51_2d30d638",
+        "filename": "content/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-25T19:46:07Z",
+      "side": 1,
+      "message": "NOTE: I can\u0027t seem to get this to link when using deps \u003d [], thoughts?",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 3
+      },
+      "revId": "571c490c1fd7e0fabcfb4331b89d6f1d293165ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ace5e0_2354acff",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-25T19:46:07Z",
+      "side": 1,
+      "message": "NOTE: I\u0027m thinking about removing the _linux in the filename in a subsequent cl.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 72
+      },
+      "revId": "571c490c1fd7e0fabcfb4331b89d6f1d293165ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
