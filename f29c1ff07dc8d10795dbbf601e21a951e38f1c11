@@ -22,6 +22,30 @@
       "revId": "f29c1ff07dc8d10795dbbf601e21a951e38f1c11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8fdd90_a07c323f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-25T17:05:05Z",
+      "side": 1,
+      "message": "Yes, this comment was inconsistent with the namings of variables. I have reworded it so it is more clear that this indicates if the notification was handled properly, or, in this case, if it was detached or killed.",
+      "parentUuid": "56572969_98f287d5",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 72,
+        "endChar": 91
+      },
+      "revId": "f29c1ff07dc8d10795dbbf601e21a951e38f1c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
