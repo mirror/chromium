@@ -520,6 +520,7 @@ size_t DrawTextBlobOp::Serialize(const PaintOp* base_op,
   helper.Write(op->flags);
   helper.Write(op->x);
   helper.Write(op->y);
+  helper.Write(op->typefaces.get(), op->typefaces_count);
   helper.Write(op->blob);
   return helper.size();
 }
@@ -882,7 +883,8 @@ PaintOp* DrawTextBlobOp::Deserialize(const volatile void* input,
   helper.Read(&op->flags);
   helper.Read(&op->x);
   helper.Read(&op->y);
-  helper.Read(&op->blob);
+  helper.Read(&op->typefaces, &op->typefaces_count);
+  helper.Read(op->typefaces.get(), op->typefaces_count, &op->blob);
   if (!helper.valid() || !op->IsValid()) {
     op->~DrawTextBlobOp();
     return nullptr;
@@ -1540,8 +1542,15 @@ DrawTextBlobOp::DrawTextBlobOp() = default;
 DrawTextBlobOp::DrawTextBlobOp(sk_sp<SkTextBlob> blob,
                                SkScalar x,
                                SkScalar y,
-                               const PaintFlags& flags)
-    : PaintOpWithFlags(flags), blob(std::move(blob)), x(x), y(y) {}
+                               const PaintFlags& flags,
+                               std::unique_ptr<PaintTypeface[]> typefaces,
+                               uint32_t typefaces_count)
+    : PaintOpWithFlags(flags),
+      blob(std::move(blob)),
+      x(x),
+      y(y),
+      typefaces(std::move(typefaces)),
+      typefaces_count(typefaces_count) {}
 
 DrawTextBlobOp::~DrawTextBlobOp() = default;
 
