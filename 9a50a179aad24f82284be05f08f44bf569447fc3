@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "08172f76_beeb05ff",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-25T15:42:03Z",
+      "side": 1,
+      "message": "Thinking a bit more, maybe we can get rid of the polling? AudioOutputController scans every buffer anyways it gets anyways, so maybe it can check the power at that point and post a notification back to AudioOutputController when needed?",
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2736498_bfacd952",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-25T15:42:03Z",
+      "side": 1,
+      "message": "This is already an int.",
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f31cfcb3_3b2cbde0",
         "filename": "content/browser/renderer_host/media/audio_output_stream_observer_impl.cc",
         "patchSetId": 1
