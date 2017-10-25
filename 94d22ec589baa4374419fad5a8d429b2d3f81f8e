@@ -22,6 +22,54 @@
       "revId": "94d22ec589baa4374419fad5a8d429b2d3f81f8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9427cf_b669a145",
+        "filename": "components/payments/content/service_worker_payment_app_factory_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-25T20:53:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbbd6bce_a59c4c9f",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 39
+      },
+      "revId": "94d22ec589baa4374419fad5a8d429b2d3f81f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d12b8473_7fbe5dd5",
+        "filename": "components/payments/content/service_worker_payment_app_factory_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-25T20:53:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbbd6bce_a59c4c9f",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 39
+      },
+      "revId": "94d22ec589baa4374419fad5a8d429b2d3f81f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
