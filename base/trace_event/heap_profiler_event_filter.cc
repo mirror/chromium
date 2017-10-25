@@ -16,8 +16,11 @@ namespace trace_event {
 namespace {
 
 inline bool IsPseudoStackEnabled() {
+  // Only Pseudo stack mode and mixed stack mode requires trace events.
   return AllocationContextTracker::capture_mode() ==
-         AllocationContextTracker::CaptureMode::PSEUDO_STACK;
+             AllocationContextTracker::CaptureMode::PSEUDO_STACK ||
+         AllocationContextTracker::capture_mode() ==
+             AllocationContextTracker::CaptureMode::MIXED_STACK;
 }
 
 inline AllocationContextTracker* GetThreadLocalTracker() {
