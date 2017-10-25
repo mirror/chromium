@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7c0fe55_64094fae",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 18756,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-25T20:19:58Z",
+      "side": 0,
+      "message": "FYI I\u0027d incorrectly allowed this comment to be sorted into the list in the last patch with \"git cl format\" (it moved with the first item).  Not noticing, I added it at the top again, and there were two.",
+      "revId": "a8e1de5b19353797ee41b343d1e4cc021d61d735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
