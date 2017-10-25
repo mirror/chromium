@@ -31,7 +31,6 @@ struct Referrer;
 // An interface for simulating a navigation in unit tests. Currently this only
 // supports renderer-initiated navigations.
 // Note: this should not be used in browser tests.
-// TODO(clamy): support browser-initiated navigations.
 class NavigationSimulator : public WebContentsObserver {
  public:
   // Simulates a browser-initiated navigation to |url| started in
@@ -44,6 +43,14 @@ class NavigationSimulator : public WebContentsObserver {
   // Simulates the page reloading. Returns the RenderFrameHost that committed
   // the navigation.
   static RenderFrameHost* Reload(WebContents* web_contents);
+
+  // Simulates a back navigation from start to commit. Returns the
+  // RenderFrameHost that committed the navigation.
+  static RenderFrameHost* GoBack(WebContents* web_contents);
+
+  // Simulates a forward navigation from start to commit. Returns the
+  // RenderFrameHost that committed the navigation.
+  static RenderFrameHost* GoForward(WebContents* web_contents);
 
   // Simulates a renderer-initiated navigation to |url| started in
   // |render_frame_host| from start to commit. Returns the RenderFramehost that
@@ -65,6 +72,14 @@ class NavigationSimulator : public WebContentsObserver {
   // error did not result in an error page.
   static RenderFrameHost* ReloadAndFail(WebContents* web_contents,
                                         int net_error_code);
+
+  // Simulates a failed back navigation. Returns the RenderFrameHost that
+  // committed the error page for the navigation, or nullptr if the navigation
+  // error did not result in an error page.
+  static RenderFrameHost* GoBackAndFail(WebContents* web_contents,
+                                        int net_error_code);
+
+  // TODO(clamy, ahemery): Add GoForwardAndFail() if it becomes needed.
 
   // Simulates a failed renderer-initiated navigation to |url| started in
   // |render_frame_host| from start to commit. Returns the RenderFramehost that
@@ -178,6 +193,8 @@ class NavigationSimulator : public WebContentsObserver {
   // Note: ReloadType should only be specified for browser-initiated
   // navigations.
   void SetReloadType(ReloadType reload_type);
+  virtual void SetIsBackNavigation(bool is_back_navigation);
+  virtual void SetIsForwardNavigation(bool is_forward_navigation);
 
   // The following parameters can change during redirects. They should be
   // specified before calling |Start| if they need to apply to the navigation to
@@ -268,6 +285,10 @@ class NavigationSimulator : public WebContentsObserver {
   // PlzNavigate: only use on renderer-initiated navigations.
   bool CheckIfSameDocument();
 
+  // Infers from internal parameters, whether the navigation created a new
+  // entry.
+  bool DidCreateNewEntry();
+
   enum State {
     INITIALIZATION,
     STARTED,
@@ -297,6 +318,8 @@ class NavigationSimulator : public WebContentsObserver {
   Referrer referrer_;
   ui::PageTransition transition_;
   ReloadType reload_type_ = ReloadType::NONE;
+  bool is_back_navigation_ = false;
+  bool is_forward_navigation_ = false;
   bool has_user_gesture_ = true;
 
   // These are used to sanity check the content/public/ API calls emitted as
