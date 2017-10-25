@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4551cf5b_8a111721",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1423,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T23:04:14Z",
+      "side": 1,
+      "message": "Yep, thanks.",
+      "parentUuid": "7c2d7dfe_9dd9867a",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6264f57d_d70959bc",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa95dd68_9c6b6f8c",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T23:04:14Z",
+      "side": 1,
+      "message": "Yes, hm I thot I grepped for all the TODO(???)s. Looks like this was the last.",
+      "parentUuid": "6264f57d_d70959bc",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,23 @@
     },
     {
       "key": {
+        "uuid": "8211e55e_6d09b6d2",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T23:04:14Z",
+      "side": 1,
+      "message": "Mmmh.. good thought. It probably didn\u0027t break anything atm, cuz we check IsGpuCompositingDisabled() and pass that to the renderer. But if anything else used the watcher interface without checking here first then it\u0027d never hear about no gpu.",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48e8284f_5e6f1afe",
         "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
         "patchSetId": 8
@@ -64,6 +117,24 @@
       "writtenOn": "2017-10-25T22:36:50Z",
       "side": 1,
       "message": "Is there a chance that some of these compositors are still in the process of (re-)creating their FrameSink, wouldn\u0027t it cause similar crashes as above?",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9b81a1_947660e0",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T23:04:14Z",
+      "side": 1,
+      "message": "I don\u0027t think so because GpuProcessTransportFactory::EstablishedGpuChannel checks if the compositor is in the per_compositor_data_ map and early outs. This will remove those compositors from the map, so their establish calls would be no-ops.",
+      "parentUuid": "48e8284f_5e6f1afe",
       "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "61bc2963_c15b7b11",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T23:04:14Z",
+      "side": 1,
+      "message": "Yep! Gosh there\u0027s a lot of room for bugs in this code...",
+      "parentUuid": "6a3adfc9_e3fbaa29",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d79f7258_0b97e12b",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 8
@@ -104,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "075d7c62_ee4f8d11",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2756,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T23:04:14Z",
+      "side": 1,
+      "message": "kk. Removed and TODO\u0027d.",
+      "parentUuid": "d79f7258_0b97e12b",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b892a08_4edd1311",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 8
@@ -118,6 +225,23 @@
       "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be81180b_3408b6a0",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2758,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T23:04:14Z",
+      "side": 1,
+      "message": "Oh right. That was the initial purpose of the flag was communication from there, but I was just thinking about users passing it. Done.",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -153,6 +277,42 @@
       "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d446f5_f07cbd80",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T23:04:14Z",
+      "side": 1,
+      "message": "Roger.",
+      "parentUuid": "31149a0a_a0f2dac8",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1328c162_a8f23e08",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T23:04:14Z",
+      "side": 1,
+      "message": "Roger. I kinda liked that its clear reading the code on android that this is all dead, but it\u0027s also harder to maintain things in general..",
+      "parentUuid": "31149a0a_a0f2dac8",
+      "revId": "f5ad75b35450d3dd3c79c2eefe8a8bcb9ba397d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
