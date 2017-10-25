@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e440dead_9334f4fa",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "I assume the TODO is to change this in a later CL. And I guess it\u0027s now on me to do that.\n\n0xC3 is the ARM return instruction?",
+      "parentUuid": "0b782b96_b21407e9",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d91f738_a202267b",
         "filename": "content/browser/background_fetch/background_fetch_context.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-19T13:36:42Z",
       "side": 1,
       "message": "Why is this called |mark_callback| while everything else is |callback|?",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f749a56b_3b896b8d",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "Done (in my version of this CL).",
+      "parentUuid": "7d91f738_a202267b",
       "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "80944632_fa0c4483",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "Done in my new CL.",
+      "parentUuid": "e42b1b9c_402422b6",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d758bde3_ca926ace",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-19T13:36:42Z",
       "side": 1,
       "message": "\"It would be nice\", \"unfortunately\" - delete, keep these concise and factual",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd72f5f_4b50024f",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "Done in my CL.",
+      "parentUuid": "d758bde3_ca926ace",
       "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d6e57573_971879a0",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "Done in my CL.",
+      "parentUuid": "999e27ed_43df9e1e",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92e55000_fb096f61",
         "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-19T13:36:42Z",
       "side": 1,
       "message": "The other Did* method is a member of the test fixture, these are not. Please keep the code consistent.",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52c1abb_04051e18",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "I\u0027ve moved the one out of the test fixture to here (in my CL) since it doesn\u0027t need to be a member function.",
+      "parentUuid": "92e55000_fb096f61",
       "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b47eb365_706c07d9",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "16dd9141_78adeb75",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "939ae279_95af74fe",
         "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
         "patchSetId": 5
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-19T13:36:42Z",
       "side": 1,
       "message": "nit: consider early returning to reduce nesting.",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e480f315_00a959bf",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "Done in my CL",
+      "parentUuid": "939ae279_95af74fe",
       "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "48830a05_0def4632",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "Done in my CL",
+      "parentUuid": "d0a19cf4_b025fe69",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8e5cb72_bacf3e54",
         "filename": "content/browser/background_fetch/background_fetch_registration_notifier_unittest.cc",
         "patchSetId": 5
@@ -166,6 +328,24 @@
       "writtenOn": "2017-10-19T13:36:42Z",
       "side": 1,
       "message": "Please add a GC test.",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48023662_9ba95605",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "I\u0027ve added a couple of tests in my CL but there is a problem: the GC doesn\u0027t actually work in the case where the binding was closed without an error.\n\nThis means we will nearly always leak the registration. Both with and without persistence, this leak is resolved on a browser restart - the former happens for obvious reasons, while the latter case is handled explicitly as part of the clean up phase at start up.",
+      "parentUuid": "a8e5cb72_bacf3e54",
       "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "fe319b74_b051f3a6",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "Done in my CL.",
+      "parentUuid": "03eb7786_65d9a9ca",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03df6d3a_397cbbe1",
         "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
         "patchSetId": 5
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "e74eab71_21f7892f",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "Done in my CL.",
+      "parentUuid": "03df6d3a_397cbbe1",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f9c56f4_f9c8cba7",
         "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
         "patchSetId": 5
@@ -217,6 +433,24 @@
       "writtenOn": "2017-10-19T13:36:42Z",
       "side": 1,
       "message": "dito",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc276f3_212c4de7",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-25T12:44:46Z",
+      "side": 1,
+      "message": "Done in my CL.",
+      "parentUuid": "5f9c56f4_f9c8cba7",
       "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
