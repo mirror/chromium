@@ -230,6 +230,7 @@ interface PaymentRequest {
        PaymentOptions options);
   Show();
   UpdateWith(PaymentDetails details);
+  NoUpdate();
   Abort();
   Complete(PaymentComplete result);
   CanMakePayment();
