@@ -116,6 +116,7 @@
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/page_state.h"
 #include "content/public/common/page_zoom.h"
 #include "content/public/common/result_codes.h"
 #include "content/public/common/url_utils.h"
@@ -2351,7 +2352,7 @@ void WebContentsImpl::CreateNewWindow(
   create_params.renderer_initiated_creation =
       main_frame_route_id != MSG_ROUTING_NONE;
 
-  WebContentsImpl* new_contents = NULL;
+  WebContentsImpl* new_contents = nullptr;
   if (!is_guest) {
     create_params.context = view_->GetNativeView();
     create_params.initial_size = GetContainerBounds().size();
@@ -3492,25 +3493,6 @@ bool WebContentsImpl::GetClosedByUserGesture() const {
   return closed_by_user_gesture_;
 }
 
-void WebContentsImpl::ViewSource() {
-  if (!delegate_)
-    return;
-
-  NavigationEntry* entry = GetController().GetLastCommittedEntry();
-  if (!entry)
-    return;
-
-  delegate_->ViewSourceForTab(this, entry->GetURL());
-}
-
-void WebContentsImpl::ViewFrameSource(const GURL& url,
-                                      const PageState& page_state) {
-  if (!delegate_)
-    return;
-
-  delegate_->ViewSourceForFrame(this, url, page_state);
-}
-
 int WebContentsImpl::GetMinimumZoomPercent() const {
   return minimum_zoom_percent_;
 }
@@ -3958,6 +3940,77 @@ bool WebContentsImpl::ShouldAllowRunningInsecureContent(
     const GURL& resource_url) {
   return GetDelegate()->ShouldAllowRunningInsecureContent(
       web_contents, allowed_per_prefs, origin, resource_url);
+}
+
+void WebContentsImpl::ViewSource(RenderFrameHostImpl* frame) {
+  DCHECK_EQ(this, WebContents::FromRenderFrameHost(frame));
+
+  // Don't do anything if there is no |delegate_| that could accept and show the
+  // new WebContents containing the view-source.
+  if (!delegate_)
+    return;
+
+  // Use the last committed entry, since the pending entry hasn't loaded yet and
+  // won't be copied into the cloned tab.
+  NavigationEntryImpl* last_committed_entry =
+      static_cast<NavigationEntryImpl*>(frame->frame_tree_node()
+                                            ->navigator()
+                                            ->GetController()
+                                            ->GetLastCommittedEntry());
+  if (!last_committed_entry)
+    return;
+  FrameNavigationEntry* frame_entry =
+      last_committed_entry->GetFrameEntry(frame->frame_tree_node());
+  if (!frame_entry)
+    return;
+
+  // TODO(dcheng): Avoid cloning of 1) WebContents, 2) NavigationEntryImpl(s),
+  // 3) FrameNavigationEntry(s) and 4) PageState.
+  WebContents* view_source_contents = Clone();
+  DCHECK(view_source_contents->GetController().CanPruneAllButLastCommitted());
+  view_source_contents->GetController().PruneAllButLastCommitted();
+  NavigationEntryImpl* cloned_entry = static_cast<NavigationEntryImpl*>(
+      view_source_contents->GetController().GetLastCommittedEntry());
+  // If |last_committed_entry| and |frame_entry| are not null, then it follows
+  // that |cloned_entry| will not be null.
+  DCHECK(cloned_entry);
+
+  GURL url = frame->GetLastCommittedURL();
+  GURL view_source_url =
+      GURL(content::kViewSourceScheme + std::string(":") + url.spec());
+  cloned_entry->SetVirtualURL(view_source_url);
+  cloned_entry->SetURL(url);
+
+  // Do not restore scroller position.
+  PageState page_state = frame_entry->page_state().RemoveScrollOffset();
+
+  // Trim |cloned_entry| to the subtree of |frame|.
+  cloned_entry->SetPageState(page_state);
+
+  // Open in a new process:
+  // 1. Because the desired subframe may be in a different process than
+  //    cloned entry's main frame.
+  // 2. Also for consistency with the behavior of allocating a
+  //    new process for handling new tab opened by middle-clicking a link.
+  cloned_entry->set_site_instance(nullptr);
+
+  // Do not restore title, derive it from the url.
+  view_source_contents->UpdateTitleForEntry(cloned_entry, base::string16());
+
+  // Any new WebContents opened while this WebContents is in fullscreen can be
+  // used to confuse the user, so drop fullscreen.
+  if (IsFullscreenForCurrentTab())
+    ExitFullscreen(true);
+
+  // Add |view_source_contents| as a new tab.
+  gfx::Rect initial_rect;
+  constexpr bool kUserGesture = true;
+  bool ignored_was_blocked;
+  delegate_->AddNewContents(this, view_source_contents,
+                            WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                            initial_rect, kUserGesture, &ignored_was_blocked);
+  // Note that the |delegate_| could have deleted |view_source_contents| during
+  // AddNewContents method call.
 }
 
 #if defined(OS_ANDROID)
