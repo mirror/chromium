@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d43fa57a_f4a96532",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-25T16:53:07Z",
+      "side": 1,
+      "message": "Just curious: Why this change?",
+      "revId": "06077a8b63260b265c8a0bca774ae4f19821a6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
