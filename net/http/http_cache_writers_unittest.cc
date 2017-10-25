@@ -47,6 +47,7 @@ class TestHttpCache : public HttpCache {
 
   void WritersDoneWritingToEntry(ActiveEntry* entry,
                                  bool success,
+                                 bool should_keep_entry,
                                  TransactionSet) override {}
 
   void WritersDoomEntryRestartTransactions(ActiveEntry* entry) override {}
@@ -431,7 +432,7 @@ class WritersTest : public testing::Test {
 
   void TruncateEntryNoStrongValidators() {
     writers_->InitiateTruncateEntry();
-    EXPECT_FALSE(writers_->ShouldKeepEntry());
+    EXPECT_FALSE(writers_->ShouldKeepEntryForTesting());
   }
 
   MockHttpCache cache_;
@@ -456,7 +457,7 @@ TEST_F(WritersTest, AddTransaction) {
   EXPECT_FALSE(writers_->IsEmpty());
 
   // Verify keep_entry_ is true by default.
-  EXPECT_TRUE(writers_->ShouldKeepEntry());
+  EXPECT_TRUE(writers_->ShouldKeepEntryForTesting());
 }
 
 // Tests successful addition of multiple transactions.
@@ -692,7 +693,7 @@ TEST_F(WritersTest, StopCachingWithKeepEntry) {
 
   writers_->StopCaching(true /* keep_entry */);
   EXPECT_TRUE(writers_->network_read_only());
-  EXPECT_TRUE(writers_->ShouldKeepEntry());
+  EXPECT_TRUE(writers_->ShouldKeepEntryForTesting());
 }
 
 TEST_F(WritersTest, StopCachingWithNotKeepEntry) {
@@ -701,7 +702,7 @@ TEST_F(WritersTest, StopCachingWithNotKeepEntry) {
 
   writers_->StopCaching(false /* keep_entry */);
   EXPECT_TRUE(writers_->network_read_only());
-  EXPECT_FALSE(writers_->ShouldKeepEntry());
+  EXPECT_FALSE(writers_->ShouldKeepEntryForTesting());
 }
 
 }  // namespace net

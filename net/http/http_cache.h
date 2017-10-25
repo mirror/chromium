@@ -432,9 +432,12 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   // cache. It may be successful completion of the response or failure as given
   // by |success|.
   // |entry| is the owner of writers.
+  // |should_keep_entry| indicates if entry should or should not be doomed/
+  // destroyed.
   // Virtual so that it can be extended in tests.
   virtual void WritersDoneWritingToEntry(ActiveEntry* entry,
                                          bool success,
+                                         bool should_keep_entry,
                                          TransactionSet make_readers);
 
   // Called when the transaction has received a non-matching response to
