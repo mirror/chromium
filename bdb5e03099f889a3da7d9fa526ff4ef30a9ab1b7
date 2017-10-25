@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6f9ff55_fe2cd47e",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-25T13:58:09Z",
+      "side": 1,
+      "message": "I understand that we need to keep things simple but this feels wrong. The service should not know about specific providers. Can you at least add a TODO?",
+      "range": {
+        "startLine": 451,
+        "startChar": 3,
+        "endLine": 454,
+        "endChar": 65
+      },
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d273f2eb_12eae42d",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-25T13:58:09Z",
+      "side": 1,
+      "message": "Can you add a comment/TODO about disabling CH and recreating the providers?",
+      "range": {
+        "startLine": 455,
+        "startChar": 3,
+        "endLine": 455,
+        "endChar": 0
+      },
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a94a5bc_7b6594b7",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-25T13:58:09Z",
+      "side": 1,
+      "message": "nit: maybe std::remove_if can lead to shorter / clearer code?\n (I can imagine that it is not the case)",
+      "range": {
+        "startLine": 737,
+        "startChar": 4,
+        "endLine": 742,
+        "endChar": 5
+      },
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afcf6ec7_1679392c",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-25T13:58:09Z",
+      "side": 1,
+      "message": "Isn\u0027t there a danger of race condition here?\nWe delete the category before we notify the observer that it is gone.\n\nI guess this is safe since this will run on the UI thread so no one should ask about the category in between. Do you agree? Is it worth some comment?",
+      "range": {
+        "startLine": 755,
+        "startChar": 0,
+        "endLine": 756,
+        "endChar": 40
+      },
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87f6e558_220e6069",
         "filename": "components/ntp_snippets/content_suggestions_service_unittest.cc",
         "patchSetId": 2
@@ -19,6 +111,23 @@
         "endLine": 839,
         "endChar": 43
       },
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c054bebb_e52f0164",
+        "filename": "components/ntp_snippets/content_suggestions_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-25T13:58:09Z",
+      "side": 1,
+      "message": "Maybe also check that there are no suggestions for the given category?",
       "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
