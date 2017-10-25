@@ -95,11 +95,11 @@ void MessageTransferOperation::Initialize() {
 }
 
 void MessageTransferOperation::OnSecureChannelStatusChanged(
-    const cryptauth::RemoteDevice& remote_device,
+    const std::string& device_id,
     const cryptauth::SecureChannel::Status& old_status,
     const cryptauth::SecureChannel::Status& new_status) {
-  if (std::find(remote_devices_.begin(), remote_devices_.end(),
-                remote_device) == remote_devices_.end()) {
+  cryptauth::RemoteDevice* remote_device = GetRemoteDevice(device_id);
+  if (!remote_device) {
     // If the device whose status has changed does not correspond to any of the
     // devices passed to this MessageTransferOperation instance, ignore the
     // status change.
@@ -107,8 +107,8 @@ void MessageTransferOperation::OnSecureChannelStatusChanged(
   }
 
   if (new_status == cryptauth::SecureChannel::Status::AUTHENTICATED) {
-    StartTimerForDevice(remote_device);
-    OnDeviceAuthenticated(remote_device);
+    StartTimerForDevice(*remote_device);
+    OnDeviceAuthenticated(*remote_device);
   } else if (new_status == cryptauth::SecureChannel::Status::DISCONNECTED) {
     // Note: In success cases, the channel advances from DISCONNECTED to
     // CONNECTING to CONNECTED to AUTHENTICATING to AUTHENTICATED. If the
@@ -116,37 +116,36 @@ void MessageTransferOperation::OnSecureChannelStatusChanged(
     // DISCONNECTED and starts over.
 
     uint32_t num_attempts_so_far;
-    if (remote_device_to_num_attempts_map_.find(remote_device) ==
+    if (remote_device_to_num_attempts_map_.find(*remote_device) ==
         remote_device_to_num_attempts_map_.end()) {
       num_attempts_so_far = 0;
     } else {
-      num_attempts_so_far = remote_device_to_num_attempts_map_[remote_device];
+      num_attempts_so_far = remote_device_to_num_attempts_map_[*remote_device];
     }
 
     num_attempts_so_far++;
-    remote_device_to_num_attempts_map_[remote_device] = num_attempts_so_far;
+    remote_device_to_num_attempts_map_[*remote_device] = num_attempts_so_far;
 
     PA_LOG(INFO) << "Connection attempt failed for device with ID "
-                 << remote_device.GetTruncatedDeviceIdForLogs() << ". "
+                 << remote_device->GetTruncatedDeviceIdForLogs() << ". "
                  << "Number of failures so far: " << num_attempts_so_far;
 
     if (num_attempts_so_far >= kMaxConnectionAttemptsPerDevice) {
       PA_LOG(INFO) << "Connection retry limit reached for device with ID "
-                   << remote_device.GetTruncatedDeviceIdForLogs() << ". "
+                   << remote_device->GetTruncatedDeviceIdForLogs() << ". "
                    << "Unregistering device.";
 
       // If the number of failures so far is equal to the maximum allowed number
       // of connection attempts, give up and unregister the device.
-      UnregisterDevice(remote_device);
+      UnregisterDevice(*remote_device);
     }
   }
 }
 
-void MessageTransferOperation::OnMessageReceived(
-    const cryptauth::RemoteDevice& remote_device,
-    const std::string& payload) {
-  if (std::find(remote_devices_.begin(), remote_devices_.end(),
-                remote_device) == remote_devices_.end()) {
+void MessageTransferOperation::OnMessageReceived(const std::string& device_id,
+                                                 const std::string& payload) {
+  cryptauth::RemoteDevice* remote_device = GetRemoteDevice(device_id);
+  if (!remote_device) {
     // If the device from which the message has been received does not
     // correspond to any of the devices passed to this MessageTransferOperation
     // instance, ignore the message.
@@ -156,7 +155,7 @@ void MessageTransferOperation::OnMessageReceived(
   std::unique_ptr<MessageWrapper> message_wrapper =
       MessageWrapper::FromRawMessage(payload);
   if (message_wrapper) {
-    OnMessageReceived(std::move(message_wrapper), remote_device);
+    OnMessageReceived(std::move(message_wrapper), *remote_device);
   }
 }
 
@@ -226,6 +225,16 @@ void MessageTransferOperation::OnTimeout(
 
   remote_device_to_timer_map_.erase(remote_device);
   UnregisterDevice(remote_device);
+}
+
+cryptauth::RemoteDevice* MessageTransferOperation::GetRemoteDevice(
+    const std::string& device_id) {
+  for (const auto& remote_device : remote_devices_) {
+    if (remote_device.GetDeviceId() == device_id)
+      return &remote_device;
+  }
+
+  return nullptr;
 }
 
 }  // namespace tether

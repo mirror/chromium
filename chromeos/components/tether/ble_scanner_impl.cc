@@ -87,9 +87,8 @@ BleScannerImpl::~BleScannerImpl() {
   adapter_->RemoveObserver(this);
 }
 
-bool BleScannerImpl::RegisterScanFilterForDevice(
-    const cryptauth::RemoteDevice& remote_device) {
-  if (registered_remote_devices_.size() >= kMaxConcurrentAdvertisements) {
+bool BleScannerImpl::RegisterScanFilterForDevice(const std::string& device_id) {
+  if (registered_remote_device_ids_.size() >= kMaxConcurrentAdvertisements) {
     // Each scan filter corresponds to an advertisement. Thus, the number of
     // concurrent advertisements cannot exceed the maximum number of concurrent
     // advertisements.
@@ -114,18 +113,18 @@ bool BleScannerImpl::RegisterScanFilterForDevice(
     return false;
   }
 
-  registered_remote_devices_.push_back(remote_device);
+  registered_remote_device_ids_.push_back(device_id);
   UpdateDiscoveryStatus();
 
   return true;
 }
 
 bool BleScannerImpl::UnregisterScanFilterForDevice(
-    const cryptauth::RemoteDevice& remote_device) {
-  for (auto it = registered_remote_devices_.begin();
-       it != registered_remote_devices_.end(); ++it) {
-    if (it->GetDeviceId() == remote_device.GetDeviceId()) {
-      registered_remote_devices_.erase(it);
+    const std::string& device_id) {
+  for (auto it = registered_remote_device_ids_.begin();
+       it != registered_remote_device_ids_.end(); ++it) {
+    if (*it == device_id) {
+      registered_remote_device_ids_.erase(it);
       UpdateDiscoveryStatus();
       return true;
     }
@@ -135,7 +134,7 @@ bool BleScannerImpl::UnregisterScanFilterForDevice(
 }
 
 bool BleScannerImpl::ShouldDiscoverySessionBeActive() {
-  return !registered_remote_devices_.empty();
+  return !registered_remote_device_ids_.empty();
 }
 
 bool BleScannerImpl::IsDiscoverySessionActive() {
@@ -160,14 +159,9 @@ void BleScannerImpl::SetTestDoubles(
 }
 
 bool BleScannerImpl::IsDeviceRegistered(const std::string& device_id) {
-  for (auto it = registered_remote_devices_.begin();
-       it != registered_remote_devices_.end(); ++it) {
-    if (it->GetDeviceId() == device_id) {
-      return true;
-    }
-  }
-
-  return false;
+  return std::find(registered_remote_device_ids_.begin(),
+                   registered_remote_device_ids_.end(),
+                   device_id) != registered_remote_device_ids_.end();
 }
 
 void BleScannerImpl::DeviceAdded(device::BluetoothAdapter* adapter,
@@ -310,20 +304,16 @@ void BleScannerImpl::CheckForMatchingScanFilters(
     return;
   }
 
-  const cryptauth::RemoteDevice* identified_device =
+  const std::string device_id =
       eid_generator_->IdentifyRemoteDeviceByAdvertisement(
-          service_data, registered_remote_devices_, beacon_seeds);
+          service_data, registered_remote_device_ids_, beacon_seeds);
 
   // If the service data does not correspond to an advertisement from a device
   // on this account, ignore it.
-  if (!identified_device)
+  if (device_id.empty())
     return;
 
-  // Make a copy before notifying observers. Since |identified_device| refers
-  // to an instance variable, it is possible that an observer could unregister
-  // that device, which would change the value of that pointer.
-  const cryptauth::RemoteDevice copy = *identified_device;
-  NotifyReceivedAdvertisementFromDevice(copy, bluetooth_device);
+  NotifyReceivedAdvertisementFromDevice(device_id, bluetooth_device);
 }
 
 void BleScannerImpl::ScheduleStatusChangeNotification(

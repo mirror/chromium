@@ -21,10 +21,10 @@ void BleScanner::RemoveObserver(Observer* observer) {
 }
 
 void BleScanner::NotifyReceivedAdvertisementFromDevice(
-    const cryptauth::RemoteDevice& remote_device,
+    const std::string& device_id,
     device::BluetoothDevice* bluetooth_device) {
   for (auto& observer : observer_list_)
-    observer.OnReceivedAdvertisementFromDevice(remote_device, bluetooth_device);
+    observer.OnReceivedAdvertisementFromDevice(device_id, bluetooth_device);
 }
 
 void BleScanner::NotifyDiscoverySessionStateChanged(

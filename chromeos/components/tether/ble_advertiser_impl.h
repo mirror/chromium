@@ -59,10 +59,8 @@ class BleAdvertiserImpl : public BleAdvertiser {
   ~BleAdvertiserImpl() override;
 
   // BleAdvertiser:
-  bool StartAdvertisingToDevice(
-      const cryptauth::RemoteDevice& remote_device) override;
-  bool StopAdvertisingToDevice(
-      const cryptauth::RemoteDevice& remote_device) override;
+  bool StartAdvertisingToDevice(const std::string& device_id) override;
+  bool StopAdvertisingToDevice(const std::string& device_id) override;
   bool AreAdvertisementsRegistered() override;
 
  private:

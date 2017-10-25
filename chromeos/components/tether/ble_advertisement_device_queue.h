@@ -11,7 +11,6 @@
 
 #include "base/macros.h"
 #include "chromeos/components/tether/connection_priority.h"
-#include "components/cryptauth/remote_device.h"
 
 namespace chromeos {
 
@@ -27,11 +26,11 @@ class BleAdvertisementDeviceQueue {
   virtual ~BleAdvertisementDeviceQueue();
 
   struct PrioritizedDevice {
-    PrioritizedDevice(const cryptauth::RemoteDevice& remote_device,
-                      const ConnectionPriority& connection_priority);
+    PrioritizedDevice(const std::string& device_id const ConnectionPriority&
+                          connection_priority);
     ~PrioritizedDevice();
 
-    cryptauth::RemoteDevice remote_device;
+    std::string device_id;
     ConnectionPriority connection_priority;
   };
 
@@ -51,17 +50,16 @@ class BleAdvertisementDeviceQueue {
   // Returns a list of devices to which to advertise. The devices returned are
   // the first |kMaxConcurrentAdvertisements| devices in the front of the queue,
   // or fewer if the number of devices in the queue is less than that value.
-  std::vector<cryptauth::RemoteDevice> GetDevicesToWhichToAdvertise() const;
+  std::vector<std::string> GetDeviceIdsToWhichToAdvertise() const;
 
   size_t GetSize() const;
 
  private:
   void AddDevicesToVectorForPriority(
       ConnectionPriority connection_priority,
-      std::vector<cryptauth::RemoteDevice>* remote_devices_out) const;
+      std::vector<std::string>* device_ids_out) const;
 
-  std::map<ConnectionPriority, std::deque<cryptauth::RemoteDevice>>
-      priority_to_deque_map_;
+  std::map<ConnectionPriority, std::deque<std::string>> priority_to_deque_map_;
 
   DISALLOW_COPY_AND_ASSIGN(BleAdvertisementDeviceQueue);
 };

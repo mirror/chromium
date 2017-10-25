@@ -60,10 +60,8 @@ class BleScannerImpl : public BleScanner,
   ~BleScannerImpl() override;
 
   // BleScanner:
-  bool RegisterScanFilterForDevice(
-      const cryptauth::RemoteDevice& remote_device) override;
-  bool UnregisterScanFilterForDevice(
-      const cryptauth::RemoteDevice& remote_device) override;
+  bool RegisterScanFilterForDevice(const std::string& device_id) override;
+  bool UnregisterScanFilterForDevice(const std::string& device_id) override;
   bool ShouldDiscoverySessionBeActive() override;
   bool IsDiscoverySessionActive() override;
 
@@ -129,7 +127,7 @@ class BleScannerImpl : public BleScanner,
   std::unique_ptr<ServiceDataProvider> service_data_provider_;
   std::unique_ptr<cryptauth::ForegroundEidGenerator> eid_generator_;
 
-  std::vector<cryptauth::RemoteDevice> registered_remote_devices_;
+  std::vector<std::string> registered_remote_device_ids_;
 
   bool is_initializing_discovery_session_ = false;
   bool is_stopping_discovery_session_ = false;

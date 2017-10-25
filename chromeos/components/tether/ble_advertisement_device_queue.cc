@@ -17,12 +17,12 @@ namespace {
 
 bool DoesVectorContainDevice(
     const ConnectionPriority& connection_priority,
-    const cryptauth::RemoteDevice& remote_device,
+    const std::string& device_id,
     const std::vector<BleAdvertisementDeviceQueue::PrioritizedDevice>&
         prioritized_devices) {
   for (const auto& prioritized_device : prioritized_devices) {
     if (prioritized_device.connection_priority == connection_priority &&
-        prioritized_device.remote_device == remote_device) {
+        prioritized_device.device_id == device_id) {
       return true;
     }
   }
@@ -33,9 +33,9 @@ bool DoesVectorContainDevice(
 }  // namespace
 
 BleAdvertisementDeviceQueue::PrioritizedDevice::PrioritizedDevice(
-    const cryptauth::RemoteDevice& remote_device,
+    const std::string& device_id,
     const ConnectionPriority& connection_priority)
-    : remote_device(remote_device), connection_priority(connection_priority) {}
+    : device_id(device_id), connection_priority(connection_priority) {}
 
 BleAdvertisementDeviceQueue::PrioritizedDevice::~PrioritizedDevice() {}
 
@@ -51,14 +51,16 @@ bool BleAdvertisementDeviceQueue::SetDevices(
   // queue. If it is not, add it to the end of the deque associated with the
   // device's priority.
   for (const auto& device : devices) {
-    std::deque<cryptauth::RemoteDevice>& deque_for_priority =
+    std::deque<std::string>& deque_for_priority =
         priority_to_deque_map_[device.connection_priority];
     if (std::find(deque_for_priority.begin(), deque_for_priority.end(),
-                  device.remote_device) == deque_for_priority.end()) {
-      deque_for_priority.push_back(device.remote_device);
+                  device.device_id) == deque_for_priority.end()) {
+      deque_for_priority.push_back(device.device_id);
       updated = true;
     }
   }
+  for (const auto& device_id : missing_from_queue)
+    device_ids_.push_back(device_id);
 
   // Now, iterate through each priority's deque to see if any of the entries
   // were not provided as part of the |devices| parameter. If any such entries
@@ -94,21 +96,21 @@ void BleAdvertisementDeviceQueue::MoveDeviceToEnd(
     if (device_deque_it == map_entry.second.end())
       continue;
 
-    cryptauth::RemoteDevice to_move = *device_deque_it;
+    std::string to_move = *device_deque_it;
     map_entry.second.erase(device_deque_it);
     map_entry.second.push_back(to_move);
   }
 }
 
-std::vector<cryptauth::RemoteDevice>
+std::vector<cryptauth::std::string>
 BleAdvertisementDeviceQueue::GetDevicesToWhichToAdvertise() const {
-  std::vector<cryptauth::RemoteDevice> devices;
+  std::vector<std::string> device_ids;
   AddDevicesToVectorForPriority(ConnectionPriority::CONNECTION_PRIORITY_HIGH,
-                                &devices);
+                                &device_ids);
   AddDevicesToVectorForPriority(ConnectionPriority::CONNECTION_PRIORITY_MEDIUM,
-                                &devices);
+                                &device_ids);
   AddDevicesToVectorForPriority(ConnectionPriority::CONNECTION_PRIORITY_LOW,
-                                &devices);
+                                &device_ids);
   DCHECK(devices.size() <= kMaxConcurrentAdvertisements);
   return devices;
 }
@@ -122,19 +124,19 @@ size_t BleAdvertisementDeviceQueue::GetSize() const {
 
 void BleAdvertisementDeviceQueue::AddDevicesToVectorForPriority(
     ConnectionPriority connection_priority,
-    std::vector<cryptauth::RemoteDevice>* remote_devices_out) const {
+    std::vector<std::string>* device_ids_out) const {
   if (priority_to_deque_map_.find(connection_priority) ==
       priority_to_deque_map_.end()) {
     // Nothing to do if there is no entry for this priority.
     return;
   }
 
-  const std::deque<cryptauth::RemoteDevice>& deque_for_priority =
+  const std::deque<std::string>& deque_for_priority =
       priority_to_deque_map_.at(connection_priority);
   size_t i = 0;
   while (i < deque_for_priority.size() &&
-         remote_devices_out->size() < kMaxConcurrentAdvertisements) {
-    remote_devices_out->push_back(deque_for_priority[i]);
+         device_ids_out->size() < kMaxConcurrentAdvertisements) {
+    device_ids_out->push_back(deque_for_priority[i]);
     ++i;
   }
 }
