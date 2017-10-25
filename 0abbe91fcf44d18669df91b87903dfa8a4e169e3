@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f151d4dd_f64c5e30",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImageTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-10-25T14:07:05Z",
+      "side": 1,
+      "message": "@Xianzhu, IIUC, each test under \"BitmapImageTestWithMockDecoder.FrameSkipTracking\" needs to call ScopedCompositorImageAnimationsForTest compositor_image_animations(false), right?",
+      "revId": "0abbe91fcf44d18669df91b87903dfa8a4e169e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
