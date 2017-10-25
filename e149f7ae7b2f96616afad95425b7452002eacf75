@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a866577_219f7b28",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-25T11:58:19Z",
+      "side": 1,
+      "message": "Remove this include as it is not needed anymore.",
+      "range": {
+        "startLine": 71,
+        "startChar": 50,
+        "endLine": 71,
+        "endChar": 80
+      },
+      "revId": "e149f7ae7b2f96616afad95425b7452002eacf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ed3878_b06fd8e9",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-25T11:58:19Z",
+      "side": 1,
+      "message": "I suppose that |identity| be passed to the command, otherwise signing in from the personalized sign-in promos with the default account is broken.\n\nI think it would be good to test signing in from a personalized promo after this change.",
+      "range": {
+        "startLine": 1012,
+        "startChar": 15,
+        "endLine": 1012,
+        "endChar": 27
+      },
+      "revId": "e149f7ae7b2f96616afad95425b7452002eacf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b08c5e_d5d35a20",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-25T11:58:19Z",
+      "side": 1,
+      "message": "Same here: This should probably be |promoAction|.",
+      "range": {
+        "startLine": 1015,
+        "startChar": 28,
+        "endLine": 1015,
+        "endChar": 56
+      },
+      "revId": "e149f7ae7b2f96616afad95425b7452002eacf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
