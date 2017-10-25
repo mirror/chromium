@@ -398,7 +398,7 @@ class ChromePrintContext : public PrintContext {
 
       DrawingRecorder line_boundary_recorder(
           builder.Context(), builder,
-          DisplayItem::kPrintedContentDestinationLocations, page_rect);
+          DisplayItem::kPrintedContentDestinationLocations);
       OutputLinkedDestinations(builder.Context(), page_rect);
     }
     context.DrawRecord(builder.EndRecording());

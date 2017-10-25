@@ -166,7 +166,7 @@ void WebPluginContainerImpl::Paint(GraphicsContext& context,
     return;
 
   DrawingRecorder recorder(context, *element_->GetLayoutObject(),
-                           DisplayItem::kWebPlugin, cull_rect.rect_);
+                           DisplayItem::kWebPlugin);
   context.Save();
 
   // The plugin is positioned in the root frame's coordinates, so it needs to
@@ -360,8 +360,9 @@ void WebPluginContainerImpl::PrintPage(int page_number,
           gc, *element_->GetLayoutObject(), DisplayItem::kWebPlugin))
     return;
 
+  // TODO(wkorman): Do we still need print_rect at all?
   DrawingRecorder recorder(gc, *element_->GetLayoutObject(),
-                           DisplayItem::kWebPlugin, print_rect);
+                           DisplayItem::kWebPlugin);
   gc.Save();
 
   WebCanvas* canvas = gc.Canvas();
