@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aa53108_b0237c21",
+        "filename": "chrome/browser/dbus/dbus_thread_linux.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-25T13:44:26Z",
+      "side": 1,
+      "message": "it\u0027s not \"this\" task runner, no? \"On ChromeOS, dbus tasks should be posted via thE DBusThreadManager instead\" or similar?",
+      "revId": "13fee2c0622c5a0e769fd83407c3008164be8303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5979256_3181a6bd",
+        "filename": "chrome/browser/dbus/dbus_thread_linux.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-25T13:44:26Z",
+      "side": 1,
+      "message": "can we put this in a namespace? chrome would be good enough",
+      "revId": "13fee2c0622c5a0e769fd83407c3008164be8303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
