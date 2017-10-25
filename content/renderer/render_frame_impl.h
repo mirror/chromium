@@ -816,6 +816,9 @@ class CONTENT_EXPORT RenderFrameImpl
   void SetCustomURLLoadeFactory(
       mojo::MessagePipeHandle custom_loader_factory_handle);
 
+  // Returns the URL being loaded by the |frame_|'s request.
+  GURL GetLoadingUrl() const;
+
  protected:
   explicit RenderFrameImpl(const CreateParams& params);
 
@@ -1147,9 +1150,6 @@ class CONTENT_EXPORT RenderFrameImpl
 
   bool ShouldDisplayErrorPageForFailedLoad(int error_code,
                                            const GURL& unreachable_url);
-
-  // Returns the URL being loaded by the |frame_|'s request.
-  GURL GetLoadingUrl() const;
 
   // If we initiated a navigation, this function will populate |document_state|
   // with the navigation information saved in OnNavigate().
