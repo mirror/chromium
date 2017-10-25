@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "488a587b_ef5774a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-25T20:21:37Z",
+      "side": 1,
+      "message": "Can you please add some more details in the CL description? (e.g. mention aura, mention high-dpi, mention use-zoom etc.)",
+      "revId": "0e260011d5d16bb893ea30508a503eea558e1a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7116266_909d9459",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-25T20:21:37Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why this is needed only for use-zoom-for-dsf, and not for regular high-dpi?",
+      "revId": "0e260011d5d16bb893ea30508a503eea558e1a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
