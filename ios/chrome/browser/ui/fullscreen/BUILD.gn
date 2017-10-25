@@ -6,6 +6,65 @@ source_set("fullscreen") {
   sources = [
     "fullscreen_features.h",
     "fullscreen_features.mm",
+  ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+
+  deps = [
+    "//base",
+  ]
+}
+
+source_set("new_fullscreen") {
+  public = [
+    "fullscreen_controller.h",
+    "fullscreen_controller_observer.h",
+    "fullscreen_ui_updater.h",
+  ]
+  sources = [
+    "fullscreen_broadcast_forwarder.h",
+    "fullscreen_broadcast_forwarder.mm",
+    "fullscreen_controller.mm",
+    "fullscreen_model.h",
+    "fullscreen_model.mm",
+    "fullscreen_ui_updater.mm",
+    "fullscreen_web_state_list_observer.h",
+    "fullscreen_web_state_list_observer.mm",
+    "fullscreen_web_state_observer.h",
+    "fullscreen_web_state_observer.mm",
+  ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+
+  deps = [
+    ":new_fullscreen_ui",
+    "//base",
+    "//ios/chrome/browser/ui:ui_util",
+    "//ios/chrome/browser/ui/broadcaster",
+    "//ios/chrome/browser/ui/browser_list",
+    "//ios/chrome/browser/web_state_list",
+    "//ios/web",
+  ]
+}
+
+source_set("new_fullscreen_ui") {
+  sources = [
+    "fullscreen_scroll_end_animator.h",
+    "fullscreen_scroll_end_animator.mm",
+    "fullscreen_ui_element.h",
+  ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+
+  deps = [
+    "//base",
+    "//ios/chrome/common:timing",
+    "//ui/gfx/geometry",
+  ]
+}
+
+source_set("legacy_fullscreen") {
+  sources = [
     "legacy_fullscreen_controller.h",
     "legacy_fullscreen_controller.mm",
   ]
@@ -26,7 +85,7 @@ source_set("fullscreen") {
   ]
 }
 
-source_set("unit_tests") {
+source_set("legacy_unit_tests") {
   testonly = true
   sources = [
     "legacy_fullscreen_controller_unittest.mm",
@@ -36,6 +95,7 @@ source_set("unit_tests") {
 
   deps = [
     ":fullscreen",
+    ":legacy_fullscreen",
     "//ios/web",
     "//ios/web/public",
     "//ios/web/public/test/fakes",
