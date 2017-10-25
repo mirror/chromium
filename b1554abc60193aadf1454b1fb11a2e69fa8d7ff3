@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7154cfaa_57fc03ec",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-25T05:24:07Z",
+      "side": 1,
+      "message": "Yeah, git-cl format removed the break...",
+      "parentUuid": "5ec16077_ca7a0f6f",
+      "revId": "b1554abc60193aadf1454b1fb11a2e69fa8d7ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08162de5_0acd9f78",
         "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b1554abc60193aadf1454b1fb11a2e69fa8d7ff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc982e2_4e47bc13",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-25T05:24:07Z",
+      "side": 1,
+      "message": "Oh, I missed that, thanks. Moved it.",
+      "parentUuid": "08162de5_0acd9f78",
+      "revId": "b1554abc60193aadf1454b1fb11a2e69fa8d7ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b3ef15e6_da3ca9aa",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-25T05:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ff32339_c440b09c",
+      "revId": "b1554abc60193aadf1454b1fb11a2e69fa8d7ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "424bd496_271dd3a8",
         "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "b1554abc60193aadf1454b1fb11a2e69fa8d7ff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1461ba9_1c36d104",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-25T05:24:07Z",
+      "side": 1,
+      "message": "Oops, it shouldn\u0027t be here since we are calling RunUntilComplete() later. It\u0027s slipped in for debugging. Removed, thanks.\nBTW it seems a bug (https://crbug.com/758455). We need to wait for the stream for subresource requests as well as SWURLLoaderJob. I created an issue for it (https://crbug.com/778110).",
+      "parentUuid": "424bd496_271dd3a8",
+      "revId": "b1554abc60193aadf1454b1fb11a2e69fa8d7ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
