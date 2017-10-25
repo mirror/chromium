@@ -19,6 +19,70 @@
     },
     {
       "key": {
+        "uuid": "51b8e25f_9447d639",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-25T10:19:25Z",
+      "side": 1,
+      "message": "👍💯👌",
+      "parentUuid": "6422b597_9e52b474",
+      "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14be1b5_8bc952e3",
+        "filename": "components/dom_distiller/core/distilled_page_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-25T10:19:25Z",
+      "side": 1,
+      "message": "This isn\u0027t very common -- usually prefs are declared in pref_names.h. That would also resolve the inconsistency that these preferences are anonymous but the new one below is exposed.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2c80bf_4ae5d169",
+        "filename": "components/dom_distiller/core/distilled_page_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-25T10:19:25Z",
+      "side": 1,
+      "message": "Nit: Accessibility",
+      "range": {
+        "startLine": 27,
+        "startChar": 47,
+        "endLine": 27,
+        "endChar": 59
+      },
+      "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f9a3a25_72c3916f",
         "filename": "components/dom_distiller/core/distilled_page_prefs_android.h",
         "patchSetId": 2
@@ -30,6 +94,30 @@
       "writtenOn": "2017-10-25T00:45:32Z",
       "side": 1,
       "message": "Is there another patch planned that\u0027s going to make use of these in DistilledPagePrefs.java?",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 55
+      },
+      "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375caa42_8adc6b69",
+        "filename": "components/dom_distiller/core/distilled_page_prefs_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-25T10:19:25Z",
+      "side": 1,
+      "message": "If these are going to be used in DistilledPagePrefs, why add an additional pair of JNI methods if there is already one in PrefServiceBridge anyway?",
+      "parentUuid": "3f9a3a25_72c3916f",
       "range": {
         "startLine": 37,
         "startChar": 2,
