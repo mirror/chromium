@@ -178,8 +178,19 @@ cr.define('offlineInternals', function() {
         {offlinePages: offlinePages, savePageRequests: savePageRequests}, null,
         2);
 
-    window.open(
-        'data:application/json,' + encodeURIComponent(json), 'dump.json');
+    $('dump-box').value = json;
+    $('dump').removeAttribute('hidden');
+    $('dump-box').select();
+  }
+
+  function closeDownload() {
+    $('dump').setAttribute('hidden', '');
+    $('dump-box').value = '';
+  }
+
+  function copyDownload() {
+    $('dump-box').select();
+    document.execCommand('copy');
   }
 
   /**
@@ -260,15 +271,10 @@ cr.define('offlineInternals', function() {
     }
 
     var incognito = loadTimeData.getBoolean('isIncognito');
-    $('delete-all-pages').disabled = incognito;
-    $('delete-selected-pages').disabled = incognito;
-    $('delete-all-requests').disabled = incognito;
-    $('delete-selected-requests').disabled = incognito;
-    $('log-model-on').disabled = incognito;
-    $('log-model-off').disabled = incognito;
-    $('log-request-on').disabled = incognito;
-    $('log-request-off').disabled = incognito;
-    $('refresh').disabled = incognito;
+    ['delete-all-pages', 'delete-selected-pages', 'delete-all-requests',
+     'delete-selected-requests', 'log-model-on', 'log-model-off',
+     'log-request-on', 'log-request-off', 'refresh']
+        .forEach(el => $(el).disabled = incognito);
 
     $('delete-all-pages').onclick = deleteAllPages;
     $('delete-selected-pages').onclick = deleteSelectedPages;
@@ -276,6 +282,8 @@ cr.define('offlineInternals', function() {
     $('delete-selected-requests').onclick = deleteSelectedRequests;
     $('refresh').onclick = refreshAll;
     $('download').onclick = download;
+    $('close-download').onclick = closeDownload;
+    $('copy-to-clipboard').onclick = copyDownload;
     $('log-model-on').onclick = togglePageModelLog.bind(this, true);
     $('log-model-off').onclick = togglePageModelLog.bind(this, false);
     $('log-request-on').onclick = toggleRequestQueueLog.bind(this, true);
