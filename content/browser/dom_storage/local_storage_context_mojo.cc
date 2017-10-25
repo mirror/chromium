@@ -14,6 +14,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
 #include "base/trace_event/memory_dump_manager.h"
+#include "build/build_config.h"
 #include "components/leveldb/public/cpp/util.h"
 #include "components/leveldb/public/interfaces/leveldb.mojom.h"
 #include "content/browser/dom_storage/dom_storage_area.h"
@@ -91,7 +92,7 @@ void MigrateStorageHelper(
   DOMStorageDatabase db(db_path);
   DOMStorageValuesMap map;
   db.ReadAllValues(&map);
-  auto values = base::MakeUnique<LevelDBWrapperImpl::ValueMap>();
+  auto values = std::make_unique<LevelDBWrapperImpl::ValueMap>();
   for (const auto& it : map) {
     (*values)[LocalStorageContextMojo::MigrateString(it.first)] =
         LocalStorageContextMojo::MigrateString(it.second.string());
@@ -178,12 +179,24 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
     const int kMaxBytesPerHour = kPerStorageAreaQuota;
     const int kMaxCommitsPerHour = 60;
 
-    level_db_wrapper_ = base::MakeUnique<LevelDBWrapperImpl>(
+    LevelDBWrapperImpl::Options options;
+    options.max_size = kPerStorageAreaQuota + kPerStorageAreaOverQuotaAllowance;
+    options.default_commit_delay =
+        base::TimeDelta::FromSeconds(kCommitDefaultDelaySecs);
+    options.max_bytes_per_hour = kMaxBytesPerHour;
+    options.max_commits_per_hour = kMaxCommitsPerHour;
+#if defined(OS_ANDROID)
+    options.cache_mode = LevelDBWrapperImpl::CacheMode::KEYS_ONLY_WHEN_POSSIBLE;
+#else
+    options.cache_mode = LevelDBWrapperImpl::CacheMode::KEYS_AND_VALUES;
+    if (base::SysInfo::IsLowEndDevice()) {
+      options.cache_mode =
+          LevelDBWrapperImpl::CacheMode::KEYS_ONLY_WHEN_POSSIBLE;
+    }
+#endif
+    level_db_wrapper_ = std::make_unique<LevelDBWrapperImpl>(
         context_->database_.get(),
-        kDataPrefix + origin_.Serialize() + kOriginSeparator,
-        kPerStorageAreaQuota + kPerStorageAreaOverQuotaAllowance,
-        base::TimeDelta::FromSeconds(kCommitDefaultDelaySecs), kMaxBytesPerHour,
-        kMaxCommitsPerHour, this);
+        kDataPrefix + origin_.Serialize() + kOriginSeparator, this, options);
     level_db_wrapper_ptr_ = level_db_wrapper_.get();
   }
 
@@ -222,7 +235,7 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
       item->type = leveldb::mojom::BatchOperationType::PUT_KEY;
       LocalStorageOriginMetaData data;
       data.set_last_modified(base::Time::Now().ToInternalValue());
-      data.set_size_bytes(level_db_wrapper()->bytes_used());
+      data.set_size_bytes(level_db_wrapper()->storage_used());
       item->value = leveldb::StdStringToUint8Vector(data.SerializeAsString());
     }
     operations.push_back(std::move(item));
@@ -863,7 +876,7 @@ LocalStorageContextMojo::GetOrCreateDBWrapper(const url::Origin& origin) {
 
   PurgeUnusedWrappersIfNeeded();
 
-  auto holder = base::MakeUnique<LevelDBWrapperHolder>(this, origin);
+  auto holder = std::make_unique<LevelDBWrapperHolder>(this, origin);
   LevelDBWrapperHolder* holder_ptr = holder.get();
   level_db_wrappers_[origin] = std::move(holder);
   return holder_ptr;
@@ -981,7 +994,7 @@ void LocalStorageContextMojo::GetStatistics(size_t* total_cache_size,
   *total_cache_size = 0;
   *unused_wrapper_count = 0;
   for (const auto& it : level_db_wrappers_) {
-    *total_cache_size += it.second->level_db_wrapper()->bytes_used();
+    *total_cache_size += it.second->level_db_wrapper()->memory_used();
     if (!it.second->has_bindings())
       (*unused_wrapper_count)++;
   }
