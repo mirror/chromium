@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6560d7dc_853cb31f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T00:09:50Z",
+      "side": 1,
+      "message": "It\u0027s probably a good idea to also say the purpose of the CL is to fix a crash. I missed that originally.",
+      "revId": "249b05e3494baad2b9173b72dc97d52252f4eea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2b0dd4_1d3cd650",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T00:09:50Z",
+      "side": 1,
+      "message": "add an empty line here as it\u0027s a new paragraph",
+      "revId": "249b05e3494baad2b9173b72dc97d52252f4eea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d754d5c_28e7a625",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T00:09:50Z",
+      "side": 1,
+      "message": "make it a new sentence: \"Blink. In such a case\"",
+      "revId": "249b05e3494baad2b9173b72dc97d52252f4eea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccb9917_19e4d251",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T00:09:50Z",
+      "side": 1,
+      "message": "\"will finally be destroyed after all Blink destroys all the WebServiceWorkerRegistration::Handles.\"",
+      "revId": "249b05e3494baad2b9173b72dc97d52252f4eea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee0e61d_e6d2f715",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T00:09:50Z",
+      "side": 1,
+      "message": "overridden -\u003e set",
+      "range": {
+        "startLine": 146,
+        "startChar": 8,
+        "endLine": 146,
+        "endChar": 17
+      },
+      "revId": "249b05e3494baad2b9173b72dc97d52252f4eea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09238349_68344229",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T00:09:50Z",
+      "side": 1,
+      "message": "new sentence: \"Blink. In such a case, \"",
+      "range": {
+        "startLine": 165,
+        "startChar": 58,
+        "endLine": 165,
+        "endChar": 68
+      },
+      "revId": "249b05e3494baad2b9173b72dc97d52252f4eea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdc7589_7debcece",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-25T00:09:50Z",
+      "side": 1,
+      "message": "transits -\u003e sets",
+      "range": {
+        "startLine": 167,
+        "startChar": 7,
+        "endLine": 167,
+        "endChar": 15
+      },
+      "revId": "249b05e3494baad2b9173b72dc97d52252f4eea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
