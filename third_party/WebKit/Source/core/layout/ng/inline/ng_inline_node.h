@@ -6,6 +6,7 @@
 #define NGInlineNode_h
 
 #include "core/CoreExport.h"
+#include "core/editing/Forward.h"
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/ng/inline/ng_inline_item.h"
 #include "core/layout/ng/inline/ng_inline_node_data.h"

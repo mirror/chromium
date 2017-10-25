@@ -6,6 +6,7 @@
 
 #include "core/dom/Node.h"
 #include "core/dom/Text.h"
+#include "core/editing/EphemeralRange.h"
 #include "core/editing/Position.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 
@@ -13,12 +14,37 @@ namespace blink {
 
 namespace {
 
+// Offset mapping APIs accept only two types of positions:
+// 1. Offset-in-anchor in a text node
+// 2. Before/After-anchor to an atomic inline
+void AssertValidPositionForOffsetMapping(const Position& position) {
+#if DCHECK_IS_ON()
+  DCHECK(position.IsNotNull());
+  if (position.AnchorNode()->IsTextNode()) {
+    DCHECK(position.IsOffsetInAnchor());
+    return;
+  }
+  DCHECK(position.IsBeforeAnchor() || position.IsAfterAnchor());
+  DCHECK(position.AnchorNode()->GetLayoutObject());
+  DCHECK(position.AnchorNode()->GetLayoutObject()->IsAtomicInlineLevel());
+#endif
+}
+
 Position CreatePositionForOffsetMapping(const Node& node, unsigned dom_offset) {
   if (node.IsTextNode())
     return Position(&node, dom_offset);
   // For non-text-anchored position, the offset must be either 0 or 1.
   DCHECK_LE(dom_offset, 1u);
   return dom_offset ? Position::AfterNode(node) : Position::BeforeNode(node);
+}
+
+unsigned GetOffsetForMapping(const Position& position) {
+  AssertValidPositionForOffsetMapping(position);
+  if (position.AnchorNode()->IsTextNode())
+    return position.OffsetInContainerNode();
+  if (position.IsBeforeAnchor())
+    return 0;
+  return 1;
 }
 
 }  // namespace
@@ -82,8 +108,10 @@ unsigned NGOffsetMappingUnit::ConvertTextContentToLastDOMOffset(
 }
 
 // static
-const NGOffsetMapping* NGOffsetMapping::GetFor(const Node& node,
-                                               unsigned offset) {
+const NGOffsetMapping* NGOffsetMapping::GetFor(const Position& position) {
+  AssertValidPositionForOffsetMapping(position);
+  const Node& node = *position.AnchorNode();
+  unsigned offset = GetOffsetForMapping(position);
   const LayoutObject* layout_object = AssociatedLayoutObjectOf(node, offset);
   if (!layout_object || !layout_object->IsInline())
     return nullptr;
@@ -106,12 +134,13 @@ NGOffsetMapping::NGOffsetMapping(UnitVector&& units,
 
 NGOffsetMapping::~NGOffsetMapping() = default;
 
-const NGOffsetMappingUnit* NGOffsetMapping::GetMappingUnitForDOMOffset(
-    const Node& node,
-    unsigned offset) const {
+const NGOffsetMappingUnit* NGOffsetMapping::GetMappingUnitForPosition(
+    const Position& position) const {
+  AssertValidPositionForOffsetMapping(position);
   unsigned range_start;
   unsigned range_end;
-  std::tie(range_start, range_end) = ranges_.at(&node);
+  std::tie(range_start, range_end) = ranges_.at(position.AnchorNode());
+  const unsigned offset = GetOffsetForMapping(position);
   if (range_start == range_end || units_[range_start].DOMStart() > offset)
     return nullptr;
   // Find the last unit where unit.dom_start <= offset
@@ -125,13 +154,17 @@ const NGOffsetMappingUnit* NGOffsetMapping::GetMappingUnitForDOMOffset(
   return unit;
 }
 
-NGMappingUnitRange NGOffsetMapping::GetMappingUnitsForDOMOffsetRange(
-    const Node& node,
-    unsigned start_offset,
-    unsigned end_offset) const {
+NGMappingUnitRange NGOffsetMapping::GetMappingUnitsForDOMRange(
+    const EphemeralRange& ephemeral_range) const {
+  AssertValidPositionForOffsetMapping(ephemeral_range.StartPosition());
+  AssertValidPositionForOffsetMapping(ephemeral_range.EndPosition());
+  DCHECK_EQ(ephemeral_range.StartPosition().AnchorNode(), ephemeral_range.EndPosition().AnchorNode());
+  const Node* node = ephemeral_range.StartPosition().AnchorNode();
+  const unsigned start_offset = GetOffsetForMapping(ephemeral_range.StartPosition());
+  const unsigned end_offset = GetOffsetForMapping(ephemeral_range.EndPosition());
   unsigned range_start;
   unsigned range_end;
-  std::tie(range_start, range_end) = ranges_.at(&node);
+  std::tie(range_start, range_end) = ranges_.at(node);
   if (range_start == range_end || units_[range_start].DOMStart() > end_offset ||
       units_[range_end - 1].DOMEnd() < start_offset)
     return {};
@@ -154,70 +187,54 @@ NGMappingUnitRange NGOffsetMapping::GetMappingUnitsForDOMOffsetRange(
 }
 
 Optional<unsigned> NGOffsetMapping::GetTextContentOffset(
-    const Node& node,
-    unsigned offset) const {
-  const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
+    const Position& position) const {
+  AssertValidPositionForOffsetMapping(position);
+  const NGOffsetMappingUnit* unit = GetMappingUnitForPosition(position);
   if (!unit)
     return WTF::nullopt;
-  return unit->ConvertDOMOffsetToTextContent(offset);
+  return unit->ConvertDOMOffsetToTextContent(GetOffsetForMapping(position));
 }
 
-Optional<unsigned> NGOffsetMapping::StartOfNextNonCollapsedCharacter(
-    const Node& node,
-    unsigned offset) const {
-  const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
-  if (!unit)
-    return WTF::nullopt;
-
-  while (unit != units_.end() && unit->GetOwner() == node) {
-    if (unit->DOMEnd() > offset &&
-        unit->GetType() != NGOffsetMappingUnitType::kCollapsed)
-      return std::max(offset, unit->DOMStart());
-    ++unit;
-  }
-  return WTF::nullopt;
+Position NGOffsetMapping::StartOfNextNonCollapsedCharacter(
+    const Position& position) const {
+  AssertValidPositionForOffsetMapping(position);
+  Optional<unsigned> text_content_offset = GetTextContentOffset(position);
+  if (!text_content_offset)
+    return Position();
+  Position candidate = GetLastPosition(*text_content_offset);
+  if (candidate.IsNull() || candidate.AnchorNode() != position.AnchorNode())
+    return Position();
+  return candidate;
 }
 
-Optional<unsigned> NGOffsetMapping::EndOfLastNonCollapsedCharacter(
-    const Node& node,
-    unsigned offset) const {
-  const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
-  if (!unit)
-    return WTF::nullopt;
-
-  while (unit->GetOwner() == node) {
-    if (unit->DOMStart() < offset &&
-        unit->GetType() != NGOffsetMappingUnitType::kCollapsed)
-      return std::min(offset, unit->DOMEnd());
-    if (unit == units_.begin())
-      break;
-    --unit;
-  }
-  return WTF::nullopt;
+Position NGOffsetMapping::EndOfLastNonCollapsedCharacter(
+    const Position& position) const {
+  AssertValidPositionForOffsetMapping(position);
+  Optional<unsigned> text_content_offset = GetTextContentOffset(position);
+  if (!text_content_offset)
+    return Position();
+  Position candidate = GetFirstPosition(*text_content_offset);
+  if (candidate.IsNull() || candidate.AnchorNode() != position.AnchorNode())
+    return Position();
+  return candidate;
 }
 
-bool NGOffsetMapping::IsBeforeNonCollapsedCharacter(const Node& node,
-                                                    unsigned offset) const {
-  const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
-  return unit && offset < unit->DOMEnd() &&
-         unit->GetType() != NGOffsetMappingUnitType::kCollapsed;
+bool NGOffsetMapping::IsBeforeNonCollapsedCharacter(
+    const Position& position) const {
+  AssertValidPositionForOffsetMapping(position);
+  return position == StartOfNextNonCollapsedCharacter(position);
 }
 
-bool NGOffsetMapping::IsAfterNonCollapsedCharacter(const Node& node,
-                                                   unsigned offset) const {
-  if (!offset)
-    return false;
-  // In case we have one unit ending at |offset| and another starting at
-  // |offset|, we need to find the former. Hence, search with |offset - 1|.
-  const NGOffsetMappingUnit* unit =
-      GetMappingUnitForDOMOffset(node, offset - 1);
-  return unit && offset > unit->DOMStart() &&
-         unit->GetType() != NGOffsetMappingUnitType::kCollapsed;
+bool NGOffsetMapping::IsAfterNonCollapsedCharacter(
+    const Position& position) const {
+  AssertValidPositionForOffsetMapping(position);
+  return position == EndOfLastNonCollapsedCharacter(position);
 }
 
-Optional<UChar> NGOffsetMapping::GetCharacterBefore(const Node& node,
-                                                    unsigned offset) const {
-  Optional<unsigned> text_content_offset = GetTextContentOffset(node, offset);
+Optional<UChar> NGOffsetMapping::GetCharacterBefore(
+    const Position& position) const {
+  AssertValidPositionForOffsetMapping(position);
+  Optional<unsigned> text_content_offset = GetTextContentOffset(position);
   if (!text_content_offset || !*text_content_offset)
     return WTF::nullopt;
   return text_[*text_content_offset - 1];

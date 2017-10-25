@@ -105,50 +105,48 @@ class CORE_EXPORT NGOffsetMapping {
 
   // ------ Mapping APIs from DOM to text content ------
 
-  // TODO(xiaochengh): Change the functions to take Positions instead of (node,
-  // offset) pairs.
+  // Note: any Position passed to the APIs must be in either of the two types:
+  // 1. Offset-in-anchor in a text node
+  // 2. Before/After-anchor of an atomic inline node
 
   // Returns the mapping object of the block laying out the given DOM offset.
   static const NGOffsetMapping* GetFor(const Node&, unsigned);
 
-  // Returns the NGOffsetMappingUnit that contains the given offset in the DOM
-  // node. If there are multiple qualifying units, returns the last one.
-  const NGOffsetMappingUnit* GetMappingUnitForDOMOffset(const Node&,
-                                                        unsigned) const;
+  // Returns the NGOffsetMappingUnit that contains the given Position.
+  // If there are multiple qualifying units, returns the last one.
+  const NGOffsetMappingUnit* GetMappingUnitForPosition(const Position&) const;
 
   // Returns all NGOffsetMappingUnits whose DOM ranges has non-empty (but
-  // possibly collapsed) intersections with the passed in DOM offset range.
-  NGMappingUnitRange GetMappingUnitsForDOMOffsetRange(const Node&,
-                                                      unsigned,
-                                                      unsigned) const;
+  // possibly collapsed) intersections with the passed in EphemeralRange. The
+  // EphemeralRange's start and end must be anchored on the same node, and
+  // satisfy our requirements on Positions.
+  NGMappingUnitRange GetMappingUnitsForDOMRange(const EphemeralRange&) const;
 
-  // Returns the text content offset corresponding to the given DOM offset.
-  // Returns nullopt when the DOM offset is not in the inlines.
-  Optional<unsigned> GetTextContentOffset(const Node&, unsigned) const;
+  // Returns the text content offset corresponding to the given Position.
+  // Returns nullopt when the Position is not in the inlines.
+  Optional<unsigned> GetTextContentOffset(const Position&) const;
 
-  // Starting from the given DOM offset in the node, finds the first non-
-  // collapsed character and returns the offset before it; Or returns nullopt if
-  // such a character does not exist.
-  Optional<unsigned> StartOfNextNonCollapsedCharacter(const Node&,
-                                                      unsigned offset) const;
+  // Starting from the given Position, finds the first non-collapsed character
+  // in the same node and returns the Position before it; Or returns null if
+  // such a Position does not exist.
+  Position StartOfNextNonCollapsedCharacter(const Position&) const;
 
-  // Starting from the given DOM offset in the node, reversely finds the first
-  // non-collapsed character and returns the offset after it; Or returns nullopt
-  // if such a character does not exist.
-  Optional<unsigned> EndOfLastNonCollapsedCharacter(const Node&,
-                                                    unsigned offset) const;
+  // Starting from the given Position, reversely finds the first non-collapsed
+  // character and returns the Position after it; Or returns null if such a
+  // Position does not exist.
+  Position EndOfLastNonCollapsedCharacter(const Position&) const;
 
-  // Returns true if the offset is right before a non-collapsed character. If
-  // the offset is at the end of the node, returns false.
-  bool IsBeforeNonCollapsedCharacter(const Node&, unsigned offset) const;
+  // Returns true if the Position is right before a non-collapsed character in
+  // the same node.
+  bool IsBeforeNonCollapsedCharacter(const Position&) const;
 
-  // Returns true if the offset is right after a non-collapsed character. If the
-  // offset is at the beginning of the node, returns false.
-  bool IsAfterNonCollapsedCharacter(const Node&, unsigned offset) const;
+  // Returns true if the Position is right after a non-collapsed character in
+  // the same node.
+  bool IsAfterNonCollapsedCharacter(const Position&) const;
 
-  // Maps the given DOM offset to text content, and then returns the text
+  // Maps the given Position to text content, and then returns the text
   // content character before the offset. Returns nullopt if it does not exist.
-  Optional<UChar> GetCharacterBefore(const Node&, unsigned offset) const;
+  Optional<UChar> GetCharacterBefore(const Position&) const;
 
   // ------ Mapping APIs from text content to DOM ------
 
