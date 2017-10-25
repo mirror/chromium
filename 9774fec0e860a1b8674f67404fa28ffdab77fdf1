@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5270712f_8a1a8094",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-25T17:11:41Z",
+      "side": 1,
+      "message": "Can we add a DCHECK on input_modality, to ensure it\u0027s either touch or wheel?",
+      "range": {
+        "startLine": 133,
+        "startChar": 40,
+        "endLine": 133,
+        "endChar": 54
+      },
+      "revId": "9774fec0e860a1b8674f67404fa28ffdab77fdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
