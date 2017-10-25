@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "21af6b14_73ce5b3c",
+        "filename": "testing/libfuzzer/proto/json.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1157269
+      },
+      "writtenOn": "2017-10-25T01:16:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be 1?",
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b582c809_da5431e1",
+        "filename": "testing/libfuzzer/proto/json.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1157269
+      },
+      "writtenOn": "2017-10-25T01:16:43Z",
+      "side": 1,
+      "message": "This line, line 38 and line 41 have extra whitespace.",
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f80e0f_25efd362",
+        "filename": "testing/libfuzzer/proto/json.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1157269
+      },
+      "writtenOn": "2017-10-25T01:16:43Z",
+      "side": 1,
+      "message": "Nit: Maybe we should do something like this:\n\nrequired NumberInteger integer_value \u003d 1;\noneof value {\n    NumberFloat float_value \u003d 2;\n    NumberExponent exponent_value \u003d 3;\n    NumberExponentFrac exponent_frac_value \u003d 4;\n}\n\nAnd then the last case of your if else will be number_value.integer_value();\n\nThat way you don\u0027t have to default to \"0\".",
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f3aa36_b6af773f",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1157269
+      },
+      "writtenOn": "2017-10-25T01:16:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be an #include guard here?",
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37eb6d77_005d8297",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1157269
+      },
+      "writtenOn": "2017-10-25T01:16:43Z",
+      "side": 1,
+      "message": "Nit: Why not put this inside of the json_proto namespace?",
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9be4e86f_668d5135",
         "filename": "testing/libfuzzer/proto/json_proto_converter.h",
         "patchSetId": 3
@@ -43,6 +128,23 @@
         "endLine": 16,
         "endChar": 21
       },
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ace333_7551e4f6",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1157269
+      },
+      "writtenOn": "2017-10-25T01:16:43Z",
+      "side": 1,
+      "message": "Nits:\nDo we want all the method names to be CamelCase? I did it in the css fuzzer because that is the convention in blink.\n\nDo we want to leave out the parameter names in function/method declarations? I also did it in the css fuzzer because that is the convention in blink.",
       "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
