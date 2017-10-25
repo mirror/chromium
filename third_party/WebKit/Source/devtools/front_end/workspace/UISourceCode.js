@@ -444,6 +444,14 @@ Workspace.UISourceCode = class extends Common.Object {
   }
 
   /**
+   * @param {string} content
+   * @param {boolean} isBase64
+   */
+  setContent(content, isBase64) {
+    this._project.setFileContent(this, content, isBase64, () => {});
+  }
+
+  /**
   * @param {function(): string } workingCopyGetter
   */
   setWorkingCopyGetter(workingCopyGetter) {
