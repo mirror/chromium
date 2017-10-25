@@ -81,8 +81,9 @@
 
 #pragma mark - ApplicationSettingsCommands
 
-- (void)showAccountsSettings {
-  [self showAlert:@"showAccountsSettings"];
+- (void)showAccountsSettingsFromViewController:
+    (UIViewController*)baseViewController {
+  [self showAlert:@"showAccountsSettingsFromViewController:"];
 }
 
 - (void)showSyncSettings {
