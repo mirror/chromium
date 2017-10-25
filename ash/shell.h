@@ -96,6 +96,7 @@ class CastConfigController;
 class DisplayColorManager;
 class DisplayConfigurationController;
 class DisplayErrorObserver;
+class DisplayMoveWindowController;
 class DragDropController;
 class EventClientImpl;
 class EventTransformationHandler;
@@ -335,6 +336,9 @@ class ASH_EXPORT Shell : public SessionObserver,
     return display_error_observer_.get();
   }
 
+  DisplayMoveWindowController* display_move_window_controller() {
+    return display_move_window_controller_.get();
+  }
   ::wm::CompoundEventFilter* env_filter() { return env_filter_.get(); }
   EventClientImpl* event_client() { return event_client_.get(); }
   EventTransformationHandler* event_transformation_handler() {
@@ -668,6 +672,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<AshDisplayController> ash_display_controller_;
   std::unique_ptr<BrightnessControlDelegate> brightness_control_delegate_;
   std::unique_ptr<CastConfigController> cast_config_;
+  std::unique_ptr<DisplayMoveWindowController> display_move_window_controller_;
   std::unique_ptr<DragDropController> drag_drop_controller_;
   std::unique_ptr<FocusCycler> focus_cycler_;
   std::unique_ptr<ImeController> ime_controller_;
