@@ -27,7 +27,6 @@ namespace payments {
 class WebPaymentRequest {
  public:
   WebPaymentRequest();
-  WebPaymentRequest(const WebPaymentRequest& other);
   ~WebPaymentRequest();
 
   bool operator==(const WebPaymentRequest& other) const;
@@ -42,7 +41,7 @@ class WebPaymentRequest {
   std::string payment_request_id;
 
   // Properties set in order to communicate user choices back to the page.
-  PaymentAddress shipping_address;
+  mojom::PaymentAddressPtr shipping_address;
   std::string shipping_option;
 
   // Properties set via the constructor for communicating from the page to the
