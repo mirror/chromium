@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1d32e66_66b2a9e3",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-25T18:08:44Z",
+      "side": 1,
+      "message": "nit: when display bounds changes are observed",
+      "revId": "81054baae613b916f6d3145928758f13a1cef890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
