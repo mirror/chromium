@@ -118,9 +118,17 @@ function handleHeaders(event) {
   event.respondWith(new Response(JSON.stringify(headers)));
 }
 
+function handleRequestBodyString(event) {
+  event.respondWith(event.request.text()
+    .then(text => {
+        return new Response(text);
+      }));
+}
+
 self.addEventListener('fetch', function(event) {
     var url = event.request.url;
     var handlers = [
+      { pattern: '?headers', fn: handleHeaders },
       { pattern: '?string', fn: handleString },
       { pattern: '?blob', fn: handleBlob },
       { pattern: '?referrerFull', fn: handleReferrerFull },
@@ -137,7 +145,7 @@ self.addEventListener('fetch', function(event) {
       { pattern: '?cache', fn: handleCache },
       { pattern: '?eventsource', fn: handleEventSource },
       { pattern: '?integrity', fn: handleIntegrity },
-      { pattern: '?headers', fn: handleHeaders },
+      { pattern: '?request-body-is-string', fn: handleRequestBodyString }
     ];
 
     var handler = null;
