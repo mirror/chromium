@@ -70,6 +70,30 @@
       "revId": "df03327bd5264e156b1ec3ae025ebca62b553eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efdf083e_941e81fd",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-25T16:06:19Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e This default action is defined only in Chrome OS so how abount renaming this to MESSAGE_CENTER_SETTING?\n\u003e \u003e \n\u003e \u003e Since this enum exists as part of the message center it seems like anything with \"message center\" in the name is redundant and not particularly elucidating.\n\u003e \n\u003e Then, how about SETTINGS_PANEL?\n\nIt still seems like an implementation detail. Chrome doesn\u0027t need to know how it\u0027s handled, just that it\u0027s handled in some default manner. What do you dislike about DEFAULT? It\u0027s a little confusing that DEFAULT is not the default. Maybe STANDARD?\n\n\u003e \n\u003e \u003e \u003e Or should we remove this and open message center in the handler on Chrome OS as well as the settings on the non-Chrome OS device?\n\u003e \u003e\n\u003e \u003e I\u0027m not sure I understand this suggestion. Arc uses CUSTOM.\n\u003e \n\u003e I meant non-ARC notification in Chrome OS. When user clicks the settings button on non-arc notifications, Chrome OS opens the settings panel in the message center. This is done in MessageCenterTray::OnNotificationSettingsClicked.\n\nI might not fully grasp your idea, but it seems like this requires too much hardcoding of assumptions in shared code. Something like\n\nbool handle_with_delegate \u003d true;\n#if defined(OS_CHROMEOS)\nif (notification.notifier_id.type !\u003d ARC_APPLICATION)\n  handle_with_delegate \u003d false;\n#endif\n...\n\nIt seems to me better to place the responsibility for deciding how to handle the settings click with the delegate and not in ui/message_center/, and I\u0027m not clear on what\u0027s objectionable about this enum in the first place?",
+      "parentUuid": "9cbfeeb2_e5078766",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 50
+      },
+      "revId": "df03327bd5264e156b1ec3ae025ebca62b553eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
