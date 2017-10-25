@@ -225,18 +225,18 @@ void QueueingTimeEstimator::State::AdvanceTime(
 
     step_start_time = current_task_start_time;
   }
-  if (in_nested_message_loop_ || renderer_backgrounded) {
-    // Skip steps when the renderer was backgrounded or when we are at a nested
-    // message loop. May cause |step_start_time| to go slightly into the future.
+  base::TimeTicks reference_time =
+      processing_task ? current_task_start_time : step_start_time;
+  if (in_nested_message_loop_ || renderer_backgrounded ||
+      current_time - reference_time > kInvalidTaskThreshold) {
+    // Skip steps when the renderer was backgrounded, when we are at a nested
+    // message loop, when a task took too long, or when we remained idle for
+    // too long. May cause |step_start_time| to go slightly into the future.
+    // TODO(npm): crbug.com/776013. Base skipping long tasks/idling on a signal
+    // that we've been suspended.
     step_start_time =
         current_time.SnappedToNextTick(step_start_time, window_step_width);
     calculator_.ResetStep();
-    return;
-  }
-  if (processing_task &&
-      current_time - current_task_start_time > kInvalidTaskThreshold) {
-    // This task took too long, so we'll pretend it never happened. This could
-    // be because the user's machine went to sleep during a task.
     return;
   }
   while (TimePastStepEnd(current_time)) {
