@@ -341,6 +341,10 @@ const base::Feature kVrShell {
 #endif
 };
 
+// Turns on experimental rendering features for VR browsing.
+const base::Feature kVrShellExperimentalRendering{
+    "VrShellExperimentalRendering", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enable WebAssembly structured cloning.
 // http://webassembly.org/
 const base::Feature kWebAssembly{"WebAssembly",
