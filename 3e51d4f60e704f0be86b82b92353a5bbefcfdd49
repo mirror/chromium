@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05650c6b_12f59778",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/buffer-usage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-25T20:38:08Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this, blank would be fine.",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94b0aef_8624b97e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/hit-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-25T20:38:08Z",
+      "side": 1,
+      "message": "nit: inline?",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6f64f0_30920e81",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/timeline-xhr-response-type-blob-event.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-25T20:38:08Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need this.",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db7e810_29cfe182",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/tracing-timeline-load.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-25T20:38:08Z",
+      "side": 1,
+      "message": "Should we come up with a more specific namespace here instead of TestClient?",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a2462f_79d6f406",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/worker-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-25T20:38:08Z",
+      "side": 1,
+      "message": "This needs to return a promise that resolves upon worker1.onmessage (i.e. when the first worker is started).",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e123e4_02c32e2a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/worker-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-25T20:38:08Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need these two lines now.",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201d5f97_ab595900",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/worker-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-25T20:38:08Z",
+      "side": 1,
+      "message": "formatting problem.",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d127ea_41d8bc2e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/worker-js-frames.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-25T20:38:08Z",
+      "side": 1,
+      "message": "All the same comments as previous test.",
+      "revId": "3e51d4f60e704f0be86b82b92353a5bbefcfdd49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
