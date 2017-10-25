@@ -60,6 +60,10 @@ const char kBrowserStartupDialog[]          = "browser-startup-dialog";
 // Path to the exe to run for the renderer and plugin subprocesses.
 const char kBrowserSubprocessPath[]         = "browser-subprocess-path";
 
+// Enables committed error pages instead of transient navigation entries for
+// interstitial error pages (e.g. certificate errors).
+const char kCommittedInterstitials[] = "committed-interstitials";
+
 // Sets the tile size used by composited layers.
 const char kDefaultTileWidth[]              = "default-tile-width";
 const char kDefaultTileHeight[]             = "default-tile-height";
