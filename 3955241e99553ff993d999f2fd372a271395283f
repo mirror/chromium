@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "447d3c54_ca045eb8",
+        "filename": "chrome/installer/zucchini/abs32_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-25T11:39:10Z",
+      "side": 1,
+      "message": "nit: \"preprocessing\"",
+      "range": {
+        "startLine": 56,
+        "startChar": 38,
+        "endLine": 56,
+        "endChar": 50
+      },
+      "revId": "3955241e99553ff993d999f2fd372a271395283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe668cd_651e0e0f",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-25T11:39:10Z",
+      "side": 1,
+      "message": "nit: does it look ugly if you inline this in the call below?",
+      "range": {
+        "startLine": 151,
+        "startChar": 18,
+        "endLine": 151,
+        "endChar": 22
+      },
+      "revId": "3955241e99553ff993d999f2fd372a271395283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76bd0113_026cda37",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-25T11:39:10Z",
+      "side": 1,
+      "message": "is \"Warning:\" needed in the message? ordinarily the log level is included in the log output.",
+      "range": {
+        "startLine": 347,
+        "startChar": 21,
+        "endLine": 347,
+        "endChar": 28
+      },
+      "revId": "3955241e99553ff993d999f2fd372a271395283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77bf4e8_daec3c81",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-25T11:39:10Z",
+      "side": 1,
+      "message": "nit: LOG_IF(WARNING, num_removed) \u003c\u003c ...",
+      "revId": "3955241e99553ff993d999f2fd372a271395283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407755c5_e99edddb",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-25T11:39:10Z",
+      "side": 1,
+      "message": "do these values matter? can they be 4 and 8 so that WidthOf doesn\u0027t need to do any math?",
+      "revId": "3955241e99553ff993d999f2fd372a271395283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
