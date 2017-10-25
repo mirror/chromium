@@ -34,6 +34,24 @@
       "revId": "b653292f3f8de3ac19374d12090c46dc20b4220f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867e76a8_0b372ca5",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-25T17:45:55Z",
+      "side": 1,
+      "message": "\u003e ...probably because they\u0027re linux-only and .gn files don\u0027t include linux yet?\n\nThat’s right.",
+      "parentUuid": "d25ece4e_4dbfdf2d",
+      "revId": "b653292f3f8de3ac19374d12090c46dc20b4220f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
