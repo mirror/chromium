@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53d34d15_074a1bba",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-25T05:51:03Z",
+      "side": 1,
+      "message": "The assumption is that UpdateThrottlingState will be a no-op if called multiple times. The current will yield very surprising results if UpdateThrottlingState will be called again from another place — loading will be stopped regardless of StopLoadingInBackgroundAndroidEnabled.\n\nWe should always call UpdateThrottlingState here and update the check in CalculateThrottlingState from \"if (page_stopped_) { return kStopped }\" to if (page_stopped_ \u0026\u0026 StopLoadingInBackgroundAndroidEnabled()) { return kStopped }\".",
+      "range": {
+        "startLine": 517,
+        "startChar": 2,
+        "endLine": 517,
+        "endChar": 67
+      },
+      "revId": "f7be1b9707af94dab981936ac21769f757bb6bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
