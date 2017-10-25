@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7db23563_7bef3598",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-25T15:02:06Z",
+      "side": 1,
+      "message": "Yes, the BUILD.gn only includes downloadable_strings_component_installer.* source files if enable_downloadable_strings is true (i.e. I\u0027ve checked that the Linux build works).",
+      "parentUuid": "c5291d9d_e826863c",
+      "range": {
+        "startLine": 57,
+        "startChar": 86,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33bceda4_50fc15c0",
         "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-23T16:07:40Z",
       "side": 1,
       "message": "This will interfere with differential updates, which will affect your metrics if you publish multiple versions of the experimental payload. The SKIP_ON_SHUTDOWN might also be problematic in some cases. Consider using a PostTaskAndReply from RegisterDownloadableStringsComponent to delete on browser start (and then proceed with registering the component).\n\nAlternatively, we just have to remember not to enable differential updates for this component on the server side.",
+      "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee02bfe_bcb283c3",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-25T15:02:06Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ve implemented your suggestion, and it had an adverse effect: it increase the variance of the install time drastically. I assume this is because deletion is pretty slow when it happens (e.g. around 500 ms), which pushes the component registration + download to a later time in the startup process, where Chrome is already performing lots of I/O or other things.\n\nI\u0027ve found a way to work-around this a little by implementing a directory rename in a background task, before the registration. Deletion of the renamed directory is pushed to a background task after the component is available. This seems to work much better, because renaming seems to be a lot faster (e.g. around 50 us on a high-end device).\n\nThe latest patch contains a new DeletionPolicy enum class and a constexpr value to control which behaviour to implement, so this can be switched if necessary. I would still prefer the AFTER_INSTALL policy, because reported numbers on local devices seem more stable. We do not plan to update the payload for this experiment, and the deletion will not happen once we remove it.",
+      "parentUuid": "33bceda4_50fc15c0",
       "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -62,6 +104,30 @@
       "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41280a85_83d4d3d0",
+        "filename": "chrome/common/features.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-25T15:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20ccdc8d_9e041567",
+      "range": {
+        "startLine": 80,
+        "startChar": 11,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +174,30 @@
       "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4832622_c4a15297",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 17332,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-25T15:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2092c720_0f7aa388",
+      "range": {
+        "startLine": 17332,
+        "startChar": 26,
+        "endLine": 17332,
+        "endChar": 27
+      },
+      "revId": "d95bf0ee4caef4d3255d7b018f537eecbfc56f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
