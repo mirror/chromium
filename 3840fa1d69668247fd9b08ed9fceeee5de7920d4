@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fca9f3ae_39ebb6e9",
+        "filename": "ppapi/proxy/ppapi_messages.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T23:02:58Z",
+      "side": 1,
+      "message": "To clarify, let\u0027s just use IPC_ENUM_TRAITS() directly here.\n\nWhile use of it is discouraged, I don\u0027t think we\u0027re going to get rid of all uses, and discussions between IPC reviewers have come to the conclusion that it\u0027s better to just use IPC_ENUM_TRAITS() when dealing with enum bitmasks.",
+      "revId": "3840fa1d69668247fd9b08ed9fceeee5de7920d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
