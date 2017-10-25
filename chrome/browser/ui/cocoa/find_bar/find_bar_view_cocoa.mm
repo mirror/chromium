@@ -4,6 +4,8 @@
 
 #import "chrome/browser/ui/cocoa/find_bar/find_bar_view_cocoa.h"
 
+#import "chrome/browser/ui/cocoa/browser_window_controller.h"
+#import "chrome/browser/ui/cocoa/find_bar/find_bar_cocoa_controller.h"
 #import "chrome/browser/ui/cocoa/url_drop_target.h"
 #import "chrome/browser/ui/cocoa/view_id_util.h"
 #import "ui/base/cocoa/nsview_additions.h"
@@ -128,6 +130,22 @@ CGFloat kCurveSize = 8;
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent {
+}
+
+- (void)viewDidHide {
+  [super viewDidHide];
+  NSWindow* window = [self window];
+  BrowserWindowController* controller =
+      [BrowserWindowController browserWindowControllerForWindow:window];
+  [[controller findBarCocoaController] updateFindBarVisibility];
+}
+
+- (void)viewDidUnhide {
+  [super viewDidUnhide];
+  NSWindow* window = [self window];
+  BrowserWindowController* controller =
+      [BrowserWindowController browserWindowControllerForWindow:window];
+  [[controller findBarCocoaController] updateFindBarVisibility];
 }
 
 // Eat drag operations, to prevent drags from going through to the views below.
