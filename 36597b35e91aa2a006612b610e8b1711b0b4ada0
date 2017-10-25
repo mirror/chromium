@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73b477e6_ff226ebe",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T04:47:32Z",
+      "side": 1,
+      "message": "AIUI, this code here is only a stopgap since the pre-paint tree walk does not have\nan \"NG\" mode. I agree that it seems that is the right way to implement it in the long term.\nPlease add a comment saying something like\n\nTODO(): This code copies VisualRects from the LayoutObject tree. We should \nimplement the pre-paint tree walk on the NGPaintFragment tree, and save this work.",
+      "revId": "36597b35e91aa2a006612b610e8b1711b0b4ada0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e234bb77_7c98b72a",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T04:47:32Z",
+      "side": 1,
+      "message": "How far down does this recursion go? Is it only for a fragment of the NGPaintFragmentTree\nthat \"belongs\" to the LayoutObject\" which led to the call to UpdateVisualRectFromLayoutObject()\nfrom PrePaintTreeWalk?\n\nThis is not double recursion?",
+      "revId": "36597b35e91aa2a006612b610e8b1711b0b4ada0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
