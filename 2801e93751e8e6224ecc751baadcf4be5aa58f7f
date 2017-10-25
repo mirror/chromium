@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0da97d71_4512b38d",
+        "filename": "base/debug/activity_tracker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-10-25T14:33:14Z",
+      "side": 1,
+      "message": "nit: this could use a little bit of running commentary to aid the reader. \nSomething maybe like:\n\nAssert that no activity is stored when acquiring and releasing a free/uncontended lock",
+      "range": {
+        "startLine": 303,
+        "startChar": 2,
+        "endLine": 303,
+        "endChar": 13
+      },
+      "revId": "2801e93751e8e6224ecc751baadcf4be5aa58f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd132ee_f04d7671",
+        "filename": "base/debug/activity_tracker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-10-25T14:33:14Z",
+      "side": 1,
+      "message": "hah, this is a PITA to test. If this turns out to be occasionally flaky, then you can push down the flakiness probability by looping until you get the right result.",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 16
+      },
+      "revId": "2801e93751e8e6224ecc751baadcf4be5aa58f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
