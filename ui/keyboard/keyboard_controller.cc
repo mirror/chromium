@@ -24,8 +24,11 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
+#include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/path.h"
+#include "ui/keyboard/container_floating_behavior.h"
 #include "ui/keyboard/container_full_width_behavior.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
 #include "ui/keyboard/keyboard_layout_manager.h"
@@ -281,6 +284,11 @@ void KeyboardController::NotifyContentsBoundsChanging(
   } else {
     current_keyboard_bounds_ = gfx::Rect();
   }
+}
+
+void KeyboardController::MoveKeyboard(const gfx::Rect new_bounds) {
+  DCHECK(keyboard_visible());
+  SetContainerBounds(new_bounds, false);
 }
 
 void KeyboardController::SetContainerBounds(const gfx::Rect& new_bounds,
@@ -702,6 +710,11 @@ const gfx::Rect KeyboardController::AdjustSetBoundsRequest(
 
 bool KeyboardController::IsOverscrollAllowed() const {
   return container_behavior_->IsOverscrollAllowed();
+}
+
+void KeyboardController::HandlePointerEvent(bool isMouseButtonPressed,
+                                            const gfx::Vector2d& kb_offset) {
+  container_behavior_->HandlePointerEvent(isMouseButtonPressed, kb_offset);
 }
 
 }  // namespace keyboard
