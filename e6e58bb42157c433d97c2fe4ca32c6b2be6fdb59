@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa976f54_455a9644",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T04:15:51Z",
+      "side": 1,
+      "message": "Rename this function to PrepareBitmapOptions.",
+      "revId": "e6e58bb42157c433d97c2fe4ca32c6b2be6fdb59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54385c53_f49ed14e",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-25T04:15:51Z",
+      "side": 1,
+      "message": "Nit: End the comment sentence with a \u0027.\u0027 (and also others places).",
+      "revId": "e6e58bb42157c433d97c2fe4ca32c6b2be6fdb59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
