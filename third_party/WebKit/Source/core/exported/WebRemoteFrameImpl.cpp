@@ -130,11 +130,6 @@ void WebRemoteFrameImpl::Close() {
   self_keep_alive_.Clear();
 }
 
-WebRect WebRemoteFrameImpl::VisibleContentRect() const {
-  NOTREACHED();
-  return WebRect();
-}
-
 WebView* WebRemoteFrameImpl::View() const {
   if (!GetFrame()) {
     return nullptr;

@@ -624,12 +624,6 @@ bool WebLocalFrameImpl::HasVisibleContent() const {
   return false;
 }
 
-WebRect WebLocalFrameImpl::VisibleContentRect() const {
-  if (LocalFrameView* view = GetFrameView())
-    return view->VisibleContentRect();
-  return WebRect();
-}
-
 WebView* WebLocalFrameImpl::View() const {
   return ViewImpl();
 }

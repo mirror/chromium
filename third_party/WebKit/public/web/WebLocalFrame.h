@@ -62,6 +62,7 @@ struct WebPrintParams;
 struct WebPrintPresetOptions;
 struct WebScriptSource;
 struct WebSourceLocation;
+struct WebRect;
 
 // Interface for interacting with in process frames. This contains methods that
 // require interacting with a frame's document.

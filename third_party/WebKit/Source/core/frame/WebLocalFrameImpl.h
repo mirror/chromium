@@ -31,6 +31,8 @@
 #ifndef WebLocalFrameImpl_h
 #define WebLocalFrameImpl_h
 
+#include <memory>
+
 #include "core/CoreExport.h"
 #include "core/editing/Forward.h"
 #include "core/exported/WebInputMethodControllerImpl.h"
@@ -44,8 +46,6 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebFileSystemType.h"
 #include "public/web/WebLocalFrame.h"
-
-#include <memory>
 
 namespace blink {
 
@@ -96,7 +96,6 @@ class CORE_EXPORT WebLocalFrameImpl final
   void SetScrollOffset(const WebSize&) override;
   WebSize ContentsSize() const override;
   bool HasVisibleContent() const override;
-  WebRect VisibleContentRect() const override;
   WebView* View() const override;
   WebDocument GetDocument() const override;
   WebPerformance Performance() const override;
@@ -391,7 +390,7 @@ class CORE_EXPORT WebLocalFrameImpl final
 
   ContentSettingsClient& GetContentSettingsClient() {
     return content_settings_client_;
-  };
+  }
 
   SharedWorkerRepositoryClientImpl* SharedWorkerRepositoryClient() const {
     return shared_worker_repository_client_.get();
