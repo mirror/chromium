@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02d08a54_68d80552",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ContextMenu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-25T21:01:19Z",
+      "side": 1,
+      "message": "Inline it :)",
+      "revId": "9f1ff8cfeb35d1097c8fae77f7dafccfaf211a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6122fe8_280510c2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ContextMenu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-25T21:01:19Z",
+      "side": 1,
+      "message": "Remove if.",
+      "revId": "9f1ff8cfeb35d1097c8fae77f7dafccfaf211a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
