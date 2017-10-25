@@ -180,12 +180,14 @@ NGMappingUnitRange NGOffsetMapping::GetMappingUnitsForDOMOffsetRange(
 }
 
 Optional<unsigned> NGOffsetMapping::GetTextContentOffset(
-    const Node& node,
-    unsigned offset) const {
-  const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
+    const Position& position) const {
+  DCHECK(NGOffsetMapping::AcceptsPosition(position)) << position;
+  auto node_offset_pair = ToNodeOffsetPair(position);
+  const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(
+      node_offset_pair.first, node_offset_pair.second);
   if (!unit)
     return WTF::nullopt;
-  return unit->ConvertDOMOffsetToTextContent(offset);
+  return unit->ConvertDOMOffsetToTextContent(node_offset_pair.second);
 }
 
 Optional<unsigned> NGOffsetMapping::StartOfNextNonCollapsedCharacter(
@@ -243,7 +245,8 @@ bool NGOffsetMapping::IsAfterNonCollapsedCharacter(const Node& node,
 
 Optional<UChar> NGOffsetMapping::GetCharacterBefore(const Node& node,
                                                     unsigned offset) const {
-  Optional<unsigned> text_content_offset = GetTextContentOffset(node, offset);
+  Optional<unsigned> text_content_offset =
+      GetTextContentOffset(CreatePositionForOffsetMapping(node, offset));
   if (!text_content_offset || !*text_content_offset)
     return WTF::nullopt;
   return text_[*text_content_offset - 1];
