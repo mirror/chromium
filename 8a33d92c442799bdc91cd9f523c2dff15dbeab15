@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e655ab0e_798bb7e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-25T00:06:35Z",
+      "side": 1,
+      "message": "BUG\u003db/64525920",
+      "revId": "8a33d92c442799bdc91cd9f523c2dff15dbeab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0eecbbd_fdad4414",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 1
