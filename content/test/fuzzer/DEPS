@@ -1,5 +1,6 @@
 include_rules = [
   "+third_party/libprotobuf-mutator/src/src",
   "+third_party/WebKit/common/origin_trials",
+  "+content/browser/origin_manifest",
 ]
 
