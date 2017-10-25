@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a53040f_58cd15fc",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-25T12:45:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ea8871e_2f5f4cbb",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 33
+      },
+      "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fe87a46_e818b7c3",
         "filename": "device/u2f/u2f_ble_discovery.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b166325_930cdfc3",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-25T12:45:30Z",
+      "side": 1,
+      "message": "Yup, this was my thinking. Leaving as is.",
+      "parentUuid": "8fe87a46_e818b7c3",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1ca09350_6ea938a1",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-25T12:45:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f20d5b1_661de4fa",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 11
+      },
+      "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cac03fb3_56500d82",
         "filename": "device/u2f/u2f_ble_discovery.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "90419666_d14a1c4e",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-25T12:45:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cac03fb3_56500d82",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 15
+      },
+      "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9dac670_3813a438",
         "filename": "device/u2f/u2f_ble_discovery.cc",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d06c7a_a8c8a5e0",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-25T12:45:30Z",
+      "side": 1,
+      "message": "oups",
+      "parentUuid": "d9dac670_3813a438",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 20
+      },
+      "revId": "48cacc51c1dee1eed351d2cdb481256e79c1dfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
