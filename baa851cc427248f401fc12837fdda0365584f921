@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44863914_97a5b1a4",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-25T17:04:21Z",
+      "side": 1,
+      "message": "SplitViewController maintains a variable for the current screen orientation, you may get it from there so that you can remove the dependence on WebScreenOrientationLockType.h file.",
+      "revId": "baa851cc427248f401fc12837fdda0365584f921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d01374b_610a7569",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-25T17:04:21Z",
+      "side": 1,
+      "message": "Why not call into this function from WindowSelector::OnDisplayBoundsChanged()? This way SplitViewOverviewOverlayView doesn\u0027t need to be a DisplayObserver.",
+      "revId": "baa851cc427248f401fc12837fdda0365584f921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
