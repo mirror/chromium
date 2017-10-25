@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc81743d_25506673",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-25T12:01:31Z",
+      "side": 1,
+      "message": "I renamed the enum :)\nhttps://chromium-review.googlesource.com/c/chromium/src/+/724563",
+      "revId": "8daa426b771a58958a16907329ccd06876e408ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
