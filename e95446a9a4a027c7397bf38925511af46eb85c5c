@@ -16,6 +16,24 @@
       "revId": "e95446a9a4a027c7397bf38925511af46eb85c5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4565cf22_050492bd",
+        "filename": "gpu/command_buffer/service/gpu_preferences.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-25T01:49:11Z",
+      "side": 0,
+      "message": "Here is the situation. The original CL got reverted because I added fields into GpuPreferences but not its mojo counterpart. That\u0027s why I added the test to assert the two structs have the same size. Otherwise it\u0027s easy to make the same mistake in the future by someone else.\n\nHowever, GpuPreferences have these platform specific if-def, but its mojo counterpart doesn\u0027t.\n\nSo either we also remove it here, or we don\u0027t have a way to test and guard against updating GpuPreferences without updating mojom::GpuPreferences.\n\nWhat do you think?",
+      "parentUuid": "54f59f8d_eb35d5c5",
+      "revId": "e95446a9a4a027c7397bf38925511af46eb85c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
