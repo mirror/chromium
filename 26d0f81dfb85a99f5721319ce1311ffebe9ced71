@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd77fbba_d035718b",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-25T14:58:15Z",
+      "side": 1,
+      "message": "optional nit: CheckNoSelection also checks that nothing in the suggestion container is selected, right? (if so, this comment is a bit incomplete). Really, comments like this are not really necessary, since the helper functions explain pretty clearly what is being checked. Comments like those above are also not really necessary, since the fixture title and the code itself gives a pretty clear explanation of what\u0027s happening, but you can save comment cleanup for later.",
+      "revId": "26d0f81dfb85a99f5721319ce1311ffebe9ced71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
