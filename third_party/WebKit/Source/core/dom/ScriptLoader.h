@@ -28,6 +28,7 @@
 #include "core/html/CrossOriginAttribute.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
+#include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ScriptFetchOptions.h"
@@ -146,12 +147,10 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   // https://html.spec.whatwg.org/#fetch-a-classic-script
   bool FetchClassicScript(const KURL&,
                           Document&,
-                          const String& nonce,
+                          const ScriptFetchOptions&,
                           const IntegrityMetadataSet&,
-                          ParserDisposition,
-                          CrossOriginAttributeValue,
-                          SecurityOrigin*,
                           const WTF::TextEncoding&);
+
   // https://html.spec.whatwg.org/#fetch-a-module-script-tree
   void FetchModuleScriptTree(const KURL&,
                              Modulator*,
