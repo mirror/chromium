@@ -16,6 +16,24 @@
       "revId": "06077a8b63260b265c8a0bca774ae4f19821a6be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b11e17e_a11b178d",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-25T17:17:19Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure, without this the new label won\u0027t show up.\n\noshima@ - any ideas?",
+      "parentUuid": "d43fa57a_f4a96532",
+      "revId": "06077a8b63260b265c8a0bca774ae4f19821a6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
