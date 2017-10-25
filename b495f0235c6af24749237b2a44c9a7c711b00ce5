@@ -565,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "bb309fd4_210ee7fb",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "No strong opinion here",
+      "parentUuid": "c81ac53f_ee9b8221",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 29
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fe2f694_c7f6fba4",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -600,6 +624,30 @@
       "side": 1,
       "message": "I prefer early return, since execution is done here and no common code has to be done after the hypothetical else block. Otherwise you have to read past the else block to see if anything else happens, which is higher cognitive load.",
       "parentUuid": "7fe2f694_c7f6fba4",
+      "range": {
+        "startLine": 410,
+        "startChar": 4,
+        "endLine": 410,
+        "endChar": 10
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10490e56_cf570b9c",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "Hmm, that\u0027s because your blocks are really long. I prefer the old code, where it had something like:\nif (deleted_)\n  AddUndoRow()\nelse\n  AddPasswordRow()\n\nBut if you really prefer this then I\u0027m fine with it.",
+      "parentUuid": "d56b92ee_72b40ff2",
       "range": {
         "startLine": 410,
         "startChar": 4,

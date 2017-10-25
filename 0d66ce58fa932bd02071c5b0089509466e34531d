@@ -2,6 +2,167 @@
   "comments": [
     {
       "key": {
+        "uuid": "327ac5da_ebdf16cd",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "Inline this and kTestPassword, since they\u0027re only used in one place now",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27311e71_f3a1d49b",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "This comment is probably unnecessary",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a3b19a_d4cd158f",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a75e74_055568b1",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "Maybe say \"normal\" instead of \"simple\"?",
+      "range": {
+        "startLine": 43,
+        "startChar": 20,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e74c01_93b0f2f2",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "nit: delete \"ROW\"",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11649ce1_adb2d295",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "I\u0027d like to see screenshots of this and the alternatives, to verify.",
+      "range": {
+        "startLine": 52,
+        "startChar": 32,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df222ab3_07908012",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "nit: \"undo/trash button\"",
+      "range": {
+        "startLine": 69,
+        "startChar": 49,
+        "endLine": 69,
+        "endChar": 73
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9868bc4c_595c2681",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 2
@@ -13,6 +174,213 @@
       "writtenOn": "2017-10-23T22:51:14Z",
       "side": 1,
       "message": "Since the dialog is changing so much anyway do you want me to remove this special case too?",
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb560065_1aeee0c7",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "9868bc4c_595c2681",
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b406d8b3_70c7538b",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "Inline this method",
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1fe750_6e2308ca",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "undo button needs SetFocusForPlatform. It should also have a tooltip (\"Restore deleted password\"?). I would also match the creation of this with the delete button, i.e. have a method for both or neither.",
+      "range": {
+        "startLine": 173,
+        "startChar": 40,
+        "endLine": 173,
+        "endChar": 51
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc862da_c47e3f72",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "redundant line?",
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4064be4_d81715b2",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "call set_tag inside CreateDeleteButton",
+      "range": {
+        "startLine": 192,
+        "startChar": 17,
+        "endLine": 192,
+        "endChar": 24
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afadaffe_efb1c5bd",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "\"no_passwords_label\"?",
+      "range": {
+        "startLine": 230,
+        "startChar": 18,
+        "endLine": 230,
+        "endChar": 29
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee7e7d2_530fd681",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "Do we expect the global view to ever not be this? If not, \"DCHECK_EQ(*global_bubble_view, this)\" instead",
+      "range": {
+        "startLine": 245,
+        "startChar": 7,
+        "endLine": 245,
+        "endChar": 26
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d205354b_f4b1a6ae",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "don\u0027t need this TODO",
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc113f5_5bd26dab",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "I would use a bug link here, and put some context for what you\u0027re doing in the bug. (In case you don\u0027t get to finishing all of them)",
+      "range": {
+        "startLine": 892,
+        "startChar": 12,
+        "endLine": 892,
+        "endChar": 16
+      },
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1486302c_8ec61447",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-25T21:26:48Z",
+      "side": 1,
+      "message": "Put a short comment as to why this is NOTREACHED",
+      "range": {
+        "startLine": 1074,
+        "startChar": 4,
+        "endLine": 1074,
+        "endChar": 14
+      },
       "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
