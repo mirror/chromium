@@ -15,6 +15,8 @@
 
 namespace blink {
 
+class ClassicScriptFetchRequest;
+
 // PendingScript for a classic script
 // https://html.spec.whatwg.org/#classic-script.
 //
@@ -35,11 +37,9 @@ class CORE_EXPORT ClassicPendingScript final
   //
   // For a script from an external file, calls ScriptResource::Fetch() and
   // creates ClassicPendingScript. Returns nullptr if Fetch() returns nullptr.
-  static ClassicPendingScript* Fetch(const KURL&,
+  static ClassicPendingScript* Fetch(ScriptElementBase*,
                                      Document&,
-                                     const ScriptFetchOptions&,
-                                     const WTF::TextEncoding&,
-                                     ScriptElementBase*,
+                                     const ClassicScriptFetchRequest&,
                                      FetchParameters::DeferOption);
 
   // For a script from an external file, with a supplied ScriptResource.

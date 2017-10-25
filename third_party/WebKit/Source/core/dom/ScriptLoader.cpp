@@ -29,6 +29,7 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/ClassicPendingScript.h"
 #include "core/dom/ClassicScript.h"
+#include "core/dom/ClassicScriptFetchRequest.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentParserTiming.h"
 #include "core/dom/IgnoreDestructiveWriteCountIncrementer.h"
@@ -671,18 +672,20 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
 }
 
 // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-classic-script
-bool ScriptLoader::FetchClassicScript(
-    const KURL& url,
-    Document& element_document,
-    const ScriptFetchOptions& options,
-    const WTF::TextEncoding& encoding) {
+bool ScriptLoader::FetchClassicScript(const KURL& url,
+                                      Document& element_document,
+                                      const ScriptFetchOptions& options,
+                                      const WTF::TextEncoding& encoding) {
   FetchParameters::DeferOption defer = FetchParameters::kNoDefer;
   if (!parser_inserted_ || element_->AsyncAttributeValue() ||
       element_->DeferAttributeValue())
     defer = FetchParameters::kLazyLoad;
 
-  ClassicPendingScript* pending_script = ClassicPendingScript::Fetch(
-      url, element_document, options, encoding, element_, defer);
+  ClassicScriptFetchRequest request(url, options, encoding,
+                                    element_->InitiatorName());
+
+  ClassicPendingScript* pending_script =
+      ClassicPendingScript::Fetch(element_, element_document, request, defer);
 
   if (!pending_script)
     return false;

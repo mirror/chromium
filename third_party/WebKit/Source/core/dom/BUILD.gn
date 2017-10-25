@@ -47,6 +47,7 @@ blink_core_sources("dom") {
     "ClassicPendingScript.h",
     "ClassicScript.cpp",
     "ClassicScript.h",
+    "ClassicScriptFetchRequest.h",
     "CollectionIndexCache.h",
     "Comment.cpp",
     "Comment.h",

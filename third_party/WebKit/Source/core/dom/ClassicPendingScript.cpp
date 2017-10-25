@@ -7,6 +7,7 @@
 #include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "bindings/core/v8/V8BindingForCore.h"
+#include "core/dom/ClassicScriptFetchRequest.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentWriteIntervention.h"
 #include "core/dom/ScriptLoader.h"
@@ -20,19 +21,17 @@
 namespace blink {
 
 ClassicPendingScript* ClassicPendingScript::Fetch(
-    const KURL& url,
-    Document& element_document,
-    const ScriptFetchOptions& options,
-    const WTF::TextEncoding& encoding,
     ScriptElementBase* element,
+    Document& element_document,
+    const ClassicScriptFetchRequest& request,
     FetchParameters::DeferOption defer) {
   // Step 1. Let request be the result of creating a potential-CORS request
   // given url, ... [spec text]
-  ResourceRequest resource_request(url);
+  ResourceRequest resource_request(request.Url());
 
   // ... "script", ... [spec text]
   ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.initiator_info.name = element->InitiatorName();
+  resource_loader_options.initiator_info.name = request.InitiatorName();
   FetchParameters params(resource_request, resource_loader_options);
 
   // Step 1. ... and CORS setting. [spec text]
@@ -43,9 +42,10 @@ ClassicPendingScript* ClassicPendingScript::Fetch(
   // kFetchCredentialsModeOmit, because in that case the request should be
   // no-cors, while SetCrossOriginAccessControl(kFetchCredentialsModeOmit)
   // would result in a cors request.
-  if (options.CredentialsMode() != WebURLRequest::kFetchCredentialsModeOmit) {
+  if (request.Options().CredentialsMode() !=
+      WebURLRequest::kFetchCredentialsModeOmit) {
     params.SetCrossOriginAccessControl(element_document.GetSecurityOrigin(),
-                                       options.CredentialsMode());
+                                       request.Options().CredentialsMode());
   }
 
   // Step 3. Set up the classic script request given request and options. [spec
@@ -54,17 +54,17 @@ ClassicPendingScript* ClassicPendingScript::Fetch(
   // https://html.spec.whatwg.org/multipage/webappapis.html#set-up-the-classic-script-request
   // Set request's cryptographic nonce metadata to options's cryptographic
   // nonce, [spec text]
-  params.SetContentSecurityPolicyNonce(options.Nonce());
+  params.SetContentSecurityPolicyNonce(request.Options().Nonce());
 
   // its integrity metadata to options's integrity metadata, [spec text]
-  params.SetIntegrityMetadata(options.GetIntegrityMetadata());
+  params.SetIntegrityMetadata(request.Options().GetIntegrityMetadata());
   params.MutableResourceRequest().SetFetchIntegrity(
-      options.GetIntegrityAttributeValue());
+      request.Options().GetIntegrityAttributeValue());
 
   // and its parser metadata to options's parser metadata. [spec text]
-  params.SetParserDisposition(options.ParserState());
+  params.SetParserDisposition(request.Options().ParserState());
 
-  params.SetCharset(encoding);
+  params.SetCharset(request.Encoding());
 
   // This DeferOption logic is only for classic scripts, as we always set
   // |kLazyLoad| for module scripts in ModuleScriptLoader.
@@ -78,7 +78,7 @@ ClassicPendingScript* ClassicPendingScript::Fetch(
       MaybeDisallowFetchForDocWrittenScript(params, element_document);
 
   ClassicPendingScript* pending_script = new ClassicPendingScript(
-      element, TextPosition(), true /* is_external */, options);
+      element, TextPosition(), true /* is_external */, request.Options());
   ScriptResource* resource =
       ScriptResource::Fetch(params, element_document.Fetcher());
   if (!resource)
