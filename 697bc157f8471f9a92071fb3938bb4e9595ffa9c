@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d77c642_9e909610",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:24:00Z",
+      "side": 1,
+      "message": "Nit: name this kBodyTextContent per style guidelines for naming constants, and make it static",
+      "range": {
+        "startLine": 2008,
+        "startChar": 13,
+        "endLine": 2008,
+        "endChar": 30
+      },
+      "revId": "697bc157f8471f9a92071fb3938bb4e9595ffa9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a642814_555e85df",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 2023,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:24:00Z",
+      "side": 1,
+      "message": "Nit: omit \u003d \"\"; here, as that\u0027s the same thing as the default ctor (but the default ctor generates less code)",
+      "revId": "697bc157f8471f9a92071fb3938bb4e9595ffa9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ae38ee_7f84b581",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:24:00Z",
+      "side": 1,
+      "message": "Nit: no need to convert to string here, since |result| is already a std::string.",
+      "range": {
+        "startLine": 2028,
+        "startChar": 12,
+        "endLine": 2028,
+        "endChar": 42
+      },
+      "revId": "697bc157f8471f9a92071fb3938bb4e9595ffa9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e897c94_f5ab2772",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:24:00Z",
+      "side": 1,
+      "message": "Similar, make this return a const ref as well to avoid a copy.",
+      "range": {
+        "startLine": 1103,
+        "startChar": 44,
+        "endLine": 1103,
+        "endChar": 64
+      },
+      "revId": "697bc157f8471f9a92071fb3938bb4e9595ffa9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c66a83_e6b9a4b0",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:24:00Z",
+      "side": 1,
+      "message": "Nit: pass by const ref to avoid a copy",
+      "revId": "697bc157f8471f9a92071fb3938bb4e9595ffa9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae5ce33_beb4f53b",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:24:00Z",
+      "side": 1,
+      "message": "Nit: line this up?",
+      "revId": "697bc157f8471f9a92071fb3938bb4e9595ffa9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ba28dc_36b325f9",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:24:00Z",
+      "side": 1,
+      "message": "Ditto: const ref here and elsewhere.",
+      "revId": "697bc157f8471f9a92071fb3938bb4e9595ffa9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0430c9_ee81b7f4",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T04:24:00Z",
+      "side": 1,
+      "message": "In the Blink public API, please use WebString instead.",
+      "range": {
+        "startLine": 412,
+        "startChar": 6,
+        "endLine": 412,
+        "endChar": 59
+      },
+      "revId": "697bc157f8471f9a92071fb3938bb4e9595ffa9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
