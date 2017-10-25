@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96c632f6_cc9626fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T05:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd1bd9f8_972b6757",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b111b738_d1384fae",
         "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8e2d186f_5039b00f",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T05:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b111b738_d1384fae",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81e743de_aef9307e",
         "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-24T21:13:13Z",
       "side": 1,
       "message": "Can we just use width?",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d0e28c_632920b6",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T05:56:53Z",
+      "side": 1,
+      "message": "During animation \"width\" gets overwritten.",
+      "parentUuid": "81e743de_aef9307e",
       "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "8594686e_0341ce68",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T05:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c8d22e7_9100e919",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4328bf37_3366f6f7",
         "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
         "patchSetId": 2
@@ -90,6 +168,24 @@
       "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a99b7f_acd72198",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T05:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4328bf37_3366f6f7",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "472c24c7_99b53982",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T05:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bf9bb91_b8340d63",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ee2644f_b47a7fb0",
         "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
         "patchSetId": 2
@@ -124,6 +238,24 @@
       "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc20f52_0578b310",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T05:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ee2644f_b47a7fb0",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "9f2c871f_23ec19c2",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T05:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4aba9d_dd872cea",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31b35cb5_02d52712",
         "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
         "patchSetId": 2
@@ -155,6 +305,24 @@
       "writtenOn": "2017-10-24T21:13:13Z",
       "side": 1,
       "message": "just width: 640px ?",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c4525b_a1bc2025",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T05:56:53Z",
+      "side": 1,
+      "message": "min/max-width is final, but width is not.\nDuring animation sum of widths of the moving .section(s) exceeds container width and \"width\" gets overwritten.",
+      "parentUuid": "31b35cb5_02d52712",
       "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "bb7f710f_55469d9a",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T05:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c8fa5a5_3a9beb61",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7ae8839_66c0895b",
         "filename": "chrome/browser/resources/chromeos/login/offline_gaia.js",
         "patchSetId": 2
@@ -192,6 +378,24 @@
       "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd08b933_3e3080f9",
+        "filename": "chrome/browser/resources/chromeos/login/offline_gaia.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T05:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7ae8839_66c0895b",
+      "revId": "7024b4374e9a7356d5766ca0c84f77e61cdb461f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
