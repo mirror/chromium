@@ -30,10 +30,12 @@ AgentRegistry::AgentEntry::AgentEntry(size_t id,
       label_(label),
       type_(type),
       supports_explicit_clock_sync_(supports_explicit_clock_sync),
-      is_tracing_(false) {
+      is_tracing_(false),
+      weak_ptr_factory_(this) {
   DCHECK(!label.empty());
-  agent_.set_connection_error_handler(base::BindRepeating(
-      &AgentRegistry::AgentEntry::OnConnectionError, base::Unretained(this)));
+  agent_.set_connection_error_handler(
+      base::BindRepeating(&AgentRegistry::AgentEntry::OnConnectionError,
+                          weak_ptr_factory_.GetWeakPtr()));
 }
 
 AgentRegistry::AgentEntry::~AgentEntry() = default;
