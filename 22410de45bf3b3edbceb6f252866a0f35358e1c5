@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f20300cc_b90df658",
+        "filename": "components/language/content/browser/geo_language_provider.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-25T04:35:36Z",
+      "side": 1,
+      "message": "Everything under components/language/content here should be moved to components/language/core.",
+      "revId": "22410de45bf3b3edbceb6f252866a0f35358e1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
