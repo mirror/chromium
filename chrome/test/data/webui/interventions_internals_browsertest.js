@@ -161,3 +161,17 @@ TEST_F('InterventionsInternalsUITest', 'LogNewMessage', function() {
 
   mocha.run();
 });
+
+TEST_F('InterventionsInternalsUITest', 'OnETCChanged', function() {
+  test('UpdateETCOnChange', () => {
+    let pageImpl = new InterventionsInternalPageImpl(null);
+    let etcTypes = ['type1', 'type2', 'type3'];
+    etcTypes.forEach((type) => {
+      pageImpl.onEffectiveConnectionTypeChanged(type);
+      let actual = $('nqe-type').textContent;
+      expectEquals(type, actual);
+    });
+  });
+
+  mocha.run();
+});

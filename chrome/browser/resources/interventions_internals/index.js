@@ -112,6 +112,11 @@ InterventionsInternalPageImpl.prototype = {
 
     logsTable.appendChild(tableRow);
   },
+
+  onEffectiveConnectionTypeChanged: function(type) {
+    let etcType = $('nqe-type');
+    etcType.textContent = type;
+  },
 };
 
 cr.define('interventions_internals', () => {
