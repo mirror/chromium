@@ -137,7 +137,6 @@
 #include "content/renderer/service_worker/service_worker_message_filter.h"
 #include "content/renderer/shared_worker/embedded_shared_worker_stub.h"
 #include "content/renderer/shared_worker/shared_worker_factory_impl.h"
-#include "content/renderer/web_database_impl.h"
 #include "content/renderer/web_database_observer_impl.h"
 #include "content/renderer/worker_thread_registry.h"
 #include "device/gamepad/public/cpp/gamepads.h"
@@ -779,8 +778,7 @@ void RenderThreadImpl::Init(
 
   {
     auto registry = std::make_unique<service_manager::BinderRegistry>();
-    registry->AddInterface(base::Bind(&WebDatabaseImpl::Create),
-                           GetIOTaskRunner());
+    blink::RegisterInterfaces(*registry);
     registry->AddInterface(base::Bind(&SharedWorkerFactoryImpl::Create),
                            base::ThreadTaskRunnerHandle::Get());
     GetServiceManagerConnection()->AddConnectionFilter(
