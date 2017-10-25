@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c11c864_7d5ce080",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-25T18:06:07Z",
+      "side": 1,
+      "message": "No, doesn\u0027t work.  SendHoverLeave uses stored hover state to determine if we\u0027ve left a previous element, so we need to call it before SendHoverEnter()\u0027ing on a new element.  The second calls to SendHoverLeave and Enter should only do work if an input lock ended.  I\u0027ll move them into the conditional block.",
+      "parentUuid": "c93df7e4_da22c31b",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 16
+      },
+      "revId": "ee4c8c6362d563a6cb8c2650b03ab1aafd70a1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e896344e_8faecd13",
         "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-25T14:30:07Z",
       "side": 1,
       "message": "You missed the test for moving from one element to another. The expectation is to get the hoverleave for the first and hoverenter for the second element. This will be very common for the elements that have overlap.",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 9
+      },
+      "revId": "ee4c8c6362d563a6cb8c2650b03ab1aafd70a1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d410daa8_3b2e834c",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-25T18:06:07Z",
+      "side": 1,
+      "message": "See the test on line 172.  This is a more complex version of a simple \"one element to another\", and I believe covers exactly what you\u0027ve asked for.",
+      "parentUuid": "e896344e_8faecd13",
       "range": {
         "startLine": 117,
         "startChar": 5,
