@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88acf0f8_bf1ce31b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-25T15:37:59Z",
+      "side": 1,
+      "message": "\u003e \"display: none\" also means it won\u0027t take up space in the layout, which might have unintended side effects. I *think* it\u0027s fine here because the containing div has an explicit height, but still: Would \"visibility: hidden\" also work?\n\nYes.\n\n\u003e visibility is also animatable, so maybe visibility and opacity could even be handled by the same css class, per the comment below...?\n\nYep. Visibility is boolean and not interpolated, so it can\u0027t replace opacity, but in concert they seem to work.",
+      "parentUuid": "61a61142_c38464ee",
+      "range": {
+        "startLine": 10,
+        "startChar": 69,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "93e2e40f4f029c713953903dadb2f9e8d8ef441a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2674f116_cc7e1837",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4f8b3c28_3036ffc3",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-25T15:37:59Z",
+      "side": 1,
+      "message": "\u003e Hrm, I was wondering if we should put .display and .opacity into a css class instead of messing with the style manually. But then we\u0027d need separate classes for \"fading out\" (opacity: 0) vs \"fully faded out\" (display: none), so maybe it\u0027d just make everything even more confusing... WDYT?\n\nWith your suggestion to use visibility, this works well.\n\nAlthough, I used a class for \"faded in\" and not one for \"faded out\" since not being visible is the default state.",
+      "parentUuid": "2674f116_cc7e1837",
+      "range": {
+        "startLine": 827,
+        "startChar": 42,
+        "endLine": 827,
+        "endChar": 0
+      },
+      "revId": "93e2e40f4f029c713953903dadb2f9e8d8ef441a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3181cc23_c08a99ad",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "93e2e40f4f029c713953903dadb2f9e8d8ef441a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca9945fb_7ab0c656",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-25T15:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3181cc23_c08a99ad",
+      "range": {
+        "startLine": 890,
+        "startChar": 4,
+        "endLine": 890,
+        "endChar": 25
+      },
+      "revId": "93e2e40f4f029c713953903dadb2f9e8d8ef441a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
