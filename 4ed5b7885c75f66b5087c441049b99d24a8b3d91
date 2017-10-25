@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "0d5e3c69_ce172aa8",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-25T15:50:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d060cf16_4103042f",
+      "revId": "4ed5b7885c75f66b5087c441049b99d24a8b3d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b71220f_85c0e3b3",
         "filename": "chromeos/dbus/power_manager_client.cc",
         "patchSetId": 2
