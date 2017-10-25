@@ -262,6 +262,10 @@
       status: "stable",
     },
     {
+      name: "CSSOverscrollBehavior",
+      status: "stable",
+    },
+    {
       name: "CSSPaintAPI",
       depends_on: ["Worklet"],
       status: "experimental",
@@ -270,10 +274,6 @@
       name: "CSSPaintAPIArguments",
       depends_on: ["CSSPaintAPI"],
       status: "experimental",
-    },
-    {
-      name: "CSSScrollBoundaryBehavior",
-      status: "stable",
     },
     {
       name: "CSSScrollSnapPoints",

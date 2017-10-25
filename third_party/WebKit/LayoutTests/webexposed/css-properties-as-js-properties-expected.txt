@@ -250,9 +250,9 @@ rx
 ry
 scale
 scrollBehavior
-scrollBoundaryBehavior
-scrollBoundaryBehaviorX
-scrollBoundaryBehaviorY
+overscrollBehavior
+overscrollBehaviorX
+overscrollBehaviorY
 scrollPadding
 scrollPaddingBlock
 scrollPaddingBlockEnd
