@@ -40,4 +40,8 @@ mojom("interfaces") {
     "//ui/gfx/mojo",
     "//ui/latency/mojo:interfaces",
   ]
+
+  if (!is_android) {
+    sources += [ "compositing/compositing_mode_watcher.mojom" ]
+  }
 }

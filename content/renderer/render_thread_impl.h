@@ -58,6 +58,10 @@
 #include "third_party/WebKit/public/web/WebMemoryStatistics.h"
 #include "ui/gfx/native_widget_types.h"
 
+#if !defined(OS_ANDROID)
+#include "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom.h"
+#endif
+
 #if defined(OS_MACOSX)
 #include "third_party/WebKit/public/platform/mac/WebScrollbarTheme.h"
 #endif
@@ -180,6 +184,9 @@ class CONTENT_EXPORT RenderThreadImpl
       public ChildMemoryCoordinatorDelegate,
       public base::MemoryCoordinatorClient,
       public mojom::Renderer,
+#if !defined(OS_ANDROID)
+      public viz::mojom::CompositingModeWatcher,
+#endif
       public CompositorDependencies {
  public:
   static RenderThreadImpl* Create(const InProcessChildThreadParams& params);
@@ -265,6 +272,11 @@ class CONTENT_EXPORT RenderThreadImpl
   // blink::scheduler::RendererScheduler::RAILModeObserver implementation.
   void OnRAILModeChanged(v8::RAILMode rail_mode) override;
 
+#if !defined(OS_ANDROID)
+  // viz::mojom::CompositingModeWatcher implementation.
+  void CompositingModeFallbackToSoftware() override;
+#endif
+
   // Synchronously establish a channel to the GPU plugin if not previously
   // established or if it has been lost (for example if the GPU plugin crashed).
   // If there is a pending asynchronous request, it will be completed by the
@@ -276,7 +288,6 @@ class CONTENT_EXPORT RenderThreadImpl
   using LayerTreeFrameSinkCallback =
       base::Callback<void(std::unique_ptr<cc::LayerTreeFrameSink>)>;
   void RequestNewLayerTreeFrameSink(
-      bool use_software,
       int routing_id,
       scoped_refptr<FrameSwapMessageQueue> frame_swap_message_queue,
       const GURL& url,
@@ -708,6 +719,13 @@ class CONTENT_EXPORT RenderThreadImpl
   // Timer that periodically calls IdleHandler.
   base::RepeatingTimer idle_timer_;
 
+#if !defined(OS_ANDROID)
+  // Sticky once true, indicates that compositing is done without Gpu, so
+  // resources given to the compositor or to the viz service should be
+  // software-based.
+  bool is_gpu_compositing_disabled_ = false;
+#endif
+
   // The channel from the renderer process to the GPU process.
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_;
 
@@ -833,6 +851,15 @@ class CONTENT_EXPORT RenderThreadImpl
   int32_t client_id_;
 
   mojom::FrameSinkProviderPtr frame_sink_provider_;
+
+#if !defined(OS_ANDROID)
+  // A mojo connection to the CompositingModeReporter service.
+  viz::mojom::CompositingModeReporterPtr compositing_mode_reporter_;
+  // The class is a CompositingModeWatcher, which is bound to mojo through
+  // this memeber.
+  mojo::Binding<viz::mojom::CompositingModeWatcher>
+      compositing_mode_watcher_binding_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(RenderThreadImpl);
 };

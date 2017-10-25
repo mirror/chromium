@@ -247,6 +247,12 @@ viz::FrameSinkManagerImpl* VizProcessTransportFactory::GetFrameSinkManager() {
   return nullptr;
 }
 
+bool VizProcessTransportFactory::IsGpuCompositingDisabled() {
+  // TODO(crbug.com/730660): Needs to listen to CompositingModeReporter.
+  NOTIMPLEMENTED();
+  return false;
+}
+
 ui::ContextFactory* VizProcessTransportFactory::GetContextFactory() {
   return this;
 }

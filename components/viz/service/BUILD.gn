@@ -196,6 +196,13 @@ viz_component("service") {
     ]
   }
 
+  if (!is_android) {
+    sources += [
+      "display_embedder/compositing_mode_reporter_impl.cc",
+      "display_embedder/compositing_mode_reporter_impl.h",
+    ]
+  }
+
   if (use_ozone) {
     sources += [
       "display_embedder/compositor_overlay_candidate_validator_ozone.cc",
