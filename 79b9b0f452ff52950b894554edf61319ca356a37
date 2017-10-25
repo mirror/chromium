@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "07aa7164_15e121e1",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-25T09:22:02Z",
+      "side": 1,
+      "message": "Sam: (Not related to this CL but) would it be possible to avoid exposing service_manager::BinderRegistry by improving blink::InterfaceRegistry?\n\nIt looks not nice that there are multiple ways to add interfaces from Blink.",
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b5048b7_68817ddb",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 12
@@ -19,6 +36,47 @@
         "endLine": 290,
         "endChar": 45
       },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dff5340_8174da7f",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-25T09:22:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure about the plan for exposing sequences to Blink but it looks like it\u0027s not yet happening. I\u0027m okay with exposing BaseIOTaskRunner until it happens.",
+      "parentUuid": "8b5048b7_68817ddb",
+      "range": {
+        "startLine": 290,
+        "startChar": 6,
+        "endLine": 290,
+        "endChar": 45
+      },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1238c31c_a57938f3",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/WebDatabaseImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-25T09:22:02Z",
+      "side": 1,
+      "message": "Would it be possible to remove WebDatabaseImpl by moving UpdateSize() to QuotaTracker and CloseImmediately() to DatabaseTracker?\n\nIt looks like that WebDatabaseImpl is an unnecessary indirection.",
       "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -106,6 +164,30 @@
       "side": 1,
       "message": "You\u0027ll still need them in a public header somewhere to share them outside blink, unless you want to make BlinkInitializer public.\n\nI don\u0027t have a good feel for how this should be structured though.",
       "parentUuid": "f8354f76_4fd5808d",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 12
+      },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f4e804_8fc657ce",
+        "filename": "third_party/WebKit/public/web/WebKit.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-25T09:22:02Z",
+      "side": 1,
+      "message": "Instead of introducing RegisterInterfaces, can we just use Initialize? I think you want to register the interfaces when Blink gets initialized.",
+      "parentUuid": "80095802_415aa478",
       "range": {
         "startLine": 55,
         "startChar": 0,
