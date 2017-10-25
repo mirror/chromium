@@ -69,6 +69,24 @@
       "revId": "97eac2b1b421c7e920f8993f9160ef6a518e8046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf3d6e2_01ff4a29",
+        "filename": "components/viz/common/frame_sinks/copy_output_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-25T17:42:02Z",
+      "side": 1,
+      "message": "Sure, followup is fine.",
+      "parentUuid": "2d094eb9_f6f259b5",
+      "revId": "97eac2b1b421c7e920f8993f9160ef6a518e8046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

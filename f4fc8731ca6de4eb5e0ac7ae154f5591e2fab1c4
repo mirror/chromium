@@ -22,6 +22,30 @@
       "revId": "f4fc8731ca6de4eb5e0ac7ae154f5591e2fab1c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e5336b_5976c56a",
+        "filename": "components/viz/service/display/software_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-25T17:42:02Z",
+      "side": 1,
+      "message": "Do you want to change this? Do you think this makes it awkward in terms of specifying the area in post-scaled space if the rect is not relative to the top left?",
+      "parentUuid": "29d1cc61_0952bb95",
+      "range": {
+        "startLine": 594,
+        "startChar": 43,
+        "endLine": 594,
+        "endChar": 54
+      },
+      "revId": "f4fc8731ca6de4eb5e0ac7ae154f5591e2fab1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
