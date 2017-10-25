@@ -460,6 +460,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   blink::mojom::blink::BlobPtr blob;
   blink::Referrer referrer;
   blink::WebURLRequest::FetchCredentialsMode credentialsMode;
+  blink::mojom::FetchCacheMode cache_mode;
   blink::WebURLRequest::FetchRedirectMode redirectMode;
   WTF::String integrity;
   WTF::String clientId;
@@ -469,6 +470,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
       !data.ReadMethod(&method) || !data.ReadHeaders(&headers) ||
       !data.ReadBlobUuid(&blobUuid) || !data.ReadReferrer(&referrer) ||
       !data.ReadCredentialsMode(&credentialsMode) ||
+      !data.ReadCacheMode(&cache_mode) ||
       !data.ReadRedirectMode(&redirectMode) || !data.ReadClientId(&clientId) ||
       !data.ReadIntegrity(&integrity)) {
     return false;
@@ -487,6 +489,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   out->SetReferrer(referrer.referrer, static_cast<blink::WebReferrerPolicy>(
                                           referrer.referrer_policy));
   out->SetCredentialsMode(credentialsMode);
+  out->SetCacheMode(cache_mode);
   out->SetRedirectMode(redirectMode);
   out->SetIntegrity(integrity);
   out->SetClientId(clientId);
