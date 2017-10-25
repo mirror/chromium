@@ -219,6 +219,7 @@ copy("common_packaging_files") {
   sources = [
     "//chrome/app/resources/manpage.1.in",
     "common/apt.include",
+    "common/chrome_symbol_export_whitelist.txt",
     "common/default-app-block.template",
     "common/default-app.template",
     "common/desktop.template",
