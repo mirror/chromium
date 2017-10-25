@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44a4ce13_bc0c8098",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-25T13:01:12Z",
+      "side": 1,
+      "message": "nit: If you feel strongly don\u0027t worry, but I think taking an early out in these functions makes it clearer when reading the code.\n\n// The corresponding HitTestQuery has already been deleted, so drop the\n// in-flight hit-test data.\nif (iter \u003d\u003d display_hit_test_query_.end())\n  return;\n\n// TODO(riajiang): Report security fault. http://crbug.com/746470\nif (active_handle_index !\u003d 0u \u0026\u0026 active_handle_index !\u003d 1u) {\n  NOTREACHED();\n  return;\n}\n\n...",
+      "revId": "9a2438e4ecce9d9e50df7d11902a749b37c72124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
