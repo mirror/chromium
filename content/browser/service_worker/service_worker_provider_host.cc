@@ -1171,6 +1171,12 @@ void ServiceWorkerProviderHost::GetControllerServiceWorker(
   controller_->controller()->Clone(std::move(controller_request));
 }
 
+void ServiceWorkerProviderHost::CloneForWorker(
+    mojom::ServiceWorkerContainerHostRequest containser_host_request) {
+  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
+  bindings_for_worker_.AddBinding(this, std::move(containser_host_request));
+}
+
 bool ServiceWorkerProviderHost::IsValidRegisterMessage(
     const GURL& script_url,
     const blink::mojom::ServiceWorkerRegistrationOptions& options,
