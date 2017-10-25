@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8cec3d7b_f7c546d5",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T23:15:56Z",
+      "side": 1,
+      "message": "dpapad@ demonstrated that with a longer time to do the fade, the fade can/is clipped short. So I\u0027ll update this to avoid clipping the fade if if the fade time is longer.",
+      "parentUuid": "edc57876_e915e3af",
+      "revId": "2ff4058fbbb58fe17937fcd4158df4d5b3340a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92054249_3884bf72",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 5
