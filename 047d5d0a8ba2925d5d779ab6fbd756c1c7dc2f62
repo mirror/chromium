@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "8e6bca44_5cf52fdd",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-25T09:37:33Z",
+      "side": 1,
+      "message": "I went ahead and rewrote this using base::Singleton since I think it\u0027s simpler. I\u0027ll assume this addresses your concern unless I hear back from you in a few days (please consider adding yourself as reviewer if you want me to wait longer).",
+      "parentUuid": "495ef6d8_2fdbac69",
+      "range": {
+        "startLine": 203,
+        "startChar": 35,
+        "endLine": 203,
+        "endChar": 36
+      },
+      "revId": "047d5d0a8ba2925d5d779ab6fbd756c1c7dc2f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2774aa33_0de81a52",
         "filename": "components/favicon/core/large_icon_service.cc",
         "patchSetId": 6
