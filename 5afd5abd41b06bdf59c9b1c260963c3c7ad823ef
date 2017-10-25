@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8508fae_d5ca2085",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-25T11:45:55Z",
+      "side": 1,
+      "message": "This logic exists for PLSA too: PaintLayerScrollableArea::VisualViewportSuppliesScrollbars. I would expect us to remove the scrollbars on root_scrollable and use visualViewport\u0027s scrollbars. Please investigate why that\u0027s not happening under --root-layer-scrolls",
+      "range": {
+        "startLine": 985,
+        "startChar": 22,
+        "endLine": 985,
+        "endChar": 40
+      },
+      "revId": "5afd5abd41b06bdf59c9b1c260963c3c7ad823ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68a976e_35014617",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-25T11:45:55Z",
+      "side": 1,
+      "message": "you should probably also check that the theme of the scrollbar is correct.",
+      "range": {
+        "startLine": 995,
+        "startChar": 15,
+        "endLine": 995,
+        "endChar": 71
+      },
+      "revId": "5afd5abd41b06bdf59c9b1c260963c3c7ad823ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c1e21b0_12a13813",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-25T11:45:55Z",
+      "side": 1,
+      "message": "You would want to check that the scrollbar isn\u0027t custom here, but again I don\u0027t think the root_scrollable should have a scrollbar in this case.",
+      "range": {
+        "startLine": 1078,
+        "startChar": 4,
+        "endLine": 1078,
+        "endChar": 62
+      },
+      "revId": "5afd5abd41b06bdf59c9b1c260963c3c7ad823ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
