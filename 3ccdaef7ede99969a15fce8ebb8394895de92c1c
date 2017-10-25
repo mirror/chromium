@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f088454_9a3f2757",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-25T03:59:04Z",
+      "side": 0,
+      "message": "Evidently yes, as the IDs are just always set as invalid for Print Preview (vs Print for Print Preview) queries.",
+      "parentUuid": "b87856d0_5baa851c",
+      "revId": "3ccdaef7ede99969a15fce8ebb8394895de92c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64f7fb30_0b49f4bf",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "3ccdaef7ede99969a15fce8ebb8394895de92c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfce73e9_51f2904f",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-25T03:59:04Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "64f7fb30_0b49f4bf",
+      "revId": "3ccdaef7ede99969a15fce8ebb8394895de92c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
