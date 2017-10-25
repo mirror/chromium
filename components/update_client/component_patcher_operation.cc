@@ -14,7 +14,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_task_runner_handle.h"
-#include "components/update_client/out_of_process_patcher.h"
+#include "components/patch_service/public/cpp/patch.h"
 #include "components/update_client/update_client.h"
 #include "components/update_client/update_client_errors.h"
 #include "components/update_client/utils.h"
@@ -40,15 +40,14 @@ const char kCourgette[] = "courgette";
 const char kInput[] = "input";
 const char kPatch[] = "patch";
 
-DeltaUpdateOp* CreateDeltaUpdateOp(
-    const std::string& operation,
-    const scoped_refptr<OutOfProcessPatcher>& out_of_process_patcher) {
+DeltaUpdateOp* CreateDeltaUpdateOp(const std::string& operation,
+                                   service_manager::Connector* connector) {
   if (operation == "copy") {
     return new DeltaUpdateOpCopy();
   } else if (operation == "create") {
     return new DeltaUpdateOpCreate();
   } else if (operation == "bsdiff" || operation == "courgette") {
-    return new DeltaUpdateOpPatch(operation, out_of_process_patcher);
+    return new DeltaUpdateOpPatch(operation, connector);
   }
   return nullptr;
 }
@@ -163,10 +162,9 @@ void DeltaUpdateOpCreate::DoRun(const ComponentPatcher::Callback& callback) {
     callback.Run(UnpackerError::kNone, 0);
 }
 
-DeltaUpdateOpPatch::DeltaUpdateOpPatch(
-    const std::string& operation,
-    const scoped_refptr<OutOfProcessPatcher>& out_of_process_patcher)
-    : operation_(operation), out_of_process_patcher_(out_of_process_patcher) {
+DeltaUpdateOpPatch::DeltaUpdateOpPatch(const std::string& operation,
+                                       service_manager::Connector* connector)
+    : operation_(operation), connector_(connector) {
   DCHECK(operation == kBsdiff || operation == kCourgette);
 }
 
@@ -193,25 +191,9 @@ UnpackerError DeltaUpdateOpPatch::DoParseArguments(
 }
 
 void DeltaUpdateOpPatch::DoRun(const ComponentPatcher::Callback& callback) {
-  if (out_of_process_patcher_.get()) {
-    out_of_process_patcher_->Patch(
-        operation_, input_abs_path_, patch_abs_path_, output_abs_path_,
-        base::Bind(&DeltaUpdateOpPatch::DonePatching, this, callback));
-    return;
-  }
-
-  if (operation_ == kBsdiff) {
-    DonePatching(callback,
-                 bsdiff::ApplyBinaryPatch(input_abs_path_, patch_abs_path_,
-                                          output_abs_path_));
-  } else if (operation_ == kCourgette) {
-    DonePatching(callback, courgette::ApplyEnsemblePatch(
-                               input_abs_path_.value().c_str(),
-                               patch_abs_path_.value().c_str(),
-                               output_abs_path_.value().c_str()));
-  } else {
-    NOTREACHED();
-  }
+  patch::Patch(connector_, operation_, input_abs_path_, patch_abs_path_,
+               output_abs_path_,
+               base::Bind(&DeltaUpdateOpPatch::DonePatching, this, callback));
 }
 
 void DeltaUpdateOpPatch::DonePatching(
