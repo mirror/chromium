@@ -16,11 +16,9 @@
 #include "chrome/browser/first_run/first_run_dialog.h"
 #include "chrome/browser/metrics/metrics_reporting_state.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/shell_integration.h"
 #include "chrome/browser/ui/cocoa/first_run_dialog_controller.h"
 #include "chrome/common/url_constants.h"
-#include "components/search_engines/template_url_service.h"
 #import "third_party/google_toolbox_for_mac/src/AppKit/GTMUILocalizerAndLayoutTweaker.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "url/gurl.h"
@@ -57,16 +55,7 @@ void FirstRunShowBridge::ShowDialog() {
 
 FirstRunShowBridge::~FirstRunShowBridge() {}
 
-// Show the first run UI.
-// Returns true if the first run dialog was shown.
-bool ShowFirstRunModal(Profile* profile) {
-  // The purpose of the dialog is to ask the user to enable stats and crash
-  // reporting. This setting may be controlled through configuration management
-  // in enterprise scenarios. If that is the case, skip the dialog entirely, as
-  // it's not worth bothering the user for only the default browser question
-  // (which is likely to be forced in enterprise deployments anyway).
-  if (IsMetricsReportingPolicyManaged())
-    return false;
+void ShowFirstRunModal(Profile* profile) {
   base::scoped_nsobject<FirstRunDialogController> dialog(
       [[FirstRunDialogController alloc] init]);
 
@@ -77,14 +66,15 @@ bool ShowFirstRunModal(Profile* profile) {
   bool consent_given = [dialog.get() isStatsReportingEnabled];
   ChangeMetricsReportingState(consent_given);
 
-  // If selected set as default browser.
-  BOOL make_default_browser = [dialog.get() isMakeDefaultBrowserEnabled];
+  // If selected, set as default browser. Skip in a test so that an OS dialog
+  // confirming the default browser choice isn't left on screen.
+  BOOL make_default_browser =
+      [dialog.get() isMakeDefaultBrowserEnabled] &&
+      !first_run::g_before_show_first_run_dialog_hook_for_testing;
   if (make_default_browser) {
     bool success = shell_integration::SetAsDefaultBrowser();
     DCHECK(success);
   }
-
-  return true;
 }
 
 // True when the stats checkbox should be checked by default. This is only
@@ -98,24 +88,8 @@ bool StatsCheckboxDefault() {
 
 namespace first_run {
 
-bool ShowFirstRunDialog(Profile* profile) {
-  bool dialog_shown = false;
-#if defined(GOOGLE_CHROME_BUILD)
-  dialog_shown = ShowFirstRunModal(profile);
-#else
-  (void)ShowFirstRunModal;  // Placate compiler.
-#endif
-  // Set preference to show first run bubble and welcome page.
-  // Only display the bubble if there is a default search provider.
-  TemplateURLService* search_engines_model =
-      TemplateURLServiceFactory::GetForProfile(profile);
-  if (search_engines_model &&
-      search_engines_model->GetDefaultSearchProvider()) {
-    first_run::SetShowFirstRunBubblePref(first_run::FIRST_RUN_BUBBLE_SHOW);
-  }
-  first_run::SetShouldShowWelcomePage();
-
-  return dialog_shown;
+void ShowFirstRunDialog(Profile* profile) {
+  ShowFirstRunModal(profile);
 }
 
 }  // namespace first_run
