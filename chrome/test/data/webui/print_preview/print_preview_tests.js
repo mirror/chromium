@@ -1360,7 +1360,7 @@ cr.define('print_preview_test', function() {
             expectEquals(
                 mediaDefault.height_microns,
                 printTicketStore.mediaSize.getValue().height_microns);
-            return nativeLayer.whenCalled('hidePreview');
+            return nativeLayer.whenCalled('dialogClose');
           });
     });
 
@@ -1447,7 +1447,7 @@ cr.define('print_preview_test', function() {
               var openPdfPreviewLink = $('open-pdf-in-preview-link');
               checkElementDisplayed(openPdfPreviewLink, true);
               openPdfPreviewLink.click();
-              // Should result in a print call and dialog should hide
+              // Should result in a print call and dialog should close.
               return nativeLayer.whenCalled('print');
             }).then(
                 /**
@@ -1462,7 +1462,7 @@ cr.define('print_preview_test', function() {
                  */
                 function(args) {
                   expectTrue(args.openPdfInPreview);
-                  return nativeLayer.whenCalled('hidePreview');
+                  return nativeLayer.whenCalled('dialogClose');
                 });
       });
 
@@ -1515,7 +1515,7 @@ cr.define('print_preview_test', function() {
               var systemDialogLink = $('system-dialog-link');
               checkElementDisplayed(systemDialogLink, true);
               systemDialogLink.click();
-              // Should result in a print call and dialog should hide
+              // Should result in a print call and dialog should close.
               return nativeLayer.whenCalled('print');
             }).then(
                 /**
@@ -1530,7 +1530,7 @@ cr.define('print_preview_test', function() {
                  */
                 function(args) {
                   expectTrue(args.showSystemDialog);
-                  return nativeLayer.whenCalled('hidePreview');
+                  return nativeLayer.whenCalled('dialogClose');
                 });
       });
 
