@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9469a3d_02245c81",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-25T08:52:04Z",
+      "side": 1,
+      "message": ":interfaces_blink?",
+      "revId": "61df6cb76ccc7c5871686a2d31d9115e3abf9c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
