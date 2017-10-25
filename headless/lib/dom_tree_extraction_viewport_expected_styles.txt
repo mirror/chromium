@@ -1,0 +1,10 @@
+{
+   "color": "rgb(0, 0, 0)",
+   "display": "block",
+   "font-family": "\"Times New Roman\"",
+   "font-style": "normal",
+   "margin-bottom": "0px",
+   "margin-left": "0px",
+   "margin-right": "0px",
+   "margin-top": "0px"
+}

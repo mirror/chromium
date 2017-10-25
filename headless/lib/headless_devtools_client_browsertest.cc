@@ -1254,12 +1254,31 @@ HEADLESS_ASYNC_DEVTOOLED_TEST_F(DevToolsAttachAndDetachNotifications);
 class DomTreeExtractionBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
                                      public page::Observer {
  public:
+  // The name of the HTML file to read as input from headless/test/data/
+  virtual std::string InputFile() { return "dom_tree_test.html"; }
+  // Output will be compared against the golden files, where [...] is from
+  // TestName().
+  // headless/lib/[...]_expected_nodes.txt
+  // headless/lib/[...]_expected_styles.txt
+  virtual std::string TestName() { return "dom_tree_extraction"; }
+
+  virtual bool Mobile() { return false; }
+  virtual int Width() { return 800; }
+  virtual int Height() { return 600; }
+
   void RunDevTooledTest() override {
     EXPECT_TRUE(embedded_test_server()->Start());
+    devtools_client_->GetEmulation()->SetDeviceMetricsOverride(
+        emulation::SetDeviceMetricsOverrideParams::Builder()
+            .SetWidth(Width())
+            .SetHeight(Height())
+            .SetDeviceScaleFactor(1.0)
+            .SetMobile(Mobile())
+            .Build());
     devtools_client_->GetPage()->AddObserver(this);
     devtools_client_->GetPage()->Enable();
     devtools_client_->GetPage()->Navigate(
-        embedded_test_server()->GetURL("/dom_tree_test.html").spec());
+        embedded_test_server()->GetURL("/" + InputFile()).spec());
   }
 
   void OnLoadEventFired(const page::LoadEventFiredParams& params) override {
@@ -1358,9 +1377,10 @@ class DomTreeExtractionBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
     base::ThreadRestrictions::SetIOAllowed(true);
     base::FilePath source_root_dir;
     base::PathService::Get(base::DIR_SOURCE_ROOT, &source_root_dir);
-    base::FilePath expected_dom_nodes_path =
-        source_root_dir.Append(FILE_PATH_LITERAL(
-            "headless/lib/dom_tree_extraction_expected_nodes.txt"));
+    auto p =
+        base::FilePath("headless/lib/" + TestName() + "_expected_nodes.txt");
+    base::FilePath expected_dom_nodes_path = source_root_dir.Append(
+        base::FilePath("headless/lib/" + TestName() + "_expected_nodes.txt"));
     std::string expected_dom_nodes;
     ASSERT_TRUE(
         base::ReadFileToString(expected_dom_nodes_path, &expected_dom_nodes));
@@ -1377,12 +1397,10 @@ class DomTreeExtractionBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
 #if defined(OS_WIN)
     ASSERT_TRUE(base::RemoveChars(dom_nodes_result, "\r", &dom_nodes_result));
 #endif
-
     EXPECT_EQ(expected_dom_nodes, dom_nodes_result);
 
-    base::FilePath expected_styles_path =
-        source_root_dir.Append(FILE_PATH_LITERAL(
-            "headless/lib/dom_tree_extraction_expected_styles.txt"));
+    base::FilePath expected_styles_path = source_root_dir.Append(
+        base::FilePath("headless/lib/" + TestName() + "_expected_styles.txt"));
     std::string expected_computed_styles;
     ASSERT_TRUE(base::ReadFileToString(expected_styles_path,
                                        &expected_computed_styles));
@@ -1401,13 +1419,24 @@ class DomTreeExtractionBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
     ASSERT_TRUE(base::RemoveChars(computed_styles_result, "\r",
                                   &computed_styles_result));
 #endif
-
     EXPECT_EQ(expected_computed_styles, computed_styles_result);
     FinishAsynchronousTest();
   }
 };
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(DomTreeExtractionBrowserTest);
+
+class DomTreeExtractionBrowserTest_Viewport
+    : public DomTreeExtractionBrowserTest {
+  std::string InputFile() override {
+    return "dom_tree_extraction_viewport.html";
+  }
+  std::string TestName() override { return "dom_tree_extraction_viewport"; }
+  bool Mobile() override { return true; }
+  int Width() override { return 600; }
+  int Height() override { return 600; }
+};
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(DomTreeExtractionBrowserTest_Viewport);
 
 class UrlRequestFailedTest : public HeadlessAsyncDevTooledBrowserTest,
                              public HeadlessBrowserContext::Observer,

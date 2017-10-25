@@ -1,0 +1,170 @@
+{
+   "backendNodeId": 3,
+   "baseURL": "http://127.0.0.1/dom_tree_extraction_viewport.html",
+   "boundingBox": {
+      "height": 300.0,
+      "width": 300.0,
+      "x": 0.0,
+      "y": 0.0
+   },
+   "childNodeIndexes": [ 1, 2, 3 ],
+   "documentEncoding": "windows-1252",
+   "documentURL": "http://127.0.0.1/dom_tree_extraction_viewport.html",
+   "frameId": "?",
+   "layoutNodeIndex": 0,
+   "nodeName": "#document",
+   "nodeType": 9,
+   "nodeValue": ""
+}
+{
+   "backendNodeId": 4,
+   "nodeName": "html",
+   "nodeType": 10,
+   "nodeValue": "",
+   "publicId": "",
+   "systemId": ""
+}
+{
+   "backendNodeId": 5,
+   "nodeName": "#comment",
+   "nodeType": 8,
+   "nodeValue": " domSnapshot test for a document with a viewport.  "
+}
+{
+   "backendNodeId": 6,
+   "boundingBox": {
+      "height": 0.0,
+      "width": 300.0,
+      "x": 0.0,
+      "y": 0.0
+   },
+   "childNodeIndexes": [ 4, 12 ],
+   "frameId": "?",
+   "layoutNodeIndex": 1,
+   "nodeName": "HTML",
+   "nodeType": 1,
+   "nodeValue": "",
+   "styleIndex": 0
+}
+{
+   "backendNodeId": 7,
+   "childNodeIndexes": [ 5, 6, 7, 9, 10, 11 ],
+   "nodeName": "HEAD",
+   "nodeType": 1,
+   "nodeValue": ""
+}
+{
+   "attributes": [ {
+      "name": "name",
+      "value": "viewport"
+   }, {
+      "name": "content",
+      "value": "width=300"
+   } ],
+   "backendNodeId": 8,
+   "nodeName": "META",
+   "nodeType": 1,
+   "nodeValue": ""
+}
+{
+   "backendNodeId": 9,
+   "nodeName": "#text",
+   "nodeType": 3,
+   "nodeValue": "\n"
+}
+{
+   "backendNodeId": 10,
+   "childNodeIndexes": [ 8 ],
+   "nodeName": "STYLE",
+   "nodeType": 1,
+   "nodeValue": ""
+}
+{
+   "backendNodeId": 11,
+   "nodeName": "#text",
+   "nodeType": 3,
+   "nodeValue": "\n* {\n  margin: 0;\n  padding: 0;\n}\ndiv {\n  position: absolute;\n  top: 100px;\n  left: 100px;\n  width: 100px;\n  height: 100px;\n  background-color: green;\n}\n"
+}
+{
+   "backendNodeId": 12,
+   "nodeName": "#text",
+   "nodeType": 3,
+   "nodeValue": "\n"
+}
+{
+   "backendNodeId": 13,
+   "nodeName": "#comment",
+   "nodeType": 8,
+   "nodeValue": " The div's box should have size and position of 100x100 to match the\n     computed style, even though it's visually scaled by the viewport. The text\n     should also be inside the div, not outside it. "
+}
+{
+   "backendNodeId": 14,
+   "nodeName": "#text",
+   "nodeType": 3,
+   "nodeValue": "\n"
+}
+{
+   "backendNodeId": 15,
+   "boundingBox": {
+      "height": 0.0,
+      "width": 300.0,
+      "x": 0.0,
+      "y": 0.0
+   },
+   "childNodeIndexes": [ 13, 15 ],
+   "layoutNodeIndex": 2,
+   "nodeName": "BODY",
+   "nodeType": 1,
+   "nodeValue": "",
+   "styleIndex": 0
+}
+{
+   "attributes": [ {
+      "name": "id",
+      "value": "100x100"
+   } ],
+   "backendNodeId": 16,
+   "boundingBox": {
+      "height": 100.0,
+      "width": 100.0,
+      "x": 100.0,
+      "y": 100.0
+   },
+   "childNodeIndexes": [ 14 ],
+   "layoutNodeIndex": 3,
+   "nodeName": "DIV",
+   "nodeType": 1,
+   "nodeValue": "",
+   "styleIndex": 0
+}
+{
+   "backendNodeId": 17,
+   "boundingBox": {
+      "height": 17.0,
+      "width": 46.0,
+      "x": 100.0,
+      "y": 100.0
+   },
+   "inlineTextNodes": [ {
+      "boundingBox": {
+         "height": 17.0,
+         "width": 45.328125,
+         "x": 100.0,
+         "y": 100.0
+      },
+      "numCharacters": 6,
+      "startCharacterIndex": 0
+   } ],
+   "layoutNodeIndex": 4,
+   "layoutText": "Boxes!",
+   "nodeName": "#text",
+   "nodeType": 3,
+   "nodeValue": "Boxes!",
+   "styleIndex": 0
+}
+{
+   "backendNodeId": 18,
+   "nodeName": "#text",
+   "nodeType": 3,
+   "nodeValue": "\n\n"
+}
