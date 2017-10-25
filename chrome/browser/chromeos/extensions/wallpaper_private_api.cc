@@ -341,13 +341,8 @@ void WallpaperPrivateSetWallpaperIfExistsFunction::OnWallpaperDecoded(
   bool update_wallpaper =
       account_id_ ==
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId();
-  wallpaper_manager->SetWallpaperFromImageSkia(account_id_, image, layout,
-                                               update_wallpaper);
-  bool is_persistent = !user_manager::UserManager::Get()
-                            ->IsCurrentUserNonCryptohomeDataEphemeral();
-  wallpaper::WallpaperInfo info = {params->url, layout, wallpaper::ONLINE,
-                                   base::Time::Now().LocalMidnight()};
-  wallpaper_manager->SetUserWallpaperInfo(account_id_, info, is_persistent);
+  wallpaper_manager->SetWallpaperFromUrl(account_id_, image, params->url,
+                                         layout, update_wallpaper);
   SetResult(base::MakeUnique<base::Value>(true));
   Profile* profile = Profile::FromBrowserContext(browser_context());
   // This API is only available to the component wallpaper picker. We do not
@@ -446,20 +441,15 @@ void WallpaperPrivateSetWallpaperFunction::SetDecodedWallpaper(
   bool update_wallpaper =
       account_id_ ==
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId();
-  wallpaper_manager->SetWallpaperFromImageSkia(account_id_, *image.get(),
-                                               layout, update_wallpaper);
+  wallpaper_manager->SetWallpaperFromUrl(account_id_, *image.get(), params->url,
+                                         layout, update_wallpaper);
 
-  bool is_persistent = !user_manager::UserManager::Get()
-                            ->IsCurrentUserNonCryptohomeDataEphemeral();
-  wallpaper::WallpaperInfo info = {params->url, layout, wallpaper::ONLINE,
-                                   base::Time::Now().LocalMidnight()};
   Profile* profile = Profile::FromBrowserContext(browser_context());
   // This API is only available to the component wallpaper picker. We do not
   // need to show the app's name if it is the component wallpaper picker. So set
   // the pref to empty string.
   profile->GetPrefs()->SetString(prefs::kCurrentWallpaperAppName,
                                  std::string());
-  wallpaper_manager->SetUserWallpaperInfo(account_id_, info, is_persistent);
   SendResponse(true);
 }
 
@@ -527,7 +517,7 @@ void WallpaperPrivateSetCustomWallpaperFunction::OnWallpaperDecoded(
   bool update_wallpaper =
       account_id_ ==
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId();
-  wallpaper_manager->SetCustomWallpaper(
+  wallpaper_manager->SetWallpaperFromFile(
       account_id_, wallpaper_files_id_, params->file_name, layout,
       wallpaper::CUSTOMIZED, image, update_wallpaper);
   unsafe_wallpaper_decoder_ = NULL;

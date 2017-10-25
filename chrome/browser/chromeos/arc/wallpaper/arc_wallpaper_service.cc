@@ -132,7 +132,7 @@ class ArcWallpaperService::DecodeRequest : public ImageDecoder::ImageRequest {
     wallpaper::WallpaperFilesId wallpaper_files_id =
         wallpaper_manager->GetFilesId(account.id);
     // TODO(crbug.com/618922): Allow specifying layout.
-    wallpaper_manager->SetCustomWallpaper(
+    wallpaper_manager->SetWallpaperFromFile(
         account.id, wallpaper_files_id, kAndroidWallpaperFilename,
         wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED, wallpaper::CUSTOMIZED,
         image, account.is_active /*update_wallpaper*/);

@@ -741,7 +741,7 @@ base::FilePath WallpaperManager::GetCustomWallpaperPath(
   return custom_wallpaper_path.Append(wallpaper_files_id.id()).Append(file);
 }
 
-void WallpaperManager::SetCustomWallpaper(
+void WallpaperManager::SetWallpaperFromFile(
     const AccountId& account_id,
     const wallpaper::WallpaperFilesId& wallpaper_files_id,
     const std::string& file,
@@ -759,15 +759,15 @@ void WallpaperManager::SetCustomWallpaper(
   if (type != wallpaper::POLICY && IsPolicyControlled(account_id))
     return;
 
-  base::FilePath wallpaper_path = GetCustomWallpaperPath(
-      kOriginalWallpaperSubDir, wallpaper_files_id, file);
-
   // If decoded wallpaper is empty, we have probably failed to decode the file.
   // Use default wallpaper in this case.
   if (image.isNull()) {
     SetDefaultWallpaperDelayed(account_id);
     return;
   }
+
+  base::FilePath wallpaper_path = GetCustomWallpaperPath(
+      kOriginalWallpaperSubDir, wallpaper_files_id, file);
 
   const user_manager::User* user =
       user_manager::UserManager::Get()->FindUser(account_id);
@@ -778,13 +778,6 @@ void WallpaperManager::SetCustomWallpaper(
       (type == wallpaper::POLICY &&
        user->GetType() == user_manager::USER_TYPE_PUBLIC_ACCOUNT);
 
-  WallpaperInfo wallpaper_info = {
-      wallpaper_path.value(),
-      layout,
-      type,
-      // Date field is not used.
-      base::Time::Now().LocalMidnight()
-  };
   if (is_persistent) {
     image.EnsureRepsForSupportedScales();
     std::unique_ptr<gfx::ImageSkia> deep_copy(image.DeepCopy());
@@ -797,9 +790,7 @@ void WallpaperManager::SetCustomWallpaper(
     // TODO(bshe): This may break if RawImage becomes RefCountedMemory.
     blocking_task_runner->PostTask(
         FROM_HERE, base::BindOnce(&WallpaperManager::SaveCustomWallpaper,
-                                  wallpaper_files_id,
-                                  base::FilePath(wallpaper_info.location),
-                                  wallpaper_info.layout,
+                                  wallpaper_files_id, wallpaper_path, layout,
                                   base::Passed(std::move(deep_copy))));
   }
 
@@ -879,28 +870,33 @@ void WallpaperManager::SetUserWallpaperInfo(const AccountId& account_id,
                                             std::move(wallpaper_info_dict));
 }
 
-void WallpaperManager::SetWallpaperFromImageSkia(
-    const AccountId& account_id,
-    const gfx::ImageSkia& image,
-    wallpaper::WallpaperLayout layout,
-    bool update_wallpaper) {
+void WallpaperManager::SetWallpaperFromUrl(const AccountId& account_id,
+                                           const gfx::ImageSkia& image,
+                                           const std::string& url,
+                                           wallpaper::WallpaperLayout layout,
+                                           bool update_wallpaper) {
   DCHECK(user_manager::UserManager::Get()->IsUserLoggedIn());
 
   // There is no visible wallpaper in kiosk mode.
   if (user_manager::UserManager::Get()->IsLoggedInAsKioskApp())
     return;
-  WallpaperInfo info;
-  info.layout = layout;
 
-  // This is an API call and we do not know the path. So we set the image, but
-  // no path.
-  wallpaper_cache_[account_id] =
-      CustomWallpaperElement(base::FilePath(), image);
+  WallpaperInfo info = {url, layout, wallpaper::ONLINE,
+                        base::Time::Now().LocalMidnight()};
+  bool is_persistent = !user_manager::UserManager::Get()
+                            ->IsCurrentUserNonCryptohomeDataEphemeral();
+  SetUserWallpaperInfo(account_id, info, is_persistent);
 
   if (update_wallpaper) {
-    GetPendingWallpaper(last_selected_user_, false /* Not delayed */)
+    GetPendingWallpaper(account_id, false /* Not delayed */)
         ->ResetSetWallpaperImage(image, info);
   }
+
+  // Leave the file path empty, because in most cases the file path is not used
+  // when fetching cache, but in case it needs to be checked, we should avoid
+  // confusing the URL with a real file path.
+  wallpaper_cache_[account_id] =
+      CustomWallpaperElement(base::FilePath(), image);
 }
 
 void WallpaperManager::InitializeWallpaper() {
@@ -2271,11 +2267,11 @@ void WallpaperManager::SetPolicyControlledWallpaper(
   // If we're at the login screen, do not change the wallpaper to the user
   // policy controlled wallpaper but only update the cache. It will be later
   // updated after the user logs in.
-  SetCustomWallpaper(account_id, wallpaper_files_id, "policy-controlled.jpeg",
-                     wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED,
-                     wallpaper::POLICY, user_image->image(),
-                     user_manager::UserManager::Get()
-                         ->IsUserLoggedIn() /* update wallpaper */);
+  SetWallpaperFromFile(account_id, wallpaper_files_id, "policy-controlled.jpeg",
+                       wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED,
+                       wallpaper::POLICY, user_image->image(),
+                       user_manager::UserManager::Get()
+                           ->IsUserLoggedIn() /* update wallpaper */);
 }
 
 void WallpaperManager::OnDeviceWallpaperPolicyChanged() {
