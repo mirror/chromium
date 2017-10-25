@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99bdd941_55e933e6",
+        "filename": "device/gamepad/public/interfaces/gamepad.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-25T23:09:14Z",
+      "side": 1,
+      "message": "vibration_actuator is a haptic actuator capable of effects that can vibrate the whole gamepad. In the future we may add support for actuators that vibrate specific elements of the gamepad (eg, Xbox One rumble triggers) or are capable of non-vibration effects (eg, steering wheels). In that context, does vibration_actuator seem reasonable?",
+      "parentUuid": "20df0c21_d5dfc99d",
+      "range": {
+        "startLine": 60,
+        "startChar": 25,
+        "endLine": 60,
+        "endChar": 43
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "427cc9f2_96f00532",
         "filename": "device/gamepad/public/interfaces/gamepad.mojom",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-25T19:21:46Z",
       "side": 1,
       "message": "GamepadHapticEffectParameters?",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 30
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709ef6fb_62adceba",
+        "filename": "device/gamepad/public/interfaces/gamepad.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-25T23:09:14Z",
+      "side": 1,
+      "message": "Is there value in including \"Haptic\" here, other than for consistency? The type name is already fairly long; I chose to leave it out for readability.",
+      "parentUuid": "427cc9f2_96f00532",
       "range": {
         "startLine": 86,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2df54fbc_08a22a03",
+        "filename": "device/gamepad/public/interfaces/gamepad.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-25T23:09:14Z",
+      "side": 1,
+      "message": "sgtm, I wasn\u0027t really sure what to call this.",
+      "parentUuid": "6d6f008a_3f5e5ff3",
+      "range": {
+        "startLine": 101,
+        "startChar": 10,
+        "endLine": 101,
+        "endChar": 32
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6de8ae33_29ce488d",
         "filename": "device/gamepad/public/interfaces/gamepad.mojom",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-25T19:21:46Z",
       "side": 1,
       "message": "PlayEffectOnce or PlayHapticEffectOnce",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0816cccb_827a3d8b",
+        "filename": "device/gamepad/public/interfaces/gamepad.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-25T23:09:14Z",
+      "side": 1,
+      "message": "The method name includes \"Vibration\" to indicate the effect is played specifically on the vibration actuator (as opposed to some other actuator on the gamepad). Maybe PlayVibrationHapticEffectOnce? I think PlayHapticEffectOnce would be an appropriate name for a method that can select different actuators on the same gamepad which is why I didn\u0027t choose it here.",
+      "parentUuid": "6de8ae33_29ce488d",
       "range": {
         "startLine": 102,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ae3d94a0_193f9941",
+        "filename": "device/gamepad/public/interfaces/gamepad.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-25T23:09:14Z",
+      "side": 1,
+      "message": "As above, this includes \"Vibration\" to indicate it resets the vibration actuator.",
+      "parentUuid": "6f9becca_150e7847",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 24
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c842467_90f832b9",
         "filename": "device/gamepad/public/interfaces/gamepad.typemap",
         "patchSetId": 4
@@ -128,6 +248,24 @@
       "writtenOn": "2017-10-25T19:21:46Z",
       "side": 1,
       "message": "If possible avoid adding typemaps when using the Mojo type in new code works just as well. This is especially true of enums.",
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc06f0aa_642a4a4d",
+        "filename": "device/gamepad/public/interfaces/gamepad.typemap",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-25T23:09:14Z",
+      "side": 1,
+      "message": "I think it is best to use typemaps for any types that are part of the device::Gamepad object since we use the device:: types in places where it would be otherwise unnecessary to add a Mojo dependency. I\u0027ll leave GamepadHapticActuator and GamepadHapticActuatorType as typemaps and use Mojo types for the rest.\n\nGamepadHapticActuator should probably be nullable_is_same_type, I\u0027ll change that as well.",
+      "parentUuid": "4c842467_90f832b9",
       "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "c0db7f0e_d90800a0",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-25T23:09:14Z",
+      "side": 1,
+      "message": "Removed, now GamepadDispatcher uses the Mojo enum.",
+      "parentUuid": "9ea0afda_722777c4",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 1
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b54c4fb5_89b7f532",
         "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.cpp",
         "patchSetId": 4
@@ -177,6 +339,30 @@
       "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b27767a_bdd3d51b",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-25T23:09:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b54c4fb5_89b7f532",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "67bcf4e284e090b0689bdcfca013af1ae64a411f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
