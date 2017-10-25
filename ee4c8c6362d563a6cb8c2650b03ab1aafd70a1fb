@@ -93,6 +93,30 @@
       "revId": "ee4c8c6362d563a6cb8c2650b03ab1aafd70a1fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e799cf3a_0a6621fc",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-10-25T18:14:05Z",
+      "side": 1,
+      "message": "It is more complex but doesn\u0027t guarantee to pass the test that I was talking about. If the code works with button doesn\u0027t mean that it works without button.",
+      "parentUuid": "d410daa8_3b2e834c",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 9
+      },
+      "revId": "ee4c8c6362d563a6cb8c2650b03ab1aafd70a1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
