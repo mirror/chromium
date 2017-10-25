@@ -16,6 +16,24 @@
       "revId": "9a2438e4ecce9d9e50df7d11902a749b37c72124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb65bdf3_153e5132",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-25T20:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44a4ce13_bc0c8098",
+      "revId": "9a2438e4ecce9d9e50df7d11902a749b37c72124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
