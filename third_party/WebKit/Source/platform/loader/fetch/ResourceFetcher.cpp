@@ -997,6 +997,8 @@ ResourceFetcher::DetermineRevalidationPolicyInternal(
     bool is_static_data) const {
   const ResourceRequest& request = fetch_params.GetResourceRequest();
 
+  DCHECK(!existing_resource.ErrorOccurred());
+
   if (IsDownloadOrStreamRequest(request))
     return kReload;
 
@@ -1097,14 +1099,6 @@ ResourceFetcher::DetermineRevalidationPolicyInternal(
     RESOURCE_LOADING_DVLOG(1) << "ResourceFetcher::DetermineRevalidationPolicy "
                                  "reloading due to "
                                  "FetchCacheMode::kBypassCache";
-    return kReload;
-  }
-
-  // We'll try to reload the resource if it failed last time.
-  if (existing_resource.ErrorOccurred()) {
-    RESOURCE_LOADING_DVLOG(1) << "ResourceFetcher::DetermineRevalidationPolicy "
-                                 "reloading due to resource being in the error "
-                                 "state";
     return kReload;
   }
 
