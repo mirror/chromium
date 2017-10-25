@@ -469,7 +469,9 @@ bool WallpaperPrivateResetWallpaperFunction::RunAsync() {
   if (wallpaper_manager->IsPolicyControlled(account_id))
     return false;
 
-  wallpaper_manager->SetDefaultWallpaper(account_id, true);
+  wallpaper_manager->SetDefaultWallpaper(account_id,
+                                         true /* update_wallpaper */,
+                                         true /* remove_custom_wallpaper */);
 
   Profile* profile = Profile::FromBrowserContext(browser_context());
   // This API is only available to the component wallpaper picker. We do not
