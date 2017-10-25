@@ -115,6 +115,13 @@ public abstract class PaymentInstrument extends PaymentOption {
         return true;
     }
 
+    /**
+     * @return Whether the instrument supports the payment method with the method data.
+     */
+    public boolean isValidForPaymentMethodData(String method, PaymentMethodData data) {
+        return getInstrumentMethodNames().contains(method);
+    }
+
     /** @return The country code (or null if none) associated with this payment instrument. */
     @Nullable
     public String getCountryCode() {
