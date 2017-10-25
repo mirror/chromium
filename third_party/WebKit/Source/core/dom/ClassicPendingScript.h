@@ -49,7 +49,7 @@ class CORE_EXPORT ClassicPendingScript final
   // For an inline script.
   static ClassicPendingScript* Create(ScriptElementBase*,
                                       const TextPosition&,
-                                      const ScriptFetchOptions&);
+                                      const ClassicScriptFetchRequest&);
 
   ~ClassicPendingScript() override;
 
@@ -91,7 +91,7 @@ class CORE_EXPORT ClassicPendingScript final
   ClassicPendingScript(ScriptElementBase*,
                        const TextPosition&,
                        bool is_external,
-                       const ScriptFetchOptions&);
+                       const ClassicScriptFetchRequest&);
   ClassicPendingScript() = delete;
 
   // Advances the current state of the script, reporting to the client if
@@ -113,7 +113,7 @@ class CORE_EXPORT ClassicPendingScript final
   // MemoryCoordinatorClient
   void OnPurgeMemory() override;
 
-  const ScriptFetchOptions options_;
+  const ClassicScriptFetchRequest request_;
 
   const bool is_external_;
   ReadyState ready_state_;
