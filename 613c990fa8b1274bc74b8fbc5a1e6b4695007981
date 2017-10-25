@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ea2e9713_10c8d117",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-25T15:43:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2209e5b7_1976373b",
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "702acf3b_bc8dfffa",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 9
@@ -48,6 +66,30 @@
       "writtenOn": "2017-10-09T17:16:32Z",
       "side": 1,
       "message": "As discussed, use an explicit delegate for this.",
+      "range": {
+        "startLine": 1347,
+        "startChar": 5,
+        "endLine": 1347,
+        "endChar": 13
+      },
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9835c23_8ca0781d",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-25T15:43:33Z",
+      "side": 1,
+      "message": "In another CL, we moved these methods to the BVC, which means there is no need for a delegate.",
+      "parentUuid": "702acf3b_bc8dfffa",
       "range": {
         "startLine": 1347,
         "startChar": 5,
@@ -130,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "62b7f940_f346003b",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-25T15:43:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32d3e707_3b9a8536",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2653732a_6b3a45f6",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
         "patchSetId": 9
@@ -189,6 +255,30 @@
       "side": 1,
       "message": "Don\u0027t make command methods optional; just get rid of showAccountSettings and always pass the presenting view controller. The implementation below will just ignore it.",
       "parentUuid": "902bbb95_8fee9647",
+      "range": {
+        "startLine": 505,
+        "startChar": 0,
+        "endLine": 505,
+        "endChar": 74
+      },
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2049d828_a7ab87f2",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-25T15:43:33Z",
+      "side": 1,
+      "message": "Now we have one method.",
+      "parentUuid": "e12db4b1_d3b33088",
       "range": {
         "startLine": 505,
         "startChar": 0,
