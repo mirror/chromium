@@ -22,6 +22,30 @@
       "revId": "8aeb5f4d533bae9f10f044c1f3d05f73dfcc6446",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22fc190d_9f6e56b9",
+        "filename": "components/offline_items_collection/core/throttled_offline_content_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-25T19:00:28Z",
+      "side": 1,
+      "message": "Yeah I think that makes sense?  We just want to update the list with the most recent entry we\u0027ve seen from the backend.",
+      "parentUuid": "6b59d6e9_b3ed877c",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 43
+      },
+      "revId": "8aeb5f4d533bae9f10f044c1f3d05f73dfcc6446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
