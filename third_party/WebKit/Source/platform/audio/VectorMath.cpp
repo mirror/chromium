@@ -676,8 +676,29 @@ void Vclip(const float* source_p,
   float low_threshold = *low_threshold_p;
   float high_threshold = *high_threshold_p;
 
-// FIXME: Optimize for SSE2.
-#if WTF_CPU_ARM_NEON
+#if defined(ARCH_CPU_X86_FAMILY)
+  if (source_stride == 1 && dest_stride == 1) {
+    size_t i = 0u;
+
+    // If the source_p address is not 16-byte aligned, the first several
+    // frames  (at most three) should be processed separately.
+    for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
+      dest_p[i] = clampTo(source_p[i], low_threshold, high_threshold);
+
+    // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
+    size_t sse_frames_to_process =
+        (frames_to_process - i) & SSE::kFramesToProcessMask;
+    if (sse_frames_to_process > 0u) {
+      SSE::Vclip(source_p + i, low_threshold_p, high_threshold_p, dest_p + i,
+                 sse_frames_to_process);
+      i += sse_frames_to_process;
+    }
+
+    source_p += i;
+    dest_p += i;
+    n -= i;
+  }
+#elif WTF_CPU_ARM_NEON
   if ((source_stride == 1) && (dest_stride == 1)) {
     int tail_frames = n % 4;
     const float* end_p = dest_p + n - tail_frames;
