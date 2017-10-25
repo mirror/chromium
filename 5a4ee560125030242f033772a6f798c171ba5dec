@@ -70,6 +70,24 @@
       "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a1eccc_09b27cec",
+        "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-25T17:37:23Z",
+      "side": 1,
+      "message": "Thanks, that looks right for mobile_setup_portal.js.  To confirm, is it also true for portalFrame in mobile_setup.js?\n\nIf so, let\u0027s document more clearly in the code and the CL description that the webviews do not ever navigate between web and extension URLs.  IIUC, carrierPage is always web and data: URLs, and portalFrame is always extension URLs.\n\nThat would resolve one of my questions for lfg@, which would be great.",
+      "parentUuid": "ede86b39_cb4b86b8",
+      "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
