@@ -16,6 +16,24 @@
       "revId": "f249f171cff0311f59044e470e2ddab9f3bf2ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa23686_fac0706a",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-25T16:26:56Z",
+      "side": 1,
+      "message": "When the handle is not optional, mojo will validate it and fail on invalid handle. Since ours is optional, I added a check here in case upwrap fails. As you said, for the uninitialized handle with mojo::kInvalidHandleValue, it will fail on Map().",
+      "parentUuid": "e1625d0d_9059f8f2",
+      "revId": "f249f171cff0311f59044e470e2ddab9f3bf2ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

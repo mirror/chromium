@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "579263e9_24523713",
+        "filename": "chrome/browser/printing/print_preview_dialog_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-25T16:26:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2282983a_7a9d5be7",
+      "range": {
+        "startLine": 380,
+        "startChar": 48,
+        "endLine": 380,
+        "endChar": 52
+      },
+      "revId": "e804486df1708680b15e3039943d03a41515ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d1871a_1ab3ba75",
         "filename": "chrome/browser/printing/printing_init.cc",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b319e9c0_a7de1c8e",
+        "filename": "chrome/browser/printing/printing_init.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-25T16:26:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d1871a_1ab3ba75",
+      "range": {
+        "startLine": 27,
+        "startChar": 46,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "e804486df1708680b15e3039943d03a41515ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41c7eae5_a67be184",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 13
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "ec4496e0_226f1ce5",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-25T16:26:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41c7eae5_a67be184",
+      "revId": "e804486df1708680b15e3039943d03a41515ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d65fbbd7_a5730fbf",
         "filename": "components/printing/browser/print_manager_utils.cc",
         "patchSetId": 13
@@ -76,6 +142,24 @@
       "writtenOn": "2017-10-24T23:38:13Z",
       "side": 1,
       "message": "I\u0027m not entirely sure I understand this logic: even without these conditions being true, we can have out-of-process iframes.",
+      "revId": "e804486df1708680b15e3039943d03a41515ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33e9f41_052db971",
+        "filename": "components/printing/browser/print_manager_utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-25T16:26:56Z",
+      "side": 1,
+      "message": "This is just for feature test so we can easily enable it thru flags. In the future, we will remove the feature test and use the service for all requests.",
+      "parentUuid": "d65fbbd7_a5730fbf",
       "revId": "e804486df1708680b15e3039943d03a41515ef62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
