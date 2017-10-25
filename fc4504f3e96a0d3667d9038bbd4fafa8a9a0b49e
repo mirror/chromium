@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46cb9811_6c05806b",
+        "filename": "base/stl_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-25T20:09:13Z",
+      "side": 1,
+      "message": "please be more precise about what this is comparing to than \"the STL\" please so ppl can go look it up if they want, i think this means std::set_intersection?",
+      "revId": "fc4504f3e96a0d3667d9038bbd4fafa8a9a0b49e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
