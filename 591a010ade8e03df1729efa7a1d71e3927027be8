@@ -142,6 +142,30 @@
       "revId": "591a010ade8e03df1729efa7a1d71e3927027be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad25e40b_5bab71f3",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-25T19:42:28Z",
+      "side": 1,
+      "message": "I tried to write a better version and eventually decided that what you have now is probably the best way to do it.",
+      "parentUuid": "fa75926a_7f3e3024",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 49
+      },
+      "revId": "591a010ade8e03df1729efa7a1d71e3927027be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
