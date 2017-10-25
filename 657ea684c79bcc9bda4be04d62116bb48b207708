@@ -118,6 +118,29 @@
       "revId": "657ea684c79bcc9bda4be04d62116bb48b207708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2688f90_dee108b8",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-25T20:51:14Z",
+      "side": 1,
+      "message": "This if-test doesn\u0027t match the comment, and will cause this path to be taken even for 8-bit back buffers. Should this instead test \"if (use_half_float_storage_)\"?",
+      "range": {
+        "startLine": 689,
+        "startChar": 8,
+        "endLine": 689,
+        "endChar": 30
+      },
+      "revId": "657ea684c79bcc9bda4be04d62116bb48b207708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
