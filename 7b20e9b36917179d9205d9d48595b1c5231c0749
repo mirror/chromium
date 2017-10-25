@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d7983708_fd5c92af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-25T22:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "326fff8d_9737ffc3",
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91296d5b_cd87f366",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 2
@@ -80,6 +98,30 @@
       "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88a2c83_532d2cc5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-25T22:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6e6ce1f_15881e57",
+      "range": {
+        "startLine": 317,
+        "startChar": 12,
+        "endLine": 317,
+        "endChar": 33
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +243,30 @@
     },
     {
       "key": {
+        "uuid": "a74d90e9_58aa20bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-25T22:04:09Z",
+      "side": 1,
+      "message": "Renamed to apkPackageName which does have a meaning for both WebAPKs and TWAs. So makes more sense.",
+      "parentUuid": "bf692cee_a31f1b16",
+      "range": {
+        "startLine": 505,
+        "startChar": 18,
+        "endLine": 505,
+        "endChar": 38
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f9587d3_18d14374",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 2
@@ -221,6 +287,30 @@
       "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e7136fc_62d448d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-25T22:04:09Z",
+      "side": 1,
+      "message": "Went with Piotr\u0027s suggestion and removed the helper completely.",
+      "parentUuid": "4f9587d3_18d14374",
+      "range": {
+        "startLine": 670,
+        "startChar": 4,
+        "endLine": 674,
+        "endChar": 0
+      },
+      "revId": "7b20e9b36917179d9205d9d48595b1c5231c0749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

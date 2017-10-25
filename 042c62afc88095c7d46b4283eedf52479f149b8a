@@ -22,6 +22,30 @@
       "revId": "042c62afc88095c7d46b4283eedf52479f149b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c100c8_9aa5fbbc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-25T22:04:09Z",
+      "side": 0,
+      "message": "For this I went with Piotr\u0027s suggestion and moved it to the manager.",
+      "parentUuid": "bb95015d_cab2b5d7",
+      "range": {
+        "startLine": 283,
+        "startChar": 2,
+        "endLine": 295,
+        "endChar": 0
+      },
+      "revId": "042c62afc88095c7d46b4283eedf52479f149b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
