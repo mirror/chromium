@@ -72,6 +72,9 @@ size_t ServiceWorkerFetchRequest::EstimatedStructSize() {
     size += key_and_value.second.size();
   }
 
+  for (const auto& str : body)
+    size += str.size();
+
   return size;
 }
 

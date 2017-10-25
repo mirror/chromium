@@ -12,6 +12,7 @@
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLRequest.h"
+#include "public/platform/WebVector.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 
 #if INSIDE_BLINK
@@ -58,6 +59,9 @@ class BLINK_PLATFORM_EXPORT WebServiceWorkerRequest {
   void AppendHeader(const WebString& key, const WebString& value);
 
   void VisitHTTPHeaderFields(WebHTTPHeaderVisitor*) const;
+
+  void SetBody(const WebVector<WebString>& body);
+  const WebVector<WebString>& Body() const;
 
   void SetBlob(const WebString& uuid,
                long long size,
