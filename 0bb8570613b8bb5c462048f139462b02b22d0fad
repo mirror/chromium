@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0279ea3d_7bdfa6f5",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T19:05:14Z",
+      "side": 1,
+      "message": "The Mojo handles are move-only objects and close the underlying pipe when destroyed. Letting a request go out of scope like this is the standard way of reporting a failure initialize an implementation of an interface.",
+      "parentUuid": "5f0e9ad9_3066cea0",
+      "revId": "0bb8570613b8bb5c462048f139462b02b22d0fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78fe32b5_3f3e2e56",
         "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
         "patchSetId": 19
