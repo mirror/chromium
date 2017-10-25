@@ -6,7 +6,6 @@
 #define UI_MESSAGE_CENTER_PUBLIC_CPP_MESSAGE_CENTER_CONSTANTS_H_
 
 #include <stddef.h>
-
 #include "build/build_config.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/color_palette.h"
@@ -127,9 +126,12 @@ const int kContextMessageLineLimit = 1;
 
 // Around notifications ////////////////////////////////////////////////////////
 
-// DIP dimensions (H = horizontal, V = vertical).
-const int kMarginBetweenItems = 10;  // H & V space around & between
-                                     // notifications.
+constexpr int kNotificationShadowElevation = 2;
+
+// Horizontal & vertical space around & between notifications.
+constexpr int kMarginBetweenItems = 8;
+constexpr int kMarginBetweenItemsWithShadow =
+    kMarginBetweenItems + kNotificationShadowElevation;
 
 // Shadow in the tray.
 const SkColor kShadowColor = SkColorSetARGB(0.3 * 255, 0, 0, 0);

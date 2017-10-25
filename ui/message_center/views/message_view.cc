@@ -101,8 +101,8 @@ void MessageView::SetIsNested() {
   SetBorder(views::CreateRoundedRectBorder(kBorderThickness,
                                            kBorderCorderRadius, kBorderColor));
 #else
-  const auto& shadow =
-      gfx::ShadowDetails::Get(kShadowElevation, kShadowCornerRadius);
+  const auto& shadow = gfx::ShadowDetails::Get(kNotificationShadowElevation,
+                                               kShadowCornerRadius);
   gfx::Insets ninebox_insets = gfx::ShadowValue::GetBlurRegion(shadow.values) +
                                gfx::Insets(kShadowCornerRadius);
   SetBorder(views::CreateBorderPainter(

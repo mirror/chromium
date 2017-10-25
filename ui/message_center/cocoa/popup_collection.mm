@@ -167,8 +167,9 @@ class PopupCollectionObserver : public message_center::MessageCenterObserver {
   NSRect screenFrame = [self screenFrame];
   NSRect popupFrame = [popup bounds];
 
-  CGFloat x = NSMaxX(screenFrame) - message_center::kMarginBetweenItems -
-      NSWidth(popupFrame);
+  CGFloat x = NSMaxX(screenFrame) -
+              message_center::kMarginBetweenItemsWithShadow -
+              NSWidth(popupFrame);
   CGFloat y = 0;
 
   MCPopupController* bottomPopup = [popups_ lastObject];
@@ -178,7 +179,7 @@ class PopupCollectionObserver : public message_center::MessageCenterObserver {
     y = NSMinY([bottomPopup bounds]);
   }
 
-  y -= message_center::kMarginBetweenItems + NSHeight(popupFrame);
+  y -= message_center::kMarginBetweenItemsWithShadow + NSHeight(popupFrame);
 
   if (y > NSMinY(screenFrame)) {
     animatingNotificationIDs_.insert(notification->id());
@@ -264,8 +265,8 @@ class PopupCollectionObserver : public message_center::MessageCenterObserver {
     MCPopupController* popup = [popups_ objectAtIndex:i];
     NSRect oldFrame = [popup bounds];
     NSRect frame = oldFrame;
-    frame.origin.y = maxY - message_center::kMarginBetweenItems -
-                     NSHeight(frame);
+    frame.origin.y =
+        maxY - message_center::kMarginBetweenItemsWithShadow - NSHeight(frame);
 
     // If this popup does not fit on screen, stop repositioning and close this
     // and subsequent popups.

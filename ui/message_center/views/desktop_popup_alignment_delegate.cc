@@ -35,14 +35,14 @@ void DesktopPopupAlignmentDelegate::StartObserving(display::Screen* screen) {
 int DesktopPopupAlignmentDelegate::GetToastOriginX(
     const gfx::Rect& toast_bounds) const {
   if (IsFromLeft())
-    return work_area_.x() + kMarginBetweenItems;
-  return work_area_.right() - kMarginBetweenItems - toast_bounds.width();
+    return work_area_.x() + kMarginBetweenItemsWithShadow;
+  return work_area_.right() - kMarginBetweenItemsWithShadow -
+         toast_bounds.width();
 }
 
 int DesktopPopupAlignmentDelegate::GetBaseLine() const {
-  return IsTopDown()
-      ? work_area_.y() + kMarginBetweenItems
-      : work_area_.bottom() - kMarginBetweenItems;
+  return IsTopDown() ? work_area_.y() + kMarginBetweenItemsWithShadow
+                     : work_area_.bottom() - kMarginBetweenItemsWithShadow;
 }
 
 gfx::Rect DesktopPopupAlignmentDelegate::GetWorkArea() const {
