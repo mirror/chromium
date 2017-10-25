@@ -111,6 +111,7 @@ interface VRPresentationProvider {
   GetVSync() => (VRPose? pose, mojo.common.mojom.TimeDelta time, int16 frame_id,
                  VSyncStatus status);
   SubmitFrame(int16 frame_id, gpu.mojom.MailboxHolder mailbox_holder);
+  SubmitFrameWithMemoryBuffer(handle texture, int16 frameId);
   UpdateLayerBounds(int16 frame_id, gfx.mojom.RectF left_bounds,
                     gfx.mojom.RectF right_bounds, gfx.mojom.Size source_size);
 };

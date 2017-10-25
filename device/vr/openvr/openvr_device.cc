@@ -2,19 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#define _USE_MATH_DEFINES  // for M_PI
-
-#include <math.h>
-
-#include "base/memory/ptr_util.h"
 #include "device/vr/openvr/openvr_device.h"
+#include <math.h>
+#include "base/memory/ptr_util.h"
+#include "base/numerics/math_constants.h"
+#include "build/build_config.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #include "third_party/openvr/src/headers/openvr.h"
+
+#if defined(OS_WIN)
+#include "device/vr/windows/d3d11_texture_helper.h"
+#endif
 
 namespace device {
 
 namespace {
 
-constexpr float kRadToDeg = static_cast<float>(180 / M_PI);
+constexpr float kRadToDeg = static_cast<float>(180 / base::kPiFloat);
 constexpr float kDefaultIPD = 0.06f;  // Default average IPD
 
 mojom::VRFieldOfViewPtr OpenVRFovToWebVRFov(vr::IVRSystem* vr_system,
@@ -87,7 +91,7 @@ mojom::VRDisplayInfoPtr CreateVRDisplayInfo(vr::IVRSystem* vr_system,
   display_info->capabilities = mojom::VRDisplayCapabilities::New();
   display_info->capabilities->hasPosition = true;
   display_info->capabilities->hasExternalDisplay = true;
-  display_info->capabilities->canPresent = false;
+  display_info->capabilities->canPresent = true;
 
   display_info->leftEye = mojom::VREyeParameters::New();
   display_info->rightEye = mojom::VREyeParameters::New();
@@ -95,7 +99,7 @@ mojom::VRDisplayInfoPtr CreateVRDisplayInfo(vr::IVRSystem* vr_system,
   mojom::VREyeParametersPtr& right_eye = display_info->rightEye;
 
   left_eye->fieldOfView = OpenVRFovToWebVRFov(vr_system, vr::Eye_Left);
-  right_eye->fieldOfView = OpenVRFovToWebVRFov(vr_system, vr::Eye_Left);
+  right_eye->fieldOfView = OpenVRFovToWebVRFov(vr_system, vr::Eye_Right);
 
   vr::TrackedPropertyError error = vr::TrackedProp_Success;
   float ipd = vr_system->GetFloatTrackedDeviceProperty(
@@ -138,73 +142,135 @@ mojom::VRDisplayInfoPtr CreateVRDisplayInfo(vr::IVRSystem* vr_system,
   return display_info;
 }
 
-class OpenVRRenderLoop : public base::SimpleThread,
-                         mojom::VRPresentationProvider {
+class OpenVRRenderLoop : public base::Thread, mojom::VRPresentationProvider {
  public:
   OpenVRRenderLoop(vr::IVRSystem* vr);
 
   void RegisterPollingEventCallback(
       const base::Callback<void()>& on_polling_events);
-
   void UnregisterPollingEventCallback();
+  void Bind(mojom::VRPresentationProviderRequest request);
+  mojom::VRPosePtr GetPose(bool presenting);
+  void RequestPresent(mojom::VRPresentationProviderRequest request,
+                      base::Callback<void(bool)> callback);
+  void ExitPresent();
+  base::WeakPtr<OpenVRRenderLoop> GetWeakPtr();
 
-  void Bind(mojom::VRPresentationProvider request);
-
-  mojom::VRPosePtr GetPose();
-
- private:
-  void Run() override;
-
-  void GetVSync(
-      mojom::VRPresentationProvider::GetVSyncCallback callback) override;
+  // VRPresentationProvider overrides:
   void SubmitFrame(int16_t frame_index,
                    const gpu::MailboxHolder& mailbox) override;
+  void SubmitFrameWithMemoryBuffer(mojo::ScopedHandle texture_handle,
+                                   int16_t frame_index) override;
   void UpdateLayerBounds(int16_t frame_id,
                          const gfx::RectF& left_bounds,
                          const gfx::RectF& right_bounds,
                          const gfx::Size& source_size) override;
+  void GetVSync(GetVSyncCallback callback) override;
 
+ private:
+  void Initialize();
+
+#if defined(OS_WIN)
+  D3D11TextureHelper texture_helper_;
+#endif
+
+  int16_t next_frame_id_ = 0;
+  bool is_presenting_ = false;
+  gfx::RectF left_bounds_;
+  gfx::RectF right_bounds_;
+  gfx::Size source_size_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   base::Callback<void()> on_polling_events_;
   vr::IVRSystem* vr_system_;
+  vr::IVRCompositor* vr_compositor_;
   mojo::Binding<mojom::VRPresentationProvider> binding_;
+  base::WeakPtrFactory<OpenVRRenderLoop> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(OpenVRRenderLoop);
 };
 
-}  // namespace
-
-OpenVRDevice::OpenVRDevice(vr::IVRSystem* vr)
-    : vr_system_(vr), weak_ptr_factory_(this), is_polling_events_(false) {
-  DCHECK(vr_system_);
-  SetVRDisplayInfo(CreateVRDisplayInfo(vr_system_, GetId()));
-  render_loop_ = std::make_unique<OpenVRRenderLoop>(vr_system_);
-  render_loop_->RegisterPollingEventCallback(base::Bind(
-      &OpenVRDevice::OnPollingEvents, weak_ptr_factory_.GetWeakPtr()));
-}
-OpenVRDevice::~OpenVRDevice() {}
-
-mojom::VRDisplayInfoPtr OpenVRDevice::GetVRDisplayInfo() {
-  return display_info_.Clone();
-}
-
 OpenVRRenderLoop::OpenVRRenderLoop(vr::IVRSystem* vr_system)
-    : vr_system_(vr_system),
+    : base::Thread("OpenVRRenderLoop"),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      vr_system_(vr_system),
       binding_(this),
-      base::SimpleThread("OpenVRRenderLoop") {
+      weak_ptr_factory_(this) {
   DCHECK(main_thread_task_runner_);
+  Initialize();
 }
 
-void OpenVRRenderLoop::Bind(mojom::VRPresentationProvider request) {
+void OpenVRRenderLoop::Bind(mojom::VRPresentationProviderRequest request) {
+  binding_.Close();
   binding_.Bind(std::move(request));
 }
 
-void OpenVRRenderLoop::Run() {
-  // TODO (BillOrr): We will wait for VSyncs on this thread using WaitGetPoses
-  // when we support presentation.
+void OpenVRRenderLoop::SubmitFrame(int16_t frame_index,
+                                   const gpu::MailboxHolder& mailbox) {
+  NOTREACHED();
 }
 
-mojom::VRPosePtr OpenVRRenderLoop::GetPose() {
-  mojom::VRPosePtr pose = mojom::VRPose::New();
+void OpenVRRenderLoop::SubmitFrameWithMemoryBuffer(
+    mojo::ScopedHandle texture_handle,
+    int16_t frame_index) {
+  TRACE_EVENT1("gpu", "SubmitFrameWithMemoryBuffer", "frameIndex", frame_index);
+
+#if defined(OS_WIN)
+  texture_helper_.SetSourceTexture(std::move(texture_handle));
+  texture_helper_.AllocateBackBuffer();
+  texture_helper_.CopyTextureToBackBuffer(true);
+
+  vr::Texture_t texture;
+  texture.handle = texture_helper_.GetBackbuffer().Get();
+  texture.eType = vr::TextureType_DirectX;
+  texture.eColorSpace = vr::ColorSpace_Auto;
+
+  vr::VRTextureBounds_t bounds[2];
+  bounds[0] = {left_bounds_.x(), left_bounds_.y(),
+               left_bounds_.width() + left_bounds_.x(),
+               left_bounds_.height() + left_bounds_.y()};
+  bounds[1] = {right_bounds_.x(), right_bounds_.y(),
+               right_bounds_.width() + right_bounds_.x(),
+               right_bounds_.height() + right_bounds_.y()};
+
+  vr::EVRCompositorError error =
+      vr_compositor_->Submit(vr::EVREye::Eye_Left, &texture, &bounds[0]);
+  if (error != vr::VRCompositorError_None) {
+    ExitPresent();
+    return;
+  }
+  error = vr_compositor_->Submit(vr::EVREye::Eye_Right, &texture, &bounds[1]);
+  if (error != vr::VRCompositorError_None)
+    ExitPresent();
+#endif
+}
+
+void OpenVRRenderLoop::UpdateLayerBounds(int16_t frame_id,
+                                         const gfx::RectF& left_bounds,
+                                         const gfx::RectF& right_bounds,
+                                         const gfx::Size& source_size) {
+  left_bounds_ = left_bounds;
+  right_bounds_ = right_bounds;
+  source_size_ = source_size;
+};
+
+void OpenVRRenderLoop::RequestPresent(
+    mojom::VRPresentationProviderRequest request,
+    base::Callback<void(bool)> callback) {
+  Bind(std::move(request));
+  main_thread_task_runner_->PostTask(FROM_HERE, base::Bind(callback, true));
+  is_presenting_ = true;
+  vr_compositor_->SuspendRendering(false);
+}
+
+void OpenVRRenderLoop::ExitPresent() {
+  is_presenting_ = false;
+  vr_compositor_->ClearLastSubmittedFrame();
+  vr_compositor_->SuspendRendering(true);
+}
+
+mojom::VRPosePtr OpenVRRenderLoop::GetPose(bool presenting) {
+  TRACE_EVENT1("gpu", "getPose", "isPresenting", presenting);
+  device::mojom::VRPosePtr pose = device::mojom::VRPose::New();
   pose->orientation.emplace(4);
 
   pose->orientation.value()[0] = 0;
@@ -217,15 +283,24 @@ mojom::VRPosePtr OpenVRRenderLoop::GetPose() {
   pose->position.value()[1] = 0;
   pose->position.value()[2] = 0;
 
-  vr::TrackedDevicePose_t poses[vr::k_unMaxTrackedDeviceCount];
+  vr::TrackedDevicePose_t rendering_poses[vr::k_unMaxTrackedDeviceCount];
+  vr::TrackedDevicePose_t unused_poses[vr::k_unMaxTrackedDeviceCount];
 
-  vr_system_->GetDeviceToAbsoluteTrackingPose(
-      vr::TrackingUniverseSeated, 0.0f, poses, vr::k_unMaxTrackedDeviceCount);
-  const auto& hmdPose = poses[vr::k_unTrackedDeviceIndex_Hmd];
+  if (presenting) {
+    TRACE_EVENT0("gpu", "WaitGetPoses");
+    vr_compositor_->WaitGetPoses(rendering_poses, vr::k_unMaxTrackedDeviceCount,
+                                 unused_poses, vr::k_unMaxTrackedDeviceCount);
+  } else {
+    vr_system_->GetDeviceToAbsoluteTrackingPose(vr::TrackingUniverseSeated,
+                                                0.0f, rendering_poses,
+                                                vr::k_unMaxTrackedDeviceCount);
+  }
+
+  const auto& hmdPose = rendering_poses[vr::k_unTrackedDeviceIndex_Hmd];
   if (hmdPose.bPoseIsValid && hmdPose.bDeviceIsConnected) {
-    const auto& transform = hmdPose.mDeviceToAbsoluteTracking;
-    const auto& m = transform.m;
-    float w = sqrt(1 + m[0][0] + m[1][1] + m[2][2]);
+    const float(&m)[3][4] = hmdPose.mDeviceToAbsoluteTracking.m;
+
+    float w = sqrt(1 + m[0][0] + m[1][1] + m[2][2]) / 2;
     pose->orientation.value()[0] = (m[2][1] - m[1][2]) / (4 * w);
     pose->orientation.value()[1] = (m[0][2] - m[2][0]) / (4 * w);
     pose->orientation.value()[2] = (m[1][0] - m[0][1]) / (4 * w);
@@ -239,7 +314,75 @@ mojom::VRPosePtr OpenVRRenderLoop::GetPose() {
     pose->angularVelocity = HmdVector3ToWebVR(hmdPose.vAngularVelocity);
   }
 
-  return std::move(pose);
+  return pose;
+}
+
+void OpenVRRenderLoop::Initialize() {
+  vr::EVRInitError error;
+  vr_compositor_ = reinterpret_cast<vr::IVRCompositor*>(
+      vr::VR_GetGenericInterface(vr::IVRCompositor_Version, &error));
+  if (error != vr::VRInitError_None) {
+    DLOG(ERROR) << "Failed to initialize compositor: "
+                << vr::VR_GetVRInitErrorAsEnglishDescription(error);
+    return;
+  }
+
+  vr_compositor_->SuspendRendering(true);
+  vr_compositor_->SetTrackingSpace(
+      vr::ETrackingUniverseOrigin::TrackingUniverseSeated);
+
+  Start();
+}
+
+base::WeakPtr<OpenVRRenderLoop> OpenVRRenderLoop::GetWeakPtr() {
+  return weak_ptr_factory_.GetWeakPtr();
+}
+
+}  // namespace
+
+OpenVRDevice::OpenVRDevice(vr::IVRSystem* vr)
+    : vr_system_(vr), is_polling_events_(false), weak_ptr_factory_(this) {
+  DCHECK(vr_system_);
+  SetVRDisplayInfo(CreateVRDisplayInfo(vr_system_, GetId()));
+
+  render_loop_ = std::make_unique<OpenVRRenderLoop>(vr_system_);
+  render_loop_->RegisterPollingEventCallback(base::Bind(
+      &OpenVRDevice::OnPollingEvents, weak_ptr_factory_.GetWeakPtr()));
+}
+OpenVRDevice::~OpenVRDevice() {}
+
+void OpenVRDevice::RequestPresent(
+    VRDisplayImpl* display,
+    mojom::VRSubmitFrameClientPtr submit_client,
+    mojom::VRPresentationProviderRequest request,
+    mojom::VRDisplayHost::RequestPresentCallback callback) {
+  // Gets us back on this thread to call the callback
+  base::Callback<void(bool)> my_callback =
+      base::Bind(&OpenVRDevice::OnRequestPresentResult,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback));
+
+  // bind to OpenVRRenderLoop
+  render_loop_->task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&OpenVRRenderLoop::RequestPresent, render_loop_->GetWeakPtr(),
+                 base::Passed(&request), base::Passed(&my_callback)));
+}
+
+void OpenVRDevice::OnRequestPresentResult(
+    mojom::VRDisplayHost::RequestPresentCallback callback,
+    bool result) {
+  std::move(callback).Run(result);
+}
+
+void OpenVRDevice::ExitPresent() {
+  render_loop_->task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&OpenVRRenderLoop::ExitPresent, render_loop_->GetWeakPtr()));
+}
+
+void OpenVRDevice::GetPose(
+    mojom::VRMagicWindowProvider::GetPoseCallback callback) {
+  std::move(callback).Run(render_loop_->GetPose(false));
 }
 
 // Only deal with events that will cause displayInfo changes for now.
@@ -294,36 +437,25 @@ void OpenVRRenderLoop::UnregisterPollingEventCallback() {
 
 void OpenVRRenderLoop::GetVSync(
     mojom::VRPresentationProvider::GetVSyncCallback callback) {
-  static int16_t next_frame = 0;
-  int16_t frame = next_frame++;
+  int16_t frame = next_frame_id_++;
+  DCHECK(is_presenting_);
 
   // VSync could be used as a signal to poll events.
   if (!on_polling_events_.is_null()) {
     main_thread_task_runner_->PostTask(FROM_HERE, on_polling_events_);
   }
 
-  // TODO(BillOrr): Give real values when VSync loop is hooked up.  This is the
-  // presentation time for the frame. Just returning a default value for now
-  // since we don't have VSync hooked up.
-  base::TimeDelta time = base::TimeDelta::FromSecondsD(2.0);
+  vr::Compositor_FrameTiming timing;
+  timing.m_nSize = sizeof(vr::Compositor_FrameTiming);
+  bool valid_time = vr_compositor_->GetFrameTiming(&timing);
+  base::TimeDelta time =
+      valid_time ? base::TimeDelta::FromSecondsD(timing.m_flSystemTimeInSeconds)
+                 : base::TimeDelta();
 
-  mojom::VRPosePtr pose = GetPose();
-  Sleep(11);  // TODO (billorr): Use real vsync timing instead of a sleep (this
-              // sleep just throttles vsyncs so we don't fill message queues).
-  std::move(callback).Run(std::move(pose), time, frame,
-                          mojom::VRPresentationProvider::VSyncStatus::SUCCESS);
-}
-
-void OpenVRRenderLoop::SubmitFrame(int16_t frame_index,
-                                   const gpu::MailboxHolder& mailbox) {
-  // We don't support presentation currently, so don't do anything.
-}
-
-void OpenVRRenderLoop::UpdateLayerBounds(int16_t frame_id,
-                                         const gfx::RectF& left_bounds,
-                                         const gfx::RectF& right_bounds,
-                                         const gfx::Size& source_size) {
-  // We don't support presentation currently, so don't do anything.
+  device::mojom::VRPosePtr pose = GetPose(is_presenting_);
+  std::move(callback).Run(
+      std::move(pose), time, frame,
+      device::mojom::VRPresentationProvider::VSyncStatus::SUCCESS);
 }
 
 }  // namespace device

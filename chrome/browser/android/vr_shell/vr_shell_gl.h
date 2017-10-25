@@ -184,6 +184,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   void GetVSync(GetVSyncCallback callback) override;
   void SubmitFrame(int16_t frame_index,
                    const gpu::MailboxHolder& mailbox) override;
+  void SubmitFrameWithMemoryBuffer(mojo::ScopedHandle texture_handle,
+                                   int16_t frame_index) override;
   void UpdateLayerBounds(int16_t frame_index,
                          const gfx::RectF& left_bounds,
                          const gfx::RectF& right_bounds,

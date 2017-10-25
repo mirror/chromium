@@ -365,6 +365,9 @@ void VrShellGl::SubmitFrame(int16_t frame_index,
   }
 }
 
+void VrShellGl::SubmitFrameWithMemoryBuffer(mojo::ScopedHandle texture_handle,
+                                            int16_t frame_index) {}
+
 void VrShellGl::ConnectPresentingService(
     device::mojom::VRSubmitFrameClientPtrInfo submit_client_info,
     device::mojom::VRPresentationProviderRequest request,
