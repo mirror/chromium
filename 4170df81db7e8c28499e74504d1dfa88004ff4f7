@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f100aee9_de6f5031",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fca3858_2248b8ab",
+      "range": {
+        "startLine": 49,
+        "startChar": 26,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1ed8156_df6c2516",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2966bdae_54cc2ec4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1ed8156_df6c2516",
+      "range": {
+        "startLine": 81,
+        "startChar": 30,
+        "endLine": 81,
+        "endChar": 68
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0338fa91_b4c19b88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "884b0716_acbe254d",
+      "range": {
+        "startLine": 208,
+        "startChar": 27,
+        "endLine": 208,
+        "endChar": 32
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21ce60c9_f8659073",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2c5f9047_817c7aca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21ce60c9_f8659073",
+      "range": {
+        "startLine": 223,
+        "startChar": 36,
+        "endLine": 223,
+        "endChar": 53
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c965526b_2505cab2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-24T22:46:20Z",
       "side": 1,
       "message": "I\u0027m surprised I don\u0027t see this anywhere in the old code, so I\u0027m wondering how you knew to add it.  Did you notice something was not working correctly and add this?",
+      "range": {
+        "startLine": 247,
+        "startChar": 32,
+        "endLine": 247,
+        "endChar": 44
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614e6f1a_ec7f0987",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "Kinda. I added this because I wanted to trigger the bubble after the panel was peeked, but I couldn\u0027t find the right event for that in the CSManager.",
+      "parentUuid": "c965526b_2505cab2",
       "range": {
         "startLine": 247,
         "startChar": 32,
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "15f3580d_4a43cc54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagementDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a3d3fc4_c6a048d6",
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00406c48_3e1caaca",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 2
@@ -154,6 +292,30 @@
       "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5a204c_159d428e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00406c48_3e1caaca",
+      "range": {
+        "startLine": 380,
+        "startChar": 45,
+        "endLine": 380,
+        "endChar": 52
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "3fe73882_5194ca3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a38753c_d02b050e",
+      "range": {
+        "startLine": 386,
+        "startChar": 12,
+        "endLine": 386,
+        "endChar": 24
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a019a613_ca907e81",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 2
@@ -200,6 +386,30 @@
       "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5b7fde_24970b1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a019a613_ca907e81",
+      "range": {
+        "startLine": 527,
+        "startChar": 0,
+        "endLine": 527,
+        "endChar": 13
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "0a8c0684_845e017b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce0992c3_47ced37c",
+      "range": {
+        "startLine": 548,
+        "startChar": 17,
+        "endLine": 548,
+        "endChar": 46
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e62c831b_096ee90e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 2
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "f3a56d6b_705dbb4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e62c831b_096ee90e",
+      "range": {
+        "startLine": 582,
+        "startChar": 17,
+        "endLine": 582,
+        "endChar": 29
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c96a18a3_785a0811",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 2
@@ -260,6 +518,30 @@
       "writtenOn": "2017-10-24T22:46:20Z",
       "side": 1,
       "message": "Where did this come from?",
+      "range": {
+        "startLine": 586,
+        "startChar": 33,
+        "endLine": 586,
+        "endChar": 35
+      },
+      "revId": "4170df81db7e8c28499e74504d1dfa88004ff4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95856d31_cc0470d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-25T01:58:28Z",
+      "side": 1,
+      "message": "I couldn\u0027t find a method in ContextualSearchPanel that returns the Y coordinate of the panel, instead of the Y coordinate of the panel + its shadow. If I use the U coordinate of the panel and its shadow, the bubble looks too far from the panel. I use this rather arbitrary offset to draw the panel a bit lower. It\u0027s a temporary workaround for my device and there\u0027s no guarantee the result will be the same on other devices.",
+      "parentUuid": "c96a18a3_785a0811",
       "range": {
         "startLine": 586,
         "startChar": 33,
