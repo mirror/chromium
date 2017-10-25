@@ -16,6 +16,24 @@
       "revId": "5772857512b037057ead0e1f496961d416f43a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624e1d12_dcc9e022",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-25T18:25:54Z",
+      "side": 1,
+      "message": "Sounds good. Done! Although I am not sure hiding the frame is would be the only reason for not getting a LayoutObject.",
+      "parentUuid": "cd4d7551_9607e565",
+      "revId": "5772857512b037057ead0e1f496961d416f43a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
