@@ -13,7 +13,6 @@
 #include "base/version.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/component_updater/component_patcher_operation_out_of_process.h"
 #include "chrome/browser/component_updater/component_updater_utils.h"
 #include "chrome/browser/google/google_brand.h"
 #include "chrome/browser/update_client/chrome_update_query_params_delegate.h"
@@ -24,6 +23,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/update_client/activity_data_service.h"
 #include "components/update_client/update_query_params.h"
+#include "content/public/common/service_manager_connection.h"
 
 #if defined(OS_WIN)
 #include "base/win/win_util.h"
@@ -50,14 +50,13 @@ class ChromeConfigurator : public update_client::Configurator {
   std::string GetProdId() const override;
   base::Version GetBrowserVersion() const override;
   std::string GetChannel() const override;
+  service_manager::Connector* GetServiceManagerConnector() const override;
   std::string GetBrand() const override;
   std::string GetLang() const override;
   std::string GetOSLongName() const override;
   std::string ExtraRequestParams() const override;
   std::string GetDownloadPreference() const override;
   net::URLRequestContextGetter* RequestContext() const override;
-  scoped_refptr<update_client::OutOfProcessPatcher> CreateOutOfProcessPatcher()
-      const override;
   bool EnabledDeltas() const override;
   bool EnabledComponentUpdates() const override;
   bool EnabledBackgroundDownloader() const override;
@@ -125,6 +124,11 @@ std::string ChromeConfigurator::GetChannel() const {
   return chrome::GetChannelString();
 }
 
+service_manager::Connector* ChromeConfigurator::GetServiceManagerConnector()
+    const {
+  return content::ServiceManagerConnection::GetForProcess()->GetConnector();
+}
+
 std::string ChromeConfigurator::GetBrand() const {
   std::string brand;
   google_brand::GetBrand(&brand);
@@ -157,11 +161,6 @@ std::string ChromeConfigurator::GetDownloadPreference() const {
 
 net::URLRequestContextGetter* ChromeConfigurator::RequestContext() const {
   return configurator_impl_.RequestContext();
-}
-
-scoped_refptr<update_client::OutOfProcessPatcher>
-ChromeConfigurator::CreateOutOfProcessPatcher() const {
-  return base::MakeRefCounted<ChromeOutOfProcessPatcher>();
 }
 
 bool ChromeConfigurator::EnabledDeltas() const {

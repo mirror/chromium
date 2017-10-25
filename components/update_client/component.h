@@ -24,7 +24,6 @@
 #include "components/update_client/update_client.h"
 #include "url/gurl.h"
 
-
 namespace update_client {
 
 class ActionRunner;
