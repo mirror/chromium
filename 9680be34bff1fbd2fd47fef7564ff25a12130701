@@ -22,6 +22,30 @@
       "revId": "9680be34bff1fbd2fd47fef7564ff25a12130701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ac29e5_e2247a97",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-25T18:00:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ae4739f_0d830539",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 28
+      },
+      "revId": "9680be34bff1fbd2fd47fef7564ff25a12130701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
