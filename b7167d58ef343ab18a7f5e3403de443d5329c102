@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6383aaba_16578dff",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-25T03:48:34Z",
+      "side": 1,
+      "message": "Ok at what point should this live in components/feature_engagement/test/mock_tracker.h/cc as a test_support target?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 2
+      },
+      "revId": "b7167d58ef343ab18a7f5e3403de443d5329c102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9c094f_abc6d0e3",
+        "filename": "components/feature_engagement/internal/tracker_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-25T03:48:34Z",
+      "side": 1,
+      "message": "Still needed?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "b7167d58ef343ab18a7f5e3403de443d5329c102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
