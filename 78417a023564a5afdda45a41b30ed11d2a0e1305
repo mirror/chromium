@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ebdbc23_9d939a59",
+        "filename": "chromeos/printing/ppd_line_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-10-25T18:09:44Z",
+      "side": 1,
+      "message": "can you please explain why we need a while(true) here? I have trouble understanding it.",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 18
+      },
+      "revId": "78417a023564a5afdda45a41b30ed11d2a0e1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f32c3f5_bc5bc1ac",
+        "filename": "chromeos/printing/ppd_line_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-10-25T18:09:44Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 18,
+        "startChar": 32,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "78417a023564a5afdda45a41b30ed11d2a0e1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
