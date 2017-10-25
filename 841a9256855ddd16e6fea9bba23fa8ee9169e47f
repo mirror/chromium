@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1af420f_39c620fd",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-25T17:59:13Z",
+      "side": 1,
+      "message": "This is pretty strange in general, since you aren\u0027t removing the row that is being iterated on in all cases. Without a row.Remove method, this can be pretty ugly.\n\nWould it make more sense to do:\n\nfor (let x \u003d rows.length - 1; x \u003e 0; x--) {\n  logsTable.deleteRow(x);\n}\n\nor something similar. This way the indexing is preserved by walking down the rows instead of up.",
+      "revId": "841a9256855ddd16e6fea9bba23fa8ee9169e47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
