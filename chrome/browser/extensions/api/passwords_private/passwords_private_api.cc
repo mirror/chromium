@@ -182,6 +182,21 @@ PasswordsPrivateImportPasswordsFunction::Run() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// PasswordsPrivatePreparePasswordsForExportFunction
+
+PasswordsPrivatePreparePasswordsForExportFunction::
+    ~PasswordsPrivatePreparePasswordsForExportFunction() {}
+
+ExtensionFunction::ResponseAction
+PasswordsPrivatePreparePasswordsForExportFunction::Run() {
+  PasswordsPrivateDelegate* delegate =
+      PasswordsPrivateDelegateFactory::GetForBrowserContext(browser_context(),
+                                                            true /* create */);
+  delegate->PreparePasswordsForExport(GetAssociatedWebContents());
+  return RespondNow(NoArguments());
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // PasswordsPrivateExportPasswordsFunction
 
 PasswordsPrivateExportPasswordsFunction::

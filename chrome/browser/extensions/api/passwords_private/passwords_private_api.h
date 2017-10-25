@@ -141,6 +141,23 @@ class PasswordsPrivateImportPasswordsFunction
   DISALLOW_COPY_AND_ASSIGN(PasswordsPrivateImportPasswordsFunction);
 };
 
+class PasswordsPrivatePreparePasswordsForExportFunction
+    : public UIThreadExtensionFunction {
+ public:
+  PasswordsPrivatePreparePasswordsForExportFunction() {}
+  DECLARE_EXTENSION_FUNCTION("passwordsPrivate.preparePasswordsForExport",
+                             PASSWORDSPRIVATE_PREPAREPASSWORDSFOREXPORT);
+
+ protected:
+  ~PasswordsPrivatePreparePasswordsForExportFunction() override;
+
+  // ExtensionFunction overrides.
+  ResponseAction Run() override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(PasswordsPrivatePreparePasswordsForExportFunction);
+};
+
 class PasswordsPrivateExportPasswordsFunction
     : public UIThreadExtensionFunction {
  public:
