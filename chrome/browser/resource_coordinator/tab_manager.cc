@@ -1014,7 +1014,8 @@ void TabManager::OnBrowserSetLastActive(Browser* browser) {
     ReloadWebContentsIfDiscarded(contents, GetWebContentsData(contents));
 }
 
-bool TabManager::IsMediaTab(WebContents* contents) const {
+// static
+bool TabManager::IsMediaTab(WebContents* contents) {
   if (contents->WasRecentlyAudible())
     return true;
 
@@ -1031,7 +1032,7 @@ bool TabManager::IsMediaTab(WebContents* contents) const {
 }
 
 TabManager::WebContentsData* TabManager::GetWebContentsData(
-    content::WebContents* contents) const {
+    content::WebContents* contents) {
   WebContentsData::CreateForWebContents(contents);
   return WebContentsData::FromWebContents(contents);
 }

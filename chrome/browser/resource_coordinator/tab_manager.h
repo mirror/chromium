@@ -228,6 +228,13 @@ class TabManager : public TabStripModelObserver,
   // Returns the number of tabs open in all browser instances.
   int GetTabCount() const;
 
+  // Whether |contents| is playing audio, has played audio recently, is
+  // accessing the camera, is accessing the microphone or is mirroring the
+  // display.
+  // TODO(fdoray): Move this to TabLifetimeEntity once it stops being used by
+  // CanSuspendBackgroundedRenderer.
+  static bool IsMediaTab(content::WebContents* contents);
+
  private:
   friend class TabManagerStatsCollectorTest;
 
@@ -391,14 +398,9 @@ class TabManager : public TabStripModelObserver,
   // BrowserListObserver overrides.
   void OnBrowserSetLastActive(Browser* browser) override;
 
-  // Returns true if the tab is currently playing audio or has played audio
-  // recently, or if the tab is currently accessing the camera, microphone or
-  // mirroring the display.
-  bool IsMediaTab(content::WebContents* contents) const;
-
   // Returns the WebContentsData associated with |contents|. Also takes care of
   // creating one if needed.
-  WebContentsData* GetWebContentsData(content::WebContents* contents) const;
+  static WebContentsData* GetWebContentsData(content::WebContents* contents);
 
   // Implementation of DiscardTab. Returns null if no tab was discarded.
   // Otherwise returns the new web_contents of the discarded tab.
