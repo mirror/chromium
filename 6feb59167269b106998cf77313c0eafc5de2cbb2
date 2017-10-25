@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0472e433_5417f7c3",
+        "filename": "chrome/browser/vr/elements/speech_recognition_prompt.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-25T18:28:37Z",
+      "side": 1,
+      "message": "Although we chatted about this offline, I thought I\u0027d a note here to capture the details.\n\nI was hoping to author this UI in terms of the following UI primitives\n - rects for both circles (with appropriate border radii, of course),\n - a vector icon element for the microphone on top.\n\nI also think that we can avoid not only the texture, but even a dedicated element to own the circles and vector icon. The visibility of the root of this tiny subtree tree could be bound to model and the UI will naturally come and go, the animation on the outer circle is continuous and can be set up at the time the element is constructed.",
+      "revId": "6feb59167269b106998cf77313c0eafc5de2cbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03546cc3_def2a549",
+        "filename": "chrome/browser/vr/elements/vector_icon_button_texture.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-25T18:28:37Z",
+      "side": 1,
+      "message": "In a follow up patch, it would be nice to break the vector icon button into constituent components as well so that we can do the \"explode on hover\" effect.",
+      "revId": "6feb59167269b106998cf77313c0eafc5de2cbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd7398c_bcb56320",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-25T18:28:37Z",
+      "side": 1,
+      "message": "I think that VR_BIND will work here.",
+      "revId": "6feb59167269b106998cf77313c0eafc5de2cbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163d5c27_55b1f1a1",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-25T18:28:37Z",
+      "side": 1,
+      "message": "Could you please add a voice_search_available (triggered by this feature) to the model and bind it to the button\u0027s visibility?",
+      "revId": "6feb59167269b106998cf77313c0eafc5de2cbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
