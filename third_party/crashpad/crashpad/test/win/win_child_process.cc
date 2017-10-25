@@ -213,7 +213,7 @@ std::unique_ptr<WinChildProcess::Handles> WinChildProcess::Launch() {
     return std::unique_ptr<Handles>();
   }
 
-  return handles_for_parent;
+  return std::move(handles_for_parent);
 }
 
 FileHandle WinChildProcess::ReadPipeHandle() const {
