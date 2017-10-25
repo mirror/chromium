@@ -141,13 +141,13 @@ TEST_F(AudioIPCFactoryTest, SeveralFactories) {
   auto io_thread = MakeIOThread();
   const int n_factories = 5;
 
-  std::vector<service_manager::InterfaceProvider> interface_providers(
+  std::vector<service_manager::InterfaceProvider> interface_provider(
       n_factories);
 
   std::vector<FakeRemoteFactory> remote_factories(n_factories);
 
   for (size_t i = 0; i < n_factories; i++) {
-    service_manager::InterfaceProvider::TestApi(&interface_providers[i])
+    service_manager::InterfaceProvider::TestApi(&interface_provider[i])
         .SetBinderForName(
             mojom::RendererAudioOutputStreamFactory::Name_,
             base::BindRepeating(&FakeRemoteFactory::Bind,
@@ -160,7 +160,7 @@ TEST_F(AudioIPCFactoryTest, SeveralFactories) {
 
   for (size_t i = 0; i < n_factories; i++) {
     ipc_factory.MaybeRegisterRemoteFactory(kRenderFrameId + i,
-                                           &interface_providers[i]);
+                                           &interface_provider[i]);
   }
 
   base::RunLoop run_loop;
