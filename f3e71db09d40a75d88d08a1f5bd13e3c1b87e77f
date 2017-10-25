@@ -16,6 +16,24 @@
       "revId": "f3e71db09d40a75d88d08a1f5bd13e3c1b87e77f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd918ee_762b3e11",
+        "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-25T15:17:16Z",
+      "side": 1,
+      "message": "There are 2 overloads of AddAnimatedTransformToPlayer() https://cs.chromium.org/chromium/src/cc/test/animation_test_common.h?l\u003d83\u0026rcl\u003d6f336c50912b9f4e2e3e8ed401e87461715ab872. Without this cast, the compiler complains that it doesn\u0027t know which overload to choose:\n\n../../base/bind_helpers.h:451:47: note: candidate template ignored: couldn\u0027t infer template argument \u0027T\u0027\nstatic inline internal::IgnoreResultHelper\u003cT\u003e IgnoreResult(T data) {",
+      "parentUuid": "f5ec67be_9bf505a8",
+      "revId": "f3e71db09d40a75d88d08a1f5bd13e3c1b87e77f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
