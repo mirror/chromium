@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17d3161b_cba82a89",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-25T06:59:38Z",
+      "side": 1,
+      "message": "nit: no braces.",
+      "range": {
+        "startLine": 262,
+        "startChar": 6,
+        "endLine": 262,
+        "endChar": 31
+      },
+      "revId": "551e66064f770f7347788d575150f95ca6bc1864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e5c386_6d575690",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-25T06:59:38Z",
+      "side": 1,
+      "message": "nit: no braces.",
+      "range": {
+        "startLine": 315,
+        "startChar": 6,
+        "endLine": 315,
+        "endChar": 39
+      },
+      "revId": "551e66064f770f7347788d575150f95ca6bc1864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b0f680_dafdfa6f",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-25T06:59:38Z",
+      "side": 1,
+      "message": "nit: no braces.",
+      "range": {
+        "startLine": 318,
+        "startChar": 6,
+        "endLine": 318,
+        "endChar": 37
+      },
+      "revId": "551e66064f770f7347788d575150f95ca6bc1864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46159d7_d1299d6f",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-25T06:59:38Z",
+      "side": 1,
+      "message": "nit: no braces.",
+      "revId": "551e66064f770f7347788d575150f95ca6bc1864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b888a1f5_093cedbe",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_win_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-25T06:59:38Z",
+      "side": 1,
+      "message": "nit: no braces.",
+      "revId": "551e66064f770f7347788d575150f95ca6bc1864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
