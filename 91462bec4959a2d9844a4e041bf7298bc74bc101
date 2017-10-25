@@ -16,6 +16,24 @@
       "revId": "91462bec4959a2d9844a4e041bf7298bc74bc101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ece06df_06b671c9",
+        "filename": "content/renderer/browser_plugin/browser_plugin.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-25T21:07:53Z",
+      "side": 1,
+      "message": "Digging into the patch that introduced the base::Optional\u003cgfx::Rect\u003e a bit more, I\u0027m beginning to think you\u0027re right:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/667900\n\nIt seems the optional is used for the \"not sent\" case. \"sent_resize_params_\" addresses that now. Got rid of it.",
+      "parentUuid": "047d67f3_e491bdc5",
+      "revId": "91462bec4959a2d9844a4e041bf7298bc74bc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
