@@ -462,6 +462,11 @@ class BLINK_PLATFORM_EXPORT Platform {
   WebTaskRunner* FileTaskRunner() const;
   SingleThreadTaskRunnerRefPtr BaseFileTaskRunner() const;
 
+  // Returns an interface to the IO task runner.
+  virtual SingleThreadTaskRunnerRefPtr BaseIOTaskRunner() const {
+    return nullptr;
+  }
+
   // Testing -------------------------------------------------------------
 
   // Gets a pointer to URLLoaderMockFactory for testing. Will not be available

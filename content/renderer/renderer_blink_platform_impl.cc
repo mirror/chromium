@@ -1416,14 +1416,14 @@ void RendererBlinkPlatformImpl::RequestPurgeMemory() {
 
 void RendererBlinkPlatformImpl::InitializeWebDatabaseHostIfNeeded() {
   if (!web_database_host_) {
-    web_database_host_ = content::mojom::ThreadSafeWebDatabaseHostPtr::Create(
+    web_database_host_ = blink::mojom::ThreadSafeWebDatabaseHostPtr::Create(
         std::move(web_database_host_info_),
         base::CreateSequencedTaskRunnerWithTraits(
             {base::WithBaseSyncPrimitives()}));
   }
 }
 
-mojom::WebDatabaseHost& RendererBlinkPlatformImpl::GetWebDatabaseHost() {
+blink::mojom::WebDatabaseHost& RendererBlinkPlatformImpl::GetWebDatabaseHost() {
   InitializeWebDatabaseHostIfNeeded();
   return **web_database_host_;
 }
