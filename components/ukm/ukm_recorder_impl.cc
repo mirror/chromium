@@ -177,4 +177,8 @@ void UkmRecorderImpl::StoreWhitelistedEntries() {
     whitelisted_entry_hashes_.insert(base::HashMetricName(entry_string));
 }
 
+void UkmRecorderImpl::DetachFromSequenceForTesting() {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
+}
+
 }  // namespace ukm
