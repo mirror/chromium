@@ -808,6 +808,24 @@ TEST(GURLTest, ContentAndPathForNonStandardURLs) {
   }
 }
 
+TEST(GURLTest, GetContentWithoutRef) {
+  struct TestCase {
+    const char* url;
+    const char* expected;
+  } cases[] = {
+      {"http://www.example.com/GUID", "www.example.com/GUID"},
+      {"http://www.example.com/GUID#ref", "http://www.example.com/GUID"},
+      {"http://me:secret@example.com/GUID/#ref", "me:secret@example.com/GUID/"},
+      {"data:text/html,Question?<div style=\"color: #bad\">idea</div>",
+       "text/html,Question?<div style=\"color: "},
+  };
+
+  for (const auto& test : cases) {
+    GURL url(test.url);
+    EXPECT_EQ(test.expected, url.GetContentWithoutRef());
+  }
+}
+
 TEST(GURLTest, IsAboutBlank) {
   const std::string kAboutBlankUrls[] = {"about:blank", "about:blank?foo",
                                          "about:blank/#foo",
