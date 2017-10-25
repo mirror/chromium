@@ -23,7 +23,7 @@ namespace blink {
 //
 // [1] https://www.w3.org/TR/CSS2/visudet.html#abs-non-replaced-width
 struct CORE_EXPORT NGOutOfFlowPositionedDescendant {
-  NGBlockNode node;
+  NGLayoutInputNode node;
   NGStaticPosition static_position;
 };
 

@@ -86,6 +86,10 @@ class CORE_EXPORT NGLayoutInputNode {
     return !(*this == other);
   }
 
+  // Called if this is an out-of-flow block which needs to be
+  // positioned with legacy layout.
+  void UseOldOutOfFlowPositioning() const;
+
 #ifndef NDEBUG
   void ShowNodeTree() const;
 #endif

@@ -154,6 +154,11 @@ String NGLayoutInputNode::ToString() const {
                     : ToNGBlockNode(*this).ToString();
 }
 
+void NGLayoutInputNode::UseOldOutOfFlowPositioning() const {
+  DCHECK(box_->IsOutOfFlowPositioned());
+  box_->ContainingBlock()->InsertPositionedObject(box_);
+}
+
 #ifndef NDEBUG
 void NGLayoutInputNode::ShowNodeTree() const {
   StringBuilder string_builder;
