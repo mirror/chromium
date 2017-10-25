@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82f88674_b1d1b614",
+        "filename": "chrome/browser/ui/cocoa/browser_window_layout.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-25T16:45:38Z",
+      "side": 1,
+      "message": "nit: if",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 12
+      },
+      "revId": "1401e092cdf47c39d133700a601f9db5c45411bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
