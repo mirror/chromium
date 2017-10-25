@@ -186,6 +186,8 @@ class ContentSuggestionsService : public KeyedService,
   // meantime).
   void ReloadSuggestions();
 
+  void OnChromeHomeStatusChanged(bool is_chrome_home_enabled);
+
   // Observer accessors.
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
@@ -324,6 +326,8 @@ class ContentSuggestionsService : public KeyedService,
 
   void RestoreDismissedCategoriesFromPrefs();
   void StoreDismissedCategoriesToPrefs();
+
+  void DestroyCategoryAndItsProvider(Category category);
 
   // Get the domain of the suggestion suitable for fetching the favicon.
   GURL GetFaviconDomain(const ContentSuggestion::ID& suggestion_id);

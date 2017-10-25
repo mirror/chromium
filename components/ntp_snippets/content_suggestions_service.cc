@@ -14,6 +14,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/default_clock.h"
 #include "base/values.h"
@@ -441,6 +442,19 @@ void ContentSuggestionsService::ReloadSuggestions() {
   }
 }
 
+void ContentSuggestionsService::OnChromeHomeStatusChanged(
+    bool is_chrome_home_enabled) {
+  debug_logger_->Log(
+      FROM_HERE, base::StringPrintf("Chrome Home enabled: %s",
+                                    is_chrome_home_enabled ? "true" : "false"));
+  if (is_chrome_home_enabled) {
+    DestroyCategoryAndItsProvider(
+        Category::FromKnownCategory(KnownCategories::BOOKMARKS));
+    DestroyCategoryAndItsProvider(
+        Category::FromKnownCategory(KnownCategories::DOWNLOADS));
+  }
+}
+
 bool ContentSuggestionsService::AreRemoteSuggestionsEnabled() const {
   return remote_suggestions_provider_ &&
          !remote_suggestions_provider_->IsDisabled();
@@ -707,6 +721,39 @@ void ContentSuggestionsService::StoreDismissedCategoriesToPrefs() {
   }
 
   pref_service_->Set(prefs::kDismissedCategories, list);
+}
+
+void ContentSuggestionsService::DestroyCategoryAndItsProvider(
+    Category category) {
+  // Destroying articles category is more complex and not implemented.
+  DCHECK_NE(category, Category::FromKnownCategory(KnownCategories::ARTICLES));
+
+  if (providers_by_category_.count(category) != 1) {
+    return;
+  }
+
+  {  // Destroy the provider and delete its mentions.
+    ContentSuggestionsProvider* raw_provider = providers_by_category_[category];
+    for (size_t i = 0; i < providers_.size(); ++i) {
+      if (providers_[i].get() == raw_provider) {
+        providers_.erase(providers_.begin() + i);
+        break;
+      }
+    }
+    providers_by_category_.erase(category);
+
+    if (dismissed_providers_by_category_.count(category) == 1) {
+      dismissed_providers_by_category_[category] = nullptr;
+    }
+  }
+
+  suggestions_by_category_.erase(category);
+
+  auto it = std::find(categories_.begin(), categories_.end(), category);
+  categories_.erase(it);
+
+  // Notify observers that the category is gone.
+  NotifyCategoryStatusChanged(category);
 }
 
 }  // namespace ntp_snippets
