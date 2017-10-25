@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad2c38a3_20a161e1",
+        "filename": "chrome/browser/resources/print_preview/search/destination_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-25T22:40:49Z",
+      "side": 1,
+      "message": "I think we can now remove this also.",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "899c1288a2673e837693a9d4d71354cc8deb6ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
