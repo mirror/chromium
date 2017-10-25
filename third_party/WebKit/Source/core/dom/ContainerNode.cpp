@@ -976,11 +976,49 @@ void ContainerNode::ChildrenChanged(const ChildrenChange& change) {
   }
 }
 
+class OriginalNodeAndCloneNode {
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+
+ public:
+  OriginalNodeAndCloneNode(Node* original, Node* clone)
+      : original(original), clone(clone) {}
+
+  void Trace(blink::Visitor* visitor) {
+    visitor->Trace(original);
+    visitor->Trace(clone);
+  }
+
+  Node* Original() { return original.Get(); }
+
+  Node* Clone() { return clone.Get(); }
+
+  Member<Node> original;
+  Member<Node> clone;
+};
+
+}  // namespace blink
+
+WTF_ALLOW_INIT_WITH_MEM_FUNCTIONS(blink::OriginalNodeAndCloneNode);
+
+namespace blink {
+
 void ContainerNode::CloneChildNodes(ContainerNode* clone) {
+  HeapDeque<OriginalNodeAndCloneNode> nodes_to_process;
   DummyExceptionStateForTesting exception_state;
-  for (Node* n = firstChild(); n && !exception_state.HadException();
-       n = n->nextSibling())
-    clone->AppendChild(n->cloneNode(true), exception_state);
+  nodes_to_process.push_back(OriginalNodeAndCloneNode(this, clone));
+  while (!nodes_to_process.IsEmpty()) {
+    auto node = nodes_to_process.TakeFirst();
+    Node* original_node = node.Original();
+    Node* cloned_node = node.Clone();
+    for (Node* child_node = original_node->firstChild();
+         child_node && !exception_state.HadException();
+         child_node = child_node->nextSibling()) {
+      Node* cloned_child_node = child_node->cloneNode(false);
+      cloned_node->appendChild(cloned_child_node, exception_state);
+      nodes_to_process.push_back(
+          OriginalNodeAndCloneNode(child_node, cloned_child_node));
+    }
+  }
 }
 
 bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
