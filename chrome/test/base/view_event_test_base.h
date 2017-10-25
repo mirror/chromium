@@ -18,6 +18,7 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/test_discardable_memory_allocator.h"
 #include "base/threading/thread.h"
 #include "build/build_config.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -153,6 +154,7 @@ class ViewEventTestBase : public views::WidgetDelegate,
 #endif
 
   std::unique_ptr<ViewEventTestPlatformPart> platform_part_;
+  base::TestDiscardableMemoryAllocator discardable_memory_allocator_;
 
   views::TestViewsDelegate views_delegate_;
 
