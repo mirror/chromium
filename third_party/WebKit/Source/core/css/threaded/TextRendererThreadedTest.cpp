@@ -100,7 +100,7 @@ TSAN_TEST(TextRendererThreadedTest, DrawText) {
     PaintFlags flags;
 
     EXPECT_CALL(mpc, getSaveCount()).WillOnce(Return(17));
-    EXPECT_CALL(mpc, drawTextBlob(_, 0, 0, _)).Times(1);
+    EXPECT_CALL(mpc, drawTextBlob(_, 0, 0, _, _)).Times(1);
     EXPECT_CALL(mpc, restoreToCount(17)).WillOnce(Return());
 
     font.DrawBidiText(&mpc, text_run_paint_info, location,

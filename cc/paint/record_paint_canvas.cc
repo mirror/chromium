@@ -274,11 +274,20 @@ void RecordPaintCanvas::drawBitmap(const SkBitmap& bitmap,
             left, top, flags);
 }
 
-void RecordPaintCanvas::drawTextBlob(sk_sp<SkTextBlob> blob,
-                                     SkScalar x,
-                                     SkScalar y,
-                                     const PaintFlags& flags) {
-  list_->push<DrawTextBlobOp>(blob, x, y, flags);
+void RecordPaintCanvas::drawTextBlob(
+    sk_sp<SkTextBlob> blob,
+    SkScalar x,
+    SkScalar y,
+    const PaintFlags& flags,
+    const std::vector<PaintTypeface>& used_typefaces) {
+  std::unique_ptr<PaintTypeface[]> typefaces;
+  if (!used_typefaces.empty()) {
+    typefaces.reset(new PaintTypeface[used_typefaces.size()]);
+    for (size_t i = 0; i < used_typefaces.size(); ++i)
+      typefaces[i] = used_typefaces[i];
+  }
+  list_->push<DrawTextBlobOp>(blob, x, y, flags, std::move(typefaces),
+                              static_cast<uint32_t>(used_typefaces.size()));
 }
 
 void RecordPaintCanvas::drawPicture(sk_sp<const PaintRecord> record) {
