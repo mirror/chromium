@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35c82970_704d67ca",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1116018
+      },
+      "writtenOn": "2017-10-25T00:05:36Z",
+      "side": 1,
+      "message": "Is there any test coverage for this?",
+      "range": {
+        "startLine": 452,
+        "startChar": 9,
+        "endLine": 452,
+        "endChar": 29
+      },
+      "revId": "627904696ae1d1b116cf98395f3200aa9ab000ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf151df4_82d536a3",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1116018
+      },
+      "writtenOn": "2017-10-25T00:05:36Z",
+      "side": 1,
+      "message": "Why not just handle this all in the existing perf_tests/generate_cplusplus_isolate_script_test?",
+      "range": {
+        "startLine": 934,
+        "startChar": 26,
+        "endLine": 934,
+        "endChar": 74
+      },
+      "revId": "627904696ae1d1b116cf98395f3200aa9ab000ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
