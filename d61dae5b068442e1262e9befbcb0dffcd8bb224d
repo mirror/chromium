@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "622408e9_013a2dc6",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-25T18:34:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cbc63cda_5f85ce29",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "d61dae5b068442e1262e9befbcb0dffcd8bb224d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6ffb1b4_8b053a79",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
         "patchSetId": 6
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "63fe914b_68917e99",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-25T18:34:01Z",
+      "side": 1,
+      "message": "\u003e This should not happen generally. We\u0027ll reach here via OnExtensionLoaded notification on the UI thread. So some scenarios where this can happen are:- \n\u003e - Duplicate loaded notifications. \n\nThat should be a bug in our code and not an expected scenario.\n\u003e - An earlier remove ruleset failed on extension unload (This could happen if PostTask failed for some reason, which only probably happens during shutdown?)\n\nIf it was shutdown, then we wouldn\u0027t be here after shutdown, right?\n\u003e \n\u003e So I felt it was safer to not DCHECK that this is not called with the same extension id.\nDCHECK sounds like the correct choice to use here.",
+      "parentUuid": "08ad46d9_d1cd78c9",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 56
+      },
+      "revId": "d61dae5b068442e1262e9befbcb0dffcd8bb224d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "171c9186_d1c18ae2",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
         "patchSetId": 6
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "Yes, so I investigated and it is necessary. Will try and add a browser test once we start evaluating network requests using DNR.",
       "parentUuid": "171c9186_d1c18ae2",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 49
+      },
+      "revId": "d61dae5b068442e1262e9befbcb0dffcd8bb224d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c95a7c5f_37b58344",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-25T18:34:01Z",
+      "side": 1,
+      "message": "Great. However, these are quite expensive to call afaik, and should be called sparingly. One scenario where we might want to be careful is during browser startup. Startup will cause each DNR extension to call ClearRendererCacheOnNavigation, where only one call at the end would have sufficed.",
+      "parentUuid": "40c79ce3_46d93b21",
       "range": {
         "startLine": 102,
         "startChar": 2,
@@ -354,6 +426,30 @@
       "side": 1,
       "message": "It\u0027s a weak pointer in the sense that we don\u0027t own info_map. Is it confusing since it can be confused with WeakPtr? Have rephrased.",
       "parentUuid": "e55c7c3f_061764d2",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "d61dae5b068442e1262e9befbcb0dffcd8bb224d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a703b17_4a118685",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-25T18:34:01Z",
+      "side": 1,
+      "message": "Yes the confusion is with WeakPtr. Rephrase looks good, thanks!",
+      "parentUuid": "8dabce97_81d19fa0",
       "range": {
         "startLine": 50,
         "startChar": 5,
