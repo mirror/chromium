@@ -571,7 +571,9 @@ class CC_PAINT_EXPORT DrawTextBlobOp final : public PaintOpWithFlags {
   DrawTextBlobOp(sk_sp<SkTextBlob> blob,
                  SkScalar x,
                  SkScalar y,
-                 const PaintFlags& flags);
+                 const PaintFlags& flags,
+                 std::unique_ptr<PaintTypeface[]> typefaces,
+                 uint32_t typefaces_count);
   ~DrawTextBlobOp();
   static void RasterWithFlags(const DrawTextBlobOp* op,
                               const PaintFlags* flags,
@@ -583,6 +585,8 @@ class CC_PAINT_EXPORT DrawTextBlobOp final : public PaintOpWithFlags {
   sk_sp<SkTextBlob> blob;
   SkScalar x;
   SkScalar y;
+  std::unique_ptr<PaintTypeface[]> typefaces;
+  uint32_t typefaces_count;
 
  private:
   DrawTextBlobOp();

@@ -44,7 +44,11 @@ class CC_PAINT_EXPORT PaintOpReader {
   void Read(PaintFlags* flags);
   void Read(PaintImage* image);
   void Read(sk_sp<SkData>* data);
-  void Read(sk_sp<SkTextBlob>* blob);
+  void Read(std::unique_ptr<PaintTypeface[]>* typefaces,
+            uint32_t* typefaces_count);
+  void Read(const PaintTypeface* typefaces,
+            uint32_t typefaces_count,
+            sk_sp<SkTextBlob>* blob);
   void Read(sk_sp<PaintShader>* shader);
   void Read(SkMatrix* matrix);
 
