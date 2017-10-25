@@ -47,21 +47,13 @@ void MojoInterfaceInterceptor::start(ExceptionState& exception_state) {
   if (started_)
     return;
 
-  service_manager::InterfaceProvider* interface_provider =
-      GetInterfaceProvider();
-  if (!interface_provider) {
-    exception_state.ThrowDOMException(kInvalidStateError,
-                                      "The interface provider is unavailable.");
-    return;
-  }
-
-  std::string interface_name =
-      StringUTF8Adaptor(interface_name_).AsStringPiece().as_string();
 
   if (process_scope_) {
     std::string browser_service = Platform::Current()->GetBrowserServiceName();
     service_manager::Connector::TestApi test_api(
         Platform::Current()->GetConnector());
+    std::string interface_name =
+        StringUTF8Adaptor(interface_name_).AsStringPiece().as_string();
     if (test_api.HasBinderOverride(browser_service, interface_name)) {
       exception_state.ThrowDOMException(
           kInvalidModificationError,
@@ -79,20 +71,25 @@ void MojoInterfaceInterceptor::start(ExceptionState& exception_state) {
     return;
   }
 
-  service_manager::InterfaceProvider::TestApi test_api(interface_provider);
-  if (test_api.HasBinderForName(interface_name)) {
-    exception_state.ThrowDOMException(
-        kInvalidModificationError,
-        "Interface " + interface_name_ +
-            " is already intercepted by another MojoInterfaceInterceptor.");
+  service_manager::InterfaceProvider* interface_provider =
+      GetInterfaceProvider();
+  if (!interface_provider) {
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      "The interface provider is unavailable.");
     return;
   }
 
-  started_ = true;
-  test_api.SetBinderForName(interface_name,
-                            ConvertToBaseCallback(WTF::Bind(
-                                &MojoInterfaceInterceptor::OnInterfaceRequest,
-                                WrapWeakPersistent(this))));
+  auto* additional_interface_provider = GetAdditionalInterfaceProvider();
+  if (additional_interface_provider) {
+    if (!StartImpl(exception_state, additional_interface_provider)) {
+      return;
+    }
+  }
+  if (StartImpl(exception_state, interface_provider)) {
+    started_ = true;
+  } else {
+    DCHECK(!additional_interface_provider);
+  }
 }
 
 void MojoInterfaceInterceptor::stop() {
@@ -100,10 +97,10 @@ void MojoInterfaceInterceptor::stop() {
     return;
 
   started_ = false;
-  std::string interface_name =
-      StringUTF8Adaptor(interface_name_).AsStringPiece().as_string();
 
   if (process_scope_) {
+    std::string interface_name =
+        StringUTF8Adaptor(interface_name_).AsStringPiece().as_string();
     std::string browser_service = Platform::Current()->GetBrowserServiceName();
     service_manager::Connector::TestApi test_api(
         Platform::Current()->GetConnector());
@@ -112,11 +109,10 @@ void MojoInterfaceInterceptor::stop() {
     return;
   }
 
-  // GetInterfaceProvider() is guaranteed not to return nullptr because this
-  // method is called when the context is destroyed.
-  service_manager::InterfaceProvider::TestApi test_api(GetInterfaceProvider());
-  DCHECK(test_api.HasBinderForName(interface_name));
-  test_api.ClearBinderForName(interface_name);
+  StopImpl(GetInterfaceProvider());
+  if (auto* additional_interface_provider = GetAdditionalInterfaceProvider()) {
+    StopImpl(additional_interface_provider);
+  }
 }
 
 void MojoInterfaceInterceptor::Trace(blink::Visitor* visitor) {
@@ -147,20 +143,58 @@ MojoInterfaceInterceptor::MojoInterfaceInterceptor(ExecutionContext* context,
       interface_name_(interface_name),
       process_scope_(process_scope) {}
 
+bool MojoInterfaceInterceptor::StartImpl(
+    ExceptionState& exception_state,
+    service_manager::InterfaceProvider* interface_provider) {
+  std::string interface_name =
+      StringUTF8Adaptor(interface_name_).AsStringPiece().as_string();
+
+  service_manager::InterfaceProvider::TestApi test_api(interface_provider);
+  if (test_api.HasBinderForName(interface_name)) {
+    exception_state.ThrowDOMException(
+        kInvalidModificationError,
+        "Interface " + interface_name_ +
+            " is already intercepted by another MojoInterfaceInterceptor.");
+    return false;
+  }
+
+  test_api.SetBinderForName(interface_name,
+                            ConvertToBaseCallback(WTF::Bind(
+                                &MojoInterfaceInterceptor::OnInterfaceRequest,
+                                WrapWeakPersistent(this))));
+  return true;
+}
+
+void MojoInterfaceInterceptor::StopImpl(
+    service_manager::InterfaceProvider* interface_provider) {
+  // GetInterfaceProvider() is guaranteed not to return nullptr because this
+  // method is called when the context is destroyed.
+  service_manager::InterfaceProvider::TestApi test_api(interface_provider);
+  std::string interface_name =
+      StringUTF8Adaptor(interface_name_).AsStringPiece().as_string();
+  DCHECK(test_api.HasBinderForName(interface_name));
+  test_api.ClearBinderForName(interface_name);
+}
+
 service_manager::InterfaceProvider*
 MojoInterfaceInterceptor::GetInterfaceProvider() const {
   ExecutionContext* context = GetExecutionContext();
   if (!context)
     return nullptr;
 
-  if (context->IsWorkerGlobalScope())
-    return &ToWorkerGlobalScope(context)->GetThread()->GetInterfaceProvider();
+  return context->GetInterfaceProvider();
+}
 
-  LocalFrame* frame = ToDocument(context)->GetFrame();
-  if (!frame)
+service_manager::InterfaceProvider*
+MojoInterfaceInterceptor::GetAdditionalInterfaceProvider() const {
+  ExecutionContext* context = GetExecutionContext();
+  if (!context)
     return nullptr;
 
-  return frame->Client()->GetInterfaceProvider();
+  if (!context->IsWorkerGlobalScope())
+    return nullptr;
+
+  return &ToWorkerGlobalScope(context)->GetThread()->GetInterfaceProvider();
 }
 
 void MojoInterfaceInterceptor::OnInterfaceRequest(

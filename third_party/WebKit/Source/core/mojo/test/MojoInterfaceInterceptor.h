@@ -64,7 +64,14 @@ class MojoInterfaceInterceptor final
                            const String& interface_name,
                            bool process_scope);
 
+  bool StartImpl(ExceptionState&, service_manager::InterfaceProvider*);
+  void StopImpl(service_manager::InterfaceProvider*);
+
   service_manager::InterfaceProvider* GetInterfaceProvider() const;
+
+  // Workers currently have access to two InterfaceProviders. Intercept
+  // interfaces on both to allow a gradual migration.
+  service_manager::InterfaceProvider* GetAdditionalInterfaceProvider() const;
   void OnInterfaceRequest(mojo::ScopedMessagePipeHandle);
   void DispatchInterfaceRequestEvent(mojo::ScopedMessagePipeHandle);
 
