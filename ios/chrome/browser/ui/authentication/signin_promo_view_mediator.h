@@ -33,6 +33,8 @@ enum class SigninPromoViewState {
 };
 }  // namespace ios
 
+class PrefService;
+
 // Class that monitors the available identities and creates
 // SigninPromoViewConfigurator. This class makes the link between the model and
 // the view. The consumer will receive notification if default identity is
@@ -46,8 +48,14 @@ enum class SigninPromoViewState {
 // contains nil.
 @property(nonatomic, readonly, strong) ChromeIdentity* defaultIdentity;
 
+@property(nonatomic, readonly) BOOL isSigninActive;
+
 // Sign-in promo view state.
 @property(nonatomic) ios::SigninPromoViewState signinPromoViewState;
+
++ (BOOL)shouldDisplaySigninPromoWithAccessPoint:
+            (signin_metrics::AccessPoint)accessPoint
+                              preferenceService:(PrefService*)prefs;
 
 // See -[SigninPromoViewMediator initWithBrowserState:].
 - (instancetype)init NS_UNAVAILABLE;
@@ -69,9 +77,6 @@ enum class SigninPromoViewState {
 
 // Called when the sign-in promo view is hidden.
 - (void)signinPromoViewHidden;
-
-// Called when the sign-in promo view is closed.
-- (void)signinPromoViewClosed;
 
 // Called when the sign-in promo view is removed from the view hierarchy (it or
 // one of its superviews is removed). The mediator should not be used after this
