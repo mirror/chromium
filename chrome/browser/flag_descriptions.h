@@ -1467,9 +1467,6 @@ extern const char kEnablePerUserTimezoneDescription[];
 extern const char kDisableSystemTimezoneAutomaticDetectionName[];
 extern const char kDisableSystemTimezoneAutomaticDetectionDescription[];
 
-extern const char kEnableFullscreenAppListName[];
-extern const char kEnableFullscreenAppListDescription[];
-
 extern const char kEnableBackgroundBlurName[];
 extern const char kEnableBackgroundBlurDescription[];
 

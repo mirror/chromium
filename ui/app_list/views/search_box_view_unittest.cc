@@ -51,7 +51,6 @@ class KeyPressCounterView : public views::View {
   DISALLOW_COPY_AND_ASSIGN(KeyPressCounterView);
 };
 
-// These tests run with both FullscreenAppList enabled and disabled.
 // TODO(crbug.com/743113) Unify the two test classes.
 class SearchBoxViewTest : public views::test::WidgetTest,
                           public SearchBoxViewDelegate,
@@ -63,15 +62,6 @@ class SearchBoxViewTest : public views::test::WidgetTest,
   // Overridden from testing::Test:
   void SetUp() override {
     views::test::WidgetTest::SetUp();
-
-    if (testing::UnitTest::GetInstance()->current_test_info()->value_param()) {
-      // Current test is parameterized.
-      test_with_fullscreen_ = GetParam();
-      if (test_with_fullscreen_) {
-        scoped_feature_list_.InitAndEnableFeature(
-            features::kEnableFullscreenAppList);
-      }
-    }
 
     app_list_view_ = new AppListView(&view_delegate_);
     AppListView::InitParams params;
@@ -171,8 +161,6 @@ class SearchBoxViewFullscreenTest : public views::test::WidgetTest,
   // Overridden from testing::Test:
   void SetUp() override {
     views::test::WidgetTest::SetUp();
-    scoped_feature_list_.InitAndEnableFeature(
-        app_list::features::kEnableFullscreenAppList);
 
     app_list_view_ = new AppListView(&view_delegate_);
     AppListView::InitParams params;
@@ -220,8 +208,6 @@ class SearchBoxViewFullscreenTest : public views::test::WidgetTest,
   void BackButtonPressed() override {}
 
   void SetSearchResultSelection(bool select) override {}
-
-  base::test::ScopedFeatureList scoped_feature_list_;
 
   AppListTestViewDelegate view_delegate_;
   views::Widget* widget_;

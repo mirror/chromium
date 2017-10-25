@@ -15,7 +15,6 @@
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/app_list/app_list_constants.h"
@@ -113,12 +112,6 @@ class AppsGridViewTest : public views::ViewsTestBase,
   void SetUp() override {
     views::ViewsTestBase::SetUp();
 
-    test_with_fullscreen_ = GetParam();
-    if (!test_with_fullscreen_) {
-      scoped_feature_list_.InitAndDisableFeature(
-          features::kEnableFullscreenAppList);
-    }
-
     gfx::NativeView parent = GetContext();
     delegate_.reset(new AppListTestViewDelegate);
     app_list_view_ = new AppListView(delegate_.get());
@@ -161,10 +154,6 @@ class AppsGridViewTest : public views::ViewsTestBase,
   }
 
  protected:
-  void EnableFullscreenAppList() {
-    scoped_feature_list_.InitAndEnableFeature(
-        features::kEnableFullscreenAppList);
-  }
 
   AppListItemView* GetItemViewAt(int index) const {
     return static_cast<AppListItemView*>(test_api_->GetViewAtModelIndex(index));
@@ -260,16 +249,11 @@ class AppsGridViewTest : public views::ViewsTestBase,
   std::unique_ptr<AppListTestViewDelegate> delegate_;
   AppListTestModel* model_ = nullptr;  // Owned by |delegate_|.
   std::unique_ptr<AppsGridViewTestApi> test_api_;
-  bool test_with_fullscreen_ = false;
-  base::test::ScopedFeatureList scoped_feature_list_;
+  bool test_with_fullscreen_ = true;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AppsGridViewTest);
 };
-
-// Instantiate the Boolean which is used to toggle the Fullscreen app list in
-// the parameterized tests.
-INSTANTIATE_TEST_CASE_P(, AppsGridViewTest, testing::Bool());
 
 class TestAppsGridViewFolderDelegate : public AppsGridViewFolderDelegate {
  public:
@@ -308,7 +292,7 @@ class TestAppsGridViewFolderDelegate : public AppsGridViewFolderDelegate {
   DISALLOW_COPY_AND_ASSIGN(TestAppsGridViewFolderDelegate);
 };
 
-TEST_P(AppsGridViewTest, CreatePage) {
+TEST_F(AppsGridViewTest, CreatePage) {
   // Fully populates a page.
   const int kPages = 1;
   if (test_with_fullscreen_) {
@@ -325,7 +309,7 @@ TEST_P(AppsGridViewTest, CreatePage) {
   EXPECT_EQ(kPages + 1, GetPaginationModel()->total_pages());
 }
 
-TEST_P(AppsGridViewTest, EnsureHighlightedVisible) {
+TEST_F(AppsGridViewTest, EnsureHighlightedVisible) {
   const int kPages = 3;
   model_->PopulateApps(GetTilesPerPage(0) + (kPages - 1) * GetTilesPerPage(1));
   EXPECT_EQ(kPages, GetPaginationModel()->total_pages());
@@ -347,7 +331,7 @@ TEST_P(AppsGridViewTest, EnsureHighlightedVisible) {
   EXPECT_EQ(kPages - 1, GetPaginationModel()->selected_page());
 }
 
-TEST_P(AppsGridViewTest, RemoveSelectedLastApp) {
+TEST_F(AppsGridViewTest, RemoveSelectedLastApp) {
   const int kTotalItems = 2;
   const int kLastItemIndex = kTotalItems - 1;
 
@@ -365,7 +349,7 @@ TEST_P(AppsGridViewTest, RemoveSelectedLastApp) {
   EXPECT_TRUE(apps_grid_view_->IsSelectedView(view));
 }
 
-TEST_P(AppsGridViewTest, MouseDragWithFolderDisabled) {
+TEST_F(AppsGridViewTest, MouseDragWithFolderDisabled) {
   model_->SetFoldersEnabled(false);
   const int kTotalItems = 4;
   model_->PopulateApps(kTotalItems);
@@ -414,7 +398,7 @@ TEST_P(AppsGridViewTest, MouseDragWithFolderDisabled) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_P(AppsGridViewTest, MouseDragItemIntoFolder) {
+TEST_F(AppsGridViewTest, MouseDragItemIntoFolder) {
   size_t kTotalItems = 3;
   model_->PopulateApps(kTotalItems);
   EXPECT_EQ(model_->top_level_item_list()->item_count(), kTotalItems);
@@ -461,7 +445,7 @@ TEST_P(AppsGridViewTest, MouseDragItemIntoFolder) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
+TEST_F(AppsGridViewTest, MouseDragMaxItemsInFolder) {
   // Create and add a folder with |GetMaxFolderItems() - 1| items.
   size_t kTotalItems = GetMaxFolderItems() - 1;
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
@@ -506,7 +490,7 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
 
 // Check that moving items around doesn't allow a drop to happen into a full
 // folder.
-TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
+TEST_F(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
   // Create and add a folder with |GetMaxFolderItems()| in it.
   size_t kTotalItems = GetMaxFolderItems();
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
@@ -555,7 +539,7 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_P(AppsGridViewTest, MouseDragItemReorder) {
+TEST_F(AppsGridViewTest, MouseDragItemReorder) {
   // Using a simulated 2x2 layout for the test. If fullscreen app list is
   // enabled, rows_per_page passed should be 3 as the first row is occupied by
   // suggested apps.
@@ -624,7 +608,7 @@ TEST_P(AppsGridViewTest, MouseDragItemReorder) {
             model_->GetModelContent());
 }
 
-TEST_P(AppsGridViewTest, MouseDragFolderReorder) {
+TEST_F(AppsGridViewTest, MouseDragFolderReorder) {
   size_t kTotalItems = 2;
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
   model_->PopulateAppWithId(kTotalItems);
@@ -648,7 +632,7 @@ TEST_P(AppsGridViewTest, MouseDragFolderReorder) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_P(AppsGridViewTest, MouseDragWithCancelDeleteAddItem) {
+TEST_F(AppsGridViewTest, MouseDragWithCancelDeleteAddItem) {
   size_t kTotalItems = 4;
   model_->PopulateApps(kTotalItems);
   EXPECT_EQ(model_->top_level_item_list()->item_count(), kTotalItems);
@@ -681,7 +665,7 @@ TEST_P(AppsGridViewTest, MouseDragWithCancelDeleteAddItem) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_P(AppsGridViewTest, MouseDragFlipPage) {
+TEST_F(AppsGridViewTest, MouseDragFlipPage) {
   apps_grid_view_->set_page_flip_delay_in_ms_for_testing(10);
   GetPaginationModel()->SetTransitionDurations(10, 10);
 
@@ -732,7 +716,7 @@ TEST_P(AppsGridViewTest, MouseDragFlipPage) {
   apps_grid_view_->EndDrag(true);
 }
 
-TEST_P(AppsGridViewTest, SimultaneousDragWithFolderDisabled) {
+TEST_F(AppsGridViewTest, SimultaneousDragWithFolderDisabled) {
   model_->SetFoldersEnabled(false);
   const int kTotalItems = 4;
   model_->PopulateApps(kTotalItems);
@@ -764,7 +748,7 @@ TEST_P(AppsGridViewTest, SimultaneousDragWithFolderDisabled) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_P(AppsGridViewTest, UpdateFolderBackgroundOnCancelDrag) {
+TEST_F(AppsGridViewTest, UpdateFolderBackgroundOnCancelDrag) {
   const int kTotalItems = 4;
   TestAppsGridViewFolderDelegate folder_delegate;
   apps_grid_view_->set_folder_delegate(&folder_delegate);
@@ -786,7 +770,7 @@ TEST_P(AppsGridViewTest, UpdateFolderBackgroundOnCancelDrag) {
 
 // TODO(warx): This test applies to bubble launcher only. Remove this test once
 // bubble launcher is removed from code base.
-TEST_P(AppsGridViewTest, HighlightWithKeyboard) {
+TEST_F(AppsGridViewTest, HighlightWithKeyboard) {
   if (test_with_fullscreen_)
     return;
 
@@ -867,7 +851,7 @@ TEST_P(AppsGridViewTest, HighlightWithKeyboard) {
       apps_grid_view_->IsSelectedView(GetItemViewAt(first_index_on_page2)));
 }
 
-TEST_P(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
+TEST_F(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
   if (!test_with_fullscreen_)
     return;
 
@@ -927,7 +911,7 @@ TEST_P(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
 }
 
 // Tests the selection movement in state apps.
-TEST_P(AppsGridViewTest, SelectionInStateApps) {
+TEST_F(AppsGridViewTest, SelectionInStateApps) {
   if (!test_with_fullscreen_)
     return;
 
@@ -981,7 +965,7 @@ TEST_P(AppsGridViewTest, SelectionInStateApps) {
 // Tests that in state start there's no selection at the beginning. And hitting
 // down/tab/right arrow key moves the selection to the first app in suggestions
 // container.
-TEST_P(AppsGridViewTest, InitialSelectionInStateStart) {
+TEST_F(AppsGridViewTest, InitialSelectionInStateStart) {
   if (!test_with_fullscreen_)
     return;
 
@@ -1004,7 +988,7 @@ TEST_P(AppsGridViewTest, InitialSelectionInStateStart) {
 
 // Tests that in state start when selection exists. Hitting tab key does
 // nothing while hitting shift+tab key clears selection.
-TEST_P(AppsGridViewTest, ClearSelectionInStateStart) {
+TEST_F(AppsGridViewTest, ClearSelectionInStateStart) {
   if (!test_with_fullscreen_)
     return;
 
@@ -1025,7 +1009,7 @@ TEST_P(AppsGridViewTest, ClearSelectionInStateStart) {
 // Tests that in state start when selection is on expand arrow, only hitting
 // left/up arrow key moves the selection to the last app in suggestion
 // container.
-TEST_P(AppsGridViewTest, ExpandArrowSelectionInStateStart) {
+TEST_F(AppsGridViewTest, ExpandArrowSelectionInStateStart) {
   if (!test_with_fullscreen_)
     return;
 
@@ -1061,7 +1045,7 @@ TEST_P(AppsGridViewTest, ExpandArrowSelectionInStateStart) {
 // selection to app on the left/right if index is valid. Hitting right key when
 // selection is on the last app in suggestions container or hitting down key
 // move the selection to the expand arrow.
-TEST_P(AppsGridViewTest, SuggestionsContainerSelectionInStateStart) {
+TEST_F(AppsGridViewTest, SuggestionsContainerSelectionInStateStart) {
   if (!test_with_fullscreen_)
     return;
 
@@ -1094,7 +1078,7 @@ TEST_P(AppsGridViewTest, SuggestionsContainerSelectionInStateStart) {
   CheckSelectionAtExpandArrow();
 }
 
-TEST_P(AppsGridViewTest, ItemLabelShortNameOverride) {
+TEST_F(AppsGridViewTest, ItemLabelShortNameOverride) {
   // If the app's full name and short name differ, the title label's tooltip
   // should always be the full name of the app.
   std::string expected_text("xyz");
@@ -1112,7 +1096,7 @@ TEST_P(AppsGridViewTest, ItemLabelShortNameOverride) {
   EXPECT_EQ(expected_text, base::UTF16ToUTF8(title_label->text()));
 }
 
-TEST_P(AppsGridViewTest, ItemLabelNoShortName) {
+TEST_F(AppsGridViewTest, ItemLabelNoShortName) {
   // If the app's full name and short name are the same, use the default tooltip
   // behavior of the label (only show a tooltip if the title is truncated).
   std::string title("a");
@@ -1128,7 +1112,7 @@ TEST_P(AppsGridViewTest, ItemLabelNoShortName) {
   EXPECT_EQ(title, base::UTF16ToUTF8(title_label->text()));
 }
 
-TEST_P(AppsGridViewTest, ScrollSequenceHandledByAppListView) {
+TEST_F(AppsGridViewTest, ScrollSequenceHandledByAppListView) {
   if (!test_with_fullscreen_)
     return;
 
@@ -1154,7 +1138,7 @@ TEST_P(AppsGridViewTest, ScrollSequenceHandledByAppListView) {
   ASSERT_EQ(0, GetPaginationModel()->transition().progress);
 }
 
-TEST_P(AppsGridViewTest,
+TEST_F(AppsGridViewTest,
        OnGestureEventScrollSequenceHandleByPaginationController) {
   if (!test_with_fullscreen_)
     return;
