@@ -141,6 +141,11 @@ public class SnippetArticle implements OfflinableSuggestion {
         return true;
     }
 
+    /** Returns whether this article has been impressed. */
+    public boolean isImpressed() {
+        return mImpressionTracked;
+    }
+
     /** @return whether a snippet is a remote suggestion. */
     public boolean isArticle() {
         return mCategory == KnownCategories.ARTICLES;

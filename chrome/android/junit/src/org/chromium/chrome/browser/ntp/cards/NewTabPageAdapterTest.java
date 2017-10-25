@@ -510,14 +510,20 @@ public class NewTabPageAdapterTest {
         reloadNtp();
         assertItemsFor(section(suggestions), section(otherSuggestions));
 
-        // Bind the whole section - indicate that it is being viewed.
+        // Bind the whole section and indicate that it is being viewed.
         bindViewHolders(mAdapter.getSectionListForTesting().getSection(otherCategory));
+        for (SnippetArticle article : otherSuggestions) article.trackImpression();
 
         List<SnippetArticle> newSuggestions = createDummySuggestions(3, TEST_CATEGORY, "new");
         mSource.setSuggestionsForCategory(TEST_CATEGORY, newSuggestions);
-        assertItemsFor(section(newSuggestions), section(otherSuggestions));
+        // The first suggestion is impressed by default so it stays, the last gets removed, instead.
+        List<SnippetArticle> combinedSuggestions = new ArrayList<SnippetArticle>(newSuggestions);
+        combinedSuggestions.add(0, suggestions.get(0));
+        combinedSuggestions.remove(3);
+        assertItemsFor(section(combinedSuggestions), section(otherSuggestions));
 
         reloadNtp();
+        // After a reload, we get solely the new list.
         assertItemsFor(section(newSuggestions), section(otherSuggestions));
     }
 
