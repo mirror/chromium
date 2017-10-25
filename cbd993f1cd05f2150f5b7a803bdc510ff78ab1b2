@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7dd39ad_bbe37999",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-25T05:35:33Z",
+      "side": 1,
+      "message": "I will double check these values with bettes@. They are not available on the mocks.",
+      "revId": "cbd993f1cd05f2150f5b7a803bdc510ff78ab1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c850ea_e1f6a577",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-25T05:35:33Z",
+      "side": 1,
+      "message": "The name that the material design spec gives for this icon is \"error-outline\". In this case, the icon serves more of an informational purpose, which is why I named the class here to \"info-icon\".\n\nLmk if you have a preference on the naming.",
+      "range": {
+        "startLine": 310,
+        "startChar": 56,
+        "endLine": 310,
+        "endChar": 69
+      },
+      "revId": "cbd993f1cd05f2150f5b7a803bdc510ff78ab1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
