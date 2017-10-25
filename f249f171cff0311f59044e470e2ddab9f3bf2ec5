@@ -34,6 +34,24 @@
       "revId": "f249f171cff0311f59044e470e2ddab9f3bf2ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4b31b0_f656d741",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T16:31:51Z",
+      "side": 1,
+      "message": "This validation should happen at a lower level though, when Mojo is deserializing the bytes from the wire, right? So is it necessary to check again here? We shouldn\u0027t ever reach this, because message validation failure should cause Mojo not to even invoke the implementation.",
+      "parentUuid": "7aa23686_fac0706a",
+      "revId": "f249f171cff0311f59044e470e2ddab9f3bf2ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
