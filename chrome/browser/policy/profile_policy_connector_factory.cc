@@ -51,6 +51,14 @@ ProfilePolicyConnectorFactory::CreateForBrowserContext(
                                                         force_immediate_load);
 }
 
+// static
+bool ProfilePolicyConnectorFactory::IsProfileManaged(
+    const content::BrowserContext* context) {
+  // Note: GetForBrowserContextInternal CHECK-fails if there is no
+  // ProfilePolicyConnector for |context| yet.
+  return GetInstance()->GetForBrowserContextInternal(context)->IsManaged();
+}
+
 void ProfilePolicyConnectorFactory::SetServiceForTesting(
     content::BrowserContext* context,
     ProfilePolicyConnector* connector) {
@@ -86,6 +94,18 @@ ProfilePolicyConnectorFactory::GetForBrowserContextInternal(
   // Get the connector for the original Profile, so that the incognito Profile
   // gets managed settings from the same PolicyService.
   content::BrowserContext* const original_context =
+      chrome::GetBrowserContextRedirectedInIncognito(context);
+  const ConnectorMap::const_iterator it = connectors_.find(original_context);
+  CHECK(it != connectors_.end());
+  return it->second;
+}
+
+const ProfilePolicyConnector*
+ProfilePolicyConnectorFactory::GetForBrowserContextInternal(
+    const content::BrowserContext* context) const {
+  // Get the connector for the original Profile, so that the incognito Profile
+  // gets managed settings from the same PolicyService.
+  const content::BrowserContext* const original_context =
       chrome::GetBrowserContextRedirectedInIncognito(context);
   const ConnectorMap::const_iterator it = connectors_.find(original_context);
   CHECK(it != connectors_.end());
