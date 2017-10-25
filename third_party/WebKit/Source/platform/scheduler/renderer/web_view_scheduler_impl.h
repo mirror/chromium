@@ -84,6 +84,10 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   void WillNavigateBackForwardSoon(WebFrameSchedulerImpl* frame_scheduler);
   void DidBeginProvisionalLoad(WebFrameSchedulerImpl* frame_scheduler);
   void DidEndProvisionalLoad(WebFrameSchedulerImpl* frame_scheduler);
+  void SetPendingDomStorageMessageCount(int pending_count);
+  void IncrementPendingLocalStorageMessageCount(const std::string& id);
+  void DecrementPendingLocalStorageMessageCount(const std::string& id);
+  void ClearPendingLocalStorageMessageCount(const std::string& id);
 
   void OnBeginNestedRunLoop();
   void OnExitNestedRunLoop();
@@ -128,12 +132,14 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   std::set<unsigned long> pending_loads_;
   std::set<WebFrameSchedulerImpl*> provisional_loads_;
   std::set<WebFrameSchedulerImpl*> expect_backward_forwards_navigation_;
+  std::map<std::string, int> pending_local_storage_message_count_;
   WebScheduler::InterventionReporter* intervention_reporter_;  // Not owned.
   RendererSchedulerImpl* renderer_scheduler_;
   VirtualTimePolicy virtual_time_policy_;
   scoped_refptr<WebTaskRunnerImpl> virtual_time_control_task_queue_;
   TaskHandle virtual_time_budget_expired_task_handle_;
   int background_parser_count_;
+  int pending_dom_storage_message_count_;
 
   // The maximum number amount of delayed task starvation we will allow in
   // VirtualTimePolicy::ADVANCE or VirtualTimePolicy::DETERMINISTIC_LOADING

@@ -1730,6 +1730,38 @@ void RendererSchedulerImpl::RemovePendingNavigation(NavigatingFrameType type) {
   }
 }
 
+void RendererSchedulerImpl::SetPendingDomStorageMessageCount(
+    int pending_count) {
+  if (!control_task_queue_->BelongsToCurrentThread()) {
+    control_task_queue_->PostTask(
+        FROM_HERE,
+        base::Bind(&RendererSchedulerImpl::SetPendingDomStorageMessageCount,
+                   base::Unretained(this), pending_count));
+    return;
+  }
+
+  for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+    web_view_scheduler->SetPendingDomStorageMessageCount(pending_count);
+}
+
+void RendererSchedulerImpl::IncrementPendingLocalStorageMessageCount(
+    const std::string& id) {
+  for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+    web_view_scheduler->IncrementPendingLocalStorageMessageCount(id);
+}
+
+void RendererSchedulerImpl::DecrementPendingLocalStorageMessageCount(
+    const std::string& id) {
+  for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+    web_view_scheduler->DecrementPendingLocalStorageMessageCount(id);
+}
+
+void RendererSchedulerImpl::ClearPendingLocalStorageMessageCount(
+    const std::string& id) {
+  for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+    web_view_scheduler->ClearPendingLocalStorageMessageCount(id);
+}
+
 std::unique_ptr<base::SingleSampleMetric>
 RendererSchedulerImpl::CreateMaxQueueingTimeMetric() {
   return base::SingleSampleMetricsFactory::Get()->CreateCustomCountsMetric(
