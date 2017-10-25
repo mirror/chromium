@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaf279b2_a2bdf938",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-25T01:40:34Z",
+      "side": 1,
+      "message": "nit: remove (c)",
+      "revId": "389aa80070cc1e419bc284b0941978d82a4f1b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
