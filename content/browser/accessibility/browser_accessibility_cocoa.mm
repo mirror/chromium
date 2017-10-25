@@ -297,7 +297,7 @@ NSAttributedString* GetAttributedTextForTextMarkerRange(
     std::swap(start_offset, end_offset);
 
   int trim_length = 0;
-  if ((end_object->IsSimpleTextControl() || end_object->IsTextOnlyObject()) &&
+  if ((end_object->IsPlainTextField() || end_object->IsTextOnlyObject()) &&
       end_offset < static_cast<int>(end_object->GetText().length())) {
     trim_length = static_cast<int>(end_object->GetText().length()) - end_offset;
   }
@@ -1470,9 +1470,9 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
     return NSAccessibilityGroupRole;
   }
 
-  if ((browserAccessibility_->IsSimpleTextControl() &&
+  if ((browserAccessibility_->IsPlainTextField() &&
        browserAccessibility_->HasState(ui::AX_STATE_MULTILINE)) ||
-      browserAccessibility_->IsRichTextControl()) {
+      browserAccessibility_->IsRichTextField()) {
     return NSAccessibilityTextAreaRole;
   }
 

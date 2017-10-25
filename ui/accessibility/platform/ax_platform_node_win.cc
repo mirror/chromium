@@ -1050,11 +1050,8 @@ STDMETHODIMP AXPlatformNodeWin::get_accValue(VARIANT var_id, BSTR* value) {
   }
 
   // Last resort (Use innerText)
-  if (result.empty() &&
-      (target->IsSimpleTextControl() || target->IsRichTextControl()) &&
-      !target->IsNativeTextControl()) {
+  if (result.empty() && target->IsRichTextField())
     result = target->GetInnerText();
-  }
 
   *value = SysAllocString(result.c_str());
   DCHECK(*value);
@@ -2991,7 +2988,6 @@ bool AXPlatformNodeWin::IsWebAreaForPresentationalIframe() {
 
 int32_t AXPlatformNodeWin::ComputeIA2State() {
   const AXNodeData& data = GetData();
-
   int32_t ia2_state = IA2_STATE_OPAQUE;
 
   const auto checked_state =
@@ -3010,21 +3006,8 @@ int32_t AXPlatformNodeWin::ComputeIA2State() {
   if (data.HasState(AX_STATE_HORIZONTAL))
     ia2_state |= IA2_STATE_HORIZONTAL;
 
-  const bool is_editable = data.HasState(AX_STATE_EDITABLE);
-  if (is_editable)
+  if (data.HasState(AX_STATE_EDITABLE))
     ia2_state |= IA2_STATE_EDITABLE;
-
-  if (IsRichTextControl() || IsEditField(data.role)) {
-    // Support multi/single line states if root editable or appropriate role.
-    // We support the edit box roles even if the area is not actually editable,
-    // because it is technically feasible for JS to implement the edit box
-    // by controlling selection.
-    if (data.HasState(AX_STATE_MULTILINE)) {
-      ia2_state |= IA2_STATE_MULTI_LINE;
-    } else {
-      ia2_state |= IA2_STATE_SINGLE_LINE;
-    }
-  }
 
   if (!GetStringAttribute(AX_ATTR_AUTO_COMPLETE).empty())
     ia2_state |= IA2_STATE_SUPPORTS_AUTOCOMPLETION;
@@ -3034,8 +3017,6 @@ int32_t AXPlatformNodeWin::ComputeIA2State() {
 
   switch (data.role) {
     case AX_ROLE_MENU_LIST_POPUP:
-      ia2_state &= ~(IA2_STATE_EDITABLE);
-      break;
     case AX_ROLE_MENU_LIST_OPTION:
       ia2_state &= ~(IA2_STATE_EDITABLE);
       break;
@@ -3394,7 +3375,7 @@ std::vector<base::string16> AXPlatformNodeWin::ComputeIA2Attributes() {
   // Expose input-text type attribute.
   base::string16 type;
   base::string16 html_tag = GetString16Attribute(AX_ATTR_HTML_TAG);
-  if (IsSimpleTextControl() && html_tag == L"input" &&
+  if (IsPlainTextField() && html_tag == L"input" &&
       GetData().GetHtmlAttribute("type", &type)) {
     SanitizeStringAttributeForIA2(type, &type);
     result.push_back(L"text-input-type:" + type);
@@ -3420,7 +3401,7 @@ base::string16 AXPlatformNodeWin::GetValue() {
 AXHypertext AXPlatformNodeWin::ComputeHypertext() {
   AXHypertext result;
 
-  if (IsSimpleTextControl()) {
+  if (IsPlainTextField()) {
     result.hypertext = GetValue();
     return result;
   }
@@ -3428,7 +3409,7 @@ AXHypertext AXPlatformNodeWin::ComputeHypertext() {
   int child_count = delegate_->GetChildCount();
 
   if (!child_count) {
-    if (IsRichTextControl()) {
+    if (IsRichTextField()) {
       // We don't want to expose any associated label in IA2 Hypertext.
       return result;
     }
@@ -3709,7 +3690,7 @@ void AXPlatformNodeWin::RemoveAlertTarget() {
 
 base::string16 AXPlatformNodeWin::TextForIAccessibleText() {
   // Special case allows us to get text even in non-HTML case, e.g. browser UI.
-  if (IsSimpleTextControl())
+  if (IsPlainTextField())
     return GetString16Attribute(AX_ATTR_VALUE);
   return GetText();
 }
@@ -4097,7 +4078,7 @@ void AXPlatformNodeWin::GetSelectionOffsets(int* selection_start,
                                             int* selection_end) {
   DCHECK(selection_start && selection_end);
 
-  if (IsSimpleTextControl() &&
+  if (IsPlainTextField() &&
       GetIntAttribute(ui::AX_ATTR_TEXT_SEL_START, selection_start) &&
       GetIntAttribute(ui::AX_ATTR_TEXT_SEL_END, selection_end)) {
     return;
