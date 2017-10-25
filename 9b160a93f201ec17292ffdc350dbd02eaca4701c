@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fff54_b17592da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-25T23:08:10Z",
+      "side": 1,
+      "message": "If I understand correctly, the only reason we need this is because of the toolbar, right?",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 82
+      },
+      "revId": "9b160a93f201ec17292ffdc350dbd02eaca4701c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01a24f4_6e99ce1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-25T23:08:10Z",
+      "side": 1,
+      "message": "Since we have access to the manager in this class, is there any reason we need to cache these?",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 51
+      },
+      "revId": "9b160a93f201ec17292ffdc350dbd02eaca4701c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
