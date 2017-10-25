@@ -7,6 +7,7 @@
 
 #include "base/callback.h"
 #include "base/compiler_specific.h"
+#include "base/metrics/field_trial.h"
 #include "base/threading/thread.h"
 #include "build/build_config.h"
 #include "content/public/test/test_host_resolver.h"
@@ -79,6 +80,8 @@ class BrowserTestBase : public testing::Test {
   // This is meant to be inherited only by the test harness.
   virtual void PostRunTestOnMainThread() = 0;
 
+  virtual bool IsContentBrowserTest() const;
+
   // Sets expected browser exit code, in case it's different than 0 (success).
   void set_expected_exit_code(int code) { expected_exit_code_ = code; }
 
@@ -147,6 +150,10 @@ class BrowserTestBase : public testing::Test {
 
   // Host resolver used during tests.
   std::unique_ptr<TestHostResolver> test_host_resolver_;
+
+  // A field trial list that's used to support field trials activated prior to
+  // browser start.
+  std::unique_ptr<base::FieldTrialList> field_trial_list_;
 
   // Expected exit code (default is 0).
   int expected_exit_code_;
