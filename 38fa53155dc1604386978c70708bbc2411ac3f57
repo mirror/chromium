@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e183e3f_79d4ff03",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-25T00:14:12Z",
+      "side": 1,
+      "message": "I chose this name since we may want to move the reservation code around (earlier in process lifetime).",
+      "range": {
+        "startLine": 88,
+        "startChar": 30,
+        "endLine": 88,
+        "endChar": 54
+      },
+      "revId": "38fa53155dc1604386978c70708bbc2411ac3f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
