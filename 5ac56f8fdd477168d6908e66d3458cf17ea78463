@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b841a34f_043afe86",
+        "filename": "android_webview/browser/render_thread_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-10-25T22:32:26Z",
+      "side": 1,
+      "message": "Do we still need to save and restore state in the !kModeDraw case?",
+      "range": {
+        "startLine": 319,
+        "startChar": 39,
+        "endLine": 319,
+        "endChar": 48
+      },
+      "revId": "5ac56f8fdd477168d6908e66d3458cf17ea78463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462e9e42_3c0f338c",
+        "filename": "android_webview/browser/scoped_app_gl_state_restore.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-10-25T22:32:26Z",
+      "side": 1,
+      "message": "Wdyt about inverting the sense of this test, and extracting the GL state save (and ditto with restore) into a method, so that there\u0027s no need for the comment below?",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 4
+      },
+      "revId": "5ac56f8fdd477168d6908e66d3458cf17ea78463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35cfc6bb_bbc2a91b",
+        "filename": "android_webview/browser/scoped_app_gl_state_restore.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-10-25T22:32:26Z",
+      "side": 1,
+      "message": "It\u0027s kind of odd that we restore the stencil state, but not the framebuffer binding. Is it currently wrong that we\u0027re missing that?",
+      "range": {
+        "startLine": 412,
+        "startChar": 2,
+        "endLine": 412,
+        "endChar": 17
+      },
+      "revId": "5ac56f8fdd477168d6908e66d3458cf17ea78463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
