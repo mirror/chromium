@@ -41,4 +41,9 @@ interface InterventionsInternalsPage {
   // InterventionsInternalsPageHandler when it receives a new MessageLog, and
   // publishes it on the javscript side.
   LogNewMessage(MessageLog log);
+
+  // Notify the page on the new estimated effective connection type is |type|.
+  // This is called by InterventionsInternalsPageHandler when the estimate
+  // network quality changes.
+  OnEffectiveConnectionTypeChanged(string type);
 };
