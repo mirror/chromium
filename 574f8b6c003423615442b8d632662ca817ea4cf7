@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7004290e_5299fa98",
+        "filename": "gpu/command_buffer/service/service_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T19:12:34Z",
+      "side": 1,
+      "message": "Could we make it go through Finch (see https://g3doc.corp.google.com/analysis/uma/g3doc/finch/guide.md?cl\u003dhead ) so that we can have an A/B test and isolate progressions/regressions/crashes caused by this change?",
+      "revId": "574f8b6c003423615442b8d632662ca817ea4cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
