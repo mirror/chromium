@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bbe8555_5e9c2d32",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T18:02:20Z",
+      "side": 1,
+      "message": "nit, but secondary lines should be aligned after the param name (importSyncType above).\n\n@param blah Stuff and things ...\n            and it is continued here ...\n            woohooo!!!",
+      "revId": "a523d63075252f96aa46face0d4c9b9e012d3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

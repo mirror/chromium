@@ -263,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "11a436a7_b135108d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-25T18:02:20Z",
+      "side": 1,
+      "message": "Sigh...that was my overlooking the previous code.  You were just replicating the existing listener/callback for canceling the progress dialog and I was thinking that was new code.\n\nsgtm and thank you again for being patient with me",
+      "parentUuid": "d991457a_5b1ec2b1",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "aec4e66c5b59b11789d6cc2b17c19181daba9faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc6ead0f_072577e1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
         "patchSetId": 5
