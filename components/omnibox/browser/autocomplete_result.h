@@ -46,8 +46,10 @@ class AutocompleteResult {
                      const ACMatches& matches);
 
   // Removes duplicates, puts the list in sorted order and culls to leave only
-  // the best GetMaxMatches() matches.  Sets the default match to the best match
-  // and updates the alternate nav URL.
+  // the best GetMaxMatches() matches. Sets the default match to the best match
+  // and updates the alternate nav URL. On desktop, it filters the matches to be
+  // either all tail suggestions (except for the first match) or no tail
+  // suggestions.
   void SortAndCull(const AutocompleteInput& input,
                    TemplateURLService* template_url_service);
 
@@ -96,6 +98,12 @@ class AutocompleteResult {
   // |alternate_nav_url_|.
   static GURL ComputeAlternateNavUrl(const AutocompleteInput& input,
                                      const AutocompleteMatch& match);
+
+  // If there are both tail and non-tail suggestions (ignoring what would be
+  // the default match), remove the tail suggestions.
+  static void MaybeCullTailSuggestions(
+      metrics::OmniboxEventProto::PageClassification page_classification,
+      ACMatches* matches);
 
   // Sort |matches| by destination, taking into account demotions based on
   // |page_classification| when resolving ties about which of several
