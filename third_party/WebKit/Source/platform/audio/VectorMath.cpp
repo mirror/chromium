@@ -27,16 +27,16 @@
 
 #include <stdint.h>
 #include "build/build_config.h"
+#if defined(ARCH_CPU_X86_FAMILY) && !defined(OS_MACOSX)
+#include "base/cpu.h"
+#include "platform/audio/cpu/x86/VectorMathAVX.h"
+#endif
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/CPU.h"
 #include "platform/wtf/MathExtras.h"
 
 #if defined(OS_MACOSX)
 #include <Accelerate/Accelerate.h>
-#endif
-
-#if defined(ARCH_CPU_X86_FAMILY)
-#include <emmintrin.h>
 #endif
 
 #if WTF_CPU_ARM_NEON
@@ -175,36 +175,502 @@ void Vclip(const float* source_p,
 }
 #else
 
+namespace {
+
+namespace Scalar {
+
+void Vadd(const float* source1p,
+          int source_stride1,
+          const float* source2p,
+          int source_stride2,
+          float* dest_p,
+          int dest_stride,
+          size_t frames_to_process) {
+  while (frames_to_process > 0u) {
+    *dest_p = *source1p + *source2p;
+    source1p += source_stride1;
+    source2p += source_stride2;
+    dest_p += dest_stride;
+    --frames_to_process;
+  }
+}
+
+void Vclip(const float* source_p,
+           int source_stride,
+           const float* low_threshold_p,
+           const float* high_threshold_p,
+           float* dest_p,
+           int dest_stride,
+           size_t frames_to_process) {
+  while (frames_to_process > 0u) {
+    *dest_p = clampTo(*source_p, *low_threshold_p, *high_threshold_p);
+    source_p += source_stride;
+    dest_p += dest_stride;
+    --frames_to_process;
+  }
+}
+
+void Vmaxmgv(const float* source_p,
+             int source_stride,
+             float* max_p,
+             size_t frames_to_process) {
+  while (frames_to_process > 0u) {
+    *max_p = std::max(*max_p, fabsf(*source_p));
+    source_p += source_stride;
+    --frames_to_process;
+  }
+}
+
+void Vmul(const float* source1p,
+          int source_stride1,
+          const float* source2p,
+          int source_stride2,
+          float* dest_p,
+          int dest_stride,
+          size_t frames_to_process) {
+  while (frames_to_process > 0u) {
+    *dest_p = *source1p * *source2p;
+    source1p += source_stride1;
+    source2p += source_stride2;
+    dest_p += dest_stride;
+    --frames_to_process;
+  }
+}
+
 void Vsma(const float* source_p,
           int source_stride,
           const float* scale,
           float* dest_p,
           int dest_stride,
           size_t frames_to_process) {
-  int n = frames_to_process;
+  while (frames_to_process > 0u) {
+    *dest_p += *source_p * *scale;
+    source_p += source_stride;
+    dest_p += dest_stride;
+    --frames_to_process;
+  }
+}
+
+void Vsmul(const float* source_p,
+           int source_stride,
+           const float* scale,
+           float* dest_p,
+           int dest_stride,
+           size_t frames_to_process) {
+  while (frames_to_process > 0u) {
+    *dest_p = *source_p * *scale;
+    source_p += source_stride;
+    dest_p += dest_stride;
+    --frames_to_process;
+  }
+}
+
+void Vsvesq(const float* source_p,
+            int source_stride,
+            float* sum_p,
+            size_t frames_to_process) {
+  while (frames_to_process > 0u) {
+    float sample = *source_p;
+    *sum_p += sample * sample;
+    source_p += source_stride;
+    --frames_to_process;
+  }
+}
+
+void Zvmul(const float* real1p,
+           const float* imag1p,
+           const float* real2p,
+           const float* imag2p,
+           float* real_dest_p,
+           float* imag_dest_p,
+           size_t frames_to_process) {
+  for (size_t i = 0u; i < frames_to_process; ++i) {
+    // Read and compute result before storing them, in case the
+    // destination is the same as one of the sources.
+    float real_result = real1p[i] * real2p[i] - imag1p[i] * imag2p[i];
+    float imag_result = real1p[i] * imag2p[i] + imag1p[i] * real2p[i];
+
+    real_dest_p[i] = real_result;
+    imag_dest_p[i] = imag_result;
+  }
+}
+
+}  // namespace Scalar
 
 #if defined(ARCH_CPU_X86_FAMILY)
-  if ((source_stride == 1) && (dest_stride == 1)) {
-    size_t i = 0u;
+namespace X86 {
 
-    // If the source_p address is not 16-byte aligned, the first several frames
-    // (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
-      dest_p[i] += *scale * source_p[i];
+struct FrameCounts {
+  size_t scalar_for_alignment;
+  size_t sse_for_alignment;
+  size_t avx;
+  size_t sse;
+  size_t scalar;
+};
 
-    // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vsma(source_p + i, scale, dest_p + i, sse_frames_to_process);
-      i += sse_frames_to_process;
+bool CPUSupportsAVX() {
+  static bool supports = ::base::CPU().has_avx();
+  return supports;
+}
+
+size_t GetAVXAlignmentOffsetInNumberOfFloats(const float* source_p) {
+  constexpr size_t kBytesPerRegister = AVX::kBitsPerRegister / 8u;
+  constexpr size_t kAlignmentOffsetMask = kBytesPerRegister - 1u;
+  size_t offset = reinterpret_cast<size_t>(source_p) & kAlignmentOffsetMask;
+  DCHECK_EQ(0u, offset % sizeof(*source_p));
+  return offset / sizeof(*source_p);
+}
+
+FrameCounts SplitFramesToProcess(const float* source_p,
+                                 size_t frames_to_process) {
+  FrameCounts counts = {0u, 0u, 0u, 0u, 0u};
+
+  const size_t avx_alignment_offset =
+      GetAVXAlignmentOffsetInNumberOfFloats(source_p);
+
+  // If the first frame is not AVX aligned, the first several frames (at most
+  // seven) must be processed separately for proper alignment.
+  const size_t total_for_alignment =
+      (AVX::kPackedFloatsPerRegister - avx_alignment_offset) &
+      ~AVX::kFramesToProcessMask;
+  const size_t scalar_for_alignment =
+      total_for_alignment & ~SSE::kFramesToProcessMask;
+  const size_t sse_for_alignment =
+      total_for_alignment & SSE::kFramesToProcessMask;
+
+  // Check which CPU features can be used based on the number of frames to
+  // process and based on CPU support.
+  const bool use_at_least_avx =
+      frames_to_process >= scalar_for_alignment + sse_for_alignment +
+                               AVX::kPackedFloatsPerRegister &&
+      CPUSupportsAVX();
+  const bool use_at_least_sse =
+      use_at_least_avx ||
+      frames_to_process >= scalar_for_alignment + SSE::kPackedFloatsPerRegister;
+
+  if (use_at_least_sse) {
+    counts.scalar_for_alignment = scalar_for_alignment;
+    frames_to_process -= counts.scalar_for_alignment;
+    // The remaining frames are SSE aligned.
+    DCHECK(SSE::IsAligned(source_p + counts.scalar_for_alignment));
+
+    if (use_at_least_avx) {
+      counts.sse_for_alignment = sse_for_alignment;
+      frames_to_process -= counts.sse_for_alignment;
+      // The remaining frames are AVX aligned.
+      DCHECK(AVX::IsAligned(source_p + counts.scalar_for_alignment +
+                            counts.sse_for_alignment));
+
+      // Process as many as possible of the remaining frames using AVX.
+      counts.avx = frames_to_process & AVX::kFramesToProcessMask;
+      frames_to_process -= counts.avx;
     }
 
-    source_p += i;
-    dest_p += i;
-    n -= i;
+    // Process as many as possible of the remaining frames using SSE.
+    counts.sse = frames_to_process & SSE::kFramesToProcessMask;
+    frames_to_process -= counts.sse;
   }
-#elif WTF_CPU_ARM_NEON
+
+  // Process the remaining frames separately.
+  counts.scalar = frames_to_process;
+  return counts;
+}
+
+void Vadd(const float* source1p,
+          int source_stride1,
+          const float* source2p,
+          int source_stride2,
+          float* dest_p,
+          int dest_stride,
+          size_t frames_to_process) {
+  size_t i = 0u;
+
+  if (source_stride1 == 1 && source_stride2 == 1 && dest_stride == 1) {
+    FrameCounts frame_counts =
+        SplitFramesToProcess(source1p, frames_to_process);
+
+    Scalar::Vadd(source1p + i, source_stride1, source2p + i, source_stride2,
+                 dest_p + i, dest_stride, frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse_for_alignment > 0u) {
+      SSE::Vadd(source1p + i, source2p + i, dest_p + i,
+                frame_counts.sse_for_alignment);
+      i += frame_counts.sse_for_alignment;
+    }
+    if (frame_counts.avx > 0u) {
+      AVX::Vadd(source1p + i, source2p + i, dest_p + i, frame_counts.avx);
+      i += frame_counts.avx;
+    }
+    if (frame_counts.sse > 0u) {
+      SSE::Vadd(source1p + i, source2p + i, dest_p + i, frame_counts.sse);
+      i += frame_counts.sse;
+    }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
+  }
+
+  Scalar::Vadd(source1p + i, source_stride1, source2p + i, source_stride2,
+               dest_p + i, dest_stride, frames_to_process - i);
+}
+
+void Vclip(const float* source_p,
+           int source_stride,
+           const float* low_threshold_p,
+           const float* high_threshold_p,
+           float* dest_p,
+           int dest_stride,
+           size_t frames_to_process) {
+  size_t i = 0u;
+
+  if (source_stride == 1 && dest_stride == 1) {
+    FrameCounts frame_counts =
+        SplitFramesToProcess(source_p, frames_to_process);
+
+    Scalar::Vclip(source_p + i, source_stride, low_threshold_p,
+                  high_threshold_p, dest_p + i, dest_stride,
+                  frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse_for_alignment > 0u) {
+      SSE::Vclip(source_p + i, low_threshold_p, high_threshold_p, dest_p + i,
+                 frame_counts.sse_for_alignment);
+      i += frame_counts.sse_for_alignment;
+    }
+    if (frame_counts.avx > 0u) {
+      AVX::Vclip(source_p + i, low_threshold_p, high_threshold_p, dest_p + i,
+                 frame_counts.avx);
+      i += frame_counts.avx;
+    }
+    if (frame_counts.sse > 0u) {
+      SSE::Vclip(source_p + i, low_threshold_p, high_threshold_p, dest_p + i,
+                 frame_counts.sse);
+      i += frame_counts.sse;
+    }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
+  }
+
+  Scalar::Vclip(source_p + i, source_stride, low_threshold_p, high_threshold_p,
+                dest_p + i, dest_stride, frames_to_process - i);
+}
+
+void Vmaxmgv(const float* source_p,
+             int source_stride,
+             float* max_p,
+             size_t frames_to_process) {
+  size_t i = 0u;
+
+  if (source_stride == 1) {
+    FrameCounts frame_counts =
+        SplitFramesToProcess(source_p, frames_to_process);
+
+    Scalar::Vmaxmgv(source_p + i, source_stride, max_p,
+                    frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse_for_alignment > 0u) {
+      SSE::Vmaxmgv(source_p + i, max_p, frame_counts.sse_for_alignment);
+      i += frame_counts.sse_for_alignment;
+    }
+    if (frame_counts.avx > 0u) {
+      AVX::Vmaxmgv(source_p + i, max_p, frame_counts.avx);
+      i += frame_counts.avx;
+    }
+    if (frame_counts.sse > 0u) {
+      SSE::Vmaxmgv(source_p + i, max_p, frame_counts.sse);
+      i += frame_counts.sse;
+    }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
+  }
+
+  Scalar::Vmaxmgv(source_p + i, source_stride, max_p, frames_to_process - i);
+}
+
+void Vmul(const float* source1p,
+          int source_stride1,
+          const float* source2p,
+          int source_stride2,
+          float* dest_p,
+          int dest_stride,
+          size_t frames_to_process) {
+  size_t i = 0u;
+
+  if (source_stride1 == 1 && source_stride2 == 1 && dest_stride == 1) {
+    FrameCounts frame_counts =
+        SplitFramesToProcess(source1p, frames_to_process);
+
+    Scalar::Vmul(source1p + i, source_stride1, source2p + i, source_stride2,
+                 dest_p + i, dest_stride, frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse_for_alignment > 0u) {
+      SSE::Vmul(source1p + i, source2p + i, dest_p + i,
+                frame_counts.sse_for_alignment);
+      i += frame_counts.sse_for_alignment;
+    }
+    if (frame_counts.avx > 0u) {
+      AVX::Vmul(source1p + i, source2p + i, dest_p + i, frame_counts.avx);
+      i += frame_counts.avx;
+    }
+    if (frame_counts.sse > 0u) {
+      SSE::Vmul(source1p + i, source2p + i, dest_p + i, frame_counts.sse);
+      i += frame_counts.sse;
+    }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
+  }
+
+  Scalar::Vmul(source1p + i, source_stride1, source2p + i, source_stride2,
+               dest_p + i, dest_stride, frames_to_process - i);
+}
+
+void Vsma(const float* source_p,
+          int source_stride,
+          const float* scale,
+          float* dest_p,
+          int dest_stride,
+          size_t frames_to_process) {
+  size_t i = 0u;
+
+  if (source_stride == 1 && dest_stride == 1) {
+    FrameCounts frame_counts =
+        SplitFramesToProcess(source_p, frames_to_process);
+
+    Scalar::Vsma(source_p + i, source_stride, scale, dest_p + i, dest_stride,
+                 frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse_for_alignment > 0u) {
+      SSE::Vsma(source_p + i, scale, dest_p + i,
+                frame_counts.sse_for_alignment);
+      i += frame_counts.sse_for_alignment;
+    }
+    if (frame_counts.avx > 0u) {
+      AVX::Vsma(source_p + i, scale, dest_p + i, frame_counts.avx);
+      i += frame_counts.avx;
+    }
+    if (frame_counts.sse > 0u) {
+      SSE::Vsma(source_p + i, scale, dest_p + i, frame_counts.sse);
+      i += frame_counts.sse;
+    }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
+  }
+
+  Scalar::Vsma(source_p + i, source_stride, scale, dest_p + i, dest_stride,
+               frames_to_process - i);
+}
+
+void Vsmul(const float* source_p,
+           int source_stride,
+           const float* scale,
+           float* dest_p,
+           int dest_stride,
+           size_t frames_to_process) {
+  size_t i = 0u;
+
+  if (source_stride == 1 && dest_stride == 1) {
+    FrameCounts frame_counts =
+        SplitFramesToProcess(source_p, frames_to_process);
+
+    Scalar::Vsmul(source_p + i, source_stride, scale, dest_p + i, dest_stride,
+                  frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse_for_alignment > 0u) {
+      SSE::Vsmul(source_p + i, scale, dest_p + i,
+                 frame_counts.sse_for_alignment);
+      i += frame_counts.sse_for_alignment;
+    }
+    if (frame_counts.avx > 0u) {
+      AVX::Vsmul(source_p + i, scale, dest_p + i, frame_counts.avx);
+      i += frame_counts.avx;
+    }
+    if (frame_counts.sse > 0u) {
+      SSE::Vsmul(source_p + i, scale, dest_p + i, frame_counts.sse);
+      i += frame_counts.sse;
+    }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
+  }
+
+  Scalar::Vsmul(source_p + i, source_stride, scale, dest_p + i, dest_stride,
+                frames_to_process - i);
+}
+
+void Vsvesq(const float* source_p,
+            int source_stride,
+            float* sum_p,
+            size_t frames_to_process) {
+  size_t i = 0u;
+
+  if (source_stride == 1) {
+    FrameCounts frame_counts =
+        SplitFramesToProcess(source_p, frames_to_process);
+
+    Scalar::Vsvesq(source_p + i, source_stride, sum_p,
+                   frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse_for_alignment > 0u) {
+      SSE::Vsvesq(source_p + i, sum_p, frame_counts.sse_for_alignment);
+      i += frame_counts.sse_for_alignment;
+    }
+    if (frame_counts.avx > 0u) {
+      AVX::Vsvesq(source_p + i, sum_p, frame_counts.avx);
+      i += frame_counts.avx;
+    }
+    if (frame_counts.sse > 0u) {
+      SSE::Vsvesq(source_p + i, sum_p, frame_counts.sse);
+      i += frame_counts.sse;
+    }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
+  }
+
+  Scalar::Vsvesq(source_p + i, source_stride, sum_p, frames_to_process - i);
+}
+
+void Zvmul(const float* real1p,
+           const float* imag1p,
+           const float* real2p,
+           const float* imag2p,
+           float* real_dest_p,
+           float* imag_dest_p,
+           size_t frames_to_process) {
+  FrameCounts frame_counts = SplitFramesToProcess(real1p, frames_to_process);
+  size_t i = 0u;
+
+  Scalar::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i, real_dest_p + i,
+                imag_dest_p + i, frame_counts.scalar_for_alignment);
+  i += frame_counts.scalar_for_alignment;
+  if (frame_counts.sse_for_alignment > 0u) {
+    SSE::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i, real_dest_p + i,
+               imag_dest_p + i, frame_counts.sse_for_alignment);
+    i += frame_counts.sse_for_alignment;
+  }
+  if (frame_counts.avx > 0u) {
+    AVX::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i, real_dest_p + i,
+               imag_dest_p + i, frame_counts.avx);
+    i += frame_counts.avx;
+  }
+  if (frame_counts.sse > 0u) {
+    SSE::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i, real_dest_p + i,
+               imag_dest_p + i, frame_counts.sse);
+    i += frame_counts.sse;
+  }
+  DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
+
+  Scalar::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i, real_dest_p + i,
+                imag_dest_p + i, frames_to_process - i);
+}
+
+}  // namespace X86
+#endif  // defined(ARCH_CPU_X86_FAMILY)
+
+}  // namespace
+
+void Vsma(const float* source_p,
+          int source_stride,
+          const float* scale,
+          float* dest_p,
+          int dest_stride,
+          size_t frames_to_process) {
+#if defined(ARCH_CPU_X86_FAMILY)
+  X86::Vsma(source_p, source_stride, scale, dest_p, dest_stride,
+            frames_to_process);
+#else
+  int n = frames_to_process;
+
+#if WTF_CPU_ARM_NEON
   if ((source_stride == 1) && (dest_stride == 1)) {
     int tail_frames = n % 4;
     const float* end_p = dest_p + n - tail_frames;
@@ -244,12 +710,8 @@ void Vsma(const float* source_p,
     }
   }
 #endif
-  while (n) {
-    *dest_p += *source_p * *scale;
-    source_p += source_stride;
-    dest_p += dest_stride;
-    n--;
-  }
+  Scalar::Vsma(source_p, source_stride, scale, dest_p, dest_stride, n);
+#endif
 }
 
 void Vsmul(const float* source_p,
@@ -258,30 +720,13 @@ void Vsmul(const float* source_p,
            float* dest_p,
            int dest_stride,
            size_t frames_to_process) {
+#if defined(ARCH_CPU_X86_FAMILY)
+  X86::Vsmul(source_p, source_stride, scale, dest_p, dest_stride,
+             frames_to_process);
+#else
   int n = frames_to_process;
 
-#if defined(ARCH_CPU_X86_FAMILY)
-  if ((source_stride == 1) && (dest_stride == 1)) {
-    size_t i = 0u;
-
-    // If the source_p address is not 16-byte aligned, the first several frames
-    // (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
-      dest_p[i] = *scale * source_p[i];
-
-    // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vsmul(source_p + i, scale, dest_p + i, sse_frames_to_process);
-      i += sse_frames_to_process;
-    }
-
-    source_p += i;
-    dest_p += i;
-    n -= i;
-  }
-#elif WTF_CPU_ARM_NEON
+#if WTF_CPU_ARM_NEON
   if ((source_stride == 1) && (dest_stride == 1)) {
     float k = *scale;
     int tail_frames = n % 4;
@@ -315,12 +760,8 @@ void Vsmul(const float* source_p,
     }
   }
 #endif
-  float k = *scale;
-  while (n--) {
-    *dest_p = k * *source_p;
-    source_p += source_stride;
-    dest_p += dest_stride;
-  }
+  Scalar::Vsmul(source_p, source_stride, scale, dest_p, dest_stride, n);
+#endif
 }
 
 void Vadd(const float* source1p,
@@ -330,34 +771,16 @@ void Vadd(const float* source1p,
           float* dest_p,
           int dest_stride,
           size_t frames_to_process) {
+#if defined(ARCH_CPU_X86_FAMILY)
+  X86::Vadd(source1p, source_stride1, source2p, source_stride2, dest_p,
+            dest_stride, frames_to_process);
+#else
   int n = frames_to_process;
 
-#if defined(ARCH_CPU_X86_FAMILY)
+#if WTF_CPU_ARM_NEON
   if ((source_stride1 == 1) && (source_stride2 == 1) && (dest_stride == 1)) {
-    size_t i = 0u;
-
-    // If the source1p address is not 16-byte aligned, the first several frames
-    // (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source1p + i) && i < frames_to_process; ++i)
-      dest_p[i] = source1p[i] + source2p[i];
-
-    // Now the source1p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vadd(source1p + i, source2p + i, dest_p + i, sse_frames_to_process);
-      i += sse_frames_to_process;
-    }
-
-    source1p += i;
-    source2p += i;
-    dest_p += i;
-    n -= i;
-  }
-#elif WTF_CPU_ARM_NEON
-  if ((source_stride1 == 1) && (source_stride2 == 1) && (dest_stride == 1)) {
-    int tail_frames = n % 4;
-    const float* end_p = dest_p + n - tail_frames;
+    size_t tail_frames = n % 4u;
+    const float* end_p = dest_p + frame_counts - tail_frames;
 
     while (dest_p < end_p) {
       float32x4_t source1 = vld1q_f32(source1p);
@@ -391,12 +814,9 @@ void Vadd(const float* source1p,
     }
   }
 #endif
-  while (n--) {
-    *dest_p = *source1p + *source2p;
-    source1p += source_stride1;
-    source2p += source_stride2;
-    dest_p += dest_stride;
-  }
+  Scalar::Vadd(source1p, source_stride1, source2p, source_stride2, dest_p,
+               dest_stride, n);
+#endif
 }
 
 void Vmul(const float* source1p,
@@ -406,31 +826,13 @@ void Vmul(const float* source1p,
           float* dest_p,
           int dest_stride,
           size_t frames_to_process) {
+#if defined(ARCH_CPU_X86_FAMILY)
+  X86::Vmul(source1p, source_stride1, source2p, source_stride2, dest_p,
+            dest_stride, frames_to_process);
+#else
   int n = frames_to_process;
 
-#if defined(ARCH_CPU_X86_FAMILY)
-  if ((source_stride1 == 1) && (source_stride2 == 1) && (dest_stride == 1)) {
-    size_t i = 0u;
-
-    // If the source1p address is not 16-byte aligned, the first several
-    // frames  (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source1p + i) && i < frames_to_process; ++i)
-      dest_p[i] = source1p[i] * source2p[i];
-
-    // Now the source1p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vmul(source1p + i, source2p + i, dest_p + i, sse_frames_to_process);
-      i += sse_frames_to_process;
-    }
-
-    source1p += i;
-    source2p += i;
-    dest_p += i;
-    n -= i;
-  }
-#elif WTF_CPU_ARM_NEON
+#if WTF_CPU_ARM_NEON
   if ((source_stride1 == 1) && (source_stride2 == 1) && (dest_stride == 1)) {
     int tail_frames = n % 4;
     const float* end_p = dest_p + n - tail_frames;
@@ -467,13 +869,9 @@ void Vmul(const float* source1p,
     }
   }
 #endif
-  while (n) {
-    *dest_p = *source1p * *source2p;
-    source1p += source_stride1;
-    source2p += source_stride2;
-    dest_p += dest_stride;
-    n--;
-  }
+  Scalar::Vmul(source1p, source_stride1, source2p, source_stride2, dest_p,
+               dest_stride, n);
+#endif
 }
 
 void Zvmul(const float* real1p,
@@ -483,29 +881,12 @@ void Zvmul(const float* real1p,
            float* real_dest_p,
            float* imag_dest_p,
            size_t frames_to_process) {
-  unsigned i = 0;
 #if defined(ARCH_CPU_X86_FAMILY)
-  // If the real1p address is not 16-byte aligned, the first several
-  // frames  (at most three) should be processed separately.
-  for (; !SSE::IsAligned(real1p + i) && i < frames_to_process; ++i) {
-    // Read and compute result before storing them, in case the
-    // destination is the same as one of the sources.
-    float real_result = real1p[i] * real2p[i] - imag1p[i] * imag2p[i];
-    float imag_result = real1p[i] * imag2p[i] + imag1p[i] * real2p[i];
-
-    real_dest_p[i] = real_result;
-    imag_dest_p[i] = imag_result;
-  }
-
-  // Now the real1p+i address is 16-byte aligned. Start to apply SSE.
-  size_t sse_frames_to_process =
-      (frames_to_process - i) & SSE::kFramesToProcessMask;
-  if (sse_frames_to_process > 0u) {
-    SSE::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i, real_dest_p + i,
-               imag_dest_p + i, sse_frames_to_process);
-    i += sse_frames_to_process;
-  }
-#elif WTF_CPU_ARM_NEON
+  X86::Zvmul(real1p, imag1p, real2p, imag2p, real_dest_p, imag_dest_p,
+             frames_to_process);
+#else
+  unsigned i = 0;
+#if WTF_CPU_ARM_NEON
   unsigned end_size = frames_to_process - frames_to_process % 4;
   while (i < end_size) {
     float32x4_t real1 = vld1q_f32(real1p + i);
@@ -522,45 +903,23 @@ void Zvmul(const float* real1p,
     i += 4;
   }
 #endif
-  for (; i < frames_to_process; ++i) {
-    // Read and compute result before storing them, in case the
-    // destination is the same as one of the sources.
-    float real_result = real1p[i] * real2p[i] - imag1p[i] * imag2p[i];
-    float imag_result = real1p[i] * imag2p[i] + imag1p[i] * real2p[i];
-
-    real_dest_p[i] = real_result;
-    imag_dest_p[i] = imag_result;
-  }
+  Scalar::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i, real_dest_p + i,
+                imag_dest_p + i, frames_to_process - i);
+#endif
 }
 
 void Vsvesq(const float* source_p,
             int source_stride,
             float* sum_p,
             size_t frames_to_process) {
-  int n = frames_to_process;
   float sum = 0;
 
 #if defined(ARCH_CPU_X86_FAMILY)
-  if (source_stride == 1) {
-    size_t i = 0u;
+  X86::Vsvesq(source_p, source_stride, &sum, frames_to_process);
+#else
+  int n = frames_to_process;
 
-    // If the source_p address is not 16-byte aligned, the first several
-    // frames  (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
-      sum += source_p[i] * source_p[i];
-
-    // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vsvesq(source_p + i, &sum, sse_frames_to_process);
-      i += sse_frames_to_process;
-    }
-
-    source_p += i;
-    n -= i;
-  }
-#elif WTF_CPU_ARM_NEON
+#if WTF_CPU_ARM_NEON
   if (source_stride == 1) {
     int tail_frames = n % 4;
     const float* end_p = source_p + n - tail_frames;
@@ -581,12 +940,8 @@ void Vsvesq(const float* source_p,
     n = tail_frames;
   }
 #endif
-
-  while (n--) {
-    float sample = *source_p;
-    sum += sample * sample;
-    source_p += source_stride;
-  }
+  Scalar::Vsvesq(source_p, source_stride, &sum, n);
+#endif
 
   DCHECK(sum_p);
   *sum_p = sum;
@@ -596,30 +951,14 @@ void Vmaxmgv(const float* source_p,
              int source_stride,
              float* max_p,
              size_t frames_to_process) {
-  int n = frames_to_process;
   float max = 0;
 
 #if defined(ARCH_CPU_X86_FAMILY)
-  if (source_stride == 1) {
-    size_t i = 0u;
+  X86::Vmaxmgv(source_p, source_stride, &max, frames_to_process);
+#else
+  int n = frames_to_process;
 
-    // If the source_p address is not 16-byte aligned, the first several
-    // frames  (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
-      max = std::max(max, fabsf(source_p[i]));
-
-    // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vmaxmgv(source_p + i, &max, sse_frames_to_process);
-      i += sse_frames_to_process;
-    }
-
-    source_p += i;
-    n -= i;
-  }
-#elif WTF_CPU_ARM_NEON
+#if WTF_CPU_ARM_NEON
   if (source_stride == 1) {
     int tail_frames = n % 4;
     const float* end_p = source_p + n - tail_frames;
@@ -662,11 +1001,8 @@ void Vmaxmgv(const float* source_p,
     max = std::max(max, vMax[3]);
   }
 #endif
-
-  while (n--) {
-    max = std::max(max, fabsf(*source_p));
-    source_p += source_stride;
-  }
+  Scalar::Vmaxmgv(source_p, source_stride, &max, n);
+#endif
 
   DCHECK(max_p);
   *max_p = max;
@@ -679,7 +1015,6 @@ void Vclip(const float* source_p,
            float* dest_p,
            int dest_stride,
            size_t frames_to_process) {
-  int n = frames_to_process;
   float low_threshold = *low_threshold_p;
   float high_threshold = *high_threshold_p;
 
@@ -693,28 +1028,12 @@ void Vclip(const float* source_p,
 #endif
 
 #if defined(ARCH_CPU_X86_FAMILY)
-  if (source_stride == 1 && dest_stride == 1) {
-    size_t i = 0u;
+  X86::Vclip(source_p, source_stride, &low_threshold, &high_threshold, dest_p,
+             dest_stride, frames_to_process);
+#else
+  int n = frames_to_process;
 
-    // If the source_p address is not 16-byte aligned, the first several
-    // frames  (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
-      dest_p[i] = clampTo(source_p[i], low_threshold, high_threshold);
-
-    // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vclip(source_p + i, &low_threshold, &high_threshold, dest_p + i,
-                 sse_frames_to_process);
-      i += sse_frames_to_process;
-    }
-
-    source_p += i;
-    dest_p += i;
-    n -= i;
-  }
-#elif WTF_CPU_ARM_NEON
+#if WTF_CPU_ARM_NEON
   if ((source_stride == 1) && (dest_stride == 1)) {
     int tail_frames = n % 4;
     const float* end_p = dest_p + n - tail_frames;
@@ -752,11 +1071,9 @@ void Vclip(const float* source_p,
     }
   }
 #endif
-  while (n--) {
-    *dest_p = clampTo(*source_p, low_threshold, high_threshold);
-    source_p += source_stride;
-    dest_p += dest_stride;
-  }
+  Scalar::Vclip(source_p, source_stride, &low_threshold, &high_threshold,
+                dest_p, dest_stride, n);
+#endif
 }
 
 #endif  // defined(OS_MACOSX)
