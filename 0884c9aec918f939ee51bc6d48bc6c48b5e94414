@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c2d5ed8_237c2530",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-25T18:58:14Z",
+      "side": 1,
+      "message": "I believe BrowserThread is no longer the preferred way of threading. Instead, we should use sequences and SEQUENCE_CHECKER.",
+      "revId": "0884c9aec918f939ee51bc6d48bc6c48b5e94414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6fc5fa_dfe629aa",
+        "filename": "components/crash/content/browser/crash_dump_manager_android_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-25T18:58:14Z",
+      "side": 1,
+      "message": "Since this is testing a singleton, there should be an AtExitManager member to clean it up between test runs.",
+      "revId": "0884c9aec918f939ee51bc6d48bc6c48b5e94414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
