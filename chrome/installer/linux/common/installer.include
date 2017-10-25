@@ -366,4 +366,18 @@ stage_install_common() {
       exit 1
     fi
   done
+
+  # Make sure we don't unexpectedly leak any symbols.
+  local prog_syms="$(nm -D ${BUILDDIR}/${PROGNAME} | \
+    awk 'NF==3{print $3;}{}')"
+  local allowed_syms="$(cat \
+    ${BUILDDIR}/installer/common/chrome_symbol_export_whitelist.txt | \
+    grep -ve '^#' | grep -ve '^$')"
+  local leaked_syms="$(grep -vFxf <(echo "${allowed_syms}") \
+    <(echo "${prog_syms}"))"
+  if [ ! -z "${leaked_syms}" ]; then
+    echo "Leaked symbosl found in ${PROGNAME}:"
+    echo "${leaked_syms}"
+    exit 1
+  fi
 }
