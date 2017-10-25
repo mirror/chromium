@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55f4c33d_227e6ffd",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_blocking.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T20:29:56Z",
+      "side": 1,
+      "message": "Hmm... getServerDomain is:\n\nfunction getServerDomain(navigationType, opt_host, opt_scheme) {\n  validateNavigationType(navigationType);\n  if (navigationType \u003d\u003d initiators.BROWSER_INITIATED \u0026\u0026\n      usingBrowserSideNavigation)\n    return undefined;\n  else\n    return getServerURL(undefined, opt_host, opt_scheme).slice(0, -1);\n}\n\nSo it seems like this effectively has all initiators here (for browser-initiated navigations) set to undefined, unconditionally?  For a browser-initiated navigation, that seems like it makes sense to me, but if so we should just unconditionally use undefined.",
+      "revId": "a992815c1ab9a8b76c2dac9b3426f98bf34f9e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
