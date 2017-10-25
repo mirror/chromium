@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "907f5e24_40d1d081",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-25T17:49:20Z",
+      "side": 1,
+      "message": "This somehow sounds weird to me. So there was never a focus function in the first place here? How is that possible? Where was the original focus function call from js would route to?",
+      "revId": "7f89d0a209873894654e1a14f47ce24135b56418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
