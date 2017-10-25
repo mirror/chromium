@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d611f029_15819bf7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/load-resource-for-frontend.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-25T22:28:04Z",
+      "side": 1,
+      "message": "Remove this.",
+      "revId": "ea42df32e4083fe1d0002e4da8aefd6078085baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b6b06d_3a72a738",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/network-cyrillic-xhr.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-25T22:28:04Z",
+      "side": 1,
+      "message": "Move this to a comment or addResult it.",
+      "revId": "ea42df32e4083fe1d0002e4da8aefd6078085baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
