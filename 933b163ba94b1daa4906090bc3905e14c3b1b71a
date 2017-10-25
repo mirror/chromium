@@ -22,6 +22,30 @@
       "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb3e31b_50e1592b",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-25T13:44:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand what you\u0027re saying. :/\nShould probably move the block from 1095 into the if (result \u003d\u003d noErr) block for clarity, but it should effectively be the same.\n\nIf changing the noise reduction state is not supported (through these means), we\u0027ll just want to do nothing for now. Perhaps trace this with stats as well, since it\u0027s a bit experimental. Would be fun to see how often it\u0027s supported.\n\nHmm, perhaps other devices could have this as well, where we\u0027d want to _not_ disable it. Try to filter on built-in devices only?",
+      "parentUuid": "c304e768_9bce1829",
+      "range": {
+        "startLine": 1092,
+        "startChar": 8,
+        "endLine": 1092,
+        "endChar": 65
+      },
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
