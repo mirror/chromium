@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df8fada7_f0003de1",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-25T12:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a866577_219f7b28",
+      "range": {
+        "startLine": 71,
+        "startChar": 50,
+        "endLine": 71,
+        "endChar": 80
+      },
+      "revId": "e149f7ae7b2f96616afad95425b7452002eacf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38ed3878_b06fd8e9",
         "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "54a220de_9c220da7",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-25T12:49:24Z",
+      "side": 1,
+      "message": "Done\n\nTests already exist in SigninSettingsTestCase. I didn\u0027t run them. But they don\u0027t test the promoAction (only the identity).",
+      "parentUuid": "38ed3878_b06fd8e9",
+      "range": {
+        "startLine": 1012,
+        "startChar": 15,
+        "endLine": 1012,
+        "endChar": 27
+      },
+      "revId": "e149f7ae7b2f96616afad95425b7452002eacf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3b08c5e_d5d35a20",
         "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "e149f7ae7b2f96616afad95425b7452002eacf75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ac1aaa_116cedf2",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-25T12:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3b08c5e_d5d35a20",
+      "range": {
+        "startLine": 1015,
+        "startChar": 28,
+        "endLine": 1015,
+        "endChar": 56
+      },
+      "revId": "e149f7ae7b2f96616afad95425b7452002eacf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
