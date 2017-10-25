@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1eccecd_b5fd2312",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T19:15:10Z",
+      "side": 1,
+      "message": "Would you mind landing unrelated changes in a separate CL?",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 68
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a523db3_0000bfc1",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T19:15:10Z",
+      "side": 1,
+      "message": "These guards miss trailing underscore. You can use tools/boilerplate.py to create source files in Chromium.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 53
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be433f46_38a86ca2",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T19:15:10Z",
+      "side": 1,
+      "message": "Could you please elaborate in comments. Explain what autofill is and what can be done using this class.",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b6a285_9bcdf3a7",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T19:15:10Z",
+      "side": 1,
+      "message": "I still don\u0027t understand why |matchingPrefix| is a part of this API. Is it here for performance? Or because |fetchSuggestionsForFormWithName:| will be called from |didFocusOnFieldWithName:| or |didInputInFieldWithName:| and client wants to filter suggestions by |value| anyway? Does |matchingPrefix| filters suggestion by |value|? Could you please update the comments to answer those questions.",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a075ebed_eb3dc0e3",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T19:15:10Z",
+      "side": 1,
+      "message": "Does this need to be nullable? @\"\" and nil work in the same way, so maybe we should just disallow nil?",
+      "range": {
+        "startLine": 34,
+        "startChar": 41,
+        "endLine": 34,
+        "endChar": 49
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95682dda_354270e4",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T19:15:10Z",
+      "side": 1,
+      "message": "Do we need a completion handler here? If no, maybe a comment that API is async?",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 24
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7adabea0_7f38f941",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T19:15:10Z",
+      "side": 1,
+      "message": "s/Fired/Called\n\nThat\u0027s a term we use in other delegate callbacks.",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 8
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e564f7cc_57c77320",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T19:15:10Z",
+      "side": 1,
+      "message": "Please explain the arguments in the comments (maybe protocol level comments).",
+      "range": {
+        "startLine": 22,
+        "startChar": 44,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b64fe8e_4047bc10",
+        "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T19:15:10Z",
+      "side": 1,
+      "message": "Maybe \"html form element\"? \n\nSame for other 2 properties.",
+      "range": {
+        "startLine": 21,
+        "startChar": 36,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576aae38_780382bd",
+        "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T19:15:10Z",
+      "side": 1,
+      "message": "Change all properties to copy?",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b094f043_caf5a568",
+        "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-25T19:15:10Z",
+      "side": 1,
+      "message": "Is it localized?",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "5ade6015939baa89219e6d7255905583aa551c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
