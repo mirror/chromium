@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "001d09a8_e081147f",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-25T14:28:42Z",
+      "side": 1,
+      "message": "This is used in a lot of tests. Let\u0027s use an enum instead of a bool to make the tests easier to read.",
+      "range": {
+        "startLine": 213,
+        "startChar": 31,
+        "endLine": 213,
+        "endChar": 40
+      },
+      "revId": "d3c0d317bedaf75054e42cc039ef59e8de5dbd15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1010d9_076093e1",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-25T14:28:42Z",
+      "side": 1,
+      "message": "s/CL/Cl/",
+      "range": {
+        "startLine": 726,
+        "startChar": 5,
+        "endLine": 726,
+        "endChar": 13
+      },
+      "revId": "d3c0d317bedaf75054e42cc039ef59e8de5dbd15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
