@@ -88,6 +88,24 @@
       "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1866ae_33648edb",
+        "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T17:56:37Z",
+      "side": 1,
+      "message": "yes, that\u0027s the case for both.\n\nOK, I\u0027ll improve the CL description, and add some documentation here.",
+      "parentUuid": "28a1eccc_09b27cec",
+      "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
