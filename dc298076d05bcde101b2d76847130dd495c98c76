@@ -277,6 +277,30 @@
     },
     {
       "key": {
+        "uuid": "c8f3d448_b59b6dbc",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-25T21:22:15Z",
+      "side": 1,
+      "message": "Oh, right. Didn\u0027t notice the static ...",
+      "parentUuid": "01b9a11b_b3cce3b9",
+      "range": {
+        "startLine": 101,
+        "startChar": 37,
+        "endLine": 101,
+        "endChar": 38
+      },
+      "revId": "dc298076d05bcde101b2d76847130dd495c98c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad377c11_204162ea",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
         "patchSetId": 3
