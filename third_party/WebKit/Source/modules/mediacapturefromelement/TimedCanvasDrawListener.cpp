@@ -4,7 +4,6 @@
 
 #include "modules/mediacapturefromelement/TimedCanvasDrawListener.h"
 
-#include <memory>
 #include "core/dom/TaskRunnerHelper.h"
 #include "third_party/skia/include/core/SkImage.h"
 
@@ -35,9 +34,11 @@ TimedCanvasDrawListener* TimedCanvasDrawListener::Create(
   return listener;
 }
 
-void TimedCanvasDrawListener::SendNewFrame(sk_sp<SkImage> image) {
+void TimedCanvasDrawListener::SendNewFrame(
+    sk_sp<SkImage> image,
+    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider) {
   frame_capture_requested_ = false;
-  CanvasDrawListener::SendNewFrame(std::move(image));
+  CanvasDrawListener::SendNewFrame(image, context_provider);
 }
 
 void TimedCanvasDrawListener::RequestFrameTimerFired(TimerBase*) {
