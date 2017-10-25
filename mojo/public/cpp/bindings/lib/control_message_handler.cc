@@ -65,8 +65,7 @@ ControlMessageHandler::ControlMessageHandler(uint32_t interface_version)
     : interface_version_(interface_version) {
 }
 
-ControlMessageHandler::~ControlMessageHandler() {
-}
+ControlMessageHandler::~ControlMessageHandler() = default;
 
 bool ControlMessageHandler::Accept(Message* message) {
   if (!ValidateControlRequestWithoutResponse(message))

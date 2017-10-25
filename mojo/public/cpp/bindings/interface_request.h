@@ -29,7 +29,7 @@ class InterfaceRequest {
  public:
   // Constructs an empty InterfaceRequest, representing that the client is not
   // requesting an implementation of Interface.
-  InterfaceRequest() {}
+  InterfaceRequest() = default;
   InterfaceRequest(decltype(nullptr)) {}
 
   explicit InterfaceRequest(ScopedMessagePipeHandle handle)

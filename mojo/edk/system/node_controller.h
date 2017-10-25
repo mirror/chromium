@@ -51,7 +51,7 @@ class NodeController : public ports::NodeDelegate,
     virtual void OnPortStatusChanged() = 0;
 
    protected:
-    ~PortObserver() override {}
+    ~PortObserver() override = default;
   };
 
   // |core| owns and out-lives us.

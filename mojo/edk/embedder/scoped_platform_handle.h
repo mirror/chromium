@@ -16,7 +16,7 @@ namespace edk {
 
 class MOJO_SYSTEM_IMPL_EXPORT ScopedPlatformHandle {
  public:
-  ScopedPlatformHandle() {}
+  ScopedPlatformHandle() = default;
   explicit ScopedPlatformHandle(PlatformHandle handle) : handle_(handle) {}
   ~ScopedPlatformHandle() { handle_.CloseIfNecessary(); }
 

@@ -19,7 +19,7 @@ class MapDataView {
  public:
   using Data_ = typename internal::MojomTypeTraits<MapDataView<K, V>>::Data;
 
-  MapDataView() {}
+  MapDataView() = default;
 
   MapDataView(Data_* data, internal::SerializationContext* context)
       : keys_(data ? data->keys.Get() : nullptr, context),

@@ -162,7 +162,7 @@ class ThreadDestructionObserver :
 
 }  // namespace
 
-NodeController::~NodeController() {}
+NodeController::~NodeController() = default;
 
 NodeController::NodeController(Core* core)
     : core_(core),

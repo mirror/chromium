@@ -27,7 +27,7 @@ class MapReaderBase {
 
   explicit MapReaderBase(MaybeConstUserType& input)
       : input_(input), iter_(Traits::GetBegin(input_)) {}
-  ~MapReaderBase() {}
+  ~MapReaderBase() = default;
 
   size_t GetSize() const { return Traits::GetSize(input_); }
 
@@ -49,7 +49,7 @@ class MapKeyReader : public MapReaderBase<MaybeConstUserType> {
   using MaybeConstIterator = typename Base::MaybeConstIterator;
 
   explicit MapKeyReader(MaybeConstUserType& input) : Base(input) {}
-  ~MapKeyReader() {}
+  ~MapKeyReader() = default;
 
   using GetNextResult =
       decltype(Traits::GetKey(std::declval<MaybeConstIterator&>()));
@@ -69,7 +69,7 @@ class MapValueReader : public MapReaderBase<MaybeConstUserType> {
   using MaybeConstIterator = typename Base::MaybeConstIterator;
 
   explicit MapValueReader(MaybeConstUserType& input) : Base(input) {}
-  ~MapValueReader() {}
+  ~MapValueReader() = default;
 
   using GetNextResult =
       decltype(Traits::GetValue(std::declval<MaybeConstIterator&>()));

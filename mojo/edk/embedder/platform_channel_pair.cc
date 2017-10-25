@@ -15,8 +15,7 @@ namespace edk {
 const char PlatformChannelPair::kMojoPlatformChannelHandleSwitch[] =
     "mojo-platform-channel-handle";
 
-PlatformChannelPair::~PlatformChannelPair() {
-}
+PlatformChannelPair::~PlatformChannelPair() = default;
 
 ScopedPlatformHandle PlatformChannelPair::PassServerHandle() {
   return std::move(server_handle_);

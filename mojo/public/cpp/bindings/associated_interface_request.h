@@ -20,7 +20,7 @@ class AssociatedInterfaceRequest {
  public:
   // Constructs an empty AssociatedInterfaceRequest, representing that the
   // client is not requesting an implementation of Interface.
-  AssociatedInterfaceRequest() {}
+  AssociatedInterfaceRequest() = default;
   AssociatedInterfaceRequest(decltype(nullptr)) {}
 
   explicit AssociatedInterfaceRequest(ScopedInterfaceEndpointHandle handle)

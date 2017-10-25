@@ -85,7 +85,7 @@ void RecordEnum(sample::Enum* storage,
 
 class RequestResponseTest : public BindingsTestBase {
  public:
-  RequestResponseTest() {}
+  RequestResponseTest() = default;
   ~RequestResponseTest() override { base::RunLoop().RunUntilIdle(); }
 
   void PumpMessages() { base::RunLoop().RunUntilIdle(); }

@@ -24,7 +24,7 @@ class MOJO_COMMON_EXPORT DataPipeDrainer {
     virtual void OnDataComplete() = 0;
 
    protected:
-    virtual ~Client() {}
+    virtual ~Client() = default;
   };
 
   DataPipeDrainer(Client*, mojo::ScopedDataPipeConsumerHandle source);

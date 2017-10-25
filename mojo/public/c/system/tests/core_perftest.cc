@@ -32,7 +32,7 @@ class MessagePipeWriterThread : public base::SimpleThread {
         handle_(handle),
         num_bytes_(num_bytes),
         num_writes_(0) {}
-  ~MessagePipeWriterThread() override {}
+  ~MessagePipeWriterThread() override = default;
 
   void Run() override {
     char buffer[10000];
@@ -72,7 +72,7 @@ class MessagePipeReaderThread : public base::SimpleThread {
       : SimpleThread("MessagePipeReaderThread"),
         handle_(handle),
         num_reads_(0) {}
-  ~MessagePipeReaderThread() override {}
+  ~MessagePipeReaderThread() override = default;
 
   void Run() override {
     for (;;) {
@@ -114,8 +114,8 @@ class MessagePipeReaderThread : public base::SimpleThread {
 
 class CorePerftest : public testing::Test {
  public:
-  CorePerftest() {}
-  ~CorePerftest() override {}
+  CorePerftest() = default;
+  ~CorePerftest() override = default;
 
   static void NoOp(void* /*closure*/) {}
 

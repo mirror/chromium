@@ -109,11 +109,9 @@ class MockDispatcher : public Dispatcher {
 
 // CoreTestBase ----------------------------------------------------------------
 
-CoreTestBase::CoreTestBase() {
-}
+CoreTestBase::CoreTestBase() = default;
 
-CoreTestBase::~CoreTestBase() {
-}
+CoreTestBase::~CoreTestBase() = default;
 
 MojoHandle CoreTestBase::CreateMockHandle(CoreTestBase::MockHandleInfo* info) {
   scoped_refptr<MockDispatcher> dispatcher = MockDispatcher::Create(info);
@@ -139,8 +137,7 @@ CoreTestBase_MockHandleInfo::CoreTestBase_MockHandleInfo()
       begin_read_data_call_count_(0),
       end_read_data_call_count_(0) {}
 
-CoreTestBase_MockHandleInfo::~CoreTestBase_MockHandleInfo() {
-}
+CoreTestBase_MockHandleInfo::~CoreTestBase_MockHandleInfo() = default;
 
 unsigned CoreTestBase_MockHandleInfo::GetCtorCallCount() const {
   base::AutoLock locker(lock_);

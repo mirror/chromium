@@ -27,7 +27,7 @@ using mojo::internal::MultiplexRouter;
 
 class MultiplexRouterTest : public testing::Test {
  public:
-  MultiplexRouterTest() {}
+  MultiplexRouterTest() = default;
 
   void SetUp() override {
     MessagePipe pipe;

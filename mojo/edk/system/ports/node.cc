@@ -1367,7 +1367,7 @@ Node::DelegateHolder::DelegateHolder(Node* node, NodeDelegate* delegate)
   DCHECK(node_);
 }
 
-Node::DelegateHolder::~DelegateHolder() {}
+Node::DelegateHolder::~DelegateHolder() = default;
 
 #if DCHECK_IS_ON()
 void Node::DelegateHolder::EnsureSafeDelegateAccess() const {

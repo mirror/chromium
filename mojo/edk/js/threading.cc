@@ -41,8 +41,7 @@ v8::Local<v8::Value> Threading::GetModule(v8::Isolate* isolate) {
   return templ->NewInstance();
 }
 
-Threading::Threading() {
-}
+Threading::Threading() = default;
 
 }  // namespace js
 }  // namespace edk

@@ -308,7 +308,7 @@ struct MultiplexRouter::Task {
     return base::WrapUnique(task);
   }
 
-  ~Task() {}
+  ~Task() = default;
 
   bool IsMessageTask() const { return type == MESSAGE; }
   bool IsNotifyErrorTask() const { return type == NOTIFY_ERROR; }

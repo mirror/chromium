@@ -8,9 +8,9 @@
 
 namespace mojo {
 
-AssociatedBindingBase::AssociatedBindingBase() {}
+AssociatedBindingBase::AssociatedBindingBase() = default;
 
-AssociatedBindingBase::~AssociatedBindingBase() {}
+AssociatedBindingBase::~AssociatedBindingBase() = default;
 
 void AssociatedBindingBase::AddFilter(std::unique_ptr<MessageReceiver> filter) {
   DCHECK(endpoint_client_);

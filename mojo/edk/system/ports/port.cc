@@ -17,7 +17,7 @@ Port::Port(uint64_t next_sequence_num_to_send,
       remove_proxy_on_last_message(false),
       peer_closed(false) {}
 
-Port::~Port() {}
+Port::~Port() = default;
 
 }  // namespace ports
 }  // namespace edk

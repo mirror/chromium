@@ -42,7 +42,7 @@ class WatchContext : public base::RefCountedThreadSafe<WatchContext> {
  private:
   friend class base::RefCountedThreadSafe<WatchContext>;
 
-  ~WatchContext() {}
+  ~WatchContext() = default;
 
   void Notify(MojoResult result, MojoHandleSignalsState state) {
     if (wait_result_ == MOJO_RESULT_UNKNOWN) {

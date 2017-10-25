@@ -26,7 +26,7 @@ namespace {
 
 class MessageAccumulator : public MessageReceiver {
  public:
-  MessageAccumulator() {}
+  MessageAccumulator() = default;
   explicit MessageAccumulator(const base::Closure& closure)
       : closure_(closure) {}
 
@@ -89,7 +89,7 @@ class ReentrantMessageAccumulator : public MessageAccumulator {
 
 class ConnectorTest : public testing::Test {
  public:
-  ConnectorTest() {}
+  ConnectorTest() = default;
 
   void SetUp() override { CreateMessagePipe(nullptr, &handle0_, &handle1_); }
 

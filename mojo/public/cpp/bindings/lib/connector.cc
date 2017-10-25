@@ -70,7 +70,7 @@ class Connector::RunLoopNestingObserver
     base::MessageLoop::current()->AddDestructionObserver(this);
   }
 
-  ~RunLoopNestingObserver() override {}
+  ~RunLoopNestingObserver() override = default;
 
   // base::RunLoop::NestingObserver:
   void OnBeginNestedRunLoop() override {

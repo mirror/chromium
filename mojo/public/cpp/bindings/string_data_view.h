@@ -13,7 +13,7 @@ namespace mojo {
 // Access to the contents of a serialized string.
 class StringDataView {
  public:
-  StringDataView() {}
+  StringDataView() = default;
 
   StringDataView(internal::String_Data* data,
                  internal::SerializationContext* context)

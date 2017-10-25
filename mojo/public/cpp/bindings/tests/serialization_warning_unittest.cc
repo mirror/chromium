@@ -41,7 +41,7 @@ CreateTestNestedHandleArray() {
 
 class SerializationWarningTest : public testing::Test {
  public:
-  ~SerializationWarningTest() override {}
+  ~SerializationWarningTest() override = default;
 
  protected:
   template <typename T>

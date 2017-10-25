@@ -9,12 +9,12 @@
 namespace mojo {
 namespace test {
 
-PickledStructChromium::PickledStructChromium() {}
+PickledStructChromium::PickledStructChromium() = default;
 
 PickledStructChromium::PickledStructChromium(int foo, int bar)
     : foo_(foo), bar_(bar) {}
 
-PickledStructChromium::~PickledStructChromium() {}
+PickledStructChromium::~PickledStructChromium() = default;
 
 bool operator==(const PickledStructChromium& a,
                 const PickledStructChromium& b) {

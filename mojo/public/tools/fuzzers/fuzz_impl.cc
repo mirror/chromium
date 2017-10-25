@@ -10,7 +10,7 @@
 FuzzImpl::FuzzImpl(fuzz::mojom::FuzzInterfaceRequest request)
     : binding_(this, std::move(request)) {}
 
-FuzzImpl::~FuzzImpl() {}
+FuzzImpl::~FuzzImpl() = default;
 
 void FuzzImpl::FuzzBasic() {}
 

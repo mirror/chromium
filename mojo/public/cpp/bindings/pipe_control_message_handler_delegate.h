@@ -21,7 +21,7 @@ class PipeControlMessageHandlerDelegate {
       const base::Optional<DisconnectReason>& reason) = 0;
 
  protected:
-  virtual ~PipeControlMessageHandlerDelegate() {}
+  virtual ~PipeControlMessageHandlerDelegate() = default;
 };
 
 }  // namespace mojo

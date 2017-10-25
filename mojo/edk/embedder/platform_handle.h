@@ -55,7 +55,7 @@ struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandle {
 };
 #elif defined(OS_POSIX)
 struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandle {
-  PlatformHandle() {}
+  PlatformHandle() = default;
   explicit PlatformHandle(int handle) : handle(handle) {}
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   explicit PlatformHandle(mach_port_t port)

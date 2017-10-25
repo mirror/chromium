@@ -86,8 +86,8 @@ base::Closure Sequence(const base::Closure& first,
 
 class PingImpl : public PingService {
  public:
-  PingImpl() {}
-  ~PingImpl() override {}
+  PingImpl() = default;
+  ~PingImpl() override = default;
 
   void set_ping_handler(const base::Closure& handler) {
     ping_handler_ = handler;
@@ -322,8 +322,8 @@ TEST_P(BindingSetTest, BindingSetGetBadMessageCallbackOutlivesBindingSet) {
 
 class PingProviderImpl : public AssociatedPingProvider, public PingService {
  public:
-  PingProviderImpl() {}
-  ~PingProviderImpl() override {}
+  PingProviderImpl() = default;
+  ~PingProviderImpl() override = default;
 
   void set_new_ping_context(int context) { new_ping_context_ = context; }
 

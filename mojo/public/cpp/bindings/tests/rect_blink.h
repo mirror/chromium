@@ -15,7 +15,7 @@ namespace test {
 // support negative origin coordinates and is not copyable.
 class RectBlink {
  public:
-  RectBlink() {}
+  RectBlink() = default;
   RectBlink(int x, int y, int width, int height) :
       x_(x), y_(y), width_(width), height_(height) {
     DCHECK_GE(x_, 0);
@@ -23,7 +23,7 @@ class RectBlink {
     DCHECK_GE(width_, 0);
     DCHECK_GE(height_, 0);
   }
-  ~RectBlink() {}
+  ~RectBlink() = default;
 
   int x() const { return x_; }
   void setX(int x) {

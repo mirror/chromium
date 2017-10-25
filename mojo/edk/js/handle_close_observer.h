@@ -14,7 +14,7 @@ class HandleCloseObserver {
   virtual void OnWillCloseHandle() = 0;
 
  protected:
-  virtual ~HandleCloseObserver() {}
+  virtual ~HandleCloseObserver() = default;
 };
 
 }  // namespace js

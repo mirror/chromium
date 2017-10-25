@@ -97,7 +97,7 @@ class MOJO_CPP_BINDINGS_EXPORT AssociatedInterfacePtrStateBase {
 template <typename Interface>
 class AssociatedInterfacePtrState : public AssociatedInterfacePtrStateBase {
  public:
-  AssociatedInterfacePtrState() {}
+  AssociatedInterfacePtrState() = default;
   ~AssociatedInterfacePtrState() = default;
 
   Interface* instance() {

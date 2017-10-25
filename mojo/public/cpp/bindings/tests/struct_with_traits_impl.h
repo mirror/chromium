@@ -133,7 +133,7 @@ class UnionWithTraitsBase {
  public:
   enum class Type { INT32, STRUCT };
 
-  virtual ~UnionWithTraitsBase() {}
+  virtual ~UnionWithTraitsBase() = default;
 
   Type type() const { return type_; }
 
@@ -143,7 +143,7 @@ class UnionWithTraitsBase {
 
 class UnionWithTraitsInt32 : public UnionWithTraitsBase {
  public:
-  UnionWithTraitsInt32() {}
+  UnionWithTraitsInt32() = default;
   explicit UnionWithTraitsInt32(int32_t value) : value_(value) {}
 
   ~UnionWithTraitsInt32() override;

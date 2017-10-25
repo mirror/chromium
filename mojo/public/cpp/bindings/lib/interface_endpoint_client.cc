@@ -116,7 +116,7 @@ InterfaceEndpointClient::SyncResponseInfo::SyncResponseInfo(
     bool* in_response_received)
     : response_received(in_response_received) {}
 
-InterfaceEndpointClient::SyncResponseInfo::~SyncResponseInfo() {}
+InterfaceEndpointClient::SyncResponseInfo::~SyncResponseInfo() = default;
 
 // ----------------------------------------------------------------------------
 
@@ -125,7 +125,7 @@ InterfaceEndpointClient::HandleIncomingMessageThunk::HandleIncomingMessageThunk(
     : owner_(owner) {}
 
 InterfaceEndpointClient::HandleIncomingMessageThunk::
-    ~HandleIncomingMessageThunk() {}
+    ~HandleIncomingMessageThunk() = default;
 
 bool InterfaceEndpointClient::HandleIncomingMessageThunk::Accept(
     Message* message) {

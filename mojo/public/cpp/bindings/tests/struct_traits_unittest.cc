@@ -60,7 +60,7 @@ void ExpectError(InterfacePtr<T> *proxy, const base::Closure& callback) {
 // This implements the generated Chromium variant of RectService.
 class ChromiumRectServiceImpl : public RectService {
  public:
-  ChromiumRectServiceImpl() {}
+  ChromiumRectServiceImpl() = default;
 
   // mojo::test::RectService:
   void AddRect(const RectChromium& r) override {
@@ -84,7 +84,7 @@ class ChromiumRectServiceImpl : public RectService {
 // This implements the generated Blink variant of RectService.
 class BlinkRectServiceImpl : public blink::RectService {
  public:
-  BlinkRectServiceImpl() {}
+  BlinkRectServiceImpl() = default;
 
   // mojo::test::blink::RectService:
   void AddRect(const RectBlink& r) override {
@@ -113,7 +113,7 @@ class BlinkRectServiceImpl : public blink::RectService {
 class StructTraitsTest : public testing::Test,
                          public TraitsTestService {
  public:
-  StructTraitsTest() {}
+  StructTraitsTest() = default;
 
  protected:
   void BindToChromiumService(RectServiceRequest request) {

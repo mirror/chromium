@@ -238,8 +238,8 @@ TEST_P(BindingTest, Unbind) {
 
 class IntegerAccessorImpl : public sample::IntegerAccessor {
  public:
-  IntegerAccessorImpl() {}
-  ~IntegerAccessorImpl() override {}
+  IntegerAccessorImpl() = default;
+  ~IntegerAccessorImpl() override = default;
 
  private:
   // sample::IntegerAccessor implementation.
@@ -298,8 +298,8 @@ TEST_P(BindingTest, ErrorHandleNotRunWhilePaused) {
 
 class PingServiceImpl : public test::PingService {
  public:
-  PingServiceImpl() {}
-  ~PingServiceImpl() override {}
+  PingServiceImpl() = default;
+  ~PingServiceImpl() override = default;
 
   // test::PingService:
   void Ping(const PingCallback& callback) override {
@@ -322,7 +322,7 @@ class CallbackFilter : public MessageReceiver {
  public:
   explicit CallbackFilter(const base::Closure& callback)
       : callback_(callback) {}
-  ~CallbackFilter() override {}
+  ~CallbackFilter() override = default;
 
   static std::unique_ptr<CallbackFilter> Wrap(const base::Closure& callback) {
     return std::make_unique<CallbackFilter>(callback);

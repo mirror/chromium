@@ -29,7 +29,7 @@ namespace mojo {
 // pipe.
 class MessagePipeHandle : public Handle {
  public:
-  MessagePipeHandle() {}
+  MessagePipeHandle() = default;
   explicit MessagePipeHandle(MojoHandle value) : Handle(value) {}
 
   // Copying and assignment allowed.
@@ -143,8 +143,7 @@ inline MessagePipe::MessagePipe(const MojoCreateMessagePipeOptions& options) {
   DCHECK(handle1.is_valid());
 }
 
-inline MessagePipe::~MessagePipe() {
-}
+inline MessagePipe::~MessagePipe() = default;
 
 }  // namespace mojo
 

@@ -35,8 +35,8 @@ SimpleWatcher::ReadyCallback NotReached() {
 
 class SimpleWatcherTest : public testing::Test {
  public:
-  SimpleWatcherTest() {}
-  ~SimpleWatcherTest() override {}
+  SimpleWatcherTest() = default;
+  ~SimpleWatcherTest() override = default;
 
  private:
   base::MessageLoop message_loop_;

@@ -54,8 +54,7 @@ MojoRunnerDelegate::MojoRunnerDelegate()
   AddBuiltinModule(Threading::kModuleName, Threading::GetModule);
 }
 
-MojoRunnerDelegate::~MojoRunnerDelegate() {
-}
+MojoRunnerDelegate::~MojoRunnerDelegate() = default;
 
 void MojoRunnerDelegate::Start(gin::Runner* runner,
                                MojoHandle pipe,

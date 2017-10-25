@@ -15,8 +15,8 @@ namespace {
 
 class LazySerializationTest : public testing::Test {
  public:
-  LazySerializationTest() {}
-  ~LazySerializationTest() override {}
+  LazySerializationTest() = default;
+  ~LazySerializationTest() override = default;
 
  private:
   base::test::ScopedTaskEnvironment task_environment_;
@@ -29,7 +29,7 @@ class TestUnserializedStructImpl : public test::TestUnserializedStruct {
   explicit TestUnserializedStructImpl(
       test::TestUnserializedStructRequest request)
       : binding_(this, std::move(request)) {}
-  ~TestUnserializedStructImpl() override {}
+  ~TestUnserializedStructImpl() override = default;
 
   // test::TestUnserializedStruct:
   void PassUnserializedStruct(

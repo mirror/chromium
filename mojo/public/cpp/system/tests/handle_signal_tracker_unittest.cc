@@ -16,8 +16,8 @@ namespace {
 
 class HandleSignalTrackerTest : public testing::Test {
  public:
-  HandleSignalTrackerTest() {}
-  ~HandleSignalTrackerTest() override {}
+  HandleSignalTrackerTest() = default;
+  ~HandleSignalTrackerTest() override = default;
 
   void WaitForNextNotification(HandleSignalTracker* tracker) {
     base::RunLoop loop;

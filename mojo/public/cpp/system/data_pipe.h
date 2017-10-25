@@ -25,7 +25,7 @@ namespace mojo {
 // data pipe.
 class DataPipeProducerHandle : public Handle {
  public:
-  DataPipeProducerHandle() {}
+  DataPipeProducerHandle() = default;
   explicit DataPipeProducerHandle(MojoHandle value) : Handle(value) {}
 
   // Writes to a data pipe. See |MojoWriteData| for complete documentation.
@@ -64,7 +64,7 @@ static_assert(sizeof(ScopedDataPipeProducerHandle) ==
 // data pipe.
 class DataPipeConsumerHandle : public Handle {
  public:
-  DataPipeConsumerHandle() {}
+  DataPipeConsumerHandle() = default;
   explicit DataPipeConsumerHandle(MojoHandle value) : Handle(value) {}
 
   // Reads from a data pipe. See |MojoReadData()| for complete documentation.
@@ -161,8 +161,7 @@ inline DataPipe::DataPipe(const MojoCreateDataPipeOptions& options) {
   DCHECK_EQ(MOJO_RESULT_OK, result);
 }
 
-inline DataPipe::~DataPipe() {
-}
+inline DataPipe::~DataPipe() = default;
 
 }  // namespace mojo
 

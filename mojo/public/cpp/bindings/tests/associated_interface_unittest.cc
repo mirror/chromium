@@ -42,7 +42,7 @@ class IntegerSenderImpl : public IntegerSender {
   explicit IntegerSenderImpl(AssociatedInterfaceRequest<IntegerSender> request)
       : binding_(this, std::move(request)) {}
 
-  ~IntegerSenderImpl() override {}
+  ~IntegerSenderImpl() override = default;
 
   void set_notify_send_method_called(
       const base::Callback<void(int32_t)>& callback) {
@@ -71,7 +71,7 @@ class IntegerSenderConnectionImpl : public IntegerSenderConnection {
       InterfaceRequest<IntegerSenderConnection> request)
       : binding_(this, std::move(request)) {}
 
-  ~IntegerSenderConnectionImpl() override {}
+  ~IntegerSenderConnectionImpl() override = default;
 
   void GetSender(AssociatedInterfaceRequest<IntegerSender> sender) override {
     IntegerSenderImpl* sender_impl = new IntegerSenderImpl(std::move(sender));
@@ -350,7 +350,7 @@ class NotificationCounter {
         current_count_(0),
         notify_finish_(notify_finish) {}
 
-  ~NotificationCounter() {}
+  ~NotificationCounter() = default;
 
   // Okay to call from any thread.
   void OnGotNotification() {
@@ -605,7 +605,7 @@ class PingServiceImpl : public PingService {
  public:
   explicit PingServiceImpl(PingServiceAssociatedRequest request)
       : binding_(this, std::move(request)) {}
-  ~PingServiceImpl() override {}
+  ~PingServiceImpl() override = default;
 
   AssociatedBinding<PingService>& binding() { return binding_; }
 
@@ -629,7 +629,7 @@ class PingProviderImpl : public AssociatedPingProvider {
  public:
   explicit PingProviderImpl(AssociatedPingProviderRequest request)
       : binding_(this, std::move(request)) {}
-  ~PingProviderImpl() override {}
+  ~PingProviderImpl() override = default;
 
   // AssociatedPingProvider:
   void GetPing(PingServiceAssociatedRequest request) override {
@@ -667,7 +667,7 @@ class CallbackFilter : public MessageReceiver {
  public:
   explicit CallbackFilter(const base::Closure& callback)
       : callback_(callback) {}
-  ~CallbackFilter() override {}
+  ~CallbackFilter() override = default;
 
   static std::unique_ptr<CallbackFilter> Wrap(const base::Closure& callback) {
     return std::make_unique<CallbackFilter>(callback);

@@ -39,7 +39,7 @@ struct LambdaBinder {
 
 class TestSyncCommonImpl {
  public:
-  TestSyncCommonImpl() {}
+  TestSyncCommonImpl() = default;
 
   using PingHandler = base::Callback<void(const base::Callback<void()>&)>;
   using PingBinder = LambdaBinder<const base::Callback<void()>&>;
@@ -308,7 +308,7 @@ class TestSyncServiceSequence {
 
 class SyncMethodTest : public testing::Test {
  public:
-  SyncMethodTest() {}
+  SyncMethodTest() = default;
   ~SyncMethodTest() override { base::RunLoop().RunUntilIdle(); }
 
  protected:
@@ -318,8 +318,8 @@ class SyncMethodTest : public testing::Test {
 template <typename TypeParam>
 class SyncMethodCommonTest : public SyncMethodTest {
  public:
-  SyncMethodCommonTest() {}
-  ~SyncMethodCommonTest() override {}
+  SyncMethodCommonTest() = default;
+  ~SyncMethodCommonTest() override = default;
 
   void SetUp() override {
     BindingsTestBase::SetupSerializationBehavior(TypeParam::kSerializationMode);
@@ -328,8 +328,8 @@ class SyncMethodCommonTest : public SyncMethodTest {
 
 class SyncMethodAssociatedTest : public SyncMethodTest {
  public:
-  SyncMethodAssociatedTest() {}
-  ~SyncMethodAssociatedTest() override {}
+  SyncMethodAssociatedTest() = default;
+  ~SyncMethodAssociatedTest() override = default;
 
  protected:
   void SetUp() override {
