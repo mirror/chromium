@@ -20,21 +20,17 @@
 
 namespace gl {
 
-DriverWGL g_driver_wgl;
+DriverWGL g_driver_wgl;  // Exists in .bss
 
 void DriverWGL::InitializeStaticBindings() {
-  fn.wglChoosePixelFormatARBFn = 0;
   fn.wglCopyContextFn =
       reinterpret_cast<wglCopyContextProc>(GetGLProcAddress("wglCopyContext"));
   fn.wglCreateContextFn = reinterpret_cast<wglCreateContextProc>(
       GetGLProcAddress("wglCreateContext"));
-  fn.wglCreateContextAttribsARBFn = 0;
   fn.wglCreateLayerContextFn = reinterpret_cast<wglCreateLayerContextProc>(
       GetGLProcAddress("wglCreateLayerContext"));
-  fn.wglCreatePbufferARBFn = 0;
   fn.wglDeleteContextFn = reinterpret_cast<wglDeleteContextProc>(
       GetGLProcAddress("wglDeleteContext"));
-  fn.wglDestroyPbufferARBFn = 0;
   fn.wglGetCurrentContextFn = reinterpret_cast<wglGetCurrentContextProc>(
       GetGLProcAddress("wglGetCurrentContext"));
   fn.wglGetCurrentDCFn = reinterpret_cast<wglGetCurrentDCProc>(
@@ -45,14 +41,10 @@ void DriverWGL::InitializeStaticBindings() {
   fn.wglGetExtensionsStringEXTFn =
       reinterpret_cast<wglGetExtensionsStringEXTProc>(
           GetGLProcAddress("wglGetExtensionsStringEXT"));
-  fn.wglGetPbufferDCARBFn = 0;
   fn.wglMakeCurrentFn =
       reinterpret_cast<wglMakeCurrentProc>(GetGLProcAddress("wglMakeCurrent"));
-  fn.wglQueryPbufferARBFn = 0;
-  fn.wglReleasePbufferDCARBFn = 0;
   fn.wglShareListsFn =
       reinterpret_cast<wglShareListsProc>(GetGLProcAddress("wglShareLists"));
-  fn.wglSwapIntervalEXTFn = 0;
   fn.wglSwapLayerBuffersFn = reinterpret_cast<wglSwapLayerBuffersProc>(
       GetGLProcAddress("wglSwapLayerBuffers"));
 }
