@@ -98,11 +98,17 @@ namespace web {
 class WebState;
 
 // Bridge to use an id<CRWWebStateObserver> as a web::WebStateObserver.
-// Will be added/removed as an observer of the underlying WebState during
-// construction/destruction. Instances should be owned by instances of the
-// class they're bridging.
 class WebStateObserverBridge : public web::WebStateObserver {
  public:
+  // Use this constructor to control which WebStates to observe. It it the
+  // responsibility of calling code to add/remove the instance from the
+  // WebStates observer lists.
+  WebStateObserverBridge(id<CRWWebStateObserver> observer);
+  // Use this constructor when using automatic registration/unregistration
+  // of the WebStateObserver. Deprecated. TODO(crbug.com/775684): remove
+  // once all observer have been converted.
+  // TODO(crbug.com/775684): this is deprecated. Remove once all observer
+  // have been converted to manage the registration with WebState directly.
   WebStateObserverBridge(web::WebState* web_state,
                          id<CRWWebStateObserver> observer);
   ~WebStateObserverBridge() override;
@@ -144,6 +150,12 @@ class WebStateObserverBridge : public web::WebStateObserver {
   void DidStopLoading(web::WebState* web_state) override;
 
  private:
+  // The WebState this instance is observing. Will be null after
+  // WebStateDestroyed has been called or if registration is manual.
+  // TODO(crbug.com/775684): this is deprecated. Remove once all observer
+  // have been converted to manage the registration with WebState directly.
+  web::WebState* web_state_ = nullptr;
+
   __weak id<CRWWebStateObserver> observer_ = nil;
   DISALLOW_COPY_AND_ASSIGN(WebStateObserverBridge);
 };
