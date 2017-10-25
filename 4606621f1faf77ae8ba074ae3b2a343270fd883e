@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4204d0c_a08d4496",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-25T22:52:44Z",
+      "side": 0,
+      "message": "This changed slightly in the move. There\u0027s no longer a need to get the keyboardShortcuts from the manager because the shortcuts know who they are :)",
+      "parentUuid": "37206136_d2de8a0a",
+      "revId": "4606621f1faf77ae8ba074ae3b2a343270fd883e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eff82cf8_686cb916",
         "filename": "chrome/browser/resources/md_extensions/service.js",
         "patchSetId": 5
