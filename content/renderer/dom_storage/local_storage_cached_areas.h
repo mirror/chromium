@@ -12,6 +12,12 @@
 #include "content/common/content_export.h"
 #include "url/origin.h"
 
+namespace blink {
+namespace scheduler {
+class RendererScheduler;
+}
+}  // namespace blink
+
 namespace content {
 class LocalStorageCachedArea;
 
@@ -25,8 +31,9 @@ class StoragePartitionService;
 // multiple caches of the same data in the same process).
 class CONTENT_EXPORT LocalStorageCachedAreas {
  public:
-  explicit LocalStorageCachedAreas(
-      mojom::StoragePartitionService* storage_partition_service);
+  LocalStorageCachedAreas(
+      mojom::StoragePartitionService* storage_partition_service,
+      blink::scheduler::RendererScheduler* renderer_scheduler);
   ~LocalStorageCachedAreas();
 
   // Returns, creating if necessary, a cached storage area for the given origin.
@@ -41,6 +48,7 @@ class CONTENT_EXPORT LocalStorageCachedAreas {
   void ClearAreasIfNeeded();
 
   mojom::StoragePartitionService* const storage_partition_service_;
+  blink::scheduler::RendererScheduler* const renderer_scheduler_;
 
   // Maps from an origin to its LocalStorageCachedArea object. When this map is
   // the only reference to the object, it can be deleted by the cache.

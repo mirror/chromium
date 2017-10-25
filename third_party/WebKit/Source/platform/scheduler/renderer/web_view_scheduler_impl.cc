@@ -103,6 +103,7 @@ WebViewSchedulerImpl::WebViewSchedulerImpl(
       renderer_scheduler_(renderer_scheduler),
       virtual_time_policy_(VirtualTimePolicy::ADVANCE),
       background_parser_count_(0),
+      pending_dom_storage_message_count_(0),
       max_task_starvation_count_(0),
       page_visible_(true),
       disable_background_timer_throttling_(disable_background_timer_throttling),
@@ -277,6 +278,32 @@ void WebViewSchedulerImpl::DidEndProvisionalLoad(
   ApplyVirtualTimePolicy();
 }
 
+void WebViewSchedulerImpl::SetPendingDomStorageMessageCount(int pending_count) {
+  pending_dom_storage_message_count_ = pending_count;
+  ApplyVirtualTimePolicy();
+}
+
+void WebViewSchedulerImpl::IncrementPendingLocalStorageMessageCount(
+    const std::string& id) {
+  pending_local_storage_message_count_[id]++;
+  ApplyVirtualTimePolicy();
+}
+
+void WebViewSchedulerImpl::DecrementPendingLocalStorageMessageCount(
+    const std::string& id) {
+  DCHECK_GT(pending_local_storage_message_count_[id], 0);
+  int count = --pending_local_storage_message_count_[id];
+  if (count == 0)
+    pending_local_storage_message_count_.erase(id);
+  ApplyVirtualTimePolicy();
+}
+
+void WebViewSchedulerImpl::ClearPendingLocalStorageMessageCount(
+    const std::string& id) {
+  pending_local_storage_message_count_.erase(id);
+  ApplyVirtualTimePolicy();
+}
+
 void WebViewSchedulerImpl::OnBeginNestedRunLoop() {
   nested_runloop_ = true;
   ApplyVirtualTimePolicy();
@@ -380,6 +407,8 @@ void WebViewSchedulerImpl::ApplyVirtualTimePolicy() {
       SetAllowVirtualTimeToAdvance(
           pending_loads_.size() == 0 && background_parser_count_ == 0 &&
           provisional_loads_.empty() && !nested_runloop_ &&
+          pending_dom_storage_message_count_ == 0 &&
+          pending_local_storage_message_count_.empty() &&
           expect_backward_forwards_navigation_.empty());
       break;
   }

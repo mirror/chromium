@@ -18,6 +18,7 @@
 #include "content/renderer/dom_storage/local_storage_cached_areas.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
+#include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 #include "third_party/WebKit/public/web/WebStorageEventDispatcher.h"
 
 namespace content {
@@ -69,9 +70,13 @@ void UnpackSource(const std::string& source,
 LocalStorageCachedArea::LocalStorageCachedArea(
     const url::Origin& origin,
     mojom::StoragePartitionService* storage_partition_service,
-    LocalStorageCachedAreas* cached_areas)
-    : origin_(origin), binding_(this),
-      cached_areas_(cached_areas), weak_factory_(this) {
+    LocalStorageCachedAreas* cached_areas,
+    blink::scheduler::RendererScheduler* renderer_scheduler)
+    : origin_(origin),
+      binding_(this),
+      cached_areas_(cached_areas),
+      renderer_scheduler_(renderer_scheduler),
+      weak_factory_(this) {
   storage_partition_service->OpenLocalStorage(origin_,
                                               mojo::MakeRequest(&leveldb_));
   mojom::LevelDBObserverAssociatedPtrInfo ptr_info;
@@ -122,6 +127,8 @@ bool LocalStorageCachedArea::SetItem(const base::string16& key,
   base::Optional<std::vector<uint8_t>> optional_old_value;
   if (!old_nullable_value.is_null())
     optional_old_value = String16ToUint8Vector(old_nullable_value.string());
+  renderer_scheduler_->IncrementPendingLocalStorageMessageCount(
+      storage_area_id);
   leveldb_->Put(String16ToUint8Vector(key), String16ToUint8Vector(value),
                 optional_old_value, PackSource(page_url, storage_area_id),
                 base::BindOnce(&LocalStorageCachedArea::OnSetItemComplete,
@@ -147,6 +154,8 @@ void LocalStorageCachedArea::RemoveItem(const base::string16& key,
   base::Optional<std::vector<uint8_t>> optional_old_value;
   if (should_send_old_value_on_mutations_)
     optional_old_value = String16ToUint8Vector(old_value);
+  renderer_scheduler_->IncrementPendingLocalStorageMessageCount(
+      storage_area_id);
   leveldb_->Delete(String16ToUint8Vector(key), optional_old_value,
                    PackSource(page_url, storage_area_id),
                    base::BindOnce(&LocalStorageCachedArea::OnRemoveItemComplete,
@@ -159,6 +168,8 @@ void LocalStorageCachedArea::Clear(const GURL& page_url,
   Reset();
   map_ = new DOMStorageMap(kPerStorageAreaQuota);
   ignore_all_mutations_ = true;
+  renderer_scheduler_->IncrementPendingLocalStorageMessageCount(
+      storage_area_id);
   leveldb_->DeleteAll(PackSource(page_url, storage_area_id),
                       base::BindOnce(&LocalStorageCachedArea::OnClearComplete,
                                      weak_factory_.GetWeakPtr()));
@@ -169,6 +180,7 @@ void LocalStorageCachedArea::AreaCreated(LocalStorageArea* area) {
 }
 
 void LocalStorageCachedArea::AreaDestroyed(LocalStorageArea* area) {
+  renderer_scheduler_->ClearPendingLocalStorageMessageCount(area->id());
   areas_.erase(area->id());
 }
 
@@ -271,6 +283,8 @@ void LocalStorageCachedArea::KeyDeleted(const std::vector<uint8_t>& key,
       blink::WebString::FromUTF16(key_string),
       blink::WebString::FromUTF16(Uint8VectorToString16(old_value)),
       blink::WebString(), origin_.GetURL(), page_url, originating_area);
+  renderer_scheduler_->DecrementPendingLocalStorageMessageCount(
+      storage_area_id);
 }
 
 void LocalStorageCachedArea::AllDeleted(const std::string& source) {
@@ -300,6 +314,8 @@ void LocalStorageCachedArea::AllDeleted(const std::string& source) {
   blink::WebStorageEventDispatcher::DispatchLocalStorageEvent(
       blink::WebString(), blink::WebString(), blink::WebString(),
       origin_.GetURL(), page_url, originating_area);
+  renderer_scheduler_->DecrementPendingLocalStorageMessageCount(
+      storage_area_id);
 }
 
 void LocalStorageCachedArea::ShouldSendOldValueOnMutations(bool value) {
@@ -341,6 +357,8 @@ void LocalStorageCachedArea::KeyAddedOrChanged(
       blink::WebString::FromUTF16(old_value),
       blink::WebString::FromUTF16(new_value_string), origin_.GetURL(), page_url,
       originating_area);
+  renderer_scheduler_->DecrementPendingLocalStorageMessageCount(
+      storage_area_id);
 }
 
 void LocalStorageCachedArea::EnsureLoaded() {
