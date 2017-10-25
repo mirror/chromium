@@ -1611,6 +1611,7 @@ test("content_unittests") {
     "//cc:test_support",
     "//cc/ipc",
     "//components/leveldb/public/cpp",
+    "//components/network_error_logging",
     "//components/network_session_configurator/browser",
     "//components/network_session_configurator/common",
     "//components/offline_pages/features:features",
