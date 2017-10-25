@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d5da712_92d8b4c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 28
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1373d6f6_83508da8",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 71
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eefb8bf8_18960ce8",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 28
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-25T01:20:00Z",
       "side": 1,
       "message": "Is this comment stale? I don\u0027t see the global variable used here.",
+      "range": {
+        "startLine": 31,
+        "startChar": 64,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f40a3c_70d61ce0",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "yup, removed.",
+      "parentUuid": "eefb8bf8_18960ce8",
       "range": {
         "startLine": 31,
         "startChar": 64,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b1dd30fd_c6a9c0de",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "um. I\u0027m not sure what documentation would actually be helpful. It\u0027s a string with a fixed prefix, and some trailing useful info.",
+      "parentUuid": "1f0e4737_81552c73",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce1224d_4e032b6f",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 28
@@ -91,6 +163,30 @@
       "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048ed0eb_d8bb5a14",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce1224d_4e032b6f",
+      "range": {
+        "startLine": 48,
+        "startChar": 59,
+        "endLine": 48,
+        "endChar": 60
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "be199cec_cd113228",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8b1f5b_674a00fa",
+      "range": {
+        "startLine": 56,
+        "startChar": 50,
+        "endLine": 56,
+        "endChar": 51
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c5d6606_2d67c933",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 28
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-25T01:20:00Z",
       "side": 1,
       "message": "You\u0027ll want to separate out the CreateNamedPipe and mojo:edk:PlatformHandle calls here.\nIf any call after CreateNamedPipe makes a Windows API call in the future, that API call could reset the last error and you\u0027d lose the reason why CreateNamePipe failed.",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c9ae7e_f8cffa4e",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "thanks, fixed.",
+      "parentUuid": "8c5d6606_2d67c933",
       "range": {
         "startLine": 58,
         "startChar": 2,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e1575a48_e3b6bf3a",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf2faba3_c1441c22",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 62,
+        "endChar": 60
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0e9c503_137a0ab7",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 28
@@ -183,6 +351,30 @@
       "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe843da_40b1b5b1",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0e9c503_137a0ab7",
+      "range": {
+        "startLine": 63,
+        "startChar": 52,
+        "endLine": 63,
+        "endChar": 53
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "5670cc6b_d7b82555",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e8da6a3_9c6ac5b1",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 8
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f77b1106_d297e354",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 28
@@ -220,6 +436,30 @@
       "writtenOn": "2017-10-25T01:20:00Z",
       "side": 1,
       "message": "Use CHECK_EQ",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 64
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3160b6e7_0ba247ab",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "N/A after other changes.",
+      "parentUuid": "f77b1106_d297e354",
       "range": {
         "startLine": 73,
         "startChar": 2,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "386e2b75_ac71ac4e",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0d7b081_81311550",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08348695_2da35eab",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 28
@@ -275,6 +539,30 @@
       "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0da1aaa_ae44d92b",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08348695_2da35eab",
+      "range": {
+        "startLine": 109,
+        "startChar": 36,
+        "endLine": 109,
+        "endChar": 78
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "ec395d96_5a6ce633",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1c0bca9_31d686fe",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 53
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b4f2201_1c0ec7e2",
         "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
         "patchSetId": 28
@@ -312,6 +624,30 @@
       "writtenOn": "2017-10-25T01:20:00Z",
       "side": 1,
       "message": "Has this been observed? Maybe we should DCHECK instead?",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 45
+      },
+      "revId": "836b9f2cf48235941f3f3a2fafb26e5412084ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9fbca3_159673cd",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-25T01:53:40Z",
+      "side": 1,
+      "message": "Has not been observed. Changed to a DCHECK.",
+      "parentUuid": "6b4f2201_1c0ec7e2",
       "range": {
         "startLine": 144,
         "startChar": 4,
