@@ -59,6 +59,9 @@ class PrintingContextDelegate : public PrintingContext::Delegate {
   // Not exposed to PrintingContext::Delegate because of dependency issues.
   content::WebContents* GetWebContents();
 
+  int render_process_id() const { return render_process_id_; }
+  int render_frame_id() const { return render_frame_id_; }
+
  private:
   const int render_process_id_;
   const int render_frame_id_;
@@ -114,11 +117,7 @@ void PostOnOwnerThread(const scoped_refptr<PrintJobWorkerOwner>& owner,
 PrintJobWorker::PrintJobWorker(int render_process_id,
                                int render_frame_id,
                                PrintJobWorkerOwner* owner)
-    : render_process_id_(render_process_id),
-      render_frame_id_(render_frame_id),
-      owner_(owner),
-      thread_("Printing_Worker"),
-      weak_factory_(this) {
+    : owner_(owner), thread_("Printing_Worker"), weak_factory_(this) {
   // The object is created in the IO thread.
   DCHECK(owner_->RunsTasksInCurrentSequence());
 
@@ -232,8 +231,10 @@ void PrintJobWorker::GetSettingsWithUI(
     // Regardless of whether the following call fails or not, the javascript
     // call will return since startPendingPrint will make it return immediately
     // in case of error.
-    if (tab)
-      tab->SetPendingPrint(render_process_id_, render_frame_id_);
+    if (tab) {
+      tab->SetPendingPrint(printing_context_delegate->render_process_id(),
+                           printing_context_delegate->render_frame_id());
+    }
   }
 #endif
 
