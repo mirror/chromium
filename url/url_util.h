@@ -273,6 +273,8 @@ URL_EXPORT void EncodeURIComponent(const char* input,
                                    int length,
                                    CanonOutput* output);
 
+URL_EXPORT int NewlyAddedFunction(int input);
+
 }  // namespace url
 
 #endif  // URL_URL_UTIL_H_
