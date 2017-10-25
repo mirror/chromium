@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f646fd50_181ec8c8",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d75dbf2_8ba19e89",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "357472a1_bd5651bf",
         "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e0d461_a243d01d",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "357472a1_bd5651bf",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "50dc5f08_36a417c4",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:40:17Z",
+      "side": 1,
+      "message": "I trust JSONReader to do JSON: \"The names within an object SHOULD be unique.\" and \"Many implementations report the last name/value pair only. Other implementations report an error or fail to parse the object, and some implementations report all of the name/value pairs, including duplicates.\" (see https://tools.ietf.org/html/rfc7159#section-4).\n\nThat is there is one single key-value pair one way or the other and I do not want to test the JSONReader. Consequently there are currently no tests regarding this.",
+      "parentUuid": "146680d2_d2070d9a",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa6d8f57_e74587aa",
         "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d881e9da_32eba584",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:40:17Z",
+      "side": 1,
+      "message": "I did not realise playing nice actually has an advantage! haha sometimes good things happen :-D",
+      "parentUuid": "aa6d8f57_e74587aa",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "063f2dfd_c9c11cde",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:40:17Z",
+      "side": 1,
+      "message": "well, JSON is case sensitive since it bases its mapping on string equality (see https://tools.ietf.org/html/rfc7159#section-4).\nsharing the same opinion with Anne we should just stick to JSON and not introduce JSON-like behaviour. In short, we define it as lowercase and only accept lowercase.",
+      "parentUuid": "50042e8e_cb98332f",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b853b321_7047e35e",
         "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "52d2c5fd_e633c8e8",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:40:17Z",
+      "side": 1,
+      "message": "just as above. We expect JSON and JSON only. JSONReader tells me if it is valid JSON and returns the parsed structure. It implements the respective RFCs and I think it is fine to blindly rely on that.",
+      "parentUuid": "b853b321_7047e35e",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "813dd59a_1898d075",
         "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127a7540_151d15c9",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "813dd59a_1898d075",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +282,42 @@
     },
     {
       "key": {
+        "uuid": "6281b8f7_fc8bcd69",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:40:17Z",
+      "side": 1,
+      "message": "honestly, I never had to care about what happens in the background when setting those things.\nShould I just add manually what the linked macro does automatically?",
+      "parentUuid": "2e22e2cb_56b5fda6",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ce49c1_b891e890",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:40:17Z",
+      "side": 1,
+      "message": "I just found out there is also a better macro: DISALLOW_IMPLICIT_CONSTRUCTORS (https://cs.chromium.org/chromium/src/base/macros.h?l\u003d40).\nAs the comment in macros.h says, it is meant for classes with only static methods. At least in //content I would be the only one to do the new operator deletion. Well, I don\u0027t think it does any harm.",
+      "parentUuid": "f86471d7_c654c472",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "064f3aed_c8767e03",
         "filename": "content/browser/origin_manifest/origin_manifest_parser_unittest.cc",
         "patchSetId": 2
@@ -170,6 +332,24 @@
       "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4c2a45_616bc815",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "064f3aed_c8767e03",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
