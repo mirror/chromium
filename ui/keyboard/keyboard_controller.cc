@@ -24,9 +24,13 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
+#include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/path.h"
+#include "ui/keyboard/container_floating_behavior.h"
 #include "ui/keyboard/container_full_width_behavior.h"
+#include "ui/keyboard/drag_descriptor.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
 #include "ui/keyboard/keyboard_layout_manager.h"
 #include "ui/keyboard/keyboard_ui.h"
@@ -211,6 +215,7 @@ KeyboardController::KeyboardController(std::unique_ptr<KeyboardUI> ui,
                                        KeyboardLayoutDelegate* delegate)
     : ui_(std::move(ui)),
       layout_delegate_(delegate),
+      drag_descriptor_(nullptr),
       show_on_content_update_(false),
       keyboard_locked_(false),
       state_(KeyboardControllerState::UNKNOWN),
@@ -702,6 +707,49 @@ const gfx::Rect KeyboardController::AdjustSetBoundsRequest(
 
 bool KeyboardController::IsOverscrollAllowed() const {
   return container_behavior_->IsOverscrollAllowed();
+}
+
+void KeyboardController::HandleMouseEvent(bool isMouseButtonPressed,
+                                          const gfx::Vector2d& kb_offset) {
+  const gfx::Rect& keyboard_bounds = container_->bounds();
+
+  // Don't handle events if this runs in a partially initialized state.
+  if (keyboard_bounds.height() <= 0)
+    return;
+
+  if (isMouseButtonPressed &&
+      container_behavior_->IsDragHandle(kb_offset, keyboard_bounds.size())) {
+    if (drag_descriptor_ == nullptr) {
+      // If there is no active drag, start a new one.
+      drag_descriptor_.reset(
+          new DragDescriptor(keyboard_bounds.origin(), kb_offset));
+    } else {
+      // If there is an active drag, use it to determine the new location of the
+      // keyboard.
+      const gfx::Point original_click_location =
+          drag_descriptor_->original_keyboard_location() +
+          drag_descriptor_->original_click_offset();
+      const gfx::Point current_drag_location =
+          keyboard_bounds.origin() + kb_offset;
+      const gfx::Vector2d cumulative_drag_offset =
+          current_drag_location - original_click_location;
+      const gfx::Point new_keyboard_location =
+          drag_descriptor_->original_keyboard_location() +
+          cumulative_drag_offset;
+      const gfx::Rect new_bounds =
+          gfx::Rect(new_keyboard_location, keyboard_bounds.size());
+      SetContainerBounds(new_bounds, true);
+    }
+
+    // re-query the container for the new bounds
+    container_behavior_->SavePosition(container_->bounds().origin());
+  } else if (drag_descriptor_ != nullptr) {
+    // drag has ended
+    drag_descriptor_ = nullptr;
+
+    // save the current bounds.
+    container_behavior_->SavePosition(keyboard_bounds.origin());
+  }
 }
 
 }  // namespace keyboard
