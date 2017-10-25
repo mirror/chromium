@@ -1,0 +1,23 @@
+static_library("core") {
+  sources = [
+    "optimization_guide_constants.cc",
+    "optimization_guide_constants.h",
+    "optimization_hints_reader.cc",
+    "optimization_hints_reader.h",
+  ]
+  deps = [
+    "//base",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "optimization_hints_reader_unittest.cc",
+  ]
+  deps = [
+    ":core",
+    "//base",
+    "//testing/gtest",
+  ]
+}
