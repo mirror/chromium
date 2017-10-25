@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db861b3b_46a35ca0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ChromeHomeDownloadManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-25T15:18:51Z",
+      "side": 1,
+      "message": "I need to add FLAG_ACTIVITY_NEW_TASK here too. Will add that and send to the CQ.",
+      "range": {
+        "startLine": 125,
+        "startChar": 12,
+        "endLine": 125,
+        "endChar": 77
+      },
+      "revId": "4f28030a625eb899914391f8aeca61f42d5b6b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
