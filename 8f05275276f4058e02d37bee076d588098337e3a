@@ -22,6 +22,30 @@
       "revId": "8f05275276f4058e02d37bee076d588098337e3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9deaa2_f40d050d",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T22:57:14Z",
+      "side": 1,
+      "message": "wallpaper_files_id is a directory name on the file system.\naccount_id or wallpaper_files_id may change asynchronously, so we need to keep them separate.",
+      "parentUuid": "82564e5f_cde8bf2b",
+      "range": {
+        "startLine": 254,
+        "startChar": 40,
+        "endLine": 254,
+        "endChar": 59
+      },
+      "revId": "8f05275276f4058e02d37bee076d588098337e3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
