@@ -83,8 +83,10 @@
 
 namespace {
 
+#if !defined(OS_FUCHSIA)
 base::LazyInstance<content::ShellCrashReporterClient>::Leaky
     g_shell_crash_client = LAZY_INSTANCE_INITIALIZER;
+#endif
 
 #if defined(OS_WIN)
 // If "Content Shell" doesn't show up in your list of trace providers in
@@ -156,6 +158,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
 #endif  // OS_MACOSX
 
   InitLogging(command_line);
+#if !defined(OS_FUCHSIA)
   if (command_line.HasSwitch(switches::kCheckLayoutTestSysDeps)) {
     // If CheckLayoutSystemDeps succeeds, we don't exit early. Instead we
     // continue and try to load the fonts in BlinkTestPlatformInitialize
@@ -165,6 +168,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
       return true;
     }
   }
+#endif
 
   if (command_line.HasSwitch(switches::kRunLayoutTest)) {
     EnableBrowserLayoutTestMode();
@@ -237,10 +241,12 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
     media::RemoveProprietaryMediaTypesAndCodecsForTests();
 #endif
 
+#if !defined(OS_FUCHSIA)
     if (!BlinkTestPlatformInitialize()) {
       *exit_code = 1;
       return true;
     }
+#endif
   }
 
   content_client_.reset(base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -258,35 +264,39 @@ void ShellMainDelegate::PreSandboxStartup() {
   // cpu_brand info.
   base::CPU cpu_info;
 #endif
+
+// Initialize crash reporting, if enabled & support, based on process type.
+// TODO(753619): Implement crash reporter integration for Fuchsia.
+#if !defined(OS_FUCHSIA)
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableCrashReporter)) {
     std::string process_type =
         base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
             switches::kProcessType);
     crash_reporter::SetCrashReporterClient(g_shell_crash_client.Pointer());
-#if defined(OS_MACOSX)
+#if defined(OS_WIN)
+    UINT new_flags =
+        SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX | SEM_NOOPENFILEERRORBOX;
+    UINT existing_flags = SetErrorMode(new_flags);
+    SetErrorMode(existing_flags | new_flags);
+    breakpad::InitCrashReporter(process_type);
+#elif defined(OS_MACOSX)
     base::mac::DisableOSCrashDumps();
     breakpad::InitCrashReporter(process_type);
     breakpad::InitCrashProcessInfo(process_type);
-#elif defined(OS_POSIX) && !defined(OS_MACOSX)
+#elif defined(OS_POSIX)
+    // The Zygote will initialize reporting for sub-processes in ZygoteForked.
     if (process_type != switches::kZygoteProcess) {
 #if defined(OS_ANDROID)
       if (process_type.empty())
         breakpad::InitCrashReporter(process_type);
       else
         breakpad::InitNonBrowserCrashReporterForAndroid(process_type);
-#else
+#endif  // defined(OS_ANDROID)
       breakpad::InitCrashReporter(process_type);
-#endif
-    }
-#elif defined(OS_WIN)
-    UINT new_flags =
-        SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX | SEM_NOOPENFILEERRORBOX;
-    UINT existing_flags = SetErrorMode(new_flags);
-    SetErrorMode(existing_flags | new_flags);
-    breakpad::InitCrashReporter(process_type);
-#endif
+#endif  // defined(OS_POSIX)
   }
+#endif  // !defined(OS_FUCHSIA)
 
   InitializeResourceBundle();
 }
@@ -315,7 +325,8 @@ int ShellMainDelegate::RunProcess(
              : ShellBrowserMain(main_function_params, browser_runner_);
 }
 
-#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX) && \
+    !defined(OS_FUCHSIA)
 void ShellMainDelegate::ZygoteForked() {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableCrashReporter)) {
