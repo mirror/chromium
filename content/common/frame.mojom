@@ -4,6 +4,8 @@
 
 module content.mojom;
 
+import "content/public/common/url_loader.mojom";
+import "content/public/common/url_loader_factory.mojom";
 import "content/public/common/window_container_type.mojom";
 import "mojo/common/unguessable_token.mojom";
 import "services/service_manager/public/interfaces/interface_provider.mojom";
@@ -19,6 +21,23 @@ const string kNavigation_FrameSpec = "navigation:frame";
 // Implemented by the frame provider (e.g. renderer processes).
 interface Frame {
   GetInterfaceProvider(service_manager.mojom.InterfaceProvider& interfaces);
+};
+
+[Native]
+struct CommonNavigationParams;
+
+[Native]
+struct RequestNavigationParams;
+
+// Implemented by the frame provider and currently must be associated with the
+// legacy IPC channel.
+interface FrameNavigationControl {
+  CommitNavigation(URLResponseHead head,
+                   url.mojom.Url body_url,
+                   CommonNavigationParams common_params,
+                   RequestNavigationParams request_params,
+                   handle<data_pipe_consumer>? body_data,
+                   URLLoaderFactory? default_subresource_url_loader_factory);
 };
 
 // Implemented by the frame (e.g. renderer processes).
