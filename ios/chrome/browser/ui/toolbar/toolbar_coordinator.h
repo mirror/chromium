@@ -12,10 +12,24 @@
 #import "ios/chrome/browser/ui/ntp/incognito_view_controller_delegate.h"
 #import "ios/chrome/browser/ui/toolbar/omnibox_focuser.h"
 
+@protocol ActivityServicePositioner;
+@protocol ApplicationCommands;
+@protocol BrowserCommands;
+@protocol QRScannerResultLoading;
+@protocol TabHistoryPositioner;
+@protocol TabHistoryUIUpdater;
 @class TabModel;
+@class ToolbarController;
 @class ToolsMenuConfiguration;
 @class ToolsPopupController;
+@protocol UrlLoader;
+@protocol VoiceSearchControllerDelegate;
 @class WebToolbarController;
+@protocol WebToolbarDelegate;
+
+namespace ios {
+class ChromeBrowserState;
+}
 
 @interface LegacyToolbarCoordinator
     : ChromeCoordinator<BubbleViewAnchorPointProvider,
@@ -26,11 +40,28 @@
 @property(nonatomic, readonly, strong) UIView* view;
 @property(nonatomic, strong) WebToolbarController* webToolbarController;
 
+// Returns the different protocols and super class now implemented by the
+// WebToolbarController to avoid using the toolbar directly.
+- (ToolbarController*)toolbarController;
+- (id<VoiceSearchControllerDelegate>)voiceSearchDelegate;
+- (id<ActivityServicePositioner>)activityServicePositioner;
+- (id<TabHistoryPositioner>)tabHistoryPositioner;
+- (id<TabHistoryUIUpdater>)tabHistoryUIUpdater;
+- (id<QRScannerResultLoading>)QRScannerResultLoader;
+
+// Set the delegate for the toolbar.
+- (void)setToolbarDelegate:(id<WebToolbarDelegate>)delegate;
+
 // TabModel callbacks.
 - (void)selectedTabChanged;
 - (void)setTabCount:(NSInteger)tabCount;
 
 // WebToolbarController public interface.
+- (void)createToolbarWithDelegate:(id<WebToolbarDelegate>)delegate
+                        urlLoader:(id<UrlLoader>)urlLoader
+                     browserState:(ios::ChromeBrowserState*)browserState
+                       dispatcher:
+                           (id<ApplicationCommands, BrowserCommands>)dispatcher;
 - (void)browserStateDestroyed;
 - (void)updateToolbarState;
 - (void)setShareButtonEnabled:(BOOL)enabled;
