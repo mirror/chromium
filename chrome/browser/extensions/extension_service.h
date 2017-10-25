@@ -485,6 +485,12 @@ class ExtensionService
   // externally managed extension.  If so, uninstall it.
   void CheckExternalUninstall(const std::string& id);
 
+  // Attempt to enable some disabled component extensions.
+  // Component extensions are managed and cannot be disabled by user, however,
+  // there are some cases to have disabled component extension in profile.
+  // This function doesn't override disabled extension by management policy.
+  void EnableComponentExtensions();
+
   // Attempt to enable all disabled extensions which the only disabled reason is
   // reloading.
   void EnabledReloadableExtensions();

@@ -464,6 +464,7 @@ void ExtensionService::Init() {
   LoadExtensionsFromCommandLineFlag(switches::kDisableExtensionsExcept);
   if (load_command_line_extensions)
     LoadExtensionsFromCommandLineFlag(extensions::switches::kLoadExtension);
+  EnableComponentExtensions();
   EnabledReloadableExtensions();
   MaybeFinishShutdownDelayed();
   SetReadyAndNotifyListeners();
@@ -475,6 +476,23 @@ void ExtensionService::Init() {
   CheckForExternalUpdates();
 
   LoadGreylistFromPrefs();
+}
+
+void ExtensionService::EnableComponentExtensions() {
+  TRACE_EVENT0("browser,startup",
+               "ExtensionService::EnableComponentExtensions");
+
+  std::vector<std::string> extensions_to_enable;
+#if defined(OS_CHROMEOS)
+  // There were some cases where the Zip Unpacker was disabled in the profile,
+  // by some reason, and cannot re-enable it in any UI. crbug.com/643060.
+  extensions_to_enable.push_back(extension_misc::kZIPUnpackerExtensionId);
+#endif
+  for (const std::string& id : extensions_to_enable) {
+    const Extension* extension = registry_->disabled_extensions().GetByID(id);
+    if (extension && CanEnableExtension(extension))
+      EnableExtension(id);
+  }
 }
 
 void ExtensionService::EnabledReloadableExtensions() {
