@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfa462c6_adb4ffad",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-25T22:45:07Z",
+      "side": 1,
+      "message": "As delay mechanism is fully internal now, we do not need to describe it in public methods description.",
+      "revId": "0f7139550bef140fc83f697f406df852ecd83ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
