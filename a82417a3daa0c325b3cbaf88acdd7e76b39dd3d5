@@ -70,6 +70,30 @@
       "revId": "a82417a3daa0c325b3cbaf88acdd7e76b39dd3d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03e00b7b_edfd656f",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-25T16:19:40Z",
+      "side": 1,
+      "message": "I think it was about a dependency from components/data_reduction_proxy/content/ vs. being about ios (can clarify with teammate later). \n\nIn this CL I needed to match up some separate PreviewsType definitions from the component and content, and so defined this new components/previews/content subdirectory to depend on both.",
+      "parentUuid": "31bec517_ff13fc1f",
+      "range": {
+        "startLine": 214,
+        "startChar": 29,
+        "endLine": 214,
+        "endChar": 44
+      },
+      "revId": "a82417a3daa0c325b3cbaf88acdd7e76b39dd3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
