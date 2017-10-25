@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "407b45ea_736ff7f3",
+        "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T00:17:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7869358e_7098c169",
+      "revId": "5968b984d62086cc55d4a2fd9bc6b8373326e5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42737bb1_46c42d0f",
         "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "5968b984d62086cc55d4a2fd9bc6b8373326e5db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0bb0ec4_7e60bebf",
+        "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T00:17:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42737bb1_46c42d0f",
+      "revId": "5968b984d62086cc55d4a2fd9bc6b8373326e5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
