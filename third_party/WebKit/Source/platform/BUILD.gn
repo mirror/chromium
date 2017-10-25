@@ -856,6 +856,8 @@ jumbo_component("platform") {
     "graphics/CanvasHeuristicParameters.h",
     "graphics/CanvasMetrics.cpp",
     "graphics/CanvasMetrics.h",
+    "graphics/CanvasResourceProvider.cpp",
+    "graphics/CanvasResourceProvider.h",
     "graphics/Color.cpp",
     "graphics/Color.h",
     "graphics/ColorBehavior.cpp",
