@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cffb302_66a27f32",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-25T16:40:06Z",
+      "side": 1,
+      "message": "I did like the previous approach more, where each message was setting an update callback for it\u0027s own links.",
+      "revId": "9ce45e1fb817cd32d6cc96ef89f3e193b33b6323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
