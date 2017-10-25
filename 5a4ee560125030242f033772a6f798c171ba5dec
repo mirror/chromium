@@ -34,6 +34,24 @@
       "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c7b6cd_f4893001",
+        "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-25T17:00:43Z",
+      "side": 1,
+      "message": "Oops, sorry!  Thought I\u0027d deleted that draft comment.  (I blame PolyGerrit.)  :)\n\nBut while we\u0027re on the topic, the portalFrame webview contains both, right?  Or am I misreading it and none of the webviews navigates from extension URLs to web URLs?",
+      "parentUuid": "fdd95fd3_19354a51",
+      "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
