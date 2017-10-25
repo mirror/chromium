@@ -786,16 +786,6 @@ var loadDoodle = function(v, onload) {
 };
 
 
-/** Returns true if |element| is fully hidden. Returns false if fully visible,
- * fading in, or fading out.
- * @param {HTMLElement} element
- */
-var isFadedOut = function(element) {
-  return (element.style.opacity == 0) &&
-      (window.getComputedStyle(element).opacity == 0);
-};
-
-
 /** Returns true if the doodle given by |image| and |metadata| is currently
  * visible. If |image| is null, returns true when the default logo is visible;
  * if non-null, checks that it matches the doodle that is currently visible.
@@ -806,7 +796,7 @@ var isFadedOut = function(element) {
  * @returns {boolean}
  */
 var isDoodleCurrentlyVisible = function(image, metadata) {
-  var haveDoodle = ($(IDS.LOGO_DOODLE).style.opacity != 0);
+  var haveDoodle = ($(IDS.LOGO_DOODLE).style.display === 'block');
   var wantDoodle = (image !== null) && (metadata !== null);
   if (!haveDoodle || !wantDoodle)
     return haveDoodle === wantDoodle;
@@ -822,6 +812,7 @@ var showLogoOrDoodle = function(image, metadata, fromCache) {
   if (metadata !== null) {
     applyDoodleMetadata(metadata);
     $(IDS.LOGO_DOODLE_IMAGE).src = image;
+    $(IDS.LOGO_DOODLE).style.display = 'block';
     $(IDS.LOGO_DOODLE).style.opacity = 1;
 
     var isCta = !!metadata.animatedUrl;
@@ -832,6 +823,7 @@ var showLogoOrDoodle = function(image, metadata, fromCache) {
                      LOG_TYPE.NTP_STATIC_LOGO_SHOWN_FRESH);
     ntpApiHandle.logEvent(eventType);
   } else {
+    $(IDS.LOGO_DEFAULT).style.display = 'block';
     $(IDS.LOGO_DEFAULT).style.opacity = 1;
   }
 };
@@ -897,17 +889,16 @@ var fadeToLogoOrDoodle = function(image, metadata) {
 
 var onDoodleTransitionEnd = function(e) {
   var logoDoodle = $(IDS.LOGO_DOODLE);
-  var logoDoodleImage = $(IDS.LOGO_DOODLE_IMAGE);
   var logoDefault = $(IDS.LOGO_DEFAULT);
 
-  if (isFadedOut(logoDoodle) && isFadedOut(logoDefault)) {
-    // Fade-out finished. Start fading in the appropriate logo.
-    showLogoOrDoodle(
-        targetDoodle.image, targetDoodle.metadata, /*fromCache=*/false);
+  logoDefault.removeEventListener('transitionend', onDoodleTransitionEnd);
+  logoDefault.style.display = 'none';
+  logoDoodle.removeEventListener('transitionend', onDoodleTransitionEnd);
+  logoDoodle.style.display = 'none';
 
-    logoDefault.removeEventListener('transitionend', onDoodleTransitionEnd);
-    logoDoodle.removeEventListener('transitionend', onDoodleTransitionEnd);
-  }
+  // Fade-out finished. Start fading in the appropriate logo.
+  showLogoOrDoodle(
+      targetDoodle.image, targetDoodle.metadata, /*fromCache=*/false);
 };
 
 
