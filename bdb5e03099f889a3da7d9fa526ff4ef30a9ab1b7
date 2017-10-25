@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebc9a6d3_83fc764f",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-25T14:54:06Z",
+      "side": 1,
+      "message": "Done (added TODO).\n\nI agree that this is not ideal. However, having a general solution would require more work, it is either:\n- Add \"IsChromeHomeFriendly\" to the provider interface and destroy based on this.\n- Destroy everything except articles (requires checking how other providers behave).\n\nThus, I would prefer to have this for M63 and then decide what to do (e.g. we could simply delete unused providers and then destroy everything except articles).",
+      "parentUuid": "f6f9ff55_fe2cd47e",
+      "range": {
+        "startLine": 451,
+        "startChar": 3,
+        "endLine": 454,
+        "endChar": 65
+      },
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d273f2eb_12eae42d",
         "filename": "components/ntp_snippets/content_suggestions_service.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc46f4a5_71051516",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-25T14:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d273f2eb_12eae42d",
+      "range": {
+        "startLine": 455,
+        "startChar": 3,
+        "endLine": 455,
+        "endChar": 0
+      },
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b6407731_10a184b8",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-25T14:54:06Z",
+      "side": 1,
+      "message": "Done with base::EraseIf.",
+      "parentUuid": "7a94a5bc_7b6594b7",
+      "range": {
+        "startLine": 737,
+        "startChar": 4,
+        "endLine": 742,
+        "endChar": 5
+      },
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afcf6ec7_1679392c",
         "filename": "components/ntp_snippets/content_suggestions_service.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c443e3d_9dee9b4a",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-25T14:54:06Z",
+      "side": 1,
+      "message": "Confirmed with treib@.\n\nNo, everything is being run on UI thread. If the service or providers are used on other thread, then we have much bigger problems, because none of them support such usage.",
+      "parentUuid": "afcf6ec7_1679392c",
+      "range": {
+        "startLine": 755,
+        "startChar": 0,
+        "endLine": 756,
+        "endChar": 40
+      },
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e79ca47c_44f807de",
+        "filename": "components/ntp_snippets/content_suggestions_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-25T14:54:06Z",
+      "side": 1,
+      "message": "I am not checking whether it is *not* deleted, but rather that it is deleted when Chrome Home is enabled.\n\nI am not aware of other ways to test this.",
+      "parentUuid": "87f6e558_220e6069",
+      "range": {
+        "startLine": 839,
+        "startChar": 22,
+        "endLine": 839,
+        "endChar": 43
+      },
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c054bebb_e52f0164",
         "filename": "components/ntp_snippets/content_suggestions_service_unittest.cc",
         "patchSetId": 2
@@ -131,6 +251,24 @@
       "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68a8edf_f60683f8",
+        "filename": "components/ntp_snippets/content_suggestions_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-25T14:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c054bebb_e52f0164",
+      "revId": "bdb5e03099f889a3da7d9fa526ff4ef30a9ab1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
