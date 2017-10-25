@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0143229_c03015dc",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-25T21:00:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f71c7689_8e4acb8d",
+      "revId": "ee304c087e0ac73a636b3c949e5bfd06334dd940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "363cacb0_198afcdb",
         "filename": "chromeos/dbus/session_manager_client.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-25T16:20:52Z",
       "side": 1,
       "message": "Note: TBH, this looks slightly weird because we ignore errors to retrieve a param from Response here, unlike other methods... Though this keeps the current behavior (incl. UMA).\n\nBTW, Dan, who should have the responsibility to parse proto?\nIn this case, callers parse it. On the other hand, some other *ClientImpl, like cryptohome, parses it by ObjectProxy::PopArrayOfBytesAsProto().\n\nParsing here may be nicer as we can have type-safeness, while as you wrote in your document,\nwe want to keep the ClientImpl classes thin. So we need some balance.\n\nWDYT?",
+      "revId": "ee304c087e0ac73a636b3c949e5bfd06334dd940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea9b6ba_1db0f2bc",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-25T21:00:04Z",
+      "side": 1,
+      "message": "i think it\u0027s generally better to deserialize protos in Client classes. i don\u0027t view it as being particularly different from deserializing args in the dbus::Response, and in the case where a signal contains a protobuf that\u0027s passed to an Observer interface, we don\u0027t want each observer to need to do its own deserialization of the protobuf.\n\ni\u0027m not very familiar with this class, though, so there may be some reason why it was implemented this way.",
+      "parentUuid": "363cacb0_198afcdb",
       "revId": "ee304c087e0ac73a636b3c949e5bfd06334dd940",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
