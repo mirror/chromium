@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "314a6bf8_bef2cf5a",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/multicol-as-paint-container-expected.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T03:49:41Z",
+      "side": 1,
+      "message": "I agree that these look fishy..",
+      "parentUuid": "0be727b9_ecb0aa7c",
+      "revId": "6faa4117bbfebad7e5a79558a7f420fa5d7e99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2240d9b7_0a3f519b",
         "filename": "third_party/WebKit/Source/core/paint/BlockPainter.cpp",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "6faa4117bbfebad7e5a79558a7f420fa5d7e99f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763d5785_89cbca38",
+        "filename": "third_party/WebKit/Source/core/paint/BlockPainter.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T03:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2240d9b7_0a3f519b",
+      "revId": "6faa4117bbfebad7e5a79558a7f420fa5d7e99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "40478fc1_38f9a6c1",
+        "filename": "third_party/WebKit/Source/core/paint/BoxClipper.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T03:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d174b5b0_26bd0ee7",
+      "revId": "6faa4117bbfebad7e5a79558a7f420fa5d7e99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4c26440_3d4049aa",
         "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "6faa4117bbfebad7e5a79558a7f420fa5d7e99f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc0000a_86442a27",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T03:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c26440_3d4049aa",
+      "revId": "6faa4117bbfebad7e5a79558a7f420fa5d7e99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2e3453f0_a7dfa256",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T03:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2323e25f_e0a72de0",
+      "revId": "6faa4117bbfebad7e5a79558a7f420fa5d7e99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e47d5f1_98c9bca1",
         "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
         "patchSetId": 15
@@ -101,6 +191,24 @@
       "revId": "6faa4117bbfebad7e5a79558a7f420fa5d7e99f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "887aed3a_15a7d804",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-25T03:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e47d5f1_98c9bca1",
+      "revId": "6faa4117bbfebad7e5a79558a7f420fa5d7e99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
