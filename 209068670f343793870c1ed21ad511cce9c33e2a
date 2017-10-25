@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eedf2175_3b9b2983",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-25T23:27:53Z",
+      "side": 1,
+      "message": "nit: this comment is not needed anymore.",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "209068670f343793870c1ed21ad511cce9c33e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45b73d2_06a7eaad",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-25T23:27:53Z",
+      "side": 1,
+      "message": "nit: Tasks posted via TaskQueue::PostDelayedTask directly won\u0027t have a task type. These tasks will correspond to content/ and some other places using TaskQueue directly as a SingleThreadTaskRunner. This comment isn\u0027t needed.",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 50
+      },
+      "revId": "209068670f343793870c1ed21ad511cce9c33e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34da02d_890e8697",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-25T23:27:53Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 53
+      },
+      "revId": "209068670f343793870c1ed21ad511cce9c33e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61373e2e_bc74f4be",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-25T23:27:53Z",
+      "side": 1,
+      "message": "nit: use base::nullopt instead of a default constructor for Optional.",
+      "range": {
+        "startLine": 63,
+        "startChar": 52,
+        "endLine": 63,
+        "endChar": 78
+      },
+      "revId": "209068670f343793870c1ed21ad511cce9c33e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
