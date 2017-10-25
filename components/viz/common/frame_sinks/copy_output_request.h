@@ -89,9 +89,13 @@ class VIZ_COMMON_EXPORT CopyOutputRequest {
   const base::UnguessableToken& source() const { return *source_; }
 
   // By default copy requests copy the entire surface (or layer's subtree
-  // output). Specifying an area requests that only a portion be copied. Note
-  // that in some cases it may be necessary to sample the pixels surrounding the
-  // area.
+  // output). Specifying an area requests that only a portion be copied. If a
+  // scale ratio has been set, this is in the scaled, NOT the source, coordinate
+  // space.
+  //
+  // TODO(crbug.com/760348): Rename these methods to something more appropriate
+  // like set_output_rect() or set_result_selection() to reflect recently-
+  // changed semantics.
   void set_area(const gfx::Rect& area) { area_ = area; }
   bool has_area() const { return area_.has_value(); }
   const gfx::Rect& area() const { return *area_; }

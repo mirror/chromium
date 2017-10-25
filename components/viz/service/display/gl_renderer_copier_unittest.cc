@@ -9,6 +9,7 @@
 #include <iterator>
 #include <memory>
 
+#include "base/bind.h"
 #include "cc/test/test_context_provider.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -21,8 +22,9 @@ class GLRendererCopierTest : public testing::Test {
   void SetUp() override {
     auto context_provider = cc::TestContextProvider::Create();
     context_provider->BindToCurrentThread();
-    copier_ = std::make_unique<GLRendererCopier>(std::move(context_provider),
-                                                 nullptr);
+    copier_ = std::make_unique<GLRendererCopier>(
+        std::move(context_provider), nullptr,
+        base::BindRepeating([](const gfx::Rect& rect) { return rect; }));
   }
 
   void TearDown() override { copier_.reset(); }

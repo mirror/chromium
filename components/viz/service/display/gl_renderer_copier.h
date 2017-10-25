@@ -10,6 +10,7 @@
 #include <array>
 #include <memory>
 
+#include "base/callback.h"
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -21,6 +22,7 @@ namespace gfx {
 class ColorSpace;
 class Rect;
 class Size;
+class Vector2d;
 }  // namespace gfx
 
 namespace viz {
@@ -47,17 +49,20 @@ class TextureMailboxDeleter;
 // "source" has ended.
 class VIZ_SERVICE_EXPORT GLRendererCopier {
  public:
+  // A callback that calls GLRenderer::MoveFromDrawToWindowSpace().
+  using ComputeWindowRectCallback =
+      base::RepeatingCallback<gfx::Rect(const gfx::Rect&)>;
+
   // |texture_mailbox_deleter| must outlive this instance.
   GLRendererCopier(scoped_refptr<ContextProvider> context_provider,
-                   TextureMailboxDeleter* texture_mailbox_deleter);
+                   TextureMailboxDeleter* texture_mailbox_deleter,
+                   ComputeWindowRectCallback window_rect_callback);
 
   ~GLRendererCopier();
 
   // Executes the |request|, copying from the currently-bound framebuffer of the
-  // given |internal_format|. The caller MUST set |request->area()|, which is
-  // the source rect to copy in the draw space of the RenderPass the request was
-  // attached to. |copy_rect| represents the identical source rect, but in
-  // window space (see DirectRenderer::MoveFromDrawToWindowSpace()).
+  // given |internal_format|. |output_rect| is the RenderPass's output Rect in
+  // draw space, and will be used to translate and clip |request->area()|.
   // |framebuffer_texture| and |framebuffer_texture_size| are optional: When
   // non-zero, the texture might be used as the source, to avoid making an extra
   // copy of the framebuffer. |color_space| specifies the color space of the
@@ -67,7 +72,7 @@ class VIZ_SERVICE_EXPORT GLRendererCopier {
   // caller must not make any assumptions about the original objects still being
   // bound to the same units.
   void CopyFromTextureOrFramebuffer(std::unique_ptr<CopyOutputRequest> request,
-                                    const gfx::Rect& copy_rect,
+                                    const gfx::Rect& output_rect,
                                     GLenum internal_format,
                                     GLuint framebuffer_texture,
                                     const gfx::Size& framebuffer_texture_size,
@@ -106,10 +111,11 @@ class VIZ_SERVICE_EXPORT GLRendererCopier {
   // framebuffer, according to the |request| parameters. This includes scaling.
   // The caller owns the returned texture.
   GLuint RenderResultTexture(const CopyOutputRequest& request,
-                             const gfx::Rect& framebuffer_copy_rect,
+                             const gfx::Rect& output_rect,
                              GLenum internal_format,
                              GLuint framebuffer_texture,
                              const gfx::Size& framebuffer_texture_size,
+                             const gfx::Vector2d& result_clip_offset,
                              const gfx::Rect& result_rect);
 
   // Processes the next phase of the copy request by starting readback of the
@@ -162,6 +168,7 @@ class VIZ_SERVICE_EXPORT GLRendererCopier {
   // Injected dependencies.
   const scoped_refptr<ContextProvider> context_provider_;
   TextureMailboxDeleter* const texture_mailbox_deleter_;
+  const ComputeWindowRectCallback window_rect_callback_;
 
   // Provides comprehensive, quality and efficient scaling and other utilities.
   GLHelper helper_;
