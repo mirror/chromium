@@ -21,6 +21,8 @@ enum GamepadTestDataType {
   GamepadPose_HasOrientation = 1,
   GamepadPose_HasPosition = 2,
   GamepadPose_Null = 3,
+  GamepadVibrationActuator_Vibration = 3,
+  GamepadVibrationActuator_Null = 4,
 };
 
 Gamepad GetWebGamepadInstance(GamepadTestDataType type) {
@@ -40,11 +42,6 @@ Gamepad GetWebGamepadInstance(GamepadTestDataType type) {
   memset(&wgp, 0, sizeof(GamepadPose));
   if (type == GamepadPose_Null) {
     wgp.not_null = false;
-  } else if (type == GamepadCommon) {
-    wgp.not_null = wgp.has_orientation = wgp.has_position = true;
-    wgp.orientation = wgq;
-    wgp.position = wgv;
-    wgp.angular_acceleration = wgv;
   } else if (type == GamepadPose_HasOrientation) {
     wgp.not_null = wgp.has_orientation = true;
     wgp.has_position = false;
@@ -55,6 +52,23 @@ Gamepad GetWebGamepadInstance(GamepadTestDataType type) {
     wgp.has_orientation = false;
     wgp.position = wgv;
     wgp.angular_acceleration = wgv;
+  } else {  // GamepadCommon
+    wgp.not_null = wgp.has_orientation = wgp.has_position = true;
+    wgp.orientation = wgq;
+    wgp.position = wgv;
+    wgp.angular_acceleration = wgv;
+  }
+
+  GamepadHapticActuator wgva;
+  memset(&wgva, 0, sizeof(GamepadHapticActuator));
+  if (type == GamepadVibrationActuator_Null) {
+    wgva.not_null = false;
+  } else if (type == GamepadVibrationActuator_Vibration) {
+    wgva.not_null = true;
+    wgva.type = GamepadHapticActuatorType::kVibration;
+  } else {  // GamepadCommon
+    wgva.not_null = true;
+    wgva.type = GamepadHapticActuatorType::kDualRumble;
   }
 
   UChar wch[Gamepad::kMappingLengthCap] = {
@@ -132,11 +146,19 @@ bool isWebGamepadPoseEqual(const GamepadPose& lhs, const GamepadPose& rhs) {
   return true;
 }
 
+bool isWebGamepadVibrationActuatorEqual(const GamepadHapticActuator& lhs,
+                                        const GamepadHapticActuator& rhs) {
+  return ((lhs.not_null == false && rhs.not_null == false) ||
+          (lhs.not_null == rhs.not_null && lhs.type == rhs.type));
+}
+
 bool isWebGamepadEqual(const Gamepad& send, const Gamepad& echo) {
   if (send.connected != echo.connected || send.timestamp != echo.timestamp ||
       send.axes_length != echo.axes_length ||
       send.buttons_length != echo.buttons_length ||
       !isWebGamepadPoseEqual(send.pose, echo.pose) || send.hand != echo.hand ||
+      !isWebGamepadVibrationActuatorEqual(send.vibration_actuator,
+                                          echo.vibration_actuator) ||
       send.display_id != echo.display_id) {
     return false;
   }
@@ -223,6 +245,24 @@ TEST_F(GamepadStructTraitsTest, GamepadPose_HasPosition) {
 
 TEST_F(GamepadStructTraitsTest, GamepadPose_Null) {
   Gamepad send = GetWebGamepadInstance(GamepadPose_Null);
+  base::RunLoop loop;
+  mojom::GamepadStructTraitsTestPtr proxy = GetGamepadStructTraitsTestProxy();
+  proxy->PassGamepad(send,
+                     base::Bind(&ExpectWebGamepad, send, loop.QuitClosure()));
+  loop.Run();
+}
+
+TEST_F(GamepadStructTraitsTest, GamepadVibrationActuator_Vibration) {
+  Gamepad send = GetWebGamepadInstance(GamepadVibrationActuator_Vibration);
+  base::RunLoop loop;
+  mojom::GamepadStructTraitsTestPtr proxy = GetGamepadStructTraitsTestProxy();
+  proxy->PassGamepad(send,
+                     base::Bind(&ExpectWebGamepad, send, loop.QuitClosure()));
+  loop.Run();
+}
+
+TEST_F(GamepadStructTraitsTest, GamepadVibrationActuator_Null) {
+  Gamepad send = GetWebGamepadInstance(GamepadVibrationActuator_Null);
   base::RunLoop loop;
   mojom::GamepadStructTraitsTestPtr proxy = GetGamepadStructTraitsTestProxy();
   proxy->PassGamepad(send,
