@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d4137c7_f8194b57",
+        "filename": "content/test/fuzzer/origin_manifest_parser_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:06:56Z",
+      "side": 1,
+      "message": "Can you add a corpus so the fuzzer doesn\u0027t have to derive JSON syntax from nothing? :) https://cs.chromium.org/chromium/src/content/test/data/fuzzer_corpus/?q\u003dcontent/test/data/fuzzer_corpus/\u0026dr",
+      "revId": "4198fa74129316eb2d11d06a6e1d672301de7905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

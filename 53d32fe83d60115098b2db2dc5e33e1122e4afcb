@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "f86471d7_c654c472",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-25T08:06:56Z",
+      "side": 1,
+      "message": "Can you kill the `new` operators as well, as noted here?",
+      "parentUuid": "2e22e2cb_56b5fda6",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "064f3aed_c8767e03",
         "filename": "content/browser/origin_manifest/origin_manifest_parser_unittest.cc",
         "patchSetId": 2
