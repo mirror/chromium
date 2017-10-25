@@ -9,6 +9,7 @@ import android.animation.TimeInterpolator;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Property;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation;
@@ -103,6 +104,36 @@ public class CompositorAnimator extends Animator {
         animator.setValues(startValue, endValue);
         if (listener != null) animator.addUpdateListener(listener);
         animator.setDuration(durationMs);
+        return animator;
+    }
+
+    /**
+     * A utility for creating a basic animator.
+     *
+     * TODO(mdjones): Currently this method takes a android.util.Property. It would be nice to use
+     *                the optimizations provided by FloatProperty, but it is a newer API than Chrome
+     *                supports.
+     *
+     * @param handler The {@link CompositorAnimationHandler} responsible for running the animation.
+     * @param target The object to modify.
+     * @param property The projecty of the object to modify.
+     * @param startValue The starting animation value.
+     * @param endValue The end animation value.
+     * @param durationMs The duration of the animation in ms.
+     * @return A {@link CompositorAnimator} for the property.
+     */
+    public static <T> CompositorAnimator ofFloatProperty(CompositorAnimationHandler handler,
+            final T target, final Property<T, Float> property, float startValue, float endValue,
+            long durationMs) {
+        CompositorAnimator animator = new CompositorAnimator(handler);
+        animator.setValues(startValue, endValue);
+        animator.setDuration(durationMs);
+        animator.addUpdateListener(new AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(CompositorAnimator animator) {
+                property.set(target, animator.getAnimatedValue());
+            }
+        });
         return animator;
     }
 
