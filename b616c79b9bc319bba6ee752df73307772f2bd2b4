@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "939bc379_948dc236",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-25T22:06:12Z",
+      "side": 1,
+      "message": "This feels super unfortunate. Is it because we don\u0027t have a WebContentsViewChildFrame? Definitely worth a comment.\n\nOne way out could be to always go to the view (which can delegate to the WebContentsImpl/View if it makes sense) - the same way we ask the view for the size, we should ask the view for the screen info.",
+      "revId": "b616c79b9bc319bba6ee752df73307772f2bd2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
