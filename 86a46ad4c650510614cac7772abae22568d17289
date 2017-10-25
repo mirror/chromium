@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a67562b7_27d3fcf4",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b791abf_57c3cde2",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b93c4093_d5691910",
         "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
         "patchSetId": 1
@@ -158,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "9aadd194_62a951f5",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ac1e426_ee931553",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79a20541_7007331c",
         "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
         "patchSetId": 1
@@ -263,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "34aa2e15_b4bba1a3",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:42:17Z",
+      "side": 1,
+      "message": "My opinion is:\n- request/response life-cycles are rather complex and I am never 100% sure what I am doing when I hold on to certain pieces of information\n- I\u0027d rather want to see the throttle only to react to information and not to manage it. IMHO the duty for throttle callers is to provide the correct information when triggering it\n\nAt the end of the day I need:\n- the existence of the Sec-Origin-Manifest header and its value\n- the origin of the response",
+      "parentUuid": "92c8beb6_33f3134d",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6124ccc_031c6b03",
         "filename": "content/public/common/url_loader_throttle.h",
         "patchSetId": 1
@@ -274,6 +328,24 @@
       "writtenOn": "2017-10-09T09:11:06Z",
       "side": 1,
       "message": "I\u0027ll defer to kinuko@, et al on this, but passing in the ResourceResponseHead here seems pretty reasonable to me. Any reason you chose to pass a const pointer rather than a reference?",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f04c5e6_3b25dc35",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-25T12:42:17Z",
+      "side": 1,
+      "message": "the other thing is a pointer, that\u0027s why ;-) Otherwise no.\nReading the other threads there is an agreement to better have a ref. So you will get it. Yeay!",
+      "parentUuid": "e6124ccc_031c6b03",
       "revId": "86a46ad4c650510614cac7772abae22568d17289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
