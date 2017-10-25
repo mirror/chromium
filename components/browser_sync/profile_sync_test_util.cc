@@ -13,6 +13,7 @@
 #include "components/history/core/browser/history_service.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/signin/core/browser/signin_manager_base.h"
+#include "components/signin/core/common/profile_management_switches.h"
 #include "components/sync/base/sync_prefs.h"
 #include "components/sync/driver/signin_manager_wrapper.h"
 #include "components/sync/engine/passive_model_worker.h"
@@ -173,6 +174,7 @@ void RegisterPrefsForProfileSyncService(
   AccountTrackerService::RegisterPrefs(registry);
   SigninManagerBase::RegisterProfilePrefs(registry);
   SigninManagerBase::RegisterPrefs(registry);
+  signin::RegisterAccountConsistencyProfilePrefs(registry);
 }
 
 ProfileSyncServiceBundle::SyncClientBuilder::~SyncClientBuilder() = default;
