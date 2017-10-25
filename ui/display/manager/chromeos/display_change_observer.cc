@@ -185,6 +185,7 @@ void DisplayChangeObserver::OnDisplayModeChanged(
   display_manager_->touch_device_manager()->AssociateTouchscreens(
       &displays,
       ui::InputDeviceManager::GetInstance()->GetTouchscreenDevices());
+
   display_manager_->OnNativeDisplaysChanged(displays);
 
   // For the purposes of user activity detection, ignore synthetic mouse events
