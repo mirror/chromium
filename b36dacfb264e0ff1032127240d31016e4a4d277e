@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fedd66a3_1c8c4272",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 2759,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-25T20:00:37Z",
+      "side": 1,
+      "message": "instead of using a Boolean you could make a custom Boolean - something like BooleanDownloaded with Local File and Downloaded File as options.",
+      "revId": "b36dacfb264e0ff1032127240d31016e4a4d277e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
