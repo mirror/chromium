@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/feature_list.h"
 #include "base/ios/block_types.h"
 #include "base/json/string_escape.h"
 #include "base/logging.h"
@@ -77,7 +78,8 @@
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/commands/show_signin_command.h"
 #import "ios/chrome/browser/ui/downloads/download_manager_controller.h"
-#import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
+#import "ios/chrome/browser/ui/fullscreen/legacy_fullscreen_controller.h"
 #import "ios/chrome/browser/ui/open_in_controller.h"
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
@@ -167,7 +169,7 @@ bool IsItemRedirectItem(web::NavigationItem* item) {
   double _lastVisitedTimestamp;
 
   // The Full Screen Controller responsible for hiding/showing the toolbar.
-  FullScreenController* _fullScreenController;
+  LegacyFullscreenController* _legacyFullscreenController;
 
   // The Overscroll controller responsible for displaying the
   // overscrollActionsView above the toolbar.
@@ -276,7 +278,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 @synthesize snapshotOverlayProvider = snapshotOverlayProvider_;
 @synthesize tabSnapshottingDelegate = tabSnapshottingDelegate_;
 @synthesize tabHeadersDelegate = tabHeadersDelegate_;
-@synthesize fullScreenControllerDelegate = fullScreenControllerDelegate_;
+@synthesize legacyFullscreenControllerDelegate =
+    legacyFullscreenControllerDelegate_;
 @synthesize snapshotManager = _snapshotManager;
 
 - (instancetype)initWithWebState:(web::WebState*)webState {
@@ -415,7 +418,9 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   if (_isPrerenderTab)
     return;
 
-  [_fullScreenController moveContentBelowHeader];
+  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+    [_legacyFullscreenController moveContentBelowHeader];
+  }
 
   // If the page has finished loading, take a snapshot.  If the page is still
   // loading, do nothing, as CRWWebController will automatically take a
@@ -429,26 +434,27 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   [self countMainFrameLoad];
 }
 
-- (void)setFullScreenControllerDelegate:
-    (id<FullScreenControllerDelegate>)fullScreenControllerDelegate {
-  if (fullScreenControllerDelegate == fullScreenControllerDelegate_)
+- (void)setLegacyFullscreenControllerDelegate:
+    (id<LegacyFullscreenControllerDelegate>)fullScreenControllerDelegate {
+  DCHECK(!base::FeatureList::IsEnabled(features::kNewFullscreen));
+  if (fullScreenControllerDelegate == legacyFullscreenControllerDelegate_)
     return;
-  // Lazily create a FullScreenController.
+  // Lazily create a LegacyFullscreenController.
   // The check for fullScreenControllerDelegate is necessary to avoid recreating
-  // a FullScreenController during teardown.
-  if (!_fullScreenController && fullScreenControllerDelegate) {
-    _fullScreenController = [[FullScreenController alloc]
+  // a LegacyFullscreenController during teardown.
+  if (!_legacyFullscreenController && fullScreenControllerDelegate) {
+    _legacyFullscreenController = [[LegacyFullscreenController alloc]
          initWithDelegate:fullScreenControllerDelegate
         navigationManager:self.navigationManager
                 sessionID:self.tabId];
-    [self.webController addObserver:_fullScreenController];
+    [self.webController addObserver:_legacyFullscreenController];
     // If the content of the page was loaded without knowledge of the
     // toolbar position it will be misplaced under the toolbar instead of
     // right below. This happens e.g. in the case of preloading. This is to make
     // sure the content is moved to the right place.
-    [_fullScreenController moveContentBelowHeader];
+    [_legacyFullscreenController moveContentBelowHeader];
   }
-  fullScreenControllerDelegate_ = fullScreenControllerDelegate;
+  legacyFullscreenControllerDelegate_ = fullScreenControllerDelegate;
 }
 
 - (void)setOverscrollActionsControllerDelegate:
@@ -510,7 +516,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (void)webStateDestroyed:(web::WebState*)webState {
   DCHECK_EQ(_webStateImpl, webState);
-  self.fullScreenControllerDelegate = nil;
   self.overscrollActionsControllerDelegate = nil;
   self.passKitDialogProvider = nil;
   self.snapshotOverlayProvider = nil;
@@ -519,14 +524,19 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
   [_openInController detachFromWebController];
   _openInController = nil;
-  if (_fullScreenController)
-    [self.webController removeObserver:_fullScreenController];
-  [_fullScreenController invalidate];
-  _fullScreenController = nil;
   if (_overscrollActionsController)
     [self.webController removeObserver:_overscrollActionsController];
   [_overscrollActionsController invalidate];
   _overscrollActionsController = nil;
+
+  // Clean up legacy fullscreen.
+  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+    self.legacyFullscreenControllerDelegate = nil;
+    if (_legacyFullscreenController)
+      [self.webController removeObserver:_legacyFullscreenController];
+    [_legacyFullscreenController invalidate];
+    _legacyFullscreenController = nil;
+  }
 
   // Cancel any queued dialogs.
   [self.dialogDelegate cancelDialogForTab:self];
@@ -764,16 +774,19 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 #pragma mark FindInPageControllerDelegate
 
 - (void)willAdjustScrollPosition {
-  // Skip the next attempt to correct the scroll offset for the toolbar height.
-  // Used when programatically scrolling down the y offset.
-  [_fullScreenController shouldSkipNextScrollOffsetForHeader];
+  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+    // Skip the next attempt to correct the scroll offset for the toolbar
+    // height.  Used when programatically scrolling down the y offset.
+    [_legacyFullscreenController shouldSkipNextScrollOffsetForHeader];
+  }
 }
 
 #pragma mark -
 #pragma mark FullScreen
 
 - (void)updateFullscreenWithToolbarVisible:(BOOL)visible {
-  [_fullScreenController moveHeaderToRestingPosition:visible];
+  DCHECK(!base::FeatureList::IsEnabled(features::kNewFullscreen));
+  [_legacyFullscreenController moveHeaderToRestingPosition:visible];
 }
 
 #pragma mark -
@@ -867,8 +880,10 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   if (!navigation->IsSameDocument()) {
     // Reset |isVoiceSearchResultsTab| since a new page is being navigated to.
     self.isVoiceSearchResultsTab = NO;
-    // Move the toolbar to visible during page load.
-    [_fullScreenController disableFullScreen];
+    if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+      // Move the toolbar to visible during page load.
+      [_legacyFullscreenController disableFullScreen];
+    }
   }
 
   if ([self shouldRecordPageLoadStartForNavigation:navigation] &&
@@ -888,10 +903,12 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 - (void)webState:(web::WebState*)webState
     didCommitNavigationWithDetails:(const web::LoadCommittedDetails&)details {
   DCHECK([self navigationManager]);
-  // |webWillAddPendingURL:transition:| is not called for native page loads.
-  // TODO(crbug.com/381201): Move this call there once that bug is fixed so that
-  // |disableFullScreen| is called only from one place.
-  [_fullScreenController disableFullScreen];
+  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+    // |webWillAddPendingURL:transition:| is not called for native page loads.
+    // TODO(crbug.com/381201): Move this call there once that bug is fixed so
+    // that |disableFullScreen| is called only from one place.
+    [_legacyFullscreenController disableFullScreen];
+  }
   GURL lastCommittedURL = webState->GetLastCommittedURL();
 
   if (_parentTabModel) {
@@ -948,8 +965,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     lastCommittedURL = lastCommittedItem->GetVirtualURL();
   }
   [_webControllerSnapshotHelper setSnapshotCoalescingEnabled:YES];
-  if (!loadSuccess)
-    [_fullScreenController disableFullScreen];
+  if (!base::FeatureList::IsEnabled(features::kNewFullscreen) && !loadSuccess)
+    [_legacyFullscreenController disableFullScreen];
   [self recordInterfaceOrientation];
   navigation_metrics::RecordMainFrameNavigation(
       lastCommittedURL, true, self.browserState->IsOffTheRecord());
@@ -998,9 +1015,11 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 }
 
 - (void)webStateDidStopLoading:(web::WebState*)webState {
-  // This is the maximum that a page will ever load and it is safe to allow
-  // fullscreen mode.
-  [_fullScreenController enableFullScreen];
+  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+    // This is the maximum that a page will ever load and it is safe to allow
+    // fullscreen mode.
+    [_legacyFullscreenController enableFullScreen];
+  }
   [_parentTabModel notifyTabChanged:self];
 }
 
@@ -1150,12 +1169,14 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 }
 
 - (void)webStateDidChangeVisibleSecurityState:(web::WebState*)webState {
-  // Disable fullscreen if SSL cert is invalid.
-  web::NavigationItem* item = [self navigationManager]->GetTransientItem();
-  if (item) {
-    web::SecurityStyle securityStyle = item->GetSSL().security_style;
-    if (securityStyle == web::SECURITY_STYLE_AUTHENTICATION_BROKEN) {
-      [_fullScreenController disableFullScreen];
+  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+    // Disable fullscreen if SSL cert is invalid.
+    web::NavigationItem* item = [self navigationManager]->GetTransientItem();
+    if (item) {
+      web::SecurityStyle securityStyle = item->GetSSL().security_style;
+      if (securityStyle == web::SECURITY_STYLE_AUTHENTICATION_BROKEN) {
+        [_legacyFullscreenController disableFullScreen];
+      }
     }
   }
 
@@ -1165,9 +1186,12 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (void)renderProcessGoneForWebState:(web::WebState*)webState {
   DCHECK(webState == _webStateImpl);
-  UIApplicationState state = [UIApplication sharedApplication].applicationState;
-  if (webState->IsVisible() && state == UIApplicationStateActive) {
-    [_fullScreenController disableFullScreen];
+  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+    UIApplicationState state =
+        [UIApplication sharedApplication].applicationState;
+    if (webState->IsVisible() && state == UIApplicationStateActive) {
+      [_legacyFullscreenController disableFullScreen];
+    }
   }
   [self.dialogDelegate cancelDialogForTab:self];
 }
