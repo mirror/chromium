@@ -96,6 +96,29 @@
     },
     {
       "key": {
+        "uuid": "aa2f6071_16e0ee1d",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1108944
+      },
+      "writtenOn": "2017-10-25T19:36:41Z",
+      "side": 1,
+      "message": "FWIW, this hash is now equal to the hash we get in Opera with a decoder based on Audio Toolbox (and the one we get with a Media Foundation-based decoder is just slightly off).",
+      "range": {
+        "startLine": 1591,
+        "startChar": 17,
+        "endLine": 1591,
+        "endChar": 52
+      },
+      "revId": "c3356c3262ea63139eb640be96701b327057b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca9d3701_4c8ac839",
         "filename": "media/test/pipeline_integration_test.cc",
         "patchSetId": 2
