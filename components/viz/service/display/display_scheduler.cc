@@ -436,8 +436,19 @@ void DisplayScheduler::ScheduleBeginFrameDeadline() {
   // Determine the deadline we want to use.
   base::TimeTicks desired_deadline = DesiredBeginFrameDeadlineTime();
 
+  // Possible combinations of the deadline task and the deadline time used
+  // in the code below:
+  // Time       Task      Deadline type
+  // ------------------------------------------------
+  // 0          null      No deadline (canceled)
+  // 0          not null  Prompt
+  // Max value  null      Infinite
+  // Other      not null  Explicit at the target time
+  // Other      null      Implicit at next BeginFrame
+
   // Avoid re-scheduling the deadline if it's already correctly scheduled.
-  if (!begin_frame_deadline_task_.IsCancelled() &&
+  if (!(begin_frame_deadline_task_.IsCancelled() &&
+        begin_frame_deadline_task_time_.is_null()) &&
       desired_deadline == begin_frame_deadline_task_time_) {
     TRACE_EVENT_INSTANT0("viz", "Using existing deadline",
                          TRACE_EVENT_SCOPE_THREAD);
@@ -454,12 +465,23 @@ void DisplayScheduler::ScheduleBeginFrameDeadline() {
     return;
   }
 
-  begin_frame_deadline_task_.Reset(begin_frame_deadline_closure_);
   base::TimeDelta delta =
       std::max(base::TimeDelta(), desired_deadline - base::TimeTicks::Now());
+
+  if (!delta.is_zero() && begin_frame_deadline_task_time_ ==
+                              current_begin_frame_args_.frame_time +
+                                  current_begin_frame_args_.interval) {
+    TRACE_EVENT_INSTANT2("viz", "Using implicit deadline on BeginFrame",
+                         TRACE_EVENT_SCOPE_THREAD,
+                         "delta", delta.InMicroseconds(),
+                         "desired_deadline", desired_deadline);
+    return;
+  }
+
+  begin_frame_deadline_task_.Reset(begin_frame_deadline_closure_);
   task_runner_->PostDelayedTask(FROM_HERE,
                                 begin_frame_deadline_task_.callback(), delta);
-  TRACE_EVENT2("viz", "Using new deadline", "delta", delta.ToInternalValue(),
+  TRACE_EVENT2("viz", "Using new deadline", "delta", delta.InMicroseconds(),
                "desired_deadline", desired_deadline);
 }
 
