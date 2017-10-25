@@ -43,15 +43,14 @@ base::ListValue* ReadCommands(const base::FilePath& unpack_path) {
 
 }  // namespace
 
-ComponentPatcher::ComponentPatcher(
-    const base::FilePath& input_dir,
-    const base::FilePath& unpack_dir,
-    scoped_refptr<CrxInstaller> installer,
-    scoped_refptr<OutOfProcessPatcher> out_of_process_patcher)
+ComponentPatcher::ComponentPatcher(const base::FilePath& input_dir,
+                                   const base::FilePath& unpack_dir,
+                                   scoped_refptr<CrxInstaller> installer,
+                                   service_manager::Connector* connector)
     : input_dir_(input_dir),
       unpack_dir_(unpack_dir),
       installer_(installer),
-      out_of_process_patcher_(out_of_process_patcher) {}
+      connector_(connector) {}
 
 ComponentPatcher::~ComponentPatcher() {
 }
@@ -86,8 +85,7 @@ void ComponentPatcher::PatchNextFile() {
 
   std::string operation;
   if (command_args->GetString(kOp, &operation)) {
-    current_operation_ =
-        CreateDeltaUpdateOp(operation, out_of_process_patcher_);
+    current_operation_ = CreateDeltaUpdateOp(operation, connector_);
   }
 
   if (!current_operation_.get()) {

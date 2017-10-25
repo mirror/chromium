@@ -152,10 +152,10 @@ void StartInstallOnBlockingTaskRunner(
     const base::FilePath& crx_path,
     const std::string& fingerprint,
     const scoped_refptr<CrxInstaller>& installer,
-    const scoped_refptr<OutOfProcessPatcher>& oop_patcher,
+    service_manager::Connector* connector,
     const InstallOnBlockingTaskRunnerCompleteCallback& callback) {
-  auto unpacker = base::MakeRefCounted<ComponentUnpacker>(
-      pk_hash, crx_path, installer, oop_patcher);
+  auto unpacker = base::MakeRefCounted<ComponentUnpacker>(pk_hash, crx_path,
+                                                          installer, connector);
 
   unpacker->Unpack(base::Bind(&UnpackCompleteOnBlockingTaskRunner,
                               main_task_runner, crx_path, fingerprint,
@@ -600,7 +600,7 @@ void Component::StateUpdatingDiff::DoHandle() {
                      base::ThreadTaskRunnerHandle::Get(),
                      component.crx_component_.pk_hash, component.crx_path_,
                      component.next_fp_, component.crx_component_.installer,
-                     update_context.config->CreateOutOfProcessPatcher(),
+                     update_context.config->GetServiceManagerConnector(),
                      base::Bind(&Component::StateUpdatingDiff::InstallComplete,
                                 base::Unretained(this))));
 }
@@ -659,7 +659,7 @@ void Component::StateUpdating::DoHandle() {
                          base::ThreadTaskRunnerHandle::Get(),
                          component.crx_component_.pk_hash, component.crx_path_,
                          component.next_fp_, component.crx_component_.installer,
-                         update_context.config->CreateOutOfProcessPatcher(),
+                         update_context.config->GetServiceManagerConnector(),
                          base::Bind(&Component::StateUpdating::InstallComplete,
                                     base::Unretained(this))));
 }

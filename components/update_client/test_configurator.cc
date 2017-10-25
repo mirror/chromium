@@ -10,7 +10,6 @@
 #include "base/version.h"
 #include "components/prefs/pref_service.h"
 #include "components/update_client/activity_data_service.h"
-#include "components/update_client/out_of_process_patcher.h"
 #include "net/url_request/url_request_test_util.h"
 #include "url/gurl.h"
 
@@ -106,7 +105,7 @@ net::URLRequestContextGetter* TestConfigurator::RequestContext() const {
   return context_.get();
 }
 
-scoped_refptr<OutOfProcessPatcher> TestConfigurator::CreateOutOfProcessPatcher()
+service_manager::Connector* TestConfigurator::GetServiceManagerConnector()
     const {
   return nullptr;
 }
