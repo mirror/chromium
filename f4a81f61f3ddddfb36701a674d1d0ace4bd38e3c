@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea739f6_695b96d6",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-25T12:07:14Z",
+      "side": 0,
+      "message": "A nice thing about having this here is that it\u0027s right above the call to DecodeToYUV. Honestly I think it\u0027s fine in either place (assuming you change your \"||\" to \"\u0026\u0026\") and don\u0027t see any compelling reason to move it.",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 35
+      },
+      "revId": "f4a81f61f3ddddfb36701a674d1d0ace4bd38e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

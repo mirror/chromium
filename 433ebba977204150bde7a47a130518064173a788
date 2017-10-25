@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac8a375d_dba436ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-25T12:07:14Z",
+      "side": 1,
+      "message": "This doesn\u0027t avoid anything. You\u0027ve just moved a debug assert.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "433ebba977204150bde7a47a130518064173a788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8858c1_be0bdeb6",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-25T12:07:14Z",
+      "side": 1,
+      "message": "You probably meant \u0026\u0026. If decoder is null, we don\u0027t want to dereference it.",
+      "range": {
+        "startLine": 202,
+        "startChar": 9,
+        "endLine": 202,
+        "endChar": 45
+      },
+      "revId": "433ebba977204150bde7a47a130518064173a788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
