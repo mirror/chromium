@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "31db1cd1_54c2e85e",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-25T17:21:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure the algorithm is right.  I want to experiment with both a \"n-1\" and a \"percentage\" algorithm.  I envision two finch variables, one to switch between algorithms, and a second for the threshold.  (I plan both for another changelist)",
+      "parentUuid": "8c9c14f7_98f3a43f",
+      "revId": "56f0e274c4e01093430375307397cfa7ba2a6995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23b66433_691f3ade",
         "filename": "components/offline_pages/core/snapshot_controller.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "418991c3_166a0670",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-25T17:21:02Z",
+      "side": 1,
+      "message": "OK, moved back to an enum.  I found the boolean flags easier to understand, which is why I switched.",
+      "parentUuid": "23b66433_691f3ade",
+      "revId": "56f0e274c4e01093430375307397cfa7ba2a6995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9224fd69_d231da2c",
         "filename": "components/offline_pages/core/snapshot_controller.cc",
         "patchSetId": 3
@@ -67,6 +103,24 @@
       "revId": "56f0e274c4e01093430375307397cfa7ba2a6995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0992f9_c968293f",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-25T17:21:02Z",
+      "side": 1,
+      "message": "Changed the code back to match the comment.",
+      "parentUuid": "9224fd69_d231da2c",
+      "revId": "56f0e274c4e01093430375307397cfa7ba2a6995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
