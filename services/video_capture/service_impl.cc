@@ -57,15 +57,14 @@ bool ServiceImpl::OnServiceManagerConnectionLost() {
 void ServiceImpl::OnDeviceFactoryProviderRequest(
     mojom::DeviceFactoryProviderRequest request) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  mojo::MakeStrongBinding(
-      base::MakeUnique<DeviceFactoryProviderImpl>(
-          ref_factory_->CreateRef(),
-          // Use of unretained |this| is safe, because the
-          // VideoCaptureServiceImpl has shared ownership of |this| via the
-          // reference created by ref_factory->CreateRef().
-          base::Bind(&ServiceImpl::SetShutdownDelayInSeconds,
-                     base::Unretained(this))),
-      std::move(request));
+  LazyInitializeDeviceFactoryProvider();
+  factory_provider_bindings_.AddBinding(device_factory_provider_.get(), std::move(request));
+  // Register a connection error handler for the first binding.
+  if (factory_provider_bindings_.size() == 1) {
+    factory_provider_bindings_.set_connection_error_handler(
+        base::BindRepeating(&ServiceImpl::OnProviderClientDisconnected,
+                             base::Unretained(this)));
+  }
 }
 
 void ServiceImpl::OnTestingControlsRequest(
@@ -99,6 +98,21 @@ void ServiceImpl::MaybeRequestQuit() {
   } else {
     video_capture::uma::LogVideoCaptureServiceEvent(
         video_capture::uma::SERVICE_SHUTDOWN_TIMEOUT_CANCELED);
+  }
+}
+
+void ServiceImpl::LazyInitializeDeviceFactoryProvider() {
+  if (device_factory_provider_)
+    return;
+
+  device_factory_provider_ = std::make_unique<DeviceFactoryProviderImpl>(
+      ref_factory_->CreateRef(), base::Bind(&ServiceImpl::SetShutdownDelayInSeconds,
+                                            base::Unretained(this)));
+}
+
+void ServiceImpl::OnProviderClientDisconnected() {
+  if (factory_provider_bindings_.empty()) {
+    device_factory_provider_.reset();
   }
 }
 
