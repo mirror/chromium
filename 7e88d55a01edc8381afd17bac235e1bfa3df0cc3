@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d67f264_8f8e7c86",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T21:52:35Z",
+      "side": 1,
+      "message": "Nit: let\u0027s be a bit more specific - maybe:\n[Extensions Docs] Update the icons in the water alarm example\n\nUpdate the icons in the water alarm sample extension to use the new\npreferred icon sizes.",
+      "revId": "7e88d55a01edc8381afd17bac235e1bfa3df0cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f874941_110dfc94",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T21:52:35Z",
+      "side": 1,
+      "message": "nit: indentation here is off",
+      "revId": "7e88d55a01edc8381afd17bac235e1bfa3df0cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e6c87d_73777cb4",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-25T21:52:35Z",
+      "side": 1,
+      "message": "Can we include a 32x32 for 2x displays?",
+      "revId": "7e88d55a01edc8381afd17bac235e1bfa3df0cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
