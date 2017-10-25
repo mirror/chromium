@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42698947_289b29f6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/request/request-cache-force-cache-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-25T12:04:26Z",
+      "side": 1,
+      "message": "These failures are not regressions, as the previous PASS results were just by accident.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "43a67b0b31d9670822811b9a04cb6828ef931584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
