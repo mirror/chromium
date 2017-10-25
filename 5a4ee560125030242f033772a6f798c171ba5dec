@@ -106,6 +106,24 @@
       "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfea27c9_9725499b",
+        "filename": "chrome/browser/resources/chromeos/mobile_setup_portal.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-25T20:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e1866ae_33648edb",
+      "revId": "5a4ee560125030242f033772a6f798c171ba5dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
