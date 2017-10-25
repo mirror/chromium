@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e8a594e2_bed94869",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-25T18:33:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89e0e7c0_d76f8653",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "c3356c3262ea63139eb640be96701b327057b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eb474c1_4a793e4c",
         "filename": "media/test/pipeline_integration_test.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "79a40452_06695b13",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-25T18:33:58Z",
+      "side": 1,
+      "message": "Correct. The only thing now discarded is what was requested by the append window.",
+      "parentUuid": "5eb474c1_4a793e4c",
+      "range": {
+        "startLine": 1591,
+        "startChar": 2,
+        "endLine": 1591,
+        "endChar": 16
+      },
+      "revId": "c3356c3262ea63139eb640be96701b327057b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca9d3701_4c8ac839",
         "filename": "media/test/pipeline_integration_test.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-25T02:20:05Z",
       "side": 1,
       "message": "I\u0027m a bit confused here: why should full-file MSE playback of sfx.adts not match SRC\u003d playback of the same?",
+      "range": {
+        "startLine": 1613,
+        "startChar": 2,
+        "endLine": 1613,
+        "endChar": 16
+      },
+      "revId": "c3356c3262ea63139eb640be96701b327057b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ca77f2_4c55904f",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-25T18:33:58Z",
+      "side": 1,
+      "message": "With MP3 we decided we wanted predictable timeline behavior where clients can choose or not choose to trim this data. Remember these encoded samples affect the actual buffered timeline (they have a timestamp and duration).\n\nSee also my questions about whether we should do this for mp4 streams as well. I.e. are video frames timestamped with or without the encoder delay discarded?",
+      "parentUuid": "ca9d3701_4c8ac839",
       "range": {
         "startLine": 1613,
         "startChar": 2,
