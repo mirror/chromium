@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c2c9f35_77442624",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-25T23:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "542c04c3_f3ee7c26",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "60637293aa7b1f139a8065eb85a2778d77515c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d0f13c_0b9e5417",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
         "patchSetId": 5
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "d16a54da_216e4bf7",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-25T23:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0bb8b71_c000dd40",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 53
+      },
+      "revId": "60637293aa7b1f139a8065eb85a2778d77515c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e34e3e1_21f835b0",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.h",
         "patchSetId": 5
@@ -83,6 +131,30 @@
       "writtenOn": "2017-10-25T23:15:57Z",
       "side": 1,
       "message": "nit: move these 2 includes to .cc file.\nHere, it is sufficient to just forward declare class UINetworkQualityEstimatorService.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 80
+      },
+      "revId": "60637293aa7b1f139a8065eb85a2778d77515c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85a7f86_5bae118c",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-25T23:44:37Z",
+      "side": 1,
+      "message": "Moved the factory.h file. In my opinion, it is much better to avoid forward declaration as much as possible.\n\nhttp://google.github.io/styleguide/cppguide.html#Forward_Declarations",
+      "parentUuid": "2e34e3e1_21f835b0",
       "range": {
         "startLine": 9,
         "startChar": 0,
