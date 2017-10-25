@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97efa868_ce3db8aa",
+        "filename": "ash/public/interfaces/voice_interaction_controller.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T06:38:49Z",
+      "side": 1,
+      "message": "Like jamescook@, I\u0027m wondering if this needs to be extensible. In general, we\u0027d prefer that enums aren\u0027t extensible, since this currently disables all validation.",
+      "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea09a469_a598a7cc",
+        "filename": "ash/voice_interaction/voice_interaction_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T06:38:49Z",
+      "side": 1,
+      "message": "Nit: it\u0027s not necessary to set *state in this case: the out value is never used if the return value is false.",
+      "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271904d7_de16ae83",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-25T06:38:49Z",
+      "side": 1,
+      "message": "Maybe this can be an inline member without the heap indirection of unique_ptr? It doesn\u0027t seem like this needs to be reset after it\u0027s created.",
+      "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
