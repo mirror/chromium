@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceb1130a_f196ab10",
+        "filename": "media/formats/mp4/box_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "I\u0027m uncertain about this logic change. Where is it enforced that this is the case, especially if ReadConcatenatedBoxes() is involved?",
+      "range": {
+        "startLine": 203,
+        "startChar": 2,
+        "endLine": 203,
+        "endChar": 8
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4db17f_29c479be",
+        "filename": "media/formats/mp4/box_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "nit: remove .get() here?",
+      "range": {
+        "startLine": 161,
+        "startChar": 21,
+        "endLine": 161,
+        "endChar": 24
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbf08e6_246a4454",
+        "filename": "media/formats/mp4/box_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "nit ditto",
+      "range": {
+        "startLine": 190,
+        "startChar": 20,
+        "endLine": 190,
+        "endChar": 21
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3fda25_2a7ccdf2",
+        "filename": "media/formats/mp4/box_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "nit ditto",
+      "range": {
+        "startLine": 221,
+        "startChar": 22,
+        "endLine": 221,
+        "endChar": 25
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd937ca_2bfb537f",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "This method retains a bit of the previous ugliness.\nCan result be changed simply to ParseResult, and logic adjusted to manage it using the enum values rather than two bools?",
+      "range": {
+        "startLine": 160,
+        "startChar": 8,
+        "endLine": 160,
+        "endChar": 14
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "373b19f6_6fd42af0",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "aside: It seems this change to an early return is ok, since the error result is fatal, right? Or am I missing something? (Perhaps there\u0027s a reason why previously the mdat_tail_ was updated even if ParseMoof returned false.)",
+      "range": {
+        "startLine": 218,
+        "startChar": 13,
+        "endLine": 218,
+        "endChar": 24
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7dc41cf_618fbc4d",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "Since uncertain about related logic, either:\n1) leave previous logic (return NeedMoreData here if !Trim here) (and update comment), or\n2) use a CHECK and reword this comment to indicate we think this Trim is unnecessary (since we think EnqueueSample is followed always by updating tail to and discard/trim in caller (and older logic that apparently allowed emission when partial MDATs were appended seems no longer to allow until full MDATs are appended), even when !runs_-\u003eIsRunValid() here) and to drop the CHECK and Trim completely once certain.",
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c88fee6_f8419868",
+        "filename": "media/formats/mp4/parse_result.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "nit: spelling",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c29b5dc_7cddd7ec",
+        "filename": "media/formats/mp4/rcheck.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "nit ditto",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6420fe14_3bec6bc5",
+        "filename": "media/formats/mp4/rcheck.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "nit ditto",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8201e99a_73aa5f4c",
+        "filename": "testing/libfuzzer/fuzzers/mp4_box_reader_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "wrong type",
+      "range": {
+        "startLine": 31,
+        "startChar": 11,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73cfa7c_435aeeb7",
+        "filename": "testing/libfuzzer/fuzzers/mp4_box_reader_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-25T00:12:40Z",
+      "side": 1,
+      "message": "reader must be non-nullptr, or bug (or misunderstanding of curren ReadTopLevelBox() logic).",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "d53bff5881876f573ce2633fccd6430ed013f87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
