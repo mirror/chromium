@@ -151,6 +151,10 @@ const char kTraceMethodOfStackAllocatedParentNote[] =
     "[blink-gc] The stack allocated class %0 provides an unnecessary "
     "trace method:";
 
+const char kUniquePtrUsedWithGC[] =
+    "[blink-gc] Expression applies %0 to garbage-collected type %1. "
+    "std::unique_ptr cannot hold garbage-collected objects.";
+
 } // namespace
 
 DiagnosticBuilder DiagnosticsReporter::ReportDiagnostic(
@@ -259,6 +263,9 @@ DiagnosticsReporter::DiagnosticsReporter(
       DiagnosticsEngine::Note, kOverriddenNonVirtualTraceNote);
   diag_manual_dispatch_method_note_ = diagnostic_.getCustomDiagID(
       DiagnosticsEngine::Note, kManualDispatchMethodNote);
+
+  diag_unique_ptr_used_with_gc_ =
+      diagnostic_.getCustomDiagID(getErrorLevel(), kUniquePtrUsedWithGC);
 }
 
 bool DiagnosticsReporter::hasErrorOccurred() const
@@ -572,4 +579,13 @@ void DiagnosticsReporter::NoteOverriddenNonVirtualTrace(
   ReportDiagnostic(overridden->getLocStart(),
                    diag_overridden_non_virtual_trace_note_)
       << overridden;
+}
+
+void DiagnosticsReporter::UniquePtrUsedWithGC(
+    const clang::Expr* expr,
+    const clang::FunctionDecl* bad_function,
+    const clang::CXXRecordDecl* gc_type) {
+  ReportDiagnostic(expr->getLocStart(), diag_unique_ptr_used_with_gc_)
+      << bad_function->getName() << gc_type->getName()
+      << expr->getSourceRange();
 }
