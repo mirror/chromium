@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ee3abd3_ea7fb7d5",
+        "filename": "content/browser/appcache/appcache_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-25T21:56:23Z",
+      "side": 1,
+      "message": "Would it make sense to have a DCHECK that the type doesn\u0027t have its 31st bit set, with a comment explaining that the situation might occur if someone enabled and then disabled the enable-appcache-executable-handlers flag (which is now gone)?",
+      "revId": "e3d0a0c9b615e7a2329337fb0fea61b6d99cc333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
