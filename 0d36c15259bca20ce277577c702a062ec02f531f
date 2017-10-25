@@ -52,6 +52,24 @@
       "revId": "0d36c15259bca20ce277577c702a062ec02f531f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e89630_97190116",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-25T18:04:12Z",
+      "side": 1,
+      "message": "You\u0027re right. What\u0027s happening is that OmniboxEditModel is calling GetSelectedRange as part of the revert process after focus loss:\n\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/omnibox_edit_model.cc?l\u003d380\u0026rcl\u003dfd35a843845c1820d06082fd2edf780abcd442e6\n\nWhen I comment out the DCHECK, there\u0027s no selection available anyway, like you said, so the values are just 0. So instead I\u0027ve added a guard for isFirstResponder in the view. Please take another look.",
+      "parentUuid": "df7af49b_e09ad195",
+      "revId": "0d36c15259bca20ce277577c702a062ec02f531f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
