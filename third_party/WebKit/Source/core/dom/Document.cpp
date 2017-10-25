@@ -7163,6 +7163,7 @@ service_manager::InterfaceProvider* Document::GetInterfaceProvider() {
 }
 
 scoped_refptr<WebTaskRunner> Document::GetTaskRunner(TaskType type) {
+  DCHECK(IsMainThread());
   if (ContextDocument() && ContextDocument()->GetFrame())
     return ContextDocument()->GetFrame()->FrameScheduler()->GetTaskRunner(type);
   // In most cases, ContextDocument() will get us to a relevant Frame. In some
