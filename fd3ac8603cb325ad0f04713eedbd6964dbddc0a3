@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21a30476_3c435f76",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T20:04:24Z",
+      "side": 1,
+      "message": "You can call reset() with no arguments.",
+      "range": {
+        "startLine": 159,
+        "startChar": 27,
+        "endLine": 159,
+        "endChar": 34
+      },
+      "revId": "fd3ac8603cb325ad0f04713eedbd6964dbddc0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02e35ab_060aab7b",
+        "filename": "device/u2f/u2f_ble_discovery.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T20:04:24Z",
+      "side": 1,
+      "message": "This header appears unused.",
+      "revId": "fd3ac8603cb325ad0f04713eedbd6964dbddc0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d232f87e_d1f7a8dd",
+        "filename": "device/u2f/u2f_ble_discovery.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T20:04:24Z",
+      "side": 1,
+      "message": "These headers appear unused.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "fd3ac8603cb325ad0f04713eedbd6964dbddc0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5698f725_cb49c8fa",
+        "filename": "device/u2f/u2f_ble_discovery.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T20:04:24Z",
+      "side": 1,
+      "message": "Chromium code style doesn\u0027t allow complex objects like this to be allocated as static constants. I would use a static const char[] and construct the BluetoothUUID from it as necessary.",
+      "revId": "fd3ac8603cb325ad0f04713eedbd6964dbddc0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a71025_18532a57",
+        "filename": "device/u2f/u2f_ble_uuids.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-25T20:04:24Z",
+      "side": 1,
+      "message": "char[] kU2fServiceUuid and so forth below.",
+      "range": {
+        "startLine": 12,
+        "startChar": 23,
+        "endLine": 12,
+        "endChar": 45
+      },
+      "revId": "fd3ac8603cb325ad0f04713eedbd6964dbddc0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
