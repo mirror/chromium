@@ -32,6 +32,7 @@
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "gpu/command_buffer/common/sync_token.h"
+#include "gpu/command_buffer/common/transfer_cache_entry.h"
 #include "gpu/command_buffer/service/buffer_manager.h"
 #include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/context_group.h"
@@ -2268,6 +2269,18 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   void UnbindTexture(TextureRef* texture_ref,
                      bool supports_separate_framebuffer_binds);
+
+  ServiceDiscardableHandle CreateDiscardableHandle(
+      DiscardableHandleId handle_id) {
+    uint32_t shm_id = static_cast<uint32_t>((handle_id >> 32) & 0xFFFFFFFF);
+    uint32_t byte_offset = static_cast<uint32_t>(handle_id & 0xFFFFFFFF);
+
+    scoped_refptr<gpu::Buffer> buffer = GetSharedMemoryBuffer(shm_id);
+    if (!DiscardableHandleBase::ValidateParameters(buffer.get(), byte_offset))
+      return ServiceDiscardableHandle(nullptr, 0, 0);
+
+    return ServiceDiscardableHandle(std::move(buffer), byte_offset, shm_id);
+  }
 
   // Generate a member function prototype for each command in an automated and
   // typesafe way.
@@ -20041,8 +20054,7 @@ error::Error GLES2DecoderImpl::HandleInitializeDiscardableTextureCHROMIUM(
           const volatile gles2::cmds::InitializeDiscardableTextureCHROMIUM*>(
           cmd_data);
   GLuint texture_id = c.texture_id;
-  uint32_t shm_id = c.shm_id;
-  uint32_t shm_offset = c.shm_offset;
+  DiscardableHandleId handle_id = c.handle_id();
 
   TextureRef* texture = texture_manager()->GetTexture(texture_id);
   if (!texture) {
@@ -20051,12 +20063,11 @@ error::Error GLES2DecoderImpl::HandleInitializeDiscardableTextureCHROMIUM(
                        "Invalid texture ID");
     return error::kNoError;
   }
-  scoped_refptr<gpu::Buffer> buffer = GetSharedMemoryBuffer(shm_id);
-  if (!DiscardableHandleBase::ValidateParameters(buffer.get(), shm_offset))
+  ServiceDiscardableHandle handle = CreateDiscardableHandle(handle_id);
+  if (!handle.shm_id())
     return error::kInvalidArguments;
 
   size_t size = texture->texture()->estimated_size();
-  ServiceDiscardableHandle handle(std::move(buffer), shm_offset, shm_id);
   GetContextGroup()->discardable_manager()->InsertLockedTexture(
       texture_id, size, group_->texture_manager(), std::move(handle));
   return error::kNoError;
@@ -20268,6 +20279,45 @@ void GLES2DecoderImpl::DoEndRasterCHROMIUM() {
   sk_surface_.reset();
 
   RestoreState(nullptr);
+}
+
+error::Error GLES2DecoderImpl::HandleCreateTransferCacheEntryCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  // const volatile gles2::cmds::CreateTransferCacheEntryCHROMIUM& c =
+  //     *static_cast<
+  //         const volatile gles2::cmds::CreateTransferCacheEntryCHROMIUM*>(
+  //         cmd_data);
+  // DiscardableHandleId handle_id = c.handle_id();
+  // TransferCacheEntryType type = static_cast<TransferCacheEntryType>(c.type);
+  // GLuint shm_id = c.shm_id;
+  // GLuint shm_offset = c.shm_offset;
+
+  // scoped_refptr<gpu::Buffer> buffer = GetSharedMemoryBuffer(shm_id);
+  // if (!DiscardableHandleBase::ValidateParameters(buffer.get(), shm_offset))
+  //   return error::kInvalidArguments;
+
+  // ServiceDiscardableHandle handle = CreateDiscardableHandle(handle_id);
+  // if (!handle.shm_id())
+  //   return error::kInvalidArguments;
+
+  // // if (!GetContextGroup()->transfer_cache()->CreateTransferCacheEntry(
+  // //         handle_id, handle, type, std::move(buffer)))
+  // //   return error::kInvalidArguments;
+
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleUnlockTransferCacheEntryCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleDeleteTransferCacheEntryCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  return error::kNoError;
 }
 
 // Include the auto-generated part of this file. We split this because it means

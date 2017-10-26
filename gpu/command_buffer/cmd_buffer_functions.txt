@@ -385,3 +385,7 @@ GL_APICALL void         GL_APIENTRY glEndRasterCHROMIUM (void);
 
 // Extension CHROMIUM_texture_storage_image
 GL_APICALL void         GL_APIENTRY glTexStorage2DImageCHROMIUM (GLenumTextureBindTarget target, GLenumTextureInternalFormatStorage internalFormat, GLenumClientBufferUsage bufferUsage, GLsizei width, GLsizei height);
+
+GL_APICALL void         GL_APIENTRY glCreateTransferCacheEntryCHROMIUM (void);
+GL_APICALL void         GL_APIENTRY glDeleteTransferCacheEntryCHROMIUM (void);
+GL_APICALL void         GL_APIENTRY glUnlockTransferCacheEntryCHROMIUM (void);

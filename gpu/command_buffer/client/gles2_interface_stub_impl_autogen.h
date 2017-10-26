@@ -1223,4 +1223,7 @@ void GLES2InterfaceStub::TexStorage2DImageCHROMIUM(GLenum /* target */,
                                                    GLenum /* bufferUsage */,
                                                    GLsizei /* width */,
                                                    GLsizei /* height */) {}
+void GLES2InterfaceStub::CreateTransferCacheEntryCHROMIUM() {}
+void GLES2InterfaceStub::DeleteTransferCacheEntryCHROMIUM() {}
+void GLES2InterfaceStub::UnlockTransferCacheEntryCHROMIUM() {}
 #endif  // GPU_COMMAND_BUFFER_CLIENT_GLES2_INTERFACE_STUB_IMPL_AUTOGEN_H_

@@ -3253,12 +3253,11 @@ void SetEnableDCLayersCHROMIUM(GLboolean enabled) {
 }
 
 void InitializeDiscardableTextureCHROMIUM(GLuint texture_id,
-                                          uint32_t shm_id,
-                                          uint32_t shm_offset) {
+                                          GLuint64 handle_id) {
   gles2::cmds::InitializeDiscardableTextureCHROMIUM* c =
       GetCmdSpace<gles2::cmds::InitializeDiscardableTextureCHROMIUM>();
   if (c) {
-    c->Init(texture_id, shm_id, shm_offset);
+    c->Init(texture_id, handle_id);
   }
 }
 
@@ -3317,6 +3316,33 @@ void TexStorage2DImageCHROMIUM(GLenum target,
       GetCmdSpace<gles2::cmds::TexStorage2DImageCHROMIUM>();
   if (c) {
     c->Init(target, internalFormat, width, height);
+  }
+}
+
+void CreateTransferCacheEntryCHROMIUM(GLuint64 handle_id,
+                                      GLuint type,
+                                      GLuint shm_id,
+                                      GLuint shm_offset) {
+  gles2::cmds::CreateTransferCacheEntryCHROMIUM* c =
+      GetCmdSpace<gles2::cmds::CreateTransferCacheEntryCHROMIUM>();
+  if (c) {
+    c->Init(handle_id, type, shm_id, shm_offset);
+  }
+}
+
+void DeleteTransferCacheEntryCHROMIUM(GLuint64 handle_id) {
+  gles2::cmds::DeleteTransferCacheEntryCHROMIUM* c =
+      GetCmdSpace<gles2::cmds::DeleteTransferCacheEntryCHROMIUM>();
+  if (c) {
+    c->Init(handle_id);
+  }
+}
+
+void UnlockTransferCacheEntryCHROMIUM(GLuint64 handle_id) {
+  gles2::cmds::UnlockTransferCacheEntryCHROMIUM* c =
+      GetCmdSpace<gles2::cmds::UnlockTransferCacheEntryCHROMIUM>();
+  if (c) {
+    c->Init(handle_id);
   }
 }
 

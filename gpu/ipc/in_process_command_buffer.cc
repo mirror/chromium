@@ -322,7 +322,8 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
                 service_->framebuffer_completeness_cache(), feature_info,
                 bind_generates_resource, service_->image_manager(),
                 nullptr /* image_factory */, nullptr /* progress_reporter */,
-                GpuFeatureInfo(), service_->discardable_manager());
+                GpuFeatureInfo(), service_->discardable_manager(),
+                service_->transfer_cache());
 
   command_buffer_ = std::make_unique<CommandBufferService>(
       this, transfer_buffer_manager_.get());

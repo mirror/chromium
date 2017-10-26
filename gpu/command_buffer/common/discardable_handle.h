@@ -12,6 +12,8 @@ namespace gpu {
 
 class Buffer;
 
+using DiscardableHandleId = uint64_t;
+
 // DiscardableHandleBase is the base class for the discardable handle
 // implementation. In order to facilitate transfering handles across the
 // command buffer, DiscardableHandleBase is backed by a gpu::Buffer and an
@@ -43,6 +45,19 @@ class GPU_EXPORT DiscardableHandleBase {
   bool IsLockedForTesting() const;
   bool IsDeletedForTesting() const;
   scoped_refptr<Buffer> BufferForTesting() const { return buffer_; }
+
+  static DiscardableHandleId IdFromShmAndOffset(uint32_t shm_id,
+                                                uint32_t byte_offset) {
+    return (static_cast<uint64_t>(shm_id) << 32) |
+           static_cast<uint64_t>(byte_offset);
+  }
+
+  static void ShmAndOffsetFromId(DiscardableHandleId handle_id,
+                                 uint32_t* shm_id,
+                                 uint32_t* offset) {
+    *shm_id = (handle_id >> 32) & 0xFFFFFFFF;
+    *offset = handle_id & 0xFFFFFFFF;
+  }
 
  protected:
   DiscardableHandleBase(scoped_refptr<Buffer> buffer,
