@@ -122,6 +122,11 @@ void PreviewsIOData::SetPreviewsBlacklistForTesting(
   previews_black_list_ = std::move(previews_back_list);
 }
 
+void PreviewsIOData::SetPreviewsOptimizationGuideForTesting(
+    std::unique_ptr<PreviewsOptimizationGuide> previews_opt_guide) {
+  previews_opt_guide_ = std::move(previews_opt_guide);
+}
+
 void PreviewsIOData::LogPreviewNavigation(const GURL& url,
                                           bool opt_out,
                                           PreviewsType type,
@@ -221,6 +226,8 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
     return false;
   }
 
+  // Check provided blacklist, if any. This type of blacklist was added for
+  // Finch provided blacklist for Client LoFi.
   if (std::find(host_blacklist_from_server.begin(),
                 host_blacklist_from_server.end(), request.url().host_piece()) !=
       host_blacklist_from_server.end()) {
@@ -228,6 +235,22 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
         PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER, request.url(),
         base::Time::Now(), type);
     return false;
+  }
+
+  // Check any provided optimization guidance from the server. This data is
+  // provided through ComponentUpdater (at least originally).
+  if (params::AreOptimizationHintsEnabled()) {
+    // Optimization hints are configured. Check specific previews types that
+    // use them.
+    // TODO(dougarnett): Generalize at some point.
+    if (type == PreviewsType::NOSCRIPT) {
+      // Ensure the URL is whitelisted for NoScript.
+      if (!previews_opt_guide_ ||
+          !previews_opt_guide_->IsWhitelisted(request, type)) {
+        // TODO(dougarnett): Add and log eligibility reason for this.
+        return false;
+      }
+    }
   }
 
   LogPreviewDecisionMade(PreviewsEligibilityReason::ALLOWED, request.url(),
