@@ -370,36 +370,46 @@ class WPTExpectationsUpdater(object):
         """Returns a list of Port objects for all try builders."""
         return [self.host.port_factory.get_from_builder_name(name) for name in self._get_try_bots()]
 
-    @staticmethod
-    def simplify_specifiers(specifiers, configuration_specifier_macros):
-        """Converts some collection of specifiers to an equivalent and maybe shorter list.
+    def simplify_specifiers(self, specifiers, specifier_macros):
+        """Simplifies the specifier part of an expectation line if possible.
 
         The input strings are all case-insensitive, but the strings in the
-        return value will all be capitalized.
+        return value will all be capitalized. If there are version specifiers
+        for versoins that have no try bots, they are ignored.
 
         Args:
-            specifiers: A collection of lower-case specifiers.
-            configuration_specifier_macros: A dict mapping "macros" for
-                groups of specifiers to lists of specific specifiers. In
-                practice, this is a dict mapping operating systems to
-                supported versions, e.g. {"win": ["win7", "win10"]}.
+            specifiers: A collection of specifiers.
+            specifier_macros: A dict mapping "macros" for groups of
+                specifiers to lists of specific specifiers. In practice,
+                this is a dict mapping operating systems to supported
+                versions, e.g.  {"win": ["win7", "win10"]}.
 
         Returns:
             A shortened list of specifiers. For example, ["win7", "win10"]
             would be converted to ["Win"]. If the given list covers all
             supported platforms, then an empty list is returned.
-            This list will be sorted and have capitalized specifier strings.
         """
-        specifiers = {specifier.lower() for specifier in specifiers}
-        for macro_specifier, version_specifiers in configuration_specifier_macros.iteritems():
-            macro_specifier = macro_specifier.lower()
-            version_specifiers = {specifier.lower() for specifier in version_specifiers}
-            if version_specifiers.issubset(specifiers):
-                specifiers -= version_specifiers
-                specifiers.add(macro_specifier)
-        if specifiers == {macro.lower() for macro in configuration_specifier_macros.keys()}:
+        specifiers = {s.lower() for s in specifiers}
+        covered_by_try_bots = self._platform_specifiers_covered_by_try_bots()
+        for macro, versions in specifier_macros.iteritems():
+            macro = macro.lower()
+
+            # Only consider version specifiers that have corresponding try bots.
+            versions = {s.lower() for s in versions if s.lower() in covered_by_try_bots}
+            if versions <= specifiers:
+                specifiers -= versions
+                specifiers.add(macro)
+        if specifiers == {macro.lower() for macro in specifier_macros}:
             return []
         return sorted(specifier.capitalize() for specifier in specifiers)
+
+    def _platform_specifiers_covered_by_try_bots(self):
+        all_platform_specifiers = set()
+        for builder_name in self._get_try_bots():
+            specifiers = self.host.builders.specifiers_for_builder(builder_name)
+            platform_specifier = specifiers[0]
+            all_platform_specifiers.add(platform_specifier.lower())
+        return frozenset(all_platform_specifiers)
 
     def write_to_test_expectations(self, line_list):
         """Writes the given lines to the TestExpectations file.
