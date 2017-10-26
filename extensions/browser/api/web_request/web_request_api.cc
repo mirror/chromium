@@ -32,6 +32,7 @@
 #include "content/public/common/resource_type.h"
 #include "extensions/browser/api/activity_log/web_request_constants.h"
 #include "extensions/browser/api/declarative/rules_registry_service.h"
+#include "extensions/browser/api/declarative_net_request/ruleset_manager.h"
 #include "extensions/browser/api/declarative_webrequest/request_stage.h"
 #include "extensions/browser/api/declarative_webrequest/webrequest_constants.h"
 #include "extensions/browser/api/declarative_webrequest/webrequest_rules_registry.h"
@@ -631,6 +632,29 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
   request_time_tracker_->LogRequestStartTime(request->identifier(),
                                              base::Time::Now());
 
+  const bool is_incognito_context = IsIncognitoBrowserContext(browser_context);
+
+  {
+    // Handle Declarative Net Request API rules.
+
+    // COMMENT: Is checking only the on before request stage fine? The
+    // parameters of a network request that we are concerned about are:
+    // - url
+    // - initiator
+    // - first/third party (depends on url and initiator)
+    // - resource type
+    // Do any of these change between the different network request stages? For
+    // e.g. the url would change for a redirect, but that issues a new
+    // onBeforeRequest AFAIK.
+
+    // |extension_info_map| is null for system level requests.
+    if (extension_info_map &&
+        extension_info_map->GetRulesetManager()->ShouldBlockRequest(
+            *request, is_incognito_context)) {
+      return net::ERR_BLOCKED_BY_CLIENT;
+    }
+  }
+
   // Whether to initialized |blocked_requests_|.
   bool initialize_blocked_requests = false;
 
@@ -659,7 +683,7 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
 
   BlockedRequest& blocked_request = blocked_requests_[request->identifier()];
   blocked_request.event = kOnBeforeRequest;
-  blocked_request.is_incognito |= IsIncognitoBrowserContext(browser_context);
+  blocked_request.is_incognito |= is_incognito_context;
   blocked_request.request = request;
   blocked_request.callback = callback;
   blocked_request.new_url = new_url;
