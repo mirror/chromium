@@ -77,6 +77,7 @@
         "device": [
           "device:battery_monitor",
           "device:generic_sensor",
+          "device:geolocation",
           "device:hid",
           "device:nfc",
           "device:serial",
