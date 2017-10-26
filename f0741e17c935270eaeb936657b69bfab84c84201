@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2ff31f9c_2777fb0c",
+        "filename": "chrome/browser/resources/md_extensions/app_or_extension_behavior.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-26T20:53:48Z",
+      "side": 1,
+      "message": "ItemBehavior?\n\nThe name can also be changed later if we do end up adding more shared utility functions.",
+      "parentUuid": "cb74cd9f_4518406b",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "f0741e17c935270eaeb936657b69bfab84c84201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca59d6a3_60802957",
         "filename": "chrome/browser/resources/md_extensions/item.html",
         "patchSetId": 3
