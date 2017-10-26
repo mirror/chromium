@@ -84,6 +84,8 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   void WillNavigateBackForwardSoon(WebFrameSchedulerImpl* frame_scheduler);
   void DidBeginProvisionalLoad(WebFrameSchedulerImpl* frame_scheduler);
   void DidEndProvisionalLoad(WebFrameSchedulerImpl* frame_scheduler);
+  void SetPendingDomStorageMessageCount(int pending_count);
+  void SetPendingLocalStorageMessages(bool pending_local_storage_messages);
 
   void OnBeginNestedRunLoop();
   void OnExitNestedRunLoop();
@@ -134,6 +136,7 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   scoped_refptr<WebTaskRunnerImpl> virtual_time_control_task_queue_;
   TaskHandle virtual_time_budget_expired_task_handle_;
   int background_parser_count_;
+  int pending_dom_storage_message_count_;
 
   // The maximum number amount of delayed task starvation we will allow in
   // VirtualTimePolicy::ADVANCE or VirtualTimePolicy::DETERMINISTIC_LOADING
@@ -149,6 +152,7 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   bool reported_background_throttling_since_navigation_;
   bool has_active_connection_;
   bool nested_runloop_;
+  bool pending_local_storage_messages_;
   CPUTimeBudgetPool* background_time_budget_pool_;  // Not owned.
   WebViewScheduler::WebViewSchedulerDelegate* delegate_;  // Not owned.
   base::ObserverList<VirtualTimeObserver> virtual_time_observers_;

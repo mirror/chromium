@@ -125,5 +125,17 @@ bool FakeRendererScheduler::MainThreadSeemsUnresponsive(
 
 void FakeRendererScheduler::SetRendererProcessType(RendererProcessType type) {}
 
+void FakeRendererScheduler::SetPendingDomStorageMessageCount(
+    int pending_count) {}
+
+void FakeRendererScheduler::IncrementPendingLocalStorageMessageCount(
+    const std::string& id) {}
+
+void FakeRendererScheduler::DecrementPendingLocalStorageMessageCount(
+    const std::string& id) {}
+
+void FakeRendererScheduler::ClearPendingLocalStorageMessageCount(
+    const std::string& id) {}
+
 }  // namespace scheduler
 }  // namespace blink
