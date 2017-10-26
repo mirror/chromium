@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f5aa436_45bb8f33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-26T22:05:57Z",
+      "side": 1,
+      "message": "Will customtabs/ClientManager.getClientPackageNameForSession(...) return a WebAPK package name if we\u0027re in a WebAPK? Because if it doesn\u0027t then you should be checking for WebAPK prefix here.\n\nSorry for my ignorance - but it\u0027s unclear to me how WebAPKs interact with CustomTabsConnection and friends.",
+      "range": {
+        "startLine": 53,
+        "startChar": 43,
+        "endLine": 53,
+        "endChar": 64
+      },
+      "revId": "e29cafa0c39bcec27f5f081b8a2ef2c84501d742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8695e9_6685db49",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-26T22:05:57Z",
+      "side": 1,
+      "message": "this variable described whether disclosure notification is allowed, please rename.\n\ns/isNotificationBlocked/isNotificationAllowed/",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "e29cafa0c39bcec27f5f081b8a2ef2c84501d742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78114f66_98eb1eed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-26T22:05:57Z",
+      "side": 1,
+      "message": "Please update a comment to clarify it\u0027s TWA only now",
+      "range": {
+        "startLine": 687,
+        "startChar": 71,
+        "endLine": 687,
+        "endChar": 74
+      },
+      "revId": "e29cafa0c39bcec27f5f081b8a2ef2c84501d742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
