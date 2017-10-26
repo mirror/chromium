@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1102271a_0e07f093",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-26T21:03:14Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 82,
+        "startChar": 32,
+        "endLine": 82,
+        "endChar": 34
+      },
+      "revId": "91f50d3d33dc5d53cf86e1a55b9b5afe70776ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3147c9_dd0f9b52",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-26T21:03:14Z",
+      "side": 1,
+      "message": "But if key_frame is true and both IsEmpty()s are true, this will return 0.\nIs that intended?\nThis condition doesn\u0027t look right. Even if key_frame is true, this method may sometimes return information about delta_frame_size_ instead.",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "91f50d3d33dc5d53cf86e1a55b9b5afe70776ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3250407b_86c1af5c",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-26T21:03:14Z",
+      "side": 1,
+      "message": "Move above remoting/base/constants.h",
+      "revId": "91f50d3d33dc5d53cf86e1a55b9b5afe70776ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
