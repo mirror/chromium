@@ -14,6 +14,7 @@ import org.chromium.base.StrictModeContext;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.infobar.SurveyInfoBar;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
+import org.chromium.chrome.browser.preferences.privacy.PrivacyPreferencesManager;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelObserver;
 import org.chromium.chrome.browser.tabmodel.TabModel;
@@ -77,6 +78,7 @@ public class ChromeHomeSurveyController {
     }
 
     private boolean doesUserQualifyForSurvey() {
+        if (!isUMAEnabled()) return false;
         if (CommandLine.getInstance().hasSwitch(SURVEY_FORCE_ENABLE_SWITCH)) return true;
         if (AccessibilityUtil.isAccessibilityEnabled()) return false;
         if (hasInfoBarBeenDisplayed()) return false;
@@ -123,6 +125,13 @@ public class ChromeHomeSurveyController {
             });
         } else {
             showSurveyInfoBar(webContents, siteId);
+        }
+    }
+
+    private boolean isUMAEnabled() {
+        try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
+            return PrivacyPreferencesManager.getInstance()
+                    .isUsageAndCrashReportingPermittedByUser();
         }
     }
 
