@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d60d2f1_85811349",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_global_scope_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-26T05:59:41Z",
+      "side": 1,
+      "message": "I wonder if this could cause race condition because WorkerGlobalScopeScheduler::GetTaskRunner() can be called from any threads while Dispose() is called on the worker thread. Is this safe?\n\nBefore this CL, a thread-safe task runner is captured at the ctor and GetTaskRunner() just returns it so that the race condition doesn\u0027t happen.",
+      "revId": "bfc6998532109cfcea6f513d14caf9b06efbc365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
