@@ -415,7 +415,7 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       SavePage(browser_);
       break;
     case IDC_BOOKMARK_PAGE:
-#if defined(OS_WIN) || (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
       feature_engagement::BookmarkTrackerFactory::GetInstance()
           ->GetForProfile(profile())
           ->OnBookmarkAdded();
@@ -423,7 +423,7 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       BookmarkCurrentPageAllowingExtensionOverrides(browser_);
       break;
     case IDC_BOOKMARK_ALL_TABS:
-#if defined(OS_WIN) || (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
       feature_engagement::BookmarkTrackerFactory::GetInstance()
           ->GetForProfile(profile())
           ->OnBookmarkAdded();
