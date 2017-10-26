@@ -244,6 +244,7 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 
 - (void)createWebViewWithConfiguration:(CWVWebViewConfiguration*)configuration {
   self.webView = [[CWVWebView alloc] initWithFrame:[_containerView bounds]
+                                       openedByDOM:NO
                                      configuration:configuration];
   // Gives a restoration identifier so that state restoration works.
   _webView.restorationIdentifier = @"webView";
