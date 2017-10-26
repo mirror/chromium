@@ -22,6 +22,30 @@
       "revId": "9c2341f4bc507b6d7b3e3174eace119ab318564a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0a8f42_f3be74e6",
+        "filename": "services/viz/manifest.json",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-26T20:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d10644e1_f3975688",
+      "range": {
+        "startLine": 7,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "9c2341f4bc507b6d7b3e3174eace119ab318564a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
