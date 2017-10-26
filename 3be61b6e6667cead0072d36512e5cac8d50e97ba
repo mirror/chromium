@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02ceef36_13c08c44",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-26T01:02:36Z",
+      "side": 1,
+      "message": "this is a util class and should not have any kind of state. It\u0027s not obvious when these values are valid or not, when they can be consumed etc. Please remove as we should do this through explicit passing",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 23
+      },
+      "revId": "3be61b6e6667cead0072d36512e5cac8d50e97ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e114da_d62c46f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-26T01:02:36Z",
+      "side": 1,
+      "message": "i think you\u0027ll need to rename this to \"*.Status2\" so that values of different types aren\u0027t mixed (but not sure)",
+      "range": {
+        "startLine": 108,
+        "startChar": 48,
+        "endLine": 108,
+        "endChar": 54
+      },
+      "revId": "3be61b6e6667cead0072d36512e5cac8d50e97ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f098818d_e00673de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-26T01:02:36Z",
+      "side": 1,
+      "message": "define a simple java object with two longs if it\u0027s absolutely necessary, or alternatively you can define these as member variables of the async task",
+      "range": {
+        "startLine": 180,
+        "startChar": 22,
+        "endLine": 180,
+        "endChar": 26
+      },
+      "revId": "3be61b6e6667cead0072d36512e5cac8d50e97ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762787d1_041cc379",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-26T01:02:36Z",
+      "side": 1,
+      "message": "you could construct this, passing in the other computed values, or give this a callback and do the metrics recording from the place that instantiated the class.",
+      "range": {
+        "startLine": 302,
+        "startChar": 25,
+        "endLine": 302,
+        "endChar": 57
+      },
+      "revId": "3be61b6e6667cead0072d36512e5cac8d50e97ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9e3bf4_c617d238",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 90489,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-26T01:02:36Z",
+      "side": 1,
+      "message": "You\u0027re removing it because our numbers seem to have checked out so we only need the failure case - is that right?",
+      "range": {
+        "startLine": 90489,
+        "startChar": 30,
+        "endLine": 90489,
+        "endChar": 33
+      },
+      "revId": "3be61b6e6667cead0072d36512e5cac8d50e97ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
