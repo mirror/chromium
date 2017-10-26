@@ -306,6 +306,7 @@ jumbo_source_set("unit_tests") {
     "peerconnection/RTCDataChannelTest.cpp",
     "peerconnection/RTCPeerConnectionTest.cpp",
     "presentation/MockWebPresentationClient.h",
+    "presentation/PresentationAvailabilityStateTest.cpp",
     "presentation/PresentationAvailabilityTest.cpp",
     "presentation/PresentationReceiverTest.cpp",
     "presentation/PresentationRequestTest.cpp",
