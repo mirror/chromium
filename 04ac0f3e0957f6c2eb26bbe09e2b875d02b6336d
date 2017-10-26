@@ -614,6 +614,30 @@
     },
     {
       "key": {
+        "uuid": "e9de1517_ccbf2aba",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2669b83_f681922c",
+      "range": {
+        "startLine": 592,
+        "startChar": 0,
+        "endLine": 592,
+        "endChar": 66
+      },
+      "revId": "04ac0f3e0957f6c2eb26bbe09e2b875d02b6336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efe82f3a_58d05f9a",
         "filename": "components/favicon/content/content_favicon_driver.cc",
         "patchSetId": 4

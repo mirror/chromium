@@ -159,6 +159,24 @@
       "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9a8a85_7ebefa4a",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:05:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9b52e08f_99de225e",
+      "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

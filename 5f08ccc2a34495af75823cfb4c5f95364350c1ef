@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3a4f118_bf191a91",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:05:09Z",
+      "side": 1,
+      "message": "No, I don\u0027t think so. It will return to navigation handle and returns.\nhttps://cs.chromium.org/chromium/src/content/browser/frame_host/navigation_handle_impl.cc?l\u003d604\n\nMoreover, there could be other navigation throttle that returns DEFER. For here, we only want to update the tab UI for this specific case.",
+      "parentUuid": "e971e0e6_56f0711b",
+      "range": {
+        "startLine": 1186,
+        "startChar": 0,
+        "endLine": 1186,
+        "endChar": 72
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d0de6ee_4e8140e2",
         "filename": "chrome/browser/ui/tab_ui_helper.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c8f053ad_70153fbb",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:05:09Z",
+      "side": 1,
+      "message": "That\u0027s right. This is called from TabManager, which already checks for first navigation. Added a DCHECK to double check.",
+      "parentUuid": "8d0de6ee_4e8140e2",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "337fe340_168349b8",
         "filename": "chrome/browser/ui/tab_ui_helper.cc",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-26T13:27:13Z",
       "side": 1,
       "message": "History may have the title. Are you sure you don\u0027t want to query it?",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a51dabf_3348e50b",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:05:09Z",
+      "side": 1,
+      "message": "Using host name is decided during the discussion with the UI team. See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d762133.\n\nI think it is possible that we have something in the history for the URL, like favicon. But it has higher chance that the title has changed. This is probably something we will want to experiment.",
+      "parentUuid": "337fe340_168349b8",
       "range": {
         "startLine": 54,
         "startChar": 11,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "23e40bb8_90c73f4d",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4815ef41_9c04658c",
+      "range": {
+        "startLine": 90,
+        "startChar": 18,
+        "endLine": 90,
+        "endChar": 46
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7916795a_2ad6ca35",
         "filename": "chrome/browser/ui/tab_ui_helper.h",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482a5222_a2132ab2",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7916795a_2ad6ca35",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 68
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "4b8ca12d_3ef7e091",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdad109f_9b9110ba",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 30
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6906cdc2_72ece551",
         "filename": "chrome/browser/ui/tab_ui_helper.h",
         "patchSetId": 8
@@ -160,6 +304,30 @@
       "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9614fa9_6bdc1c72",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6906cdc2_72ece551",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 22
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
