@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61c028f2_a26078f7",
+        "filename": "chrome/browser/ui/cocoa/first_run_dialog.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T02:49:17Z",
+      "side": 0,
+      "message": "Note this deleted logic was running twice on Mac. It is repeated in first_run.cc\u0027s DoPostImportTasks() function -\n https://cs.chromium.org/chromium/src/chrome/browser/first_run/first_run.cc?q\u003dSetShowFirstRunBubblePref\u0026sq\u003dpackage:chromium\u0026l\u003d707",
+      "revId": "e2a6495ad84a298a611b4a832722a8a3115fce91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
