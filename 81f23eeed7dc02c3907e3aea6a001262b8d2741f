@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df854fbb_0cc66ce2",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T20:22:25Z",
+      "side": 1,
+      "message": "This is to be removed in the subsequent CL. So keeping it as is.",
+      "parentUuid": "67909df6_92c778dc",
+      "revId": "81f23eeed7dc02c3907e3aea6a001262b8d2741f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12401b3c_4a896b65",
         "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ebdaf197_2a0b3d42",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T20:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12401b3c_4a896b65",
+      "revId": "81f23eeed7dc02c3907e3aea6a001262b8d2741f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abcf80ab_9cc2202f",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "81f23eeed7dc02c3907e3aea6a001262b8d2741f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322adb84_5b560332",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T20:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abcf80ab_9cc2202f",
+      "revId": "81f23eeed7dc02c3907e3aea6a001262b8d2741f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
