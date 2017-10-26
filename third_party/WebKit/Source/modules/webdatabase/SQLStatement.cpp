@@ -95,12 +95,18 @@ bool SQLStatement::PerformCallback(SQLTransaction* transaction) {
   // Call the appropriate statement callback and track if it resulted in an
   // error, because then we need to jump to the transaction error callback.
   if (error) {
-    if (error_callback)
-      callback_error =
+    if (error_callback) {
+      v8::Maybe<bool> result =
           error_callback->handleEvent(transaction, SQLError::Create(*error));
+      // https://dev.w3.org/html5/webdatabase/#processing-model
+      // step 6.2. If the error callback returns false, then move on to the next
+      //   statement, if any, or onto the next overall step otherwise.
+      callback_error = !(result.IsJust() && !result.FromJust());
+    }
   } else if (callback) {
     callback_error =
-        !callback->handleEvent(transaction, backend_->SqlResultSet());
+        callback->handleEvent(transaction, backend_->SqlResultSet())
+            .IsNothing();
   }
 
   return callback_error;

@@ -20,6 +20,7 @@ shouldThrow('navigator.webkitGetUserMedia({video: true}, emptyFunction)');
 shouldNotThrow('navigator.webkitGetUserMedia({video: true}, emptyFunction, emptyFunction)');
 shouldNotThrow('navigator.webkitGetUserMedia({audio: true}, emptyFunction, emptyFunction)');
 shouldNotThrow('navigator.webkitGetUserMedia({audio: true, video: true}, emptyFunction, emptyFunction)');
+shouldNotThrow('navigator.webkitGetUserMedia({video: true}, {}, emptyFunction)');
 shouldThrow('navigator.webkitGetUserMedia(-Infinity, emptyFunction, emptyFunction)');
 shouldThrow('navigator.webkitGetUserMedia(42, emptyFunction, emptyFunction)');
 shouldThrow('navigator.webkitGetUserMedia(Infinity, emptyFunction, emptyFunction)');
@@ -45,7 +46,6 @@ shouldThrow('navigator.webkitGetUserMedia({video: true}, emptyFunction, {})');
 shouldThrow('navigator.webkitGetUserMedia({video: true}, null, emptyFunction)');
 shouldThrow('navigator.webkitGetUserMedia({video: true}, true, emptyFunction)');
 shouldThrow('navigator.webkitGetUserMedia({video: true}, undefined, emptyFunction)');
-shouldThrow('navigator.webkitGetUserMedia({video: true}, {}, emptyFunction)');
 
 window.jsTestIsAsync = false;
 </script>
