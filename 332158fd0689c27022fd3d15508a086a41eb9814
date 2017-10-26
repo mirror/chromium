@@ -187,6 +187,30 @@
       "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de5efdcd_5d8b20a2",
+        "filename": "chrome/browser/ui/views/button_background_painter_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T21:35:53Z",
+      "side": 1,
+      "message": "Sorry for not being clear. I was suggesting you pass in the button as a views::Button, that way no circular deps.",
+      "parentUuid": "109b46b0_067cb040",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
