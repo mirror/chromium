@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "4fc626b7_0f47ffbd",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-26T14:42:43Z",
+      "side": 1,
+      "message": "I think you can simplify this code block to...\n\n  DCHECK(phone_number_separate_fields);\n  DCHECK(!found_number_field_second);\n  found_number_field_second \u003d field.get();\n  phone_number_found \u003d true;\n  break;\n\nNote that the phone_number_separate_fields var isn\u0027t really needed; but, it\u0027s nice for readability/sanity-check.",
+      "revId": "65a67e9ee34cb9cc37d3b242f7089bd34bcfe7ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40272037_58f70992",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-26T14:42:43Z",
+      "side": 1,
+      "message": "since this check was removed in the preceding block, it doesn\u0027t belong here either.",
+      "range": {
+        "startLine": 1235,
+        "startChar": 14,
+        "endLine": 1235,
+        "endChar": 35
+      },
+      "revId": "65a67e9ee34cb9cc37d3b242f7089bd34bcfe7ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2167961_fd97c9a4",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-26T14:42:43Z",
+      "side": 1,
+      "message": "I think 3 and 4 are the same case of base-effort fill. Also, city_code *might* be null.",
+      "revId": "65a67e9ee34cb9cc37d3b242f7089bd34bcfe7ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "484c4053_8c15b007",
         "filename": "components/autofill/core/browser/form_structure_unittest.cc",
         "patchSetId": 11
