@@ -74,9 +74,12 @@ class RenderFrameImplTest : public RenderViewTest {
         view_->GetMainRenderFrame()->GetWebFrame()->FirstChild())
         ->OnSwapOut(kFrameProxyRouteId, false, frame_replication_state);
 
+    service_manager::mojom::InterfaceProviderPtr isolated_interface_provider;
+    mojo::MakeRequest(&isolated_interface_provider);
     RenderFrameImpl::CreateFrame(
-        kSubframeRouteId, MSG_ROUTING_NONE, MSG_ROUTING_NONE,
-        kFrameProxyRouteId, MSG_ROUTING_NONE, base::UnguessableToken::Create(),
+        kSubframeRouteId, std::move(isolated_interface_provider),
+        MSG_ROUTING_NONE, MSG_ROUTING_NONE, kFrameProxyRouteId,
+        MSG_ROUTING_NONE, base::UnguessableToken::Create(),
         frame_replication_state, &compositor_deps_, widget_params,
         FrameOwnerProperties());
 
