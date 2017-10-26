@@ -77,6 +77,8 @@ blink_core_sources("editing") {
     "TextAffinity.cpp",
     "TextAffinity.h",
     "TextGranularity.h",
+    "TextOffsetMapping.cpp",
+    "TextOffsetMapping.h",
     "VisiblePosition.cpp",
     "VisiblePosition.h",
     "VisibleSelection.cpp",

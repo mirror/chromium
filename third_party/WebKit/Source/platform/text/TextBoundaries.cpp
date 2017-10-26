@@ -90,6 +90,31 @@ int FindNextWordFromIndex(const UChar* chars,
   }
 }
 
+static bool IsWhitespace(UChar character) {
+  return IsSpaceOrNewline(character) || character == kNoBreakSpaceCharacter;
+}
+
+std::pair<int, int> FindWordBoundary(
+    const UChar* chars,
+    int len,
+    int position,
+    AppendTrailingWhitespace append_trailing_whitespace) {
+  if (len == 0)
+    return {0, 0};
+  TextBreakIterator* it = WordBreakIterator(chars, len);
+  const int end = it->following(position);
+  const int start = it->previous();
+  if (end < 0)
+    return {start, it->last()};
+  if (append_trailing_whitespace == AppendTrailingWhitespace::kDontAppend)
+    return {start, end};
+  for (int runner = end; runner < len; ++runner) {
+    if (!IsWhitespace(chars[runner]))
+      return {start, runner};
+  }
+  return {start, len};
+}
+
 int FindWordStartBoundary(const UChar* chars, int len, int position) {
   TextBreakIterator* it = WordBreakIterator(chars, len);
   it->following(position);
