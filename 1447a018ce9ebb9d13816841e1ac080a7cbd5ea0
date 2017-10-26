@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c2ee7b9_fe06a0ee",
+        "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-26T19:17:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd98b16_a41c64f4",
+      "range": {
+        "startLine": 63,
+        "startChar": 32,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "1447a018ce9ebb9d13816841e1ac080a7cbd5ea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c77b21f0_adba9052",
         "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dc551a96_c65b77c1",
+        "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-26T19:17:40Z",
+      "side": 1,
+      "message": "Unfortunately, even if we added the ifdef, that would only determine if mesa has XR30 support, but not if the board supports it. That means eglCreateImageKHR (therefore these tests) could still fail depending on the board.\n\nIn Mesa Intel driver, the GPU generation is used to determine if a format is supported.\nThere is no explicit API to determine if eglCreateImageKHR will work for a specific format, last time I asked they suggested to just try eglCreateImageKHR with different formats and see if it fails or not.\n\nWe currently just disable all tests with optional formats and test them manually. I\u0027m going to leave this disabled for now, we can discuss later if we want to do something different for optional formats.",
+      "parentUuid": "c77b21f0_adba9052",
+      "range": {
+        "startLine": 92,
+        "startChar": 30,
+        "endLine": 92,
+        "endChar": 39
+      },
+      "revId": "1447a018ce9ebb9d13816841e1ac080a7cbd5ea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "502fb8bd_baddac59",
         "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "1447a018ce9ebb9d13816841e1ac080a7cbd5ea0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907c8c25_d8aceb09",
+        "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-26T19:17:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "502fb8bd_baddac59",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 58
+      },
+      "revId": "1447a018ce9ebb9d13816841e1ac080a7cbd5ea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
