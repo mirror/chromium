@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb014768_abb6b167",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-26T02:30:25Z",
+      "side": 1,
+      "message": "container_host_request",
+      "range": {
+        "startLine": 1175,
+        "startChar": 45,
+        "endLine": 1175,
+        "endChar": 68
+      },
+      "revId": "dd84518aacd1f1ae35e6e9e79c7da8e1e324fa9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b1cda9_efba302f",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-26T02:30:25Z",
+      "side": 1,
+      "message": "This is a little confusing because ProviderHost is supposed to exist for SharedWorker already, and ProviderHost IS_A ContainerHost. Is the following accurate?\n\n// For provider hosts that are hosting a service worker client associated with worker threads. These are the bindings to ServiceWorkerContainerHost used on the worker threads.\n// When this hosting a shared worker, |bindings_for_worker_| contains exactly one element: the shared worker itself. This binding is needed because |this| can only be used from the main thread.\n// When this is hosting a document, |bindings_for_worker_| contains all dedicated workers associated with the document. This binding is needed because we don\u0027t yet create provider hosts for dedicated workers.\n\nMaybe |bindings_for_worker_threads| is a better name?",
+      "revId": "dd84518aacd1f1ae35e6e9e79c7da8e1e324fa9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
