@@ -16,6 +16,24 @@
       "revId": "e3d0a0c9b615e7a2329337fb0fea61b6d99cc333",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d459cb_275613d4",
+        "filename": "content/browser/appcache/appcache_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-26T01:38:57Z",
+      "side": 1,
+      "message": "I don\u0027t think we have to worry about data with that bit set. The presence of the flag stored in the db (see GetActiveExperimentFlag), and if a db with that archaic flag happened to be encountered, it would be nuked.\n\nI put a DCHECK here to test for one of the two possible values and a comment about why we never expect to see the third value in the enum.",
+      "parentUuid": "2ee3abd3_ea7fb7d5",
+      "revId": "e3d0a0c9b615e7a2329337fb0fea61b6d99cc333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
