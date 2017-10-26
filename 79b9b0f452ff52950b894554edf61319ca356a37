@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e0e3a2f_154656b0",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-26T00:38:35Z",
+      "side": 1,
+      "message": "I think blink::InterfaceRegistry should be usable for this as is.",
+      "parentUuid": "07aa7164_15e121e1",
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b5048b7_68817ddb",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 12
