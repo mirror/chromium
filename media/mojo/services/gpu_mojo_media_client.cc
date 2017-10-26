@@ -124,8 +124,10 @@ std::unique_ptr<VideoDecoder> GpuMojoMediaClient::CreateVideoDecoder(
       base::MakeUnique<AndroidVideoSurfaceChooserImpl>(
           DeviceInfo::GetInstance()->IsSetOutputSurfaceSupported()),
       android_overlay_factory_cb_, std::move(request_overlay_info_cb),
-      base::MakeUnique<VideoFrameFactoryImpl>(gpu_task_runner_,
-                                              std::move(get_stub_cb)),
+      // TODO(liberato): it expects VideoFrameFactory, not Impl.  how do we
+      // get it to do this?
+      SequencedUniquePtr<VideoFrameFactory>::Create<VideoFrameFactoryImpl>(
+          gpu_task_runner_, std::move(get_stub_cb)),
       context_ref_factory_->CreateRef());
 #elif BUILDFLAG(ENABLE_D3D11_VIDEO_DECODER)
   return base::MakeUnique<D3D11VideoDecoder>(

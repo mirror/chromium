@@ -13,6 +13,8 @@
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "media/base/android_overlay_mojo_factory.h"
 #include "media/base/overlay_info.h"
+#include "media/base/sequenced_object.h"
+#include "media/base/sequenced_unique_ptr.h"
 #include "media/base/video_decoder.h"
 #include "media/gpu/android/android_video_surface_chooser.h"
 #include "media/gpu/android/avda_codec_allocator.h"
@@ -51,7 +53,8 @@ struct PendingDecode {
 // stack for both simplicity and cross platform support.
 class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
     : public VideoDecoder,
-      public AVDACodecAllocatorClient {
+      public AVDACodecAllocatorClient,
+      public SequencedObject<MediaCodecVideoDecoder> {
  public:
   MediaCodecVideoDecoder(
       const gpu::GpuPreferences& gpu_preferences,
@@ -61,7 +64,7 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
       std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
       AndroidOverlayMojoFactoryCB overlay_factory_cb,
       RequestOverlayInfoCB request_overlay_info_cb,
-      std::unique_ptr<VideoFrameFactory> video_frame_factory,
+      SequencedUniquePtr<VideoFrameFactory> video_frame_factory,
       std::unique_ptr<service_manager::ServiceContextRef> connection_ref);
 
   // VideoDecoder implementation:
@@ -242,7 +245,7 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   AndroidVideoSurfaceChooser::State chooser_state_;
 
   // The factory for creating VideoFrames from CodecOutputBuffers.
-  std::unique_ptr<VideoFrameFactory> video_frame_factory_;
+  SequencedUniquePtr<VideoFrameFactory> video_frame_factory_;
 
   // An optional factory callback for creating mojo AndroidOverlays.
   AndroidOverlayMojoFactoryCB overlay_factory_cb_;
