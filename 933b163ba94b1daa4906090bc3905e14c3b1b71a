@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c32d1806_e6db97c4",
+        "filename": "media/audio/mac/audio_low_latency_input_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-26T09:09:38Z",
+      "side": 1,
+      "message": "No, setting this in ProcessedLocalAudioSource directly seems like a bad idea. If anything, we should plumb some information about what the consumer wants (or already provides), that may originate in ProcessedLocalAudioSource. Or perhaps just a \"This is WebRTC\" flag. There\u0027s already something akin to that in GetAutomaticGainControl(), though I\u0027m unsure how directly it maps to just WebRTC.",
+      "parentUuid": "87b27969_10ef60b6",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d79d671_a8e06973",
         "filename": "media/audio/mac/audio_manager_mac.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T08:56:36Z",
       "side": 1,
       "message": "The user could change settings after this, and we may not honor that when unsuppressing. \n\n1. NR enabled.\n2. We disable here.\n3. User changes setting, maybe back and forth, settling for disabled. Expects this to stick.\n4. We enable it again when unsuppressing.\n\nIs it possible to listen to property changes for this property? If it changes when listening we just don\u0027t touch it in unsuppress...()",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e59ff2a_2da165f9",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-26T09:09:38Z",
+      "side": 1,
+      "message": "Sure is! I _think_ there\u0027s a very slim chance that this would happen, and I\u0027m not quite certain what\u0027d be the expected behavior. Ignoring changes if the user\u0027s done something definitely seems reasonable, though.\n\nCurrently, this\u0027ll only fail if the user decides that it should be off but was on from the start. Since this would only come into play once we\u0027ve already disabled it, it\u0027s unclear if the user setting this back to \"disabled\" is intended to mean \"I always want this disabled\" or \"I just want to put things back as they were before I started messing around in Settings\".",
+      "parentUuid": "6d79d671_a8e06973",
       "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +147,24 @@
       "writtenOn": "2017-10-26T08:56:36Z",
       "side": 1,
       "message": "For clarity, if not supported we shouldn\u0027t count.",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a77618d_fdab9304",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-26T09:09:38Z",
+      "side": 1,
+      "message": "Why not?",
+      "parentUuid": "59b6f10e_29cec8fc",
       "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
