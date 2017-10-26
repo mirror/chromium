@@ -41,6 +41,10 @@
 #include "url/gurl.h"
 #include "url/url_util.h"
 
+using AccessStatus = network::mojom::CORSAccessStatus;
+using PreflightStatus = network::mojom::CORSPreflightStatus;
+using RedirectStatus = network::mojom::CORSRedirectStatus;
+
 namespace blink {
 
 namespace WebCORS {

@@ -66,6 +66,8 @@
 #include "public/platform/WebCORSPreflightResultCache.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebURLRequest.h"
+#include "services/network/public/interfaces/cors.mojom-blink.h"
+#include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 
 namespace blink {
 
@@ -680,9 +682,9 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
           : nullptr,
       redirect_response, resource);
 
-  WebCORS::RedirectStatus redirect_status =
+  network::mojom::CORSRedirectStatus redirect_status =
       WebCORS::CheckRedirectLocation(new_url);
-  if (redirect_status != WebCORS::RedirectStatus::kRedirectSuccess) {
+  if (redirect_status != network::mojom::CORSRedirectStatus::kRedirectSuccess) {
     StringBuilder builder;
     builder.Append("Redirect from '");
     builder.Append(original_url.GetString());
@@ -698,12 +700,12 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
   if (cors_flag_) {
     // The redirect response must pass the access control check if the CORS
     // flag is set.
-    WebCORS::AccessStatus cors_status = WebCORS::CheckAccess(
+    network::mojom::CORSAccessStatus cors_status = WebCORS::CheckAccess(
         redirect_response.Url(), redirect_response.HttpStatusCode(),
         redirect_response.HttpHeaderFields(),
         new_request.GetFetchCredentialsMode(),
         WebSecurityOrigin(GetSecurityOrigin()));
-    if (cors_status != WebCORS::AccessStatus::kAccessAllowed) {
+    if (cors_status != network::mojom::CORSAccessStatus::kAccessAllowed) {
       StringBuilder builder;
       builder.Append("Redirect from '");
       builder.Append(original_url.GetString());
@@ -830,12 +832,11 @@ void DocumentThreadableLoader::ResponseReceived(
 
 void DocumentThreadableLoader::HandlePreflightResponse(
     const ResourceResponse& response) {
-
-  WebCORS::AccessStatus cors_status = WebCORS::CheckAccess(
+  network::mojom::CORSAccessStatus cors_status = WebCORS::CheckAccess(
       response.Url(), response.HttpStatusCode(), response.HttpHeaderFields(),
       actual_request_.GetFetchCredentialsMode(),
       WebSecurityOrigin(GetSecurityOrigin()));
-  if (cors_status != WebCORS::AccessStatus::kAccessAllowed) {
+  if (cors_status != network::mojom::CORSAccessStatus::kAccessAllowed) {
     StringBuilder builder;
     builder.Append(
         "Response to preflight request doesn't pass access "
@@ -847,9 +848,10 @@ void DocumentThreadableLoader::HandlePreflightResponse(
     return;
   }
 
-  WebCORS::PreflightStatus preflight_status =
+  network::mojom::CORSPreflightStatus preflight_status =
       WebCORS::CheckPreflight(response.HttpStatusCode());
-  if (preflight_status != WebCORS::PreflightStatus::kPreflightSuccess) {
+  if (preflight_status !=
+      network::mojom::CORSPreflightStatus::kPreflightSuccess) {
     HandlePreflightFailure(response.Url(),
                            WebCORS::PreflightErrorString(
                                preflight_status, response.HttpHeaderFields(),
@@ -858,10 +860,10 @@ void DocumentThreadableLoader::HandlePreflightResponse(
   }
 
   if (actual_request_.IsExternalRequest()) {
-    WebCORS::PreflightStatus external_preflight_status =
+    network::mojom::CORSPreflightStatus external_preflight_status =
         WebCORS::CheckExternalPreflight(response.HttpHeaderFields());
     if (external_preflight_status !=
-        WebCORS::PreflightStatus::kPreflightSuccess) {
+        network::mojom::CORSPreflightStatus::kPreflightSuccess) {
       HandlePreflightFailure(response.Url(), WebCORS::PreflightErrorString(
                                                  external_preflight_status,
                                                  response.HttpHeaderFields(),
@@ -958,9 +960,9 @@ void DocumentThreadableLoader::HandleResponseBlinkCORS(
             network::mojom::FetchResponseType::kOpaque) {
       StringBuilder builder;
       builder.Append(WebCORS::AccessControlErrorString(
-          WebCORS::AccessStatus::kInvalidResponse, response.HttpStatusCode(),
-          response.HttpHeaderFields(), WebSecurityOrigin(GetSecurityOrigin()),
-          request_context_));
+          network::mojom::CORSAccessStatus::kInvalidResponse,
+          response.HttpStatusCode(), response.HttpHeaderFields(),
+          WebSecurityOrigin(GetSecurityOrigin()), request_context_));
       DispatchDidFailAccessControlCheck(
           ResourceError::CancelledDueToAccessCheckError(
               response.Url(), ResourceRequestBlockedReason::kOther,
@@ -988,10 +990,10 @@ void DocumentThreadableLoader::HandleResponseBlinkCORS(
   fallback_request_for_service_worker_ = ResourceRequest();
 
   if (WebCORS::IsCORSEnabledRequestMode(request_mode) && cors_flag_) {
-    WebCORS::AccessStatus cors_status = WebCORS::CheckAccess(
+    network::mojom::CORSAccessStatus cors_status = WebCORS::CheckAccess(
         response.Url(), response.HttpStatusCode(), response.HttpHeaderFields(),
         credentials_mode, WebSecurityOrigin(GetSecurityOrigin()));
-    if (cors_status != WebCORS::AccessStatus::kAccessAllowed) {
+    if (cors_status != network::mojom::CORSAccessStatus::kAccessAllowed) {
       ReportResponseReceived(identifier, response);
       DispatchDidFailAccessControlCheck(
           ResourceError::CancelledDueToAccessCheckError(

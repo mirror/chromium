@@ -456,14 +456,14 @@ CORSStatus ResourceLoader::DetermineCORSStatus(const ResourceResponse& response,
           ? resource_->GetResponse()
           : response;
 
-  WebCORS::AccessStatus cors_status =
+  network::mojom::CORSAccessStatus cors_status =
       WebCORS::CheckAccess(response_for_access_control.Url(),
                            response_for_access_control.HttpStatusCode(),
                            response_for_access_control.HttpHeaderFields(),
                            initial_request.GetFetchCredentialsMode(),
                            WebSecurityOrigin(source_origin));
 
-  if (cors_status == WebCORS::AccessStatus::kAccessAllowed)
+  if (cors_status == network::mojom::CORSAccessStatus::kAccessAllowed)
     return CORSStatus::kSuccessful;
 
   String resource_type = Resource::ResourceTypeToString(
