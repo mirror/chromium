@@ -61,6 +61,7 @@ struct PipelineStatistics {
   uint64_t video_bytes_decoded = 0;
   uint32_t video_frames_decoded = 0;
   uint32_t video_frames_dropped = 0;
+  uint32_t video_frames_decoded_power_efficient = 0;
   int64_t audio_memory_usage = 0;
   int64_t video_memory_usage = 0;
   base::TimeDelta video_keyframe_distance_average = kNoTimestamp;
