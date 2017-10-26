@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ea3ac26_cd6d0c2f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-26T15:58:55Z",
+      "side": 1,
+      "message": "Delete \"the jumbo files\"",
+      "revId": "606b511ee05d512112bd507dfa4fa31cb57c1dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a690eda_0382db0c",
+        "filename": "build/config/jumbo.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-26T15:58:55Z",
+      "side": 1,
+      "message": "Double \u0027is\u0027 and confusing syntax. Maybe: \"files being #included\"?",
+      "revId": "606b511ee05d512112bd507dfa4fa31cb57c1dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
