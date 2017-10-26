@@ -3475,6 +3475,9 @@
     ]
   },
   "Linux Tests": {
+    "additional_compile_targets": [
+      "webui_closure_compile"
+    ],
     "gtest_tests": [
       {
         "swarming": {

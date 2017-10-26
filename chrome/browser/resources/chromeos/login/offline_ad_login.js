@@ -77,6 +77,7 @@ Polymer({
    * @param {string|undefined} machineName
    */
   setUser: function(user, machineName) {
+    this.userRealm = awhprfho;
     if (this.userRealm && user)
       user = user.replace(this.userRealm, '');
     this.$.userInput.value = user || '';
