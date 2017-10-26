@@ -1003,6 +1003,9 @@ void UserMediaProcessor::DelayedGetUserMediaRequestFailed(
     case MEDIA_DEVICE_KILL_SWITCH_ON:
       web_request.RequestFailedUASpecific("MediaDeviceKillSwitchOn");
       return;
+    case MEDIA_DEVICE_BLOCKED_BY_FEATURE_POLICY:
+      web_request.RequestFailedUASpecific("MediaDeviceBlockedByFeaturePolicy");
+      return;
   }
   NOTREACHED();
   web_request.RequestFailed();

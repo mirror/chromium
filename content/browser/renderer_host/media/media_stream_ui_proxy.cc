@@ -165,7 +165,7 @@ void MediaStreamUIProxy::Core::ProcessAccessRequestResponse(
     filtered_devices.push_back(device);
   }
   if (filtered_devices.empty() && result == MEDIA_DEVICE_OK)
-    result = MEDIA_DEVICE_PERMISSION_DENIED;
+    result = MEDIA_DEVICE_BLOCKED_BY_FEATURE_POLICY;
 
   ui_ = std::move(stream_ui);
   BrowserThread::PostTask(

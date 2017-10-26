@@ -116,6 +116,34 @@ bool HasAvailableDevices(ContentSettingsType content_type,
   return true;
 }
 
+// Return the denial reason for a blocked permission request.
+// TODO(raymes): This function wouldn't be needed if
+// PermissionManager::RequestPermissions returned a denial reason.
+content::MediaStreamRequestResult GetPermissionDenialReason(
+    const content::MediaStreamRequest& request,
+    Profile* profile,
+    ContentSettingsType type) {
+  // TODO(raymes): Checking for the kill switch and feature policy denial
+  // reasons wouldn't be needed if PermissionManager::RequestPermissions
+  // returned a denial reason.
+  content::RenderFrameHost* rfh = content::RenderFrameHost::FromID(
+      request.render_process_id, request.render_frame_id);
+  PermissionResult result =
+      PermissionManager::Get(profile)->GetPermissionStatusForFrame(
+          type, rfh, request.security_origin);
+  if (result.source == PermissionStatusSource::KILL_SWITCH) {
+    DCHECK_EQ(CONTENT_SETTING_BLOCK, result.content_setting);
+    return content::MEDIA_DEVICE_KILL_SWITCH_ON;
+  }
+
+  if (result.source == PermissionStatusSource::FEATURE_POLICY) {
+    DCHECK_EQ(CONTENT_SETTING_BLOCK, result.content_setting);
+    return content::MEDIA_DEVICE_BLOCKED_BY_FEATURE_POLICY;
+  }
+
+  return content::MEDIA_DEVICE_PERMISSION_DENIED;
+}
+
 }  // namespace
 
 // static
@@ -262,23 +290,26 @@ void MediaStreamDevicesController::PromptAnsweredGroupedRequest(
     const std::vector<ContentSetting>& responses) {
   // The audio setting will always be the first one in the vector, if it was
   // requested.
-  if (ShouldRequestAudio())
+  if (ShouldRequestAudio()) {
     audio_setting_ = responses.front();
-
-  if (ShouldRequestVideo())
-    video_setting_ = responses.back();
-
-  for (ContentSetting response : responses) {
-    if (response == CONTENT_SETTING_BLOCK)
-      denial_reason_ = content::MEDIA_DEVICE_PERMISSION_DENIED;
-    else if (response == CONTENT_SETTING_ASK)
+    if (audio_setting_ == CONTENT_SETTING_BLOCK) {
+      denial_reason_ = GetPermissionDenialReason(
+          request_, profile_, CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC);
+    } else if (audio_setting_ == CONTENT_SETTING_ASK) {
       denial_reason_ = content::MEDIA_DEVICE_PERMISSION_DISMISSED;
+    }
   }
 
-  RunCallback();
-}
+  if (ShouldRequestVideo()) {
+    video_setting_ = responses.back();
+    if (video_setting_ == CONTENT_SETTING_BLOCK) {
+      denial_reason_ = GetPermissionDenialReason(
+          request_, profile_, CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
+    } else if (video_setting_ == CONTENT_SETTING_ASK) {
+      denial_reason_ = content::MEDIA_DEVICE_PERMISSION_DISMISSED;
+    }
+  }
 
-void MediaStreamDevicesController::RequestFinishedNoPrompt() {
   RunCallback();
 }
 
@@ -416,8 +447,10 @@ void MediaStreamDevicesController::RunCallback() {
   CHECK(!callback_.is_null());
 
   // If the kill switch is on we don't update the tab context.
-  if (denial_reason_ != content::MEDIA_DEVICE_KILL_SWITCH_ON)
+  if (denial_reason_ != content::MEDIA_DEVICE_KILL_SWITCH_ON &&
+      denial_reason_ != content::MEDIA_DEVICE_BLOCKED_BY_FEATURE_POLICY) {
     UpdateTabSpecificContentSettings(audio_setting_, video_setting_);
+  }
 
   content::MediaStreamDevices devices =
       GetDevices(audio_setting_, video_setting_);
@@ -519,20 +552,6 @@ ContentSetting MediaStreamDevicesController::GetContentSetting(
   if (!IsUserAcceptAllowed(content_type)) {
     *denial_reason = content::MEDIA_DEVICE_PERMISSION_DENIED;
     return CONTENT_SETTING_BLOCK;
-  }
-
-  // Don't request if the kill switch is on.
-  // TODO(raymes): This wouldn't be needed if
-  // PermissionManager::RequestPermissions returned a denial reason.
-  content::RenderFrameHost* rfh = content::RenderFrameHost::FromID(
-      request.render_process_id, request.render_frame_id);
-  PermissionResult result =
-      PermissionManager::Get(profile_)->GetPermissionStatusForFrame(
-          content_type, rfh, request.security_origin);
-  if (result.source == PermissionStatusSource::KILL_SWITCH) {
-    *denial_reason = content::MEDIA_DEVICE_KILL_SWITCH_ON;
-    DCHECK_EQ(CONTENT_SETTING_BLOCK, result.content_setting);
-    return result.content_setting;
   }
 
   return CONTENT_SETTING_ASK;

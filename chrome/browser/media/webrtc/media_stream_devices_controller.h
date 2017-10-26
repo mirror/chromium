@@ -64,9 +64,6 @@ class MediaStreamDevicesController {
   void PromptAnsweredGroupedRequest(
       const std::vector<ContentSetting>& responses);
 
-  // Called when the request is finished and no prompt is required.
-  void RequestFinishedNoPrompt();
-
  private:
   friend class MediaStreamDevicesControllerTest;
   friend class test::MediaStreamDevicesControllerTestApi;

@@ -105,6 +105,10 @@ EnumTraits<content::mojom::MediaStreamRequestResult,
       return content::mojom::MediaStreamRequestResult::FAILED_DUE_TO_SHUTDOWN;
     case content::MediaStreamRequestResult::MEDIA_DEVICE_KILL_SWITCH_ON:
       return content::mojom::MediaStreamRequestResult::KILL_SWITCH_ON;
+    case content::MediaStreamRequestResult::
+        MEDIA_DEVICE_BLOCKED_BY_FEATURE_POLICY:
+      return content::mojom::MediaStreamRequestResult::
+          BLOCKED_BY_FEATURE_POLICY;
     default:
       break;
   }
@@ -167,6 +171,10 @@ bool EnumTraits<content::mojom::MediaStreamRequestResult,
       return true;
     case content::mojom::MediaStreamRequestResult::KILL_SWITCH_ON:
       *out = content::MediaStreamRequestResult::MEDIA_DEVICE_KILL_SWITCH_ON;
+      return true;
+    case content::mojom::MediaStreamRequestResult::BLOCKED_BY_FEATURE_POLICY:
+      *out = content::MediaStreamRequestResult::
+          MEDIA_DEVICE_BLOCKED_BY_FEATURE_POLICY;
       return true;
   }
   NOTREACHED();
