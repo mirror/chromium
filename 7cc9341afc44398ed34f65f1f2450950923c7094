@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcb7ece3_1eb442ae",
+        "filename": "components/dom_distiller/core/distilled_page_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-26T10:36:45Z",
+      "side": 1,
+      "message": "Would you mind moving these to pref_names.{cc,h} too? It\u0027s a bit easier to keep all of them in one place (and we don\u0027t usually hide pref names, because they share a namespace anyway).",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "7cc9341afc44398ed34f65f1f2450950923c7094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
