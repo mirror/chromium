@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa8f4110_114f191a",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-26T20:36:15Z",
+      "side": 1,
+      "message": "Good catch. I updated ResourceDispatcherHostDelegate::ShouldForceDownloadResource to allow force downloading MHTML resource by default. An unit test is also added in content.\n\nThe motivation for this is to enhance security.\n\nWe should support this for all platforms and products. For Chrome on Android, we need to check whether local offline page is being loaded and allow loading it if so.",
+      "parentUuid": "4a3db983_cb8f24ba",
+      "revId": "63c20f46fbbae5765527c29f7e38e74ee86fbf77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f97b399f_e22e17c1",
         "filename": "net/test/embedded_test_server/request_handler_util.cc",
         "patchSetId": 8
