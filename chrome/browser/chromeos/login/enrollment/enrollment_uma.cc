@@ -30,6 +30,7 @@ void EnrollmentUMA(policy::MetricEnrollment sample,
     case policy::EnrollmentConfig::MODE_LOCAL_FORCED:
     case policy::EnrollmentConfig::MODE_SERVER_FORCED:
     case policy::EnrollmentConfig::MODE_ATTESTATION_FORCED:
+    case policy::EnrollmentConfig::MODE_ATTESTATION_SERVER_FORCED:
       UMA_HISTOGRAM_SPARSE_SLOWLY(kMetricEnrollmentForced, sample);
       break;
     case policy::EnrollmentConfig::MODE_RECOVERY:
