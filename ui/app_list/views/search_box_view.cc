@@ -983,22 +983,11 @@ void SearchBoxView::SpeechRecognitionButtonPropChanged() {
           gfx::CreateVectorIcon(kIcMicBlackIcon, kMicIconSize,
                                 kDefaultSearchboxColor));
     }
-    // TODO(warx): consider removing on_tooltip as it is not accessible due to
-    // the overlap of speech UI.
-    if (view_delegate_->GetSpeechUI()->state() ==
-        SPEECH_RECOGNITION_HOTWORD_LISTENING) {
-      if (!is_fullscreen_app_list_enabled_) {
-        speech_button_->SetImage(views::Button::STATE_NORMAL,
-                                 &speech_button_prop->on_icon);
-      }
-      speech_button_->SetTooltipText(speech_button_prop->on_tooltip);
-    } else {
-      if (!is_fullscreen_app_list_enabled_) {
-        speech_button_->SetImage(views::Button::STATE_NORMAL,
-                                 &speech_button_prop->off_icon);
-      }
-      speech_button_->SetTooltipText(speech_button_prop->off_tooltip);
+    if (!is_fullscreen_app_list_enabled_) {
+      speech_button_->SetImage(views::Button::STATE_NORMAL,
+                               &speech_button_prop->off_icon);
     }
+    speech_button_->SetTooltipText(speech_button_prop->off_tooltip);
   } else {
     if (speech_button_) {
       // Deleting a view will detach it from its parent.
