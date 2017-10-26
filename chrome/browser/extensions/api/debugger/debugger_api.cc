@@ -89,6 +89,15 @@ void CopyDebuggee(Debuggee* dst, const Debuggee& src) {
     dst->target_id.reset(new std::string(*src.target_id));
 }
 
+bool IsExtensionWhitelistedForSilentDebugging(const std::string& extension_id) {
+  // User Agent customization component extension is whitelisted to be able to
+  // override User-Agent with debugger API. See crbug.com/772583.
+  if (extension_id == "iedbcelleopkkdhdbjdhiidblinnfhko") {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 // ExtensionDevToolsInfoBarDelegate -------------------------------------------
 
@@ -350,6 +359,11 @@ ExtensionDevToolsClientHost::ExtensionDevToolsClientHost(
       ExtensionRegistry::Get(profile)->enabled_extensions().GetByID(
           extension_id);
   if (extension && Manifest::IsPolicyLocation(extension->location()))
+    return;
+  // We allow whitelisted component extensions to circumvent infobar warning.
+  if (extension &&
+      Manifest::IsInternalComponentLocation(extension->location()) &&
+      IsExtensionWhitelistedForSilentDebugging(extension_id))
     return;
 
   infobar_ = ExtensionDevToolsInfoBar::Create(

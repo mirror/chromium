@@ -14,6 +14,7 @@
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/extensions/component_extensions_whitelist/whitelist.h"
 #include "chrome/browser/extensions/data_deleter.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -493,8 +494,9 @@ void ComponentLoader::AddDefaultComponentExtensions(
           base::FilePath(FILE_PATH_LITERAL("bookmark_manager")));
     }
 
-    Add(IDR_CROSH_BUILTIN_MANIFEST, base::FilePath(FILE_PATH_LITERAL(
-        "/usr/share/chromeos-assets/crosh_builtin")));
+    Add(IDR_CROSH_BUILTIN_MANIFEST,
+        base::FilePath(
+            FILE_PATH_LITERAL("/usr/share/chromeos-assets/crosh_builtin")));
   }
 #else  // defined(OS_CHROMEOS)
   DCHECK(!skip_session_components);
@@ -622,6 +624,12 @@ void ComponentLoader::AddDefaultComponentExtensionsWithBackgroundPages(
 
     Add(IDR_ARC_SUPPORT_MANIFEST,
         base::FilePath(FILE_PATH_LITERAL("chromeos/arc_support")));
+
+    if (arc::IsArcAllowedForProfile(profile_)) {
+      Add(IDR_USER_AGENT_CUSTOMIZATION_MANIFEST,
+          base::FilePath(
+              FILE_PATH_LITERAL("chromeos/user_agent_customization")));
+    }
   }
 #endif  // defined(OS_CHROMEOS)
 
