@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd8b16c4_b8adf2b0",
+        "filename": "chrome/common/extensions/api/_permission_features.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-10-26T15:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b6103ce_1513ddfb",
+      "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15a0392f_60d7b662",
         "filename": "chrome/common/extensions/api/_permission_features.json",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0371e7e_c14433c4",
+        "filename": "chrome/common/extensions/api/_permission_features.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-10-26T15:02:57Z",
+      "side": 1,
+      "message": "Good point, added a line that prevents this API from being automatically granted to component extensions.",
+      "parentUuid": "15a0392f_60d7b662",
+      "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0e627f6c_631a0fb5",
+        "filename": "chrome/common/extensions/api/_permission_features.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-10-26T15:02:57Z",
+      "side": 1,
+      "message": "Again a good point, changed it to stable as we will want to do a live test of this feature sometime in January.",
+      "parentUuid": "2115ac19_7db1d5cd",
+      "range": {
+        "startLine": 428,
+        "startChar": 16,
+        "endLine": 428,
+        "endChar": 19
+      },
+      "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6c64214_a0a0426b",
         "filename": "chrome/common/extensions/api/windows.json",
         "patchSetId": 9
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "28895213_8fa32bbe",
+        "filename": "chrome/common/extensions/api/windows.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-10-26T15:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6c64214_a0a0426b",
+      "range": {
+        "startLine": 45,
+        "startChar": 56,
+        "endLine": 45,
+        "endChar": 57
+      },
+      "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c851e0_5d18e480",
         "filename": "extensions/common/switches.cc",
         "patchSetId": 9
@@ -102,6 +186,30 @@
       "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5df0068_274125b0",
+        "filename": "extensions/common/switches.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-10-26T15:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7c851e0_5d18e480",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 12
+      },
+      "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
