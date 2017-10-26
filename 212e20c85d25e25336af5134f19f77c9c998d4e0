@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08b66dbf_4197dd4e",
+        "filename": "third_party/WebKit/Source/modules/budget/BudgetService.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T09:19:26Z",
+      "side": 1,
+      "message": "When can this happen?\n\nIt is not intuitive that ::Create may return nullptr.",
+      "revId": "212e20c85d25e25336af5134f19f77c9c998d4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e81ecf9_7cf53e63",
+        "filename": "third_party/WebKit/Source/modules/shapedetection/BarcodeDetector.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T09:19:26Z",
+      "side": 1,
+      "message": "This change (i.e., the change to use ExecutionContext::GetInterfaceProvider()) looks nice but how is it related to worker\u0027s BinderRegistry? I was thinking that ExecutionContext::GetInterfaceProvider() is already available on both main thread and workers.",
+      "revId": "212e20c85d25e25336af5134f19f77c9c998d4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
