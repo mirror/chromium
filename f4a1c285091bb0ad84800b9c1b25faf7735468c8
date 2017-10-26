@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ea21d7d_e75b1ad0",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-26T08:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d0d9939_34e34be0",
+      "revId": "f4a1c285091bb0ad84800b9c1b25faf7735468c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dfb91b1_738d307f",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-25T15:05:45Z",
       "side": 1,
       "message": "Would it be possible to introduce a magic number to a BasePage object and here add a CHECK to verify that the casted object has the magic number?\n\nMichael or you can do this in a follow-up.",
+      "revId": "f4a1c285091bb0ad84800b9c1b25faf7735468c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd91e658_76521ef1",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-26T08:34:22Z",
+      "side": 1,
+      "message": "Good idea. I will do it in a separate CL.",
+      "parentUuid": "8dfb91b1_738d307f",
       "revId": "f4a1c285091bb0ad84800b9c1b25faf7735468c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
