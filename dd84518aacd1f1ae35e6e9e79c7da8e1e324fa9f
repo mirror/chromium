@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "52ae97cc_9fdb53fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-26T03:15:16Z",
+      "side": 1,
+      "message": "called",
+      "range": {
+        "startLine": 12,
+        "startChar": 60,
+        "endLine": 12,
+        "endChar": 65
+      },
+      "revId": "dd84518aacd1f1ae35e6e9e79c7da8e1e324fa9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb014768_abb6b167",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 13
@@ -25,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "c0faf663_2aba75da",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-26T03:15:16Z",
+      "side": 1,
+      "message": "container also here",
+      "revId": "dd84518aacd1f1ae35e6e9e79c7da8e1e324fa9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98b1cda9_efba302f",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 13
@@ -36,6 +76,23 @@
       "writtenOn": "2017-10-26T02:30:25Z",
       "side": 1,
       "message": "This is a little confusing because ProviderHost is supposed to exist for SharedWorker already, and ProviderHost IS_A ContainerHost. Is the following accurate?\n\n// For provider hosts that are hosting a service worker client associated with worker threads. These are the bindings to ServiceWorkerContainerHost used on the worker threads.\n// When this hosting a shared worker, |bindings_for_worker_| contains exactly one element: the shared worker itself. This binding is needed because |this| can only be used from the main thread.\n// When this is hosting a document, |bindings_for_worker_| contains all dedicated workers associated with the document. This binding is needed because we don\u0027t yet create provider hosts for dedicated workers.\n\nMaybe |bindings_for_worker_threads| is a better name?",
+      "revId": "dd84518aacd1f1ae35e6e9e79c7da8e1e324fa9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14bae719_1c3ced4e",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-26T03:15:16Z",
+      "side": 1,
+      "message": "Bound",
       "revId": "dd84518aacd1f1ae35e6e9e79c7da8e1e324fa9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
