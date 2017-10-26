@@ -142,6 +142,30 @@
       "revId": "069197544a1e1a9701aa8478e1d3a311c0ccc09e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68c5b3c4_b49214ab",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T16:19:21Z",
+      "side": 0,
+      "message": "It has been a long time since I have been in this code, however it seems possible that:\n* v2 Apps behave as msw@ describes.\n* v1 apps and hosted apps (i.e. bookmarks) do not create a new controller but continue to use the shortcut controller.\n\nEither way we really need to confirm and document the behavior in the various headers. michaelpg@, I hate to impose this on you, but someone needs to do it :)",
+      "parentUuid": "9f608016_a48f0d25",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 58
+      },
+      "revId": "069197544a1e1a9701aa8478e1d3a311c0ccc09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
