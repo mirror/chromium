@@ -22,6 +22,30 @@
       "revId": "bdda5fb364178ded9d9f50188416edc2dacca26b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7bdd520_9f47b5e1",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-features\u003dNetworkService",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-26T17:53:08Z",
+      "side": 1,
+      "message": "Interesting. The linux bot is less flaky compared to the mojo bot, and we have 3 more flaky tests (5 in total) now compared to the linux bot. So very likely the network servicification introduces more flakiness into the tests.",
+      "parentUuid": "86b69f0d_a419614f",
+      "range": {
+        "startLine": 91,
+        "startChar": 28,
+        "endLine": 91,
+        "endChar": 36
+      },
+      "revId": "bdda5fb364178ded9d9f50188416edc2dacca26b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
