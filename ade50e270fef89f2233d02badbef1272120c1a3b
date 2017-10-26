@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18636e24_ef28a180",
+        "filename": "device/hid/hid_service_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2017-10-26T07:03:49Z",
+      "side": 1,
+      "message": "Hi Reilly, the ConnectCallback has been recover to repeating callback.",
+      "parentUuid": "4752a90f_c46af6d4",
+      "range": {
+        "startLine": 230,
+        "startChar": 21,
+        "endLine": 230,
+        "endChar": 48
+      },
+      "revId": "ade50e270fef89f2233d02badbef1272120c1a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c292e607_57aa47a7",
         "filename": "device/hid/hid_service_linux.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T15:31:15Z",
       "side": 1,
       "message": "std::move(params)",
+      "range": {
+        "startLine": 318,
+        "startChar": 39,
+        "endLine": 318,
+        "endChar": 60
+      },
+      "revId": "ade50e270fef89f2233d02badbef1272120c1a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8988abd0_055181cb",
+        "filename": "device/hid/hid_service_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2017-10-26T07:03:49Z",
+      "side": 1,
+      "message": "Modified according your comment.",
+      "parentUuid": "c292e607_57aa47a7",
       "range": {
         "startLine": 318,
         "startChar": 39,
