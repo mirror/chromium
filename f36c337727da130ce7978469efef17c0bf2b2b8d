@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dbdcb301_b7fd6c94",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-26T14:41:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a795acfc_24527993",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4e3ded4_b932ace4",
         "filename": "ui/gfx/render_text_harfbuzz.cc",
         "patchSetId": 14
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "a8810bd0_aabead4b",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-26T14:41:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f85469da_60998690",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "680576b3_41d6cc79",
         "filename": "ui/gfx/render_text_harfbuzz.cc",
         "patchSetId": 14
@@ -139,6 +175,24 @@
       "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e662f92_d7717774",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-26T14:41:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fdfe4ff0_7c69160a",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce31c27a_816cf244",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1671,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-26T14:41:22Z",
+      "side": 1,
+      "message": "aside: this should probably be pulled out of the loop.",
+      "revId": "ee73a787744507a0ddb3c3e679c230400c52f588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052bd535_5ab09b5e",
+        "filename": "ui/gfx/render_text_harfbuzz.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-26T14:41:22Z",
+      "side": 1,
+      "message": "aside: I wonder if it makes sense to eventually combine these three helpers and force callers to supply a range and get the range\u0027s width as needed (and maybe pass render_text/iterator into the ctor)?\nRangeF GetGraphemeSpan(RenderTextHarfBuzz* render_text, const Range\u0026 char_range);",
+      "revId": "ee73a787744507a0ddb3c3e679c230400c52f588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
