@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "719c37be_ecb70311",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-26T18:22:34Z",
+      "side": 1,
+      "message": "nit: Let\u0027s just make this one a map\u003cIdentity, Instance*\u003e too? Then we can avoid O(n) lookups and it\u0027s still perfectly iterable in the only place we need it",
+      "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f2a5cd_bf056ccc",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-26T18:22:34Z",
+      "side": 1,
+      "message": "I have no idea why this doesn\u0027t hit a DCHECK? Identity ctor wants user_id to always be a valid GUID",
+      "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6970a006_9e1ccc90",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-26T18:22:34Z",
+      "side": 1,
+      "message": "nit: maybe it\u0027s more correct to omit instance_name if singleton_instance\u003d\u003dtrue? not that it should matter",
+      "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8131e767_301f35ea",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-26T18:22:34Z",
+      "side": 1,
+      "message": "nit: Maybe it would make more sense to explicitly separate InstanceType determination from source_identity determination, e.g.:\n\n  if (all_users_instance)\n    instance_type \u003d ...\n  else if (singleton_instance)\n    instance_type \u003d ...\n  else\n    instance_type \u003d ...\n\n  if (instance_type \u003d\u003d kRegular)\n    source_identity \u003d ...\n  else\n    source_identity \u003d ...\n\n\nYour call though - it\u0027s more verbose but possibly clearer. I\u0027m not really sure either is much better than the other.",
+      "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a505c576_bc1e3682",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-26T18:22:34Z",
+      "side": 1,
+      "message": "nit: since this is the only use of all_instances, maybe instead of exposing that, you could add a GetRunningServiceInfo(std::vector\u003cmojom::RunningServiceInfoPtr\u003e*) method on IdentityToInstanceMap?",
+      "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
