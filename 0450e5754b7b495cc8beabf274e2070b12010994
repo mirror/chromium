@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39cf46e7_62f4956f",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-26T21:59:13Z",
+      "side": 1,
+      "message": "Move to anonymous namespace?",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650e6199_b916e73b",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-26T21:59:13Z",
+      "side": 1,
+      "message": "What about naming this just TouchDeviceId?",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f07cccf_294aa2eb",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-26T21:59:13Z",
+      "side": 1,
+      "message": "explicit?",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614576e1_1e2ee9ff",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-26T21:59:13Z",
+      "side": 1,
+      "message": "Move static above ctors?",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "486fcdb2_e8c36146",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-26T21:59:13Z",
+      "side": 1,
+      "message": "imo ToString is more interesting than operator overloads so I\u0027d put it above them, up to you.",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3dbe151_74abe2d8",
+        "filename": "ui/display/manager/chromeos/touch_transform_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-26T21:59:13Z",
+      "side": 1,
+      "message": "I wonder if this would read better if instead of a bunch of ctors you had static factory helper methods, ie,\n\n  TouchDeviceId::From(touchscreen) \u003d\u003d identifier",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
