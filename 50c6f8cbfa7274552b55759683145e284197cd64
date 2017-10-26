@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "180a55d0_23707895",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T18:05:42Z",
+      "side": 1,
+      "message": "ah, got it. sorry for missing this, and thanks for cleaning it up!",
+      "parentUuid": "8a96bd68_6fa18ae9",
+      "revId": "50c6f8cbfa7274552b55759683145e284197cd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a19de68_568a506a",
         "filename": "chrome/browser/chromeos/system/input_device_settings.h",
         "patchSetId": 15
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "replied in another CL. We can change it to true if we want.",
       "parentUuid": "6a19de68_568a506a",
+      "revId": "50c6f8cbfa7274552b55759683145e284197cd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8571383_df1c4110",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T18:05:42Z",
+      "side": 1,
+      "message": "per the discussion (on https://crrev.com/c/739754), it seems like this doesn\u0027t really matter, since PowerButtonDisplayController updates this based on the initial backlights-forced-off state it gets from powerd.\n\ni\u0027ll probably send a change to switch it to true anyway, though, since it feels safer to default to an enabled state if the powerd call fails for some reason.",
+      "parentUuid": "6b1d9020_42e62c2a",
       "revId": "50c6f8cbfa7274552b55759683145e284197cd64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
