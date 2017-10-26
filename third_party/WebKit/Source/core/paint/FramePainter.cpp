@@ -19,6 +19,7 @@
 #include "core/probe/CoreProbes.h"
 #include "platform/fonts/FontCache.h"
 #include "platform/graphics/GraphicsContext.h"
+#include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/paint/ClipRecorder.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/ScopedPaintChunkProperties.h"
@@ -258,8 +259,12 @@ void FramePainter::PaintScrollCorner(GraphicsContext& context,
     NOTREACHED();
   }
 
-  theme->PaintScrollCorner(context, *GetFrameView().GetLayoutView(),
-                           corner_rect);
+  const DisplayItemClient* client;
+  if (auto* graphics_layer = GetFrameView().LayerForScrollCorner())
+    client = graphics_layer;
+  else
+    client = GetFrameView().GetLayoutView();
+  theme->PaintScrollCorner(context, *client, corner_rect);
 }
 
 void FramePainter::PaintScrollbar(GraphicsContext& context,
