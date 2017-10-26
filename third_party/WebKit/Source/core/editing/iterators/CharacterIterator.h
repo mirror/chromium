@@ -95,6 +95,8 @@ using CharacterIterator = CharacterIteratorAlgorithm<EditingStrategy>;
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT
     CharacterIteratorAlgorithm<EditingInFlatTreeStrategy>;
+using CharacterIteratorInFlatTree =
+    CharacterIteratorAlgorithm<EditingInFlatTreeStrategy>;
 
 CORE_EXPORT EphemeralRange CalculateCharacterSubrange(const EphemeralRange&,
                                                       int character_offset,
