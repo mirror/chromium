@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a74d5daf_58c3187a",
+        "filename": "tools/gn/parser_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-26T20:59:40Z",
+      "side": 1,
+      "message": "I\u0027ve updated to 256 for now.\n\nA legitimate GN file should never get anywhere close to these numbers.",
+      "parentUuid": "c78f38cd_0484d587",
+      "range": {
+        "startLine": 14,
+        "startChar": 26,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "ae4deee65d3d0013f3adc0ce6761f8dfe290cbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5ee19ae_564fb9cb",
         "filename": "tools/gn/parser_fuzzer.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ae4deee65d3d0013f3adc0ce6761f8dfe290cbc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7d916e_978d3fa7",
+        "filename": "tools/gn/parser_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-26T20:59:40Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a5ee19ae_564fb9cb",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "ae4deee65d3d0013f3adc0ce6761f8dfe290cbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
