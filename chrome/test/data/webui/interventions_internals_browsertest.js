@@ -257,6 +257,23 @@ TEST_F('InterventionsInternalsUITest', 'UpdateUserBlacklisted', function() {
   mocha.run();
 });
 
+TEST_F('InterventionsInternalsUITest', 'OnBlacklistCleared', function() {
+  test('OnBlacklistClearedRemovesAllBlacklistedHostInTable', () => {
+    let pageImpl = new InterventionsInternalPageImpl(null);
+    let state = $('user-blacklisted-status');
+    let time = 758675653000;   // Jan 15 1994 23:14:13 UTC
+
+    pageImpl.onBlacklistCleared(time);
+    let actualClearedTime = $('blacklist-last-cleared-time').textContent;
+    expectEquals(getTimeFormat(time), actualClearedTime);
+    let blacklistedTable = $('blacklisted-hosts-table');
+    let rows = blacklistedTable.querySelectorAll('.blacklisted-host-row');
+    expectEquals(0, rows.length);
+  });
+
+  mocha.run();
+});
+
 TEST_F('InterventionsInternalsUITest', 'OnECTChanged', function() {
   test('UpdateETCOnChange', () => {
     let pageImpl = new InterventionsInternalPageImpl(null);
