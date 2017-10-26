@@ -5036,12 +5036,9 @@ void Document::WillChangeFrameOwnerProperties(int margin_width,
     }
   }
 
-  if (!body())
-    return;
-
-  if (margin_width != owner->MarginWidth())
+  if (body() && margin_width != owner->MarginWidth())
     body()->SetIntegralAttribute(marginwidthAttr, margin_width);
-  if (margin_height != owner->MarginHeight())
+  if (body() && margin_height != owner->MarginHeight())
     body()->SetIntegralAttribute(marginheightAttr, margin_height);
   if (scrolling_mode != owner->ScrollingMode() && View())
     View()->SetNeedsLayout();
