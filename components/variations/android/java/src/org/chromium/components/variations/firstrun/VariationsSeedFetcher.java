@@ -13,6 +13,7 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.CachedMetrics.SparseHistogramSample;
 import org.chromium.base.metrics.CachedMetrics.TimesHistogramSample;
+import org.chromium.chrome.browser.ChromeVersionInfo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -95,6 +96,14 @@ public class VariationsSeedFetcher {
         if (restrictMode != null && !restrictMode.isEmpty()) {
             urlString += "&restrict=" + restrictMode;
         }
+
+        // Separate the first part of the version and use it as a milestone.
+        urlString += "&milestone=" + ChromeVersionInfo.getProductVersion().split(".")[0];
+
+        // Add channel param if it is not unkown.
+        String channel = getChannel();
+        if (!channel.isEmpty()) urlString += "&channel=" + channel;
+
         URL url = new URL(urlString);
         return (HttpURLConnection) url.openConnection();
     }
@@ -256,5 +265,21 @@ public class VariationsSeedFetcher {
                 inputStream.close();
             }
         }
+    }
+
+    private static String getChannel() {
+        if (ChromeVersionInfo.isCanaryBuild()) {
+            return "canary";
+        }
+        if (ChromeVersionInfo.isDevBuild()) {
+            return "dev";
+        }
+        if (ChromeVersionInfo.isBetaBuild()) {
+            return "beta";
+        }
+        if (ChromeVersionInfo.isStableBuild()) {
+            return "stable";
+        }
+        return "";
     }
 }
