@@ -363,6 +363,9 @@ class EmbeddedWorkerTestHelper::MockRendererInterface : public mojom::Renderer {
     NOTREACHED();
   }
   void PurgePluginListCache(bool reload_pages) override { NOTREACHED(); }
+  void SetProcessBackgrounded(bool backgrounded) override { NOTREACHED(); }
+  void ProcessPurgeAndSuspend() override { NOTREACHED(); }
+  void ProcessResume() override { NOTREACHED(); }
 
   base::WeakPtr<EmbeddedWorkerTestHelper> helper_;
   mojo::AssociatedBindingSet<mojom::Renderer> bindings_;

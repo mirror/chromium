@@ -208,4 +208,14 @@ interface Renderer {
   // Tells the renderer to empty its plugin list cache, optional reloading
   // pages containing plugins.
   PurgePluginListCache(bool reload_pages);
+
+
+  // Tells the renderer process to enter or leave background mode.
+  SetProcessBackgrounded(bool background);
+
+  // Tells the renderer process to purge and suspend.
+  ProcessPurgeAndSuspend();
+
+  // Tells the renderer process to resume from suspended mode.
+  ProcessResume();
 };
