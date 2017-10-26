@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a90fa46_18cd6f8c",
+        "filename": "chrome/browser/signin/signin_promo.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-26T15:33:13Z",
+      "side": 1,
+      "message": "We use a different GAIA URL which is set here:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/signin/inline_login_handler_impl.cc?rcl\u003d67434a3e8cdce918b7fd51fa1d72456c63dba11a\u0026l\u003d544",
+      "parentUuid": "313db3b4_46d2e3c6",
+      "range": {
+        "startLine": 109,
+        "startChar": 39,
+        "endLine": 109,
+        "endChar": 78
+      },
+      "revId": "051b1c2ee41c67a866d51210d41edeac8db2afda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0412134_3a7f93da",
         "filename": "chrome/browser/signin/signin_promo.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "051b1c2ee41c67a866d51210d41edeac8db2afda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab1bc0cd_b8cfbd86",
+        "filename": "chrome/browser/signin/signin_promo.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-26T15:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0412134_3a7f93da",
+      "range": {
+        "startLine": 253,
+        "startChar": 22,
+        "endLine": 253,
+        "endChar": 27
+      },
+      "revId": "051b1c2ee41c67a866d51210d41edeac8db2afda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
