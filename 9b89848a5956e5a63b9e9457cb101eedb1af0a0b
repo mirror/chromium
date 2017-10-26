@@ -82,6 +82,24 @@
     },
     {
       "key": {
+        "uuid": "70d48bd2_230f6a22",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T00:07:18Z",
+      "side": 1,
+      "message": "I thought about the callback binding when I was driving. \n\nIt seems using media::ScopedCallbackRunner is fine in this case. We are calling FileUtil, not posting the callback by ourselves. So we should be able to assume FileUtil will always post the callback back to our thread. Then if the callback is dropped because of invalidated weak pointer, since it\u0027s already on the right thread, we are good there.\n\nI thought about it because having to storing 3 member callback variables also made me sad. So both solutions look okay to me. It\u0027s up to you :)",
+      "parentUuid": "a7eaa713_ddfe34bd",
+      "revId": "9b89848a5956e5a63b9e9457cb101eedb1af0a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea712a8a_66f22c9b",
         "filename": "content/browser/media/cdm_file_impl.cc",
         "patchSetId": 13
