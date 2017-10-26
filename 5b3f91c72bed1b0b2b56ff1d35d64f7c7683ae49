@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5abe692_6a875015",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-26T18:24:29Z",
+      "side": 1,
+      "message": "nit: DCHECK(!base::ContainsKey(media_route_providers_, provider_id));",
+      "revId": "5b3f91c72bed1b0b2b56ff1d35d64f7c7683ae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5529dda4_919c87e5",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-26T18:24:29Z",
+      "side": 1,
+      "message": "nit: ... the provider given by |provider_id| ...",
+      "revId": "5b3f91c72bed1b0b2b56ff1d35d64f7c7683ae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8554fb1d_8a590549",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-26T18:24:29Z",
+      "side": 1,
+      "message": "no need for virtual?",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 11
+      },
+      "revId": "5b3f91c72bed1b0b2b56ff1d35d64f7c7683ae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64d40bb_16c0ac23",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-26T18:24:29Z",
+      "side": 1,
+      "message": "Can BindingSet be used here?",
+      "revId": "5b3f91c72bed1b0b2b56ff1d35d64f7c7683ae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
