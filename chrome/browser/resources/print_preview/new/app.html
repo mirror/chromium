@@ -1,8 +1,87 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
+<link rel="import" href="settings_section.html">
+<link rel="import" href="header.html">
+
 <dom-module id="print-preview-app">
   <template>
-    <p>New Print Preview UI is coming... Stay tuned</p>
+    <style>
+      :host {
+        display: flex;
+        height: 100%;
+      }
+
+      #sidebar {
+        -webkit-border-end: 1px solid #c8c8c8;
+        background-color: white;
+        min-width: 310px;
+      }
+
+      #settings {
+        background: #fbfbfb;
+        border-top: 1px solid #f3f3f3;
+        height: 100%;
+        overflow: auto;
+      }
+
+      #previewArea {
+        -webkit-border-start: 1px solid #dcdcdc;
+        align-items: center;
+        background-color: #e6e6e6;
+        display: flex;
+        flex: 1;
+        justify-content: center;
+      }
+    </style>
+    <div id="sidebar">
+      <print-preview-header></print-preview-header>
+      <div id="settings">
+        <print-preview-settings-section>
+          <span slot="title">Destination</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Pages</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Copies</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Layout</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Color</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Paper size</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Margins</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Quality</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Scale</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Options</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Advanced</span>
+        </print-preview-settings-section>
+      </div>
+    </div>
+    <div id="previewArea">preview area</div>
   </template>
   <script src="app.js"></script>
 </dom-module>
