@@ -5210,9 +5210,16 @@ interface RTCRtpReceiver
     getter track
     method constructor
     method getContributingSources
+    method getSynchronizationSources
 interface RTCRtpSender
     attribute @@toStringTag
     getter track
+    method constructor
+interface RTCRtpSynchronizationSource
+    attribute @@toStringTag
+    getter audioLevel
+    getter source
+    getter timestamp
     method constructor
 interface RTCSessionDescription
     attribute @@toStringTag

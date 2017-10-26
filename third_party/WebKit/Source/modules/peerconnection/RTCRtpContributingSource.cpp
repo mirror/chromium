@@ -5,23 +5,24 @@
 #include "modules/peerconnection/RTCRtpContributingSource.h"
 
 #include "modules/peerconnection/RTCRtpReceiver.h"
-#include "public/platform/WebRTCRtpContributingSource.h"
+#include "public/platform/WebRTCRtpSource.h"
 
 namespace blink {
 
 RTCRtpContributingSource::RTCRtpContributingSource(
     RTCRtpReceiver* receiver,
-    const WebRTCRtpContributingSource& webContributingSource)
+    const WebRTCRtpSource& webSource)
     : receiver_(receiver),
-      timestamp_ms_(webContributingSource.TimestampMs()),
-      source_(webContributingSource.Source()) {
+      timestamp_ms_(webSource.TimestampMs()),
+      source_(webSource.Source()) {
   DCHECK(receiver_);
+  DCHECK_EQ(webSource.SourceType(), WebRTCRtpSourceType::CSRC);
 }
 
-void RTCRtpContributingSource::UpdateMembers(
-    const WebRTCRtpContributingSource& webContributingSource) {
-  timestamp_ms_ = webContributingSource.TimestampMs();
-  DCHECK_EQ(webContributingSource.Source(), source_);
+void RTCRtpContributingSource::UpdateMembers(const WebRTCRtpSource& webSource) {
+  timestamp_ms_ = webSource.TimestampMs();
+  DCHECK_EQ(webSource.Source(), source_);
+  DCHECK_EQ(webSource.SourceType(), WebRTCRtpSourceType::CSRC);
 }
 
 double RTCRtpContributingSource::timestamp() {
