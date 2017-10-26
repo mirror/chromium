@@ -22,9 +22,9 @@ namespace content {
 
 namespace {
 
-const char kNoDocumentURLErrorMessage[] =
+const char kRegistrationHandleNoDocumentURLErrorMessage[] =
     "No URL is associated with the caller's document.";
-const char kShutdownErrorMessage[] = "The Service Worker system has shutdown.";
+const char kRegistrationHandleShutdownErrorMessage[] = "The Service Worker system has shutdown.";
 const char kUserDeniedPermissionMessage[] =
     "The user denied permission to use Service Worker.";
 const char kEnableNavigationPreloadErrorPrefix[] =
@@ -36,7 +36,7 @@ const char kNoActiveWorkerErrorMessage[] =
     "The registration does not have an active worker.";
 const char kDatabaseErrorMessage[] = "Failed to access storage.";
 
-WebContents* GetWebContents(int render_process_id, int render_frame_id) {
+WebContents* RegistrationHandleGetWebContents(int render_process_id, int render_frame_id) {
   RenderFrameHost* rfh =
       RenderFrameHost::FromID(render_process_id, render_frame_id);
   return WebContents::FromRenderFrameHost(rfh);
@@ -262,7 +262,7 @@ bool ServiceWorkerRegistrationHandle::CanServeRegistrationObjectHostMethods(
   if (!provider_host_ || !context_) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
-        std::string(error_prefix) + std::string(kShutdownErrorMessage),
+        std::string(error_prefix) + std::string(kRegistrationHandleShutdownErrorMessage),
         args...);
     return false;
   }
@@ -272,7 +272,7 @@ bool ServiceWorkerRegistrationHandle::CanServeRegistrationObjectHostMethods(
   if (provider_host_->document_url().is_empty()) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kSecurity,
-        std::string(error_prefix) + std::string(kNoDocumentURLErrorMessage),
+        std::string(error_prefix) + std::string(kRegistrationHandleNoDocumentURLErrorMessage),
         args...);
     return false;
   }
@@ -287,7 +287,7 @@ bool ServiceWorkerRegistrationHandle::CanServeRegistrationObjectHostMethods(
   if (!GetContentClient()->browser()->AllowServiceWorker(
           registration_->pattern(), provider_host_->topmost_frame_url(),
           dispatcher_host_->resource_context(),
-          base::Bind(&GetWebContents, provider_host_->process_id(),
+          base::Bind(&RegistrationHandleGetWebContents, provider_host_->process_id(),
                      provider_host_->frame_id()))) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kDisabled,

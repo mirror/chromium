@@ -24,9 +24,9 @@
 #include "url/url_constants.h"
 #include "url/url_util.h"
 
-namespace {
+namespace content {
 
-using namespace content;
+namespace {
 
 // Should return the same value as SchemeRegistry::shouldTreatURLSchemeAsSecure.
 bool IsSecureScheme(const std::string& scheme) {
@@ -43,7 +43,7 @@ bool ShouldTreatURLSchemeAsCORSEnabled(const GURL& url) {
 // TODO(carlosk): secure origin checks don't match between content and Blink
 // hence this implementation here instead of a direct call to IsOriginSecure (in
 // origin_util.cc). See https://crbug.com/629059.
-bool IsOriginSecure(const GURL& url) {
+bool IsOriginSecurePerBlink(const GURL& url) {
   if (IsSecureScheme(url.scheme()))
     return true;
 
@@ -64,7 +64,7 @@ bool IsUrlPotentiallySecure(const GURL& url) {
   // to same-origin contexts, so they are not blocked.
   bool is_secure = url.SchemeIs(url::kBlobScheme) ||
                    url.SchemeIs(url::kFileSystemScheme) ||
-                   IsOriginSecure(url) ||
+                   IsOriginSecurePerBlink(url) ||
                    IsPotentiallyTrustworthyOrigin(url::Origin::Create(url));
 
   // TODO(mkwst): Remove this once the following draft is implemented:
@@ -107,8 +107,6 @@ void UpdateRendererOnMixedContentFound(NavigationHandleImpl* navigation_handle,
 }
 
 }  // namespace
-
-namespace content {
 
 // static
 std::unique_ptr<NavigationThrottle>
