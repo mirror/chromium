@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd90232f_530737d4",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-10-26T09:00:25Z",
+      "side": 1,
+      "message": "Sorry for lack of explanation.\n\nBreakIteratorAdapter::Advance() calls BreakIterator::Advance().\nAnd if result of BreakIterator::GetStringPiece() has \u0027underscore\u0027, sets that word to |underscore_word_|. (Otherwise it\u0027s empty)\nFrom then, BreakIteratorAdapter works and deals with the underscore as punctuation in |underscore_word_|.\nNext call to BreakIteratorAdapter::Advance() moves |prev_| and |pos_| considering underscore.\n\nFor example,\nIf get a word of \"ab_cd\", BreakIteratorAdapter sets |underscore_word_| to \"ab_cd\".\nAnd sets |prev_| to 0, |pos_| to 2 by AdvancePosition().\nThen BreakIteratorAdapter::GetString() returns \"ab\".\n\nNext calls to BreakIteratorAdapter::Advance() moves |prev_| to 2, |pos_| to 3.\nBreakIteratorAdapter::GetString() returns \"_\", then BreakIteratorAdapter::IsWord() returns false.\n\nIf |pos_| points the end of |underscore_word_|, BreakIteratorAdapter finish it\u0027s work.\n\nthanks.",
+      "parentUuid": "b5412fc3_c67151fb",
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3362a4a7_7408afc3",
         "filename": "components/omnibox/browser/break_iterator_adapter.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T23:40:00Z",
       "side": 1,
       "message": "Again, please revise / expand this comment.  Move prev and pos to ...?  And does it only apply in the context of a word that contains underscores or not?  The next sentence somewhat implies that it does.  I\u0027d hope it\u0027s clearer.",
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97873989_628d45ab",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-10-26T09:00:25Z",
+      "side": 1,
+      "message": "I added explanation on your first comment, thanks.",
+      "parentUuid": "3362a4a7_7408afc3",
       "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cf51e75f_041aa581",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-10-26T09:00:25Z",
+      "side": 1,
+      "message": "|underscore_word_| only has the word containing \u0027underscore\u0027 or empty.\nIf it\u0027s empty, BreakIterator works instead of BreakIteratorAdapter.\nthanks.",
+      "parentUuid": "e3e0644d_18d7ac1e",
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c77ae59_dc5dc567",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 6
@@ -64,6 +118,30 @@
       "writtenOn": "2017-09-27T23:40:00Z",
       "side": 1,
       "message": "nit: no \"k\" in string value.  Also, please add \"Omnibox\" at the beginning of the string.",
+      "range": {
+        "startLine": 150,
+        "startChar": 46,
+        "endLine": 150,
+        "endChar": 47
+      },
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726e5ed9_4dd44927",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-10-26T09:00:25Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll fix.\nthanks.",
+      "parentUuid": "2c77ae59_dc5dc567",
       "range": {
         "startLine": 150,
         "startChar": 46,
