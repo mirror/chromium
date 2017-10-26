@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c159b69e_85ecc263",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContentsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-26T22:12:52Z",
+      "side": 1,
+      "message": "that\u0027ll definitely throw an exception every single time. you need to call AwContents.activityFromContext",
+      "revId": "6a682500996059917048f691d427af01ca5fd8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd403c9_4616bd73",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContentsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-26T22:12:52Z",
+      "side": 1,
+      "message": "keep using the context. app might decide to add a ContextWrapper around the activity, don\u0027t want to ignore that",
+      "revId": "6a682500996059917048f691d427af01ca5fd8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
