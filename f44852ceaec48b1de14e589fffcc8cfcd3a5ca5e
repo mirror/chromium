@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "771b5499_b58a44ed",
+        "filename": "components/password_manager/core/browser/ui/export_flow.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-10-26T14:03:13Z",
+      "side": 1,
+      "message": "Why not hold this in the implementation and keep the interface pure? As it is, the implementation will have to give CredentialProviderInterface to ExportFlow and ask for it back to use it, which seems like an unnecessary detour.\n\nAlso, a single instance of PasswordStoreCacheForSettings will be serving the needs of both the export and import flow, correct?",
+      "revId": "f44852ceaec48b1de14e589fffcc8cfcd3a5ca5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
