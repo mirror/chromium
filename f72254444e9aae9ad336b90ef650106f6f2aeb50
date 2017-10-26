@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "76b9d7bb_c210a826",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-26T16:29:12Z",
+      "side": 1,
+      "message": "tag with [Chromecast]",
+      "revId": "f72254444e9aae9ad336b90ef650106f6f2aeb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fb0d32f_6b8fd987",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashUploader.java",
         "patchSetId": 2
@@ -19,6 +36,23 @@
         "endLine": 172,
         "endChar": 64
       },
+      "revId": "f72254444e9aae9ad336b90ef650106f6f2aeb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0276222_a6568745",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashUploader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-26T16:29:12Z",
+      "side": 1,
+      "message": "how big is this?  (you can check with jasonroberts).  it might not be appropriate for logging.",
       "revId": "f72254444e9aae9ad336b90ef650106f6f2aeb50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
