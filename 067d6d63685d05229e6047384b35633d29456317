@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a2a4f2d_0300cc4d",
+        "filename": "components/optimization_guide/optimization_hints_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-10-26T21:14:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e7f3860_60c79c16",
+      "revId": "067d6d63685d05229e6047384b35633d29456317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acfe06d3_cbda6eec",
         "filename": "components/optimization_guide/optimization_hints_reader.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T20:08:11Z",
       "side": 1,
       "message": "I\u0027d prefer if this CL actually used this method in production code.\n\nRight now, it is unclear how this will be used in production code, so it\u0027s somewhat hard to say if it is being used the correct way. I won\u0027t push back on a multipart CL, but if it\u0027s possible to add something that consumes this in production code in this CL I\u0027d be a little more confident this is implemented in a good way. As far as I can tell, this is doing the right thing, but I just want to avoid re-writing parts in later CLs.",
+      "revId": "067d6d63685d05229e6047384b35633d29456317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1460e2_a79b714d",
+        "filename": "components/optimization_guide/optimization_hints_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-10-26T21:14:00Z",
+      "side": 1,
+      "message": "hmm - i was trying to avoid needing to ask for multiple outside owners approval with this cl. i can hold off but the resulting CL will be much larger (would include the component installer which adds another 500+ lines or so including test.)\n\nwould you be more comfortable if this was just a shell method that just returned false? (i basically added some validation just so i can have a test and not ask for the same owners approval again)",
+      "parentUuid": "acfe06d3_cbda6eec",
       "revId": "067d6d63685d05229e6047384b35633d29456317",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "067d6d63685d05229e6047384b35633d29456317",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58e2034_66111ba2",
+        "filename": "components/optimization_guide/optimization_hints_reader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-10-26T21:14:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70194b65_50c24555",
+      "revId": "067d6d63685d05229e6047384b35633d29456317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
