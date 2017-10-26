@@ -1909,27 +1909,24 @@ LayoutRect LayoutText::LocalSelectionRect() const {
   return rect;
 }
 
-bool LayoutText::ShouldUseNGAlternatives() const {
+const NGOffsetMapping* LayoutText::GetNGOffsetMapping() const {
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return nullptr;
   // LayoutNG alternatives rely on |TextLength()| property, which is correct
   // only when fragment painting is enabled.
-  return RuntimeEnabledFeatures::LayoutNGEnabled() &&
-         RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled() &&
-         EnclosingNGBlockFlow();
-}
-
-const NGOffsetMapping& LayoutText::GetNGOffsetMapping() const {
-  DCHECK(EnclosingNGBlockFlow());
-  return NGInlineNode(EnclosingNGBlockFlow()).ComputeOffsetMappingIfNeeded();
+  if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
+    return nullptr;
+  return NGOffsetMapping::GetFor(this);
 }
 
 int LayoutText::CaretMinOffset() const {
-  if (ShouldUseNGAlternatives()) {
+  if (auto mapping = GetNGOffsetMapping()) {
     // ::first-letter handling should be done by LayoutTextFragment override.
     DCHECK(!IsTextFragment());
     if (!GetNode())
       return 0;
     Optional<unsigned> candidate =
-        GetNGOffsetMapping().StartOfNextNonCollapsedCharacter(*GetNode(), 0);
+        mapping->StartOfNextNonCollapsedCharacter(*GetNode(), 0);
     // Align with the legacy behavior that 0 is returned if the entire node
     // contains only collapsed whitespaces.
     return candidate ? *candidate : 0;
@@ -1945,14 +1942,13 @@ int LayoutText::CaretMinOffset() const {
 }
 
 int LayoutText::CaretMaxOffset() const {
-  if (ShouldUseNGAlternatives()) {
+  if (auto mapping = GetNGOffsetMapping()) {
     // ::first-letter handling should be done by LayoutTextFragment override.
     DCHECK(!IsTextFragment());
     if (!GetNode())
       return TextLength();
     Optional<unsigned> candidate =
-        GetNGOffsetMapping().EndOfLastNonCollapsedCharacter(*GetNode(),
-                                                            TextLength());
+        mapping->EndOfLastNonCollapsedCharacter(*GetNode(), TextLength());
     // Align with the legacy behavior that |TextLength()| is returned if the
     // entire node contains only collapsed whitespaces.
     return candidate ? *candidate : TextLength();
@@ -1969,15 +1965,14 @@ int LayoutText::CaretMaxOffset() const {
 }
 
 unsigned LayoutText::ResolvedTextLength() const {
-  if (ShouldUseNGAlternatives()) {
+  if (auto mapping = GetNGOffsetMapping()) {
     // ::first-letter handling should be done by LayoutTextFragment override.
     DCHECK(!IsTextFragment());
     if (!GetNode())
       return 0;
-    const NGOffsetMapping& mapping = GetNGOffsetMapping();
-    Optional<unsigned> start = mapping.GetTextContentOffset(*GetNode(), 0);
+    Optional<unsigned> start = mapping->GetTextContentOffset(*GetNode(), 0);
     Optional<unsigned> end =
-        mapping.GetTextContentOffset(*GetNode(), TextLength());
+        mapping->GetTextContentOffset(*GetNode(), TextLength());
     DCHECK(start);
     DCHECK(end);
     DCHECK_LE(*start, *end);
@@ -1991,24 +1986,23 @@ unsigned LayoutText::ResolvedTextLength() const {
 }
 
 bool LayoutText::HasNonCollapsedText() const {
-  if (ShouldUseNGAlternatives())
+  if (GetNGOffsetMapping())
     return ResolvedTextLength();
   return FirstTextBox();
 }
 
 bool LayoutText::ContainsCaretOffset(int text_offset) const {
   DCHECK_GE(text_offset, 0);
-  if (ShouldUseNGAlternatives()) {
+  if (auto mapping = GetNGOffsetMapping()) {
     // ::first-letter handling should be done by LayoutTextFragment override.
     DCHECK(!IsTextFragment());
     if (!GetNode())
       return false;
-    const NGOffsetMapping& mapping = GetNGOffsetMapping();
-    if (mapping.IsBeforeNonCollapsedCharacter(*GetNode(), text_offset))
+    if (mapping->IsBeforeNonCollapsedCharacter(*GetNode(), text_offset))
       return true;
-    if (!mapping.IsAfterNonCollapsedCharacter(*GetNode(), text_offset))
+    if (!mapping->IsAfterNonCollapsedCharacter(*GetNode(), text_offset))
       return false;
-    return *mapping.GetCharacterBefore(*GetNode(), text_offset) !=
+    return *mapping->GetCharacterBefore(*GetNode(), text_offset) !=
            kNewlineCharacter;
   }
 
@@ -2061,13 +2055,12 @@ static bool DoesContinueOnNextLine(const LayoutText& text_layout_object,
 }
 
 bool LayoutText::IsBeforeNonCollapsedCharacter(unsigned text_offset) const {
-  if (ShouldUseNGAlternatives()) {
+  if (auto mapping = GetNGOffsetMapping()) {
     // ::first-letter handling should be done by LayoutTextFragment override.
     DCHECK(!IsTextFragment());
     if (!GetNode())
       return false;
-    return GetNGOffsetMapping().IsBeforeNonCollapsedCharacter(*GetNode(),
-                                                              text_offset);
+    return mapping->IsBeforeNonCollapsedCharacter(*GetNode(), text_offset);
   }
 
   InlineTextBox* const last_text_box = LastTextBox();
@@ -2094,13 +2087,12 @@ bool LayoutText::IsBeforeNonCollapsedCharacter(unsigned text_offset) const {
 }
 
 bool LayoutText::IsAfterNonCollapsedCharacter(unsigned text_offset) const {
-  if (ShouldUseNGAlternatives()) {
+  if (auto mapping = GetNGOffsetMapping()) {
     // ::first-letter handling should be done by LayoutTextFragment override.
     DCHECK(!IsTextFragment());
     if (!GetNode())
       return false;
-    return GetNGOffsetMapping().IsAfterNonCollapsedCharacter(*GetNode(),
-                                                             text_offset);
+    return mapping->IsAfterNonCollapsedCharacter(*GetNode(), text_offset);
   }
 
   InlineTextBox* const last_text_box = LastTextBox();
