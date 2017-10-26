@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2a36852_b0517e34",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T22:11:58Z",
+      "side": 1,
+      "message": "I looked into a bit more and the following should do the right thing for all cases including non immersive fullscreen.\n\nif (immersive_enabled) {\n   return IsRevealed();\n}\nreturn !IsFullscreen();\n\nI noticed that there is an existing bug, probably in GetTopInsets. If you go overview when the immersive frame is revealed, it cuts extra height (with/without thisCL). Can you look into it in a separate CL?",
+      "revId": "13003a59a8ff2e65d04732949c83a250927e1b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
