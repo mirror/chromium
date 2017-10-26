@@ -16,6 +16,24 @@
       "revId": "45ec982e9c00706ff717dfafb9517bf7c56e21b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2dfd05_d77d488c",
+        "filename": "services/ui/ws/gpu_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-26T13:36:38Z",
+      "side": 1,
+      "message": "I believe the current expectation is that a client will have only a single channel, and will not issue another request if one is already in flight. But we don\u0027t exactly enforce that. So this is a safe fallback for that scenario.",
+      "parentUuid": "ed08c703_4f4a5ecc",
+      "revId": "45ec982e9c00706ff717dfafb9517bf7c56e21b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
