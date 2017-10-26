@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "9ae3c5d7_7ffe76e9",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-26T02:05:20Z",
+      "side": 1,
+      "message": "Ha, makes sense. I\u0027ll iterate on this algorithm once I\u0027ve some metrics about this system.",
+      "parentUuid": "f8222105_434eba82",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d31ae44a_7df6a87f",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -896,6 +914,24 @@
     },
     {
       "key": {
+        "uuid": "2c2b5bef_41037e98",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-26T02:05:20Z",
+      "side": 1,
+      "message": "Ha, that\u0027d be a good improvement. I\u0027ll add this as a TODO and I\u0027ll get back to this later (I want to start by getting some data and then iterate on this system).",
+      "parentUuid": "909a6630_696aff48",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08d71bb0_7630a0e9",
         "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
         "patchSetId": 15
@@ -943,6 +979,24 @@
       "side": 1,
       "message": "My point is that the behaviour will be very different if the caller calls you once per second, or once per ten seconds; the current impl allows the state to change once-per-call, in effect.",
       "parentUuid": "88a66289_41df799f",
+      "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6895098_5293cd5b",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-26T02:05:20Z",
+      "side": 1,
+      "message": "Good point, I think that this is something that could be owned and enforced by the monitor though? (it\u0027s confusing because this class is temporarily called Monitor :) )",
+      "parentUuid": "2dffea72_c1e64201",
       "revId": "cfbc53c6c7b015feb84c415b58627f89a60d95d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
