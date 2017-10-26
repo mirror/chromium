@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b6103ce_1513ddfb",
+        "filename": "chrome/common/extensions/api/_permission_features.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-26T13:38:54Z",
+      "side": 1,
+      "message": "nit: Remove the extra line.",
+      "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a0392f_60d7b662",
+        "filename": "chrome/common/extensions/api/_permission_features.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-26T13:38:54Z",
+      "side": 1,
+      "message": "Have you thought about enabling/disabling this feature for the component extensions? IIUC, all of them are auto-granted this permissions, unless you specify the \"component_extensions_auto_granted\" property here.",
+      "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2115ac19_7db1d5cd",
+        "filename": "chrome/common/extensions/api/_permission_features.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-26T13:38:54Z",
+      "side": 1,
+      "message": "This will constrain the feature only to Canary and Dev - is this expected? Haven\u0027t found references to this in the Design Doc.",
+      "range": {
+        "startLine": 428,
+        "startChar": 16,
+        "endLine": 428,
+        "endChar": 19
+      },
+      "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c64214_a0a0426b",
+        "filename": "chrome/common/extensions/api/windows.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-26T13:38:54Z",
+      "side": 1,
+      "message": "nit: Maybe clarify the meaning a little bit? E.g. like this (I\u0027m only unsure my understanding of the feature is right):\n\n  (the fullscreen mode cannot be left by the user action)",
+      "range": {
+        "startLine": 45,
+        "startChar": 56,
+        "endLine": 45,
+        "endChar": 57
+      },
+      "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c851e0_5d18e480",
+        "filename": "extensions/common/switches.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-26T13:38:54Z",
+      "side": 1,
+      "message": "nit: s/ChromeOS/Chrome OS/",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 12
+      },
+      "revId": "fd7ed92e6462621b7f899a8ac5a7950e92ef7c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
