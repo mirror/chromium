@@ -11,7 +11,12 @@ the application class changed to IncrementalApplication.
 
 import argparse
 import os
+import re
+import shutil
+import subprocess
 import sys
+import tempfile
+import zipfile
 from xml.etree import ElementTree
 
 sys.path.append(os.path.join(os.path.dirname(__file__), os.path.pardir, 'gyp'))
@@ -50,7 +55,16 @@ def _ParseArgs():
                       help='Changes all android:isolatedProcess to false. '
                            'This is required on Android M+',
                       action='store_true')
-  return parser.parse_args()
+  parser.add_argument('--out-apk', help='Path to output .ap_ file')
+  parser.add_argument('--in-apk', help='Path to non-incremental .ap_ file')
+  parser.add_argument('--aapt-path', help='Path to the Android aapt tool')
+  parser.add_argument('--android-sdk-jar', help='Path to the Android SDK jar.')
+
+  ret = parser.parse_args()
+  if ret.out_apk and not (ret.in_apk and ret.aapt_path and ret.android_sdk_jar):
+    parser.error(
+        '--out-apk requires --in-apk, --aapt-path, and --android-sdk-jar.')
+  return ret
 
 
 def _CreateMetaData(parent, name, value):
@@ -102,6 +116,13 @@ def _ProcessManifest(main_manifest, disable_isolated_processes):
   return ElementTree.tostring(doc, encoding='UTF-8')
 
 
+def _ExtractVersionFromApk(aapt_path, apk_path):
+  output = subprocess.check_output([aapt_path, 'dump', 'badging', apk_path])
+  version_code = re.search(r"versionCode='(.*?)'", output).group(1)
+  version_name = re.search(r"versionName='(.*?)'", output).group(1)
+  return version_code, version_name,
+
+
 def main():
   options = _ParseArgs()
   with open(options.src_manifest) as f:
@@ -110,6 +131,20 @@ def main():
                                        options.disable_isolated_processes)
   with open(options.out_manifest, 'w') as f:
     f.write(new_manifest_data)
+
+  if options.out_apk:
+    version_code, version_name = _ExtractVersionFromApk(
+        options.aapt_path, options.in_apk)
+    with tempfile.NamedTemporaryFile() as f:
+      cmd = [options.aapt_path, 'package', '-f', '-F', f.name,
+             '-M', options.out_manifest, '-I', options.android_sdk_jar,
+             '-I', options.in_apk, '--replace-version',
+             '--version-code', version_code, '--version-name', version_name]
+      subprocess.check_call(cmd)
+      with zipfile.ZipFile(f.name, 'a') as z:
+        build_utils.MergeZips(
+            z, [options.in_apk], exclude_patterns=['AndroidManifest.xml'])
+      shutil.copyfile(f.name, options.out_apk)
 
   if options.depfile:
     deps = [options.src_manifest]
