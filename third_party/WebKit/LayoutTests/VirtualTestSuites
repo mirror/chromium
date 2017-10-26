@@ -575,5 +575,15 @@
     "prefix": "import-meta-url",
     "base": "external/wpt/html/semantics/scripting-1/the-script-element/module/import-meta",
     "args": ["--enable-features=ModuleScriptsImportMetaUrl"]
+  },
+  {
+    "prefix": "mouseevent_fractional",
+    "base": "fast/events/constructors",
+    "args": ["--enable-blink-features=FractionalMouseEvent"]
+  },
+  {
+    "prefix": "mouseevent_fractional",
+    "base": "fast/events/mouseevents",
+    "args": ["--enable-blink-features=FractionalMouseEvent"]
   }
 ]
