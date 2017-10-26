@@ -38,7 +38,7 @@
     [bvc.view setFrame:[[UIScreen mainScreen] bounds]];
   }
 
-  UIView* toolbarView = [[bvc toolbarController] view];
+  UIView* toolbarView = [bvc toolbarView];
   UIView* toolbarSnapshotView;
   if ([toolbarView window]) {
     toolbarSnapshotView = [toolbarView snapshotViewAfterScreenUpdates:NO];

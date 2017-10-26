@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h"
 
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
+#import "ios/chrome/browser/ui/uikit_ui_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -44,6 +45,18 @@
 
 - (void)setToolbarDelegate:(id<WebToolbarDelegate>)delegate {
   self.webToolbarController.delegate = delegate;
+}
+
+#pragma mark - Public
+
+- (UIImage*)toolbarSnapshotForTab:(Tab*)tab {
+  [self.webToolbarController updateToolbarForSideSwipeSnapshot:tab];
+  UIImage* toolbarSnapshot = CaptureViewWithOption(
+      [self.webToolbarController view], [[UIScreen mainScreen] scale],
+      kClientSideRendering);
+
+  [self.webToolbarController resetToolbarAfterSideSwipeSnapshot];
+  return toolbarSnapshot;
 }
 
 #pragma mark - WebToolbarController interface

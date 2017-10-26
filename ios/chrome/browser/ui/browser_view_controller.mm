@@ -4982,12 +4982,21 @@ bubblePresenterForFeature:(const base::Feature&)feature
   [_infoBarContainer->view() setHidden:NO];
 }
 
+- (UIView*)toolbarView {
+  return _toolbarCoordinator.view;
+}
+
 - (UIView*)contentView {
   return _contentArea;
 }
 
-- (WebToolbarController*)toolbarController {
-  return _toolbarCoordinator.webToolbarController;
+- (BOOL)canBeginToolbarSwipe {
+  return ![_toolbarCoordinator isOmniboxFirstResponder] &&
+         ![_toolbarCoordinator showingOmniboxPopup];
+}
+
+- (UIImage*)toolbarSnapshotForTab:(Tab*)tab {
+  return [_toolbarCoordinator toolbarSnapshotForTab:tab];
 }
 
 - (BOOL)preventSideSwipe {

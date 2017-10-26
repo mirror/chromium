@@ -212,18 +212,13 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
   // edges, which will happen frequently with edge swipes from the right side.
   // Since the toolbar and the contentView can overlap, check the toolbar frame
   // first, and confirm the right gesture recognizer is firing.
-  CGRect toolbarFrame =
-      CGRectInset([[[swipeDelegate_ toolbarController] view] frame], -1, -1);
+  CGRect toolbarFrame = CGRectInset([swipeDelegate_ toolbarView].frame, -1, -1);
   if (CGRectContainsPoint(toolbarFrame, location)) {
     if (![gesture isEqual:panGestureRecognizer_]) {
       return NO;
     }
 
-    if ([[swipeDelegate_ toolbarController] isOmniboxFirstResponder] ||
-        [[swipeDelegate_ toolbarController] showingOmniboxPopup]) {
-      return NO;
-    }
-    return YES;
+    return [swipeDelegate_ canBeginToolbarSwipe];
   }
 
   // Otherwise, only allow contentView touches with |swipeGestureRecognizer_|.
@@ -417,7 +412,7 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
     [pageSideSwipeView_ setTargetView:[swipeDelegate_ contentView]];
 
     [gesture.view insertSubview:pageSideSwipeView_
-                   belowSubview:[[swipeDelegate_ toolbarController] view]];
+                   belowSubview:[swipeDelegate_ toolbarView]];
   }
 
   __weak Tab* weakCurrentTab = [model_ currentTab];
@@ -482,9 +477,7 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
     [swipeDelegate_ updateAccessoryViewsForSideSwipeWithVisibility:NO];
 
     // Layout tabs with new snapshots in the current orientation.
-    [tabSideSwipeView_
-        updateViewsForDirection:gesture.direction
-                    withToolbar:[swipeDelegate_ toolbarController]];
+    [tabSideSwipeView_ updateViewsForDirection:gesture.direction];
 
     // Insert behind infobar container (which is below toolbar)
     // so card border doesn't look janky during animation.

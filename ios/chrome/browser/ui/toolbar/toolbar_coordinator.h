@@ -14,6 +14,7 @@
 
 @protocol ActivityServicePositioner;
 @protocol QRScannerResultLoading;
+@class Tab;
 @protocol TabHistoryPositioner;
 @protocol TabHistoryUIUpdater;
 @class TabModel;
@@ -48,6 +49,10 @@
 
 // Sets the delegate for the toolbar.
 - (void)setToolbarDelegate:(id<WebToolbarDelegate>)delegate;
+
+// Returns a snapshot of the toolbar with the controls visibility adapted to
+// |tab|.
+- (UIImage*)toolbarSnapshotForTab:(Tab*)tab;
 
 // TabModel callbacks.
 - (void)selectedTabChanged;
