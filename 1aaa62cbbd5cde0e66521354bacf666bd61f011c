@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "2dc1353c_01e611cc",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-26T12:56:24Z",
+      "side": 1,
+      "message": "I guess we have a different definition of \u0027used\u0027. I\u0027m OK with only the comment-side changes",
+      "parentUuid": "03cbbc4d_0df8f88f",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 15
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab977734_d37dbb06",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 1
@@ -272,6 +296,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "0871f98c_862bf014",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 40
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb81c77c_8e30badb",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-26T12:56:24Z",
+      "side": 1,
+      "message": "\"It\u0027s OK for X to be larger if none is Y.\u0027\n\nWhat does OK mean? Larger than what? None of what is reached? Or maybe \u0027None\u0027 is reached? Too many possible interpretations .. the code is clearer without this comment :)\n\nI would just put a comment like:\n# Cut the zeros from the end of the dump past the length of the list of known offsets.",
+      "parentUuid": "62068c48_9d2b8cdf",
       "range": {
         "startLine": 93,
         "startChar": 38,
@@ -425,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "12882f36_4af96f05",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-26T12:56:24Z",
+      "side": 1,
+      "message": "oh, thanks for explaning, asking to explain it in a warning in another place",
+      "parentUuid": "f1ddc0a8_2e0d712d",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 79
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "954b5923_60854849",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 1
@@ -554,6 +626,30 @@
       "side": 1,
       "message": "Until it\u0027s used somewhere else, what about keeping it this way?\nLess churn later.",
       "parentUuid": "90fefa84_ea08d222",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 42
+      },
+      "revId": "1aaa62cbbd5cde0e66521354bacf666bd61f011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42db44c_649ea07b",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-26T12:56:24Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "ca2c76dd_cca68d25",
       "range": {
         "startLine": 184,
         "startChar": 2,
