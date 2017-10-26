@@ -22,6 +22,30 @@
       "revId": "f684701d50cd14f757ba8185a8906ea4d4b5e1af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee1f5e7_f692d4db",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehaviorTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-26T02:11:33Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "a90d6d6f_4b4e8ba1",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 13
+      },
+      "revId": "f684701d50cd14f757ba8185a8906ea4d4b5e1af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
