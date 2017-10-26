@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9d2fe53_34db4377",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-26T15:03:06Z",
+      "side": 1,
+      "message": "Have we done this pattern in Chromium before? I\u0027m not particularly sure it strikes me as more readable, but I\u0027m curious if there are existing uses of this pattern.",
+      "range": {
+        "startLine": 186,
+        "startChar": 14,
+        "endLine": 186,
+        "endChar": 15
+      },
+      "revId": "f3d86b2f942b4bda8f21c080a0efd8e528c74d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92fcf40_5a14a3fb",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-26T15:03:06Z",
+      "side": 1,
+      "message": "did I miss a thread on where this was being introduced for non-Blink types?\n\nIn particular, the header documentation implies this is Start-From-One, but is this true here?",
+      "range": {
+        "startLine": 430,
+        "startChar": 14,
+        "endLine": 430,
+        "endChar": 28
+      },
+      "revId": "f3d86b2f942b4bda8f21c080a0efd8e528c74d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
