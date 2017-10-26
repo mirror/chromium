@@ -41478,6 +41478,14 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="1" label="Supports DMS"/>
 </enum>
 
+<enum name="WiFiApChannelSwitch">
+  <int value="0" label="Unknown frequency range"/>
+  <int value="1" label="Switch from 2.4GHz to 2.4GHz"/>
+  <int value="2" label="Switch from 2.4GHz to 5GHz"/>
+  <int value="3" label="Switch from 5GHz to 2.4GHz"/>
+  <int value="4" label="Switch from 5GHz to 5GHz"/>
+</enum>
+
 <enum name="WiFiApMode">
   <int value="0" label="Unknown"/>
   <int value="1" label="Managed"/>
