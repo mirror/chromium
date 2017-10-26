@@ -43,6 +43,8 @@ class ContentBrowserTest : public BrowserTestBase {
   // Returns the window for the test.
   Shell* shell() const { return shell_; }
 
+  bool IsContentBrowserTest() const override;
+
  private:
   Shell* shell_;
 
