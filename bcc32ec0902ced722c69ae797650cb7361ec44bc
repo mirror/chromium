@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a14539b0_4c2ce4d9",
+        "filename": "content/child/child_thread_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-26T00:33:15Z",
+      "side": 1,
+      "message": "The IPC logging code can connect arbitrarily many times. Either make this a BindingSet or let ChildProcessHostImpl and RenderProcessHostImpl share their ChildControlPtr.",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 15
+      },
+      "revId": "bcc32ec0902ced722c69ae797650cb7361ec44bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c7180a_5e372547",
+        "filename": "content/common/child_control.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-26T00:33:15Z",
+      "side": 1,
+      "message": "Is this used?",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "bcc32ec0902ced722c69ae797650cb7361ec44bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81944f54_69a8f7a6",
+        "filename": "content/common/child_process_messages.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-26T00:33:15Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "bcc32ec0902ced722c69ae797650cb7361ec44bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65cede0_2cb5d66a",
+        "filename": "content/common/child_process_messages.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-26T00:33:15Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "bcc32ec0902ced722c69ae797650cb7361ec44bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
