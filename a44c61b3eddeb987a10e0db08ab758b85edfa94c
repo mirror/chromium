@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e04e021_11bbfc04",
+        "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-26T22:39:19Z",
+      "side": 1,
+      "message": "Is there an easier way to accomplish this?",
+      "range": {
+        "startLine": 144,
+        "startChar": 5,
+        "endLine": 144,
+        "endChar": 12
+      },
+      "revId": "a44c61b3eddeb987a10e0db08ab758b85edfa94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

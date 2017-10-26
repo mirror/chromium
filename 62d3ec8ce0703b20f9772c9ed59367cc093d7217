@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd4cda8d_fcebc73d",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-26T22:39:19Z",
+      "side": 1,
+      "message": "Any idea on how to test these in a browser test? I\u0027ll try and add some unit tests for these.",
+      "range": {
+        "startLine": 628,
+        "startChar": 34,
+        "endLine": 628,
+        "endChar": 69
+      },
+      "revId": "62d3ec8ce0703b20f9772c9ed59367cc093d7217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8ef131_ff91aca0",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-26T22:39:19Z",
+      "side": 1,
+      "message": "I\u0027ll try and add more tests (e.g. not intercepting sensitive network requests, webkit cache). Let me know if you can think of other cases which are not covered here or other things worth testing.",
+      "revId": "62d3ec8ce0703b20f9772c9ed59367cc093d7217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9356c800_0584c600",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-26T22:39:19Z",
+      "side": 1,
+      "message": "Do you have context regarding this?",
+      "range": {
+        "startLine": 640,
+        "startChar": 16,
+        "endLine": 640,
+        "endChar": 70
+      },
+      "revId": "62d3ec8ce0703b20f9772c9ed59367cc093d7217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
