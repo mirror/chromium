@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52103457_6199ae78",
+        "filename": "content/common/browser_plugin/browser_plugin_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-26T21:44:01Z",
+      "side": 1,
+      "message": "nit: Wrong comment.",
+      "revId": "605cc7d17c928a3d852548e9f9e82790a75b652f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

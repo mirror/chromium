@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9b36608_6101efcb",
+        "filename": "content/browser/web_contents/web_contents_view_guest_mus.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-26T21:44:01Z",
+      "side": 1,
+      "message": "nit: WebContentsViewGuestMus?",
+      "revId": "a0842e0a453691958f4d04ed83cf230a64deb23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745f01f6_d83a0477",
+        "filename": "content/browser/web_contents/web_contents_view_guest_mus.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-26T21:44:01Z",
+      "side": 1,
+      "message": "Could you please explain why we need a different WebContentsViewGuest?",
+      "revId": "a0842e0a453691958f4d04ed83cf230a64deb23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4727bc6_324d3a39",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-26T21:44:01Z",
+      "side": 1,
+      "message": "Could this be simply base::Optional instead of allocating?",
+      "revId": "a0842e0a453691958f4d04ed83cf230a64deb23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
