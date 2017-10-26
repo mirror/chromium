@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "51c6eeb3_7997db46",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:12:03Z",
+      "side": 1,
+      "message": "I\u0027m fine with you trusting JSONReader to do JSON. I don\u0027t think that means that our tests can trust you to use JSONReader. :)\n\nIf you believe JSONReader\u0027s behavior is the way we should specify the parsing behavior, that\u0027s great! It seems reasonable to me! But we should lock that behavior in with tests, and we should ensure that we document it as a public expectation, rather than relying on it\u0027s current presence in the implementation.",
+      "parentUuid": "50dc5f08_36a417c4",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa6d8f57_e74587aa",
         "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
         "patchSetId": 2
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "f3aa3625_cf29cbde",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:12:03Z",
+      "side": 1,
+      "message": "Sounds like a reasonable place to start. In that case, can you add tests that ensure that strangely-cased entries fail?",
+      "parentUuid": "063f2dfd_c9c11cde",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b853b321_7047e35e",
         "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
         "patchSetId": 2
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "just as above. We expect JSON and JSON only. JSONReader tells me if it is valid JSON and returns the parsed structure. It implements the respective RFCs and I think it is fine to blindly rely on that.",
       "parentUuid": "b853b321_7047e35e",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37bf2b47_762d10d7",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:12:03Z",
+      "side": 1,
+      "message": "I agree in part and disagree in part! See above. :)",
+      "parentUuid": "52d2c5fd_e633c8e8",
       "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
