@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "016074c5_3cc61703",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-26T16:23:41Z",
+      "side": 1,
+      "message": "generateOffer() does not decide what you do with the offer, so if you want to use two PCs you can do that.\n\nBut I agree not relying on a helper function here is more clear. generateOffer() does very little an does not provide much value.\n\nIn fact on second thought I think the helper function is bad and shouldn\u0027t be used: it obscures what\u0027s going on in the test and it asserts things about the SDP that is unrelated to what this test is testing, so if the test would fail assertions in the helper function it would fail the entire test which could be misleading. Different behaviors should be tested separately to give helpful test results, and here we do not care about e.g. number of m-lines that the offer contains, we care about offer/SLD/SRD succeeding, not the SDP details.\n\nKeep this as-is.",
+      "parentUuid": "68e1f18a_38225501",
+      "revId": "6c375ade23273b3ee486ed919318f6741742bcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a443e49a_4c3c9f3a",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html",
         "patchSetId": 2

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52fd7975_87a88eed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-26T16:23:41Z",
+      "side": 1,
+      "message": "setLocalDescription returns a promise, you should createOffer in a then() or you could have a race.",
+      "revId": "63c1e409a25d9038c2304faec5d751ecd2967666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
