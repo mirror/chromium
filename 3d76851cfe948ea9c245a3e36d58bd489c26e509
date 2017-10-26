@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6161a62a_e7e456ed",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.css",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-26T20:55:28Z",
+      "side": 1,
+      "message": "Did you try adding\ntop: 0;\nbottom: 0;\n\nper my https://jsfiddle.net/bkccrsd4/1/ example, to see if this fixes the centering issue?",
+      "revId": "3d76851cfe948ea9c245a3e36d58bd489c26e509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
