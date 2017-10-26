@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26a46836_5d2745d8",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-26T07:31:52Z",
+      "side": 1,
+      "message": "Can you use @weakify/@strongify here? Or isn\u0027t it common to use them in Chrome?",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba433e4_6c9cc7e9",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-26T07:31:52Z",
+      "side": 1,
+      "message": "Wouldn\u0027t the instance of AutofillClientIOS allocated here leak? Or does AutofillDriverIOS::CreateForWebStateAndDelegate() take ownership of the instance?",
+      "range": {
+        "startLine": 131,
+        "startChar": 31,
+        "endLine": 131,
+        "endChar": 45
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6015989e_1da3b57e",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-26T07:31:52Z",
+      "side": 1,
+      "message": "Put these in a single line or add braces:\nhttps://github.com/google/styleguide/blob/gh-pages/objcguide.md#conditionals",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 167,
+        "endChar": 15
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f527f4a0_8f1a04ef",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-26T07:31:52Z",
+      "side": 1,
+      "message": "Add braces:\nhttps://github.com/google/styleguide/blob/gh-pages/objcguide.md#conditionals",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 196,
+        "endChar": 80
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e539f377_f5c9b927",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-26T07:31:52Z",
+      "side": 1,
+      "message": "Maybe not related to this CL, but shouldn\u0027t this type also be prefixed with CWV?",
+      "range": {
+        "startLine": 17,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ea6416_ad3f5f8d",
+        "filename": "ios/web_view/public/cwv_autofill_suggestion.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-26T07:31:52Z",
+      "side": 1,
+      "message": "s/If/if/",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe54a13_5b6e63a8",
+        "filename": "ios/web_view/shell/shell_autofill_delegate.m",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-26T07:31:52Z",
+      "side": 1,
+      "message": "Again, how about using @weakify/@strongify here?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc1b703_393d7012",
+        "filename": "ios/web_view/shell/shell_view_controller.m",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-26T07:31:52Z",
+      "side": 1,
+      "message": "Do you need this? Looks this controller is not used as autofill delegate.",
+      "range": {
+        "startLine": 23,
+        "startChar": 34,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b95843f_e1a78512",
+        "filename": "ios/web_view/shell/shell_view_controller.m",
+        "patchSetId": 13
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-26T07:31:52Z",
+      "side": 1,
+      "message": "I guess this shouldn\u0027t be submitted as is? Maybe add this feature (showing a special form for debugging) in the menu instead? Or upload the form somewhere and use it for testing?",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 64
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
