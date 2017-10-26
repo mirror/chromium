@@ -16,7 +16,6 @@
 #import "ios/chrome/browser/signin/signin_util.h"
 #import "ios/chrome/browser/ui/authentication/authentication_ui_util.h"
 #import "ios/chrome/browser/ui/authentication/chrome_signin_view_controller.h"
-#import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h"
 #import "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #import "ios/public/provider/chrome/browser/signin/chrome_identity.h"
@@ -380,7 +379,7 @@ using signin_ui::CompletionCallback;
   }
   strongSelf = nil;
   if (showAccountsSettings) {
-    [self.dispatcher showAccountsSettings];
+    [self.presenter showAccountsSettings];
   }
 }
 
