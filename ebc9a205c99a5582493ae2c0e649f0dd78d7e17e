@@ -22,6 +22,30 @@
       "revId": "ebc9a205c99a5582493ae2c0e649f0dd78d7e17e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c4338d_2a90978e",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-26T12:51:34Z",
+      "side": 1,
+      "message": "Ouch, typo! Will correct.",
+      "parentUuid": "1c6e37a3_2a60f5bf",
+      "range": {
+        "startLine": 135,
+        "startChar": 23,
+        "endLine": 135,
+        "endChar": 24
+      },
+      "revId": "ebc9a205c99a5582493ae2c0e649f0dd78d7e17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

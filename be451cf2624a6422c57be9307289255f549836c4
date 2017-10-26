@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23214e42_88e8a3eb",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-26T12:51:34Z",
+      "side": 0,
+      "message": "This seems to have been added in [1] as a mere \ndeclaration of support, but the rest of the code in\nthis file doesn\u0027t seem to support these Profiles.\n\n\n[1] https://codereview.chromium.org/2834313002/diff/20001/media/gpu/vaapi_wrapper.cc",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 48
+      },
+      "revId": "be451cf2624a6422c57be9307289255f549836c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
