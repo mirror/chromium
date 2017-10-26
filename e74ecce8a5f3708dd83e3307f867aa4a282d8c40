@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390506b2_2e9019ed",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-26T16:35:37Z",
+      "side": 1,
+      "message": "Do you need also \"|| defined(OS_ANDROID)\" here?",
+      "range": {
+        "startLine": 58,
+        "startChar": 21,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "e74ecce8a5f3708dd83e3307f867aa4a282d8c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
