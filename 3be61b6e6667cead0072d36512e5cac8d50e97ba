@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "459ca73a_30328767",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-26T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02ceef36_13c08c44",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 23
+      },
+      "revId": "3be61b6e6667cead0072d36512e5cac8d50e97ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e114da_d62c46f0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "3be61b6e6667cead0072d36512e5cac8d50e97ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05ce1a8_2309e1b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-26T18:25:47Z",
+      "side": 1,
+      "message": "Confirmed with Ilya that the underlying representation for BooleanHistogram/EnumeratedHistogram are identical, no need to do the rename.",
+      "parentUuid": "11e114da_d62c46f0",
+      "range": {
+        "startLine": 108,
+        "startChar": 48,
+        "endLine": 108,
+        "endChar": 54
+      },
+      "revId": "3be61b6e6667cead0072d36512e5cac8d50e97ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f62b992f_0ff68b40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-26T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f098818d_e00673de",
+      "range": {
+        "startLine": 180,
+        "startChar": 22,
+        "endLine": 180,
+        "endChar": 26
+      },
+      "revId": "3be61b6e6667cead0072d36512e5cac8d50e97ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "762787d1_041cc379",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "3be61b6e6667cead0072d36512e5cac8d50e97ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84780458_86882527",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-26T18:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "762787d1_041cc379",
+      "range": {
+        "startLine": 302,
+        "startChar": 25,
+        "endLine": 302,
+        "endChar": 57
+      },
+      "revId": "3be61b6e6667cead0072d36512e5cac8d50e97ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
