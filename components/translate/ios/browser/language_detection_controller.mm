@@ -10,8 +10,10 @@
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
+#include "components/language/ios/browser/ios_language_detection_client.h"
 #include "components/prefs/pref_member.h"
 #include "components/translate/core/browser/translate_pref_names.h"
+#include "components/translate/core/common/language_detection_details.h"
 #include "components/translate/core/language_detection/language_detection_util.h"
 #import "components/translate/ios/browser/js_language_detection_manager.h"
 #include "components/translate/ios/browser/string_clipping_util.h"
@@ -51,20 +53,6 @@ LanguageDetectionController::LanguageDetectionController(
 }
 
 LanguageDetectionController::~LanguageDetectionController() {
-}
-
-LanguageDetectionController::DetectionDetails::DetectionDetails()
-    : is_cld_reliable(false) {}
-
-LanguageDetectionController::DetectionDetails::DetectionDetails(
-    const DetectionDetails& other) = default;
-
-LanguageDetectionController::DetectionDetails::~DetectionDetails() = default;
-
-std::unique_ptr<LanguageDetectionController::CallbackList::Subscription>
-LanguageDetectionController::RegisterLanguageDetectionCallback(
-    const Callback& callback) {
-  return language_detection_callbacks_.Add(callback);
 }
 
 void LanguageDetectionController::StartLanguageDetection() {
@@ -116,31 +104,38 @@ bool LanguageDetectionController::OnTextCaptured(
   [js_manager_ retrieveBufferedTextContent:
                    base::Bind(&LanguageDetectionController::OnTextRetrieved,
                               weak_method_factory_.GetWeakPtr(),
-                              http_content_language, html_lang)];
+                              http_content_language, html_lang, url)];
   return true;
 }
 
 void LanguageDetectionController::OnTextRetrieved(
     const std::string& http_content_language,
     const std::string& html_lang,
+    const GURL& url,
     const base::string16& text_content) {
+  const base::string16 clipped_text = GetStringByClippingLastWord(
+      text_content, language_detection::kMaxIndexChars);
+
   std::string cld_language;
   bool is_cld_reliable;
   std::string language = translate::DeterminePageLanguage(
-      http_content_language, html_lang,
-      GetStringByClippingLastWord(text_content,
-                                  language_detection::kMaxIndexChars),
-      &cld_language, &is_cld_reliable);
+      http_content_language, html_lang, clipped_text, &cld_language,
+      &is_cld_reliable);
   if (language.empty())
     return;  // No language detected.
 
-  DetectionDetails details;
+  LanguageDetectionDetails details;
+  details.time = base::Time::Now();
+  details.url = url;
   details.content_language = http_content_language;
-  details.html_root_language = html_lang;
-  details.adopted_language = language;
   details.cld_language = cld_language;
   details.is_cld_reliable = is_cld_reliable;
-  language_detection_callbacks_.Notify(details);
+  details.html_root_language = html_lang;
+  details.adopted_language = language;
+  details.contents = clipped_text;
+
+  language::IOSLanguageDetectionClient::FromWebState(web_state())
+      ->OnLanguageDetermined(details);
 }
 
 void LanguageDetectionController::ExtractContentLanguageHeader(
