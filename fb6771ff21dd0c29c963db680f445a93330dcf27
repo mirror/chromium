@@ -22,6 +22,30 @@
       "revId": "fb6771ff21dd0c29c963db680f445a93330dcf27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623c0669_b44ca2be",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 34657,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-26T22:54:51Z",
+      "side": 1,
+      "message": "MediaRouterConnectResult enum in .cc has an extra TOTAL_COUNT value. Wondering is it ok to use BooleanSuccess here? \n\nIt seems that it is suggested to use UMA_HISTOGRAM_BOOLEAN with BooleanSuccess (maybe I misunderstood previous comments...:)) (https://chromium-review.googlesource.com/c/chromium/src/+/673354/3/chrome/browser/media/router/discovery/media_sink_discovery_metrics.h#16)",
+      "parentUuid": "d12ffebb_2dffd53b",
+      "range": {
+        "startLine": 34657,
+        "startChar": 10,
+        "endLine": 34657,
+        "endChar": 42
+      },
+      "revId": "fb6771ff21dd0c29c963db680f445a93330dcf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
