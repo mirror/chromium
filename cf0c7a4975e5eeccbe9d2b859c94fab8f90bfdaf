@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c936198_bffb96b5",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-26T20:45:15Z",
+      "side": 1,
+      "message": "That was for the old approach which i forgot to revert. I don\u0027t think it adds much documentation, so leaving as is.",
+      "parentUuid": "87dc960e_de0a23b5",
+      "revId": "cf0c7a4975e5eeccbe9d2b859c94fab8f90bfdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b95c5b9e_d92073bc",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T01:36:59Z",
       "side": 1,
       "message": "maybe we can just remove this, because if it\u0027s not fullscreen, IsEnabled() is false?",
+      "revId": "cf0c7a4975e5eeccbe9d2b859c94fab8f90bfdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afac270b_e83c699e",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-26T20:45:15Z",
+      "side": 1,
+      "message": "but if it\u0027s not fullscreen, it should return true, as it should be painted, except in tablet mode and not normal browser.",
+      "parentUuid": "b95c5b9e_d92073bc",
       "revId": "cf0c7a4975e5eeccbe9d2b859c94fab8f90bfdaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
