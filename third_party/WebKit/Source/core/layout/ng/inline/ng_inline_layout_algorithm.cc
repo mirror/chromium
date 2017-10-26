@@ -546,14 +546,13 @@ scoped_refptr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
   NGLineBreaker line_breaker(Node(), constraint_space_, &positioned_floats_,
                              &unpositioned_floats_, break_token.get());
   // TODO(ikilpatrick): Does this always succeed when we aren't an empty inline?
-  if (line_breaker.NextLine(*exclusion_space, &line_info)) {
-    CreateLine(&line_info, line_breaker.ExclusionSpace());
-    container_builder_.SetBreakToken(
-        line_breaker.CreateBreakToken(std::move(box_states_)));
+  line_breaker.NextLine(*exclusion_space, &line_info);
+  CreateLine(&line_info, line_breaker.ExclusionSpace());
+  container_builder_.SetBreakToken(
+      line_breaker.CreateBreakToken(std::move(box_states_)));
 
-    exclusion_space =
-        WTF::MakeUnique<NGExclusionSpace>(*line_breaker.ExclusionSpace());
-  }
+  exclusion_space =
+      WTF::MakeUnique<NGExclusionSpace>(*line_breaker.ExclusionSpace());
 
   // Place any remaining floats which couldn't fit on the line.
   LayoutUnit content_size =

@@ -39,7 +39,7 @@ class CORE_EXPORT NGLineBreaker {
 
   // Compute the next line break point and produces NGInlineItemResults for
   // the line.
-  bool NextLine(const NGExclusionSpace&, NGLineInfo*);
+  void NextLine(const NGExclusionSpace&, NGLineInfo*);
 
   // Create an NGInlineBreakToken for the last line returned by NextLine().
   scoped_refptr<NGInlineBreakToken> CreateBreakToken(
