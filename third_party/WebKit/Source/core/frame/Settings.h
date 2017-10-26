@@ -69,6 +69,9 @@ class CORE_EXPORT Settings {
   void SetTextAutosizingEnabled(bool);
   bool TextAutosizingEnabled() const { return text_autosizing_enabled_; }
 
+  void SetDataSaverEnabled(bool data_saver_enabled);
+  bool GetDataSaverEnabled() const;
+
   // Only set by Layout Tests, and only used if textAutosizingEnabled() returns
   // true.
   void SetTextAutosizingWindowSizeOverride(const IntSize&);

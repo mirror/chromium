@@ -29,6 +29,7 @@
 #include <memory>
 
 #include "build/build_config.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/wtf/PtrUtil.h"
 
@@ -104,6 +105,14 @@ void Settings::SetMockScrollbarsEnabled(bool flag) {
 
 bool Settings::MockScrollbarsEnabled() {
   return ScrollbarTheme::MockScrollbarsEnabled();
+}
+
+void Settings::SetDataSaverEnabled(bool data_saver_enabled) {
+  GetNetworkStateNotifier().SetSaveData(data_saver_enabled);
+}
+
+bool Settings::GetDataSaverEnabled() const {
+  return GetNetworkStateNotifier().SaveData();
 }
 
 }  // namespace blink
