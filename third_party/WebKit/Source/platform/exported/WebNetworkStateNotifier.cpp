@@ -51,4 +51,8 @@ void WebNetworkStateNotifier::SetNetworkQuality(WebEffectiveConnectionType type,
                                               downlink_throughput_kbps);
 }
 
+void WebNetworkStateNotifier::SetSaveData(bool save_data) {
+  GetNetworkStateNotifier().SetSaveData(save_data);
+}
+
 }  // namespace blink
