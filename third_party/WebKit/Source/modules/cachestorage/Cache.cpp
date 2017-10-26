@@ -14,6 +14,7 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/modules/v8/V8Response.h"
 #include "core/dom/DOMException.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "modules/cachestorage/CacheStorageError.h"
 #include "modules/fetch/BodyStreamBuffer.h"
@@ -21,10 +22,12 @@
 #include "modules/fetch/GlobalFetch.h"
 #include "modules/fetch/Request.h"
 #include "modules/fetch/Response.h"
+#include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
 #include "platform/Histogram.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/network/http_names.h"
+#include "platform/network/mime/MIMETypeRegistry.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerCache.h"
 
 namespace blink {
@@ -217,6 +220,23 @@ bool VaryHeaderContainsAsterisk(const Response* response) {
   return false;
 }
 
+bool ShouldGenerateV8CodeCache(ScriptState* script_state,
+                               const Response* response) {
+  // TODO(horo): Check experimental flag.
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  if (!context->IsServiceWorkerGlobalScope())
+    return false;
+  if (!ToServiceWorkerGlobalScope(context)->is_being_installed())
+    return false;
+  if (!MIMETypeRegistry::IsSupportedJavaScriptMIMEType(
+          response->InternalMIMEType())) {
+    return false;
+  }
+  if (!response->InternalBodyBuffer())
+    return false;
+  return true;
+}
+
 }  // namespace
 
 // TODO(nhiroki): Unfortunately, we have to go through V8 to wait for the fetch
@@ -374,6 +394,58 @@ class Cache::BlobHandleCallbackForPut final
   const size_t index_;
   Member<BarrierCallbackForPut> barrier_callback_;
 
+  WebServiceWorkerRequest web_request_;
+  WebServiceWorkerResponse web_response_;
+};
+
+class Cache::CodeCacheHandleCallbackForPut final
+    : public GarbageCollectedFinalized<CodeCacheHandleCallbackForPut>,
+      public FetchDataLoader::Client {
+  USING_GARBAGE_COLLECTED_MIXIN(CodeCacheHandleCallbackForPut);
+
+ public:
+  CodeCacheHandleCallbackForPut(size_t index,
+                                BarrierCallbackForPut* barrier_callback,
+                                Request* request,
+                                Response* response)
+      : index_(index),
+        barrier_callback_(barrier_callback),
+        mime_type_(response->InternalMIMEType()) {
+    request->PopulateWebServiceWorkerRequest(web_request_);
+    response->PopulateWebServiceWorkerResponse(web_response_);
+  }
+  ~CodeCacheHandleCallbackForPut() override {}
+  void DidFetchDataLoadedArrayBuffer(DOMArrayBuffer* array_buffer) override {
+    std::unique_ptr<BlobData> blob_data = BlobData::Create();
+    blob_data->SetContentType(mime_type_);
+    blob_data->AppendBytes(array_buffer->Data(), array_buffer->ByteLength());
+
+    // TODO(horo): Create V8 code cache.
+
+    auto size = blob_data->length();
+    WebServiceWorkerCache::BatchOperation batch_operation;
+    batch_operation.operation_type = WebServiceWorkerCache::kOperationTypePut;
+    batch_operation.request = web_request_;
+    batch_operation.response = web_response_;
+    batch_operation.response.SetBlobDataHandle(
+        BlobDataHandle::Create(std::move(blob_data), size));
+    barrier_callback_->OnSuccess(index_, batch_operation);
+  }
+
+  void DidFetchDataLoadFailed() override {
+    barrier_callback_->OnError("network error");
+  }
+
+  virtual void Trace(blink::Visitor* visitor) {
+    visitor->Trace(barrier_callback_);
+    FetchDataLoader::Client::Trace(visitor);
+  }
+
+ private:
+  const size_t index_;
+  Member<BarrierCallbackForPut> barrier_callback_;
+
+  String mime_type_;
   WebServiceWorkerRequest web_request_;
   WebServiceWorkerResponse web_response_;
 };
@@ -652,8 +724,15 @@ ScriptPromise Cache::PutImpl(ScriptState* script_state,
       barrier_callback->OnError("Response body is already used");
       return promise;
     }
-
     BodyStreamBuffer* buffer = responses[i]->InternalBodyBuffer();
+
+    if (ShouldGenerateV8CodeCache(script_state, responses[i])) {
+      FetchDataLoader* loader = FetchDataLoader::CreateLoaderAsArrayBuffer();
+      buffer->StartLoading(
+          loader, new CodeCacheHandleCallbackForPut(i, barrier_callback,
+                                                    requests[i], responses[i]));
+      continue;
+    }
     if (buffer) {
       // If the response has body, read the all data and create
       // the blob handle and dispatch the put batch asynchronously.
