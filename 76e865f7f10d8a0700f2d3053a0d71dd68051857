@@ -111,6 +111,30 @@
     },
     {
       "key": {
+        "uuid": "b8be8023_d485253c",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRPresentationFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-26T18:11:30Z",
+      "side": 1,
+      "message": "This will likely change as we support more devices, but for now this represents the \"real\" coordinates sent over from the service. The various frame of reference types transform it in some way to provide the matrix the page uses. (Eye level frame of reference returns it without change, Stage frame of reference translates it up a couple of meters so it feels like you\u0027re standing, head model frame of reference returns it with the translation component stripped out.)\n\nWhen we get to more advanced AR-ish stuff we\u0027ll probably need to update this because the idea of \"the one true coordinate system\" doesn\u0027t apply well to world-scale tracking.",
+      "parentUuid": "385709bf_6b6cf25a",
+      "range": {
+        "startLine": 37,
+        "startChar": 40,
+        "endLine": 37,
+        "endChar": 57
+      },
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16e807ad_7c42fe8d",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.cpp",
         "patchSetId": 1
