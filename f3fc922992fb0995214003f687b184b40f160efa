@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4f0a1c2_2028694a",
+        "filename": "chrome/browser/chromeos/events/event_rewriter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T21:40:36Z",
+      "side": 1,
+      "message": "nit: remove these comments; the meaning of the EXPECT_FALSE/TRUE calls is pretty clear already",
+      "revId": "f3fc922992fb0995214003f687b184b40f160efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba294f4_b225e9f0",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T21:40:36Z",
+      "side": 1,
+      "message": "what\u0027s linux_chromeos? are you trying to handle the mode where an OS_CHROMEOS build of chrome is running on a regular linux system?",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 23
+      },
+      "revId": "f3fc922992fb0995214003f687b184b40f160efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa00106e_f24683dd",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T21:40:36Z",
+      "side": 1,
+      "message": "when is this null? just in unit tests? chromeos::input_method::Initialize() looks like it\u0027s called in ChromeBrowserMainPartsChromeos::PreProfileInit, and Shutdown is called in ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun.",
+      "revId": "f3fc922992fb0995214003f687b184b40f160efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c4ebd2_c2987f36",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T21:40:36Z",
+      "side": 1,
+      "message": "is there a better place for this code? this method seems very high-level; should this instead be in an observer somewhere?",
+      "revId": "f3fc922992fb0995214003f687b184b40f160efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af651e47_0006a5c5",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T21:40:36Z",
+      "side": 1,
+      "message": "nit: Reword to something like:\n\n  // Caps Lock handling is here instead of AcceleratorController because ...",
+      "revId": "f3fc922992fb0995214003f687b184b40f160efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
