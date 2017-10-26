@@ -660,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "f925e123_bfcf338f",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-26T21:19:38Z",
+      "side": 1,
+      "message": "Note: This required changing NavigationHandle::GetSSLInfo() to return a const ref net::SSLError.",
+      "parentUuid": "cc2d8231_294fcf99",
+      "range": {
+        "startLine": 89,
+        "startChar": 59,
+        "endLine": 89,
+        "endChar": 68
+      },
+      "revId": "b8d8370a0c3670b42bace21337e377da516fcce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb63e583_84800e0d",
         "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
         "patchSetId": 10
