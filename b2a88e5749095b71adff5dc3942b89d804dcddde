@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9360ea44_5a6ba1c3",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T11:47:12Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "3c840a0c_5cda1f23",
+      "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f08a726_2f95382f",
         "filename": "services/network/public/interfaces/cors.mojom",
         "patchSetId": 3
@@ -47,6 +65,23 @@
       "writtenOn": "2017-10-26T10:44:41Z",
       "side": 1,
       "message": "(ditto)",
+      "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be0b2ff_11b4cdfd",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T11:47:12Z",
+      "side": 1,
+      "message": "Should these still be in the `blink::WebCORS` namespace?",
       "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
