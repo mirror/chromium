@@ -22,6 +22,30 @@
       "revId": "5028f29b34a25f0b28e11e9a2185918439f77829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f72fe2f_f794333b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-10-26T15:17:41Z",
+      "side": 0,
+      "message": "I\u0027m about to send a larger CL to remove the old ClearBrowsingData code and the flag: https://crrev.com/c/739561. I\u0027m only waiting on the trybots to see if I forgot any test that is affected :D",
+      "parentUuid": "703b7a17_d6e2b006",
+      "range": {
+        "startLine": 313,
+        "startChar": 30,
+        "endLine": 313,
+        "endChar": 89
+      },
+      "revId": "5028f29b34a25f0b28e11e9a2185918439f77829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
