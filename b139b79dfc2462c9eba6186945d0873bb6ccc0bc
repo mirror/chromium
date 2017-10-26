@@ -16,6 +16,24 @@
       "revId": "b139b79dfc2462c9eba6186945d0873bb6ccc0bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9fc20a2_1e5a3a2c",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8DOMActivityLogger.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-10-26T13:01:05Z",
+      "side": 1,
+      "message": "That is much faster and simpler, thanks! :)\nCould you PTAL at this CL again?",
+      "parentUuid": "636a1ac2_5bd6f76f",
+      "revId": "b139b79dfc2462c9eba6186945d0873bb6ccc0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
