@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aea24d21_491fce93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-26T22:15:08Z",
+      "side": 1,
+      "message": "No, we don\u0027t expect WebAPKs to interact with CustomTabsConnection at all.\n\nBut in WebAPKActivity.java we now override getNativeClientPackageName() to only look at WebappInfo.apkPackageName.",
+      "parentUuid": "5f5aa436_45bb8f33",
+      "range": {
+        "startLine": 53,
+        "startChar": 43,
+        "endLine": 53,
+        "endChar": 64
+      },
+      "revId": "e29cafa0c39bcec27f5f081b8a2ef2c84501d742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac8695e9_6685db49",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "488ac05d_a7e64f53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-26T22:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8695e9_6685db49",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "e29cafa0c39bcec27f5f081b8a2ef2c84501d742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78114f66_98eb1eed",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-26T22:05:57Z",
       "side": 1,
       "message": "Please update a comment to clarify it\u0027s TWA only now",
+      "range": {
+        "startLine": 687,
+        "startChar": 71,
+        "endLine": 687,
+        "endChar": 74
+      },
+      "revId": "e29cafa0c39bcec27f5f081b8a2ef2c84501d742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6aa9506_d9bae0b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-26T22:15:08Z",
+      "side": 1,
+      "message": "Sorry, to make sure it is clear, this is still valid for both TWA and WebAPKs. The WebAPKActivity implementation resolves to the WebAPK package name and WebappActivity implementation resolves to the TWA client package name if it is a TWA and null if it is a vanilla Webapp.",
+      "parentUuid": "78114f66_98eb1eed",
       "range": {
         "startLine": 687,
         "startChar": 71,
