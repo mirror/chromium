@@ -22,6 +22,30 @@
       "revId": "4870f795b7958fefea63abfb9c64b312287f0cc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93864e96_374868ce",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T19:04:50Z",
+      "side": 1,
+      "message": "That\u0027s why I added the change @ line 285 to ensure this gets called again when the list of networks changes :)",
+      "parentUuid": "16dee861_f80e5c25",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 326,
+        "endChar": 62
+      },
+      "revId": "4870f795b7958fefea63abfb9c64b312287f0cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
