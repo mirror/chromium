@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90ed83c2_9b54d666",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T23:12:27Z",
+      "side": 1,
+      "message": "For later: This is probably not needed. If |temp_file| is empty, that\u0027s a very strong signal that something failed.",
+      "range": {
+        "startLine": 212,
+        "startChar": 19,
+        "endLine": 212,
+        "endChar": 31
+      },
+      "revId": "c80465b0cc6dbc68087bdad8bdbde7e4f906f560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1a5b5d_7c7e8d43",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T23:12:27Z",
+      "side": 1,
+      "message": "Can you add a TODO to remove this and switch to base::CancelableOnceCallback when it\u0027s available?",
+      "revId": "c80465b0cc6dbc68087bdad8bdbde7e4f906f560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
