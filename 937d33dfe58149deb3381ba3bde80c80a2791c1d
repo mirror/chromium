@@ -16,6 +16,41 @@
       "revId": "937d33dfe58149deb3381ba3bde80c80a2791c1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8466f96a_359d6923",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-26T17:00:12Z",
+      "side": 1,
+      "message": "Weak or strong works for all three properties. I think using \"strong\" is cheaper (because \"weak\" is a zero-ing weak reference so the compiler/runtime has to do some extra work to clean them up when the subview will be destroyed). On the other hand, \"weak\" is more correct as they will become nil if for example they are not properly added to the view hierarchy.\n\nTL;DR: use \"weak\" if you want.",
+      "parentUuid": "0b0241bc_cfdb51eb",
+      "revId": "937d33dfe58149deb3381ba3bde80c80a2791c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968cfedc_25af5da2",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-26T17:00:12Z",
+      "side": 1,
+      "message": "Is this comment misplaced? It is strange that we \"create icon view\" after having initialized a property named \"iconView\".",
+      "revId": "937d33dfe58149deb3381ba3bde80c80a2791c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
