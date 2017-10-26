@@ -12,6 +12,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/clock.h"
 #include "components/autofill/core/common/password_form.h"
+#include "components/password_manager/core/browser/password_form_metrics_recorder.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/statistics_table.h"
 #include "components/password_manager/core/common/password_manager_ui.h"
@@ -134,6 +135,10 @@ class ManagePasswordsBubbleModel {
 
   void SetClockForTesting(std::unique_ptr<base::Clock> clock);
 
+  password_manager::PasswordFormMetricsRecorder* metrics_recorder() {
+    return metrics_recorder_.get();
+  }
+
  private:
   enum UserBehaviorOnUpdateBubble {
     UPDATE_CLICKED,
@@ -173,6 +178,12 @@ class ManagePasswordsBubbleModel {
 
   // True iff username/password editing should be enabled.
   bool enable_editing_;
+
+  // Reference to metrics recorder of the PasswordForm presented to the user by
+  // |this|. We hold on to this because |delegate_| may not be able to provide
+  // the reference anymore when we need it.
+  scoped_refptr<password_manager::PasswordFormMetricsRecorder>
+      metrics_recorder_;
 
   DISALLOW_COPY_AND_ASSIGN(ManagePasswordsBubbleModel);
 };

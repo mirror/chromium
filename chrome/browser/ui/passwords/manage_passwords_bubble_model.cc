@@ -22,7 +22,6 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/password_manager/core/browser/password_bubble_experiment.h"
-#include "components/password_manager/core/browser/password_form_metrics_recorder.h"
 #include "components/password_manager/core/browser/password_manager_constants.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
@@ -85,7 +84,9 @@ class ManagePasswordsBubbleModel::InteractionKeeper {
 
   // Records UMA events, updates the interaction statistics and sends
   // notifications to the delegate when the bubble is closed.
-  void ReportInteractions(const ManagePasswordsBubbleModel* model);
+  void ReportInteractions(
+      const ManagePasswordsBubbleModel* model,
+      password_manager::PasswordFormMetricsRecorder* metrics_recorder);
 
   void set_dismissal_reason(
       password_manager::metrics_util::UIDismissalReason reason) {
@@ -155,7 +156,8 @@ ManagePasswordsBubbleModel::InteractionKeeper::InteractionKeeper(
       sign_in_promo_shown_count(0) {}
 
 void ManagePasswordsBubbleModel::InteractionKeeper::ReportInteractions(
-    const ManagePasswordsBubbleModel* model) {
+    const ManagePasswordsBubbleModel* model,
+    password_manager::PasswordFormMetricsRecorder* metrics_recorder) {
   if (model->state() == password_manager::ui::PENDING_PASSWORD_STATE) {
     Profile* profile = model->GetProfile();
     if (profile) {
@@ -224,15 +226,11 @@ void ManagePasswordsBubbleModel::InteractionKeeper::ReportInteractions(
   }
 
   // Record UKM statistics on dismissal reason.
-  if (model->delegate_ && model->delegate_->GetPasswordFormMetricsRecorder()) {
-    if (model->state() != password_manager::ui::PENDING_PASSWORD_UPDATE_STATE) {
-      model->delegate_->GetPasswordFormMetricsRecorder()
-          ->RecordUIDismissalReason(dismissal_reason_);
-    } else {
-      model->delegate_->GetPasswordFormMetricsRecorder()
-          ->RecordUIDismissalReason(
-              ToNearestUIDismissalReason(update_password_submission_event_));
-    }
+  if (metrics_recorder) {
+    metrics_recorder->RecordUIDismissalReason(
+        model->state() != password_manager::ui::PENDING_PASSWORD_UPDATE_STATE
+            ? dismissal_reason_
+            : ToNearestUIDismissalReason(update_password_submission_event_));
   }
 }
 
@@ -273,7 +271,9 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
     base::WeakPtr<PasswordsModelDelegate> delegate,
     DisplayReason display_reason)
     : password_overridden_(false),
-      delegate_(std::move(delegate)) {
+      delegate_(std::move(delegate)),
+      metrics_recorder_(delegate_ ? delegate_->GetPasswordFormMetricsRecorder()
+                                  : nullptr) {
   origin_ = delegate_->GetOrigin();
   state_ = delegate_->GetState();
   password_manager::InteractionsStats interaction_stats;
@@ -376,8 +376,8 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
     }
   }
 
-  if (delegate_ && delegate_->GetPasswordFormMetricsRecorder()) {
-    delegate_->GetPasswordFormMetricsRecorder()->RecordPasswordBubbleShown(
+  if (metrics_recorder_) {
+    metrics_recorder_->RecordPasswordBubbleShown(
         delegate_->GetCredentialSource(), display_disposition);
   }
   metrics_util::LogUIDisplayDisposition(display_disposition);
@@ -388,7 +388,7 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
 }
 
 ManagePasswordsBubbleModel::~ManagePasswordsBubbleModel() {
-  interaction_keeper_->ReportInteractions(this);
+  interaction_keeper_->ReportInteractions(this, metrics_recorder());
   if (delegate_)
     delegate_->OnBubbleHidden();
 }
@@ -517,7 +517,7 @@ bool ManagePasswordsBubbleModel::ReplaceToShowPromotionIfNeeded() {
   // Signin promotion.
   if (password_bubble_experiment::ShouldShowChromeSignInPasswordPromo(
           prefs, sync_service)) {
-    interaction_keeper_->ReportInteractions(this);
+    interaction_keeper_->ReportInteractions(this, metrics_recorder());
     title_brand_link_range_ = gfx::Range();
     title_ = l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE);
     state_ = password_manager::ui::CHROME_SIGN_IN_PROMO_STATE;
@@ -534,7 +534,7 @@ bool ManagePasswordsBubbleModel::ReplaceToShowPromotionIfNeeded() {
   if (desktop_ios_promotion::IsEligibleForIOSPromotion(
           GetProfile(),
           desktop_ios_promotion::PromotionEntryPoint::SAVE_PASSWORD_BUBBLE)) {
-    interaction_keeper_->ReportInteractions(this);
+    interaction_keeper_->ReportInteractions(this, metrics_recorder());
     title_brand_link_range_ = gfx::Range();
     title_ = desktop_ios_promotion::GetPromoTitle(
         desktop_ios_promotion::PromotionEntryPoint::SAVE_PASSWORD_BUBBLE);
