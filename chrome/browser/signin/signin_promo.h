@@ -43,19 +43,23 @@ void SetUserSkippedPromo(Profile* profile);
 // Gets the sign in landing page URL.
 GURL GetLandingURL(signin_metrics::AccessPoint access_point);
 
-// Returns the sign in promo URL wth the given arguments in the query.
+// Returns the sign in promo URL that can be used in a full browser tab with
+// the given arguments in the query.
 // |access_point| indicates where the sign in is being initiated.
 // |reason| indicates the purpose of using this URL.
 // |auto_close| whether to close the sign in promo automatically when done.
-// |is_constrained} whether to load the URL in a constrained window, false
-// by default.
-GURL GetPromoURL(signin_metrics::AccessPoint access_point,
-                 signin_metrics::Reason reason,
-                 bool auto_close);
-GURL GetPromoURL(signin_metrics::AccessPoint access_point,
-                 signin_metrics::Reason reason,
-                 bool auto_close,
-                 bool is_constrained);
+GURL GetPromoURLForTab(signin_metrics::AccessPoint access_point,
+                       signin_metrics::Reason reason,
+                       bool auto_close);
+
+// Returns the sign in promo URL that can be used in a full browser tab with
+// the given arguments in the query.
+// |access_point| indicates where the sign in is being initiated.
+// |reason| indicates the purpose of using this URL.
+// |auto_close| whether to close the sign in promo automatically when done.
+GURL GetPromoURLForModalDialog(signin_metrics::AccessPoint access_point,
+                               signin_metrics::Reason reason,
+                               bool auto_close);
 
 // Returns a sign in promo URL specifically for reauthenticating |account_id|.
 GURL GetReauthURL(signin_metrics::AccessPoint access_point,

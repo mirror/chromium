@@ -234,9 +234,9 @@ void UserManagerProfileDialog::ShowSigninDialog(
   if (!UserManager::IsShowing())
     return;
   instance_->SetSigninProfilePath(profile_path);
-  GURL url = signin::GetPromoURL(
+  GURL url = signin::GetPromoURLForModalDialog(
       signin_metrics::AccessPoint::ACCESS_POINT_USER_MANAGER,
-      signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT, true, true);
+      signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT, true);
   instance_->ShowDialog(browser_context, std::string(), url);
 }
 

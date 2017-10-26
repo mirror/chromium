@@ -307,7 +307,7 @@ void PeopleHandler::DisplayGaiaLoginInNewTabOrWindow(
           BrowserWindow::AVATAR_BUBBLE_MODE_SIGNIN,
           signin::ManageAccountsParams(), access_point, false);
     } else {
-      url = signin::GetPromoURL(
+      url = signin::GetPromoURLForModalDialog(
           access_point, signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
           true);
     }

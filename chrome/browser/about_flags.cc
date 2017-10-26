@@ -3424,6 +3424,14 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kManualPasswordSavingDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(password_manager::features::kEnableManualSaving)},
 
+#if !defined(OS_ANDROID)
+    {"remove-deprecared-gaia-signin-endpoint",
+     flag_descriptions::kRemoveUsageOfDeprecatedGaiaSigninEndpointName,
+     flag_descriptions::kRemoveUsageOfDeprecatedGaiaSigninEndpointDescription,
+     kOsWin | kOsMac | kOsMac,
+     FEATURE_VALUE_TYPE(features::kRemoveUsageOfDeprecatedGaiaSigninEndpoint)},
+#endif
+
 #if defined(OS_ANDROID)
     {"third-party-doodles", flag_descriptions::kThirdPartyDoodlesName,
      flag_descriptions::kThirdPartyDoodlesDescription, kOsAndroid,
