@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8165fc2f_f1b425b3",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-26T08:10:46Z",
+      "side": 1,
+      "message": "all static classes should be namespaces instead",
+      "revId": "95efcce85d9bd6af31132c40a95a3a33f5e6f629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00226fa2_3afd1be1",
         "filename": "content/test/fuzzer/DEPS",
         "patchSetId": 8
@@ -13,6 +30,41 @@
       "writtenOn": "2017-10-26T08:03:17Z",
       "side": 1,
       "message": "Hrm. You shouldn\u0027t need this, as `//content/test/DEPS` contains `+content`. And yet the linux bots are sad.",
+      "revId": "95efcce85d9bd6af31132c40a95a3a33f5e6f629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ea51db_c21cdf04",
+        "filename": "content/test/fuzzer/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-26T08:10:46Z",
+      "side": 1,
+      "message": "right, this shouldn\u0027t be required",
+      "parentUuid": "00226fa2_3afd1be1",
+      "revId": "95efcce85d9bd6af31132c40a95a3a33f5e6f629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae67d3bd_ab15a85d",
+        "filename": "content/test/fuzzer/origin_manifest_parser_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-26T08:10:46Z",
+      "side": 1,
+      "message": "add // nogncheck to the end of this line",
       "revId": "95efcce85d9bd6af31132c40a95a3a33f5e6f629",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
