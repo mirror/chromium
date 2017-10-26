@@ -21,6 +21,7 @@ namespace test {
 CWVWebView* CreateWebView() {
   return [[CWVWebView alloc]
       initWithFrame:UIScreen.mainScreen.bounds
+        openedByDOM:NO
       configuration:[CWVWebViewConfiguration defaultConfiguration]];
 }
 

@@ -147,12 +147,13 @@ static NSString* gUserAgentProduct = nil;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
+                  openedByDOM:(BOOL)openedByDOM
                 configuration:(CWVWebViewConfiguration*)configuration {
   self = [super initWithFrame:frame];
   if (self) {
     _configuration = configuration;
     _scrollView = [[CWVScrollView alloc] init];
-    [self resetWebStateWithSessionStorage:nil];
+    [self resetWebStateWithSessionStorage:nil openedByDOM:openedByDOM];
   }
   return self;
 }
@@ -386,7 +387,7 @@ static NSString* gUserAgentProduct = nil;
   [super decodeRestorableStateWithCoder:coder];
   CRWSessionStorage* sessionStorage =
       [coder decodeObjectForKey:kSessionStorageKey];
-  [self resetWebStateWithSessionStorage:sessionStorage];
+  [self resetWebStateWithSessionStorage:sessionStorage openedByDOM:NO];
 }
 
 #pragma mark - Private methods
@@ -395,7 +396,8 @@ static NSString* gUserAgentProduct = nil;
 // It replaces the old |_webState| if any.
 // The WebState is restored from |sessionStorage| if provided.
 - (void)resetWebStateWithSessionStorage:
-    (nullable CRWSessionStorage*)sessionStorage {
+            (nullable CRWSessionStorage*)sessionStorage
+                            openedByDOM:(BOOL)openedByDOM {
   if (_webState && _webState->GetView().superview == self) {
     // The web view provided by the old |_webState| has been added as a subview.
     // It must be removed and replaced with a new |_webState|'s web view, which
@@ -404,6 +406,7 @@ static NSString* gUserAgentProduct = nil;
   }
 
   web::WebState::CreateParams webStateCreateParams(_configuration.browserState);
+  webStateCreateParams.created_with_opener = openedByDOM;
   if (sessionStorage) {
     _webState = web::WebState::CreateWithStorageSession(webStateCreateParams,
                                                         sessionStorage);

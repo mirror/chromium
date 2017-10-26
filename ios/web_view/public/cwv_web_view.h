@@ -108,6 +108,7 @@ CWV_EXPORT
 
 // |configuration| must not be null
 - (instancetype)initWithFrame:(CGRect)frame
+                  openedByDOM:(BOOL)openedByDOM
                 configuration:(CWVWebViewConfiguration*)configuration
     NS_DESIGNATED_INITIALIZER;
 
