@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "809cf143_91434990",
+        "filename": "services/resource_coordinator/observers/coordination_unit_graph_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:10:02Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "bdc3d90f3747f378dc1ea90e6e3db31758728313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc231ef0_68c30d9c",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_integration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:10:02Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bdc3d90f3747f378dc1ea90e6e3db31758728313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3e2046_d4d19040",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:10:02Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bdc3d90f3747f378dc1ea90e6e3db31758728313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e32a75_5590ce89",
+        "filename": "services/resource_coordinator/resource_coordinator_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:10:02Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bdc3d90f3747f378dc1ea90e6e3db31758728313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23689bf_7899b304",
+        "filename": "services/resource_coordinator/service_callbacks_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:10:02Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bdc3d90f3747f378dc1ea90e6e3db31758728313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5001dd_92e0bdc7",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:10:02Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bdc3d90f3747f378dc1ea90e6e3db31758728313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de05d05_adf871ab",
+        "filename": "services/resource_coordinator/tracing/recorder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-26T22:10:02Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bdc3d90f3747f378dc1ea90e6e3db31758728313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
