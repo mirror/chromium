@@ -1,0 +1,16 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+#
+# Add your directory-specific  file to this list for it to be continuously
+# typechecked on the linux_chromium_rel_ng builder.
+#
+# Also, see our guide to Closure compilation in chrome:
+# https://chromium.googlesource.com/chromium/src/+/master/docs/closure_compilation.md
+
+group("webui_closure_compile") {
+  data_deps = [
+    "//chrome/browser/resources/chromeos/login:closure_compile",
+    "//chrome/browser/resources/md_bookmarks:closure_compile",
+  ]
+}
