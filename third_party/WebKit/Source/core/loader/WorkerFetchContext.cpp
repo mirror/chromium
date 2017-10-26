@@ -17,6 +17,7 @@
 #include "platform/WebTaskRunner.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "public/platform/Platform.h"
@@ -257,7 +258,7 @@ void WorkerFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
   if (!request.Url().IsEmpty() && !request.Url().ProtocolIsInHTTPFamily())
     return;
 
-  if (web_context_->IsDataSaverEnabled())
+  if (GetNetworkStateNotifier().SaveData())
     request.SetHTTPHeaderField(HTTPNames::Save_Data, "on");
 }
 
