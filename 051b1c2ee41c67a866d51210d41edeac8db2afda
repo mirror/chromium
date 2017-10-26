@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "313db3b4_46d2e3c6",
+        "filename": "chrome/browser/signin/signin_promo.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-26T15:12:44Z",
+      "side": 1,
+      "message": "So, this is the parameter controlling whether we end up on the programmatic_auth endpoint? How does that work, is this Gaia redirecting to programmatic_auth if the parameter is set?",
+      "range": {
+        "startLine": 109,
+        "startChar": 39,
+        "endLine": 109,
+        "endChar": 78
+      },
+      "revId": "051b1c2ee41c67a866d51210d41edeac8db2afda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0412134_3a7f93da",
+        "filename": "chrome/browser/signin/signin_promo.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-26T15:12:44Z",
+      "side": 1,
+      "message": "Do you want to check the feature here and return the other URL?",
+      "range": {
+        "startLine": 253,
+        "startChar": 22,
+        "endLine": 253,
+        "endChar": 27
+      },
+      "revId": "051b1c2ee41c67a866d51210d41edeac8db2afda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
