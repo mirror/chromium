@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7fff503_5db99d7f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1162829
+      },
+      "writtenOn": "2017-10-26T01:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24fc636d_00c55a18",
+      "revId": "6c375ade23273b3ee486ed919318f6741742bcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d2d83a5_e7ce6c76",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-25T22:17:43Z",
       "side": 1,
       "message": "Is there any reason for changing this test? If not, can you revert the change?\nIt looks like the generateOffer() function is doing the same thing except for the data channel\u0027s name being different, which I assume doesn\u0027t matter?",
+      "revId": "6c375ade23273b3ee486ed919318f6741742bcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e1f18a_38225501",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1162829
+      },
+      "writtenOn": "2017-10-26T01:15:51Z",
+      "side": 1,
+      "message": "I think the changes here makes sense.\n\nIf keeping the existing code and only changing the generateOffer(), that basically means only one peerconnection creates an offer and set it as both local and remote description which is not how the peerconnection is used in the real world. Also, when setting the remote description, the signalling state would be incorrect. It\u0027s also more clear to use two peerconnections here. \n\nDoes it make sense to you? Sorry that I didn\u0027t bring this up when we talked in person.",
+      "parentUuid": "0d2d83a5_e7ce6c76",
       "revId": "6c375ade23273b3ee486ed919318f6741742bcf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "6c375ade23273b3ee486ed919318f6741742bcf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e8cc20_f82c4cad",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1162829
+      },
+      "writtenOn": "2017-10-26T01:15:51Z",
+      "side": 1,
+      "message": "See above reply.",
+      "parentUuid": "a443e49a_4c3c9f3a",
+      "revId": "6c375ade23273b3ee486ed919318f6741742bcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
