@@ -14,12 +14,15 @@
 
 namespace ash {
 
-const aura::WindowTreeHost* MirrorWindowTestApi::GetHost() const {
-  aura::Window* window = Shell::Get()
-                             ->window_tree_host_manager()
-                             ->mirror_window_controller()
-                             ->GetWindow();
-  return window ? window->GetHost() : NULL;
+void MirrorWindowTestApi::GetHosts(
+    std::vector<aura::WindowTreeHost*>* out_hosts) const {
+  aura::Window::Windows windows;
+  Shell::Get()
+      ->window_tree_host_manager()
+      ->mirror_window_controller()
+      ->GetWindows(&windows);
+  for (auto* window : windows)
+    out_hosts->emplace_back(window->GetHost());
 }
 
 ui::CursorType MirrorWindowTestApi::GetCurrentCursorType() const {
