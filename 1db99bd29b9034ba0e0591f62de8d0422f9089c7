@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9844c9eb_318e0974",
+        "filename": "cc/paint/paint_font.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-26T20:27:10Z",
+      "side": 1,
+      "message": "Can these things be removed from PaintFlags?",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f1c57a_dc947316",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-26T20:27:10Z",
+      "side": 1,
+      "message": "Can DrawTextBlobOp take a PaintTextBlob, since that has all of this information already and not require allocating another array for the typefaces?",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fc8833_25ad8595",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-26T20:27:10Z",
+      "side": 1,
+      "message": "I\u0027m a little surprised by !*typeface.  Is this for webfonts that can\u0027t successfully create the SkTypeface for the PaintTypeface?  Should that be checked earlier and make sure that all catalog entries are valid?",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1743e2_46b4607f",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-26T20:27:10Z",
+      "side": 1,
+      "message": "Can you add a text blob intercepts function to PaintTextBlob so that if we ever change its internals in the future we don\u0027t have this hidden converter hiding here?",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1511fd0e_84f82956",
+        "filename": "third_party/WebKit/Source/platform/fonts/win/FontPlatformDataWin.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-26T20:27:10Z",
+      "side": 1,
+      "message": "Can you avoid the ToSkPaint here? It looks like PaintFont has a SetFlags and a SetEmbeddedBitmapText function.",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
