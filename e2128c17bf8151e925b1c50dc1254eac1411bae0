@@ -52,6 +52,24 @@
       "revId": "e2128c17bf8151e925b1c50dc1254eac1411bae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902f66b7_c627f134",
+        "filename": "BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-26T06:57:45Z",
+      "side": 1,
+      "message": "How about I put this target behind a default-disabled GN flag then? I think infra discourages use of custom bots at this point.",
+      "parentUuid": "90c7372f_037df9a9",
+      "revId": "e2128c17bf8151e925b1c50dc1254eac1411bae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
