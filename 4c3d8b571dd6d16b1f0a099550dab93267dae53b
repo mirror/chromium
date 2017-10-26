@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9010117e_4ff74cd5",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-26T19:13:59Z",
+      "side": 1,
+      "message": "This should be {favicon_base::IconType::kFavicon} otherwise the file does not compile",
+      "revId": "4c3d8b571dd6d16b1f0a099550dab93267dae53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef2e62e_d2a1d3c7",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2197,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-26T19:13:59Z",
+      "side": 1,
+      "message": "Nit: You can simplify equivalent_types.count(icon_type) !\u003d 0 \u0026\u0026\n\nto\n\nequivalent_types.count(icon_type) \u0026\u0026",
+      "revId": "4c3d8b571dd6d16b1f0a099550dab93267dae53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf506229_e05fd257",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-26T19:13:59Z",
+      "side": 1,
+      "message": "Nit: This can just be\n\nrequired_icon_types.count(m-\u003eicon_type)",
+      "revId": "4c3d8b571dd6d16b1f0a099550dab93267dae53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
