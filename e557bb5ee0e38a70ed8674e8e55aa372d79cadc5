@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7629b21_b049ec28",
+        "filename": "device/u2f/u2f_ble_uuids.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-26T08:34:46Z",
+      "side": 1,
+      "message": "Tiny Nit: Could you link to the section of the standard where this is defined, i.e. https://fidoalliance.org/specs/fido-u2f-v1.2-ps-20170411/fido-u2f-bt-protocol-v1.2-ps-20170411.html#u2f-service?\n\nAlso, could you add a link to https://www.bluetooth.com/specifications/assigned-numbers/service-discovery or similar that explains the origin of 0000XXXX-0000-1000-8000-00805f9b34fb?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 102
+      },
+      "revId": "e557bb5ee0e38a70ed8674e8e55aa372d79cadc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
