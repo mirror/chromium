@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "175b5c48_4d7b72ae",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7758b1b_997def3b",
+      "range": {
+        "startLine": 17,
+        "startChar": 46,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b743514_ec0626a5",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04cb16c3_94d904b5",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b743514_ec0626a5",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a814e65f_def0277c",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "let me try to explain.\nThe callback is needed by the interface,\nthe interface needs the callback because it connects OPM constructor and initializing the store, which later loads the in-memory map. (The call chain of initializing OfflinePageModelImpl is suboptimal).\n\nThere was a UMA reporting wrapped as a callback(ArchiveDirCreationTime), which is commented as \u0027not useful\u0027 in the doc discussing UMA migration. (And this patch has no UMA-related stuff so it\u0027s currently having an empty callback).\n\nSolution:\n1. If the UMA is necessary, wrap it in as a callback.\n2. Clean up interface when we finally switched and have no old model.",
+      "parentUuid": "334477b3_8964ca87",
+      "range": {
+        "startLine": 84,
+        "startChar": 20,
+        "endLine": 84,
+        "endChar": 28
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28da333d_e98d5d92",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e4151d_d1b7669c",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "The observer will be DCHECKed in the {Add,Remove}Observer so i think it\u0027s fine for not checking it here?",
+      "parentUuid": "28da333d_e98d5d92",
+      "range": {
+        "startLine": 90,
+        "startChar": 54,
+        "endLine": 90,
+        "endChar": 62
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1ca1ab58_27f9adbe",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "This method is called in 3 places, and moving this out seems not perfect.\nAlso this method currently is the place that starts UMA collection, I\u0027ve added a TODO and will do the refactor once UMA migration settles.",
+      "parentUuid": "9d8ef854_90ced3ab",
+      "range": {
+        "startLine": 210,
+        "startChar": 32,
+        "endLine": 210,
+        "endChar": 55
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c395d97_cfbe334c",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c03c624_6030c80b",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c395d97_cfbe334c",
+      "range": {
+        "startLine": 211,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 68
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c6406234_1b4e0839",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be69132f_54ea45b7",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 3
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eb597f2_f09ae89d",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af74ae3_8cf145d1",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eb597f2_f09ae89d",
+      "range": {
+        "startLine": 266,
+        "startChar": 2,
+        "endLine": 266,
+        "endChar": 30
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "c6184f32_9ca0c765",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "I added TODO here, since currently this method will start collecting UMAs which might need access to memeber variables. I\u0027ll refactor once migration is settled.",
+      "parentUuid": "ae940c50_61e45a1b",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 52
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4ccac39_ab2c7e12",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "824a30d0_e14ef8ed",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ccac39_ab2c7e12",
+      "range": {
+        "startLine": 304,
+        "startChar": 2,
+        "endLine": 304,
+        "endChar": 5
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "048dcaff_024cbebc",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1
@@ -243,6 +483,30 @@
       "writtenOn": "2017-10-25T21:42:04Z",
       "side": 1,
       "message": "would it make sense to remove this variable from the task and simply use it when postponing\nOfflinePageModelTaskfiied::ClearCachedPages?\n\ne.g.\n\nvoid OfflinePageModelTaskified::PostClearCachedPagesTask(bool is_delayed) {\n  // Will ensure that final delay is at least 0.\n  base::TimeDelta min_delay \u003d\n      is_delayed ? kClearStorageStartingDelay : base::TimeDelta();\n  // Checks whether clear storage interval already passed since last delay.\n  base::TimeDelta min_delay_to_next_cleanup \u003d\n      kClearStorageInterval - (base::Time::Now() - last_clear_cached_pages_time_);\n  // Final delay is max(min_delay, min_delay_to_next_cleanup).\n  base::TimeDelta delay \u003d min_delay \u003e min_delay_to_next_cleanup\n      ? min_delay : min_delay_to_next_cleanup;\n\n  base::ThreadTaskRunnerHandle::Get()-\u003ePostDelayedTask(\n      FROM_HERE,\n      base::Bind(\u0026OfflinePageModelTaskified::ClearCachedPages,\n                 weak_ptr_factory_.GetWeakPtr()),\n      delay);\n\n\nThat way you don\u0027t have to do all the checking work in the task, because you know the earliest it can run, it will have met the minimum interval constrain or passing in base::Time::Now() I believe... Smaller task.",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 35
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359d011e_467b5f04",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "Here is how it works now:\n1. [I missed this one in the CL but will add it in next patch] At Chrome start, we post PostClearCachedPagesTask with 20 seconds delay, to clear expired cached pages on the start.\n2. Whenever a page is saved, post PostClearCachedPagesTask without a delay.\n\nWhenever ClearCachedPages executes, it will check if it has been longer than the interval from last clearing, or if we\u0027re having a storage pressure. If both answers are false, there\u0027ll be no actual clearing and returned with ClearStorageResult::UNNECESSARY.\n\nWith your change, it seems that the ClearCachedPages will be guaranteed to be called every 30 minutes, which means the \u0027storage pressure\u0027 check can be removed, since no matter if there\u0027s a storage pressure or not, the storage needs to be cleared.\n\nSo I made the change in clear_storage_task:\n- Removed ShouldClearPages(), since it\u0027s always true. It means whenever this task is created, we should try to clear expired pages.\n- Moved the check of exceeding storage limit into GetPageInfosToClear, which means only when storage usage \u003e limit there will be pages deleted based on quota.\n- Redefined the meaning of ClearStorageResult::UNNECESSARY, now it means we tried to clear storage but no pages should be deleted [so it was unnecessary].\n\nIn the model, I\u0027m going to make the logic look like:\n- Is it at initializing? If yes, post the task with 20 second delay.\n- Otherwise, check if it\u0027s been longer than kClearStorageInterval (which is 30minutes) and if yes, post the task without delay; otherwise do nothing.\n\n\nWDYT? Or maybe let\u0027s chat offline...",
+      "parentUuid": "048dcaff_024cbebc",
       "range": {
         "startLine": 313,
         "startChar": 6,
@@ -272,6 +536,24 @@
     },
     {
       "key": {
+        "uuid": "06316e24_9c1211a4",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e577a80_b729a2eb",
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2afe549_67809fee",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
         "patchSetId": 1
@@ -292,6 +574,30 @@
       "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0157aa05_515192db",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "add_page_task is removed.\nclear_storage_task.h contains the ClearStorageTask::ClearStorageResult, so it\u0027s included. It was in the offline_page_storage_manager.h, which should probably be removed after moving to taskified model.",
+      "parentUuid": "d2afe549_67809fee",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "fe876122_60a4394f",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d3238dc_9c4f5164",
+      "range": {
+        "startLine": 163,
+        "startChar": 18,
+        "endLine": 163,
+        "endChar": 35
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beb45974_fe617058",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
         "patchSetId": 1
@@ -338,6 +668,30 @@
       "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "976c40e8_7d49747c",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-26T02:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beb45974_fe617058",
+      "range": {
+        "startLine": 181,
+        "startChar": 52,
+        "endLine": 181,
+        "endChar": 70
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
