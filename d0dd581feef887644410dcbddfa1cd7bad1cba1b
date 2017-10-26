@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10be5aa0_e4ca3d0a",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-26T21:19:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ebbcdac_6630d643",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "d0dd581feef887644410dcbddfa1cd7bad1cba1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b033e95d_2b316e4f",
         "filename": "components/download/internal/in_progress_metadata_cache.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T00:12:20Z",
       "side": 1,
       "message": "This is only for Add. For update, get the existing entry and update?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "d0dd581feef887644410dcbddfa1cd7bad1cba1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3385df15_c161abff",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-26T21:19:50Z",
+      "side": 1,
+      "message": "I originally intended it to just replace the old entry, in which case we could probably rename it as AddOrReplaceMetadata. \n\nDo you think actually merging the old entry with the new one would be useful? Or can we assume that the caller would handle that on their side?",
+      "parentUuid": "b033e95d_2b316e4f",
       "range": {
         "startLine": 26,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "da7ce71d_bbc9eaae",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-26T21:19:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b78573d9_36ab7b11",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "d0dd581feef887644410dcbddfa1cd7bad1cba1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47d23ef8_a396a1be",
         "filename": "components/download/internal/in_progress_metadata_cache.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-26T00:12:20Z",
       "side": 1,
       "message": "ReadEntriesFromFile() will execute after this function and the current stack frame returns. \nSo GetEntryFromEntries (and |entries_|) will not return the uptodate value of entry at this point.\n\nSo there are two options :\n1- Make RetrieveMetadata() asynchronous. This means pass a callback to RetrieveMetadata(OnReadFinishedCallback\u0026 callback). And inside ReadEntriesFromFile, call callback.Run(entry).\n2- Keep RetrieveMetadata() synchronous using a cache of |entries_| which is always kept uptodate. For this to work, we need to update the |entries_| every time we have a write before even writing to the disk. Also construction/initialization, we need to do a read and populate the |entries_|\n\nI would say #2. The |entries_| can be in the form of proto or vector\u003cDownloadEntry\u003e, whichever seems easier. Up to you.",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "d0dd581feef887644410dcbddfa1cd7bad1cba1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04353ad2_5fa0aa04",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-26T21:19:50Z",
+      "side": 1,
+      "message": "Do you think I would need to have a callback in the initialization to make sure that ReadEntriesFromFile finishes executing? Or would it make sense to run it synchronously?",
+      "parentUuid": "47d23ef8_a396a1be",
       "range": {
         "startLine": 37,
         "startChar": 9,
@@ -114,6 +210,30 @@
       "revId": "d0dd581feef887644410dcbddfa1cd7bad1cba1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea090a0_bdcf7d39",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-26T21:19:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "290d3e78_fe0b9269",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 53
+      },
+      "revId": "d0dd581feef887644410dcbddfa1cd7bad1cba1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

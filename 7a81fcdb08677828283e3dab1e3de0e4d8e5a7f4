@@ -290,6 +290,24 @@
     },
     {
       "key": {
+        "uuid": "4239d017_ea6a5c33",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-26T21:19:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9bc0bc0_8b661548",
+      "revId": "7a81fcdb08677828283e3dab1e3de0e4d8e5a7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86bde9cf_52e76c40",
         "filename": "components/download/internal/in_progress_metadata_cache.cc",
         "patchSetId": 2
