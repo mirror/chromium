@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a7de672_2751d02c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-26T20:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6a855cc_1b2e09c5",
+      "revId": "8f95c1d30d47ebb18e8f4db9da7ff089be519eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5be31c3_96efb3fb",
         "filename": "chrome/browser/vr/elements/rect.h",
         "patchSetId": 6
@@ -51,6 +69,24 @@
       "revId": "8f95c1d30d47ebb18e8f4db9da7ff089be519eab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9523834e_87625bab",
+        "filename": "chrome/browser/vr/elements/rect.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-26T20:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f591beb_fb11573b",
+      "revId": "8f95c1d30d47ebb18e8f4db9da7ff089be519eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
