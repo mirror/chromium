@@ -260,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "60458eef_062c9ba3",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-26T07:07:12Z",
+      "side": 1,
+      "message": "I like the look of it more this way :)",
+      "parentUuid": "d49ec278_f4244032",
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0834edce_77193ae1",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 4
@@ -448,6 +466,30 @@
     },
     {
       "key": {
+        "uuid": "cb80a1cb_22886657",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-26T07:07:12Z",
+      "side": 1,
+      "message": "You might also want to add a comment / test to reflect this.",
+      "parentUuid": "8738321d_01130c83",
+      "range": {
+        "startLine": 147,
+        "startChar": 53,
+        "endLine": 147,
+        "endChar": 0
+      },
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3615436d_4995d14f",
         "filename": "third_party/closure_compiler/externs/language_settings_private.js",
         "patchSetId": 4
@@ -483,6 +525,30 @@
       "side": 1,
       "message": "I don\u0027t know.",
       "parentUuid": "3615436d_4995d14f",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "44f9e7535a7213bae386c18708a2ce71c3e3417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14eec0bc_af5fd388",
+        "filename": "third_party/closure_compiler/externs/language_settings_private.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-26T07:07:12Z",
+      "side": 1,
+      "message": "Ok - I see that (some? all?) of the other links here don\u0027t work either. It might be worth investigating what\u0027s going on before committing broken links to the codebase.",
+      "parentUuid": "2e62ae84_ac81d9f8",
       "range": {
         "startLine": 100,
         "startChar": 4,

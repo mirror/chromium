@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c4ca94d_38b0e7ae",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-26T07:07:12Z",
+      "side": 1,
+      "message": "You probably want to return here too, right?",
+      "range": {
+        "startLine": 336,
+        "startChar": 19,
+        "endLine": 336,
+        "endChar": 0
+      },
+      "revId": "a49bff9af4ff66f9dd3203af7e17af3c338a9990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
