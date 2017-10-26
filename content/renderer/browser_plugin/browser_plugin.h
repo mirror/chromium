@@ -16,6 +16,7 @@
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
+#include "content/public/common/screen_info.h"
 #include "content/renderer/mouse_lock_dispatcher.h"
 #include "content/renderer/render_view_impl.h"
 #include "third_party/WebKit/public/web/WebDragStatus.h"
@@ -56,6 +57,8 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   // Informs the guest of an updated focus state.
   void UpdateGuestFocusState(blink::WebFocusType focus_type);
 
+  void ScreenInfoChanged(const ScreenInfo& screen_info);
+
   // Indicates whether the guest should be focused.
   bool ShouldGuestBeFocused() const;
 
@@ -73,6 +76,8 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   // Notify the plugin about a compositor commit so that frame ACKs could be
   // sent, if needed.
   void DidCommitCompositorFrame();
+
+  void WasResized();
 
   // Returns whether a message should be forwarded to BrowserPlugin.
   static bool ShouldForwardToBrowserPlugin(const IPC::Message& message);
@@ -146,17 +151,28 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
 
   ~BrowserPlugin() override;
 
-  gfx::Rect view_rect() const { return view_rect_.value_or(gfx::Rect()); }
+  const gfx::Rect& frame_rect() const {
+    return pending_resize_params_.frame_rect;
+  }
+
+  const ScreenInfo& screen_info() const {
+    return pending_resize_params_.screen_info;
+  }
+
+  uint64_t auto_size_sequence_number() const {
+    return pending_resize_params_.sequence_number;
+  }
 
   void UpdateInternalInstanceId();
-
-  void ViewRectsChanged(const gfx::Rect& view_rect);
 
   // IPC message handlers.
   // Please keep in alphabetical order.
   void OnAdvanceFocus(int instance_id, bool reverse);
   void OnGuestGone(int instance_id);
   void OnGuestReady(int instance_id, const viz::FrameSinkId& frame_sink_id);
+  void OnResizeDueToAutoResize(int browser_plugin_instance_id,
+                               const gfx::Size& frame_size,
+                               uint64_t sequence_number);
   void OnSetChildFrameSurface(int instance_id,
                               const viz::SurfaceInfo& surface_info,
                               const viz::SurfaceSequence& sequence);
@@ -176,7 +192,6 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   const int render_frame_routing_id_;
   blink::WebPluginContainer* container_;
   // The plugin's rect in css pixels.
-  base::Optional<gfx::Rect> view_rect_;
   bool guest_crashed_;
   bool plugin_focused_;
   // Tracks the visibility of the browser plugin regardless of the whole
@@ -203,6 +218,21 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
 
   bool enable_surface_synchronization_ = false;
+
+  // TODO(fsamuel): We might want to unify this with content::ResizeParams.
+  struct ResizeParams {
+    gfx::Rect frame_rect;
+    ScreenInfo screen_info;
+    uint64_t sequence_number = 0lu;
+  };
+
+  // The last ResizeParams sent to the browser process, if any.
+  base::Optional<ResizeParams> sent_resize_params_;
+
+  // The current set of ResizeParams. This may or may not match
+  // |sent_resize_params_|.
+  ResizeParams pending_resize_params_;
+
   // We call lifetime managing methods on |delegate_|, but we do not directly
   // own this. The delegate destroys itself.
   base::WeakPtr<BrowserPluginDelegate> delegate_;

@@ -43,6 +43,7 @@
 #include "content/public/common/context_menu_params.h"
 #include "content/public/common/drop_data.h"
 #include "content/public/renderer/content_renderer_client.h"
+#include "content/renderer/browser_plugin/browser_plugin_manager.h"
 #include "content/renderer/cursor_utils.h"
 #include "content/renderer/devtools/render_widget_screen_metrics_emulator.h"
 #include "content/renderer/drop_data_builder.h"
@@ -353,7 +354,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       owner_delegate_(nullptr),
       next_paint_flags_(0),
       auto_resize_mode_(false),
-      need_update_rect_for_auto_resize_(false),
+      need_resize_ack_for_auto_resize_(false),
       did_show_(false),
       is_hidden_(hidden),
       compositor_never_visible_(never_visible),
@@ -1257,6 +1258,8 @@ void RenderWidget::Resize(const ResizeParams& params) {
       screen_info_.orientation_angle != params.screen_info.orientation_angle ||
       screen_info_.orientation_type != params.screen_info.orientation_type;
 
+  bool screen_info_changed = screen_info_ != params.screen_info;
+
   screen_info_ = params.screen_info;
 
   if (device_scale_factor_ != screen_info_.device_scale_factor) {
@@ -1339,6 +1342,15 @@ void RenderWidget::Resize(const ResizeParams& params) {
 
   if (orientation_changed)
     OnOrientationChange();
+
+  if (screen_info_changed) {
+    for (auto& observer : render_frame_proxies_)
+      observer.OnScreenInfoChanged(params.screen_info);
+
+    // Notify all BrowserPlugins of the updated ScreenInfo.
+    if (BrowserPluginManager::Get())
+      BrowserPluginManager::Get()->ScreenInfoChanged(params.screen_info);
+  }
 
   // If a resize ack is requested and it isn't set-up, then no more resizes will
   // come in and in general things will go wrong.
@@ -2170,7 +2182,7 @@ void RenderWidget::DidAutoResize(const gfx::Size& new_size) {
     AutoResizeCompositor();
 
     if (!resizing_mode_selector_->is_synchronous_mode()) {
-      need_update_rect_for_auto_resize_ = true;
+      need_resize_ack_for_auto_resize_ = true;
       // If surface synchronization is off, then ResizeAcks go to the browser in
       // response to a DidReceiveCompositorFrame. With surface synchronization
       // on, that notification will not arrive here because the compositor is
@@ -2274,6 +2286,7 @@ blink::WebScreenInfo RenderWidget::GetScreenInfo() {
       break;
   }
   web_screen_info.orientation_angle = screen_info_.orientation_angle;
+
   return web_screen_info;
 }
 
@@ -2484,7 +2497,7 @@ void RenderWidget::SetWidgetBinding(mojom::WidgetRequest request) {
 }
 
 void RenderWidget::DidResizeOrRepaintAck() {
-  if (!next_paint_flags_ && !need_update_rect_for_auto_resize_)
+  if (!next_paint_flags_ && !need_resize_ack_for_auto_resize_)
     return;
 
   ViewHostMsg_ResizeOrRepaint_ACK_Params params;
@@ -2494,7 +2507,7 @@ void RenderWidget::DidResizeOrRepaintAck() {
 
   Send(new ViewHostMsg_ResizeOrRepaint_ACK(routing_id_, params));
   next_paint_flags_ = 0;
-  need_update_rect_for_auto_resize_ = false;
+  need_resize_ack_for_auto_resize_ = false;
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
