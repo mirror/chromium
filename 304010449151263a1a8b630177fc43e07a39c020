@@ -16,6 +16,24 @@
       "revId": "304010449151263a1a8b630177fc43e07a39c020",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f93149_d8c23851",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-26T18:05:53Z",
+      "side": 1,
+      "message": "Done. (The host_resolver setup code must be setup at this stage, so it is not moved.)",
+      "parentUuid": "352b613d_29f64190",
+      "revId": "304010449151263a1a8b630177fc43e07a39c020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
