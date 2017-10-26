@@ -13,6 +13,10 @@
 #include "chrome/browser/ui/webui/print_preview/printer_handler.h"
 #include "printing/backend/print_backend.h"
 
+namespace content {
+class WebContents;
+}
+
 namespace printing {
 
 struct PrinterBasicInfo;
@@ -50,6 +54,16 @@ void ConvertPrinterListForCallback(
 // and remove any lists/options that are empty or only contain null values.
 std::unique_ptr<base::DictionaryValue> ValidateCddForPrintPreview(
     const base::DictionaryValue& cdd);
+
+// Starts a local print of |print_data| with print settings dictionary
+// |ticket_json|. Runs |callback| on failure or success.
+// On Mac, |print_data| should contain PDF data for the first page of the
+// document. On other platforms, |print_data| should contain PDF data for the
+// entire document to print.
+void StartLocalPrint(const std::string& ticket_json,
+                     const scoped_refptr<base::RefCountedBytes>& print_data,
+                     const PrinterHandler::PrintCallback& callback,
+                     content::WebContents* preview_web_contents);
 }  // namespace printing
 
 #endif  // CHROME_BROWSER_UI_WEBUI_PRINT_PREVIEW_PRINTER_CAPABILITIES_H_
