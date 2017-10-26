@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "c137d241_37e7b90b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-26T04:40:09Z",
+      "side": 1,
+      "message": "Cool! (^_^)b",
+      "revId": "a090b1efcf7b9c9c7eb9b5791673e309f6afc1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3256d1e1_2f368c54",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1923,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-26T04:40:09Z",
+      "side": 1,
+      "message": "nit: We should use |auto*| instead of |auto|.\nSee [1] and search \"auto\".\nIt seems this is Chromium specific. Google C++ style guide doesn\u0027t mention\nabout this. I think this is good practice.\n\n\n[1] https://chromium-cpp.appspot.com/",
+      "range": {
+        "startLine": 1923,
+        "startChar": 6,
+        "endLine": 1923,
+        "endChar": 10
+      },
+      "revId": "a090b1efcf7b9c9c7eb9b5791673e309f6afc1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817d1135_50af686e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-26T04:40:09Z",
+      "side": 1,
+      "message": "Finally, you change mind. (^_^;)",
+      "revId": "a090b1efcf7b9c9c7eb9b5791673e309f6afc1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0914a80_8884aaa1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-26T04:40:09Z",
+      "side": 1,
+      "message": "nit: s/auto/const auto* const/",
+      "revId": "a090b1efcf7b9c9c7eb9b5791673e309f6afc1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49c9e2f5_57822669",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
         "patchSetId": 3
@@ -13,6 +87,24 @@
       "writtenOn": "2017-10-26T04:23:45Z",
       "side": 1,
       "message": "Note: We are assuming that every LayoutNGBlockFlow with inline children is laid out with NG, and hence, has offset mapping.\n\nIf any change breaks the above assumption (e.g., disabling NG on contenteditable), extra checking is needed here.",
+      "revId": "a090b1efcf7b9c9c7eb9b5791673e309f6afc1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f9f7f9_529f88c0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-26T04:40:09Z",
+      "side": 1,
+      "message": "I think it is better to put this note as comment in source code.",
+      "parentUuid": "49c9e2f5_57822669",
       "revId": "a090b1efcf7b9c9c7eb9b5791673e309f6afc1f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
