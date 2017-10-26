@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90b5ab4f_7254669a",
+        "filename": "testing/libfuzzer/fuzzers/minizip_uncompress_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-26T00:44:12Z",
+      "side": 1,
+      "message": "nit: i think you can just do \u003d {};",
+      "range": {
+        "startLine": 14,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "f4ebce93d3b6a67053fd23a0c0107beca92a1948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da08a206_b0a1275f",
+        "filename": "testing/libfuzzer/fuzzers/minizip_uncompress_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-26T00:44:12Z",
+      "side": 1,
+      "message": "nit: use C++ style casts: http://google.github.io/styleguide/cppguide.html#Casting",
+      "range": {
+        "startLine": 18,
+        "startChar": 16,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "f4ebce93d3b6a67053fd23a0c0107beca92a1948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
