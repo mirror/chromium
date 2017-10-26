@@ -1,0 +1,16 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x116
+  LayoutBlockFlow {HTML} at (0,0) size 800x116
+    LayoutBlockFlow {BODY} at (8,8) size 784x100
+layer at (8,8) size 600x100
+  LayoutBlockFlow {DIV} at (0,0) size 600x100
+    LayoutMultiColumnSet (anonymous) at (0,0) size 600x60
+layer at (8,8) size 292x120 backgroundClip at (8,8) size 600x100 clip at (8,8) size 600x100
+  LayoutMultiColumnFlowThread (anonymous) at (0,0) size 292x120
+    LayoutBlockFlow {DIV} at (0,0) size 100x20 [bgcolor=#ADD8E6]
+    LayoutBlockFlow {DIV} at (0,20) size 100x20 [bgcolor=#ADD8E6]
+    LayoutBlockFlow {DIV} at (0,40) size 100x20 [bgcolor=#ADD8E6]
+    LayoutBlockFlow {DIV} at (0,60) size 100x20 [bgcolor=#ADD8E6]
+    LayoutBlockFlow {DIV} at (0,80) size 100x20 [bgcolor=#ADD8E6]
+    LayoutBlockFlow {DIV} at (0,100) size 100x20 [bgcolor=#008000]
