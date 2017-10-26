@@ -52,6 +52,24 @@
       "revId": "23eeb0cfbaed25d3e5ddd89497046d8587d05aee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8ac02a_3139331a",
+        "filename": "ash/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-26T23:30:38Z",
+      "side": 1,
+      "message": "Sorry, Luis, I don\u0027t understand.\n\nIt seems like we have 3 paths:\n1. Put this enum in //components/arc/common/ and allow //ash to depend on //components/arc/common. It\u0027s not obvious from the path //components/arc/common that it will only ever contain mojoms. I don\u0027t want code in ash depending on arbitrary C++ code in arc, at least until we sort out how things are going to work for mustash.\n2. Put this enum in //ash/public/interfaces. //components/arc already depends on //ash/public/cpp, it could add a dep on //ash/public/interfaces. The complication would be how this mojom under //ash gets updated if you change something on the ARC container side.\n3. Duplicate the enum in the chrome codebase. Use one copy in //components/arc for browser \u003c-\u003e ARC container communication, and another one for ash \u003c-\u003e browser communication. That doesn\u0027t sound great either.\n\nIf 2 works for you, I prefer that. If 2 doesn\u0027t work for you, I\u0027d rather do something like 1, but only allow ash to depend on the single .mojom file in //components/arc/common/foo.mojom with some sort of TODO to sort out the overall dependency graph between ash and arc.\n\nDid I miss something? Which direction do you prefer?",
+      "parentUuid": "23a810cc_3db54f61",
+      "revId": "23eeb0cfbaed25d3e5ddd89497046d8587d05aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
