@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b643b430_4b9c9db2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-26T21:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd50115f_e53c8b46",
+      "range": {
+        "startLine": 642,
+        "startChar": 15,
+        "endLine": 642,
+        "endChar": 18
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cacff20d_c9adb1e2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b286b64b_5f88f8bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-26T21:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cacff20d_c9adb1e2",
+      "range": {
+        "startLine": 645,
+        "startChar": 14,
+        "endLine": 645,
+        "endChar": 20
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f8a0d1dc_0b8b0bf2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-26T21:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4faabb70_2f3e0e54",
+      "range": {
+        "startLine": 648,
+        "startChar": 12,
+        "endLine": 648,
+        "endChar": 30
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c9cb7bc_d194db2f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3265b92_6e1e0bcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-26T21:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c9cb7bc_d194db2f",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8f27f271_f4aac347",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-26T21:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73bf3a17_bc1087e4",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 4
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b33400c_f1d9106d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f715726b_5ff36626",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-26T21:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b33400c_f1d9106d",
+      "range": {
+        "startLine": 27,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "78104345_3966086e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-26T21:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df1509bb_b66cce7e",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64f78478_9f467f9e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
         "patchSetId": 8
@@ -183,6 +351,30 @@
       "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935b31f3_80728052",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-26T21:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64f78478_9f467f9e",
+      "range": {
+        "startLine": 69,
+        "startChar": 71,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "5430f0d1_c4a571a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-26T21:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac066ea_1e0983e7",
+      "range": {
+        "startLine": 73,
+        "startChar": 59,
+        "endLine": 73,
+        "endChar": 60
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "926597cb_b22e27b3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
         "patchSetId": 8
@@ -229,6 +445,30 @@
       "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d92a22_d120340f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-26T21:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "926597cb_b22e27b3",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 82
+      },
+      "revId": "2e3dfdee868c9e4349b53e466ad94498d4b9ec88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
