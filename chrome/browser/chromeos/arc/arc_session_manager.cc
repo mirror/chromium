@@ -770,6 +770,8 @@ void ArcSessionManager::OnTermsOfServiceNegotiated(bool accepted) {
   terms_of_service_negotiator_.reset();
 
   if (!accepted) {
+    // Stop the mini-container
+    RequestDisable();
     // User does not accept the Terms of Service. Disable Google Play Store.
     MaybeUpdateOptInCancelUMA(support_host_.get());
     SetArcPlayStoreEnabledForProfile(profile_, false);
