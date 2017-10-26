@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b2ce588_f4958663",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace_diff/WorkspaceDiff.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-26T05:14:44Z",
+      "side": 1,
+      "message": "You know it is FS and you know this is how you get the original content? I\u0027d rather bring original content getter back. I mean we don\u0027t want it, but the price we are paying seems to be too high.",
+      "revId": "1aadd2d7f390f0e033fb210b84a5aa394ac468ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9e9165_3734f7a1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace_diff/WorkspaceDiff.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-26T05:14:44Z",
+      "side": 1,
+      "message": "async/await is now commodity, no need to yell.",
+      "revId": "1aadd2d7f390f0e033fb210b84a5aa394ac468ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
