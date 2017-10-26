@@ -34,6 +34,24 @@
       "revId": "aeaa916deed5e1f5a0912d2949ff608aceef2379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d0cf94_67f18e70",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-10-26T01:41:57Z",
+      "side": 1,
+      "message": "Changed to \u003cdialog\u003e.  I like the code better, but want your opinion on this:\n2) page is only shown on android, so ESC doesn\u0027t really apply here. Clicking outside the box does not make the modal disappear... (but neither did my impl before)\n3) \u003cdialog\u003e is centered to the page size. However, due to overflow (one of the tables is too big), the page is automatically zoomed out (see screenshot I sent you)",
+      "parentUuid": "53ad9027_bdcdb810",
+      "revId": "aeaa916deed5e1f5a0912d2949ff608aceef2379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
