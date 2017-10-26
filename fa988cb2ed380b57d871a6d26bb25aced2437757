@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "6b690221_72d0a443",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-26T11:03:58Z",
+      "side": 1,
+      "message": "brettw@: friendly ping.\n\nAgain, please consider separately reviewing the split https://chromium-review.googlesource.com/#/c/chromium/src/+/738191 which could be easier for you.",
+      "parentUuid": "86c63da1_a0cac7e7",
+      "revId": "fa988cb2ed380b57d871a6d26bb25aced2437757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db99ba01_e1a40be4",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 13
