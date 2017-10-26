@@ -101,7 +101,7 @@
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/net/chrome_network_delegate.h"
-#include "chrome/browser/notifications/message_center_settings_controller_chromeos.h"
+#include "chrome/browser/notifications/notification_platform_bridge.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/task_manager/task_manager_interface.h"
@@ -880,8 +880,11 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
       l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_OS_NAME));
 
   // Create and set the settings provider for the message center.
-  message_center::MessageCenter::Get()->SetNotifierSettingsProvider(
-      std::make_unique<MessageCenterSettingsControllerChromeOs>());
+  // TODO(estade): remove this; use mojo.
+  // ash::Shell::Get()->message_center_controller()->SetNotifierSettingsProvider(
+  //     std::make_unique<MessageCenterSettingsControllerChromeOs>());
+  if (!base::FeatureList::IsEnabled(features::kNativeNotifications))
+    notification_client_.reset(NotificationPlatformBridge::Create());
 
   // Register all installed components for regular update.
   base::PostTaskWithTraitsAndReplyWithResult(

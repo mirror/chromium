@@ -8,6 +8,8 @@
 
 namespace message_center {
 
+NotifierId::NotifierId() : type(SYSTEM_COMPONENT) {}
+
 NotifierId::NotifierId(NotifierType type,
                        const std::string& id)
     : type(type),
@@ -19,10 +21,6 @@ NotifierId::NotifierId(NotifierType type,
 NotifierId::NotifierId(const GURL& url)
     : type(WEB_PAGE),
       url(url) {}
-
-NotifierId::NotifierId()
-    : type(SYSTEM_COMPONENT) {
-}
 
 NotifierId::NotifierId(const NotifierId& other) = default;
 
@@ -52,6 +50,7 @@ bool NotifierId::operator<(const NotifierId& other) const {
   return id < other.id;
 }
 
+#if 0
 NotifierUiData::NotifierUiData(const NotifierId& notifier_id,
                                const base::string16& name,
                                bool has_advanced_settings,
@@ -62,5 +61,6 @@ NotifierUiData::NotifierUiData(const NotifierId& notifier_id,
       enabled(enabled) {}
 
 NotifierUiData::~NotifierUiData() {}
+#endif
 
 }  // namespace message_center

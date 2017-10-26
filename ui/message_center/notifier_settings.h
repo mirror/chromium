@@ -32,14 +32,6 @@ class MessagePopupCollectionTest;
 class MessageCenterNotificationManagerTest;
 class Notification;
 class NotifierSettingsDelegate;
-class NotifierSettingsProvider;
-
-// Brings up the settings dialog and returns a weak reference to the delegate,
-// which is typically the view. If the dialog already exists, it is brought to
-// the front, otherwise it is created.
-MESSAGE_CENTER_EXPORT NotifierSettingsDelegate* ShowSettings(
-    NotifierSettingsProvider* provider,
-    gfx::NativeView context);
 
 // A struct that identifies the source of notifications. For example, a web page
 // might send multiple notifications but they'd all have the same NotifierId.
@@ -54,6 +46,9 @@ struct MESSAGE_CENTER_EXPORT NotifierId {
     SYSTEM_COMPONENT = 3,
     SIZE,
   };
+
+  // Default constructor needed for generated mojom files and tests.
+  NotifierId();
 
   // Constructor for non WEB_PAGE type.
   NotifierId(NotifierType type, const std::string& id);
@@ -78,26 +73,9 @@ struct MESSAGE_CENTER_EXPORT NotifierId {
   // The identifier of the profile where the notification is created. This is
   // used for ChromeOS multi-profile support and can be empty.
   std::string profile_id;
-
- private:
-  friend class MessageCenterNotificationManagerTest;
-  friend class MessageCenterTrayTest;
-  friend class Notification;
-  friend class NotificationControllerTest;
-  friend class PopupCollectionTest;
-  friend class TrayViewControllerTest;
-  friend class ::MessageCenterNotificationsTest;
-  friend class ::MessageCenterTrayBridgeTest;
-  friend class ash::WebNotificationTrayTest;
-  friend class test::MessagePopupCollectionTest;
-  FRIEND_TEST_ALL_PREFIXES(PopupControllerTest, Creation);
-  FRIEND_TEST_ALL_PREFIXES(NotificationListTest, UnreadCountNoNegative);
-  FRIEND_TEST_ALL_PREFIXES(NotificationListTest, TestHasNotificationOfType);
-
-  // The default constructor which doesn't specify the notifier. Used for tests.
-  NotifierId();
 };
 
+#if 0
 // A struct to hold UI information about notifiers. The data is used by
 // NotifierSettingsView.
 struct MESSAGE_CENTER_EXPORT NotifierUiData {
@@ -128,6 +106,7 @@ struct MESSAGE_CENTER_EXPORT NotifierUiData {
 
 // An observer class implemented by the view of the NotifierSettings to get
 // notified when the controller has changed data.
+// TODO(estade): this is Chrome OS only. Remove it.
 class MESSAGE_CENTER_EXPORT NotifierSettingsObserver {
  public:
   // Called when an icon in the controller has been updated.
@@ -141,6 +120,7 @@ class MESSAGE_CENTER_EXPORT NotifierSettingsObserver {
 
 // A class used by NotifierSettingsView to integrate with a setting system
 // for the clients of this module.
+// TODO(estade): this is Chrome OS only. Remove it.
 class MESSAGE_CENTER_EXPORT NotifierSettingsProvider {
  public:
   virtual ~NotifierSettingsProvider() {}
@@ -158,14 +138,12 @@ class MESSAGE_CENTER_EXPORT NotifierSettingsProvider {
   virtual void SetNotifierEnabled(const NotifierId& notifier_id,
                                   bool enabled) = 0;
 
-  // Called when the settings window is closed.
-  virtual void OnNotifierSettingsClosing() = 0;
-
   // Called upon request for more information about a particular notifier.
   virtual void OnNotifierAdvancedSettingsRequested(
       const NotifierId& notifier_id,
       const std::string* notification_id) = 0;
 };
+#endif
 
 }  // namespace message_center
 

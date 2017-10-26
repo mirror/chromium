@@ -13,34 +13,65 @@
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
+#include "ash/ash_export.h"
+#include "ui/message_center/notifier_settings.h"
+
 namespace ash {
 
-// This class manages the ash message center. For now it just houses
-// Ash-specific notification blockers. In the future, when the MessageCenter
-// lives in the Ash process, it will also manage adding and removing
-// notifications sent from clients (like Chrome).
-class MessageCenterController : public mojom::AshMessageCenterController {
+// This class manages the ash message center and allows clients (like Chrome) to
+// add and remove notifications.
+class ASH_EXPORT MessageCenterController
+    : public mojom::AshMessageCenterController {
  public:
   MessageCenterController();
   ~MessageCenterController() override;
 
+  // Called when the |enabled| for the given notifier has been changed by user
+  // operation.
+  void SetNotifierEnabled(const message_center::NotifierId& notifier_id,
+                          bool enabled);
+
+  // Called upon request for more information about a particular notifier.
+  void OnNotifierAdvancedSettingsRequested(
+      const message_center::NotifierId& notifier_id);
+
   void BindRequest(mojom::AshMessageCenterControllerRequest request);
 
-  // AshMessageCenterController:
+  // mojom::AshMessageCenterController:
   void SetClient(
       mojom::AshMessageCenterClientAssociatedPtrInfo client) override;
   void ShowClientNotification(
       const message_center::Notification& notification) override;
+  void UpdateNotifierIcon(const message_center::NotifierId& notifier_id,
+                          const gfx::ImageSkia& icon) override;
+  void NotifierEnabledChanged(const message_center::NotifierId& notifier_id,
+                              bool enabled) override;
 
   InactiveUserNotificationBlocker*
   inactive_user_notification_blocker_for_testing() {
     return &inactive_user_notification_blocker_;
   }
 
+  // FIXME
+  class NotifierSettingsListener {
+   public:
+    virtual void SetNotifierList(
+        const std::vector<mojom::NotifierUiDataPtr>& ui_data) = 0;
+    virtual void UpdateNotifierIcon(
+        const message_center::NotifierId& notifier_id,
+        const gfx::ImageSkia& icon) = 0;
+  };
+
+  void SetNotifierSettingsListener(NotifierSettingsListener* listener);
+
  private:
+  void OnGotNotifierList(std::vector<mojom::NotifierUiDataPtr> ui_data);
+
   FullscreenNotificationBlocker fullscreen_notification_blocker_;
   InactiveUserNotificationBlocker inactive_user_notification_blocker_;
   LoginStateNotificationBlocker login_notification_blocker_;
+
+  NotifierSettingsListener* notifier_settings_;
 
   mojo::Binding<mojom::AshMessageCenterController> binding_;
 

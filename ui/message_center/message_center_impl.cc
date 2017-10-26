@@ -153,14 +153,6 @@ void MessageCenterImpl::OnBlockingStateChanged(NotificationBlocker* blocker) {
     observer.OnBlockingStateChanged(blocker);
 }
 
-void MessageCenterImpl::NotifierEnabledChanged(
-    const NotifierId& notifier_id, bool enabled) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  if (!enabled) {
-    RemoveNotificationsForNotifierId(notifier_id);
-  }
-}
-
 void MessageCenterImpl::SetVisibility(Visibility visibility) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(!iterating_);
@@ -603,6 +595,7 @@ void MessageCenterImpl::DisplayedNotification(
   }
 }
 
+#if 0
 void MessageCenterImpl::SetNotifierSettingsProvider(
     std::unique_ptr<NotifierSettingsProvider> provider) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -615,6 +608,7 @@ NotifierSettingsProvider* MessageCenterImpl::GetNotifierSettingsProvider() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return settings_provider_.get();
 }
+#endif
 
 void MessageCenterImpl::SetQuietMode(bool in_quiet_mode) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
