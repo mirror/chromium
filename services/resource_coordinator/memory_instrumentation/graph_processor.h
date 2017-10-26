@@ -52,6 +52,8 @@ class GraphProcessor {
 
   static void PropagateNumericsAndDiagnosticsRecursively(
       GlobalDumpGraph::Node* node);
+
+  static void CalculateSizeForNode(GlobalDumpGraph::Node* node);
 };
 
 }  // namespace memory_instrumentation
