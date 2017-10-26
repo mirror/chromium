@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "0fb1d0fd_a0f614bf",
+        "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-26T23:25:58Z",
+      "side": 1,
+      "message": "Good catch. I didn\u0027t consider that case.",
+      "parentUuid": "6805989f_217eb8cf",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3f305c6_e5942f17",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
@@ -158,6 +176,24 @@
       "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02531cd1_7aeb8a8e",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-26T23:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dc18d40_6767f200",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +279,24 @@
       "side": 1,
       "message": "My understanding is opposite. If non-managed pref, it is called, while if managed pref, not.\nIn case of managed pref, we always expect \"accept \u003d true\" here (i.e. on UI, there\u0027s no way to skip by a user)?",
       "parentUuid": "7f7a3cfa_7b35b3ae",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d37a85f_9a806e12",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-26T23:25:58Z",
+      "side": 1,
+      "message": "The call to RequestDisable in SetArcPlayStoreEnabledForProfile(*,false) is inside an \"if (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile))\" block. IsArcPlayStoreEnabledPreferenceManagedForProfile returns PrefService::IsManagedPreference(prefs::kArcEnabled). This means it\u0027s only true if kArcEnabled is managed. Am I misunderstanding something?\n\n\u003e In case of managed pref, we always expect \"accept \u003d true\" here (i.e. on UI, there\u0027s no way to skip by a user)?\n\nThere are several cases with managed prefs. In the case where it\u0027s managed, and enabled, AND opt-in preferences are ignorable, then yes, it will always be accept\u003dtrue. In other cases where the prefs are managed, this function isn\u0027t called at all.",
+      "parentUuid": "ee11d1e9_4430b2ab",
       "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
