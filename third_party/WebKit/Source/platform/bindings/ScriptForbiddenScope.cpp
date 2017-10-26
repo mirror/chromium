@@ -5,14 +5,9 @@
 #include "platform/bindings/ScriptForbiddenScope.h"
 
 #include "platform/wtf/Assertions.h"
-#include "platform/wtf/ThreadSpecific.h"
 
 namespace blink {
 
-unsigned& ScriptForbiddenScope::GetMutableCounter() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(WTF::ThreadSpecific<unsigned>,
-                                  script_forbidden_counter_, ());
-  return *script_forbidden_counter_;
-}
+unsigned ScriptForbiddenScope::script_forbidden_count_ = 0;
 
 }  // namespace blink
