@@ -551,8 +551,24 @@ scoped_refptr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
     container_builder_.SetBreakToken(
         line_breaker.CreateBreakToken(std::move(box_states_)));
 
+    // TODO(xiaochengh): Store a dedicated struct instead of NGLineInfo;
+    // Also need to store the offset of first/last rendered character.
+    if (Node().Data().line_info_.size()) {
+      DCHECK_LE(Node().Data().line_info_.back().EndOffset(),
+                line_info.StartOffset());
+      Node().MutableData()->line_info_.back().SetEndOffset(
+          line_info.StartOffset());
+    } else {
+      DCHECK_EQ(0u, line_info.StartOffset());
+    }
+    Node().MutableData()->line_info_.push_back(line_info);
     exclusion_space =
         WTF::MakeUnique<NGExclusionSpace>(*line_breaker.ExclusionSpace());
+  }
+  if (Node().Text().length()) {
+    DCHECK(!Node().Data().line_info_.IsEmpty());
+    DCHECK_EQ(Node().Text().length(),
+              Node().Data().line_info_.back().EndOffset());
   }
 
   // Place any remaining floats which couldn't fit on the line.
