@@ -114,7 +114,7 @@ UserMediaClientImpl::~UserMediaClientImpl() {
   // Force-close all outstanding user media requests and local sources here,
   // before the outstanding WeakPtrs are invalidated, to ensure a clean
   // shutdown.
-  WillCommitProvisionalLoad();
+  WillCommitProvisionalLoad(false);
 }
 
 void UserMediaClientImpl::RequestUserMedia(
@@ -323,7 +323,8 @@ void UserMediaClientImpl::DeleteAllUserMediaRequests() {
   pending_request_infos_.clear();
 }
 
-void UserMediaClientImpl::WillCommitProvisionalLoad() {
+void UserMediaClientImpl::WillCommitProvisionalLoad(
+    bool is_same_document_navigation) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // Cancel all outstanding UserMediaRequests.
   DeleteAllUserMediaRequests();
