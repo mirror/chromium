@@ -22,6 +22,47 @@
       "revId": "f0741e17c935270eaeb936657b69bfab84c84201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dae59c9_f3a0de1b",
+        "filename": "chrome/browser/resources/md_extensions/app_or_extension_behavior.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-26T19:35:12Z",
+      "side": 1,
+      "message": "Up to you, but Maybe name this more generically so that it may hold other helper functions in the future.",
+      "parentUuid": "aa72626d_08c5ee40",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "f0741e17c935270eaeb936657b69bfab84c84201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca59d6a3_60802957",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-26T19:35:12Z",
+      "side": 1,
+      "message": "This may be outside the scope of this CL, but this aria-describedby made me wonder where id\u003d\"name\" is. It looks like it\u0027s in a extensions-item which is repeated in an extensions-item-list. Does that mean that there may be several elements with the same id?\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/item_list.html?type\u003dcs\u0026q\u003dextensions-item%5B%5E-%5D\u0026sq\u003dpackage:chromium\u0026l\u003d70",
+      "revId": "f0741e17c935270eaeb936657b69bfab84c84201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
