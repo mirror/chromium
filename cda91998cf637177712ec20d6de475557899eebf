@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1486d05_ac24e990",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 80559,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-26T20:53:48Z",
+      "side": 1,
+      "message": "nit: Please associate a more semantically contentful enum, defining one in enums.xml if necessary.",
+      "range": {
+        "startLine": 80559,
+        "startChar": 10,
+        "endLine": 80559,
+        "endChar": 17
+      },
+      "revId": "cda91998cf637177712ec20d6de475557899eebf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5898b947_fe46ce21",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 80562,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-26T20:53:48Z",
+      "side": 1,
+      "message": "This description raises some questions for me that I think would be nice to explain inline a bit: In particular, the word \"still\" catches my eye.  There\u0027s an implication that this is recorded only for renderers that were at one point considered unresponsive.  Could you please clarify in the description what set of renderers this applies to?  Relatedly, I\u0027m inferring that we\u0027re terminating the process /because/ the renderer was unresponsive at one point.  Is that accurate?  If so, please make a brief note of that as well.  (If not, the perhaps make a brief note of the reason for termination.)",
+      "range": {
+        "startLine": 80562,
+        "startChar": 23,
+        "endLine": 80562,
+        "endChar": 52
+      },
+      "revId": "cda91998cf637177712ec20d6de475557899eebf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
