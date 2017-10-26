@@ -16,6 +16,24 @@
       "revId": "f44852ceaec48b1de14e589fffcc8cfcd3a5ca5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3feac0c4_d1c3ed57",
+        "filename": "components/password_manager/core/browser/ui/export_flow.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-26T14:11:37Z",
+      "side": 1,
+      "message": "As for why to keep it in the interface: my motivation was that this relation is independent of the actual implementation of both interfaces -- the ExportFlow will always need to know a CredentialProviderInterface. But I\u0027m fine with pushing it down to the implementation to keep the CredentialProviderInterface if you want me to.\n\nAs for a single instance serving two interfaces: Indeed, both interface implementations will use the single password store cache.\n\nSo I guess what you are saying that if I duplicate that cache pointer ultimately in both interfaces, I\u0027m doing redundant work. That makes good sense! :) (I did not spot it, because the minimal ImportFlow interface I add in the next step does not use the store yet.)\n\nPlease confirm if I understood you well and I\u0027m happy to change this.",
+      "parentUuid": "771b5499_b58a44ed",
+      "revId": "f44852ceaec48b1de14e589fffcc8cfcd3a5ca5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
