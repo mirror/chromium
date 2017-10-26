@@ -344,6 +344,22 @@ class TestImporterTest(LoggingTestCase):
         self.assertEqual('current-sheriff@chromium.org', importer.tbr_reviewer())
         self.assertLog([])
 
+    def test_tbr_reviewer_with_full_email_address(self):
+        host = MockHost()
+        today = datetime.date.fromtimestamp(host.time()).isoformat()
+        host.web.urls[ROTATIONS_URL] = json.dumps({
+            'calendar': [
+                {
+                    'date': today,
+                    'participants': [['external@example.com']],
+                },
+            ],
+            'rotations': ['ecosystem_infra']
+        })
+        importer = TestImporter(host)
+        self.assertEqual('external@example.com', importer.tbr_reviewer())
+        self.assertLog([])
+
     def test_generate_manifest_successful_run(self):
         # This test doesn't test any aspect of the real manifest script, it just
         # asserts that TestImporter._generate_manifest would invoke the script.
