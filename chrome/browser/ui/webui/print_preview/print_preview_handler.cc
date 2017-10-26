@@ -634,7 +634,7 @@ void PrintPreviewHandler::HandleGetPreview(const base::ListValue* args) {
 
   VLOG(1) << "Print preview request start";
 
-  rfh->Send(new PrintMsg_PrintPreview(rfh->GetRoutingID(), *settings));
+  SendIPC(rfh, new PrintMsg_PrintPreview(rfh->GetRoutingID(), *settings));
 }
 
 void PrintPreviewHandler::HandlePrint(const base::ListValue* args) {
@@ -796,8 +796,8 @@ void PrintPreviewHandler::HandleHidePreview(const base::ListValue* /*args*/) {
     // Print preview is responding to a resolution of "print" promise. Send the
     // print message to the renderer.
     RenderFrameHost* rfh = preview_web_contents()->GetMainFrame();
-    rfh->Send(
-        new PrintMsg_PrintForPrintPreview(rfh->GetRoutingID(), *settings_));
+    SendIPC(rfh,
+            new PrintMsg_PrintForPrintPreview(rfh->GetRoutingID(), *settings_));
     settings_.reset();
 
     // Clear the initiator so that it can open a new print preview dialog, while
@@ -1307,6 +1307,11 @@ PrinterHandler* PrintPreviewHandler::GetPrinterHandler(
 PdfPrinterHandler* PrintPreviewHandler::GetPdfPrinterHandler() {
   return static_cast<PdfPrinterHandler*>(
       GetPrinterHandler(PrinterType::kPdfPrinter));
+}
+
+void PrintPreviewHandler::SendIPC(content::RenderFrameHost* rfh,
+                                  IPC::Message* message) {
+  rfh->Send(message);
 }
 
 void PrintPreviewHandler::OnAddedPrinters(printing::PrinterType printer_type,
