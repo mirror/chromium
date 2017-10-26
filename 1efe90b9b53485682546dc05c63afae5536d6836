@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6acd047c_a2292776",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-26T07:36:42Z",
+      "side": 1,
+      "message": "In the same way, the url is also updated in CheckContentSecurityPolicyFrameSrc. It means we are trying to upgrade it twice. What if the form submission targets an iframe?\n\nI think the right way to do it is:\n1) Check every CSP with CHECK_REPORT_ONLY_CSP.\n2) Upgrade the url.\n3) Check every CSP with CHECK_ENFORCED_CSP.",
+      "range": {
+        "startLine": 1340,
+        "startChar": 27,
+        "endLine": 1340,
+        "endChar": 34
+      },
+      "revId": "1efe90b9b53485682546dc05c63afae5536d6836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
