@@ -10,11 +10,14 @@
 #include <string>
 #include <vector>
 
+#include "base/containers/span.h"
 #include "base/strings/string_piece.h"
+#include "extensions/common/features/feature_config.h"
 
 namespace extensions {
 
 class Feature;
+class SimpleFeature;
 
 // Note: Binding code (specifically native_extension_bindings_system.cc) relies
 // on this being a sorted map.
@@ -58,11 +61,13 @@ class FeatureProvider {
   // TODO(devlin): Rename this to be features().
   const FeatureMap& GetAllFeatures() const;
 
-  void AddFeature(base::StringPiece name, std::unique_ptr<Feature> feature);
-
-  // Takes ownership. Used in preference to unique_ptr variant to reduce size
-  // of generated code.
-  void AddFeature(base::StringPiece name, Feature* feature);
+  void AddFeature(std::unique_ptr<Feature> feature);
+  using SimpleFeatureFactoryFunction =
+      std::unique_ptr<SimpleFeature>(const SimpleFeatureConfig&);
+  void AddFeaturesFromConfigs(
+      base::span<const SimpleFeatureConfig> simple_configs,
+      base::span<const ComplexFeatureConfig> complex_configs,
+      SimpleFeatureFactoryFunction* feature_factory);
 
  private:
   FeatureMap features_;

@@ -14,6 +14,7 @@ namespace extensions {
 class PermissionFeature : public SimpleFeature {
  public:
   PermissionFeature();
+  explicit PermissionFeature(const SimpleFeatureConfig& config);
   ~PermissionFeature() override;
 
   Feature::Availability IsAvailableToContext(

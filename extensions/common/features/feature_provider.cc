@@ -16,6 +16,7 @@
 #include "content/public/common/content_switches.h"
 #include "extensions/common/extensions_client.h"
 #include "extensions/common/features/feature.h"
+#include "extensions/common/features/feature_config.h"
 #include "extensions/common/features/feature_util.h"
 #include "extensions/common/switches.h"
 
@@ -173,13 +174,13 @@ const FeatureMap& FeatureProvider::GetAllFeatures() const {
   return features_;
 }
 
-void FeatureProvider::AddFeature(base::StringPiece name,
-                                 std::unique_ptr<Feature> feature) {
-  features_[name.as_string()] = std::move(feature);
+void FeatureProvider::AddFeature(std::unique_ptr<Feature> feature) {
+  features_[feature->name()] = std::move(feature);
 }
 
-void FeatureProvider::AddFeature(base::StringPiece name, Feature* feature) {
-  features_[name.as_string()] = std::unique_ptr<Feature>(feature);
-}
+void FeatureProvider::AddFeaturesFromConfigs(
+    base::span<const SimpleFeatureConfig> simple_configs,
+    base::span<const ComplexFeatureConfig> complex_configs,
+    SimpleFeatureFactoryFunction* feature_factory) {}
 
 }  // namespace extensions
