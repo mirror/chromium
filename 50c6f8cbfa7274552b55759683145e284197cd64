@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "025e6081_3f235b73",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T16:19:38Z",
+      "side": 1,
+      "message": "i didn\u0027t notice it when doing the review, but this looks like it was initially an interface. it has some implementation mixed in now, which isn\u0027t ideal (see http://google.github.io/styleguide/cppguide.html#Inheritance).\n\nhow hard would it be to make this be an abstract interface, with the concrete members and methods moved into a separate class that can be a member of InputDeviceSettings implementations (i.e. composition instead of inheritance).",
+      "revId": "50c6f8cbfa7274552b55759683145e284197cd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a19de68_568a506a",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T16:19:38Z",
+      "side": 1,
+      "message": "should this have been true?",
+      "revId": "50c6f8cbfa7274552b55759683145e284197cd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
