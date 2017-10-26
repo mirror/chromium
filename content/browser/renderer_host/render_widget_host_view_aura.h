@@ -157,6 +157,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
                      InputEventAckState ack_result) override;
   void GestureEventAck(const blink::WebGestureEvent& event,
                        InputEventAckState ack_result) override;
+  void DidOverscroll(const ui::DidOverscrollParams& params) override;
   void ProcessAckedTouchEvent(const TouchEventWithLatencyInfo& touch,
                               InputEventAckState ack_result) override;
   std::unique_ptr<SyntheticGestureTarget> CreateSyntheticGestureTarget()
@@ -614,6 +615,10 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   bool is_guest_view_hack_;
 
   float device_scale_factor_;
+
+  // Whether the renderer disables the overscroll effect, e.g. by
+  // scroll_boundary_behavior.
+  bool renderer_disabled_overscroll_;
 
   viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink_ =
       nullptr;
