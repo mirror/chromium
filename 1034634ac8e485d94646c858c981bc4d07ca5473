@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d4a7d01_e26b4c85",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-26T15:17:43Z",
+      "side": 1,
+      "message": "Remove \u0027!\u0027. This function should return \u0027true\u0027 when satisfied.",
+      "range": {
+        "startLine": 1206,
+        "startChar": 9,
+        "endLine": 1206,
+        "endChar": 10
+      },
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f79e07dd_07a62543",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-26T15:17:43Z",
+      "side": 1,
+      "message": "!MinVersionConstraintsSatisfied()",
+      "range": {
+        "startLine": 1227,
+        "startChar": 6,
+        "endLine": 1227,
+        "endChar": 38
+      },
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "526b473d_927fd600",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-26T15:17:43Z",
+      "side": 1,
+      "message": "nit: swap this checks as user type check is much lighter.",
+      "range": {
+        "startLine": 1227,
+        "startChar": 6,
+        "endLine": 1228,
+        "endChar": 53
+      },
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c5a127_feaebb12",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-26T15:17:43Z",
+      "side": 1,
+      "message": "Update the comment as it has nothing to do with the current user and is in general wrong here.",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 78
+      },
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
