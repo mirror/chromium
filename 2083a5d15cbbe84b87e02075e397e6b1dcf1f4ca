@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d75e6ed1_0e67c4cd",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/download_metadata_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T17:14:01Z",
+      "side": 0,
+      "message": "!!",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 43
+      },
+      "revId": "2083a5d15cbbe84b87e02075e397e6b1dcf1f4ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
