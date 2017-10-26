@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd9a395e_411230f6",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-26T08:29:15Z",
+      "side": 1,
+      "message": "The value used here must be the same as the one returned by n_t_p_toolbar_controller\u0027s |-statusBarOffset|.\nShould we use a shared constant?",
+      "range": {
+        "startLine": 60,
+        "startChar": 41,
+        "endLine": 60,
+        "endChar": 42
+      },
+      "revId": "898475034899ff5a5d4158e6d8bed37c27482dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
