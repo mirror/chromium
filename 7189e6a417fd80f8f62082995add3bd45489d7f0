@@ -22,6 +22,30 @@
       "revId": "7189e6a417fd80f8f62082995add3bd45489d7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa7b7e0_e8d56a17",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-helper.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-26T20:54:00Z",
+      "side": 1,
+      "message": "Oh you\u0027re right, when looking at its implementation I got it mixed up with t.set_timeout which sets a singular timeout_id, clearing any previous timeouts, this is not the case with t.step_timeout.\n\nI used t.step_timeout in a subsequent patch set, but in the latest patch set I removed expectCalled() and moved the timing out test to a separate file (with a TODO to merge them).",
+      "parentUuid": "0eb88536_a17ceb0d",
+      "range": {
+        "startLine": 452,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 78
+      },
+      "revId": "7189e6a417fd80f8f62082995add3bd45489d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
