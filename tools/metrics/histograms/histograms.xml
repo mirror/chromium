@@ -80555,6 +80555,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Stability.RendererStillUnresponsiveBeforeTermination"
+    enum="Boolean">
+  <owner>dtapuska@chromium.org</owner>
+  <summary>
+    If the renderer is still considered unresponsive before we terminate the
+    process.
+  </summary>
+</histogram>
+
 <histogram name="Stars.Goog_Related" units="%">
   <owner>yefim@chromium.org</owner>
   <summary>
