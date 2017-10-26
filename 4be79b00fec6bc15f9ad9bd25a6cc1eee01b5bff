@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0350f6b2_5db1f115",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-10-26T17:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6aceb7f_99fd06a0",
+      "range": {
+        "startLine": 111,
+        "startChar": 37,
+        "endLine": 111,
+        "endChar": 52
+      },
+      "revId": "4be79b00fec6bc15f9ad9bd25a6cc1eee01b5bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce81b189_c91ffa40",
         "filename": "components/optimization_guide/OWNERS",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T16:46:52Z",
       "side": 1,
       "message": "hmm, I wonder if better as previews/OWNERS for tighter association with that functionality even though less direct to actual list. [Maybe leave this comment for now so we can ask another client team reviewer when we add one]",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 38
+      },
+      "revId": "4be79b00fec6bc15f9ad9bd25a6cc1eee01b5bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec773a1_3763e33f",
+        "filename": "components/optimization_guide/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-10-26T17:03:50Z",
+      "side": 1,
+      "message": "will wait for another client team reviewer",
+      "parentUuid": "ce81b189_c91ffa40",
       "range": {
         "startLine": 1,
         "startChar": 18,
@@ -68,6 +116,30 @@
       "revId": "4be79b00fec6bc15f9ad9bd25a6cc1eee01b5bff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dabc212_1920293c",
+        "filename": "components/optimization_guide/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-10-26T17:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf12db26_30df910f",
+      "range": {
+        "startLine": 5,
+        "startChar": 16,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "4be79b00fec6bc15f9ad9bd25a6cc1eee01b5bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
