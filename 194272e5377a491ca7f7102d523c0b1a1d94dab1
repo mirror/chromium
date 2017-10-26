@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57e899fb_7352cd3c",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-26T20:13:04Z",
+      "side": 1,
+      "message": "why is this \"const Callback\" instead of Callback? I\u0027m actually surprised the std::move() works -- I don\u0027t see a Callback ctor that accepts a const rvalue-reference, so does this actually invoke the copy ctor?",
+      "revId": "194272e5377a491ca7f7102d523c0b1a1d94dab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5b85fd_fc30f207",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-26T20:13:04Z",
+      "side": 1,
+      "message": "s/insert/emplace/ ?",
+      "revId": "194272e5377a491ca7f7102d523c0b1a1d94dab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
