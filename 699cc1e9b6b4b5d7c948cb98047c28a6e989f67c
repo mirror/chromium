@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62db6376_1b6be0ce",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-26T15:44:22Z",
+      "side": 1,
+      "message": "might be worth pulling in Size() into this class as well. I think they\u0027ve diverged, can do this in a follow up.",
+      "range": {
+        "startLine": 104,
+        "startChar": 39,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "699cc1e9b6b4b5d7c948cb98047c28a6e989f67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
