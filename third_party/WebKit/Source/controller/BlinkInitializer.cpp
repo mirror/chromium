@@ -34,6 +34,7 @@
 #include "bindings/modules/v8/V8ContextSnapshotExternalReferences.h"
 #include "build/build_config.h"
 #include "core/animation/AnimationClock.h"
+#include "core/exported/DevToolsFrontendImpl.h"
 #include "core/frame/LocalFrame.h"
 #include "platform/Histogram.h"
 #include "platform/bindings/Microtask.h"
@@ -42,6 +43,7 @@
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/WTF.h"
+#include "public/platform/InterfaceRegistry.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
 #include "public/web/WebKit.h"
@@ -111,6 +113,8 @@ void Initialize(Platform* platform) {
 
 void BlinkInitializer::InitLocalFrame(LocalFrame& frame) const {
   ModulesInitializer::InitLocalFrame(frame);
+  frame.GetInterfaceRegistry()->AddAssociatedInterface(WTF::Bind(
+      &DevToolsFrontendImpl::BindMojoRequest, WrapWeakPersistent(&frame)));
 }
 
 }  // namespace blink
