@@ -55,6 +55,7 @@
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/chrome_browser_main_extra_parts.h"
 #include "chrome/browser/component_updater/crl_set_component_installer.h"
+#include "chrome/browser/component_updater/downloadable_strings_component_installer.h"
 #include "chrome/browser/component_updater/file_type_policies_component_installer.h"
 #include "chrome/browser/component_updater/origin_trials_component_installer.h"
 #include "chrome/browser/component_updater/pepper_flash_component_installer.h"
@@ -528,6 +529,10 @@ void RegisterComponentsForUpdate() {
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
     RegisterSSLErrorAssistantComponent(cus, path);
+#endif
+
+#if BUILDFLAG(ENABLE_DOWNLOADABLE_STRINGS)
+    RegisterDownloadableStringsComponent(cus);
 #endif
   }
 
