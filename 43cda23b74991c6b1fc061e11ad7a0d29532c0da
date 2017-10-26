@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "72b61bd6_ba9448bc",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-26T13:28:00Z",
+      "side": 1,
+      "message": "It took me a while to realize Callback uses ref-counting behind the scenes. So it worked fine.",
+      "parentUuid": "3f520b18_6a9d8331",
+      "revId": "43cda23b74991c6b1fc061e11ad7a0d29532c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ca32b16_f8f4416c",
         "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
         "patchSetId": 14
@@ -69,6 +87,24 @@
       "revId": "43cda23b74991c6b1fc061e11ad7a0d29532c0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb60e37_e1ce1326",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-26T13:28:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1bae92c4_02dd3a83",
+      "revId": "43cda23b74991c6b1fc061e11ad7a0d29532c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
