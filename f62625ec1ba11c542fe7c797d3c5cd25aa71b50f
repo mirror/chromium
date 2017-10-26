@@ -22,6 +22,30 @@
       "revId": "f62625ec1ba11c542fe7c797d3c5cd25aa71b50f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd3afd9_5ae3c874",
+        "filename": "device/geolocation/geoposition.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-26T00:14:49Z",
+      "side": 1,
+      "message": "Thanks, added crbug.com/778472 to investigate Geoposition vs mojom::Geoposition conversion overall using StructTraits",
+      "parentUuid": "722fdf25_8fdc3934",
+      "range": {
+        "startLine": 72,
+        "startChar": 70,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "f62625ec1ba11c542fe7c797d3c5cd25aa71b50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
