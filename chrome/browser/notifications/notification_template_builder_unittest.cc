@@ -236,3 +236,34 @@ TEST_F(NotificationTemplateBuilderTest, InlineRepliesTextTypeNotFirst) {
 
   EXPECT_EQ(xml_template, kExpectedXml);
 }
+
+TEST_F(NotificationTemplateBuilderTest, RequireInteraction) {
+  // TODO(finnur): Until I've merged with my CL to support silent notifications
+  //               this test will fail because I'm not actually setting the
+  //               requireNotification bit.
+  NotificationData notification_data;
+  base::string16 xml_template;
+
+  std::vector<message_center::ButtonInfo> buttons;
+  ASSERT_NO_FATAL_FAILURE(
+      BuildTemplate(notification_data, buttons, &xml_template));
+
+  const wchar_t kExpectedXml[] =
+      LR"(<toast launch="notification_id" scenario="reminder">
+ <visual>
+  <binding template="ToastGeneric">
+   <text>My Title</text>
+   <text>My Message</text>
+   <text>example.com</text>
+  </binding>
+ </visual>
+ <actions>
+  <input id="userResponse" type="text" placeHolderContent="Reply here"/>
+  <action activationType="foreground" content="Button1" arguments="buttonIndex=0"/>
+  <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>
+ </actions>
+</toast>
+)";
+
+  EXPECT_EQ(xml_template, kExpectedXml);
+}

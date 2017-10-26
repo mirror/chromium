@@ -48,7 +48,8 @@ class NotificationTemplateBuilder {
 
   // Writes the <toast> element with the |notification_id| as the launch string.
   // Also closes the |xml_writer_| for writing as the toast is now complete.
-  void StartToastElement(const std::string& notification_id);
+  void StartToastElement(const std::string& notification_id,
+                         const message_center::Notification& notification);
   void EndToastElement();
 
   // Writes the <visual> element.
