@@ -1009,6 +1009,7 @@ jumbo_component("base") {
     "trace_event/tracing_agent.cc",
     "trace_event/tracing_agent.h",
     "tuple.h",
+    "unbindable_as_pointer.h",
     "unguessable_token.cc",
     "unguessable_token.h",
     "value_conversions.cc",
