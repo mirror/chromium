@@ -15996,25 +15996,27 @@ struct InitializeDiscardableTextureCHROMIUM {
 
   void SetHeader() { header.SetCmd<ValueType>(); }
 
-  void Init(GLuint _texture_id, uint32_t _shm_id, uint32_t _shm_offset) {
+  void Init(GLuint _texture_id, GLuint64 _handle_id) {
     SetHeader();
     texture_id = _texture_id;
-    shm_id = _shm_id;
-    shm_offset = _shm_offset;
+    GLES2Util::MapUint64ToTwoUint32(static_cast<uint64_t>(_handle_id),
+                                    &handle_id_0, &handle_id_1);
   }
 
-  void* Set(void* cmd,
-            GLuint _texture_id,
-            uint32_t _shm_id,
-            uint32_t _shm_offset) {
-    static_cast<ValueType*>(cmd)->Init(_texture_id, _shm_id, _shm_offset);
+  void* Set(void* cmd, GLuint _texture_id, GLuint64 _handle_id) {
+    static_cast<ValueType*>(cmd)->Init(_texture_id, _handle_id);
     return NextCmdAddress<ValueType>(cmd);
+  }
+
+  GLuint64 handle_id() const volatile {
+    return static_cast<GLuint64>(
+        GLES2Util::MapTwoUint32ToUint64(handle_id_0, handle_id_1));
   }
 
   gpu::CommandHeader header;
   uint32_t texture_id;
-  uint32_t shm_id;
-  uint32_t shm_offset;
+  uint32_t handle_id_0;
+  uint32_t handle_id_1;
 };
 
 static_assert(sizeof(InitializeDiscardableTextureCHROMIUM) == 16,
@@ -16026,11 +16028,11 @@ static_assert(
     offsetof(InitializeDiscardableTextureCHROMIUM, texture_id) == 4,
     "offset of InitializeDiscardableTextureCHROMIUM texture_id should be 4");
 static_assert(
-    offsetof(InitializeDiscardableTextureCHROMIUM, shm_id) == 8,
-    "offset of InitializeDiscardableTextureCHROMIUM shm_id should be 8");
+    offsetof(InitializeDiscardableTextureCHROMIUM, handle_id_0) == 8,
+    "offset of InitializeDiscardableTextureCHROMIUM handle_id_0 should be 8");
 static_assert(
-    offsetof(InitializeDiscardableTextureCHROMIUM, shm_offset) == 12,
-    "offset of InitializeDiscardableTextureCHROMIUM shm_offset should be 12");
+    offsetof(InitializeDiscardableTextureCHROMIUM, handle_id_1) == 12,
+    "offset of InitializeDiscardableTextureCHROMIUM handle_id_1 should be 12");
 
 struct UnlockDiscardableTextureCHROMIUM {
   typedef UnlockDiscardableTextureCHROMIUM ValueType;
