@@ -18,7 +18,8 @@ class FaviconService;
 
 // Request a favicon from |favicon_service| for the page at |page_url|.
 // |callback| is run when the the favicon has been fetched. If |type| is:
-// - favicon_base::FAVICON, the returned gfx::Image is a multi-resolution image
+// - favicon_base::IconType::kFavicon, the returned gfx::Image is a
+// multi-resolution image
 //   of gfx::kFaviconSize DIP width and height (the data from the cache is
 //   resized if need be),
 // - otherwise, the returned gfx::Image is a single-resolution image with the
