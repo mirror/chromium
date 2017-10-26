@@ -20,6 +20,7 @@ const char kActionElement[] = "action";
 const char kActionsElement[] = "actions";
 const char kActivationType[] = "activationType";
 const char kArguments[] = "arguments";
+const char kAudioElement[] = "audio";
 const char kBindingElement[] = "binding";
 const char kBindingElementTemplateAttribute[] = "template";
 const char kButtonIndex[] = "buttonIndex=";
@@ -29,7 +30,9 @@ const char kInputElement[] = "input";
 const char kInputId[] = "id";
 const char kInputType[] = "type";
 const char kPlaceholderContent[] = "placeHolderContent";
+const char kSilent[] = "silent";
 const char kText[] = "text";
+const char kTrue[] = "true";
 const char kUserResponse[] = "userResponse";
 const char kTextElement[] = "text";
 const char kToastElement[] = "toast";
@@ -69,6 +72,12 @@ std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
   builder->EndVisualElement();
 
   builder->AddActions(notification.buttons());
+
+  // At the moment, the only audio feature supported is silence.
+  if (notification.silent()) {
+    builder->StartAudioElement(notification);
+    builder->EndAudioElement();
+  }
 
   builder->EndToastElement();
 
@@ -177,6 +186,16 @@ void NotificationTemplateBuilder::StartActionsElement() {
 }
 
 void NotificationTemplateBuilder::EndActionsElement() {
+  xml_writer_->EndElement();
+}
+
+void NotificationTemplateBuilder::StartAudioElement(
+    const message_center::Notification& notification) {
+  xml_writer_->StartElement(kAudioElement);
+  xml_writer_->AddAttribute(kSilent, kTrue);
+}
+
+void NotificationTemplateBuilder::EndAudioElement() {
   xml_writer_->EndElement();
 }
 

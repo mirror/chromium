@@ -66,6 +66,10 @@ class NotificationTemplateBuilder {
   void StartActionsElement();
   void EndActionsElement();
 
+  // Writes the <audio> element.
+  void StartAudioElement(const message_center::Notification& notification);
+  void EndAudioElement();
+
   // Fills in the details for the actions.
   void AddActions(const std::vector<message_center::ButtonInfo>& buttons);
   void WriteActionElement(const message_center::ButtonInfo& button, int index);
