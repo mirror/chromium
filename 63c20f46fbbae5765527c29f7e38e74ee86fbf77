@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4a3db983_cb8f24ba",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-26T15:11:18Z",
+      "side": 1,
+      "message": "This only affects Chrome.  Should we always download multipart/related resources by default in all content/ embedders?  (Android Webview, chromecast, headless, external embedders, etc?)\n\nIf the motivation here is for security, I assume so?\n\nAlso, is this needed on platforms other than Android?  i.e., will we currently render MHTML on desktop without this?  I know offline pages is Android only, but I\u0027m not seeing why, without this, we wouldn\u0027t renderer MHTML on desktop.  Should we also test this on desktop?",
+      "revId": "63c20f46fbbae5765527c29f7e38e74ee86fbf77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f97b399f_e22e17c1",
         "filename": "net/test/embedded_test_server/request_handler_util.cc",
         "patchSetId": 8
