@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1950e61_dccc49ca",
+        "filename": "chrome/android/java/res/layout/contextual_search_bar_banner_text_view.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T23:20:23Z",
+      "side": 1,
+      "message": "Do these two text views ever get set to visible?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103e4b28_f6b11e29",
+        "filename": "chrome/android/java/res/layout/contextual_search_bar_banner_text_view.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T23:20:23Z",
+      "side": 1,
+      "message": "I don\u0027t think this line is necessary",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 39
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d62434_653b66d0",
+        "filename": "chrome/android/java/res/layout/contextual_search_bar_banner_text_view.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T23:20:23Z",
+      "side": 1,
+      "message": "This should use one of the text styles defined in ui/android/java/res/values-v17/styles.xml. This matches \"WhiteBody\", which can be set with android:textAppearance\u003d\"@style/WhiteBody\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34bf95d_4a46acbc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T23:20:23Z",
+      "side": 1,
+      "message": "I think we can do this in ContextualSearchPanelMetrics using existing functions rather than adding new #isEntityDataShown and #wasTriggedByTap methods to the management delegate interface.\n\nIn ContextualSearchPanelMetrics#onPanelStateChanged() there is a if (isEndingSearch) block we can hook into that knows how the panel was activated, whether it was opened, and whethedr entity data was shown.\n\nMaybe we should move all of the feature engagement notification over to the metrics class...\n\ndonnd@ - what do you think?",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 225,
+        "endChar": 13
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd51d4b_d2573683",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T23:20:23Z",
+      "side": 1,
+      "message": "Since contextual search code uses both DP and PX, let\u0027s document that this is using PX",
+      "range": {
+        "startLine": 642,
+        "startChar": 66,
+        "endLine": 642,
+        "endChar": 77
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e28e07_8c4649f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T23:20:23Z",
+      "side": 1,
+      "message": "I think what we really want is the \"bar\" rect, rather than the entire panel since the panel height is dependent on the current panel state. Check out OverlayPanelBase#getBarHeight().",
+      "range": {
+        "startLine": 644,
+        "startChar": 16,
+        "endLine": 644,
+        "endChar": 28
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24444cc7_4acc2e3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T23:20:23Z",
+      "side": 1,
+      "message": "Should we do this check in maybeShow() so that it applies to the bar banner as well?",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 90
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a3454a_37a115b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T23:20:23Z",
+      "side": 1,
+      "message": "Since both bubbles are controlled by the feature engagement backend, it shouldn\u0027t be possible to a help bubble to be showing at this point. I think this block can be removed. If we want to ensure that a CS help bubble isn\u0027t showing, let\u0027s set mHelpBubble \u003d null in the onDismissListener below then assert mHelpBubble \u003d\u003d null here.",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 9
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d1a115_9786e869",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T23:20:23Z",
+      "side": 1,
+      "message": "In the C++ code, we draw the panel shadow using negative positioning, and start drawing the bar at position \"0\": https://cs.chromium.org/chromium/src/chrome/browser/android/compositor/layer/overlay_panel_layer.cc?q\u003doverlay_panel_layer\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d97\n\nI think it\u0027s okay to use an inset for UX purposes, but just wanted to point this out. If the goal is align the bubble with the top edge of the bar, we should be able to figure it out programatically.",
+      "range": {
+        "startLine": 85,
+        "startChar": 24,
+        "endLine": 85,
+        "endChar": 55
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3078e850_827b0ca3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T23:20:23Z",
+      "side": 1,
+      "message": "I think adding this new method is a bit confusing because this class already knows about and manages panel shows in other methods. Can we hook into #showContextualSearch()?\n\nWe should also figure out the ordering of CONTEXTUAL_SEARCH_FEATURE and CONTEXTUAL_SEARCH_TAP_FEATURE since they both occur after a long-press triggers contextual search. One idea is to let ContextualSearchIPH handle determining which in-product help to show. Instead of simply creating the UI in response to a request, the ContextualSearchIPH class could control which IPH is showing based on some parameters.\n\nAll of the IPH\u0027s are triggered when the panel is showing, so maybe when the panel is shown, we can call ContextualSearchIPH#onPanelShown(boolean wasTriggeredByTap, boolean hasEntityData, ...). Similarly, when the panel is opened/dismissed we could call ContextualSearchIPH methods. We could have 1 ContextualSearchIPH object that lives for the lifetime of the application. Or we could destroy and recreate it every time contextual search is shown/hidden.",
+      "range": {
+        "startLine": 1256,
+        "startChar": 3,
+        "endLine": 1261,
+        "endChar": 5
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9e0f80_acf2b87d",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 9
+      },
+      "lineNbr": 2853,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T23:20:23Z",
+      "side": 1,
+      "message": "Since these strings aren\u0027t final yet, please add a note to the end of the description saying something like \"This is a placeholder while the string is being finalized. Do not translate for now.\"",
+      "range": {
+        "startLine": 2853,
+        "startChar": 61,
+        "endLine": 2853,
+        "endChar": 201
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
