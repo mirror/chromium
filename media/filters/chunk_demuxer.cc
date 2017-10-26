@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "media/base/audio_decoder_config.h"
@@ -890,6 +891,13 @@ bool ChunkDemuxer::AppendData(const std::string& id,
                                            append_window_end,
                                            timestamp_offset)) {
           ReportError_Locked(CHUNK_DEMUXER_ERROR_APPEND_FAILED);
+
+          // Crash with a 1/10 chance to investigate https://crbug.com/778363.
+          // TODO(crbug.com/778363): Remove after investigation is done.
+          int n = base::RandInt(1, 10);
+          if (n == 1)
+            CHECK(false) << "Crash to help investigate crbug.com/778363";
+
           return false;
         }
         break;
