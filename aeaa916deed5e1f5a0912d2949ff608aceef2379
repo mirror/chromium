@@ -52,6 +52,24 @@
       "revId": "aeaa916deed5e1f5a0912d2949ff608aceef2379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e24d3fc_1962cf78",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-26T17:51:58Z",
+      "side": 1,
+      "message": "Is the zooming out happening accidentally when user taps somewhere? You can probably prevent it with touch-action: none;\n\nAlso see updated example at https://jsfiddle.net/bkccrsd4/1/ where the dialog remains centered in both dimensions as the window gets resized. Perhaps creating a minimal repro of the problem you are facing could help find a solution.",
+      "parentUuid": "35d0cf94_67f18e70",
+      "revId": "aeaa916deed5e1f5a0912d2949ff608aceef2379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
