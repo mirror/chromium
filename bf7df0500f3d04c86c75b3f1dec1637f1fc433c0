@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "7532ef1b_30cafedf",
+        "filename": "chromeos/dbus/fake_image_loader_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-10-26T23:12:51Z",
+      "side": 1,
+      "message": "And I think unit test is not necessary in this case for FakeImageLoaderClient since its logic is  just to map each method to its corresponding imageloader API in a linear fashion and unit test is unable to verity method call since imageloader is not availble.",
+      "parentUuid": "e9022e28_d5d55e07",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "bf7df0500f3d04c86c75b3f1dec1637f1fc433c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fdbdc4a_53fe6ef8",
         "filename": "chromeos/dbus/image_loader_client.h",
         "patchSetId": 2
