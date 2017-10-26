@@ -16,6 +16,24 @@
       "revId": "2fc3db4d7c9c673ebff04033320a3ed31dc91656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb1a512_6941d1fc",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-26T15:34:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c96200_85521552",
+      "revId": "2fc3db4d7c9c673ebff04033320a3ed31dc91656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
