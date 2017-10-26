@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4d4613d4_98ae09d3",
+        "filename": "cc/input/page_scale_animation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-26T15:22:21Z",
+      "side": 1,
+      "message": "Ok, thanks (and sorry for the delay). I\u0027ll try to reproduce and debug why that\u0027s the case tomorrow when I get to a Mac. I think we should probably ensure that the root layer is always at least as large as the viewport (I specifically remember adding that logic so it maybe broke or this is an edge case) but I\u0027d like to understand this better first.\n\nThat aside, if shrike@ is fine with the current bahavior the code looks good to me. Otherwise, you\u0027d have to add a ChromeOS setting to base this off.",
+      "parentUuid": "d7be7cef_3c3248aa",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 51
+      },
+      "revId": "7182501025f46a5a1f63f54db1804dadc39ee9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "691b8a59_156e6640",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 9
