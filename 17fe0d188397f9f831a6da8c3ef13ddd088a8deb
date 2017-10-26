@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a3cc9b2_91676845",
+        "filename": "testing/libfuzzer/fuzzers/icu_fuzzer_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-10-26T20:17:52Z",
+      "side": 1,
+      "message": "Didn\u0027t realize that this had been copied from v8. v8 fixed this issue recently. :-)",
+      "parentUuid": "e66381b9_147d9285",
+      "range": {
+        "startLine": 108,
+        "startChar": 5,
+        "endLine": 108,
+        "endChar": 41
+      },
+      "revId": "17fe0d188397f9f831a6da8c3ef13ddd088a8deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "795996b0_e8075167",
         "filename": "testing/libfuzzer/fuzzers/icu_fuzzer_common.cc",
         "patchSetId": 3
