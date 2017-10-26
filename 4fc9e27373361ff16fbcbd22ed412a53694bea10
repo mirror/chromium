@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5d1a7a1b_0f1f7318",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-26T17:23:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42133fd4_745120f9",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd217eea_34f7bdef",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Yes, by std::iterator_traits used by std::equal used by Range::operator\u003d\u003d.\nI added a comment.",
       "parentUuid": "fd217eea_34f7bdef",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21fc9f74_249de540",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-26T17:23:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "afd32540_0f55e266",
       "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "d9d72008_401935da",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-26T17:23:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "24893b7b_1164266c",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28206025_cce842bc",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
         "patchSetId": 1
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "Yes. Is there something odd in the formatting?",
       "parentUuid": "28206025_cce842bc",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9822eab1_18599d86",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-26T17:23:10Z",
+      "side": 1,
+      "message": "No, I was just wondering. (I hate how clang-format formats some things, but have given up arguing with clang-format.)",
+      "parentUuid": "aea4ffa8_e5f79ee6",
       "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -177,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "eb4f3cfa_e1ef5262",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-26T17:23:10Z",
+      "side": 1,
+      "message": "Ok. I was just curious.",
+      "parentUuid": "93493590_3c013fbf",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78bc6727_9b5912e5",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
         "patchSetId": 1
@@ -212,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "2f3cabeb_c93ec26d",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-26T17:23:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d811db57_3abbd157",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1cb0a33_b6cc8b61",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
         "patchSetId": 1
@@ -241,6 +349,41 @@
       "side": 1,
       "message": "Because float epsilon is about 1.19e-7 and because 1e-6 is about one order of magnitude greater than that and thus quite good error estimate. I find that estimate good enough here.",
       "parentUuid": "e1cb0a33_b6cc8b61",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89341826_f411e2fc",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-26T17:23:10Z",
+      "side": 1,
+      "message": "Most webaudio layout tests try to pick very tight thresholds suitable for all the platforms.  This makes it easier to see if we\u0027ve accidentally regressed something. (We\u0027d do it by platform and OS if we could.)\n\nI\u0027m ok with 1e-6.  But isn\u0027t single-float epsilon about 5.96e-8 and not 1.19e-7?",
+      "parentUuid": "abf211fd_1bbf9348",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2299303d_5db21559",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-26T17:23:10Z",
+      "side": 1,
+      "message": "Although I suspect this doesn\u0027t actually happen in WebAudio usage, can we get tests where real1*real2 and imag1*imag2 both overflow?  Then the expected real result should be NaN and the imag result should be +/- infinity.\n\nIf this is a a bit of work, I\u0027m ok with what you have now.",
       "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
