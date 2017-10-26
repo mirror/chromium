@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2836d9d8_ca712ea1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-26T23:30:44Z",
+      "side": 1,
+      "message": "Do we really need visual order API for SelectionController?\n\nSince SelectionController is for creating selection instead of moving caret, and we don\u0027t support multi-range selection for bidi-mixed content, I think SC can work on logical text.",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "97b902547040ebad7a9ac01ce0fba7099f7c5d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0e6fa6_5a2118a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-26T23:30:44Z",
+      "side": 1,
+      "message": "Seems done by TextIterator...",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "97b902547040ebad7a9ac01ce0fba7099f7c5d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

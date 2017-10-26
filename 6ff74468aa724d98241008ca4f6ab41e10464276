@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "783d8446_18c23120",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-26T23:30:44Z",
+      "side": 1,
+      "message": "Does it make sense to pass PositionWithAffinity to AdjustPositionForMapping(), so that we can also handle block-anchored positions?\n\nFor example, if we have\n\n\u003cdiv id\u003dcontainer\u003e\n  foo\n  \u003cdiv id\u003dchild\u003ebar\u003c/div\u003e\n  baz\n\u003c/div\u003e\n\n(#child@BeforeAnchor, upstream) should be adjusted to \"foo\"@3\n(#child@AfterAnchor, downstream) should be adjusted to \"bar\"@0\n\nIn fact I\u0027d like to add the entire logic into offset mapping so that it can also handle block-anchored positions by adjusting them to the correct inline. WDYT?\n\nBtw, it seems tricky when there are empty blocks. Seems that we should skip them during adjustion.",
+      "range": {
+        "startLine": 625,
+        "startChar": 10,
+        "endLine": 625,
+        "endChar": 41
+      },
+      "revId": "6ff74468aa724d98241008ca4f6ab41e10464276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
