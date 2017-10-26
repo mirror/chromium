@@ -313,6 +313,12 @@ cr.define('extensions', function() {
     computeWarningsClasses_: function() {
       return this.data.blacklistText ? 'severe' : 'mild';
     },
+
+    appOrExtension_: function(type, appLabel, extensionLabel) {
+      return (type == chrome.developerPrivate.ExtensionType.EXTENSION) ?
+          extensionLabel :
+          appLabel;
+    },
   });
 
   return {
