@@ -117,6 +117,30 @@
       "revId": "d392aea08b2fbe3167ae4c360a502414061c9e26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a5b4255_aab089ca",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-26T17:55:30Z",
+      "side": 1,
+      "message": "The call would be rejected with an INVALID_ID error.\n\nBackgroundFetchServiceImpl::Abort\n--\u003e BackgroundFetchContext::Abort\n--\u003e BackgroundFetchContext::DidFinishJob\n--\u003e BackgroundFetchDataManager::MarkRegistrationForDeletion\n--- --\u003e Registration for |unique_id| does not exist: INVALID_ERROR w/ bail out",
+      "parentUuid": "c3993f32_52419641",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 85,
+        "endChar": 32
+      },
+      "revId": "d392aea08b2fbe3167ae4c360a502414061c9e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
