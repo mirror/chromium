@@ -133,6 +133,8 @@ const gpu::GpuPreferences GetGpuPreferencesFromCommandLine() {
       (gpu_preferences.single_process || gpu_preferences.in_process_gpu);
   gpu_preferences.gpu_sandbox_start_early =
       command_line->HasSwitch(switches::kGpuSandboxStartEarly);
+  gpu_preferences.disable_gpu_compositing =
+      command_line->HasSwitch(switches::kDisableGpuCompositing);
   // Some of these preferences are set or adjusted in
   // GpuDataManagerImplPrivate::AppendGpuCommandLine.
   return gpu_preferences;
