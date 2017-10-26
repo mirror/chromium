@@ -10,7 +10,7 @@ After setting suggestedValue:
 |     <div>
 |       id="placeholder"
 |       pseudo="-webkit-input-suggested"
-|       style="display: none !important;"
+|       style="display: block !important;"
 |       shadow:pseudoId="-webkit-input-suggested"
 |       "suggested value"
 |     <div>
