@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea30e9e0_c7783e39",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7132,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-26T22:21:40Z",
+      "side": 0,
+      "message": "By definition, this CL breaks this test (since a frame can no longer navigate itself back via its children). It\u0027s not clear to me if there\u0027s still anything interesting to test after this CL. Given the following set of frames:\n\nmain -\u003e child -\u003e grandchild\n\n1. grandchild does a push state on the main frame and sets an unload listener to do top.history.back() in unload.\n2. test harness reloads just the child frame\n3. grandchild frame is unloaded. since it goes back in the context of the main frame, the history navigation is not blocked.\n4. this is a same document navigation on the main frame and shouldn\u0027t affect the loading status of child.\n\nGiven that, I\u0027m not sure what there is to test so I removed it. Happy to hear alternate opinions though.",
+      "revId": "3704146ff021d9e035a2fda201fb983811c10582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

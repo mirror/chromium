@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2536d1_527672c0",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-26T22:21:40Z",
+      "side": 1,
+      "message": "There\u0027s an inconsistency here between local frames and remote frames: when detaching the subtree of a remote frame (potentially in preparation for a commit), the children can navigate |this|, whereas that\u0027s not possible for a local frame. I\u0027m looking into potentially addressing that in this CL, but it will likely be a followup.",
+      "revId": "7f6bb580327af1307482aa446b431b7362e094c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

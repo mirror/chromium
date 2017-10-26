@@ -34,6 +34,24 @@
       "revId": "7ff332470340943fad856cf758eba00f4d3c1c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2dab571_3c5cbbca",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-26T22:21:40Z",
+      "side": 0,
+      "message": "Note: I\u0027m still investigating this. I\u0027m not convinced it\u0027s necessary, because it should be explicitly OK to navigate at that point: the frame tree should be in a consistent state. But I\u0027m not 100% sure either \u003d)",
+      "parentUuid": "36e982b2_e7818a7f",
+      "revId": "7ff332470340943fad856cf758eba00f4d3c1c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80c31850_9345c18d",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/back-in-unload.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-26T22:21:40Z",
+      "side": 1,
+      "message": "This test doesn\u0027t fail before my changes, but the internal flow is a bit different: with the original code, the history navigation actually goes through but doesn\u0027t win the race. With the new code, the history navigation doesn\u0027t go through at all. Not sure how to make that show up in the layout test results though...",
+      "revId": "b8639e3f7ccdee606b7717b8f5ba22768314c3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
