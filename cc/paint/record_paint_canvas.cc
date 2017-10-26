@@ -287,10 +287,12 @@ void RecordPaintCanvas::drawPicture(sk_sp<const PaintRecord> record) {
 }
 
 bool RecordPaintCanvas::isClipEmpty() const {
+  DCHECK(!recording_bounds_.isEmpty());
   return GetCanvas()->isClipEmpty();
 }
 
 bool RecordPaintCanvas::isClipRect() const {
+  DCHECK(!recording_bounds_.isEmpty());
   return GetCanvas()->isClipRect();
 }
 
