@@ -7,6 +7,7 @@
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/keyboard/container_type.h"
 #include "ui/keyboard/drag_descriptor.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_ui.h"
@@ -35,6 +36,10 @@ constexpr int kDragHandleSquareMargin = 60;
 
 ContainerFloatingBehavior::ContainerFloatingBehavior() {}
 ContainerFloatingBehavior::~ContainerFloatingBehavior() {}
+
+ContainerType ContainerFloatingBehavior::GetType() const {
+  return ContainerType::FLOATING;
+}
 
 void ContainerFloatingBehavior::DoHidingAnimation(
     aura::Window* container,
