@@ -233,8 +233,8 @@ void CookieManagerImpl::NotificationPipeBroken(
 }
 
 void CookieManagerImpl::CloneInterface(
-    network::mojom::CookieManagerRequest new_interface) {
-  AddRequest(std::move(new_interface));
+    network::mojom::CookieManagerRequest new_interface_provider) {
+  AddRequest(std::move(new_interface_provider));
 }
 
 }  // namespace content

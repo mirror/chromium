@@ -95,10 +95,9 @@ void RenderFrameHostManager::Init(SiteInstance* site_instance,
   // https://crbug.com/545684
   DCHECK(!frame_tree_node_->IsMainFrame() ||
          view_routing_id == widget_routing_id);
-  SetRenderFrameHost(CreateRenderFrameHost(site_instance, view_routing_id,
-                                           frame_routing_id, widget_routing_id,
-                                           delegate_->IsHidden(),
-                                           renderer_initiated_creation));
+  SetRenderFrameHost(CreateRenderFrameHost(
+      site_instance, view_routing_id, frame_routing_id, widget_routing_id,
+      delegate_->IsHidden(), renderer_initiated_creation));
 
   // Notify the delegate of the creation of the current RenderFrameHost.
   // Do this only for subframes, as the main frame case is taken care of by
@@ -1769,10 +1768,9 @@ std::unique_ptr<RenderFrameHostImpl> RenderFrameHostManager::CreateRenderFrame(
           instance) {
     widget_routing_id = instance->GetProcess()->GetNextRoutingID();
   }
-
-  new_render_frame_host = CreateRenderFrameHost(
-      instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, widget_routing_id, hidden,
-      false);
+  new_render_frame_host =
+      CreateRenderFrameHost(instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE,
+                            widget_routing_id, hidden, false);
   RenderViewHostImpl* render_view_host =
       new_render_frame_host->render_view_host();
 
