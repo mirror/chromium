@@ -137,6 +137,10 @@ void Button::SetState(ButtonState state) {
   SchedulePaint();
 }
 
+Button::ButtonState Button::GetOverridableState() const {
+  return state();
+}
+
 void Button::StartThrobbing(int cycles_til_stop) {
   if (!animate_on_state_change_)
     return;

@@ -96,6 +96,11 @@ class VIEWS_EXPORT Button : public InkDropHostView,
   // will also set the state of |this| to STATE_DISABLED.
   void SetState(ButtonState state);
 
+  // Get the button state for the purposes of drawing.  Used by
+  // AvatarButton to override the state when the ProfileChooserMenu is
+  // showing.
+  virtual ButtonState GetOverridableState() const;
+
   // Starts throbbing. See HoverAnimation for a description of cycles_til_stop.
   // This method does nothing if |animate_on_state_change_| is false.
   void StartThrobbing(int cycles_til_stop);
