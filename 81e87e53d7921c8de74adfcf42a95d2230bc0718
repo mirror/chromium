@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e364e96_451bb5ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "Add some additional context. eg that this is a stub implementation and that future CL\u0027s will implement. Also add a reference to this bug - https://bugs.chromium.org/p/chromium/issues/detail?id\u003d778791\n\nThe format is BUG\u003dchromium:778791",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81e1cb3_87909d91",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "Remove the comment before we commit.",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621bb103_4024c29c",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "It looks like you need to sync because this field should be called provider_id now. So you need o sync and rebase to pull in your previous change.\n\nFind where CreateProvidedFileSystem gets tested and add a test with this provider_id, then verify the fields by using the GetFileSystemInfo() method on the interface.",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a977351d_73793cba",
+        "filename": "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "You can put \u003ddefault in the header file.",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5550fe8_b225d6cd",
+        "filename": "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "This one is basically implemented and you might be able to use to write a test.",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46bd212_65bc851f",
+        "filename": "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "Implement this since it\u0027s trivial.",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed34cc1_3354e0c6",
+        "filename": "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "This comment looks wrong.",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bd90de_27a47242",
+        "filename": "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "See where the other implementation calls create. The code in service seems to just call the constructor? Though if this is here we should just implement it since it is trivial.",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26895a95_70bc9deb",
+        "filename": "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "Several of these aren\u0027t part of the interface. We can add similar functions back later if we need them but let\u0027s just stick to the minimal requirements of the interface.",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623df51f_22ce7e17",
+        "filename": "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "Stray comment?",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c8651a_2eb9c009",
+        "filename": "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "These functions aren\u0027t part of the interface and we may not even need them in the new implementation.",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a092de90_b25820ce",
+        "filename": "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-26T20:51:38Z",
+      "side": 1,
+      "message": "Remove the fields that aren\u0027t needed for the interface. tracker_ ? I think observers_ too.",
+      "revId": "81e87e53d7921c8de74adfcf42a95d2230bc0718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
