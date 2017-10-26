@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "028daf79_a12a9723",
+        "filename": "chrome/browser/vr/elements/speech_recognition_prompt.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-26T19:07:46Z",
+      "side": 1,
+      "message": "Great suggestion. Removed this file completely! Moved animation logic to rect.",
+      "parentUuid": "0472e433_5417f7c3",
+      "revId": "6feb59167269b106998cf77313c0eafc5de2cbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03546cc3_def2a549",
         "filename": "chrome/browser/vr/elements/vector_icon_button_texture.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-25T18:28:37Z",
       "side": 1,
       "message": "In a follow up patch, it would be nice to break the vector icon button into constituent components as well so that we can do the \"explode on hover\" effect.",
+      "revId": "6feb59167269b106998cf77313c0eafc5de2cbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547b28bb_48d3f9c4",
+        "filename": "chrome/browser/vr/elements/vector_icon_button_texture.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-26T19:07:46Z",
+      "side": 1,
+      "message": "ack. will address in a follow up patch",
+      "parentUuid": "03546cc3_def2a549",
       "revId": "6feb59167269b106998cf77313c0eafc5de2cbb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4884ceb6_7aeca91c",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-26T19:07:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcd7398c_bcb56320",
+      "revId": "6feb59167269b106998cf77313c0eafc5de2cbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "163d5c27_55b1f1a1",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-25T18:28:37Z",
       "side": 1,
       "message": "Could you please add a voice_search_available (triggered by this feature) to the model and bind it to the button\u0027s visibility?",
+      "revId": "6feb59167269b106998cf77313c0eafc5de2cbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d19f67_a602c0d6",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-26T19:07:46Z",
+      "side": 1,
+      "message": "The visibility also controlled by control_visible above as it is a control element. It is not entirely triggered by the flag. But if the flag is false, it should be forced to false. We don\u0027t have control_visible state in model yet. So perhaps keep it as it is for now? Plumbing control_visible to model is probably not going to be super trivial.",
+      "parentUuid": "163d5c27_55b1f1a1",
       "revId": "6feb59167269b106998cf77313c0eafc5de2cbb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
