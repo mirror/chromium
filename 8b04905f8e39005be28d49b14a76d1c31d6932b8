@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "9ad44ab2_b3dea105",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-26T02:15:59Z",
+      "side": 1,
+      "message": "Does the following work?\n\nin vaapi_jpeg_encode_accelerator.h:\n\n  std::unique_ptr\u003cEncoder, base::OnTaskRunnerDeleter\u003e encoder_;\n\nin vaapi_jpeg_encode_accelerator.cc:\n\n  encoder_ \u003d std::unique_ptr\u003cEncoder, base::OnTaskRunnerDeleter\u003e(\n      new Encoder(\n          std::move(vaapi_wrapper),\n          BindToCurrentLoop(base::BindRepeating(\n              \u0026VaapiJpegEncodeAccelerator::VideoFrameReady, weak_this_)),\n          BindToCurrentLoop(base::BindRepeating(\n              \u0026VaapiJpegEncodeAccelerator::NotifyError, weak_this_))),\n      base::OnTaskRunnerDeleter(encoder_task_runner_));\n\nAnyway, this is not super important and I\u0027m fine with the current implementation as well.",
+      "parentUuid": "449d8961_57a44df8",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 67
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eb94f9f_7e88fd9a",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 15
@@ -152,6 +176,30 @@
       "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ced654c_a3fb5da7",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-26T02:15:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "095c8b77_2443bc06",
+      "range": {
+        "startLine": 258,
+        "startChar": 17,
+        "endLine": 258,
+        "endChar": 49
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
