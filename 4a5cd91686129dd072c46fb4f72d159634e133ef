@@ -233,6 +233,24 @@
       "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aec8cce_efafb3c9",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-26T19:46:27Z",
+      "side": 1,
+      "message": "Ah, so the goal is to keep it alive even after the ClassicPendingScript?\n\nWould you mind expanding the comment to clarify why it\u0027s desirable to keep the resource alive? Is there some undesirable side effect to finalization of a ScriptResource? Do we want to ensure that its entry in a weak map is kept alive?\n\nOrdinarily we are happy to have GC objects collected, so it\u0027s not immediately apparent to me as a reader why we want it to live in this case. There\u0027s an allusion to DevTools layout test failures in the CL description, but if that\u0027s the only reason, it sounds like it\u0027s likely to be a bug in the test that we should eventually correct.",
+      "parentUuid": "21cf28da_ade705d4",
+      "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
