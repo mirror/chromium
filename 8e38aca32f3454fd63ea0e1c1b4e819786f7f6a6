@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23f764bd_dc650202",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T05:17:58Z",
+      "side": 1,
+      "message": "File a bug on storage code and add a TODO here. Basically the storage code should make sure if the returned base::File() is dropped, it\u0027s posted back to the file thread to be deleted. This solution works for the case when CdmFileImpl is destroyed, but it still doesn\u0027t fix the issue if OnFleOpened() task is dropped in the task runner.",
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f287e17_73417796",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T05:17:58Z",
+      "side": 1,
+      "message": "Seems like the test is still failing on this. We are derefing a null scoped_refptr somewhere.",
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e25729_109c2d84",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T05:17:58Z",
+      "side": 1,
+      "message": "This should be equivalent to DCHECK_EQ(LockState::kOpenForReadAndWrite, lock_state_), and we can DCHECK it?",
+      "range": {
+        "startLine": 312,
+        "startChar": 6,
+        "endLine": 312,
+        "endChar": 69
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce3c7ae_91ae94c6",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T05:17:58Z",
+      "side": 1,
+      "message": "\"linked\" is ambiguous. The life time of this object is managed by the StrongBindingSet, which is CdmStorageImpl\u0027s impl detail, we probably don\u0027t care about that in this class.\n\nThat said, it\u0027s still valuable to say it\u0027s using the same pipe as CdmStorageImpl since it\u0027s using associated interface, to enforce message dispatch order.",
+      "range": {
+        "startLine": 27,
+        "startChar": 68,
+        "endLine": 27,
+        "endChar": 74
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c8552d_f77a9604",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T05:17:58Z",
+      "side": 1,
+      "message": "This is correct, but not what I meant.\n\nWhat I meant is that when this function calls file_opened_callback.Run(...), in that callstack, |this| can be destroyed. This is important because if we do something like this we\u0027ll crash:\n\nvoid Initialize(OpenFileCallback file_opened_callback) {\n  DoWork();\n  std::move(file_opened_callback).Run(...);  // |this| is deleted.\n  DoMoreWork();  // Crash!\n}",
+      "range": {
+        "startLine": 41,
+        "startChar": 59,
+        "endLine": 43,
+        "endChar": 77
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c05120e_daa8df8b",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T05:17:58Z",
+      "side": 1,
+      "message": "Since this is \"LockState\" now, how about:\nkFileLocked,\nkFileAndTempFileLocked",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 66
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f7d874_6868740f",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T05:17:58Z",
+      "side": 1,
+      "message": "optional nit: I am not a fan of reusing variables for different purposes. I thought it\u0027s against the style guide but I can\u0027t find any explicit rule on that. After all, we are just lucky that all the callbacks have the same signature... Also, this makes it harder to track what\u0027s going on or what state we are in. I suggest we just define 3 callbacks here so that we can clearly DCHECK what state we are at. This can also help catch tricky bugs. But I don\u0027t have strong opinion on this.",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 42
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cf178a_53d5781f",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T05:17:58Z",
+      "side": 1,
+      "message": ", which should be called when the file is closed.",
+      "range": {
+        "startLine": 101,
+        "startChar": 53,
+        "endLine": 101,
+        "endChar": 54
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
