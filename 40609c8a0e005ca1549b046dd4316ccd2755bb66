@@ -70,6 +70,30 @@
       "revId": "40609c8a0e005ca1549b046dd4316ccd2755bb66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5649d36_5618946e",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-10-26T12:39:45Z",
+      "side": 1,
+      "message": "Can\u0027t we just do what Peter suggested but add our own private dimen, set to the same value as the support library does? (13 sp) i.e.\n\n\u003cstyle name\u003d\"TextAppearance.StatusBar.EventContent.Line2\"\u003e\n    \u003citem name\u003d\"textSize\"\u003e@dimen/notification_subtext_size\u003c/item\u003e\n\u003c/style\u003e\n\nand in dimens.xml\n    \u003cdimen name\u003d\"notification_subtext_size\"\u003e13sp\u003c/dimen\u003e\n\n(Weirdly the framework has @dimen/notification_subtext_size set to 12sp, I don\u0027t know the reason for this inconsistency..)",
+      "parentUuid": "6f5dbcd9_cfb44d73",
+      "range": {
+        "startLine": 409,
+        "startChar": 16,
+        "endLine": 409,
+        "endChar": 74
+      },
+      "revId": "40609c8a0e005ca1549b046dd4316ccd2755bb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
