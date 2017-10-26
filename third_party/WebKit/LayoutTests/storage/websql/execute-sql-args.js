@@ -32,9 +32,11 @@ var expectNoException = [
     '"", null, null',
     '"", null, undefined',
     '"", null, function(){}',
+    '"", null, {}',
     '"", null, null, null',
     '"", null, null, undefined',
     '"", null, null, function(){}',
+    '"", null, null, {}',
 ];
 
 var expectException = [
@@ -50,10 +52,8 @@ var expectException = [
     '"", { length: 1, 0: "arg0" }',
     '"", null, 0',
     '"", null, ""',
-    '"", null, { }',
     '"", null, null, 0',
     '"", null, null, ""',
-    '"", null, null, { }',
 ];
 
 function tryExecuteSql(transaction, parameterList)
