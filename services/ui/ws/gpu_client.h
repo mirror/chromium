@@ -41,8 +41,8 @@ class GpuClient : public mojom::Gpu {
   friend class test::GpuHostTest;
 
   // EstablishGpuChannelCallback:
-  void OnGpuChannelEstablished(mojo::ScopedMessagePipeHandle channel_handle);
-
+  void OnGpuChannelEstablished(const EstablishGpuChannelCallback& callback,
+                               mojo::ScopedMessagePipeHandle channel_handle);
   // mojom::Gpu overrides:
   void EstablishGpuChannel(
       const EstablishGpuChannelCallback& callback) override;

@@ -104,7 +104,7 @@ void GpuHostTest::DestroyHost() {
 
 void GpuHostTest::SetUp() {
   testing::Test::SetUp();
-  gpu_host_ = base::MakeUnique<DefaultGpuHost>(&gpu_host_delegate_);
+  gpu_host_ = base::MakeUnique<DefaultGpuHost>(&gpu_host_delegate_, nullptr);
   gpu_service_->Bind(mojo::MakeRequest(&gpu_service_ptr_));
   gpu_host_->gpu_service_ = std::move(gpu_service_ptr_);
 }
@@ -117,20 +117,6 @@ TEST_F(GpuHostTest, GpuClientDestructionOrder) {
   EXPECT_NE(nullptr, client_ref);
   DestroyHost();
   EXPECT_EQ(nullptr, client_ref);
-}
-
-TEST_F(GpuHostTest, GpuClientDestroyedWhileChannelRequestInFlight) {
-  base::WeakPtr<GpuClient> client_ref = AddGpuClient();
-  mojom::Gpu* gpu = client_ref.get();
-  bool callback_called = false;
-  gpu->EstablishGpuChannel(
-      base::Bind([](bool* callback_called, int, mojo::ScopedMessagePipeHandle,
-                    const gpu::GPUInfo&,
-                    const gpu::GpuFeatureInfo&) { *callback_called = true; },
-                 &callback_called));
-  EXPECT_FALSE(callback_called);
-  DestroyHost();
-  EXPECT_TRUE(callback_called);
 }
 
 }  // namespace test
