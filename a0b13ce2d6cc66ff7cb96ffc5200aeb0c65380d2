@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b304f3c4_e09c3475",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controlling.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-26T11:37:39Z",
+      "side": 1,
+      "message": "Should we update this parameter to be named \"screenWidth\" too?",
+      "revId": "a0b13ce2d6cc66ff7cb96ffc5200aeb0c65380d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052e678b_d96cd5a9",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-26T11:37:39Z",
+      "side": 1,
+      "message": "Is it worth commenting that the contentOffset has already been adjusted to account for the safeArea, or is that obvious to anyone working in this code?",
+      "revId": "a0b13ce2d6cc66ff7cb96ffc5200aeb0c65380d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4bbe9b4_6f0592d7",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-26T11:37:39Z",
+      "side": 1,
+      "message": "This is unusual enough that it could use a comment explaining why.",
+      "revId": "a0b13ce2d6cc66ff7cb96ffc5200aeb0c65380d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
