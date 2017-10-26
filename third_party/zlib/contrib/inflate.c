@@ -84,7 +84,7 @@
 #include "inftrees.h"
 #include "inflate.h"
 #include "inffast.h"
-#include "contrib/arm/chunkcopy.h"
+#include "contrib/chunkcopy.h"
 
 #ifdef MAKEFIXED
 #  ifndef BUILDFIXED
