@@ -251,6 +251,24 @@
       "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cded930_f515b9a5",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-26T21:29:29Z",
+      "side": 1,
+      "message": "\u003e Would you mind expanding the comment to clarify why it\u0027s desirable to keep the resource alive?\n\nThis is to leave ScriptResource on MemoryCache.\n(I noticed I forgot mentioning MemoryCache explicitly. I updated the comment and CL description)\n\nThe Blink loading team hasn\u0027t reached a consensus on whether we should garbage collect the\nScriptResource after script is executed (crbug.com/778799), so this CL keeps the existing\nbehavior anyway.",
+      "parentUuid": "3aec8cce_efafb3c9",
+      "revId": "4a5cd91686129dd072c46fb4f72d159634e133ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
