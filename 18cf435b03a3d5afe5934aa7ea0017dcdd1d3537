@@ -22,6 +22,30 @@
       "revId": "18cf435b03a3d5afe5934aa7ea0017dcdd1d3537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e18c717_25727a31",
+        "filename": "chrome/test/base/ui_test_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-26T17:02:09Z",
+      "side": 1,
+      "message": "IIRC, I wrote geolocation.mojom back in 2014, way before we had typemapping etc.",
+      "parentUuid": "6bac8c36_d63c5415",
+      "range": {
+        "startLine": 506,
+        "startChar": 11,
+        "endLine": 506,
+        "endChar": 21
+      },
+      "revId": "18cf435b03a3d5afe5934aa7ea0017dcdd1d3537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
