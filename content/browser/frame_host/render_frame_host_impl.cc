@@ -121,6 +121,7 @@
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/common/url_loader_factory_bundle.mojom.h"
 #include "content/public/common/url_utils.h"
 #include "device/vr/vr_service.mojom.h"
 #include "media/base/media_switches.h"
@@ -153,6 +154,7 @@
 #include "ui/gfx/geometry/quad_f.h"
 #include "url/gurl.h"
 #include "url/origin.h"
+#include "url/url_constants.h"
 
 #if defined(OS_ANDROID)
 #include "content/browser/android/java_interfaces_impl.h"
@@ -3339,7 +3341,7 @@ void RenderFrameHostImpl::CommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
     bool is_view_source,
-    mojom::URLLoaderFactoryPtrInfo subresource_url_loader_factory_info) {
+    mojom::URLLoaderFactoryPtrInfo subresource_loader_factory_override) {
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::CommitNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());
@@ -3358,7 +3360,7 @@ void RenderFrameHostImpl::CommitNavigation(
     GetNavigationControl()->CommitNavigation(
         ResourceResponseHead(), GURL(), common_params, request_params,
         mojo::ScopedDataPipeConsumerHandle(),
-        /*default_subresource_url_loader_factory=*/nullptr);
+        /*subresource_loader_factories=*/base::nullopt);
     return;
   }
 
@@ -3378,24 +3380,48 @@ void RenderFrameHostImpl::CommitNavigation(
   const GURL body_url = body.get() ? body->GetURL() : GURL();
   const ResourceResponseHead head = response ?
       response->head : ResourceResponseHead();
-  mojom::URLLoaderFactoryPtr default_subresource_url_loader_factory;
+  const bool is_same_document =
+      FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type);
+
   // TODO(scottmg): Pass a factory for SW, etc. once we have one.
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    if (!subresource_url_loader_factory_info.is_valid()) {
+  base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
+  if (base::FeatureList::IsEnabled(features::kNetworkService) &&
+      !is_same_document) {
+    mojom::URLLoaderFactoryPtr default_factory;
+    StoragePartitionImpl* storage_partition =
+        static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
+            GetSiteInstance()->GetBrowserContext(), GetSiteInstance()));
+    if (!subresource_loader_factory_override.is_valid()) {
       const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
       if (std::find(schemes.begin(), schemes.end(),
                     common_params.url.scheme()) != schemes.end()) {
-        default_subresource_url_loader_factory =
-            CreateWebUIURLLoader(frame_tree_node_);
+        // If navigating to WebUI, supply a default subresource loader which can
+        // only load WebUI resources.
+        default_factory = CreateWebUIURLLoader(frame_tree_node_);
+      } else {
+        // Otherwise default to a Network Service-backed loader.
+        storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
+            mojo::MakeRequest(&default_factory), GetProcess()->GetID());
       }
     } else {
-      default_subresource_url_loader_factory.Bind(
-          std::move(subresource_url_loader_factory_info));
+      default_factory.Bind(std::move(subresource_loader_factory_override));
     }
+
+    DCHECK(default_factory.is_bound());
+    subresource_loader_factories.emplace();
+    subresource_loader_factories->SetDefaultFactory(std::move(default_factory));
+
+    // Everyone gets a blob loader.
+    mojom::URLLoaderFactoryPtr blob_factory;
+    storage_partition->GetBlobURLLoaderFactory()->HandleRequest(
+        mojo::MakeRequest(&blob_factory));
+    subresource_loader_factories->RegisterFactory(url::kBlobScheme,
+                                                  std::move(blob_factory));
   }
+
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params, std::move(handle),
-      std::move(default_subresource_url_loader_factory));
+      std::move(subresource_loader_factories));
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&
@@ -3409,7 +3435,7 @@ void RenderFrameHostImpl::CommitNavigation(
   // same-document navigation would not load any new ones for replacement.
   // The user would finish with a half loaded document.
   // See https://crbug.com/769645.
-  if (!FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type)) {
+  if (!is_same_document) {
     // Released in OnStreamHandleConsumed().
     stream_handle_ = std::move(body);
   }

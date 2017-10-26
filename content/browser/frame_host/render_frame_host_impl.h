@@ -555,7 +555,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
       bool is_view_source,
-      mojom::URLLoaderFactoryPtrInfo subresource_url_loader_factory_info);
+      mojom::URLLoaderFactoryPtrInfo subresource_loader_factory_override);
 
   // PlzNavigate
   // Indicates that a navigation failed and that this RenderFrame should display
