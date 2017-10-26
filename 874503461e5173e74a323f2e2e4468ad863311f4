@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55653073_96c97ccc",
+        "filename": "components/favicon/core/favicon_handler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-26T21:09:48Z",
+      "side": 1,
+      "message": "I had trouble parsing this sentence. It deletes if \"no download is other than 404\" has too many qualifiers for my breain. Can you rephrase?",
+      "revId": "874503461e5173e74a323f2e2e4468ad863311f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
