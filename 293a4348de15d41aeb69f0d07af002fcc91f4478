@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69ca322d_9941ebc5",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-26T22:58:23Z",
+      "side": 1,
+      "message": "Note that extended timeouts are going to have to be specified for all of the jobs which run on this bot. I\u0027m not 100% sure exactly how this works but from looking here:\n\nhttps://cs.chromium.org/chromium/build/scripts/slave/recipe_modules/chromium_tests/steps.py?l\u003d1725\n\nand here:\n\nhttps://cs.chromium.org/chromium/build/scripts/slave/recipe_modules/swarming/api.py?l\u003d159\n\nI *think* that if you specify larger expiration and hard_timeout values here that they should apply to all the tests on this bot. Can you try?",
+      "range": {
+        "startLine": 758,
+        "startChar": 7,
+        "endLine": 758,
+        "endChar": 8
+      },
+      "revId": "293a4348de15d41aeb69f0d07af002fcc91f4478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
