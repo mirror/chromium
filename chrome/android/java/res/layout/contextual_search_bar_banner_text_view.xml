@@ -6,20 +6,21 @@
    found in the LICENSE file.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/contextual_search_peek_promo_text_view"
+              android:id="@+id/contextual_search_bar_banner_text_view"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
-              android:paddingStart="@dimen/contextual_search_peek_promo_padding"
-              android:paddingEnd="@dimen/contextual_search_peek_promo_padding"
+              android:paddingStart="@dimen/contextual_search_bar_banner_padding"
+              android:paddingEnd="@dimen/contextual_search_bar_banner_padding"
               android:visibility="invisible">
     <TextView
         style="@style/RobotoMediumStyle"
         android:id="@+id/contextual_search_peek_promo_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/contextual_search_peek_promo_padding"
+        android:layout_marginEnd="@dimen/contextual_search_bar_banner_padding"
         android:background="@drawable/contextual_search_peek_promo_new_background"
+        android:visibility="gone"
         android:text="@string/contextual_search_peek_promo_new"
         android:textAllCaps="true"
         android:textColor="@color/light_active_color"
@@ -31,7 +32,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
+        android:visibility="gone"
         android:text="@string/contextual_search_peek_promo_text"
+        android:textColor="#FFF"
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/contextual_search_iph_tap_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="@string/contextual_search_iph_tap"
         android:textColor="#FFF"
         android:textSize="14sp"
         />
