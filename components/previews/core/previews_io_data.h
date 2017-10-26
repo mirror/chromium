@@ -20,6 +20,7 @@
 #include "components/previews/core/previews_decider.h"
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_logger.h"
+#include "components/previews/core/previews_optimization_guide.h"
 #include "net/nqe/effective_connection_type.h"
 
 class GURL;
@@ -99,11 +100,17 @@ class PreviewsIOData : public PreviewsDecider,
   void SetPreviewsBlacklistForTesting(
       std::unique_ptr<PreviewsBlackList> previews_back_list);
 
+  // Sets an optimization guide for testing.
+  void SetPreviewsOptimizationGuideForTesting(
+      std::unique_ptr<PreviewsOptimizationGuide> previews_opt_guide);
+
  private:
   // The UI thread portion of the inter-thread communication for previews.
   base::WeakPtr<PreviewsUIService> previews_ui_service_;
 
   std::unique_ptr<PreviewsBlackList> previews_black_list_;
+
+  std::unique_ptr<PreviewsOptimizationGuide> previews_opt_guide_;
 
   // The UI and IO thread task runners. |ui_task_runner_| is used to post
   // tasks to |previews_ui_service_|, and |io_task_runner_| is used to post from
