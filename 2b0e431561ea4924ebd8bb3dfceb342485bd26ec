@@ -46,6 +46,30 @@
       "revId": "2b0e431561ea4924ebd8bb3dfceb342485bd26ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e84365_99117934",
+        "filename": "content/browser/loader/mime_sniffing_resource_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-26T23:39:32Z",
+      "side": 1,
+      "message": "I\u0027d suggest a browser test - navigate to a test page with the relevant content-type, and make sure it\u0027s downloaded.  For the test file, the embbeded_test_server() supports mock-http-headers files to add the relevant header.\n\nThere are already download browser tests, which have all the infrastructure to test if something is downloaded instead of navigated to, and have a few mime type tests already, I believe, so maybe add the test there (content/browser/download/download_browsertest.cc?)",
+      "parentUuid": "4fedf5be_c12796ed",
+      "range": {
+        "startLine": 636,
+        "startChar": 38,
+        "endLine": 636,
+        "endChar": 63
+      },
+      "revId": "2b0e431561ea4924ebd8bb3dfceb342485bd26ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
