@@ -103,7 +103,8 @@ class StatementCallback final : public SQLStatementCallback {
     SQLStatementCallback::Trace(visitor);
   }
 
-  bool handleEvent(SQLTransaction*, SQLResultSet* result_set) override {
+  v8::Maybe<bool> handleEvent(SQLTransaction*,
+                              SQLResultSet* result_set) override {
     SQLResultSetRowList* row_list = result_set->rows();
 
     std::unique_ptr<protocol::Array<String>> column_names =
@@ -132,7 +133,7 @@ class StatementCallback final : public SQLStatementCallback {
     request_callback_->Get()->sendSuccess(std::move(column_names),
                                           std::move(values),
                                           Maybe<protocol::Database::Error>());
-    return true;
+    return v8::Just(true);
   }
 
  private:
@@ -154,9 +155,9 @@ class StatementErrorCallback final : public SQLStatementErrorCallback {
     SQLStatementErrorCallback::Trace(visitor);
   }
 
-  bool handleEvent(SQLTransaction*, SQLError* error) override {
+  v8::Maybe<bool> handleEvent(SQLTransaction*, SQLError* error) override {
     request_callback_->ReportTransactionFailed(error);
-    return true;
+    return v8::Just(true);
   }
 
  private:
@@ -180,7 +181,7 @@ class TransactionCallback final : public SQLTransactionCallback {
     SQLTransactionCallback::Trace(visitor);
   }
 
-  bool handleEvent(SQLTransaction* transaction) override {
+  v8::Maybe<bool> handleEvent(SQLTransaction* transaction) override {
     Vector<SQLValue> sql_values;
     SQLStatementCallback* callback =
         StatementCallback::Create(request_callback_);
@@ -188,7 +189,7 @@ class TransactionCallback final : public SQLTransactionCallback {
         StatementErrorCallback::Create(request_callback_);
     transaction->ExecuteSQL(sql_statement_, sql_values, callback,
                             error_callback, IGNORE_EXCEPTION_FOR_TESTING);
-    return true;
+    return v8::Just(true);
   }
 
  private:
@@ -213,9 +214,9 @@ class TransactionErrorCallback final : public SQLTransactionErrorCallback {
     SQLTransactionErrorCallback::Trace(visitor);
   }
 
-  bool handleEvent(SQLError* error) override {
+  v8::Maybe<bool> handleEvent(SQLError* error) override {
     request_callback_->ReportTransactionFailed(error);
-    return true;
+    return v8::Just(true);
   }
 
  private:
