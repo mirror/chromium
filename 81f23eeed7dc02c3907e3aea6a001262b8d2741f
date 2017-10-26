@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67909df6_92c778dc",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T18:10:39Z",
+      "side": 1,
+      "message": "optiona: define type for this map?",
+      "revId": "81f23eeed7dc02c3907e3aea6a001262b8d2741f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12401b3c_4a896b65",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T18:10:39Z",
+      "side": 1,
+      "message": "you can inline this, but you may leave it if you prefer.",
+      "revId": "81f23eeed7dc02c3907e3aea6a001262b8d2741f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcf80ab_9cc2202f",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T18:10:39Z",
+      "side": 1,
+      "message": "\u003d default; \n\n(this makes dtor trivial dtor)",
+      "revId": "81f23eeed7dc02c3907e3aea6a001262b8d2741f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
