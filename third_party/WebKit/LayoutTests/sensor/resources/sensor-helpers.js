@@ -179,8 +179,8 @@ function sensorMocks() {
           if (this.updateReadingFunction_) {
             this.updateReadingFunction_(this.buffer_);
             // For all tests sensor reading should have monotonically
-            // increasing timestamp in seconds.
-            this.buffer_[1] = window.performance.now() * 0.001;
+            // increasing timestamp from window.performance.now().
+            this.buffer_[1] = window.performance.now();
           }
           if (this.reportingMode_ === device.mojom.ReportingMode.ON_CHANGE) {
             this.client_.sensorReadingChanged();
