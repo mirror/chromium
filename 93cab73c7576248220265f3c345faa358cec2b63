@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec065939_58877cd4",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-26T17:27:43Z",
+      "side": 1,
+      "message": "Usually \"mbps\" stands for megabit per second, so the value should be multiplied by 8.",
+      "range": {
+        "startLine": 88,
+        "startChar": 73,
+        "endLine": 88,
+        "endChar": 77
+      },
+      "revId": "93cab73c7576248220265f3c345faa358cec2b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3554059_3c192471",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-26T17:27:43Z",
+      "side": 1,
+      "message": "I thought that we also need to add the hint if we connect to the local server, e.g. \n[Cronet addQuicHint:@\"test.example.com\" port:443 altPort:443], where test.example.com is resolved to localhost.",
+      "revId": "93cab73c7576248220265f3c345faa358cec2b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb251c12_8be09354",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-26T17:27:43Z",
+      "side": 1,
+      "message": "I think we should not add |totalBytesReceivedPerTask| to |total_bytes_received| for the failed tasks since we don\u0027t increment |elapsed_total| for the failed tasks. Otherwise, the failed tasks will increase reported throughput as if the download was instant.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 63
+      },
+      "revId": "93cab73c7576248220265f3c345faa358cec2b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
