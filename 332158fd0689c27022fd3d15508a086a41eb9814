@@ -235,6 +235,30 @@
       "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843619de_41ab6844",
+        "filename": "chrome/browser/ui/views/button_background_painter_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T22:11:17Z",
+      "side": 1,
+      "message": "That SGTM.",
+      "parentUuid": "95814a49_b77f32be",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
