@@ -1045,17 +1045,15 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
                          &new_policy_duration);
   }
 
-  bool newly_stopped = false;
+  bool previously_stopped_when_backgrounded =
+      main_thread_only().stopped_when_backgrounded;
   if (main_thread_only().renderer_backgrounded &&
       main_thread_only().stopping_when_backgrounded_enabled) {
     base::TimeTicks stop_at =
         main_thread_only().background_status_changed_at +
         base::TimeDelta::FromMilliseconds(kStopWhenBackgroundedDelayMillis);
 
-    newly_stopped = !main_thread_only().stopped_when_backgrounded;
     main_thread_only().stopped_when_backgrounded = now >= stop_at;
-    newly_stopped &= main_thread_only().stopped_when_backgrounded;
-
     if (!main_thread_only().stopped_when_backgrounded)
       UpdatePolicyDuration(now, stop_at, &new_policy_duration);
   } else {
@@ -1258,9 +1256,10 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
 
   // TODO(skyostil): send these notifications after releasing the scheduler
   // lock.
-  if (new_policy.loading_queue_policy().is_stopped !=
-      main_thread_only().current_policy.loading_queue_policy().is_stopped) {
-    SetStoppedInBackground(new_policy.loading_queue_policy().is_stopped);
+  if (main_thread_only().stopping_when_backgrounded_enabled) {
+    if (main_thread_only().stopped_when_backgrounded !=
+        previously_stopped_when_backgrounded)
+      SetStoppedInBackground(main_thread_only().stopped_when_backgrounded);
   }
 
   if (new_policy.should_disable_throttling() !=
@@ -1275,7 +1274,8 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   DCHECK(compositor_task_queue_->IsQueueEnabled());
   main_thread_only().current_policy = new_policy;
 
-  if (newly_stopped)
+  if (main_thread_only().stopped_when_backgrounded &&
+      !previously_stopped_when_backgrounded)
     Platform::Current()->RequestPurgeMemory();
 }
 
