@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a96bd68_6fa18ae9",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-26T17:55:44Z",
+      "side": 1,
+      "message": "This class is pure abstract interface now on tot. I moved the impl methods to TouchDevicesController in this patch: https://chromium-review.googlesource.com/c/chromium/src/+/662657\n\nYeah, the old code is a mix. Thanks for pointing out.",
+      "parentUuid": "025e6081_3f235b73",
+      "revId": "50c6f8cbfa7274552b55759683145e284197cd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a19de68_568a506a",
         "filename": "chrome/browser/chromeos/system/input_device_settings.h",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T16:19:38Z",
       "side": 1,
       "message": "should this have been true?",
+      "revId": "50c6f8cbfa7274552b55759683145e284197cd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1d9020_42e62c2a",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-26T17:55:44Z",
+      "side": 1,
+      "message": "replied in another CL. We can change it to true if we want.",
+      "parentUuid": "6a19de68_568a506a",
       "revId": "50c6f8cbfa7274552b55759683145e284197cd64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
