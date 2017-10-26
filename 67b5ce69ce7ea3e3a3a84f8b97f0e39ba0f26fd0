@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de5112fd_90cf9039",
+        "filename": "content/browser/loader/resource_scheduler_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-26T15:58:43Z",
+      "side": 1,
+      "message": "Hi Ray, I can not find this feature, also I tried remove this method and tests pass. Is it dead code?",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 44
+      },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
