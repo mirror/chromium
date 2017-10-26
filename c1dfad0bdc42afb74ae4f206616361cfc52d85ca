@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "820db5b8_7d869213",
+        "filename": "services/viz/manifest.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-26T07:06:18Z",
+      "side": 1,
+      "message": "This is deliberate at the moment. Once the sandboxing code is out of content [1], we would be using that code from GpuSandboxHelper [2] to get into the sandbox. So service-manager would not be involved in entering the sandbox, but the viz service itself would do that (like chrome-gpu process does right now).\n\n[1] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d708738\n[2] https://cs.chromium.org/chromium/src/gpu/ipc/service/gpu_init.h?l\u003d22",
+      "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
