@@ -52,6 +52,24 @@
       "revId": "d9e0abf42f331ae3910aef8756ac63164ed90241",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a370cd9c_8fbdd781",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-26T00:12:04Z",
+      "side": 1,
+      "message": "Sorry I misunderstood. I *think* it is in the right spot now, ptal.",
+      "parentUuid": "9759b0df_f09b7fa6",
+      "revId": "d9e0abf42f331ae3910aef8756ac63164ed90241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
