@@ -12,5 +12,14 @@
 <p id="two">This line should have lime background</p>
 <p id="three">This line should not have red background</p>
 <p id="four">This line should have lime background</p>
+<script>
+if (window.testRunner)
+  testRunner.waitUntilDone();
+
+window.onload = setTimeout(function() {
+  if (window.testRunner)
+    testRunner.notifyDone();
+}, 0);
+</script>
 </body>
 </html>

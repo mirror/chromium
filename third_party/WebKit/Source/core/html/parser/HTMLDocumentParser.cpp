@@ -1037,6 +1037,11 @@ TextPosition HTMLDocumentParser::GetTextPosition() const {
   return TextPosition(line, column);
 }
 
+bool HTMLDocumentParser::IsPaused() const {
+  return IsWaitingForScripts() ||
+         (is_waiting_for_stylesheets_ && !GetDocument()->IsInDocumentWrite());
+}
+
 bool HTMLDocumentParser::IsWaitingForScripts() const {
   // When the TreeBuilder encounters a </script> tag, it returns to the
   // HTMLDocumentParser where the script is transfered from the treebuilder to

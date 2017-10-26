@@ -16,6 +16,7 @@
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/testing/UnitTestHelpers.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/text/TextEncoding.h"
 #include "public/platform/Platform.h"
@@ -215,6 +216,7 @@ TEST_F(CSSPreloadScannerTest, ReferrerPolicyHeader) {
   const char* data = "@import url('http://127.0.0.1/preload.css');";
   resource->AppendData(data, strlen(data));
 
+  blink::testing::RunPendingTasks();
   EXPECT_EQ(1u, resource_client->preload_urls_.size());
   EXPECT_EQ("http://127.0.0.1/preload.css",
             resource_client->preload_urls_.front());

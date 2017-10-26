@@ -7,8 +7,10 @@
 Test that &lt;link> elements only have stylesheets when in document.</p>
 <pre id=result></pre>
 <script>
-if (window.testRunner)
+if (window.testRunner) {
     testRunner.dumpAsText();
+    testRunner.waitUntilDone();
+}
 
 head = document.getElementsByTagName("head")[0];
 link = document.getElementsByTagName("link")[0];
@@ -22,9 +24,12 @@ function finishTest()
 
     head.appendChild(link);
 
-    result.innerHTML += "After adding to document: " + ((link.sheet === null) ? ("FAIL: " + link.sheet) : "PASS") + "\n";
-
-    result.innerHTML += "DONE";
+    setTimeout(function() {
+      result.innerHTML += "After adding to document: " + ((link.sheet === null) ? ("FAIL: " + link.sheet) : "PASS") + "\n";
+      result.innerHTML += "DONE";
+      if (window.testRunner)
+        testRunner.notifyDone();
+    }, 0);
 }
 </script>
 </body>
