@@ -36,6 +36,7 @@
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/SpaceSplitString.h"
@@ -468,8 +469,9 @@ void UserMediaRequest::Succeed(MediaStreamDescriptor* stream_descriptor) {
 void UserMediaRequest::FailPermissionDenied(const String& message) {
   if (!GetExecutionContext())
     return;
-  error_callback_->handleEvent(NavigatorUserMediaError::Create(
-      NavigatorUserMediaError::kNamePermissionDenied, message, String()));
+  error_callback_->handleEvent(
+      DOMExceptionOrOverconstrainedError::FromDOMException(
+          DOMException::Create(kNotAllowedError, message, message)));
 }
 
 void UserMediaRequest::FailConstraint(const String& constraint_name,
@@ -477,19 +479,44 @@ void UserMediaRequest::FailConstraint(const String& constraint_name,
   DCHECK(!constraint_name.IsEmpty());
   if (!GetExecutionContext())
     return;
-  error_callback_->handleEvent(NavigatorUserMediaError::Create(
-      NavigatorUserMediaError::kNameConstraintNotSatisfied, message,
-      constraint_name));
+  error_callback_->handleEvent(
+      DOMExceptionOrOverconstrainedError::FromOverconstrainedError(
+          OverconstrainedError::Create(constraint_name, message)));
 }
 
-void UserMediaRequest::FailUASpecific(const String& name,
+void UserMediaRequest::FailUASpecific(WebUserMediaRequest::Error name,
                                       const String& message,
                                       const String& constraint_name) {
-  DCHECK(!name.IsEmpty());
   if (!GetExecutionContext())
     return;
+
+  ExceptionCode ec;
+  switch (name) {
+    case WebUserMediaRequest::Error::kPermissionDismissed:
+      ec = kNotAllowedError;
+      break;
+    case WebUserMediaRequest::Error::kDevicesNotFound:
+      ec = kNotFoundError;
+      break;
+    case WebUserMediaRequest::Error::kInvalidState:
+    case WebUserMediaRequest::Error::kTabCapture:
+    case WebUserMediaRequest::Error::kScreenCapture:
+    case WebUserMediaRequest::Error::kDeviceCapture:
+    case WebUserMediaRequest::Error::kTrackStart:
+    case WebUserMediaRequest::Error::kMediaDeviceFailedDueToShutdown:
+    case WebUserMediaRequest::Error::kMediaDeviceKillSwitchOn:
+      ec = kNotReadableError;
+      break;
+    case WebUserMediaRequest::Error::kNotSupported:
+    case WebUserMediaRequest::Error::kMediaDeviceNotSupported:
+      ec = kNotSupportedError;
+      break;
+    default:
+      NOTREACHED();
+  }
   error_callback_->handleEvent(
-      NavigatorUserMediaError::Create(name, message, constraint_name));
+      DOMExceptionOrOverconstrainedError::FromDOMException(
+          DOMException::Create(ec, message, message)));
 }
 
 void UserMediaRequest::ContextDestroyed(ExecutionContext*) {

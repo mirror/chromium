@@ -25,8 +25,13 @@
 
 // https://w3c.github.io/mediacapture-main/#navigatorusermediaerrorcallback
 
+// TODO(orphis): This is in a plain object in the current IDL spec, but text
+// says different.
+// Bug: https://github.com/w3c/mediacapture-main/issues/484
+typedef (DOMException or OverconstrainedError) MediaStreamError;
+
 // TODO(foolip): This should be a callback function, not a callback interface.
 // https://crbug.com/569301
 callback interface NavigatorUserMediaErrorCallback {
-    void handleEvent(NavigatorUserMediaError error);
+    void handleEvent(MediaStreamError error);
 };
