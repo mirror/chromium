@@ -299,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "90ff9470_989357e2",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-26T16:59:09Z",
+      "side": 1,
+      "message": "You might run into some other problems since Android does not have media_router.mojom. If we want to do this, we\u0027ll need to use C++ typemapping for now.\n\nIt sounds like there was an implicit assumption that a MediaSink can only be associated with one MRP, and we are trying to make it explicit here. On Android it might be a bit trickier since they have a remote playback MRP that can return the same sink as their Cast MRP. For simplicity (so we don\u0027t have to plumb the MRP ID from Java), maybe we can just use a stub C++ value for Android.",
+      "parentUuid": "a723aada_41f9f01f",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b36740e2_54143618",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 16
