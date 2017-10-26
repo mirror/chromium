@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dcb4e7b_2fb0e653",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_intercepting_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T00:32:28Z",
+      "side": 1,
+      "message": "nit: do you mind using enforce.example.com and warn.example.com ?",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 18
+      },
+      "revId": "ccd1127545af2930967be08fc634f2bc58f5e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7f1c7d_086b8cf2",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T00:32:28Z",
+      "side": 1,
+      "message": "IIRC, I had intentionally not used \"bad\" because this method can also be used for whitelists.",
+      "range": {
+        "startLine": 148,
+        "startChar": 23,
+        "endLine": 148,
+        "endChar": 61
+      },
+      "revId": "ccd1127545af2930967be08fc634f2bc58f5e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
