@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3462b064_4c792f5d",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-26T23:20:12Z",
+      "side": 1,
+      "message": "What would the consequence be to resetting the existing pointer instead?",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2948d5bb_2d52fde9",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-26T23:20:12Z",
+      "side": 1,
+      "message": "ISTM the caller in PresentationRequest should be responsible for posting a callback with an error value to the appropriate thread.",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f3caef_43ef0843",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-26T23:20:12Z",
+      "side": 1,
+      "message": "Can blink::WebPresentationError have factory methods to create instances of appropriate types?  That would make it less verbose to use.",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87355b6a_6ef33aa2",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-26T23:20:12Z",
+      "side": 1,
+      "message": "Similar comment to the above.",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9d172d_2acdb775",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-26T23:20:12Z",
+      "side": 1,
+      "message": "typo in PresentationRequest",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c952f09d_c0531ac9",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-26T23:20:12Z",
+      "side": 1,
+      "message": "RequestAvailability() ?",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a6c4a3_d486701c",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-26T23:20:12Z",
+      "side": 1,
+      "message": "Maybe just AddObserver/RemoveObserver?",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f04489_3c88a23c",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-26T23:20:12Z",
+      "side": 1,
+      "message": "UpdateAvailability() ?",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ad641d_d43692cc",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-26T23:20:12Z",
+      "side": 1,
+      "message": "When would there be more than one callback/observer for an availability object?  I believe the spec requires that they be 1:1; Blink will handle propagating a change in the availability value to all event listeners on PresentationAvailability.",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489b1b6c_258b2afd",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-26T23:20:12Z",
+      "side": 1,
+      "message": "Should this be here or in PresentationAvailability?",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6028a223_20a0f391",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-26T23:20:12Z",
+      "side": 1,
+      "message": "Is the plan to move these functions to a PresentationControllerClient interface?",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
