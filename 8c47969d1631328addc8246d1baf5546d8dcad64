@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0e6cdd05_7d1e345b",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-26T00:48:47Z",
+      "side": 1,
+      "message": "Any suggestions on how to execute this piece of code behind a flag please? base::Feature flag hasn\u0027t been initialized here yet, so I cannot run chrome using something like \"chrome.exe --enable-features\u003dNativeNotifications\".",
+      "parentUuid": "b5f2afa9_f6f58767",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb763108_f2e49c17",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -207,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "28cefe42_c6a881fe",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-26T00:48:47Z",
+      "side": 1,
+      "message": "Actually, if the shortcut has been created during installation already, we just need to update proper information for that shortcut. If the shortcut is somehow missing (e.g., deleted by the user), then we need to recreate one with proper information. There won\u0027t be any shortcuts created with strange names.",
+      "parentUuid": "9e55987d_9a04e9e0",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8962d305_38467f94",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -360,6 +396,30 @@
       "side": 1,
       "message": "Well, my worry is about the lifetime of the activator. It looks like it will survive until shutdown -- does that mean we can have attempts to call into our code while we\u0027re being torn down, resulting in shutdown crashes?",
       "parentUuid": "627b3b26_dc7064e2",
+      "range": {
+        "startLine": 253,
+        "startChar": 34,
+        "endLine": 253,
+        "endChar": 35
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee04b33_1eeb0871",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-26T00:48:47Z",
+      "side": 1,
+      "message": "I did try to make activator_reg a local variable in PrepareForNativeNotification() using the code snippet below:\n\nauto activator_reg \u003d std::make_unique\u003cActivatorRegister\u003e();\nactivator_reg-\u003eRun();\n\nHowever, after the change, the Activate() method in this file seems not to be called when Chrome is triggered to launch by clicking the toast notification, which is undesired. The reason behind this is unclear though.",
+      "parentUuid": "611c8fe4_8368340c",
       "range": {
         "startLine": 253,
         "startChar": 34,
