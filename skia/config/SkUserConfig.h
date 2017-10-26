@@ -242,14 +242,10 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 /* Restrict formats for Skia font matching to SFNT type fonts. */
 #define SK_FONT_CONFIG_INTERFACE_ONLY_ALLOW_SFNT_FONTS
 
-#define SK_IGNORE_BLURRED_RRECT_OPT
 #define SK_USE_DISCARDABLE_SCALEDIMAGECACHE
 
 #define SK_ATTR_DEPRECATED          SK_NOTHING_ARG1
 #define GR_GL_CUSTOM_SETUP_HEADER   "GrGLConfig_chrome.h"
-
-// mtklein's fiddling with Src / SrcOver.  Will rebaseline these only once when done.
-#define SK_SUPPORT_LEGACY_X86_BLITS
 
 // ===== End Chrome-specific definitions =====
 

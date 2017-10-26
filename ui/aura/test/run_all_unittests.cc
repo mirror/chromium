@@ -5,6 +5,7 @@
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/test/launcher/unit_test_launcher.h"
+#include "base/test/test_discardable_memory_allocator.h"
 #include "base/test/test_suite.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "ui/aura/env.h"
@@ -20,6 +21,8 @@ class AuraTestSuite : public base::TestSuite {
     base::TestSuite::Initialize();
     gl::GLSurfaceTestSupport::InitializeOneOff();
     env_ = aura::Env::CreateInstance();
+    base::DiscardableMemoryAllocator::SetInstance(
+        &discardable_memory_allocator_);
   }
 
   void Shutdown() override {
@@ -29,6 +32,7 @@ class AuraTestSuite : public base::TestSuite {
 
  private:
   std::unique_ptr<aura::Env> env_;
+  base::TestDiscardableMemoryAllocator discardable_memory_allocator_;
   DISALLOW_COPY_AND_ASSIGN(AuraTestSuite);
 };
 

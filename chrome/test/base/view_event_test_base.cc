@@ -89,6 +89,8 @@ void ViewEventTestBase::SetUp() {
   views_delegate_.set_context_factory_private(context_factory_private);
   views_delegate_.set_use_desktop_native_widgets(true);
 
+  base::DiscardableMemoryAllocator::SetInstance(&discardable_memory_allocator_);
+
   platform_part_.reset(ViewEventTestPlatformPart::Create(
       context_factory, context_factory_private));
   gfx::NativeWindow context = platform_part_->GetContext();
