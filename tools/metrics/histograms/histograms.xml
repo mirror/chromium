@@ -98095,6 +98095,25 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="DataUse.Dimensions.AllServices" separator=".">
+  <suffix name="Upstream.Background.NotCellular"/>
+  <suffix name="Upstream.Background.Cellular"/>
+  <suffix name="Upstream.Foreground.NotCellular"/>
+  <suffix name="Upstream.Foreground.Cellular"/>
+  <suffix name="Downstream.Background.NotCellular"/>
+  <suffix name="Downstream.Background.Cellular"/>
+  <suffix name="Downstream.Foreground.NotCellular"/>
+  <suffix name="Downstream.Foreground.Cellular"/>
+  <suffix name="Upstream.Unknown.NotCellular"/>
+  <suffix name="Upstream.Unknown.Cellular"/>
+  <suffix name="Downstream.Unknown.NotCellular"/>
+  <suffix name="Downstream.Unknown.Cellular"/>
+  <obsolete>
+    Replaced by KB version in October, 2017.
+  </obsolete>
+  <affected-histogram name="DataUse.MessageSize.AllServices"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="DataUse.Dimensions.AllServicesKB" separator=".">
   <suffix name="Upstream.Background.NotCellularKB"/>
   <suffix name="Upstream.Background.CellularKB"/>
   <suffix name="Upstream.Foreground.NotCellularKB"/>
@@ -98107,54 +98126,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Upstream.Unknown.CellularKB"/>
   <suffix name="Downstream.Unknown.NotCellularKB"/>
   <suffix name="Downstream.Unknown.CellularKB"/>
-  <suffix name="Upstream.Background.NotCellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
-  <suffix name="Upstream.Background.Cellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
-  <suffix name="Upstream.Foreground.NotCellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
-  <suffix name="Upstream.Foreground.Cellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
-  <suffix name="Downstream.Background.NotCellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
-  <suffix name="Downstream.Background.Cellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
-  <suffix name="Downstream.Foreground.NotCellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
-  <suffix name="Downstream.Foreground.Cellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
-  <suffix name="Upstream.Unknown.NotCellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
-  <suffix name="Upstream.Unknown.Cellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
-  <suffix name="Downstream.Unknown.NotCellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
-  <suffix name="Downstream.Unknown.Cellular"/>
-  <obsolete>
-    Replaced by KB version in October, 2017.
-  </obsolete>
   <affected-histogram name="DataUse.MessageSize.AllServices"/>
 </histogram_suffixes>
 
