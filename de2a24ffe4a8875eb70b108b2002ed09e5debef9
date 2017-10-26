@@ -140,6 +140,30 @@
       "revId": "de2a24ffe4a8875eb70b108b2002ed09e5debef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f1ee4a4_2a5c3dfb",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-26T16:57:49Z",
+      "side": 1,
+      "message": "OK. How does clearTransitionData get called? I\u0027m trying to understand how the activity resigns its current status and when that happens.",
+      "parentUuid": "863d79cc_009b3bfc",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 30
+      },
+      "revId": "de2a24ffe4a8875eb70b108b2002ed09e5debef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
