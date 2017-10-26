@@ -52,6 +52,24 @@
       "revId": "d5c47924de3492cfc4e3e17eb03d01923ebf4e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92858707_23cf3a87",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-26T18:50:04Z",
+      "side": 1,
+      "message": "Sorry for confusing terms...\n\n\u003e I\u0027m a bit confused...|Position| is DOM offset, right? Is the \"caret offset\" LayoutText offset? Then is PositionForCaretOffset wrong?\n\n|Position| is DOM offset. \"Caret offset\" is LayoutText offset.\n\nPositionsForCaretOffset() converts the caret offset to Position. Please note there\u0027s an override in LayoutTextFragment. In general:\n- We ignore text length difference due to text-transform since we don\u0027t have any way to handle it yet...\n- When there is no ::first-letter, caret offset and DOM offset are the same\n- When there is ::first-letter, caret offset + LayoutTextFragment::Start() \u003d\u003d DOM offset\n\n\u003e \n\u003e Or is |Position| LayoutText offset?",
+      "parentUuid": "9f19271d_29e22fd8",
+      "revId": "d5c47924de3492cfc4e3e17eb03d01923ebf4e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
