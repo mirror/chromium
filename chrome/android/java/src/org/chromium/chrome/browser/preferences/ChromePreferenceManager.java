@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.StrictMode;
 
 import org.chromium.base.ContextUtils;
-import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.crash.MinidumpUploadService.ProcessType;
@@ -70,9 +69,15 @@ public class ChromePreferenceManager {
 
     public static final String CHROME_HOME_SHARED_PREFERENCES_KEY = "chrome_home_enabled_date";
 
-    private static ChromePreferenceManager sPrefs;
-
     private final SharedPreferences mSharedPreferences;
+
+    /**
+     * Initialization-on-demand holder. This exists for thread-safe lazy initialization.
+     */
+    private static class Holder {
+        // Not final for tests.
+        private static ChromePreferenceManager sPrefs = new ChromePreferenceManager();
+    }
 
     private ChromePreferenceManager() {
         mSharedPreferences = ContextUtils.getAppSharedPreferences();
@@ -82,12 +87,8 @@ public class ChromePreferenceManager {
      * Get the static instance of ChromePreferenceManager if exists else create it.
      * @return the ChromePreferenceManager singleton
      */
-    @SuppressFBWarnings("CHROMIUM_SYNCHRONIZED_METHOD")
-    public static synchronized ChromePreferenceManager getInstance() {
-        if (sPrefs == null) {
-            sPrefs = new ChromePreferenceManager();
-        }
-        return sPrefs;
+    public static ChromePreferenceManager getInstance() {
+        return Holder.sPrefs;
     }
 
     /**
