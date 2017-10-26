@@ -15,6 +15,7 @@
 #include "media/base/decoder_buffer.h"
 #include "media/base/video_codecs.h"
 #include "media/base/video_decoder_config.h"
+#include "media/base/video_frame.h"
 #include "media/gpu/android/android_video_surface_chooser.h"
 #include "media/gpu/android/avda_codec_allocator.h"
 
@@ -101,7 +102,7 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
     AndroidOverlayMojoFactoryCB overlay_factory_cb,
     RequestOverlayInfoCB request_overlay_info_cb,
-    std::unique_ptr<VideoFrameFactory> video_frame_factory,
+    SequencedUniquePtr<VideoFrameFactory> video_frame_factory,
     std::unique_ptr<service_manager::ServiceContextRef> context_ref)
     : output_cb_(output_cb),
       codec_allocator_(codec_allocator),
@@ -117,10 +118,9 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
       codec_allocator_weak_factory_(this) {
   DVLOG(2) << __func__;
   surface_chooser_->SetClientCallbacks(
-      base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
-                 weak_factory_.GetWeakPtr()),
-      base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
-                 weak_factory_.GetWeakPtr(), nullptr));
+      SequencedWeakPtr<MediaCodecVideoDecoder>(this).BindRepeating(
+          &MediaCodecVideoDecoder::OnSurfaceChosen),
+      this->BindRepeating(&MediaCodecVideoDecoder::OnSurfaceChosen, nullptr));
 }
 
 MediaCodecVideoDecoder::~MediaCodecVideoDecoder() {
@@ -184,9 +184,10 @@ void MediaCodecVideoDecoder::StartLazyInit() {
   DVLOG(2) << __func__;
   lazy_init_pending_ = false;
   codec_allocator_->StartThread(this);
-  video_frame_factory_->Initialize(
-      base::Bind(&MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized,
-                 weak_factory_.GetWeakPtr()));
+  video_frame_factory_.Post(
+      FROM_HERE, &VideoFrameFactory::Initialize,
+      this->BindRepeating(
+          &MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized));
 }
 
 void MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized(
@@ -210,8 +211,7 @@ void MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized(
   bool restart_for_transitions = !device_info_->IsSetOutputSurfaceSupported();
   std::move(request_overlay_info_cb_)
       .Run(restart_for_transitions,
-           base::Bind(&MediaCodecVideoDecoder::OnOverlayInfoChanged,
-                      weak_factory_.GetWeakPtr()));
+           this->BindRepeating(&MediaCodecVideoDecoder::OnOverlayInfoChanged));
 }
 
 void MediaCodecVideoDecoder::OnOverlayInfoChanged(
@@ -244,8 +244,7 @@ void MediaCodecVideoDecoder::OnSurfaceChosen(
 
   if (overlay) {
     overlay->AddSurfaceDestroyedCallback(
-        base::Bind(&MediaCodecVideoDecoder::OnSurfaceDestroyed,
-                   weak_factory_.GetWeakPtr()));
+        this->BindRepeating(&MediaCodecVideoDecoder::OnSurfaceDestroyed));
     target_surface_bundle_ = new AVDASurfaceBundle(std::move(overlay));
   } else {
     target_surface_bundle_ = surface_texture_bundle_;
@@ -323,8 +322,7 @@ void MediaCodecVideoDecoder::OnCodecConfigured(
   }
   codec_ = base::MakeUnique<CodecWrapper>(
       CodecSurfacePair(std::move(codec), std::move(surface_bundle)),
-      BindToCurrentLoop(base::Bind(&MediaCodecVideoDecoder::StartTimer,
-                                   weak_factory_.GetWeakPtr())));
+      this->BindRepeating(&MediaCodecVideoDecoder::StartTimer));
 
   // If the target surface changed while codec creation was in progress,
   // transition to it immediately.
@@ -405,9 +403,9 @@ void MediaCodecVideoDecoder::StartTimer() {
   // at this frequency is likely overkill in the steady state.
   const auto kPollingPeriod = base::TimeDelta::FromMilliseconds(10);
   if (!pump_codec_timer_.IsRunning()) {
-    pump_codec_timer_.Start(FROM_HERE, kPollingPeriod,
-                            base::Bind(&MediaCodecVideoDecoder::PumpCodec,
-                                       base::Unretained(this), false));
+    pump_codec_timer_.Start(
+        FROM_HERE, kPollingPeriod,
+        this->BindRepeating(&MediaCodecVideoDecoder::PumpCodec, false));
   }
 }
 
@@ -519,9 +517,10 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
   if (eos) {
     if (eos_decode_cb_) {
       // Schedule the EOS DecodeCB to run after all previous frames.
-      video_frame_factory_->RunAfterPendingVideoFrames(
-          base::Bind(&MediaCodecVideoDecoder::RunEosDecodeCb,
-                     weak_factory_.GetWeakPtr(), reset_generation_));
+      video_frame_factory_.Post(
+          FROM_HERE, &VideoFrameFactory::RunAfterPendingVideoFrames,
+          this->BindRepeating(&MediaCodecVideoDecoder::RunEosDecodeCb,
+                              reset_generation_));
     }
     if (drain_type_)
       OnCodecDrained();
@@ -535,15 +534,15 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
   if (drain_type_)
     return true;
 
-  video_frame_factory_->CreateVideoFrame(
-      std::move(output_buffer),
+  video_frame_factory_.Post(
+      FROM_HERE, &VideoFrameFactory::CreateVideoFrame, std::move(output_buffer),
       codec_->SurfaceBundle()->overlay
           ? nullptr
           : surface_texture_bundle_->surface_texture,
       presentation_time, decoder_config_.natural_size(),
       CreatePromotionHintCB(),
-      base::Bind(&MediaCodecVideoDecoder::ForwardVideoFrame,
-                 weak_factory_.GetWeakPtr(), reset_generation_));
+      this->BindRepeating(&MediaCodecVideoDecoder::ForwardVideoFrame,
+                          reset_generation_));
   return true;
 }
 

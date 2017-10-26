@@ -19,19 +19,17 @@
 #include "ui/gl/gl_bindings.h"
 
 namespace media {
-class GpuVideoFrameFactory;
 
 // VideoFrameFactoryImpl creates CodecOutputBuffer backed VideoFrames and tries
 // to eagerly render them to their surface to release the buffers back to the
 // decoder as soon as possible. It's not thread safe; it should be created, used
-// and destructed on a single sequence. It's implemented by proxying calls
-// to a helper class hosted on the gpu thread.
-class MEDIA_GPU_EXPORT VideoFrameFactoryImpl : public VideoFrameFactory {
+// and destructed on the gpu thread only.
+class MEDIA_GPU_EXPORT VideoFrameFactoryImpl
+    : public VideoFrameFactory,
+      public gpu::GpuCommandBufferStub::DestructionObserver {
  public:
   // |get_stub_cb| will be run on |gpu_task_runner|.
-  VideoFrameFactoryImpl(
-      scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
-      GetStubCb get_stub_cb);
+  VideoFrameFactoryImpl(GetStubCb get_stub_cb);
   ~VideoFrameFactoryImpl() override;
 
   void Initialize(InitCb init_cb) override;
@@ -46,36 +44,9 @@ class MEDIA_GPU_EXPORT VideoFrameFactoryImpl : public VideoFrameFactory {
 
  private:
   // The gpu thread side of the implementation.
-  std::unique_ptr<GpuVideoFrameFactory> gpu_video_frame_factory_;
-  scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner_;
   GetStubCb get_stub_cb_;
+  gpu::GpuCommandBufferStub* stub_ = nullptr;
 
-  SEQUENCE_CHECKER(sequence_checker_);
-  DISALLOW_COPY_AND_ASSIGN(VideoFrameFactoryImpl);
-};
-
-// GpuVideoFrameFactory is an implementation detail of VideoFrameFactoryImpl. It
-// may be created on any thread but only accessed on the gpu thread thereafter.
-class GpuVideoFrameFactory
-    : public gpu::GpuCommandBufferStub::DestructionObserver {
- public:
-  GpuVideoFrameFactory();
-  ~GpuVideoFrameFactory() override;
-
-  scoped_refptr<SurfaceTextureGLOwner> Initialize(
-      VideoFrameFactory::GetStubCb get_stub_cb);
-
-  // Creates and returns a VideoFrame with its ReleaseMailboxCB.
-  void CreateVideoFrame(
-      std::unique_ptr<CodecOutputBuffer> output_buffer,
-      scoped_refptr<SurfaceTextureGLOwner> surface_texture,
-      base::TimeDelta timestamp,
-      gfx::Size natural_size,
-      PromotionHintAggregator::NotifyPromotionHintCB promotion_hint_cb,
-      VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
-
- private:
   // Creates a TextureRef and VideoFrame.
   void CreateVideoFrameInternal(
       std::unique_ptr<CodecOutputBuffer> output_buffer,
@@ -97,7 +68,7 @@ class GpuVideoFrameFactory
   void DropTextureRef(gpu::gles2::TextureRef* ref, const gpu::SyncToken& token);
 
   // Removes |image| from |images_|.
-  void OnImageDestructed(CodecImage* image);
+  void OnImageDestructed(void* image_as_void);
 
   // Outstanding images that should be considered for early rendering.
   std::vector<CodecImage*> images_;
@@ -107,13 +78,12 @@ class GpuVideoFrameFactory
   // destructed).
   std::map<gpu::gles2::TextureRef*, scoped_refptr<gpu::gles2::TextureRef>>
       texture_refs_;
-  gpu::GpuCommandBufferStub* stub_;
 
   // A helper for creating textures. Only valid while |stub_| is valid.
   std::unique_ptr<GLES2DecoderHelper> decoder_helper_;
-  THREAD_CHECKER(thread_checker_);
-  base::WeakPtrFactory<GpuVideoFrameFactory> weak_factory_;
-  DISALLOW_COPY_AND_ASSIGN(GpuVideoFrameFactory);
+
+  SEQUENCE_CHECKER(sequence_checker_);
+  DISALLOW_COPY_AND_ASSIGN(VideoFrameFactoryImpl);
 };
 
 namespace internal {

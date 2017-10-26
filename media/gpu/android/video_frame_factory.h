@@ -10,6 +10,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "base/time/time.h"
+#include "media/base/sequenced_object.h"
 #include "media/gpu/android/promotion_hint_aggregator.h"
 #include "media/gpu/media_gpu_export.h"
 #include "ui/gfx/geometry/size.h"
@@ -27,7 +28,8 @@ class VideoFrame;
 
 // VideoFrameFactory creates CodecOutputBuffer backed VideoFrames. Not thread
 // safe. Virtual for testing; see VideoFrameFactoryImpl.
-class MEDIA_GPU_EXPORT VideoFrameFactory {
+class MEDIA_GPU_EXPORT VideoFrameFactory
+    : public SequencedObject<VideoFrameFactory> {
  public:
   using GetStubCb = base::Callback<gpu::GpuCommandBufferStub*()>;
   using InitCb = base::Callback<void(scoped_refptr<SurfaceTextureGLOwner>)>;
