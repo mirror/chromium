@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "ffb8e9e6_c399c7ba",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceIntegrityHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-26T02:27:58Z",
+      "side": 1,
+      "message": "\"return\" is not necessary.",
+      "revId": "eb41161cdd1160fe614a4aaa2a0739dbbd8cf1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48072aee_c3afdbf4",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-26T02:27:58Z",
+      "side": 1,
+      "message": "In the current impl, |error_messages| is always non-null. How about adding DCHECK(error_messages) here and removing null checks from line 23 and 50?",
+      "revId": "eb41161cdd1160fe614a4aaa2a0739dbbd8cf1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a5a6856_0f9c4146",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
         "patchSetId": 4
@@ -13,6 +47,24 @@
       "writtenOn": "2017-10-25T22:13:04Z",
       "side": 1,
       "message": "This CL adds integrity check here in DocumentModuleScriptFetcher. Do we also need something in WorkletModuleScriptFetcher?",
+      "revId": "eb41161cdd1160fe614a4aaa2a0739dbbd8cf1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247218f3_e693f0e1",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-26T02:27:58Z",
+      "side": 1,
+      "message": "It\u0027s not necessary. Worklet goes through this path.\n\nDETAILS: WorkletModuleScriptFetcher on a worker thread doesn\u0027t fetch module scripts by itself. Instead, it works as a proxy to WorkletModuleResponsesMap on the main thread. WorkletModuleResponsesMap acts as a cache for module creation params and performs fetch via DocumentModuleScriptFetcher when needed. Therefore, WorkletModuleScriptFetcher doesn\u0027t have to have these checks.",
+      "parentUuid": "7a5a6856_0f9c4146",
       "revId": "eb41161cdd1160fe614a4aaa2a0739dbbd8cf1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
