@@ -34,6 +34,24 @@
       "revId": "3535abeb857e17de1fd78ebf808c27dacfc1f632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f52efc5_b4629a55",
+        "filename": "content/shell/app/shell_main_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-26T18:45:21Z",
+      "side": 1,
+      "message": "No worries, it\u0027s a nit anyway :)\n\nWe have 123 instances of TODO(123456) in the codebase and 1600 of TODO(crbug.com/123456), so more from a consistency point of view than anything else. While this isn\u0027t an area new contributors would be interested in, \"123456\" means very little when reading the code without prior context. It just makes things a little bit more accessible.",
+      "parentUuid": "4328e84b_bb69fc26",
+      "revId": "3535abeb857e17de1fd78ebf808c27dacfc1f632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
