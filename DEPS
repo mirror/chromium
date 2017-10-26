@@ -42,6 +42,7 @@ vars = {
   'checkout_traffic_annotation_tools': 'checkout_configuration == "default"',
   'checkout_instrumented_libraries': 'checkout_linux and checkout_configuration == "default"',
 
+  'aomedia_git': 'https://aomedia.googlesource.com',
   'chromium_git': 'https://chromium.googlesource.com',
   'swiftshader_git': 'https://swiftshader.googlesource.com',
   'pdfium_git': 'https://pdfium.googlesource.com',
@@ -130,6 +131,7 @@ vars = {
 # If you need to add a new host, contact chrome infrastracture team.
 allowed_hosts = [
   'android.googlesource.com',
+  'aomedia.googlesource.com',
   'boringssl.googlesource.com',
   'chrome-internal.googlesource.com',
   'chromium.googlesource.com',
@@ -393,6 +395,10 @@ deps = {
 
   'src/third_party/libaddressinput/src':
     Var('chromium_git') + '/external/libaddressinput.git' + '@' + '8200a3221282582ca3291ef219257ca4be7426ca',
+
+  'src/third_party/libaom/source/libaom': {
+    'url': Var('aomedia_git') + '/aom.git' + '@' +  'd9f2286e4c0bbb0fee5719d151653247939c3847',
+  },
 
   # Userspace interface to kernel DRM services.
   'src/third_party/libdrm/src': {
