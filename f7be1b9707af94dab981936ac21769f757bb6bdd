@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b626e0ff_0affb57a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-26T14:36:48Z",
+      "side": 1,
+      "message": "I think we should still only send this notification when the state actually changes to avoid useless calls. Is there a reason we need to send it redundantly?",
+      "range": {
+        "startLine": 1260,
+        "startChar": 25,
+        "endLine": 1260,
+        "endChar": 59
+      },
+      "revId": "f7be1b9707af94dab981936ac21769f757bb6bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53d34d15_074a1bba",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
         "patchSetId": 2
