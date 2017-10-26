@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9af2d641_e26225c3",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-26T15:40:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb552955_25b11d1d",
+      "revId": "3f947c63f77f4c2194f561419af55f9c77436491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6ab1916_a572b6ce",
         "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
         "patchSetId": 2
