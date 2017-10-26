@@ -41,7 +41,9 @@ class MockImageResourceObserver final : public ImageResourceObserver {
 
   // ImageResourceObserver overrides.
   void ImageNotifyFinished(ImageResourceContent*) override;
-  void ImageChanged(ImageResourceContent*, const IntRect*) override;
+  void ImageChanged(ImageResourceContent*,
+                    CanDeferInvalidation,
+                    const IntRect*) override;
   String DebugName() const override { return "MockImageResourceObserver"; }
 
   Persistent<ImageResourceContent> content_;
