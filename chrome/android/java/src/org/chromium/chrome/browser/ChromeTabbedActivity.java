@@ -279,6 +279,9 @@ public class ChromeTabbedActivity
     // Time at which an intent was received and handled.
     private long mIntentHandlingTimeMs;
 
+    /** Whether {@link #onResumeWithNative()} has completed. */
+    private boolean mResumeWithNativeComplete;
+
     private class TabbedAssistStatusHandler extends AssistStatusHandler {
         public TabbedAssistStatusHandler(Activity activity) {
             super(activity);
@@ -668,6 +671,8 @@ public class ChromeTabbedActivity
         }
 
         maybeStartMonitoringForScreenshots();
+
+        mResumeWithNativeComplete = true;
     }
 
     private void maybeStartMonitoringForScreenshots() {
@@ -2247,7 +2252,7 @@ public class ChromeTabbedActivity
     @Override
     public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
         super.onMultiWindowModeChanged(isInMultiWindowMode);
-        if (!FeatureUtilities.isTabModelMergingEnabled()) return;
+        if (!FeatureUtilities.isTabModelMergingEnabled() || !mResumeWithNativeComplete) return;
         if (!isInMultiWindowMode) {
             // If the activity is currently resumed when multi-window mode is exited, try to merge
             // tabs from the other activity instance.
