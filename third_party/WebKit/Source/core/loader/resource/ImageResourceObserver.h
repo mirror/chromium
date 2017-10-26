@@ -36,16 +36,22 @@ class IntRect;
 
 class CORE_EXPORT ImageResourceObserver {
  public:
+  enum class CanDeferInvalidation { kYes, kNo };
+
   virtual ~ImageResourceObserver() {}
 
   // Called whenever a frame of an image changes, either because we got more
   // data from the network or because we are animating. If not null, the IntRect
   // is the changed rect of the image.
-  virtual void ImageChanged(ImageResourceContent*, const IntRect* = nullptr) {}
+  virtual void ImageChanged(ImageResourceContent*,
+                            CanDeferInvalidation,
+                            const IntRect* = nullptr) {}
 
   // Sub-classes that have an associated image need to override this function
   // to get notified of any image change.
-  virtual void ImageChanged(WrappedImagePtr, const IntRect* = nullptr) {}
+  virtual void ImageChanged(WrappedImagePtr,
+                            CanDeferInvalidation,
+                            const IntRect* = nullptr) {}
 
   // Called just after imageChanged() if all image data is received or errored.
   // TODO(hiroshige): Merge imageNotifyFinished() into imageChanged().
