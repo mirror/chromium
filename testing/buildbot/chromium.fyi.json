@@ -12456,6 +12456,8 @@
   },
   "Fuchsia": {
     "additional_compile_targets": [
+      "content_browsertests",
+      "content_shell",
       "gl_unittests",
       "headless_shell"
     ],
@@ -12657,8 +12659,10 @@
   },
   "Fuchsia (dbg)": {
     "additional_compile_targets": [
-      "gl_unittests",
+      "content_browsertests",
+      "content_shell",
       "content_unittests",
+      "gl_unittests",
       "media_unittests",
       "net_unittests"
     ],
@@ -12829,6 +12833,8 @@
   "Fuchsia ARM64": {
     "additional_compile_targets": [
       "base_unittests",
+      "content_browsertests",
+      "content_shell",
       "content_unittests",
       "crypto_unittests",
       "gl_unittests",
