@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "33de65a2_2a851934",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-26T20:59:25Z",
+      "side": 1,
+      "message": "Leave it as-is for now.",
+      "parentUuid": "c0d91ced_5161c9d7",
+      "range": {
+        "startLine": 206,
+        "startChar": 9,
+        "endLine": 206,
+        "endChar": 25
+      },
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8c79ae6_2c57a21b",
         "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
         "patchSetId": 1
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Not sure I understand what you\u0027re asking here? This if statement is, effectively, saying that FLOAT_EPSILON is the default if the caller doesn\u0027t specify a different one.",
       "parentUuid": "a8c79ae6_2c57a21b",
+      "range": {
+        "startLine": 250,
+        "startChar": 6,
+        "endLine": 250,
+        "endChar": 13
+      },
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1193bccd_a8ef656a",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-26T20:59:25Z",
+      "side": 1,
+      "message": "JavaScript supports specifying default parameters directly in the function definition, e.g. assert_matrices_approx_equal(matA, matB, epsilon \u003d FLOAT_EPSILON). https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters",
+      "parentUuid": "029625db_4850e634",
       "range": {
         "startLine": 250,
         "startChar": 6,
