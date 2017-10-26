@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "676231f0_2a0821a2",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-10-26T09:51:06Z",
+      "side": 1,
+      "message": "nit: for consistency with other benchmarks, expand this out into the full\n\n@classmethod\ndef Name(cls):\n  return \u0027heap_profiling.pseudo\u0027\n\n\n(TBH I actually like better the class attribute rather than class method, but I think consistency trumps that.)",
+      "revId": "58aeaa77af75f2bd4d673ac8c6000234c3a1286b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
