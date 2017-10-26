@@ -417,6 +417,30 @@
     },
     {
       "key": {
+        "uuid": "879791af_d7c867be",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-26T21:46:32Z",
+      "side": 1,
+      "message": "Good catch. Should the render loop even be running for magic window? Can we query poses without the render loop?\n\n(We should never get magic window poses while presenting, you could even add a DCHECK for that probably)",
+      "parentUuid": "9d28d738_aba9f5b1",
+      "range": {
+        "startLine": 385,
+        "startChar": 26,
+        "endLine": 385,
+        "endChar": 38
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "173fca14_564ebd3e",
         "filename": "device/vr/windows/d3d11_texture_helper.cc",
         "patchSetId": 1
