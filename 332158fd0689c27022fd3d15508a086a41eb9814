@@ -211,6 +211,30 @@
       "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95814a49_b77f32be",
+        "filename": "chrome/browser/ui/views/button_background_painter_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-26T21:51:55Z",
+      "side": 1,
+      "message": "Even if we just passed a views::Button, we would still need to depend on //c/b/ui.  The avatar button\u0027s state is STATE_NORMAL when the profile menu is showing, but this case is special because we want the button to look pressed.  The only way to tell if the menu is showing would be to depend on c/b/u/v/profiles which comes from //chrome/browser/ui.\n\nOne thing we could maybe try is changing the behavior of AvatarButton when render_native_nav_buttons_ is true so that the button state really is STATE_PRESSED when the menu is showing.",
+      "parentUuid": "de5efdcd_5d8b20a2",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
