@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e5fc67e_10f5ae03",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-26T12:17:39Z",
+      "side": 1,
+      "message": "They\u0027re per service worker registration ids. Two different service workers can use the same developer_id without clashing.",
+      "parentUuid": "87086896_ef08cf60",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "d392aea08b2fbe3167ae4c360a502414061c9e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4f7ccf2_66d25926",
         "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "d392aea08b2fbe3167ae4c360a502414061c9e26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f95d602_b91ab69c",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-26T12:17:39Z",
+      "side": 1,
+      "message": "It could do, but at the moment it doesn\u0027t. We may be able to remove this in a later CL.",
+      "parentUuid": "b4f7ccf2_66d25926",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 85,
+        "endChar": 32
+      },
+      "revId": "d392aea08b2fbe3167ae4c360a502414061c9e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
