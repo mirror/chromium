@@ -12,6 +12,7 @@
 #include "content/child/child_process.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/renderer/service_worker/service_worker_dispatcher.h"
+#include "content/renderer/service_worker/service_worker_handle_reference.h"
 #include "content/renderer/service_worker/web_service_worker_impl.h"
 #include "content/renderer/service_worker/web_service_worker_provider_impl.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebNavigationPreloadState.h"
@@ -402,6 +403,35 @@ WebServiceWorkerRegistrationImpl::~WebServiceWorkerRegistrationImpl() {
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   if (dispatcher)
     dispatcher->RemoveServiceWorkerRegistration(handle_id_);
+}
+
+void WebServiceWorkerRegistrationImpl::SetVersionAttributes(
+    blink::mojom::ServiceWorkerObjectInfoPtr installing,
+    blink::mojom::ServiceWorkerObjectInfoPtr waiting,
+    blink::mojom::ServiceWorkerObjectInfoPtr active) {
+  if (!creation_task_runner_->RunsTasksInCurrentSequence()) {
+    creation_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&WebServiceWorkerRegistrationImpl::SetVersionAttributes,
+                       base::Unretained(this), std::move(installing),
+                       std::move(waiting), std::move(active)));
+    return;
+  }
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
+  DCHECK(dispatcher);
+  if (installing) {
+    SetInstalling(dispatcher->GetOrCreateServiceWorker(
+        dispatcher->Adopt(std::move(installing))));
+  }
+  if (waiting) {
+    SetWaiting(dispatcher->GetOrCreateServiceWorker(
+        dispatcher->Adopt(std::move(waiting))));
+  }
+  if (active) {
+    SetActive(dispatcher->GetOrCreateServiceWorker(
+        dispatcher->Adopt(std::move(active))));
+  }
 }
 
 }  // namespace content
