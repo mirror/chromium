@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b211bb6e_7863820c",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-26T21:54:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3bbcb863_e352ddeb",
+      "revId": "7e975ad82d0035cea452c3f36242093903556cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d19f5c6e_c7565f2b",
         "filename": "chrome/android/chrome_public_apk_tmpl.gni",
         "patchSetId": 2
@@ -104,6 +122,24 @@
       "revId": "7e975ad82d0035cea452c3f36242093903556cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f182c50_9e464f02",
+        "filename": "chrome/android/chrome_public_apk_tmpl.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-26T21:54:23Z",
+      "side": 1,
+      "message": "Ah, somehow I didn\u0027t connect this to the line you removed below. Makes sense.",
+      "parentUuid": "0c634f89_eecc2e13",
+      "revId": "7e975ad82d0035cea452c3f36242093903556cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

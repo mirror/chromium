@@ -34,6 +34,24 @@
       "revId": "c3be6ac562e5c1a8815d505969b7d8077836d90c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3e2362_053d0b57",
+        "filename": "build/android/tombstones.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-26T21:54:23Z",
+      "side": 0,
+      "message": "SGTM",
+      "parentUuid": "68b32a3d_4899cc30",
+      "revId": "c3be6ac562e5c1a8815d505969b7d8077836d90c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
