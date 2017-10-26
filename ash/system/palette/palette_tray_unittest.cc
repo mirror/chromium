@@ -12,7 +12,6 @@
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/stylus_utils.h"
-#include "ash/public/cpp/voice_interaction_state.h"
 #include "ash/session/session_controller.h"
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
@@ -29,6 +28,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "chromeos/chromeos_switches.h"
+#include "components/arc/common/voice_interaction_state.mojom.h"
 #include "components/prefs/pref_service.h"
 #include "components/session_manager/session_manager_types.h"
 #include "ui/events/base_event_utils.h"
@@ -330,7 +330,7 @@ TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolViewCreated) {
 
 TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolActivatesHighlighter) {
   Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      VoiceInteractionState::RUNNING);
+      arc::mojom::VoiceInteractionState::RUNNING);
   Shell::Get()->NotifyVoiceInteractionEnabled(true);
   Shell::Get()->NotifyVoiceInteractionContextEnabled(true);
 
@@ -407,7 +407,7 @@ TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolActivatesHighlighter) {
 TEST_F(PaletteTrayTestWithVoiceInteraction,
        StylusBarrelButtonActivatesHighlighter) {
   Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      VoiceInteractionState::NOT_READY);
+      arc::mojom::VoiceInteractionState::NOT_READY);
   Shell::Get()->NotifyVoiceInteractionEnabled(false);
   Shell::Get()->NotifyVoiceInteractionContextEnabled(false);
 
@@ -442,7 +442,7 @@ TEST_F(PaletteTrayTestWithVoiceInteraction,
 
   // Once the service is ready, the button should start working.
   Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      VoiceInteractionState::RUNNING);
+      arc::mojom::VoiceInteractionState::RUNNING);
 
   // Press and drag with no button, still no highlighter.
   WaitDragAndAssertMetalayer("all enabled, no button ", origin, ui::EF_NONE,

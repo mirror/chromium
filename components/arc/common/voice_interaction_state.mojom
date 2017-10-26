@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef ASH_PUBLIC_CPP_VOICE_INTERACTION_STATE_H_
-#define ASH_PUBLIC_CPP_VOICE_INTERACTION_STATE_H_
+module arc.mojom;
 
-namespace ash {
-
-enum class VoiceInteractionState {
+[Extensible]
+// The initial state is NOT_READY, then it will either becomes STOPPED or
+// RUNNING. If the mojo connection is lost, the state will be set back to
+// NOT_READY.
+enum VoiceInteractionState {
   // Voice interaction service is not ready yet, request sent will be waiting.
   NOT_READY = 0,
   // Voice interaction session is stopped.
@@ -15,7 +16,3 @@ enum class VoiceInteractionState {
   // Voice interaction session is currently running.
   RUNNING
 };
-
-}  // namespace ash
-
-#endif  // ASH_PUBLIC_CPP_VOICE_INTERACTION_STATE_H_

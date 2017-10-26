@@ -7,6 +7,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/login_status.h"
+#include "components/arc/common/voice_interaction_state.mojom.h"
 
 namespace aura {
 class Window;
@@ -73,7 +74,8 @@ class ASH_EXPORT ShellObserver {
   // TODO(kaznacheev) Move voice interaction related methods to a separate
   // observer (crbug.com/758650)
   // Called when voice interaction session state changes.
-  virtual void OnVoiceInteractionStatusChanged(VoiceInteractionState state) {}
+  virtual void OnVoiceInteractionStatusChanged(
+      arc::mojom::VoiceInteractionState state) {}
 
   // Called when voice interaction is enabled/disabled.
   virtual void OnVoiceInteractionEnabled(bool enabled) {}

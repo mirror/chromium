@@ -141,7 +141,7 @@ void MetalayerMode::OnTouchEvent(ui::TouchEvent* event) {
 }
 
 void MetalayerMode::OnVoiceInteractionStatusChanged(
-    VoiceInteractionState state) {
+    arc::mojom::VoiceInteractionState state) {
   voice_interaction_state_ = state;
   UpdateState();
 }

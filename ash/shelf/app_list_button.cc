@@ -384,7 +384,7 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     if (UseVoiceInteractionStyle())
       // active: 100% alpha, inactive: 54% alpha
       fg_flags.setAlpha(Shell::Get()->voice_interaction_state() ==
-                                ash::VoiceInteractionState::RUNNING
+                                arc::mojom::VoiceInteractionState::RUNNING
                             ? kVoiceInteractionRunningAlpha
                             : kVoiceInteractionNotRunningAlpha);
 
@@ -488,19 +488,19 @@ void AppListButton::OnAppListVisibilityChanged(bool shown,
 }
 
 void AppListButton::OnVoiceInteractionStatusChanged(
-    ash::VoiceInteractionState state) {
+    arc::mojom::VoiceInteractionState state) {
   SchedulePaint();
 
   if (!voice_interaction_overlay_)
     return;
 
   switch (state) {
-    case ash::VoiceInteractionState::STOPPED:
+    case arc::mojom::VoiceInteractionState::STOPPED:
       UMA_HISTOGRAM_TIMES(
           "VoiceInteraction.OpenDuration",
           base::TimeTicks::Now() - voice_interaction_start_timestamp_);
       break;
-    case ash::VoiceInteractionState::NOT_READY:
+    case arc::mojom::VoiceInteractionState::NOT_READY:
       // If we are showing the bursting or waiting animation, no need to do
       // anything. Otherwise show the waiting animation now.
       if (!voice_interaction_overlay_->IsBursting() &&
@@ -508,7 +508,7 @@ void AppListButton::OnVoiceInteractionStatusChanged(
         voice_interaction_overlay_->WaitingAnimation();
       }
       break;
-    case ash::VoiceInteractionState::RUNNING:
+    case arc::mojom::VoiceInteractionState::RUNNING:
       // we start hiding the animation if it is running.
       if (voice_interaction_overlay_->IsBursting() ||
           voice_interaction_overlay_->IsWaiting()) {
@@ -551,7 +551,7 @@ void AppListButton::StartVoiceInteractionAnimation() {
   bool show_icon = (alignment == SHELF_ALIGNMENT_BOTTOM ||
                     alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) &&
                    Shell::Get()->voice_interaction_state() ==
-                       VoiceInteractionState::STOPPED &&
+                       arc::mojom::VoiceInteractionState::STOPPED &&
                    Shell::Get()->voice_interaction_setup_completed();
   voice_interaction_overlay_->StartAnimation(show_icon);
 }

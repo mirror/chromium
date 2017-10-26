@@ -262,18 +262,18 @@ void ArcVoiceInteractionFrameworkService::CaptureFullscreen(
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionRunning(
     bool running) {
   ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      running ? ash::VoiceInteractionState::RUNNING
-              : ash::VoiceInteractionState::STOPPED);
+      running ? arc::mojom::VoiceInteractionState::RUNNING
+              : arc::mojom::VoiceInteractionState::STOPPED);
 }
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
-    ash::VoiceInteractionState state) {
+    arc::mojom::VoiceInteractionState state) {
   DCHECK_NE(state_, state);
   // Assume voice interaction state changing from NOT_READY to a state other
   // than ready indicates container boot complete and it's safe to synchronize
   // voice interaction flags. VoiceInteractionEnabled is locked at true in
   // Android side so we don't need to synchronize it here.
-  if (state_ == ash::VoiceInteractionState::NOT_READY) {
+  if (state_ == arc::mojom::VoiceInteractionState::NOT_READY) {
     PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
     bool value_prop_accepted =
         prefs->GetBoolean(prefs::kArcVoiceInteractionValuePropAccepted);
@@ -566,10 +566,10 @@ bool ArcVoiceInteractionFrameworkService::InitiateUserInteraction(
   if (!prefs->GetBoolean(prefs::kVoiceInteractionEnabled))
     return false;
 
-  if (state_ == ash::VoiceInteractionState::NOT_READY) {
+  if (state_ == arc::mojom::VoiceInteractionState::NOT_READY) {
     // If the container side is not ready, we will be waiting for a while.
     ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(
-        ash::VoiceInteractionState::NOT_READY);
+        arc::mojom::VoiceInteractionState::NOT_READY);
   }
 
   ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMA(context_);

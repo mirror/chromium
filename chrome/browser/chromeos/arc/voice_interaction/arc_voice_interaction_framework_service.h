@@ -14,6 +14,7 @@
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chromeos/audio/cras_audio_handler.h"
 #include "components/arc/common/voice_interaction_framework.mojom.h"
+#include "components/arc/common/voice_interaction_state.mojom.h"
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/session_manager/core/session_manager_observer.h"
@@ -67,7 +68,8 @@ class ArcVoiceInteractionFrameworkService
   void OnMetalayerClosed() override;
   void SetMetalayerEnabled(bool enabled) override;
   void SetVoiceInteractionRunning(bool running) override;
-  void SetVoiceInteractionState(ash::VoiceInteractionState state) override;
+  void SetVoiceInteractionState(
+      arc::mojom::VoiceInteractionState state) override;
 
   void ShowMetalayer();
   void HideMetalayer();
@@ -158,7 +160,8 @@ class ArcVoiceInteractionFrameworkService
   // delay after boot before the service is ready. We wait for the container
   // to tell us if it is ready to quickly serve voice interaction requests.
   // We also give user proper feedback based on the state.
-  ash::VoiceInteractionState state_ = ash::VoiceInteractionState::NOT_READY;
+  arc::mojom::VoiceInteractionState state_ =
+      arc::mojom::VoiceInteractionState::NOT_READY;
 
   // The time when a user initated an interaction.
   base::TimeTicks user_interaction_start_time_;

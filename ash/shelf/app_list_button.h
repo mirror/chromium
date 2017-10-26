@@ -8,10 +8,10 @@
 #include <memory>
 
 #include "ash/ash_export.h"
-#include "ash/public/cpp/voice_interaction_state.h"
 #include "ash/session/session_observer.h"
 #include "ash/shell_observer.h"
 #include "base/macros.h"
+#include "components/arc/common/voice_interaction_state.mojom.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/views/controls/button/image_button.h"
 
@@ -78,7 +78,7 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   void OnAppListVisibilityChanged(bool shown,
                                   aura::Window* root_window) override;
   void OnVoiceInteractionStatusChanged(
-      ash::VoiceInteractionState state) override;
+      arc::mojom::VoiceInteractionState state) override;
   void OnVoiceInteractionEnabled(bool enabled) override;
   void OnVoiceInteractionSetupCompleted() override;
 

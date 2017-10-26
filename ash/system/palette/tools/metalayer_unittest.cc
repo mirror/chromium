@@ -61,16 +61,18 @@ class MetalayerToolTest : public AshTestBase {
 // The metalayer tool is always visible, but only enabled when the user
 // has enabled the metalayer AND the voice interaction framework is ready.
 TEST_F(MetalayerToolTest, PaletteMenuState) {
-  const VoiceInteractionState kStates[] = {VoiceInteractionState::NOT_READY,
-                                           VoiceInteractionState::STOPPED,
-                                           VoiceInteractionState::RUNNING};
+  const arc::mojom::VoiceInteractionState kStates[] = {
+      arc::mojom::VoiceInteractionState::NOT_READY,
+      arc::mojom::VoiceInteractionState::STOPPED,
+      arc::mojom::VoiceInteractionState::RUNNING};
   const base::string16 kLoading(base::ASCIIToUTF16("loading"));
 
   // Iterate over every possible combination of states.
-  for (VoiceInteractionState state : kStates) {
+  for (arc::mojom::VoiceInteractionState state : kStates) {
     for (int enabled = 0; enabled <= 1; enabled++) {
       for (int context = 0; context <= 1; context++) {
-        const bool ready = state != VoiceInteractionState::NOT_READY;
+        const bool ready =
+            state != arc::mojom::VoiceInteractionState::NOT_READY;
         const bool selectable = enabled && context && ready;
 
         Shell::Get()->NotifyVoiceInteractionStatusChanged(state);
@@ -118,7 +120,7 @@ TEST_F(MetalayerToolTest, EnablingDisablingMetalayerEnablesDisablesController) {
 // Verifies that disabling the metalayer support disables the tool.
 TEST_F(MetalayerToolTest, MetalayerUnsupportedDisablesPaletteTool) {
   Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      VoiceInteractionState::RUNNING);
+      arc::mojom::VoiceInteractionState::RUNNING);
   Shell::Get()->NotifyVoiceInteractionEnabled(true);
   Shell::Get()->NotifyVoiceInteractionContextEnabled(true);
 
@@ -146,16 +148,16 @@ TEST_F(MetalayerToolTest, MetalayerUnsupportedDisablesPaletteTool) {
               DisableTool(PaletteToolId::METALAYER))
       .Times(0);
   Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      VoiceInteractionState::STOPPED);
+      arc::mojom::VoiceInteractionState::STOPPED);
   Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      VoiceInteractionState::RUNNING);
+      arc::mojom::VoiceInteractionState::RUNNING);
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
 
   // Changing the state to NOT_READY should disable the tool.
   EXPECT_CALL(*palette_tool_delegate_.get(),
               DisableTool(PaletteToolId::METALAYER));
   Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      VoiceInteractionState::NOT_READY);
+      arc::mojom::VoiceInteractionState::NOT_READY);
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
 }
 

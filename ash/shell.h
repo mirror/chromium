@@ -12,7 +12,6 @@
 #include "ash/ash_export.h"
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/public/cpp/shelf_types.h"
-#include "ash/public/cpp/voice_interaction_state.h"
 #include "ash/session/session_observer.h"
 #include "ash/wm/cursor_manager_chromeos.h"
 #include "ash/wm/system_modal_container_event_filter_delegate.h"
@@ -20,6 +19,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "components/arc/common/voice_interaction_state.mojom.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/aura/window.h"
 #include "ui/display/screen.h"
@@ -174,7 +174,6 @@ class WindowTreeHostManager;
 
 enum class Config;
 enum class LoginStatus;
-enum class VoiceInteractionState;
 
 // Shell is a singleton object that presents the Shell API and implements the
 // RootWindow's delegate interface.
@@ -571,7 +570,8 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // TODO(kaznacheev) Move voice interaction related methods to a separate
   // controller (crbug.com/758650)
-  void NotifyVoiceInteractionStatusChanged(VoiceInteractionState state);
+  void NotifyVoiceInteractionStatusChanged(
+      arc::mojom::VoiceInteractionState state);
 
   void NotifyVoiceInteractionEnabled(bool enabled);
 
@@ -579,7 +579,7 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   void NotifyVoiceInteractionSetupCompleted(bool completed);
 
-  VoiceInteractionState voice_interaction_state() const {
+  arc::mojom::VoiceInteractionState voice_interaction_state() const {
     return voice_interaction_state_;
   }
 
@@ -802,8 +802,8 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // Voice interaction state. The intial value should be set to STOPPED to make
   // sure the burst animation could be correctly shown.
-  VoiceInteractionState voice_interaction_state_ =
-      VoiceInteractionState::STOPPED;
+  arc::mojom::VoiceInteractionState voice_interaction_state_ =
+      arc::mojom::VoiceInteractionState::STOPPED;
 
   // Whether voice interaction is enabled in system settings.
   bool voice_interaction_settings_enabled_ = false;

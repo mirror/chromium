@@ -575,7 +575,8 @@ void Shell::NotifyAppListVisibilityChanged(bool visible,
     observer.OnAppListVisibilityChanged(visible, root_window);
 }
 
-void Shell::NotifyVoiceInteractionStatusChanged(VoiceInteractionState state) {
+void Shell::NotifyVoiceInteractionStatusChanged(
+    arc::mojom::VoiceInteractionState state) {
   voice_interaction_state_ = state;
   for (auto& observer : shell_observers_)
     observer.OnVoiceInteractionStatusChanged(state);

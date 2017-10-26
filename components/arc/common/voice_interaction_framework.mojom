@@ -7,13 +7,7 @@
 module arc.mojom;
 
 import "gfx.mojom";
-
-[Extensible]
-enum VoiceInteractionState {
-  NOT_READY = 0,
-  STOPPED,
-  RUNNING
-};
+import "voice_interaction_state.mojom";
 
 // Handles voice interaction queries from Android.
 // Next method ID: 6
