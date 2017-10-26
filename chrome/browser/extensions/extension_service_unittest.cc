@@ -7298,3 +7298,51 @@ TEST_F(ExtensionServiceTest, UninstallDisabledMigratedExtension) {
   service()->UninstallMigratedExtensionsForTest();
   EXPECT_FALSE(service()->GetInstalledExtension(cast_stable));
 }
+
+TEST_F(ExtensionServiceTest, EnableZipUnpackerExtension) {
+  InitializeEmptyExtensionService();
+
+  scoped_refptr<const Extension> zip_unpacker =
+      ExtensionBuilder("stable")
+          .SetID(extension_misc::kZIPUnpackerExtensionId)
+          .SetLocation(Manifest::EXTERNAL_COMPONENT)
+          .Build();
+  service()->AddExtension(zip_unpacker.get());
+  service()->DisableExtension(extension_misc::kZIPUnpackerExtensionId,
+                              extensions::disable_reason::DISABLE_USER_ACTION);
+  ASSERT_TRUE(registry()->disabled_extensions().Contains(
+      extension_misc::kZIPUnpackerExtensionId));
+
+  service()->EnableZipUnpackerExtensionForTest();
+#if defined(OS_CHROMEOS)
+  ASSERT_TRUE(registry()->enabled_extensions().Contains(
+      extension_misc::kZIPUnpackerExtensionId));
+#else
+  ASSERT_TRUE(registry()->disabled_extensions().Contains(
+      extension_misc::kZIPUnpackerExtensionId));
+#endif
+}
+
+TEST_F(ExtensionServiceTest, ShouldNotEnableZipUnpackerExtensionAgainstPolicy) {
+  InitializeEmptyExtensionService();
+
+  GetManagementPolicy()->UnregisterAllProviders();
+  extensions::TestManagementPolicyProvider provider_(
+      extensions::TestManagementPolicyProvider::MUST_REMAIN_DISABLED);
+  GetManagementPolicy()->RegisterProvider(&provider_);
+
+  scoped_refptr<const Extension> zip_unpacker =
+      ExtensionBuilder("stable")
+          .SetID(extension_misc::kZIPUnpackerExtensionId)
+          .SetLocation(Manifest::EXTERNAL_COMPONENT)
+          .Build();
+  service()->AddExtension(zip_unpacker.get());
+  service()->DisableExtension(extension_misc::kZIPUnpackerExtensionId,
+                              extensions::disable_reason::DISABLE_USER_ACTION);
+  ASSERT_TRUE(registry()->disabled_extensions().Contains(
+      extension_misc::kZIPUnpackerExtensionId));
+
+  service()->EnableZipUnpackerExtensionForTest();
+  ASSERT_FALSE(registry()->enabled_extensions().Contains(
+      extension_misc::kZIPUnpackerExtensionId));
+}
