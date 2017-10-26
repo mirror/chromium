@@ -45,11 +45,14 @@ class ClipPathClipper {
                       const AffineTransform&,
                       const FloatPoint&);
   void FinishEffect();
+  void PaintClipPathAsEffectNode();
 
   LayoutSVGResourceClipper* resource_clipper_;
   ClipperState clipper_state_;
   const LayoutObject& layout_object_;
   GraphicsContext& context_;
+  ClipPathOperation& clip_path_operation_;
+  FloatRect reference_box_;
 
   // TODO(pdr): This pattern should be cleaned up so that the recorders are just
   // on the stack.
