@@ -48,6 +48,10 @@ support_lib_alias("emma_device_java") {
 }
 support_lib_alias("android_support_multidex_java") {
 }
+support_lib_alias("android_arch_lifecycle_runtime_java") {
+}
+support_lib_alias("android_arch_lifecycle_common_java") {
+}
 support_lib_alias("android_support_annotations_java") {
 }
 support_lib_alias("android_support_cardview_java") {
