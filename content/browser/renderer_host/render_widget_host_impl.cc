@@ -735,6 +735,10 @@ void RenderWidgetHostImpl::SetImportance(ChildProcessImportance importance) {
 bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
   *resize_params = ResizeParams();
 
+  // TODO(fsamuel): We should have a single code path for propagation of
+  // ScreenInfo. Ideally we should always grab the ScreenInfo from the
+  // view, and in the case of top level pages, we grab ScreenInfo from
+  // the WebContentsView through the RenderWidgetHostView.
   if (view_ && view_->IsRenderWidgetHostViewChildFrame())
     view_->GetScreenInfo(&resize_params->screen_info);
   else
