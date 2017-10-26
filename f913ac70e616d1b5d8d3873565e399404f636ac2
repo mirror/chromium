@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "869ace39_72d6dc11",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T06:28:02Z",
+      "side": 1,
+      "message": "\u003e background tabs are different processes. ScopedPagePauser in foreground tab does nothing about background pages\n\nHowever, it\u0027s possible that multiple tabs share one process.\n\n\u003e don\u0027t want to add yet another concept of pausing/suspending etc\n\nThis makes sense. So I\u0027d argue that the existing ScopedPagePauser is not an ideal implementation (not limited to the near-OOM intervention)... However, to fix the implementation, we need to clarify what the \"pause\" in the HTML spec should mean.\n\nSo, I think this CL is fine.",
+      "parentUuid": "554a6c7b_bc22dd7c",
+      "revId": "f913ac70e616d1b5d8d3873565e399404f636ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8b29f76_ec23e134",
         "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
         "patchSetId": 3
