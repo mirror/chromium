@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6afae97_959bc73f",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-26T14:25:40Z",
+      "side": 1,
+      "message": "Should we move these to be method-local when they\u0027re only used once? (Open question.)",
+      "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7827eacf_3b134652",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-26T14:25:40Z",
+      "side": 1,
+      "message": "nit: consider something like WriteAudioSilentElement(). Merges both methods and is clearer about the intention. It probably also doesn\u0027t need |notification|?",
+      "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae724be_42108b38",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-26T14:25:40Z",
+      "side": 1,
+      "message": "Return an std::unique_ptr\u003c\u003e. Also allows you to remove the WARN_UNUSED_RESULT since that\u0027d become safe.",
+      "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ae30ee_7851ba5a",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-26T14:25:40Z",
+      "side": 1,
+      "message": "return std::make_unique\u003cmessage_center::Notification\u003e(..args..);",
+      "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b950d4_5f9e7daa",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-26T14:25:40Z",
+      "side": 1,
+      "message": "nit: just use the assign operator, that\u0027ll do an implicit move.",
+      "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
