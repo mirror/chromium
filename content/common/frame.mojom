@@ -153,7 +153,12 @@ interface FrameHost {
   // Creates and returns a KeepAliveHandle.
   IssueKeepAliveHandle(KeepAliveHandle& keep_alive_handle);
 
-  // Sent by the renderer when a navigation commits in the frame.
+  // Sent by the renderer when a navigation commits in the frame. If |request|
+  // is non-empty, the browser must close the old binding to its
+  // InterfaceProvider implementation and drop any pending requests, if any.
+  // Then it should bind |request| to an implementation that services interface
+  // requests in a security context appropriate for the committed load.
   DidCommitProvisionalLoad(
-      DidCommitProvisionalLoadParams params);
+      DidCommitProvisionalLoadParams params,
+      service_manager.mojom.InterfaceProvider&? interface_provider_request);
 };
