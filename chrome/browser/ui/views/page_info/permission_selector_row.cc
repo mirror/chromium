@@ -19,6 +19,7 @@
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/models/combobox_model.h"
 #include "ui/gfx/image/image.h"
+#include "ui/gfx/text_utils.h"
 #include "ui/views/controls/button/menu_button.h"
 #include "ui/views/controls/combobox/combobox.h"
 #include "ui/views/controls/combobox/combobox_listener.h"
@@ -213,11 +214,20 @@ class PermissionCombobox : public views::Combobox,
 
   void UpdateSelectedIndex(bool use_default);
 
+  // Sets the minimum content width for the |PermissionCombobox|.
+  void SetMinContentWidth(int width);
+
+  // View:
+  gfx::Size CalculatePreferredSize() const override;
+
  private:
   // views::ComboboxListener:
   void OnPerformAction(Combobox* combobox) override;
 
   ComboboxModelAdapter* model_;
+
+  // Minimum width for |PermissionCombobox|, including padding and the arrow.
+  int min_total_width_;
 };
 
 PermissionCombobox::PermissionCombobox(ComboboxModelAdapter* model,
@@ -241,6 +251,24 @@ void PermissionCombobox::UpdateSelectedIndex(bool use_default) {
     index = 0;
   }
   SetSelectedIndex(index);
+}
+
+void PermissionCombobox::SetMinContentWidth(int width) {
+  min_total_width_ = std::max(views::Combobox::kMinComboboxWidth, width);
+  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  const int combobox_padding =
+      GetInsets().width() +
+      provider->GetDistanceMetric(
+          views::DISTANCE_TEXTFIELD_HORIZONTAL_TEXT_PADDING) *
+          2;
+  min_total_width_ += combobox_padding + GetArrowContainerWidth();
+}
+
+gfx::Size PermissionCombobox::CalculatePreferredSize() const {
+  const gfx::Size& preferred_size = Combobox::CalculatePreferredSize();
+  if (preferred_size.width() > min_total_width_)
+    return preferred_size;
+  return gfx::Size(min_total_width_, preferred_size.height());
 }
 
 void PermissionCombobox::OnPerformAction(Combobox* combobox) {
@@ -402,6 +430,30 @@ void PermissionSelectorRow::PermissionChanged(
   for (PermissionSelectorRowObserver& observer : observer_list_) {
     observer.OnPermissionChanged(permission);
   }
+}
+
+int PermissionSelectorRow::GetMaxLinkableContentWidth() const {
+  DCHECK(combobox_model_adapter_);
+
+  const gfx::FontList& font_list = views::Combobox::GetFontList();
+  const int maximum_width = ChromeLayoutProvider::Get()->GetDistanceMetric(
+      views::DISTANCE_BUTTON_MAX_LINKABLE_WIDTH);
+  int max_linkable_content_width = 0;
+
+  for (int i = 0; i < combobox_model_adapter_->GetItemCount(); ++i) {
+    int current_width =
+        gfx::GetStringWidth(combobox_model_adapter_->GetItemAt(i), font_list);
+    if (current_width > maximum_width)
+      continue;
+    max_linkable_content_width =
+        std::max(max_linkable_content_width, current_width);
+  }
+  return max_linkable_content_width;
+}
+
+void PermissionSelectorRow::SetMinComboboxContentWidth(int width) {
+  DCHECK(combobox_);
+  combobox_->SetMinContentWidth(width);
 }
 
 views::View* PermissionSelectorRow::button() {

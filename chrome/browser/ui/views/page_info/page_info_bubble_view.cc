@@ -755,6 +755,12 @@ void PageInfoBubbleView::SetPermissionInfo(
                                GridLayout::USE_PREF, 0, 0);
   chosen_object_set->AddPaddingColumn(kFixed, side_margin);
 
+  // In Harmony, the combobox width should fit as many permission option strings
+  // as possible across all permission rows (under a max width), so that most
+  // comboboxes will be the same width. For strings over the max width, avoid
+  // ellision (i.e., just allow them to assume their full width).
+  bool is_md = ui::MaterialDesignController::IsSecondaryUiMaterial();
+  int combobox_width = 0;
   for (const auto& permission : permission_info_list) {
     std::unique_ptr<PermissionSelectorRow> selector =
         base::MakeUnique<PermissionSelectorRow>(
@@ -762,8 +768,18 @@ void PageInfoBubbleView::SetPermissionInfo(
             web_contents() ? web_contents()->GetVisibleURL()
                            : GURL::EmptyGURL(),
             permission, layout);
+    if (is_md) {
+      combobox_width =
+          std::max(combobox_width, selector->GetMaxLinkableContentWidth());
+    }
     selector->AddObserver(this);
     selector_rows_.push_back(std::move(selector));
+  }
+  // Assume the permission menu model will not change. If this ever changes, the
+  // max linkable content width will need to be recalculated.
+  if (is_md) {
+    for (const auto& selector : selector_rows_)
+      selector->SetMinComboboxContentWidth(combobox_width);
   }
 
   for (auto& object : chosen_object_info_list) {
