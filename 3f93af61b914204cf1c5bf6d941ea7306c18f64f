@@ -16,6 +16,24 @@
       "revId": "3f93af61b914204cf1c5bf6d941ea7306c18f64f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9779fe51_59810ed1",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-26T16:10:01Z",
+      "side": 1,
+      "message": "I also considered that option, but it requires\nWorkletModuleScriptFetcher::OnRead() and WorkletModuleScriptFetcher::OnFailed() to construct an empty HeapVector. Does this look good? If so, I\u0027ll do the change (I also prefer const-ref here).",
+      "parentUuid": "cb2d65d6_ef2f1213",
+      "revId": "3f93af61b914204cf1c5bf6d941ea7306c18f64f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
