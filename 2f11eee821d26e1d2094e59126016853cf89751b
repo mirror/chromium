@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92da6ffa_88c181f1",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-26T15:45:01Z",
+      "side": 1,
+      "message": "Can we just make the delegate a constructor parameter instead?  It doesn\u0027t require a bit of re-architecting (And maybe a new method to ContentClientDelegate), but having SetDelegate secretly initialize the RDH seems not great.",
+      "range": {
+        "startLine": 864,
+        "startChar": 4,
+        "endLine": 864,
+        "endChar": 9
+      },
+      "revId": "2f11eee821d26e1d2094e59126016853cf89751b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
