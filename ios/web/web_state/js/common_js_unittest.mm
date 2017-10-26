@@ -10,6 +10,8 @@
 #import "ios/web/public/test/web_test_with_web_state.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #import "testing/gtest_mac.h"
+#include "base/timer/elapsed_timer.h"
+#include "ios/web/public/test/fakes/test_web_client.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -39,6 +41,76 @@ namespace web {
 
 // Test fixture to test common.js.
 typedef web::WebTestWithWebState CommonJsTest;
+
+#define DW_NUM_TESTS 50
+
+TEST_F(CommonJsTest, TimingTestNewNavManager) {
+  GetWebClient()->SetIsSlimNavigationManager(true);
+  base::ElapsedTimer timer;
+  for (int i = 0; i < DW_NUM_TESTS; i++) {
+  LoadHtml(@"<html><body>"
+            "<input type='text' name='firstname'>"
+            "<input type='text' name='lastname'>"
+            "<input type='email' name='email'>"
+            "<input type='tel' name='phone'>"
+            "<input type='url' name='blog'>"
+            "<input type='number' name='expected number of clicks'>"
+            "<input type='password' name='pwd'>"
+            "<input type='checkbox' name='vehicle' value='Bike'>"
+            "<input type='checkbox' name='vehicle' value='Car'>"
+            "<input type='checkbox' name='vehicle' value='Rocket'>"
+            "<input type='radio' name='boolean' value='true'>"
+            "<input type='radio' name='boolean' value='false'>"
+            "<input type='radio' name='boolean' value='other'>"
+            "<select name='state'>"
+            "  <option value='CA'>CA</option>"
+            "  <option value='MA'>MA</option>"
+            "</select>"
+            "<select name='cars' multiple>"
+            "  <option value='volvo'>Volvo</option>"
+            "  <option value='saab'>Saab</option>"
+            "  <option value='opel'>Opel</option>"
+            "  <option value='audi'>Audi</option>"
+            "</select>"
+            "<input type='submit' name='submit' value='Submit'>"
+            "</body></html>");
+  }
+  DLOG(WARNING) << "[new nav manager]: " << timer.Elapsed().InMilliseconds() << "ms";
+}
+
+TEST_F(CommonJsTest, TimingTestOldNavManager) {
+  GetWebClient()->SetIsSlimNavigationManager(false);
+  base::ElapsedTimer timer;
+  for (int i = 0; i < DW_NUM_TESTS; i++) {
+  LoadHtml(@"<html><body>"
+            "<input type='text' name='firstname'>"
+            "<input type='text' name='lastname'>"
+            "<input type='email' name='email'>"
+            "<input type='tel' name='phone'>"
+            "<input type='url' name='blog'>"
+            "<input type='number' name='expected number of clicks'>"
+            "<input type='password' name='pwd'>"
+            "<input type='checkbox' name='vehicle' value='Bike'>"
+            "<input type='checkbox' name='vehicle' value='Car'>"
+            "<input type='checkbox' name='vehicle' value='Rocket'>"
+            "<input type='radio' name='boolean' value='true'>"
+            "<input type='radio' name='boolean' value='false'>"
+            "<input type='radio' name='boolean' value='other'>"
+            "<select name='state'>"
+            "  <option value='CA'>CA</option>"
+            "  <option value='MA'>MA</option>"
+            "</select>"
+            "<select name='cars' multiple>"
+            "  <option value='volvo'>Volvo</option>"
+            "  <option value='saab'>Saab</option>"
+            "  <option value='opel'>Opel</option>"
+            "  <option value='audi'>Audi</option>"
+            "</select>"
+            "<input type='submit' name='submit' value='Submit'>"
+            "</body></html>");
+  }
+  DLOG(WARNING) << "[old nav manager]: " << timer.Elapsed().InMilliseconds() << "ms";
+}
 
 // Tests __gCrWeb.common.isTextField JavaScript API.
 TEST_F(CommonJsTest, IsTestField) {
