@@ -33,6 +33,24 @@
       "revId": "8f95c1d30d47ebb18e8f4db9da7ff089be519eab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f591beb_fb11573b",
+        "filename": "chrome/browser/vr/elements/rect.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-26T19:38:06Z",
+      "side": 1,
+      "message": "Drive by comment: +1 on that suggestion.  Rect should be limited to Rect-y things.  :)",
+      "parentUuid": "a5be31c3_96efb3fb",
+      "revId": "8f95c1d30d47ebb18e8f4db9da7ff089be519eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
