@@ -31,6 +31,7 @@
 #include "sandbox/linux/seccomp-bpf-helpers/syscall_sets.h"
 #include "sandbox/linux/seccomp-bpf/sandbox_bpf.h"
 #include "sandbox/linux/system_headers/linux_syscalls.h"
+#include "services/service_manager/sandbox/linux/bpf_base_policy_linux.h"
 #include "services/service_manager/sandbox/linux/bpf_cdm_policy_linux.h"
 #include "services/service_manager/sandbox/linux/bpf_cros_amd_gpu_policy_linux.h"
 #include "services/service_manager/sandbox/linux/bpf_cros_arm_gpu_policy_linux.h"
@@ -39,7 +40,6 @@
 #include "services/service_manager/sandbox/linux/bpf_ppapi_policy_linux.h"
 #include "services/service_manager/sandbox/linux/bpf_renderer_policy_linux.h"
 #include "services/service_manager/sandbox/linux/bpf_utility_policy_linux.h"
-#include "services/service_manager/sandbox/linux/sandbox_bpf_base_policy_linux.h"
 
 using sandbox::BaselinePolicy;
 using sandbox::SandboxBPF;
