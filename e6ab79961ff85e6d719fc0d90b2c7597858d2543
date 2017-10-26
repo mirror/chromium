@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70a0f908_ff66eb54",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-event.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-26T06:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06e07706_8629a9f8",
+      "range": {
+        "startLine": 516,
+        "startChar": 46,
+        "endLine": 516,
+        "endChar": 58
+      },
+      "revId": "e6ab79961ff85e6d719fc0d90b2c7597858d2543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e95300e9_acf00025",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-event.https.html",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e6ab79961ff85e6d719fc0d90b2c7597858d2543",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123b3c6d_4e234db5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-event.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-26T06:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e95300e9_acf00025",
+      "range": {
+        "startLine": 519,
+        "startChar": 10,
+        "endLine": 520,
+        "endChar": 37
+      },
+      "revId": "e6ab79961ff85e6d719fc0d90b2c7597858d2543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
