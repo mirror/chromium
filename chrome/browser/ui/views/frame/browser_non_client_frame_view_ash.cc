@@ -454,8 +454,15 @@ void BrowserNonClientFrameViewAsh::LayoutProfileIndicatorIcon() {
 }
 
 bool BrowserNonClientFrameViewAsh::ShouldPaint() const {
-  if (!frame()->IsFullscreen())
-    return true;
+  if (!frame()->IsFullscreen()) {
+    // For tablet mode, non-normal browsers will be in immersive mode, so they
+    // may or may not need to have their headers painted.
+    if (!TabletModeClient::Get()->tablet_mode_enabled() ||
+        !TabletModeClient::Get()->auto_hide_title_bars() ||
+        browser_view()->IsBrowserTypeNormal()) {
+      return true;
+    }
+  }
 
   // We need to paint when the top-of-window views are revealed in immersive
   // fullscreen.
