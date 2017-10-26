@@ -6,6 +6,7 @@
 
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#import "ios/web_view/shell/shell_autofill_delegate.h"
 #import "ios/web_view/shell/shell_translation_delegate.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -34,6 +35,8 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 @property(nonatomic, strong) UIToolbar* toolbar;
 // Handles the translation of the content displayed in |webView|.
 @property(nonatomic, strong) ShellTranslationDelegate* translationDelegate;
+// Handles the autofill of the content displayed in |webView|.
+@property(nonatomic, strong) ShellAutofillDelegate* autofillDelegate;
 
 - (void)back;
 - (void)forward;
@@ -53,6 +56,7 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 @synthesize toolbar = _toolbar;
 @synthesize webView = _webView;
 @synthesize translationDelegate = _translationDelegate;
+@synthesize autofillDelegate = _autofillDelegate;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -250,7 +254,9 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
   _webView.navigationDelegate = self;
   _webView.UIDelegate = self;
   _translationDelegate = [[ShellTranslationDelegate alloc] init];
+  _autofillDelegate = [[ShellAutofillDelegate alloc] init];
   _webView.translationController.delegate = _translationDelegate;
+  _webView.autofillController.delegate = _autofillDelegate;
 
   [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                 UIViewAutoresizingFlexibleHeight];
