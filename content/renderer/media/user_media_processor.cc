@@ -968,40 +968,50 @@ void UserMediaProcessor::DelayedGetUserMediaRequestFailed(
       web_request.RequestDenied();
       return;
     case MEDIA_DEVICE_PERMISSION_DISMISSED:
-      web_request.RequestFailedUASpecific("PermissionDismissedError");
+      web_request.RequestFailedUASpecific(
+          blink::WebUserMediaRequest::Error::kPermissionDismissed);
       return;
     case MEDIA_DEVICE_INVALID_STATE:
-      web_request.RequestFailedUASpecific("InvalidStateError");
+      web_request.RequestFailedUASpecific(
+          blink::WebUserMediaRequest::Error::kInvalidState);
       return;
     case MEDIA_DEVICE_NO_HARDWARE:
-      web_request.RequestFailedUASpecific("DevicesNotFoundError");
+      web_request.RequestFailedUASpecific(
+          blink::WebUserMediaRequest::Error::kDevicesNotFound);
       return;
     case MEDIA_DEVICE_INVALID_SECURITY_ORIGIN_DEPRECATED:
       NOTREACHED();
       return;
     case MEDIA_DEVICE_TAB_CAPTURE_FAILURE:
-      web_request.RequestFailedUASpecific("TabCaptureError");
+      web_request.RequestFailedUASpecific(
+          blink::WebUserMediaRequest::Error::kTabCapture);
       return;
     case MEDIA_DEVICE_SCREEN_CAPTURE_FAILURE:
-      web_request.RequestFailedUASpecific("ScreenCaptureError");
+      web_request.RequestFailedUASpecific(
+          blink::WebUserMediaRequest::Error::kScreenCapture);
       return;
     case MEDIA_DEVICE_CAPTURE_FAILURE:
-      web_request.RequestFailedUASpecific("DeviceCaptureError");
+      web_request.RequestFailedUASpecific(
+          blink::WebUserMediaRequest::Error::kDeviceCapture);
       return;
     case MEDIA_DEVICE_CONSTRAINT_NOT_SATISFIED:
       web_request.RequestFailedConstraint(result_name);
       return;
     case MEDIA_DEVICE_TRACK_START_FAILURE:
-      web_request.RequestFailedUASpecific("TrackStartError");
+      web_request.RequestFailedUASpecific(
+          blink::WebUserMediaRequest::Error::kTrackStart);
       return;
     case MEDIA_DEVICE_NOT_SUPPORTED:
-      web_request.RequestFailedUASpecific("MediaDeviceNotSupported");
+      web_request.RequestFailedUASpecific(
+          blink::WebUserMediaRequest::Error::kMediaDeviceNotSupported);
       return;
     case MEDIA_DEVICE_FAILED_DUE_TO_SHUTDOWN:
-      web_request.RequestFailedUASpecific("MediaDeviceFailedDueToShutdown");
+      web_request.RequestFailedUASpecific(
+          blink::WebUserMediaRequest::Error::kMediaDeviceFailedDueToShutdown);
       return;
     case MEDIA_DEVICE_KILL_SWITCH_ON:
-      web_request.RequestFailedUASpecific("MediaDeviceKillSwitchOn");
+      web_request.RequestFailedUASpecific(
+          blink::WebUserMediaRequest::Error::kMediaDeviceKillSwitchOn);
       return;
   }
   NOTREACHED();
