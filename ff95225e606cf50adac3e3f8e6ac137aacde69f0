@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98fbb105_6cf6c57f",
+        "filename": "ios/web/public/web_state/web_state_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T14:46:52Z",
+      "side": 1,
+      "message": "nit: extra period in the end",
+      "range": {
+        "startLine": 156,
+        "startChar": 32,
+        "endLine": 156,
+        "endChar": 46
+      },
+      "revId": "ff95225e606cf50adac3e3f8e6ac137aacde69f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
