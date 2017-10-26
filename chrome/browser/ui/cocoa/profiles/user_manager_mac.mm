@@ -488,7 +488,7 @@ void UserManagerProfileDialog::ShowReauthDialog(
   // This method should only be called if the user manager is already showing.
   if (!UserManager::IsShowing())
     return;
-  GURL url = signin::GetReauthURLWithEmail(
+  GURL url = signin::GetReauthURLWithEmailForModalDialog(
       signin_metrics::AccessPoint::ACCESS_POINT_USER_MANAGER, reason, email);
   instance_->ShowDialog(browser_context, email, url);
 }
