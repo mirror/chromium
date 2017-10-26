@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "0f81aef2_c14d4a4a",
+        "filename": "content/common/service_worker/service_worker_types.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-26T06:13:31Z",
+      "side": 1,
+      "message": "Thanks, makes sense.",
+      "parentUuid": "60eabab5_364fba04",
+      "revId": "43a67b0b31d9670822811b9a04cb6828ef931584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42698947_289b29f6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/request/request-cache-force-cache-expected.txt",
         "patchSetId": 3
