@@ -22,6 +22,30 @@
       "revId": "b80bb0cad1e81c9a52af5ea690d37b992c7713a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8042f15f_530dec56",
+        "filename": "cc/trees/layer_tree_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-26T23:00:14Z",
+      "side": 1,
+      "message": "Ok. I mildly prefer keeping it as is, since it\u0027s a public interface and I don\u0027t wanna get bit in the future. Discussed offline a bit and going to leave it as is.",
+      "parentUuid": "490b2c28_30cb8c72",
+      "range": {
+        "startLine": 499,
+        "startChar": 28,
+        "endLine": 499,
+        "endChar": 68
+      },
+      "revId": "b80bb0cad1e81c9a52af5ea690d37b992c7713a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
