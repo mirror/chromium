@@ -105,6 +105,24 @@
       "revId": "50c6f8cbfa7274552b55759683145e284197cd64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b108d521_e6a9d87e",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T18:17:54Z",
+      "side": 1,
+      "message": "i\u0027ve uploaded https://crrev.com/c/739959 to change this.",
+      "parentUuid": "b8571383_df1c4110",
+      "revId": "50c6f8cbfa7274552b55759683145e284197cd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
