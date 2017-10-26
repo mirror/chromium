@@ -109,13 +109,16 @@ bool LengthPropertyFunctions::GetInitialLength(CSSPropertyID property,
     case CSSPropertyBorderLeftWidth:
     case CSSPropertyBorderRightWidth:
     case CSSPropertyBorderTopWidth:
-      result = LengthFromUnsigned(ComputedStyle::InitialBorderWidth());
+      result = LengthFromUnsigned(
+          ComputedStyleInitialFunctions::InitialBorderWidth());
       return true;
     case CSSPropertyOutlineWidth:
-      result = LengthFromUnsigned(ComputedStyle::InitialOutlineWidth());
+      result = LengthFromUnsigned(
+          ComputedStyleInitialFunctions::InitialOutlineWidth());
       return true;
     case CSSPropertyColumnRuleWidth:
-      result = LengthFromUnsigned(ComputedStyle::InitialColumnRuleWidth());
+      result = LengthFromUnsigned(
+          ComputedStyleInitialFunctions::InitialColumnRuleWidth());
       return true;
 
     default:

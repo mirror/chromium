@@ -26,6 +26,8 @@ blink_core_sources("rendering") {
     "ComputedStyle.cpp",
     "ComputedStyle.h",
     "ComputedStyleConstants.h",
+    "ComputedStyleInitialFunctions.cpp",
+    "ComputedStyleInitialFunctions.h",
     "ContentData.cpp",
     "ContentData.h",
     "CounterContent.h",
