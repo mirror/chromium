@@ -562,6 +562,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
 
   SeqLockQueueingTimeEstimator seqlock_queueing_time_estimator_;
 
+  base::TimeDelta stop_when_backgrounded_delay_;
+
   // We have decided to improve thread safety at the cost of some boilerplate
   // (the accessors) for the following data members.
 
