@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<style>
+    #test {
+        width: 200px;
+        border: 2px solid black;
+        height: 40px;
+        resize: none;
+        overflow: hidden;
+    }
+</style>
+<textarea id="test">Some text</textarea>
+<script>
+  window.onload = function() {
+    document.getElementById("test").focus();
+    if (window.testRunner) {
+      testRunner.waitUntilDone();
+      testRunner.setBackingScaleFactor(0.9, finishTest);
+    }
+  }
+
+  function finishTest() {
+    setTimeout(function() { testRunner.notifyDone(); }, 0);
+  }
+</script>
+
