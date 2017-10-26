@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "62d07834_1958f3a3",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-26T03:12:57Z",
+      "side": 1,
+      "message": "There were a few reasons for the polling. OTOH (recalling from years ago):\n\n1. To reduce the rate of updates. If AudioOutputController posts a notification after every buffer, it would be posting tasks every 1-2ms. That\u0027s a lot.\n\n2. Lockless code on the real-time audio thread. Although these days, it seems the RT audio thread (AOC::OnMoreData()) has had a lot of things that acquire locks added to it, so maybe this is a moot point?",
+      "parentUuid": "08172f76_beeb05ff",
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2736498_bfacd952",
         "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
         "patchSetId": 1
@@ -115,6 +133,52 @@
       "writtenOn": "2017-10-25T14:01:36Z",
       "side": 1,
       "message": "Is this used here?",
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1b8b53_191fb83f",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-26T03:12:57Z",
+      "side": 1,
+      "message": "IMHO, this should be \"float power_dbfs\" instead of a boolean. Two reasons:\n\n1. The threshold that determines whether audio is loud enough to turn the UI indicator on/off should live in content (or chrome) code, not in media code.\n\n2. There are actually other use cases where it will be good to know the power level. My team, for Cast Mirroring, has an open item to add logging of this information to user feedback reports; so that we can determine where break-down in the system is occurring.",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ead9191_0c50f3d6",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-26T03:12:57Z",
+      "side": 1,
+      "message": "IMHO, remove this. How will sound ever be audible the instant audio starts playing?",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 33
+      },
       "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
