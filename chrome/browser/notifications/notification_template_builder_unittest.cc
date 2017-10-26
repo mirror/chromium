@@ -40,6 +40,17 @@ struct NotificationData {
   GURL origin;
 };
 
+bool FixedTime(base::Time* time) {
+  base::Time::Exploded exploded = {0};
+  exploded.year = 1998;
+  exploded.month = 9;
+  exploded.day_of_month = 4;
+  exploded.hour = 1;
+  exploded.minute = 2;
+  exploded.second = 3;
+  return base::Time::FromUTCExploded(exploded, time);
+}
+
 }  // namespace
 
 class NotificationTemplateBuilderTest : public ::testing::Test {
@@ -62,6 +73,10 @@ class NotificationTemplateBuilderTest : public ::testing::Test {
         base::UTF8ToUTF16(notification_data.message), gfx::Image() /* icon */,
         base::string16() /* display_source */, origin_url,
         NotifierId(origin_url), RichNotificationData(), nullptr /* delegate */);
+    // TODO(finnur): Test with null timestamp.
+    base::Time timestamp;
+    ASSERT_TRUE(FixedTime(&timestamp));
+    notification.set_timestamp(timestamp);
     if (buttons.size())
       notification.set_buttons(buttons);
 
@@ -88,7 +103,7 @@ TEST_F(NotificationTemplateBuilderTest, SimpleToast) {
       BuildTemplate(notification_data, buttons, &xml_template));
 
   const wchar_t kExpectedXml[] =
-      LR"(<toast launch="notification_id">
+      LR"(<toast launch="notification_id" displayTimestamp="1998-09-04T01:02:03Z">
  <visual>
   <binding template="ToastGeneric">
    <text>My Title</text>
@@ -114,7 +129,7 @@ TEST_F(NotificationTemplateBuilderTest, Buttons) {
       BuildTemplate(notification_data, buttons, &xml_template));
 
   const wchar_t kExpectedXml[] =
-      LR"(<toast launch="notification_id">
+      LR"(<toast launch="notification_id" displayTimestamp="1998-09-04T01:02:03Z">
  <visual>
   <binding template="ToastGeneric">
    <text>My Title</text>
@@ -147,7 +162,7 @@ TEST_F(NotificationTemplateBuilderTest, InlineReplies) {
       BuildTemplate(notification_data, buttons, &xml_template));
 
   const wchar_t kExpectedXml[] =
-      LR"(<toast launch="notification_id">
+      LR"(<toast launch="notification_id" displayTimestamp="1998-09-04T01:02:03Z">
  <visual>
   <binding template="ToastGeneric">
    <text>My Title</text>
@@ -184,7 +199,7 @@ TEST_F(NotificationTemplateBuilderTest, InlineRepliesDoubleInput) {
       BuildTemplate(notification_data, buttons, &xml_template));
 
   const wchar_t kExpectedXml[] =
-      LR"(<toast launch="notification_id">
+      LR"(<toast launch="notification_id" displayTimestamp="1998-09-04T01:02:03Z">
  <visual>
   <binding template="ToastGeneric">
    <text>My Title</text>
@@ -218,7 +233,7 @@ TEST_F(NotificationTemplateBuilderTest, InlineRepliesTextTypeNotFirst) {
       BuildTemplate(notification_data, buttons, &xml_template));
 
   const wchar_t kExpectedXml[] =
-      LR"(<toast launch="notification_id">
+      LR"(<toast launch="notification_id" displayTimestamp="1998-09-04T01:02:03Z">
  <visual>
   <binding template="ToastGeneric">
    <text>My Title</text>
