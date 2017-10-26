@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dec07b08_259e9108",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:40:13Z",
+      "side": 1,
+      "message": "Nit: Remove extra line. There should only be one empty line.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c3bdca_a47df445",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:40:13Z",
+      "side": 1,
+      "message": "Nit: This is included in core_winrt_util.h, and is not needed here.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e78c02f_317d86df",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:40:13Z",
+      "side": 1,
+      "message": "Initialize this to nullptr at the beginning of the function.",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32f32fa_3c213a60",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:40:13Z",
+      "side": 1,
+      "message": "Set the buffer pointer at the very end right before returning S_OK.",
+      "range": {
+        "startLine": 45,
+        "startChar": 38,
+        "endLine": 45,
+        "endChar": 44
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd1f67e_5a9969d8",
+        "filename": "base/win/winrt_storage_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:40:13Z",
+      "side": 1,
+      "message": "Feel free to revert back to using\n#include \u003cwindows.storage.streams.h\u003e\nfor this one.\n\nThis avoids getting in the game of fixing build breaks if MS decides to change the way they project interfaces.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 19
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6e5897_e58a5d02",
+        "filename": "base/win/winrt_storage_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:40:13Z",
+      "side": 1,
+      "message": "Document what both of these functions do.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801984da_642e2346",
+        "filename": "base/win/winrt_storage_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:40:13Z",
+      "side": 1,
+      "message": "The k needs to be lowercase here.",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 28
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94441bef_0d9147ed",
+        "filename": "base/win/winrt_storage_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:40:13Z",
+      "side": 1,
+      "message": "I\u0027m surprised there wasn\u0027t a flag for this for unit tests. This generates a static initializer and should be converted either to an array or made local to the test below.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 77
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3024f04_1c79a299",
+        "filename": "base/win/winrt_storage_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:40:13Z",
+      "side": 1,
+      "message": "Nit: Demorganize this expression (!ResolveCoreWinRTDelayload() || !ScopedHString::...)",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 58
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd888e8d_111549df",
+        "filename": "base/win/winrt_storage_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:40:13Z",
+      "side": 1,
+      "message": "Braces are required if the if-condition spans multiple lines.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16f5809_e9cca04a",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:40:13Z",
+      "side": 1,
+      "message": "Is this header still needed?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 37
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
