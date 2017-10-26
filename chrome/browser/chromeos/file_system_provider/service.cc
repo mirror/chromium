@@ -18,6 +18,7 @@
 #include "chrome/browser/chromeos/file_system_provider/registry.h"
 #include "chrome/browser/chromeos/file_system_provider/registry_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/service_factory.h"
+#include "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.h"
 #include "chrome/browser/chromeos/file_system_provider/throttled_file_system.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
@@ -37,10 +38,17 @@ namespace {
 const size_t kMaxFileSystems = 16;
 
 // Default factory for provided file systems. |profile| must not be NULL.
+// TODO(baileyberro): change to reflect decided upon 'special id" for an
+// smb_provider
 std::unique_ptr<ProvidedFileSystemInterface> CreateProvidedFileSystem(
     Profile* profile,
     const ProvidedFileSystemInfo& file_system_info) {
   DCHECK(profile);
+
+  if (file_system_info.extension_id() == "smb_provider") {
+    return base::MakeUnique<ThrottledFileSystem>(
+        base::MakeUnique<SmbProvidedFileSystem>(file_system_info));
+  }
   return base::MakeUnique<ThrottledFileSystem>(
       base::MakeUnique<ProvidedFileSystem>(profile, file_system_info));
 }
