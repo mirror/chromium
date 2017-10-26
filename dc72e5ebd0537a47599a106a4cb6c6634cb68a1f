@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a88b116_925e6dd3",
+        "filename": "ash/wm/lock_state_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T16:19:14Z",
+      "side": 1,
+      "message": "i was a bit surprised to notice that in https://crrev.com/c/640551, chromeos::system::InputDeviceSettings::global_touchscreen_enabled_ is initialized to false by default. is that intentional? i didn\u0027t notice it at the time. it\u0027s not obvious to me how it gets set to true at startup, either.",
+      "revId": "dc72e5ebd0537a47599a106a4cb6c6634cb68a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
