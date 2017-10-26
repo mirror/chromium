@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6a855cc_1b2e09c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-26T19:33:09Z",
+      "side": 1,
+      "message": "nit: Please add a tiny description of how the UI is built and how it works.",
+      "revId": "8f95c1d30d47ebb18e8f4db9da7ff089be519eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5be31c3_96efb3fb",
+        "filename": "chrome/browser/vr/elements/rect.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-26T19:33:09Z",
+      "side": 1,
+      "message": "Thanks for making this change! It\u0027d be nice to avoid changing Rect, and after chatting the options through with you offline, I think I\u0027d prefer that we derive a Throbber element from Rect and add the new functions/members to that class.",
+      "revId": "8f95c1d30d47ebb18e8f4db9da7ff089be519eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
