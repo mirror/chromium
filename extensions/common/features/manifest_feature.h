@@ -14,6 +14,7 @@ namespace extensions {
 class ManifestFeature : public SimpleFeature {
  public:
   ManifestFeature();
+  explicit ManifestFeature(const SimpleFeatureConfig&);
   ~ManifestFeature() override;
 
   Feature::Availability IsAvailableToContext(

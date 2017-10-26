@@ -11,6 +11,8 @@ namespace extensions {
 ManifestFeature::ManifestFeature() {
 }
 
+ManifestFeature::ManifestFeature(const SimpleFeatureConfig& config)
+    : SimpleFeature(config) {}
 ManifestFeature::~ManifestFeature() {
 }
 

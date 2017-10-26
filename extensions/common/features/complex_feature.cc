@@ -4,13 +4,13 @@
 
 #include "extensions/common/features/complex_feature.h"
 
+#include <utility>
+
 namespace extensions {
 
-ComplexFeature::ComplexFeature(std::vector<Feature*>* features) {
-  DCHECK_GT(features->size(), 1UL);
-  for (Feature* f : *features)
-    features_.push_back(std::unique_ptr<Feature>(f));
-  features->clear();
+ComplexFeature::ComplexFeature(std::vector<std::unique_ptr<Feature>> features)
+    : features_(std::move(features)) {
+  DCHECK_GT(features.size(), 1UL);
   no_parent_ = features_[0]->no_parent();
 
 #if !defined(NDEBUG) || defined(DCHECK_ALWAYS_ON)
