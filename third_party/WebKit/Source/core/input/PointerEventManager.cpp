@@ -257,38 +257,60 @@ void PointerEventManager::SetNodeUnderPointer(PointerEvent* pointer_event,
   }
 }
 
-void PointerEventManager::BlockTouchPointers(TimeTicks platform_time_stamp) {
-  if (in_canceled_state_for_pointer_type_touch_)
-    return;
-  in_canceled_state_for_pointer_type_touch_ = true;
+void PointerEventManager::HandlePointerCancelEvents(
+    const WebPointerEvent& web_pointer_event) {
+  DCHECK(web_pointer_event.GetType() == WebInputEvent::Type::kPointerCancel);
 
-  Vector<int> touch_pointer_ids =
-      pointer_event_factory_.GetPointerIdsOfScrollCapablePointers();
-
-  for (int pointer_id : touch_pointer_ids) {
-    PointerEvent* pointer_event =
+  std::vector<PointerEvent*> canceled_pointer_events;
+  if (web_pointer_event.pointer_type ==
+      WebPointerProperties::PointerType::kMouse) {
+    canceled_pointer_events.push_back(
         pointer_event_factory_.CreatePointerCancelEvent(
-            pointer_id, WebPointerProperties::PointerType::kTouch,
-            platform_time_stamp);
+            PointerEventFactory::kMouseId,
+            TimeTicks::FromSeconds(web_pointer_event.TimeStampSeconds())));
+  } else {
+    // Cancel all scroll capable pointers if the pointer is not mouse.
+    if (!in_canceled_state_for_pointer_type_touch_) {
+      Vector<int> scroll_capable_pointer_ids =
+          pointer_event_factory_.GetPointerIdsOfScrollCapablePointers();
 
-    DCHECK(node_under_pointer_.Contains(pointer_id));
-    EventTarget* target = node_under_pointer_.at(pointer_id).target;
+      for (int pointer_id : scroll_capable_pointer_ids) {
+        canceled_pointer_events.push_back(
+            pointer_event_factory_.CreatePointerCancelEvent(
+                pointer_id,
+                TimeTicks::FromSeconds(web_pointer_event.TimeStampSeconds())));
+      }
 
-    ProcessCaptureAndPositionOfPointerEvent(pointer_event, target);
+      in_canceled_state_for_pointer_type_touch_ = true;
+    }
+  }
 
-    // TODO(nzolghadr): This event follows implicit TE capture. The actual
-    // target would depend on PE capturing. Perhaps need to split TE/PE event
-    // path upstream?  crbug.com/579553.
+  for (auto pointer_event : canceled_pointer_events) {
+    // If we are sending a pointercancel we have sent the pointerevent to some
+    // target before.
+    DCHECK(node_under_pointer_.Contains(pointer_event->pointerId()));
+    EventTarget* target =
+        node_under_pointer_.at(pointer_event->pointerId()).target;
+
     DispatchPointerEvent(
         GetEffectiveTargetForPointerEvent(target, pointer_event->pointerId()),
         pointer_event);
 
     ReleasePointerCapture(pointer_event->pointerId());
 
-    // Sending the leave/out events and lostpointercapture
-    // because the next touch event will have a different id. So delayed
-    // sending of lostpointercapture won't work here.
-    ProcessCaptureAndPositionOfPointerEvent(pointer_event, nullptr);
+    if (web_pointer_event.pointer_type ==
+        WebPointerProperties::PointerType::kMouse) {
+      // Instead of |ProcessPendingPointerCapture| maybe we should have used
+      // ProcessCaptureAndPositionOfPointerEvent but that will be sending
+      // boundary events (i.e. leave/out) however the existing pages might not
+      // expect that all the times. Sending boundary events may cause some web
+      // compatibilities that need to be dealt with at some point.
+      ProcessPendingPointerCapture(pointer_event);
+    } else {
+      // Sending the leave/out events and lostpointercapture because the next
+      // touch event will have a different id.
+      ProcessCaptureAndPositionOfPointerEvent(pointer_event, nullptr);
+    }
 
     RemovePointer(pointer_event);
   }
@@ -302,8 +324,12 @@ WebInputEventResult PointerEventManager::HandleTouchEvents(
     const WebTouchEvent& event,
     const Vector<WebTouchEvent>& coalesced_events) {
   if (event.GetType() == WebInputEvent::kTouchScrollStarted) {
-    BlockTouchPointers(TimeTicks::FromSeconds(event.TimeStampSeconds()));
-    return WebInputEventResult::kHandledSystem;
+    WebPointerEvent web_pointer_event_cancel;
+    web_pointer_event_cancel.SetType(WebInputEvent::Type::kPointerCancel);
+    web_pointer_event_cancel.SetTimeStampSeconds(event.TimeStampSeconds());
+    web_pointer_event_cancel.pointer_type =
+        WebPointerProperties::PointerType::kTouch;
+    return HandlePointerEvent(web_pointer_event_cancel);
   }
 
   bool new_touch_sequence = true;
@@ -489,29 +515,16 @@ WebInputEventResult PointerEventManager::SendTouchPointerEvent(
 }
 
 WebInputEventResult PointerEventManager::HandlePointerEvent(
-    const WebPointerEvent& web_pointer_event,
-    Node* target) {
+    const WebPointerEvent& web_pointer_event) {
   // TODO(crbug.com/625841): This function only handles pointercancel for now.
   // But we should extend it to handle any pointerevents.
   DCHECK(web_pointer_event.GetType() == WebInputEvent::Type::kPointerCancel);
-  PointerEvent* pointer_event =
-      pointer_event_factory_.CreatePointerCancelEvent(web_pointer_event);
 
-  EventTarget* effective_target =
-      GetEffectiveTargetForPointerEvent(target, pointer_event->pointerId());
-  WebInputEventResult result =
-      DispatchPointerEvent(effective_target, pointer_event);
+  if (web_pointer_event.GetType() == WebInputEvent::Type::kPointerCancel) {
+    HandlePointerCancelEvents(web_pointer_event);
+  }
 
-  ReleasePointerCapture(pointer_event->pointerId());
-
-  // TODO(nzolghadr): Instead of |ProcessPendingPointerCapture| maybe we
-  // should have used ProcessCaptureAndPositionOfPointerEvent but that might
-  // be sending boundary events however we probably not want that all the
-  // time.
-  ProcessPendingPointerCapture(pointer_event);
-
-  RemovePointer(pointer_event);
-  return result;
+  return WebInputEventResult::kHandledSystem;
 }
 
 WebInputEventResult PointerEventManager::SendMousePointerEvent(

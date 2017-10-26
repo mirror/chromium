@@ -34,7 +34,7 @@ class CORE_EXPORT PointerEventManager
   // cause firing DOM pointerevents, mouseevent, and touch events accordingly.
   // TODO(crbug.com/625841): We need to get all event handling path to go
   // through this function.
-  WebInputEventResult HandlePointerEvent(const WebPointerEvent&, Node* target);
+  WebInputEventResult HandlePointerEvent(const WebPointerEvent&);
 
   // Sends the mouse pointer events and the boundary events
   // that it may cause. It also sends the compat mouse events
@@ -137,11 +137,10 @@ class CORE_EXPORT PointerEventManager
     Member<PointerEvent> pointer_event_;
   };
 
-  // Inhibits firing of touch-type PointerEvents until unblocked by
-  // unblockTouchPointers(). Also sends pointercancels for existing touch-type
-  // PointerEvents.  See:
-  // www.w3.org/TR/pointerevents/#declaring-candidate-regions-for-default-touch-behaviors
-  void BlockTouchPointers(TimeTicks platform_time_stamp);
+  // Sends pointercancels for existing PointerEvents. For example when browser
+  // starts dragging with mouse or when we start scrolling with scroll capable
+  // pointers pointercancel events should be dispatched.
+  void HandlePointerCancelEvents(const WebPointerEvent&);
 
   // Enables firing of touch-type PointerEvents after they were inhibited by
   // blockTouchPointers().
