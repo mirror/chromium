@@ -36,18 +36,6 @@ bool UrlContainsKeyValueInQuery(const GURL& url,
          value == expected_value;
 }
 
-bool ShouldShowInlineStyleVariant(const GURL& url) {
-  // Can be overridden via a query.
-  // TODO(pmonette): Remove these checks when they are no longer needed
-  //                 (crbug.com/658918).
-  if (UrlContainsKeyValueInQuery(url, "style", "inline"))
-    return true;
-  if (UrlContainsKeyValueInQuery(url, "style", "sectioned"))
-    return false;
-
-  return base::FeatureList::IsEnabled(features::kWelcomeWin10InlineStyle);
-}
-
 // Adds all the needed localized strings to |html_source|, depending on
 // the value of |is_first_run|.
 void AddLocalizedStrings(content::WebUIDataSource* html_source,
@@ -89,8 +77,8 @@ void AddLocalizedStrings(content::WebUIDataSource* html_source,
 
 WelcomeWin10UI::WelcomeWin10UI(content::WebUI* web_ui, const GURL& url)
     : content::WebUIController(web_ui) {
-  static const char kCssFilePath[] = "welcome.css";
-  static const char kJsFilePath[] = "welcome.js";
+  static const char kCssFilePath[] = "welcome_win10.css";
+  static const char kJsFilePath[] = "welcome_win10.js";
   static const char kDefaultFilePath[] = "default.webp";
   static const char kPinFilePath[] = "pin.webp";
 
@@ -100,33 +88,20 @@ WelcomeWin10UI::WelcomeWin10UI(content::WebUI* web_ui, const GURL& url)
 
   // Determine which variation to show.
   bool is_first_run = !UrlContainsKeyValueInQuery(url, "text", "faster");
-  bool is_inline_style = ShouldShowInlineStyleVariant(url);
 
-  web_ui->AddMessageHandler(
-      base::MakeUnique<WelcomeWin10Handler>(is_inline_style));
+  web_ui->AddMessageHandler(base::MakeUnique<WelcomeWin10Handler>());
 
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(url.host());
 
   AddLocalizedStrings(html_source, is_first_run);
 
-  if (is_inline_style) {
-    html_source->AddResourcePath(kCssFilePath, IDR_WELCOME_WIN10_INLINE_CSS);
-    html_source->AddResourcePath(kJsFilePath, IDR_WELCOME_WIN10_INLINE_JS);
-    html_source->AddResourcePath(kDefaultFilePath,
-                                 IDR_WELCOME_WIN10_DEFAULT_SMALL_WEBP);
-    html_source->AddResourcePath(kPinFilePath,
-                                 IDR_WELCOME_WIN10_PIN_SMALL_WEBP);
-    html_source->SetDefaultResource(IDR_WELCOME_WIN10_INLINE_HTML);
-  } else {
-    html_source->AddResourcePath(kCssFilePath, IDR_WELCOME_WIN10_SECTIONED_CSS);
-    html_source->AddResourcePath(kJsFilePath, IDR_WELCOME_WIN10_SECTIONED_JS);
-    html_source->AddResourcePath(kDefaultFilePath,
-                                 IDR_WELCOME_WIN10_DEFAULT_LARGE_WEBP);
-    html_source->AddResourcePath(kPinFilePath,
-                                 IDR_WELCOME_WIN10_PIN_LARGE_WEBP);
-    html_source->SetDefaultResource(IDR_WELCOME_WIN10_SECTIONED_HTML);
-  }
+  html_source->AddResourcePath(kCssFilePath, IDR_WELCOME_WIN10_CSS);
+  html_source->AddResourcePath(kJsFilePath, IDR_WELCOME_WIN10_JS);
+  html_source->AddResourcePath(kDefaultFilePath,
+                               IDR_WELCOME_WIN10_DEFAULT_WEBP);
+  html_source->AddResourcePath(kPinFilePath, IDR_WELCOME_WIN10_PIN_WEBP);
+  html_source->SetDefaultResource(IDR_WELCOME_WIN10_HTML);
 
   html_source->AddResourcePath("logo-small.png", IDR_PRODUCT_LOGO_64);
   html_source->AddResourcePath("logo-large.png", IDR_PRODUCT_LOGO_128);

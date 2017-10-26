@@ -45,8 +45,7 @@ void RecordPinnedResult(const std::string& histogram_suffix,
 
 }  // namespace
 
-WelcomeWin10Handler::WelcomeWin10Handler(bool inline_style_variant)
-    : inline_style_variant_(inline_style_variant), weak_ptr_factory_(this) {
+WelcomeWin10Handler::WelcomeWin10Handler() : weak_ptr_factory_(this) {
   // The check is started as early as possible because waiting for the page to
   // be fully loaded is unnecessarily wasting time.
   StartIsPinnedToTaskbarCheck();
@@ -59,7 +58,6 @@ WelcomeWin10Handler::~WelcomeWin10Handler() {
       pinned_state_result_.has_value() && !pinned_state_result_.value();
 
   std::string histogram_suffix;
-  histogram_suffix += inline_style_variant_ ? "Inline" : "Sectioned";
   histogram_suffix += pin_instructions_shown ? "Combined" : "Default";
 
   // Closing the page. Record whether the instructions were useful.
