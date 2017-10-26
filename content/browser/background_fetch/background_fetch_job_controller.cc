@@ -66,23 +66,22 @@ void BackgroundFetchJobController::StartRequest(
 }
 
 void BackgroundFetchJobController::DidStartRequest(
-    const scoped_refptr<BackgroundFetchRequestInfo>& request,
-    const std::string& download_guid) {
+    const scoped_refptr<BackgroundFetchRequestInfo>& request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  data_manager_->MarkRequestAsStarted(registration_id_, request.get(),
-                                      download_guid);
+  // TODO(crbug.com/757441): Perform security checks?
 }
 
 void BackgroundFetchJobController::DidUpdateRequest(
     const scoped_refptr<BackgroundFetchRequestInfo>& request,
-    const std::string& download_guid,
     uint64_t bytes_downloaded) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  if (active_request_download_bytes_[download_guid] == bytes_downloaded)
+  if (active_request_download_bytes_[request.download_guid()] ==
+      bytes_downloaded) {
     return;
+  }
 
-  active_request_download_bytes_[download_guid] = bytes_downloaded;
+  active_request_download_bytes_[request.download_guid()] = bytes_downloaded;
 
   progress_callback_.Run(registration_id_.unique_id(), options_.download_total,
                          complete_requests_downloaded_bytes_cache_ +
@@ -90,13 +89,12 @@ void BackgroundFetchJobController::DidUpdateRequest(
 }
 
 void BackgroundFetchJobController::DidCompleteRequest(
-    const scoped_refptr<BackgroundFetchRequestInfo>& request,
-    const std::string& download_guid) {
+    const scoped_refptr<BackgroundFetchRequestInfo>& request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   // This request is no longer in-progress, so the DataManager will take over
   // responsibility for storing its downloaded bytes, though still need a cache.
-  active_request_download_bytes_.erase(download_guid);
+  active_request_download_bytes_.erase(request.download_guid());
   complete_requests_downloaded_bytes_cache_ += request->GetFileSize();
 
   // The DataManager must acknowledge that it stored the data and that there are

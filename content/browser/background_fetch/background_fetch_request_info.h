@@ -33,6 +33,7 @@ class CONTENT_EXPORT BackgroundFetchRequestInfo
     : public base::RefCountedDeleteOnSequence<BackgroundFetchRequestInfo> {
  public:
   BackgroundFetchRequestInfo(int request_index,
+                             const std::string& download_guid,
                              const ServiceWorkerFetchRequest& fetch_request);
 
   // Populates the cached state for the in-progress download.
@@ -42,6 +43,10 @@ class CONTENT_EXPORT BackgroundFetchRequestInfo
 
   // Returns the index of this request within a Background Fetch registration.
   int request_index() const { return request_index_; }
+
+  // Returns the |download_guid| that will be or is being used to identify this
+  // request within the Download Service.
+  const std::string& download_guid() { return download_guid_; }
 
   // Returns the Fetch API Request object that details the developer's request.
   const ServiceWorkerFetchRequest& fetch_request() const {

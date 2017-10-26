@@ -27,6 +27,12 @@ const char kExampleDeveloperId[] = "my-example-id";
 const char kExampleUniqueId[] = "7e57ab1e-c0de-a150-ca75-1e75f005ba11";
 const char kAlternativeUniqueId[] = "bb48a9fb-c21f-4c2d-a9ae-58bd48a9fb53";
 
+const char kUserDataPrefix[] = "bgfetch_";
+
+// Duplicated from background_fetch_data_manager.cc.
+const char kPendingRequestKeyPrefix[] = "bgfetch_pending_request_";
+const char kActiveRequestKeyPrefix[] = "bgfetch_active_request_";
+
 // See schema documentation in background_fetch_data_manager.cc.
 // A "bgfetch_registration_" per registration (not including keys for requests).
 constexpr size_t kUserDataKeysPerInactiveRegistration = 1u;
@@ -38,9 +44,10 @@ constexpr size_t kUserDataKeysPerActiveRegistration =
 // A "bgfetch_request_" per request.
 constexpr size_t kUserDataKeysPerInactiveRequest = 1u;
 
-// An additional "bgfetch_pending_request_" per request.
+// An additional "bgfetch_pending_request_" and "bgfetch_active_request_" per
+// request.
 constexpr size_t kUserDataKeysPerActiveRequest =
-    kUserDataKeysPerInactiveRequest + 1u;
+    kUserDataKeysPerInactiveRequest + 2u;
 
 void DidCreateRegistration(
     base::Closure quit_closure,
@@ -101,6 +108,20 @@ class BackgroundFetchDataManagerTest : public BackgroundFetchTestBase {
     run_loop.Run();
   }
 
+  // Synchronous version of BackgroundFetchDataManager::PopNextRequest().
+  void PopNextRequest(const BackgroundFetchRegistrationId& registration_id,
+                      scoped_refptr<BackgroundFetchRequestInfo>* out_request) {
+    DCHECK(out_request);
+
+    base::RunLoop run_loop;
+    background_fetch_data_manager_->PopNextRequest(
+        registration_id,
+        base::BindOnce(&BackgroundFetchDataManagerTest::DidPopNextRequest,
+                       base::Unretained(this), run_loop.QuitClosure(),
+                       out_request));
+    run_loop.Run();
+  }
+
   // Synchronous version of
   // BackgroundFetchDataManager::MarkRegistrationForDeletion().
   void MarkRegistrationForDeletion(
@@ -149,6 +170,13 @@ class BackgroundFetchDataManagerTest : public BackgroundFetchTestBase {
 
  protected:
   std::unique_ptr<BackgroundFetchDataManager> background_fetch_data_manager_;
+  void DidPopNextRequest(base::Closure quit_closure,
+                         scoped_refptr<BackgroundFetchRequestInfo>* out_request,
+                         scoped_refptr<BackgroundFetchRequestInfo> request) {
+    *out_request = request;
+
+    quit_closure.Run();
+  }
 };
 
 TEST_F(BackgroundFetchDataManagerTest, NoDuplicateRegistrations) {
@@ -228,13 +256,14 @@ TEST_F(BackgroundFetchDataManagerTest, CreateAndDeleteRegistrationPersisted) {
       kUserDataKeysPerActiveRegistration +
       requests.size() * kUserDataKeysPerActiveRequest;
 
-  EXPECT_EQ(0u, GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+  EXPECT_EQ(0u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   // Creating the initial registration should succeed.
   CreateRegistration(registration_id1, requests, options, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
   EXPECT_EQ(expected_active_data_count,
-            GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   RestartDataManagerFromPersistentStorage();
 
@@ -253,7 +282,7 @@ TEST_F(BackgroundFetchDataManagerTest, CreateAndDeleteRegistrationPersisted) {
   MarkRegistrationForDeletion(registration_id1, true /* aborted */, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
   EXPECT_EQ(expected_inactive_data_count,
-            GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   RestartDataManagerFromPersistentStorage();
 
@@ -264,7 +293,7 @@ TEST_F(BackgroundFetchDataManagerTest, CreateAndDeleteRegistrationPersisted) {
   CreateRegistration(registration_id2, requests, options, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
   EXPECT_EQ(expected_inactive_data_count + expected_active_data_count,
-            GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   RestartDataManagerFromPersistentStorage();
 
@@ -272,7 +301,7 @@ TEST_F(BackgroundFetchDataManagerTest, CreateAndDeleteRegistrationPersisted) {
   DeleteRegistration(registration_id1, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
   EXPECT_EQ(expected_active_data_count,
-            GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 }
 
 TEST_F(BackgroundFetchDataManagerTest, Cleanup) {
@@ -296,7 +325,8 @@ TEST_F(BackgroundFetchDataManagerTest, Cleanup) {
       kUserDataKeysPerInactiveRegistration +
       requests.size() * kUserDataKeysPerInactiveRequest;
 
-  EXPECT_EQ(0u, GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+  EXPECT_EQ(0u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   // Create a registration.
   CreateRegistration(registration_id, requests, options, &error);
@@ -309,17 +339,19 @@ TEST_F(BackgroundFetchDataManagerTest, Cleanup) {
   RestartDataManagerFromPersistentStorage();
 
   EXPECT_EQ(expected_inactive_data_count,
-            GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   // Cleanup should delete the registration.
   background_fetch_data_manager_->Cleanup();
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(0u, GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+  EXPECT_EQ(0u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   RestartDataManagerFromPersistentStorage();
 
   // The deletion should have been persisted.
-  EXPECT_EQ(0u, GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+  EXPECT_EQ(0u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 }
 
 TEST_F(BackgroundFetchDataManagerTest, CreateInParallel) {
@@ -375,6 +407,75 @@ TEST_F(BackgroundFetchDataManagerTest, CreateInParallel) {
   // and all the others should have failed with DUPLICATED_DEVELOPER_ID.
   EXPECT_EQ(1, success_count);
   EXPECT_EQ(num_parallel_creates - 1, duplicated_developer_id_count);
+}
+
+TEST_F(BackgroundFetchDataManagerTest, StartPendingPersisted) {
+  // Tests that |PopNextRequest| finds the oldest request, marks it as no longer
+  // pending, marks it as active, and persists all this to the ServiceWorker DB.
+
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kEnableBackgroundFetchPersistence);
+
+  BackgroundFetchRegistrationId registration_id;
+  ASSERT_TRUE(CreateRegistrationId(kExampleId, &registration_id));
+  int64_t sw_id = registration_id.service_worker_registration_id();
+
+  std::vector<ServiceWorkerFetchRequest> requests(2u);
+  BackgroundFetchOptions options;
+  blink::mojom::BackgroundFetchError error;
+
+  size_t expected_data_count =
+      kUserDataKeysPerRegistration + requests.size() * kUserDataKeysPerRequest;
+
+  EXPECT_EQ(0u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
+
+  CreateRegistration(registration_id, requests, options, &error);
+  ASSERT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+
+  RestartDataManagerFromPersistentStorage();
+
+  // Requests persisted by |CreateRegistration| should be in pending state.
+  EXPECT_EQ(requests.size(),
+            GetRegistrationUserDataByKeyPrefix(sw_id, kPendingRequestKeyPrefix)
+                .size());
+  EXPECT_EQ(0u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kActiveRequestKeyPrefix)
+                .size());
+
+  scoped_refptr<BackgroundFetchRequestInfo> request;
+  PopNextRequest(registration_id, &request);
+
+  // PopNextRequest should succeed.
+  EXPECT_TRUE(request);
+
+  RestartDataManagerFromPersistentStorage();
+
+  // |PopNextRequest| should persistently move one request from pending to
+  // active state.
+  EXPECT_EQ(requests.size() - 1u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kPendingRequestKeyPrefix)
+                .size());
+  EXPECT_EQ(1u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kActiveRequestKeyPrefix)
+                .size());
+
+  DeleteRegistration(registration_id, &error);
+  ASSERT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+
+  RestartDataManagerFromPersistentStorage();
+
+  // Deleting the registration should persistently delete both pending and
+  // active keys.
+  EXPECT_EQ(0u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
+
+  request = nullptr;
+  PopNextRequest(registration_id, &request);
+
+  // PopNextRequest should resolve null since there are no remaining pending
+  // requests.
+  EXPECT_FALSE(request);
 }
 
 }  // namespace content
