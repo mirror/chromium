@@ -95,11 +95,11 @@ TEST_F(RecorderTest, AddChunkString) {
 TEST_F(RecorderTest, AddMetadata) {
   CreateRecorder(mojom::TraceDataType::ARRAY, base::BindRepeating([] {}));
 
-  auto dict1 = base::MakeUnique<base::DictionaryValue>();
+  auto dict1 = std::make_unique<base::DictionaryValue>();
   dict1->SetString("network-type", "Ethernet");
   AddMetadata(std::move(dict1));
 
-  auto dict2 = base::MakeUnique<base::DictionaryValue>();
+  auto dict2 = std::make_unique<base::DictionaryValue>();
   dict2->SetString("os-name", "CrOS");
   AddMetadata(std::move(dict2));
 

@@ -67,7 +67,7 @@ class TestCoordinationUnitGraphObserver : public CoordinationUnitGraphObserver {
 TEST_F(CoordinationUnitGraphObserverTest, CallbacksInvoked) {
   EXPECT_TRUE(coordination_unit_manager().observers_for_testing().empty());
   coordination_unit_manager().RegisterObserver(
-      base::MakeUnique<TestCoordinationUnitGraphObserver>());
+      std::make_unique<TestCoordinationUnitGraphObserver>());
   EXPECT_EQ(1u, coordination_unit_manager().observers_for_testing().size());
 
   TestCoordinationUnitGraphObserver* observer =
