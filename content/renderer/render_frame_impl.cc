@@ -195,6 +195,7 @@
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "third_party/WebKit/public/web/WebContextFeatures.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
+#include "third_party/WebKit/public/web/WebElementCollection.h"
 #include "third_party/WebKit/public/web/WebFindOptions.h"
 #include "third_party/WebKit/public/web/WebFrameOwnerProperties.h"
 #include "third_party/WebKit/public/web/WebFrameSerializer.h"
@@ -254,6 +255,7 @@ using blink::WebDocument;
 using blink::WebDOMEvent;
 using blink::WebDOMMessageEvent;
 using blink::WebElement;
+using blink::WebElementCollection;
 using blink::WebExternalPopupMenu;
 using blink::WebExternalPopupMenuClient;
 using blink::WebFindOptions;
@@ -1752,6 +1754,8 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_MixedContentFound, OnMixedContentFound)
     IPC_MESSAGE_HANDLER(FrameMsg_SetOverlayRoutingToken,
                         OnSetOverlayRoutingToken)
+    IPC_MESSAGE_HANDLER(FrameMsg_RequestFullscreenVideoElement,
+                        OnRequestFullscreenVideoElement)
 #if defined(OS_ANDROID)
     IPC_MESSAGE_HANDLER(FrameMsg_ActivateNearestFindResult,
                         OnActivateNearestFindResult)
@@ -4910,6 +4914,23 @@ void RenderFrameImpl::HandleAccessibilityFindInPageResult(
 void RenderFrameImpl::DidChangeManifest() {
   for (auto& observer : observers_)
     observer.DidChangeManifest();
+}
+
+void RenderFrameImpl::OnRequestFullscreenVideoElement() {
+  CR_DEFINE_STATIC_LOCAL(WebString, kVideoTag, ("video"));
+
+  WebElement video_element =
+      frame_->GetDocument().GetElementsByHTMLTagName(kVideoTag).FirstItem();
+
+  if (!video_element.IsNull()) {
+    // This is always initiated from browser side (which should require the user
+    // interacting with ui) which suffices for a user gesture even though there
+    // will have been no input to the frame at this point.
+    std::unique_ptr<blink::WebScopedUserGesture> gesture(
+        new blink::WebScopedUserGesture(frame_));
+
+    video_element.RequestFullscreen();
+  }
 }
 
 void RenderFrameImpl::EnterFullscreen() {
