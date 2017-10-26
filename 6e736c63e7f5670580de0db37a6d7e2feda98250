@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b51b9223_96671916",
+        "filename": "third_party/WebKit/Source/core/paint/SVGInlineTextBoxPainterTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-26T17:43:48Z",
+      "side": 0,
+      "message": "LOL, I added these tests mid-2016. They\u0027re explicitly testing the cull rect to make sure they are the right size, but since we\u0027re removing the cull rect they\u0027re not really relevant any more so I think we could just remove them.\n\nIt could be worth adding unit tests for painting with MockPaintCanvas but we aren\u0027t doing that currently anywhere and we do have existing coverage of painting with layout tests. So doing so seems like a separate P3 task we should do for both SVG and non-SVG InlineTextBoxPainter if we do want to further use of MockPaintCanvas for that.",
+      "parentUuid": "43ca5fb2_a2e83f12",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 47
+      },
+      "revId": "6e736c63e7f5670580de0db37a6d7e2feda98250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c6a2f38_1b684e4e",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
         "patchSetId": 6
@@ -131,6 +155,30 @@
       "side": 0,
       "message": "I think we can delete this. I don\u0027t know if anyone is using the feature.\n\nUsing visual rect as the bounds, SlimmingPaintStrictCullRectClipping alone might not discover all inadequate visual rects problems because we might not rasterize the part out of the visual rects because of rtree. We may need the feature along with rtree disabled to expose the inadequate visual rect problems. We can try to find an effective way later.",
       "parentUuid": "8898d71c_631316ca",
+      "range": {
+        "startLine": 59,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 71
+      },
+      "revId": "6e736c63e7f5670580de0db37a6d7e2feda98250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b5ec0e_9ae4db34",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingRecorder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-26T17:43:48Z",
+      "side": 0,
+      "message": "OK, I\u0027ll look at removing the REF and any other related code in a follow up change.",
+      "parentUuid": "cd92982e_f846b7c2",
       "range": {
         "startLine": 59,
         "startChar": 3,
