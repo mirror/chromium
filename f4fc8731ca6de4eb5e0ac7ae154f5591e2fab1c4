@@ -46,6 +46,30 @@
       "revId": "f4fc8731ca6de4eb5e0ac7ae154f5591e2fab1c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9573ccde_206b8623",
+        "filename": "components/viz/service/display/software_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-26T00:38:06Z",
+      "side": 1,
+      "message": "Thought a lot about this and did some deeper investigation today. I think you\u0027re right, and I *do* want to change this. :)\n\nI was looking through all the existing callers of set_area() and realized they are using it in two main ways: 1) To set a clipping region to, for example, isolate just a specific \"media content widget\" within the application window. 2) To translate coordinate systems (e.g., property trees convert copy requests made on a specific layer into requests that can be made on the Surface that contains them; https://cs.chromium.org/chromium/src/cc/trees/property_tree.cc?sq\u003dpackage:chromium\u0026l\u003d947).\n\nSo, I came up with a new approach here: Leave set_area() alone; no change. Instead, I\u0027m adding a new set_result_selection() method to allow selecting rects in the post-scaled space, and these rects can be *relative* to the top-left corner of the area(). This keeps things simple, and clients can use either/both of set_area() and set_result_selection() to get the desired results.\n\nFor example, for my use case for tab capture, I want to make copy requests for each new compositor frame. I can keep set_area() set to the same thing each time (just the bounds of the Surface), and then change set_result_selection() with each request to get just the pixels that changed according to the aggregated damage_rect and also account for alignment concerns with the I420 image format.\n\nThanks for being patient with me here. Sometimes it\u0027s hard to see the forest through the trees, so to speak. :)",
+      "parentUuid": "e9e5336b_5976c56a",
+      "range": {
+        "startLine": 594,
+        "startChar": 43,
+        "endLine": 594,
+        "endChar": 54
+      },
+      "revId": "f4fc8731ca6de4eb5e0ac7ae154f5591e2fab1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
