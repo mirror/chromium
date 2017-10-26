@@ -249,7 +249,7 @@
 
       The output will list the declaration location, current value for the
       build, default value (if different than the current value), and comment
-      preceeding the declaration.
+      preceding the declaration.
 
       If --short is specified, only the names and current values will be
       printed.
@@ -353,7 +353,7 @@
       included by other targets. Anything in the sources will be considered
       private and will not be includable regardless of dependency paths.
 
-    - Ouptuts from actions are treated like public sources on that target.
+    - Outputs from actions are treated like public sources on that target.
 
     - A target can include headers from a target that depends on it if the
       other target is annotated accordingly. See "gn help
@@ -571,7 +571,7 @@
 
   The contents of some lists ('sources', 'deps', etc.) will be sorted to a
   canonical order. To suppress this, you can add a comment of the form "#
-  NOSORT" immediately preceeding the assignment. e.g.
+  NOSORT" immediately preceding the assignment. e.g.
 
   # NOSORT
   sources = [
@@ -2105,7 +2105,7 @@
 ```
   value = getenv(env_var_name)
 
-  Returns the value of the given enironment variable. If the value is not
+  Returns the value of the given environment variable. If the value is not
   found, it will try to look up the variable with the "opposite" case (based on
   the case of the first letter of the variable), but is otherwise
   case-sensitive.
@@ -3064,7 +3064,7 @@
         prefixed by the "lib_prefix".
 
         As a special case to support Mac, libraries with names ending in
-        ".framework" will be added to the {{libs}} with "-framework" preceeding
+        ".framework" will be added to the {{libs}} with "-framework" preceding
         it, and the lib prefix will be ignored.
 
         Example: "-lfoo -lbar"
@@ -3091,7 +3091,7 @@
         Example: ".so"
 
     {{solibs}}
-        Extra libraries from shared library dependencide not specified in the
+        Extra libraries from shared library dependencies not specified in the
         {{inputs}}. This is the list of link_output files from shared libraries
         (if the solink tool specifies a "link_output" variable separate from
         the "depend_output").
@@ -3117,7 +3117,7 @@
 
   The compile_xcassets tool will be called with one or more source (each an
   asset catalog) that needs to be compiled to a single output. The following
-  substitutions are avaiable:
+  substitutions are available:
 
     {{inputs}}
         Expands to the list of .xcassets to use as input to compile the asset
@@ -3213,7 +3213,7 @@
   When a target has a dependency on a target using different toolchain (see "gn
   help labels" for how to specify this), GN will start a build using that
   secondary toolchain to resolve the target. GN will load the build config file
-  with the build arguements overridden as specified in the toolchain_args.
+  with the build arguments overridden as specified in the toolchain_args.
   Because the default toolchain is already known, calls to
   set_default_toolchain() are ignored.
 
@@ -3338,7 +3338,7 @@
   that depend on this file.
 
   One use for write_file is to write a list of inputs to an script that might
-  be too long for the command line. However, it is preferrable to use response
+  be too long for the command line. However, it is preferable to use response
   files for this purpose. See "gn help response_file_contents".
 
   TODO(brettw) we probably need an optional third argument to control list
@@ -3718,7 +3718,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -3824,7 +3824,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -3859,7 +3859,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -4037,7 +4037,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -4070,7 +4070,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -4103,7 +4103,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -4136,7 +4136,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -4169,7 +4169,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -4331,7 +4331,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -4440,7 +4440,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -4496,7 +4496,7 @@
   A list of target labels.
 
   Specifies private dependencies of a target. Private dependencies are
-  propagated up the dependency tree and linked to dependant targets, but do not
+  propagated up the dependency tree and linked to dependent targets, but do not
   grant the ability to include headers from the dependency. Public configs are
   not forwarded.
 ```
@@ -4511,7 +4511,7 @@
   Executables, shared libraries, and complete static libraries will link all
   propagated targets and stop propagation. Actions and copy steps also stop
   propagation, allowing them to take a library as an input but not force
-  dependants to link to it.
+  dependents to link to it.
 
   Propagation of all_dependent_configs and public_configs happens independently
   of target type. all_dependent_configs are always propagated across all types
@@ -4544,7 +4544,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -4652,7 +4652,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -4685,7 +4685,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -4754,7 +4754,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -5088,7 +5088,7 @@
      those configs appear in the list.
   5. all_dependent_configs pulled from dependencies, in the order of
      the "deps" list. This is done recursively. If a config appears
-     more than once, only the first occurance will be used.
+     more than once, only the first occurence will be used.
   6. public_configs pulled from dependencies, in the order of the
      "deps" list. If a dependency is public, they will be applied
      recursively.
@@ -5205,7 +5205,7 @@
 
   As a special case, a file ending in ".def" will be treated as a Windows
   module definition file. It will be appended to the link line with a
-  preceeding "/DEF:" string. There must be at most one .def file in a target
+  preceding "/DEF:" string. There must be at most one .def file in a target
   and they do not cross dependency boundaries (so specifying a .def file in a
   static library or source set will have no effect on the executable or shared
   library they're linked into).
@@ -5563,7 +5563,7 @@
       ... target parameter definitions ...
     }
 
-  There is also a generic "target" function for programatically defined types
+  There is also a generic "target" function for programmatically defined types
   (see "gn help target"). You can define new types using templates (see "gn
   help template"). A template defines some custom code that expands to one or
   more other targets.
