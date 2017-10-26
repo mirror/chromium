@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b100b254_3f0683f3",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-26T16:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5188ee4_f363b3ee",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 36
+      },
+      "revId": "de2a24ffe4a8875eb70b108b2002ed09e5debef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6add41f9_10d490f0",
         "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
         "patchSetId": 1
@@ -92,6 +116,30 @@
       "revId": "de2a24ffe4a8875eb70b108b2002ed09e5debef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863d79cc_009b3bfc",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-26T16:51:45Z",
+      "side": 1,
+      "message": "|invalidate| above. The docs are sort of vague on this (they contrast |invalidate| as permanent vs. |resignCurrent| as temporary). Empirically, after invalidate, calling the private currentUserActivityUUID method returns the previously-current activity\u0027s UUID.",
+      "parentUuid": "2e50dca5_9d43646b",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 30
+      },
+      "revId": "de2a24ffe4a8875eb70b108b2002ed09e5debef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
