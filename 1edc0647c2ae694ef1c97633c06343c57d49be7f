@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "752f168e_861afaf9",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-26T17:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9641620d_bc964a51",
+      "range": {
+        "startLine": 967,
+        "startChar": 1,
+        "endLine": 968,
+        "endChar": 47
+      },
+      "revId": "1edc0647c2ae694ef1c97633c06343c57d49be7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d476949_cbe630a3",
         "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T14:18:37Z",
       "side": 1,
       "message": "Do this in the class\u0027 SetUp method. (since you call disable in the TearDown method).",
+      "range": {
+        "startLine": 981,
+        "startChar": 2,
+        "endLine": 981,
+        "endChar": 45
+      },
+      "revId": "1edc0647c2ae694ef1c97633c06343c57d49be7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c4cd44_a2a63923",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-26T17:41:43Z",
+      "side": 1,
+      "message": "Move this to SetUp will crash when EnableVirtualTime.",
+      "parentUuid": "5d476949_cbe630a3",
       "range": {
         "startLine": 981,
         "startChar": 2,
@@ -68,6 +116,30 @@
       "revId": "1edc0647c2ae694ef1c97633c06343c57d49be7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e9c451_5ac9a2ee",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-26T17:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71889a2f_55975d1b",
+      "range": {
+        "startLine": 1011,
+        "startChar": 6,
+        "endLine": 1011,
+        "endChar": 38
+      },
+      "revId": "1edc0647c2ae694ef1c97633c06343c57d49be7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
