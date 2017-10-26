@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c0aff9e_887bf991",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoConverter.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T02:23:24Z",
+      "side": 1,
+      "message": "nit: remove empty line",
+      "revId": "04838cb77124ac614b60b9da6473a0eaefb5f4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b59200c_7b4c3a10",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoConverter.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T02:23:24Z",
+      "side": 1,
+      "message": "I think it would be better to define a method in the Converter class. If types of arguments may differ, let it be a template function.\n\nI assume that lookup tables are not used anywhere except of the converter? Let\u0027s make those a static const members of the class as well.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 80
+      },
+      "revId": "04838cb77124ac614b60b9da6473a0eaefb5f4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c038fd_0d1fddb4",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoConverter.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T02:23:24Z",
+      "side": 1,
+      "message": "Any specific reason for using DCHECK? If you want to crash here and consider it as a bug, we need a regular assert that works in both Release and Debug builds.",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 8
+      },
+      "revId": "04838cb77124ac614b60b9da6473a0eaefb5f4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72e84cf_2b9cce5d",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoConverter.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T02:23:24Z",
+      "side": 1,
+      "message": "\u0027static const\u0027 would be even better? The same question for other arrays",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "04838cb77124ac614b60b9da6473a0eaefb5f4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba4b7e6_79f0418c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoConverter.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T02:23:24Z",
+      "side": 1,
+      "message": "leftover or an intentional comment?",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 67
+      },
+      "revId": "04838cb77124ac614b60b9da6473a0eaefb5f4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14a193a_cc45f13b",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoFuzzer.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T02:23:24Z",
+      "side": 1,
+      "message": "I think you can do it simpler, in a way similar to BlinkFuzzerTestSupport initialization:\n\n  static Converter converter \u003d Converter();",
+      "range": {
+        "startLine": 22,
+        "startChar": 1,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "04838cb77124ac614b60b9da6473a0eaefb5f4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
