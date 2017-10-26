@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf5407ab_59539bd0",
+        "filename": "base/values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T22:59:29Z",
+      "side": 1,
+      "message": "How about:\n\nDCHECK_GE(path.size(), 2u) \u003c\u003c \"Use FindKey() for path of length 1.\";",
+      "revId": "d0dc60fe34ef3004cac0bd9e1f844233b557a759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d644e1_9d11572a",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_event_details_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T22:59:29Z",
+      "side": 1,
+      "message": "If you don\u0027t mind, change this to ASSERT_EQ() to prevent potential out of bounds errors from crashing the unit test binary. Same on line 125.",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "d0dc60fe34ef3004cac0bd9e1f844233b557a759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85ba489_b84e4ebd",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T22:59:29Z",
+      "side": 1,
+      "message": "I think I got all the printing ones already, thus the merge conflict. Though I didn\u0027t rename |path| to |key.",
+      "revId": "d0dc60fe34ef3004cac0bd9e1f844233b557a759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
