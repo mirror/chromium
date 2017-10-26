@@ -373,6 +373,24 @@
     },
     {
       "key": {
+        "uuid": "eb14cb9b_a0c93739",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-10-26T23:03:29Z",
+      "side": 1,
+      "message": "\u003e But isn\u0027t single-float epsilon about 5.96e-8 and not 1.19e-7?\n\nIt seems that there are two definitions for epsilon. The single-float unit roundoff is about 5.96e-8 and thus the spacing between a normalised single-float numbers is twice of that i.e. about 1.19e-7. Both are called as epsilon. C and C++ use the latter definition as FLT_EPSILON.\n\nInteresting.",
+      "parentUuid": "89341826_f411e2fc",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2299303d_5db21559",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
         "patchSetId": 1
@@ -387,6 +405,24 @@
       "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ddbc02e_32ac8350",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-10-26T23:03:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2299303d_5db21559",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
