@@ -9,7 +9,6 @@
 #include <cctype>
 
 #include "base/location.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -143,8 +142,9 @@ RenderViewTest::RendererBlinkPlatformImplTestOverride::Get() const {
 
 void RenderViewTest::RendererBlinkPlatformImplTestOverride::Initialize() {
   renderer_scheduler_ = blink::scheduler::RendererScheduler::Create();
-  blink_platform_impl_.reset(
-      new RendererBlinkPlatformImplTestOverrideImpl(renderer_scheduler_.get()));
+  blink_platform_impl_ =
+      std::make_unique<RendererBlinkPlatformImplTestOverrideImpl>(
+          renderer_scheduler_.get());
 }
 
 void RenderViewTest::RendererBlinkPlatformImplTestOverride::Shutdown() {
@@ -152,8 +152,7 @@ void RenderViewTest::RendererBlinkPlatformImplTestOverride::Shutdown() {
   blink_platform_impl_->Shutdown();
 }
 
-RenderViewTest::RenderViewTest()
-    : view_(NULL) {
+RenderViewTest::RenderViewTest() {
   RenderFrameImpl::InstallCreateHook(&TestRenderFrame::CreateTestRenderFrame);
 }
 
@@ -226,17 +225,18 @@ void RenderViewTest::GoForward(const GURL& url, const PageState& state) {
 }
 
 void RenderViewTest::SetUp() {
-  test_io_thread_.reset(new base::TestIOThread(base::TestIOThread::kAutoStart));
-  ipc_support_.reset(new mojo::edk::ScopedIPCSupport(
+  test_io_thread_ =
+      std::make_unique<base::TestIOThread>(base::TestIOThread::kAutoStart);
+  ipc_support_ = std::make_unique<mojo::edk::ScopedIPCSupport>(
       test_io_thread_->task_runner(),
-      mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST));
+      mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST);
 
   // Subclasses can set render_thread_ with their own implementation before
   // calling RenderViewTest::SetUp().
   // The render thread needs to exist before blink::Initialize. It also mirrors
   // the order on Chromium initialization.
   if (!render_thread_)
-    render_thread_.reset(new MockRenderThread());
+    render_thread_ = std::make_unique<MockRenderThread>();
   render_thread_->set_routing_id(kRouteId);
   render_thread_->set_new_window_routing_id(kNewWindowRouteId);
   render_thread_->set_new_window_main_frame_widget_routing_id(
@@ -265,15 +265,16 @@ void RenderViewTest::SetUp() {
 #endif
 
 #if defined(OS_MACOSX)
-  autorelease_pool_.reset(new base::mac::ScopedNSAutoreleasePool());
+  autorelease_pool_ = std::make_unique<base::mac::ScopedNSAutoreleasePool>();
 #endif
-  command_line_.reset(new base::CommandLine(base::CommandLine::NO_PROGRAM));
-  field_trial_list_.reset(new base::FieldTrialList(nullptr));
+  command_line_ =
+      std::make_unique<base::CommandLine>(base::CommandLine::NO_PROGRAM);
+  field_trial_list_ = std::make_unique<base::FieldTrialList>(nullptr);
   // We don't use the descriptor here anyways so it's ok to pass -1.
   base::FieldTrialList::CreateTrialsFromCommandLine(
       *command_line_, switches::kFieldTrialHandle, -1);
-  params_.reset(new MainFunctionParams(*command_line_));
-  platform_.reset(new RendererMainPlatformDelegate(*params_));
+  params_ = std::make_unique<MainFunctionParams>(*command_line_);
+  platform_ = std::make_unique<RendererMainPlatformDelegate>(*params_);
   platform_->PlatformInitialize();
 
   // Setting flags and really doing anything with WebKit is fairly fragile and
@@ -292,12 +293,13 @@ void RenderViewTest::SetUp() {
   // ResourceBundle isn't initialized (since we have to use a diferent test
   // suite implementation than for content_unittests). For browser_tests, this
   // is already initialized.
-  if (!ui::ResourceBundle::HasSharedInstance())
+  if (!ui::ResourceBundle::HasSharedInstance()) {
     ui::ResourceBundle::InitSharedInstanceWithLocale(
-        "en-US", NULL, ui::ResourceBundle::DO_NOT_LOAD_COMMON_RESOURCES);
+        "en-US", nullptr, ui::ResourceBundle::DO_NOT_LOAD_COMMON_RESOURCES);
+  }
 
-  compositor_deps_.reset(new FakeCompositorDependencies);
-  mock_process_.reset(new MockRenderProcess);
+  compositor_deps_ = std::make_unique<FakeCompositorDependencies>();
+  mock_process_ = std::make_unique<MockRenderProcess>();
 
   mojom::CreateViewParams view_params;
   view_params.opener_frame_route_id = MSG_ROUTING_NONE;
@@ -318,10 +320,8 @@ void RenderViewTest::SetUp() {
   view_params.min_size = gfx::Size();
   view_params.max_size = gfx::Size();
 
-  // This needs to pass the mock render thread to the view.
-  RenderViewImpl* view = RenderViewImpl::Create(
-      compositor_deps_.get(), view_params, RenderWidget::ShowCallback());
-  view_ = view;
+  view_ = RenderViewImpl::Create(compositor_deps_.get(), view_params,
+                                 RenderWidget::ShowCallback());
 }
 
 void RenderViewTest::TearDown() {
@@ -335,7 +335,9 @@ void RenderViewTest::TearDown() {
 
   leak_detector->PrepareForLeakDetection(view_->GetWebView()->MainFrame());
 
-  view_ = NULL;
+  // |view_| is ref-counted and deletes itself during the RunUntilIdle() call
+  // below.
+  view_ = nullptr;
   mock_process_.reset();
 
   RenderThreadImpl::SetRendererBlinkPlatformImplForTesting(nullptr);
@@ -346,7 +348,7 @@ void RenderViewTest::TearDown() {
   base::RunLoop().RunUntilIdle();
 
 #if defined(OS_MACOSX)
-  autorelease_pool_.reset(NULL);
+  autorelease_pool_.reset();
 #endif
 
   leak_detector->CollectGarbageAndReport();
@@ -401,31 +403,31 @@ void RenderViewTest::SendWebGestureEvent(
   SendInputEvent(gesture_event);
 }
 
-const char* const kGetCoordinatesScript =
-    "(function() {"
-    "  function GetCoordinates(elem) {"
-    "    if (!elem)"
-    "      return [ 0, 0];"
-    "    var coordinates = [ elem.offsetLeft, elem.offsetTop];"
-    "    var parent_coordinates = GetCoordinates(elem.offsetParent);"
-    "    coordinates[0] += parent_coordinates[0];"
-    "    coordinates[1] += parent_coordinates[1];"
-    "    return [ Math.round(coordinates[0]),"
-    "             Math.round(coordinates[1])];"
-    "  };"
-    "  var elem = document.getElementById('$1');"
-    "  if (!elem)"
-    "    return null;"
-    "  var bounds = GetCoordinates(elem);"
-    "  bounds[2] = Math.round(elem.offsetWidth);"
-    "  bounds[3] = Math.round(elem.offsetHeight);"
-    "  return bounds;"
-    "})();";
 gfx::Rect RenderViewTest::GetElementBounds(const std::string& element_id) {
+  static constexpr char kGetCoordinatesScript[] =
+      "(function() {"
+      "  function GetCoordinates(elem) {"
+      "    if (!elem)"
+      "      return [ 0, 0];"
+      "    var coordinates = [ elem.offsetLeft, elem.offsetTop];"
+      "    var parent_coordinates = GetCoordinates(elem.offsetParent);"
+      "    coordinates[0] += parent_coordinates[0];"
+      "    coordinates[1] += parent_coordinates[1];"
+      "    return [ Math.round(coordinates[0]),"
+      "             Math.round(coordinates[1])];"
+      "  };"
+      "  var elem = document.getElementById('$1');"
+      "  if (!elem)"
+      "    return null;"
+      "  var bounds = GetCoordinates(elem);"
+      "  bounds[2] = Math.round(elem.offsetWidth);"
+      "  bounds[3] = Math.round(elem.offsetHeight);"
+      "  return bounds;"
+      "})();";
   std::vector<std::string> params;
   params.push_back(element_id);
   std::string script =
-      base::ReplaceStringPlaceholders(kGetCoordinatesScript, params, NULL);
+      base::ReplaceStringPlaceholders(kGetCoordinatesScript, params, nullptr);
 
   v8::Isolate* isolate = v8::Isolate::GetCurrent();
   v8::HandleScope handle_scope(isolate);
@@ -647,7 +649,7 @@ ContentRendererClient* RenderViewTest::CreateContentRendererClient() {
 }
 
 std::unique_ptr<ResizeParams> RenderViewTest::InitialSizeParams() {
-  auto initial_size = base::MakeUnique<ResizeParams>();
+  auto initial_size = std::make_unique<ResizeParams>();
   // Ensure the view has some size so tests involving scrolling bounds work.
   initial_size->new_size = gfx::Size(400, 300);
   initial_size->visible_viewport_size = gfx::Size(400, 300);
