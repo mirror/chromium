@@ -320,12 +320,13 @@ cr.define('print_preview', function() {
       // chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc
       // with any changes to ticket creation.
       const ticket = {
+        'pageRange': printTicketStore.pageRange.getDocumentPageRanges(),
         'mediaSize': printTicketStore.mediaSize.getValue(),
         'pageCount': printTicketStore.pageRange.getPageNumberSet().size,
         'landscape': printTicketStore.landscape.getValue(),
         'color': this.getNativeColorModel_(destination, printTicketStore.color),
         'headerFooterEnabled': false,  // Only used in print preview
-        'marginsType': printTicketStore.marginsType.getValue(),
+        'marginsType': print_preview.ticket_items.MarginsTypeValue.NO_MARGINS,
         'duplex': printTicketStore.duplex.getValue() ?
             NativeLayer.DuplexMode.LONG_EDGE :
             NativeLayer.DuplexMode.SIMPLEX,
