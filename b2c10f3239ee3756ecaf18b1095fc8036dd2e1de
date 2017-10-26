@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6709cf4b_7caeee02",
+        "filename": "ash/system/screen_layout_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ab0540d_045d3839",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae28fa35_643dba82",
         "filename": "ash/system/screen_layout_observer.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-25T20:38:49Z",
       "side": 1,
       "message": "Why do you need this condition? This function is supposed to be called only when you are currently in mirror mode.\n\nIf your goal is to make sure that the mirroring list is not empty, then I would add a DCHECK.",
+      "range": {
+        "startLine": 139,
+        "startChar": 23,
+        "endLine": 139,
+        "endChar": 60
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68083b2c_a12ba74c",
+        "filename": "ash/system/screen_layout_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Yes, you are right. Done.",
+      "parentUuid": "ae28fa35_643dba82",
       "range": {
         "startLine": 139,
         "startChar": 23,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d9463d4d_1e9e4f28",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a93148e7_ce2cdca1",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5108e38a_49e33f8e",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55963ae_28a30823",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5108e38a_49e33f8e",
+      "range": {
+        "startLine": 613,
+        "startChar": 45,
+        "endLine": 613,
+        "endChar": 64
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cd83af69_b93ab829",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d396ed07_7b10d2d6",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 308,
+        "endChar": 8
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49c6078f_c050aa11",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c9a55e_e5f70d51",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49c6078f_c050aa11",
+      "range": {
+        "startLine": 314,
+        "startChar": 36,
+        "endLine": 314,
+        "endChar": 78
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a4b420af_360a16a7",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4641d418_0310a4be",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 8
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e3c5ba3_be6537d1",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 4
@@ -183,6 +351,30 @@
       "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef9a51c_9d6a848c",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e3c5ba3_be6537d1",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 8
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "9f26a6ce_d6ee4497",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "That\u0027s better, thanks, done.",
+      "parentUuid": "c23e0a93_a3ad9231",
+      "range": {
+        "startLine": 683,
+        "startChar": 0,
+        "endLine": 695,
+        "endChar": 42
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2f40bab_d510c229",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 4
@@ -220,6 +436,30 @@
       "writtenOn": "2017-10-25T20:38:49Z",
       "side": 1,
       "message": "You don\u0027t want to do this if it\u0027s the source display.",
+      "range": {
+        "startLine": 697,
+        "startChar": 6,
+        "endLine": 697,
+        "endChar": 74
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7985f4_1f8ced92",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Yes, this list should only have destination displays.",
+      "parentUuid": "b2f40bab_d510c229",
       "range": {
         "startLine": 697,
         "startChar": 6,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "deee52ff_b59943dc",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "This does not change the logic here.\n\nYes, you are right, software_mirroring_enabled() means the mode is requested, but does not neccessarily means the mode is active. (mirroring_display_id_ not invalid \u0026\u0026 software_mirroring_enabled()) or (software mirroring display list not empty \u0026\u0026 software_mirroring_enabled()) mean the mode is active. Since mirroring_display_id_ is removed, I use the latter condition in IsInSoftwareMirrorMode().",
+      "parentUuid": "a6706c24_40c7d9f1",
+      "range": {
+        "startLine": 1248,
+        "startChar": 6,
+        "endLine": 1248,
+        "endChar": 28
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2449af56_a6cbd286",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 4
@@ -266,6 +530,30 @@
       "writtenOn": "2017-10-25T20:38:49Z",
       "side": 1,
       "message": "I don\u0027t see a need for using this local variable. You can just assign to the new |mirroring_source_id_|.",
+      "range": {
+        "startLine": 1352,
+        "startChar": 14,
+        "endLine": 1352,
+        "endChar": 23
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74bbe902_a0eefec1",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "It seems that I need a local variable as a parameter in in find_if.",
+      "parentUuid": "2449af56_a6cbd286",
       "range": {
         "startLine": 1352,
         "startChar": 14,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "0807f808_94576f83",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Sorry, I forgot a case: If source is internal, then it is possible internal is removed in the display_info_list. If source is first display, then we don\u0027t need to find it, because the display_info_list must contains the first display.",
+      "parentUuid": "29ae5454_07546c73",
+      "range": {
+        "startLine": 1362,
+        "startChar": 0,
+        "endLine": 1367,
+        "endChar": 47
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c31390a4_8f0f03ec",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 4
@@ -321,6 +633,30 @@
       "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a2884d_69c454dd",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c31390a4_8f0f03ec",
+      "range": {
+        "startLine": 1378,
+        "startChar": 6,
+        "endLine": 1378,
+        "endChar": 23
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "ddcc5591_236f446f",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf0bd41e_70829950",
+      "range": {
+        "startLine": 1510,
+        "startChar": 4,
+        "endLine": 1510,
+        "endChar": 5
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c41a353_ace9866e",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 4
@@ -367,6 +727,30 @@
       "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94ad7fb_84bf980c",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T03:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c41a353_ace9866e",
+      "range": {
+        "startLine": 521,
+        "startChar": 72,
+        "endLine": 521,
+        "endChar": 79
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
