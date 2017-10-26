@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2d0db3b_a66aeffa",
+        "filename": "base/metrics/persistent_memory_allocator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-26T15:28:59Z",
+      "side": 1,
+      "message": "Can you expand this comment to explain why that\u0027s the case? i.e. if it hits some specific field in a header struct, mention what the field is, etc.",
+      "range": {
+        "startLine": 748,
+        "startChar": 61,
+        "endLine": 748,
+        "endChar": 68
+      },
+      "revId": "f5b19184239c5d05849f65ab73642e5e8d915fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
