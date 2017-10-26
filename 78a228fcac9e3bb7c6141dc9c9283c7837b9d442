@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9dc8dff_1b9f62f4",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T14:57:19Z",
+      "side": 1,
+      "message": "It can be argued either way. I kind of like the fact that it is quite obvious with the current system when you\u0027re adding a duplicate value. But I don\u0027t feel strongly about it if you want method-local...?",
+      "parentUuid": "a6afae97_959bc73f",
+      "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7827eacf_3b134652",
         "filename": "chrome/browser/notifications/notification_template_builder.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T14:25:40Z",
       "side": 1,
       "message": "nit: consider something like WriteAudioSilentElement(). Merges both methods and is clearer about the intention. It probably also doesn\u0027t need |notification|?",
+      "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435102d2_c6247ba9",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T14:57:19Z",
+      "side": 1,
+      "message": "Yeah, I like that...",
+      "parentUuid": "7827eacf_3b134652",
       "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "502e0ff9_e09ac6c2",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T14:57:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bae724be_42108b38",
+      "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93ae30ee_7851ba5a",
         "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0552dcde_678c5c84",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T14:57:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93ae30ee_7851ba5a",
+      "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62b950d4_5f9e7daa",
         "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9468f3_7ff037e6",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T14:57:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62b950d4_5f9e7daa",
+      "revId": "78a228fcac9e3bb7c6141dc9c9283c7837b9d442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
