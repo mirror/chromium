@@ -62,6 +62,8 @@ class CORE_EXPORT NGContainerFragmentBuilder : public NGBaseFragmentBuilder {
   NGContainerFragmentBuilder& AddOutOfFlowDescendant(
       NGOutOfFlowPositionedDescendant);
 
+  void ReserveCapacity(unsigned);
+
  protected:
   // An out-of-flow positioned-candidate is a temporary data structure used
   // within the NGFragmentBuilder.
