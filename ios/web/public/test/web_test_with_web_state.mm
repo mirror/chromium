@@ -60,8 +60,15 @@ void WebTestWithWebState::LoadHtml(NSString* html, const GURL& url) {
   // Sets MIME type to "text/html" once navigation is committed.
   class MimeTypeUpdater : public WebStateObserver {
    public:
-    explicit MimeTypeUpdater(WebState* web_state)
-        : WebStateObserver(web_state) {}
+    explicit MimeTypeUpdater(WebState* web_state) : web_state_(web_state) {
+      web_state_->AddObserver(this);
+    }
+    ~MimeTypeUpdater() override {
+      if (web_state_) {
+        web_state_->RemoveObserver(this);
+        web_state_ = nullptr;
+      }
+    }
     // WebStateObserver overrides:
     void NavigationItemCommitted(WebState* web_state,
                                  const LoadCommittedDetails&) override {
@@ -72,6 +79,16 @@ void WebTestWithWebState::LoadHtml(NSString* html, const GURL& url) {
       // checking if MIME type is in fact HTML.
       static_cast<WebStateImpl*>(web_state)->SetContentsMimeType("text/html");
     }
+    void WebStateDestroyed(WebState* web_state) override {
+      DCHECK_EQ(web_state_, web_state);
+      web_state_->RemoveObserver(this);
+      web_state_ = nullptr;
+    }
+
+   private:
+    WebState* web_state_;
+
+    DISALLOW_COPY_AND_ASSIGN(MimeTypeUpdater);
   };
   MimeTypeUpdater mime_type_updater(web_state());
 
