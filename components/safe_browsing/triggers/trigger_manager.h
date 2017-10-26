@@ -113,6 +113,10 @@ class TriggerManager {
       int num_visits,
       const SBErrorOptions& error_display_options);
 
+  // Called when a ThreatDetails report finishes for the specified
+  // |web_contents|.
+  void ThreatDetailsDone(content::WebContents* web_contents);
+
  private:
   friend class TriggerManagerTest;
 
@@ -129,6 +133,8 @@ class TriggerManager {
   // Keeps track of how often triggers fire and throttles them when needed.
   std::unique_ptr<TriggerThrottler> trigger_throttler_;
 
+  base::WeakPtrFactory<TriggerManager> weak_factory_;
+  // WeakPtrFactory should be last, don't add any members below it.
   DISALLOW_COPY_AND_ASSIGN(TriggerManager);
 };
 
