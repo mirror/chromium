@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16dee861_f80e5c25",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-10-26T18:58:22Z",
+      "side": 1,
+      "message": "I assume this subtitle will be updated again when a cellular network appears at a latter point, right?",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 326,
+        "endChar": 62
+      },
+      "revId": "4870f795b7958fefea63abfb9c64b312287f0cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
