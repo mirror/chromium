@@ -10,6 +10,8 @@ source_set("exo") {
   sources = [
     "buffer.cc",
     "buffer.h",
+    "client_controlled_state.cc",
+    "client_controlled_state.h",
     "data_device.cc",
     "data_device.h",
     "data_device_delegate.h",

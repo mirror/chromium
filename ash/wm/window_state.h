@@ -367,10 +367,12 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // new bounds will not exceeds the size of the work area.
   void SetBoundsConstrained(const gfx::Rect& bounds);
 
+ public:
   // Sets the wndow's |bounds| and transitions to the new bounds with
   // a scale animation.
   void SetBoundsDirectAnimated(const gfx::Rect& bounds);
 
+ private:
   // Sets the window's |bounds| and transition to the new bounds with
   // a cross fade animation.
   void SetBoundsDirectCrossFade(const gfx::Rect& bounds);
