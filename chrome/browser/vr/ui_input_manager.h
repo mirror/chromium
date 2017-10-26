@@ -43,6 +43,8 @@ class UiInputManager {
                    gfx::Point3F* out_target_point,
                    UiElement** out_reticle_render_target);
 
+  bool in_gesture() const { return in_click_ || in_scroll_; }
+
  private:
   void SendFlingCancel(GestureList* gesture_list,
                        const gfx::PointF& target_point);

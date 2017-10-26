@@ -36,15 +36,32 @@ static constexpr float kReticleHeight = 0.025f;
 }  // namespace
 
 UiRenderer::UiRenderer(UiScene* scene, VrShellRenderer* vr_shell_renderer)
-    : scene_(scene), vr_shell_renderer_(vr_shell_renderer) {}
+    : scene_(scene), vr_shell_renderer_(vr_shell_renderer) {
+  animation_player_.set_target(this);
+  animation_player_.SetTransitionedProperties({OPACITY});
+  animation_player_.SetTransitionDuration(
+      base::TimeDelta::FromMilliseconds(550));
+}
 
-UiRenderer::~UiRenderer() = default;
+UiRenderer::~UiRenderer() {
+  animation_player_.set_target(nullptr);
+}
 
 // TODO(crbug.com/767515): UiRenderer must not care about the elements its
 // rendering and be platform agnostic, each element should know how to render
 // itself correctly.
 void UiRenderer::Draw(const RenderInfo& render_info,
-                      const ControllerInfo& controller_info) {
+                      const ControllerInfo& controller_info,
+                      base::TimeTicks current_time) {
+  // HACK. should be handled by bindings in the scene.
+  animation_player_.SetTransitionDuration(
+      controller_info.quiescent ? base::TimeDelta::FromMilliseconds(550)
+                                : base::TimeDelta::FromMilliseconds(200));
+  animation_player_.TransitionFloatTo(current_time, OPACITY,
+                                      controller_quiescence_opacity_,
+                                      controller_info.quiescent ? 0.f : 1.0f);
+  animation_player_.Tick(current_time);
+
   Draw2dBrowsing(render_info, controller_info);
   DrawSplashScreen(render_info, controller_info);
 }
@@ -230,7 +247,8 @@ void UiRenderer::DrawReticle(const gfx::Transform& render_matrix,
                              target_point.z());
 
   gfx::Transform transform = render_matrix * mat;
-  vr_shell_renderer_->GetReticleRenderer()->Draw(transform);
+  vr_shell_renderer_->GetReticleRenderer()->Draw(controller_quiescence_opacity_,
+                                                 transform);
 }
 
 void UiRenderer::DrawLaser(const gfx::Transform& render_matrix,
@@ -275,8 +293,8 @@ void UiRenderer::DrawLaser(const gfx::Transform& render_matrix,
                                           controller_info.laser_origin.y(),
                                           controller_info.laser_origin.z());
     transform = render_matrix * face_transform;
-    vr_shell_renderer_->GetLaserRenderer()->Draw(controller_info.opacity,
-                                                 transform);
+    vr_shell_renderer_->GetLaserRenderer()->Draw(
+        controller_info.opacity * controller_quiescence_opacity_, transform);
   }
 }
 
@@ -303,7 +321,14 @@ void UiRenderer::DrawController(const gfx::Transform& view_proj_matrix,
 
   gfx::Transform transform = view_proj_matrix * controller_info.transform;
   vr_shell_renderer_->GetControllerRenderer()->Draw(
-      state, controller_info.opacity, transform);
+      state, controller_info.opacity * controller_quiescence_opacity_,
+      transform);
+}
+
+void UiRenderer::NotifyClientFloatAnimated(float value,
+                                           int target_property_id,
+                                           cc::Animation* animation) {
+  controller_quiescence_opacity_ = value;
 }
 
 }  // namespace vr
