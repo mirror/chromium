@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "889f5901_70a2dcc6",
+        "filename": "chrome/android/java/res/drawable-sw600dp/window_background.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-26T20:54:55Z",
+      "side": 1,
+      "message": "can we make this only 25dp high?  Otherwise, we\u0027re doing a full overdraw with the background",
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ef6d0d_e6caccaa",
+        "filename": "chrome/android/java/res/drawable-sw600dp/window_background.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-26T20:54:55Z",
+      "side": 1,
+      "message": "increase indent on these two lines",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9350c29a_64a485a1",
+        "filename": "chrome/android/java/res/drawable-sw720dp/window_background.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-26T20:54:55Z",
+      "side": 1,
+      "message": "with not margin on the below drawable, is this needed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29f44ef_5c3b5e16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ThemedWindowFrameBuilder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-26T20:54:55Z",
+      "side": 1,
+      "message": "should we annotate this (and mThemeId) with @StyleRes (or whatever makes since)",
+      "range": {
+        "startLine": 45,
+        "startChar": 53,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56f7e09_9a364bba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-26T20:54:55Z",
+      "side": 1,
+      "message": "javadoc non-private methods, should this be annotated with @CallSuper?",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 13
+      },
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9e4c56_1e5be36c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-26T20:54:55Z",
+      "side": 1,
+      "message": "I would check this above the previous as it might be cheaper since it isn\u0027t doing any drawable inflation",
+      "range": {
+        "startLine": 421,
+        "startChar": 26,
+        "endLine": 421,
+        "endChar": 27
+      },
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1d02c9_34c21c5f",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-26T20:54:55Z",
+      "side": 1,
+      "message": "let\u0027s put this in widget/ at a minimum (should see if any folders there make sense).  we should try to avoid anything else in the root package.",
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
