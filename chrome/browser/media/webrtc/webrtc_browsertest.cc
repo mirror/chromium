@@ -48,6 +48,11 @@ class WebRtcBrowserTest : public WebRtcTestBase {
 
     // Flag used by TestWebAudioMediaStream to force garbage collection.
     command_line->AppendSwitchASCII(switches::kJavaScriptFlags, "--expose-gc");
+
+    // Flags use for testing screen capturing.
+    command_line->AppendSwitchASCII(switches::kAutoSelectDesktopCaptureSource,
+                                    "Entire screen");
+    command_line->AppendSwitch(switches::kEnableUserMediaScreenCapturing);
   }
 
   void RunsAudioVideoWebRTCCallInTwoTabs(
@@ -245,5 +250,26 @@ IN_PROC_BROWSER_TEST_F(
       ExecuteJavascript("getLastGatheringState()", left_tab_);
 
   EXPECT_EQ("complete", ice_gatheringstate);
+  DetectVideoAndHangUp();
+}
+
+IN_PROC_BROWSER_TEST_F(WebRtcBrowserTest, RunsScreenshareInTwoTabs) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  LoadDesktopCaptureExtension();
+  left_tab_ = OpenTestPageInNewTab(kMainWebrtcTestHtmlPage);
+  std::string stream_id = GetDesktopMediaStream(left_tab_);
+  EXPECT_NE(stream_id, "");
+
+  LOG(WARNING) << "Opened desktop media stream, got id " << stream_id;
+
+  std::string constraints =
+      "{video: {mandatory: {chromeMediaSource: 'desktop',"
+      "chromeMediaSourceId: '" +
+      stream_id + "'}}}";
+  EXPECT_TRUE(
+      GetUserMediaWithSpecificConstraintsAndAccept(left_tab_, constraints));
+  SetupPeerconnectionWithLocalStream(right_tab_);
+  NegotiateCall(left_tab_, right_tab_);
+  VerifyStatsGeneratedCallback(left_tab_);
   DetectVideoAndHangUp();
 }
