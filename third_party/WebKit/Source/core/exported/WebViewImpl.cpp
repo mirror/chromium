@@ -183,10 +183,16 @@
 static const int touchPointPadding = 32;
 static const int nonUserInitiatedPointPadding = 11;
 static const float minScaleDifference = 0.01f;
+#if defined(OS_MACOSX)
+static const float doubleTapZoomContentDefaultMargin = 75;
+static const float doubleTapZoomContentMinimumMargin = 65;
+static const float doubleTapZoomAlreadyLegibleRatio = 1.4f;
+#else
 static const float doubleTapZoomContentDefaultMargin = 5;
 static const float doubleTapZoomContentMinimumMargin = 2;
-static const double doubleTapZoomAnimationDurationInSeconds = 0.25;
 static const float doubleTapZoomAlreadyLegibleRatio = 1.2f;
+#endif
+static const double doubleTapZoomAnimationDurationInSeconds = 0.25;
 
 static const double multipleTargetsZoomAnimationDurationInSeconds = 0.25;
 static const double findInPageAnimationDurationInSeconds = 0;
