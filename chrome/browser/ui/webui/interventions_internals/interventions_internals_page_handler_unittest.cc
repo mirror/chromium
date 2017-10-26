@@ -4,7 +4,9 @@
 
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h"
 
+#include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/run_loop.h"
@@ -53,15 +55,26 @@ class TestInterventionsInternalsPage
   void LogNewMessage(mojom::MessageLogPtr message) override {
     message_ = base::MakeUnique<mojom::MessageLogPtr>(std::move(message));
   }
+  void OnEffectiveConnectionTypeChanged(const std::string& type) override {
+    effective_connection_type_ = type;
+  }
 
   // Expose passed in message in LogNewMessage for testing.
   mojom::MessageLogPtr* message() const { return message_.get(); }
+
+  // Expose passed in ECT in OnEffectiveConnectionTypeChanged for testing.
+  std::string effective_connection_type() const {
+    return effective_connection_type_;
+  }
 
  private:
   mojo::Binding<mojom::InterventionsInternalsPage> binding_;
 
   // The MessageLogPtr passed in LogNewMessage method.
   std::unique_ptr<mojom::MessageLogPtr> message_;
+
+  // The passed in string representation of the ECT.
+  std::string effective_connection_type_;
 };
 
 // Mock class to test interaction between the PageHandler and the
