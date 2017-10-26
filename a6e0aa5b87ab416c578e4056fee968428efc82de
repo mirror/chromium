@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7a510007_cab055ae",
+        "filename": "components/autofill/core/browser/autofill_credit_card_policy_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-10-26T06:42:26Z",
+      "side": 1,
+      "message": "The DTC will check IsEnabled at startup time either way. If kAutofillCreditCardEnabled is false, the DTC will prevent the datatype from starting, regardless of the kSync pref state.\n\nThese kSync prefs are meant to record user intent, which is orthogonal to policy and other programmatic restrictions. Those are controlled by the DTC.",
+      "parentUuid": "bb3b8064_e1ce50b5",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 74
+      },
+      "revId": "a6e0aa5b87ab416c578e4056fee968428efc82de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6725080f_20057ed7",
         "filename": "components/autofill/core/browser/autofill_policy_handler.cc",
         "patchSetId": 10
