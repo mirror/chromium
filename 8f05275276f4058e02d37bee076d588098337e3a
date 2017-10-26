@@ -46,6 +46,23 @@
       "revId": "8f05275276f4058e02d37bee076d588098337e3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49519c3_d480b612",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-26T00:07:36Z",
+      "side": 1,
+      "message": "I don\u0027t think the renaming is reasonable here. When this function is called, the online wallpaper data has been downloaded and decoded (and also should has been saved to local file with a name extracted from its url), so theoretically url is not needed here.  \n\nAfter the renaming, it looks like this function will do the download job which is not the case.",
+      "revId": "8f05275276f4058e02d37bee076d588098337e3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

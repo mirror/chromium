@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "e994ce81_998efbd4",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-26T00:07:36Z",
+      "side": 1,
+      "message": "SetWallpaperFromImageSkia() are only called from wallpaper_private_api.cc for decoded online wallpapers. All the policy checks are in wallpaper_private_api.cc before decoding the wallpaper.   it\u0027s unnecessary to check twice. However, SetCustomWallpaper() might be called from wallpaper_private_api.cc (i.e., Chrome OS legacy Wallpaper Picker App) but also from other Wallpaper Apps (e.g., Chrome Wallpaper extensions or Android Wallpaper Apps), thus need extra check here.",
+      "parentUuid": "b3136ecd_db928783",
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "104b2ef9_d7f1c602",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 3
@@ -160,6 +178,24 @@
       "side": 1,
       "message": "It\u0027s added now. I think it was forgotten before..",
       "parentUuid": "104b2ef9_d7f1c602",
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d179b216_c5b10103",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-26T00:07:36Z",
+      "side": 1,
+      "message": "It was not forgeotten. SetUserWallpaperInfo() is called in line 828 in this patch.",
+      "parentUuid": "c68ea52e_49511ce0",
       "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -225,6 +261,30 @@
       "side": 1,
       "message": "There\u0027s still a lot of code duplication, and it would be nice to avoid it.\n\nbasically, the main differences are:\n* SetWallpaperFromUrl ignores policy (though, I\u0027m not sure why, nor whether it should)\n* SetWallpaperFromPath has an additional step to save the wallpaper on disk and calculate wallpaper paths (maybe this could be moved to another method, or just bypassed when setting wallpaper with ONLINE type)?\n\nThough, feedback with someone more familiar with wallpapers might be useful here :)",
       "parentUuid": "76e30efd_b2e2d0c5",
+      "range": {
+        "startLine": 767,
+        "startChar": 12,
+        "endLine": 767,
+        "endChar": 13
+      },
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00908540_6ba08a4f",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-26T00:07:36Z",
+      "side": 1,
+      "message": "SetWallpaperFromUrl() doesn\u0027t not ignore policy, which I explained in the previous comment. But yes, I agree it would be nice to extract the saveWallpaper step out of SetCustomWallpaper and then integrate them into one function as they both accept an ImageSkia parameter.",
+      "parentUuid": "9e6db0b0_b50486b7",
       "range": {
         "startLine": 767,
         "startChar": 12,
