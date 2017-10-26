@@ -768,31 +768,29 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  // Media Engagement
-  if (remove_mask & DATA_TYPE_SITE_USAGE_DATA &&
-      MediaEngagementService::IsEnabled()) {
-    MediaEngagementService::Get(profile_)->ClearDataBetweenTime(delete_begin_,
-                                                                delete_end_);
-  }
-
-  //////////////////////////////////////////////////////////////////////////////
   // DATA_TYPE_SITE_USAGE_DATA
   if (remove_mask & DATA_TYPE_SITE_USAGE_DATA) {
+    base::RecordAction(UserMetricsAction("ClearBrowsingData_SiteUsageData"));
+
     HostContentSettingsMapFactory::GetForProfile(profile_)
         ->ClearSettingsForOneTypeWithPredicate(
             CONTENT_SETTINGS_TYPE_SITE_ENGAGEMENT, base::Time(),
             base::Bind(&WebsiteSettingsFilterAdapter, filter));
-  }
 
-  if ((remove_mask & DATA_TYPE_SITE_USAGE_DATA) ||
-      (remove_mask & DATA_TYPE_HISTORY)) {
-    HostContentSettingsMapFactory::GetForProfile(profile_)
-        ->ClearSettingsForOneTypeWithPredicate(
-            CONTENT_SETTINGS_TYPE_APP_BANNER, base::Time(),
-            base::Bind(&WebsiteSettingsFilterAdapter, filter));
+    if (remove_mask & DATA_TYPE_HISTORY) {
+      HostContentSettingsMapFactory::GetForProfile(profile_)
+          ->ClearSettingsForOneTypeWithPredicate(
+              CONTENT_SETTINGS_TYPE_APP_BANNER, base::Time(),
+              base::Bind(&WebsiteSettingsFilterAdapter, filter));
 
-    PermissionDecisionAutoBlocker::GetForProfile(profile_)->RemoveCountsByUrl(
-        filter);
+      PermissionDecisionAutoBlocker::GetForProfile(profile_)->RemoveCountsByUrl(
+          filter);
+    }
+
+    if (MediaEngagementService::IsEnabled()) {
+      MediaEngagementService::Get(profile_)->ClearDataBetweenTime(delete_begin_,
+                                                                  delete_end_);
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////
