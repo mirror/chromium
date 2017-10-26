@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed08c703_4f4a5ecc",
+        "filename": "services/ui/ws/gpu_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-26T13:00:16Z",
+      "side": 1,
+      "message": "Could this cause problem/could it just be a invariant that EstablishGpuChannel isn\u0027t called again until it returns the first time?",
+      "revId": "45ec982e9c00706ff717dfafb9517bf7c56e21b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
