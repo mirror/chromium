@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b7bc329_20422fc2",
+        "filename": "chrome/browser/dbus/dbus_thread_linux.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-26T06:31:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48d7de3b_46277a47",
+      "revId": "13fee2c0622c5a0e769fd83407c3008164be8303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1061d723_dec5fa42",
         "filename": "chrome/browser/dbus/dbus_thread_linux.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "13fee2c0622c5a0e769fd83407c3008164be8303",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e7a337_a5fd3e04",
+        "filename": "chrome/browser/dbus/dbus_thread_linux.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-26T06:31:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1061d723_dec5fa42",
+      "revId": "13fee2c0622c5a0e769fd83407c3008164be8303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a4160cfa_e427b649",
+        "filename": "chrome/browser/dbus/dbus_thread_linux.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-26T06:31:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa53108_b0237c21",
+      "revId": "13fee2c0622c5a0e769fd83407c3008164be8303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5979256_3181a6bd",
         "filename": "chrome/browser/dbus/dbus_thread_linux.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "13fee2c0622c5a0e769fd83407c3008164be8303",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfec8b39_b3133925",
+        "filename": "chrome/browser/dbus/dbus_thread_linux.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-26T06:31:10Z",
+      "side": 1,
+      "message": "Thanks for pointing this out to me as well as the style guide request to do so (http://google.github.io/styleguide/cppguide.html#Nonmember,_Static_Member,_and_Global_Functions). Additionally, I noticed that there already is GetDBusTaskRunner used in //dbus, so having this one in the namespace makes a conflict less likely.",
+      "parentUuid": "f5979256_3181a6bd",
+      "revId": "13fee2c0622c5a0e769fd83407c3008164be8303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
