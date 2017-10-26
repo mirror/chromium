@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "991d589e_00a24d66",
+        "filename": "media/mojo/services/video_decode_perf_history.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-26T17:50:38Z",
+      "side": 1,
+      "message": "Sequence/thread checker?",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998075f3_8f5a5744",
+        "filename": "media/mojo/services/video_decode_perf_history.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-26T17:50:38Z",
+      "side": 1,
+      "message": "No .get() necessary",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741c3612_084d5822",
+        "filename": "media/mojo/services/video_decode_perf_history.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-26T17:50:38Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f69d8e1_b01fbe13",
+        "filename": "media/mojo/services/video_decode_perf_history.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-26T17:50:38Z",
+      "side": 1,
+      "message": "InitDatabase or change to OnDBInit below.",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7851c19_68a20a23",
+        "filename": "media/mojo/services/video_decode_perf_history.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-26T17:50:38Z",
+      "side": 1,
+      "message": "OnDatabaseInit",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b8adc2_69fdad64",
+        "filename": "media/mojo/services/video_decode_perf_history.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-26T17:50:38Z",
+      "side": 1,
+      "message": "OnGot gives me Halloween shivers, but if you\u0027re going to use it how about OnGotPerfInfo and OnSavePerfRecord so they match the methods above? You could also name them based on the methods you pass these callbacks too.",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12424dc_49123231",
+        "filename": "media/mojo/services/video_decode_perf_history_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-26T17:50:38Z",
+      "side": 1,
+      "message": "Do you feel these test appropriately cover the lazily initialized db + deferred callbacks aspect? That\u0027s the hairiest part I feel.y",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0ad8be_204da436",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-26T17:50:38Z",
+      "side": 1,
+      "message": "no need for .get() in presence tests, they have bool overrides.",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd40811a_58ee5536",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-26T17:50:38Z",
+      "side": 1,
+      "message": "Ever null?",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad929798_4059bf2e",
+        "filename": "media/mojo/services/video_decode_stats_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-26T17:50:38Z",
+      "side": 1,
+      "message": "Explicit",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
