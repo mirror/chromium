@@ -16,6 +16,24 @@
       "revId": "865586aa91b81a36e9f3f021e91e8564495d65b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2592e4f7_1fa339c3",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-26T17:10:47Z",
+      "side": 1,
+      "message": "I think cr-icon-height-width is better since it covers both height and width, but I can change this to cr-icon-size if you prefer.",
+      "parentUuid": "604adaff_21e7b1f4",
+      "revId": "865586aa91b81a36e9f3f021e91e8564495d65b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
