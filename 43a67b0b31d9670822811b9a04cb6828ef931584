@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "f56b1c4e_4eeb0dbf",
+        "filename": "content/browser/service_worker/service_worker_url_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-26T01:57:58Z",
+      "side": 1,
+      "message": "nit: request_ for consistency",
+      "range": {
+        "startLine": 582,
+        "startChar": 6,
+        "endLine": 582,
+        "endChar": 21
+      },
+      "revId": "43a67b0b31d9670822811b9a04cb6828ef931584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ed630f_1b28a52f",
+        "filename": "content/common/service_worker/service_worker_types.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-26T01:57:58Z",
+      "side": 1,
+      "message": "nit: // static",
+      "revId": "43a67b0b31d9670822811b9a04cb6828ef931584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68e56a3_f6e30660",
+        "filename": "content/common/service_worker/service_worker_types.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-26T01:57:58Z",
+      "side": 1,
+      "message": "Do we already have a test for that conversion? If not, I think it\u0027d be better to have a test like checking the conversion from mojom type to net type and back to the mojom type since it\u0027s a bit complicated.\nCurrently code to convert mojom type to net type seems in renderer/loader and net to mojom is here, so it seems a bit difficult to add an unit test.\nWhat do you think of moving them into one place (I guess it\u0027d be in common)?",
+      "revId": "43a67b0b31d9670822811b9a04cb6828ef931584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42698947_289b29f6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/request/request-cache-force-cache-expected.txt",
         "patchSetId": 3
