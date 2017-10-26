@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1b801e3_c253bfc7",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-26T17:21:52Z",
+      "side": 1,
+      "message": "Nit: The new syntax for applying CSS mixins is as follows:\n@apply --cr-icon-height-width;\n\nYou can see more details at https://www.polymer-project.org/2.0/docs/upgrade#shadow-dom-styles. We are not using Polymer 2 yet, but we are trying to get there, by using whatever syntax hybrid mode allows us (tracking at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d738611).",
+      "revId": "f62adc73fbaba7e001810062c9e9c05d0aac18e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2891200_cf7585c4",
+        "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-26T17:21:52Z",
+      "side": 1,
+      "message": "Accidental? I don\u0027t think the dom-module\u0027s ID should be affected.",
+      "range": {
+        "startLine": 12,
+        "startChar": 16,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "f62adc73fbaba7e001810062c9e9c05d0aac18e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
