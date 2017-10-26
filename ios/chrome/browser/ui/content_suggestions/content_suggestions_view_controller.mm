@@ -369,14 +369,19 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   UIEdgeInsets parentInset = [super collectionView:collectionView
                                             layout:collectionViewLayout
                             insetForSectionAtIndex:section];
+  CGFloat safeAreaWidth = CGRectGetWidth(collectionView.frame);
+  if (@available(iOS 11, *)) {
+    safeAreaWidth = CGRectGetWidth(UIEdgeInsetsInsetRect(
+        collectionView.frame, collectionView.safeAreaInsets));
+  }
   if ([self.collectionUpdater isHeaderSection:section]) {
     parentInset.top = 0;
     parentInset.left = 0;
     parentInset.right = 0;
   } else if ([self.collectionUpdater isMostVisitedSection:section] ||
              [self.collectionUpdater isPromoSection:section]) {
-    CGFloat margin = content_suggestions::centeredTilesMarginForWidth(
-        collectionView.frame.size.width);
+    CGFloat margin =
+        content_suggestions::centeredTilesMarginForWidth(safeAreaWidth);
     parentInset.left = margin;
     parentInset.right = margin;
     if ([self.collectionUpdater isMostVisitedSection:section]) {
@@ -422,8 +427,7 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
       parentInset.bottom = margin;
     }
   } else if (self.styler.cellStyle == MDCCollectionViewCellStyleCard) {
-    CGFloat margin =
-        MAX(0, (collectionView.frame.size.width - kMaxCardWidth) / 2);
+    CGFloat margin = MAX(0, (safeAreaWidth - kMaxCardWidth) / 2);
     parentInset.left = margin;
     parentInset.right = margin;
   }
@@ -575,12 +579,13 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
       !self.containsToolbar)
     return;
 
+  CGFloat xOffset = self.collectionView.contentOffset.x;
   // Adjust the toolbar to be all the way on or off screen.
   if (targetY > toolbarHeight / 2) {
-    [self.collectionView setContentOffset:CGPointMake(0, toolbarHeight)
+    [self.collectionView setContentOffset:CGPointMake(xOffset, toolbarHeight)
                                  animated:YES];
   } else {
-    [self.collectionView setContentOffset:CGPointMake(0, 0) animated:YES];
+    [self.collectionView setContentOffset:CGPointMake(xOffset, 0) animated:YES];
   }
 }
 
