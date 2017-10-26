@@ -22,6 +22,30 @@
       "revId": "214ff1bf9c6e24ecb811f86d1291597f2ddd8041",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c3f1d2_4601004e",
+        "filename": "cc/layers/painted_overlay_scrollbar_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-26T16:19:15Z",
+      "side": 1,
+      "message": "Tried use same rect to create SolidColorQuad and it works, so the thing we miss is in painted_overlay_scrollbar_layer. Do you know anything can help us debug the canvas?",
+      "parentUuid": "ce603db1_e85b3a2d",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 141,
+        "endChar": 42
+      },
+      "revId": "214ff1bf9c6e24ecb811f86d1291597f2ddd8041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
