@@ -34,6 +34,24 @@
       "revId": "bfc6998532109cfcea6f513d14caf9b06efbc365",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5167155_f3fce01a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_global_scope_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-26T07:05:24Z",
+      "side": 1,
+      "message": "In addition, WebTaskRunnerImpl::Create() doesn\u0027t access the given task_queue and it simply sets WebTaskRunnerImpl::task_queue_ so this would be OK.",
+      "parentUuid": "990745de_aff04c26",
+      "revId": "bfc6998532109cfcea6f513d14caf9b06efbc365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
