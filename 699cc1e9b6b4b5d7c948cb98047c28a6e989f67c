@@ -22,6 +22,30 @@
       "revId": "699cc1e9b6b4b5d7c948cb98047c28a6e989f67c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8747135c_50ce97f6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-26T15:59:21Z",
+      "side": 1,
+      "message": "Good catch. Size() has diverged, LineBox Size() is \n{inline_size_, metrics_.LineHeight().ClampNegativeToZero()}\nI need to understand the relationship between LineBox block_size, and Size()",
+      "parentUuid": "62db6376_1b6be0ce",
+      "range": {
+        "startLine": 104,
+        "startChar": 39,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "699cc1e9b6b4b5d7c948cb98047c28a6e989f67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
