@@ -163,7 +163,7 @@ class ForeignFetchRequestHandlerTest : public testing::Test {
         helper_->mock_render_process_id(), provider_host()->provider_id(),
         ServiceWorkerMode::ALL, FETCH_REQUEST_MODE_CORS,
         FETCH_CREDENTIALS_MODE_OMIT, FetchRedirectMode::FOLLOW_MODE,
-        std::string() /* integrity */, resource_type,
+        std::string() /* integrity */, false /* keepalive */, resource_type,
         REQUEST_CONTEXT_TYPE_FETCH, REQUEST_CONTEXT_FRAME_TYPE_NONE, nullptr,
         true /* initiated_in_secure_context */);
 

@@ -39,6 +39,7 @@ class WebServiceWorkerRequestPrivate
   WebURLRequest::RequestContext request_context_;
   WebURLRequest::FrameType frame_type_;
   WebString integrity_;
+  bool keepalive_ = false;
   WebString client_id_;
   bool is_reload_;
 };
@@ -60,6 +61,10 @@ void WebServiceWorkerRequest::SetURL(const WebURL& url) {
 
 const WebString& WebServiceWorkerRequest::Integrity() const {
   return private_->integrity_;
+}
+
+bool WebServiceWorkerRequest::Keepalive() const {
+  return private_->keepalive_;
 }
 
 const WebURL& WebServiceWorkerRequest::Url() const {
@@ -170,6 +175,10 @@ void WebServiceWorkerRequest::SetCredentialsMode(
 
 void WebServiceWorkerRequest::SetIntegrity(const WebString& integrity) {
   private_->integrity_ = integrity;
+}
+
+void WebServiceWorkerRequest::SetKeepalive(bool keepalive) {
+  private_->keepalive_ = keepalive;
 }
 
 WebURLRequest::FetchCredentialsMode WebServiceWorkerRequest::CredentialsMode()

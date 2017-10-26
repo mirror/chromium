@@ -63,6 +63,7 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
       FetchCredentialsMode credentials_mode,
       FetchRedirectMode redirect_mode,
       const std::string& integrity,
+      bool keepalive,
       ResourceType resource_type,
       RequestContextType request_context_type,
       RequestContextFrameType frame_type,
@@ -94,6 +95,7 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
       FetchCredentialsMode credentials_mode,
       FetchRedirectMode redirect_mode,
       const std::string& integrity,
+      bool keepalive,
       ResourceType resource_type,
       RequestContextType request_context_type,
       RequestContextFrameType frame_type,
@@ -129,6 +131,7 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
   FetchCredentialsMode credentials_mode_;
   FetchRedirectMode redirect_mode_;
   std::string integrity_;
+  const bool keepalive_;
   RequestContextType request_context_type_;
   RequestContextFrameType frame_type_;
   scoped_refptr<ResourceRequestBody> body_;

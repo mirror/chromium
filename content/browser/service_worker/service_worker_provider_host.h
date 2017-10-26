@@ -224,6 +224,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
       FetchCredentialsMode credentials_mode,
       FetchRedirectMode redirect_mode,
       const std::string& integrity,
+      bool keepalive,
       ResourceType resource_type,
       RequestContextType request_context_type,
       RequestContextFrameType frame_type,

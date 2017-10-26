@@ -492,6 +492,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   out->SetCacheMode(cache_mode);
   out->SetRedirectMode(redirectMode);
   out->SetIntegrity(integrity);
+  out->SetKeepalive(data.keepalive());
   out->SetClientId(clientId);
   out->SetIsReload(data.is_reload());
   return true;

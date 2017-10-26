@@ -113,6 +113,10 @@ function handleIntegrity(event) {
   event.respondWith(new Response(event.request.integrity));
 }
 
+function handleKeepalive(event) {
+  event.respondWith(new Response(event.request.keepalive));
+}
+
 function handleHeaders(event) {
   const headers = Array.from(event.request.headers);
   event.respondWith(new Response(JSON.stringify(headers)));
@@ -137,6 +141,7 @@ self.addEventListener('fetch', function(event) {
       { pattern: '?cache', fn: handleCache },
       { pattern: '?eventsource', fn: handleEventSource },
       { pattern: '?integrity', fn: handleIntegrity },
+      { pattern: '?keepalive', fn: handleKeepalive },
       { pattern: '?headers', fn: handleHeaders },
     ];
 
