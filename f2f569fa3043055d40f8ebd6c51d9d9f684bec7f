@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2e252f8_dc600e8f",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-26T15:25:13Z",
+      "side": 1,
+      "message": "nit: you are calling gbm_device_is_format_supported twice? Do you need to?",
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40995d38_6b871aa7",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surface_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-26T15:25:13Z",
+      "side": 1,
+      "message": "why do we do this? Why should CreateNativePixmapFromHandle support creation of protected pixmaps?\n\nI would have expected CreateNativePixmapFromHandle to do what CreateNativePixmapForProtectedBufffer does and vice-versa?\n\nMoreover, the way that you have written this, why do we need a CreateNativePixmapForProtectedBufferHandle?\n\nPerhaps I am misunderstanding the code.",
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8553a780_d8915c2e",
+        "filename": "ui/ozone/public/surface_factory_ozone.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-26T15:25:13Z",
+      "side": 1,
+      "message": "nit: add a blank line after thie line.",
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
