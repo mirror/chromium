@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deddf202_451202f0",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-26T21:12:52Z",
+      "side": 1,
+      "message": "Does it really wait anything?",
+      "range": {
+        "startLine": 1757,
+        "startChar": 14,
+        "endLine": 1757,
+        "endChar": 47
+      },
+      "revId": "7082248067a8591d12e35a5055314ad07ed11c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8671ebb3_c615df88",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1764,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-26T21:12:52Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1764,
+        "startChar": 14,
+        "endLine": 1764,
+        "endChar": 41
+      },
+      "revId": "7082248067a8591d12e35a5055314ad07ed11c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
