@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d6f3c6a_b3ffff4f",
+        "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T19:34:06Z",
+      "side": 1,
+      "message": "Please remove.",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 36
+      },
+      "revId": "85ca85dfbb13cf34e6504f40aee6ca2484c47c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37ebd8a_b3a64ce5",
+        "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T19:34:06Z",
+      "side": 1,
+      "message": "nit: use size_t or unsigned int.",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 6
+      },
+      "revId": "85ca85dfbb13cf34e6504f40aee6ca2484c47c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008e8d6e_549834d9",
+        "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T19:34:06Z",
+      "side": 1,
+      "message": "Please remove.",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 48
+      },
+      "revId": "85ca85dfbb13cf34e6504f40aee6ca2484c47c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
