@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "4f394448_8973b13b",
+        "filename": "components/optimization_guide/optimization_hints_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-10-26T22:30:38Z",
+      "side": 1,
+      "message": "your points make sense.  \n\nactually talking with doug a little bit ago, seems like he hasn\u0027t gotten all the details ironed out. i\u0027ll work on hooking this part up with my component installer cl while he\u0027s out. so i guess hold off on this one until then. thanks!",
+      "parentUuid": "901d776b_15d0d147",
+      "revId": "067d6d63685d05229e6047384b35633d29456317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70194b65_50c24555",
         "filename": "components/optimization_guide/optimization_hints_reader.h",
         "patchSetId": 4
