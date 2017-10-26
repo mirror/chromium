@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
 /**
  * Imports bookmarks from partner content provider using the private provider API.
  */
-public class PartnerBookmarksProviderIterator implements PartnerBookmarksReader.BookmarkIterator {
+public class PartnerBookmarksProviderIterator implements PartnerBookmark.BookmarkIterator {
     private static final String TAG = "cr_PartnerBookmarks";
     private static final String PROVIDER_AUTHORITY = "com.android.partnerbookmarks";
     private static final Uri CONTENT_URI = new Uri.Builder()
@@ -80,11 +80,6 @@ public class PartnerBookmarksProviderIterator implements PartnerBookmarksReader.
     }
 
     @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void close() {
         if (mCursor == null) throw new IllegalStateException();
         mCursor.close();
@@ -101,11 +96,11 @@ public class PartnerBookmarksProviderIterator implements PartnerBookmarksReader.
     }
 
     @Override
-    public PartnerBookmarksReader.Bookmark next() {
+    public PartnerBookmark next() {
         if (mCursor == null) throw new IllegalStateException();
         if (!mCursor.moveToNext()) throw new NoSuchElementException();
 
-        PartnerBookmarksReader.Bookmark bookmark = new PartnerBookmarksReader.Bookmark();
+        PartnerBookmark bookmark = new PartnerBookmark();
         try {
             bookmark.mId = mCursor.getLong(mCursor.getColumnIndexOrThrow(BOOKMARKS_COLUMN_ID));
             // The container folder should not be among the results.

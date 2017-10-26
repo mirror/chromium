@@ -31,6 +31,8 @@ import org.chromium.chrome.browser.multiwindow.MultiWindowUtils;
 import org.chromium.chrome.browser.net.qualityprovider.ExternalEstimateProviderAndroid;
 import org.chromium.chrome.browser.offlinepages.CCTRequestStatus;
 import org.chromium.chrome.browser.omaha.RequestGenerator;
+import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmark;
+import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmarksProviderIterator;
 import org.chromium.chrome.browser.physicalweb.PhysicalWebBleClient;
 import org.chromium.chrome.browser.policy.PolicyAuditor;
 import org.chromium.chrome.browser.preferences.LocationSettings;
@@ -310,5 +312,10 @@ public abstract class AppHooks {
      */
     public List<String> getOfflinePagesCctWhitelist() {
         return Collections.emptyList();
+    }
+
+    public PartnerBookmark.BookmarkIterator getBookmarkIterator() {
+        return PartnerBookmarksProviderIterator.createIfAvailable(
+                ContextUtils.getApplicationContext().getContentResolver());
     }
 }
