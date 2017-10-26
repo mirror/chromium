@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98824856_a2f36707",
+        "filename": "chrome/browser/vr/elements/linear_layout_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-26T19:27:56Z",
+      "side": 1,
+      "message": "Ian, two notes:\n- I don\u0027t think we need to repeat the thoroughness of the above test in all 4 directions, hence a simpler test body to ensure correct direction.\n- Parameterizing this results in more lines of code.",
+      "revId": "6d507d2b1b08668dceb35e624c7eeb06925d044b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
