@@ -36,6 +36,7 @@ source_set("ntp_header") {
     "//ios/chrome/browser/ui/toolbar",
     "//ios/chrome/browser/ui/toolbar:resource_macros",
     "//ios/chrome/browser/ui/toolbar:toolbar_base_feature",
+    "//ios/chrome/browser/ui/toolbar:toolbar_external",
     "//ios/chrome/common",
     "//ui/base",
   ]

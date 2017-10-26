@@ -13,8 +13,6 @@ source_set("toolbar") {
     "toolbar_controller+protected.h",
     "toolbar_controller.h",
     "toolbar_controller.mm",
-    "toolbar_controller_constants.h",
-    "toolbar_controller_constants.mm",
     "toolbar_coordinator.h",
     "toolbar_coordinator.mm",
     "toolbar_frame_delegate.h",
@@ -32,13 +30,12 @@ source_set("toolbar") {
     "tools_menu_button_observer_bridge.mm",
     "web_toolbar_controller.h",
     "web_toolbar_controller.mm",
-    "web_toolbar_controller_constants.h",
-    "web_toolbar_controller_constants.mm",
     "web_toolbar_delegate.h",
   ]
   deps = [
     ":resource_macros",
     ":toolbar_base_feature",
+    ":toolbar_external",
     "resources:collapse",
     "resources:collapse_incognito",
     "resources:collapse_pressed",
@@ -98,7 +95,6 @@ source_set("toolbar") {
     "//ios/web",
     "//net",
     "//ui/base",
-    "//ui/gfx",
 
     # Fake dependencies to break cycles
     "//ios/chrome/browser/ui/ntp",
@@ -114,6 +110,20 @@ source_set("toolbar") {
   libs = [
     "CoreLocation.framework",
     "UIKit.framework",
+  ]
+}
+
+source_set("toolbar_external") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "toolbar_controller_constants.h",
+    "toolbar_controller_constants.mm",
+    "web_toolbar_controller_constants.h",
+    "web_toolbar_controller_constants.mm",
+  ]
+  deps = [
+    "//base",
+    "//ios/chrome/browser/ui",
   ]
 }
 
