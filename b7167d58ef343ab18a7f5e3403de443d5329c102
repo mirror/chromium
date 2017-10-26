@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac6951bb_df33ec8c",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-26T17:39:25Z",
+      "side": 1,
+      "message": "At this point ;-)",
+      "parentUuid": "6383aaba_16578dff",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 2
+      },
+      "revId": "b7167d58ef343ab18a7f5e3403de443d5329c102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b9c094f_abc6d0e3",
         "filename": "components/feature_engagement/internal/tracker_impl.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "b7167d58ef343ab18a7f5e3403de443d5329c102",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4713a433_2b672d00",
+        "filename": "components/feature_engagement/internal/tracker_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-26T17:39:25Z",
+      "side": 1,
+      "message": "Yeah, it is unrelated to this CL kind of, but it was missing for the std::unique_ptr\u003c\u003e usage below so while I was editing this file I thought I\u0027d fix it.",
+      "parentUuid": "1b9c094f_abc6d0e3",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "b7167d58ef343ab18a7f5e3403de443d5329c102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
