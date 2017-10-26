@@ -4,10 +4,11 @@ Tests V8 cache information of Service Worker Cache Storage in timeline
 v8.compile Properties:
 {
     data : {
-        cacheProduceOptions : "code"
+        cacheConsumeOptions : "code"
+        cacheRejected : false
         columnNumber : <number>
+        consumedCacheSize : <number>
         lineNumber : <number>
-        producedCacheSize : <number>
         streamed : <boolean>
         url : .../devtools/service-workers/resources/v8-cache-script.js
     }
