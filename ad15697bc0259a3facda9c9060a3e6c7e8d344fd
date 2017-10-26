@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad14ae85_b07b7ff5",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-26T02:00:37Z",
+      "side": 1,
+      "message": "Nit: perhaps explicitly comment that you don\u0027t wait for a service worker if it doesn\u0027t exist.",
+      "range": {
+        "startLine": 583,
+        "startChar": 7,
+        "endLine": 583,
+        "endChar": 11
+      },
+      "revId": "ad15697bc0259a3facda9c9060a3e6c7e8d344fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7fdf9d_fd2fcb9f",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-26T02:00:37Z",
+      "side": 1,
+      "message": "Nit: clarify that this is adding to the list of icons to download, while line 631 is adding the primary icon to the final list of downloaded icons.",
+      "range": {
+        "startLine": 620,
+        "startChar": 5,
+        "endLine": 620,
+        "endChar": 42
+      },
+      "revId": "ad15697bc0259a3facda9c9060a3e6c7e8d344fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
