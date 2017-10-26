@@ -38,9 +38,8 @@ AcceleratedWidgetMac::AcceleratedWidgetMac() : view_(nullptr) {
   // Disable the fade-in animation as the layers are added.
   ScopedCAActionDisabler disabler;
 
-  // Add a flipped transparent layer as a child, so that we don't need to
-  // fiddle with the position of sub-layers -- they will always be at the
-  // origin.
+  // Add a flipped layer so that we don't need to fiddle with the position of
+  // sub-layers — they will always be at the origin.
   flipped_layer_.reset([[CALayer alloc] init]);
   [flipped_layer_ setGeometryFlipped:YES];
   [flipped_layer_ setAnchorPoint:CGPointMake(0, 0)];
@@ -95,10 +94,9 @@ void AcceleratedWidgetMac::ResetNSView() {
   // Disable the fade-out animation as the view is removed.
   ScopedCAActionDisabler disabler;
 
+  [flipped_layer_ setSublayers:nil];
   [flipped_layer_ removeFromSuperlayer];
-  [content_layer_ removeFromSuperlayer];
   [io_surface_layer_ removeFromSuperlayer];
-  content_layer_.reset();
   io_surface_layer_.reset();
 
   last_swap_size_dip_ = gfx::Size();
@@ -164,33 +162,26 @@ void AcceleratedWidgetMac::GotCALayerFrame(
   }
   ScopedCAActionDisabler disabler;
   last_swap_size_dip_ = gfx::ConvertSizeToDIP(scale_factor, pixel_size);
-  if (fullscreen_low_power_layer_valid)
+  CALayer* flipped_layer = flipped_layer_.get();
+
+  if (fslp_coordinator_) {
+    if (![fullscreen_low_power_layer superlayer])
+      [fslp_flipped_layer_ setSublayers:@[ fullscreen_low_power_layer ]];
     [fslp_flipped_layer_ setFrame:gfx::Rect(last_swap_size_dip_).ToCGRect()];
-
-  // Ensure that the content is in the CALayer hierarchy, and update fullscreen
-  // low power state.
-  if (content_layer_ != content_layer) {
-    [flipped_layer_ addSublayer:content_layer];
-    [content_layer_ removeFromSuperlayer];
-    content_layer_ = content_layer;
-  }
-  if (fullscreen_low_power_layer_ != fullscreen_low_power_layer) {
-    if (fslp_coordinator_) {
-      fslp_coordinator_->WillLoseAcceleratedWidget();
-      DCHECK(!fslp_coordinator_);
-    }
-    [fslp_flipped_layer_ addSublayer:fullscreen_low_power_layer];
-    [fullscreen_low_power_layer_ removeFromSuperlayer];
-    fullscreen_low_power_layer_ = fullscreen_low_power_layer;
-  }
-  if (fslp_coordinator_)
     fslp_coordinator_->SetLowPowerLayerValid(fullscreen_low_power_layer_valid);
-
-  // Ensure the IOSurface is removed.
-  if (io_surface_layer_) {
-    [io_surface_layer_ removeFromSuperlayer];
-    io_surface_layer_.reset();
+  } else if (fullscreen_low_power_layer_valid) {
+    if (![fullscreen_low_power_layer superlayer]) {
+      flipped_layer.backgroundColor = CGColorGetConstantColor(kCGColorBlack);
+      flipped_layer.sublayers = @[ fullscreen_low_power_layer ];
+    }
+  } else {
+    if (![content_layer superlayer]) {
+      flipped_layer.backgroundColor = nil;
+      flipped_layer.sublayers = @[ content_layer ];
+    }
   }
+
+  io_surface_layer_.reset();
   view_->AcceleratedWidgetSwapCompleted();
 }
 
@@ -211,7 +202,8 @@ void AcceleratedWidgetMac::GotIOSurfaceFrame(
     io_surface_layer_.reset([[CALayer alloc] init]);
     [io_surface_layer_ setContentsGravity:kCAGravityTopLeft];
     [io_surface_layer_ setAnchorPoint:CGPointMake(0, 0)];
-    [flipped_layer_ addSublayer:io_surface_layer_];
+    [flipped_layer_ setBackgroundColor:nil];
+    [flipped_layer_ setSublayers:@[ io_surface_layer_ ]];
   }
   id new_contents = static_cast<id>(io_surface.get());
   if (new_contents && new_contents == [io_surface_layer_ contents])
@@ -223,11 +215,6 @@ void AcceleratedWidgetMac::GotIOSurfaceFrame(
   if ([io_surface_layer_ contentsScale] != scale_factor)
     [io_surface_layer_ setContentsScale:scale_factor];
 
-  // Ensure that the content layer is removed.
-  if (content_layer_) {
-    [content_layer_ removeFromSuperlayer];
-    content_layer_.reset();
-  }
   view_->AcceleratedWidgetSwapCompleted();
 }
 
