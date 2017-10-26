@@ -1970,19 +1970,8 @@ void WebContentsImpl::RenderWidgetWasResized(
   GetScreenInfo(&screen_info);
   SendPageMessage(new PageMsg_UpdateScreenInfo(MSG_ROUTING_NONE, screen_info));
 
-  // Send resize message to subframes.
-  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree()) {
-    if (view != rfh->GetView())
-      view->GetRenderWidgetHost()->WasResized();
-  }
-
   for (auto& observer : observers_)
     observer.MainFrameWasResized(width_changed);
-}
-
-void WebContentsImpl::ScreenInfoChanged() {
-  if (browser_plugin_embedder_)
-    browser_plugin_embedder_->ScreenInfoChanged();
 }
 
 KeyboardEventProcessingResult WebContentsImpl::PreHandleKeyboardEvent(
@@ -2882,11 +2871,15 @@ void WebContentsImpl::UpdatePreferredSize(const gfx::Size& pref_size) {
 
 void WebContentsImpl::ResizeDueToAutoResize(
     RenderWidgetHostImpl* render_widget_host,
-    const gfx::Size& new_size) {
+    const gfx::Size& new_size,
+    uint64_t sequence_number) {
   if (render_widget_host != GetRenderViewHost()->GetWidget())
     return;
 
   auto_resize_size_ = new_size;
+
+  if (browser_plugin_guest_)
+    browser_plugin_guest_->ResizeDueToAutoResize(new_size, sequence_number);
 
   // Out-of-process iframe visible viewport sizes usually come from the
   // top-level RenderWidgetHostView, but when auto-resize is enabled on the
