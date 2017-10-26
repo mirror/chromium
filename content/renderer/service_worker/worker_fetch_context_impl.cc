@@ -33,7 +33,7 @@ void WorkerFetchContextImpl::InitializeOnWorkerThread(
   DCHECK(loading_task_runner->RunsTasksInCurrentSequence());
   DCHECK(!resource_dispatcher_);
   DCHECK(!binding_.is_bound());
-  resource_dispatcher_ = base::MakeUnique<ResourceDispatcher>(
+  resource_dispatcher_ = std::make_unique<ResourceDispatcher>(
       nullptr, std::move(loading_task_runner));
 
   url_loader_factory_getter_ = url_loader_factory_getter_info_.Bind();

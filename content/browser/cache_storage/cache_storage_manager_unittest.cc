@@ -340,7 +340,7 @@ class CacheStorageManagerTest : public testing::Test {
       const CacheStorageCacheQueryParams& match_params =
           CacheStorageCacheQueryParams()) {
     std::unique_ptr<ServiceWorkerFetchRequest> unique_request =
-        base::MakeUnique<ServiceWorkerFetchRequest>(request);
+        std::make_unique<ServiceWorkerFetchRequest>(request);
 
     base::RunLoop loop;
     cache_manager_->MatchCache(
@@ -367,7 +367,7 @@ class CacheStorageManagerTest : public testing::Test {
       const CacheStorageCacheQueryParams& match_params =
           CacheStorageCacheQueryParams()) {
     std::unique_ptr<ServiceWorkerFetchRequest> unique_request =
-        base::MakeUnique<ServiceWorkerFetchRequest>(request);
+        std::make_unique<ServiceWorkerFetchRequest>(request);
     base::RunLoop loop;
     cache_manager_->MatchAllCaches(
         origin, std::move(unique_request), match_params,
@@ -410,16 +410,16 @@ class CacheStorageManagerTest : public testing::Test {
     std::unique_ptr<storage::BlobDataHandle> blob_handle =
         blob_storage_context_->AddFinishedBlob(blob_data.get());
     std::unique_ptr<std::vector<GURL>> url_list =
-        base::MakeUnique<std::vector<GURL>>();
+        std::make_unique<std::vector<GURL>>();
     url_list->push_back(request.url);
     ServiceWorkerResponse response(
         std::move(url_list), status_code, "OK", response_type,
-        base::MakeUnique<ServiceWorkerHeaderMap>(response_headers),
+        std::make_unique<ServiceWorkerHeaderMap>(response_headers),
         blob_handle->uuid(), request.url.spec().size(), nullptr /* blob */,
         blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
         false /* is_in_cache_storage */,
         std::string() /* cache_storage_cache_name */,
-        base::MakeUnique<
+        std::make_unique<
             ServiceWorkerHeaderList>() /* cors_exposed_header_names */);
 
     CacheStorageBatchOperation operation;

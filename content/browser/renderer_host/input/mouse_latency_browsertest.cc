@@ -110,7 +110,7 @@ class MouseLatencyBrowserTest : public ContentBrowserTest {
                        base::Unretained(this)));
 
     // Runs until we get the OnSyntheticGestureCompleted callback
-    runner_ = base::MakeUnique<base::RunLoop>();
+    runner_ = std::make_unique<base::RunLoop>();
     runner_->Run();
   }
 
@@ -133,7 +133,7 @@ class MouseLatencyBrowserTest : public ContentBrowserTest {
                        base::Unretained(this)));
 
     // Runs until we get the OnSyntheticGestureCompleted callback
-    runner_ = base::MakeUnique<base::RunLoop>();
+    runner_ = std::make_unique<base::RunLoop>();
     runner_->Run();
   }
 
@@ -163,7 +163,7 @@ class MouseLatencyBrowserTest : public ContentBrowserTest {
 
     // Runs until we get the OnTraceDataCollected callback, which populates
     // trace_data_;
-    runner_ = base::MakeUnique<base::RunLoop>();
+    runner_ = std::make_unique<base::RunLoop>();
     runner_->Run();
     return trace_data_;
   }
