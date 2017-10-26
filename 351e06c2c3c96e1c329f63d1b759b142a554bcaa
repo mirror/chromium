@@ -87,6 +87,24 @@
       "revId": "351e06c2c3c96e1c329f63d1b759b142a554bcaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eec3aad_a54e8df0",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-26T14:45:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4a8eadc2_5a15cbe7",
+      "revId": "351e06c2c3c96e1c329f63d1b759b142a554bcaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
