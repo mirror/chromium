@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ad2ef085_d0041fbd",
+        "filename": "services/ui/service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T14:32:38Z",
+      "side": 1,
+      "message": "How come you need to clone this rather than using context()-\u003econnector() on line 282?",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 33
+      },
+      "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a66d8b_5eea85a1",
+        "filename": "services/ui/ws/gpu_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T14:32:38Z",
+      "side": 1,
+      "message": "Could you instead key of enable-viz?",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 52
+      },
+      "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "820db5b8_7d869213",
         "filename": "services/viz/manifest.json",
         "patchSetId": 15
@@ -13,6 +59,24 @@
       "writtenOn": "2017-10-26T07:06:18Z",
       "side": 1,
       "message": "This is deliberate at the moment. Once the sandboxing code is out of content [1], we would be using that code from GpuSandboxHelper [2] to get into the sandbox. So service-manager would not be involved in entering the sandbox, but the viz service itself would do that (like chrome-gpu process does right now).\n\n[1] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d708738\n[2] https://cs.chromium.org/chromium/src/gpu/ipc/service/gpu_init.h?l\u003d22",
+      "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cbd21d3_c6055610",
+        "filename": "services/viz/manifest.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T14:32:38Z",
+      "side": 1,
+      "message": "We made it so you can have comments in these files. So, how about adding a comment to this effect here?",
+      "parentUuid": "820db5b8_7d869213",
       "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
