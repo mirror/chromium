@@ -5,6 +5,9 @@
 package org.chromium.chrome.browser.contextualsearch;
 
 import static org.chromium.base.test.util.Restriction.RESTRICTION_TYPE_NON_LOW_END_DEVICE;
+import static org.chromium.chrome.browser.multiwindow.MultiWindowTestUtils.moveActivityToFront;
+import static org.chromium.chrome.browser.multiwindow.MultiWindowTestUtils.waitForSecondChromeTabbedActivity;
+import static org.chromium.chrome.browser.multiwindow.MultiWindowTestUtils.waitForTabs;
 import static org.chromium.content.browser.test.util.CriteriaHelper.DEFAULT_POLLING_INTERVAL;
 
 import android.app.Activity;
@@ -45,6 +48,7 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
+import org.chromium.chrome.browser.ChromeTabbedActivity2;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayContentDelegate;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayContentProgressObserver;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.PanelState;
@@ -674,8 +678,8 @@ public class ContextualSearchManagerTest {
      */
     private void assertContainsParameters(String searchTerm, String alternateTerm) {
         Assert.assertTrue(mFakeServer.getSearchTermRequested() == null
-                || mFakeServer.getLoadedUrl().contains(searchTerm)
-                        && mFakeServer.getLoadedUrl().contains(alternateTerm));
+                || (mFakeServer.getLoadedUrl().contains(searchTerm)
+                           && mFakeServer.getLoadedUrl().contains(alternateTerm)));
     }
 
     /**
@@ -3353,5 +3357,38 @@ public class ContextualSearchManagerTest {
         assertValueIs1or2(observer.getShowCount());
         Assert.assertEquals(1, observer.getHideCount());
         mManager.removeObserver(observer);
+    }
+
+    /**
+     * Tests Tab reparenting.  When a tab moves from one activity to another the
+     * ContextualSearchTabHelper should detect the change and handle gestures for it too.  This
+     * happens with multiwindow modes.
+     */
+    @Test
+    @SmallTest
+    @Feature({"ContextualSearch"})
+    public void testTabReparenting() throws InterruptedException, TimeoutException {
+        // Move our "tap_test" tab to another activity.
+        final ChromeActivity ca = mActivityTestRule.getActivity();
+        int testTabId = ca.getActivityTab().getId();
+        MenuUtils.invokeCustomMenuActionSync(InstrumentationRegistry.getInstrumentation(), ca,
+                R.id.move_to_other_window_menu_id);
+
+        // Wait for the second activity to start up and be ready for interaction.
+        final ChromeTabbedActivity2 activity2 = waitForSecondChromeTabbedActivity();
+        waitForTabs("CTA2", activity2, 1, testTabId);
+        moveActivityToFront(activity2);
+
+        // Tap on a word and wait for the selection to be established.
+        DOMUtils.clickNode(activity2.getActivityTab().getContentViewCore(), "search");
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                String selection = activity2.getContextualSearchManager()
+                                           .getSelectionController()
+                                           .getSelectedText();
+                return selection != null && selection.equals("Search");
+            }
+        });
     }
 }

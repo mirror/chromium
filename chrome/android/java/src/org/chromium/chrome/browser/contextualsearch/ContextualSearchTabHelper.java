@@ -30,19 +30,16 @@ public class ContextualSearchTabHelper
     /** The Tab that this helper tracks. */
     private final Tab mTab;
 
-    /**
-     * Notification handler for Contextual Search events.
-     */
+    /** Notification handler for Contextual Search events. */
     private TemplateUrlServiceObserver mTemplateUrlObserver;
 
-    /**
-     * The current ContentViewCore for the Tab which this helper is monitoring.
-     */
+    /** The current ContentViewCore for the Tab which this helper is monitoring. */
     private ContentViewCore mBaseContentViewCore;
 
-    /**
-     * The GestureListener used for handling events from the current ContentViewCore.
-     */
+    /** The {@link ContextualSearchManager} that's managing this tab. */
+    private ContextualSearchManager mContextualSearchManager;
+
+    /** The GestureListener used for handling events from the current ContentViewCore. */
     private GestureStateListener mGestureStateListener;
 
     /**
@@ -80,7 +77,7 @@ public class ContextualSearchTabHelper
     @Override
     public void onPageLoadStarted(Tab tab, String url) {
         updateHooksForNewContentViewCore(tab);
-        ContextualSearchManager manager = getContextualSearchManager();
+        ContextualSearchManager manager = getContextualSearchManager(tab);
         if (manager != null) manager.onBasePageLoadStarted();
     }
 
@@ -123,13 +120,14 @@ public class ContextualSearchTabHelper
         }
         removeContextualSearchHooks(mBaseContentViewCore);
         mBaseContentViewCore = null;
+        mContextualSearchManager = null;
         mSelectionClientManager = null;
         mGestureStateListener = null;
     }
 
     @Override
     public void onToggleFullscreenMode(Tab tab, boolean enable) {
-        ContextualSearchManager manager = getContextualSearchManager();
+        ContextualSearchManager manager = getContextualSearchManager(tab);
         if (manager != null) {
             manager.hideContextualSearch(StateChangeReason.UNKNOWN);
         }
@@ -142,7 +140,7 @@ public class ContextualSearchTabHelper
 
     @Override
     public void onContextMenuShown(Tab tab, ContextMenu menu) {
-        ContextualSearchManager manager = getContextualSearchManager();
+        ContextualSearchManager manager = getContextualSearchManager(tab);
         if (manager != null) {
             manager.onContextMenuShown();
         }
@@ -168,12 +166,15 @@ public class ContextualSearchTabHelper
      */
     private void updateHooksForNewContentViewCore(Tab tab) {
         ContentViewCore currentContentViewCore = tab.getActiveContentViewCore();
-        if (currentContentViewCore != mBaseContentViewCore) {
+        if (currentContentViewCore != mBaseContentViewCore
+                || mContextualSearchManager != getContextualSearchManager(tab)) {
             removeContextualSearchHooks(mBaseContentViewCore);
             mBaseContentViewCore = currentContentViewCore;
             if (mBaseContentViewCore != null) {
+                mContextualSearchManager = getContextualSearchManager(tab);
                 mSelectionClientManager = new SelectionClientManager(mBaseContentViewCore);
             } else {
+                mContextualSearchManager = null;
                 mSelectionClientManager = null;
             }
             updateContextualSearchHooks(mBaseContentViewCore);
@@ -201,7 +202,7 @@ public class ContextualSearchTabHelper
      * @param cvc The content view core to attach the gesture state listener to.
      */
     private void addContextualSearchHooks(ContentViewCore cvc) {
-        ContextualSearchManager contextualSearchManager = getContextualSearchManager();
+        ContextualSearchManager contextualSearchManager = getContextualSearchManager(mTab);
         if (mGestureStateListener == null && contextualSearchManager != null) {
             mGestureStateListener = contextualSearchManager.getGestureStateListener();
             cvc.addGestureStateListener(mGestureStateListener);
@@ -234,7 +235,8 @@ public class ContextualSearchTabHelper
      * @return whether Contextual Search is enabled and active in this tab.
      */
     private boolean isContextualSearchActive(ContentViewCore cvc) {
-        ContextualSearchManager manager = getContextualSearchManager();
+        assert mTab.getContentViewCore() == cvc;
+        ContextualSearchManager manager = getContextualSearchManager(mTab);
         if (manager == null) return false;
 
         return !cvc.getWebContents().isIncognito()
@@ -260,10 +262,12 @@ public class ContextualSearchTabHelper
     }
 
     /**
-     * @return the Contextual Search manager.
+     * Gets the {@link ContextualSearchManager} associated with the given tab's activity.
+     * @param tab The {@link Tab} that we're getting the manager for.
+     * @return The Contextual Search manager controlling that Tab.
      */
-    private ContextualSearchManager getContextualSearchManager() {
-        Activity activity = mTab.getWindowAndroid().getActivity().get();
+    private ContextualSearchManager getContextualSearchManager(Tab tab) {
+        Activity activity = tab.getWindowAndroid().getActivity().get();
         if (activity instanceof ChromeActivity) {
             return ((ChromeActivity) activity).getContextualSearchManager();
         }
@@ -275,10 +279,10 @@ public class ContextualSearchTabHelper
     // ============================================================================================
 
     @CalledByNative
-    private void onContextualSearchPrefChanged() {
+    void onContextualSearchPrefChanged() {
         updateContextualSearchHooks(mBaseContentViewCore);
 
-        ContextualSearchManager manager = getContextualSearchManager();
+        ContextualSearchManager manager = getContextualSearchManager(mTab);
         if (manager != null) {
             boolean isEnabled = !PrefServiceBridge.getInstance().isContextualSearchDisabled()
                     && !PrefServiceBridge.getInstance().isContextualSearchUninitialized();
