@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f8d223b_e2f0db87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-26T03:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "304eab5d_c723038a",
+      "revId": "87f15d68b850c33d361c96b54fb57bb3a321d880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e42fbb05_0b21ed35",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T03:11:15Z",
       "side": 1,
       "message": "Do you think the backgroundClip and clip RLS / non-RLS difference in json layer dumps will be a maintenance burden? Would it be possible to change LayoutTreeAsText in the non-RLS case so it better reflects what the user sees, and so it matches RLS?",
+      "revId": "87f15d68b850c33d361c96b54fb57bb3a321d880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886651d8_055f6ae3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-26T03:26:48Z",
+      "side": 1,
+      "message": "\u003e Do you think the backgroundClip and clip RLS / non-RLS difference in json layer dumps will be a maintenance burden? Would it be possible to change LayoutTreeAsText in the non-RLS case so it better reflects what the user sees, and so it matches RLS?\n\nI think it\u0027s probably not worth doing this, given that we need RLS baselines anyway due to the layer positions.",
+      "parentUuid": "e42fbb05_0b21ed35",
       "revId": "87f15d68b850c33d361c96b54fb57bb3a321d880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "079514b3_6c549d06",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-26T03:26:48Z",
+      "side": 1,
+      "message": "\u003e From the diffs it looks like RLS has flattenInheritedTransform\u003dfalse but non-RLS does not--is that true? Or is it just the JSON output that\u0027s different?\n\nCorrect, it\u0027s not just the JSON output.  Everything I know is in crbug.com/778060.  We\u0027ve landed a bunch of RLS baselines with this diff already.",
+      "parentUuid": "a31c6459_90706c78",
+      "revId": "87f15d68b850c33d361c96b54fb57bb3a321d880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfc1d059_db142077",
         "filename": "third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/compositing/force-compositing-mode/overflow-iframe-layer-expected.txt",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-26T03:11:15Z",
       "side": 1,
       "message": "What is this non-drawing layer from?",
+      "revId": "87f15d68b850c33d361c96b54fb57bb3a321d880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9f697e_500a8136",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/compositing/force-compositing-mode/overflow-iframe-layer-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-26T03:26:48Z",
+      "side": 1,
+      "message": "\u003e What is this non-drawing layer from?\n\nThis is CLM\u0027s container for scrollbar layers.  It replaces PLC\u0027s \"Frame Overflow Controls Host Layer\".\n\n(\"Composited scrolling layers\" in commit message encompasses scroll layer, scrolling contents layer, overflow controls host layer, horizontal scrollbar layer, and vertical scrollbar layer in CLM, all replacing \"Frame ...\" equivalents in PLC.)",
+      "parentUuid": "dfc1d059_db142077",
       "revId": "87f15d68b850c33d361c96b54fb57bb3a321d880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
