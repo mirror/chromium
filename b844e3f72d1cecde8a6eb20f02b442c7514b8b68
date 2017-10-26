@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f0a01d4_8c90f9f1",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-26T18:45:49Z",
+      "side": 1,
+      "message": "Let\u0027s add\n\u003clink rel\u003d\"import\" href\u003d\"chrome://resources/polymer/v1_0/iron-icon/iron-icon.html\"\u003e\nsince we should be explicitly including our direct dependencies.",
+      "revId": "b844e3f72d1cecde8a6eb20f02b442c7514b8b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a354e7fb_61954ccf",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-26T18:45:49Z",
+      "side": 1,
+      "message": "You probably need to rebase. This was fixed at https://chromium-review.googlesource.com/c/chromium/src/+/734861.",
+      "revId": "b844e3f72d1cecde8a6eb20f02b442c7514b8b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
