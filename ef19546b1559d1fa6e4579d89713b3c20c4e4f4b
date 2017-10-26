@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "733e2fb4_0362ac4d",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T15:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e9de82b_5cd0e59c",
+      "range": {
+        "startLine": 253,
+        "startChar": 17,
+        "endLine": 253,
+        "endChar": 27
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77cca6e4_1758bd87",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d3c4db_f9bab06b",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T15:57:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "77cca6e4_1758bd87",
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "81b30dc3_bc885912",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T15:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcf36221_04603d6c",
+      "range": {
+        "startLine": 267,
+        "startChar": 27,
+        "endLine": 267,
+        "endChar": 33
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af63affa_ef65ea18",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2017-10-26T00:54:40Z",
       "side": 1,
       "message": "nit: Isn\u0027t |cellular_device| guaranteed to be non-null if state !\u003d TECHNOLOGY_UNAVAILABLE? Should this be a DCHECK()?",
+      "range": {
+        "startLine": 301,
+        "startChar": 11,
+        "endLine": 301,
+        "endChar": 26
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec0ae01_dcf0dd40",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T15:57:28Z",
+      "side": 1,
+      "message": "No, it is not. An uninitialized Cellular modem may not immediately have a Device object. Even if it does they come from different properties so there may be a frame where the technology state and object state do not match.",
+      "parentUuid": "af63affa_ef65ea18",
       "range": {
         "startLine": 301,
         "startChar": 11,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "67c0f6a0_fe11271c",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T15:57:28Z",
+      "side": 1,
+      "message": "Wehn none of the above are true? Initialized with an unlocked SIM and not scanning.",
+      "parentUuid": "6fd0d5a7_64c245c2",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 54
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c27722ef_0a2e1006",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 1
@@ -122,6 +236,30 @@
       "writtenOn": "2017-10-26T00:54:40Z",
       "side": 1,
       "message": "I don\u0027t understand why we show these Tether-related subtitles if the first Mobile network is the default Cellular network. Maybe I\u0027m misunderstanding what the default Cellular network is - can you explain? A comment would also be helpful here for future readers.",
+      "range": {
+        "startLine": 314,
+        "startChar": 47,
+        "endLine": 314,
+        "endChar": 66
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c810d48d_235420df",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T15:57:28Z",
+      "side": 1,
+      "message": "I\u0027ll add to the comment below referring readers to the comments in NSH.h. Basically we create a default cellular network when there is no Shill Service. This can occur e.g. when no Cellular networks are in range.\n\nIn that case, the user may want to enable Tether.",
+      "parentUuid": "c27722ef_0a2e1006",
       "range": {
         "startLine": 314,
         "startChar": 47,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "86504d8e_faf120c0",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T15:57:28Z",
+      "side": 1,
+      "message": "Good catch, this was supposed to be false / true.",
+      "parentUuid": "4d81c05d_cf4a772a",
+      "range": {
+        "startLine": 338,
+        "startChar": 8,
+        "endLine": 338,
+        "endChar": 70
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7df14e00_b8409515",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 1
@@ -168,6 +330,30 @@
       "writtenOn": "2017-10-26T00:54:40Z",
       "side": 1,
       "message": "AFAIK, the UX designers do not want any Cellular initialization subtitle if Cellular is unavailable. Can you double-check with elizabethchiu@ and/or shibasheikh@?",
+      "range": {
+        "startLine": 339,
+        "startChar": 20,
+        "endLine": 339,
+        "endChar": 61
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9adfd604_c7b21367",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T15:57:28Z",
+      "side": 1,
+      "message": "The text here is just \u0027Initializing...\u0027. (We can rename the string later, but we may want to merge this to 63; I\u0027ll add a comment).\n\nThe current behavior is to continue to show IDS_ASH_STATUS_TRAY_ENABLE_BLUETOOTH or IDS_ASH_STATUS_TRAY_ENABLING_MOBILE_ENABLES_BLUETOOTH, which seems less helpful to me. I\u0027ll show Elizabeth or Alan when I have a chance to confirm, but trying to explain the exact contex can be... challenging.",
+      "parentUuid": "7df14e00_b8409515",
       "range": {
         "startLine": 339,
         "startChar": 20,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "304e5b48_5f13b31f",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T15:57:28Z",
+      "side": 1,
+      "message": "Actually this is expected when we have enabled bletooth instead of Tether (this was in OnBluetoothSuccess() before but this was the only place to call that so I inlined it). I\u0027ll add a comment and separate this if from the timer \u0027if\u0027 (which might actually have expired in an edge case, now that I think about it).",
+      "parentUuid": "f793f388_21089474",
+      "range": {
+        "startLine": 354,
+        "startChar": 6,
+        "endLine": 354,
+        "endChar": 28
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3f27532_198bbbe5",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 1
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "293df6e2_5eabd328",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T15:57:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3f27532_198bbbe5",
+      "range": {
+        "startLine": 356,
+        "startChar": 19,
+        "endLine": 356,
+        "endChar": 60
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c60586_c09adb68",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 1
@@ -246,6 +480,30 @@
       "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22251b56_d647c9c5",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T15:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37c60586_c09adb68",
+      "range": {
+        "startLine": 399,
+        "startChar": 7,
+        "endLine": 399,
+        "endChar": 37
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
