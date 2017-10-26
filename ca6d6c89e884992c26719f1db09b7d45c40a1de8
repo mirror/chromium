@@ -34,6 +34,24 @@
       "revId": "ca6d6c89e884992c26719f1db09b7d45c40a1de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b0101c_eabebe22",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 3602,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-10-26T11:35:46Z",
+      "side": 1,
+      "message": "\u003crant\u003eIf I were king of the universe, every folder with an OWNERS file would have its own BUILD file and BUILD files would fit on the side of a box of cereals\u003c/rant\u003e",
+      "parentUuid": "b7ac69d6_b6874d69",
+      "revId": "ca6d6c89e884992c26719f1db09b7d45c40a1de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
