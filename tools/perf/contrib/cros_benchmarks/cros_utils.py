@@ -10,6 +10,7 @@ import subprocess
 import py_utils
 
 from telemetry.core import exceptions
+from telemetry.core import cros_interface
 from telemetry.value import histogram_util
 
 
@@ -17,10 +18,29 @@ def _RunRemoteCommand(dut_ip, cmd):
   return os.system('ssh root@%s %s' % (dut_ip, cmd))
 
 
-def _GetTabSwitchHistogram(browser):
-  """Gets MPArch.RWH_TabSwitchPaintDuration histogram.
+def _GetCommandOutput(dut_ip, cmd):
+  args = ['ssh', 'root@'+dut_ip] + cmd.split()
+  return cros_interface.GetAllCmdOutput(args)[0]
+
+
+def _GetHistogram(tab, histogram_name):
+  """Gets histogram.
 
   Catches exceptions to handle devtools context lost cases.
+  """
+  histogram_type = histogram_util.BROWSER_HISTOGRAM
+  try:
+    return histogram_util.GetHistogram(
+        histogram_type, histogram_name, tab)
+  except (exceptions.DevtoolsTargetCrashException, KeyError):
+    logging.warning('GetHistogram: Devtools context lost.')
+  except exceptions.TimeoutException:
+    logging.warning('GetHistogram: Timed out getting histogram.')
+  return None
+
+
+def _GetTabSwitchHistogram(browser):
+  """Gets MPArch.RWH_TabSwitchPaintDuration histogram.
 
   Any tab context can be used to get the TabSwitchPaintDuration histogram.
   browser.tabs[-1] is the last valid context. Ex: If the browser opens
@@ -39,16 +59,29 @@ def _GetTabSwitchHistogram(browser):
     A json serialization of a histogram or None if get histogram failed.
   """
   histogram_name = 'MPArch.RWH_TabSwitchPaintDuration'
-  histogram_type = histogram_util.BROWSER_HISTOGRAM
-  try:
-    return histogram_util.GetHistogram(
-        histogram_type, histogram_name, browser.tabs[-1])
-  except (exceptions.DevtoolsTargetCrashException, KeyError):
-    logging.warning('GetHistogram: Devtools context lost.')
-  except exceptions.TimeoutException:
-    logging.warning('GetHistogram: Timed out getting histogram.')
-  return None
+  return _GetHistogram(browser.tabs[-1], histogram_name)
 
+def GetReloadCount(browser):
+  """Gets accumulated tab reload count via histogram.
+
+  The TabManager.Discarding.ReloadCount histogram's record the accumulated
+  reload count when a page is reloaded. The ReloadCount histogram is
+  1, 2, 3, ..., n compacted to some ranges. For example, when the current
+  reload count is 54, the ReloadCount histogram is 1, 2, ..., 54 compacted
+  to [{low:1,high:2,count:1},...,{low:51,high:55, count:4}].
+
+  Args:
+    browser: Gets histogram from this browser.
+
+  Returns:
+    Accumulated reload count.
+  """
+  histogram_name = 'TabManager.Discarding.ReloadCount'
+  reload_histogram = _GetHistogram(browser.tabs[-1], histogram_name)
+  reloads = json.loads(reload_histogram)
+  if not reloads:
+    return 0
+  return max(i['high'] - 1 for i in reloads['buckets'])
 
 def GetTabSwitchHistogramRetry(browser):
   """Retries getting histogram as it may fail when a context was discarded.
@@ -172,3 +205,59 @@ def NoScreenOff(dut_ip):
   """
   _RunRemoteCommand(dut_ip, 'set_power_policy --ac_screen_off_delay=3600')
   _RunRemoteCommand(dut_ip, 'set_power_policy --ac_screen_dim_delay=3600')
+
+
+def CrosMeminfo(dut_ip):
+  """Gets /proc/meminfo
+
+  Args:
+    dut_ip: DUT IP or hostname.
+  Returns:
+    A dictionary from item names to values
+  """
+  result = {}
+  output = _GetCommandOutput(dut_ip, 'cat /proc/meminfo')
+  for line in output.split('\n'):
+    if len(line) == 0:
+      continue
+    name, value, unit = line.split() # pylint: disable=unused-variable
+    name = name[:-1]
+    value = int(value)
+    result[name] = value
+  return result
+
+
+def CrosVmstat(dut_ip):
+  """Gets /proc/vmstat
+
+  Args:
+    dut_ip: DUT IP or hostname.
+  Returns:
+    A dictionary from item names to values
+  """
+  result = {}
+  output = _GetCommandOutput(dut_ip, 'cat /proc/vmstat')
+  for line in output.split('\n'):
+    if len(line) == 0:
+      continue
+    name, value = line.split()
+    value = int(value)
+    result[name] = value
+  return result
+
+def CrosZramInfo(dut_ip):
+  """Gets /sys/block/zram0/mm_stat
+
+  Args:
+    dut_ip: DUT IP or hostname.
+  Returns:
+    A dictionary from item names to values
+  """
+  result = {}
+  keys = ['orig_data_size', 'compr_data_size', 'mem_used_total', 'mem_limit',
+          'mem_used_max', 'same_pages', 'pages_compacted']
+  output = _GetCommandOutput(dut_ip, 'cat /sys/block/zram0/mm_stat')
+  items = output.split()
+  for i in range(len(items)):
+    result[keys[i]] = int(items[i])
+  return result

@@ -26,6 +26,12 @@ class CrosMultiTabStory(page_module.Page):
     self._tabset_repeat = tabset_repeat
     self._pause_after_creation = pause_after_creation
 
+  def GetRemote(self):
+    return self._cros_remote
+
+  def GetRepeatCount(self):
+    return self._tabset_repeat
+
   def RunNavigateSteps(self, action_runner):
     """Opening tabs and waiting for them to load."""
     if not self._cros_remote:
