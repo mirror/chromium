@@ -1105,6 +1105,8 @@ source_set("browser") {
     "message_port_provider.cc",
     "mime_registry_impl.cc",
     "mime_registry_impl.h",
+    "mus_util.cc",
+    "mus_util.h",
     "net/browser_online_state_observer.cc",
     "net/browser_online_state_observer.h",
     "net/network_errors_listing_ui.cc",
@@ -2140,6 +2142,8 @@ source_set("browser") {
       "renderer_host/delegated_frame_host_client_aura.h",
       "renderer_host/render_widget_host_view_event_handler.cc",
       "renderer_host/render_widget_host_view_event_handler.h",
+      "web_contents/web_contents_view_guest_mus.cc",
+      "web_contents/web_contents_view_guest_mus.h",
     ]
   } else {  # Not aura.
     sources -= [

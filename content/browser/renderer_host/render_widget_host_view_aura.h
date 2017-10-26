@@ -491,9 +491,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   // and to notify the |event_handler_|.
   void SetPopupChild(RenderWidgetHostViewAura* popup_child_host_view);
 
-  // Forwards a mouse event to this view's parent window delegate.
-  void ForwardMouseEventToParent(ui::MouseEvent* event);
-
   // Tells DelegatedFrameHost whether we need to receive BeginFrames.
   void UpdateNeedsBeginFramesInternal();
 
