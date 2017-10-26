@@ -12,6 +12,8 @@
 #include <list>
 #include <memory>
 
+#include <iostream>
+
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -729,6 +731,15 @@ bool OutOfProcessInstance::HandleInputEvent(const pp::InputEvent& event) {
 }
 
 void OutOfProcessInstance::DidChangeView(const pp::View& view) {
+  // std::cerr << "OutOfProcessInstance::DidChangeView " <<
+  // view.GetScrollOffset().x() << ", "  << view.GetScrollOffset().y() <<
+  // std::endl; std::vector<int> annotationTypes =
+  // engine_->GetVisibleAnnotationTypes(); std::cerr << "annotationTypes[size:"
+  // << annotationTypes.size() << "]" << std::endl; for (int& i :
+  // annotationTypes) {
+  //   std::cerr << "  annotationType " << i << "]" << std::endl;
+  // }
+
   pp::Rect view_rect(view.GetRect());
   float old_device_scale = device_scale_;
   float device_scale = view.GetDeviceScale();
@@ -1164,8 +1175,12 @@ void OutOfProcessInstance::DocumentSizeUpdated(const pp::Size& size) {
   dimensions.Set(kJSDocumentWidth, pp::Var(document_size_.width()));
   dimensions.Set(kJSDocumentHeight, pp::Var(document_size_.height()));
   pp::VarArray page_dimensions_array;
-  int num_pages = engine_->GetNumberOfPages();
-  for (int i = 0; i < num_pages; ++i) {
+  size_t num_pages = engine_->GetNumberOfPages();
+  std::cerr << "DocumentSizeUpdated num_pages " << num_pages << std::endl;
+  if (page_is_processed_.size() < num_pages) {
+    page_is_processed_.resize(num_pages);
+  }
+  for (size_t i = 0; i < num_pages; ++i) {
     pp::Rect page_rect = engine_->GetPageRect(i);
     pp::VarDictionary page_dimensions;
     page_dimensions.Set(kJSPageX, pp::Var(page_rect.x()));
@@ -1284,6 +1299,29 @@ void OutOfProcessInstance::NotifySelectedFindResultChanged(
     int current_find_index) {
   DCHECK_GE(current_find_index, -1);
   SelectedFindResultChanged(current_find_index);
+}
+
+void OutOfProcessInstance::NotifyPageBecameVisible(
+    const PDFEngine::PageFeatures& page_features) {
+  std::cerr << "page " << page_features.index << " became visible" << std::endl;
+  std::cerr << "annotationTypes[size:" << page_features.annotation_types.size()
+            << "]" << std::endl;
+  for (const int annotation_type : page_features.annotation_types) {
+    std::cerr << "  annotationType " << annotation_type << std::endl;
+  }
+
+  if (page_features.IsInitialized() && page_features.index >= 0 &&
+      page_features.index < static_cast<int>(page_is_processed_.size()) &&
+      !page_is_processed_[page_features.index]) {
+    for (const int annotation_type : page_features.annotation_types) {
+      if (annotation_types_counted_.find(annotation_type) ==
+          annotation_types_counted_.end()) {
+        std::cerr << "Log annot type " << annotation_type << std::endl;
+        annotation_types_counted_.insert(annotation_type);
+      }
+    }
+    page_is_processed_[page_features.index] = true;
+  }
 }
 
 void OutOfProcessInstance::GetDocumentPassword(

@@ -120,6 +120,7 @@ class PDFiumEngine : public PDFEngine,
   void OnDocumentComplete() override;
   void OnDocumentCanceled() override;
   void CancelBrowserDownload() override;
+  // std::vector<int> GetVisibleAnnotationTypes() override;
 
   void UnsupportedFeature(int type);
   void FontSubstituted();

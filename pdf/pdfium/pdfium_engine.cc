@@ -13,6 +13,8 @@
 #include <memory>
 #include <set>
 
+#include <iostream>
+
 #include "base/auto_reset.h"
 #include "base/i18n/encoding_detection.h"
 #include "base/i18n/icu_string_conversions.h"
@@ -1219,8 +1221,11 @@ void PDFiumEngine::OnPendingRequestComplete() {
   for (int pending_page : pending_pages_) {
     if (CheckPageAvailable(pending_page, &still_pending)) {
       update_pages = true;
-      if (IsPageVisible(pending_page))
+      if (IsPageVisible(pending_page)) {
+        client_->NotifyPageBecameVisible(
+            pages_[pending_page]->GetPageFeatures());
         client_->Invalidate(GetPageScreenRect(pending_page));
+      }
     }
   }
   pending_pages_.swap(still_pending);
@@ -3097,7 +3102,8 @@ void PDFiumEngine::CalculateVisiblePages() {
   pending_pages_.clear();
   doc_loader_->ClearPendingRequests();
 
-  visible_pages_.clear();
+  std::vector<int> formerly_visible_pages = std::move(visible_pages_);
+
   pp::Rect visible_rect(plugin_size_);
   for (size_t i = 0; i < pages_.size(); ++i) {
     // Check an entire PageScreenRect, since we might need to repaint side
@@ -3106,7 +3112,12 @@ void PDFiumEngine::CalculateVisiblePages() {
     // outside page area.
     if (visible_rect.Intersects(GetPageScreenRect(i))) {
       visible_pages_.push_back(i);
-      CheckPageAvailable(i, &pending_pages_);
+      if (CheckPageAvailable(i, &pending_pages_) &&
+          std::find(formerly_visible_pages.begin(),
+                    formerly_visible_pages.end(),
+                    i) == formerly_visible_pages.end()) {
+        client_->NotifyPageBecameVisible(pages_[i]->GetPageFeatures());
+      }
     } else {
       // Need to unload pages when we're not using them, since some PDFs use a
       // lot of memory.  See http://crbug.com/48791
@@ -4296,6 +4307,19 @@ void PDFiumEngine::SetSelectionBounds(const pp::Point& base,
                                    ? RangeSelectionDirection::Left
                                    : RangeSelectionDirection::Right;
 }
+
+// std::vector<int> PDFiumEngine::GetVisibleAnnotationTypes() {
+//   std::vector<int> result;
+//   for (int page_index : visible_pages_) {
+//     FPDF_PAGE page = pages_[page_index]->GetPage();
+//     if (!page)
+//       continue;
+
+//     int annotationCount = FPDFPage_GetAnnotCount(page);
+//     result.push_back(annotationCount);
+//   }
+//   return result;
+// }
 
 PDFiumEngine::FormFillTimerData::FormFillTimerData(base::TimeDelta period,
                                                    TimerCallback callback)
