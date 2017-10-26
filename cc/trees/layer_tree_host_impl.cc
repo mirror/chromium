@@ -87,6 +87,7 @@
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -1042,6 +1043,13 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
 
     // Draw properties depend on copy requests.
     active_tree()->set_needs_update_draw_properties();
+  }
+
+  if (ukm_manager_) {
+    ukm_manager_->AddCheckerboardStatsForFrame(
+        checkerboarded_no_recording_content_area +
+            checkerboarded_needs_raster_content_area,
+        num_missing_tiles);
   }
 
   if (active_tree_->has_ever_been_drawn()) {
@@ -4579,6 +4587,12 @@ void LayerTreeHostImpl::RequestInvalidationForAnimatedImages() {
   // before a new tree is activated.
   bool needs_first_draw_on_activation = true;
   client_->NeedsImplSideInvalidation(needs_first_draw_on_activation);
+}
+
+void LayerTreeHostImpl::InitializeUkm(
+    std::unique_ptr<ukm::UkmRecorder> recorder) {
+  DCHECK(!ukm_manager_);
+  ukm_manager_ = std::make_unique<UkmManager>(std::move(recorder));
 }
 
 }  // namespace cc
