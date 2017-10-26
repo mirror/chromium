@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f6aff77_75e47eee",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-26T19:00:05Z",
+      "side": 1,
+      "message": "IMO, it seems a little redundant to add \"ing\" because any event, at the time when they are recorded, are \"on going\".\n\nThat being said, if the name \"CheckingUrl\" is already widely used / accepted, it would make sense to stick to it.\n\nI am happy to do either. Please let me know. Thanks",
+      "parentUuid": "fb1902be_e4db6851",
+      "range": {
+        "startLine": 107,
+        "startChar": 45,
+        "endLine": 107,
+        "endChar": 53
+      },
+      "revId": "7802694acb07f74cf7825d6ac0772b12866ef85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6ce315f_0db32181",
         "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
         "patchSetId": 1
