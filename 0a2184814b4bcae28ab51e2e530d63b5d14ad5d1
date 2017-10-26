@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "5f7ff284_eec1e57f",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-26T01:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b86fee4_0029ca2b",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aab12e75_410abf4d",
         "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
         "patchSetId": 5
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "69a2c83a_5e5ab70b",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-26T01:23:05Z",
+      "side": 1,
+      "message": "Done\nWebstateObserver already has a web_state() method, so will remove this.",
+      "parentUuid": "aab12e75_410abf4d",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef689301_1ef42fce",
         "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
         "patchSetId": 5
@@ -79,6 +127,24 @@
       "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd02f317_009819b5",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-26T01:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef689301_1ef42fce",
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -135,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "48a53acb_8525c8bd",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-26T01:23:05Z",
+      "side": 1,
+      "message": "I\u0027m now actually going to use the WebStateObserver getter that SadTabHelper inherits from.",
+      "parentUuid": "c1feddff_2142fc3c",
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b72c17f2_af84e3d0",
         "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
         "patchSetId": 5
@@ -167,6 +251,24 @@
       "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6c6267_b9e0f6b0",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-26T01:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cf91776_cdfe0227",
+      "revId": "0a2184814b4bcae28ab51e2e530d63b5d14ad5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
