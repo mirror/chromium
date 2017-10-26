@@ -341,6 +341,30 @@
       "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8644544_3e48e93c",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-26T10:00:03Z",
+      "side": 1,
+      "message": ":-(\n\nI suppose you could do something like http://seanmiddleditch.com/enabling-make_unique-with-private-constructors/, but I\u0027m not sure that\u0027s necessary...",
+      "parentUuid": "35725bc3_17526592",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 38
+      },
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

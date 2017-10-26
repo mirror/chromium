@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a7f80e4_b3575f1e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/FramebustBlockInfoBar.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-26T10:00:03Z",
+      "side": 1,
+      "message": "This is the |url|, no?",
+      "range": {
+        "startLine": 58,
+        "startChar": 57,
+        "endLine": 58,
+        "endChar": 82
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8388a75_785f8385",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/FramebustBlockInfoBar.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-26T10:00:03Z",
+      "side": 1,
+      "message": "Is this actually called through InfoBar or could we use a private method (that takes a View, so we can use a plain method reference to it)?",
+      "range": {
+        "startLine": 87,
+        "startChar": 16,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a2d4484_eb07b1c7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
         "patchSetId": 7
