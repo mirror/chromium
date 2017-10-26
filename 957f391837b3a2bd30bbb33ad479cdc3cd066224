@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98fb5277_76555a65",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-26T21:48:28Z",
+      "side": 1,
+      "message": "We probably need to think about the intended relationship of all these. Does `enable_\u003csdk\u003e` being true imply that `enable_vr` is also true or do we need to always check the latter?",
+      "revId": "957f391837b3a2bd30bbb33ad479cdc3cd066224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60f9118_3736d615",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-26T21:48:28Z",
+      "side": 1,
+      "message": "This is duplicated below. This variable should probably be based on that variable.\n\nThis one is really `enable_vr_device_support` I think.\nHowever, is also used to enable tests (hence `|| is_win`). I\u0027m not sure how much that makes sense. It may also be temporary until `enable_openvr` is enabled.",
+      "range": {
+        "startLine": 11,
+        "startChar": 15,
+        "endLine": 11,
+        "endChar": 77
+      },
+      "revId": "957f391837b3a2bd30bbb33ad479cdc3cd066224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873fa2d9_00c5543e",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-26T21:48:28Z",
+      "side": 1,
+      "message": "This should be added to the new variable below. It happens that this works because we only use the new variable inside enable_vr, but that\u0027s not obvious or guaranteed to always be the case.",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "957f391837b3a2bd30bbb33ad479cdc3cd066224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61bff412_54d0c890",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-26T21:48:28Z",
+      "side": 1,
+      "message": "This is really enabling Google VR Services (GVR), not only Daydream.",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "957f391837b3a2bd30bbb33ad479cdc3cd066224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
