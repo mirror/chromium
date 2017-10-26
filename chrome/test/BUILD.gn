@@ -24,6 +24,7 @@ import("//services/service_manager/public/service_manifest.gni")
 import("//services/catalog/public/tools/catalog.gni")
 import("//testing/test.gni")
 import("//ui/base/ui_features.gni")
+import("//ui/views/features.gni")
 import("//v8/gni/v8.gni")
 
 if (is_android) {
@@ -4948,6 +4949,9 @@ test("unit_tests") {
         "../browser/ui/views/frame/opaque_browser_frame_view_layout_unittest.cc",
         "../browser/ui/views/sync/one_click_signin_dialog_view_unittest.cc",
       ]
+    }
+    if (enable_native_window_nav_buttons) {
+      sources += [ "../browser/ui/views/frame/native_nav_buttons_frame_view_layout_unittest.cc" ]
     }
     if (!is_mac || mac_views_browser) {
       sources += [
