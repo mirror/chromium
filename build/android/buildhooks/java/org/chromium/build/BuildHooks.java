@@ -8,10 +8,24 @@ package org.chromium.build;
  * All Java targets that support android have dependence on this class.
  */
 public abstract class BuildHooks {
+    private static Callback<AssertionError> sAssertCallback;
+
     /**
      * This method is inserted to handle any assert failure by java_assertion_enabler.
      */
     public static void assertFailureHandler(AssertionError assertionError) {
-        throw assertionError;
+        if (sAssertCallback != null) {
+            sAssertCallback.run(assertionError);
+        } else {
+            throw assertionError;
+        }
+    }
+
+    /**
+     * Set the callback function that handles assert failure.
+     * This should be called from attachBaseContext.
+     */
+    public static void setAssertCallback(Callback<AssertionError> callback) {
+        sAssertCallback = callback;
     }
 }
