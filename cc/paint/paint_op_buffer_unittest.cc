@@ -1213,24 +1213,39 @@ std::vector<std::vector<SkPoint>> test_point_arrays = {
      SkPoint::Make(9, 9), SkPoint::Make(50, 50), SkPoint::Make(100, 100)},
 };
 
-std::vector<sk_sp<SkTextBlob>> test_blobs = {
+std::vector<std::vector<PaintTypeface>> test_typefaces = {
+    [] {
+      return std::vector<PaintTypeface>{
+          PaintTypeface::FromSkTypeface(SkTypeface::MakeDefault())};
+    }(),
+    [] {
+      return std::vector<PaintTypeface>{
+          PaintTypeface::FromSkTypeface(SkTypeface::MakeDefault()),
+          PaintTypeface::FromSkTypeface(SkTypeface::MakeDefault())};
+    }(),
+};
+
+std::vector<PaintTextBlob> test_paint_blobs = {
     [] {
       SkPaint font;
       font.setTextEncoding(SkPaint::kGlyphID_TextEncoding);
+      font.setTypeface(test_typefaces[0][0].ToSkTypeface());
 
       SkTextBlobBuilder builder;
       builder.allocRun(font, 5, 1.2f, 2.3f, &test_rects[0]);
-      return builder.make();
+      return PaintTextBlob(builder.make(), test_typefaces[0]);
     }(),
     [] {
       SkPaint font;
       font.setTextEncoding(SkPaint::kGlyphID_TextEncoding);
+      font.setTypeface(test_typefaces[1][0].ToSkTypeface());
 
       SkTextBlobBuilder builder;
       builder.allocRun(font, 5, 1.2f, 2.3f, &test_rects[0]);
       builder.allocRunPos(font, 16, &test_rects[1]);
+      font.setTypeface(test_typefaces[1][1].ToSkTypeface());
       builder.allocRunPosH(font, 8, 0, &test_rects[2]);
-      return builder.make();
+      return PaintTextBlob(builder.make(), test_typefaces[1]);
     }(),
 };
 
@@ -1512,10 +1527,10 @@ void PushDrawRRectOps(PaintOpBuffer* buffer) {
 }
 
 void PushDrawTextBlobOps(PaintOpBuffer* buffer) {
-  size_t len = std::min(std::min(test_blobs.size(), test_flags.size()),
+  size_t len = std::min(std::min(test_paint_blobs.size(), test_flags.size()),
                         test_floats.size() - 1);
   for (size_t i = 0; i < len; ++i) {
-    buffer->push<DrawTextBlobOp>(test_blobs[i], test_floats[i],
+    buffer->push<DrawTextBlobOp>(test_paint_blobs[i], test_floats[i],
                                  test_floats[i + 1], test_flags[i]);
   }
   ValidateOps<DrawTextBlobOp>(buffer);

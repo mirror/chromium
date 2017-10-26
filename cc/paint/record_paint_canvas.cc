@@ -274,7 +274,7 @@ void RecordPaintCanvas::drawBitmap(const SkBitmap& bitmap,
             left, top, flags);
 }
 
-void RecordPaintCanvas::drawTextBlob(sk_sp<SkTextBlob> blob,
+void RecordPaintCanvas::drawTextBlob(const PaintTextBlob& blob,
                                      SkScalar x,
                                      SkScalar y,
                                      const PaintFlags& flags) {

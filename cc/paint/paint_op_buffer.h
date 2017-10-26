@@ -569,7 +569,7 @@ class CC_PAINT_EXPORT DrawTextBlobOp final : public PaintOpWithFlags {
  public:
   static constexpr PaintOpType kType = PaintOpType::DrawTextBlob;
   static constexpr bool kIsDrawOp = true;
-  DrawTextBlobOp(sk_sp<SkTextBlob> blob,
+  DrawTextBlobOp(const PaintTextBlob& blob,
                  SkScalar x,
                  SkScalar y,
                  const PaintFlags& flags);
@@ -584,6 +584,8 @@ class CC_PAINT_EXPORT DrawTextBlobOp final : public PaintOpWithFlags {
   sk_sp<SkTextBlob> blob;
   SkScalar x;
   SkScalar y;
+  std::unique_ptr<PaintTypeface[]> typefaces;
+  uint32_t typefaces_count;
 
  private:
   DrawTextBlobOp();

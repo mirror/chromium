@@ -5,6 +5,7 @@
 #include "cc/paint/paint_op_reader.h"
 
 #include <stddef.h>
+#include <algorithm>
 
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_op_buffer.h"
@@ -17,8 +18,33 @@
 namespace cc {
 namespace {
 
+uint32_t kMaxTypefacesCount = 128;
+size_t kMaxFilenameSize = 1024;
+size_t kMaxFamilyNameSize = 128;
+
 // If we have more than this many colors, abort deserialization.
 const size_t kMaxShaderColorsSupported = 10000;
+
+struct TypefacesCatalog {
+  const PaintTypeface* typefaces = nullptr;
+  uint32_t typefaces_count = 0;
+  bool had_null = false;
+};
+
+sk_sp<SkTypeface> ResolveTypeface(uint32_t id, void* ctx) {
+  TypefacesCatalog* catalog = static_cast<TypefacesCatalog*>(ctx);
+  auto* typeface = std::find_if(catalog->typefaces,
+                                catalog->typefaces + catalog->typefaces_count,
+                                [id](const PaintTypeface& typeface) {
+                                  return typeface && typeface.sk_id() == id;
+                                });
+  if (typeface == catalog->typefaces + catalog->typefaces_count) {
+    catalog->had_null = true;
+    return nullptr;
+  }
+  DCHECK(*typeface);
+  return typeface->ToSkTypeface();
+}
 
 bool IsValidPaintShaderType(PaintShader::Type type) {
   return static_cast<uint8_t>(type) <
@@ -212,8 +238,99 @@ void PaintOpReader::Read(sk_sp<SkData>* data) {
   remaining_bytes_ -= bytes;
 }
 
-void PaintOpReader::Read(sk_sp<SkTextBlob>* blob) {
-  // TODO(enne): implement SkTextBlob serialization: http://crbug.com/737629
+void PaintOpReader::Read(std::unique_ptr<PaintTypeface[]>* typefaces,
+                         uint32_t* typefaces_count) {
+  ReadSimple(typefaces_count);
+  if (*typefaces_count > kMaxTypefacesCount) {
+    valid_ = false;
+    return;
+  }
+  typefaces->reset(new PaintTypeface[*typefaces_count]);
+  for (uint32_t i = 0; i < *typefaces_count; ++i) {
+    SkFontID id;
+    uint8_t type;
+    PaintTypeface& typeface = (*typefaces)[i];
+    ReadSimple(&id);
+    ReadSimple(&type);
+    if (!valid_)
+      return;
+    switch (static_cast<PaintTypeface::Type>(type)) {
+      case PaintTypeface::Type::kSkTypeface:
+        // TODO(vmpstr): This shouldn't ever happen once everything is
+        // implemented. So this should be a failure (ie |valid_| = false).
+        break;
+      case PaintTypeface::Type::kFontConfigInterfaceIdAndTtcIndex: {
+        int font_config_interface_id;
+        int ttc_index;
+        ReadSimple(&font_config_interface_id);
+        ReadSimple(&ttc_index);
+        typeface = PaintTypeface::FromFontConfigInterfaceIdAndTtcIndex(
+            font_config_interface_id, ttc_index);
+        break;
+      }
+      case PaintTypeface::Type::kFilenameAndTtcIndex: {
+        size_t size;
+        ReadSimple(&size);
+        if (!valid_ || size > kMaxFilenameSize) {
+          valid_ = false;
+          return;
+        }
+
+        std::unique_ptr<char[]> buffer(new char[size]);
+        ReadData(size, buffer.get());
+        std::string filename(buffer.get(), size);
+
+        int ttc_index;
+        ReadSimple(&ttc_index);
+        typeface = PaintTypeface::FromFilenameAndTtcIndex(filename, ttc_index);
+        break;
+      }
+      case PaintTypeface::Type::kFamilyNameAndFontStyle: {
+        size_t size;
+        ReadSimple(&size);
+        if (!valid_ || size > kMaxFamilyNameSize) {
+          valid_ = false;
+          return;
+        }
+
+        std::unique_ptr<char[]> buffer(new char[size]);
+        ReadData(size, buffer.get());
+        std::string family_name(buffer.get(), size);
+
+        int weight;
+        int width;
+        SkFontStyle::Slant slant;
+        ReadSimple(&weight);
+        ReadSimple(&width);
+        ReadSimple(&slant);
+        typeface = PaintTypeface::FromFamilyNameAndFontStyle(
+            family_name, SkFontStyle(weight, width, slant));
+        break;
+      }
+    }
+    typeface.SetSkId(id);
+    if (!typeface) {
+      valid_ = false;
+      return;
+    }
+  }
+}
+
+void PaintOpReader::Read(const PaintTypeface* typefaces,
+                         uint32_t typefaces_count,
+                         sk_sp<SkTextBlob>* blob) {
+  sk_sp<SkData> data;
+  Read(&data);
+  if (!data || !valid_)
+    return;
+
+  TypefacesCatalog catalog;
+  catalog.typefaces = typefaces;
+  catalog.typefaces_count = typefaces_count;
+  *blob = SkTextBlob::Deserialize(data->data(), data->size(), &ResolveTypeface,
+                                  &catalog);
+  if (catalog.had_null)
+    *blob = nullptr;
 }
 
 void PaintOpReader::Read(sk_sp<PaintShader>* shader) {

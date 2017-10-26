@@ -501,6 +501,7 @@ size_t DrawTextBlobOp::Serialize(const PaintOp* base_op,
   helper.Write(op->flags);
   helper.Write(op->x);
   helper.Write(op->y);
+  helper.Write(op->typefaces.get(), op->typefaces_count);
   helper.Write(op->blob);
   return helper.size();
 }
@@ -863,7 +864,12 @@ PaintOp* DrawTextBlobOp::Deserialize(const volatile void* input,
   helper.Read(&op->flags);
   helper.Read(&op->x);
   helper.Read(&op->y);
-  helper.Read(&op->blob);
+  helper.Read(&op->typefaces, &op->typefaces_count);
+  if (!helper.valid()) {
+    op->~DrawTextBlobOp();
+    return nullptr;
+  }
+  helper.Read(op->typefaces.get(), op->typefaces_count, &op->blob);
   if (!helper.valid() || !op->IsValid()) {
     op->~DrawTextBlobOp();
     return nullptr;
@@ -1518,11 +1524,21 @@ bool DrawRecordOp::HasDiscardableImages() const {
 
 DrawTextBlobOp::DrawTextBlobOp() = default;
 
-DrawTextBlobOp::DrawTextBlobOp(sk_sp<SkTextBlob> blob,
+DrawTextBlobOp::DrawTextBlobOp(const PaintTextBlob& paint_blob,
                                SkScalar x,
                                SkScalar y,
                                const PaintFlags& flags)
-    : PaintOpWithFlags(flags), blob(std::move(blob)), x(x), y(y) {}
+    : PaintOpWithFlags(flags), blob(paint_blob.ToSkTextBlob()), x(x), y(y) {
+  // Convert PaintTextBlob into a heap allocated array of typefaces and an
+  // SkTextBlob.
+  const auto& used_typefaces = paint_blob.typefaces();
+  if (!used_typefaces.empty()) {
+    typefaces.reset(new PaintTypeface[used_typefaces.size()]);
+    for (size_t i = 0; i < used_typefaces.size(); ++i)
+      typefaces[i] = used_typefaces[i];
+  }
+  typefaces_count = used_typefaces.size();
+}
 
 DrawTextBlobOp::~DrawTextBlobOp() = default;
 
