@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "0a081579_2e6ab9ba",
+        "filename": "chromeos/printing/ppd_line_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-26T06:23:59Z",
+      "side": 1,
+      "message": "If you want to flatten the loops, this should work.  It\u0027s not that much easier to read though.\n\nbool done \u003d false;\nwhile(!done) {\ndone \u003d true;\nline-\u003eclear();\nline-\u003ereserve(..);\nint count \u003d 0;\ndo {\n  char c \u003d NextChar();\n\n  if (IsNewline(c)) {\n    if (count !\u003d 0) {\n      // Newlines complete reads.\n      if (count \u003e\u003d max_line_length_) {\n        // invalid line.  Try again.\n        done \u003d false;\n      }\n      break;\n    }\n    // skip leading newlines\n    continue;\n  }\n\n  if (count \u003e\u003d max_line_length_) {\n    // consume input after max_line_length_\n    continue;\n  }\n\n  // Non-newline character within max_line_length_\n  line-\u003epush_back(c);\n  count++;\n} while (!Eof());\n}\n\n// If we\u0027ve read some data, assume there\u0027s more data.\nreturn !line-\u003eempty();",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 108,
+        "endChar": 7
+      },
+      "revId": "78417a023564a5afdda45a41b30ed11d2a0e1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f32c3f5_bc5bc1ac",
         "filename": "chromeos/printing/ppd_line_reader.h",
         "patchSetId": 2
