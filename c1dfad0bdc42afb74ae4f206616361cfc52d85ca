@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "061aa4cd_5ef59040",
+        "filename": "services/ui/service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-26T15:28:39Z",
+      "side": 1,
+      "message": "Using context()-\u003econnector() works (which I forgot existed)! Removed |connector_|. Thanks!",
+      "parentUuid": "ad2ef085_d0041fbd",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 33
+      },
+      "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04a66d8b_5eea85a1",
         "filename": "services/ui/ws/gpu_host.cc",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e12d5d_97dfe426",
+        "filename": "services/ui/ws/gpu_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-26T15:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04a66d8b_5eea85a1",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 52
+      },
+      "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -80,6 +128,24 @@
       "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5f641f_a978740e",
+        "filename": "services/viz/manifest.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-26T15:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cbd21d3_c6055610",
+      "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +193,30 @@
       "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52223d5_1a1332f4",
+        "filename": "services/viz/service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-26T15:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28164b1f_fb4276d7",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "c1dfad0bdc42afb74ae4f206616361cfc52d85ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
