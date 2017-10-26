@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "362a34b8_9f4d9887",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-26T09:28:35Z",
+      "side": 1,
+      "message": "Indeed. We can\u0027t know for sure what the user means. Let\u0027s discuss offline.",
+      "parentUuid": "2e59ff2a_2da165f9",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c304e768_9bce1829",
         "filename": "media/audio/mac/audio_manager_mac.cc",
         "patchSetId": 2
@@ -165,6 +183,24 @@
       "side": 1,
       "message": "Why not?",
       "parentUuid": "59b6f10e_29cec8fc",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202cb1a3_20dd3fe7",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-26T09:28:35Z",
+      "side": 1,
+      "message": "It makes it clear for the reader that it\u0027s not relevant and not used if NR isn\u0027t supported.",
+      "parentUuid": "0a77618d_fdab9304",
       "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
