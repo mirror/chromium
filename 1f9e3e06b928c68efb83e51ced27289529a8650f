@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b0741d5e_4db26912",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-26T21:37:18Z",
+      "side": 1,
+      "message": "Missed this before: No need to null-check frame_-\u003eGetDocument() here.",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbdb1c68_b1332741",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 11
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "Interactive Detector is constructed on the first call to InteractiveDetector::From, which is supposed to be here. We also want to start listening for long tasks and network requests immediately after navigation commits.",
       "parentUuid": "bbdb1c68_b1332741",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c02653_f7acd089",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-26T21:37:18Z",
+      "side": 1,
+      "message": "Hrm. Network requests are easy, becuase you\u0027re already calling InteractiveDetector::From() in FrameFetchContext::DispatchWillSendRequest. But I don\u0027t immediately see a good way to guarantee that it will be constructed before the first long task, so I guess this can stay here.",
+      "parentUuid": "a9a92c34_3a2caa53",
       "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "9a216ae0_a9220d2d",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-26T21:37:18Z",
+      "side": 1,
+      "message": "Awesome, as long as it\u0027s been considered, I\u0027m happy. :)",
+      "parentUuid": "fa324f1f_3a82dc92",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3606e594_95396149",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 11
@@ -136,6 +189,24 @@
       "side": 1,
       "message": "I\u0027m changing the comment. As as aside, do you know why DomContentLoaded can fire multiple times? This makes me wonder if I\u0027m taking the current DCL time or whether I should take the later time if DCL fires again. I understand this happens in tests like RenderFrameHostManagerSpoofingTest.ShowLoadingURLUntilDocumentOpenSpoof[1] but I don\u0027t understand why. \n\n[1]: https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_manager_browsertest.cc?type\u003dcs\u0026q\u003dShowLoadingURLUntilDocumentOpenSpoof\u0026sq\u003dpackage:chromium\u0026l\u003d1459",
       "parentUuid": "3606e594_95396149",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2697e9ec_9285d9e0",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-26T21:37:18Z",
+      "side": 1,
+      "message": "If document.open() or document.write() is called after the initial parse finishes, a new parser will be created and a bunch of state/events will be reset. See Document::ImplicitOpen, starting here: https://chromium.googlesource.com/chromium/src/+/2023dfaa5cf30d61426031c5b450cec3bdb0cc05/third_party/WebKit/Source/core/dom/Document.cpp#3017 . The relevant chunk of the spec is: https://html.spec.whatwg.org/#document-open-steps\n\nI don\u0027t think you need to worry about it, since what you\u0027re likely to care about is \"has this page finished the initial parse?\", not whether it\u0027s modified itself via document.write().",
+      "parentUuid": "eedec754_29eff98b",
       "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -241,6 +312,24 @@
       "side": 1,
       "message": "This is not a visibility issue. It\u0027s just much, much easier to write test cases if I assume the window size is 5 seconds - I can write a test case like FMP happened at 3 seconds, a long task ending at 4 seconds, DCL happening at 6 seconds, and another long task happened from 11 seconds to 11.5 seconds, so TTI should be reached at the 6th second. If I don\u0027t assume the 5 second window, these cases are a lot harder to write and read - every timestamp has to be proportional to the window size and even then we might have to branch on some boundary values of kTimeToInteractiveWindowSeconds depending on the exact ordering of events.",
       "parentUuid": "f4df6024_fd59795f",
+      "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4acee9aa_aefc9d2d",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-26T21:37:18Z",
+      "side": 1,
+      "message": "K. Works for me.",
+      "parentUuid": "1b42c9ad_b75927bb",
       "revId": "1f9e3e06b928c68efb83e51ced27289529a8650f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
