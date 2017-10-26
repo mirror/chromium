@@ -123,6 +123,11 @@
         cursor: pointer;
       }
 
+      #allow-incognito iron-icon {
+        -webkit-margin-start: 20px;
+        @apply(--cr-icon-height-width);
+      }
+
       .inspectable-view {
         color: var(--google-blue-700);
         height: 20px;
@@ -300,7 +305,10 @@
               <extensions-toggle-row id="allow-incognito"
                   checked="[[data.incognitoAccess.isActive]]"
                   on-change="onAllowIncognitoChange_">
-                <span>$i18n{itemAllowIncognito}</span>
+                <span>
+                  $i18n{itemAllowIncognito}
+                  <iron-icon icon="cr:error-outline"></iron-icon>
+                </span>
               </extensions-toggle-row>
             </template>
             <template is="dom-if" if="[[data.fileAccess.isEnabled]]">
