@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f5188ee4_f363b3ee",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-26T16:16:39Z",
+      "side": 1,
+      "message": "Can we change to say \"The Reminders share extension...\" or \"Reminder\u0027s share extension\"?",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 36
+      },
+      "revId": "de2a24ffe4a8875eb70b108b2002ed09e5debef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6add41f9_10d490f0",
         "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
         "patchSetId": 1
@@ -18,6 +41,53 @@
         "startChar": 35,
         "endLine": 181,
         "endChar": 0
+      },
+      "revId": "de2a24ffe4a8875eb70b108b2002ed09e5debef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eae3d49_36420429",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-26T16:16:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6add41f9_10d490f0",
+      "range": {
+        "startLine": 181,
+        "startChar": 35,
+        "endLine": 181,
+        "endChar": 0
+      },
+      "revId": "de2a24ffe4a8875eb70b108b2002ed09e5debef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e50dca5_9d43646b",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-26T16:16:39Z",
+      "side": 1,
+      "message": "How does this activity stop being the current one?",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 30
       },
       "revId": "de2a24ffe4a8875eb70b108b2002ed09e5debef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
