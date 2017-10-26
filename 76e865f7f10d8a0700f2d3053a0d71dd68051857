@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb156926_6640eb1d",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/getDevicePose_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-26T20:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38e42e5c_cb05bb4a",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fb9622a_53dfa739",
         "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-25T21:48:39Z",
       "side": 1,
       "message": "Nit: This and assert_matrices_approx_equal feel like they should go elsewhere, although I would vote to keep them here (at least for now) if the alternative is creating another file in resources/ that needs to be included in tests.",
+      "range": {
+        "startLine": 206,
+        "startChar": 9,
+        "endLine": 206,
+        "endChar": 25
+      },
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d91ced_5161c9d7",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-26T20:46:07Z",
+      "side": 1,
+      "message": "Agreed on both counts. I think we eventually need a vr_test_utils or similar, but I didn\u0027t want to introduce that just yet. If you\u0027d prefer I make that change as part of this CL, though, I\u0027ll gladly do it.",
+      "parentUuid": "3fb9622a_53dfa739",
       "range": {
         "startLine": 206,
         "startChar": 9,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "029625db_4850e634",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-26T20:46:07Z",
+      "side": 1,
+      "message": "Not sure I understand what you\u0027re asking here? This if statement is, effectively, saying that FLOAT_EPSILON is the default if the caller doesn\u0027t specify a different one.",
+      "parentUuid": "a8c79ae6_2c57a21b",
+      "range": {
+        "startLine": 250,
+        "startChar": 6,
+        "endLine": 250,
+        "endChar": 13
+      },
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0af39d0d_e7175a2c",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRPresentationFrame.h",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce15d10_86740913",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRPresentationFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-26T20:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0af39d0d_e7175a2c",
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -149,6 +239,24 @@
       "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b86da0_425b6443",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-26T20:46:07Z",
+      "side": 1,
+      "message": "This was an attempt to evaluate potential reductions in garbage collection costs, but I had intended to refactor it prior to posting this CL. Thanks for catching this and reminding me.",
+      "parentUuid": "16e807ad_7c42fe8d",
+      "revId": "76e865f7f10d8a0700f2d3053a0d71dd68051857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
