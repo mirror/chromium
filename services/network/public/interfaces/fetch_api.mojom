@@ -8,6 +8,7 @@ module network.mojom;
 // https://fetch.spec.whatwg.org/#concept-request-mode
 //
 // This enum is also used in histograms. Append-only.
+// See content/browser/service_worker/service_worker_metrics.cc.
 enum FetchRequestMode {
   kSameOrigin,
   kNoCORS,
@@ -18,10 +19,29 @@ enum FetchRequestMode {
   kLast = kNavigate
 };
 
+// Corresponds to Fetch request's "credentials mode":
+// https://fetch.spec.whatwg.org/#concept-request-credentials-mode
+enum FetchCredentialsMode {
+  kOmit,
+  kSameOrigin,
+  kInclude,
+
+  // "password" mode is not defined in the Fetch spec, but can be seen in
+  // an example code for the Credential Management Level 1.
+  // https://w3c.github.io/webappsec-credential-management/#passwords
+  // TODO(battre): Remove kPassword. http://crbug.com/778536.
+  kPassword,
+
+  // Add a new type here, then update kLast and enums.xml.
+  kLast = kPassword
+};
+
 // Corresponds to response types from the Fetch spec:
 // https://fetch.spec.whatwg.org/#concept-response-type
 //
 // This enum is also used in histograms. Append-only.
+// See content/browser/cache_storage/cache_storage_cache.cc and
+// third_party/WebKit/Source/modules/cachestorage/Cache.cpp.
 enum FetchResponseType {
   kBasic,
   kCORS,

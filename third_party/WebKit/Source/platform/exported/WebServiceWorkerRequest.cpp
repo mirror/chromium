@@ -19,7 +19,7 @@ class WebServiceWorkerRequestPrivate
   WebServiceWorkerRequestPrivate()
       : mode_(network::mojom::FetchRequestMode::kNoCORS),
         is_main_resource_load_(false),
-        credentials_mode_(WebURLRequest::kFetchCredentialsModeOmit),
+        credentials_mode_(network::mojom::FetchCredentialsMode::kOmit),
         cache_mode_(mojom::FetchCacheMode::kDefault),
         redirect_mode_(WebURLRequest::kFetchRedirectModeFollow),
         request_context_(WebURLRequest::kRequestContextUnspecified),
@@ -33,7 +33,7 @@ class WebServiceWorkerRequestPrivate
   Referrer referrer_;
   network::mojom::FetchRequestMode mode_;
   bool is_main_resource_load_;
-  WebURLRequest::FetchCredentialsMode credentials_mode_;
+  network::mojom::FetchCredentialsMode credentials_mode_;
   mojom::FetchCacheMode cache_mode_;
   WebURLRequest::FetchRedirectMode redirect_mode_;
   WebURLRequest::RequestContext request_context_;
@@ -164,7 +164,7 @@ bool WebServiceWorkerRequest::IsMainResourceLoad() const {
 }
 
 void WebServiceWorkerRequest::SetCredentialsMode(
-    WebURLRequest::FetchCredentialsMode credentials_mode) {
+    network::mojom::FetchCredentialsMode credentials_mode) {
   private_->credentials_mode_ = credentials_mode;
 }
 
@@ -172,7 +172,7 @@ void WebServiceWorkerRequest::SetIntegrity(const WebString& integrity) {
   private_->integrity_ = integrity;
 }
 
-WebURLRequest::FetchCredentialsMode WebServiceWorkerRequest::CredentialsMode()
+network::mojom::FetchCredentialsMode WebServiceWorkerRequest::CredentialsMode()
     const {
   return private_->credentials_mode_;
 }
