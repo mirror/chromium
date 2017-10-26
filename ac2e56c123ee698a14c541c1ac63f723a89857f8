@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "854dcaa0_9a32cee7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T06:18:19Z",
+      "side": 1,
+      "message": "delay_for_background_tab_stopping ?\n\nBTW it\u0027s confusing to mix \"stop\" and \"suspend\". We should unify the terms to \"stop\".",
+      "revId": "ac2e56c123ee698a14c541c1ac63f723a89857f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
