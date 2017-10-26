@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "48672b04_175972f6",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 1,
+      "message": "I\u0027m fairly concerned about the suffix approach, since it seems like it could significantly affect the savings we were getting from dcheng@\u0027s https://chromium-review.googlesource.com/c/chromium/src/+/624817 (which put a limit of 80 characters on frame names).  Adding a suffix and GUID to that name could almost double it in a common case (where ads are added to a page).\n\nI see your point about testing different behavior than we ship with, but I think that\u0027s already true with the suffix removal.  Removing the suffix means layout tests will assume that the unique name is what it was before this bug fix, so they would presumably conclude that this bug isn\u0027t fixed.\n\nDo we have any other layout test framework options for addressing this sort of dynamic value in expectations?  If not, I might lean toward the EnterLayoutTestsModeForTesting() idea, to let us keep the names shorter in practice.",
+      "parentUuid": "72336d25_67be391d",
+      "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55e3bc3e_bdf1a12c",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 11
@@ -240,6 +258,24 @@
       "side": 1,
       "message": "You\u0027re right - this doesn\u0027t catch frames created by inline scripts (i.e. scripts which execute happen before the onLoad event).  I\u0027ve added a test for this situation and it seems that detecting this situation via v8::Isolate::GetCurrent()-\u003eInContext() (instead of HasFinishedParsing) is working okay.",
       "parentUuid": "a2ad8ff7_9dff6331",
+      "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcc646fb_dc40d88e",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 2138,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 1,
+      "message": "Great, thanks!",
+      "parentUuid": "d5f8328b_f44e8da4",
       "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

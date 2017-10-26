@@ -22,6 +22,47 @@
       "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b87f51e_74f9326e",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 0,
+      "message": "Because cross_site_iframe_factory.html creates iframes dynamically?  That\u0027s unfortunate.  I\u0027m surprised that doesn\u0027t affect more tests.\n\nI suppose if we wanted to, we could rewrite that to be a \"server-generated\" page by coding it in testserver.py instead (and spitting out static HTML files with iframes), but that might limit some ways people use the current HTML file for testing.\n\nOk, I guess we can live with it.",
+      "parentUuid": "e009b31f_2067c861",
+      "range": {
+        "startLine": 950,
+        "startChar": 10,
+        "endLine": 950,
+        "endChar": 29
+      },
+      "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07bd1f37_cace774a",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3280,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 0,
+      "message": "Wasn\u0027t this part of the intention of the test?  I\u0027m very nervous about any changes in behavior here, since this test relates to https://crbug.com/657896, which is about breaking ads on back/forward.  We need to be very careful not to regress that.",
+      "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

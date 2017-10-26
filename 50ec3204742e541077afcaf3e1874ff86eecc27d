@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8c1878c_ccd27562",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 1,
+      "message": "nit: accomplished",
+      "range": {
+        "startLine": 20,
+        "startChar": 54,
+        "endLine": 20,
+        "endChar": 67
+      },
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17f4c73_9e7032ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 1,
+      "message": "nit: exist",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 17
+      },
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5a6220_9ca4b936",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3184,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 1,
+      "message": "It\u0027s worth having a comment saying why these are in here twice.  Same in similar cases below.",
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7014a45e_eb3d046d",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure session restore is the right term here, since it also affects back/forward when the frame is recreated.  Maybe we just mention both?",
+      "range": {
+        "startLine": 140,
+        "startChar": 37,
+        "endLine": 140,
+        "endChar": 52
+      },
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75042f4d_b5f81c81",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 1,
+      "message": "Let\u0027s explain why this is needed, since it\u0027s not clear at first glance.",
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c23c95_cc2cdd8b",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3182,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 1,
+      "message": "This needs a comment of its own to explain why this is the right way to define dynamic.  (I\u0027m hoping dcheng@ can confirm whether it is, since I don\u0027t know.)\n\nMaybe we can move it before the comment paragraph on 3168 to make it easier to give it comment.",
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd04b38_ef354904",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3215,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand what this is accomplishing.  If we need it, let\u0027s add a comment.",
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ffdd571_e3b52e9c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/history/dynamic-frame-creation-order.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 1,
+      "message": "nit: in a",
+      "range": {
+        "startLine": 127,
+        "startChar": 26,
+        "endLine": 127,
+        "endChar": 27
+      },
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d86b43_35feef4d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/history/dynamic-frame-creation-order2.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:18:58Z",
+      "side": 1,
+      "message": "I spent a while hunting for the difference between this test and dynamic-frame-creation-order.html.  :)\n\nMaybe we can remove some of the duplicated text and just say that this test is similar to that one, with this exception about inline script?  We could also put \"-inline\" in the name instead of \"2\" to give people a sense for what the difference is.",
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
