@@ -44,10 +44,15 @@ extern NSString* const kSideSwipeDidStopNotification;
 @required
 // Called when the horizontal stack view is done and should be removed.
 - (void)sideSwipeViewDismissAnimationDidEnd:(UIView*)sideSwipeView;
+// Returns the toolbar view.
+- (UIView*)toolbarView;
 // Returns the main content view.
 - (UIView*)contentView;
-// Returns the toolbar controller.
-- (WebToolbarController*)toolbarController;
+// Returns whether a swipe on the toolbar can start.
+- (BOOL)canBeginToolbarSwipe;
+// Returns a snapshot of the toolbar with the controls visibility adapted to
+// |tab|.
+- (UIImage*)toolbarSnapshotForTab:(Tab*)tab;
 // Makes |tab| the currently visible tab, displaying its view.  Calls
 // -selectedTabChanged on the toolbar only if |newSelection| is YES.
 - (void)displayTab:(Tab*)tab isNewSelection:(BOOL)newSelection;

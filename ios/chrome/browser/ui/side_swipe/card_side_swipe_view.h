@@ -12,7 +12,6 @@
 
 @class SideSwipeGestureRecognizer;
 @class TabModel;
-@class WebToolbarController;
 
 @interface SwipeView : UIView {
   base::scoped_nsobject<UIImageView> image_;
@@ -48,8 +47,7 @@
 - (id)initWithFrame:(CGRect)frame
           topMargin:(CGFloat)margin
               model:(TabModel*)model;
-- (void)updateViewsForDirection:(UISwipeGestureRecognizerDirection)direction
-                    withToolbar:(WebToolbarController*)toolbarController;
+- (void)updateViewsForDirection:(UISwipeGestureRecognizerDirection)direction;
 - (void)handleHorizontalPan:(SideSwipeGestureRecognizer*)gesture;
 
 @end
