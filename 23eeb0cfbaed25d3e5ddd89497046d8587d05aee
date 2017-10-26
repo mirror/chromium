@@ -16,6 +16,24 @@
       "revId": "23eeb0cfbaed25d3e5ddd89497046d8587d05aee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1fd006a_86db2317",
+        "filename": "ash/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-26T21:28:29Z",
+      "side": 1,
+      "message": "It will be more complicated if we place it outside //components/arc since Android side also uses the VoiceInteractionState type. I chatted with xiyuan@ and xiaohuic@, can we only let ash depend on //components/arc/common which contains mojo files only?",
+      "parentUuid": "169f1afc_f8185a55",
+      "revId": "23eeb0cfbaed25d3e5ddd89497046d8587d05aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
