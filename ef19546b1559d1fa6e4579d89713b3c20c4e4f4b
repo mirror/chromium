@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e9de82b_5cd0e59c",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-26T00:54:40Z",
+      "side": 1,
+      "message": "connection",
+      "range": {
+        "startLine": 253,
+        "startChar": 17,
+        "endLine": 253,
+        "endChar": 27
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77cca6e4_1758bd87",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 1
@@ -13,6 +36,213 @@
       "writtenOn": "2017-10-26T00:17:03Z",
       "side": 1,
       "message": "Note: This is supposed to show the SIM unlock UI if |is_on| is true and the SIM is locked. That is currently broken and will be fixed separately.",
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf36221_04603d6c",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-26T00:54:40Z",
+      "side": 1,
+      "message": "disabled",
+      "range": {
+        "startLine": 267,
+        "startChar": 27,
+        "endLine": 267,
+        "endChar": 33
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af63affa_ef65ea18",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-26T00:54:40Z",
+      "side": 1,
+      "message": "nit: Isn\u0027t |cellular_device| guaranteed to be non-null if state !\u003d TECHNOLOGY_UNAVAILABLE? Should this be a DCHECK()?",
+      "range": {
+        "startLine": 301,
+        "startChar": 11,
+        "endLine": 301,
+        "endChar": 26
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd0d5a7_64c245c2",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-26T00:54:40Z",
+      "side": 1,
+      "message": "When is this \"else\" case expected to be hit? In the normal case where there\u0027s no scan in progress?",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 54
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27722ef_0a2e1006",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-26T00:54:40Z",
+      "side": 1,
+      "message": "I don\u0027t understand why we show these Tether-related subtitles if the first Mobile network is the default Cellular network. Maybe I\u0027m misunderstanding what the default Cellular network is - can you explain? A comment would also be helpful here for future readers.",
+      "range": {
+        "startLine": 314,
+        "startChar": 47,
+        "endLine": 314,
+        "endChar": 66
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d81c05d_cf4a772a",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-26T00:54:40Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right to me. When Bluetooth is disabled, then the toggled is toggled to on, it should remain in the on position until either Bluetooth is enabled or the timer fires. If Bluetooth is enabled, the toggle should remain on, and if the timer fires, the toggle should be off.\n\nIf we reach this point, it means that Bluetooth was disabled, the toggle was toggled, then some event occurred which caused UpdateState() to be invoked. Since this happens as part of DeviceListChanged(), there are a variety of reasons why this could happen. We shouldn\u0027t just set the toggle to off yet.",
+      "range": {
+        "startLine": 338,
+        "startChar": 8,
+        "endLine": 338,
+        "endChar": 70
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df14e00_b8409515",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-26T00:54:40Z",
+      "side": 1,
+      "message": "AFAIK, the UX designers do not want any Cellular initialization subtitle if Cellular is unavailable. Can you double-check with elizabethchiu@ and/or shibasheikh@?",
+      "range": {
+        "startLine": 339,
+        "startChar": 20,
+        "endLine": 339,
+        "endChar": 61
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f793f388_21089474",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-26T00:54:40Z",
+      "side": 1,
+      "message": "I don\u0027t believe this situation is actually possible in practice, though this depends on an implementation detail of how TetherService works, so it\u0027s nice that you added some defensive code here. Can you add a comment explaining that we don\u0027t expect it to occur?",
+      "range": {
+        "startLine": 354,
+        "startChar": 6,
+        "endLine": 354,
+        "endChar": 28
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f27532_198bbbe5",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-26T00:54:40Z",
+      "side": 1,
+      "message": "Same comment as above - I don\u0027t believe this is supposed to be displayed for non-Cellular cases.",
+      "range": {
+        "startLine": 356,
+        "startChar": 19,
+        "endLine": 356,
+        "endChar": 60
+      },
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c60586_c09adb68",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-26T00:54:40Z",
+      "side": 1,
+      "message": "Initialize this to false; otherwise, we could get stuck in a state where we\u0027re always waiting if the memory used to allocate this bool happens to be true before we create the class.",
+      "range": {
+        "startLine": 399,
+        "startChar": 7,
+        "endLine": 399,
+        "endChar": 37
+      },
       "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
