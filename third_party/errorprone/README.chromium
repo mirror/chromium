@@ -9,6 +9,7 @@ Security Critical: no
 
 Description:
 * Catch common Java mistakes as compile-time errors.
+* AutoService is used for custom plugins in //tools/android/errorprone_plugin.
 * Download a version of error_prone_ant from the maven repository:
   * https://repo1.maven.org/maven2/com/google/errorprone/error_prone_ant/
 * Add jar file to the lib/ subdirectory, commit, update BUILD.gn and DEPS.
