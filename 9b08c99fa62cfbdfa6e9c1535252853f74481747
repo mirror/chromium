@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86598f38_1a8ca5c6",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 0,
+      "message": "\u003e aside: hmm, I hope that we test cursor bounds at bidi level changes, etc.\n\nTextfieldTest.TextCursorDisplayTest and TextCursorDisplayInRTLTest seem to cover this.\n\nrender_text_unittest.cc has DisplayRectShowsCursorLTR/DisplayRectShowsCursorRTL, but it doesn\u0027t use mixed strings.",
+      "parentUuid": "9bbf2fc4_fa818fc6",
+      "revId": "9b08c99fa62cfbdfa6e9c1535252853f74481747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80917fd6_5ebda801",
         "filename": "ui/gfx/render_text_harfbuzz.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-20T00:30:49Z",
       "side": 0,
       "message": "Why not just update this to mention GetCursorSpan instead?",
+      "revId": "9b08c99fa62cfbdfa6e9c1535252853f74481747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c1db5a_0a31ad48",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 0,
+      "message": "\u003e Why not just update this to mention GetCursorSpan instead?\n\nAhh, because the comment is wrong :/\n\nGetCursorSpan only uses ceil when the span encloses the last glyph of the text run. \n\nYou can get the full story at http://crbug.com/735346, which I titled \"(not really a bug) RenderText::GetSubstringBounds and RenderText::GetCursorBounds disagree (integer rounding differs)\" :)",
+      "parentUuid": "80917fd6_5ebda801",
       "revId": "9b08c99fa62cfbdfa6e9c1535252853f74481747",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

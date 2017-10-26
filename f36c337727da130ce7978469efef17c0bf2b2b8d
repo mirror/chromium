@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a795acfc_24527993",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e q: Is it possible to drop this swap and just return the x.span.start for the insert_mode case below?\n\nNot without moving the complexity elsewhere. GetCursorSpan requires its text range to be forwards (I\u0027ll add an earlier DCHECK [Done.], although GetGraphemeSpanForCharRange would DCHECK later).\n\nIf we allow GetCursorSpan to accept reversed ranges, documenting its return value becomes more complicated (it currently returns a reversed range iff the text run is RTL). And while the direction of the input to GetCursorSpan doesn\u0027t influence the geometry, I think it\u0027s nicer to enforce that on the contract rather than silently swapping inside GetCursorSpan.",
+      "parentUuid": "c9914388_acca9d4f",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4e3ded4_b932ace4",
         "filename": "ui/gfx/render_text_harfbuzz.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-20T00:30:49Z",
       "side": 1,
       "message": "nit: |code_point_count|?",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b38d4c4_4837e0b9",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e nit: |code_point_count|?\n\nDone.",
+      "parentUuid": "f4e3ded4_b932ace4",
       "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f85469da_60998690",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e aside: I hope GetDisplayText is safe to call here! ie. this code path isn\u0027t used when calculating the display text from the layout text or similar, ditto below. Existing tests should reveal any issues.\n\nI think it\u0027s safe. The call just below for RenderTextHarfBuzz::GetGraphemeIterator() also invokes GetDisplayText(), so this isn\u0027t really introducing anything new.\n\nAlthough.... I don\u0027t think there\u0027s any use-case currently for highlighting or drawing a cursor inside _elided_ text. GetDisplayText() here (and in GetGraphemeIterator()) are likely always returning layout_text();",
+      "parentUuid": "a1b17e9a_ba277053",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "680576b3_41d6cc79",
         "filename": "ui/gfx/render_text_harfbuzz.cc",
         "patchSetId": 14
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-20T00:30:49Z",
       "side": 1,
       "message": "q: Are these bounds not reversed for RTL text at the given index? If this DCHECK is important, perhaps we should do the same for the span returned for right_index? Maybe it\u0027d be nice to clarify the return value for GetGraphemeBounds.",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdfe4ff0_7c69160a",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e q: Are these bounds not reversed for RTL text at the given index? If this DCHECK is important, perhaps we should do the same for the span returned for right_index? Maybe it\u0027d be nice to clarify the return value for GetGraphemeBounds.\n\nRTL won\u0027t reverse the return value of GetGraphemeBounds. TextRunHarfBuzz::glpyhs are always ordered left-to-right (GetClusterAtImpl guarantees the cluster range is never reversed). Updated the documentation for TextRunHarfBuzz::GetGrapheme*\n\nAdded a DCHECK in GetGraphemeBounds -\n\n\n  DCHECK_LE(cluster_begin_x, cluster_end_x);\n\n\nThat gives an early check, and guarantees a non-reversed range will pop out.\n\n(removed this DCHECK)",
+      "parentUuid": "680576b3_41d6cc79",
       "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "59a259a1_4a38d7e9",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e q: DCHECK that the text_range.end() index is in the same run? (maybe not, given your comment below)\n\nupdated comment below",
+      "parentUuid": "28566145_83ddc4bf",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2adf879_a9357e02",
         "filename": "ui/gfx/render_text_harfbuzz.cc",
         "patchSetId": 14
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-20T00:30:49Z",
       "side": 1,
       "message": "nit: s/jump/span/?",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e881319a_e22a55c3",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e nit: s/jump/span/?\n\nDone.",
+      "parentUuid": "d2adf879_a9357e02",
       "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "10a3ae53_0110b8bf",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e Hmm, if that\u0027s a bug, I wonder if there are other legit cases where the span isn\u0027t contained in a single run? It would be good to cite a proper example, otherwise, maybe tweak the example to emphasize the incorrectness of the current behavior, maybe something like \"For example, Unicode Variation Selectors are incorrectly placed in the next run; see crbug.com/775404\"\n\nDone. Pretty sure it\u0027s a bug, but you can\u0027t tell on Windows since Segoe UI only has one telephone glyph. It\u0027s easy to see on ChromeOS by pasting text from that bug into the omnibox.",
+      "parentUuid": "6c1fe9e6_ad96561c",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3c30b8e_937c4e63",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 14
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-20T00:30:49Z",
       "side": 1,
       "message": "ditto nit: \"Each flag is 4\"",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b05725_f5c222e5",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4898,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e ditto nit: \"Each flag is 4\"\n\nDone.",
+      "parentUuid": "f3c30b8e_937c4e63",
       "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "ebfbc8fe_9f07f935",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4917,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e nit: also check that this middle_cursor.x() is LE half_width + 1?\n\nDone.",
+      "parentUuid": "7e9f4959_cf84c89d",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b13b663d_34dceb30",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 14
@@ -166,6 +328,24 @@
       "writtenOn": "2017-10-20T00:30:49Z",
       "side": 1,
       "message": "ditto nit: also check that this end_cursor.x() is LE whole_width + 1?",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c995b67_d702f314",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4922,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e ditto nit: also check that this end_cursor.x() is LE whole_width + 1?\n\nDone.",
+      "parentUuid": "b13b663d_34dceb30",
       "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "100939af_174b45cc",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4930,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e nit: s/British/first/?\n\nDone.",
+      "parentUuid": "9c17647b_4d337309",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "364f82c6_13c4b07d",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 14
@@ -200,6 +398,24 @@
       "writtenOn": "2017-10-20T00:30:49Z",
       "side": 1,
       "message": "ditto nit: check that selection_bounds.width() + 1 is GE half_width.\n(optionally make this expectation match the pattern above a bit better)",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58455cf0_eb586946",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4935,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T07:51:00Z",
+      "side": 1,
+      "message": "\u003e ditto nit: check that selection_bounds.width() + 1 is GE half_width.\n\u003e (optionally make this expectation match the pattern above a bit better)\n\nDone.",
+      "parentUuid": "364f82c6_13c4b07d",
       "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
