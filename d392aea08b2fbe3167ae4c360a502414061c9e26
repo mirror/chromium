@@ -93,6 +93,30 @@
       "revId": "d392aea08b2fbe3167ae4c360a502414061c9e26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3993f32_52419641",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-26T17:28:15Z",
+      "side": 1,
+      "message": "What happens if a compromised worker passes a fake value?",
+      "parentUuid": "2f95d602_b91ab69c",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 85,
+        "endChar": 32
+      },
+      "revId": "d392aea08b2fbe3167ae4c360a502414061c9e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
