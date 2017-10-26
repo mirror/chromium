@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "95fbdb55_6ee1ec8c",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-26T00:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37bfd512_82bae490",
+      "revId": "21c2b2f2db65ec33e48b9af1a34e5a2fa90735f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2838be2_ee3e1b4d",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 10
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-25T23:54:48Z",
       "side": 1,
       "message": "Should this be !HasSeenStylus? It seems odd to check that the pref is true, then immediately set it to true.",
+      "revId": "21c2b2f2db65ec33e48b9af1a34e5a2fa90735f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2f0724_3598c52d",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-26T00:22:25Z",
+      "side": 1,
+      "message": "Done. This is covered by tests fwiw, i just didn\u0027t expect to make a mistake when changing it from local var.",
+      "parentUuid": "d2838be2_ee3e1b4d",
       "revId": "21c2b2f2db65ec33e48b9af1a34e5a2fa90735f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "d4493415_b9c4207d",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-26T00:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34d6e709_449fba29",
+      "revId": "21c2b2f2db65ec33e48b9af1a34e5a2fa90735f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4305bbbb_660e9ad9",
         "filename": "ash/system/palette/palette_welcome_bubble.cc",
         "patchSetId": 10
@@ -81,6 +135,24 @@
       "writtenOn": "2017-10-25T23:54:48Z",
       "side": 1,
       "message": "Should this check that the event is a stylus event?",
+      "revId": "21c2b2f2db65ec33e48b9af1a34e5a2fa90735f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5404a40a_ba4f8f35",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-26T00:22:25Z",
+      "side": 1,
+      "message": "Any event will be able to close the bubble.",
+      "parentUuid": "4305bbbb_660e9ad9",
       "revId": "21c2b2f2db65ec33e48b9af1a34e5a2fa90735f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
