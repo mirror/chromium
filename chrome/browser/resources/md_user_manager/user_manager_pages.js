@@ -46,6 +46,14 @@ Polymer({
   },
 
   /**
+   * @param {!Event} e
+   * @private
+   */
+  stopPropagation_: function(e) {
+    e.stopPropagation();
+  },
+
+  /**
    * Returns True if the first argument is present in the given set of values.
    * @param {string} selectedPage ID of the currently selected page.
    * @param {...string} var_args Pages IDs to check the first argument against.
