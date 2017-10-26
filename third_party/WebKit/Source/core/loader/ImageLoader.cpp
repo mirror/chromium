@@ -32,7 +32,6 @@
 #include "core/dom/events/Event.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
-#include "core/frame/UseCounter.h"
 #include "core/html/CrossOriginAttribute.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
