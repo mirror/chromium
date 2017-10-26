@@ -21,17 +21,6 @@
 
 namespace media {
 
-// Returns true if the decode result was end of stream.
-static inline bool IsEndOfStream(int result,
-                                 int decoded_size,
-                                 const scoped_refptr<DecoderBuffer>& input) {
-  // Three conditions to meet to declare end of stream for this decoder:
-  // 1. FFmpeg didn't read anything.
-  // 2. FFmpeg didn't output anything.
-  // 3. An end of stream buffer is received.
-  return result == 0 && decoded_size == 0 && input->end_of_stream();
-}
-
 // Return the number of channels from the data in |frame|.
 static inline int DetermineChannels(AVFrame* frame) {
   return frame->channels;
@@ -188,16 +177,25 @@ bool FFmpegAudioDecoder::FFmpegDecode(
       return true;
   }
 
-  // Each audio packet may contain several frames, so we must call the decoder
-  // until we've exhausted the packet.  Regardless of the packet size we always
-  // want to hand it to the decoder at least once, otherwise we would end up
-  // skipping end of stream packets since they have a size of zero.
+  bool packet_sent = false;
   do {
-    int frame_decoded = 0;
-    const int result = avcodec_decode_audio4(
-        codec_context_.get(), av_frame_.get(), &frame_decoded, &packet);
+    int result = avcodec_send_packet(codec_context_.get(), &packet);
+    packet_sent = result != AVERROR(EAGAIN);
+    if (result < 0 && result != AVERROR(EAGAIN) && result != AVERROR_EOF) {
+      LOG(ERROR) << "BOOM!";
+      return false;
+    }
 
-    if (result < 0) {
+    result = avcodec_receive_frame(codec_context_.get(), av_frame_.get());
+
+    bool frame_decoded = true;
+    if (result == AVERROR(EAGAIN) || result == AVERROR_EOF) {
+      frame_decoded = false;
+      if (!packet_sent) {
+        LOG(ERROR) << "Decoding not contiuable, can't write and can't read!";
+        return false;
+      }
+    } else if (result < 0) {
       DCHECK(!buffer->end_of_stream())
           << "End of stream buffer produced an error! "
           << "This is quite possibly a bug in the audio decoder not handling "
@@ -211,11 +209,6 @@ bool FFmpegAudioDecoder::FFmpegDecode(
 
       break;
     }
-
-    // Update packet size and data pointer in case we need to call the decoder
-    // with the remaining bytes from this packet.
-    packet.size -= result;
-    packet.data += result;
 
     scoped_refptr<AudioBuffer> output;
 
@@ -285,8 +278,7 @@ bool FFmpegAudioDecoder::FFmpegDecode(
     }
 
     // WARNING: |av_frame_| no longer has valid data at this point.
-    const int decoded_frames = frame_decoded ? output->frame_count() : 0;
-    if (IsEndOfStream(result, decoded_frames, buffer)) {
+    if (buffer->end_of_stream() && !frame_decoded) {
       DCHECK_EQ(packet.size, 0);
     } else if (discard_helper_->ProcessBuffers(buffer, output)) {
       if (config_changed &&
@@ -300,7 +292,7 @@ bool FFmpegAudioDecoder::FFmpegDecode(
       *has_produced_frame = true;
       output_cb_.Run(output);
     }
-  } while (packet.size > 0);
+  } while (!packet_sent);
 
   return true;
 }
