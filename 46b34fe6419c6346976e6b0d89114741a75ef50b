@@ -37,6 +37,52 @@
     },
     {
       "key": {
+        "uuid": "18031d07_37c60fd6",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-26T12:14:57Z",
+      "side": 1,
+      "message": "volume ?",
+      "range": {
+        "startLine": 462,
+        "startChar": 20,
+        "endLine": 462,
+        "endChar": 25
+      },
+      "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10bad198_dc06a065",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-26T12:14:57Z",
+      "side": 1,
+      "message": "How about using fall-through to avoid duplication? e.g.\n\ncase importer.ActivityState.INSUFFICIENT_CLOUD_SPACE:  // fallthrough\ncase importer.ActivityState.INSUFFICIENT_LOCAL_SPACE:\n  console.assert(!!opt_scan, \u0027Scan not defined, but is required.\u0027);\n  {\n    let attrLabel;\n    let messageLabel;\n    if (activityState \u003d\u003d importer.ActivityState.INSUFFICIENT_CLOUD_SPACE) {\n      attrLabel \u003d \u0027CLOUD_IMPORT_TOOLTIP_INSUFFICIENT_CLOUD_SPACE\u0027;\n      messageLabel \u003d \u0027CLOUD_IMPORT_STATUS_INSUFFICIENT_CLOUD_SPACE\u0027;\n    } else {\n      // Do the same for local.\n    }\n    this.mainButton_.setAttribute(\u0027aria-label\u0027, strf(attrLabel));\n    this.statusContent_.innerHTML \u003d strf(messageLabel,\n        opt_scan.getFileEntries().length);\n  }\n  // Do the common stuff.\n  break;",
+      "range": {
+        "startLine": 861,
+        "startChar": 57,
+        "endLine": 867,
+        "endChar": 57
+      },
+      "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "104ba9a6_1cb82228",
         "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
         "patchSetId": 2
@@ -72,6 +118,30 @@
       "side": 1,
       "message": "I have checked it, there is no error as cloud back up is not possible if Drive is not mounted - when checking back in the code, I found this line\n\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/import_controller.js?l\u003d347\u0026rcl\u003d549c712977c9bd8c81ac978548be8fa0f84fa7e9\n\nin the method that ultimately calls fitsInAvailableSpace_, which calls getFreeStorageSpace.\n\nThe check does, however, run forever if there Drive is available via the settings but if there is no internet connection - should I hide the back up option in this case (like in the above case), or show an error message saying that it can\u0027t connect to drive (see the screenshots in the bug for reference - I have also included my question there to get input from Weifang and Maria)?",
       "parentUuid": "104ba9a6_1cb82228",
+      "range": {
+        "startLine": 1220,
+        "startChar": 8,
+        "endLine": 1220,
+        "endChar": 27
+      },
+      "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f75edd_bb5a5fa2",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-26T12:14:57Z",
+      "side": 1,
+      "message": "If it\u0027s not possible to volumeInfo to be null, can you add assert wrapping? i.e.\nassert(this.fileManager_.volumeManager.getCurrentProfileVolumeInfo(volumeType));\n, and add comment why it\u0027s not null?",
+      "parentUuid": "96c93fba_9be37f9e",
       "range": {
         "startLine": 1220,
         "startChar": 8,
