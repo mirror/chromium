@@ -597,9 +597,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidStartProvisionalLoad(blink::WebDocumentLoader* document_loader,
                                blink::WebURLRequest& request) override;
   void DidReceiveServerRedirectForProvisionalLoad() override;
-  void DidFailProvisionalLoad(
-      const blink::WebURLError& error,
-      blink::WebHistoryCommitType commit_type) override;
+  void DidFailProvisionalLoad(const blink::WebURLError& error,
+                              blink::WebHistoryCommitType commit_type) override;
   void DidCommitProvisionalLoad(
       const blink::WebHistoryItem& item,
       blink::WebHistoryCommitType commit_type) override;
