@@ -716,12 +716,6 @@ bool CanHandleToggleCapsLock(const ui::Accelerator& accelerator,
     }
   }
 
-  // Caps Lock release
-  if (accelerator.key_code() == ui::VKEY_CAPITAL &&
-      accelerator.key_state() == ui::Accelerator::KeyState::RELEASED) {
-    return ime->GetImeKeyboard();
-  }
-
   return false;
 }
 

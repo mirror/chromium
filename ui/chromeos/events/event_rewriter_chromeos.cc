@@ -796,9 +796,21 @@ bool EventRewriterChromeOS::RewriteModifierKeys(const ui::KeyEvent& key_event,
       used_modifier_latches_ |= pressed_modifier_latches_;
       latched_modifier_latches_ = ui::EF_NONE;
     }
-    // The handling of Caps Lock toggling is now moved to accelerator
-    // controller.
-    // (see https://bugs.chromium.org/p/chromium/issues/detail?id=700705).
+  }
+
+  // Caps lock handling is here instead of AcceleratorController because key
+  // event stops propagation after it is handled as an accelerator key. Caps
+  // lock key as an accelerator key is always handled before it is sent to web
+  // app (e.g. Chrome Remote Desktop), which results in unexpected caps lock
+  // state (crbug.com/775743).
+  if (key_event.type() == ui::ET_KEY_RELEASED &&
+      state->key_code == ui::VKEY_CAPITAL) {
+    ::chromeos::input_method::ImeKeyboard* ime_keyboard =
+        ime_keyboard_for_testing_
+            ? ime_keyboard_for_testing_
+            : ::chromeos::input_method::InputMethodManager::Get()
+                  ->GetImeKeyboard();
+    ime_keyboard->SetCapsLockEnabled(!ime_keyboard->CapsLockIsEnabled());
   }
   return exact_event;
 }
