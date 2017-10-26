@@ -249,6 +249,15 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   ContentSecurityPolicyCheckResult CheckContentSecurityPolicyFrameSrc(
       bool is_redirect);
 
+  // Check whether a form action should be allowed or should be blocked because
+  // it violates a CSP. This method can have two side effects:
+  // - If a CSP is configured to send reports and the request violates the CSP,
+  //   a report will be sent.
+  // - The navigation request may be upgraded from HTTP to HTTPS if a CSP is
+  //   configured to upgrade insecure requests.
+  ContentSecurityPolicyCheckResult CheckContentSecurityPolicyFormAction(
+      bool is_redirect);
+
   // This enum describes the result of the credentialed subresource check for
   // the request.
   enum class CredentialedSubresourceCheckResult {
