@@ -45,6 +45,30 @@ LanguageSettingsPrivate.prototype = {
   setEnableTranslationForLanguage: assertNotReached,
 
   /**
+   * Moves a language to the top of the list.
+   * @param {string} languageCode
+   * @param {string} languageList
+   * @see https://developer.chrome.com/extensions/languageSettingsPrivate#method-moveLanguageToTheTop
+   */
+  moveLanguageToTheTop: assertNotReached,
+
+  /**
+   * Moves a language up in the list by one position.
+   * @param {string} languageCode
+   * @param {string} languageList
+   * @see https://developer.chrome.com/extensions/languageSettingsPrivate#method-moveLanguageUp
+   */
+  moveLanguageUp: assertNotReached,
+
+  /**
+   * Moves a language down in the list by one position.
+   * @param {string} languageCode
+   * @param {string} languageList
+   * @see https://developer.chrome.com/extensions/languageSettingsPrivate#method-moveLanguageDown
+   */
+  moveLanguageDown: assertNotReached,
+
+  /**
    * Gets the current status of the chosen spell check dictionaries.
    * @param {function(!Array<!chrome.languageSettingsPrivate.SpellcheckDictionaryStatus>):void}
    *     callback

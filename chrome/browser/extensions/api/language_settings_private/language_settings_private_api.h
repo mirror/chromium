@@ -92,6 +92,63 @@ class LanguageSettingsPrivateSetEnableTranslationForLanguageFunction
       LanguageSettingsPrivateSetEnableTranslationForLanguageFunction);
 };
 
+// Implements the languageSettingsPrivate.moveLanguageToTheTop method.
+class LanguageSettingsPrivateMoveLanguageToTheTopFunction
+    : public UIThreadExtensionFunction {
+ public:
+  LanguageSettingsPrivateMoveLanguageToTheTopFunction();
+  DECLARE_EXTENSION_FUNCTION("languageSettingsPrivate.moveLanguageToTheTop",
+                             LANGUAGESETTINGSPRIVATE_MOVELANGUAGETOTHETOP)
+
+ protected:
+  ~LanguageSettingsPrivateMoveLanguageToTheTopFunction() override;
+
+  // ExtensionFunction overrides.
+  ResponseAction Run() override;
+
+ private:
+  ChromeExtensionFunctionDetails chrome_details_;
+  DISALLOW_COPY_AND_ASSIGN(LanguageSettingsPrivateMoveLanguageToTheTopFunction);
+};
+
+// Implements the languageSettingsPrivate.moveLanguageUp method.
+class LanguageSettingsPrivateMoveLanguageUpFunction
+    : public UIThreadExtensionFunction {
+ public:
+  LanguageSettingsPrivateMoveLanguageUpFunction();
+  DECLARE_EXTENSION_FUNCTION("languageSettingsPrivate.moveLanguageUp",
+                             LANGUAGESETTINGSPRIVATE_MOVELANGUAGEUP)
+
+ protected:
+  ~LanguageSettingsPrivateMoveLanguageUpFunction() override;
+
+  // ExtensionFunction overrides.
+  ResponseAction Run() override;
+
+ private:
+  ChromeExtensionFunctionDetails chrome_details_;
+  DISALLOW_COPY_AND_ASSIGN(LanguageSettingsPrivateMoveLanguageUpFunction);
+};
+
+// Implements the languageSettingsPrivate.moveLanguageDown method.
+class LanguageSettingsPrivateMoveLanguageDownFunction
+    : public UIThreadExtensionFunction {
+ public:
+  LanguageSettingsPrivateMoveLanguageDownFunction();
+  DECLARE_EXTENSION_FUNCTION("languageSettingsPrivate.moveLanguageDown",
+                             LANGUAGESETTINGSPRIVATE_MOVELANGUAGEDOWN)
+
+ protected:
+  ~LanguageSettingsPrivateMoveLanguageDownFunction() override;
+
+  // ExtensionFunction overrides.
+  ResponseAction Run() override;
+
+ private:
+  ChromeExtensionFunctionDetails chrome_details_;
+  DISALLOW_COPY_AND_ASSIGN(LanguageSettingsPrivateMoveLanguageDownFunction);
+};
+
 // Implements the languageSettingsPrivate.getSpellcheckDictionaryStatuses
 // method.
 class LanguageSettingsPrivateGetSpellcheckDictionaryStatusesFunction

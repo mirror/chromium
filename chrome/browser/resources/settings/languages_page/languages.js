@@ -610,38 +610,24 @@ Polymer({
   },
 
   /**
-   * Moves the language in the list of enabled languages by the given offset.
+   * Moves the language in the list of enabled languages either up or down.
    * @param {string} languageCode
-   * @param {number} offset Negative offset moves the language toward the front
-   *     of the list. A Positive one moves the language toward the back.
+   * @param {boolean} upDirection True if we need to move up, false if we
+   *     need to move down
    */
-  moveLanguage: function(languageCode, offset) {
+  moveLanguage: function(languageCode, upDirection) {
     if (!CrSettingsPrefs.isInitialized)
       return;
 
-    var languageCodes =
-        this.getPref(preferredLanguagesPrefName).value.split(',');
+    var tempArray = Array.from(this.enabledLanguageSet_);
+    var listStr = tempArray.join(',');
 
-    var originalIndex = languageCodes.indexOf(languageCode);
-    var newIndex = originalIndex;
-    var direction = Math.sign(offset);
-    var distance = Math.abs(offset);
-
-    // Step over the distance to find the target index.
-    while (distance > 0) {
-      newIndex += direction;
-      if (newIndex < 0 || newIndex >= languageCodes.length)
-        return;
-
-      // Skip over non-enabled languages, since they don't appear in the list
-      // (but we don't want to remove them).
-      if (this.enabledLanguageSet_.has(languageCodes[newIndex]))
-        distance--;
+    if (upDirection) {
+      this.languageSettingsPrivate_.moveLanguageUp(languageCode, listStr);
+    } else {
+      this.languageSettingsPrivate_.moveLanguageDown(languageCode, listStr);
     }
 
-    languageCodes[originalIndex] = languageCodes[newIndex];
-    languageCodes[newIndex] = languageCode;
-    this.setPrefValue(preferredLanguagesPrefName, languageCodes.join(','));
   },
 
   /**
@@ -652,15 +638,9 @@ Polymer({
     if (!CrSettingsPrefs.isInitialized)
       return;
 
-    var languageCodes =
-        this.getPref(preferredLanguagesPrefName).value.split(',');
-    var originalIndex = languageCodes.indexOf(languageCode);
-    assert(originalIndex != -1);
-
-    languageCodes.splice(originalIndex, 1);
-    languageCodes.unshift(languageCode);
-
-    this.setPrefValue(preferredLanguagesPrefName, languageCodes.join(','));
+    var tempArray = Array.from(this.enabledLanguageSet_);
+    var listStr = tempArray.join(',');
+    this.languageSettingsPrivate_.moveLanguageToTheTop(languageCode, listStr);
   },
 
   /**
