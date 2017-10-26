@@ -61,8 +61,9 @@ class WebFrameTestClient : public blink::WebFrameClient {
   void DidStartProvisionalLoad(blink::WebDocumentLoader* loader,
                                blink::WebURLRequest& request) override;
   void DidReceiveServerRedirectForProvisionalLoad() override;
-  void DidFailProvisionalLoad(const blink::WebURLError& error,
-                              blink::WebHistoryCommitType commit_type) override;
+  void DidFailProvisionalLoad(
+      const blink::WebURLError& error,
+      blink::WebHistoryCommitType commit_type) override;
   void DidCommitProvisionalLoad(
       const blink::WebHistoryItem& history_item,
       blink::WebHistoryCommitType history_type) override;
@@ -90,6 +91,14 @@ class WebFrameTestClient : public blink::WebFrameClient {
   bool RunFileChooser(const blink::WebFileChooserParams& params,
                       blink::WebFileChooserCompletion* completion) override;
   blink::WebEffectiveConnectionType GetEffectiveConnectionType() override;
+
+  // RenderFrameImpl method needed by WebFrameTestProxy
+  // This is not needed by Blink, so it is not a part of the WebFrameClient
+  // interface like DidFailProvisionalLoad().
+  void DidFailProvisionalLoadWithErrorPage(
+      const blink::WebURLError& error,
+      blink::WebHistoryCommitType commit_type,
+      const base::Optional<std::string>& error_page_content);
 
  private:
   TestRunner* test_runner();
