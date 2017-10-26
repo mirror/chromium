@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dafe0e80_fd4e4f37",
+        "filename": "tools/metrics/rappor/rappor.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-26T20:56:22Z",
+      "side": 1,
+      "message": "nit: s/menu/menu, (i.e. add a comma after \"menu\")",
+      "range": {
+        "startLine": 309,
+        "startChar": 4,
+        "endLine": 309,
+        "endChar": 8
+      },
+      "revId": "9810e9da4092852312bfd78b4eb12b314f865127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
