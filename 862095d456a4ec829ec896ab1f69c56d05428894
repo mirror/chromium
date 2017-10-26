@@ -16,6 +16,24 @@
       "revId": "862095d456a4ec829ec896ab1f69c56d05428894",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ea893b_5cf79ada",
+        "filename": "ui/gl/gl_bindings_autogen_glx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-26T14:08:06Z",
+      "side": 0,
+      "message": "Good idea. Done",
+      "parentUuid": "d25c5a14_7d28e0d2",
+      "revId": "862095d456a4ec829ec896ab1f69c56d05428894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
