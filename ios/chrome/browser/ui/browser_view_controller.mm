@@ -136,6 +136,7 @@
 #import "ios/chrome/browser/ui/find_bar/find_bar_controller_ios.h"
 #import "ios/chrome/browser/ui/first_run/welcome_to_chrome_view_controller.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_presentation.h"
 #import "ios/chrome/browser/ui/history_popup/tab_history_legacy_coordinator.h"
 #import "ios/chrome/browser/ui/key_commands_provider.h"
@@ -2468,7 +2469,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
   tab.dialogDelegate = self;
   tab.snapshotOverlayProvider = self;
   tab.passKitDialogProvider = self;
-  tab.fullScreenControllerDelegate = self;
+  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+    tab.fullScreenControllerDelegate = self;
+  }
   if (!IsIPadIdiom()) {
     tab.overscrollActionsControllerDelegate = self;
   }
@@ -2509,7 +2512,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
   tab.dialogDelegate = nil;
   tab.snapshotOverlayProvider = nil;
   tab.passKitDialogProvider = nil;
-  tab.fullScreenControllerDelegate = nil;
+  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+    tab.fullScreenControllerDelegate = nil;
+  }
   if (!IsIPadIdiom()) {
     tab.overscrollActionsControllerDelegate = nil;
   }
