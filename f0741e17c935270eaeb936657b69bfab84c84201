@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cb74cd9f_4518406b",
+        "filename": "chrome/browser/resources/md_extensions/app_or_extension_behavior.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-26T20:24:44Z",
+      "side": 1,
+      "message": "Ideas on a name?\nAppExtensionBehavior\nExtensionBehavior\n\nI don\u0027t feel strongly about any of the names and can\u0027t think of something more generic that\u0027s extensions specific.",
+      "parentUuid": "6dae59c9_f3a0de1b",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "f0741e17c935270eaeb936657b69bfab84c84201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca59d6a3_60802957",
         "filename": "chrome/browser/resources/md_extensions/item.html",
         "patchSetId": 3
@@ -60,6 +84,24 @@
       "writtenOn": "2017-10-26T19:35:12Z",
       "side": 1,
       "message": "This may be outside the scope of this CL, but this aria-describedby made me wonder where id\u003d\"name\" is. It looks like it\u0027s in a extensions-item which is repeated in an extensions-item-list. Does that mean that there may be several elements with the same id?\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/item_list.html?type\u003dcs\u0026q\u003dextensions-item%5B%5E-%5D\u0026sq\u003dpackage:chromium\u0026l\u003d70",
+      "revId": "f0741e17c935270eaeb936657b69bfab84c84201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf9dfbd_0e5a035d",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-26T20:24:44Z",
+      "side": 1,
+      "message": "Each ID is inside the shadow dom, so there\u0027s only one element with an id\u003d\"name\" in this scope.",
+      "parentUuid": "ca59d6a3_60802957",
       "revId": "f0741e17c935270eaeb936657b69bfab84c84201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
