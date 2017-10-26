@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec960ec8_9ad8b928",
+        "filename": "cc/tiles/gpu_image_decode_cache_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-26T19:55:07Z",
+      "side": 1,
+      "message": "nit: Can you change this to EXPECT_NE other states (or some other robust way of ensuring this won\u0027t accidentally break in the future)",
+      "revId": "4f1f6a7f2d92e934f3be9e67cdaa938de7b5ebe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
