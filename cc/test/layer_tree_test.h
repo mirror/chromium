@@ -49,6 +49,8 @@ void CreateVirtualViewportLayers(Layer* root_layer,
                                  const gfx::Size& scroll_bounds,
                                  LayerTreeHost* host);
 
+std::unique_ptr<UkmRecorderFactory> CreateUkmRecorderFactory();
+
 class LayerTreeHostClientForTesting;
 
 // The LayerTreeTests runs with the main loop running. It instantiates a single
