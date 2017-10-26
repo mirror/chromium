@@ -108,11 +108,21 @@ bool NGOffsetMapping::AcceptsPosition(const Position& position) {
 
 // static
 const NGOffsetMapping* NGOffsetMapping::GetFor(const Position& position) {
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return nullptr;
   if (!NGOffsetMapping::AcceptsPosition(position))
     return nullptr;
   auto node_offset_pair = ToNodeOffsetPair(position);
   const LayoutObject* layout_object =
       AssociatedLayoutObjectOf(node_offset_pair.first, node_offset_pair.second);
+  return GetFor(layout_object);
+}
+
+// static
+const NGOffsetMapping* NGOffsetMapping::GetFor(
+    const LayoutObject* layout_object) {
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return nullptr;
   if (!layout_object || !layout_object->IsInline())
     return nullptr;
   LayoutBlockFlow* block_flow = layout_object->EnclosingNGBlockFlow();
