@@ -7,6 +7,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
+#include "device/geolocation/public/interfaces/geolocation_context.mojom.h"
 #include "device/screen_orientation/public/interfaces/screen_orientation.mojom.h"
 #include "device/sensors/public/interfaces/orientation.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -79,6 +80,8 @@ class DeviceService : public service_manager::Service {
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
 
   void BindFingerprintRequest(mojom::FingerprintRequest request);
+
+  void BindGeolocationContextRequest(mojom::GeolocationContextRequest request);
 
   void BindOrientationSensorRequest(mojom::OrientationSensorRequest request);
 
