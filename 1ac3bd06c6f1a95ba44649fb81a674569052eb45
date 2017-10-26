@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18a9c604_5b6cb68d",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-26T03:41:07Z",
+      "side": 1,
+      "message": "Nit: per the style guide, we can omit \u003cstring\u003e here since the .h file includes it.",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "1ac3bd06c6f1a95ba44649fb81a674569052eb45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
