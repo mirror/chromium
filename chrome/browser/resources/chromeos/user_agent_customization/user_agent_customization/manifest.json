@@ -1,0 +1,16 @@
+{
+  // id: okmppgjfomiienghbmnakljkhbcijocd
+  "name": "User-Agent customization",
+  "description": "Extension to customize User-Agent platform",
+  "version": "1.0",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "*://*.office.com/*"
+  ]
+}

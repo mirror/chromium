@@ -1,0 +1,25 @@
+{
+  // chrome-extension://iedbcelleopkkdhdbjdhiidblinnfhko
+  // "id": "gokfmgbabgmfmnnpikikekganhmlioga",
+  // TODO: remove whitelisted key
+  // "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs8wiwzvpbAdK5eMfIofO0aKo9lOZ0XUOdzOGJzgvVs0EWavUvzhu5BQwT4yr4+RmjSog2GVMnVnYA0pz2V5TMuZzxt9VD9FLRKL/IBM2GImnmKmBgee0jRVmJkGXvxyy9g9ruj/0TfE4S4GzEwD6ckT85mWEmY1eUuH2Z+LNScBvtj7ckpSeA98sc7MhRBBFJdcrlG+AAvf4MyYzJyswoUt6MSyJybu3nyNQLeNvPbntWxwOwokfxZ8YHZQUzdMfm7VDAV8LVGbmwYFTWnSXxkj4wkmRn2uIqzDr9Dnb7NxySFLFiZGx+mf9vrXtVx6vAs+7AvocK8r+lAUghGLcfQIDAQAB",
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8pGXFsB/5k3zkbUGSfy83rH72vjfC5z6cW8W/LmheaJc1rAkdsNTD9KGykk/z96EdoQ4zHQ1AqpCHCJ0lXAn+tZ4F45JbfJrMGcJ722ky8LSE5qy8r3l+rfL4iCPLrEpsZtv3ck5QuTN9IcrEfj5fdWstyt7MFuhJ7931O2LuhQIDAQAB",
+  "name": "User-Agent customization",
+  "description": "Extension to customize User-Agent for ARC++",
+  "version": "1.0",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["*://*.office.com/*"],
+      "js": ["script.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "debugger"
+  ]
+}
