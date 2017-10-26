@@ -17,6 +17,7 @@ struct StructTraits<url::mojom::blink::Url::DataView, ::blink::KURL> {
   static WTF::String url(const ::blink::KURL& blinkUrl) {
     if (!blinkUrl.IsValid() ||
         blinkUrl.GetString().length() > url::kMaxURLChars) {
+      DCHECK(!blinkUrl.GetString().IsNull());
       return g_empty_string;
     }
 
