@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7745fed2_fef6a963",
+        "filename": "chrome/browser/devtools/device/devtools_android_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-26T15:02:12Z",
+      "side": 1,
+      "message": "I don\u0027t get this.\n- |callback| is base::Callback, not a CancelableCallback. Why does it have IsCancelled method? I\u0027d expect is_null instead.\n- Previous code was checking callbacks for equality, not for cancellation.\nAm I missing something?",
+      "revId": "f093b702fa004dc517e96e46ea328bd4a50fc5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
