@@ -303,4 +303,9 @@ HostFrameSinkManager::FrameSinkData::~FrameSinkData() = default;
 HostFrameSinkManager::FrameSinkData& HostFrameSinkManager::FrameSinkData::
 operator=(FrameSinkData&& other) = default;
 
+void HostFrameSinkManager::AddVideoDetectorObserver(
+    mojom::VideoDetectorObserverPtr observer) {
+  frame_sink_manager_impl_->AddVideoDetectorObserver(std::move(observer));
+}
+
 }  // namespace viz
