@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceb72d89_e344c5f7",
+        "filename": ".gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T06:37:29Z",
+      "side": 0,
+      "message": "Hammer was from the SCons era!",
+      "revId": "4aa64a68765adbc08b192cab7038c36f6c1937ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
