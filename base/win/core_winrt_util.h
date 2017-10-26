@@ -8,7 +8,6 @@
 #include <hstring.h>
 #include <inspectable.h>
 #include <windef.h>
-#include <windows.storage.streams.h>
 
 #include "base/base_export.h"
 #include "base/strings/string16.h"
@@ -31,15 +30,6 @@ BASE_EXPORT HRESULT RoGetActivationFactory(HSTRING class_id,
 
 BASE_EXPORT HRESULT RoActivateInstance(HSTRING class_id,
                                        IInspectable** instance);
-
-BASE_EXPORT HRESULT
-GetPointerToBufferData(ABI::Windows::Storage::Streams::IBuffer* buffer,
-                       uint8_t** out);
-
-BASE_EXPORT HRESULT
-CreateIBufferFromData(const uint8_t* data,
-                      UINT32 length,
-                      ABI::Windows::Storage::Streams::IBuffer** buffer);
 
 // Retrieves an activation factory for the type specified.
 template <typename InterfaceType, char16 const* runtime_class_id>
