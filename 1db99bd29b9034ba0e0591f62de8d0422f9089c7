@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "003292ed_994a2785",
+        "filename": "cc/paint/paint_font.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-26T23:22:43Z",
+      "side": 1,
+      "message": "All of these are still used by the ui/gfx/render_text. I can remove them as a follow-up when I convert the ui to use PaintTypefaces.",
+      "parentUuid": "9844c9eb_318e0974",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93f1c57a_dc947316",
         "filename": "cc/paint/paint_op_buffer.h",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bf469f68_c38abe57",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-26T23:22:43Z",
+      "side": 1,
+      "message": "We still need the array for the member, since we can\u0027t store a vector there, but other than that done.",
+      "parentUuid": "93f1c57a_dc947316",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80fc8833_25ad8595",
         "filename": "cc/paint/paint_op_reader.cc",
         "patchSetId": 15
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-26T20:27:10Z",
       "side": 1,
       "message": "I\u0027m a little surprised by !*typeface.  Is this for webfonts that can\u0027t successfully create the SkTypeface for the PaintTypeface?  Should that be checked earlier and make sure that all catalog entries are valid?",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2003ca53_1155cfe7",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-26T23:22:43Z",
+      "side": 1,
+      "message": "So it\u0027s not just webfonts. I basically don\u0027t have validity verification for PaintTypeface deserialization other than the parameters _seem_ sane. In theory, you could have a bunch of typefaces that can\u0027t be created but that\u0027s Ok as long as they aren\u0027t used. \n\nI agree that I should be verifying the typefaces earlier. However, the (self-imposed) problem is that typeface deserialization is decoupled from the sktextblob deserialization. So even if we fail the typeface deserialization, the textblob will still try and go ahead and, without this check, end up with a nullptr typeface which means skia would use some default instead of failing.\n\nI would prefer to keep this here... The alternative is to check !valid in the paint_op_buffer deserialization. I could do that. Ok done. I guess I\u0027m going to leave the above text as proof that I thought about it :P",
+      "parentUuid": "80fc8833_25ad8595",
       "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b07917f5_9ef1f567",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-26T23:22:43Z",
+      "side": 1,
+      "message": "Can you please clarify? Do you mean to add it to PaintFlags and then pass PaintFlags instead of SkPaint to this function and then do paint_flags.getTextBlobIntercepts?\n\nOr am I misunderstanding?",
+      "parentUuid": "3d1743e2_46b4607f",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1511fd0e_84f82956",
         "filename": "third_party/WebKit/Source/platform/fonts/win/FontPlatformDataWin.cpp",
         "patchSetId": 15
@@ -84,6 +156,24 @@
       "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc1e9ce_03eeb307",
+        "filename": "third_party/WebKit/Source/platform/fonts/win/FontPlatformDataWin.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-26T23:22:43Z",
+      "side": 1,
+      "message": "Yeah, it has all the setters but it doesn\u0027t have the corresponding getters. I was kind of purposely avoiding that, but I\u0027ve added it here.",
+      "parentUuid": "1511fd0e_84f82956",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
