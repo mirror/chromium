@@ -60,19 +60,6 @@ void InstantiatePersistentHistograms() {
   if (!base::PathService::Get(chrome::DIR_USER_DATA, &metrics_dir))
     return;
 
-  // Remove any existing file from its legacy location.
-  // TODO(bcwhite): Remove this block of code in M62 or later.
-  base::FilePath legacy_file;
-  base::GlobalHistogramAllocator::ConstructFilePaths(
-      metrics_dir, ChromeMetricsServiceClient::kBrowserMetricsName,
-      &legacy_file, nullptr, nullptr);
-  base::PostTaskWithTraits(
-      FROM_HERE,
-      {base::MayBlock(), base::TaskPriority::BACKGROUND,
-       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
-      base::BindOnce(base::IgnoreResult(&base::DeleteFile),
-                     base::Passed(&legacy_file), /*recursive=*/false));
-
   // Create a directory for storing completed metrics files. Files in this
   // directory must have embedded system profiles. If the directory can't be
   // created, the file will just be deleted below.
@@ -92,12 +79,18 @@ void InstantiatePersistentHistograms() {
   base::GlobalHistogramAllocator::ConstructFilePathsForUploadDir(
       metrics_dir, upload_dir, ChromeMetricsServiceClient::kBrowserMetricsName,
       &upload_file, &active_file, &spare_file);
+  DCHECK(!base::PathExists(active_file));
 
-  // Move any existing "active" file to the final name from which it will be
-  // read when reporting initial stability metrics. If there is no file to
-  // move, remove any old, existing file from before the previous session.
-  if (!base::ReplaceFile(active_file, upload_file, nullptr))
-    base::DeleteFile(active_file, /*recursive=*/false);
+  // The "active" file isn't used any longer. Metics are stored directly into
+  // the "upload" file and a run-time filter prevents its upload as long as the
+  // process that created it still lives.
+  // TODO(bcwhite): Remove this in M64 or later.
+  base::PostTaskWithTraits(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+      base::BindOnce(base::IgnoreResult(&base::DeleteFile),
+                     base::Passed(&active_file), /*recursive=*/false));
 
   // This is used to report results to an UMA histogram.
   enum InitResult {
@@ -121,31 +114,23 @@ void InstantiatePersistentHistograms() {
       base::kPersistentHistogramsFeature, "storage");
 
   if (storage.empty() || storage == "MappedFile") {
-    // If for some reason the existing "active" file could not be moved above
-    // then it is essential it be scheduled for deletion when possible and the
-    // contents ignored. Because this shouldn't happen but can on an OS like
-    // Windows where another process reading the file (backup, AV, etc.) can
-    // prevent its alteration, it's necessary to handle this case by switching
-    // to the equivalent of "LocalMemory" for this run.
-    if (base::PathExists(active_file)) {
-      base::File file(active_file, base::File::FLAG_OPEN |
-                                       base::File::FLAG_READ |
-                                       base::File::FLAG_DELETE_ON_CLOSE);
+    // The "upload" filename is supposed to be unique so this shouldn't happen.
+    if (base::PathExists(upload_file)) {
       result = MAPPED_FILE_EXISTS;
       base::GlobalHistogramAllocator::CreateWithLocalMemory(
           kAllocSize, kAllocId,
           ChromeMetricsServiceClient::kBrowserMetricsName);
     } else {
-      // Move any sparse file into the active position.
-      base::ReplaceFile(spare_file, active_file, nullptr);
-      // Create global allocator using the "active" file.
-      if (kSpareFileRequired && !base::PathExists(active_file)) {
+      // Move any sparse file into the upload position.
+      base::ReplaceFile(spare_file, upload_file, nullptr);
+      // Create global allocator using the "upload" file.
+      if (kSpareFileRequired && !base::PathExists(upload_file)) {
         result = NO_SPARE_FILE;
         base::GlobalHistogramAllocator::CreateWithLocalMemory(
             kAllocSize, kAllocId,
             ChromeMetricsServiceClient::kBrowserMetricsName);
       } else if (base::GlobalHistogramAllocator::CreateWithFile(
-                     active_file, kAllocSize, kAllocId,
+                     upload_file, kAllocSize, kAllocId,
                      ChromeMetricsServiceClient::kBrowserMetricsName)) {
         result = MAPPED_FILE_SUCCESS;
       } else {
