@@ -90,6 +90,8 @@ class SpinnerTexture : public UiTexture {
 Spinner::Spinner(int maximum_width)
     : TexturedElement(maximum_width),
       texture_(base::MakeUnique<SpinnerTexture>()) {
+  // This is a total hack. We need to avoid animating invisible objects.
+  return;
   std::unique_ptr<cc::KeyframedFloatAnimationCurve> curve(
       cc::KeyframedFloatAnimationCurve::Create());
 

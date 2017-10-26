@@ -90,6 +90,7 @@ CONTENT_EXPORT extern const base::Feature kV8ContextSnapshot;
 CONTENT_EXPORT extern const base::Feature kV8VmFuture;
 CONTENT_EXPORT extern const base::Feature kVibrateRequiresUserGesture;
 CONTENT_EXPORT extern const base::Feature kVrShell;
+CONTENT_EXPORT extern const base::Feature kVrShellExperimentalRendering;
 CONTENT_EXPORT extern const base::Feature kWebAssembly;
 CONTENT_EXPORT extern const base::Feature kWebAssemblyStreaming;
 CONTENT_EXPORT extern const base::Feature kWebAssemblyTrapHandler;
