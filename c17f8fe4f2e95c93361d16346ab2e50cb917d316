@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "945c3d49_455b38a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "Actually what I meant for the CL description was to:\n\n- Make clear that we are updating the DOM Code mapping for the key.\n- Explain what that mapping is for, in general terms.\n- Explain how we are using it _specifically_ in ChromeOS.",
+      "parentUuid": "2fdbd058_42a5ceb2",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d3cd266_ef2fad47",
         "filename": "ash/accelerators/accelerator_controller.cc",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "no.. VoiceInteraction means \"Assistant\", which is a terminology we are using here and is consistent with Android\u0027s naming (e.g. VoiceInteractionService \u003d\u003d Service to handle Assistant).\n\n|voice_mode| means whether we should launch Assistant in voice mode.",
       "parentUuid": "4d3cd266_ef2fad47",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc303c20_ef9b0d1a",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "The documentation for Android VoiceInteraction is all about actual voice interactions - I don\u0027t see anything suggesting they use \"voice interaction\" to refer to non-voice interactions.\n\nLet\u0027s deal with renaming this function and the callsites in a separate CL, though.\n\nFor this CL, let\u0027s just get rid of the |voice_mode| flag and test that the accelerator.key_code() \u003d\u003d ui::VKEY_VOICE_COMMAND, rather than passing the same information through here twice?",
+      "parentUuid": "aac4116d_5364bd21",
       "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "e66bf0cf_1020ec43",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "648d689a_47e129c1",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like anything has changed here?",
+      "parentUuid": "6d940428_cd7888cd",
       "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -276,6 +330,24 @@
       "side": 1,
       "message": "The latest patchset should have already addressed this.",
       "parentUuid": "f9ed06a3_455a23b1",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed0938c_ca37455e",
+        "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "The latest patchset still has this listed as SpeechInputToggle, rather than VoiceCommand to match the name used in the USB standard.",
+      "parentUuid": "5e2664c2_0cea76ef",
       "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c36b152_f37afe59",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "As I suggest previously, the key should be VoiceCommand, not SpeechInputToggle.",
+      "revId": "6d781110c51c6260f93b7025cac7e9f43aa2b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb1f727_e65498c3",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 18540,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "Presumably it is a pain to change the names of these action metrics, but let\u0027s at least mention in the description that this means an assistant interaction, not actually voice.",
+      "revId": "6d781110c51c6260f93b7025cac7e9f43aa2b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9433ef_0cfcfe1a",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "You will need to replace this with an entry in the DomCodeToKeyboardCodeEntry table, below, since you\u0027re defining a DomCode for this but no corresponding DomKey value.",
+      "revId": "6d781110c51c6260f93b7025cac7e9f43aa2b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

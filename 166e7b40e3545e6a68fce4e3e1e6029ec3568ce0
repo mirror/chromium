@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3229fd67_3dcf8bde",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "Resolving this, since I tracked this down in the USB spec.",
+      "parentUuid": "9bfd3f0c_026e3328",
+      "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f13e5b42_1b28895b",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -130,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "571cfe37_87c7587d",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "Marking this comment resolved to reduce distraction, but as previously noted, it\u0027s best not to describe this as \"voice interaction\" when it isn\u0027t a voice interaction - calling these START_ASSISTANT_TEXT_COMMAND and START_ASSISTANT_VOICE_COMMAND would be preferable, for example.",
+      "parentUuid": "1a6927b1_438ef0cd",
+      "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e36535b_f36a4cdb",
         "filename": "ui/events/keycodes/dom/dom_key_data.inc",
         "patchSetId": 3
@@ -162,6 +198,24 @@
       "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b58555_83854654",
+        "filename": "ui/events/keycodes/dom/dom_key_data.inc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "Resolving; started a separate mail thread to get these entries fixed.",
+      "parentUuid": "0359d379_171a7a28",
+      "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

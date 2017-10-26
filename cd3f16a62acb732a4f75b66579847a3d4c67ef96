@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ef35499c_7a85586e",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "If this really only means Assistant then let\u0027s just call it START_ASSISTANT_TEXT_COMMAND and START_ASSISTANT_VOICE_COMMAND.\n\nReferring to the Assistant feature as \"voice interaction\" when the user is interacting with it by something other than voice (i.e. via text-entry in this case) just seems confusing for future maintainers of this code.",
+      "parentUuid": "b9e590d8_94a8c248",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3f59387_4fa4c6b6",
         "filename": "ash/accelerators/accelerator_table.h",
         "patchSetId": 9
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "b3f59387_4fa4c6b6",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d8bcc4f_c91f4f21",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "See my comment above re use of \"voice interaction\" for something that is not voice. :)",
+      "parentUuid": "ed747ba9_35aa8f3e",
       "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -160,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "80d142ef_9a11f149",
+        "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
+        "patchSetId": 9
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "Interesting; I wasn\u0027t aware of those definitions! However, that spec is for DOM \"key\" rather than DOM \"code\", so they don\u0027t apply here, at least not directly.\n\nThe DOM \"code\" specification (https://www.w3.org/TR/uievents-code/) doesn\u0027t provide a definition for this key, yet, so we\u0027ll need to get it updated. Since the DOM |code| scheme closely follows the USB standard, I would recommend using \"VoiceCommand\", since that is what the key is called in the DOM spec.\n\nUsing \"SpeechInputToggle\" for the DOM \"key\" value doesn\u0027t seem a fit for this case, since that is described as being a \"toggle\" between dictation and command/control mode, whereas the key you are adding always (re)starts the assistant listening for a command.",
+      "parentUuid": "1161c485_f6653799",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a66b10f_c8c043c8",
         "filename": "ui/events/keycodes/dom_us_layout_data.h",
         "patchSetId": 9
@@ -189,6 +243,24 @@
       "side": 1,
       "message": "This line is necessary but L425 is not.",
       "parentUuid": "6a66b10f_c8c043c8",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529e8190_ecf9befd",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T01:34:39Z",
+      "side": 1,
+      "message": "Are you sure? The CL defines DomCode::SPEECH_INPUT_TOGGLE (though see my comment elsewhere re naming) but not DomKey::SPEECH_INPUT_TOGGLE, and you actually only use the mapping from DomCode -\u003e VKEY_VOICE_COMMAND to detect the accelerator.",
+      "parentUuid": "8874d76d_ce57f554",
       "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
