@@ -94,6 +94,7 @@ def main():
   compiler_args += sources
 
   returncode, errors = compile2.Checker().run_jar(args.compiler, compiler_args)
+  print '\n'.join(compiler_args)
   if returncode != 0:
     print errors
 

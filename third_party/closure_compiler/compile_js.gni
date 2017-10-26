@@ -7,7 +7,9 @@ import("//third_party/closure_compiler/closure_args.gni")
 script_path = "//third_party/closure_compiler"
 compiler_path = "$script_path/compiler/compiler.jar"
 externs_path = "$script_path/externs"
+interfaces_path = "$script_path/interfaces"
 polymer_externs = "$externs_path/polymer-1.0.js"
+test_api_externs = "//chrome/test/data/webui/test_api.js"
 
 # Defines a target that creates an ordering for .js files to be used by
 # js_binary to compile.
@@ -23,6 +25,12 @@ polymer_externs = "$externs_path/polymer-1.0.js"
 #   extra_deps:
 #     List of any other rules to depend on. E.g. a rule that generates js source
 #     files
+#
+#   externs_list:
+#     A list of .js files to pass to the compiler as externs
+#
+#   interfaces_list:
+#     A list of .js files to pass to the compiler as interfaces
 #
 # Example:
 #   js_library("apple_tree") {
@@ -42,6 +50,7 @@ template("js_library") {
                              "sources",
                              "deps",
                              "externs_list",
+                             "interfaces_list",
                              "extra_deps",
                            ])
     output_file = "$target_gen_dir/$target_name.js_library"
@@ -57,6 +66,9 @@ template("js_library") {
     }
 
     args += [ "--sources" ] + rebase_path(sources, root_build_dir)
+    if (defined(interfaces_list)) {
+      args += rebase_path(interfaces_list, root_build_dir)
+    }
 
     if (defined(deps)) {
       args += [ "--deps" ]
@@ -195,5 +207,13 @@ template("js_binary") {
       args += rebase_path(externs_list, root_build_dir)
       sources += externs_list
     }
+  }
+}
+
+# Defines a target that compiles a group of js_library targets.
+template("js_group") {
+  js_binary(target_name) {
+    sources = []
+    forward_variables_from(invoker, [ "deps" ])
   }
 }

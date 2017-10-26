@@ -8,9 +8,6 @@
  * and existing networks.
  */
 
-(function() {
-'use strict';
-
 /**
  * Combinaiton of CrOnc.VPNType + AuthenticationType for IPsec.
  * @enum {string}
@@ -23,6 +20,9 @@ var VPNConfigType = {
 
 /** @const */ var DEFAULT_HASH = 'default';
 /** @const */ var DO_NOT_CHECK_HASH = 'do-not-check';
+
+(function() {
+'use strict';
 
 Polymer({
   is: 'network-config',

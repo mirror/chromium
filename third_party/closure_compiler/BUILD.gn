@@ -11,5 +11,10 @@
 group("webui_closure_compile") {
   data_deps = [
     "//chrome/browser/resources/chromeos/login:closure_compile",
+    "//ui/webui/resources/cr_elements:closure_compile",
+    "//ui/webui/resources/cr_components:closure_compile",
+    "//ui/webui/resources/cr_elements:closure_compile",
+    "//ui/webui/resources/js:closure_compile",
+    "//ui/webui/resources/js/cr/ui:closure_compile",
   ]
 }
