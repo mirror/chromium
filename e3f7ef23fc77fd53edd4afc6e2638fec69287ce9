@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a32827db_aefeff4c",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-26T07:35:37Z",
+      "side": 1,
+      "message": "probably we have some choices for naming.\n\n1. network::mojom::CORS*\n2. network::mojom::Cors*\n3. network::CORS::mojom::*\n\nSince we already have many code that uses CORS rather than Cors, 1 or 3 would be preferable. Also, since other network/public/interfaces/*.mojom files does not have a specific namespace for each, probably 1 is more reasonable choice, I think.\n\nAny thought?",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05c4406_de4678ba",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-26T07:35:37Z",
+      "side": 1,
+      "message": "we may want to remove Preflight prefix in each entry.",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a189355_cbf3191b",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-26T07:35:37Z",
+      "side": 1,
+      "message": "we may want to remove Redirect prefix too.",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132625d5_923ab9a1",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-26T07:35:37Z",
+      "side": 1,
+      "message": "We would agree with omitting network::mojom:: prefix in following code by having aliases, but I\u0027m not sure if we also omit CORS prefix like this.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 58
+      },
+      "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
