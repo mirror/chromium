@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c6629b0_a1c58874",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-26T17:34:29Z",
+      "side": 1,
+      "message": "nit: It\u0027s unintuitive to infer the meaning of the return value of \"SelectWord\". Can we use a better name, say, GetWordSelection?",
+      "range": {
+        "startLine": 49,
+        "startChar": 14,
+        "endLine": 49,
+        "endChar": 24
+      },
+      "revId": "bde9afdeec18634d1d5722a7f86bca2a9c5c32ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
