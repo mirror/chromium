@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "352b613d_29f64190",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-26T15:43:30Z",
+      "side": 1,
+      "message": "Can\u0027t this code be moved into a separate method instead? It\u0027s a bit convoluted to have this step being executed here, but with a configuration through a virtual method GetDirectoryForTestServer().\n\nIt looks like all existing tests should be fine with starting the test server inside the test itself, but not during SetUp* phases - or am I wrong here?",
+      "revId": "304010449151263a1a8b630177fc43e07a39c020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
