@@ -9,6 +9,7 @@ import android.content.Context;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
+import org.chromium.base.BuildConfig;
 import org.chromium.base.CommandLineInitUtil;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.DiscardableReferencePool;
@@ -17,7 +18,9 @@ import org.chromium.base.TraceEvent;
 import org.chromium.base.annotations.MainDex;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.ProcessInitException;
+import org.chromium.build.BuildHooks;
 import org.chromium.build.BuildHooksAndroid;
+import org.chromium.chrome.browser.crash.PureJavaExceptionReporter;
 import org.chromium.chrome.browser.document.DocumentActivity;
 import org.chromium.chrome.browser.document.IncognitoDocumentActivity;
 import org.chromium.chrome.browser.init.InvalidStartupDialog;
@@ -45,6 +48,10 @@ public class ChromeApplication extends ContentApplication {
         super.attachBaseContext(base);
         ContextUtils.initApplicationContext(this);
         BuildHooksAndroid.initCustomResources(this);
+        if (BuildConfig.HANDLE_JAVA_ASSERT) {
+            BuildHooks.setAssertCallback(assertionError
+                    -> PureJavaExceptionReporter.reportJavaException(assertionError));
+        }
     }
 
     /**
