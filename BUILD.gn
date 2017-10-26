@@ -1141,6 +1141,14 @@ template("assert_valid_out_dir") {
       "Do not use a platform name in your output directory (found \"$root_build_dir\"). http://crbug.com/548283")
 }
 
+if (!is_ios && !is_android && !is_chromecast && !is_fuchsia) {
+  group("webui_closure_compile") {
+    deps = [
+      "//third_party/closure_compiler:webui_closure_compile",
+    ]
+  }
+}
+
 assert_valid_out_dir("_unused") {
   actual_sources = [ "$root_build_dir/foo" ]
 }
