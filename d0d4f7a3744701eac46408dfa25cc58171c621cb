@@ -264,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "f971d77f_7ff7df97",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-26T23:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee707243_dc72d71a",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99630718_617acc73",
         "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/manifest.json",
         "patchSetId": 2
@@ -314,6 +332,24 @@
       "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19492fe7_9976ab1e",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-26T23:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34036f8d_80388a96",
+      "revId": "d0d4f7a3744701eac46408dfa25cc58171c621cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
