@@ -410,6 +410,14 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
     if (update_behavior != kUpdateForcedReload && document.GetFrame())
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 
+    {
+      const KURL& url = params.Url();
+      if (url.Protocol().LowerASCII() == "data" &&
+          url.HasFragmentIdentifier()) {
+        UseCounter::Count(document, WebFeature::kParsedDataUriHasOctothorpe);
+      }
+    }
+
     new_image_content = ImageResourceContent::Fetch(params, document.Fetcher());
 
     if (!new_image_content && !PageIsBeingDismissed(&document)) {

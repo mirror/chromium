@@ -30,6 +30,7 @@
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/UseCounter.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/style/StyleFetchedImageSet.h"
 #include "core/style/StyleInvalidImage.h"
@@ -129,6 +130,13 @@ StyleImage* CSSImageSetValue::CacheImage(
         placeholder_image_request_type == FetchParameters::kAllowPlaceholder)
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 
+    {
+      const KURL& url = params.Url();
+      if (url.Protocol().LowerASCII() == "data" &&
+          url.HasFragmentIdentifier()) {
+        UseCounter::Count(document, WebFeature::kParsedDataUriHasOctothorpe);
+      }
+    }
     if (ImageResourceContent* cached_image =
             ImageResourceContent::Fetch(params, document.Fetcher())) {
       cached_image_ = StyleFetchedImageSet::Create(
