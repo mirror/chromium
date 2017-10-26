@@ -2,7 +2,7 @@
 # Copyright 2017 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
-
+7
 import json5_generator
 import template_expander
 import make_style_builder
@@ -99,6 +99,7 @@ def _find_enum_longest_continuous_segment(property_, name_to_position_dictionary
 class CSSValueIDMappingsWriter(make_style_builder.StyleBuilderWriter):
     def __init__(self, json5_file_paths):
         super(CSSValueIDMappingsWriter, self).__init__(json5_file_paths)
+        print('json5_file_path', json5_file_paths[0]);
         self._outputs = {
             'CSSValueIDMappingsGenerated.h': self.generate_css_value_mappings,
         }

@@ -1,0 +1,38 @@
+{% from "templates/macros.tmpl" import license, source_files_for_generated_file %}
+{{ license() }}
+
+{{source_files_for_generated_file(template_file, input_files)}}
+
+#ifndef BLINK_CORE_{{namespace|upper}}_NAMES_H_
+#define BLINK_CORE_{{namespace|upper}}_NAMES_H_
+
+{% if export == 'CORE_EXPORT' %}
+#include "core/CoreExport.h"
+{% endif %}
+#include "core/dom/QualifiedName.h"
+#include <memory>
+
+namespace blink {
+
+namespace HTMLNames {
+
+{% set symbol_export = '%s ' % export if export else '' %}
+// Namespace
+{{symbol_export}}extern const WTF::AtomicString& {{namespace_prefix}}NamespaceURI;
+
+// Attributes
+{% for attr in attrs|sort %}
+{{symbol_export}}extern const blink::QualifiedName& {{attr|symbol}}Attr;
+{% endfor %}
+
+const unsigned {{namespace}}AttrsCount = {{attrs|count}};
+{% if namespace != 'HTML' %}
+std::unique_ptr<const QualifiedName*[]> get{{namespace}}Attrs();
+{% endif %}
+
+void init();
+
+} // {{namespace}}Names
+} // namespace blink
+
+#endif

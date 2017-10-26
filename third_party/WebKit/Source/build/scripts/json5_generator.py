@@ -64,6 +64,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 
                              'third_party', 'blink', 'tools'))
 from blinkpy.common.name_style_converter import NameStyleConverter
 
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', '..',
+                             'third_party', 'pyjson5'))
+import json5
 
 def _json5_load(lines):
     # Use json5.loads when json5 is available. Currently we use simple
@@ -114,10 +117,12 @@ class Json5File(object):
     @classmethod
     def load_from_files(cls, file_paths, default_metadata=None, default_parameters=None):
         merged_doc = dict()
+        print('file_paths', file_paths)
+        print('default_parameters', default_parameters, 'default_metadata', default_metadata)
         for path in file_paths:
             assert path.endswith(".json5")
             with open(os.path.abspath(path)) as json5_file:
-                doc = _json5_load(json5_file.read())
+                doc = json5.loads(json5_file.read())
                 if not merged_doc:
                     merged_doc = doc
                 else:
@@ -178,15 +183,15 @@ class Json5File(object):
                     (key, self.parameters.keys()))
             assert self.parameters[key] is not None, \
                 "Specification for parameter 'key' cannot be None. Use {} instead."
-            self._validate_parameter(self.parameters[key], value)
+            self._validate_parameter(self.parameters[key], value, key)
             entry[key] = value
         return entry
 
-    def _validate_parameter(self, parameter, value):
+    def _validate_parameter(self, parameter, value, parameter_name):
         valid_type = parameter.get("valid_type")
         if valid_type and type(value).__name__ != valid_type:
-            raise Exception("Incorrect type: '%s'\nExpected type: %s" %
-                            (type(value).__name__, valid_type))
+            raise Exception("Incorrect type for %s: '%s'\nExpected type: %s" %
+                            (parameter_name, type(value).__name__, valid_type))
         valid_values = parameter.get("valid_values")
         if not valid_values:
             return
