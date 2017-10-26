@@ -15,6 +15,7 @@
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/CurrentTime.h"
 #include "public/platform/WebWorkerFetchContext.h"
@@ -50,8 +51,6 @@ ThreadedMessagingProxyBase::ThreadedMessagingProxyBase(
     DCHECK(web_worker_fetch_context);
     web_worker_fetch_context->SetApplicationCacheHostID(
         document->Fetcher()->Context().ApplicationCacheHostID());
-    web_worker_fetch_context->SetDataSaverEnabled(
-        document->GetFrame()->GetSettings()->GetDataSaverEnabled());
     web_worker_fetch_context->SetIsOnSubframe(
         document->GetFrame() != document->GetFrame()->Tree().Top());
     ProvideWorkerFetchContextToWorker(worker_clients,

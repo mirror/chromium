@@ -40,6 +40,7 @@
 #include "core/probe/CoreProbes.h"
 #include "core/workers/SharedWorker.h"
 #include "platform/loader/fetch/ResourceResponse.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebContentSecurityPolicy.h"
 #include "public/platform/WebString.h"
@@ -148,8 +149,8 @@ void SharedWorkerRepositoryClientImpl::Connect(SharedWorker* worker,
       url, name, GetId(document), header, header_type,
       worker->GetExecutionContext()->GetSecurityContext().AddressSpace(),
       ToCreationContextType(is_secure_context),
-      document->GetFrame()->GetSettings()->GetDataSaverEnabled(),
-      std::move(port), std::move(listener));
+      GetNetworkStateNotifier().SaveData(), std::move(port),
+      std::move(listener));
 }
 
 void SharedWorkerRepositoryClientImpl::DocumentDetached(Document* document) {
