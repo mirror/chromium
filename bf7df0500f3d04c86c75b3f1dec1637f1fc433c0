@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "e9022e28_d5d55e07",
+        "filename": "chromeos/dbus/fake_image_loader_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-10-26T21:47:31Z",
+      "side": 1,
+      "message": "FakeImageLoaderClient is never used as unit test, so I think second case applies here. Each method in ImageLoaderClient here is to send a dbus signal to imageloader to invoke its corresponding APIs (RegisterComponent -\u003e RegisterComponent, LoadComponent -\u003e LoadComponent, RequestComponentVersion -\u003e getComponentVersion, etc.). Imageloader (and its dbus API) exists only on a real device. So in the case of running chrome on developers\u0027 workstations, desired behavior is failure due to missing imageloader.",
+      "parentUuid": "aeba7b66_376cec89",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "bf7df0500f3d04c86c75b3f1dec1637f1fc433c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fdbdc4a_53fe6ef8",
         "filename": "chromeos/dbus/image_loader_client.h",
         "patchSetId": 2
