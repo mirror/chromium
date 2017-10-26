@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e538fa03_f690a25f",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-26T22:11:23Z",
+      "side": 0,
+      "message": "This was the only callsite of LogicalRectToPhysicalRect, it can now be deleted.",
+      "revId": "48616c3974cc51f34e2f8eeca462d4355f92e9d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
