@@ -46,6 +46,30 @@
       "revId": "5028f29b34a25f0b28e11e9a2185918439f77829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df140d28_bb7ecfe6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T15:20:08Z",
+      "side": 0,
+      "message": "There\u0027s a test in HistoryActivity that adds this flag -- I suspect that all of the tests are fine with it being removed, just an FYI.",
+      "parentUuid": "7f72fe2f_f794333b",
+      "range": {
+        "startLine": 313,
+        "startChar": 30,
+        "endLine": 313,
+        "endChar": 89
+      },
+      "revId": "5028f29b34a25f0b28e11e9a2185918439f77829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
