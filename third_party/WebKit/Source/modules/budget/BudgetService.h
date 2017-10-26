@@ -15,6 +15,7 @@ class InterfaceProvider;
 
 namespace blink {
 
+class ExecutionContext;
 class ScriptPromise;
 class ScriptPromiseResolver;
 class ScriptState;
@@ -26,10 +27,7 @@ class BudgetService final : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static BudgetService* Create(
-      service_manager::InterfaceProvider* interface_provider) {
-    return new BudgetService(interface_provider);
-  }
+  static BudgetService* Create(ExecutionContext*);
 
   ~BudgetService();
 

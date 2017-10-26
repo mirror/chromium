@@ -54,6 +54,14 @@ BudgetService::BudgetService(
       WTF::Bind(&BudgetService::OnConnectionError, WrapWeakPersistent(this))));
 }
 
+// static
+BudgetService* BudgetService::Create(ExecutionContext* execution_context) {
+  if (auto* interface_provider = execution_context->GetInterfaceProvider())
+    return new BudgetService(interface_provider);
+
+  return nullptr;
+}
+
 BudgetService::~BudgetService() {}
 
 ScriptPromise BudgetService::getCost(ScriptState* script_state,
