@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa89a5eb_73442ed9",
+        "filename": "build/fuchsia/exe_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-26T20:29:58Z",
+      "side": 1,
+      "message": "Whoops, that\u0027s a debug line. \u003c_\u003c Removed",
+      "parentUuid": "cf28436e_02e65248",
+      "revId": "b3fd1b16c54e7d8f2fa02c898a558bdcf6de485a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eced781_ec9ad9b8",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "b3fd1b16c54e7d8f2fa02c898a558bdcf6de485a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297b50b5_d99e23f8",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-26T20:29:58Z",
+      "side": 1,
+      "message": "That\u0027s what I figured.",
+      "parentUuid": "6eced781_ec9ad9b8",
+      "revId": "b3fd1b16c54e7d8f2fa02c898a558bdcf6de485a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
