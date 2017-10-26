@@ -20426,6 +20426,9 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="HotwordAvailability">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="Unavailable -- reason may be unknown"/>
   <int value="1" label="Available"/>
   <int value="2" label="Pending download"/>
@@ -20433,6 +20436,9 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="HotwordError">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="No error"/>
   <int value="1" label="Generic error"/>
   <int value="2" label="NaCl error"/>
@@ -20440,6 +20446,9 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="HotwordMediaStreamResult">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="Success"/>
   <int value="1" label="Unknown error"/>
   <int value="2" label="NotSupportedError"/>
@@ -20456,6 +20465,9 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="HotwordNaClMessageTimeout">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="REQUEST_MODEL"/>
   <int value="1" label="MODEL_LOADED"/>
   <int value="2" label="READY_FOR_AUDIO"/>
@@ -20465,6 +20477,9 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="HotwordNaClPluginLoadResult">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="Success"/>
   <int value="1" label="Unknown error"/>
   <int value="2" label="Module crash"/>
@@ -20472,6 +20487,9 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="HotwordPrefState">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="Preference not set"/>
   <int value="1" label="'Classic' hotwording enabled"/>
   <int value="2" label="Hotwording disabled"/>
@@ -20479,6 +20497,9 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="HotwordTriggerSource">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="Launcher (except when always-on is enabled)"/>
   <int value="1" label="NTP or google.com"/>
   <int value="2" label="Always-On"/>
