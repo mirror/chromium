@@ -22,6 +22,30 @@
       "revId": "f5b19184239c5d05849f65ab73642e5e8d915fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b507b2_843a54d1",
+        "filename": "base/metrics/persistent_memory_allocator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-26T16:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2d0db3b_a66aeffa",
+      "range": {
+        "startLine": 748,
+        "startChar": 61,
+        "endLine": 748,
+        "endChar": 68
+      },
+      "revId": "f5b19184239c5d05849f65ab73642e5e8d915fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
