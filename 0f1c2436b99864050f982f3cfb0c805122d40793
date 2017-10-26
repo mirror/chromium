@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d932403_f9a80e3f",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-26T01:43:38Z",
+      "side": 1,
+      "message": "Don\u0027t really understand why, but https://chromium-review.googlesource.com/c/chromium/src/+/683635 seemed to make it so instead of including //services/network/public/interfaces:interfaces_blink you include //third_party/WebKit/Source/platform instead. Following that for consistency with the current Source/modules/fetch/BUILD.gn.",
+      "revId": "0f1c2436b99864050f982f3cfb0c805122d40793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
