@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4a25bb8_c4a0bd69",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-26T18:43:17Z",
+      "side": 1,
+      "message": "Done.\n\nJust FYI, there are 2497 \"static constexpr\"s and 5992 \"constexpr\"s in Chromium, i.e. 3495 \"constexpr\"s without \"static\".",
+      "parentUuid": "bfc5b1f7_d53ff37c",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 7
+      },
+      "revId": "c1766ca33aa61f801cba1bbe0cf50f8f3f9b43a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5662a6bc_d57465e2",
         "filename": "remoting/protocol/webrtc_video_stream.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-26T02:19:06Z",
       "side": 1,
       "message": "Instead of hard-coding 0,1,2 it would be better to store the actual indexes returned by RegisterEncoder() and use those. Even better, track the indexes using a\nstd::map\u003cwebrtc::CodecType, int\u003e",
+      "revId": "c1766ca33aa61f801cba1bbe0cf50f8f3f9b43a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e735f9e9_b7fb4fa4",
+        "filename": "remoting/protocol/webrtc_video_stream.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-26T18:43:17Z",
+      "side": 1,
+      "message": "Using std::map\u003c\u003e breaks the possibility of providing multiple implementations for a certain codec. For example, we may try VP8 HW encoder later. That\u0027s also the reason I have not added webrtc::VideoCodecType into WebrtcVideoEncoderSelector.\n\nAnd it\u0027s also a little bit over-kill:\n  - WebrtcVideoEncoderSelector won\u0027t return arbitrary numbers from RegisterEncoder() function, this behavior has been protected by WebrtcVideoEncoderSelectorTest.\n  - Adding a new encoder rarely happens and we won\u0027t have too many encoders.\n\nSo if you do not have a very strong opinion, I will keep it like this. Otherwise, we can always reconsider a better solution later.",
+      "parentUuid": "5662a6bc_d57465e2",
       "revId": "c1766ca33aa61f801cba1bbe0cf50f8f3f9b43a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
