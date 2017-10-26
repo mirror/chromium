@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0391fce_ca689f2c",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T14:08:20Z",
+      "side": 1,
+      "message": "Is this needed on classes with pure virtual functions?",
+      "range": {
+        "startLine": 442,
+        "startChar": 2,
+        "endLine": 442,
+        "endChar": 26
+      },
+      "revId": "8fc688e55ef5386b4fc33b3a7dd3b1271077f974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
