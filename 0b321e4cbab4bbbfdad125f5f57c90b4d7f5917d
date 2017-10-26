@@ -341,6 +341,29 @@
     },
     {
       "key": {
+        "uuid": "25d58299_ab2a7b1e",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-26T17:04:09Z",
+      "side": 1,
+      "message": "Use C++-style casts throughout the change.",
+      "range": {
+        "startLine": 301,
+        "startChar": 10,
+        "endLine": 301,
+        "endChar": 15
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f342e325_001c0351",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -357,6 +380,98 @@
         "startChar": 0,
         "endLine": 384,
         "endChar": 1
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68311178_81bc192b",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-26T17:04:09Z",
+      "side": 1,
+      "message": "This should happen automatically. Are you seeing this is not true?",
+      "range": {
+        "startLine": 406,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 0
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd80b0d_6cec7728",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-26T17:04:09Z",
+      "side": 1,
+      "message": "use C++-style casts:\n\n static_cast\u003cfloat\u003e(...)",
+      "range": {
+        "startLine": 439,
+        "startChar": 18,
+        "endLine": 439,
+        "endChar": 25
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275bbe8b_d0555b79",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-26T17:04:09Z",
+      "side": 1,
+      "message": "Please comment why this is not a leak.",
+      "range": {
+        "startLine": 459,
+        "startChar": 6,
+        "endLine": 459,
+        "endChar": 21
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e31b29_5aa39f7b",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-26T17:04:09Z",
+      "side": 1,
+      "message": "This, on the other hand, can be a leak since you\u0027re at the mercy of the other side explicitly calling DestroyDiscoverySession(). You should also change the |binding_| of this class to a mojo::StrongBinding so it also cleans after itself in the case of a disconnection.",
+      "range": {
+        "startLine": 477,
+        "startChar": 6,
+        "endLine": 477,
+        "endChar": 22
       },
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
