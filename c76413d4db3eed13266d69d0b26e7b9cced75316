@@ -16,6 +16,24 @@
       "revId": "c76413d4db3eed13266d69d0b26e7b9cced75316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23427b30_239c01d0",
+        "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-10-26T09:24:27Z",
+      "side": 1,
+      "message": "Yes. The transition is set to PAGE_TRANSITION_TYPED by default when using content::NavigationSimulator::CreateBrowserInitiated.",
+      "parentUuid": "7ad5346b_227a768d",
+      "revId": "c76413d4db3eed13266d69d0b26e7b9cced75316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
