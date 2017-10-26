@@ -63,6 +63,9 @@ ScriptResource::~ScriptResource() {}
 
 void ScriptResource::DidAddClient(ResourceClient* client) {
   DCHECK(ScriptResourceClient::IsExpectedType(client));
+  ResourceClientWalker<ScriptResourceClient> walker(Clients());
+  while (ScriptResourceClient* client = walker.Next())
+    client->NotifyAppendData(this);
   Resource::DidAddClient(client);
 }
 
