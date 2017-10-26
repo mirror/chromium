@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08ac6332_d1f2f528",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_intercepting_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-26T02:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dcb4e7b_2fb0e653",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 18
+      },
+      "revId": "ccd1127545af2930967be08fc634f2bc58f5e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa7f1c7d_086b8cf2",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T00:32:28Z",
       "side": 1,
       "message": "IIRC, I had intentionally not used \"bad\" because this method can also be used for whitelists.",
+      "range": {
+        "startLine": 148,
+        "startChar": 23,
+        "endLine": 148,
+        "endChar": 61
+      },
+      "revId": "ccd1127545af2930967be08fc634f2bc58f5e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ddca829_b4f17eb4",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-26T02:25:19Z",
+      "side": 1,
+      "message": "Ah right, sorry about that. Do you have recommendations here? I am not quite familiar with the terms. The way I see it, there are 3 pieces:\n\n1. The \"prefix\" cache for deciding whether we should talk to the server\n2. The v4 server\n3. The full hash cache\n\nDoes the prefix cache have a name? Is \"FullHashCache\" the correct terminology?",
+      "parentUuid": "fa7f1c7d_086b8cf2",
       "range": {
         "startLine": 148,
         "startChar": 23,
