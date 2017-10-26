@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66a1574e_889e9b08",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwViewAndroidDelegate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-26T22:07:21Z",
+      "side": 1,
+      "message": "not ok to cache this, this can change at run time in webview",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "908d6ee8190252192635aa147c59cfdead450009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136605a6_271a9782",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwViewAndroidDelegate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-26T22:07:21Z",
+      "side": 1,
+      "message": "not used?",
+      "revId": "908d6ee8190252192635aa147c59cfdead450009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59cccff_2e462b17",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-26T22:07:21Z",
+      "side": 1,
+      "message": "don\u0027t add this here. CVC can get WebContentsAndroid directly",
+      "revId": "908d6ee8190252192635aa147c59cfdead450009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4a8187_cc2a3954",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-26T22:07:21Z",
+      "side": 1,
+      "message": "you can just keep this in WebContentsImpl itself. RenderCoordinates just holds values. It doesn\u0027t store the context passed into its constructor. Then you don\u0027t need the DEFAULT fallback thing either",
+      "revId": "908d6ee8190252192635aa147c59cfdead450009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737f9101_1e9e986a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-26T22:07:21Z",
+      "side": 1,
+      "message": "remove all of these getters, there is already a getter for RendererCoordinates itself",
+      "revId": "908d6ee8190252192635aa147c59cfdead450009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
