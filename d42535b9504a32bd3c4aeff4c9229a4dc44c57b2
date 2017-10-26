@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ba0d8f_cea83b19",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-26T18:19:51Z",
+      "side": 1,
+      "message": "I see that there are several other related parameters (eg. AVEncVideoMaxKeyframeDistance, AVEncMPVDefaultBPictureCount). Are you sure that this is the right one/enough?",
+      "range": {
+        "startLine": 516,
+        "startChar": 29,
+        "endLine": 516,
+        "endChar": 53
+      },
+      "revId": "d42535b9504a32bd3c4aeff4c9229a4dc44c57b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
