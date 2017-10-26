@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "130adfe3_808419eb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59313,
+      "author": {
+        "id": 1129199
+      },
+      "writtenOn": "2017-10-26T16:13:01Z",
+      "side": 1,
+      "message": "I\u0027m wondering, should this be a @chromium.org address?",
+      "range": {
+        "startLine": 59313,
+        "startChar": 9,
+        "endLine": 59313,
+        "endChar": 28
+      },
+      "revId": "26af30a3cd0ba130b01cb37caf28f10feaf22de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84295456_51e4df44",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59314,
+      "author": {
+        "id": 1129199
+      },
+      "writtenOn": "2017-10-26T16:13:01Z",
+      "side": 1,
+      "message": "is active (USB interface not autosuspended).",
+      "range": {
+        "startLine": 59314,
+        "startChar": 51,
+        "endLine": 59314,
+        "endChar": 69
+      },
+      "revId": "26af30a3cd0ba130b01cb37caf28f10feaf22de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c0a23f_3873ada5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59326,
+      "author": {
+        "id": 1129199
+      },
+      "writtenOn": "2017-10-26T16:13:01Z",
+      "side": 1,
+      "message": "Do we actually need to keep them? It\u0027s not like we care about any of the data in Platform.DetachableBase.ROUpdateMetric?",
+      "revId": "26af30a3cd0ba130b01cb37caf28f10feaf22de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
