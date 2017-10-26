@@ -34,7 +34,6 @@ namespace IPC {
 class Message;
 }
 
-struct ServiceWorkerMsg_MessageToDocument_Params;
 struct ServiceWorkerMsg_SetControllerServiceWorker_Params;
 
 namespace content {
@@ -174,7 +173,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
                      int registration_handle_id);
   void OnSetControllerServiceWorker(
       const ServiceWorkerMsg_SetControllerServiceWorker_Params& params);
-  void OnPostMessage(const ServiceWorkerMsg_MessageToDocument_Params& params);
   void OnCountFeature(int thread_id, int provider_id, uint32_t feature);
 
   // Keeps map from handle_id to ServiceWorker object.
