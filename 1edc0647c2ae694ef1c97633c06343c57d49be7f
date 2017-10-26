@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9641620d_bc964a51",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-26T14:18:37Z",
+      "side": 1,
+      "message": "This bug is fixed and it doesn\u0027t look like there\u0027s plans to make it work. That\u0027s unfortunate. There\u0027s nothing here that shouldn\u0027t work on Android (and in fact we may want to add the non-composited delayed fade out to Android) so it\u0027d be nice to get this working on Android...but lets land this to get the bots green.",
+      "range": {
+        "startLine": 967,
+        "startChar": 1,
+        "endLine": 968,
+        "endChar": 47
+      },
+      "revId": "1edc0647c2ae694ef1c97633c06343c57d49be7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d476949_cbe630a3",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-26T14:18:37Z",
+      "side": 1,
+      "message": "Do this in the class\u0027 SetUp method. (since you call disable in the TearDown method).",
+      "range": {
+        "startLine": 981,
+        "startChar": 2,
+        "endLine": 981,
+        "endChar": 45
+      },
+      "revId": "1edc0647c2ae694ef1c97633c06343c57d49be7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71889a2f_55975d1b",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-26T14:18:37Z",
+      "side": 1,
+      "message": "Add a comment that border-radius is to ensure the scroller is non-composited. You should also DCHECK that the contaner\u0027s ScrollableArea returns false for UsesCompositedScrolling().\n\nAlthough, if you remove border-radius, does it become compositing? I suspect we don\u0027t have --enable-prefer-compositing-to-lcd-text in the test so it shouldn\u0027t composite. You could also set DisablePreferCompositingToLCDText at the beginning of the test.",
+      "range": {
+        "startLine": 1011,
+        "startChar": 6,
+        "endLine": 1011,
+        "endChar": 38
+      },
+      "revId": "1edc0647c2ae694ef1c97633c06343c57d49be7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
