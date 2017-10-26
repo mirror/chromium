@@ -426,6 +426,12 @@ void PasswordManagerPresenter::ImportPasswords() {
 }
 
 void PasswordManagerPresenter::ExportPasswords() {
+#if !defined(OS_ANDROID)  // Reauthentication is handled differently on Android.
+  if (!password_access_authenticator_.EnsureUserIsAuthenticated()) {
+    return;
+  }
+#endif  // !defined(OS_ANDROID)
+
   export_flow_->Store();
 }
 

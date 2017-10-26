@@ -12,6 +12,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/ui/passwords/password_manager_presenter.h"
 #include "chrome/browser/ui/passwords/password_ui_view.h"
+#include "components/password_manager/core/browser/ui/mock_export_flow.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 class MockPasswordUIView : public PasswordUIView {
@@ -37,8 +38,13 @@ class MockPasswordUIView : public PasswordUIView {
       SetPasswordExceptionList,
       void(const std::vector<std::unique_ptr<autofill::PasswordForm>>&));
 
+  password_manager::MockExportFlow* mock_export_flow() {
+    return &mock_export_flow_;
+  }
+
  private:
   Profile* profile_;
+  password_manager::MockExportFlow mock_export_flow_;
   PasswordManagerPresenter password_manager_presenter_;
 
   DISALLOW_COPY_AND_ASSIGN(MockPasswordUIView);

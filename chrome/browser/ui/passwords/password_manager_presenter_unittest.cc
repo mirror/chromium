@@ -345,6 +345,29 @@ TEST_F(PasswordManagerPresenterTest, TestFailedReauthOnView) {
   GetUIController()->GetPasswordManagerPresenter()->RequestShowPassword(0);
   EXPECT_TRUE(reauth_called);
 }
+
+TEST_F(PasswordManagerPresenterTest, TestPassedReauthOnExport) {
+  bool reauth_called = false;
+  GetUIController()->GetPasswordManagerPresenter()->SetOsReauthCallForTesting(
+      base::BindRepeating(&FakeOsReauthCall, &reauth_called,
+                          ReauthResult::PASS));
+
+  EXPECT_CALL(*GetUIController()->mock_export_flow(), Store());
+  GetUIController()->GetPasswordManagerPresenter()->ExportPasswords();
+  EXPECT_TRUE(reauth_called);
+}
+
+TEST_F(PasswordManagerPresenterTest, TestFailedReauthOnExport) {
+  bool reauth_called = false;
+  GetUIController()->GetPasswordManagerPresenter()->SetOsReauthCallForTesting(
+      base::BindRepeating(&FakeOsReauthCall, &reauth_called,
+                          ReauthResult::FAIL));
+
+  EXPECT_CALL(*GetUIController()->mock_export_flow(), Store()).Times(0);
+  GetUIController()->GetPasswordManagerPresenter()->ExportPasswords();
+  EXPECT_TRUE(reauth_called);
+}
+
 #endif  // !defined(OS_ANDROID)
 
 }  // namespace
