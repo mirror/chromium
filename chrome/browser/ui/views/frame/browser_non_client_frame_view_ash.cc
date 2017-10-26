@@ -454,8 +454,17 @@ void BrowserNonClientFrameViewAsh::LayoutProfileIndicatorIcon() {
 }
 
 bool BrowserNonClientFrameViewAsh::ShouldPaint() const {
-  if (!frame()->IsFullscreen())
-    return true;
+  // We need to paint if the window is not fullscreened, because the
+  // top-of-window views should always be visible. An exception is non normal
+  // browser window in tablet mode, because those are not fullscreened, but
+  // they are in immersive mode, so their top-of-window views may be hidden.
+  if (!frame()->IsFullscreen()) {
+    if (!TabletModeClient::Get()->tablet_mode_enabled() ||
+        !TabletModeClient::Get()->auto_hide_title_bars() ||
+        browser_view()->IsBrowserTypeNormal()) {
+      return true;
+    }
+  }
 
   // We need to paint when the top-of-window views are revealed in immersive
   // fullscreen.
