@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "273468b9_d6914cbd",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-26T17:09:33Z",
+      "side": 0,
+      "message": "For async cache hits, this no longer holds true. IsLoaded() will be true while waiting for the cache hit to be processed, but ready_state_ won\u0027t become kReady while waiting for the timer to fire.",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
