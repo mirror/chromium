@@ -5,6 +5,8 @@
 #ifndef ScriptForbiddenScope_h
 #define ScriptForbiddenScope_h
 
+#include <atomic>
+
 #include "base/macros.h"
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
@@ -33,17 +35,26 @@ class PLATFORM_EXPORT ScriptForbiddenScope final {
     AutoReset<unsigned> saved_counter_;
   };
 
-  static bool IsScriptForbidden() { return GetMutableCounter() > 0; }
+  static bool IsScriptForbidden() {
+    if (LIKELY(g_global_counter_ == 0))
+      return false;
+    return GetMutableCounter() > 0;
+  }
 
   // DO NOT USE THESE FUNCTIONS FROM OUTSIDE OF THIS CLASS.
-  static void Enter() { ++GetMutableCounter(); }
+  static void Enter() {
+    ++g_global_counter_;
+    ++GetMutableCounter();
+  }
   static void Exit() {
     DCHECK(IsScriptForbidden());
+    --g_global_counter_;
     --GetMutableCounter();
   }
 
  private:
   static unsigned& GetMutableCounter();
+  static std::atomic<unsigned> g_global_counter_;
 };
 
 }  // namespace blink
