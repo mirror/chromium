@@ -44,6 +44,9 @@ def main():
   parser.add_argument('--extra-file', action='append', default=[],
                       help='Extra file to add to bootfs, '
                            '<bootfs_path>=<local_path>')
+  parser.add_argument('--wait_for_network', default=True,
+                      help='Wait for network connectivity before executing '
+                           'the test binary.')
   args, child_args = parser.parse_known_args()
 
   runtime_deps = ReadRuntimeDeps(args.runtime_deps_path, args.output_directory)
@@ -59,7 +62,7 @@ def main():
       args.output_directory, runtime_deps, args.exe_name, child_args,
       args.dry_run, args.bootdata, summary_output=None, shutdown_machine=False,
       target_cpu=args.target_cpu, use_device=args.device,
-      use_autorun=not args.no_autorun)
+      wait_for_network=args.wait_for_network, use_autorun=not args.no_autorun)
   if not bootfs:
     return 2
 
