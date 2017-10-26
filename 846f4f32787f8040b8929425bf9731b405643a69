@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "296c2fcd_7a875929",
+        "filename": "build/android/download_from_maven.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-26T14:26:51Z",
+      "side": 1,
+      "message": "Moved the file to pylib.utils and the actual downloading of the support lib to update_support_library",
+      "parentUuid": "5022388c_5df841ce",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 22
+      },
+      "revId": "846f4f32787f8040b8929425bf9731b405643a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a94b4e4_91445333",
         "filename": "build/android/download_from_maven.py",
         "patchSetId": 3
@@ -62,6 +86,24 @@
       "revId": "846f4f32787f8040b8929425bf9731b405643a69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9df4c6_d8e4e519",
+        "filename": "build/android/download_from_maven.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-26T14:26:51Z",
+      "side": 1,
+      "message": "Yeah that was obscure and convoluted... I used checked https://maven.google.com/com/android/support/\u003cartifact_id\u003e/\u003cversion\u003e/\u003cartifact_id\u003e-\u003cversion\u003e.pom for each file and pulled the new dependencies. It would be nice if we could just rely on gradle on some better maven usage to avoid having to do that. But the issue is that these dependencies have to be extracted to BUILD.gn as well. It would be amazing if we have a script to do that as well.\n\nIn the meantime I added code to download the pom files with the libraries. See https://chromium-review.googlesource.com/c/android_tools/+/738376\nThat way it will be easier to start writing the above script and finding issues with the build if there are some.",
+      "parentUuid": "7a94b4e4_91445333",
+      "revId": "846f4f32787f8040b8929425bf9731b405643a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "b813a45f_ded43f21",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-26T14:26:51Z",
+      "side": 1,
+      "message": "Added a todo linking to https://crbug.com/778650 to figure that out later. Will not modify the current behaviour in this CL.",
+      "parentUuid": "17f20b8d_af975608",
+      "range": {
+        "startLine": 269,
+        "startChar": 2,
+        "endLine": 269,
+        "endChar": 48
+      },
+      "revId": "846f4f32787f8040b8929425bf9731b405643a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aad82fc_78404d9b",
         "filename": "build/android/play_services/update.py",
         "patchSetId": 3
@@ -126,6 +192,24 @@
       "revId": "846f4f32787f8040b8929425bf9731b405643a69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa231d8_4b6df164",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-26T14:26:51Z",
+      "side": 1,
+      "message": "Thanks, copypasta error. fixed.",
+      "parentUuid": "4aad82fc_78404d9b",
+      "revId": "846f4f32787f8040b8929425bf9731b405643a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
