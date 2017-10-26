@@ -75,6 +75,24 @@
       "revId": "037a170ac6a7ea969a22f8b41b50a38b02c34cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b22e24f_aa67b5aa",
+        "filename": "ios/web/public/test/web_test_with_web_state.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-26T18:05:11Z",
+      "side": 1,
+      "message": "After some more investigation, I don\u0027t think removing DCHECK is workable. The DCHECK enforces the semantic that [CRWWebController loadHTML] generates a navigation entry. Many tests depend on it, e.g. a test will look up LastCommittedItem() after |-loadHTML|. Removing DCHECK requires also modifying the code to relax this semantic. IMHO it opens up more issues than it fixes.\n\nI did some microbenchmarking wrt file://. Writing to file is much slower than loading about:blank. Here are the data points:\n1) trivial LoadHTML(): 244ms\n2) load about:blank and wait for loaded, then LoadHTML() (this patch): 286ms\n3) write to file and load file:/// URL: 580ms\n\nHere\u0027s my prototype with file://: crrev.com/c/740016\nMaybe my implementation is not the most efficient, but intuitively I can believe that creating and writing a file is slower than WKWebView painting a whitescreen.\n\nWhat\u0027s worse is that the overhead of (3) vs. (1) is proportionally to the number of times a test calls LoadHTML(). In comparison, the ~40ms overhead in (2) is fixed per test case. I verified this with running LoadHTML() up to 1000 times.\n\nI counted 195 occurrences of \"LoadHtml\" in tests under ios/. Assuming the worse case where each test only calls LoadHtml() once, the total increase in time is still about 8 seconds. I think this is the best of the options we have. WDYT?",
+      "parentUuid": "f7763d4f_eb360159",
+      "revId": "037a170ac6a7ea969a22f8b41b50a38b02c34cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
