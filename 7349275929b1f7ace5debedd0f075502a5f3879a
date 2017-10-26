@@ -317,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "69381a8b_a9fe86a6",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-26T21:19:43Z",
+      "side": 1,
+      "message": "Right, I didn\u0027t think about Android. Putting TODOs for this in MediaSinksQuery/MediaRoutesQuery so that we don\u0027t introduce a bunch of new files into this CL.",
+      "parentUuid": "90ff9470_989357e2",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b36740e2_54143618",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 16
