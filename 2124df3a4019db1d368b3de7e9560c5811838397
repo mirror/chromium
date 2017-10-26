@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ecb8457_e1f4ad8a",
+        "filename": "content/browser/frame_host/data_url_navigation_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-26T02:33:09Z",
+      "side": 1,
+      "message": "We still have lots of test using SFL in test body. The test fails because RuntimeEnabledFeatures::AllowContentInitiatedDataUrlNavigationsEnabled updated, but in  LocalFrameClientImpl::AllowContentInitiatedDataUrlNavigations[1] RuntimeEnabledFeatures::AllowContentInitiatedDataUrlNavigationsEnabled not update.\n\nTestBody and LocalFrameClientImpl::AllowContentInitiatedDataUrlNavigations happens in another thread/process. I don\u0027t know how it can update when FieldTrailList is null.\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp?rcl\u003d18bff081d83fb265709da376b3ae9989b1c92edc\u0026l\u003d281",
+      "parentUuid": "5ebb838a_0eba8dfd",
+      "range": {
+        "startLine": 515,
+        "startChar": 0,
+        "endLine": 516,
+        "endChar": 60
+      },
+      "revId": "2124df3a4019db1d368b3de7e9560c5811838397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a3362ec_ca9aea16",
         "filename": "content/public/test/browser_test_base.cc",
         "patchSetId": 20
@@ -45,6 +69,30 @@
       "revId": "2124df3a4019db1d368b3de7e9560c5811838397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135ae818_e001ae56",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-26T02:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a3362ec_ca9aea16",
+      "range": {
+        "startLine": 266,
+        "startChar": 70,
+        "endLine": 266,
+        "endChar": 73
+      },
+      "revId": "2124df3a4019db1d368b3de7e9560c5811838397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
