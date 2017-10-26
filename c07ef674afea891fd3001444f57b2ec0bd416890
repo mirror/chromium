@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "af01cf87_04adbc98",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 2896,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-26T08:39:30Z",
+      "side": 1,
+      "message": "If it works, sure. I\u0027m not familiar with the details of TestConnectorImpl though, so I\u0027m not sure how hard it\u0027ll be. (and this is definitely a separate CL anyway)",
+      "parentUuid": "c1d67727_e4fb1620",
+      "revId": "c07ef674afea891fd3001444f57b2ec0bd416890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e533804_1b1ba8c2",
         "filename": "content/common/frame.mojom",
         "patchSetId": 24

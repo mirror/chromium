@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b459491b_fceb2885",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-26T08:39:30Z",
+      "side": 0,
+      "message": "Ditto here.",
+      "revId": "f4a81f61f3ddddfb36701a674d1d0ace4bd38e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bedd1269_d8a51d92",
+        "filename": "content/network/cookie_manager_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-26T08:39:30Z",
+      "side": 0,
+      "message": "Revert changes to this file?",
+      "revId": "f4a81f61f3ddddfb36701a674d1d0ace4bd38e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

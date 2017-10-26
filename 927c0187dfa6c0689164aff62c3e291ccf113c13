@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c845db2_b6d1d720",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-26T08:39:30Z",
+      "side": 1,
+      "message": "There are some files that are whitespace-only changes. Maybe consider reverting those for now.\n(I don\u0027t feel strongly about this though, and it\u0027s obviously easier not to do anything at all \u003d)",
+      "revId": "927c0187dfa6c0689164aff62c3e291ccf113c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73691cd_fe94043a",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-26T08:39:30Z",
+      "side": 1,
+      "message": "Nit: the unique_ptr indirection here isn\u0027t needed. We can call Close() on remote_interfaces_ and then call Bind() afterwards.",
+      "revId": "927c0187dfa6c0689164aff62c3e291ccf113c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
