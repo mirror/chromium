@@ -32,6 +32,7 @@ void MockImageResourceObserver::RemoveAsObserver() {
 }
 
 void MockImageResourceObserver::ImageChanged(ImageResourceContent* image,
+                                             CanDeferInvalidation,
                                              const IntRect*) {
   image_changed_count_++;
   image_width_on_last_image_changed_ =
