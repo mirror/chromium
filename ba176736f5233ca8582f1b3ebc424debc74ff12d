@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5014b0af_822826dc",
+        "filename": "third_party/libaom/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2017-10-26T19:55:17Z",
+      "side": 1,
+      "message": "Let\u0027s still land this with \"yes\" here. It\u0027s too easy to forget to change it later, and we\u0027ve seen some things fall through the cracks because of this.",
+      "range": {
+        "startLine": 8,
+        "startChar": 19,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "ba176736f5233ca8582f1b3ebc424debc74ff12d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
