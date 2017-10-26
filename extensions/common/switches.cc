@@ -101,6 +101,10 @@ const char kEnableCrxHashCheck[] = "enable-crx-hash-check";
 const char kYieldBetweenContentScriptRuns[] =
     "yield-between-content-script-runs";
 
+// Whether to enable fullscreen locking capability of chrome.windows API
+// (Chrome OS only feature).
+const char kLockWindowFullscreen[] = "lock-window-fullscreen";
+
 }  // namespace switches
 
 }  // namespace extensions
