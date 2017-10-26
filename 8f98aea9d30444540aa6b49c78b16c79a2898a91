@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a73c6381_c5752d58",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-26T14:15:49Z",
+      "side": 1,
+      "message": "I\u0027ve added a new comment on top of that to explain what the code is doing + links to crbugs.\nLet me know if you don\u0027t think the new version is not clear enough.",
+      "parentUuid": "4156e04a_06d9101e",
+      "range": {
+        "startLine": 41,
+        "startChar": 56,
+        "endLine": 41,
+        "endChar": 61
+      },
+      "revId": "8f98aea9d30444540aa6b49c78b16c79a2898a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c66a764_0fc901be",
         "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-25T18:43:05Z",
       "side": 1,
       "message": "maybe const several of the local variables in this function where applicable?",
+      "revId": "8f98aea9d30444540aa6b49c78b16c79a2898a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0362ff14_59c5d60e",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-26T14:15:49Z",
+      "side": 1,
+      "message": "Yes, done. Thanks.",
+      "parentUuid": "5c66a764_0fc901be",
       "revId": "8f98aea9d30444540aa6b49c78b16c79a2898a91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "8f98aea9d30444540aa6b49c78b16c79a2898a91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e488a6c0_5a311da2",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-26T14:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b17a315_dae2ad6f",
+      "revId": "8f98aea9d30444540aa6b49c78b16c79a2898a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
