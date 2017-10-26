@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0fd0682_89806e2d",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-26T00:16:57Z",
+      "side": 1,
+      "message": "nit of nits: indentation slightly off (need one more space)",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 2
+      },
+      "revId": "73333d00a5f1a21d40546ed1faaf63de2202fead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
