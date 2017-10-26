@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ef2b9f8_ac081153",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-26T21:44:05Z",
+      "side": 1,
+      "message": "kInitialBufferSize",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca2df59_b247df50",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-26T21:44:05Z",
+      "side": 1,
+      "message": "This looks like an std::string.",
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272682f6_b2bc3923",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-26T21:44:05Z",
+      "side": 1,
+      "message": "This is not quite true.",
+      "range": {
+        "startLine": 1551,
+        "startChar": 165,
+        "endLine": 1551,
+        "endChar": 184
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
