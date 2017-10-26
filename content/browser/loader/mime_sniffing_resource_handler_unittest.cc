@@ -40,13 +40,17 @@ namespace content {
 
 namespace {
 
+// Allows testing the default implementation in ResourceDispatcherHostDelegate.
+class DefaultResourceDispatcherHostDelegate
+    : public ResourceDispatcherHostDelegate {};
+
 class TestResourceDispatcherHostDelegate
     : public ResourceDispatcherHostDelegate {
  public:
   explicit TestResourceDispatcherHostDelegate(bool must_download)
       : must_download_(must_download) {}
 
-  bool ShouldForceDownloadResource(const GURL& url,
+  bool ShouldForceDownloadResource(net::URLRequest* request,
                                    const std::string& mime_type) override {
     return must_download_;
   }
@@ -205,6 +209,11 @@ class MimeSniffingResourceHandlerTest : public testing::Test {
                              bool read_completed,
                              bool defer_read_completed);
 
+  // Tests whether to force downloading a resource.
+  void TestForceDownloadResource(const GURL& url,
+                                 const std::string& mime_type,
+                                 bool expect_download);
+
  private:
   // Whether the URL request should be intercepted as a stream.
   bool stream_has_handler_;
@@ -235,9 +244,10 @@ MimeSniffingResourceHandlerTest::TestAcceptHeaderSettingWithURLRequest(
                                           0,              // render_view_id
                                           0,              // render_frame_id
                                           is_main_frame,  // is_main_frame
-                                          false,  // allow_download
-                                          true,   // is_async
-                                          PREVIEWS_OFF);  // previews_state
+                                          false,          // allow_download
+                                          true,           // is_async
+                                          PREVIEWS_OFF,   // previews_state
+                                          nullptr);       // navigation_ui_data
 
   std::unique_ptr<TestResourceHandler> scoped_test_handler(
       new TestResourceHandler());
@@ -266,14 +276,15 @@ bool MimeSniffingResourceHandlerTest::TestStreamIsIntercepted(
       TRAFFIC_ANNOTATION_FOR_TESTS));
   bool is_main_frame = request_resource_type == RESOURCE_TYPE_MAIN_FRAME;
   ResourceRequestInfo::AllocateForTesting(request.get(), request_resource_type,
-                                          nullptr,        // context
-                                          0,              // render_process_id
-                                          0,              // render_view_id
-                                          0,              // render_frame_id
-                                          is_main_frame,  // is_main_frame
+                                          nullptr,         // context
+                                          0,               // render_process_id
+                                          0,               // render_view_id
+                                          0,               // render_frame_id
+                                          is_main_frame,   // is_main_frame
                                           allow_download,  // allow_download
                                           true,            // is_async
-                                          PREVIEWS_OFF);   // previews_state
+                                          PREVIEWS_OFF,    // previews_state
+                                          nullptr);        // navigation_ui_data
 
   TestResourceDispatcherHost host(stream_has_handler_);
   TestResourceDispatcherHostDelegate host_delegate(must_download);
@@ -326,14 +337,15 @@ void MimeSniffingResourceHandlerTest::TestHandlerSniffing(
       TRAFFIC_ANNOTATION_FOR_TESTS));
   ResourceRequestInfo::AllocateForTesting(request.get(),
                                           RESOURCE_TYPE_MAIN_FRAME,
-                                          nullptr,  // context
-                                          0,        // render_process_id
-                                          0,        // render_view_id
-                                          0,        // render_frame_id
-                                          true,     // is_main_frame
-                                          false,    // allow_download
-                                          true,     // is_async
-                                          PREVIEWS_OFF);  // previews_state
+                                          nullptr,       // context
+                                          0,             // render_process_id
+                                          0,             // render_view_id
+                                          0,             // render_frame_id
+                                          true,          // is_main_frame
+                                          false,         // allow_download
+                                          true,          // is_async
+                                          PREVIEWS_OFF,  // previews_state
+                                          nullptr);      // navigation_ui_data
 
   TestResourceDispatcherHost host(false);
   TestResourceDispatcherHostDelegate host_delegate(false);
@@ -488,14 +500,15 @@ void MimeSniffingResourceHandlerTest::TestHandlerNoSniffing(
       TRAFFIC_ANNOTATION_FOR_TESTS));
   ResourceRequestInfo::AllocateForTesting(request.get(),
                                           RESOURCE_TYPE_MAIN_FRAME,
-                                          nullptr,  // context
-                                          0,        // render_process_id
-                                          0,        // render_view_id
-                                          0,        // render_frame_id
-                                          true,     // is_main_frame
-                                          false,    // allow_download
-                                          true,     // is_async
-                                          PREVIEWS_OFF);  // previews_state
+                                          nullptr,       // context
+                                          0,             // render_process_id
+                                          0,             // render_view_id
+                                          0,             // render_frame_id
+                                          true,          // is_main_frame
+                                          false,         // allow_download
+                                          true,          // is_async
+                                          PREVIEWS_OFF,  // previews_state
+                                          nullptr);      // navigation_ui_data
 
   TestResourceDispatcherHost host(false);
   TestResourceDispatcherHostDelegate host_delegate(false);
@@ -617,6 +630,58 @@ void MimeSniffingResourceHandlerTest::TestHandlerNoSniffing(
   ASSERT_EQ(MockResourceLoader::Status::IDLE, mock_loader.status());
 
   // Process all messages to ensure proper test teardown.
+  content::RunAllPendingInMessageLoop();
+}
+
+void MimeSniffingResourceHandlerTest::TestForceDownloadResource(
+    const GURL& url,
+    const std::string& mime_type,
+    bool expect_download) {
+  net::URLRequestContext context;
+  std::unique_ptr<net::URLRequest> request(context.CreateRequest(
+      url, net::DEFAULT_PRIORITY, nullptr, TRAFFIC_ANNOTATION_FOR_TESTS));
+  ResourceRequestInfo::AllocateForTesting(request.get(),
+                                          RESOURCE_TYPE_MAIN_FRAME,
+                                          nullptr,       // context
+                                          0,             // render_process_id
+                                          0,             // render_view_id
+                                          0,             // render_frame_id
+                                          true,          // is_main_frame
+                                          true,          // allow_download
+                                          true,          // is_async
+                                          PREVIEWS_OFF,  // previews_state
+                                          nullptr);      // navigation_ui_data
+
+  TestResourceDispatcherHost host(false);
+  DefaultResourceDispatcherHostDelegate host_delegate;
+  host.SetDelegate(&host_delegate);
+
+  TestFakePluginService plugin_service(false, false);
+  std::unique_ptr<ResourceHandler> intercepting_handler(
+      new InterceptingResourceHandler(base::MakeUnique<TestResourceHandler>(),
+                                      nullptr));
+  MimeSniffingResourceHandler mime_sniffing_handler(
+      std::unique_ptr<ResourceHandler>(new TestResourceHandler()), &host,
+      &plugin_service,
+      static_cast<InterceptingResourceHandler*>(intercepting_handler.get()),
+      request.get(), REQUEST_CONTEXT_TYPE_UNSPECIFIED);
+
+  MockResourceLoader mock_loader(&mime_sniffing_handler);
+
+  // Request starts.
+  EXPECT_EQ(MockResourceLoader::Status::IDLE,
+            mock_loader.OnWillStart(request->url()));
+
+  scoped_refptr<ResourceResponse> response(new ResourceResponse);
+  response->head.mime_type = mime_type;
+
+  // The response is received.
+  EXPECT_EQ(MockResourceLoader::Status::IDLE,
+            mock_loader.OnResponseStarted(std::move(response)));
+  // Check if new ResourceHandler is created to handle the download if forceing
+  // download is expected.
+  EXPECT_EQ(expect_download, host.new_resource_handler() != nullptr);
+
   content::RunAllPendingInMessageLoop();
 }
 
@@ -868,14 +933,15 @@ TEST_F(MimeSniffingResourceHandlerTest, 304Handling) {
       TRAFFIC_ANNOTATION_FOR_TESTS));
   ResourceRequestInfo::AllocateForTesting(request.get(),
                                           RESOURCE_TYPE_MAIN_FRAME,
-                                          nullptr,  // context
-                                          0,        // render_process_id
-                                          0,        // render_view_id
-                                          0,        // render_frame_id
-                                          true,     // is_main_frame
-                                          true,     // allow_download
-                                          true,     // is_async
-                                          PREVIEWS_OFF);  // previews_state
+                                          nullptr,       // context
+                                          0,             // render_process_id
+                                          0,             // render_view_id
+                                          0,             // render_frame_id
+                                          true,          // is_main_frame
+                                          true,          // allow_download
+                                          true,          // is_async
+                                          PREVIEWS_OFF,  // previews_state
+                                          nullptr);      // navigation_ui_data
 
   TestResourceDispatcherHost host(false);
   TestResourceDispatcherHostDelegate host_delegate(false);
@@ -919,14 +985,15 @@ TEST_F(MimeSniffingResourceHandlerTest, FetchShouldDisableMimeSniffing) {
       TRAFFIC_ANNOTATION_FOR_TESTS));
   ResourceRequestInfo::AllocateForTesting(request.get(),
                                           RESOURCE_TYPE_MAIN_FRAME,
-                                          nullptr,  // context
-                                          0,        // render_process_id
-                                          0,        // render_view_id
-                                          0,        // render_frame_id
-                                          true,     // is_main_frame
-                                          false,    // allow_download
-                                          true,     // is_async
-                                          PREVIEWS_OFF);  // previews_state
+                                          nullptr,       // context
+                                          0,             // render_process_id
+                                          0,             // render_view_id
+                                          0,             // render_frame_id
+                                          true,          // is_main_frame
+                                          false,         // allow_download
+                                          true,          // is_async
+                                          PREVIEWS_OFF,  // previews_state
+                                          nullptr);      // navigation_ui_data
 
   TestResourceDispatcherHost host(false);
 
@@ -960,6 +1027,27 @@ TEST_F(MimeSniffingResourceHandlerTest, FetchShouldDisableMimeSniffing) {
 
   // Process all messages to ensure proper test teardown.
   content::RunAllPendingInMessageLoop();
+}
+
+TEST_F(MimeSniffingResourceHandlerTest, ForceDownload) {
+  TestForceDownloadResource(GURL("http://www.google.com") /* url */,
+                            "text/html" /* mime_type */,
+                            false /* expect_download */);
+  TestForceDownloadResource(GURL("http://www.google.com") /* url */,
+                            "multipart/related" /* mime_type */,
+                            true /* expect_download */);
+  TestForceDownloadResource(GURL("https://www.google.com") /* url */,
+                            "text/html" /* mime_type */,
+                            false /* expect_download */);
+  TestForceDownloadResource(GURL("https://www.google.com") /* url */,
+                            "multipart/related" /* mime_type */,
+                            true /* expect_download */);
+  TestForceDownloadResource(GURL("file://localpage") /* url */,
+                            "text/html" /* mime_type */,
+                            false /* expect_download */);
+  TestForceDownloadResource(GURL("file://localpage") /* url */,
+                            "multipart/related" /* mime_type */,
+                            false /* expect_download */);
 }
 
 }  // namespace content

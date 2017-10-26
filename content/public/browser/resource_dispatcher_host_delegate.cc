@@ -8,6 +8,7 @@
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/stream_info.h"
 #include "net/ssl/client_cert_store.h"
+#include "net/url_request/url_request.h"
 
 namespace content {
 
@@ -48,9 +49,14 @@ bool ResourceDispatcherHostDelegate::HandleExternalProtocol(
 }
 
 bool ResourceDispatcherHostDelegate::ShouldForceDownloadResource(
-    const GURL& url,
+    net::URLRequest* request,
     const std::string& mime_type) {
-  return false;
+  // Force to download the MHTML page from the remote server, instead of loading
+  // it.
+  return request->url().SchemeIsHTTPOrHTTPS() &&
+         // The MHTML mime type should be same as the one we check in Blink's
+         // DocumentLoader.
+         mime_type == "multipart/related";
 }
 
 bool ResourceDispatcherHostDelegate::ShouldInterceptResourceAsStream(

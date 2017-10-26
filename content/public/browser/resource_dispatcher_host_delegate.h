@@ -80,7 +80,7 @@ class CONTENT_EXPORT ResourceDispatcherHostDelegate {
 
   // Returns true if we should force the given resource to be downloaded.
   // Otherwise, the content layer decides.
-  virtual bool ShouldForceDownloadResource(const GURL& url,
+  virtual bool ShouldForceDownloadResource(net::URLRequest* request,
                                            const std::string& mime_type);
 
   // Returns true and sets |origin| if a Stream should be created for the

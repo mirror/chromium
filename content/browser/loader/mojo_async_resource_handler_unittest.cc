@@ -144,7 +144,7 @@ class TestResourceDispatcherHostDelegate final
     return false;
   }
 
-  bool ShouldForceDownloadResource(const GURL& url,
+  bool ShouldForceDownloadResource(net::URLRequest* request,
                                    const std::string& mime_type) override {
     ADD_FAILURE() << "ShouldForceDownloadResource should not be called.";
     return false;
@@ -345,7 +345,8 @@ class MojoAsyncResourceHandlerTestBase {
         true,                                    // is_main_frame
         false,                                   // allow_download
         true,                                    // is_async
-        PREVIEWS_OFF                             // previews_state
+        PREVIEWS_OFF,                            // previews_state
+        nullptr                                  // navigation_ui_data
         );
 
     ResourceRequest request;
