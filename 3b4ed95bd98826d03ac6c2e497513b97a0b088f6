@@ -190,6 +190,23 @@
     },
     {
       "key": {
+        "uuid": "7f57effb_1a6fd4a8",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-26T22:09:30Z",
+      "side": 1,
+      "message": "I think you don\u0027t need to DCHECK the result of memory allocation. If it is null, you are already dead. Same below.",
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d8ef854_90ced3ab",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1

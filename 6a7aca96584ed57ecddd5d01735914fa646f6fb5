@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9823f501_525a3b7c",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-26T22:09:30Z",
+      "side": 1,
+      "message": "A comment of why this was moved before TaskQueue here can help to avoid issues in the future...",
+      "revId": "6a7aca96584ed57ecddd5d01735914fa646f6fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
