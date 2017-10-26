@@ -27,6 +27,8 @@ HEADER_FILE_TEMPLATE = """
 
 #include "extensions/common/features/feature_provider.h"
 
+#include <memory>
+
 namespace extensions {
 
 class %(provider_class)s : public FeatureProvider {
@@ -185,9 +187,9 @@ FEATURE_GRAMMAR = (
     'location': {
       unicode: {
         'enum_map': {
-          'component': 'SimpleFeature::COMPONENT_LOCATION',
-          'external_component': 'SimpleFeature::EXTERNAL_COMPONENT_LOCATION',
-          'policy': 'SimpleFeature::POLICY_LOCATION',
+          'component': 'SimpleFeatureLocation::kComponent',
+          'external_component': 'SimpleFeatureLocation::kExternalComponent',
+          'policy': 'SimpleFeatureLocation::kPolicy',
         }
       }
     },
@@ -346,9 +348,25 @@ FINAL_VALIDATION = ({
   'PermissionFeature': []
 })
 
-# These keys are used to find the parents of different features, but are not
-# compiled into the features themselves.
-IGNORED_KEYS = ['default_parent']
+# Note: this must match the order the fields are declared in FeatureConfig.
+CONFIG_KEYS = [
+    'blacklist',
+    'channel',
+    'command_line_switch',
+    'contexts',
+    'dependencies',
+    'extension_types',
+    'session_types',
+    'location',
+    'matches',
+    'platforms',
+    'whitelist',
+    'max_manifest_version',
+    'min_manifest_version',
+    'component_extensions_auto_granted',
+    'internal',
+    'noparent',
+]
 
 # By default, if an error is encountered, assert to stop the compilation. This
 # can be disabled for testing.
@@ -362,10 +380,18 @@ STRINGS_TO_UNICODE = False
 def GetCodeForFeatureValues(feature_values):
   """ Gets the Code object for setting feature values for this object. """
   c = Code()
-  for key in sorted(feature_values.keys()):
-    if key in IGNORED_KEYS:
-      continue;
-    c.Append('feature->set_%s(%s);' % (key, feature_values[key]))
+  for key in CONFIG_KEYS:
+    c.Comment('%s' % key)
+    if key in feature_values:
+      c.Append('%s,' % feature_values[key])
+    elif key in ['location', 'channel']:
+      c.Append('base::nullopt,')
+    elif key in ['component_extensions_auto_granted']:
+      c.Append('true,')
+    elif key in ['max_manifest_version', 'min_manifest_version']:
+      c.Append('-1,')
+    else:
+      c.Append('{},')
   return c
 
 class Feature(object):
@@ -545,13 +571,13 @@ class Feature(object):
       if not validator(feature_values):
         self.AddError(error)
 
-  def GetCode(self, feature_type):
+  def GetCode(self):
     """Returns the Code object for generating this feature."""
     c = Code()
-    cpp_feature_class = SIMPLE_FEATURE_CPP_CLASSES[feature_type]
-    c.Append('%s* feature = new %s();' % (cpp_feature_class, cpp_feature_class))
-    c.Append('feature->set_name("%s");' % self.name)
+    c.Sblock('{')
+    c.Append('"%s", ' % self.name)
     c.Concat(GetCodeForFeatureValues(self.GetAllFeatureValues()))
+    c.Eblock('},')
     return c
 
   def AsParent(self):
@@ -583,20 +609,20 @@ class ComplexFeature(Feature):
     Feature.__init__(self, name)
     self.feature_list = []
 
-  def GetCode(self, feature_type):
+  def GetCode(self):
     c = Code()
-    c.Append('std::vector<Feature*> features;')
+    c.Sblock('{')
+    c.Append('"%s",' % self.name)
+    # TODO(dcheng): Not entirely correct. Meh.
+    # c.Concat(GetCodeForFeatureValues(self.shared_values))
+    c.Sblock('{')
     for f in self.feature_list:
       # Sanity check that components of complex features have no shared values
       # set.
       assert not f.shared_values
-      c.Sblock('{')
-      c.Concat(f.GetCode(feature_type))
-      c.Append('features.push_back(feature);')
-      c.Eblock('}')
-    c.Append('ComplexFeature* feature(new ComplexFeature(&features));')
-    c.Append('feature->set_name("%s");' % self.name)
-    c.Concat(GetCodeForFeatureValues(self.shared_values))
+      c.Concat(f.GetCode())
+    c.Eblock('}')
+    c.Append('},')
     return c
 
   def AsParent(self):
@@ -748,12 +774,33 @@ class FeatureCompiler(object):
     c = Code()
     c.Append('%s::%s() {' % (self._provider_class, self._provider_class))
     c.Sblock()
+
+    simple_features = []
+    complex_features = []
+
+    c.Append('static constexpr SimpleFeatureConfig kSimpleConfigs[] = {')
+    c.Sblock()
     for k in sorted(self._features.keys()):
-      c.Sblock('{')
       feature = self._features[k]
-      c.Concat(feature.GetCode(self._feature_type))
-      c.Append('AddFeature("%s", feature);' % k)
-      c.Eblock('}')
+      if isinstance(feature, ComplexFeature):
+        complex_features.append(feature)
+        continue
+      c.Concat(feature.GetCode())
+    c.Eblock('};')
+
+    c.Append('static constexpr ComplexFeatureConfig kComplexConfigs[] = {')
+    c.Sblock()
+    for feature in complex_features:
+      c.Concat(feature.GetCode())
+    c.Eblock('};')
+
+    c.Append(
+        'AddFeaturesFromConfigs(kSimpleConfigs, kComplexConfigs, +[](const '
+        'SimpleFeatureConfig& c) -> std::unique_ptr<SimpleFeature> {')
+    c.Sblock()
+    c.Append('return std::make_unique<%s>(c);' %
+             SIMPLE_FEATURE_CPP_CLASSES[self._feature_type])
+    c.Eblock('});')
     c.Eblock('}')
     return c
 

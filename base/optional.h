@@ -119,13 +119,12 @@ class Optional {
 
   constexpr Optional(base::nullopt_t) {}
 
-  // TODO(dcheng): Make these constexpr iff T is trivially constructible.
-  Optional(const Optional& other) {
+  constexpr Optional(const Optional& other) {
     if (!other.storage_.is_null_)
       Init(other.value());
   }
 
-  Optional(Optional&& other) {
+  constexpr Optional(Optional&& other) {
     if (!other.storage_.is_null_)
       Init(std::move(other.value()));
   }

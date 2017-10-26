@@ -12,6 +12,8 @@ namespace extensions {
 PermissionFeature::PermissionFeature() {
 }
 
+PermissionFeature::PermissionFeature(const SimpleFeatureConfig& config) {}
+
 PermissionFeature::~PermissionFeature() {
 }
 

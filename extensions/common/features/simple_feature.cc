@@ -20,6 +20,7 @@
 #include "components/crx_file/id_util.h"
 #include "extensions/common/extension_api.h"
 #include "extensions/common/features/feature_channel.h"
+#include "extensions/common/features/feature_config.h"
 #include "extensions/common/features/feature_provider.h"
 #include "extensions/common/features/feature_util.h"
 #include "extensions/common/switches.h"
@@ -211,6 +212,33 @@ SimpleFeature::ScopedThreadUnsafeWhitelistForTest::
 
 SimpleFeature::SimpleFeature()
     : component_extensions_auto_granted_(true), is_internal_(false) {}
+
+SimpleFeature::SimpleFeature(const SimpleFeatureConfig& config)
+    : channel_(config.channel),
+      extension_types_(config.extension_types),
+      contexts_(config.contexts),
+      component_extensions_auto_granted_(
+          config.component_extensions_auto_granted),
+      session_types_(config.session_types),
+      location_(config.location),
+      is_internal_(config.internal),
+      platforms_(config.platforms) {
+  for (const auto* entry : config.blacklist)
+    blacklist_.push_back(entry);
+  if (config.command_line_switch)
+    command_line_switch_.emplace(config.command_line_switch);
+  for (const auto* entry : config.dependencies)
+    dependencies_.push_back(entry);
+  for (const auto* entry : config.matches)
+    matches_.AddPattern(URLPattern(URLPattern::SCHEME_ALL, entry));
+  if (config.max_manifest_version >= 0)
+    max_manifest_version_ = config.max_manifest_version;
+  if (config.min_manifest_version >= 0)
+    min_manifest_version_ = config.min_manifest_version;
+  no_parent_ = config.no_parent;
+  for (const auto* entry : config.whitelist)
+    whitelist_.push_back(entry);
+}
 
 SimpleFeature::~SimpleFeature() {}
 
@@ -441,11 +469,11 @@ bool SimpleFeature::MatchesManifestLocation(
     Manifest::Location manifest_location) const {
   DCHECK(location_);
   switch (*location_) {
-    case SimpleFeature::COMPONENT_LOCATION:
+    case SimpleFeatureLocation::kComponent:
       return manifest_location == Manifest::COMPONENT;
-    case SimpleFeature::EXTERNAL_COMPONENT_LOCATION:
+    case SimpleFeatureLocation::kExternalComponent:
       return manifest_location == Manifest::EXTERNAL_COMPONENT;
-    case SimpleFeature::POLICY_LOCATION:
+    case SimpleFeatureLocation::kPolicy:
       return manifest_location == Manifest::EXTERNAL_POLICY ||
              manifest_location == Manifest::EXTERNAL_POLICY_DOWNLOAD;
   }

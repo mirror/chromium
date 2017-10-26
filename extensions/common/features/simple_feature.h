@@ -27,8 +27,18 @@
 
 namespace extensions {
 
-class FeatureProviderTest;
 class ExtensionAPITest;
+class FeatureProviderTest;
+struct SimpleFeatureConfig;
+
+// Similar to Manifest::Location, these are the classes of locations
+// supported in feature files. These should only be used in this class and in
+// generated files.
+enum class SimpleFeatureLocation {
+  kComponent,
+  kExternalComponent,
+  kPolicy,
+};
 
 class SimpleFeature : public Feature {
  public:
@@ -47,6 +57,7 @@ class SimpleFeature : public Feature {
   };
 
   SimpleFeature();
+  SimpleFeature(const SimpleFeatureConfig& config);
   ~SimpleFeature() override;
 
   Availability IsAvailableToContext(const Extension* extension,
@@ -83,15 +94,6 @@ class SimpleFeature : public Feature {
                           const char* const array[],
                           size_t array_length);
 
-  // Similar to Manifest::Location, these are the classes of locations
-  // supported in feature files. These should only be used in this class and in
-  // generated files.
-  enum Location {
-    COMPONENT_LOCATION,
-    EXTERNAL_COMPONENT_LOCATION,
-    POLICY_LOCATION,
-  };
-
   // Setters used by generated code to create the feature.
   // NOTE: These setters use base::StringPiece and std::initalizer_list rather
   // than std::string and std::vector for binary size reasons. Using STL types
@@ -108,7 +110,7 @@ class SimpleFeature : public Feature {
   void set_extension_types(std::initializer_list<Manifest::Type> types);
   void set_session_types(std::initializer_list<FeatureSessionType> types);
   void set_internal(bool is_internal) { is_internal_ = is_internal; }
-  void set_location(Location location) { location_ = location; }
+  void set_location(SimpleFeatureLocation location) { location_ = location; }
   // set_matches() is an exception to pass-by-value since we construct an
   // URLPatternSet from the vector of strings.
   // TODO(devlin): Pass in an URLPatternSet directly.
@@ -133,14 +135,16 @@ class SimpleFeature : public Feature {
   const std::vector<Platform>& platforms() const { return platforms_; }
   const std::vector<Context>& contexts() const { return contexts_; }
   const std::vector<std::string>& dependencies() const { return dependencies_; }
-  const base::Optional<version_info::Channel> channel() const {
+  const base::Optional<version_info::Channel>& channel() const {
     return channel_;
   }
-  const base::Optional<Location> location() const { return location_; }
-  const base::Optional<int> min_manifest_version() const {
+  const base::Optional<SimpleFeatureLocation>& location() const {
+    return location_;
+  }
+  const base::Optional<int>& min_manifest_version() const {
     return min_manifest_version_;
   }
-  const base::Optional<int> max_manifest_version() const {
+  const base::Optional<int>& max_manifest_version() const {
     return max_manifest_version_;
   }
   const base::Optional<std::string>& command_line_switch() const {
@@ -226,7 +230,7 @@ class SimpleFeature : public Feature {
   std::vector<Platform> platforms_;
   URLPatternSet matches_;
 
-  base::Optional<Location> location_;
+  base::Optional<SimpleFeatureLocation> location_;
   base::Optional<int> min_manifest_version_;
   base::Optional<int> max_manifest_version_;
   base::Optional<std::string> command_line_switch_;
