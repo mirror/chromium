@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fc0fa8c_5bad6c05",
+        "filename": "components/safe_browsing/browser/threat_details.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T16:32:39Z",
+      "side": 1,
+      "message": "ready",
+      "range": {
+        "startLine": 189,
+        "startChar": 43,
+        "endLine": 189,
+        "endChar": 44
+      },
+      "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32cdad3_4097b9c7",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T16:32:39Z",
+      "side": 1,
+      "message": "Is it possible for threat details to outlive trigger manager? probably not, but if it does, then this code will start failing.",
+      "range": {
+        "startLine": 164,
+        "startChar": 70,
+        "endLine": 164,
+        "endChar": 74
+      },
+      "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a30c99d_353ba3fe",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T16:32:39Z",
+      "side": 1,
+      "message": "nit: skip the temp and just Bind here?",
+      "range": {
+        "startLine": 168,
+        "startChar": 55,
+        "endLine": 168,
+        "endChar": 68
+      },
+      "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd1247c_6e25b0c7",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T16:32:39Z",
+      "side": 1,
+      "message": "should this be a DCHECK instead? It looks like so but I am not sure.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 61
+      },
+      "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d064f7c5_495f1353",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T16:32:39Z",
+      "side": 1,
+      "message": "non-blocking: It might be useful to verify that the done_callback does indeed get called back in all cases.\nEither here or in threat_details_unittest",
+      "range": {
+        "startLine": 130,
+        "startChar": 21,
+        "endLine": 130,
+        "endChar": 38
+      },
+      "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
