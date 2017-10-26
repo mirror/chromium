@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf069483_ff0a80c1",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 5972,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-26T01:56:25Z",
+      "side": 0,
+      "message": "Patching your CL in, I still see duplicate DidSetFramePolicyHeaders IPCs for every navigation.  Maybe one of them is from the initial empty document?  Any way to avoid this?",
+      "range": {
+        "startLine": 5972,
+        "startChar": 12,
+        "endLine": 5972,
+        "endChar": 38
+      },
+      "revId": "ce9ef51ea3e0eb5e7c789d00a4ba4885cab5966f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bb5f7a8e_e1cbfe0e",
+        "filename": "content/browser/frame_host/frame_tree_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-26T01:56:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d55b2a57_254f10f7",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "667ec8c6_58992fb7",
         "filename": "content/browser/frame_host/frame_tree_browsertest.cc",
         "patchSetId": 8
@@ -224,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "f6f5a379_282d5ced",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-26T01:56:25Z",
+      "side": 1,
+      "message": "Wow, that\u0027s interesting.  Let me think a bit more about why this happens, and whether there might still be cases where we aren\u0027t already covered.",
+      "parentUuid": "d1a603a1_21da6e6c",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49027139_52a29ead",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 8
@@ -400,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "008d02c7_ab4fe8cb",
+        "filename": "content/browser/frame_host/render_frame_host_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3211,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-26T01:56:25Z",
+      "side": 1,
+      "message": "Your way should be fine, sorry. :)  I was initially thinking that the old RFH might be gone by now, but you\u0027re using main_test_rfh() (which looks up the new RFH) and not initial_rfh, so this is fine.",
+      "parentUuid": "7c69de86_78e71d85",
+      "range": {
+        "startLine": 3211,
+        "startChar": 12,
+        "endLine": 3211,
+        "endChar": 27
+      },
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "675e8e3e_92fdb6fa",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -482,6 +542,24 @@
     },
     {
       "key": {
+        "uuid": "b659e15b_5e5e69a5",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 12138,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-26T01:56:25Z",
+      "side": 1,
+      "message": "Great, thanks for adding the test!",
+      "parentUuid": "e996b9cc_a1121368",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e2b4c60_95e0999e",
         "filename": "content/browser/web_contents/web_contents_impl.h",
         "patchSetId": 8
@@ -511,6 +589,24 @@
       "side": 1,
       "message": "Mostly cleanliness -- we\u0027re tracking the flags on the RFH, so it seemed like we should be using them as well. Would you prefer I revert this (I\u0027d at least add a comment at the point where we access the flags to point out which flags are being used)",
       "parentUuid": "0e2b4c60_95e0999e",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9aed11e_07de7b92",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-26T01:56:25Z",
+      "side": 1,
+      "message": "I\u0027m fine keeping it since you\u0027ve already done the work -- given that the window.open ultimately comes from the opener RFH, I agree it\u0027s cleaner to pull the sandbox flags off from the same opener RFH as well.  This refactor just makes this CL a bit riskier, because there\u0027s lots of paths/weirdness around WC creation, but seems like this change should be ok.",
+      "parentUuid": "241ee70d_31b6a128",
       "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
