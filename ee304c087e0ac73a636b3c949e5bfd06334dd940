@@ -69,6 +69,24 @@
       "revId": "ee304c087e0ac73a636b3c949e5bfd06334dd940",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf0c6ad_09ee6b96",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-26T02:16:37Z",
+      "side": 1,
+      "message": "Thank you for reply!\nThen let\u0027s give it a try to pull parsing to Client class (in another CL).",
+      "parentUuid": "aea9b6ba_1db0f2bc",
+      "revId": "ee304c087e0ac73a636b3c949e5bfd06334dd940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
