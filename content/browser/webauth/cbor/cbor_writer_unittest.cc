@@ -33,7 +33,8 @@ TEST(CBORWriterTest, TestWriteUint) {
   };
 
   for (const UintTestCase& test_case : kUintTestCases) {
-    std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(test_case.value));
+    std::vector<uint8_t> cbor =
+        CBORWriter::Write(CBORValue(test_case.value)).value();
     EXPECT_THAT(cbor, testing::ElementsAreArray(test_case.cbor));
   }
 }
@@ -50,7 +51,8 @@ TEST(CBORWriterTest, TestWriteBytes) {
   };
 
   for (const BytesTestCase& test_case : kBytesTestCases) {
-    std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(test_case.bytes));
+    std::vector<uint8_t> cbor =
+        CBORWriter::Write(CBORValue(test_case.bytes)).value();
     EXPECT_THAT(cbor, testing::ElementsAreArray(test_case.cbor));
   }
 }
@@ -71,7 +73,8 @@ TEST(CBORWriterTest, TestWriteString) {
       {"\xf0\x90\x85\x91", base::StringPiece("\x64\xf0\x90\x85\x91")}};
 
   for (const StringTestCase& test_case : kStringTestCases) {
-    std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(test_case.string));
+    std::vector<uint8_t> cbor =
+        CBORWriter::Write(CBORValue(test_case.string)).value();
     EXPECT_THAT(cbor, testing::ElementsAreArray(test_case.cbor));
   }
 }
@@ -89,7 +92,7 @@ TEST(CBORWriterTest, TestWriteArray) {
   for (int i = 1; i <= 25; i++) {
     array.push_back(CBORValue(i));
   }
-  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(array));
+  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(array)).value();
   EXPECT_THAT(cbor, testing::ElementsAreArray(kArrayTestCaseCbor,
                                               arraysize(kArrayTestCaseCbor)));
 }
@@ -128,7 +131,7 @@ TEST(CBORWriterTest, TestWriteMapWithMapValue) {
   // The empty string is shorter than all others, so should appear first in the
   // serialisation.
   map[""] = CBORValue(".");
-  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(map));
+  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(map)).value();
   EXPECT_THAT(cbor, testing::ElementsAreArray(kMapTestCaseCbor,
                                               arraysize(kMapTestCaseCbor)));
 }
@@ -152,7 +155,7 @@ TEST(CBORWriterTest, TestWriteMapWithArray) {
   array.push_back(CBORValue(2));
   array.push_back(CBORValue(3));
   map["b"] = CBORValue(array);
-  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(map));
+  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(map)).value();
   EXPECT_THAT(cbor,
               testing::ElementsAreArray(kMapArrayTestCaseCbor,
                                         arraysize(kMapArrayTestCaseCbor)));
@@ -180,9 +183,93 @@ TEST(CBORWriterTest, TestWriteNestedMap) {
   nested_map["c"] = CBORValue(2);
   nested_map["d"] = CBORValue(3);
   map["b"] = CBORValue(nested_map);
-  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(map));
+  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(map)).value();
   EXPECT_THAT(cbor, testing::ElementsAreArray(kNestedMapTestCase,
                                               arraysize(kNestedMapTestCase)));
+}
+
+// Testing Write() function CBOR structure with major data type
+// 0(unsigned integer), major data type 2(byte string), major data type 3(text
+// string), and an empty CBOR. Since all four cases would have 0 nesting
+// layers, Write() function is expected to return non empty value.
+TEST(CBORWriterTest, TestWriteSingleLayer) {
+  EXPECT_THAT(CBORWriter::Write(CBORValue(1), 4).value(),
+              testing::ElementsAreArray(base::StringPiece("\x01")));
+  EXPECT_THAT(CBORWriter::Write(CBORValue("a"), 4).value(),
+              testing::ElementsAreArray(base::StringPiece("\x61\x61")));
+  EXPECT_THAT(CBORWriter::Write(CBORValue("\xc3\xbc"), 4).value(),
+              testing::ElementsAreArray(base::StringPiece("\x62\xc3\xbc")));
+}
+
+// Testing Write() function for major type 5 CBOR structure with
+// nested CBOR map. The structure of CBOR tested is shown below.
+//     {"a": 1,
+//      "b": {"c": 2,
+//            "d": 3}}
+TEST(CBORWriterTest, TestWriteMultiLayer) {
+  CBORValue::MapValue cbor_map;
+  cbor_map["a"] = CBORValue(1);
+  CBORValue::MapValue nested_map;
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  cbor_map["b"] = CBORValue(nested_map);
+  EXPECT_TRUE(CBORWriter::Write(CBORValue(cbor_map), 4).has_value());
+}
+
+// Testing Write() function for following CBOR structure.
+//     [1,
+//      2,
+//      3,
+//      {"a": 1,
+//       "b": {"c": 2,
+//             "d": 3}}]
+TEST(CBORWriterTest, TestWriteUnbalancedCBOR) {
+  CBORValue::ArrayValue cbor_array;
+  CBORValue::MapValue cbor_map;
+  CBORValue::MapValue nested_map;
+
+  cbor_map["a"] = CBORValue(1);
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  cbor_map["b"] = CBORValue(nested_map);
+  cbor_array.push_back(CBORValue(1));
+  cbor_array.push_back(CBORValue(2));
+  cbor_array.push_back(CBORValue(3));
+  cbor_array.push_back(CBORValue(cbor_map));
+
+  EXPECT_TRUE(CBORWriter::Write(CBORValue(cbor_array), 4).has_value());
+}
+
+// Testing Write() function for following CBOR structure.
+//     {"a": 1,
+//      "b": {"c": 2,
+//            "d": 3
+//            "h": { "e": 4,
+//                   "f": 5,
+//                   "g": [6, 7, [8]]}}}
+// Since above CBOR contains 5 nesting levels. Thus, Write() is expected to
+// return empty optional object.
+TEST(CBORWriterTest, TestWriteOverlyNestedCBOR) {
+  CBORValue::MapValue map;
+  CBORValue::MapValue nested_map;
+  CBORValue::MapValue inner_nested_map;
+  CBORValue::ArrayValue inner_array;
+  CBORValue::ArrayValue array;
+
+  map["a"] = CBORValue(1);
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  inner_nested_map["e"] = CBORValue(4);
+  inner_nested_map["f"] = CBORValue(5);
+  inner_array.push_back(CBORValue(6));
+  array.push_back(CBORValue(6));
+  array.push_back(CBORValue(7));
+  array.push_back(CBORValue(inner_array));
+  inner_nested_map["g"] = CBORValue(array);
+  nested_map["h"] = CBORValue(inner_nested_map);
+  map["b"] = CBORValue(nested_map);
+
+  EXPECT_FALSE(CBORWriter::Write(CBORValue(map), 4).has_value());
 }
 
 }  // namespace content
