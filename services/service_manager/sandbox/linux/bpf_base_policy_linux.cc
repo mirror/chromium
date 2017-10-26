@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "services/service_manager/sandbox/linux/sandbox_bpf_base_policy_linux.h"
+#include "services/service_manager/sandbox/linux/bpf_base_policy_linux.h"
 
 #include <errno.h>
 
