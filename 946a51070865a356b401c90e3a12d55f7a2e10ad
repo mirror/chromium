@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6fffe33_99cd86f7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-26T18:27:39Z",
+      "side": 1,
+      "message": "Nit: perhaps put this in a separate method e.g. test_tbr_reviewer_with_full_email_address.",
+      "revId": "946a51070865a356b401c90e3a12d55f7a2e10ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
