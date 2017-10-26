@@ -4,10 +4,6 @@
 
 #include "ui/events/event.h"
 
-#include <utility>
-
-#include "base/memory/ptr_util.h"
-
 #if defined(USE_X11)
 #include <X11/extensions/XInput2.h>
 #include <X11/keysym.h>
@@ -16,10 +12,12 @@
 
 #include <cmath>
 #include <cstring>
+#include <utility>
 
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/numerics/ranges.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
 #include "ui/events/base_event_utils.h"
@@ -530,11 +528,12 @@ PointerDetails::PointerDetails(EventPointerType pointer_type,
       // information from the other axis.
       radius_x(radius_x > 0 ? radius_x : radius_y),
       radius_y(radius_y > 0 ? radius_y : radius_x),
+      // TODO(jamescook): Should these be clamped?
       force(force),
       tilt_x(tilt_x),
       tilt_y(tilt_y),
-      tangential_pressure(tangential_pressure),
-      twist(twist),
+      tangential_pressure(base::ClampToRange(tangential_pressure, -1.f, 1.f)),
+      twist(base::ClampToRange(twist, 0, 359)),
       id(pointer_id) {
   if (pointer_id == PointerDetails::kUnknownPointerId) {
     id = pointer_type == EventPointerType::POINTER_TYPE_MOUSE
