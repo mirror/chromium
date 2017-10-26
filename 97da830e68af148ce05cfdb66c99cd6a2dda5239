@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8367c695_8c113dd9",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-26T15:10:19Z",
+      "side": 1,
+      "message": "you\u0027re right. I thought std::map::size() was O(N) but it turns out that it is specified as O(1), so let\u0027s use this instead.\n\nhttp://en.cppreference.com/w/cpp/container/map/size",
+      "parentUuid": "e89d370b_06bcda51",
+      "range": {
+        "startLine": 421,
+        "startChar": 8,
+        "endLine": 421,
+        "endChar": 19
+      },
+      "revId": "97da830e68af148ce05cfdb66c99cd6a2dda5239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcba09d8_d5a94e07",
         "filename": "ui/base/resource/data_pack.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-26T14:06:19Z",
       "side": 1,
       "message": "Super nit: I doubt it\u0027s worth distinguishing in the error messages which byte failed to write.\nCan you make all of the LOG(ERROR) strings in this file the same (saves a few bytes): \"Failed to write pak\".\n\nEven more optional: Could just have one LOG(ERROR) at the end and change all writes to:\nsuccess \u0026\u003d (fwrite() !\u003d 0)",
+      "revId": "97da830e68af148ce05cfdb66c99cd6a2dda5239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97306400_d33f5078",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-26T15:10:19Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "dcba09d8_d5a94e07",
       "revId": "97da830e68af148ce05cfdb66c99cd6a2dda5239",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
