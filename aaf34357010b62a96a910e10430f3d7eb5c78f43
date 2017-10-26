@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45e84f48_ec8d4922",
+        "filename": "components/optimization_guide/optimization_hints_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-10-26T17:56:02Z",
+      "side": 1,
+      "message": "hmm did some looking and couldn\u0027t find one. i\u0027ll leave this unresolved in case someone else knows. (though looking around with my rudimentary search of usages of TaskPriority::BACKGROUND, i don\u0027t really see anyone else doing this)",
+      "parentUuid": "d9fe38c4_c22222ba",
+      "revId": "aaf34357010b62a96a910e10430f3d7eb5c78f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "beec0462_d0326e71",
         "filename": "components/optimization_guide/optimization_hints_reader.h",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "8ed7230e_2a8fcc7d",
+        "filename": "components/optimization_guide/optimization_hints_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-10-26T17:56:02Z",
+      "side": 1,
+      "message": "added clarification (reads and indexes)",
+      "parentUuid": "beec0462_d0326e71",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "aaf34357010b62a96a910e10430f3d7eb5c78f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20e3370c_c1370ba9",
         "filename": "components/optimization_guide/optimization_hints_reader.h",
         "patchSetId": 3
@@ -62,6 +104,30 @@
       "revId": "aaf34357010b62a96a910e10430f3d7eb5c78f43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfcb8d4_71ffb791",
+        "filename": "components/optimization_guide/optimization_hints_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-10-26T17:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20e3370c_c1370ba9",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "aaf34357010b62a96a910e10430f3d7eb5c78f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
