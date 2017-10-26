@@ -1937,17 +1937,37 @@ Position LayoutText::PositionForCaretOffset(unsigned offset) const {
   return Position();
 }
 
+Optional<unsigned> LayoutText::CaretOffsetForPosition(
+    const Position& position) const {
+  // ::first-letter handling should be done by LayoutTextFragment override.
+  DCHECK(!IsTextFragment());
+  if (position.IsNull() || position.AnchorNode() != GetNode())
+    return WTF::nullopt;
+  if (GetNode()->IsTextNode()) {
+    DCHECK(position.IsOffsetInAnchor()) << position;
+    DCHECK_LE(position.OffsetInContainerNode(), static_cast<int>(TextLength()))
+        << position;
+    return position.OffsetInContainerNode();
+  }
+  if (IsBR()) {
+    DCHECK(position.IsBeforeAnchor() || position.IsAfterAnchor()) << position;
+    return position.IsBeforeAnchor() ? 0 : 1;
+  }
+  NOTREACHED();
+  return WTF::nullopt;
+}
+
 int LayoutText::CaretMinOffset() const {
   if (auto* mapping = GetNGOffsetMapping()) {
-    // ::first-letter handling should be done by LayoutTextFragment override.
-    DCHECK(!IsTextFragment());
-    if (!GetNode())
+    const Position first_position = PositionForCaretOffset(0);
+    if (first_position.IsNull())
       return 0;
-    Optional<unsigned> candidate =
-        mapping->StartOfNextNonCollapsedCharacter(*GetNode(), 0);
+    Optional<unsigned> candidate = CaretOffsetForPosition(
+        mapping->StartOfNextNonCollapsedContent(first_position));
     // Align with the legacy behavior that 0 is returned if the entire node
     // contains only collapsed whitespaces.
-    return candidate ? *candidate : 0;
+    const bool fully_collapsed = !candidate || *candidate == TextLength();
+    return fully_collapsed ? 0 : *candidate;
   }
 
   InlineTextBox* box = FirstTextBox();
@@ -1961,15 +1981,15 @@ int LayoutText::CaretMinOffset() const {
 
 int LayoutText::CaretMaxOffset() const {
   if (auto* mapping = GetNGOffsetMapping()) {
-    // ::first-letter handling should be done by LayoutTextFragment override.
-    DCHECK(!IsTextFragment());
-    if (!GetNode())
+    const Position last_position = PositionForCaretOffset(TextLength());
+    if (last_position.IsNull())
       return TextLength();
-    Optional<unsigned> candidate =
-        mapping->EndOfLastNonCollapsedCharacter(*GetNode(), TextLength());
-    // Align with the legacy behavior that |TextLength()| is returned if the
+    Optional<unsigned> candidate = CaretOffsetForPosition(
+        mapping->EndOfLastNonCollapsedContent(last_position));
+    // Align with the legacy behavior that |TextLenght()| is returned if the
     // entire node contains only collapsed whitespaces.
-    return candidate ? *candidate : TextLength();
+    const bool fully_collapsed = !candidate || *candidate == 0u;
+    return fully_collapsed ? TextLength() : *candidate;
   }
 
   InlineTextBox* box = LastTextBox();
