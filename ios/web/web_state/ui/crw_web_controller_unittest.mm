@@ -15,6 +15,7 @@
 #include "base/strings/utf_string_conversions.h"
 #import "base/test/ios/wait_util.h"
 #import "ios/testing/ocmock_complex_type_helper.h"
+#import "ios/testing/wait_util.h"
 #import "ios/web/navigation/crw_session_controller.h"
 #import "ios/web/navigation/navigation_item_impl.h"
 #import "ios/web/navigation/navigation_manager_impl.h"
@@ -641,6 +642,7 @@ class CRWWebControllerNativeContentTest : public WebTestWithWebController {
   }
 
   void Load(const GURL& URL) {
+    TestWebStateObserver observer(web_state());
     NavigationManagerImpl& navigation_manager =
         [web_controller() webStateImpl]->GetNavigationManagerImpl();
     navigation_manager.AddPendingItem(
@@ -648,6 +650,15 @@ class CRWWebControllerNativeContentTest : public WebTestWithWebController {
         NavigationInitiationType::USER_INITIATED,
         NavigationManager::UserAgentOverrideOption::INHERIT);
     [web_controller() loadCurrentURL];
+
+    // Native URL is loaded asynchronously with WKBasedNavigationManager. Wait
+    // for navigation to finish before asserting.
+    if (GetWebClient()->IsSlimNavigationManagerEnabled()) {
+      TestWebStateObserver* observer_ptr = &observer;
+      testing::WaitUntilConditionOrTimeout(testing::kWaitForPageLoadTimeout, ^{
+        return observer_ptr->did_finish_navigation_info() != nullptr;
+      });
+    }
   }
 
   TestNativeContentProvider* mock_native_provider_;
