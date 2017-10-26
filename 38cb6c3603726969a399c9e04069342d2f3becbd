@@ -497,6 +497,24 @@
     },
     {
       "key": {
+        "uuid": "29876553_0660ad20",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T22:39:58Z",
+      "side": 1,
+      "message": "This class is 260 LOC, it\u0027s much more than just initialization, so it needs more tests. Once you start writing unit tests you may see that CWVAutofillController requires refactoring and will likely change. So this class will require extra codereview, which can be avoided by splitting CL and writing tests.\n\nThis CL is 700+ LOC, which is a good reason to split it into multiple chunks and land them separately. Please refer to go/smallcl for more information about CLs size. And please send smaller CLs, as it is much easier for reviewers to provide high quality reviews.",
+      "parentUuid": "4350f52a_2c3cd3d0",
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c027218e_a8c04bbe",
         "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion.mm",
         "patchSetId": 13
