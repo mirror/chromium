@@ -94,6 +94,23 @@
     },
     {
       "key": {
+        "uuid": "cc790aad_a081e9fa",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-26T19:27:03Z",
+      "side": 1,
+      "message": "I suggest changing the function name, because here you are no longer talking about surface_ any more and the name is still about \"Surface\".\n\nI can see this happening in other places too, like \"ReportSurfaceCreationFailure()\" where you only report when resource provider creation has failed. I guess you can do a mass re-naming after you fix all the bugs.",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ab6727e_616999d5",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
         "patchSetId": 3
@@ -105,6 +122,29 @@
       "writtenOn": "2017-10-25T21:05:06Z",
       "side": 1,
       "message": "Do you feel like writing some comments here? 😎",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5b1c91_0b39a9d6",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-26T19:27:03Z",
+      "side": 1,
+      "message": "There\u0027re a lot of context_provider_wrapper_ references. I saw that this one is only used as \"SharedGpuContext::ContextProviderWrapper()\" in constructor and restore(). Is there a necessity to keep it. How is different from the resource_provider_\u0027s context_provider_wrapper?",
+      "range": {
+        "startLine": 177,
+        "startChar": 9,
+        "endLine": 177,
+        "endChar": 13
+      },
       "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -157,6 +197,30 @@
     },
     {
       "key": {
+        "uuid": "c53f1f29_3797f2eb",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-26T19:27:03Z",
+      "side": 1,
+      "message": "The implementation in many functions of this class doesn\u0027t look trivial; I\u0027m wondering if putting all as a header file is good.",
+      "parentUuid": "d0fe37f6_3f11b421",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb4e4e8b_d5c6f17a",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 3
@@ -174,6 +238,57 @@
         "endLine": 102,
         "endChar": 36
       },
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b99fee_1ab3f7dc",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-26T19:27:03Z",
+      "side": 1,
+      "message": "Mark this class as final and do the same for other CanvasResource\u0027s subclasses.",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22aee065_a18f4ef9",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-26T19:27:03Z",
+      "side": 1,
+      "message": "Add comment to this subclass.",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c81a47_c2f2f6fa",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-26T19:27:03Z",
+      "side": 1,
+      "message": "Again, mark this subclass as final. Do the same to other subclasses.",
       "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -203,6 +318,23 @@
     },
     {
       "key": {
+        "uuid": "69f08899_56d1c147",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-26T19:27:03Z",
+      "side": 1,
+      "message": "Nice implementation! But would it be acceptable in code style to move the definition of FallbackList enums (from Line 27 to Line 48) to just before this Create function? When I\u0027m reading the code I keep scroll back and forth to check up what the lists look like. And these lists seem to be used in only this place.",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05ee6700_937f215c",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 3
@@ -214,6 +346,23 @@
       "writtenOn": "2017-10-25T21:05:06Z",
       "side": 1,
       "message": "is there reason why we do it like that as opposed to just make PrepareTextureMailbox a no-op on cases where it doesn\u0027t make sense?",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b6c707_ec843160",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-26T19:27:03Z",
+      "side": 1,
+      "message": "Any reason why you put a blank line between these forward declarations?",
       "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
