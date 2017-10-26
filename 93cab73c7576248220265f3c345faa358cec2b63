@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "803f22f7_bb04226c",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-26T22:12:40Z",
+      "side": 1,
+      "message": "This will result in a smaller number. We should multiply it by 8.",
+      "parentUuid": "9b39ccaa_805a4b51",
+      "range": {
+        "startLine": 88,
+        "startChar": 73,
+        "endLine": 88,
+        "endChar": 77
+      },
+      "revId": "93cab73c7576248220265f3c345faa358cec2b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3554059_3c192471",
         "filename": "components/cronet/ios/test/cronet_performance_test.mm",
         "patchSetId": 17
@@ -166,6 +190,30 @@
       "side": 1,
       "message": "You\u0027re right, I hadn\u0027t been paying attention to that.\nDo you think it would be useful to have an elapsed_total including failed tasks?",
       "parentUuid": "cb251c12_8be09354",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 63
+      },
+      "revId": "93cab73c7576248220265f3c345faa358cec2b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "023de9fc_f2b9bf8d",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-26T22:12:40Z",
+      "side": 1,
+      "message": "It is good as it is right now because failed requests may skew the stats. Also, from the client point of view, the request has just failed.",
+      "parentUuid": "a7ca27be_7d342565",
       "range": {
         "startLine": 227,
         "startChar": 0,

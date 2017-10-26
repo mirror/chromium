@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2bd74be_b4e7b234",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-26T22:12:40Z",
+      "side": 1,
+      "message": "Can we calculate the host based on the value of |kExternalUrl|? My concern is that somebody may change the URL but forget to change the hint.",
+      "range": {
+        "startLine": 119,
+        "startChar": 26,
+        "endLine": 119,
+        "endChar": 44
+      },
+      "revId": "3b6b35fb25eb42176b52756d57eacda0793d501e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc126e5_9590858f",
+        "filename": "components/cronet/ios/test/cronet_test_base.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-26T22:12:40Z",
+      "side": 1,
+      "message": "Lowercase.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 6
+      },
+      "revId": "3b6b35fb25eb42176b52756d57eacda0793d501e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
