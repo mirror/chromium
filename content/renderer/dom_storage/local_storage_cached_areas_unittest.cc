@@ -8,6 +8,7 @@
 #include "base/test/scoped_task_environment.h"
 #include "content/renderer/dom_storage/local_storage_cached_area.h"
 #include "content/renderer/dom_storage/mock_leveldb_wrapper.h"
+#include "third_party/WebKit/public/platform/scheduler/test/fake_renderer_scheduler.h"
 
 namespace content {
 
@@ -25,7 +26,9 @@ TEST(LocalStorageCachedAreasTest, CacheLimit) {
   const size_t kCacheLimit = 100;
 
   MockLevelDBWrapper mock_leveldb_wrapper;
-  LocalStorageCachedAreas cached_areas(&mock_leveldb_wrapper);
+  blink::scheduler::FakeRendererScheduler fake_renderer_scheduler;
+  LocalStorageCachedAreas cached_areas(&mock_leveldb_wrapper,
+                                       &fake_renderer_scheduler);
   cached_areas.set_cache_limit_for_testing(kCacheLimit);
 
   scoped_refptr<LocalStorageCachedArea> cached_area1 =

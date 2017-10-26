@@ -1730,6 +1730,53 @@ void RendererSchedulerImpl::RemovePendingNavigation(NavigatingFrameType type) {
   }
 }
 
+void RendererSchedulerImpl::SetPendingDomStorageMessageCount(
+    int pending_count) {
+  if (!control_task_queue_->BelongsToCurrentThread()) {
+    control_task_queue_->PostTask(
+        FROM_HERE,
+        base::Bind(&RendererSchedulerImpl::SetPendingDomStorageMessageCount,
+                   base::Unretained(this), pending_count));
+    return;
+  }
+
+  for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+    web_view_scheduler->SetPendingDomStorageMessageCount(pending_count);
+}
+
+void RendererSchedulerImpl::IncrementPendingLocalStorageMessageCount(
+    const std::string& id) {
+  bool was_empty =
+      main_thread_only().pending_local_storage_message_count.empty();
+  main_thread_only().pending_local_storage_message_count[id]++;
+  if (was_empty) {
+    for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+      web_view_scheduler->SetPendingLocalStorageMessages(true);
+  }
+}
+
+void RendererSchedulerImpl::DecrementPendingLocalStorageMessageCount(
+    const std::string& id) {
+  DCHECK_GT(main_thread_only().pending_local_storage_message_count[id], 0);
+  int count = --main_thread_only().pending_local_storage_message_count[id];
+  if (count == 0) {
+    main_thread_only().pending_local_storage_message_count.erase(id);
+    if (main_thread_only().pending_local_storage_message_count.empty()) {
+      for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+        web_view_scheduler->SetPendingLocalStorageMessages(false);
+    }
+  }
+}
+
+void RendererSchedulerImpl::ClearPendingLocalStorageMessageCount(
+    const std::string& id) {
+  main_thread_only().pending_local_storage_message_count.erase(id);
+  if (main_thread_only().pending_local_storage_message_count.empty()) {
+    for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+      web_view_scheduler->SetPendingLocalStorageMessages(false);
+  }
+}
+
 std::unique_ptr<base::SingleSampleMetric>
 RendererSchedulerImpl::CreateMaxQueueingTimeMetric() {
   return base::SingleSampleMetricsFactory::Get()->CreateCustomCountsMetric(
@@ -1889,6 +1936,8 @@ base::TickClock* RendererSchedulerImpl::tick_clock() const {
 void RendererSchedulerImpl::AddWebViewScheduler(
     WebViewSchedulerImpl* web_view_scheduler) {
   main_thread_only().web_view_schedulers.insert(web_view_scheduler);
+  web_view_scheduler->SetPendingLocalStorageMessages(
+      !main_thread_only().pending_local_storage_message_count.empty());
 }
 
 void RendererSchedulerImpl::RemoveWebViewScheduler(
