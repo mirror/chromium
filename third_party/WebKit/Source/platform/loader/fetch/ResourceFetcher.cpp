@@ -655,6 +655,15 @@ Resource* ResourceFetcher::RequestResource(
   TRACE_EVENT1("blink", "ResourceFetcher::requestResource", "url",
                UrlForTraceEvent(params.Url()));
 
+  // This should hopefully catch most data: loads. It won't include workers
+  // though.
+  if (context_) {
+    const KURL& url = params.Url();
+    if (url.Protocol().LowerASCII() == "data" && url.HasFragmentIdentifier()) {
+      context_->RecordUseCounterForRef();
+    }
+  }
+
   ResourceRequestBlockedReason blocked_reason =
       ResourceRequestBlockedReason::kNone;
 
