@@ -16,6 +16,24 @@
       "revId": "c281ea724f0bd6339daf15c77d8dae1f8a148ea4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb993b6d_eb498765",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/argument-types-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-26T09:07:59Z",
+      "side": 1,
+      "message": "Oops, I overlooked this case.  The test should be updated (or the callback should be replaced with \"callback function\").  I\u0027ve updated this test case.\n\nFYI,\n- callback function \u003d must be a Function.\n- callback interface \u003d must be an Object (Function is okay, too).",
+      "parentUuid": "2a597de1_756e7624",
+      "revId": "c281ea724f0bd6339daf15c77d8dae1f8a148ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
