@@ -32,6 +32,7 @@
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/gpu/compositor_util.h"
+#include "content/browser/mus_util.h"
 #include "content/browser/renderer_host/cursor_manager.h"
 #include "content/browser/renderer_host/delegated_frame_host_client_aura.h"
 #include "content/browser/renderer_host/dip_util.h"
@@ -379,9 +380,6 @@ class RenderWidgetHostViewAura::WindowAncestorObserver
   DISALLOW_COPY_AND_ASSIGN(WindowAncestorObserver);
 };
 
-bool IsMus() {
-  return aura::Env::GetInstance()->mode() == aura::Env::Mode::MUS;
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewAura, public:
@@ -412,8 +410,9 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
       is_guest_view_hack_(is_guest_view_hack),
       device_scale_factor_(0.0f),
       event_handler_(new RenderWidgetHostViewEventHandler(host_, this, this)),
-      frame_sink_id_(IsMus() ? viz::FrameSinkId()
-                             : host_->AllocateFrameSinkId(is_guest_view_hack_)),
+      frame_sink_id_(IsUsingMus()
+                         ? viz::FrameSinkId()
+                         : host_->AllocateFrameSinkId(is_guest_view_hack_)),
       weak_ptr_factory_(this) {
   if (!is_guest_view_hack_)
     host_->SetView(this);
@@ -1714,7 +1713,7 @@ void RenderWidgetHostViewAura::FocusedNodeChanged(
 void RenderWidgetHostViewAura::ScheduleEmbed(
     ui::mojom::WindowTreeClientPtr client,
     base::OnceCallback<void(const base::UnguessableToken&)> callback) {
-  DCHECK(IsMus());
+  DCHECK(IsUsingMus());
   aura::Env::GetInstance()->ScheduleEmbed(std::move(client),
                                           std::move(callback));
 }
@@ -1910,7 +1909,7 @@ void RenderWidgetHostViewAura::CreateAuraWindow(aura::client::WindowType type) {
   window_->Init(ui::LAYER_SOLID_COLOR);
   window_->layer()->SetColor(background_color_);
 
-  if (!IsMus())
+  if (!IsUsingMus())
     return;
 
   // Embed the renderer into the Window.
@@ -1924,7 +1923,7 @@ void RenderWidgetHostViewAura::CreateAuraWindow(aura::client::WindowType type) {
 }
 
 void RenderWidgetHostViewAura::CreateDelegatedFrameHostClient() {
-  if (IsMus())
+  if (IsUsingMus())
     return;
 
   // Tests may set |delegated_frame_host_client_|.
