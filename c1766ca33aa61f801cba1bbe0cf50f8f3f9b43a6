@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc5b1f7_d53ff37c",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-26T02:19:06Z",
+      "side": 1,
+      "message": "dont need static",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 7
+      },
+      "revId": "c1766ca33aa61f801cba1bbe0cf50f8f3f9b43a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5662a6bc_d57465e2",
+        "filename": "remoting/protocol/webrtc_video_stream.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-26T02:19:06Z",
+      "side": 1,
+      "message": "Instead of hard-coding 0,1,2 it would be better to store the actual indexes returned by RegisterEncoder() and use those. Even better, track the indexes using a\nstd::map\u003cwebrtc::CodecType, int\u003e",
+      "revId": "c1766ca33aa61f801cba1bbe0cf50f8f3f9b43a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
