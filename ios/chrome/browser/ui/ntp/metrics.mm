@@ -37,7 +37,8 @@ void RecordNTPTileImpression(int index,
       ntp_tiles::NTPTileImpression(
           index, source, title_source, VisualTypeFromAttributes(attributes),
           // TODO(crbug.com/774977): Plumb icon type.
-          /*icon_type=*/favicon_base::INVALID_ICON, data_generation_time, url),
+          /*icon_type=*/favicon_base::IconType::kInvalid, data_generation_time,
+          url),
       GetApplicationContext()->GetRapporServiceImpl());
 }
 
@@ -50,5 +51,6 @@ void RecordNTPTileClick(int index,
   ntp_tiles::metrics::RecordTileClick(ntp_tiles::NTPTileImpression(
       index, source, title_source, VisualTypeFromAttributes(attributes),
       // TODO(crbug.com/774977): Plumb icon type.
-      /*icon_type=*/favicon_base::INVALID_ICON, data_generation_time, url));
+      /*icon_type=*/favicon_base::IconType::kInvalid, data_generation_time,
+      url));
 }

@@ -248,9 +248,9 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest, LoadIconFromWebManifest) {
 
 #if defined(OS_ANDROID)
   EXPECT_TRUE(delegate->was_requested());
-  EXPECT_NE(
-      nullptr,
-      GetFaviconForPageURL(url, favicon_base::WEB_MANIFEST_ICON).bitmap_data);
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(url, favicon_base::IconType::kWebManifestIcon)
+                .bitmap_data);
 #else
   EXPECT_FALSE(delegate->was_requested());
 #endif
@@ -277,8 +277,9 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
         ui_test_utils::BROWSER_TEST_NONE);
     waiter.Wait();
   }
-  ASSERT_NE(nullptr,
-            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
+  ASSERT_NE(
+      nullptr,
+      GetFaviconForPageURL(url, favicon_base::IconType::kFavicon).bitmap_data);
 
   ui_test_utils::NavigateToURL(browser(), GURL(url::kAboutBlankURL));
 
@@ -291,8 +292,9 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
     waiter.Wait();
   }
 
-  EXPECT_NE(nullptr,
-            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
+  EXPECT_NE(
+      nullptr,
+      GetFaviconForPageURL(url, favicon_base::IconType::kFavicon).bitmap_data);
 }
 
 // Test that a page which uses a meta refresh tag to redirect gets associated
@@ -311,11 +313,12 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
       ui_test_utils::BROWSER_TEST_NONE);
   waiter.Wait();
 
-  EXPECT_NE(nullptr,
-            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
   EXPECT_NE(
       nullptr,
-      GetFaviconForPageURL(landing_url, favicon_base::FAVICON).bitmap_data);
+      GetFaviconForPageURL(url, favicon_base::IconType::kFavicon).bitmap_data);
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(landing_url, favicon_base::IconType::kFavicon)
+                .bitmap_data);
 }
 
 // Test that a page gets a server-side redirect followed by a meta refresh tag
@@ -337,11 +340,12 @@ IN_PROC_BROWSER_TEST_F(
       ui_test_utils::BROWSER_TEST_NONE);
   waiter.Wait();
 
-  EXPECT_NE(nullptr,
-            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
   EXPECT_NE(
       nullptr,
-      GetFaviconForPageURL(landing_url, favicon_base::FAVICON).bitmap_data);
+      GetFaviconForPageURL(url, favicon_base::IconType::kFavicon).bitmap_data);
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(landing_url, favicon_base::IconType::kFavicon)
+                .bitmap_data);
 }
 
 // Test that a page gets a server-side redirect, followed by a meta refresh tag,
@@ -364,11 +368,12 @@ IN_PROC_BROWSER_TEST_F(
       ui_test_utils::BROWSER_TEST_NONE);
   waiter.Wait();
 
-  EXPECT_NE(nullptr,
-            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
   EXPECT_NE(
       nullptr,
-      GetFaviconForPageURL(landing_url, favicon_base::FAVICON).bitmap_data);
+      GetFaviconForPageURL(url, favicon_base::IconType::kFavicon).bitmap_data);
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(landing_url, favicon_base::IconType::kFavicon)
+                .bitmap_data);
 }
 
 // Test that a page which uses JavaScript to override document.location.hash
@@ -387,11 +392,12 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
       ui_test_utils::BROWSER_TEST_NONE);
   waiter.Wait();
 
-  EXPECT_NE(nullptr,
-            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
   EXPECT_NE(
       nullptr,
-      GetFaviconForPageURL(landing_url, favicon_base::FAVICON).bitmap_data);
+      GetFaviconForPageURL(url, favicon_base::IconType::kFavicon).bitmap_data);
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(landing_url, favicon_base::IconType::kFavicon)
+                .bitmap_data);
 }
 
 // Test that a page which uses JavaScript document.location.replace() to
@@ -411,11 +417,12 @@ IN_PROC_BROWSER_TEST_F(
       ui_test_utils::BROWSER_TEST_NONE);
   waiter.Wait();
 
-  EXPECT_NE(nullptr,
-            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
   EXPECT_NE(
       nullptr,
-      GetFaviconForPageURL(landing_url, favicon_base::FAVICON).bitmap_data);
+      GetFaviconForPageURL(url, favicon_base::IconType::kFavicon).bitmap_data);
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(landing_url, favicon_base::IconType::kFavicon)
+                .bitmap_data);
 }
 
 // Test that a page which uses JavaScript document.location.replace() to
@@ -436,11 +443,12 @@ IN_PROC_BROWSER_TEST_F(
       ui_test_utils::BROWSER_TEST_NONE);
   waiter.Wait();
 
-  EXPECT_NE(nullptr,
-            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
   EXPECT_NE(
       nullptr,
-      GetFaviconForPageURL(landing_url, favicon_base::FAVICON).bitmap_data);
+      GetFaviconForPageURL(url, favicon_base::IconType::kFavicon).bitmap_data);
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(landing_url, favicon_base::IconType::kFavicon)
+                .bitmap_data);
 }
 
 // Test that a page which uses JavaScript's history.replaceState() to update
@@ -459,11 +467,12 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
       ui_test_utils::BROWSER_TEST_NONE);
   waiter.Wait();
 
-  EXPECT_NE(nullptr,
-            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
-  EXPECT_NE(nullptr,
-            GetFaviconForPageURL(replacestate_url, favicon_base::FAVICON)
-                .bitmap_data);
+  EXPECT_NE(
+      nullptr,
+      GetFaviconForPageURL(url, favicon_base::IconType::kFavicon).bitmap_data);
+  EXPECT_NE(nullptr, GetFaviconForPageURL(replacestate_url,
+                                          favicon_base::IconType::kFavicon)
+                         .bitmap_data);
 }
 
 // Test that a page which uses JavaScript's history.pushState() to update
@@ -482,11 +491,12 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
       ui_test_utils::BROWSER_TEST_NONE);
   waiter.Wait();
 
-  EXPECT_NE(nullptr,
-            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
   EXPECT_NE(
       nullptr,
-      GetFaviconForPageURL(pushstate_url, favicon_base::FAVICON).bitmap_data);
+      GetFaviconForPageURL(url, favicon_base::IconType::kFavicon).bitmap_data);
+  EXPECT_NE(nullptr, GetFaviconForPageURL(pushstate_url,
+                                          favicon_base::IconType::kFavicon)
+                         .bitmap_data);
 }
 
 #if defined(OS_ANDROID)
@@ -508,7 +518,8 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
   waiter.Wait();
 
   EXPECT_NE(nullptr,
-            GetFaviconForPageURL(pushstate_url, favicon_base::WEB_MANIFEST_ICON)
+            GetFaviconForPageURL(pushstate_url,
+                                 favicon_base::IconType::kWebManifestIcon)
                 .bitmap_data);
 }
 #endif
