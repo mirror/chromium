@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4df209ca_0a4752fd",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-26T22:51:14Z",
+      "side": 1,
+      "message": "this function name should probs be updated - you\u0027re passing an object called properties_ranking to a function called _get_proerties_ranking, it\u0027s not clear what the difference between the arg and return value are. perhaps _get_properties_groups?",
+      "revId": "b82f7d1e2b04f70b10ce04239a95527068ecdcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b95183b_5b6c8249",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-26T22:51:14Z",
+      "side": 1,
+      "message": "function description needs updating",
+      "revId": "b82f7d1e2b04f70b10ce04239a95527068ecdcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
