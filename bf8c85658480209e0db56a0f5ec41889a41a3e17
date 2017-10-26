@@ -25,6 +25,75 @@
     },
     {
       "key": {
+        "uuid": "9a615bd7_0b92b79f",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-26T22:34:00Z",
+      "side": 1,
+      "message": "nit needs braces.",
+      "range": {
+        "startLine": 314,
+        "startChar": 26,
+        "endLine": 314,
+        "endChar": 27
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495f5631_e9487321",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-26T22:34:00Z",
+      "side": 1,
+      "message": "std::move(encoded_response)",
+      "range": {
+        "startLine": 332,
+        "startChar": 52,
+        "endLine": 332,
+        "endChar": 68
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc874fa_8e3cfb29",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-26T22:34:00Z",
+      "side": 1,
+      "message": "I suspect you\u0027re going to have to handle the async version.",
+      "range": {
+        "startLine": 359,
+        "startChar": 4,
+        "endLine": 359,
+        "endChar": 10
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ca2df59_b247df50",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
         "patchSetId": 2
@@ -58,6 +127,52 @@
         "startChar": 165,
         "endLine": 1551,
         "endChar": 184
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de7d930_e884d21a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-26T22:34:00Z",
+      "side": 1,
+      "message": "Maybe call this responseStatusCode (to match redirectStatusCode) and document this is the HTTP status code.",
+      "range": {
+        "startLine": 1938,
+        "startChar": 31,
+        "endLine": 1938,
+        "endChar": 43
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e660d7c_5d211b54",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-26T22:34:00Z",
+      "side": 1,
+      "message": "Can we make sending the body optional?  I can see a use case where folks want to filter based on the mime type from the response headers, but don\u0027t actually need to see the responseBody (which can be large).",
+      "range": {
+        "startLine": 1940,
+        "startChar": 31,
+        "endLine": 1940,
+        "endChar": 43
       },
       "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
