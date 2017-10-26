@@ -16,6 +16,24 @@
       "revId": "dc72e5ebd0537a47599a106a4cb6c6634cb68a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db63cd7d_6a012c45",
+        "filename": "ash/wm/lock_state_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-26T17:30:12Z",
+      "side": 1,
+      "message": "First of all, we can change it to true.\n\nBut I believe it doesn\u0027t matter since it would do initialization during the startup by powerd\u0027 backlights forced off state when PowerButtonDisplayController is constructed in [1].\n\nWe have backlights_forced_off_ initialized to false in FakePowerManagerClient. If you have to set to true here. I believe it is because PBDC doesn\u0027t get backlights forced off state. Will a base::RunLoop().RunUntilIdle() help here?\n\n[1] https://cs.chromium.org/chromium/src/ash/system/power/power_button_display_controller.cc?sq\u003dpackage:chromium\u0026l\u003d41",
+      "parentUuid": "4a88b116_925e6dd3",
+      "revId": "dc72e5ebd0537a47599a106a4cb6c6634cb68a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
