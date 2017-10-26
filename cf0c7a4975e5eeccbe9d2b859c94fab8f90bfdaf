@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87dc960e_de0a23b5",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T01:36:59Z",
+      "side": 1,
+      "message": "This is for documentation purpose right? (which I\u0027m fine with it)",
+      "revId": "cf0c7a4975e5eeccbe9d2b859c94fab8f90bfdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95c5b9e_d92073bc",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T01:36:59Z",
+      "side": 1,
+      "message": "maybe we can just remove this, because if it\u0027s not fullscreen, IsEnabled() is false?",
+      "revId": "cf0c7a4975e5eeccbe9d2b859c94fab8f90bfdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
