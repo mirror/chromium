@@ -123,7 +123,8 @@ void WorkletGlobalScope::FetchAndInvokeScript(
   Modulator* modulator = Modulator::From(ScriptController()->GetScriptState());
   // TODO(nhiroki, ikilpatrick): Update spec to use #script-fetch-options.
   ScriptFetchOptions options(nonce, parser_state, credentials_mode);
-  ModuleScriptFetchRequest module_request(module_url_record, options);
+  ModuleScriptFetchRequest module_request(
+      module_url_record, modulator->GetReferrerPolicy(), options);
 
   // Step 3 to 5 are implemented in
   // WorkletModuleTreeClient::NotifyModuleTreeLoadFinished.
