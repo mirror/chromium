@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "969a0004_36539b5a",
+        "filename": "ios/chrome/browser/ui/first_run/first_run_chrome_signin_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-26T13:44:31Z",
+      "side": 1,
+      "message": "+kkhorimoto@ as owner of this file.\nI changed the execution of dismissing first run and showing settings from parallel to sequential. I believe that it is more deterministic this way. For example, we can be certain that the baseViewController does not have a presentedViewController.\nI have checked for visual differences with this change, and have not noticed any difference with my untrained eye. I also ran all the first_run_egtests.mm and they passed.",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 46
+      },
+      "revId": "b21a920e7e3e586fd5cf83e0bf3e87395110aa75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
