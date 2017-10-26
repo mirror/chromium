@@ -500,6 +500,10 @@ class TestImporter(object):
             _log.error('Exception while fetching current sheriff: %s', error)
         if not username:
             username = 'qyearsley'  # Fallback in case of failure.
+        # Users with an email address other than chromium.org have a full email
+        # address in the JSON file.
+        if '@' in username:
+            return username
         return username + '@chromium.org'
 
     def _fetch_ecosystem_infra_sheriff_username(self):

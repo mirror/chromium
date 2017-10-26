@@ -343,6 +343,17 @@ class TestImporterTest(LoggingTestCase):
         importer = TestImporter(host)
         self.assertEqual('current-sheriff@chromium.org', importer.tbr_reviewer())
         self.assertLog([])
+        host.web.urls[ROTATIONS_URL] = json.dumps({
+            'calendar': [
+                {
+                    'date': today,
+                    'participants': [['external@example.com']],
+                },
+            ],
+            'rotations': ['ecosystem_infra']
+        })
+        self.assertEqual('external@example.com', importer.tbr_reviewer())
+        self.assertLog([])
 
     def test_generate_manifest_successful_run(self):
         # This test doesn't test any aspect of the real manifest script, it just
