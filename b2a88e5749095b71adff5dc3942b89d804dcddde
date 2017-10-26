@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c840a0c_5cda1f23",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-26T10:44:41Z",
+      "side": 1,
+      "message": "nit: Maybe just \u0027The result of the CORS access control check.\u0027 would be fine (and clearer) if we include access allowed",
+      "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f08a726_2f95382f",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-26T10:44:41Z",
+      "side": 1,
+      "message": "ditto (not sure \u0027enumerating\u0027 and \u0027can report\u0027 part is useful)",
+      "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a1453d_fbb530c7",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-26T10:44:41Z",
+      "side": 1,
+      "message": "(ditto)",
+      "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
