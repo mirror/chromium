@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0151445a_fbb9fadf",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-26T23:14:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1102271a_0e07f093",
+      "range": {
+        "startLine": 82,
+        "startChar": 32,
+        "endLine": 82,
+        "endChar": 34
+      },
+      "revId": "91f50d3d33dc5d53cf86e1a55b9b5afe70776ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e3147c9_dd0f9b52",
         "filename": "remoting/codec/frame_processing_time_estimator.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T21:03:14Z",
       "side": 1,
       "message": "But if key_frame is true and both IsEmpty()s are true, this will return 0.\nIs that intended?\nThis condition doesn\u0027t look right. Even if key_frame is true, this method may sometimes return information about delta_frame_size_ instead.",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "91f50d3d33dc5d53cf86e1a55b9b5afe70776ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41329ba_0603c2b3",
+        "filename": "remoting/codec/frame_processing_time_estimator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-26T23:14:33Z",
+      "side": 1,
+      "message": "Yes, both of your concerns are by-design.\n1. If we do not have any records of key (delta) frames, we use information from delta (key) frames. Though key (delta) frames should be larger (smaller) than delta (key) frames, we still can provide a smaller error and a better estimation rather than returning 0.\n2. If we do not have any records, we have to return 0 instead of an arbitrary number.\n\nThe situations discussed above should rarely happen. The first frame is always a key frame, while the following several frames are always delta frames. So the improvement here helps only the first delta frame - usually it should be the second frame.\n\nBut since this is a general used class, handling edge cases well without significantly impacts the complexity is still worthy.",
+      "parentUuid": "8e3147c9_dd0f9b52",
       "range": {
         "startLine": 83,
         "startChar": 5,
@@ -62,6 +110,24 @@
       "revId": "91f50d3d33dc5d53cf86e1a55b9b5afe70776ee7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64907add_13191179",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-26T23:14:33Z",
+      "side": 1,
+      "message": "Sorry, I forgot to remove this line.",
+      "parentUuid": "3250407b_86c1af5c",
+      "revId": "91f50d3d33dc5d53cf86e1a55b9b5afe70776ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
