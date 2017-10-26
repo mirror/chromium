@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "ecd399cc_4e2367a0",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1586,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-26T06:46:06Z",
+      "side": 1,
+      "message": "Actually, this is needed, otherwise we get the class scoped BindInterface which has a different signature (see above).",
+      "parentUuid": "5a17054d_fab4abb6",
+      "revId": "f5264581d286ab09f36877d815fa8e02778c1432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc08f055_9684de27",
         "filename": "content/child/child_thread_impl.cc",
         "patchSetId": 7
@@ -62,6 +80,30 @@
       "revId": "f5264581d286ab09f36877d815fa8e02778c1432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867f3e19_fc3fdc5f",
+        "filename": "content/child/child_thread_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-26T06:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc08f055_9684de27",
+      "range": {
+        "startLine": 751,
+        "startChar": 0,
+        "endLine": 761,
+        "endChar": 40
+      },
+      "revId": "f5264581d286ab09f36877d815fa8e02778c1432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
