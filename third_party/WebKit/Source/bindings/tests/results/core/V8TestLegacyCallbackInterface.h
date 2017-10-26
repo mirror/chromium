@@ -13,8 +13,8 @@
 
 #include "bindings/tests/idls/core/TestLegacyCallbackInterface.h"
 #include "core/CoreExport.h"
+#include "platform/bindings/CallbackInterfaceBase.h"
 #include "platform/bindings/DOMWrapperWorld.h"
-#include "platform/bindings/ScopedPersistent.h"
 
 namespace blink {
 
