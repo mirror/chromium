@@ -136,9 +136,9 @@ ScriptPromise MediaDevices::getUserMedia(ScriptState* script_state,
     return ScriptPromise::RejectWithDOMException(
         script_state, DOMException::Create(kNotSupportedError, error_message));
   }
-
+  auto holder = resolver->Promise();
   request->Start();
-  return resolver->Promise();
+  return holder;
 }
 
 void MediaDevices::DidChangeMediaDevices() {
