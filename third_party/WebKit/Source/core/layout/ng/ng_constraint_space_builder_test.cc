@@ -5,23 +5,22 @@
 #include "core/layout/ng/ng_constraint_space_builder.h"
 
 #include "core/layout/LayoutTestHelper.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 
 namespace blink {
 namespace {
 
 class NGConstraintSpaceBuilderTest {
  public:
-  NGConstraintSpaceBuilderTest() {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
-  };
-  ~NGConstraintSpaceBuilderTest() {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
-  };
+  NGConstraintSpaceBuilderTest(){};
+  ~NGConstraintSpaceBuilderTest(){};
 };
 
 // Asserts that indefinite inline length becomes initial containing
 // block width for horizontal-tb inside vertical document.
 TEST(NGConstraintSpaceBuilderTest, AvailableSizeFromHorizontalICB) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   NGPhysicalSize icb_size{NGSizeIndefinite, LayoutUnit(51)};
 
   NGConstraintSpaceBuilder horizontal_builder(kHorizontalTopBottom, icb_size);
@@ -46,6 +45,8 @@ TEST(NGConstraintSpaceBuilderTest, AvailableSizeFromHorizontalICB) {
 // Asserts that indefinite inline length becomes initial containing
 // block height for vertical-lr inside horizontal document.
 TEST(NGConstraintSpaceBuilderTest, AvailableSizeFromVerticalICB) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   NGPhysicalSize icb_size{LayoutUnit(51), NGSizeIndefinite};
 
   NGConstraintSpaceBuilder horizontal_builder(kVerticalLeftRight, icb_size);

@@ -11,6 +11,7 @@
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/style/ComputedStyle.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -19,13 +20,11 @@ class NGOffsetMappingTest : public RenderingTest {
  protected:
   void SetUp() override {
     RenderingTest::SetUp();
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
     style_ = ComputedStyle::Create();
     style_->GetFont().Update(nullptr);
   }
 
   void TearDown() override {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
     RenderingTest::TearDown();
   }
 
@@ -106,6 +105,8 @@ class NGOffsetMappingTest : public RenderingTest {
   EXPECT_EQ(end, ranges.at(owner).second)
 
 TEST_F(NGOffsetMappingTest, StoredResult) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", "<div id=t>foo</div>");
   EXPECT_FALSE(IsOffsetMappingStored());
   GetOffsetMapping();
@@ -113,6 +114,8 @@ TEST_F(NGOffsetMappingTest, StoredResult) {
 }
 
 TEST_F(NGOffsetMappingTest, OneTextNode) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", "<div id=t>foo</div>");
   const Node* foo_node = layout_object_->GetNode();
   const NGOffsetMapping& result = GetOffsetMapping();
@@ -170,6 +173,8 @@ TEST_F(NGOffsetMappingTest, OneTextNode) {
 }
 
 TEST_F(NGOffsetMappingTest, TwoTextNodes) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", "<div id=t>foo<span id=s>bar</span></div>");
   const LayoutText* foo = ToLayoutText(layout_object_);
   const LayoutText* bar = GetLayoutTextUnder("s");
@@ -236,6 +241,8 @@ TEST_F(NGOffsetMappingTest, TwoTextNodes) {
 }
 
 TEST_F(NGOffsetMappingTest, BRBetweenTextNodes) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", u"<div id=t>foo<br>bar</div>");
   const LayoutText* foo = ToLayoutText(layout_object_);
   const LayoutText* br = ToLayoutText(foo->NextSibling());
@@ -291,6 +298,8 @@ TEST_F(NGOffsetMappingTest, BRBetweenTextNodes) {
 }
 
 TEST_F(NGOffsetMappingTest, OneTextNodeWithCollapsedSpace) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", "<div id=t>foo  bar</div>");
   const Node* node = layout_object_->GetNode();
   const NGOffsetMapping& result = GetOffsetMapping();
@@ -361,6 +370,8 @@ TEST_F(NGOffsetMappingTest, OneTextNodeWithCollapsedSpace) {
 }
 
 TEST_F(NGOffsetMappingTest, FullyCollapsedWhiteSpaceNode) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t",
             "<div id=t>"
             "<span id=s1>foo </span>"
@@ -422,6 +433,8 @@ TEST_F(NGOffsetMappingTest, FullyCollapsedWhiteSpaceNode) {
 }
 
 TEST_F(NGOffsetMappingTest, ReplacedElement) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", "<div id=t>foo <img> bar</div>");
   const LayoutText* foo = ToLayoutText(layout_object_);
   const LayoutObject* img = foo->NextSibling();
@@ -485,6 +498,8 @@ TEST_F(NGOffsetMappingTest, ReplacedElement) {
 }
 
 TEST_F(NGOffsetMappingTest, FirstLetter) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t",
             "<style>div:first-letter{color:red}</style>"
             "<div id=t>foo</div>");
@@ -512,6 +527,8 @@ TEST_F(NGOffsetMappingTest, FirstLetter) {
 }
 
 TEST_F(NGOffsetMappingTest, FirstLetterWithLeadingSpace) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t",
             "<style>div:first-letter{color:red}</style>"
             "<div id=t>  foo</div>");
@@ -545,6 +562,8 @@ TEST_F(NGOffsetMappingTest, FirstLetterWithLeadingSpace) {
 }
 
 TEST_F(NGOffsetMappingTest, FirstLetterWithoutRemainingText) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t",
             "<style>div:first-letter{color:red}</style>"
             "<div id=t>  f</div>");
@@ -576,6 +595,8 @@ TEST_F(NGOffsetMappingTest, FirstLetterWithoutRemainingText) {
 }
 
 TEST_F(NGOffsetMappingTest, FirstLetterInDifferentBlock) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t",
             "<style>:first-letter{float:right}</style><div id=t>foo</div>");
   Element* div = GetDocument().getElementById("t");
@@ -632,6 +653,8 @@ TEST_F(NGOffsetMappingTest, FirstLetterInDifferentBlock) {
 }
 
 TEST_F(NGOffsetMappingTest, WhiteSpaceTextNodeWithoutLayoutText) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", "<div id=t> <span>foo</span></div>");
   Element* div = GetDocument().getElementById("t");
   const Node* text_node = div->firstChild();

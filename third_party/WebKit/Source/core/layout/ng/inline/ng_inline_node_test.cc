@@ -14,6 +14,7 @@
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
 #include "core/style/ComputedStyle.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -64,13 +65,11 @@ class NGInlineNodeTest : public RenderingTest {
  protected:
   void SetUp() override {
     RenderingTest::SetUp();
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
     style_ = ComputedStyle::Create();
     style_->GetFont().Update(nullptr);
   }
 
   void TearDown() override {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
     RenderingTest::TearDown();
   }
 
@@ -137,6 +136,8 @@ class NGInlineNodeTest : public RenderingTest {
   EXPECT_EQ(direction, item.Direction())
 
 TEST_F(NGInlineNodeTest, CollectInlinesText) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", "<div id=t>Hello <span>inline</span> world.</div>");
   NGInlineNodeForTest node = CreateInlineNode();
   node.CollectInlines();
@@ -150,6 +151,8 @@ TEST_F(NGInlineNodeTest, CollectInlinesText) {
 }
 
 TEST_F(NGInlineNodeTest, CollectInlinesBR) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", u"<div id=t>Hello<br>World</div>");
   NGInlineNodeForTest node = CreateInlineNode();
   node.CollectInlines();
@@ -162,6 +165,8 @@ TEST_F(NGInlineNodeTest, CollectInlinesBR) {
 }
 
 TEST_F(NGInlineNodeTest, CollectInlinesRtlText) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", u"<div id=t dir=rtl>\u05E2 <span>\u05E2</span> \u05E2</div>");
   NGInlineNodeForTest node = CreateInlineNode();
   node.CollectInlines();
@@ -178,6 +183,8 @@ TEST_F(NGInlineNodeTest, CollectInlinesRtlText) {
 }
 
 TEST_F(NGInlineNodeTest, CollectInlinesMixedText) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", u"<div id=t>Hello, \u05E2 <span>\u05E2</span></div>");
   NGInlineNodeForTest node = CreateInlineNode();
   node.CollectInlines();
@@ -194,6 +201,8 @@ TEST_F(NGInlineNodeTest, CollectInlinesMixedText) {
 }
 
 TEST_F(NGInlineNodeTest, CollectInlinesMixedTextEndWithON) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetupHtml("t", u"<div id=t>Hello, \u05E2 <span>\u05E2!</span></div>");
   NGInlineNodeForTest node = CreateInlineNode();
   node.CollectInlines();
@@ -211,6 +220,8 @@ TEST_F(NGInlineNodeTest, CollectInlinesMixedTextEndWithON) {
 }
 
 TEST_F(NGInlineNodeTest, SegmentASCII) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   NGInlineNodeForTest node = CreateInlineNode();
   node.Append("Hello");
   node.SegmentText();
@@ -220,6 +231,8 @@ TEST_F(NGInlineNodeTest, SegmentASCII) {
 }
 
 TEST_F(NGInlineNodeTest, SegmentHebrew) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   NGInlineNodeForTest node = CreateInlineNode();
   node.Append(u"\u05E2\u05D1\u05E8\u05D9\u05EA");
   node.SegmentText();
@@ -230,6 +243,8 @@ TEST_F(NGInlineNodeTest, SegmentHebrew) {
 }
 
 TEST_F(NGInlineNodeTest, SegmentSplit1To2) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   NGInlineNodeForTest node = CreateInlineNode();
   node.Append(u"Hello \u05E2\u05D1\u05E8\u05D9\u05EA");
   node.SegmentText();
@@ -241,6 +256,8 @@ TEST_F(NGInlineNodeTest, SegmentSplit1To2) {
 }
 
 TEST_F(NGInlineNodeTest, SegmentSplit3To4) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   NGInlineNodeForTest node = CreateInlineNode();
   node.Append("Hel");
   node.Append(u"lo \u05E2");
@@ -255,6 +272,8 @@ TEST_F(NGInlineNodeTest, SegmentSplit3To4) {
 }
 
 TEST_F(NGInlineNodeTest, SegmentBidiOverride) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   NGInlineNodeForTest node = CreateInlineNode();
   node.Append("Hello ");
   node.Append(kRightToLeftOverrideCharacter);
@@ -286,6 +305,8 @@ static NGInlineNodeForTest CreateBidiIsolateNode(NGInlineNodeForTest node,
 }
 
 TEST_F(NGInlineNodeTest, SegmentBidiIsolate) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   NGInlineNodeForTest node = CreateInlineNode();
   node = CreateBidiIsolateNode(node, style_.get(), layout_object_);
   Vector<NGInlineItem>& items = node.Items();
@@ -308,6 +329,8 @@ TEST_F(NGInlineNodeTest, SegmentBidiIsolate) {
   EXPECT_EQ(dir, node.Items()[fragment->ItemIndexDeprecated()].Direction())
 
 TEST_F(NGInlineNodeTest, CreateLineBidiIsolate) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   UseLayoutObjectAndAhem();
   scoped_refptr<ComputedStyle> style = ComputedStyle::Create();
   style->SetLineHeight(Length(1, kFixed));
@@ -326,6 +349,8 @@ TEST_F(NGInlineNodeTest, CreateLineBidiIsolate) {
 }
 
 TEST_F(NGInlineNodeTest, MinMaxSize) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   LoadAhem();
   SetupHtml("t", "<div id=t style='font:10px Ahem'>AB CDEF</div>");
   NGInlineNodeForTest node = CreateInlineNode();
@@ -336,6 +361,8 @@ TEST_F(NGInlineNodeTest, MinMaxSize) {
 }
 
 TEST_F(NGInlineNodeTest, MinMaxSizeElementBoundary) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   LoadAhem();
   SetupHtml("t", "<div id=t style='font:10px Ahem'>A B<span>C D</span></div>");
   NGInlineNodeForTest node = CreateInlineNode();
