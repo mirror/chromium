@@ -11,6 +11,7 @@
 #include "core/layout/ng/ng_constraint_space_builder.h"
 #include "core/layout/ng/ng_fragment_builder.h"
 #include "core/layout/ng/ng_positioned_float.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -73,6 +74,8 @@ String ToString(NGInlineItemResults line, NGInlineNode node) {
 }
 
 TEST_F(NGLineBreakerTest, SingleNode) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   LoadAhem();
   NGInlineNode node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>
@@ -98,6 +101,8 @@ TEST_F(NGLineBreakerTest, SingleNode) {
 }
 
 TEST_F(NGLineBreakerTest, OverflowWord) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   LoadAhem();
   NGInlineNode node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>
@@ -172,6 +177,8 @@ TEST_F(NGLineBreakerTest, MAYBE_OverflowAtomicInline) {
 }
 
 TEST_F(NGLineBreakerTest, OverflowMargin) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   LoadAhem();
   NGInlineNode node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>
@@ -209,6 +216,8 @@ TEST_F(NGLineBreakerTest, OverflowMargin) {
 
 // Tests when the last word in a node wraps, and another node continues.
 TEST_F(NGLineBreakerTest, WrapLastWord) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   LoadAhem();
   NGInlineNode node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>
@@ -228,6 +237,8 @@ TEST_F(NGLineBreakerTest, WrapLastWord) {
 }
 
 TEST_F(NGLineBreakerTest, BoundaryInWord) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   LoadAhem();
   NGInlineNode node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>
@@ -258,6 +269,8 @@ TEST_F(NGLineBreakerTest, BoundaryInWord) {
 }
 
 TEST_F(NGLineBreakerTest, BoundaryInFirstWord) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   LoadAhem();
   NGInlineNode node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>

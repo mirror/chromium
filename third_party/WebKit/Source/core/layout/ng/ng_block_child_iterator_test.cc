@@ -8,6 +8,7 @@
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -16,20 +17,22 @@ namespace {
 class NGBlockChildIteratorTest : public RenderingTest {
  public:
   NGBlockChildIteratorTest() {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
   }
   ~NGBlockChildIteratorTest() override {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
   }
 };
 
 TEST_F(NGBlockChildIteratorTest, NullFirstChild) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   NGBlockChildIterator iterator(nullptr, nullptr);
   ASSERT_EQ(NGBlockChildIterator::Entry(nullptr, nullptr),
             iterator.NextChild());
 }
 
 TEST_F(NGBlockChildIteratorTest, NoBreakToken) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
       <div id='child1'></div>
       <div id='child2'></div>
@@ -50,6 +53,8 @@ TEST_F(NGBlockChildIteratorTest, NoBreakToken) {
 }
 
 TEST_F(NGBlockChildIteratorTest, BreakTokenWithFinishedChild) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
       <div id='container'>
         <div id='child1'></div>
@@ -89,6 +94,8 @@ TEST_F(NGBlockChildIteratorTest, BreakTokenWithFinishedChild) {
 }
 
 TEST_F(NGBlockChildIteratorTest, BreakTokenWithUnFinishedChild) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
       <div id='container'>
         <div id='child1'></div>
