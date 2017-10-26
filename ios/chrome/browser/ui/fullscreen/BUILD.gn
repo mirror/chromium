@@ -18,7 +18,7 @@ source_set("fullscreen") {
     "//ios/chrome/browser/ui/page_info:coordinator",
     "//ios/chrome/browser/ui/side_swipe",
     "//ios/chrome/browser/ui/tabs/requirements",
-    "//ios/chrome/browser/ui/toolbar",
+    "//ios/chrome/browser/ui/toolbar:toolbar_external",
     "//ios/chrome/browser/ui/voice",
     "//ios/web",
   ]
