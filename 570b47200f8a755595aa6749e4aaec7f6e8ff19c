@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65c24b00_aa4dce7e",
+        "filename": "headless/test/data/dom_tree_extraction_viewport.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-26T20:44:19Z",
+      "side": 1,
+      "message": "There is nothing headless specific here, please implement the protocol test under inspector-protocol/dom-snapshot/ instead.",
+      "revId": "570b47200f8a755595aa6749e4aaec7f6e8ff19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
