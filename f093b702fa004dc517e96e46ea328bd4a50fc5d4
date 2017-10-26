@@ -16,6 +16,24 @@
       "revId": "f093b702fa004dc517e96e46ea328bd4a50fc5d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c83d827_9da090c7",
+        "filename": "chrome/browser/devtools/device/devtools_android_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-10-26T15:42:10Z",
+      "side": 1,
+      "message": "base::Callback has IsCancelled() too, which returns true if it\u0027s cancelled through CancelableCallback or WeakPtr.\n\nThe previous code should be equivalent to the new one, since the previous implementation of CancelableCallback changes the return value of callback() only when it\u0027s Cancel()ed or Reset().",
+      "parentUuid": "7745fed2_fef6a963",
+      "revId": "f093b702fa004dc517e96e46ea328bd4a50fc5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
