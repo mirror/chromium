@@ -95,6 +95,8 @@ class WebRemoteFrame : public WebFrame {
   virtual void DidStartLoading() = 0;
   virtual void DidStopLoading() = 0;
 
+  virtual void DetachChildren() = 0;
+
   // Returns true if this frame should be ignored during hittesting.
   virtual bool IsIgnoredForHitTest() const = 0;
 
