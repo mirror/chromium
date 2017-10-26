@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17140f87_49c5bb86",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-26T21:12:32Z",
+      "side": 1,
+      "message": "positioned",
+      "range": {
+        "startLine": 1663,
+        "startChar": 56,
+        "endLine": 1663,
+        "endChar": 67
+      },
+      "revId": "be037f21bfc2809af069e9f256561d17d3d10289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538c0c6d_b680caac",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1665,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-26T21:12:32Z",
+      "side": 1,
+      "message": "Would this fix also work if you moved the |-layoutIfNeeded| call to |-didRotateFromInterfaceOrientation:|?  That seems like a more logical place to put it.",
+      "revId": "be037f21bfc2809af069e9f256561d17d3d10289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
