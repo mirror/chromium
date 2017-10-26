@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "dabea45a_e74f8b4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-26T16:33:35Z",
+      "side": 1,
+      "message": "Missing bug id",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "e6dd678242552fafca2aca3df6ab2a8440e76b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "302bee82_cd58baad",
         "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
         "patchSetId": 3
