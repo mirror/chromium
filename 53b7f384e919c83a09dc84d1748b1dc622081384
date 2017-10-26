@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0a1aefe_e360b52e",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T14:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d20c96e_a7a06043",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8f59480_edebe057",
         "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-25T17:20:09Z",
       "side": 1,
       "message": "Are they 1:1?",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bfb7b9_aa2d1123",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T14:05:09Z",
+      "side": 1,
+      "message": "It\u0027s n:1 when NGPhysicalFragment is shared. Expanded the explanation.",
+      "parentUuid": "f8f59480_edebe057",
       "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "98b7777a_6a5c0616",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T14:05:09Z",
+      "side": 1,
+      "message": "Clarified, and use \"phase 1\".",
+      "parentUuid": "acf7f04d_e7771b2d",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16611c17_672090c3",
         "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
         "patchSetId": 3
@@ -82,6 +136,24 @@
       "writtenOn": "2017-10-25T17:20:09Z",
       "side": 1,
       "message": "Does the box itself paint with the legacy paint system or the NG paint system?\nOr is it just the inlines that paint with the NG one?",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747945ae_f75ec963",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T14:05:09Z",
+      "side": 1,
+      "message": "Emil may correct but AFAIU, we have box fragment painter, and uses it for the container box of inline children, and for inline boxes.\nEdited to clarify that point.",
+      "parentUuid": "16611c17_672090c3",
       "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "20f9f02f_e4b39483",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T14:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8955a1e8_8e5e6b96",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6158f078_d9b0fbd0",
         "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
         "patchSetId": 3
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "5dca486a_5ac5d493",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T14:05:09Z",
+      "side": 1,
+      "message": "Yes, by the CSS definition, a box can contain only inline children or only block children, but not mixed. Added \"only\".",
+      "parentUuid": "6158f078_d9b0fbd0",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0714313_c90f8781",
         "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
         "patchSetId": 3
@@ -133,6 +241,24 @@
       "writtenOn": "2017-10-25T17:20:09Z",
       "side": 1,
       "message": "What does it mean to \"split\" this tree?",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44f37c5_42db7d9e",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T14:05:09Z",
+      "side": 1,
+      "message": "Re-written without using the confusing term, thanks for the feedback.",
+      "parentUuid": "e0714313_c90f8781",
       "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "0b7f05fa_ba142fa8",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T14:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53a88a17_a6a1a221",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fd8a2a4_5ac8d8ed",
         "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
         "patchSetId": 3
@@ -170,6 +314,24 @@
       "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37ff072_b81f4c56",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T14:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fd8a2a4_5ac8d8ed",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "a22dcbc3_005285b5",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T14:05:09Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s still to be discussed, so removed it. Thanks for the suggestion.",
+      "parentUuid": "e06251be_dabf2f76",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17285923_a23fd3e1",
         "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
         "patchSetId": 3
@@ -204,6 +384,24 @@
       "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273e7ead_33f24be2",
+        "filename": "third_party/WebKit/Source/core/paint/ng/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T14:05:09Z",
+      "side": 1,
+      "message": "Removed this too.",
+      "parentUuid": "17285923_a23fd3e1",
+      "revId": "53b7f384e919c83a09dc84d1748b1dc622081384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
