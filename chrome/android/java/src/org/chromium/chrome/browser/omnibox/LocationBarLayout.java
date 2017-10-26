@@ -163,7 +163,7 @@ public class LocationBarLayout extends FrameLayout
     private AutocompleteController mAutocomplete;
 
     protected ToolbarDataProvider mToolbarDataProvider;
-    private UrlFocusChangeListener mUrlFocusChangeListener;
+    private List<UrlFocusChangeListener> mUrlFocusChangeListeners = new ArrayList<>();
 
     protected boolean mNativeInitialized;
 
@@ -1102,7 +1102,9 @@ public class LocationBarLayout extends FrameLayout
      */
     protected void handleUrlFocusAnimation(boolean hasFocus) {
         if (hasFocus) mUrlFocusedWithoutAnimations = false;
-        if (mUrlFocusChangeListener != null) mUrlFocusChangeListener.onUrlFocusChange(hasFocus);
+        for (UrlFocusChangeListener listener : mUrlFocusChangeListeners) {
+            listener.onUrlFocusChange(hasFocus);
+        }
 
         updateOmniboxResultsContainer();
         if (hasFocus) updateFadingBackgroundView(true);
@@ -1252,13 +1254,17 @@ public class LocationBarLayout extends FrameLayout
         mBottomSheet = sheet;
     }
 
-    /**
-     * Sets the URL focus change listner that will be notified when the URL gains or loses focus.
-     * @param listener The listener to be registered.
-     */
     @Override
-    public void setUrlFocusChangeListener(UrlFocusChangeListener listener) {
-        mUrlFocusChangeListener = listener;
+    public void addUrlFocusChangeListener(UrlFocusChangeListener listener) {
+        assert !mUrlFocusChangeListeners.contains(listener);
+        if (mUrlFocusChangeListeners.contains(listener)) return;
+        mUrlFocusChangeListeners.add(listener);
+    }
+
+    @Override
+    public void removeUrlFocusChangeListener(UrlFocusChangeListener listener) {
+        assert mUrlFocusChangeListeners.contains(listener);
+        mUrlFocusChangeListeners.remove(listener);
     }
 
     @Override
