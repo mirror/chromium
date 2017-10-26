@@ -4644,6 +4644,32 @@ TEST(HttpCache, SimpleHEAD_LoadOnlyFromCache_Hit) {
   RemoveMockTransaction(&transaction);
 }
 
+TEST(HttpCache, SimpleGET_NoResponseBody) {
+  MockHttpCache cache;
+  MockTransaction transaction(kETagGET_Transaction);
+  transaction.data = "";
+  AddMockTransaction(&transaction);
+
+  // Populate the cache.
+  RunTransactionTest(cache.http_cache(), transaction);
+
+  EXPECT_EQ(1, cache.network_layer()->transaction_count());
+  EXPECT_EQ(0, cache.disk_cache()->open_count());
+  EXPECT_EQ(1, cache.disk_cache()->create_count());
+
+  // Load from cache.
+  transaction.method = "GET";
+  transaction.load_flags |= LOAD_VALIDATE_CACHE;
+  transaction.status = "HTTP/1.1 304 Not Modified";
+  transaction.data = "";
+  RunTransactionTest(cache.http_cache(), transaction);
+
+  EXPECT_EQ(2, cache.network_layer()->transaction_count());
+  EXPECT_EQ(1, cache.disk_cache()->open_count());
+  EXPECT_EQ(1, cache.disk_cache()->create_count());
+  RemoveMockTransaction(&transaction);
+}
+
 // Tests that a read-only request served from the cache preserves CL.
 TEST(HttpCache, SimpleHEAD_ContentLengthOnHit_Read) {
   MockHttpCache cache;
