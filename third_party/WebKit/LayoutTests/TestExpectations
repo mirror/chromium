@@ -3701,6 +3701,3 @@ crbug.com/778575 [ Mac ] virtual/threaded/http/tests/devtools/tracing/hit-test.h
 crbug.com/778575 [ Mac ] virtual/threaded/http/tests/devtools/tracing/timeline-network-received-data.js [ Pass Failure ]
 crbug.com/778575 [ Mac ] virtual/threaded/http/tests/devtools/tracing/timeline-receive-response-event.js [ Pass Failure ]
 crbug.com/778575 [ Mac ] virtual/threaded/http/tests/devtools/tracing/timeline-xhr-response-type-blob-event.js [ Pass Failure ]
-
-# https://bugs.chromium.org/p/chromium/issues/detail?id=777526
-crbug.com/777777 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-remove-tracks.https.html [ Timeout ]
