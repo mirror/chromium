@@ -66,6 +66,15 @@ class MockRenderMessageFilterImpl : public mojom::RenderMessageFilter {
   MockRenderThread* const thread_;
 };
 
+// Returns an InterfaceProvider that is safe to call into, but will not actually
+// service any interface requests.
+service_manager::mojom::InterfaceProviderPtr CreateIsolatedInterfaceProvider() {
+  ::service_manager::mojom::InterfaceProviderPtr
+      isolated_interface_provider_proxy;
+  mojo::MakeRequest(&isolated_interface_provider_proxy);
+  return isolated_interface_provider_proxy;
+}
+
 }  // namespace
 
 MockRenderThread::MockRenderThread()
@@ -269,8 +278,11 @@ void MockRenderThread::OnCreateWidget(int opener_id,
 void MockRenderThread::OnCreateChildFrame(
     const FrameHostMsg_CreateChildFrame_Params& params,
     int* new_render_frame_id,
+    mojo::MessagePipeHandle* new_interface_provider,
     base::UnguessableToken* devtools_frame_token) {
   *new_render_frame_id = new_frame_routing_id_++;
+  *new_interface_provider =
+      CreateIsolatedInterfaceProvider().PassInterface().PassHandle().release();
   *devtools_frame_token = base::UnguessableToken::Create();
 }
 
@@ -310,6 +322,7 @@ void MockRenderThread::OnCreateWindow(
     mojom::CreateNewWindowReply* reply) {
   reply->route_id = new_window_routing_id_;
   reply->main_frame_route_id = new_window_main_frame_routing_id_;
+  reply->main_frame_interface_provider = CreateIsolatedInterfaceProvider();
   reply->main_frame_widget_route_id = new_window_main_frame_widget_routing_id_;
   reply->cloned_session_storage_namespace_id = 0;
 }
