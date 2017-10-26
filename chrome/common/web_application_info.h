@@ -34,6 +34,12 @@ struct WebApplicationInfo {
     MOBILE_CAPABLE_APPLE
   };
 
+  enum Installable {
+    INSTALLABLE_YES,
+    INSTALLABLE_NO,
+    INSTALLABLE_UNKNOWN,
+  };
+
   WebApplicationInfo();
   WebApplicationInfo(const WebApplicationInfo& other);
   ~WebApplicationInfo();
@@ -66,6 +72,10 @@ struct WebApplicationInfo {
   // Whether the app should be opened in a window. If false, the app will be
   // opened in a tab.
   bool open_as_window;
+
+  // Whether the site is installable.
+  // See chrome/browser/installable/installable_params.h for details.
+  Installable installable;
 };
 
 #endif  // CHROME_COMMON_WEB_APPLICATION_INFO_H_
