@@ -86,6 +86,7 @@
 #include "ui/compositor/dip_util.h"
 #include "ui/display/screen.h"
 #include "ui/events/blink/blink_event_util.h"
+#include "ui/events/blink/did_overscroll_params.h"
 #include "ui/events/blink/web_input_event.h"
 #include "ui/events/event.h"
 #include "ui/events/event_utils.h"
@@ -411,6 +412,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
       has_snapped_to_boundary_(false),
       is_guest_view_hack_(is_guest_view_hack),
       device_scale_factor_(0.0f),
+      renderer_disabled_overscroll_(false),
       event_handler_(new RenderWidgetHostViewEventHandler(host_, this, this)),
       frame_sink_id_(IsMus() ? viz::FrameSinkId()
                              : host_->AllocateFrameSinkId(is_guest_view_hack_)),
@@ -1014,10 +1016,18 @@ void RenderWidgetHostViewAura::WheelEventAck(
   }
 }
 
+void RenderWidgetHostViewAura::DidOverscroll(
+    const ui::DidOverscrollParams& params) {
+  renderer_disabled_overscroll_ =
+      params.scroll_boundary_behavior.x !=
+      cc::ScrollBoundaryBehavior::ScrollBoundaryBehaviorType::
+          kScrollBoundaryBehaviorTypeAuto;
+}
+
 void RenderWidgetHostViewAura::GestureEventAck(
     const blink::WebGestureEvent& event,
     InputEventAckState ack_result) {
-  if (overscroll_controller_) {
+  if (overscroll_controller_ && !renderer_disabled_overscroll_) {
     overscroll_controller_->ReceivedEventACK(
         event, (INPUT_EVENT_ACK_STATE_CONSUMED == ack_result));
   }
