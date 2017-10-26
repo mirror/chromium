@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e38efdc5_2935c4ca",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-26T23:52:31Z",
+      "side": 1,
+      "message": "We actually don\u0027t need all_instances anymore.",
+      "parentUuid": "719c37be_ecb70311",
+      "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91f2a5cd_bf056ccc",
         "filename": "services/service_manager/service_manager.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1d1a8011_1ef20cbb",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-26T23:52:31Z",
+      "side": 1,
+      "message": "Probably because no one is using that :-)\nRemoved that TestAPI.",
+      "parentUuid": "91f2a5cd_bf056ccc",
+      "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6970a006_9e1ccc90",
         "filename": "services/service_manager/service_manager.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-26T18:22:34Z",
       "side": 1,
       "message": "nit: maybe it\u0027s more correct to omit instance_name if singleton_instance\u003d\u003dtrue? not that it should matter",
+      "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3229e3df_91b19edd",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-26T23:52:31Z",
+      "side": 1,
+      "message": "Good point, moved it to the if statements below.",
+      "parentUuid": "6970a006_9e1ccc90",
       "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a7207c79_91d6d9f1",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-26T23:52:31Z",
+      "side": 1,
+      "message": "You are right, it\u0027s easier to read.",
+      "parentUuid": "8131e767_301f35ea",
+      "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a505c576_bc1e3682",
         "filename": "services/service_manager/service_manager.cc",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-26T18:22:34Z",
       "side": 1,
       "message": "nit: since this is the only use of all_instances, maybe instead of exposing that, you could add a GetRunningServiceInfo(std::vector\u003cmojom::RunningServiceInfoPtr\u003e*) method on IdentityToInstanceMap?",
+      "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db641ee9_4a094198",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-26T23:52:31Z",
+      "side": 1,
+      "message": "Good point, actually we don\u0027t need all_instances anymore at that point.",
+      "parentUuid": "a505c576_bc1e3682",
       "revId": "d2355a2bdc90ed83c2663f3db05bf1595ee0aebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
