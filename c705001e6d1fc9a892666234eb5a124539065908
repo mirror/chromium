@@ -22,6 +22,30 @@
       "revId": "c705001e6d1fc9a892666234eb5a124539065908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6831dbb_0fa4e8bc",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-26T18:47:34Z",
+      "side": 1,
+      "message": "The reason I put it here is that:\n1. TextControlElement::InnerEditorElement already exists, and is how most callers reach it.\n2. TextControlElement is the common base class of HTMLInputElement and HTMLTextAreaElement, which both can create inner editor divs. IIUC HTMLTextAreaElement doesn\u0027t use TextFieldInputType, and would require parallel logic to store its own inner_editor_ member, as well as making InnerEditorElement virtual.\n\nIf you would still like this refactor, I can go ahead and try it. WDYT?",
+      "parentUuid": "80ee6a4b_e77d8e75",
+      "range": {
+        "startLine": 206,
+        "startChar": 22,
+        "endLine": 206,
+        "endChar": 35
+      },
+      "revId": "c705001e6d1fc9a892666234eb5a124539065908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
