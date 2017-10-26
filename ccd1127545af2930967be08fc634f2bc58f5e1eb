@@ -93,6 +93,30 @@
       "revId": "ccd1127545af2930967be08fc634f2bc58f5e1eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e188cd63_338de247",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T16:39:12Z",
+      "side": 1,
+      "message": "The three pieces are correct. FullHashCache part is spot-on.\nA suggestion for the function name: AddFullHashToDbAndFullHashCache()",
+      "parentUuid": "8ddca829_b4f17eb4",
+      "range": {
+        "startLine": 148,
+        "startChar": 23,
+        "endLine": 148,
+        "endChar": 61
+      },
+      "revId": "ccd1127545af2930967be08fc634f2bc58f5e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
