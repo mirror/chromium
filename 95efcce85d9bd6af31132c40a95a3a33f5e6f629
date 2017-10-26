@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00226fa2_3afd1be1",
+        "filename": "content/test/fuzzer/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:03:17Z",
+      "side": 1,
+      "message": "Hrm. You shouldn\u0027t need this, as `//content/test/DEPS` contains `+content`. And yet the linux bots are sad.",
+      "revId": "95efcce85d9bd6af31132c40a95a3a33f5e6f629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
