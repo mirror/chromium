@@ -37,6 +37,42 @@
     },
     {
       "key": {
+        "uuid": "5a16f232_1cd12842",
+        "filename": "chrome/browser/ui/cocoa/find_bar/find_bar_cocoa_controller.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "507f1c9b_7f619ab3",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a63ea0ae_6b256650",
+        "filename": "chrome/browser/ui/cocoa/find_bar/find_bar_cocoa_controller.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "The UpdateFindBarVisibility() function in test_browser_window is different and is an override from the LocationBar delegate class.\n\nI can just TBR you since it\u0027s only that one file, if that\u0027s better?",
+      "parentUuid": "fb635d9b_d6d30cd5",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba9d62ab_c54716c4",
         "filename": "chrome/browser/ui/cocoa/find_bar/find_bar_cocoa_controller.mm",
         "patchSetId": 26
@@ -54,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "40bf5280_f8193692",
+        "filename": "chrome/browser/ui/cocoa/find_bar/find_bar_cocoa_controller.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba9d62ab_c54716c4",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "575a0fac_68750080",
         "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
         "patchSetId": 26
@@ -68,6 +122,24 @@
       "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6635ef_cd1d1aec",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "575a0fac_68750080",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9d0f0926_74c2957b",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b468293a_af8e9b4a",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 18
+      },
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "290a9a62_8ece4881",
         "filename": "chrome/browser/ui/find_bar/find_bar_controller.h",
         "patchSetId": 26
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "656fe9fd_7f2c2c9f",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "290a9a62_8ece4881",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10e47007_4a33aad1",
         "filename": "chrome/browser/ui/views/find_bar_host.cc",
         "patchSetId": 26
@@ -134,6 +254,42 @@
     },
     {
       "key": {
+        "uuid": "a07fd516_15f16dd2",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10e47007_4a33aad1",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21dcddb9_66cc3f3a",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10e47007_4a33aad1",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3587c775_996cebe2",
         "filename": "chrome/browser/ui/views/find_bar_host.cc",
         "patchSetId": 26
@@ -148,6 +304,24 @@
       "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b983c7df_e11f677e",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "I\u0027ve updated the code to ensure there is a location_bar_view in BrowserViewLayout. The immersive mode case was only to not overlap the find bar with the top container. The find bar is now butted up against the bottom of the LocationBarView if present. If there is no location bar, then the find bar is aligned with the top of the content view which is the same behavior as before when in immersive mode. Checking for immersive mode didn\u0027t seem to be the right thing to do now because its position is more dependent on the presence of the location bar view.\n\nI\u0027ve removed the feature test here since the positioning in full screen/immersive mode still requires adjustments based on the border insets.",
+      "parentUuid": "3587c775_996cebe2",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +348,30 @@
     },
     {
       "key": {
+        "uuid": "ae3d78e8_9b733316",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22a93570_4a706992",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a24fedd1_dd978edb",
         "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
         "patchSetId": 26
@@ -191,6 +389,24 @@
     },
     {
       "key": {
+        "uuid": "f18ab069_55fecb38",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "According to UX, clicking the icon should *not* dismiss the find bar.",
+      "parentUuid": "a24fedd1_dd978edb",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca87cbd5_eab6092d",
         "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
         "patchSetId": 26
@@ -205,6 +421,24 @@
       "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b523f2_447d5404",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "We\u0027re not using an actual bubble right now. That\u0027s going to happen later.",
+      "parentUuid": "ca87cbd5_eab6092d",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +465,30 @@
     },
     {
       "key": {
+        "uuid": "14c3f321_02336cfe",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1fc369b_0533eb5b",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fde09622_d201f9d7",
         "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.h",
         "patchSetId": 26
@@ -248,6 +506,24 @@
     },
     {
       "key": {
+        "uuid": "34ea5ba1_67895da4",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fde09622_d201f9d7",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c816d0e_4b8f1f87",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 26
@@ -262,6 +538,24 @@
       "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037ade14_572c5e2e",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-26T15:58:46Z",
+      "side": 1,
+      "message": "I just retained the existing for-loop. Yes, the \"r\" is lost a little since it\u0027s not the first character.",
+      "parentUuid": "4c816d0e_4b8f1f87",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
