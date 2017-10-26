@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f688f433_da56ccc3",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T00:33:47Z",
+      "side": 1,
+      "message": "sorry it was unclear. I think we should remove this change for now -- it\u0027s fixing a separate issue - filed http://crbug.com/778474 . I\u0027m not sure what the best way to fix it is yet. If the fix goes here, it probably doesn\u0027t need to be guarded by #ifdef (if it does, it should have a comment), but let\u0027s worry about it later.",
+      "revId": "b6c17add20cf841a2fb699f4c8a6279a5b0ae31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
