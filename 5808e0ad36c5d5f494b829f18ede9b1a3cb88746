@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c1be2948_ce118722",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-26T19:39:18Z",
+      "side": 1,
+      "message": "I\u0027ve added a brief summary of the classes here (SimpleURLLoaderImpl, BodyHandler, BodyReader - mention the file contains BodyHandler implementations, but don\u0027t list them here).",
+      "parentUuid": "04a3cbc6_a3e4662a",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 17
+      },
+      "revId": "5808e0ad36c5d5f494b829f18ede9b1a3cb88746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b56ae25a_e295cedc",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-21T14:37:21Z",
       "side": 1,
       "message": "Not a change in this CL, so optional, but I find these two paragraphs different structure (first one names the class it\u0027s referring to, second is a forward reference to the class defined right after it) jarring to read.  Maybe regularize?  \n\nThis comment may be moot if you hoist these up to the top of the file and integrate them with a larger file implementation comment.",
+      "range": {
+        "startLine": 198,
+        "startChar": 19,
+        "endLine": 198,
+        "endChar": 26
+      },
+      "revId": "5808e0ad36c5d5f494b829f18ede9b1a3cb88746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72fd1bc_77b01869",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-26T19:39:18Z",
+      "side": 1,
+      "message": "I\u0027ve moved the BodyHandler comment to above BodyHandler.",
+      "parentUuid": "b56ae25a_e295cedc",
       "range": {
         "startLine": 198,
         "startChar": 19,
