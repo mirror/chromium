@@ -58,7 +58,7 @@ TabManager::GRCTabSignalObserver::~GRCTabSignalObserver() = default;
 void TabManager::GRCTabSignalObserver::OnEventReceived(
     const CoordinationUnitID& cu_id,
     mojom::TabEvent event) {
-  if (event == mojom::TabEvent::kDoneLoading) {
+  if (event == mojom::TabEvent::kAlmostIdle) {
     auto web_contents_iter = cu_id_web_contents_map_.find(cu_id);
     if (web_contents_iter == cu_id_web_contents_map_.end())
       return;

@@ -7,8 +7,10 @@
 #include "base/bind.h"
 #include "base/metrics/histogram_macros.h"
 #include "platform/WebFrameScheduler.h"
+#include "platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "public/platform/scheduler/renderer_process_type.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 
 namespace blink {
 namespace scheduler {
@@ -339,6 +341,17 @@ void RendererMetricsHelper::RecordMainThreadTaskLoad(base::TimeTicks time,
                                                      double load) {
   int load_percentage = static_cast<int>(load * 100);
   DCHECK_LE(load_percentage, 100);
+
+  if (::resource_coordinator::IsPageAlmostIdleSignalEnabled()) {
+    if (load_percentage <=
+        ::resource_coordinator::GetLowMainThreadLoadThreshold()) {
+      RendererResourceCoordinator::Get().SetProperty(
+          resource_coordinator::mojom::PropertyType::kLowMainThreadLoad, true);
+    } else {
+      RendererResourceCoordinator::Get().SetProperty(
+          resource_coordinator::mojom::PropertyType::kLowMainThreadLoad, false);
+    }
+  }
 
   UMA_HISTOGRAM_PERCENTAGE(MAIN_THREAD_LOAD_METRIC_NAME, load_percentage);
 
