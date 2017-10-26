@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ebbcdac_6630d643",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-26T00:12:20Z",
+      "side": 1,
+      "message": "Sorry, I meant of initializing the file_path_ member in constructor as :\nInProgressMetadataCache::InProgressMetadataCache(\n    const base::FilePath\u0026 file_path) : file_path_(file_path) {}\n\nAs per chromium c++ style guide, private variables in a class always have a trailing underscore.",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "d0dd581feef887644410dcbddfa1cd7bad1cba1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b033e95d_2b316e4f",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-26T00:12:20Z",
+      "side": 1,
+      "message": "This is only for Add. For update, get the existing entry and update?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "d0dd581feef887644410dcbddfa1cd7bad1cba1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78573d9_36ab7b11",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-26T00:12:20Z",
+      "side": 1,
+      "message": "I think we still need a task runner. Since read/write will run on IO thread, but all these methods can be called from UI thread. So we can\u0027t use current thread task runner.",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "d0dd581feef887644410dcbddfa1cd7bad1cba1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d23ef8_a396a1be",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-26T00:12:20Z",
+      "side": 1,
+      "message": "ReadEntriesFromFile() will execute after this function and the current stack frame returns. \nSo GetEntryFromEntries (and |entries_|) will not return the uptodate value of entry at this point.\n\nSo there are two options :\n1- Make RetrieveMetadata() asynchronous. This means pass a callback to RetrieveMetadata(OnReadFinishedCallback\u0026 callback). And inside ReadEntriesFromFile, call callback.Run(entry).\n2- Keep RetrieveMetadata() synchronous using a cache of |entries_| which is always kept uptodate. For this to work, we need to update the |entries_| every time we have a write before even writing to the disk. Also construction/initialization, we need to do a read and populate the |entries_|\n\nI would say #2. The |entries_| can be in the form of proto or vector\u003cDownloadEntry\u003e, whichever seems easier. Up to you.",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "d0dd581feef887644410dcbddfa1cd7bad1cba1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290d3e78_fe0b9269",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-26T00:12:20Z",
+      "side": 1,
+      "message": "Most places use a WeakPtrFactory instead, because if you use base::Unretained(this), you are guaranteeing that |this| must be valid when WriteEntriesToFile is executed, which will happen mostly but still... in which case it will crash if the pointer is not valid. On the otherhand, weak pointer will simply return if the object died. See some examples e.g. controller.cc\n\nAlternatively you can have WriteEntriesToFile a c-style function which can be passed |entries_| as a param and no need for weak pointer.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 53
+      },
+      "revId": "d0dd581feef887644410dcbddfa1cd7bad1cba1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
