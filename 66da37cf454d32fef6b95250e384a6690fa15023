@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3abb903_0cca38b3",
+        "filename": "ash/display/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-26T15:34:41Z",
+      "side": 1,
+      "message": "Updated comment.",
+      "parentUuid": "072ed891_1b81fc98",
+      "revId": "66da37cf454d32fef6b95250e384a6690fa15023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddf7bf4d_762f983f",
         "filename": "testing/buildbot/filters/ash_unittests_mash.filter",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T06:31:59Z",
       "side": 1,
       "message": "We should just never run these tests in --mash.",
+      "revId": "66da37cf454d32fef6b95250e384a6690fa15023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ff4625_1b211f73",
+        "filename": "testing/buildbot/filters/ash_unittests_mash.filter",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-26T15:34:41Z",
+      "side": 1,
+      "message": "These tests make some assertions about UI views. I suspect those views will still be in ash under mash, so we might still want some sort of integration test. Maybe that will need to be a browser test, or the calibration stuff will need to be stubbed out. Updated comment.",
+      "parentUuid": "ddf7bf4d_762f983f",
       "revId": "66da37cf454d32fef6b95250e384a6690fa15023",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
