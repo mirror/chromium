@@ -22,6 +22,30 @@
       "revId": "bb6528b3f76d3e4bfb9870ba0fb995141d8361a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49ccb62_86c6e628",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-26T18:46:51Z",
+      "side": 1,
+      "message": "After thinking about this, the order is simple. The completionBlock should be called at the completion, so it should be the last task. So I added a comment as a reminder.",
+      "parentUuid": "cdcc81f9_3c4aa59a",
+      "range": {
+        "startLine": 373,
+        "startChar": 20,
+        "endLine": 373,
+        "endChar": 40
+      },
+      "revId": "bb6528b3f76d3e4bfb9870ba0fb995141d8361a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
