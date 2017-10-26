@@ -26516,6 +26516,11 @@ from previous Chrome versions.
   <int value="5" label="First by DIAL, then by mDNS"/>
 </enum>
 
+<enum name="MediaRouterChannelConnectResults">
+  <int value="0" label="Failure"/>
+  <int value="1" label="Success"/>
+</enum>
+
 <enum name="MediaRouterCreateRouteOutcome">
   <int value="0" label="Success"/>
   <int value="1" label="Failure No Route"/>
