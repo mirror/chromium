@@ -33,6 +33,24 @@
       "revId": "d500a83df77c9d3eb5efbb5735c5887b0a627a70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f2aec3_22a2ccae",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller_unittest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-26T11:01:54Z",
+      "side": 1,
+      "message": "Thanks for noticing, I totally forgot to run the closure compiler after extracting the actual change from my various (confusing) printf debug statements :/",
+      "parentUuid": "f3657521_6b4bae5f",
+      "revId": "d500a83df77c9d3eb5efbb5735c5887b0a627a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
