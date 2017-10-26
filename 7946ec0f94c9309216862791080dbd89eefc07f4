@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f5d5c57_ac562a45",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T01:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a97e6a6a_8ea18101",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f16ed3a5_f3ec8120",
         "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a53215_cf11a03d",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T01:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f16ed3a5_f3ec8120",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e0400576_77eb9e77",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T01:09:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fb57cb6f_80ec077d",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cee8a879_ad3db5f4",
         "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4db487_12bc1ea9",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T01:09:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cee8a879_ad3db5f4",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "82969910_014ed862",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T01:09:58Z",
+      "side": 1,
+      "message": "How did this get back here.\nMust have mixed up the changes and moved this to the dependent patchset.",
+      "parentUuid": "01c16bbd_6cda9be8",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "330b9123_bf6c8799",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "86e1229d_eb685fed",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T01:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "330b9123_bf6c8799",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe0b22a3_2f2ea637",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 7
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-25T23:02:38Z",
       "side": 1,
       "message": "This seems like a really unusual pattern. What about passing nullptr for non-cros platforms? Or passing an argument struct that contains the data?",
+      "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0824a7e_ae819914",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T01:09:58Z",
+      "side": 1,
+      "message": "It is. In the subsequent CL this is removed all together. All CrOS dependency is moved to TouchDeviceManager and this artifact would no longer be necessary.\n\nSee https://chromium-review.googlesource.com/c/chromium/src/+/708044/24/ui/display/manager/display_manager.h#201",
+      "parentUuid": "fe0b22a3_2f2ea637",
       "revId": "7946ec0f94c9309216862791080dbd89eefc07f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -336,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "efb28ce7_c0a66885",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T01:09:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5c71f1bf_bb516f93",
+      "revId": "c9a0bde137934db04a6aee6ef5ac7d54f19679e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18b125ce_060f9e22",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 4
