@@ -10,6 +10,7 @@
 #include "public/platform/WebCommon.h"
 
 #if INSIDE_BLINK
+#include "mojo/public/cpp/bindings/associated_interface_request.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "platform/wtf/Functional.h"
 #endif
@@ -17,10 +18,16 @@
 namespace blink {
 
 using InterfaceFactory = base::Callback<void(mojo::ScopedMessagePipeHandle)>;
+using AssociatedInterfaceFactory =
+    base::Callback<void(mojo::ScopedInterfaceEndpointHandle)>;
 
 class BLINK_PLATFORM_EXPORT InterfaceRegistry {
  public:
   virtual void AddInterface(const char* name, const InterfaceFactory&) = 0;
+  // The usage of associated interfaces should be very limited. Please
+  // consult the owners of public/platform before adding one.
+  virtual void AddAssociatedInterface(const char* name,
+                                      const AssociatedInterfaceFactory&) = 0;
 
 #if INSIDE_BLINK
   static InterfaceRegistry* GetEmptyInterfaceRegistry();
@@ -34,12 +41,31 @@ class BLINK_PLATFORM_EXPORT InterfaceRegistry {
                      std::move(factory))));
   }
 
+  template <typename Interface>
+  void AddAssociatedInterface(
+      WTF::Function<void(mojo::AssociatedInterfaceRequest<Interface>)>
+          factory) {
+    AddAssociatedInterface(
+        Interface::Name_,
+        ConvertToBaseCallback(WTF::Bind(
+            &InterfaceRegistry::ForwardToAssociatedInterfaceFactory<Interface>,
+            std::move(factory))));
+  }
+
  private:
   template <typename Interface>
   static void ForwardToInterfaceFactory(
       const WTF::Function<void(mojo::InterfaceRequest<Interface>)>& factory,
       mojo::ScopedMessagePipeHandle handle) {
     factory(mojo::InterfaceRequest<Interface>(std::move(handle)));
+  }
+
+  template <typename Interface>
+  static void ForwardToAssociatedInterfaceFactory(
+      const WTF::Function<void(mojo::AssociatedInterfaceRequest<Interface>)>&
+          factory,
+      mojo::ScopedInterfaceEndpointHandle handle) {
+    factory(mojo::AssociatedInterfaceRequest<Interface>(std::move(handle)));
   }
 #endif  // INSIDE_BLINK
 };
