@@ -26,9 +26,12 @@ namespace device {
 // well.
 class U2fRequest : device::mojom::HidManagerClient {
  public:
+  // Response and key_handle are optional, depending on the status and
+  // the type of request being served.
   using ResponseCallback =
       base::Callback<void(U2fReturnCode status_code,
-                          const std::vector<uint8_t>& response)>;
+                          const std::vector<uint8_t>& response,
+                          const std::vector<uint8_t>& key_handle)>;
 
   U2fRequest(const ResponseCallback& callback,
              service_manager::Connector* connector);
