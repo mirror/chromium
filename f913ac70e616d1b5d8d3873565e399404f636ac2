@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "554a6c7b_bc22dd7c",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-26T06:13:56Z",
+      "side": 1,
+      "message": "It wouldn\u0027t be too difficult to implement per-page basis, but I\u0027d like to start with using ScopedPagePauser (which pauses all pages) because:\n- easy to implement / understand\n- don\u0027t want to add yet another concept of pausing/suspending etc\n- background tabs are different processes. ScopedPagePauser in foreground tab does nothing about background pages\n\nWDYT?",
+      "parentUuid": "1e11cb36_574d6df5",
+      "revId": "f913ac70e616d1b5d8d3873565e399404f636ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8b29f76_ec23e134",
         "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f913ac70e616d1b5d8d3873565e399404f636ac2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07768b32_9044338a",
+        "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-26T06:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8b29f76_ec23e134",
+      "revId": "f913ac70e616d1b5d8d3873565e399404f636ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
