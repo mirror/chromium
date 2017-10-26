@@ -23,6 +23,18 @@
       <structure name="IDR_PRINT_PREVIEW_NEW_APP_JS"
                  file="new/app.js"
                  type="chrome_html" />
+      <structure name="IDR_PRINT_PREVIEW_NEW_HEADER_HTML"
+                 file="new/header.html"
+                 type="chrome_html" />
+      <structure name="IDR_PRINT_PREVIEW_NEW_HEADER_JS"
+                 file="new/header.js"
+                 type="chrome_html" />
+      <structure name="IDR_PRINT_PREVIEW_NEW_SETTINGS_SECTION_HTML"
+                 file="new/settings_section.html"
+                 type="chrome_html" />
+      <structure name="IDR_PRINT_PREVIEW_NEW_SETTINGS_SECTION_JS"
+                 file="new/settings_section.js"
+                 type="chrome_html" />
     </structures>
   </release>
 </grit>
