@@ -16,13 +16,15 @@ class U2fDiscovery;
 
 class U2fRegister : public U2fRequest {
  public:
-  U2fRegister(const std::vector<uint8_t>& challenge_hash,
+  U2fRegister(const std::vector<std::vector<uint8_t>>& registered_keys,
+              const std::vector<uint8_t>& challenge_hash,
               const std::vector<uint8_t>& app_param,
               std::vector<std::unique_ptr<U2fDiscovery>> discoveries,
               const ResponseCallback& cb);
   ~U2fRegister() override;
 
   static std::unique_ptr<U2fRequest> TryRegistration(
+      const std::vector<std::vector<uint8_t>>& registered_keys,
       const std::vector<uint8_t>& challenge_hash,
       const std::vector<uint8_t>& app_param,
       std::vector<std::unique_ptr<U2fDiscovery>> discoveries,
@@ -30,11 +32,30 @@ class U2fRegister : public U2fRequest {
 
  private:
   void TryDevice() override;
-  void OnTryDevice(U2fReturnCode return_code,
+  void OnTryDevice(bool is_duplicate_registration,
+                   U2fReturnCode return_code,
                    const std::vector<uint8_t>& response_data);
+
+  // Callback function called when non-empty exclude list was provided. This
+  // function iterates through all key handles in exclude list for all devices
+  // and checks for duplicate keys.
+  void OnTryDeviceCheckAlreadyRegistered(
+      std::vector<std::vector<uint8_t>>::const_iterator it,
+      U2fReturnCode return_code,
+      const std::vector<uint8_t>& response_data);
+  // Function handling registration flow after all devices were checked for
+  // duplicate keys.
+  void completeNewDeviceRegistration();
 
   std::vector<uint8_t> challenge_hash_;
   std::vector<uint8_t> app_param_;
+  const std::vector<std::vector<uint8_t>> registered_keys_;
+  // List of authenticators that did not create any of the key handles provided
+  // by the exclude list.
+  std::list<std::unique_ptr<U2fDevice>> register_device_list_;
+  // State of register request representing whether key handles provided in
+  // exclude list has been checked for all authenticators.
+  bool checked_exclusion_list_;
   base::WeakPtrFactory<U2fRegister> weak_factory_;
 };
 
