@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b0241bc_cfdb51eb",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-10-26T12:07:28Z",
+      "side": 1,
+      "message": "I was wondering if I should change these 3 properties to weak.",
+      "revId": "937d33dfe58149deb3381ba3bde80c80a2791c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

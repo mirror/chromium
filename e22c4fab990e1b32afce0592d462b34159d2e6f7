@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02bf41dd_2579879f",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-10-26T12:07:28Z",
+      "side": 0,
+      "message": "This TODO is done.  The following comment is irrelevant.  So I removed them.",
+      "revId": "e22c4fab990e1b32afce0592d462b34159d2e6f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
