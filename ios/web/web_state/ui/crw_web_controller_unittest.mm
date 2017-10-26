@@ -641,6 +641,7 @@ class CRWWebControllerNativeContentTest : public WebTestWithWebController {
   }
 
   void Load(const GURL& URL) {
+    TestWebStateObserver observer(web_state());
     NavigationManagerImpl& navigation_manager =
         [web_controller() webStateImpl]->GetNavigationManagerImpl();
     navigation_manager.AddPendingItem(
@@ -648,6 +649,15 @@ class CRWWebControllerNativeContentTest : public WebTestWithWebController {
         NavigationInitiationType::USER_INITIATED,
         NavigationManager::UserAgentOverrideOption::INHERIT);
     [web_controller() loadCurrentURL];
+
+    // Native URL is loaded asynchronously with WKBasedNavigationManager. Wait
+    // for navigation to finish before asserting.
+    if (GetWebClient()->IsSlimNavigationManagerEnabled()) {
+      TestWebStateObserver* observer_ptr = &observer;
+      base::test::ios::WaitUntilCondition(^{
+        return observer_ptr->did_finish_navigation_info() != nullptr;
+      });
+    }
   }
 
   TestNativeContentProvider* mock_native_provider_;
