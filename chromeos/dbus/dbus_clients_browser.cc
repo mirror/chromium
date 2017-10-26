@@ -27,6 +27,7 @@
 #include "chromeos/dbus/image_loader_client.h"
 #include "chromeos/dbus/lorgnette_manager_client.h"
 #include "chromeos/dbus/media_analytics_client.h"
+#include "chromeos/dbus/smb_provider_client.h"
 #include "chromeos/dbus/upstart_client.h"
 
 namespace chromeos {
@@ -85,6 +86,9 @@ DBusClientsBrowser::DBusClientsBrowser(bool use_real_clients) {
     upstart_client_.reset(UpstartClient::Create());
   else
     upstart_client_.reset(new FakeUpstartClient);
+
+  smb_provider_client_.reset(SmbProviderClient::Create());
+  // TODO(allenvic): Create a FakeSmbProviderClient?
 }
 
 DBusClientsBrowser::~DBusClientsBrowser() {}
@@ -100,6 +104,7 @@ void DBusClientsBrowser::Initialize(dbus::Bus* system_bus) {
   easy_unlock_client_->Init(system_bus);
   image_burner_client_->Init(system_bus);
   image_loader_client_->Init(system_bus);
+  smb_provider_client_->Init(system_bus);
   lorgnette_manager_client_->Init(system_bus);
   media_analytics_client_->Init(system_bus);
   upstart_client_->Init(system_bus);
