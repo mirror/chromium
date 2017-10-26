@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b4c532cf_ce7b9462",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "_JSAutofillManager",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 39
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26a46836_5d2745d8",
         "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
         "patchSetId": 13
@@ -70,6 +93,76 @@
       "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bd4f1af_44197648",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "http://go/objc-style#Macros",
+      "parentUuid": "491fc071_be1d0c78",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "738862c5_3e573a57",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "s/cwvSuggestions/suggestions\n\nPer Style Guide all acronyms should be capitalized, and prefix is not necessary here",
+      "range": {
+        "startLine": 77,
+        "startChar": 22,
+        "endLine": 77,
+        "endChar": 36
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a003b9c0_32867d17",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 79,
+        "startChar": 31,
+        "endLine": 79,
+        "endChar": 44
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -214,6 +307,166 @@
     },
     {
       "key": {
+        "uuid": "9523ffb4_6125252d",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "Missing trailing _",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 73
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e5aba1_b0508469",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "Please add a unit test for this class. It may be necessary to pass some dependencies into init to make this class testable.",
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c027218e_a8c04bbe",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "copy",
+      "range": {
+        "startLine": 26,
+        "startChar": 16,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe36aa6_6c3c2abb",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 26
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a63031_52e7047f",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "super.description",
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "972505d0_b378fdfa",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion_internal.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "Missing trailing _",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 73
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c45e444_50087330",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion_internal.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "Do you want to use nullable annotation?",
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c8395b_b52d998e",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion_internal.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "Please add a unit test for this class",
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e539f377_f5c9b927",
         "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
         "patchSetId": 13
@@ -284,6 +537,29 @@
     },
     {
       "key": {
+        "uuid": "4ec7c74c_9b1b266f",
+        "filename": "ios/web_view/shell/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "All tests files should live in ios/testing/data. Test apps should not bundle them. But do you even need this test file?",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 24
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbe54a13_5b6e63a8",
         "filename": "ios/web_view/shell/shell_autofill_delegate.m",
         "patchSetId": 13
@@ -328,6 +604,29 @@
       "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a176681_eaa0ff7e",
+        "filename": "ios/web_view/shell/shell_autofill_delegate.m",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T18:50:09Z",
+      "side": 1,
+      "message": "Do you want to add completion handlers to clear and fill the data?",
+      "range": {
+        "startLine": 56,
+        "startChar": 52,
+        "endLine": 56,
+        "endChar": 69
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
