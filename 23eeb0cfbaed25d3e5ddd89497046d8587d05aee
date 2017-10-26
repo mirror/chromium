@@ -34,6 +34,24 @@
       "revId": "23eeb0cfbaed25d3e5ddd89497046d8587d05aee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a810cc_3db54f61",
+        "filename": "ash/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-26T23:10:52Z",
+      "side": 1,
+      "message": "ARC will have a bit of trouble if we start depending of stuff outside of that directory (and //base, //mojo) :S\n\nwould it help to have not //components/arc but a subdirectory depend on //ash*?\n\notherwise we might need to drop this one change altogether since it just moves where the enum is declared. alternatively, move the enum to //ash/public/interfaces and change arc\u0027s typemap to point to that.",
+      "parentUuid": "d1fd006a_86db2317",
+      "revId": "23eeb0cfbaed25d3e5ddd89497046d8587d05aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
