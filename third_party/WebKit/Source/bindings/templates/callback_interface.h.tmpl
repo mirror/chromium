@@ -1,6 +1,7 @@
 {% filter format_blink_cpp_source_code %}
 
 {% include 'copyright_block.txt' %}
+
 #ifndef {{v8_class}}_h
 #define {{v8_class}}_h
 
@@ -10,28 +11,50 @@
 
 namespace blink {
 
-class {{v8_class}} final : public {{cpp_class}} {
+{# TODO(yukishiino): Stop inheriting {{cpp_class}} as it\'s not necessary for
+   most cases. Those who needs a common base class between this class and
+   another class should define an adapter class for themselves. #}
+class {{exported}}{{v8_class}} final
+    : public {{cpp_class}},
+      public CallbackInterfaceBase {
  public:
-  static {{v8_class}}* Create(v8::Local<v8::Function> callback, ScriptState* scriptState) {
-    return new {{v8_class}}(callback, scriptState);
+  static {{v8_class}}* Create(v8::Local<v8::Object> callback_object) {
+    return new {{v8_class}}(callback_object);
   }
 
-  ~{{v8_class}}() override;
-
-  virtual void Trace(blink::Visitor*);
+  ~{{v8_class}}() override = default;
 
 {% for method in methods %}
-  {{method.cpp_type}} {{method.name}}({{method.argument_declarations | join(', ')}}) override;
+  // Performs "call a user object's operation" and returns the return value of
+  // a user object's operation. Although this function does not take an
+  // ExceptionState, an exception is thrown if the resulting Maybe is Nothing,
+  // otherwise not. (If the return type of this function is type void, an
+  // exception may or may not be thrown and no way to determine it from the
+  // return value.)
+  // https://heycam.github.io/webidl/#call-a-user-objects-operation
+  //
+  // NOTE: This function actually does *NOT* perform
+  // "call a user object's operation".  The following patch will actually
+  // support it.
+  // TODO(yukishiino): Implement "call a user object's operation".
+  {# TODO(yukishiino): Add |ScriptWrappable* callback_this_value| as the first
+     argument of the IDL operations. The callsites must pass callback_this_value
+     explicitly. #}
+  {% set return_type = 'void' if method.cpp_type == 'void' else 'v8::Maybe<%s>' % method.cpp_type %}
+  {{return_type}} {{method.name}}({{method.argument_declarations | join(', ')}}) override;
+
 {% endfor %}
 
  private:
-  {{exported}}{{v8_class}}(v8::Local<v8::Function>, ScriptState*);
-
-  ScopedPersistent<v8::Function> callback_;
-  scoped_refptr<ScriptState> script_state_;
+  {{v8_class}}(v8::Local<v8::Object> callback_object)
+      : CallbackInterfaceBase(callback_object, {# one space after comma #}
+                              {%- if is_single_operation_callback_interface -%}
+                              kSingleOperation {%- else -%} kNotSingleOperation
+                              {%- endif %}) {}
 };
 
-}
+}  // namespace blink
+
 #endif  // {{v8_class}}_h
 
 {% endfilter %}{# format_blink_cpp_source_code #}

@@ -160,7 +160,7 @@ SQLTransactionState SQLTransaction::DeliverTransactionCallback() {
   // object.
   if (SQLTransactionCallback* callback = callback_.Release()) {
     execute_sql_allowed_ = true;
-    should_deliver_error_callback = !callback->handleEvent(this);
+    should_deliver_error_callback = callback->handleEvent(this).IsNothing();
     execute_sql_allowed_ = false;
   }
 
