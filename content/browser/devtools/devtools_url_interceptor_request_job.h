@@ -36,7 +36,8 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
       WebContents* web_contents,
       base::WeakPtr<protocol::NetworkHandler> network_handler,
       bool is_redirect,
-      ResourceType resource_type);
+      ResourceType resource_type,
+      bool intercept_response);
 
   ~DevToolsURLInterceptorRequestJob() override;
 
@@ -108,6 +109,9 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
     net::RequestPriority priority;
     const net::URLRequestContext* url_request_context;
   };
+
+  void ReadSubRequestIntoBuffer();
+  void SubRequestResponseReady();
 
   // If the request was either allowed or modified, a SubRequest will be used to
   // perform the fetch and the results proxied to the original request. This
@@ -201,6 +205,13 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
   const bool is_redirect_;
   const ResourceType resource_type_;
   GlobalRequestID global_request_id_;
+  bool intercept_response_;
+
+  // We store the original request's first read buffer and size to fill it
+  // after the subrequest has fulfilled if we are capturing response.
+  std::pair<net::IOBuffer*, int> original_request_buffer_pair_;
+  scoped_refptr<net::IOBuffer> subrequest_pending_response_data_buffer_;
+  std::vector<char> captured_response_;
   base::WeakPtrFactory<DevToolsURLInterceptorRequestJob> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DevToolsURLInterceptorRequestJob);
