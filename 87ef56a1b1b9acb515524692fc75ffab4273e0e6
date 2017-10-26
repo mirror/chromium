@@ -209,6 +209,30 @@
     },
     {
       "key": {
+        "uuid": "5e646870_6d2a4924",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-26T21:19:10Z",
+      "side": 1,
+      "message": "This is Valve\u0027s naming convention, so not sure how much we can/should do about it.",
+      "parentUuid": "92280418_509bdcd3",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 4
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b026ab6_731678c2",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -363,6 +387,86 @@
         "startChar": 2,
         "endLine": 364,
         "endChar": 29
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d28d738_aba9f5b1",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-26T21:19:10Z",
+      "side": 1,
+      "message": "Maybe I\u0027m missing something, but shouldn\u0027t this be called through the render_loop\u0027s task runner?",
+      "range": {
+        "startLine": 385,
+        "startChar": 26,
+        "endLine": 385,
+        "endChar": 38
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173fca14_564ebd3e",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-26T21:19:10Z",
+      "side": 1,
+      "message": "Silly question, maybe you\u0027ve already tried: Can we just pass in inverted Y values for the VRTextureBounds_t vMin and vMax?",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ef882a_b877f9f5",
+        "filename": "device/vr/windows/flip_pixel_shader.hlsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-26T21:19:10Z",
+      "side": 1,
+      "message": "I don\u0027t imagine that we have a style guide for HLSL within Chrome, but I\u0027d still say that these should probably be spaces instead of tabs.",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d19f5c_6b981124",
+        "filename": "third_party/openvr/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-26T21:19:10Z",
+      "side": 1,
+      "message": "No objection to the change to jsoncpp, but given the size I\u0027d request that it be done as a separate CL.",
+      "range": {
+        "startLine": 15,
+        "startChar": 69,
+        "endLine": 15,
+        "endChar": 76
       },
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
