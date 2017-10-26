@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "169f1afc_f8185a55",
+        "filename": "ash/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-26T21:18:29Z",
+      "side": 1,
+      "message": "//components/arc depends on ash, so ash should not depend on //components/arc\n\nlhchavez, where should the mojom file live? //ash/public/interfaces? Can ARC tolerate mojoms that live outside of //components/arc that need to be uprev\u0027d when the container version uprevs?",
+      "revId": "23eeb0cfbaed25d3e5ddd89497046d8587d05aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
