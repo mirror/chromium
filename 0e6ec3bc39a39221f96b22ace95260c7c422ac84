@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5c74915_b0bbced0",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary_item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-10-26T23:22:08Z",
+      "side": 1,
+      "message": "nit: took a while to figure out what !showSimInfo_ means here\n\n  showSimInfo_ essentially implies SIM is locked or required-but-absent, right?",
+      "range": {
+        "startLine": 200,
+        "startChar": 18,
+        "endLine": 200,
+        "endChar": 30
+      },
+      "revId": "0e6ec3bc39a39221f96b22ace95260c7c422ac84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
