@@ -186,6 +186,30 @@
       "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcdf6a7_5b929ee8",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-26T01:01:12Z",
+      "side": 1,
+      "message": "Thanks for the info! I\u0027d like AcceptIntervention to get called so that we can track accept/decline rate.",
+      "parentUuid": "2bb2dbf4_c42b0d2d",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
