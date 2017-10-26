@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5f8d501_001e844b",
+        "filename": "chromeos/dbus/fake_image_loader_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-10-26T20:36:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55b6eaf8_ff76a1ed",
+      "revId": "bf7df0500f3d04c86c75b3f1dec1637f1fc433c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2ae5b00_5daf16f3",
         "filename": "chromeos/dbus/fake_image_loader_client.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b5a1d4ce_ef4c2d09",
+        "filename": "chromeos/dbus/fake_image_loader_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-10-26T20:36:10Z",
+      "side": 1,
+      "message": "In the original CL for fake_image_loader_client https://codereview.chromium.org/2450923002, it does try to simulate a failure. Then the CL https://chromium-review.googlesource.com/c/chromium/src/+/666944 to switch from callback.Run(DBUS_METHOD_CALL_FAILURE, \"\") to std::move(callback).Run(base::nullopt), it keep simulating the failure which is consistent. \nBut for other fake_*_client (e.g. fake_cryptohome_client), they do simulate success and returns true for bool callback. \nMaybe there is some in-consistence here across different fake_*_clients?",
+      "parentUuid": "e2ae5b00_5daf16f3",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "bf7df0500f3d04c86c75b3f1dec1637f1fc433c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fdbdc4a_53fe6ef8",
         "filename": "chromeos/dbus/image_loader_client.h",
         "patchSetId": 2
@@ -62,6 +104,30 @@
       "revId": "bf7df0500f3d04c86c75b3f1dec1637f1fc433c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446d2cc6_7442d8f7",
+        "filename": "chromeos/dbus/image_loader_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-10-26T20:36:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fdbdc4a_53fe6ef8",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "bf7df0500f3d04c86c75b3f1dec1637f1fc433c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
