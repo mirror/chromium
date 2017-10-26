@@ -20,6 +20,7 @@
 #include "content/browser/download/drag_download_util.h"
 #include "content/browser/frame_host/interstitial_page_impl.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
+#include "content/browser/mus_util.h"
 #include "content/browser/renderer_host/dip_util.h"
 #include "content/browser/renderer_host/input/touch_selection_controller_client_aura.h"
 #include "content/browser/renderer_host/overscroll_controller.h"
@@ -31,7 +32,9 @@
 #include "content/browser/web_contents/aura/gesture_nav_simple.h"
 #include "content/browser/web_contents/aura/overscroll_navigation_overlay.h"
 #include "content/browser/web_contents/web_contents_impl.h"
+#include "content/browser/web_contents/web_contents_view_guest_mus.h"
 #include "content/public/browser/content_browser_client.h"
+#include "content/public/browser/guest_mode.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/notification_source.h"
@@ -85,6 +88,10 @@ WebContentsView* CreateWebContentsView(
     WebContentsImpl* web_contents,
     WebContentsViewDelegate* delegate,
     RenderViewHostDelegateView** render_view_host_delegate_view) {
+  if (IsUsingMus() && !GuestMode::IsCrossProcessFrameGuest(web_contents) &&
+      web_contents->GetBrowserPluginGuest()) {
+    return new WebContentsViewGuestMus(web_contents, delegate);
+  }
   WebContentsViewAura* rv = new WebContentsViewAura(web_contents, delegate);
   *render_view_host_delegate_view = rv;
   return rv;

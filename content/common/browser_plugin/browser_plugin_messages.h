@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/process/process.h"
+#include "base/unguessable_token.h"
 #include "cc/ipc/cc_param_traits.h"
 #include "components/viz/common/surfaces/surface_info.h"
 #include "content/common/content_export.h"
@@ -212,5 +213,12 @@ IPC_MESSAGE_CONTROL2(BrowserPluginMsg_SetMouseLock,
 IPC_MESSAGE_CONTROL2(BrowserPluginMsg_SetTooltipText,
                      int /* browser_plugin_instance_id */,
                      base::string16 /* tooltip_text */)
+
+#if defined(USE_AURA)
+// Sends text to be displayed in tooltip.
+IPC_MESSAGE_CONTROL2(BrowserPluginMsg_SetMusEmbedToken,
+                     int /* browser_plugin_instance_id */,
+                     base::UnguessableToken /* embed_token */)
+#endif
 
 #endif  // CONTENT_COMMON_BROWSER_PLUGIN_BROWSER_PLUGIN_MESSAGES_H_
