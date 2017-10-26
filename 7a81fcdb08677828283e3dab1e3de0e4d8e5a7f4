@@ -272,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "f9bc0bc0_8b661548",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-26T00:27:54Z",
+      "side": 1,
+      "message": "Yea, that\u0027s true. If you want to know whether file exists, use base::PathExists(file_path_).\nBut actually we are writing, so I guess we don\u0027t need any of these. Just make sure WriteFileAtomically handles overwrite and new file correctly.\n\nFor this comment, just have a DCHECK(!file_path_.empty()) since we will always pass a non-empty file name.",
+      "parentUuid": "f34b50d5_76b96d43",
+      "revId": "7a81fcdb08677828283e3dab1e3de0e4d8e5a7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86bde9cf_52e76c40",
         "filename": "components/download/internal/in_progress_metadata_cache.cc",
         "patchSetId": 2
