@@ -16,6 +16,24 @@
       "revId": "a190c253b8efe727801315929a14412d4d91af0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850a3992_6f96b8ce",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-26T03:52:32Z",
+      "side": 0,
+      "message": "Hm... yeah, it\u0027s likely. I feel it\u0027d be better to keep the current behavior in this CL and to work on it in a separate CL.\n\nAnyway, let\u0027s wait for kouhei@\u0027s review.",
+      "parentUuid": "e261bd47_043ed866",
+      "revId": "a190c253b8efe727801315929a14412d4d91af0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
