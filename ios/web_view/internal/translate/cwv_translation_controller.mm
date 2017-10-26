@@ -78,6 +78,10 @@ const NSInteger CWVTranslationErrorScriptLoadError =
   _translatePrefs = _translateClient->translate_manager()
                         ->translate_client()
                         ->GetTranslatePrefs();
+
+  base::string16 test_string = base::SysNSStringToUTF16(@"");
+  NSString* string = base::SysUTF16ToNSString(test_string);
+  NSLog(@"%@", string);
 }
 
 - (void)updateTranslateStep:(translate::TranslateStep)step
