@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0e2feed_7f7f5099",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-10-26T17:32:32Z",
+      "side": 1,
+      "message": "EndingSelection().IsDirectional() will always be equal to frame.Selection.IsDirectonal() as\nDeleteKeyPressed(granularity,..) is called from DeleteKeyPressed(Document\u0026..) or TypingCommand::DoApply().\n1) If it is called from DeleteKeyPressed(granularity,..), then always the EndingSelection is upated with the current frameSelection when the typing is open, else a new typingCommand is created which will also take value from frameSelection.\n2) If it called from the TypingCommand::DoApply, then it comes directly from the EditorCommand which will also have frameSelection directional.\nSo i think the value passed will always be the frameSelection directional.\n\nThe extra parameter is added to avoid inclusion of FrameSelection.h in SelectionModifier.\n\nSimilar is also the case with the ForwardDeleteKeyPressed below",
+      "range": {
+        "startLine": 822,
+        "startChar": 22,
+        "endLine": 822,
+        "endChar": 39
+      },
+      "revId": "5fe5f7ff133e78251082005aa64aebf1d1cc53e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
