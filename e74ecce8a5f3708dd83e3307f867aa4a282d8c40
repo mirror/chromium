@@ -22,6 +22,30 @@
       "revId": "e74ecce8a5f3708dd83e3307f867aa4a282d8c40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1a3548_32323a6f",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T17:06:02Z",
+      "side": 1,
+      "message": "No, the Android-specific definitions, e.g. breakpad::CrashDumpObserver for Android, are pulled in via the include block immediately above this one, and the content_descriptors header is only used for the Linux-specific kCrashDumpSignal definition.",
+      "parentUuid": "390506b2_2e9019ed",
+      "range": {
+        "startLine": 58,
+        "startChar": 21,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "e74ecce8a5f3708dd83e3307f867aa4a282d8c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
