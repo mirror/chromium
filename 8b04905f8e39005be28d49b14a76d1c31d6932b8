@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "da71bf34_be06b847",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-26T04:49:30Z",
+      "side": 1,
+      "message": "It generates compiler error at VaapiJpegEncodeAccelerator().\nerror: no matching constructor for initialization of \u0027base::OnTaskRunnerDeleter\u0027",
+      "parentUuid": "9ad44ab2_b3dea105",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 67
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eb94f9f_7e88fd9a",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 15
