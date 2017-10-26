@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22b46a99_dabb348a",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-26T06:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2189241_52f707c8",
+      "revId": "61df6cb76ccc7c5871686a2d31d9115e3abf9c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9469a3d_02245c81",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/BUILD.gn",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "61df6cb76ccc7c5871686a2d31d9115e3abf9c3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2eb45bb_f36467ff",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-26T06:23:02Z",
+      "side": 1,
+      "message": "now that the HEAD has a public_deps to //third_party/WebKit/Source/platform, I can just remove this specific deps.",
+      "parentUuid": "f9469a3d_02245c81",
+      "revId": "61df6cb76ccc7c5871686a2d31d9115e3abf9c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
