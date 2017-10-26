@@ -52,6 +52,24 @@
       "revId": "ca6d6c89e884992c26719f1db09b7d45c40a1de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0da354ac_e62f0a39",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 3602,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-26T11:38:30Z",
+      "side": 1,
+      "message": "I like that. Either we would have manageable BUILD files, or at least big boxes of cereals. :)",
+      "parentUuid": "97b0101c_eabebe22",
+      "revId": "ca6d6c89e884992c26719f1db09b7d45c40a1de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
