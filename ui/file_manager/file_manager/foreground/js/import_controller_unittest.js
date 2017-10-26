@@ -45,6 +45,23 @@ var MESSAGES = {
 // Set up string assets.
 loadTimeData.data = MESSAGES;
 
+// Set up chrome API.
+chrome.runtime = {
+  // According to CS it is only used in
+  // ui/file_manager/file_manager/common/js/importer_common.js in the method
+  // importer.getTracker_ for analytics, deemed as not important
+  getBackgroundPage: function() {},
+};
+chrome.syncFileSystem = {
+  requestFileSystem: funciton(callback) {
+    // Basically copied from
+    // ui/file_manager/file_manager/background/js/volume_manager_unittest.js
+    // adjusted to ui/file_manager/file_manager/common/js/importer_common.js,
+    // method importer.ChromeSyncFilesystem.getFileSystem
+    callback(new MockFileSystem('testFs'));
+  },
+};
+
 function setUp() {
   new MockChromeStorageAPI();
   new MockCommandLinePrivate();
