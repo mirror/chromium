@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ac3ddff_057336eb",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-26T14:13:38Z",
+      "side": 0,
+      "message": "Oh no, of course not, my rebase-merge-foo must have betrayed me :-/ Fixed. Thanks for spotting it.",
+      "parentUuid": "a99ddf58_0aec308a",
+      "range": {
+        "startLine": 1145,
+        "startChar": 6,
+        "endLine": 1145,
+        "endChar": 0
+      },
+      "revId": "e852c075d1439cfbd3b0bdbb1a46ccf8b0661b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19ad2e7a_28bba9c7",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 10
