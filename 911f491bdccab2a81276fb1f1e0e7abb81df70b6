@@ -226,6 +226,30 @@
     },
     {
       "key": {
+        "uuid": "9b0a1ca9_377d0119",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-26T17:46:37Z",
+      "side": 1,
+      "message": "Yep. Just a normal member should suffice here since no one else picks up ownership of this object.",
+      "parentUuid": "f5b29bb2_92e0049d",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fa7aba8_c376289d",
         "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
         "patchSetId": 19
