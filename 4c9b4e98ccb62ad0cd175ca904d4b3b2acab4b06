@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d8cc05c_e73d3216",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-26T00:31:37Z",
+      "side": 1,
+      "message": "+1 Yes I plan to do that in the next CL. Either we figure out the performance penalty is too deep so we have to upgrade our clip node, or happily live with mask-based clip path thereafter.",
+      "parentUuid": "419f962c_43de4815",
+      "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6261624d_98e9633a",
         "filename": "third_party/WebKit/Source/core/paint/ObjectPaintProperties.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed2702c_91a7f45d",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-26T00:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6261624d_98e9633a",
+      "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b6da1151_b9527609",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-26T00:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad2e258b_0b747232",
+      "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc643a39_5dad653c",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-25T00:21:19Z",
       "side": 1,
       "message": "Nit: replace \"layoutObject()\", \"scopedPaintChunkProperties\" with new names.",
+      "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32dfb632_fa4c83ac",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-26T00:31:37Z",
+      "side": 1,
+      "message": "Done.\n\nBy the way, why do we need separate ScopedPaintChunkProperties anyway?\nMaybe I overlooked something, but I don\u0027t see anything sensitive to chunk state between the two scopes.\n\nI\u0027ll try combine then in the next patchset and see what happens.",
+      "parentUuid": "cc643a39_5dad653c",
       "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "00fcf0c4_191ec368",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-26T00:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a49569fd_e20eaa41",
+      "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa2a71ae_c8969f46",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8aec61b6_582f4770",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-26T00:31:37Z",
+      "side": 1,
+      "message": "Makes sense. Done.",
+      "parentUuid": "aa2a71ae_c8969f46",
+      "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22683fd5_f530f097",
         "filename": "third_party/WebKit/Source/core/paint/SVGPaintContext.cpp",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-25T17:52:49Z",
       "side": 1,
       "message": "Why is it unconditionally true fro SPv175+?",
+      "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381c7d6c_0709bfdc",
+        "filename": "third_party/WebKit/Source/core/paint/SVGPaintContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-26T00:31:37Z",
+      "side": 1,
+      "message": "Isolated groups are modeled by effect nodes, and will be applied by either PAC (as render surface), or by PC2CL (as canvas-\u003eSaveLayer). Comments added.",
+      "parentUuid": "22683fd5_f530f097",
       "revId": "4c9b4e98ccb62ad0cd175ca904d4b3b2acab4b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
