@@ -595,8 +595,6 @@ void PaintController::CommitNewDisplayItems() {
                (int)new_display_item_list_.size() - num_cached_new_items_);
 
   num_cached_new_items_ = 0;
-  // These data structures are used during painting only.
-  DCHECK(!IsSkippingCache());
 #if DCHECK_IS_ON()
   new_display_item_indices_by_client_.clear();
 #endif
@@ -614,23 +612,15 @@ void PaintController::CommitNewDisplayItems() {
   for (auto& item : current_cached_subsequences_)
     item.key->SetDisplayItemsCached(current_cache_generation_);
 
-  Vector<const DisplayItemClient*> skipped_cache_clients;
   for (const auto& item : new_display_item_list_) {
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
       item.Client().ClearPartialInvalidationRect();
 
-    if (item.IsCacheable()) {
+    if (item.IsCacheable())
       item.Client().SetDisplayItemsCached(current_cache_generation_);
-    } else {
-      if (item.Client().IsJustCreated())
-        item.Client().ClearIsJustCreated();
-      if (item.SkippedCache())
-        skipped_cache_clients.push_back(&item.Client());
-    }
+    else if (item.Client().IsJustCreated())
+      item.Client().ClearIsJustCreated();
   }
-
-  for (auto* client : skipped_cache_clients)
-    client->SetDisplayItemsUncached();
 
   // The new list will not be appended to again so we can release unused memory.
   new_display_item_list_.ShrinkToFit();
