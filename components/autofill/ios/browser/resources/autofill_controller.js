@@ -603,8 +603,15 @@ __gCrWeb.autofill['fillForm'] = function(data, forceFillFieldName) {
     evt.target.removeEventListener('input', controlElementInputListener);
   };
 
-  var form = __gCrWeb.common.getFormElementFromIdentifier(data.formName);
-  var controlElements = __gCrWeb.common.getFormControlElements(form);
+  var controlElements = [];
+  if (data.formName !== '') {
+    var form = __gCrWeb.common.getFormElementFromIdentifier(data.formName);
+    controlElements = __gCrWeb.common.getFormControlElements(form);
+ } else {
+   var fieldsets = [];
+   var unownedControlElements =
+     getUnownedAutofillableFormFieldElements_(document.all, fieldsets);
+ }
   for (var i = 0; i < controlElements.length; ++i) {
     var element = controlElements[i];
     if (!__gCrWeb.autofill.isAutofillableElement(element)) {
