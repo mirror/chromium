@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf7ee63f_d6e82466",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T23:18:40Z",
+      "side": 1,
+      "message": "nit: is it possible that on_close_callback is non-null but file is invalid? IOW, can we do:\n\nif (file.IsValid()) {\n  // post\n} else {\n  DCHECK(!on_close_callback);\n}",
+      "revId": "5385769ef5ea39fe0f0c439eb99933bccafe54fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
