@@ -16,6 +16,24 @@
       "revId": "d5c47924de3492cfc4e3e17eb03d01923ebf4e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c5d1e0_fbf4ce9c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-26T17:26:05Z",
+      "side": 1,
+      "message": "The legacy behavior is to report the number of non-collapsed characters in LayoutText::GetText() instead of text node, so to align with it, we should use TextLength() instead of text node length.\n\nAlso, \"caret offset\" in the context of LayoutText stands for an offset in the GetText() string, not in the text node.",
+      "parentUuid": "7e41dcf9_70994389",
+      "revId": "d5c47924de3492cfc4e3e17eb03d01923ebf4e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
