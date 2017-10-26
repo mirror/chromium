@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f375656a_7daa62e8",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-26T17:51:13Z",
+      "side": 1,
+      "message": "Nit: DISALLOW_COPY_AND_ASSIGN()",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b18173f_f7d4a545",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-26T17:51:13Z",
+      "side": 1,
+      "message": "While you\u0027re here, can you fix the name of this param to be hacker_style per convention?",
+      "range": {
+        "startLine": 440,
+        "startChar": 42,
+        "endLine": 440,
+        "endChar": 58
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce4f57a_90597eec",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-26T17:51:13Z",
+      "side": 1,
+      "message": "Nit: Not sure if ignore_result is needed here and in the else. I don\u0027t think other Chromium code wraps .insert() calls with it.",
+      "range": {
+        "startLine": 470,
+        "startChar": 8,
+        "endLine": 470,
+        "endChar": 21
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22f3dee_eafb207e",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-26T17:51:13Z",
+      "side": 1,
+      "message": "Maybe add a comment that this is guaranteed to fit into uint16 due to an earlier check on resource_count.",
+      "range": {
+        "startLine": 478,
+        "startChar": 47,
+        "endLine": 478,
+        "endChar": 54
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78e783e_c08fc1b5",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-26T17:51:13Z",
+      "side": 1,
+      "message": "So I\u0027m guessing the file format is supposed to be always little endian since you\u0027re not doing any byteswapping anywhere? Could you add a DCHECK() at the beginning of the function that verifies that the current platform is little endian?",
+      "range": {
+        "startLine": 480,
+        "startChar": 42,
+        "endLine": 480,
+        "endChar": 0
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8cce31_ffbfaa5a",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-26T17:51:13Z",
+      "side": 1,
+      "message": "I\u0027m confused as to the purpose of the alias table if we\u0027re not skipping aliases in this loop - if we\u0027re still including the content of aliases in the main resource list - then why have the alias table at all?",
+      "range": {
+        "startLine": 492,
+        "startChar": 49,
+        "endLine": 492,
+        "endChar": 50
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dad8897_bbd7dccf",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-26T17:51:13Z",
+      "side": 1,
+      "message": "Given this is new functionality for this code, can you expand CL description to mention the impact of this change? In particular, will this affect any production bits in Chrome (and if so, what\u0027s the effect) - or is this code not generally used in the Chrome build process?",
+      "range": {
+        "startLine": 505,
+        "startChar": 37,
+        "endLine": 505,
+        "endChar": 0
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c68e2b_86c522ee",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-26T17:51:13Z",
+      "side": 1,
+      "message": "Why not use Alias type here?",
+      "range": {
+        "startLine": 506,
+        "startChar": 13,
+        "endLine": 506,
+        "endChar": 21
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
