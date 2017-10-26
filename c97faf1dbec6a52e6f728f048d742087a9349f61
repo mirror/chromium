@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24b00345_d07f3427",
+        "filename": "base/files/file_util_win.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-26T17:30:11Z",
+      "side": 1,
+      "message": "You\u0027ll need to implement this function for file_util_posix.cc too.",
+      "range": {
+        "startLine": 346,
+        "startChar": 5,
+        "endLine": 346,
+        "endChar": 39
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10eccb99_0324d03e",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-26T17:30:11Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be full, not lossy, path here? Or how does the notification center find images?\n(same for other places)",
+      "range": {
+        "startLine": 169,
+        "startChar": 54,
+        "endLine": 169,
+        "endChar": 77
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a31204_e57ef643",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-26T17:30:11Z",
+      "side": 1,
+      "message": "It\u0027s not obvious that this method will process only notification\u0027s buttons. Could you please documentthat? Or the method could be changed to have (buttons, origin, file_keeper) as arguments.",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 67
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7127f1_94736658",
+        "filename": "chrome/browser/notifications/temp_file_keeper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-26T17:30:11Z",
+      "side": 1,
+      "message": "Why not schedule DeleteFile directly? This way you won\u0027t need weak_factory_",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b088cb_40ca48cd",
+        "filename": "chrome/browser/notifications/temp_file_keeper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-26T17:30:11Z",
+      "side": 1,
+      "message": "nitty nit: DeleteFile(file, /*recursive\u003d*/true)",
+      "range": {
+        "startLine": 101,
+        "startChar": 21,
+        "endLine": 101,
+        "endChar": 27
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ee2d5b_98cf8c4e",
+        "filename": "chrome/browser/notifications/temp_file_keeper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-26T17:30:11Z",
+      "side": 1,
+      "message": "nitty nit: DeleteFile(path, /*recursive\u003d*/false)",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 26
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73db2028_4d4243ce",
+        "filename": "chrome/browser/notifications/temp_file_keeper.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-26T17:30:11Z",
+      "side": 1,
+      "message": "nit: this parenthesis isn\u0027t closed.",
+      "range": {
+        "startLine": 52,
+        "startChar": 57,
+        "endLine": 52,
+        "endChar": 58
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4408a3f_b87ae9b2",
+        "filename": "chrome/browser/notifications/temp_file_keeper.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-26T17:30:11Z",
+      "side": 1,
+      "message": "Could you please document that the method returns empty FilePath if file creation failed.",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 16
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6369e4ef_4a7c1d85",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-26T17:30:11Z",
+      "side": 1,
+      "message": "Nit: Is setting empty button icons required? If not, I think it\u0027s easier to read the code if the if statement is outside:\nif (include_icon_images) {\n  for (....)\n}\n(same for the statements above)",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 3
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
