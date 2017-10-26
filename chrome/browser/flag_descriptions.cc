@@ -1187,6 +1187,12 @@ const char kShowAutofillSignaturesName[] = "Show autofill signatures.";
 const char kShowAutofillSignaturesDescription[] =
     "Annotates web forms with Autofill signatures as HTML attributes.";
 
+const char kRemoveUsageOfDeprecatedGaiaSigninEndpointName[] =
+    "Remove usage of the deprecated GAIA sign-in endpoint";
+const char kRemoveUsageOfDeprecatedGaiaSigninEndpointDescription[] =
+    "The Gaia sign-in endpoint used for full-tab sign-in page is deprecated. "
+    "This flags controls whether its usage should be removed from Chrome.";
+
 const char kShowAutofillTypePredictionsName[] = "Show Autofill predictions";
 const char kShowAutofillTypePredictionsDescription[] =
     "Annotates web forms with Autofill field type predictions as placeholder "
