@@ -127,6 +127,7 @@
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/editing/spellcheck/TextCheckerClientImpl.h"
+#include "core/exported/DevToolsFrontendImpl.h"
 #include "core/exported/LocalFrameClientImpl.h"
 #include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebAssociatedURLLoaderImpl.h"
@@ -1662,7 +1663,6 @@ WebLocalFrameImpl::WebLocalFrameImpl(
       autofill_client_(nullptr),
       input_events_scale_factor_for_emulation_(1),
       interface_registry_(interface_registry),
-      web_dev_tools_frontend_(nullptr),
       input_method_controller_(*this),
       text_checker_client_(new TextCheckerClientImpl(this)),
       spell_check_panel_host_client_(nullptr),
@@ -2385,6 +2385,11 @@ TextFinder& WebLocalFrameImpl::EnsureTextFinder() {
 
 void WebLocalFrameImpl::SetFrameWidget(WebFrameWidgetBase* frame_widget) {
   frame_widget_ = frame_widget;
+}
+
+void WebLocalFrameImpl::SetDevToolsFrontend(
+    std::unique_ptr<DevToolsFrontendImpl> frontend) {
+  dev_tools_frontend_ = std::move(frontend);
 }
 
 WebFrameWidgetBase* WebLocalFrameImpl::FrameWidget() const {

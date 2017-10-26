@@ -5,6 +5,8 @@ import("//third_party/WebKit/Source/core/core.gni")
 
 blink_core_sources("exported") {
   sources = [
+    "DevToolsFrontendImpl.cpp",
+    "DevToolsFrontendImpl.h",
     "LocalFrameClientImpl.cpp",
     "LocalFrameClientImpl.h",
     "SharedWorkerRepositoryClientImpl.cpp",
@@ -25,8 +27,6 @@ blink_core_sources("exported") {
     "WebDateTimeSuggestion.cpp",
     "WebDevToolsAgentImpl.cpp",
     "WebDevToolsAgentImpl.h",
-    "WebDevToolsFrontendImpl.cpp",
-    "WebDevToolsFrontendImpl.h",
     "WebDocument.cpp",
     "WebDocumentLoaderImpl.cpp",
     "WebDocumentLoaderImpl.h",
