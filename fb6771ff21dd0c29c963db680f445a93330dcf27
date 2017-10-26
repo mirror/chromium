@@ -70,6 +70,30 @@
       "revId": "fb6771ff21dd0c29c963db680f445a93330dcf27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891e002f_09d80cfc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 34657,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-26T23:43:01Z",
+      "side": 1,
+      "message": "Thanks a lot for the explanation!",
+      "parentUuid": "17e54d83_f217f3eb",
+      "range": {
+        "startLine": 34657,
+        "startChar": 10,
+        "endLine": 34657,
+        "endChar": 42
+      },
+      "revId": "fb6771ff21dd0c29c963db680f445a93330dcf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
