@@ -16,7 +16,7 @@ MockU2fDiscovery::MockDelegate::~MockDelegate() = default;
 
 void MockU2fDiscovery::MockDelegate::OnDeviceAdded(
     std::unique_ptr<U2fDevice> device) {
-  OnDeviceAddedStr(device->GetId());
+  OnDeviceAddedStr(device ? device->GetId() : "");
 }
 
 void MockU2fDiscovery::MockDelegate::OnDeviceRemoved(
