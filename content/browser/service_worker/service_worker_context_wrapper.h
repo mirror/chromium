@@ -220,6 +220,13 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
       const GURL& origin,
       const std::vector<std::pair<std::string, std::string>>& key_value_pairs,
       const StatusCallback& callback);
+  void ClearAndStoreRegistrationUserData(
+      int64_t registration_id,
+      base::Optional<GURL> origin,
+      const std::vector<std::string>& keys_to_clear,
+      const std::vector<std::pair<std::string, std::string>>&
+          key_value_pairs_to_store,
+      const StatusCallback& callback);
   void ClearRegistrationUserData(int64_t registration_id,
                                  const std::vector<std::string>& keys,
                                  const StatusCallback& callback);
@@ -233,6 +240,9 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   void GetUserDataForAllRegistrationsByKeyPrefix(
       const std::string& key_prefix,
       const GetUserDataForAllRegistrationsCallback& callback);
+  void GetLeastUserDataKeyForAllRegistrationsByKeyPrefix(
+      const std::string& key_prefix,
+      const GetLeastUserDataKeyForAllRegistrationsCallback& callback);
 
   // This function can be called from any thread, but the callback will always
   // be called on the UI thread.

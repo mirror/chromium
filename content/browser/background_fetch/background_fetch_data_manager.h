@@ -112,13 +112,6 @@ class CONTENT_EXPORT BackgroundFetchDataManager {
                       NextRequestCallback callback);
 
   // Marks that the |request|, part of the Background Fetch identified by
-  // |registration_id|, has been started as |download_guid|.
-  void MarkRequestAsStarted(
-      const BackgroundFetchRegistrationId& registration_id,
-      BackgroundFetchRequestInfo* request,
-      const std::string& download_guid);
-
-  // Marks that the |request|, part of the Background Fetch identified by
   // |registration_id|, has completed.
   void MarkRequestAsComplete(
       const BackgroundFetchRegistrationId& registration_id,
@@ -132,16 +125,17 @@ class CONTENT_EXPORT BackgroundFetchDataManager {
       const BackgroundFetchRegistrationId& registration_id,
       SettledFetchesCallback callback);
 
-  // Marks that the backgroundfetched/backgroundfetchfail/backgroundfetchabort
-  // event is being dispatched. It's not possible to call DeleteRegistration at
-  // this point as JavaScript may hold a reference to a
-  // BackgroundFetchRegistration object and we need to keep the corresponding
-  // data around until the last such reference is released (or until shutdown).
-  // We can't just move the Background Fetch registration's data to RAM as it
-  // might consume too much memory. So instead this step disassociates the
-  // |developer_id| from the |unique_id|, so that existing JS objects with a
-  // reference to |unique_id| can still access the data, but it can no longer be
-  // reached using GetIds or GetRegistration.
+  // Marks a registration as no longer active. Call this when the
+  // backgroundfetched/backgroundfetchfail/backgroundfetchabort event is about
+  // to be dispatched. It's not possible to call DeleteRegistration at this
+  // point as JavaScript may hold a reference to a BackgroundFetchRegistration
+  // object and we need to keep the corresponding data around until the last
+  // such reference is released (or until shutdown). We can't just move the
+  // Background Fetch registration's data to RAM as it might consume too much
+  // memory. So instead this step disassociates the |developer_id| from the
+  // |unique_id|, so that existing JS objects with a reference to |unique_id|
+  // can still access the data, but they can no longer be reached using GetIds
+  // or GetRegistration.
   void MarkRegistrationForDeletion(
       const BackgroundFetchRegistrationId& registration_id,
       bool aborted,
