@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "763f1ea7_72b6b9a6",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
+        "patchSetId": 3
+      },
+      "lineNbr": 2234,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-26T16:26:44Z",
+      "side": 1,
+      "message": "It would be nice to add a very brief description of the bug here, so that people doesn\u0027t need to follow the link.\n\nFor example: # crbug.com/xxxxx The tests use xxx that is not supported by network service.",
+      "revId": "16923dd761e424a48ae01a74be53747ffdbf1909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
