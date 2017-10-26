@@ -291,4 +291,8 @@ bool PrintViewManager::OnMessageReceived(
          PrintViewManagerBase::OnMessageReceived(message, render_frame_host);
 }
 
+content::RenderFrameHost* PrintViewManager::print_preview_rfh() {
+  return print_preview_rfh_;
+}
+
 }  // namespace printing

@@ -55,10 +55,12 @@ class PrintViewManager : public PrintViewManagerBase,
   bool OnMessageReceived(const IPC::Message& message,
                          content::RenderFrameHost* render_frame_host) override;
 
-  content::RenderFrameHost* print_preview_rfh() { return print_preview_rfh_; }
+  virtual content::RenderFrameHost* print_preview_rfh();
+
+ protected:
+  explicit PrintViewManager(content::WebContents* web_contents);
 
  private:
-  explicit PrintViewManager(content::WebContents* web_contents);
   friend class content::WebContentsUserData<PrintViewManager>;
 
   enum PrintPreviewState {
