@@ -1168,6 +1168,10 @@
     "label": "//third_party/WebKit/Source/controller:webkit_unit_tests",
     "type": "console_test_launcher",
   },
+  "webui_closure_compile": {
+    "label": "//third_party/closure_compiler:webui_closure_compile",
+    "type": "additional_compile_target",
+  },
   "webview_instrumentation_test_apk": {
     "label": "//android_webview/test:webview_instrumentation_test_apk",
     "type": "console_test_launcher",
