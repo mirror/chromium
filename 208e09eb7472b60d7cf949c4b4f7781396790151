@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7714e54_7f6385f1",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-26T22:46:17Z",
+      "side": 1,
+      "message": "Is there a point of having a default constructor?\nSeems unused in this CL and IIRC it wouldn\u0027t configure \n|face_detector_factory_| and render this class useless.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "208e09eb7472b60d7cf949c4b4f7781396790151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97037fd1_31c00186",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-26T22:46:17Z",
+      "side": 1,
+      "message": "Probably remove this.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 58
+      },
+      "revId": "208e09eb7472b60d7cf949c4b4f7781396790151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783f6600_48834a33",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-26T22:46:17Z",
+      "side": 1,
+      "message": "Having a private factory method is strange; it\u0027s more\ncommon to have a public Create() and a private ctor.\nAnd with that change you don\u0027t need the \n  friend class FaceDetectionProviderImpl;\nin l.40, so you can remove it.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 56
+      },
+      "revId": "208e09eb7472b60d7cf949c4b4f7781396790151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5b2a5d_f37a5c63",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-26T22:46:17Z",
+      "side": 1,
+      "message": "This is not needed since the dtor will clean this scoped\nobject for us, right?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 63
+      },
+      "revId": "208e09eb7472b60d7cf949c4b4f7781396790151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f8e886_07487d78",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-26T22:46:17Z",
+      "side": 1,
+      "message": "And if (impl), then what? Return anyway, so just remove this \nTEST_F case altogether and add it together with the code.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "208e09eb7472b60d7cf949c4b4f7781396790151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
