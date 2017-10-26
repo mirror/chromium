@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "fd540657_6c41438c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 2896,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-26T14:27:24Z",
+      "side": 1,
+      "message": "I have done something much simpler now in the follow up CL (https://chromium-review.googlesource.com/c/chromium/src/+/735686).",
+      "parentUuid": "af01cf87_04adbc98",
+      "revId": "c07ef674afea891fd3001444f57b2ec0bd416890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e533804_1b1ba8c2",
         "filename": "content/common/frame.mojom",
         "patchSetId": 24
