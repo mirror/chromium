@@ -16,6 +16,24 @@
       "revId": "2a4f0b5586469730a8c23fab3bd1085dff391e79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3ffbcf_fa7187af",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-10-26T15:35:14Z",
+      "side": 1,
+      "message": "I did not consider it as a significant issue given that this code is only executing in unit tests (where the execution time is limited), but I agree that it is a better coding style to fix those leaks. PTAL at https://chromium-review.googlesource.com/c/chromium/src/+/739602, I kept the type argument as it make possible to make type-specific mocks, e.g. \nON_CALL(*provider_, DoCreateSensorInternal(SensorType::ACCELEROMETER, _, _))..",
+      "parentUuid": "c5eac8d8_3291d7e1",
+      "revId": "2a4f0b5586469730a8c23fab3bd1085dff391e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
