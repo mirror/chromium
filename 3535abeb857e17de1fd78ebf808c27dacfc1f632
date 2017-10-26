@@ -52,6 +52,24 @@
       "revId": "3535abeb857e17de1fd78ebf808c27dacfc1f632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0c503b_5589c7ec",
+        "filename": "content/shell/app/shell_main_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-26T18:48:07Z",
+      "side": 1,
+      "message": "Makes sense, although it\u0027d be nice for us to call this out somewhere :D\n\nI\u0027m drafting a CL to add content_shell to the builders, so will fix this in that.",
+      "parentUuid": "0f52efc5_b4629a55",
+      "revId": "3535abeb857e17de1fd78ebf808c27dacfc1f632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
