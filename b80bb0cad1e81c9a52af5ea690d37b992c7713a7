@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "490b2c28_30cb8c72",
+        "filename": "cc/trees/layer_tree_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-26T22:44:21Z",
+      "side": 1,
+      "message": "nit: Take this by value? All call-sites move it.",
+      "range": {
+        "startLine": 499,
+        "startChar": 28,
+        "endLine": 499,
+        "endChar": 68
+      },
+      "revId": "b80bb0cad1e81c9a52af5ea690d37b992c7713a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
