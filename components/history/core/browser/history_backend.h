@@ -315,6 +315,9 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
       const std::vector<int>& desired_sizes,
       std::vector<favicon_base::FaviconRawBitmapResult>* bitmap_results);
 
+  void DeleteFaviconMappings(const base::flat_set<GURL>& page_urls,
+                             favicon_base::IconType icon_type);
+
   void MergeFavicon(const GURL& page_url,
                     const GURL& icon_url,
                     favicon_base::IconType icon_type,
