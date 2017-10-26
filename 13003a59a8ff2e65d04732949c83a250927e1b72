@@ -16,6 +16,24 @@
       "revId": "13003a59a8ff2e65d04732949c83a250927e1b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ffd8bc_f6199be9",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-26T22:59:52Z",
+      "side": 1,
+      "message": "Done, filed bug.",
+      "parentUuid": "d2a36852_b0517e34",
+      "revId": "13003a59a8ff2e65d04732949c83a250927e1b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
