@@ -19,8 +19,7 @@ FaviconImageResult::~FaviconImageResult() {}
 // FaviconRawBitmapResult
 
 FaviconRawBitmapResult::FaviconRawBitmapResult()
-    : expired(false), icon_type(INVALID_ICON) {
-}
+    : expired(false), icon_type(IconType::kInvalid) {}
 
 FaviconRawBitmapResult::FaviconRawBitmapResult(
     const FaviconRawBitmapResult& other) = default;
@@ -50,26 +49,5 @@ LargeIconImageResult::LargeIconImageResult(
     : fallback_icon_style(fallback_icon_style_in) {}
 
 LargeIconImageResult::~LargeIconImageResult() {}
-
-int GetUmaFaviconType(IconType icon_type) {
-  // These values must stay in sync with the FaviconType enum in
-  // histograms/enums.xml.
-  switch (icon_type) {
-    case INVALID_ICON:
-      break;
-    case FAVICON:
-      return 1;
-    case TOUCH_ICON:
-      return 2;
-    case TOUCH_PRECOMPOSED_ICON:
-      return 3;
-    case WEB_MANIFEST_ICON:
-      return 4;
-  }
-  // Unexpected values including multiple bits (accidentally) being set in the
-  // input contribute to the zero bucket in release mode.
-  NOTREACHED();
-  return 0;
-}
 
 }  // namespace favicon_base
