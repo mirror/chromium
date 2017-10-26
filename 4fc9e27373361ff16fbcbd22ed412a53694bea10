@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42133fd4_745120f9",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-10-26T17:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4775acb6_0014dfd7",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd217eea_34f7bdef",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd32540_0f55e266",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-10-26T17:01:53Z",
+      "side": 1,
+      "message": "Yes, by std::iterator_traits used by std::equal used by Range::operator\u003d\u003d.\nI added a comment.",
+      "parentUuid": "fd217eea_34f7bdef",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "24893b7b_1164266c",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-10-26T17:01:53Z",
+      "side": 1,
+      "message": "Yes, internally by Google Test.\nI added a comment.",
+      "parentUuid": "4c4bcba6_61699205",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28206025_cce842bc",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "aea4ffa8_e5f79ee6",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-10-26T17:01:53Z",
+      "side": 1,
+      "message": "Yes. Is there something odd in the formatting?",
+      "parentUuid": "28206025_cce842bc",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f532e27b_8f2525af",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-25T15:59:08Z",
       "side": 1,
       "message": "Does it matter if these are signed or unsigned constants?",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93493590_3c013fbf",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-10-26T17:01:53Z",
+      "side": 1,
+      "message": "I am not sure. To my experience, Windows compilers are sometimes very picky about signedness.",
+      "parentUuid": "f532e27b_8f2525af",
       "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d811db57_3abbd157",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-10-26T17:01:53Z",
+      "side": 1,
+      "message": "No, they random initialized (by VectorMathTest::SetUpTestCase).\nI modified the set up to include infinities and NaNs, too.",
+      "parentUuid": "78bc6727_9b5912e5",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1cb0a33_b6cc8b61",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
         "patchSetId": 1
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-25T15:59:08Z",
       "side": 1,
       "message": "Why 1e-6?  Can we use the actual minimum value for this?",
+      "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf211fd_1bbf9348",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-10-26T17:01:53Z",
+      "side": 1,
+      "message": "Because float epsilon is about 1.19e-7 and because 1e-6 is about one order of magnitude greater than that and thus quite good error estimate. I find that estimate good enough here.",
+      "parentUuid": "e1cb0a33_b6cc8b61",
       "revId": "4fc9e27373361ff16fbcbd22ed412a53694bea10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
