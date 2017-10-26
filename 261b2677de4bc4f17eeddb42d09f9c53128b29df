@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6c5ba18c_a85955df",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T23:02:45Z",
+      "side": 1,
+      "message": "I like the original code better where we don\u0027t depend on rfh. We are dragging a large dependency (with lifetime assumption) here only to save 4 lines of code. Can we get the salt and origin in PVI and pass them into this function?",
+      "range": {
+        "startLine": 108,
+        "startChar": 22,
+        "endLine": 108,
+        "endChar": 51
+      },
+      "revId": "261b2677de4bc4f17eeddb42d09f9c53128b29df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a0301e6_72a3d59d",
         "filename": "chrome/browser/media/cdm_storage_id.cc",
         "patchSetId": 8
@@ -65,6 +88,64 @@
       "side": 1,
       "message": "The root cause of this is that StorageId and PlatformVerification are two different features supported on different platforms and we are mixing them together...",
       "parentUuid": "560bf578_c933fa40",
+      "revId": "261b2677de4bc4f17eeddb42d09f9c53128b29df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146f56b4_3721aa7f",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T23:02:45Z",
+      "side": 1,
+      "message": "As replied offline, I like Daniel\u0027s idea of using EnabledIf attribute. Please add a TODO here.",
+      "parentUuid": "75a1ecf9_6c73830e",
+      "revId": "261b2677de4bc4f17eeddb42d09f9c53128b29df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6fcacd_f272d998",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T23:02:45Z",
+      "side": 1,
+      "message": "optional nit: will it be cleaner if we group platform challenge functions together, and storage ID functions together? It\u0027s violating the style guide that definition order should match declaration order, but I still feel that\u0027ll be much more readable, especially given they are doing totally different things, and we have a lot of if/defs involved.",
+      "revId": "261b2677de4bc4f17eeddb42d09f9c53128b29df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bbe6f5_ed5edded",
+        "filename": "chrome/browser/media/platform_verification_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-26T23:02:45Z",
+      "side": 1,
+      "message": "This is a bit too generic now since now we do two operations in this class. How about PlatformVerificationResult?",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 14
+      },
       "revId": "261b2677de4bc4f17eeddb42d09f9c53128b29df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
