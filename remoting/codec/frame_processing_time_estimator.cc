@@ -35,7 +35,6 @@ FrameProcessingTimeEstimator::FrameProcessingTimeEstimator()
 FrameProcessingTimeEstimator::~FrameProcessingTimeEstimator() = default;
 
 void FrameProcessingTimeEstimator::StartFrame() {
-  DCHECK(start_time_.is_null());
   start_time_ = Now();
 }
 
