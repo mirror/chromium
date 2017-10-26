@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77cca6e4_1758bd87",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T00:17:03Z",
+      "side": 1,
+      "message": "Note: This is supposed to show the SIM unlock UI if |is_on| is true and the SIM is locked. That is currently broken and will be fixed separately.",
+      "revId": "ef19546b1559d1fa6e4579d89713b3c20c4e4f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
