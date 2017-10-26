@@ -156,6 +156,30 @@
     },
     {
       "key": {
+        "uuid": "007b0c38_15f63b0e",
+        "filename": "chromeos/dbus/fake_image_loader_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T23:54:15Z",
+      "side": 1,
+      "message": "thanks for the explanation!\n\nre unit tests, i was referring to testing the code that calls the ImageLoaderClient interface. that looks like it\u0027s chrome/browser/component_updater/cros_component_installer_unittest.cc, right? if you wanted to verify that that code does the right thing when ImageLoaderClient reports success, you\u0027d probably want to update FakeImageLoaderClient to support returning arbitrary values.",
+      "parentUuid": "7532ef1b_30cafedf",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "bf7df0500f3d04c86c75b3f1dec1637f1fc433c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fdbdc4a_53fe6ef8",
         "filename": "chromeos/dbus/image_loader_client.h",
         "patchSetId": 2
