@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "60eabab5_364fba04",
+        "filename": "content/common/service_worker/service_worker_types.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-26T05:44:48Z",
+      "side": 1,
+      "message": "Regarding moving the logic, this is not the reverse function of the logic in web_url_request_util.cc as load_flags contains more information. Moreover, this is the only place where load flags \u003d\u003e cache mode conversion is needed. If there are more use-cases then I will consider decoupling cache mode from load flags.",
+      "parentUuid": "a983f74e_974eb630",
+      "revId": "43a67b0b31d9670822811b9a04cb6828ef931584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42698947_289b29f6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/request/request-cache-force-cache-expected.txt",
         "patchSetId": 3
