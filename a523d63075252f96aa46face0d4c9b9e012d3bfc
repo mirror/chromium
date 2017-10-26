@@ -16,6 +16,24 @@
       "revId": "a523d63075252f96aa46face0d4c9b9e012d3bfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc7c82a_fb34d95f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-26T11:02:44Z",
+      "side": 1,
+      "message": "I thought that subsequent lines are indented 8 spaces just like code (otherwise you end up with blocks of different indentation, which looks a bit weird IMO, and it also can reduce the space if you have long parameter names).\n\n(Otherwise, sorry if I\u0027ve told you the wrong thing in the past, Boris!)",
+      "parentUuid": "7bbe8555_5e9c2d32",
+      "revId": "a523d63075252f96aa46face0d4c9b9e012d3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
