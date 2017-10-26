@@ -168,7 +168,7 @@ class ServiceManagerConnectionImpl::IOThreadContext
     // Should bind |io_thread_checker_| to the context's thread.
     DCHECK(io_thread_checker_.CalledOnValidThread());
     service_context_.reset(new service_manager::ServiceContext(
-        base::MakeUnique<service_manager::ForwardingService>(this),
+        std::make_unique<service_manager::ForwardingService>(this),
         std::move(pending_service_request_),
         std::move(io_thread_connector_),
         std::move(pending_connector_request_)));
@@ -366,7 +366,7 @@ std::unique_ptr<ServiceManagerConnection> ServiceManagerConnection::Create(
     scoped_refptr<base::SequencedTaskRunner> io_task_runner) {
   if (service_manager_connection_factory)
     return service_manager_connection_factory->Run();
-  return base::MakeUnique<ServiceManagerConnectionImpl>(
+  return std::make_unique<ServiceManagerConnectionImpl>(
       std::move(request), io_task_runner);
 }
 

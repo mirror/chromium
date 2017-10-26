@@ -26,7 +26,7 @@ void KeyboardLockServiceImpl::CreateMojoService(
     RenderFrameHost* render_frame_host,
     blink::mojom::KeyboardLockServiceRequest request) {
   mojo::MakeStrongBinding(
-        base::MakeUnique<KeyboardLockServiceImpl>(render_frame_host),
+        std::make_unique<KeyboardLockServiceImpl>(render_frame_host),
         std::move(request));
 }
 
