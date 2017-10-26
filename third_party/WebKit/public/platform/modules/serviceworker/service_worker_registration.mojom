@@ -83,8 +83,13 @@ interface ServiceWorkerRegistrationObjectHost {
 // ServiceWorkerRegistration JavaScript object. The browser uses it to talk with
 // the corresponding impl of ServiceWorkerRegistration in the renderer.
 interface ServiceWorkerRegistrationObject {
+  // Sets changed service worker objects for this registration object.
+  // Non-null value of {|installing|,|waiting|,|active|} means the corresponding
+  // object has changed. Null value means unchanged.
+  SetVersionAttributes(ServiceWorkerObjectInfo? installing,
+                       ServiceWorkerObjectInfo? waiting,
+                       ServiceWorkerObjectInfo? active);
+
   // TODO(leonhsl): Implement all methods.
-  // SetVersionAttributes(int32 changed_mask,
-  //                      ServiceWorkerVersionAttributes attrs);
   // UpdateFound();
 };
