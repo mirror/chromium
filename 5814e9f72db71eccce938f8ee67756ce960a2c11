@@ -16,6 +16,24 @@
       "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1abb8721_5bc6cdbc",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-26T18:46:44Z",
+      "side": 0,
+      "message": "So, this CL prevents streaming immediately after we hit MemoryCache:\n\nPreviously, ClassicPendingScript is NotifyFinished() synchronously, thus ready_state_ is kReady here and we can initiate StartStreamingLoadedScript() below.\n\nAfter this CL, ClassicPendingScript is not yet ready here (because it is NotifyFinished() asynchronously), and thus ScriptStreamer::StartStreaming() is called below, and it doesn\u0027t start streaming because the Resource is loaded (https://codesearch.chromium.org/chromium/src/third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d650).\n\nIf WorkStealingInScriptRunnerEnabled() (still not enabled by default though IIUC), the streaming (StartStreamingLoadedScript()) can be initiated (in some cases) when ClassicPendingScript is NotifyFinished(), via ScriptRunner::NotifyScriptReady() -\u003e TryStreamAny().\n\nI think ScriptStreamer depends on two facts:\n[a] ClassicPendingScript is already notified and thus no further notifications are expected (or not), and\n[b] Resource\u0027s ResourceBuffer is available when NotifyAppendData() is called (or not).\n\nScriptStreamer::StartStreamingLoadedScript()\n- assumes [a] is true (and thus calls streamer\u0027s NotifyAppendData() and NotifyFinished()), and\n- expects [b] is true but can be false (and thus checks Resource::ResourceBuffer()).\n\nScriptStreamer::StartStreaming()\n- assumes [a] is false (and thus doesn\u0027t calls streamer\u0027s NotifyAppendData() and NotifyFinished() as they are expected to be called via ClassicPendingScript::NotifyAppendData()/NotifyFinished()), and\n- assumes [b] is true (this should be always true if the Resource is still loading).\n\nAfter this CL, there are cases (i.e. MemoryCache hit) where:\n- [a] is false\n- [b] can be false\nwhich is a kind of mixture of the assumptions of ScriptStreamer::StartStreaming() and ScriptStreamer::StartStreamingLoadedScript().\n\nSo if we want to enable streaming in the case of MemoryCache hit, I feel it\u0027s better to merge ScriptStreamer::StartStreaming() and StartStreamingLoadedScript() and make the merged function to handle these cases.\n\n(I discussed these things offline with Nate, and Nate is preparing another patch)",
+      "parentUuid": "273468b9_d6914cbd",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
