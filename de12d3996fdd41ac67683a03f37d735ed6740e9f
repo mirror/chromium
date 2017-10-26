@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b2eff3_c8a2a14b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/css_properties.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-26T03:56:00Z",
+      "side": 1,
+      "message": "I wonder, what non-computed style related classes use CSSProperties? If there are many things that use CSSProperties but not for the computed style stuff, maybe eventually we could move computed style logic into a separate class? e.g.\n\n        CSSProperties\n      /               \\ \nshorthand writer    ComputedStyle\n                      /          \\\n         computed style writer   style builder writer\n\nBut a lot of things need to be fixed before this can happen e.g. handling of names, flipping around the inheritance of ComputedStyle/StyleBuilder.",
+      "revId": "de12d3996fdd41ac67683a03f37d735ed6740e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c533d98f_f93e8729",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-26T03:56:00Z",
+      "side": 1,
+      "message": "Cool! I believe this was one of the \"JSON health\" things Renee wanted to do.",
+      "revId": "de12d3996fdd41ac67683a03f37d735ed6740e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4161028_4e44df7a",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/templates/CSSOMKeywords.cpp.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-26T03:56:00Z",
+      "side": 1,
+      "message": "Are these changes because properties is no longer a dict of name -\u003e properties, but a list of properties?",
+      "revId": "de12d3996fdd41ac67683a03f37d735ed6740e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e4493f_96a11ab7",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-26T03:56:00Z",
+      "side": 1,
+      "message": "I\u0027m guessing that eventually this might be able to just directly inherit from the Writer class, and in the __init__, it\u0027ll instantiate its own CSSProperties instance?",
+      "revId": "de12d3996fdd41ac67683a03f37d735ed6740e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fad7eb1_21958321",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-26T03:56:00Z",
+      "side": 1,
+      "message": "haha damn, we need a better way to read in multiple files. I think it\u0027s possible to pass flags into scripts, so theoretically json5_file_paths could be a dict of name -\u003e path.",
+      "revId": "de12d3996fdd41ac67683a03f37d735ed6740e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
