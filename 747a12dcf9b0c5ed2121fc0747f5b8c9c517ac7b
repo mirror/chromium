@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30d5b54d_ad308a0b",
+        "filename": "components/crash/core/common/assertion_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-26T13:34:59Z",
+      "side": 1,
+      "message": "Nit: OnCurrentThread()? Otherwise I was expecting this method to take a pointer to a thread as an argument.",
+      "revId": "747a12dcf9b0c5ed2121fc0747f5b8c9c517ac7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe70941d_56fbfd80",
+        "filename": "components/crash/core/common/assertion_handler_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-26T13:34:59Z",
+      "side": 1,
+      "message": "I don\u0027t think death tests work on iOS, and on top of that the crash unittest target is excluded on iOS.  I\u0027ll sort the BUILD.gn changes out later, but I may ask for help in getting these tests to run on iOS.",
+      "revId": "747a12dcf9b0c5ed2121fc0747f5b8c9c517ac7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
