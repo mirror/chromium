@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5fc2553_09b3dd60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-26T13:44:09Z",
+      "side": 1,
+      "message": "Is there a more cross-platform location to put this?",
+      "range": {
+        "startLine": 152,
+        "startChar": 20,
+        "endLine": 152,
+        "endChar": 49
+      },
+      "revId": "019e300c6e1df7e9636cd46adeb7077b88a6b3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
