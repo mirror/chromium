@@ -8,15 +8,39 @@
 #import <Cocoa/Cocoa.h>
 
 #import "base/mac/scoped_nsobject.h"
+#include "base/mac/sdk_forward_declarations.h"
+#include "third_party/skia/include/core/SkColor.h"
 
 // A view that displays a Material Design Circular Activity Indicator (aka a
 // "spinner") for Mac Chrome. To use, create a SpinnerView of the desired size
 // and add to a view hierarchy. SpinnerView uses Core Animation to achieve GPU-
 // accelerated animation and smooth scaling to any size.
-@interface SpinnerView : NSView
+@interface SpinnerView : NSView<CALayerDelegate> {
+  base::scoped_nsobject<CAAnimationGroup> spinnerAnimation_;
+  base::scoped_nsobject<CABasicAnimation> rotationAnimation_;
+  CAShapeLayer* shapeLayer_;  // Weak.
+  CALayer* rotationLayer_;    // Weak.
+}
+
+// Returns the time for one full animation rotation.
++ (CGFloat)rotationTime;
+
+// Returns the spinner arc's radius.
++ (CGFloat)spinnerArcRadius;
+
+// Returns the scale factor for sizing the vector strokes to fit the
+// SpinnerView's bounds.
+- (CGFloat)scaleFactor;
+
+- (void)initializeAnimation;
 
 // Return YES if the spinner is animating.
 - (BOOL)isAnimating;
+- (NSColor*)spinnerColor;
+- (void)configureShapeLayerPathAndPattern;
+- (void)updateSpinnerColor;
+
+- (void)updateAnimation:(NSNotification*)notification;
 
 @end
 
