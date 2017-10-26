@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "901d776b_15d0d147",
+        "filename": "components/optimization_guide/optimization_hints_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-26T21:17:45Z",
+      "side": 1,
+      "message": "Well the problem for me is, I don\u0027t know where the object is created (what thread creates it) and how it is used, so from a practical standpoint, it\u0027s just hard to say if this is the best way to do it. It seems fine, but I assume this is created on the UI thread and the method is called on the file thread, etc. Which means there are more details to this like adding a weak pointer, etc.",
+      "parentUuid": "0d1460e2_a79b714d",
+      "revId": "067d6d63685d05229e6047384b35633d29456317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70194b65_50c24555",
         "filename": "components/optimization_guide/optimization_hints_reader.h",
         "patchSetId": 4

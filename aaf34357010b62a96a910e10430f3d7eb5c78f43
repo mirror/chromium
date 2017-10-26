@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "246871b8_c1100462",
+        "filename": "components/optimization_guide/optimization_hints_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-26T21:17:45Z",
+      "side": 1,
+      "message": "SequenceChecker would be the right thing to use. See here https://cs.chromium.org/chromium/src/components/previews/core/previews_logger.h?type\u003dcs\u0026q\u003dsequence+checker+previews\u0026sq\u003dpackage:chromium\u0026l\u003d113",
+      "parentUuid": "c35852e8_63a8bf30",
+      "revId": "aaf34357010b62a96a910e10430f3d7eb5c78f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beec0462_d0326e71",
         "filename": "components/optimization_guide/optimization_hints_reader.h",
         "patchSetId": 3
