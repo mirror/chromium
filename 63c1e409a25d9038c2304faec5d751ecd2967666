@@ -16,6 +16,24 @@
       "revId": "63c1e409a25d9038c2304faec5d751ecd2967666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06590279_33f5aa34",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1162829
+      },
+      "writtenOn": "2017-10-26T18:00:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52fd7975_87a88eed",
+      "revId": "63c1e409a25d9038c2304faec5d751ecd2967666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
