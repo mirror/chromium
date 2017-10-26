@@ -22,6 +22,30 @@
       "revId": "d42535b9504a32bd3c4aeff4c9229a4dc44c57b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321581d6_2ca035c5",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-26T19:56:15Z",
+      "side": 1,
+      "message": "It looks like I am lucky enough to select the right one, https://msdn.microsoft.com/en-us/library/windows/desktop/dd797816(v\u003dvs.85).aspx, H264 encoder supports only AVEncMPVGOPSize.\n\nBy using b picture, it may help to improve the encoding / decoding performance as well as reducing the output size. I will try it later.\n\nI have tested on my machine, AVEncMPVGOPSize does what it should be.",
+      "parentUuid": "e1ba0d8f_cea83b19",
+      "range": {
+        "startLine": 516,
+        "startChar": 29,
+        "endLine": 516,
+        "endChar": 53
+      },
+      "revId": "d42535b9504a32bd3c4aeff4c9229a4dc44c57b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
