@@ -75,6 +75,8 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   // This funciton must be called with clean layout.
   const NGOffsetMapping& ComputeOffsetMappingIfNeeded();
 
+  const Vector<NGLineInfo>& GetLineInfo() const { return Data().line_info_; }
+
   bool IsBidiEnabled() const { return Data().is_bidi_enabled_; }
   TextDirection BaseDirection() const { return Data().BaseDirection(); }
 
@@ -103,6 +105,7 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   }
 
   friend class NGLineBreakerTest;
+  friend class NGInlineLayoutAlgorithm;
 };
 
 inline void NGInlineNode::AssertOffset(unsigned index, unsigned offset) const {

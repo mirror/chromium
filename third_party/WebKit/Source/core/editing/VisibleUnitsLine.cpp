@@ -38,6 +38,9 @@
 #include "core/layout/api/LineLayoutBlockFlow.h"
 #include "core/layout/line/InlineTextBox.h"
 #include "core/layout/line/RootInlineBox.h"
+#include "core/layout/ng/inline/ng_inline_item_result.h"
+#include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/inline/ng_offset_mapping.h"
 
 namespace blink {
 
@@ -180,6 +183,42 @@ PositionWithAffinityTemplate<Strategy> StartPositionForLine(
     LineEndpointComputationMode mode) {
   if (c.IsNull())
     return PositionWithAffinityTemplate<Strategy>();
+
+  const Position position_for_mapping = ToPositionInDOMTree(c.GetPosition());
+  if (auto mapping = NGOffsetMapping::GetFor(position_for_mapping)) {
+    Optional<unsigned> canonical_offset =
+        mapping->GetTextContentOffset(position_for_mapping);
+    if (!canonical_offset) {
+      // TODO(xiaochengh): Handle positions in empty editable blocks.
+      return {};
+    }
+    // TODO(xiaochengh): Handle BiDi for visual line start/end.
+    auto& lines = NGInlineNode(position_for_mapping.AnchorNode()
+                                   ->GetLayoutObject()
+                                   ->EnclosingNGBlockFlow())
+                      .GetLineInfo();
+    auto line_it =
+        std::lower_bound(lines.begin(), lines.end(), *canonical_offset,
+                         [](const NGLineInfo& line_info, unsigned offset) {
+                           return line_info.EndOffset() < offset;
+                         });
+    DCHECK_NE(lines.end(), line_it);
+    DCHECK_LE(line_it->StartOffset(), *canonical_offset);
+    // Adjustment for line boundary.
+    // TODO(xiaochengh): Adjustment is also needed if we are in a streak of
+    // unrendered characters at line boundary.
+    if (c.Affinity() == TextAffinity::kDownstream) {
+      if (canonical_offset == line_it->EndOffset() &&
+          std::next(line_it) != lines.end())
+        ++line_it;
+    }
+
+    // Map the line start offset back to DOM
+    // TODO(xiaochengh): Skip leading unrendered characters in the line.
+    const unsigned line_start_offset = line_it->StartOffset();
+    const Position line_start = mapping->GetLastPosition(line_start_offset);
+    return {FromPositionInDOMTree<Strategy>(line_start), c.Affinity()};
+  }
 
   RootInlineBox* root_box =
       RenderedPosition(c.GetPosition(), c.Affinity()).RootBox();
@@ -387,6 +426,7 @@ InlineBox* FindLeftNonPseudoNodeInlineBox(const RootInlineBox& root_box) {
   return nullptr;
 }
 
+// TODO(xiaochengh): Stop using VisiblePosition
 template <typename Strategy>
 static VisiblePositionTemplate<Strategy> EndPositionForLine(
     const VisiblePositionTemplate<Strategy>& c,
@@ -394,6 +434,42 @@ static VisiblePositionTemplate<Strategy> EndPositionForLine(
   DCHECK(c.IsValid()) << c;
   if (c.IsNull())
     return VisiblePositionTemplate<Strategy>();
+
+  const Position position_for_mapping = ToPositionInDOMTree(c.DeepEquivalent());
+  if (auto mapping = NGOffsetMapping::GetFor(position_for_mapping)) {
+    Optional<unsigned> canonical_offset =
+        mapping->GetTextContentOffset(position_for_mapping);
+    if (!canonical_offset) {
+      // TODO(xiaochengh): Handle positions in empty editable blocks.
+      return {};
+    }
+    // TODO(xiaochengh): Handle BiDi for visual line start/end.
+    auto& lines = NGInlineNode(position_for_mapping.AnchorNode()
+                                   ->GetLayoutObject()
+                                   ->EnclosingNGBlockFlow())
+                      .GetLineInfo();
+    auto line_it =
+        std::lower_bound(lines.begin(), lines.end(), *canonical_offset,
+                         [](const NGLineInfo& line_info, unsigned offset) {
+                           return line_info.EndOffset() < offset;
+                         });
+    DCHECK_NE(lines.end(), line_it);
+    DCHECK_LE(line_it->StartOffset(), *canonical_offset);
+    // Adjustment for line boundary.
+    // TODO(xiaochengh): Adjustment is also needed if we are in a streak of
+    // unrendered characters at line boundary.
+    if (c.Affinity() == TextAffinity::kUpstream) {
+      if (canonical_offset == line_it->StartOffset() &&
+          line_it != lines.begin())
+        --line_it;
+    }
+
+    // Map the line start offset back to DOM
+    // TODO(xiaochengh): Skip leading unrendered characters in the line.
+    const unsigned line_end_offset = line_it->EndOffset();
+    const Position line_end = mapping->GetFirstPosition(line_end_offset);
+    return CreateVisiblePosition(FromPositionInDOMTree<Strategy>(line_end), c.Affinity());
+  }
 
   RootInlineBox* root_box = RenderedPosition(c).RootBox();
   if (!root_box) {
