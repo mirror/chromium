@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c35852e8_63a8bf30",
+        "filename": "components/optimization_guide/optimization_hints_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-26T21:11:37Z",
+      "side": 1,
+      "message": "Ok, lets defer for now.",
+      "parentUuid": "45e84f48_ec8d4922",
+      "revId": "aaf34357010b62a96a910e10430f3d7eb5c78f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beec0462_d0326e71",
         "filename": "components/optimization_guide/optimization_hints_reader.h",
         "patchSetId": 3

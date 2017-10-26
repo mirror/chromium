@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2ccac7ca_523591fb",
+        "filename": "components/optimization_guide/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-26T21:11:37Z",
+      "side": 1,
+      "message": "Ryan, any thought on this?",
+      "parentUuid": "dec773a1_3763e33f",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 38
+      },
+      "revId": "4be79b00fec6bc15f9ad9bd25a6cc1eee01b5bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf12db26_30df910f",
         "filename": "components/optimization_guide/core/BUILD.gn",
         "patchSetId": 2
