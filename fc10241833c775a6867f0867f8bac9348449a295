@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a650aa02_e9f33dba",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-10-26T23:35:38Z",
+      "side": 1,
+      "message": "assuming ShowNetworkSettings handles empty network id, right?",
+      "range": {
+        "startLine": 118,
+        "startChar": 52,
+        "endLine": 118,
+        "endChar": 64
+      },
+      "revId": "fc10241833c775a6867f0867f8bac9348449a295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
