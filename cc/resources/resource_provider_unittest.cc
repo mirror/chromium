@@ -654,7 +654,6 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
   int child_id =
       resource_provider_->CreateChild(GetReturnCallback(&returned_to_child));
 
-  {
     // Transfer some resources to the parent.
     ResourceProvider::ResourceIdArray resource_ids_to_transfer;
     resource_ids_to_transfer.push_back(id1);
@@ -689,10 +688,15 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
     resource_provider_->ReceiveFromChild(child_id, list);
     EXPECT_NE(list[0].mailbox_holder.sync_token,
               context3d_->last_waited_sync_token());
+
+    // In DisplayResourceProvider's namespace, use the mapped resource id.
+    ResourceProvider::ResourceIdMap resource_map =
+        resource_provider_->GetChildToParentMap(child_id);
     {
-      resource_provider_->WaitSyncToken(list[0].id);
+      viz::ResourceId mapped_resource_id = resource_map[list[0].id];
+      resource_provider_->WaitSyncToken(mapped_resource_id);
       DisplayResourceProvider::ScopedReadLockGL lock(resource_provider_.get(),
-                                                     list[0].id);
+                                                     mapped_resource_id);
     }
     EXPECT_EQ(list[0].mailbox_holder.sync_token,
               context3d_->last_waited_sync_token());
@@ -703,11 +707,10 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
     resource_ids_to_receive.insert(id4);
     resource_provider_->DeclareUsedResourcesFromChild(child_id,
                                                       resource_ids_to_receive);
-  }
 
   EXPECT_EQ(4u, resource_provider_->num_resources());
-  ResourceProvider::ResourceIdMap resource_map =
-      resource_provider_->GetChildToParentMap(child_id);
+  // ResourceProvider::ResourceIdMap resource_map =
+  //    resource_provider_->GetChildToParentMap(child_id);
   viz::ResourceId mapped_id1 = resource_map[id1];
   viz::ResourceId mapped_id2 = resource_map[id2];
   viz::ResourceId mapped_id3 = resource_map[id3];
@@ -716,10 +719,12 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
   EXPECT_NE(0u, mapped_id2);
   EXPECT_NE(0u, mapped_id3);
   EXPECT_NE(0u, mapped_id4);
-  EXPECT_FALSE(resource_provider_->InUseByConsumer(id1));
-  EXPECT_FALSE(resource_provider_->InUseByConsumer(id2));
-  EXPECT_FALSE(resource_provider_->InUseByConsumer(id3));
-  EXPECT_FALSE(resource_provider_->InUseByConsumer(id4));
+
+  EXPECT_FALSE(resource_provider_->InUseByConsumer(mapped_id1));
+
+  EXPECT_FALSE(resource_provider_->InUseByConsumer(mapped_id2));
+  EXPECT_FALSE(resource_provider_->InUseByConsumer(mapped_id3));
+  EXPECT_FALSE(resource_provider_->InUseByConsumer(mapped_id4));
 
   uint8_t result[4] = { 0 };
   GetResourcePixels(
@@ -1116,13 +1121,18 @@ TEST_P(ResourceProviderTest, SetBatchPreventsReturn) {
 
   resource_provider_->ReceiveFromChild(child_id, list);
 
+  // In DisplayResourceProvider's namespace, use the mapped resource id.
+  ResourceProvider::ResourceIdMap resource_map =
+      resource_provider_->GetChildToParentMap(child_id);
+
   std::vector<std::unique_ptr<DisplayResourceProvider::ScopedReadLockGL>>
       read_locks;
-  for (auto& parent_resource : list) {
-    resource_provider_->WaitSyncToken(parent_resource.id);
+  for (auto& resource_id : list) {
+    unsigned int mapped_resource_id = resource_map[resource_id.id];
+    resource_provider_->WaitSyncToken(mapped_resource_id);
     read_locks.push_back(
         std::make_unique<DisplayResourceProvider::ScopedReadLockGL>(
-            resource_provider_.get(), parent_resource.id));
+            resource_provider_.get(), mapped_resource_id));
   }
 
   resource_provider_->DeclareUsedResourcesFromChild(child_id,
@@ -1174,9 +1184,13 @@ TEST_P(ResourceProviderTest, ReadLockCountStopsReturnToChildOrDelete) {
 
     resource_provider_->ReceiveFromChild(child_id, list);
 
-    resource_provider_->WaitSyncToken(list[0].id);
+    // In DisplayResourceProvider's namespace, use the mapped resource id.
+    ResourceProvider::ResourceIdMap resource_map =
+        resource_provider_->GetChildToParentMap(child_id);
+    viz::ResourceId mapped_resource_id = resource_map[list[0].id];
+    resource_provider_->WaitSyncToken(mapped_resource_id);
     DisplayResourceProvider::ScopedReadLockGL lock(resource_provider_.get(),
-                                                   list[0].id);
+                                                   mapped_resource_id);
 
     resource_provider_->DeclareUsedResourcesFromChild(child_id,
                                                       viz::ResourceIdSet());
@@ -1236,10 +1250,14 @@ TEST_P(ResourceProviderTest, ReadLockFenceStopsReturnToChildOrDelete) {
 
   resource_provider_->ReceiveFromChild(child_id, list);
 
+  // In DisplayResourceProvider's namespace, use the mapped resource id.
+  ResourceProvider::ResourceIdMap resource_map =
+      resource_provider_->GetChildToParentMap(child_id);
+
   scoped_refptr<TestFence> fence(new TestFence);
   resource_provider_->SetReadLockFence(fence.get());
   {
-    unsigned parent_id = list.front().id;
+    unsigned parent_id = resource_map[list.front().id];
     resource_provider_->WaitSyncToken(parent_id);
     DisplayResourceProvider::ScopedReadLockGL lock(resource_provider_.get(),
                                                    parent_id);
@@ -1296,11 +1314,15 @@ TEST_P(ResourceProviderTest, ReadLockFenceDestroyChild) {
 
   resource_provider_->ReceiveFromChild(child_id, list);
 
+  // In DisplayResourceProvider's namespace, use the mapped resource id.
+  ResourceProvider::ResourceIdMap resource_map =
+      resource_provider_->GetChildToParentMap(child_id);
+
   scoped_refptr<TestFence> fence(new TestFence);
   resource_provider_->SetReadLockFence(fence.get());
   {
     for (size_t i = 0; i < list.size(); i++) {
-      unsigned parent_id = list[i].id;
+      unsigned parent_id = resource_map[list[i].id];
       resource_provider_->WaitSyncToken(parent_id);
       DisplayResourceProvider::ScopedReadLockGL lock(resource_provider_.get(),
                                                      parent_id);
@@ -1359,11 +1381,15 @@ TEST_P(ResourceProviderTest, ReadLockFenceContextLost) {
 
   resource_provider_->ReceiveFromChild(child_id, list);
 
+  // In DisplayResourceProvider's namespace, use the mapped resource id.
+  ResourceProvider::ResourceIdMap resource_map =
+      resource_provider_->GetChildToParentMap(child_id);
+
   scoped_refptr<TestFence> fence(new TestFence);
   resource_provider_->SetReadLockFence(fence.get());
   {
     for (size_t i = 0; i < list.size(); i++) {
-      unsigned parent_id = list[i].id;
+      unsigned parent_id = resource_map[list[i].id];
       resource_provider_->WaitSyncToken(parent_id);
       DisplayResourceProvider::ScopedReadLockGL lock(resource_provider_.get(),
                                                      parent_id);
@@ -1447,9 +1473,9 @@ TEST_P(ResourceProviderTest, TransferSoftwareResources) {
   EXPECT_NE(0u, mapped_id1);
   EXPECT_NE(0u, mapped_id2);
   EXPECT_NE(0u, mapped_id3);
-  EXPECT_FALSE(resource_provider_->InUseByConsumer(id1));
-  EXPECT_FALSE(resource_provider_->InUseByConsumer(id2));
-  EXPECT_FALSE(resource_provider_->InUseByConsumer(id3));
+  EXPECT_FALSE(resource_provider_->InUseByConsumer(mapped_id1));
+  EXPECT_FALSE(resource_provider_->InUseByConsumer(mapped_id2));
+  EXPECT_FALSE(resource_provider_->InUseByConsumer(mapped_id3));
 
   uint8_t result[4] = { 0 };
   GetResourcePixels(
@@ -1908,7 +1934,7 @@ class ResourceProviderTestTextureFilters : public ResourceProviderTest {
     std::vector<viz::ReturnedResource> returned_to_child;
     int child_id = parent_resource_provider->CreateChild(
         GetReturnCallback(&returned_to_child));
-    {
+
       // Transfer some resource to the parent.
       ResourceProvider::ResourceIdArray resource_ids_to_transfer;
       resource_ids_to_transfer.push_back(id);
@@ -1929,10 +1955,15 @@ class ResourceProviderTestTextureFilters : public ResourceProviderTest {
           .WillOnce(Return(parent_texture_id));
 
       parent_resource_provider->ReceiveFromChild(child_id, list);
+      ResourceProvider::ResourceIdMap resource_map =
+          parent_resource_provider->GetChildToParentMap(child_id);
+      viz::ResourceId mapped_id = resource_map[id];
+      EXPECT_NE(0u, mapped_id);
+
       {
-        parent_resource_provider->WaitSyncToken(list[0].id);
+        parent_resource_provider->WaitSyncToken(mapped_id);
         DisplayResourceProvider::ScopedReadLockGL lock(
-            parent_resource_provider.get(), list[0].id);
+            parent_resource_provider.get(), mapped_id);
       }
       Mock::VerifyAndClearExpectations(parent_context);
 
@@ -1941,11 +1972,6 @@ class ResourceProviderTestTextureFilters : public ResourceProviderTest {
       parent_resource_provider->DeclareUsedResourcesFromChild(
           child_id, resource_ids_to_receive);
       Mock::VerifyAndClearExpectations(parent_context);
-    }
-    ResourceProvider::ResourceIdMap resource_map =
-        parent_resource_provider->GetChildToParentMap(child_id);
-    viz::ResourceId mapped_id = resource_map[id];
-    EXPECT_NE(0u, mapped_id);
 
     // The texture is set to |parent_filter| in the parent.
     EXPECT_CALL(*parent_context, bindTexture(GL_TEXTURE_2D, parent_texture_id));
