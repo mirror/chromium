@@ -6,6 +6,7 @@
 #define CHROME_COMMON_CLIENT_HINTS_CLIENT_HINTS_H_
 
 #include "components/content_settings/core/common/content_settings.h"
+#include "third_party/WebKit/public/platform/WebString.h"
 
 class GURL;
 
@@ -18,8 +19,11 @@ namespace client_hints {
 // Retrieves the persistent client hints that should be set when fetching a
 // resource from |url|, and updates |client_hints| with the result.
 // |client_hints_rules| contains the content settings for the client hints.
+// Allow passing both WebURL and GURL here, so that we can avoid allocating a
+// new backing string in case of an early return.
+template <typename URL>
 void GetAllowedClientHintsFromSource(
-    const GURL& url,
+    const URL& url,
     const ContentSettingsForOneType& client_hints_rules,
     blink::WebEnabledClientHints* client_hints);
 
