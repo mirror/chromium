@@ -271,12 +271,11 @@ String GetTextForInlineCollection<NGOffsetMappingBuilder>(
 // There are also performance considerations, since template saves the overhead
 // for condition checking and branching.
 template <typename OffsetMappingBuilder>
-LayoutBox* CollectInlinesInternal(
+void CollectInlinesInternal(
     LayoutBlockFlow* block,
     NGInlineItemsBuilderTemplate<OffsetMappingBuilder>* builder) {
   builder->EnterBlock(block->Style());
   LayoutObject* node = GetLayoutObjectForFirstChildNode(block);
-  LayoutBox* next_box = nullptr;
   while (node) {
     if (node->IsText()) {
       LayoutText* layout_text = ToLayoutText(node);
@@ -314,12 +313,12 @@ LayoutBox* CollectInlinesInternal(
         builder->AppendAtomicInline(node->Style(), node);
       }
 
-    } else if (!node->IsInline()) {
-      // A block box found. End inline and transit to block layout.
-      next_box = ToLayoutBox(node);
-      break;
-
     } else {
+      // Because we're collecting from LayoutObject tree, block-level children
+      // should not appear. LayoutObjet tree should have created an anonymous
+      // box to prevent having inline/block-mixed children.
+      DCHECK(node->IsInline());
+
       builder->EnterInline(node);
 
       // Traverse to children if they exist.
@@ -353,7 +352,6 @@ LayoutBox* CollectInlinesInternal(
     }
   }
   builder->ExitBlock();
-  return next_box;
 }
 
 }  // namespace
@@ -425,7 +423,7 @@ void NGInlineNode::CollectInlines() {
   block->WillCollectInlines();
   NGInlineNodeData* data = MutableData();
   NGInlineItemsBuilder builder(&data->items_);
-  data->next_sibling_ = CollectInlinesInternal(block, &builder);
+  CollectInlinesInternal(block, &builder);
   data->text_content_ = builder.ToString();
   data->is_bidi_enabled_ =
       !Data().text_content_.IsEmpty() &&
@@ -606,10 +604,6 @@ MinMaxSize NGInlineNode::ComputeMinMaxSize() {
   sizes.min_size = std::min(sizes.min_size, sizes.max_size);
 
   return sizes;
-}
-
-NGLayoutInputNode NGInlineNode::NextSibling() {
-  return NGBlockNode(Data().next_sibling_);
 }
 
 void NGInlineNode::CopyFragmentDataToLayoutBox(
