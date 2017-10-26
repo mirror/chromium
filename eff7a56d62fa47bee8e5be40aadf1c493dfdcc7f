@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0433b9b4_2ae7fbae",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptForbiddenScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-10-26T08:38:49Z",
+      "side": 1,
+      "message": "is_trivial might be a better fit?",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "eff7a56d62fa47bee8e5be40aadf1c493dfdcc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b89e12_8d962435",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptForbiddenScope.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-10-26T08:38:49Z",
+      "side": 1,
+      "message": "Not needed here as you added it to .cpp?",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 63
+      },
+      "revId": "eff7a56d62fa47bee8e5be40aadf1c493dfdcc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
