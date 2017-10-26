@@ -319,9 +319,9 @@ class ServiceWorkerWriteToCacheJobTest : public testing::Test {
         request_.get(), context_wrapper(), &blob_storage_context_, process_id,
         provider_id, false, FETCH_REQUEST_MODE_NO_CORS,
         FETCH_CREDENTIALS_MODE_OMIT, FetchRedirectMode::FOLLOW_MODE,
-        std::string() /* integrity */, RESOURCE_TYPE_SERVICE_WORKER,
-        REQUEST_CONTEXT_TYPE_SERVICE_WORKER, REQUEST_CONTEXT_FRAME_TYPE_NONE,
-        scoped_refptr<ResourceRequestBody>());
+        std::string() /* integrity */, false /* keepalive */,
+        RESOURCE_TYPE_SERVICE_WORKER, REQUEST_CONTEXT_TYPE_SERVICE_WORKER,
+        REQUEST_CONTEXT_FRAME_TYPE_NONE, scoped_refptr<ResourceRequestBody>());
   }
 
   int NextVersionId() { return next_version_id_++; }
