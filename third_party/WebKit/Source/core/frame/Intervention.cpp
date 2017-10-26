@@ -45,7 +45,9 @@ void Intervention::GenerateReport(const LocalFrame* frame,
   // Send the intervention report to the Reporting API.
   mojom::blink::ReportingServiceProxyPtr service;
   frame->Client()->GetInterfaceProvider()->GetInterface(&service);
-  service->QueueInterventionReport(document->Url(), message, body->sourceFile(),
+  const KURL& document_url =
+      document->Url().IsNull() ? EmptyURL() : document->Url();
+  service->QueueInterventionReport(document_url, message, body->sourceFile(),
                                    body->lineNumber());
 }
 
