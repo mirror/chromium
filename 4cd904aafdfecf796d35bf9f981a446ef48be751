@@ -96,6 +96,24 @@
     },
     {
       "key": {
+        "uuid": "66553e80_2bb6b5df",
+        "filename": "ui/gfx/native_pixmap.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-26T08:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be7fc496_587ad3af",
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73ba6b00_b7e50033",
         "filename": "ui/ozone/platform/drm/gpu/gbm_surface_factory.cc",
         "patchSetId": 7
@@ -119,6 +137,30 @@
     },
     {
       "key": {
+        "uuid": "d364d653_7b023ace",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surface_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-26T08:57:39Z",
+      "side": 1,
+      "message": "This is an existing call in the API, not a new one, so I would prefer not to change this in this CL, if that would be ok.",
+      "parentUuid": "73ba6b00_b7e50033",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 13
+      },
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5e6ecd2_8a9233c7",
         "filename": "ui/ozone/platform/drm/gpu/gbm_surface_factory.cc",
         "patchSetId": 7
@@ -130,6 +172,30 @@
       "writtenOn": "2017-10-25T17:41:52Z",
       "side": 1,
       "message": "Why is this necessary? Given that in the absence of a callback and if the callback returns nullptr, this is exactly CreateNativePixmapFromHandle(), why can\u0027t we rely on ProtectedBufferManager to return nullptr if we called CreateNativePixmapFromHandle() rather than this?",
+      "range": {
+        "startLine": 211,
+        "startChar": 19,
+        "endLine": 211,
+        "endChar": 61
+      },
+      "revId": "4cd904aafdfecf796d35bf9f981a446ef48be751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649f897e_f892c401",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surface_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-26T08:57:39Z",
+      "side": 1,
+      "message": "A client of SurfaceFactoryOzone calls CreateNativePixmapFromHandle() with a NativePixmapHandle (NPH). SurfaceFactoryOzone calls the callback to see if we have a mapping for this in ProtectedBufferManager (PBM). PBM will need to NativePixmap::GetUniqueId() to get the id to perform the lookup, but it will get an NPH through the callback. So PBM will have to call CreateNativePixmapFromHandle() by itself again from the callback to get a NativePixmap for the lookup, which will call PBM callback again, and we will have an infinite recursion.\n\nThat\u0027s why we have this method, so that the callback is skipped.\n\nWe could change the order: first always create a NativePixmap from here, and then call the callback with a NativePixmap, instead of a NPH. However, what PBM actually does when calling CreateNativePixmapFromHandle() itself, is it passes a different size (and format as well actually). This helps us save memory, otherwise we\u0027d need the dummy NativePixmap to be as large as the protected pixmap, because the client of SurfaceFactoryOzone is not aware of the fact that this is a dummy handle (nor should it be).\n\nThis can however be addressed by splitting PBM functionality into two parts: integrating the protected pixmap path directly into GbmSurfaceFactory, including the map and the lookup, while keeping the protected shared memory path in PBM. This is the next step and what the TODO is about. This however requires a major rewrite of this CL, because of how things were designed initially.\nThe initial design actually kept this functionality completely out of GbmSurfaceFactory and Ozone API in general, including not having the callback, and not having this method either (please see patchset 6), to keep the changes to Ozone to a minimum. The only modification to Ozone API in the original design was GetUniqueId(). However, after review comments to integrate the lookup functionality in CreateNativePixmapFromHandle(), instead of GpuMemoryBufferFactoryNativePixmap::CreateImageForGpuMemoryBuffer(), and to use a callback into PBM instead, this is now needed for the above reasons.",
+      "parentUuid": "c5e6ecd2_8a9233c7",
       "range": {
         "startLine": 211,
         "startChar": 19,
