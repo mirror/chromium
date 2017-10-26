@@ -31,6 +31,7 @@
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/memory/oom_memory_details.h"
+#include "chrome/browser/memory/swap_thrashing_monitor.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
 #include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
@@ -332,6 +333,11 @@ void TabManager::Start() {
     max_time_to_purge_ = min_time_to_purge_ * kDefaultMinMaxTimeToPurgeRatio;
   else
     max_time_to_purge_ = base::TimeDelta::FromSeconds(max_time_to_purge_sec);
+
+#if defined(OS_WIN)
+  memory::SwapThrashingMonitor::SetInstance(
+      base::MakeUnique<memory::SwapThrashingMonitor>());
+#endif
 }
 
 void TabManager::Stop() {
