@@ -10,6 +10,7 @@
 #include "ios/web/public/test/web_test.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
+#include "base/files/file_util.h"
 
 namespace web {
 
@@ -52,6 +53,10 @@ class WebTestWithWebState : public WebTest,
   // Returns web state for this web controller.
   web::WebState* web_state();
   const web::WebState* web_state() const;
+
+ protected:
+  //NSURL* temp_directory_;
+  base::FilePath temp_directory_;
 
  private:
   // base::MessageLoop::TaskObserver overrides.

@@ -64,6 +64,7 @@ void TestWebClient::AllowCertificateError(
 }
 
 bool TestWebClient::IsSlimNavigationManagerEnabled() const {
+  //return true;
   return is_slim_navigation_manager_enabled_;
 }
 

@@ -12,6 +12,9 @@
 #include "ios/web/public/web_state/web_state_observer.h"
 #import "ios/web/web_state/ui/crw_web_controller.h"
 #import "ios/web/web_state/web_state_impl.h"
+#include "ios/web/public/test/fakes/test_web_client.h"
+#include "base/files/file_util.h"
+#include "net/base/mac/url_conversions.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -40,6 +43,12 @@ void WebTestWithWebState::SetUp() {
 
   // Force generation of child views; necessary for some tests.
   web_state_->GetView();
+
+  //NSString* unique_id = [[NSProcessInfo processInfo] globallyUniqueString];
+  //temp_directory_ = [NSURL fileURLWithPath:[NSTemporaryDirectory()
+  //stringByAppendingPathComponent:unique_id] isDirectory:YES];
+
+  base::CreateNewTempDirectory("", &temp_directory_);
 }
 
 void WebTestWithWebState::TearDown() {
@@ -78,8 +87,19 @@ void WebTestWithWebState::LoadHtml(NSString* html, const GURL& url) {
   // Initiate asynchronous HTML load.
   CRWWebController* web_controller = GetWebController(web_state());
   ASSERT_EQ(PAGE_LOADED, web_controller.loadPhase);
-  [web_controller loadHTML:html forURL:url];
-  ASSERT_EQ(LOAD_REQUESTED, web_controller.loadPhase);
+
+  if (!web::GetWebClient()->IsSlimNavigationManagerEnabled()) {
+    [web_controller loadHTML:html forURL:url];
+    ASSERT_EQ(LOAD_REQUESTED, web_controller.loadPhase);
+  } else {
+    base::FilePath temp_dir;
+    base::GetTempDir(&temp_dir);
+    NSURL* dir = [NSURL fileURLWithPath:base::SysUTF8ToNSString(temp_dir.value())];
+    NSURL* url = [dir URLByAppendingPathComponent:@"test.html"];
+    [html writeToURL:url atomically:NO encoding:NSUnicodeStringEncoding error:nil];
+    NavigationManager::WebLoadParams params(net::GURLWithNSURL(url));
+    web_state()->GetNavigationManager()->LoadURLWithParams(params);
+  }
 
   // Wait until the page is loaded.
   base::test::ios::WaitUntilCondition(^{
