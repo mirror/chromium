@@ -15,11 +15,9 @@
 namespace blink {
 
 NGBaseLayoutAlgorithmTest::NGBaseLayoutAlgorithmTest() {
-  RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
 }
 
 NGBaseLayoutAlgorithmTest::~NGBaseLayoutAlgorithmTest() {
-  RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
 }
 
 void NGBaseLayoutAlgorithmTest::SetUp() {

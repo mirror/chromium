@@ -6,18 +6,19 @@
 
 #include "core/layout/LayoutTestHelper.h"
 #include "core/layout/MinMaxSize.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 
 namespace blink {
 namespace {
 class NGBlockNodeForTest : public RenderingTest {
  public:
-  NGBlockNodeForTest() { RuntimeEnabledFeatures::SetLayoutNGEnabled(true); }
-  ~NGBlockNodeForTest() override {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
-  };
+  NGBlockNodeForTest() {}
+  ~NGBlockNodeForTest() override{};
 };
 
 TEST_F(NGBlockNodeForTest, ChildInlineAndBlock) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <div id=container>Hello!<div></div></div>
@@ -32,6 +33,8 @@ TEST_F(NGBlockNodeForTest, ChildInlineAndBlock) {
 }
 
 TEST_F(NGBlockNodeForTest, ChildBlockAndInline) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <div id=container><div></div>Hello!</div>
@@ -46,6 +49,8 @@ TEST_F(NGBlockNodeForTest, ChildBlockAndInline) {
 }
 
 TEST_F(NGBlockNodeForTest, ChildFloatBeforeBlock) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <style>
@@ -63,6 +68,8 @@ TEST_F(NGBlockNodeForTest, ChildFloatBeforeBlock) {
 }
 
 TEST_F(NGBlockNodeForTest, ChildFloatBeforeInline) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <style>
@@ -78,6 +85,8 @@ TEST_F(NGBlockNodeForTest, ChildFloatBeforeInline) {
 }
 
 TEST_F(NGBlockNodeForTest, ChildFloatAfterInline) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <style>
@@ -93,6 +102,8 @@ TEST_F(NGBlockNodeForTest, ChildFloatAfterInline) {
 }
 
 TEST_F(NGBlockNodeForTest, ChildFloatOnly) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <style>
@@ -108,6 +119,8 @@ TEST_F(NGBlockNodeForTest, ChildFloatOnly) {
 }
 
 TEST_F(NGBlockNodeForTest, ChildFloatWithSpaces) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <style>
@@ -125,6 +138,8 @@ TEST_F(NGBlockNodeForTest, ChildFloatWithSpaces) {
 }
 
 TEST_F(NGBlockNodeForTest, ChildOofBeforeInline) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <style>
@@ -140,6 +155,8 @@ TEST_F(NGBlockNodeForTest, ChildOofBeforeInline) {
 }
 
 TEST_F(NGBlockNodeForTest, ChildOofAfterInline) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <style>
@@ -155,6 +172,8 @@ TEST_F(NGBlockNodeForTest, ChildOofAfterInline) {
 }
 
 TEST_F(NGBlockNodeForTest, MinAndMaxContent) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(R"HTML(
     <div id="box" >
       <div id="first_child" style="width:30px">
