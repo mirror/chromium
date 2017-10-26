@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd78f4f7_e53361b5",
+        "filename": "tools/traffic_annotation/auditor/tests/annotations_diff12.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-26T07:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e365ac35_35350e21",
+      "range": {
+        "startLine": 2,
+        "startChar": 37,
+        "endLine": 2,
+        "endChar": 38
+      },
+      "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "346330d5_3fca8b63",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1261c00e_1c9641c7",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-26T07:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "346330d5_3fca8b63",
+      "range": {
+        "startLine": 332,
+        "startChar": 28,
+        "endLine": 332,
+        "endChar": 31
+      },
+      "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e5719159_23c1e724",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-26T07:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cffe10f_d61e96e6",
+      "range": {
+        "startLine": 356,
+        "startChar": 2,
+        "endLine": 356,
+        "endChar": 43
+      },
+      "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bd28148_cdd55da9",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "59d22971_509a08ca",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-26T07:19:12Z",
+      "side": 1,
+      "message": "It\u0027s used for testing. Made it two versions.",
+      "parentUuid": "0bd28148_cdd55da9",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74babdbf_14d356f6",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1174a2_2783c276",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-26T07:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74babdbf_14d356f6",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "b5b9711eec595a439d348a8c3fcd9925e09f594e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
