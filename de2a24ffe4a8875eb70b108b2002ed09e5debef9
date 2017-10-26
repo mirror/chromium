@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6add41f9_10d490f0",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-26T13:34:00Z",
+      "side": 1,
+      "message": "I\u0027ll make this exclusive to reminders after https://chromium-review.googlesource.com/c/chromium/src/+/726328 gets in (for\n|name|).",
+      "range": {
+        "startLine": 181,
+        "startChar": 35,
+        "endLine": 181,
+        "endChar": 0
+      },
+      "revId": "de2a24ffe4a8875eb70b108b2002ed09e5debef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
