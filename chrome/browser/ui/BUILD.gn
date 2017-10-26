@@ -17,6 +17,7 @@ import("//ppapi/features/features.gni")
 import("//printing/features/features.gni")
 import("//rlz/features/features.gni")
 import("//ui/base/ui_features.gni")
+import("//ui/views/features.gni")
 
 config("ui_warnings") {
   if (is_clang) {
@@ -1602,6 +1603,7 @@ split_static_library("ui") {
         "views/profiles/avatar_button.cc",
         "views/profiles/avatar_button.h",
       ]
+      deps += [ "//ui/views:features" ]
     }
 
     if (enable_dice_support) {
@@ -3074,6 +3076,15 @@ split_static_library("ui") {
           "//services/ui/public/interfaces",
         ]
       }
+    }
+
+    if (enable_native_window_nav_buttons) {
+      sources += [
+        "views/frame/native_nav_buttons_frame_view.cc",
+        "views/frame/native_nav_buttons_frame_view.h",
+        "views/frame/native_nav_buttons_frame_view_layout.cc",
+        "views/frame/native_nav_buttons_frame_view_layout.h",
+      ]
     }
 
     if (is_desktop_linux) {

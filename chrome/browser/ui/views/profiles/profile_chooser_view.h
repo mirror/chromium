@@ -56,6 +56,7 @@ class ProfileChooserView : public content::WebContentsDelegate,
       Browser* browser,
       bool is_source_keyboard);
   static bool IsShowing();
+  static const Browser* GetCurrentBubbleBrowser();
   static views::Widget* GetCurrentBubbleWidget();
   static void Hide();
 
