@@ -22,6 +22,30 @@
       "revId": "7f17f8fde76ab78859f8fd2ce7ac509d5fcd22f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5c3d3a_cfb3111e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestNoUpdateWithTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-10-26T15:05:43Z",
+      "side": 1,
+      "message": "Strange, does not run never happened to me (happens when the UI can not be triggered), I also do not see any wrong of this test case. Have you tried to comment out the other test cases in this file, empty test function body and copy paste the annotations?",
+      "parentUuid": "e7349f79_a812d7f5",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 5
+      },
+      "revId": "7f17f8fde76ab78859f8fd2ce7ac509d5fcd22f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
