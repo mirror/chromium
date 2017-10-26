@@ -14,6 +14,7 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/modules/v8/V8Response.h"
 #include "core/dom/DOMException.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "modules/cachestorage/CacheStorageError.h"
 #include "modules/fetch/BodyStreamBuffer.h"
@@ -21,10 +22,12 @@
 #include "modules/fetch/GlobalFetch.h"
 #include "modules/fetch/Request.h"
 #include "modules/fetch/Response.h"
+#include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
 #include "platform/Histogram.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/network/http_names.h"
+#include "platform/network/mime/MIMETypeRegistry.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerCache.h"
 
 namespace blink {
@@ -215,6 +218,18 @@ bool VaryHeaderContainsAsterisk(const Response* response) {
     });
   }
   return false;
+}
+
+bool ShouldGenerateV8CodeCache(ScriptState* script_state,
+                               const Response* response) {
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  if (!context->IsServiceWorkerGlobalScope())
+    return false;
+  if (!ToServiceWorkerGlobalScope(context)->is_being_installed())
+    return false;
+  if (!MIMETypeRegistry::IsSupportedJavaScriptMIMEType(response->ContentType()))
+    return false;
+  return true;
 }
 
 }  // namespace
@@ -651,6 +666,9 @@ ScriptPromise Cache::PutImpl(ScriptState* script_state,
     if (responses[i]->IsBodyLocked() || responses[i]->bodyUsed()) {
       barrier_callback->OnError("Response body is already used");
       return promise;
+    }
+    if (ShouldGenerateV8CodeCache(script_state, responses[i])) {
+      LOG(ERROR) << "TODO: Let's generate V8 code cache";
     }
 
     BodyStreamBuffer* buffer = responses[i]->InternalBodyBuffer();
