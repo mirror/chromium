@@ -23,7 +23,8 @@ class SelectionForUndoStep final {
   // Returns newly constructed |SelectionForUndoStep| from |SelectionInDOMTree|
   // with computing direction of selection by base <= extent. Thus, computation
   // time depends O(depth of tree).
-  static SelectionForUndoStep From(const SelectionInDOMTree&);
+  static SelectionForUndoStep From(const SelectionInDOMTree&,
+                                   bool directional = false);
 
   SelectionForUndoStep(const SelectionForUndoStep&);
   SelectionForUndoStep();

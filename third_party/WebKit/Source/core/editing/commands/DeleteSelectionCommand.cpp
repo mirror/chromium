@@ -217,12 +217,11 @@ void DeleteSelectionCommand::SetStartingSelectionOnSmartDelete(
   SelectionInDOMTree::Builder builder;
   builder.SetAffinity(new_base.Affinity())
       .SetBaseAndExtentDeprecated(new_base.DeepEquivalent(),
-                                  new_extent.DeepEquivalent())
-      .SetIsDirectional(StartingSelection().IsDirectional());
+                                  new_extent.DeepEquivalent());
   const VisibleSelection& visible_selection =
       CreateVisibleSelection(builder.Build());
-  SetStartingSelection(
-      SelectionForUndoStep::From(visible_selection.AsSelection()));
+  SetStartingSelection(SelectionForUndoStep::From(
+      visible_selection.AsSelection(), StartingSelection().IsDirectional()));
 }
 
 void DeleteSelectionCommand::InitializePositionData(
@@ -1130,13 +1129,12 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
     SelectionInDOMTree::Builder builder;
     builder.SetAffinity(affinity);
-    builder.SetIsDirectional(EndingSelection().IsDirectional());
     if (ending_position_.IsNotNull())
       builder.Collapse(ending_position_);
     const VisibleSelection& visible_selection =
         CreateVisibleSelection(builder.Build());
-    SetEndingSelection(
-        SelectionForUndoStep::From(visible_selection.AsSelection()));
+    SetEndingSelection(SelectionForUndoStep::From(
+        visible_selection.AsSelection(), EndingSelection().IsDirectional()));
     ClearTransientState();
     RebalanceWhitespace();
     return;
@@ -1194,13 +1192,12 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
 
   SelectionInDOMTree::Builder builder;
   builder.SetAffinity(affinity);
-  builder.SetIsDirectional(EndingSelection().IsDirectional());
   if (ending_position_.IsNotNull())
     builder.Collapse(ending_position_);
   const VisibleSelection& visible_selection =
       CreateVisibleSelection(builder.Build());
-  SetEndingSelection(
-      SelectionForUndoStep::From(visible_selection.AsSelection()));
+  SetEndingSelection(SelectionForUndoStep::From(
+      visible_selection.AsSelection(), EndingSelection().IsDirectional()));
 
   if (relocatable_reference_position.GetPosition().IsNull()) {
     ClearTransientState();

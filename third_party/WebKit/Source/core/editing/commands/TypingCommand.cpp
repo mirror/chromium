@@ -117,7 +117,6 @@ PlainTextRange GetSelectionOffsets(LocalFrame* frame) {
 
 SelectionInDOMTree CreateSelection(const size_t start,
                                    const size_t end,
-                                   const bool is_directional,
                                    Element* element) {
   const EphemeralRange& start_range =
       PlainTextRange(0, static_cast<int>(start)).CreateRange(*element);
@@ -132,7 +131,6 @@ SelectionInDOMTree CreateSelection(const size_t start,
   const SelectionInDOMTree& selection =
       SelectionInDOMTree::Builder()
           .SetBaseAndExtent(start_position, end_position)
-          .SetIsDirectional(is_directional)
           .Build();
   return selection;
 }
@@ -290,10 +288,10 @@ void TypingCommand::UpdateSelectionIfDifferentFromCurrentSelection(
   if (current_selection == typing_command->EndingSelection().AsSelection())
     return;
 
-  typing_command->SetStartingSelection(
-      SelectionForUndoStep::From(current_selection));
-  typing_command->SetEndingSelection(
-      SelectionForUndoStep::From(current_selection));
+  typing_command->SetStartingSelection(SelectionForUndoStep::From(
+      current_selection, frame->Selection().IsDirectional()));
+  typing_command->SetEndingSelection(SelectionForUndoStep::From(
+      current_selection, frame->Selection().IsDirectional()));
 }
 
 void TypingCommand::InsertText(Document& document,
@@ -336,16 +334,20 @@ void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
   const size_t end = selection_start + text_length;
   const size_t start =
       CompositionType() == kTextCompositionUpdate ? selection_start : end;
-  const SelectionInDOMTree& selection =
-      CreateSelection(start, end, EndingSelection().IsDirectional(), element);
+  const SelectionInDOMTree& selection = CreateSelection(start, end, element);
 
   if (selection == frame->Selection()
                        .ComputeVisibleSelectionInDOMTreeDeprecated()
-                       .AsSelection())
+                       .AsSelection() /*&&
+      EndingSelection().IsDirectional() == frame->Selection().IsDirectional()*/)
     return;
 
-  SetEndingSelection(SelectionForUndoStep::From(selection));
-  frame->Selection().SetSelection(selection);
+  SetEndingSelection(
+      SelectionForUndoStep::From(selection, EndingSelection().IsDirectional()));
+  frame->Selection().SetSelection(
+      selection, SetSelectionOptions::Builder()
+                     .SetIsDirectional(EndingSelection().IsDirectional())
+                     .Build());
 }
 
 // FIXME: We shouldn't need to take selectionForInsertion. It should be
@@ -409,7 +411,8 @@ void TypingCommand::InsertText(
     if (last_typing_command->EndingVisibleSelection() !=
         selection_for_insertion) {
       const SelectionForUndoStep& selection_for_insertion_as_undo_step =
-          SelectionForUndoStep::From(selection_for_insertion.AsSelection());
+          SelectionForUndoStep::From(selection_for_insertion.AsSelection(),
+                                     frame->Selection().IsDirectional());
       last_typing_command->SetStartingSelection(
           selection_for_insertion_as_undo_step);
       last_typing_command->SetEndingSelection(
@@ -436,7 +439,8 @@ void TypingCommand::InsertText(
   bool change_selection = selection_for_insertion != current_selection;
   if (change_selection) {
     const SelectionForUndoStep& selection_for_insertion_as_undo_step =
-        SelectionForUndoStep::From(selection_for_insertion.AsSelection());
+        SelectionForUndoStep::From(selection_for_insertion.AsSelection(),
+                                   frame->Selection().IsDirectional());
     command->SetStartingSelection(selection_for_insertion_as_undo_step);
     command->SetEndingSelection(selection_for_insertion_as_undo_step);
   }
@@ -448,9 +452,13 @@ void TypingCommand::InsertText(
   if (change_selection) {
     const SelectionInDOMTree& current_selection_as_dom =
         current_selection.AsSelection();
-    command->SetEndingSelection(
-        SelectionForUndoStep::From(current_selection_as_dom));
-    frame->Selection().SetSelection(current_selection_as_dom);
+    command->SetEndingSelection(SelectionForUndoStep::From(
+        current_selection_as_dom, frame->Selection().IsDirectional()));
+    frame->Selection().SetSelection(
+        current_selection_as_dom,
+        SetSelectionOptions::Builder()
+            .SetIsDirectional(frame->Selection().IsDirectional())
+            .Build());
   }
 }
 
@@ -755,9 +763,9 @@ bool TypingCommand::MakeEditableRootEmpty(EditingState* editing_state) {
   const SelectionInDOMTree& selection =
       SelectionInDOMTree::Builder()
           .Collapse(Position::FirstPositionInNode(*root))
-          .SetIsDirectional(EndingSelection().IsDirectional())
           .Build();
-  SetEndingSelection(SelectionForUndoStep::From(selection));
+  SetEndingSelection(
+      SelectionForUndoStep::From(selection, EndingSelection().IsDirectional()));
 
   return true;
 }
@@ -810,7 +818,8 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
   smart_delete_ = false;
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  SelectionModifier selection_modifier(*frame, EndingVisibleSelection());
+  SelectionModifier selection_modifier(*frame, EndingVisibleSelection(),
+                                       frame->Selection().IsDirectional());
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kBackward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&
@@ -880,9 +889,9 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
         SelectionInDOMTree::Builder()
             .Collapse(Position::BeforeNode(*table))
             .Extend(EndingSelection().Start())
-            .SetIsDirectional(EndingSelection().IsDirectional())
             .Build();
-    SetEndingSelection(SelectionForUndoStep::From(selection));
+    SetEndingSelection(SelectionForUndoStep::From(
+        selection, EndingSelection().IsDirectional()));
     TypingAddedToOpenCommand(kDeleteKey);
     return;
   }
@@ -896,7 +905,8 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
       selection_to_delete.Base() != StartingSelection().Start()) {
     DeleteKeyPressedInternal(
         selection_to_delete,
-        SelectionForUndoStep::From(selection_to_delete.AsSelection()),
+        SelectionForUndoStep::From(selection_to_delete.AsSelection(),
+                                   selection_modifier.IsDirectional()),
         kill_ring, editing_state);
     return;
   }
@@ -985,7 +995,8 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
   // Handle delete at beginning-of-block case.
   // Do nothing in the case that the caret is at the start of a
   // root editable element or at the start of a document.
-  SelectionModifier selection_modifier(*frame, EndingVisibleSelection());
+  SelectionModifier selection_modifier(*frame, EndingVisibleSelection(),
+                                       frame->Selection().IsDirectional());
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kForward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&
@@ -1019,9 +1030,9 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
             .SetBaseAndExtentDeprecated(
                 EndingSelection().End(),
                 Position::AfterNode(*downstream_end.ComputeContainerNode()))
-            .SetIsDirectional(EndingSelection().IsDirectional())
             .Build();
-    SetEndingSelection(SelectionForUndoStep::From(selection));
+    SetEndingSelection(SelectionForUndoStep::From(
+        selection, EndingSelection().IsDirectional()));
     TypingAddedToOpenCommand(kForwardDeleteKey);
     return;
   }
@@ -1042,7 +1053,8 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
           StartingSelection().Start()) {
     ForwardDeleteKeyPressedInternal(
         selection_to_delete,
-        SelectionForUndoStep::From(selection_to_delete.AsSelection()),
+        SelectionForUndoStep::From(selection_to_delete.AsSelection(),
+                                   selection_modifier.IsDirectional()),
         kill_ring, editing_state);
     return;
   }

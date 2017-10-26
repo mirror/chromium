@@ -185,10 +185,9 @@ void ApplyStyleCommand::UpdateStartEnd(const Position& new_start,
       SelectionInDOMTree::Builder()
           .Collapse(new_start)
           .Extend(new_end)
-          .SetIsDirectional(EndingSelection().IsDirectional())
           .Build());
-  SetEndingSelection(
-      SelectionForUndoStep::From(visible_selection.AsSelection()));
+  SetEndingSelection(SelectionForUndoStep::From(
+      visible_selection.AsSelection(), EndingSelection().IsDirectional()));
   start_ = new_start;
   end_ = new_end;
 }

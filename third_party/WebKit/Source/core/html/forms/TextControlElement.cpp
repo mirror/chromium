@@ -443,12 +443,12 @@ bool TextControlElement::SetSelectionRange(
                         : start_position)
           .Extend(direction == kSelectionHasBackwardDirection ? start_position
                                                               : end_position)
-          .SetIsDirectional(direction != kSelectionHasNoDirection)
           .Build(),
       SetSelectionOptions::Builder()
           .SetShouldCloseTyping(true)
           .SetShouldClearTypingStyle(true)
           .SetDoNotSetFocus(true)
+          .SetIsDirectional(direction != kSelectionHasNoDirection)
           .Build());
   return did_change;
 }
@@ -629,7 +629,6 @@ SelectionInDOMTree TextControlElement::Selection() const {
   if (!inner_text->HasChildren()) {
     return SelectionInDOMTree::Builder()
         .Collapse(Position(inner_text, 0))
-        .SetIsDirectional(selectionDirection() != "none")
         .Build();
   }
 
@@ -657,7 +656,6 @@ SelectionInDOMTree TextControlElement::Selection() const {
 
   return SelectionInDOMTree::Builder()
       .SetBaseAndExtent(Position(start_node, start), Position(end_node, end))
-      .SetIsDirectional(selectionDirection() != "none")
       .Build();
 }
 

@@ -90,8 +90,9 @@ CompositeEditCommand::CompositeEditCommand(Document& document)
       document.GetFrame()
           ->Selection()
           .ComputeVisibleSelectionInDOMTreeDeprecated();
-  SetStartingSelection(
-      SelectionForUndoStep::From(visible_selection.AsSelection()));
+  SetStartingSelection(SelectionForUndoStep::From(
+      visible_selection.AsSelection(),
+      document.GetFrame()->Selection().IsDirectional()));
   SetEndingSelection(starting_selection_);
 }
 
@@ -1555,15 +1556,14 @@ void CompositeEditCommand::MoveParagraphs(
   const VisibleSelection& destination_selection =
       CreateVisibleSelection(SelectionInDOMTree::Builder()
                                  .Collapse(destination.ToPositionWithAffinity())
-                                 .SetIsDirectional(original_is_directional)
                                  .Build());
   if (EndingSelection().IsNone()) {
     // We abort executing command since |destination| becomes invisible.
     editing_state->Abort();
     return;
   }
-  SetEndingSelection(
-      SelectionForUndoStep::From(destination_selection.AsSelection()));
+  SetEndingSelection(SelectionForUndoStep::From(
+      destination_selection.AsSelection(), original_is_directional));
   ReplaceSelectionCommand::CommandOptions options =
       ReplaceSelectionCommand::kSelectReplacement |
       ReplaceSelectionCommand::kMovingParagraph;
@@ -1615,10 +1615,9 @@ void CompositeEditCommand::MoveParagraphs(
       CreateVisibleSelection(SelectionInDOMTree::Builder()
                                  .Collapse(start_range.StartPosition())
                                  .Extend(end_range.StartPosition())
-                                 .SetIsDirectional(original_is_directional)
                                  .Build());
-  SetEndingSelection(
-      SelectionForUndoStep::From(visible_selection.AsSelection()));
+  SetEndingSelection(SelectionForUndoStep::From(visible_selection.AsSelection(),
+                                                original_is_directional));
 }
 
 // FIXME: Send an appropriate shouldDeleteRange call.
@@ -1723,8 +1722,8 @@ bool CompositeEditCommand::BreakOutOfEmptyListItem(
   SetEndingSelection(SelectionForUndoStep::From(
       SelectionInDOMTree::Builder()
           .Collapse(Position::FirstPositionInNode(*new_block))
-          .SetIsDirectional(EndingSelection().IsDirectional())
-          .Build()));
+          .Build(),
+      EndingSelection().IsDirectional()));
 
   style->PrepareToApplyAt(EndingSelection().Start());
   if (!style->IsEmpty()) {
@@ -1783,11 +1782,11 @@ bool CompositeEditCommand::BreakOutOfEmptyMailBlockquotedParagraph(
       return false;
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
   }
-  SetEndingSelection(SelectionForUndoStep::From(
-      SelectionInDOMTree::Builder()
-          .Collapse(at_br.ToPositionWithAffinity())
-          .SetIsDirectional(EndingSelection().IsDirectional())
-          .Build()));
+  SetEndingSelection(
+      SelectionForUndoStep::From(SelectionInDOMTree::Builder()
+                                     .Collapse(at_br.ToPositionWithAffinity())
+                                     .Build(),
+                                 EndingSelection().IsDirectional()));
 
   // If this is an empty paragraph there must be a line break here.
   if (!LineBreakExistsAtVisiblePosition(caret))

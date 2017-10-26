@@ -1792,20 +1792,18 @@ void ReplaceSelectionCommand::CompleteHTMLReplacement(
   end_of_inserted_range_ = end;
 
   if (select_replacement_) {
-    SetEndingSelection(SelectionForUndoStep::From(
-        SelectionInDOMTree::Builder()
-            .SetBaseAndExtentDeprecated(start, end)
-            .SetIsDirectional(EndingSelection().IsDirectional())
-            .Build()));
+    SetEndingSelection(
+        SelectionForUndoStep::From(SelectionInDOMTree::Builder()
+                                       .SetBaseAndExtentDeprecated(start, end)
+                                       .Build(),
+                                   EndingSelection().IsDirectional()));
     return;
   }
 
   if (end.IsNotNull()) {
     SetEndingSelection(SelectionForUndoStep::From(
-        SelectionInDOMTree::Builder()
-            .Collapse(end)
-            .SetIsDirectional(EndingSelection().IsDirectional())
-            .Build()));
+        SelectionInDOMTree::Builder().Collapse(end).Build(),
+        EndingSelection().IsDirectional()));
     return;
   }
   SetEndingSelection(SelectionForUndoStep());

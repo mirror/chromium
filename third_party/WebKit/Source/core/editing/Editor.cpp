@@ -941,7 +941,11 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
 
   // Don't clear the typing style with this selection change. We do those things
   // elsewhere if necessary.
-  ChangeSelectionAfterCommand(new_selection, SetSelectionOptions());
+  ChangeSelectionAfterCommand(
+      new_selection,
+      SetSelectionOptions::Builder()
+          .SetIsDirectional(cmd->EndingSelection().IsDirectional())
+          .Build());
 
   if (!cmd->PreservesTypingStyle())
     ClearTypingStyle();
@@ -980,11 +984,13 @@ void Editor::UnappliedEditing(UndoStep* cmd) {
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->StartingSelection(), GetFrame().GetDocument());
-  ChangeSelectionAfterCommand(new_selection,
-                              SetSelectionOptions::Builder()
-                                  .SetShouldCloseTyping(true)
-                                  .SetShouldClearTypingStyle(true)
-                                  .Build());
+  ChangeSelectionAfterCommand(
+      new_selection,
+      SetSelectionOptions::Builder()
+          .SetShouldCloseTyping(true)
+          .SetShouldClearTypingStyle(true)
+          .SetIsDirectional(cmd->EndingSelection().IsDirectional())
+          .Build());
 
   last_edit_command_ = nullptr;
   undo_stack_->RegisterRedoStep(cmd);
@@ -1003,11 +1009,13 @@ void Editor::ReappliedEditing(UndoStep* cmd) {
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->EndingSelection(), GetFrame().GetDocument());
-  ChangeSelectionAfterCommand(new_selection,
-                              SetSelectionOptions::Builder()
-                                  .SetShouldCloseTyping(true)
-                                  .SetShouldClearTypingStyle(true)
-                                  .Build());
+  ChangeSelectionAfterCommand(
+      new_selection,
+      SetSelectionOptions::Builder()
+          .SetShouldCloseTyping(true)
+          .SetShouldClearTypingStyle(true)
+          .SetIsDirectional(cmd->EndingSelection().IsDirectional())
+          .Build());
 
   last_edit_command_ = nullptr;
   undo_stack_->RegisterUndoStep(cmd);
@@ -1482,11 +1490,13 @@ void Editor::ChangeSelectionAfterCommand(
   // See <rdar://problem/5729315> Some shouldChangeSelectedDOMRange contain
   // Ranges for selections that are no longer valid
   bool selection_did_not_change_dom_position =
-      new_selection == GetFrameSelection().GetSelectionInDOMTree();
+      new_selection == GetFrameSelection().GetSelectionInDOMTree() &&
+      options.IsDirectional() == GetFrameSelection().IsDirectional();
   GetFrameSelection().SetSelection(
       new_selection,
       SetSelectionOptions::Builder(options)
           .SetShouldShowHandle(GetFrameSelection().IsHandleVisible())
+          .SetIsDirectional(options.IsDirectional())
           .Build());
 
   // Some editing operations change the selection visually without affecting its
