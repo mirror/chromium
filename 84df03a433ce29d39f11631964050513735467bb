@@ -38,6 +38,24 @@
     },
     {
       "key": {
+        "uuid": "bc179f3e_e1168203",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-26T05:30:30Z",
+      "side": 1,
+      "message": "This is not very important. I mean that a test which does:\n\nmockInstallBrowsers({packageName}, packageName);\nAssert.assertTrue(WebApkUtils.isInstalledAndEnabled((PackageManager) mPackageManager, packageName));\n\nfails. I am not sure if it really matters though",
+      "parentUuid": "5a7dd40c_b6d33b04",
+      "revId": "84df03a433ce29d39f11631964050513735467bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13bed615_b13c7261",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
         "patchSetId": 1
