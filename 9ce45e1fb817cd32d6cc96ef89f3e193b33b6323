@@ -16,6 +16,24 @@
       "revId": "9ce45e1fb817cd32d6cc96ef89f3e193b33b6323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8289446f_bdd19211",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-26T21:59:46Z",
+      "side": 1,
+      "message": "Sorry about that, I forgot that we decided on that offline.  I\u0027ve added an onUpdate to LinkInfo.",
+      "parentUuid": "8cffb302_66a27f32",
+      "revId": "9ce45e1fb817cd32d6cc96ef89f3e193b33b6323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
