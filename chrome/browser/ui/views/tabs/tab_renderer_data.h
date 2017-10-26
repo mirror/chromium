@@ -46,6 +46,9 @@ struct CHROME_VIEWS_EXPORT TabRendererData {
   bool blocked;
   bool app;
   TabAlertState alert_state;
+  bool was_active_at_least_once;
+  bool is_navigation_delayed;
+  bool created_by_session_restore;
 };
 
 #endif  // CHROME_BROWSER_UI_VIEWS_TABS_TAB_RENDERER_DATA_H_

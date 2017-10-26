@@ -15,7 +15,10 @@ TabRendererData::TabRendererData()
       pinned(false),
       blocked(false),
       app(false),
-      alert_state(TabAlertState::NONE) {}
+      alert_state(TabAlertState::NONE),
+      was_active_at_least_once(false),
+      is_navigation_delayed(false),
+      created_by_session_restore(false) {}
 
 TabRendererData::TabRendererData(const TabRendererData& other) = default;
 
@@ -33,16 +36,13 @@ bool TabRendererData::IsCrashed() const {
 }
 
 bool TabRendererData::Equals(const TabRendererData& data) {
-  return
-      favicon.BackedBySameObjectAs(data.favicon) &&
-      network_state == data.network_state &&
-      title == data.title &&
-      url == data.url &&
-      crashed_status == data.crashed_status &&
-      incognito == data.incognito &&
-      show_icon == data.show_icon &&
-      pinned == data.pinned &&
-      blocked == data.blocked &&
-      app == data.app &&
-      alert_state == data.alert_state;
+  return favicon.BackedBySameObjectAs(data.favicon) &&
+         network_state == data.network_state && title == data.title &&
+         url == data.url && crashed_status == data.crashed_status &&
+         incognito == data.incognito && show_icon == data.show_icon &&
+         pinned == data.pinned && blocked == data.blocked && app == data.app &&
+         alert_state == data.alert_state &&
+         was_active_at_least_once == data.was_active_at_least_once &&
+         is_navigation_delayed == data.is_navigation_delayed &&
+         created_by_session_restore == data.created_by_session_restore;
 }
