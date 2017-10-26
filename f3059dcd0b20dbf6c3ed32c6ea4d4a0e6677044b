@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "910c1855_a233418b",
+        "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-26T16:43:34Z",
+      "side": 1,
+      "message": "This needed to change because it collides with a #define on win.\n\n../..\\services/metrics/public/cpp/mojo_ukm_recorder.h(30,59):  error: declaration of anonymous struct must be a definition\n  explicit MojoUkmRecorder(mojom::UkmRecorderInterfacePtr interface);\n                                                          ^\nc:\\b\\c\\win_toolchain\\vs_files\\88c3b62e1eb0893b8cd57e3f4859c3af27907f64\\win_sdk\\bin\\..\\..\\win_sdk\\include\\10.0.15063.0\\um\\combaseapi.h(197,19):  note: expanded from macro \u0027interface\u0027\n#define interface __STRUCT__\n                  ^\nc:\\b\\c\\win_toolchain\\vs_files\\88c3b62e1eb0893b8cd57e3f4859c3af27907f64\\win_sdk\\bin\\..\\..\\win_sdk\\include\\10.0.15063.0\\um\\combaseapi.h(196,20):  note: expanded from macro \u0027__STRUCT__\u0027\n#define __STRUCT__ struct",
+      "range": {
+        "startLine": 30,
+        "startChar": 58,
+        "endLine": 30,
+        "endChar": 76
+      },
+      "revId": "f3059dcd0b20dbf6c3ed32c6ea4d4a0e6677044b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
