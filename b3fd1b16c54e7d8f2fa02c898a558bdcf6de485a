@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf28436e_02e65248",
+        "filename": "build/fuchsia/exe_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-26T20:22:42Z",
+      "side": 1,
+      "message": "? did an add_argument get lost?\n\nOr I guess probably just delete this line as it\u0027s always on for exe presumably.",
+      "revId": "b3fd1b16c54e7d8f2fa02c898a558bdcf6de485a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eced781_ec9ad9b8",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-26T20:22:42Z",
+      "side": 1,
+      "message": "I didn\u0027t we had a ping now, nice!\n\n(I guess it\u0027s fine to hang here if we never get network as we\u0027re probably SOL for running much usefully anyway in that case.)",
+      "revId": "b3fd1b16c54e7d8f2fa02c898a558bdcf6de485a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
