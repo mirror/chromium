@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1312f8_c42df047",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathMax.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T08:05:04Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "2f63414ca2b8fa1032c60b1d0c0d329c2bbf161d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a1c9fb_5e8f012b",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathMin.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T08:05:04Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "2f63414ca2b8fa1032c60b1d0c0d329c2bbf161d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba803d87_f273e7d6",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathProduct.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T08:05:04Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "2f63414ca2b8fa1032c60b1d0c0d329c2bbf161d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ae9bdf_772da72c",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathSum.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T08:05:04Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "2f63414ca2b8fa1032c60b1d0c0d329c2bbf161d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
