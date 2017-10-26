@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba34c160_be708b77",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-26T19:53:06Z",
+      "side": 1,
+      "message": "My thought was that if its dirty because the internal state of the image changed, then it should be fine to defer it. We only care about not deferring when the image gets more data, which happens through this class. I can confidently say that about BitmapImage. +pdr in case I\u0027m missing something with SVG.",
+      "parentUuid": "822deafd_4338fc93",
+      "revId": "51fe7d2b353143aad8009c024351d65aec85a620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0433374b_be12da91",
         "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T18:47:45Z",
       "side": 1,
       "message": "Is this shorthand necessary?",
+      "revId": "51fe7d2b353143aad8009c024351d65aec85a620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842b53ec_950df68b",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-26T19:53:06Z",
+      "side": 1,
+      "message": "ImageResourceObserver::CanDeferInvalidation at multiple places in this class seemed a bit verbose. I can do that too, no strong style preference.",
+      "parentUuid": "0433374b_be12da91",
       "revId": "51fe7d2b353143aad8009c024351d65aec85a620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "51fe7d2b353143aad8009c024351d65aec85a620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96886851_338c8983",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceObserver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-26T19:53:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "670f0773_7bb9bd1f",
+      "revId": "51fe7d2b353143aad8009c024351d65aec85a620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
