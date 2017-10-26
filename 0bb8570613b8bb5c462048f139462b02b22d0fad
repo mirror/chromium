@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bcd9eddb_33c96d7e",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-26T05:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc6f46cd_5ef1d158",
+      "revId": "0bb8570613b8bb5c462048f139462b02b22d0fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f0e9ad9_3066cea0",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 19
@@ -68,6 +86,24 @@
       "revId": "0bb8570613b8bb5c462048f139462b02b22d0fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f2d6f5_b27860cd",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-26T05:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78fe32b5_3f3e2e56",
+      "revId": "0bb8570613b8bb5c462048f139462b02b22d0fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
