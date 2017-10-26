@@ -16,6 +16,24 @@
       "revId": "ca6d6c89e884992c26719f1db09b7d45c40a1de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ac69d6_b6874d69",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 3602,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-26T06:19:34Z",
+      "side": 1,
+      "message": "I don\u0027t think you \"burden\" the build file :). Let us stay consistent with how other test support files are added.\n\nHaving said that, once https://docs.google.com/a/chromium.org/document/d/1hDVnf-1FiPPaCJ7PBpRHfD1Z56ey8cQdkuMA5zOODpc/edit?usp\u003dsharing is done, the interface will have no //chrome dependencies and can happily live in //components/password_manager.",
+      "parentUuid": "10d0748c_00bbc354",
+      "revId": "ca6d6c89e884992c26719f1db09b7d45c40a1de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
