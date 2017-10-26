@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "862d95a5_697e9725",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-26T02:47:35Z",
+      "side": 1,
+      "message": "Ok, thank you, lgtm without this.",
+      "parentUuid": "a77f0861_ece1f6bd",
+      "revId": "2508970ffab83a355c7e94ff9d44018b51cce03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02cb6025_dc2c392b",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
         "patchSetId": 2
