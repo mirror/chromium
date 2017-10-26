@@ -56,28 +56,27 @@
 #include "base/memory/weak_ptr.h"
 
 namespace base {
+namespace internal {
 
-template <typename Sig>
-class CancelableCallback;
+template <typename CallbackType>
+struct Forwarder;
 
-template <typename... A>
-class CancelableCallback<void(A...)> {
+template <typename CallbackType>
+class CancelableCallbackImpl {
  public:
-  CancelableCallback() : weak_factory_(this) {}
+  CancelableCallbackImpl() : weak_ptr_factory_(this) {}
 
   // |callback| must not be null.
-  explicit CancelableCallback(const base::Callback<void(A...)>& callback)
-      : callback_(callback), weak_factory_(this) {
-    DCHECK(!callback.is_null());
-    InitializeForwarder();
+  explicit CancelableCallbackImpl(CallbackType callback)
+      : callback_(std::move(callback)), weak_ptr_factory_(this) {
+    DCHECK(callback);
   }
 
-  ~CancelableCallback() {}
+  ~CancelableCallbackImpl() = default;
 
   // Cancels and drops the reference to the wrapped callback.
   void Cancel() {
-    weak_factory_.InvalidateWeakPtrs();
-    forwarder_.Reset();
+    weak_ptr_factory_.InvalidateWeakPtrs();
     callback_.Reset();
   }
 
@@ -88,48 +87,79 @@ class CancelableCallback<void(A...)> {
 
   // Sets |callback| as the closure that may be cancelled. |callback| may not
   // be null. Outstanding and any previously wrapped callbacks are cancelled.
-  void Reset(const base::Callback<void(A...)>& callback) {
-    DCHECK(!callback.is_null());
-
+  void Reset(CallbackType callback) {
+    DCHECK(callback);
     // Outstanding tasks (e.g., posted to a message loop) must not be called.
     Cancel();
-
-    // |forwarder_| is no longer valid after Cancel(), so re-bind.
-    InitializeForwarder();
-
-    callback_ = callback;
+    callback_ = std::move(callback);
   }
 
   // Returns a callback that can be disabled by calling Cancel().
-  const base::Callback<void(A...)>& callback() const {
-    return forwarder_;
+  CallbackType callback() const {
+    if (!callback_)
+      return CallbackType();
+    return Forwarder<CallbackType>::MakeForwarder(
+        weak_ptr_factory_.GetWeakPtr());
   }
 
  private:
-  void Forward(A... args) const {
-    callback_.Run(std::forward<A>(args)...);
-  }
-
-  // Helper method to bind |forwarder_| using a weak pointer from
-  // |weak_factory_|.
-  void InitializeForwarder() {
-    forwarder_ = base::Bind(&CancelableCallback<void(A...)>::Forward,
-                            weak_factory_.GetWeakPtr());
-  }
-
-  // The wrapper closure.
-  base::Callback<void(A...)> forwarder_;
+  friend struct Forwarder<CallbackType>;
 
   // The stored closure that may be cancelled.
-  base::Callback<void(A...)> callback_;
+  CallbackType callback_;
+  mutable base::WeakPtrFactory<CancelableCallbackImpl> weak_ptr_factory_;
 
-  // Used to ensure Forward() is not run when this object is destroyed.
-  base::WeakPtrFactory<CancelableCallback<void(A...)>> weak_factory_;
-
-  DISALLOW_COPY_AND_ASSIGN(CancelableCallback);
+  DISALLOW_COPY_AND_ASSIGN(CancelableCallbackImpl);
 };
 
-typedef CancelableCallback<void(void)> CancelableClosure;
+template <typename... Args>
+struct Forwarder<RepeatingCallback<void(Args...)>> {
+  using CallbackType = RepeatingCallback<void(Args...)>;
+  using Impl = CancelableCallbackImpl<CallbackType>;
+
+  static CallbackType MakeForwarder(WeakPtr<Impl> impl) {
+    return BindRepeating(&Forwarder::Forward, impl);
+  }
+
+  static void Forward(const WeakPtr<Impl>& impl, Args... args) {
+    if (!impl)
+      return;
+    impl->callback_.Run(std::forward<Args>(args)...);
+  }
+};
+
+template <typename... Args>
+struct Forwarder<OnceCallback<void(Args...)>> {
+  using CallbackType = OnceCallback<void(Args...)>;
+  using Impl = CancelableCallbackImpl<CallbackType>;
+
+  static CallbackType MakeForwarder(const WeakPtr<Impl>& impl) {
+    return base::BindOnce(&Forwarder::Forward, impl);
+  }
+
+  static void Forward(Impl* impl, Args... args) {
+    if (!impl)
+      return;
+    impl->weak_ptr_factory_.InvalidateWeakPtrs();
+    std::move(impl->callback_).Run(std::forward<Args>(args)...);
+  }
+};
+
+}  // namespace internal
+
+template <typename Signature>
+using CancelableOnceCallback =
+    internal::CancelableCallbackImpl<OnceCallback<Signature>>;
+using CancelableOnceClosure = CancelableOnceCallback<void()>;
+
+template <typename Signature>
+using CancelableRepeatingCallback =
+    internal::CancelableCallbackImpl<RepeatingCallback<Signature>>;
+using CancelableRepeatingClosure = CancelableOnceCallback<void()>;
+
+template <typename Signature>
+using CancelableCallback = CancelableRepeatingCallback<Signature>;
+using CancelableClosure = CancelableCallback<void()>;
 
 }  // namespace base
 
