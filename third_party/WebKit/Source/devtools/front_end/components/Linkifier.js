@@ -146,9 +146,10 @@ Components.Linkifier = class {
    * @param {number} lineNumber
    * @param {number=} columnNumber
    * @param {string=} classes
+   * @param {function()=} onUpdate
    * @return {?Element}
    */
-  maybeLinkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes) {
+  maybeLinkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes, onUpdate) {
     var fallbackAnchor = null;
     if (sourceURL) {
       fallbackAnchor = Components.Linkifier.linkifyURL(
@@ -174,6 +175,8 @@ Components.Linkifier = class {
     info.liveLocation = Bindings.debuggerWorkspaceBinding.createLiveLocation(
         rawLocation, this._updateAnchor.bind(this, anchor),
         /** @type {!Bindings.LiveLocationPool} */ (this._locationPoolByTarget.get(rawLocation.debuggerModel.target())));
+    if (onUpdate)
+      info.onUpdate = onUpdate;
 
     var anchors = /** @type {!Array<!Element>} */ (this._anchorsByTarget.get(rawLocation.debuggerModel.target()));
     anchors.push(anchor);
@@ -187,10 +190,12 @@ Components.Linkifier = class {
    * @param {number} lineNumber
    * @param {number=} columnNumber
    * @param {string=} classes
+   * @param {function()=} onUpdate
    * @return {!Element}
    */
-  linkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes) {
-    var scriptLink = this.maybeLinkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes);
+  linkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes, onUpdate) {
+    var scriptLink =
+        this.maybeLinkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes, onUpdate);
     return scriptLink ||
         Components.Linkifier.linkifyURL(
             sourceURL,
@@ -224,9 +229,10 @@ Components.Linkifier = class {
    * @param {!SDK.Target} target
    * @param {!Protocol.Runtime.StackTrace} stackTrace
    * @param {string=} classes
+   * @param {function()=} onUpdate
    * @return {!Element}
    */
-  linkifyStackTraceTopFrame(target, stackTrace, classes) {
+  linkifyStackTraceTopFrame(target, stackTrace, classes, onUpdate) {
     console.assert(stackTrace.callFrames && stackTrace.callFrames.length);
 
     var topFrame = stackTrace.callFrames[0];
@@ -251,6 +257,8 @@ Components.Linkifier = class {
     info.liveLocation = Bindings.debuggerWorkspaceBinding.createStackTraceTopFrameLiveLocation(
         rawLocations, this._updateAnchor.bind(this, anchor),
         /** @type {!Bindings.LiveLocationPool} */ (this._locationPoolByTarget.get(target)));
+    if (onUpdate)
+      info.onUpdate = onUpdate;
 
     var anchors = /** @type {!Array<!Element>} */ (this._anchorsByTarget.get(target));
     anchors.push(anchor);
@@ -309,6 +317,10 @@ Components.Linkifier = class {
     anchor.title = titleText;
     anchor.classList.toggle('webkit-html-blackbox-link', liveLocation.isBlackboxed());
     Components.Linkifier._updateLinkDecorations(anchor);
+
+    var info = Components.Linkifier._linkInfo(anchor);
+    if (info.onUpdate)
+      info.onUpdate();
   }
 
   /**
@@ -598,6 +610,7 @@ Components.Linkifier._untruncatedNodeTextSymbol = Symbol('Linkifier.untruncatedN
  *     enableDecorator: boolean,
  *     uiLocation: ?Workspace.UILocation,
  *     liveLocation: ?Bindings.LiveLocation,
+ *     onUpdate: (function()|undefined),
  *     url: ?string,
  *     lineNumber: ?number,
  *     columnNumber: ?number,

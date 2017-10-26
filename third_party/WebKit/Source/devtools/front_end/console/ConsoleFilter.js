@@ -112,7 +112,7 @@ Console.ConsoleFilter = class {
         return !!value === filter.negative;
       if (!value)
         return !filter.text === !filter.negative;
-      var filterText = /** @type {string} */ (filter.text).toLowerCase();
+      var filterText = filter.text;
       var lowerCaseValue = value.toLowerCase();
       if (exactMatch && (lowerCaseValue === filterText) === filter.negative)
         return false;
