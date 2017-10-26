@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37808d7d_9d43c96f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2017-10-26T15:30:41Z",
+      "side": 1,
+      "message": "specify the bug",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "a55d167ed83376476d32c776455a631eabfad887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230cc269_c879d7fd",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2017-10-26T15:30:41Z",
+      "side": 1,
+      "message": "add copyright header",
+      "revId": "a55d167ed83376476d32c776455a631eabfad887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816595b7_e184e769",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2017-10-26T15:30:41Z",
+      "side": 1,
+      "message": "wouldn\u0027t just returning this be simpler\nit is unlikely that we will add other checks in this branch\n\nsame below",
+      "range": {
+        "startLine": 4,
+        "startChar": 6,
+        "endLine": 4,
+        "endChar": 72
+      },
+      "revId": "a55d167ed83376476d32c776455a631eabfad887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
