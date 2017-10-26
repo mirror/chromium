@@ -27,7 +27,9 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/path.h"
+#include "ui/keyboard/container_floating_behavior.h"
 #include "ui/keyboard/container_full_width_behavior.h"
+#include "ui/keyboard/container_type.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
 #include "ui/keyboard/keyboard_layout_manager.h"
 #include "ui/keyboard/keyboard_ui.h"
@@ -215,11 +217,12 @@ KeyboardController::KeyboardController(std::unique_ptr<KeyboardUI> ui,
       show_on_content_update_(false),
       keyboard_locked_(false),
       state_(KeyboardControllerState::UNKNOWN),
+      enqueued_container_type_(ContainerType::FULL_WIDTH),
       weak_factory_report_lingering_state_(this),
       weak_factory_will_hide_(this) {
   ui_->GetInputMethod()->AddObserver(this);
   ui_->SetController(this);
-  container_behavior_ = std::make_unique<ContainerFullWidthBehavior>();
+  SetContainerBehaviorInternal(enqueued_container_type_);
   ChangeState(KeyboardControllerState::INITIAL);
 }
 
@@ -364,6 +367,14 @@ void KeyboardController::HideKeyboard(HideReason reason) {
 
       set_keyboard_locked(false);
 
+      ui::LayerAnimator* container_animator =
+          container_->layer()->GetAnimator();
+      animation_observer_.reset(new CallbackAnimationObserver(
+          container_animator,
+          base::BindOnce(&KeyboardController::HideAnimationFinished,
+                         base::Unretained(this))));
+      container_animator->AddObserver(animation_observer_.get());
+
       aura::Window* window = container_.get();
 
       {
@@ -381,6 +392,30 @@ void KeyboardController::HideKeyboard(HideReason reason) {
 
       break;
     }
+    default:
+      NOTREACHED();
+  }
+}
+
+void KeyboardController::HideAnimationFinished() {
+  if (state_ != KeyboardControllerState::HIDDEN)
+    return;
+
+  if (enqueued_container_type_ != container_behavior_->GetType()) {
+    SetContainerBehaviorInternal(enqueued_container_type_);
+    ShowKeyboard(false /* lock */);
+  }
+}
+
+void KeyboardController::SetContainerBehaviorInternal(
+    const ContainerType type) {
+  switch (type) {
+    case ContainerType::FULL_WIDTH:
+      container_behavior_ = std::make_unique<ContainerFullWidthBehavior>();
+      break;
+    case ContainerType::FLOATING:
+      container_behavior_ = std::make_unique<ContainerFloatingBehavior>();
+      break;
     default:
       NOTREACHED();
   }
@@ -713,6 +748,18 @@ bool KeyboardController::IsOverscrollAllowed() const {
 void KeyboardController::HandlePointerEvent(bool isMouseButtonPressed,
                                             const gfx::Vector2d& kb_offset) {
   container_behavior_->HandlePointerEvent(isMouseButtonPressed, kb_offset);
+}
+
+void KeyboardController::SetContainerType(const ContainerType type) {
+  if (container_behavior_->GetType() == type)
+    return;
+
+  enqueued_container_type_ = type;
+  if (state_ == KeyboardControllerState::SHOWN) {
+    HideKeyboard(HIDE_REASON_AUTOMATIC);
+  } else {
+    SetContainerBehaviorInternal(type);
+  }
 }
 
 }  // namespace keyboard
