@@ -72,6 +72,7 @@ class CORE_EXPORT WebRemoteFrameImpl final
   void DispatchLoadEventOnFrameOwner() override;
   void DidStartLoading() override;
   void DidStopLoading() override;
+  void DetachChildren() override;
   bool IsIgnoredForHitTest() const override;
   void WillEnterFullscreen() override;
   void SetHasReceivedUserGesture() override;

@@ -246,6 +246,28 @@ void FrameTreeNode::ResetForNewProcess() {
   current_frame_host()->SetLastCommittedUrl(GURL());
   blame_context_.TakeSnapshot();
 
+  // TODO(dcheng): This is really complicated. Refactor RFH cleanup so that the
+  // destructor doesn't send FrameMsg_Delete; instead, code that needs to
+  // replicate a frame detach should explicitly send a FrameMsg_Delete. This
+  // will remove the need to suppress the delete IPC.
+
+  // Normally, deleting a FTN will cause the corresponding RFH to send a
+  // FrameMsg_Delete to the corresponding RenderFrame in the renderer. However,
+  // deleting a subtree this way violates Blink's preconditions for frame
+  // detachment: Blink expects detachment of a subtree to be performed
+  // recursively in the same stack, rather than one at a time. Get around this
+  // by suppressing FrameMsg_Delete for all descendant RFHs.
+  //
+  // Note that this suppression is really only needed for RFHs in the same
+  // process as |current_frame_host()|, since this function detaches the
+  // children of all proxies before clearing |children_|.
+  for (auto& child : children_)
+    child->SuppressDeleteIpc();
+
+  // The caller will clean up |current_frame_host()| itself, but make sure that
+  // the render proxies clean up their children now.
+  render_manager_.DetachProxyChildren();
+
   // Remove child nodes from the tree, then delete them. This destruction
   // operation will notify observers.
   std::vector<std::unique_ptr<FrameTreeNode>>().swap(children_);
@@ -621,6 +643,12 @@ void FrameTreeNode::BeforeUnloadCanceled() {
 void FrameTreeNode::OnSetHasReceivedUserGesture() {
   render_manager_.OnSetHasReceivedUserGesture();
   replication_state_.has_received_user_gesture = true;
+}
+
+void FrameTreeNode::SuppressDeleteIpc() {
+  current_frame_host()->SuppressDeleteIpc();
+  for (auto& child : children_)
+    child->SuppressDeleteIpc();
 }
 
 FrameTreeNode* FrameTreeNode::GetSibling(int relative_offset) const {
