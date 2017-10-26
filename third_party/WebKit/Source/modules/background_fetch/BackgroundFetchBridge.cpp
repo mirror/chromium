@@ -94,7 +94,7 @@ void BackgroundFetchBridge::DidGetRegistration(
     registration->Initialize(GetSupplementable());
   }
 
-  callback(error, registration);
+  std::move(callback).Run(error, registration);
 }
 
 void BackgroundFetchBridge::GetDeveloperIds(GetDeveloperIdsCallback callback) {
