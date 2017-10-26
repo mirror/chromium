@@ -31,6 +31,7 @@
 #include "core/frame/Settings.h"
 #include "core/page/Page.h"
 #include "platform/Supplementable.h"
+//#include "platform/network/NetworkStateNotifier.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/text/LocaleToScriptMapping.h"
 
@@ -552,5 +553,13 @@ void InternalSettings::setAutoplayPolicy(const String& policy_str,
 
   GetSettings()->SetAutoplayPolicy(policy);
 }
+
+/*
+void InternalSettings::setDataSaverEnabled(bool enabled,
+                                           ExceptionState& exception_state) {
+  InternalSettingsGuardForSettings();
+  GetNetworkStateNotifier().SetSaveData(enabled);
+}
+*/
 
 }  // namespace blink
