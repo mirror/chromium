@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "689225a6_7d4e3eea",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-26T11:41:55Z",
+      "side": 1,
+      "message": "why do we assume the surface-opened trigger?",
+      "range": {
+        "startLine": 531,
+        "startChar": 36,
+        "endLine": 531,
+        "endChar": 50
+      },
+      "revId": "1563e3497c18a666d3465eea06b0c87d846b4676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
