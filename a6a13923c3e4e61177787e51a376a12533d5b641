@@ -22,6 +22,30 @@
       "revId": "a6a13923c3e4e61177787e51a376a12533d5b641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96116d0d_1d8155c9",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-10-26T16:56:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee4ac11c_98e3e834",
+      "range": {
+        "startLine": 1116,
+        "startChar": 2,
+        "endLine": 1116,
+        "endChar": 35
+      },
+      "revId": "a6a13923c3e4e61177787e51a376a12533d5b641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
