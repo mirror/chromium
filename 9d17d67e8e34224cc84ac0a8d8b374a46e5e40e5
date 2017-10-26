@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29eab593_11c82dea",
+        "filename": "ash/display/display_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T19:48:45Z",
+      "side": 1,
+      "message": "it\u0027s not clear why we need this. Can you explain in the comment?",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9239d672_3fc9374f",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T19:48:45Z",
+      "side": 1,
+      "message": "we shouldn\u0027t handle fatal case, unless there is a good reason.",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877dc65a_13cdc52e",
+        "filename": "ash/display/unified_mouse_warp_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T19:48:45Z",
+      "side": 1,
+      "message": "I think I was wrong. Until we fix the implicit grab issue, this should still be\n\nauto iter \u003d display::FindDisplayContainingPoint(mirroring_display_list,\n                                                point_in_unified_host);\n\nOr you may add TODO to remove implicit grab and fix it in next CL.",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07a18ea_565fb263",
+        "filename": "ash/screen_util_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T19:48:45Z",
+      "side": 1,
+      "message": "just use gfx::Rect(). no need to use string any more.",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5291d9b_05ab2930",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T19:48:45Z",
+      "side": 1,
+      "message": "Is this fallback path in case there was an error / issue in layout?",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e9238a_3dba4b91",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T19:48:45Z",
+      "side": 1,
+      "message": "Don\u0027t have to be in this CL, but maybe it makes sense to refactor unified display related logic to separate class. WDYT?",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
