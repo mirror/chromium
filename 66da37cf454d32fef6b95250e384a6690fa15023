@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "072ed891_1b81fc98",
+        "filename": "ash/display/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-26T06:31:59Z",
+      "side": 1,
+      "message": "The touch-calibration code should actually just move into mus.",
+      "revId": "66da37cf454d32fef6b95250e384a6690fa15023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf7bf4d_762f983f",
+        "filename": "testing/buildbot/filters/ash_unittests_mash.filter",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-26T06:31:59Z",
+      "side": 1,
+      "message": "We should just never run these tests in --mash.",
+      "revId": "66da37cf454d32fef6b95250e384a6690fa15023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
