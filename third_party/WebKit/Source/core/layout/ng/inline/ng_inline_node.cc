@@ -317,6 +317,7 @@ LayoutBox* CollectInlinesInternal(
     } else if (!node->IsInline()) {
       // A block box found. End inline and transit to block layout.
       next_box = ToLayoutBox(node);
+      NOTREACHED();
       break;
 
     } else {
