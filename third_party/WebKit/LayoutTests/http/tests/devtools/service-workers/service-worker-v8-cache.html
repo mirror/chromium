@@ -18,15 +18,15 @@ function test() {
   const scope = 'resources/v8-cache-iframe.html';
   const frameId = 'frame_id';
 
-  ApplicationTestRunner.registerServiceWorker(scriptURL, scope)
+  // Need to suspend targets, because V8 doesn't produce the cache when
+  // the debugger is loaded.
+  SDK.targetManager.suspendAllTargets()
+      .then(_ => {
+        return ApplicationTestRunner.registerServiceWorker(scriptURL, scope);
+      })
       .then(_ => ApplicationTestRunner.waitForActivated(scope))
       .then(() => {
         return TestRunner.addIframe(scope, {id: frameId});
-      })
-      .then(() => {
-        // Need to suspend targets, because V8 doesn't produce the cache when
-        // the debugger is loaded.
-        return SDK.targetManager.suspendAllTargets();
       })
       .then(() => {
         return new Promise(
