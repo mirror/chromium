@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdcc81f9_3c4aa59a",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-26T18:10:31Z",
+      "side": 1,
+      "message": "There is an implicit order dependency here that should be made explicit by refactor or explicitly commented (with a preference for the former). \nThe |completionCallback_| resets the coordinator so that the baseViewController is made nil. So the call to presenter -showAccountSettings MUST happen before so that it has a VC on which to present the accountsSettings.",
+      "range": {
+        "startLine": 373,
+        "startChar": 20,
+        "endLine": 373,
+        "endChar": 40
+      },
+      "revId": "bb6528b3f76d3e4bfb9870ba0fb995141d8361a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
