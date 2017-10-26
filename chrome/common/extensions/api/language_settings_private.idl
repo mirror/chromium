@@ -91,6 +91,16 @@ namespace languageSettingsPrivate {
     static void setEnableTranslationForLanguage(
         DOMString languageCode, boolean enable);
 
+    // Moves a language to the top of the list.
+    static void moveLanguageToTheTop(DOMString languageCode, DOMString
+    languageList);
+
+    // Moves a language up in the list by one position.
+    static void moveLanguageUp(DOMString languageCode, DOMString languageList);
+
+    // Moves a language down in the list by one position.
+    static void moveLanguageDown(DOMString languageCode, DOMString languageList);
+
     // Gets the current status of the chosen spell check dictionaries.
     static void getSpellcheckDictionaryStatuses(
         GetSpellcheckDictionaryStatusesCallback callback);

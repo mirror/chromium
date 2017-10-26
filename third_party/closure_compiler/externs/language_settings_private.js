@@ -91,8 +91,31 @@ chrome.languageSettingsPrivate.disableLanguage = function(languageCode) {};
  * @param {boolean} enable
  * @see https://developer.chrome.com/extensions/languageSettingsPrivate#method-setEnableTranslationForLanguage
  */
-chrome.languageSettingsPrivate.setEnableTranslationForLanguage = function(
-    languageCode, enable) {};
+chrome.languageSettingsPrivate.setEnableTranslationForLanguage = function(languageCode, enable) {};
+
+/**
+ * Moves a language to the top of the list.
+ * @param {string} languageCode
+ * @param {string} languageList
+ * @see https://developer.chrome.com/extensions/languageSettingsPrivate#method-moveLanguageToTheTop
+ */
+chrome.languageSettingsPrivate.moveLanguageToTheTop = function(languageCode, languageList) {};
+
+/**
+ * Moves a language up in the list by one position.
+ * @param {string} languageCode
+ * @param {string} languageList
+ * @see https://developer.chrome.com/extensions/languageSettingsPrivate#method-moveLanguageUp
+ */
+chrome.languageSettingsPrivate.moveLanguageUp = function(languageCode, languageList) {};
+
+/**
+ * Moves a language down in the list by one position.
+ * @param {string} languageCode
+ * @param {string} languageList
+ * @see https://developer.chrome.com/extensions/languageSettingsPrivate#method-moveLanguageDown
+ */
+chrome.languageSettingsPrivate.moveLanguageDown = function(languageCode, languageList) {};
 
 /**
  * Gets the current status of the chosen spell check dictionaries.

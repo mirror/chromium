@@ -207,6 +207,83 @@ cr.define('settings', function() {
     }
 
     /**
+     * Moves a language to the top of the language list.
+     * This fake ignores the second param |languageList|.
+     * @param {string} languageCode
+     * @param {string} languageList
+     */
+    moveLanguageToTheTop(languageCode, languageList) {
+      var languageCodes = this.settingsPrefs_.prefs.intl.accept_languages.value;
+      var languages = languageCodes.split(',');
+      var index = languages.indexOf(languageCode);
+      if (index == -1)
+        return;
+
+      languages.splice(index, 1);
+      languages.unshift(languageCode);
+      languageCodes = languages.join(',');
+
+      this.settingsPrefs_.set(
+          'prefs.intl.accept_languages.value', languageCodes);
+      if (cr.isChromeOS) {
+        this.settingsPrefs_.set(
+            'prefs.settings.language.preferred_languages.value', languageCodes);
+      }
+    }
+
+    /**
+     * Moves a language up by one position inside the language list.
+     * This fake ignores the second param |languageList|.
+     * @param {string} languageCode
+     * @param {string} languageList
+     */
+    moveLanguageUp(languageCode, languageList) {
+      var languageCodes = this.settingsPrefs_.prefs.intl.accept_languages.value;
+      var languages = languageCodes.split(',');
+      var index = languages.indexOf(languageCode);
+      if (index < 1)
+        return;
+
+      var temp = languages[index - 1];
+      languages[index - 1] = languageCode;
+      languages[index] = temp;
+      languageCodes = languages.join(',');
+
+      this.settingsPrefs_.set(
+          'prefs.intl.accept_languages.value', languageCodes);
+      if (cr.isChromeOS) {
+        this.settingsPrefs_.set(
+            'prefs.settings.language.preferred_languages.value', languageCodes);
+      }
+    }
+
+    /**
+     * Moves a language down by one position inside the language list.
+     * This fake ignores the second param |languageList|.
+     * @param {string} languageCode
+     * @param {string} languageList
+     */
+    moveLanguageDown(languageCode, languageList) {
+      var languageCodes = this.settingsPrefs_.prefs.intl.accept_languages.value;
+      var languages = languageCodes.split(',');
+      var index = languages.indexOf(languageCode);
+      if (index == -1 || index == languages.length - 1)
+        return;
+
+      var temp = languages[index + 1];
+      languages[index + 1] = languageCode;
+      languages[index] = temp;
+      languageCodes = languages.join(',');
+
+      this.settingsPrefs_.set(
+          'prefs.intl.accept_languages.value', languageCodes);
+      if (cr.isChromeOS) {
+        this.settingsPrefs_.set(
+            'prefs.settings.language.preferred_languages.value', languageCodes);
+      }
+    }
+
+    /**
      * Gets the current status of the chosen spell check dictionaries.
      * @param {function(!Array<
      *     !chrome.languageSettingsPrivate.SpellcheckDictionaryStatus>):void}
