@@ -82,7 +82,7 @@ void PasswordImportConsumer::ConsumePassword(
 PasswordManagerPorter::PasswordManagerPorter(
     password_manager::CredentialProviderInterface*
         credential_provider_interface)
-    : credential_provider_interface_(credential_provider_interface) {}
+    : password_manager::ExportFlow(credential_provider_interface) {}
 
 PasswordManagerPorter::~PasswordManagerPorter() {}
 
@@ -132,6 +132,12 @@ void PasswordManagerPorter::PresentFileSelector(
 #endif
 }
 
+void PasswordManagerPorter::Store() {
+  DCHECK(web_contents_);
+  PresentFileSelector(web_contents_,
+                      PasswordManagerPorter::Type::PASSWORD_EXPORT);
+}
+
 void PasswordManagerPorter::FileSelected(const base::FilePath& path,
                                          int index,
                                          void* params) {
@@ -157,7 +163,7 @@ void PasswordManagerPorter::ImportPasswordsFromPath(
 
 void PasswordManagerPorter::ExportPasswordsToPath(const base::FilePath& path) {
   std::vector<std::unique_ptr<autofill::PasswordForm>> password_list =
-      credential_provider_interface_->GetAllPasswords();
+      credential_provider()->GetAllPasswords();
   UMA_HISTOGRAM_COUNTS("PasswordManager.ExportedPasswordsPerUserInCSV",
                        password_list.size());
   password_manager::PasswordExporter::Export(path, std::move(password_list));
