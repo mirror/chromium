@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83e5c8d4_0f434c60",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-26T05:30:22Z",
+      "side": 1,
+      "message": "Ken: can we move child.mojom so it\u0027s implemented by ChildThread? AFAIK it\u0027s used now just to signal to the browser when the child process dies, so moving it should be ok?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "f5264581d286ab09f36877d815fa8e02778c1432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a17054d_fab4abb6",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1586,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-26T05:30:22Z",
+      "side": 1,
+      "message": "nit:: content:: not needed?",
+      "revId": "f5264581d286ab09f36877d815fa8e02778c1432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc08f055_9684de27",
+        "filename": "content/child/child_thread_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-26T05:30:22Z",
+      "side": 1,
+      "message": "these three are only sent by RenderProcessHost. the first is dispatched here, but since it\u0027s only used by renderer it can be in RenderThreadImpl. The other two are noops for child processes are general and only do stuff in renderers. so we can move all three to renderer.mojom",
+      "range": {
+        "startLine": 751,
+        "startChar": 0,
+        "endLine": 761,
+        "endChar": 40
+      },
+      "revId": "f5264581d286ab09f36877d815fa8e02778c1432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
