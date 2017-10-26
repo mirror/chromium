@@ -9,12 +9,9 @@
 #include "platform/bindings/ScriptWrappable.h"
 #include "public/platform/modules/budget_service/budget_service.mojom-blink.h"
 
-namespace service_manager {
-class InterfaceProvider;
-}
-
 namespace blink {
 
+class ExecutionContext;
 class ScriptPromise;
 class ScriptPromiseResolver;
 class ScriptState;
@@ -26,9 +23,8 @@ class BudgetService final : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static BudgetService* Create(
-      service_manager::InterfaceProvider* interface_provider) {
-    return new BudgetService(interface_provider);
+  static BudgetService* Create(ExecutionContext* execution_context) {
+    return new BudgetService(execution_context);
   }
 
   ~BudgetService();
@@ -52,7 +48,7 @@ class BudgetService final : public ScriptWrappable {
   // Error handler for use if mojo service doesn't connect.
   void OnConnectionError();
 
-  explicit BudgetService(service_manager::InterfaceProvider*);
+  explicit BudgetService(ExecutionContext*);
 
   // Pointer to the Mojo service which will proxy calls to the browser.
   mojom::blink::BudgetServicePtr service_;

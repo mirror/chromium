@@ -33,20 +33,17 @@ NavigatorBudget& NavigatorBudget::From(Navigator& navigator) {
   return *navigator_budget;
 }
 
-BudgetService* NavigatorBudget::budget() {
+BudgetService* NavigatorBudget::budget(ExecutionContext* context) {
   if (!budget_) {
-    Navigator* navigator = GetSupplementable();
-    if (navigator->GetFrame()) {
-      budget_ = BudgetService::Create(
-          navigator->GetFrame()->Client()->GetInterfaceProvider());
-    }
+    budget_ = BudgetService::Create(context);
   }
   return budget_.Get();
 }
 
 // static
-BudgetService* NavigatorBudget::budget(Navigator& navigator) {
-  return NavigatorBudget::From(navigator).budget();
+BudgetService* NavigatorBudget::budget(ExecutionContext* context,
+                                       Navigator& navigator) {
+  return NavigatorBudget::From(navigator).budget(context);
 }
 
 void NavigatorBudget::Trace(blink::Visitor* visitor) {
