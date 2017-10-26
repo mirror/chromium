@@ -3074,7 +3074,6 @@ InternalSettings:::setAccessibilityFontScaleFactor:::2
 InternalSettings:::setAvailableHoverTypes:::2
 InternalSettings:::setAvailablePointerTypes:::2
 InternalSettings:::setCompositorWorkerEnabled:::2
-InternalSettings:::setCSSStickyPositionEnabled:::1
 InternalSettings:::setCursiveFontFamily:::3
 InternalSettings:::setDefaultVideoPosterURL:::2
 InternalSettings:::setDisplayModeOverride:::2
