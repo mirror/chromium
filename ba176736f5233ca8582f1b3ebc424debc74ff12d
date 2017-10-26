@@ -22,6 +22,30 @@
       "revId": "ba176736f5233ca8582f1b3ebc424debc74ff12d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa69961_c875d49d",
+        "filename": "third_party/libaom/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-10-26T20:02:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5014b0af_822826dc",
+      "range": {
+        "startLine": 8,
+        "startChar": 19,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "ba176736f5233ca8582f1b3ebc424debc74ff12d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
