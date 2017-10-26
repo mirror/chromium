@@ -184,10 +184,22 @@ Polymer({
    * @private
    */
   enableToggleIsVisible_: function(deviceState) {
-    return !!deviceState && deviceState.Type != CrOnc.Type.ETHERNET &&
-        deviceState.Type != CrOnc.Type.VPN &&
-        (deviceState.Type == CrOnc.Type.TETHER ||
-         deviceState.State != CrOnc.DeviceState.UNINITIALIZED);
+    if (!deviceState)
+      return false;
+    switch (deviceState.Type) {
+      case CrOnc.Type.ETHERNET:
+      case CrOnc.Type.VPN:
+        return false;
+      case CrOnc.Type.WI_FI:
+      case CrOnc.Type.WI_MAX:
+        return deviceState.State != CrOnc.DeviceState.UNINITIALIZED;
+      case CrOnc.Type.TETHER:
+        return true;
+      case CrOnc.Type.CELLULAR:
+        return !this.showSimInfo_(deviceState);
+    }
+    assertNotReached();
+    return false;
   },
 
   /**
