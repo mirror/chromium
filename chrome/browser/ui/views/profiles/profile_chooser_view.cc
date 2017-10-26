@@ -78,6 +78,7 @@
 #include "ui/native_theme/common_theme.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/controls/button/blue_button.h"
+#include "ui/views/controls/button/hover_button.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/controls/button/label_button_border.h"
@@ -171,113 +172,6 @@ views::ImageButton* CreateBackButton(views::ButtonListener* listener) {
   return back_button;
 }
 
-// BackgroundColorHoverButton -------------------------------------------------
-
-// A custom button that allows for setting a background color when hovered over.
-class BackgroundColorHoverButton : public views::LabelButton {
- public:
-  BackgroundColorHoverButton(ProfileChooserView* profile_chooser_view,
-                             const base::string16& text)
-      : views::LabelButton(profile_chooser_view, text),
-        title_(nullptr),
-        subtitle_(nullptr) {
-    DCHECK(profile_chooser_view);
-    SetImageLabelSpacing(kMenuEdgeMargin - 2);
-    SetBorder(views::CreateEmptyBorder(0, kMenuEdgeMargin, 0, kMenuEdgeMargin));
-    SetFocusForPlatform();
-    SetFocusPainter(nullptr);
-
-    label()->SetHandlesTooltips(false);
-  }
-
-  BackgroundColorHoverButton(ProfileChooserView* profile_chooser_view,
-                             const base::string16& text,
-                             const gfx::ImageSkia& icon)
-      : BackgroundColorHoverButton(profile_chooser_view, text) {
-    SetMinSize(gfx::Size(
-        icon.width(),
-        kButtonHeight + ChromeLayoutProvider::Get()->GetDistanceMetric(
-                            views::DISTANCE_RELATED_CONTROL_VERTICAL)));
-    SetImage(STATE_NORMAL, icon);
-  }
-
-  // Overrides the main label associated with this button.  If unset,
-  // label() will be used instead.  |label| should be drawn over this
-  // button, but it is not necessary that it be a child view.
-  void set_title(views::Label* label) { title_ = label; }
-
-  // Sets a secondary label associated with this button.  |label|
-  // should be drawn over this button, but it is not necessary that it
-  // be a child view.
-  void set_subtitle(views::Label* label) { subtitle_ = label; }
-
-  ~BackgroundColorHoverButton() override {}
-
- private:
-  // views::View:
-  void OnFocus() override {
-    LabelButton::OnFocus();
-    UpdateColors();
-  }
-
-  void OnBlur() override {
-    LabelButton::OnBlur();
-    UpdateColors();
-  }
-
-  void OnNativeThemeChanged(const ui::NativeTheme* theme) override {
-    LabelButton::OnNativeThemeChanged(theme);
-    UpdateColors();
-  }
-
-  // views::Button:
-  void StateChanged(ButtonState old_state) override {
-    LabelButton::StateChanged(old_state);
-
-    // As in a menu, focus follows the mouse (including blurring when the mouse
-    // leaves the button). If we don't do this, the focused view and the hovered
-    // view might both have the selection highlight.
-    if (state() == STATE_HOVERED || state() == STATE_PRESSED)
-      RequestFocus();
-    else if (state() == STATE_NORMAL && HasFocus())
-      GetFocusManager()->SetFocusedView(nullptr);
-
-    UpdateColors();
-  }
-
-  void UpdateColors() {
-    // TODO(tapted): This should use views::style::GetColor() to obtain grey
-    // text where it's needed. But note |subtitle_| is used to draw an email,
-    // which might not be grey in Harmony.
-    bool is_selected = HasFocus();
-
-    SetBackground(
-        is_selected
-            ? views::CreateSolidBackground(GetNativeTheme()->GetSystemColor(
-                  ui::NativeTheme::kColorId_FocusedMenuItemBackgroundColor))
-            : nullptr);
-
-    SkColor text_color = GetNativeTheme()->GetSystemColor(
-        is_selected ? ui::NativeTheme::kColorId_SelectedMenuItemForegroundColor
-                    : ui::NativeTheme::kColorId_LabelEnabledColor);
-    SetEnabledTextColors(text_color);
-    if (title_)
-      title_->SetEnabledColor(text_color);
-
-    if (subtitle_) {
-      subtitle_->SetEnabledColor(GetNativeTheme()->GetSystemColor(
-          is_selected
-              ? ui::NativeTheme::kColorId_DisabledMenuItemForegroundColor
-              : ui::NativeTheme::kColorId_LabelDisabledColor));
-    }
-  }
-
-  views::Label* title_;
-  views::Label* subtitle_;
-
-  DISALLOW_COPY_AND_ASSIGN(BackgroundColorHoverButton);
-};
-
 }  // namespace
 
 // EditableProfilePhoto -------------------------------------------------
@@ -298,9 +192,7 @@ class EditableProfilePhoto : public views::LabelButton {
     SetImage(views::LabelButton::STATE_NORMAL, *image.ToImageSkia());
     SetBorder(views::NullBorder());
     SetMinSize(gfx::Size(GetPreferredSize().width() + kBadgeSpacing,
-                         GetPreferredSize().height() + kBadgeSpacing +
-                             ChromeLayoutProvider::Get()->GetDistanceMetric(
-                                 DISTANCE_RELATED_CONTROL_VERTICAL_SMALL)));
+                         GetPreferredSize().height() + kBadgeSpacing));
 
     SetEnabled(false);
   }
@@ -311,10 +203,9 @@ class EditableProfilePhoto : public views::LabelButton {
       ui::ClipRecorder clip_recorder(paint_info.context());
       gfx::Rect clip_bounds = image()->GetMirroredBounds();
       gfx::Path clip_mask;
-      clip_mask.addCircle(
-          clip_bounds.x() + clip_bounds.width() / 2,
-          clip_bounds.y() + clip_bounds.height() / 2,
-          clip_bounds.width() / 2);
+      clip_mask.addCircle(clip_bounds.x() + clip_bounds.width() / 2,
+                          clip_bounds.y() + clip_bounds.height() / 2,
+                          clip_bounds.width() / 2);
       clip_recorder.ClipPathWithAntiAliasing(clip_mask);
       View::PaintChildren(paint_info);
     }
@@ -355,8 +246,8 @@ class EditableProfilePhoto : public views::LabelButton {
   // views::Button:
   void StateChanged(ButtonState old_state) override {
     if (photo_overlay_) {
-      photo_overlay_->SetVisible(
-          state() == STATE_PRESSED || state() == STATE_HOVERED || HasFocus());
+      photo_overlay_->SetVisible(state() == STATE_PRESSED ||
+                                 state() == STATE_HOVERED || HasFocus());
     }
   }
 
@@ -385,7 +276,8 @@ class EditableProfilePhoto : public views::LabelButton {
 // A title card with one back button left aligned and one label center aligned.
 class TitleCard : public views::View {
  public:
-  TitleCard(const base::string16& message, views::ButtonListener* listener,
+  TitleCard(const base::string16& message,
+            views::ButtonListener* listener,
             views::ImageButton** back_button) {
     back_button_ = CreateBackButton(listener);
     *back_button = back_button_;
@@ -417,7 +309,8 @@ class TitleCard : public views::View {
     columns->AddPaddingColumn(1, dialog_insets.left());
     int available_width = width - dialog_insets.width();
     columns->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 0,
-        views::GridLayout::FIXED, available_width, available_width);
+                       views::GridLayout::FIXED, available_width,
+                       available_width);
     columns->AddPaddingColumn(1, dialog_insets.right());
     layout->AddColumnSet(1)->AddColumn(views::GridLayout::FILL,
                                        views::GridLayout::FILL, 0,
@@ -459,7 +352,7 @@ class TitleCard : public views::View {
 
   gfx::Size CalculatePreferredSize() const override {
     int height = std::max(title_label_->GetPreferredSize().height(),
-        back_button_->GetPreferredSize().height());
+                          back_button_->GetPreferredSize().height());
     return gfx::Size(width(), height);
   }
 
@@ -600,8 +493,7 @@ void ProfileChooserView::OnNativeThemeChanged(
       ui::NativeTheme::kColorId_DialogBackground)));
 }
 
-void ProfileChooserView::OnAvatarMenuChanged(
-    AvatarMenu* avatar_menu) {
+void ProfileChooserView::OnAvatarMenuChanged(AvatarMenu* avatar_menu) {
   if (IsProfileChooser(view_mode_) ||
       view_mode_ == profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT) {
     // Refresh the view with the new menu. We can't just update the local copy
@@ -637,8 +529,8 @@ void ProfileChooserView::ShowView(profiles::BubbleViewMode view_to_display,
   // is signed in.
   if (view_to_display == profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT) {
     DCHECK(signin::IsAccountConsistencyMirrorEnabled());
-    const AvatarMenu::Item& active_item = avatar_menu->GetItemAt(
-        avatar_menu->GetActiveProfileIndex());
+    const AvatarMenu::Item& active_item =
+        avatar_menu->GetItemAt(avatar_menu->GetActiveProfileIndex());
     if (!active_item.signed_in) {
       // This is the case when the user selects the sign out option in the user
       // menu upon encountering unrecoverable errors. Afterwards, the profile
@@ -792,9 +684,9 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
         SigninManagerFactory::GetForProfile(browser_->profile())
             ->IsAuthenticated() &&
         signin::IsAccountConsistencyMirrorEnabled();
-    ShowViewFromMode(account_management_available ?
-        profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT :
-        profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
+    ShowViewFromMode(account_management_available
+                         ? profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT
+                         : profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
   } else if (sender == current_profile_card_) {
     avatar_menu_->EditProfile(avatar_menu_->GetActiveProfileIndex());
     PostActionPerformed(ProfileMetrics::PROFILE_DESKTOP_MENU_EDIT_IMAGE);
@@ -814,8 +706,9 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
         open_other_profile_indexes_map_.find(sender);
     if (profile_match != open_other_profile_indexes_map_.end()) {
       avatar_menu_->SwitchToProfile(
-          profile_match->second, ui::DispositionFromEventFlags(event.flags()) ==
-                                     WindowOpenDisposition::NEW_WINDOW,
+          profile_match->second,
+          ui::DispositionFromEventFlags(event.flags()) ==
+              WindowOpenDisposition::NEW_WINDOW,
           ProfileMetrics::SWITCH_PROFILE_ICON);
     } else {
       // This was a profile accounts button.
@@ -851,10 +744,9 @@ void ProfileChooserView::LinkClicked(views::Link* sender, int event_flags) {
     // This link can either mean show/hide the account management view,
     // depending on which view it is displayed. ShowView() will DCHECK if
     // the account management view is displayed for non signed-in users.
-    ShowViewFromMode(
-        view_mode_ == profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT ?
-            profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER :
-            profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT);
+    ShowViewFromMode(view_mode_ == profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT
+                         ? profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER
+                         : profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT);
   } else if (sender == add_account_link_) {
     ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_GAIA_ADD_ACCOUNT);
     PostActionPerformed(ProfileMetrics::PROFILE_DESKTOP_MENU_ADD_ACCT);
@@ -987,8 +879,8 @@ views::View* ProfileChooserView::CreateSyncErrorViewIfNeeded() {
 
   // Adds a vertical view to organize the error title, message, and button.
   views::View* vertical_view = new views::View();
-  const int small_vertical_spacing = provider->GetDistanceMetric(
-      DISTANCE_RELATED_CONTROL_VERTICAL_SMALL);
+  const int small_vertical_spacing =
+      provider->GetDistanceMetric(DISTANCE_RELATED_CONTROL_VERTICAL_SMALL);
   views::BoxLayout* vertical_layout = new views::BoxLayout(
       views::BoxLayout::kVertical, gfx::Insets(), small_vertical_spacing);
   vertical_layout->set_cross_axis_alignment(
@@ -1037,60 +929,32 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
   views::View* view = new views::View();
-  const int vertical_spacing_small =
-      provider->GetDistanceMetric(DISTANCE_RELATED_CONTROL_VERTICAL_SMALL);
-  view->SetLayoutManager(new views::BoxLayout(
-      views::BoxLayout::kVertical, gfx::Insets(vertical_spacing_small, 0), 0));
+  bool account_consistency_enabled =
+      signin::IsAccountConsistencyMirrorEnabled();
+  int content_list_vert_spacing =
+      account_consistency_enabled
+          ? provider->GetDistanceMetric(
+                views::DISTANCE_SINGLE_HOVER_CONTENT_LIST_VERTICAL)
+          : provider->GetDistanceMetric(
+                views::DISTANCE_MULTI_HOVER_CONTENT_LIST_VERTICAL);
+  view->SetLayoutManager(
+      new views::BoxLayout(views::BoxLayout::kVertical,
+                           gfx::Insets(content_list_vert_spacing, 0), 0));
 
-  // Container for the profile photo and avatar/user name.
-  BackgroundColorHoverButton* current_profile_card =
-      new BackgroundColorHoverButton(this, base::string16());
-  views::GridLayout* grid_layout =
-      views::GridLayout::CreateAndInstall(current_profile_card);
-  views::ColumnSet* columns = grid_layout->AddColumnSet(0);
-  // BackgroundColorHoverButton has already accounted for the left and right
-  // margins.
-  columns->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 0,
-                     views::GridLayout::USE_PREF, 0, 0);
-  columns->AddPaddingColumn(0, kMenuEdgeMargin - kBadgeSpacing);
-  columns->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
-                     views::GridLayout::USE_PREF, 0, 0);
-  grid_layout->AddPaddingRow(0, 0);
-  const int num_labels =
-      (avatar_item.signed_in && !signin::IsAccountConsistencyMirrorEnabled())
-          ? 2
-          : 1;
-  int profile_card_height =
-      kImageSide + 2 * (kBadgeSpacing + vertical_spacing_small);
-  const int line_height = profile_card_height / num_labels;
-  grid_layout->StartRow(0, 0, line_height);
-  current_profile_card_ = current_profile_card;
-
-  // Profile picture, left-aligned.
   EditableProfilePhoto* current_profile_photo = new EditableProfilePhoto(
       this, avatar_item.icon, !is_guest, browser_->profile());
+  const base::string16 profile_name =
+      profiles::GetAvatarNameForProfile(browser_->profile()->GetPath());
 
-  // Profile name, left-aligned to the right of profile icon.
-  views::Label* current_profile_name = new views::Label(
-      profiles::GetAvatarNameForProfile(browser_->profile()->GetPath()));
-  current_profile_card->set_title(current_profile_name);
-  current_profile_name->SetAutoColorReadabilityEnabled(false);
-  current_profile_name->SetFontList(
-      ui::ResourceBundle::GetSharedInstance().GetFontListWithDelta(
-          1, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::MEDIUM));
-  current_profile_name->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-
-  // The grid layout contains one row if not signed in or account consistency is
-  // enabled. It contains 2 rows if signed in and account consistency is
-  // disabled (the second row is for the email label). For the second case the
-  // profile photo has to be over 2 rows.
-  grid_layout->AddView(current_profile_photo, 1, num_labels);
-  grid_layout->AddView(current_profile_name, 1, 1, views::GridLayout::LEADING,
-                       (num_labels == 2) ? views::GridLayout::TRAILING
-                                         : views::GridLayout::CENTER);
-  current_profile_card_->SetMinSize(gfx::Size(
-      kFixedMenuWidth, current_profile_photo->GetPreferredSize().height() +
-                           2 * vertical_spacing_small));
+  // Show the profile name by itself if not signed in or account consistency is
+  // enabled. Otherwise, show the email attached to the profile.
+  bool show_email = avatar_item.signed_in && account_consistency_enabled;
+  views::HoverButton* profile_card = new views::HoverButton(
+      this, current_profile_photo, profile_name,
+      show_email ? avatar_item.username : base::string16());
+  if (show_email)
+    profile_card->SetSubtitleElideBehavior(gfx::ELIDE_EMAIL);
+  current_profile_card_ = profile_card;
   view->AddChildView(current_profile_card_);
 
   if (is_guest) {
@@ -1098,40 +962,20 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
     return view;
   }
 
-  const base::string16 profile_name =
-      profiles::GetAvatarNameForProfile(browser_->profile()->GetPath());
-
   // The available links depend on the type of profile that is active.
   if (avatar_item.signed_in) {
-    if (signin::IsAccountConsistencyMirrorEnabled()) {
+    if (account_consistency_enabled) {
       base::string16 button_text = l10n_util::GetStringUTF16(
           IsProfileChooser(view_mode_)
               ? IDS_PROFILES_PROFILE_MANAGE_ACCOUNTS_BUTTON
               : IDS_PROFILES_PROFILE_HIDE_MANAGE_ACCOUNTS_BUTTON);
-      manage_accounts_button_ =
-          new BackgroundColorHoverButton(this, button_text);
-      manage_accounts_button_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-      manage_accounts_button_->SetMinSize(
-          gfx::Size(kFixedMenuWidth, kButtonHeight));
+      manage_accounts_button_ = new views::HoverButton(this, button_text);
       view->AddChildView(manage_accounts_button_);
-    } else {
-      views::Label* email_label = new views::Label(avatar_item.username);
-      current_profile_card->set_subtitle(email_label);
-      email_label->SetAutoColorReadabilityEnabled(false);
-      email_label->SetElideBehavior(gfx::ELIDE_EMAIL);
-      email_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-      grid_layout->StartRow(1, 0);
-      // Skip first column for the profile icon.
-      grid_layout->SkipColumns(1);
-      grid_layout->AddView(email_label, 1, 1, views::GridLayout::LEADING,
-                           views::GridLayout::LEADING);
     }
 
-    current_profile_card_->SetAccessibleName(
-        l10n_util::GetStringFUTF16(
-            IDS_PROFILES_EDIT_SIGNED_IN_PROFILE_ACCESSIBLE_NAME,
-            profile_name,
-            avatar_item.username));
+    current_profile_card_->SetAccessibleName(l10n_util::GetStringFUTF16(
+        IDS_PROFILES_EDIT_SIGNED_IN_PROFILE_ACCESSIBLE_NAME, profile_name,
+        avatar_item.username));
     return view;
   }
 
@@ -1162,25 +1006,25 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
     extra_links_view->AddChildView(signin_current_profile_button_);
     base::RecordAction(
         base::UserMetricsAction("Signin_Impression_FromAvatarBubbleSignin"));
-    extra_links_view->SetBorder(
-        views::CreateEmptyBorder(0, 0, vertical_spacing_small, 0));
+    extra_links_view->SetBorder(views::CreateEmptyBorder(
+        0, 0,
+        provider->GetDistanceMetric(DISTANCE_RELATED_CONTROL_VERTICAL_SMALL),
+        0));
     view->AddChildView(extra_links_view);
   }
 
-  current_profile_card_->SetAccessibleName(
-      l10n_util::GetStringFUTF16(
-          IDS_PROFILES_EDIT_PROFILE_ACCESSIBLE_NAME, profile_name));
+  current_profile_card_->SetAccessibleName(l10n_util::GetStringFUTF16(
+      IDS_PROFILES_EDIT_PROFILE_ACCESSIBLE_NAME, profile_name));
   return view;
 }
 
 views::View* ProfileChooserView::CreateGuestProfileView() {
-  gfx::Image guest_icon =
-      ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-          profiles::GetPlaceholderAvatarIconResourceID());
+  gfx::Image guest_icon = ui::ResourceBundle::GetSharedInstance().GetImageNamed(
+      profiles::GetPlaceholderAvatarIconResourceID());
   AvatarMenu::Item guest_avatar_item(0, base::FilePath(), guest_icon);
   guest_avatar_item.active = true;
-  guest_avatar_item.name = l10n_util::GetStringUTF16(
-      IDS_PROFILES_GUEST_PROFILE_NAME);
+  guest_avatar_item.name =
+      l10n_util::GetStringUTF16(IDS_PROFILES_GUEST_PROFILE_NAME);
   guest_avatar_item.signed_in = false;
 
   return CreateCurrentProfileView(guest_avatar_item, true);
@@ -1189,25 +1033,26 @@ views::View* ProfileChooserView::CreateGuestProfileView() {
 views::View* ProfileChooserView::CreateOptionsView(bool display_lock,
                                                    AvatarMenu* avatar_menu) {
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  const int vertical_spacing =
-      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL);
+  const int content_list_vert_spacing = provider->GetDistanceMetric(
+      views::DISTANCE_MULTI_HOVER_CONTENT_LIST_VERTICAL);
+
   views::View* view = new views::View();
   views::GridLayout* layout = CreateSingleColumnLayout(view, kFixedMenuWidth);
 
   const bool is_guest = browser_->profile()->IsGuestSession();
   const int kIconSize = 20;
-  // Add the user switching buttons
+  // Add the user switching buttons.
   const int kProfileIconSize = 18;
-  layout->StartRowWithPadding(1, 0, 0, vertical_spacing);
+  layout->StartRowWithPadding(1, 0, 0, content_list_vert_spacing);
   for (size_t i = 0; i < avatar_menu->GetNumberOfItems(); ++i) {
     const AvatarMenu::Item& item = avatar_menu->GetItemAt(i);
     if (!item.active) {
       gfx::Image image = profiles::GetSizedAvatarIcon(
           item.icon, true, kProfileIconSize, kProfileIconSize,
           profiles::SHAPE_CIRCLE);
-      views::LabelButton* button = new BackgroundColorHoverButton(
-          this, profiles::GetProfileSwitcherTextForItem(item),
-          *image.ToImageSkia());
+      views::LabelButton* button =
+          new views::HoverButton(this, *image.ToImageSkia(),
+                                 profiles::GetProfileSwitcherTextForItem(item));
       button->SetImageLabelSpacing(kMenuEdgeMargin);
       open_other_profile_indexes_map_[button] = i;
 
@@ -1223,10 +1068,11 @@ views::View* ProfileChooserView::CreateOptionsView(bool display_lock,
     PrefService* service = g_browser_process->local_state();
     DCHECK(service);
     if (service->GetBoolean(prefs::kBrowserGuestModeEnabled)) {
-      guest_profile_button_ = new BackgroundColorHoverButton(
-          this, l10n_util::GetStringUTF16(IDS_GUEST_PROFILE_NAME),
+      guest_profile_button_ = new views::HoverButton(
+          this,
           gfx::CreateVectorIcon(kAccountCircleIcon, kIconSize,
-                                gfx::kChromeIconGrey));
+                                gfx::kChromeIconGrey),
+          l10n_util::GetStringUTF16(IDS_GUEST_PROFILE_NAME));
       layout->StartRow(1, 0);
       layout->AddView(guest_profile_button_);
     }
@@ -1236,29 +1082,32 @@ views::View* ProfileChooserView::CreateOptionsView(bool display_lock,
       is_guest ? IDS_PROFILES_EXIT_GUEST : IDS_PROFILES_MANAGE_USERS_BUTTON);
   const gfx::VectorIcon& settings_icon =
       is_guest ? kCloseAllIcon : kSettingsIcon;
-  users_button_ = new BackgroundColorHoverButton(
-      this, text,
-      gfx::CreateVectorIcon(settings_icon, kIconSize, gfx::kChromeIconGrey));
+  users_button_ = new views::HoverButton(
+      this,
+      gfx::CreateVectorIcon(settings_icon, kIconSize, gfx::kChromeIconGrey),
+      text);
 
   layout->StartRow(1, 0);
   layout->AddView(users_button_);
 
   if (display_lock) {
-    lock_button_ = new BackgroundColorHoverButton(
-        this, l10n_util::GetStringUTF16(IDS_PROFILES_PROFILE_SIGNOUT_BUTTON),
+    lock_button_ = new views::HoverButton(
+        this,
         gfx::CreateVectorIcon(vector_icons::kLockIcon, kIconSize,
-                              gfx::kChromeIconGrey));
+                              gfx::kChromeIconGrey),
+        l10n_util::GetStringUTF16(IDS_PROFILES_PROFILE_SIGNOUT_BUTTON));
     layout->StartRow(1, 0);
     layout->AddView(lock_button_);
   } else if (!is_guest) {
-    close_all_windows_button_ = new BackgroundColorHoverButton(
-        this, l10n_util::GetStringUTF16(IDS_PROFILES_CLOSE_ALL_WINDOWS_BUTTON),
-        gfx::CreateVectorIcon(kCloseAllIcon, kIconSize, gfx::kChromeIconGrey));
+    close_all_windows_button_ = new views::HoverButton(
+        this,
+        gfx::CreateVectorIcon(kCloseAllIcon, kIconSize, gfx::kChromeIconGrey),
+        l10n_util::GetStringUTF16(IDS_PROFILES_CLOSE_ALL_WINDOWS_BUTTON));
     layout->StartRow(1, 0);
     layout->AddView(close_all_windows_button_);
   }
 
-  layout->StartRowWithPadding(1, 0, 0, vertical_spacing);
+  layout->AddPaddingRow(0, content_list_vert_spacing);
   return view;
 }
 
@@ -1293,7 +1142,7 @@ views::View* ProfileChooserView::CreateCurrentProfileAccountsView(
   std::string primary_account =
       SigninManagerFactory::GetForProfile(profile)->GetAuthenticatedAccountId();
   DCHECK(!primary_account.empty());
-  std::vector<std::string>accounts =
+  std::vector<std::string> accounts =
       profiles::GetSecondaryAccountsForProfile(profile, primary_account);
 
   // Get state of authentication error, if any.
@@ -1315,8 +1164,10 @@ views::View* ProfileChooserView::CreateCurrentProfileAccountsView(
   if (!profile->IsSupervised()) {
     layout->AddPaddingRow(0, vertical_spacing);
 
-    add_account_link_ = CreateLink(l10n_util::GetStringFUTF16(
-        IDS_PROFILES_PROFILE_ADD_ACCOUNT_BUTTON, avatar_item.name), this);
+    add_account_link_ = CreateLink(
+        l10n_util::GetStringFUTF16(IDS_PROFILES_PROFILE_ADD_ACCOUNT_BUTTON,
+                                   avatar_item.name),
+        this);
     add_account_link_->SetBorder(views::CreateEmptyBorder(
         0, provider->GetInsetsMetric(views::INSETS_DIALOG).left(),
         vertical_spacing, 0));
@@ -1333,8 +1184,8 @@ void ProfileChooserView::CreateAccountButton(views::GridLayout* layout,
                                              bool reauth_required,
                                              int width) {
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  std::string email = signin_ui_util::GetDisplayEmail(browser_->profile(),
-                                                      account_id);
+  std::string email =
+      signin_ui_util::GetDisplayEmail(browser_->profile(), account_id);
   ui::ResourceBundle* rb = &ui::ResourceBundle::GetSharedInstance();
   const gfx::ImageSkia* delete_default_image =
       rb->GetImageNamed(IDR_CLOSE_1).ToImageSkia();
@@ -1353,10 +1204,10 @@ void ProfileChooserView::CreateAccountButton(views::GridLayout* layout,
   const gfx::Insets dialog_insets =
       provider->GetInsetsMetric(views::INSETS_DIALOG);
 
-  int available_width = width - dialog_insets.width() -
-      kDeleteButtonWidth - warning_button_width;
-  views::LabelButton* email_button = new BackgroundColorHoverButton(
-      this, base::UTF8ToUTF16(email), warning_default_image);
+  int available_width =
+      width - dialog_insets.width() - kDeleteButtonWidth - warning_button_width;
+  views::LabelButton* email_button = new views::HoverButton(
+      this, warning_default_image, base::UTF8ToUTF16(email));
   email_button->SetEnabled(reauth_required);
   email_button->SetElideBehavior(gfx::ELIDE_EMAIL);
   email_button->SetMinSize(gfx::Size(0, kButtonHeight));
@@ -1401,12 +1252,12 @@ views::View* ProfileChooserView::CreateAccountRemovalView() {
   views::GridLayout* layout = CreateSingleColumnLayout(
       view, kFixedAccountRemovalViewWidth - dialog_insets.width());
 
-  view->SetBorder(
-      views::CreateEmptyBorder(0, dialog_insets.left(),
-                               dialog_insets.bottom(), dialog_insets.right()));
+  view->SetBorder(views::CreateEmptyBorder(
+      0, dialog_insets.left(), dialog_insets.bottom(), dialog_insets.right()));
 
-  const std::string& primary_account = SigninManagerFactory::GetForProfile(
-      browser_->profile())->GetAuthenticatedAccountId();
+  const std::string& primary_account =
+      SigninManagerFactory::GetForProfile(browser_->profile())
+          ->GetAuthenticatedAccountId();
   bool is_primary_account = primary_account == account_id_to_remove_;
 
   const int unrelated_vertical_spacing =
@@ -1423,7 +1274,8 @@ views::View* ProfileChooserView::CreateAccountRemovalView() {
         l10n_util::GetStringUTF16(IDS_PROFILES_SETTINGS_LINK);
     const base::string16 primary_account_removal_text =
         l10n_util::GetStringFUTF16(IDS_PROFILES_PRIMARY_ACCOUNT_REMOVAL_TEXT,
-            base::UTF8ToUTF16(email), settings_text, &offsets);
+                                   base::UTF8ToUTF16(email), settings_text,
+                                   &offsets);
     views::StyledLabel* primary_account_removal_label =
         new views::StyledLabel(primary_account_removal_text, this);
     primary_account_removal_label->AddStyleRange(
@@ -1444,8 +1296,7 @@ views::View* ProfileChooserView::CreateAccountRemovalView() {
   if (!is_primary_account) {
     remove_account_button_ = views::MdTextButton::CreateSecondaryUiBlueButton(
         this, l10n_util::GetStringUTF16(IDS_PROFILES_ACCOUNT_REMOVAL_BUTTON));
-    remove_account_button_->SetHorizontalAlignment(
-        gfx::ALIGN_CENTER);
+    remove_account_button_->SetHorizontalAlignment(gfx::ALIGN_CENTER);
     layout->StartRowWithPadding(1, 0, 0, unrelated_vertical_spacing);
     layout->AddView(remove_account_button_);
   } else {
@@ -1453,16 +1304,16 @@ views::View* ProfileChooserView::CreateAccountRemovalView() {
   }
 
   TitleCard* title_card = new TitleCard(
-      l10n_util::GetStringUTF16(IDS_PROFILES_ACCOUNT_REMOVAL_TITLE),
-      this, &account_removal_cancel_button_);
+      l10n_util::GetStringUTF16(IDS_PROFILES_ACCOUNT_REMOVAL_TITLE), this,
+      &account_removal_cancel_button_);
   return TitleCard::AddPaddedTitleCard(view, title_card,
-      kFixedAccountRemovalViewWidth);
+                                       kFixedAccountRemovalViewWidth);
 }
 
 bool ProfileChooserView::ShouldShowGoIncognito() const {
   bool incognito_available =
       IncognitoModePrefs::GetAvailability(browser_->profile()->GetPrefs()) !=
-          IncognitoModePrefs::DISABLED;
+      IncognitoModePrefs::DISABLED;
   return incognito_available && !browser_->profile()->IsGuestSession();
 }
 
