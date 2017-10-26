@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e258ec8_8c2acb8d",
+        "filename": "base/win/shortcut.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T10:13:11Z",
+      "side": 1,
+      "message": "nit: \ns/Version/version/\ns/Build/build/\nAnd add a comma after 14393.",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 12
+      },
+      "revId": "ed365995088e0e5120f79806a30357a002adfe3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cfa53a3_99527352",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T10:13:11Z",
+      "side": 1,
+      "message": "nit: \ns/in/in a/\nor\ns/in/in the/",
+      "range": {
+        "startLine": 99,
+        "startChar": 39,
+        "endLine": 99,
+        "endChar": 40
+      },
+      "revId": "ed365995088e0e5120f79806a30357a002adfe3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311c651b_6f5000cc",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T10:13:11Z",
+      "side": 1,
+      "message": "nit: Not sure this comment is needed. If someone removes the lib they\u0027re going to see linker errors right away, either locally or on the bots.",
+      "range": {
+        "startLine": 234,
+        "startChar": 38,
+        "endLine": 234,
+        "endChar": 47
+      },
+      "revId": "ed365995088e0e5120f79806a30357a002adfe3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563aa0d6_35f8740f",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T10:13:11Z",
+      "side": 1,
+      "message": "nit: End sentence with a period.",
+      "range": {
+        "startLine": 240,
+        "startChar": 14,
+        "endLine": 240,
+        "endChar": 17
+      },
+      "revId": "ed365995088e0e5120f79806a30357a002adfe3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9f1176_ee2425e0",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T10:13:11Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 242,
+        "startChar": 38,
+        "endLine": 242,
+        "endChar": 47
+      },
+      "revId": "ed365995088e0e5120f79806a30357a002adfe3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

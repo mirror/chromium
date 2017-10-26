@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "75343727_8b6fbe79",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T10:13:11Z",
+      "side": 1,
+      "message": "Well, if all else fails you can still look at the command line and read a flag yourself, right?\n\nI mean, this flag would be temporary, so going out of sync with the Feature conventions isn\u0027t really a big concern in the near future.",
+      "parentUuid": "0e6cdd05_7d1e345b",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb763108_f2e49c17",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -420,6 +438,30 @@
       "side": 1,
       "message": "I did try to make activator_reg a local variable in PrepareForNativeNotification() using the code snippet below:\n\nauto activator_reg \u003d std::make_unique\u003cActivatorRegister\u003e();\nactivator_reg-\u003eRun();\n\nHowever, after the change, the Activate() method in this file seems not to be called when Chrome is triggered to launch by clicking the toast notification, which is undesired. The reason behind this is unclear though.",
       "parentUuid": "611c8fe4_8368340c",
+      "range": {
+        "startLine": 253,
+        "startChar": 34,
+        "endLine": 253,
+        "endChar": 35
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f60dbd5_b6a6504c",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-26T10:13:11Z",
+      "side": 1,
+      "message": "I would expect that to not work because the destructor is called as soon as activator_reg goes out of scope at the end of the function. Can you try returning it instead and have the caller of this function manage the lifetime of the object?",
+      "parentUuid": "2ee04b33_1eeb0871",
       "range": {
         "startLine": 253,
         "startChar": 34,
