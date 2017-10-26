@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "79e2d7e6_baf12ed4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-26T00:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51b8e25f_9447d639",
+      "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f14be1b5_8bc952e3",
         "filename": "components/dom_distiller/core/distilled_page_prefs.cc",
         "patchSetId": 2
@@ -60,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "a7ca6d58_ebfb1293",
+        "filename": "components/dom_distiller/core/distilled_page_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-26T00:06:02Z",
+      "side": 1,
+      "message": "Moved kReaderForAccessibilityPref to pref_names.",
+      "parentUuid": "f14be1b5_8bc952e3",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae2c80bf_4ae5d169",
         "filename": "components/dom_distiller/core/distilled_page_prefs.cc",
         "patchSetId": 2
@@ -80,6 +122,30 @@
       "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84229d5_61d2fa11",
+        "filename": "components/dom_distiller/core/distilled_page_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-26T00:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae2c80bf_4ae5d169",
+      "range": {
+        "startLine": 27,
+        "startChar": 47,
+        "endLine": 27,
+        "endChar": 59
+      },
+      "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +193,30 @@
       "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e937416a_d2b6f3c6",
+        "filename": "components/dom_distiller/core/distilled_page_prefs_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-26T00:06:02Z",
+      "side": 1,
+      "message": "Oops. Forgot to revert a separate implementation.",
+      "parentUuid": "3f9a3a25_72c3916f",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 55
+      },
+      "revId": "c0fc1ccbf911be8fc681e981db1816857b486912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
