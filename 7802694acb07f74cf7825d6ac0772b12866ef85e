@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb1902be_e4db6851",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T18:45:38Z",
+      "side": 1,
+      "message": "nit: CheckingUrl or CHECKING_URL ?",
+      "range": {
+        "startLine": 107,
+        "startChar": 45,
+        "endLine": 107,
+        "endChar": 53
+      },
+      "revId": "7802694acb07f74cf7825d6ac0772b12866ef85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ce315f_0db32181",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T18:45:38Z",
+      "side": 1,
+      "message": "Here also.",
+      "range": {
+        "startLine": 135,
+        "startChar": 24,
+        "endLine": 135,
+        "endChar": 32
+      },
+      "revId": "7802694acb07f74cf7825d6ac0772b12866ef85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

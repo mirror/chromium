@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "676b6fd4_e181315b",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-26T18:45:38Z",
+      "side": 0,
+      "message": "why remove this?",
+      "range": {
+        "startLine": 230,
+        "startChar": 4,
+        "endLine": 231,
+        "endChar": 29
+      },
+      "revId": "fd89fae64111cbc80f7f3d07e899784c0428edd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
