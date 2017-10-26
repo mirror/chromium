@@ -70,6 +70,24 @@
       "revId": "aeaa916deed5e1f5a0912d2949ff608aceef2379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bcb422_757d564c",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-10-26T20:07:37Z",
+      "side": 1,
+      "message": "Zooming out is happening every other refresh (maybe because proxy and data loading?)\n\nQuickest repro is to go to wikipedia, save a page (menu -\u003e download button), then go to chrome://offline-internals on Android phone. If you don\u0027t see the zoom-out, then refresh the page.  On my phone at least, the dialog is vertically centered with zoom-out, and horizontally centered without zoom-out, but never both at the same time?\n\nSince this is on an internals page, I\u0027m not willing to spend much more time trying to get this super-centered. The dump to json button which uses a data-url before is completely broken, and priority should be to at least be able to view the contents first.",
+      "parentUuid": "4e24d3fc_1962cf78",
+      "revId": "aeaa916deed5e1f5a0912d2949ff608aceef2379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
