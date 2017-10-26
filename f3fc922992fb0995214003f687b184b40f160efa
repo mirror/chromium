@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b99baf6_76863ccf",
+        "filename": "chrome/browser/chromeos/events/event_rewriter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T22:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4f0a1c2_2028694a",
+      "revId": "f3fc922992fb0995214003f687b184b40f160efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aba294f4_b225e9f0",
         "filename": "ui/base/ime/input_method_chromeos.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-26T21:40:36Z",
       "side": 1,
       "message": "what\u0027s linux_chromeos? are you trying to handle the mode where an OS_CHROMEOS build of chrome is running on a regular linux system?",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 23
+      },
+      "revId": "f3fc922992fb0995214003f687b184b40f160efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26b943c_d496b96f",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T22:50:22Z",
+      "side": 1,
+      "message": "Yes, you are right. I changed the term to OS_CHROMEOS build of chrome running on linux.",
+      "parentUuid": "aba294f4_b225e9f0",
       "range": {
         "startLine": 69,
         "startChar": 9,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "125d6c2d_5e4621e1",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T22:50:22Z",
+      "side": 1,
+      "message": "I think |manager| is null only in unit tests.",
+      "parentUuid": "fa00106e_f24683dd",
+      "revId": "f3fc922992fb0995214003f687b184b40f160efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74c4ebd2_c2987f36",
         "filename": "ui/base/ime/input_method_chromeos.cc",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-10-26T21:40:36Z",
       "side": 1,
       "message": "is there a better place for this code? this method seems very high-level; should this instead be in an observer somewhere?",
+      "revId": "f3fc922992fb0995214003f687b184b40f160efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875fcb8b_e3122140",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T22:50:22Z",
+      "side": 1,
+      "message": "This Cl is reverting the changes in this CL:https://codereview.chromium.org/2763483002/ while keeping caps lock triggered by key up. The original code to handle caps lock synchronization was put here.",
+      "parentUuid": "74c4ebd2_c2987f36",
       "revId": "f3fc922992fb0995214003f687b184b40f160efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +168,24 @@
       "revId": "f3fc922992fb0995214003f687b184b40f160efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdead120_11298395",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-26T22:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af651e47_0006a5c5",
+      "revId": "f3fc922992fb0995214003f687b184b40f160efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
