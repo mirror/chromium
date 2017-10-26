@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "02a5f44e_9fc1e8aa",
+        "filename": "chrome/installer/zucchini/abs32_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-26T02:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "447d3c54_ca045eb8",
+      "range": {
+        "startLine": 56,
+        "startChar": 38,
+        "endLine": 56,
+        "endChar": 50
+      },
+      "revId": "3955241e99553ff993d999f2fd372a271395283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe668cd_651e0e0f",
         "filename": "chrome/installer/zucchini/disassembler_win32.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3955241e99553ff993d999f2fd372a271395283f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4172634c_81a98fae",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-26T02:03:43Z",
+      "side": 1,
+      "message": "Looks fine after git cl format; the whole line gets unwrapped!",
+      "parentUuid": "bfe668cd_651e0e0f",
+      "range": {
+        "startLine": 151,
+        "startChar": 18,
+        "endLine": 151,
+        "endChar": 22
+      },
+      "revId": "3955241e99553ff993d999f2fd372a271395283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,48 @@
     },
     {
       "key": {
+        "uuid": "2fd46eb5_b9ac9770",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-26T02:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76bd0113_026cda37",
+      "range": {
+        "startLine": 347,
+        "startChar": 21,
+        "endLine": 347,
+        "endChar": 28
+      },
+      "revId": "3955241e99553ff993d999f2fd372a271395283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79e9af1b_0633cddd",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-26T02:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b77bf4e8_daec3c81",
+      "revId": "3955241e99553ff993d999f2fd372a271395283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "407755c5_e99edddb",
         "filename": "chrome/installer/zucchini/image_utils.h",
         "patchSetId": 3
@@ -102,6 +192,24 @@
       "revId": "3955241e99553ff993d999f2fd372a271395283f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8dd02a1_8017efdd",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-26T02:03:43Z",
+      "side": 1,
+      "message": "Done, added comments. However, I take that raison d\u0027etre of WidthOf() to semantically isolate enum and the value is obvious enough to not require comment.",
+      "parentUuid": "407755c5_e99edddb",
+      "revId": "3955241e99553ff993d999f2fd372a271395283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
