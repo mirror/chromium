@@ -112,6 +112,8 @@ class AppMenuModel : public ui::SimpleMenuModel,
   AppMenuModel(ui::AcceleratorProvider* provider, Browser* browser);
   ~AppMenuModel() override;
 
+  void Init();
+
   // Overridden for ButtonMenuItemModel::Delegate:
   bool DoesCommandIdDismissMenu(int command_id) const override;
 
@@ -151,19 +153,8 @@ class AppMenuModel : public ui::SimpleMenuModel,
   // Calculates |zoom_label_| in response to a zoom change.
   void UpdateZoomControls();
 
- private:
-  class HelpMenuModel;
-  // Testing constructor used for mocking.
-  friend class ::MockAppMenuModel;
-
-  AppMenuModel();
-
-  void Build();
-
-  // Adds actionable global error menu items to the menu.
-  // Examples: Extension permissions and sign in errors.
-  // Returns a boolean indicating whether any menu items were added.
-  bool AddGlobalErrorMenuItems();
+ protected:
+  virtual void Build();
 
   // Appends everything needed for the clipboard menu: a menu break, the
   // clipboard menu content and the finalizing menu break.
@@ -176,9 +167,21 @@ class AppMenuModel : public ui::SimpleMenuModel,
   // menu content and then another menu break.
   void CreateZoomMenu();
 
-  void OnZoomLevelChanged(const content::HostZoomMap::ZoomLevelChange& change);
+ private:
+  class HelpMenuModel;
+  // Testing constructor used for mocking.
+  friend class ::MockAppMenuModel;
+
+  AppMenuModel();
 
   bool ShouldShowNewIncognitoWindowMenuItem();
+
+  // Adds actionable global error menu items to the menu.
+  // Examples: Extension permissions and sign in errors.
+  // Returns a boolean indicating whether any menu items were added.
+  bool AddGlobalErrorMenuItems();
+
+  void OnZoomLevelChanged(const content::HostZoomMap::ZoomLevelChange& change);
 
   // Called when a command is selected.
   // Logs UMA metrics about which command was chosen and how long the user
