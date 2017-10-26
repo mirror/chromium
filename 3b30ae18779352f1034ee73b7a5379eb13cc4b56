@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daedf5c0_e64e13f7",
+        "filename": "chrome/browser/ui/cocoa/test/menu_test_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T23:04:40Z",
+      "side": 1,
+      "message": "Currently just a theory, but could this result in flakiness? E.g. what if, the app event queue looks like\n\n - NSMenuDidBeginTrackingNotification\n - Another test/process opened a menu / focus loss\n\nnext iteration, after posting, we get\n\n - Another test/process opened a menu / focus loss\n - performOpenTasks\n\nThe next run loop iteration closes the menu, then performOpenTasks runs with the menu closed.\n\n\n\n(maybe it\u0027s not flaky, in which case this is fine. Maybe setOpenCallback can immediately post a task to run just in NSEventTrackingRunLoopMode - not sure if that would be more or less robust though..)",
+      "revId": "3b30ae18779352f1034ee73b7a5379eb13cc4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5c1d46_e608ef3c",
+        "filename": "chrome/browser/ui/cocoa/test/menu_test_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T23:04:40Z",
+      "side": 1,
+      "message": "I think passing @[ NSRunLoopCommonModes ] for inModes will also work -- https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16-SW12",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "3b30ae18779352f1034ee73b7a5379eb13cc4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
