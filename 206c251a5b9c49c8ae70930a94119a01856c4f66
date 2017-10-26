@@ -50,6 +50,24 @@
       "revId": "206c251a5b9c49c8ae70930a94119a01856c4f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5c0349_76da2e4b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-26T15:50:14Z",
+      "side": 1,
+      "message": "Agreed, that would be much better.",
+      "parentUuid": "cb7ef489_b824be79",
+      "revId": "206c251a5b9c49c8ae70930a94119a01856c4f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
