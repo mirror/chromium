@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db027a05_ff1f7dc4",
+        "filename": "media/gpu/va_surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-26T23:14:37Z",
+      "side": 1,
+      "message": "Why this assumption? Is there any code elsewhere that depends on the VASurface being YUV only?",
+      "revId": "1b0743b082bb2e1658dfd40beaaf224866f09a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e665616e_1140ad24",
+        "filename": "media/gpu/va_surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-26T23:14:37Z",
+      "side": 1,
+      "message": "Perhaps we could make it a OnceCallback while we are here please?",
+      "revId": "1b0743b082bb2e1658dfd40beaaf224866f09a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
