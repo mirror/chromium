@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "611691e6_bfd2e5cf",
+        "filename": "components/safe_browsing/browser/threat_details.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-26T18:52:44Z",
+      "side": 1,
+      "message": "reworded.",
+      "parentUuid": "3fc0fa8c_5bad6c05",
+      "range": {
+        "startLine": 189,
+        "startChar": 43,
+        "endLine": 189,
+        "endChar": 44
+      },
+      "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c32cdad3_4097b9c7",
         "filename": "components/safe_browsing/triggers/trigger_manager.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d13484c_6a9ec892",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-26T18:52:44Z",
+      "side": 1,
+      "message": "Good catch. Not possible but a weakptr is probably safer and more appropriate here.",
+      "parentUuid": "c32cdad3_4097b9c7",
+      "range": {
+        "startLine": 164,
+        "startChar": 70,
+        "endLine": 164,
+        "endChar": 74
+      },
+      "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "074bfeff_3ca963ff",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-26T18:52:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a30c99d_353ba3fe",
+      "range": {
+        "startLine": 168,
+        "startChar": 55,
+        "endLine": 168,
+        "endChar": 68
+      },
+      "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acd1247c_6e25b0c7",
         "filename": "components/safe_browsing/triggers/trigger_manager.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8b2c13e6_5c0e49d6",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-26T18:52:44Z",
+      "side": 1,
+      "message": "Yes, it can. Done.",
+      "parentUuid": "acd1247c_6e25b0c7",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 61
+      },
+      "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d064f7c5_495f1353",
         "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303a8f84_4db42729",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-26T18:52:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d064f7c5_495f1353",
+      "range": {
+        "startLine": 130,
+        "startChar": 21,
+        "endLine": 130,
+        "endChar": 38
+      },
+      "revId": "0fd4aa9b167f8804abe13abd3566ec5e1ae7b831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
