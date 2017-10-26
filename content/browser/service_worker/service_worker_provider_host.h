@@ -76,9 +76,10 @@ class WebContents;
 // navigation is initiated on the browser side. In that case, establishment of
 // Mojo's connection will be deferred until ServiceWorkerNetworkProvider is
 // created on the renderer.
-// Destruction of the ServiceWorkerProviderHost instance happens on
-// disconnection of the Mojo's pipe from the renderer side regardless of what
-// the provider is for.
+//
+// Destruction of the ServiceWorkerProviderHost instance happens upon
+// disconnection of the Mojo pipe from the renderer side regardless of what the
+// provider is for.
 class CONTENT_EXPORT ServiceWorkerProviderHost
     : public ServiceWorkerRegistration::Listener,
       public base::SupportsWeakPtr<ServiceWorkerProviderHost>,

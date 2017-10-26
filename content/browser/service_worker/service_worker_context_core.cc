@@ -327,6 +327,7 @@ void ServiceWorkerContextCore::AddProviderHost(
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
   int process_id = host->process_id();
   int provider_id = host->provider_id();
+  LOG(ERROR) << "adding provider: " << host->client_uuid();
   ProviderMap* map = GetProviderMapForProcess(process_id);
   if (!map) {
     providers_->AddWithID(base::MakeUnique<ProviderMap>(), process_id);

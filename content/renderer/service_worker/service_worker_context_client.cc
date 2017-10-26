@@ -229,6 +229,7 @@ void ToWebServiceWorkerRequest(const ServiceWorkerFetchRequest& request,
   web_request->SetRequestContext(
       GetBlinkRequestContext(request.request_context_type));
   web_request->SetFrameType(GetBlinkFrameType(request.frame_type));
+  LOG(ERROR) << "Setting client id: " << request.client_id;
   web_request->SetClientId(blink::WebString::FromUTF8(request.client_id));
   web_request->SetIsReload(request.is_reload);
   web_request->SetIntegrity(blink::WebString::FromUTF8(request.integrity));

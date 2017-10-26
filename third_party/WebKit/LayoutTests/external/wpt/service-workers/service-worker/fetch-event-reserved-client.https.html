@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>FetchEvent: reserved client</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/common/get-host-info.sub.js"></script>
+<script src="resources/test-helpers.sub.js"></script>
+<body>
+<script>
+const kScope = 'resources/';
+const kScript = 'resources/fetch-event-reserved-client-worker.js';
+let worker;
+
+function get_client_info(url) {
+    const saw_message = new Promise(resolve => {
+        navigator.serviceWorker.addEventListener('message',
+                                                 function listener(e) {
+            navigator.serviceWorker.removeEventListener('message', listener);
+            resolve(e.data);
+          });
+      });
+    worker.postMessage(url);
+    return saw_message;
+}
+
+promise_test(t => {
+    return service_worker_unregister_and_register(t, kScript, kScope)
+      .then(registration => {
+          promise_test(() => {
+              return registration.unregister();
+            }, 'restore global state');
+          worker = registration.installing;
+          return wait_for_state(t, worker, 'activated');
+        })
+  }, 'initialize global state');
+
+promise_test(t => {
+    let data;
+    return with_iframe(kScope + 'iframe')
+      .then(frame => {
+          add_completion_callback(() => { frame.remove(); });
+          data = JSON.parse(frame.contentDocument.body.textContent);
+          return get_client_info(frame.contentWindow.location.href)
+        })
+      .then(message => {
+          assert_equals(data.reservedClientId, message.clientId,
+              'reserved client id should match the resulting document');
+        })
+  }, 'FetchEvent#reservedClientId for iframe');
+
+promise_test(t => {
+    let data;
+    let win;
+    return Promise.resolve()
+      .then(() => {
+          win = window.open(kScope + 'window');
+          if (!win)
+            throw 'window.open() failed, is the test runner blocking popups?';
+          add_completion_callback(() => { win.close(); });
+          return new Promise(resolve => {
+                win.onload = resolve;
+            });
+        })
+      .then(() => {
+          data = JSON.parse(win.document.body.textContent);
+          return get_client_info(win.location.href)
+        })
+      .then(message => {
+          assert_equals(data.reservedClientId, message.clientId,
+              'reserved client id should match the resulting document');
+        })
+  }, 'FetchEvent#reservedClientId for window.open()');
+</script>
+<body>

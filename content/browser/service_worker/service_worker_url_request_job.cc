@@ -352,6 +352,7 @@ ServiceWorkerURLRequestJob::ServiceWorkerURLRequestJob(
       fetch_type_(fetch_type),
       timeout_(timeout),
       weak_factory_(this) {
+  LOG(ERROR) << "Create SWURLRequestJob with client_id: " << client_id_;
   DCHECK(delegate_) << "ServiceWorkerURLRequestJob requires a delegate";
 }
 
