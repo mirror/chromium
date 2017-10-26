@@ -79,6 +79,14 @@ void ImplicitAnimationObserver::StopObservingImplicitAnimations() {
   StopObserving();
 }
 
+bool ImplicitAnimationObserver::WasAnimationAborted() const {
+  for (auto& property_animation_status : property_animation_status_) {
+    if (property_animation_status.second == ANIMATION_STATUS_ABORTED)
+      return true;
+  }
+  return false;
+}
+
 bool ImplicitAnimationObserver::WasAnimationAbortedForProperty(
     LayerAnimationElement::AnimatableProperty property) const {
   return AnimationStatusForProperty(property) == ANIMATION_STATUS_ABORTED;

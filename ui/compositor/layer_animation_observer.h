@@ -117,6 +117,9 @@ class COMPOSITOR_EXPORT ImplicitAnimationObserver
   // waiting for.
   void StopObservingImplicitAnimations();
 
+  // Returns whether at least one observed animation was aborted.
+  bool WasAnimationAborted() const;
+
   // Returns whether animation for |property| was aborted.
   // Note that if the property wasn't animated, then it couldn't have been
   // aborted, so this will return false for that property.
