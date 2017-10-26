@@ -174,37 +174,44 @@ TEST_F(VirtualTimeTest,
   WebView().Scheduler()->SetVirtualTimePolicy(
       WebViewScheduler::VirtualTimePolicy::DETERMINISTIC_LOADING);
 
-  EXPECT_TRUE(WebView().Scheduler()->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            WebView().Scheduler()->GetTaskStatus());
 
   SimRequest main_resource("https://example.com/test.html", "text/html");
   SimRequest css_resource("https://example.com/test.css", "text/css");
 
   // Loading, virtual time should not advance.
   LoadURL("https://example.com/test.html");
-  EXPECT_FALSE(WebView().Scheduler()->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            WebView().Scheduler()->GetTaskStatus());
 
   main_resource.Start();
 
   // Still Loading, virtual time should not advance.
   main_resource.Write("<!DOCTYPE html><link rel=stylesheet href=test.css>");
-  EXPECT_FALSE(WebView().Scheduler()->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            WebView().Scheduler()->GetTaskStatus());
 
   // Still Loading, virtual time should not advance.
   css_resource.Start();
   css_resource.Write("a { color: red; }");
-  EXPECT_FALSE(WebView().Scheduler()->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            WebView().Scheduler()->GetTaskStatus());
 
   // Still Loading, virtual time should not advance.
   css_resource.Finish();
-  EXPECT_FALSE(WebView().Scheduler()->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            WebView().Scheduler()->GetTaskStatus());
 
   // Still Loading, virtual time should not advance.
   main_resource.Write("<body>");
-  EXPECT_FALSE(WebView().Scheduler()->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            WebView().Scheduler()->GetTaskStatus());
 
   // Finished loading, virtual time should be able to advance.
   main_resource.Finish();
-  EXPECT_TRUE(WebView().Scheduler()->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            WebView().Scheduler()->GetTaskStatus());
 }
 
 // http://crbug.com/633321

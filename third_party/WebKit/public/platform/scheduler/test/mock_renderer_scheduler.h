@@ -66,6 +66,14 @@ class MockRendererScheduler : public RendererScheduler {
   MOCK_METHOD1(SetRAILModeObserver, void(RAILModeObserver*));
   MOCK_METHOD1(MainThreadSeemsUnresponsive, bool(base::TimeDelta));
   MOCK_METHOD1(SetRendererProcessType, void(RendererProcessType));
+  MOCK_METHOD1(SetPendingDomStorageMessageCount, void(int));
+  MOCK_METHOD1(IncrementPendingLocalStorageMessageCount,
+               void(const std::string&));
+  MOCK_METHOD1(DecrementPendingLocalStorageMessageCount,
+               void(const std::string&));
+  MOCK_METHOD1(ClearPendingLocalStorageMessageCount, void(const std::string&));
+  MOCK_METHOD0(IncrementPendingIndexDbTransactionCount, void());
+  MOCK_METHOD0(DecrementPendingIndexDbTransactionCount, void());
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockRendererScheduler);
