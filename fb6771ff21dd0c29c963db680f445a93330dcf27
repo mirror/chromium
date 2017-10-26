@@ -46,6 +46,30 @@
       "revId": "fb6771ff21dd0c29c963db680f445a93330dcf27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e54d83_f217f3eb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 34657,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-26T23:01:47Z",
+      "side": 1,
+      "message": "Because the TOTAL_COUNT value is not recorded, it\u0027s indeed fine to use BooleanSuccess here.  enums.xml and histograms.xml just provide metadata that\u0027s used to create the dashboard UI.  There\u0027s nothing special about the BooleanSuccess enum in enums.xml, nor any of the other Boolean* enums there, other than it having two values.\n\nI realize that it\u0027s a bit confusing, because you\u0027re getting a crash based on recording to the same named histogram in two different ways.  Those two ways actually result in a fully compatible representation.  They simply do so via differing implementations, which is why you\u0027re seeing a crash.",
+      "parentUuid": "623c0669_b44ca2be",
+      "range": {
+        "startLine": 34657,
+        "startChar": 10,
+        "endLine": 34657,
+        "endChar": 42
+      },
+      "revId": "fb6771ff21dd0c29c963db680f445a93330dcf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
