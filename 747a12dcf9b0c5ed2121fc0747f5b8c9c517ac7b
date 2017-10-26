@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8595d26f_32035a19",
+        "filename": "components/crash/core/common/assertion_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-26T21:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30d5b54d_ad308a0b",
+      "revId": "747a12dcf9b0c5ed2121fc0747f5b8c9c517ac7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe70941d_56fbfd80",
         "filename": "components/crash/core/common/assertion_handler_unittest.mm",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T13:34:59Z",
       "side": 1,
       "message": "I don\u0027t think death tests work on iOS, and on top of that the crash unittest target is excluded on iOS.  I\u0027ll sort the BUILD.gn changes out later, but I may ask for help in getting these tests to run on iOS.",
+      "revId": "747a12dcf9b0c5ed2121fc0747f5b8c9c517ac7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27f4396_f99e8f16",
+        "filename": "components/crash/core/common/assertion_handler_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-26T21:02:40Z",
+      "side": 1,
+      "message": "Yeah, so I\u0027m a bit confused about this. According to the CHANGES file, googletest 1.7.0 supports death tests in the simulator. But I don\u0027t see how that works given the code (no TARGET_IPHONE_SIMULATOR conditions), nor do I see any corresponding changes for it. And it definitely doesn\u0027t work on the bots...\n\nhttps://github.com/google/googletest/blob/1f87a0970dc0880c954ea4066fd7b72fad6fb089/googletest/CHANGES#L3",
+      "parentUuid": "fe70941d_56fbfd80",
       "revId": "747a12dcf9b0c5ed2121fc0747f5b8c9c517ac7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
