@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cdd7688_b9036bf1",
+        "filename": "media/filters/source_buffer_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-26T21:10:46Z",
+      "side": 1,
+      "message": "Change this to state_ \u003d\u003d PARSER_INITIALIZED to report parse errors beyond the ::OnNewConfigs() for the first init segment in this case. Caveat:\n\nNote, though, that I\u0027ve also filed today bug 778800 due to a code smell : while OnNewConfigs()\u0027s sanity checks on the new configs may pass, there\u0027s possibility (at least in blink SourceBuffer::InitializationSegmentReceived() API) that blink\u0027s sanity checks might fail. In that case, if somehow another OnNewConfigs() occurs for this sourcebuffer later (unlikely but maybe blink\u0027s sanity check failure might go unnoticed??) and is selected for crash dump, then it wouldn\u0027t know about previous init segment failure by blink and think the SB is beyond a successful first init segment.",
+      "range": {
+        "startLine": 237,
+        "startChar": 8,
+        "endLine": 237,
+        "endChar": 36
+      },
+      "revId": "7111cde93ab0cf340e38f13f3ce35be438095d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
