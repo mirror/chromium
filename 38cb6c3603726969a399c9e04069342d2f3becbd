@@ -533,6 +533,24 @@
     },
     {
       "key": {
+        "uuid": "6e2efcc3_b5eb5697",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T23:49:48Z",
+      "side": 1,
+      "message": "This class should be unit testable with proper dependency injections. We may add 1 integration test, but we should aim for having more unit tests than integration tests.\n\nThis class has 3 methods and a few delegate callbacks. Let\u0027s inject _autofillManager and _JSAutofillManager mocks in init and test all public API on controller and controller delegate.",
+      "parentUuid": "e5de3268_72fa6ca7",
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c027218e_a8c04bbe",
         "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion.mm",
         "patchSetId": 13
