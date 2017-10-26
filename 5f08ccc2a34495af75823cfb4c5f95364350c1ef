@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e971e0e6_56f0711b",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T13:27:13Z",
+      "side": 1,
+      "message": "Ideally NotifyNavigationDelayed would not be intimately tied to TabUIHelper. Does returning DEFER here push state to content that TabUIHelper could observe?",
+      "range": {
+        "startLine": 1186,
+        "startChar": 0,
+        "endLine": 1186,
+        "endChar": 72
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0de6ee_4e8140e2",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T13:27:13Z",
+      "side": 1,
+      "message": "Don\u0027t you only care about this for the first navigation?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337fe340_168349b8",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T13:27:13Z",
+      "side": 1,
+      "message": "History may have the title. Are you sure you don\u0027t want to query it?",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4815ef41_9c04658c",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T13:27:13Z",
+      "side": 1,
+      "message": "Early out it navigation_delayed_ is false.",
+      "range": {
+        "startLine": 90,
+        "startChar": 18,
+        "endLine": 90,
+        "endChar": 46
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7916795a_2ad6ca35",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T13:27:13Z",
+      "side": 1,
+      "message": "How about: \"TabUIHelper is used by ui code to obtain the title and favicon for a WebContents. The values returned by TabUIHelper differ from the WebContents when the WebContents hasn\u0027t loaded.\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 68
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdad109f_9b9110ba",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T13:27:13Z",
+      "side": 1,
+      "message": "Add comments. From looking at this class it isn\u0027t at all clear who calls this or why.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 30
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6906cdc2_72ece551",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T13:27:13Z",
+      "side": 1,
+      "message": "Please move this into struct that is wrapped in a unique_ptr and only non-null when necessary.",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 22
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

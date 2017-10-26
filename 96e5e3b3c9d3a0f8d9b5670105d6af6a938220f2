@@ -141,6 +141,24 @@
       "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b52e08f_99de225e",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T13:27:13Z",
+      "side": 1,
+      "message": "I am not familiar with the mac code. Look to local owners if you have questions.",
+      "parentUuid": "1fb59c7d_e0b4b882",
+      "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
