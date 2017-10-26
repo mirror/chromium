@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90f4a1cc_254081d2",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-26T08:18:17Z",
+      "side": 1,
+      "message": "nit: needs {} if its more than 1 line.",
+      "range": {
+        "startLine": 892,
+        "startChar": 2,
+        "endLine": 894,
+        "endChar": 80
+      },
+      "revId": "d7e209631f1570951ef99caf38cd627178f40dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81917b8_5e1e2400",
+        "filename": "cc/tiles/tile_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1976,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-26T08:18:17Z",
+      "side": 1,
+      "message": "Looks like this comment belongs above line 1980?",
+      "range": {
+        "startLine": 1975,
+        "startChar": 2,
+        "endLine": 1976,
+        "endChar": 54
+      },
+      "revId": "d7e209631f1570951ef99caf38cd627178f40dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159456ea_fba4e6aa",
+        "filename": "cc/tiles/tile_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-26T08:18:17Z",
+      "side": 1,
+      "message": "Not sure I understood this comment. What are we stealing from the recycle tree?",
+      "range": {
+        "startLine": 2020,
+        "startChar": 2,
+        "endLine": 2020,
+        "endChar": 34
+      },
+      "revId": "d7e209631f1570951ef99caf38cd627178f40dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba38cea_de3e48d2",
+        "filename": "cc/tiles/tile_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-26T08:18:17Z",
+      "side": 1,
+      "message": "ASSERT_FALSE. Otherwise the next line will crash anyway.",
+      "range": {
+        "startLine": 2038,
+        "startChar": 2,
+        "endLine": 2038,
+        "endChar": 33
+      },
+      "revId": "d7e209631f1570951ef99caf38cd627178f40dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
