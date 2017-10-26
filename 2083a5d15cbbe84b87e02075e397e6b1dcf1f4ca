@@ -22,6 +22,30 @@
       "revId": "2083a5d15cbbe84b87e02075e397e6b1dcf1f4ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6dfbc3_9e4a29b3",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/download_metadata_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T23:14:32Z",
+      "side": 0,
+      "message": "\u003e !!\n\nyah - that gave a pretty weird compile error...",
+      "parentUuid": "d75e6ed1_0e67c4cd",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 43
+      },
+      "revId": "2083a5d15cbbe84b87e02075e397e6b1dcf1f4ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
