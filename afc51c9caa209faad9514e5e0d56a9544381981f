@@ -260,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "a9088c8f_ed014928",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-26T22:58:24Z",
+      "side": 1,
+      "message": "OK, I think I understand now why this case works, but I think I found another one which doesn\u0027t. :)\n\nI thought this setup wouldn\u0027t work because B*\u0027s proxy in A never had correct sandbox flags.  However, there\u0027s another flow that does allow things to work.  When we create B2 and call SetPendingFramePolicy from AddFrame, the new B2 FTN will now inherit the parent FTN\u0027s active_sandbox_flags() (https://chromium-review.googlesource.com/c/chromium/src/+/712711/13/content/browser/frame_host/frame_tree_node.cc#376), which means its effective_frame_policy will now be initialized with sandbox flags from B*.  Then, when we do the remote-to-local navigation in the grandchild, the replication state\u0027s effective_frame_policy.sandbox_flags in CreateProvisional will be used to initialize the frame\u0027s sandbox flags [1], and that now has the correct flags.  So this works even without having the sandbox flags for B*\u0027s RenderFrameProxy in A.\n\nBut, note that [1] is done by setting those flags on the RemoteFrameOwner for A2 (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp?l\u003d1631\u0026rcl\u003dbbe401d2e2fef44f3dc8b7992e96a913862f0cab), which isn\u0027t technically correct, as the flags don\u0027t come from the FrameOwner: they should\u0027ve been inherited from B*\u0027s RemoteFrame (its RemoteSecurityContext) instead.\n\nI think there might be a problem because of this: what if after the navigation to B2, B* updates the \u003ciframe\u003e sandbox attribute to something more permissive?  That would trigger FrameMsg_DidUpdateFramePolicy, which would overwrite the corresponding RemoteFrameOwner flags.  Suppose A2 then navigates to A3.  That seems like it might now get incorrect flags. :(\n\nI tested this by taking your ActiveSandboxFlagsCorrectInProxies test, and replacing the block with the baz.com grandchild navigation to:\n\n  EXPECT_TRUE(ExecuteScript(root-\u003echild_at(0),\n                            \"document.querySelector(\u0027iframe\u0027).sandbox \u003d \"\n                            \"    \u0027allow-scripts allow-popups\u0027;\"));\n  NavigateFrameToURL(root-\u003echild_at(0)-\u003echild_at(0),\n                     embedded_test_server()-\u003eGetURL(\"foo.com\", \"/title2.html\"));\n  EXPECT_EQ(\n      blink::WebSandboxFlags::kAll \u0026 ~blink::WebSandboxFlags::kScripts \u0026\n          ~blink::WebSandboxFlags::kAutomaticFeatures,\n      root-\u003echild_at(0)-\u003echild_at(0)-\u003eeffective_frame_policy().sandbox_flags);\n  EXPECT_EQ(\n      root-\u003echild_at(0)-\u003echild_at(0)-\u003eactive_sandbox_flags(),\n      root-\u003echild_at(0)-\u003echild_at(0)-\u003eeffective_frame_policy().sandbox_flags);\n  success \u003d false;\n  EXPECT_TRUE(ExecuteScriptAndExtractBool(\n      root-\u003echild_at(0)-\u003echild_at(0),\n      \"window.domAutomationController.send(\"\n      \"    !window.open(\u0027data:text/html,dataurl\u0027));\",\n      \u0026success));\n  EXPECT_TRUE(success);\n  EXPECT_EQ(1u, Shell::windows().size());\n\nThat fails and opens up the popup, whereas it should\u0027ve been still restricted by its parent\u0027s CSP sandbox flags which don\u0027t allow popups.  If we had the parent\u0027s flags on its RemoteSecurityContext, they would\u0027ve been properly combined with the more permissive flags on the RemoteFrameOwner on the Blink side in process A, here: \nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/FrameLoader.cpp?l\u003d1591\u0026rcl\u003d70b7e6f5a6563f28ad223cd41253bc543b774753.\n\nSeems like we might need to send the active_sandbox_flags to proxies after all, and use them to initialize the proxy\u0027s flags in RemoteSecurityContext.  We might also need to update RenderFrameProxy::OnDidUpdateFramePolicy to only update the FrameOwner flags, but not the RemoteSecurityContext flags -- currently it does both (https://cs.chromium.org/chromium/src/content/renderer/render_frame_proxy.cc?l\u003d301-302\u0026rcl\u003d4960963e7c323fdf88690697322175348af996f1), which might lead to this kind of confusion.  Let me know what you think.  Sorry this is so complex!",
+      "parentUuid": "f6f5a379_282d5ced",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49027139_52a29ead",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 8
