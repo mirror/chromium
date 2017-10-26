@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81672352_3a8ef68e",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-26T22:56:28Z",
+      "side": 1,
+      "message": "a few capitalization nits throughout these comments: should be \"Chrome\", \"Linux\", \"IME\", \"Caps Lock\"",
+      "revId": "e87e3b5c55c4f67a9dd87f2f5758444e8ad4f37b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
