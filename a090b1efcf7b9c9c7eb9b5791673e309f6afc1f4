@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49c9e2f5_57822669",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-26T04:23:45Z",
+      "side": 1,
+      "message": "Note: We are assuming that every LayoutNGBlockFlow with inline children is laid out with NG, and hence, has offset mapping.\n\nIf any change breaks the above assumption (e.g., disabling NG on contenteditable), extra checking is needed here.",
+      "revId": "a090b1efcf7b9c9c7eb9b5791673e309f6afc1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
