@@ -13,7 +13,6 @@ import android.support.test.filters.LargeTest;
 import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
 import android.support.v7.app.AlertDialog;
-import android.text.SpannableString;
 import android.widget.ListView;
 
 import org.junit.After;
@@ -229,54 +228,6 @@ public class ClearBrowsingDataPreferencesTest {
                         screen.findPreference(ClearBrowsingDataPreferences.PREF_GENERAL_SUMMARY));
                 Assert.assertNull(
                         screen.findPreference(ClearBrowsingDataPreferences.PREF_GOOGLE_SUMMARY));
-            }
-        });
-    }
-
-    /**
-     * Tests that for users who are signed in, both the general and the Google-specific footnotes
-     * are shown.
-     */
-    @Test
-    @MediumTest
-    public void testFooterSigned() throws Exception {
-        // Sign in.
-        SigninTestUtil.addAndSignInTestAccount();
-
-        final Preferences preferences =
-                mActivityTestRule.startPreferences(ClearBrowsingDataPreferences.class.getName());
-
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ClearBrowsingDataPreferences fragment =
-                        (ClearBrowsingDataPreferences) preferences.getFragmentForTest();
-                PreferenceScreen screen = fragment.getPreferenceScreen();
-
-                Assert.assertNotNull(
-                        screen.findPreference(ClearBrowsingDataPreferences.PREF_GENERAL_SUMMARY));
-
-                Preference google_summary =
-                        screen.findPreference(ClearBrowsingDataPreferences.PREF_GOOGLE_SUMMARY);
-                Assert.assertNotNull(google_summary);
-
-                // There is currently no clickable link in the Google-specific summary.
-                Assert.assertTrue(!(google_summary.getSummary() instanceof SpannableString)
-                        || ((SpannableString) google_summary.getSummary())
-                                        .getSpans(0, google_summary.getSummary().length(),
-                                                Object.class)
-                                        .length
-                                == 0);
-
-                // When the web history service reports that there are other forms of browsing
-                // history, we should show a link to them.
-                fragment.showNoticeAboutOtherFormsOfBrowsingHistory();
-                Assert.assertTrue(google_summary.getSummary() instanceof SpannableString);
-                Assert.assertTrue(
-                        ((SpannableString) google_summary.getSummary())
-                                .getSpans(0, google_summary.getSummary().length(), Object.class)
-                                .length
-                        == 1);
             }
         });
     }

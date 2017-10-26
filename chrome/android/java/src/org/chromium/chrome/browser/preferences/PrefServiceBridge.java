@@ -669,14 +669,6 @@ public final class PrefServiceBridge {
         nativeSetLastClearBrowsingDataTab(tabIndex);
     }
 
-    /**
-     * Migrate browsing data preferences when the new "clear browsing data" dialog with tabs is
-     * visited.
-     */
-    public void migrateBrowsingDataPreferences() {
-        nativeMigrateBrowsingDataPreferences();
-    }
-
     public void setAllowCookiesEnabled(boolean allow) {
         nativeSetAllowCookiesEnabled(allow);
     }
@@ -1018,7 +1010,6 @@ public final class PrefServiceBridge {
             int clearBrowsingDataTab, int timePeriod);
     private native int nativeGetLastClearBrowsingDataTab();
     private native void nativeSetLastClearBrowsingDataTab(int lastTab);
-    private native void nativeMigrateBrowsingDataPreferences();
     private native void nativeSetAutoplayEnabled(boolean allow);
     private native void nativeSetAllowCookiesEnabled(boolean allow);
     private native void nativeSetBackgroundSyncEnabled(boolean allow);
