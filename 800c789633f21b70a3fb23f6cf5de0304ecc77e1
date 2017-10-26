@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47a45546_3d3d9a48",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T17:26:19Z",
+      "side": 1,
+      "message": "Can you rephrase this a bit? What is \"scroll_boundary_behavior\" ? There\u0027s no variable with that name in this file.",
+      "revId": "800c789633f21b70a3fb23f6cf5de0304ecc77e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52fa637c_3d10d8b5",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T17:26:19Z",
+      "side": 1,
+      "message": "on",
+      "range": {
+        "startLine": 196,
+        "startChar": 60,
+        "endLine": 196,
+        "endChar": 62
+      },
+      "revId": "800c789633f21b70a3fb23f6cf5de0304ecc77e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01231685_30afe950",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T17:26:19Z",
+      "side": 1,
+      "message": "HistorySwiper. Isn\u0027t \"history_swiper\" the namespace or something?",
+      "range": {
+        "startLine": 198,
+        "startChar": 47,
+        "endLine": 198,
+        "endChar": 61
+      },
+      "revId": "800c789633f21b70a3fb23f6cf5de0304ecc77e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8601fc33_1d374fa1",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T17:26:19Z",
+      "side": 1,
+      "message": "I like to use ClassName, FuncName(), and |variable_name| in comments. In this case, adding the parens makes it obvious to readers that DidOverscroll is a function and not a class name. It may seem more obvious to you because you have been working on this code, whereas I am reading it for the first time.",
+      "range": {
+        "startLine": 199,
+        "startChar": 63,
+        "endLine": 199,
+        "endChar": 76
+      },
+      "revId": "800c789633f21b70a3fb23f6cf5de0304ecc77e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd68becc_f4e50ea6",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper_unit_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T17:26:19Z",
+      "side": 1,
+      "message": "Considering the mac_deployment_target GN build variable is set to 10.9.0, we can safely assume this is the case.",
+      "revId": "800c789633f21b70a3fb23f6cf5de0304ecc77e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf41b5a_1099df4b",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 3596,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T17:26:19Z",
+      "side": 1,
+      "message": "Can you double check and make sure it\u0027s actually needed?",
+      "revId": "800c789633f21b70a3fb23f6cf5de0304ecc77e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
