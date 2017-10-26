@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6174b578_aa7550be",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-26T08:19:23Z",
+      "side": 1,
+      "message": "chatted with yhirano offline.\n\nyhirano\u0027s comment:\nwe may want to remove success cases from each enum to avoid confusion of kAccessAllowed vs optnull.\n\nAfter the chat, I took a look my CORS change again, and notice that if we have the CORS error status as an optional struct containing following all three status, success would be still useful because the error would be on-hot.",
+      "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a32827db_aefeff4c",
         "filename": "services/network/public/interfaces/cors.mojom",
         "patchSetId": 2
