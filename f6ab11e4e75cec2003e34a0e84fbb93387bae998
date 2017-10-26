@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "317123a6_e09746fb",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-26T02:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7de246fb_0ba54ea3",
+      "range": {
+        "startLine": 53,
+        "startChar": 24,
+        "endLine": 53,
+        "endChar": 32
+      },
+      "revId": "f6ab11e4e75cec2003e34a0e84fbb93387bae998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd94c039_80457fb1",
         "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "f6ab11e4e75cec2003e34a0e84fbb93387bae998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9977cb_58f455fe",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-26T02:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd94c039_80457fb1",
+      "range": {
+        "startLine": 36,
+        "startChar": 25,
+        "endLine": 36,
+        "endChar": 30
+      },
+      "revId": "f6ab11e4e75cec2003e34a0e84fbb93387bae998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
