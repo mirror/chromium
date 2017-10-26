@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42c731f3_3d6fec4b",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-26T20:40:33Z",
+      "side": 1,
+      "message": "Done :).",
+      "parentUuid": "7278cc64_add61ed3",
+      "range": {
+        "startLine": 661,
+        "startChar": 11,
+        "endLine": 661,
+        "endChar": 16
+      },
+      "revId": "eec9394a454a5e7fc25c750a33801022b47ccff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f5a07ab_6e341c98",
         "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
         "patchSetId": 2
