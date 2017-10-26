@@ -16,6 +16,24 @@
       "revId": "40e32dfcdc79504866bd26469816810f2a3b83c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5470c71f_c23d7709",
+        "filename": "components/machine_intelligence/ranker_model_loader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-26T07:05:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7250733b_5a51498f",
+      "revId": "40e32dfcdc79504866bd26469816810f2a3b83c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

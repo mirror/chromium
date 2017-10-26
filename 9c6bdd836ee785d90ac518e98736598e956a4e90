@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c108891c_c2ebb45b",
+        "filename": "components/machine_intelligence/assist_ranker_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-26T07:05:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f898312e_76dc97ce",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b1468b5_99ff0f01",
         "filename": "components/machine_intelligence/assist_ranker_service.h",
         "patchSetId": 8
@@ -175,6 +193,24 @@
       "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a98c395_12e22ba5",
+        "filename": "components/machine_intelligence/base_predictor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-26T07:05:34Z",
+      "side": 1,
+      "message": "I went with the factory pattern you suggested, while keeping the test class as a friend to allow injection.\nRe:Injection\nI think it is good to have a way to decouple the model_loader logic from the predictor logic for unittests related to the RankerModelProto content. I agree that we also need to have an integration test for the creation process. However, to do this right I think it might require to create some test utils for the model_loader. I left this as a TODO for now.\nRe:Downsides\nMy point was that with the creation process in AssistRankerService, we would not need Predictor-specific factory code. We would have something like AssistRankerService::FetchPredictor\u003cBlah\u003e, which would not require any extra code in the derived predictors. In any case, I don\u0027t feel strongly, so I followed your recommendation. The templating is not necessary for now, and we can wait until we have several predictors before we do that. Templating a virtual function is not straightforward, and may actually make the code harder to read.",
+      "parentUuid": "b9b6f5e4_c0967a55",
+      "revId": "9c6bdd836ee785d90ac518e98736598e956a4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
