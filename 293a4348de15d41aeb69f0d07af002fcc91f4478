@@ -22,6 +22,30 @@
       "revId": "293a4348de15d41aeb69f0d07af002fcc91f4478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9931b8c_a845b4f2",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1001921
+      },
+      "writtenOn": "2017-10-26T23:04:29Z",
+      "side": 1,
+      "message": "Since default timeout is 1 hour and the longest webgl_conformance_tests run for 32 minutes, I don\u0027t think it is necessary. Thanks for the pointers, though!\nGuess we can verify if modifying these parameters works by submitting a dry run on android_optional_gpu_tests_rel, if you\u0027d like.",
+      "parentUuid": "69ca322d_9941ebc5",
+      "range": {
+        "startLine": 758,
+        "startChar": 7,
+        "endLine": 758,
+        "endChar": 8
+      },
+      "revId": "293a4348de15d41aeb69f0d07af002fcc91f4478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
