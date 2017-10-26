@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc391c2b_31f8f802",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-26T00:14:57Z",
+      "side": 1,
+      "message": "Yes, it will. Maybe this should be isVerified?",
+      "parentUuid": "56681535_83fbec17",
+      "range": {
+        "startLine": 52,
+        "startChar": 31,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "04899ad768c105d7e1438c4fd4b8f253e77138b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a46bcec4_39affd30",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T00:00:19Z",
       "side": 1,
       "message": "I understand what you\u0027re doing, but naming is wrong.\n\nA question of whether an APK is unbounded does not depend on whether notification was dismissed, whether notification is currently shown or on whether a flag for PWA persistent notification is enabled.\n\ns/isUnboundAPK/shouldShowDisclosure/\n\nor even better split the condition into:\n\nisUnboundAPK + isNotificationBlocked.\n\nif (!isUnboundAPK || isNotificationBlocked) return;\n\nor something along those lines.",
+      "range": {
+        "startLine": 54,
+        "startChar": 28,
+        "endLine": 54,
+        "endChar": 50
+      },
+      "revId": "04899ad768c105d7e1438c4fd4b8f253e77138b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d457110_6a173c5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-26T00:14:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a46bcec4_39affd30",
       "range": {
         "startLine": 54,
         "startChar": 28,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e3d8227e_49623235",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-26T00:14:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ff9c2bc9_af6ded63",
+      "range": {
+        "startLine": 70,
+        "startChar": 23,
+        "endLine": 70,
+        "endChar": 37
+      },
+      "revId": "04899ad768c105d7e1438c4fd4b8f253e77138b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6328bc00_d388e413",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-26T00:00:19Z",
       "side": 1,
       "message": "In the previous series of comments I asked whether you have to call updateTimeOfLastCheckForUpdatedWebManifest for TWAs, as it does not seem like it will have any impact on TWAs. Let me know if I\u0027m wrong.",
+      "range": {
+        "startLine": 458,
+        "startChar": 36,
+        "endLine": 458,
+        "endChar": 78
+      },
+      "revId": "04899ad768c105d7e1438c4fd4b8f253e77138b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c045a452_404a90f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-26T00:14:57Z",
+      "side": 1,
+      "message": "Hmm. That was why I added comment about this being a noop for TWAs. But now that we have the below calls, we can just avoid this for TWAs for now.",
+      "parentUuid": "6328bc00_d388e413",
       "range": {
         "startLine": 458,
         "startChar": 36,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bee27226_acc8d209",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-26T00:14:57Z",
+      "side": 1,
+      "message": "This part doesn\u0027t but the latter part -browser level confirmation- does relate to WebAPKs.\n\nI meant this as a way to say, these Activities are \"verified\" in some way or the other (It can be DAL or comment-signing). Maybe I need better naming here as well?",
+      "parentUuid": "10f3c7c2_9c311bc0",
+      "range": {
+        "startLine": 679,
+        "startChar": 23,
+        "endLine": 679,
+        "endChar": 30
+      },
+      "revId": "04899ad768c105d7e1438c4fd4b8f253e77138b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f3c4f39_266c8922",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-26T00:00:19Z",
       "side": 1,
       "message": "I find it confusing that:\n\nwebappActivity.getApkPackageName() !\u003d webappActivity.mWebappInfo.apkPackageName()\n\nI\u0027m concerned that it\u0027s so easy to miss the subtlety and do a wrong thing. What can we do to remove this confusion? Maybe rename those concepts?\n\nWebappActivity.getNativeClientPackageName() ? + make it not fall back to WebappInfo\n\nor something like that, a better name would be even better (ha!)",
+      "range": {
+        "startLine": 688,
+        "startChar": 4,
+        "endLine": 688,
+        "endChar": 10
+      },
+      "revId": "04899ad768c105d7e1438c4fd4b8f253e77138b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4197ff1_63d445ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-26T00:14:57Z",
+      "side": 1,
+      "message": "We do want to fallback to WebappInfo for WebAPKs because that is the only place they have this information.\n\nHow about keeping only the TWA bits here and pushing the WebappInfo related bits back to WebAPKActivity? This way we are showing two different ways to get the package name for the related APK as there are now two different ways to be associated with any APK.",
+      "parentUuid": "4f3c4f39_266c8922",
       "range": {
         "startLine": 688,
         "startChar": 4,
