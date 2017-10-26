@@ -38,6 +38,9 @@ class APP_LIST_EXPORT SearchResultObserver {
   // Invoked just before the SearchResult is destroyed.
   virtual void OnResultDestroying() {}
 
+  // Invoked ...
+  virtual void OnViewReadyChanged() {}
+
  protected:
   virtual ~SearchResultObserver() {}
 };

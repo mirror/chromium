@@ -132,6 +132,9 @@ class APP_LIST_EXPORT SearchResult {
   views::View* view() const { return view_; }
   void set_view(views::View* view) { view_ = view; }
 
+  bool view_ready() const { return view_ready_; }
+  void SetViewReady(bool view_ready);
+
   const std::string& id() const { return id_; }
   const std::string& comparable_id() const { return comparable_id_; }
 
@@ -232,6 +235,8 @@ class APP_LIST_EXPORT SearchResult {
   // The view has set_owned_by_client() property set. It's a responsibility of
   // SearchProvider to set this property and own this view.
   views::View* view_ = nullptr;
+
+  bool view_ready_ = true;
 
   std::string id_;
   // ID that can be compared across results from different providers to remove

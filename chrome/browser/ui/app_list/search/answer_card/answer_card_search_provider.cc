@@ -205,6 +205,10 @@ void AnswerCardSearchProvider::DidStopLoading(
   base::RecordAction(base::UserMetricsAction("SearchAnswer_StoppedLoading"));
 }
 
+void AnswerCardSearchProvider::DidFirstVisuallyNonEmptyPaint() {
+
+}
+
 void AnswerCardSearchProvider::UpdateResult() {
   SearchProvider::Results results;
 

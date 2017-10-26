@@ -65,10 +65,12 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
         search_result ? search_result->view() : nullptr;
 
     if (old_result_view != new_result_view) {
-      if (old_result_view != nullptr)
-        RemoveChildView(old_result_view);
-      if (new_result_view != nullptr)
+      //if (old_result_view != nullptr)
+        //RemoveChildView(old_result_view);
+      if (new_result_view != nullptr) {
         AddChildView(new_result_view);
+        new_result_view->SetVisible(false);
+      }
     }
 
     base::string16 old_title, new_title;
@@ -82,6 +84,7 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
       new_title = search_result_->title();
       SetAccessibleName(new_title);
     }
+    OnViewReadyChanged();
 
     return old_title != new_title;
   }
@@ -132,6 +135,15 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
 
   // SearchResultObserver overrides:
   void OnResultDestroying() override { search_result_ = nullptr; }
+
+  void OnViewReadyChanged() override {
+    if (search_result_ && search_result_->view_ready()) {
+      if (search_result_->view())
+        search_result_->view()->SetVisible(true);
+      //if (child_at(0))
+        //RemoveChildView(child_at(0));
+    }
+  }
 
  private:
   void UpdateBackgroundColor() {
@@ -185,6 +197,8 @@ int SearchResultAnswerCardView::DoUpdate() {
 
   const bool have_result =
       !display_results.empty() && !features::IsAnswerCardDarkRunEnabled();
+  //if (have_result)
+    //display_results[0]->view()->SetVisible(false);
 
   const bool title_changed = search_answer_container_view_->SetSearchResult(
       have_result ? display_results[0] : nullptr);

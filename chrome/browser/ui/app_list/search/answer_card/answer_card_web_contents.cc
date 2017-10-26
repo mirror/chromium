@@ -175,6 +175,8 @@ void AnswerCardWebContents::LoadURL(const GURL& url) {
   load_params.should_clear_history_list = true;
   web_contents_->GetController().LoadURLWithParams(load_params);
 
+  LOG(ERROR) << "Load URL";
+  web_contents_->WasShown();
   web_contents_->GetRenderViewHost()->EnableAutoResize(
       gfx::Size(1, 1), gfx::Size(INT_MAX, INT_MAX));
 }
@@ -243,12 +245,21 @@ void AnswerCardWebContents::DidFinishNavigation(
                          &has_answer_card, &result_title, &issued_query);
   }
 
+  LOG(ERROR) << "did finish navigation";
+  web_contents_->WasShown();
   delegate()->DidFinishNavigation(this, navigation_handle->GetURL(), has_error,
                                   has_answer_card, result_title, issued_query);
 }
 
 void AnswerCardWebContents::DidStopLoading() {
+  LOG(ERROR) << "did stop loading";
+  web_contents_->WasShown();
   delegate()->DidStopLoading(this);
+}
+
+void AnswerCardWebContents::DidFirstVisuallyNonEmptyPaint() {
+  web_contents_->WasShown();
+  delegate()->DidFirstVisuallyNonEmptyPaint();
 }
 
 void AnswerCardWebContents::DidGetUserInteraction(
@@ -273,6 +284,14 @@ void AnswerCardWebContents::RenderViewHostChanged(
     DetachFromHost();
     AttachToHost(new_host->GetWidget());
   }
+}
+
+void AnswerCardWebContents::WasShown() {
+  LOG(ERROR) << "was shown is called";
+}
+
+void AnswerCardWebContents::WasHidden() {
+  LOG(ERROR) << "was hidden is called";
 }
 
 void AnswerCardWebContents::AttachToHost(content::RenderWidgetHost* host) {

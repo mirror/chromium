@@ -48,6 +48,7 @@ class AnswerCardSearchProvider : public SearchProvider,
                            const std::string& result_title,
                            const std::string& issued_query) override;
   void DidStopLoading(const AnswerCardContents* source) override;
+  void DidFirstVisuallyNonEmptyPaint() override;
 
  private:
   enum class RequestState {

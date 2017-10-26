@@ -39,6 +39,7 @@ class AnswerCardContents {
                                      const std::string& result_title,
                                      const std::string& issued_query) = 0;
     virtual void DidStopLoading(const AnswerCardContents* source) = 0;
+    virtual void DidFirstVisuallyNonEmptyPaint() = 0;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(Delegate);

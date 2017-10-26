@@ -62,6 +62,12 @@ void SearchResult::SetFormattedPrice(const base::string16& formatted_price) {
     observer.OnFormattedPriceChanged();
 }
 
+void SearchResult::SetViewReady(bool view_ready) {
+  view_ready_ = view_ready;
+  for (auto& observer : observers_)
+    observer.OnViewReadyChanged();
+}
+
 void SearchResult::SetActions(const Actions& sets) {
   actions_ = sets;
   for (auto& observer : observers_)
