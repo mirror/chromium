@@ -22,6 +22,30 @@
       "revId": "5e580c764d6ce523a2cbd2b6502b196e9efcf121",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf4dadb_48ed46bf",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-26T20:06:05Z",
+      "side": 0,
+      "message": "No. I have no idea how it got deleted. Anyway, I have added it back. Thanks!",
+      "parentUuid": "fd7d23cf_58b79f13",
+      "range": {
+        "startLine": 118,
+        "startChar": 5,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "5e580c764d6ce523a2cbd2b6502b196e9efcf121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

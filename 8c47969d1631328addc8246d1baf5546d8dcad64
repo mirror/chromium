@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "166f2941_de2c789c",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-26T20:06:05Z",
+      "side": 1,
+      "message": "Yes, adding a switch works fine. Thanks~",
+      "parentUuid": "75343727_8b6fbe79",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb763108_f2e49c17",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -462,6 +480,30 @@
       "side": 1,
       "message": "I would expect that to not work because the destructor is called as soon as activator_reg goes out of scope at the end of the function. Can you try returning it instead and have the caller of this function manage the lifetime of the object?",
       "parentUuid": "2ee04b33_1eeb0871",
+      "range": {
+        "startLine": 253,
+        "startChar": 34,
+        "endLine": 253,
+        "endChar": 35
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57984d02_07ec3fb6",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-26T20:06:05Z",
+      "side": 1,
+      "message": "PrepareForNativeNotification() is currently invoked via PostTask. Here is the code snippet:\nnotification_thread.task_runner()-\u003ePostTask(\n        FROM_HERE, base::Bind(\u0026PrepareForNativeNotification));\n\nThe only way to return activator_reg I could think of is to use PostTaskAndReply with the following pattern:\n\nnotification_thread.task_runner()-\u003ePostTaskAndReply(\n        FROM_HERE, base::Bind(\u0026PrepareForNativeNotification), base::Bind(\u0026OnCompletion, base::Passed(std::move(activator_reg))));\n\nvoid OnCompletion(std::unique_ptr\u003cActivatorRegister\u003e p);\n\nHowever, we often use |p| to carry the task run status. So I am not sure if using PostTaskAndReply is appropriate here. \n\nAny suggestions please? Thanks!",
+      "parentUuid": "2f60dbd5_b6a6504c",
       "range": {
         "startLine": 253,
         "startChar": 34,
