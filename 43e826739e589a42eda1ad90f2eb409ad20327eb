@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81206ae4_f2661ced",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-26T14:20:48Z",
+      "side": 1,
+      "message": "This is the requireInteraction bit BTW",
+      "revId": "43e826739e589a42eda1ad90f2eb409ad20327eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36a18e4_51e3c16e",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-26T14:20:48Z",
+      "side": 1,
+      "message": "Hmm. We should probably *not* include this attribute when timestamp.is_null(), since that\u0027d unintentionally yield a time far in the past. Sorry for missing this in the first round!",
+      "revId": "43e826739e589a42eda1ad90f2eb409ad20327eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
