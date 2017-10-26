@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27330de1_08bc548a",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsLine.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-26T19:39:04Z",
+      "side": 1,
+      "message": "I don\u0027t have a good idea to get rid of this VP. Fortunately, it\u0027s only a workaround for the bug mentioned above.\n\nAs we don\u0027t expect the same bug in NG, we won\u0027t be entering this branch in the NG version. So it seems fine.",
+      "range": {
+        "startLine": 477,
+        "startChar": 0,
+        "endLine": 479,
+        "endChar": 36
+      },
+      "revId": "6d541e265bf85b2e1a372d7d3ea5348181dc2220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2cb5e1_3eb0dc82",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsLine.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-26T19:39:04Z",
+      "side": 1,
+      "message": "Keeping this VP for similar reasons.",
+      "range": {
+        "startLine": 534,
+        "startChar": 0,
+        "endLine": 535,
+        "endChar": 44
+      },
+      "revId": "6d541e265bf85b2e1a372d7d3ea5348181dc2220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
