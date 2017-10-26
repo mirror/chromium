@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96f74d6c_4cbb46ec",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-26T18:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1b801e3_c253bfc7",
+      "revId": "f62adc73fbaba7e001810062c9e9c05d0aac18e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2891200_cf7585c4",
         "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.html",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "f62adc73fbaba7e001810062c9e9c05d0aac18e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f96f217_ee756d7d",
+        "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-26T18:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2891200_cf7585c4",
+      "range": {
+        "startLine": 12,
+        "startChar": 16,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "f62adc73fbaba7e001810062c9e9c05d0aac18e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
