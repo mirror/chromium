@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7eabb9be_bb1380c5",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controlling.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-26T12:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b304f3c4_e09c3475",
+      "revId": "a0b13ce2d6cc66ff7cb96ffc5200aeb0c65380d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "052e678b_d96cd5a9",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2db7518c_5bffb841",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-26T12:50:30Z",
+      "side": 1,
+      "message": "It takes it into account only when the adjustment behavior is always.\nI modified the CL to not have this behavior, so it does not take it into account.\nBut it is still better to use the value instead of putting 0 because \"it should always be 0\".",
+      "parentUuid": "052e678b_d96cd5a9",
+      "revId": "a0b13ce2d6cc66ff7cb96ffc5200aeb0c65380d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4bbe9b4_6f0592d7",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.mm",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "a0b13ce2d6cc66ff7cb96ffc5200aeb0c65380d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce2d867_66a33132",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-26T12:50:30Z",
+      "side": 1,
+      "message": "This was to allow the fake omnibox to become bigger than the NTPHeaderView.\nBut I did not like this pattern so I changed it. This change is no longer necessary.",
+      "parentUuid": "e4bbe9b4_6f0592d7",
+      "revId": "a0b13ce2d6cc66ff7cb96ffc5200aeb0c65380d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
