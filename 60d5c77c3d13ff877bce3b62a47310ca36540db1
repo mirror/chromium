@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4996e9e5_e59e23d8",
+        "filename": "third_party/WebKit/common/feature_policy/OWNERS",
+        "patchSetId": 17
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-26T19:25:33Z",
+      "side": 1,
+      "message": "My bad.\nYes, there\u0027s no longer code in content/child for feature policy.",
+      "parentUuid": "f9f184cf_c3fca968",
+      "revId": "60d5c77c3d13ff877bce3b62a47310ca36540db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b814077d_d099b337",
         "filename": "third_party/WebKit/common/feature_policy/feature_policy.h",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ef3c36dc_1af8f683",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-26T19:25:33Z",
+      "side": 1,
+      "message": "Yes.\nCode is used in content/browser/frame_host, content/browser/permissions, content/common/frame_message/frame_owner_properties/etc, etc.",
+      "parentUuid": "b814077d_d099b337",
+      "revId": "60d5c77c3d13ff877bce3b62a47310ca36540db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aad31fb6_857e520a",
         "filename": "third_party/WebKit/public/platform/WebFeaturePolicyFeature.h",
         "patchSetId": 17
@@ -50,6 +86,24 @@
       "revId": "60d5c77c3d13ff877bce3b62a47310ca36540db1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b34554_69e16815",
+        "filename": "third_party/WebKit/public/platform/WebFeaturePolicyFeature.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-26T19:25:33Z",
+      "side": 1,
+      "message": "My bad. I meant to delete this file after moving the enum definition to WebKit/common.",
+      "parentUuid": "aad31fb6_857e520a",
+      "revId": "60d5c77c3d13ff877bce3b62a47310ca36540db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
