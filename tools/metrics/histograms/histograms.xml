@@ -76182,7 +76182,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="ServiceWorkerCache.Cache.AddResponseType"
-    enum="ServiceWorkerCacheResponseType">
+    enum="FetchResponseType">
   <owner>nhiroki@chromium.org</owner>
   <summary>
     Records the response type to be added in the Cache by Cache.add()/addAll().
@@ -76190,7 +76190,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="ServiceWorkerCache.Cache.AllWritesResponseType"
-    enum="ServiceWorkerCacheResponseType">
+    enum="FetchResponseType">
   <owner>jkarlin@chromium.org</owner>
   <summary>
     Records the response type to be added in the Cache by all operations that
