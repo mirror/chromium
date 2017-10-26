@@ -813,14 +813,21 @@ TEST_F(CRWWebControllerTitleTest, TitleChange) {
   // Observes and waits for TitleWasSet call.
   class TitleObserver : public WebStateObserver {
    public:
-    explicit TitleObserver(WebState* web_state) : WebStateObserver(web_state) {}
+    explicit TitleObserver(WebState* web_state) : web_state_(web_state) {
+      web_state_->AddObserver(this);
+    }
+    ~TitleObserver() override { web_state_->RemoveObserver(this); }
     // Returns number of times |TitleWasSet| was called.
     int title_change_count() { return title_change_count_; }
     // WebStateObserver overrides:
     void TitleWasSet(WebState* web_state) override { title_change_count_++; }
+    void WebStateDestroyed(WebState* web_state) override { NOTREACHED(); }
 
    private:
+    WebState* web_state_;
     int title_change_count_ = 0;
+
+    DISALLOW_COPY_AND_ASSIGN(TitleObserver);
   };
 
   TitleObserver observer(web_state());
