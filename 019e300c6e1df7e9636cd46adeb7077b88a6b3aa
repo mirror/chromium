@@ -46,6 +46,30 @@
       "revId": "019e300c6e1df7e9636cd46adeb7077b88a6b3aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0134b555_a55c763c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-26T13:57:42Z",
+      "side": 1,
+      "message": "No, but with all the \"basic-card\" constants in the codebase, mistakes are definitely possible when adding new ones and ideally we wouldn\u0027t have to audit the codebase everytime we add one. We should keep an eye on the situation, wdyt?",
+      "parentUuid": "09d11b80_623daca3",
+      "range": {
+        "startLine": 152,
+        "startChar": 20,
+        "endLine": 152,
+        "endChar": 49
+      },
+      "revId": "019e300c6e1df7e9636cd46adeb7077b88a6b3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
