@@ -297,7 +297,9 @@ void Deprecation::GenerateReport(const LocalFrame* frame,
   // Send the deprecation report to the Reporting API.
   mojom::blink::ReportingServiceProxyPtr service;
   frame->Client()->GetInterfaceProvider()->GetInterface(&service);
-  service->QueueDeprecationReport(document->Url(), message, body->sourceFile(),
+  const KURL& document_url =
+      document->Url().IsNull() ? EmptyURL() : document->Url();
+  service->QueueDeprecationReport(document_url, message, body->sourceFile(),
                                   body->lineNumber());
 }
 

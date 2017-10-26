@@ -1832,6 +1832,7 @@ jumbo_source_set("blink_platform_unittests_sources") {
     "mojo/CommonCustomTypesStructTraitsTest.cpp",
     "mojo/GeometryStructTraitsTest.cpp",
     "mojo/KURLSecurityOriginTest.cpp",
+    "mojo/KURLStructTraitsTests.cpp",
     "scroll/ScrollableAreaTest.cpp",
     "scroll/ScrollbarThemeOverlayTest.cpp",
     "testing/ArenaTestHelpers.h",

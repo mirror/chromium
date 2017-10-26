@@ -96,4 +96,4 @@ TEST(KURLSecurityOriginStructTraitsTest, Basic) {
   EXPECT_FALSE(output->IsUnique());
 }
 
-}  // namespace url
+}  // namespace blink

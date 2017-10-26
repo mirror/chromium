@@ -15,6 +15,13 @@ namespace mojo {
 template <>
 struct StructTraits<url::mojom::blink::Url::DataView, ::blink::KURL> {
   static WTF::String url(const ::blink::KURL& blinkUrl) {
+    if (blinkUrl.IsNull()) {
+      // Currently, the far side of this connection will likely map to a GURL
+      // instance which does not support null URLs. Prevent null KURLs from
+      // being sent to avoid a situation where the two objects are not equal.
+      NOTREACHED() << "Cannot send null KURLs through Mojo";
+      return g_empty_string;
+    }
     if (!blinkUrl.IsValid() ||
         blinkUrl.GetString().length() > url::kMaxURLChars) {
       return g_empty_string;
