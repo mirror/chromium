@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c99feb98_6110f544",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-26T23:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23f764bd_dc650202",
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f287e17_73417796",
         "filename": "content/browser/media/cdm_file_impl.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dcc5dea_3c4bc8e5",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-26T23:00:29Z",
+      "side": 1,
+      "message": "Think I found it.",
+      "parentUuid": "9f287e17_73417796",
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "33eaef51_973ce167",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-26T23:00:29Z",
+      "side": 1,
+      "message": "Switched the DCHECK and condition to make it faster. Still want to fail if called out of order in case the other side of the mojo pipe is compromised.",
+      "parentUuid": "d5e25729_109c2d84",
+      "range": {
+        "startLine": 312,
+        "startChar": 6,
+        "endLine": 312,
+        "endChar": 69
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ce3c7ae_91ae94c6",
         "filename": "content/browser/media/cdm_file_impl.h",
         "patchSetId": 14
@@ -79,6 +139,30 @@
       "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17af662b_e2c3320a",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-26T23:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ce3c7ae_91ae94c6",
+      "range": {
+        "startLine": 27,
+        "startChar": 68,
+        "endLine": 27,
+        "endChar": 74
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "ffd808b3_6e7148ee",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-26T23:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30c8552d_f77a9604",
+      "range": {
+        "startLine": 41,
+        "startChar": 59,
+        "endLine": 43,
+        "endChar": 77
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c05120e_daa8df8b",
         "filename": "content/browser/media/cdm_file_impl.h",
         "patchSetId": 14
@@ -125,6 +233,30 @@
       "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73415e4b_bddc712c",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-26T23:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c05120e_daa8df8b",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 66
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "b1250139_11104f9b",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-26T23:00:29Z",
+      "side": 1,
+      "message": "It\u0027s convenient that they all have the same signature, as this is what gets called when OpenFile() completes. If they didn\u0027t it would just be another level of callback required.",
+      "parentUuid": "82f7d874_6868740f",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 42
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47cf178a_53d5781f",
         "filename": "content/browser/media/cdm_file_impl.h",
         "patchSetId": 14
@@ -171,6 +327,30 @@
       "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e0191c_011a96fe",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-26T23:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47cf178a_53d5781f",
+      "range": {
+        "startLine": 101,
+        "startChar": 53,
+        "endLine": 101,
+        "endChar": 54
+      },
+      "revId": "8e38aca32f3454fd63ea0e1c1b4e819786f7f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
