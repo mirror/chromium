@@ -421,11 +421,14 @@ int HttpCache::Transaction::TransitionToReadingState() {
   // Full request.
   // If it's a writer and a full request then it may read from the cache if its
   // offset is behind the current offset else from the network.
+  // TODO(crbug.com/778641) network transaction check is being added for the
+  // edge case crash reported in the bug.
   int disk_entry_size = entry_->disk_entry->GetDataSize(kResponseContentIndex);
-  if (read_offset_ == disk_entry_size || entry_->writers->network_read_only()) {
+  if ((read_offset_ == disk_entry_size &&
+       entry_->writers->network_transaction()) ||
+      entry_->writers->network_read_only()) {
     next_state_ = STATE_NETWORK_READ_CACHE_WRITE;
   } else {
-    DCHECK_LT(read_offset_, disk_entry_size);
     next_state_ = STATE_CACHE_READ_DATA;
   }
   return OK;
