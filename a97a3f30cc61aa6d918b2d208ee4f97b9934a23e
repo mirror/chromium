@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72c7692a_d3ff2cb6",
+        "filename": "chrome/browser/printing/cloud_print/privet_http.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-26T01:25:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db36ca5c_de50679c",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad7bca8d_bcd39caf",
         "filename": "chrome/browser/printing/cloud_print/privet_http_impl.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c33002_79dc51b3",
+        "filename": "chrome/browser/printing/cloud_print/privet_http_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-26T01:25:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad7bca8d_bcd39caf",
+      "range": {
+        "startLine": 120,
+        "startChar": 27,
+        "endLine": 120,
+        "endChar": 31
+      },
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,48 @@
     },
     {
       "key": {
+        "uuid": "92c00aa9_6beb4d84",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-26T01:25:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5832c9ba_c066bc03",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5147a952_f508e701",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-26T01:25:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eef57756_60c7dab5",
+      "range": {
+        "startLine": 215,
+        "startChar": 24,
+        "endLine": 215,
+        "endChar": 35
+      },
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8da997f_9f790c9b",
         "filename": "chrome/browser/printing/pwg_raster_converter.cc",
         "patchSetId": 4
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "ecf7a6ef_c77ea52e",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-26T01:25:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8da997f_9f790c9b",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51ad77ce_c1b33a68",
         "filename": "chrome/browser/printing/pwg_raster_converter.cc",
         "patchSetId": 4
@@ -113,6 +215,24 @@
       "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "799306e2_277b2b8e",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-26T01:25:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51ad77ce_c1b33a68",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "51b11254_498f61ca",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-26T01:25:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c175185_4e7336de",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "234b92f9_66a4471c",
         "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
         "patchSetId": 4
@@ -182,6 +320,24 @@
       "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15c03c0_9996bad4",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-26T01:25:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "234b92f9_66a4471c",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "ba827578_3f931a92",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-26T01:25:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa3201d6_91a69df1",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7438ca40_2fc95e74",
         "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
         "patchSetId": 4
@@ -219,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "e2c79b85_1b6d7efe",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-26T01:25:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7438ca40_2fc95e74",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a478293b_3dec8730",
         "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
         "patchSetId": 4
@@ -233,6 +425,24 @@
       "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0437001_5614dfa1",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-26T01:25:41Z",
+      "side": 1,
+      "message": "No. Did not realize this check was already here so removed the checks in the callers as only this location ensures privet_http_resolution_.reset() gets called.",
+      "parentUuid": "a478293b_3dec8730",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
