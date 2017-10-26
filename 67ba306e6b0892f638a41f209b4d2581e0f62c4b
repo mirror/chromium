@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c566293_e6dd3228",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T09:46:34Z",
+      "side": 1,
+      "message": "It looks like ProcessResume() is no-op. Maybe we can remove it in a follow-up.",
+      "revId": "67ba306e6b0892f638a41f209b4d2581e0f62c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
