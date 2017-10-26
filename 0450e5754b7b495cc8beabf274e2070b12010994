@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "50799cf3_9718a475",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-26T22:00:02Z",
+      "side": 1,
+      "message": "\u003d default should go in cc file iirc.",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "614576e1_1e2ee9ff",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 5
