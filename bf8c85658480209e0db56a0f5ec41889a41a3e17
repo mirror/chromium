@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32f45436_28ef9cf2",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-26T23:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ef2b9f8_ac081153",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a615bd7_0b92b79f",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40eddd4_4016bb30",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-26T23:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a615bd7_0b92b79f",
+      "range": {
+        "startLine": 314,
+        "startChar": 26,
+        "endLine": 314,
+        "endChar": 27
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5890f27f_02b4713e",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-26T23:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "495f5631_e9487321",
+      "range": {
+        "startLine": 332,
+        "startChar": 52,
+        "endLine": 332,
+        "endChar": 68
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fc874fa_8e3cfb29",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-26T22:34:00Z",
       "side": 1,
       "message": "I suspect you\u0027re going to have to handle the async version.",
+      "range": {
+        "startLine": 359,
+        "startChar": 4,
+        "endLine": 359,
+        "endChar": 10
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb154965_4e566253",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-26T23:08:16Z",
+      "side": 1,
+      "message": "This is handling the async version... If the subrequest\u0027s request returns an async result we cant do anything until the OnReadCompleted is called from the subrequest\u0027s request.\n\nIt is a little confusing because the job delegate\u0027s calls are only going to be called on the subrequest\u0027s events... The main request\u0027s events don\u0027t go through the job\u0027s delegate.",
+      "parentUuid": "7fc874fa_8e3cfb29",
       "range": {
         "startLine": 359,
         "startChar": 4,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "9904673d_33bd76e5",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-26T23:08:16Z",
+      "side": 1,
+      "message": "After speaking with you offline we can use net::GrowableIOBuffer, but then it\u0027s a bit more work to insert into it because we have to keep growing it. For now we are going to keep it a vector\u003cchar\u003e.",
+      "parentUuid": "2ca2df59_b247df50",
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "272682f6_b2bc3923",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 2
@@ -131,6 +245,30 @@
       "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f196a67a_d5f3783a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-26T23:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "272682f6_b2bc3923",
+      "range": {
+        "startLine": 1551,
+        "startChar": 165,
+        "endLine": 1551,
+        "endChar": 184
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "3e2de324_424c1d41",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-26T23:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0de7d930_e884d21a",
+      "range": {
+        "startLine": 1938,
+        "startChar": 31,
+        "endLine": 1938,
+        "endChar": 43
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e660d7c_5d211b54",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 2
@@ -168,6 +330,30 @@
       "writtenOn": "2017-10-26T22:34:00Z",
       "side": 1,
       "message": "Can we make sending the body optional?  I can see a use case where folks want to filter based on the mime type from the response headers, but don\u0027t actually need to see the responseBody (which can be large).",
+      "range": {
+        "startLine": 1940,
+        "startChar": 31,
+        "endLine": 1940,
+        "endChar": 43
+      },
+      "revId": "bf8c85658480209e0db56a0f5ec41889a41a3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164d5e97_f019005f",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-26T23:08:16Z",
+      "side": 1,
+      "message": "Interception is already quite expensive which is why I added patterns of urls to match against. Yes sending the body can be expensive, but I\u0027m not 100% convinced it\u0027s worth it to make it optional since the damage is already done. It will be easy in the future to make it more optional, no point in doing it now.",
+      "parentUuid": "4e660d7c_5d211b54",
       "range": {
         "startLine": 1940,
         "startChar": 31,
