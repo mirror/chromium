@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1d11776b_75fab8ae",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-26T20:10:03Z",
+      "side": 1,
+      "message": "I prefer not to shorten for clarity, but up to you. If you do end up leaving it,\ncan you change it to CanDeferInvalidation instead of DeferInvalidation?",
+      "parentUuid": "842b53ec_950df68b",
+      "revId": "51fe7d2b353143aad8009c024351d65aec85a620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "670f0773_7bb9bd1f",
         "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceObserver.h",
         "patchSetId": 3
