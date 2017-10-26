@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ebb838a_0eba8dfd",
+        "filename": "content/browser/frame_host/data_url_navigation_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-26T02:13:08Z",
+      "side": 1,
+      "message": "Could you explain why it matters whether this happens in the test harness constructor rather than in the body of the test?  Have you changed something so that it is now impossible to use ScopedFeatureList in the body of a browser test, or this there something unusual about this test in particular?",
+      "range": {
+        "startLine": 515,
+        "startChar": 0,
+        "endLine": 516,
+        "endChar": 60
+      },
+      "revId": "2124df3a4019db1d368b3de7e9560c5811838397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3362ec_ca9aea16",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-26T02:13:08Z",
+      "side": 1,
+      "message": "nit: s/not/but not",
+      "range": {
+        "startLine": 266,
+        "startChar": 70,
+        "endLine": 266,
+        "endChar": 73
+      },
+      "revId": "2124df3a4019db1d368b3de7e9560c5811838397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
