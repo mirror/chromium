@@ -133,6 +133,24 @@
     },
     {
       "key": {
+        "uuid": "eb635592_9ecd582d",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-26T00:49:55Z",
+      "side": 1,
+      "message": "Per offline discussion, it looks like this is trying to be a CancelableOnceCallback. We should ask tzik@ if we want to put something like that in base/.",
+      "parentUuid": "1433608f_79e10f20",
+      "revId": "a97a3f30cc61aa6d918b2d208ee4f97b9934a23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c175185_4e7336de",
         "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
         "patchSetId": 4
