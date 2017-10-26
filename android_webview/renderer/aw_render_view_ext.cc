@@ -6,8 +6,11 @@
 #include "android_webview/common/render_view_messages.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
+#include "third_party/WebKit/public/platform/WebRect.h"
+#include "third_party/WebKit/public/web/WebFrameWidget.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
+#include "third_party/WebKit/public/web/WebWidgetClient.h"
 
 namespace android_webview {
 
@@ -62,6 +65,14 @@ void AwRenderViewExt::CheckContentsSize() {
   // 0x0 size (this happens during initial load).
   if (contents_size.IsEmpty()) {
     contents_size = webview->ContentsPreferredMinimumSize();
+  } else {
+    // Convert contents_size to CSS scale.
+    blink::WebRect rect(0, 0, contents_size.width(), contents_size.height());
+    main_render_frame->GetWebFrame()
+        ->FrameWidget()
+        ->Client()
+        ->ConvertViewportToWindow(&rect);
+    contents_size.SetSize(rect.width, rect.height);
   }
 
   if (contents_size == last_sent_contents_size_)
