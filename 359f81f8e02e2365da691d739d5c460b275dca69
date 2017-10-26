@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35901d3c_8ded3631",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-26T15:39:37Z",
+      "side": 1,
+      "message": "As every test under NGInlineNodeTest uses this, you should use the\n  NGInlineNodeTest : public RenderingTest, private ScopedLayoutNGForTest ...\npattern.",
+      "revId": "359f81f8e02e2365da691d739d5c460b275dca69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab814a6_2a85b6f7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-26T15:39:37Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "359f81f8e02e2365da691d739d5c460b275dca69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d348e10_c8b9d183",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-26T15:39:37Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "359f81f8e02e2365da691d739d5c460b275dca69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae96d5f_109a000a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_child_iterator_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-26T15:39:37Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "359f81f8e02e2365da691d739d5c460b275dca69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
