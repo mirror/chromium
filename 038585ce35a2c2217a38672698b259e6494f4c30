@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e4d25f2_15e723ca",
+        "filename": "chrome/services/chrome_win_util/manifest.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-26T17:19:00Z",
+      "side": 1,
+      "message": "In which process did this code used to run?  The browser process? Where now?",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 25
+      },
+      "revId": "038585ce35a2c2217a38672698b259e6494f4c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
