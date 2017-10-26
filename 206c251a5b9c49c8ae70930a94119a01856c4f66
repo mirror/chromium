@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f69f7232_cd686f21",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-26T15:01:17Z",
+      "side": 1,
+      "message": "This new sentence is helpful, but would be better if we restructure the text to put the immediate context (i.e. what simplifications it is trying to do) around here, or move this sentence to the end of the docstring (after \"if the given list covers all...\").",
+      "revId": "206c251a5b9c49c8ae70930a94119a01856c4f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f6a9bb_319429e4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-26T15:01:17Z",
+      "side": 1,
+      "message": "Nit: is the extra space here intentional?",
+      "revId": "206c251a5b9c49c8ae70930a94119a01856c4f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7ef489_b824be79",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-26T15:01:17Z",
+      "side": 1,
+      "message": "Could you please add a comment to explain the `[0]`? Or even better, I feel like we shall have a version_specifier_for_builder method in BuilderList.",
+      "revId": "206c251a5b9c49c8ae70930a94119a01856c4f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
