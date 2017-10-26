@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
@@ -14,6 +15,7 @@
 #include "ash/shutdown_reason.h"
 #include "ash/system/power/power_button_controller.h"
 #include "ash/system/power/power_button_test_base.h"
+#include "ash/touch/touch_devices_controller.h"
 #include "ash/wm/lock_state_controller_test_api.h"
 #include "ash/wm/session_state_animator.h"
 #include "ash/wm/test_session_state_animator.h"
@@ -1016,6 +1018,38 @@ TEST_F(LockStateControllerTest, CancelClamshellDisplayOffAfterLock) {
   EXPECT_FALSE(power_button_controller_->TriggerDisplayOffTimerForTesting());
   EXPECT_FALSE(power_manager_client_->backlights_forced_off());
   UnlockScreen();
+}
+
+// Tests that the touchscreen status is updated appropriately when the screen is
+// turned off.
+TEST_F(LockStateControllerTest, UpdateTouchscreenStateForScreenOff) {
+  Shell::Get()->touch_devices_controller()->SetTouchscreenEnabled(
+      true, TouchscreenEnabledSource::GLOBAL);
+  Initialize(ButtonType::NORMAL, LoginStatus::USER);
+
+  // The touchscreen should remain enabled if the user manually turns the screen
+  // off.
+  power_manager_client_->SendBrightnessChanged(0, true /* user_initiated */);
+  EXPECT_TRUE(Shell::Get()->touch_devices_controller()->GetTouchscreenEnabled(
+      TouchscreenEnabledSource::GLOBAL));
+
+  // It should be disabled if the screen is turned off due to user inactivity.
+  power_manager_client_->SendBrightnessChanged(100, true /* user_initiated */);
+  power_manager_client_->SendBrightnessChanged(0, false /* user_initiated */);
+  EXPECT_FALSE(Shell::Get()->touch_devices_controller()->GetTouchscreenEnabled(
+      TouchscreenEnabledSource::GLOBAL));
+
+  // If kTouchscreenUsableWhileScreenOff is set, the touchscreen should be kept
+  // on.
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kTouchscreenUsableWhileScreenOff);
+  Shell::Get()->touch_devices_controller()->SetTouchscreenEnabled(
+      true, TouchscreenEnabledSource::GLOBAL);
+  ResetPowerButtonController();
+  Initialize(ButtonType::NORMAL, LoginStatus::USER);
+  power_manager_client_->SendBrightnessChanged(0, false /* user_initiated */);
+  EXPECT_TRUE(Shell::Get()->touch_devices_controller()->GetTouchscreenEnabled(
+      TouchscreenEnabledSource::GLOBAL));
 }
 
 }  // namespace ash
