@@ -16,6 +16,8 @@ enum CORSAccessStatus {
   kMultipleAllowOriginValues,
   kInvalidAllowOriginValue,
   kDisallowCredentialsNotSetToTrue,
+
+  kLast = kDisallowCredentialsNotSetToTrue,
 };
 
 // Enumerating the error conditions that CORS preflight
@@ -28,6 +30,8 @@ enum CORSPreflightStatus {
   // conditions:
   kPreflightMissingAllowExternal,
   kPreflightInvalidAllowExternal,
+
+  kLast = kPreflightInvalidAllowExternal,
 };
 
 // Enumerating the error conditions that CORS redirect target URL
@@ -36,4 +40,6 @@ enum CORSRedirectStatus {
   kRedirectSuccess,
   kRedirectDisallowedScheme,
   kRedirectContainsCredentials,
+
+  kLast = kRedirectContainsCredentials,
 };
