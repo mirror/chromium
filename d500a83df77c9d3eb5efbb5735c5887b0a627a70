@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1a4d4b9_039234b6",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller_unittest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-26T04:52:48Z",
+      "side": 1,
+      "message": "nit: CS should be spelled out as [code search] as it\u0027s not very common or obvious. Alternatively, how about just saying like [The function is only used in ....]?",
+      "revId": "d500a83df77c9d3eb5efbb5735c5887b0a627a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
