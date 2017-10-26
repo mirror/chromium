@@ -35,6 +35,8 @@
 #include "components/password_manager/core/browser/android_affiliation/affiliation_utils.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/password_ui_utils.h"
+#include "components/password_manager/core/browser/ui/export_flow.h"
+#include "components/password_manager/core/browser/ui/import_flow.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/password_manager/sync/browser/password_sync_util.h"
 #include "components/prefs/pref_service.h"
@@ -216,7 +218,6 @@ PasswordManagerPresenter::PasswordManagerPresenter(
     : populater_(this),
       exception_populater_(this),
       password_view_(password_view),
-      password_manager_porter_(this),
       password_access_authenticator_(
           base::BindRepeating(&PasswordManagerPresenter::OsReauthCall,
                               base::Unretained(this))) {
@@ -229,7 +230,11 @@ PasswordManagerPresenter::~PasswordManagerPresenter() {
     store->RemoveObserver(this);
 }
 
-void PasswordManagerPresenter::Initialize() {
+void PasswordManagerPresenter::Initialize(
+    password_manager::ExportFlow* export_flow,
+    password_manager::ImportFlow* import_flow) {
+  export_flow_ = export_flow;
+  import_flow_ = import_flow;
   PasswordStore* store = GetPasswordStore();
   if (store)
     store->AddObserver(this);
@@ -416,16 +421,12 @@ void PasswordManagerPresenter::SortEntriesAndHideDuplicates(
   }
 }
 
-void PasswordManagerPresenter::ImportPasswords(
-    content::WebContents* web_contents) {
-  password_manager_porter_.set_web_contents(web_contents);
-  password_manager_porter_.Load();
+void PasswordManagerPresenter::ImportPasswords() {
+  import_flow_->Load();
 }
 
-void PasswordManagerPresenter::ExportPasswords(
-    content::WebContents* web_contents) {
-  password_manager_porter_.set_web_contents(web_contents);
-  password_manager_porter_.Store();
+void PasswordManagerPresenter::ExportPasswords() {
+  export_flow_->Store();
 }
 
 void PasswordManagerPresenter::AddLogin(const autofill::PasswordForm& form) {
