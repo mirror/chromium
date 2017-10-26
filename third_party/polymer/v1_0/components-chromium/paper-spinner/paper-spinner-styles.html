@@ -58,12 +58,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       #spinnerContainer.active {
-        -webkit-animation: container-rotate var(--paper-spinner-container-rotation-duration) linear infinite;
         animation: container-rotate var(--paper-spinner-container-rotation-duration) linear infinite;
       }
 
       @-webkit-keyframes container-rotate {
-        to { -webkit-transform: rotate(360deg) }
       }
 
       @keyframes container-rotate {
@@ -104,10 +102,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * seems).
        */
       .active .spinner-layer {
-        -webkit-animation-name: fill-unfill-rotate;
-        -webkit-animation-duration: var(--paper-spinner-full-cycle-duration);
-        -webkit-animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
-        -webkit-animation-iteration-count: infinite;
         animation-name: fill-unfill-rotate;
         animation-duration: var(--paper-spinner-full-cycle-duration);
         animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
@@ -116,34 +110,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .active .spinner-layer.layer-1 {
-        -webkit-animation-name: fill-unfill-rotate, layer-1-fade-in-out;
         animation-name: fill-unfill-rotate, layer-1-fade-in-out;
       }
 
       .active .spinner-layer.layer-2 {
-        -webkit-animation-name: fill-unfill-rotate, layer-2-fade-in-out;
         animation-name: fill-unfill-rotate, layer-2-fade-in-out;
       }
 
       .active .spinner-layer.layer-3 {
-        -webkit-animation-name: fill-unfill-rotate, layer-3-fade-in-out;
         animation-name: fill-unfill-rotate, layer-3-fade-in-out;
       }
 
       .active .spinner-layer.layer-4 {
-        -webkit-animation-name: fill-unfill-rotate, layer-4-fade-in-out;
         animation-name: fill-unfill-rotate, layer-4-fade-in-out;
       }
 
       @-webkit-keyframes fill-unfill-rotate {
-        12.5% { -webkit-transform: rotate(135deg) } /* 0.5 * ARCSIZE */
-        25%   { -webkit-transform: rotate(270deg) } /* 1   * ARCSIZE */
-        37.5% { -webkit-transform: rotate(405deg) } /* 1.5 * ARCSIZE */
-        50%   { -webkit-transform: rotate(540deg) } /* 2   * ARCSIZE */
-        62.5% { -webkit-transform: rotate(675deg) } /* 2.5 * ARCSIZE */
-        75%   { -webkit-transform: rotate(810deg) } /* 3   * ARCSIZE */
-        87.5% { -webkit-transform: rotate(945deg) } /* 3.5 * ARCSIZE */
-        to    { -webkit-transform: rotate(1080deg) } /* 4   * ARCSIZE */
       }
 
       @keyframes fill-unfill-rotate {
@@ -267,41 +249,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .circle-clipper.left::after {
         left: 0;
         border-right-color: transparent !important;
-        -webkit-transform: rotate(129deg);
         transform: rotate(129deg);
       }
 
       .circle-clipper.right::after {
         left: -100%;
         border-left-color: transparent !important;
-        -webkit-transform: rotate(-129deg);
         transform: rotate(-129deg);
       }
 
       .active .gap-patch::after,
       .active .circle-clipper::after {
-        -webkit-animation-duration: var(--paper-spinner-expand-contract-duration);
-        -webkit-animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
-        -webkit-animation-iteration-count: infinite;
         animation-duration: var(--paper-spinner-expand-contract-duration);
         animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
         animation-iteration-count: infinite;
       }
 
       .active .circle-clipper.left::after {
-        -webkit-animation-name: left-spin;
         animation-name: left-spin;
       }
 
       .active .circle-clipper.right::after {
-        -webkit-animation-name: right-spin;
         animation-name: right-spin;
       }
 
       @-webkit-keyframes left-spin {
-        0% { -webkit-transform: rotate(130deg) }
-        50% { -webkit-transform: rotate(-5deg) }
-        to { -webkit-transform: rotate(130deg) }
       }
 
       @keyframes left-spin {
@@ -311,9 +283,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       @-webkit-keyframes right-spin {
-        0% { -webkit-transform: rotate(-130deg) }
-        50% { -webkit-transform: rotate(5deg) }
-        to { -webkit-transform: rotate(-130deg) }
       }
 
       @keyframes right-spin {
@@ -323,7 +292,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       #spinnerContainer.cooldown {
-        -webkit-animation: container-rotate var(--paper-spinner-container-rotation-duration) linear infinite, fade-out var(--paper-spinner-cooldown-duration) cubic-bezier(0.4, 0.0, 0.2, 1);
         animation: container-rotate var(--paper-spinner-container-rotation-duration) linear infinite, fade-out var(--paper-spinner-cooldown-duration) cubic-bezier(0.4, 0.0, 0.2, 1);
       }
 
