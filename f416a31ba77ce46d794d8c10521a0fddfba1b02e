@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "343b3e9f_724223db",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T22:46:04Z",
+      "side": 1,
+      "message": "Can you define helper function to take the location, begin, width, the min size, is_primary, and ratios?",
+      "revId": "f416a31ba77ce46d794d8c10521a0fddfba1b02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d435eb53_e55fa264",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-26T22:46:04Z",
+      "side": 1,
+      "message": "how about first get the total_length based on the orientation, then define min_size_left_ratio, min_size_right_ratio based on the orientation and primary/non primary? Then you can just compare the ratio and add it?",
+      "revId": "f416a31ba77ce46d794d8c10521a0fddfba1b02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
