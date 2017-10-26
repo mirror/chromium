@@ -292,13 +292,29 @@ ACTION_P4(VerifyReloadFinishedContext, web_state, url, context, is_web_page) {
 // Mocks WebStateObserver navigation callbacks.
 class WebStateObserverMock : public WebStateObserver {
  public:
-  WebStateObserverMock(WebState* web_state) : WebStateObserver(web_state) {}
+  WebStateObserverMock(WebState* web_state) : web_state_(web_state) {
+    web_state_->AddObserver(this);
+  }
+  ~WebStateObserverMock() override {
+    if (web_state_) {
+      web_state_->RemoveObserver(this);
+      web_state_ = nullptr;
+    }
+  }
   MOCK_METHOD2(DidStartNavigation,
                void(WebState* web_state, NavigationContext* context));
   MOCK_METHOD2(DidFinishNavigation,
                void(WebState* web_state, NavigationContext* context));
   MOCK_METHOD1(DidStartLoading, void(WebState* web_state));
   MOCK_METHOD1(DidStopLoading, void(WebState* web_state));
+  void WebStateDestroyed(WebState* web_state) {
+    DCHECK_EQ(web_state_, web_state);
+    web_state_->RemoveObserver(this);
+    web_state_ = nullptr;
+  }
+
+ private:
+  WebState* web_state_;
 };
 
 // Mocks WebStatePolicyDecider decision callbacks.
