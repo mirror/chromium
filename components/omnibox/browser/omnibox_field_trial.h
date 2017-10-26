@@ -10,6 +10,7 @@
 
 #include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/macros.h"
@@ -55,7 +56,7 @@ extern const base::Feature kUIExperimentSwapTitleAndUrl;
 extern const base::Feature kUIExperimentVerticalLayout;
 extern const base::Feature kUIExperimentVerticalMargin;
 extern const base::Feature kSpeculativeServiceWorkerStartOnQueryInput;
-}
+}  // namespace omnibox
 
 // The set of parameters customizing the HUP scoring.
 struct HUPScoringParams {
