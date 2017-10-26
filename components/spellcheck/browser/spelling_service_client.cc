@@ -107,7 +107,7 @@ bool SpellingServiceClient::RequestTextCheck(
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("spellcheck_lookup", R"(
         semantics {
-          sender: "Online Spellcheck"
+          sender: "Online Spellcheck2"
           description:
             "Chromium can provide smarter spell-checking, by sending the text "
             "that the users type into the browser, to Google's servers. This"
@@ -137,8 +137,42 @@ bool SpellingServiceClient::RequestTextCheck(
           }
         })");
 
+  net::NetworkTrafficAnnotationTag traffic_annotation2 =
+      net::DefineNetworkTrafficAnnotation("spellcheck_lookup", R"(
+        semantics {
+          description:
+            "Chromium can provide smarter spell-checking, by sending the text "
+            "that the users type into the browser, to Google's servers. This"
+            "allows users to use the same spell-checking technology used by "
+            "Google products, such as Docs. If the feature is enabled, "
+            "Chromium will send the entire contents of text fields as user "
+            "types them to Google, along with the browser’s default language. "
+            "Google returns a list of suggested spellings, which will be "
+            "displayed in the context menu."
+          trigger: "User types text into a text field or asks to correct a "
+                    "misspelled word."
+          data: "Text a user has typed into a text field. No user identifier "
+                "is sent along with the text."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: NO
+          setting:
+            "Users can enable or disable this feature via 'Use a web service "
+            "to help resolve spelling errors.' in Chromium's settings under "
+            "Advanced. The feature is disabled by default."
+          chrome_policy {
+            SpellCheckServiceEnabled {
+                policy_options {mode: MANDATORY}
+                SpellCheckServiceEnabled: false
+            }
+          }
+        })");
+
   net::URLFetcher* fetcher =
-      CreateURLFetcher(url, traffic_annotation).release();
+      CreateURLFetcher(url, rand() ? traffic_annotation : traffic_annotation2)
+          .release();
+
   data_use_measurement::DataUseUserData::AttachToFetcher(
       fetcher, data_use_measurement::DataUseUserData::SPELL_CHECKER);
   fetcher->SetRequestContext(
@@ -307,6 +341,5 @@ void SpellingServiceClient::OnURLFetchComplete(const net::URLFetcher* source) {
 std::unique_ptr<net::URLFetcher> SpellingServiceClient::CreateURLFetcher(
     const GURL& url,
     net::NetworkTrafficAnnotationTag traffic_annotation) {
-  return net::URLFetcher::Create(url, net::URLFetcher::POST, this,
-                                 traffic_annotation);
+  return net::URLFetcher::Create(url, net::URLFetcher::POST, this);
 }
