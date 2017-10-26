@@ -24,6 +24,7 @@ import android.util.SparseBooleanArray;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.metrics.RecordHistogram;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.browserservices.OriginVerifier;
 import org.chromium.chrome.browser.browserservices.OriginVerifier.OriginVerificationListener;
@@ -400,6 +401,8 @@ class ClientManager {
      */
     public synchronized boolean canSessionLaunchInTrustedWebActivity(
             CustomTabsSessionToken session, Uri origin) {
+        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.TRUSTED_WEB_ACTIVITY)) return false;
+
         SessionParams params = mSessionParams.get(session);
         if (params == null) return false;
         String packageName = params.getPackageName();
