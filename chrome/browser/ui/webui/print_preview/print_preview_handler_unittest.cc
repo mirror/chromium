@@ -76,7 +76,9 @@ PrinterInfo GetEmptyPrinterInfo() {
 base::Value GetPrintTicket(printing::PrinterType type, bool cloud) {
   bool is_privet_printer = !cloud && type == printing::kPrivetPrinter;
   bool is_extension_printer = !cloud && type == printing::kExtensionPrinter;
+
   base::Value ticket(base::Value::Type::DICTIONARY);
+  ticket.SetKey("pageRange", base::Value());  // entire document
 
   // Letter
   base::Value media_size(base::Value::Type::DICTIONARY);
@@ -506,8 +508,8 @@ TEST_F(PrintPreviewHandlerTest, Print) {
     handler()->HandlePrint(&args);
 
     // Verify correct PrinterHandler was called or that no handler was requested
-    // for local and cloud printers.
-    if (cloud || type == printing::kLocalPrinter) {
+    // for cloud printers.
+    if (cloud) {
       EXPECT_TRUE(handler()->NotCalled());
     } else {
       EXPECT_TRUE(handler()->CalledOnlyForType(type));
