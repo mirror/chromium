@@ -83,11 +83,11 @@ cr.define('extension_manager_tests', function() {
     test(assert(TestNames.ItemListVisibility), function() {
       var extension = getDataByName(manager.extensions, 'My extension 1');
 
-      var list = manager.$['items-list'];
+      var list = manager.$$('#itemsList');
       var listHasItemWithName = (name) =>
           !!list.extensions.find(el => el.name == name);
 
-      expectEquals(manager.extensions, manager.$['items-list'].extensions);
+      expectEquals(manager.extensions, manager.$$('#itemsList').extensions);
       expectTrue(listHasItemWithName('My extension 1'));
 
       manager.removeItem(extension);
@@ -130,7 +130,7 @@ cr.define('extension_manager_tests', function() {
       isActiveView(Page.SHORTCUTS);
 
       // Switch: item list -> detail view.
-      var item = manager.$['items-list'].$$('extensions-item');
+      var item = manager.$$('#itemsList').$$('extensions-item');
       assert(item);
       item.onDetailsTap_();
       Polymer.dom.flush();
@@ -149,7 +149,7 @@ cr.define('extension_manager_tests', function() {
 
     test(assert(TestNames.UrlNavigationToDetails), function() {
       isActiveView(Page.DETAILS);
-      var detailsView = manager.$['details-view'];
+      var detailsView = manager.$$('#detailsView');
       expectEquals('ldnnhddmnhbkjipkidpdiheffobcpfmf', detailsView.data.id);
     });
 
@@ -168,33 +168,37 @@ cr.define('extension_manager_tests', function() {
       // TODO(scottchen): maybe testing too many things in a single unit test.
       extensions.navigation.navigateTo(
           {page: Page.DETAILS, extensionId: extension.id});
-      Polymer.dom.flush();
-      var detailsView = manager.$['details-view'];
-      expectEquals(extension.id, detailsView.data.id);
-      expectEquals(oldDescription, detailsView.data.description);
-      expectEquals(
-          oldDescription,
-          detailsView.$$('.section .section-content').textContent.trim());
+      return test_util.eventToPromise('extensions-manager-page-ready', manager)
+          .then(() => {
+            var detailsView = manager.$$('#detailsView');
+            expectTrue(!!extension.id);
+            expectTrue(!!detailsView);
+            expectTrue(!!detailsView.data.id);
+            expectEquals(extension.id, detailsView.data.id);
+            expectEquals(oldDescription, detailsView.data.description);
+            expectEquals(
+                oldDescription,
+                detailsView.$$('.section .section-content').textContent.trim());
 
-      var extensionCopy = Object.assign({}, extension);
-      extensionCopy.description = newDescription;
-      manager.updateItem(extensionCopy);
-      expectEquals(extension.id, detailsView.data.id);
-      expectEquals(newDescription, detailsView.data.description);
-      expectEquals(
-          newDescription,
-          detailsView.$$('.section .section-content').textContent.trim());
+            var extensionCopy = Object.assign({}, extension);
+            extensionCopy.description = newDescription;
+            manager.updateItem(extensionCopy);
+            expectEquals(extension.id, detailsView.data.id);
+            expectEquals(newDescription, detailsView.data.description);
+            expectEquals(
+                newDescription,
+                detailsView.$$('.section .section-content').textContent.trim());
 
-      // Updating a different extension shouldn't have any impact.
-      var secondExtensionCopy = Object.assign({}, secondExtension);
-      secondExtensionCopy.description = 'something else';
-      manager.updateItem(secondExtensionCopy);
-      expectEquals(extension.id, detailsView.data.id);
-      expectEquals(newDescription, detailsView.data.description);
-      expectEquals(
-          newDescription,
-          detailsView.$$('.section .section-content').textContent.trim());
-
+            // Updating a different extension shouldn't have any impact.
+            var secondExtensionCopy = Object.assign({}, secondExtension);
+            secondExtensionCopy.description = 'something else';
+            manager.updateItem(secondExtensionCopy);
+            expectEquals(extension.id, detailsView.data.id);
+            expectEquals(newDescription, detailsView.data.description);
+            expectEquals(
+                newDescription,
+                detailsView.$$('.section .section-content').textContent.trim());
+          });
     });
   });
 

@@ -177,14 +177,6 @@ cr.define('extensions', function() {
       this.navigationListener_ = null;
     },
 
-    get keyboardShortcuts() {
-      return this.$['keyboard-shortcuts'];
-    },
-
-    get errorPage() {
-      return this.$['error-page'];
-    },
-
     /**
      * Initializes the page to reflect what's specified in the url so that if
      * the user visits chrome://extensions/?id=..., we land on the proper page.
@@ -325,27 +317,6 @@ cr.define('extensions', function() {
     },
 
     /**
-     * @param {Page} page
-     * @return {!(extensions.KeyboardShortcuts |
-     *            extensions.DetailView |
-     *            extensions.ItemList)}
-     * @private
-     */
-    getPage_: function(page) {
-      switch (page) {
-        case Page.LIST:
-          return this.$['items-list'];
-        case Page.DETAILS:
-          return this.$['details-view'];
-        case Page.SHORTCUTS:
-          return this.$['keyboard-shortcuts'];
-        case Page.ERRORS:
-          return this.$['error-page'];
-      }
-      assertNotReached();
-    },
-
-    /**
      * Changes the active page selection.
      * @param {PageState} newPage
      * @private
@@ -365,33 +336,42 @@ cr.define('extensions', function() {
 
       const fromPage = this.currentPage_ ? this.currentPage_.page : null;
       const toPage = newPage.page;
-      let data;
-      if (newPage.extensionId)
-        data = assert(this.getData_(newPage.extensionId));
 
-      if (toPage == Page.DETAILS)
-        this.detailViewItem_ = assert(data);
-      else if (toPage == Page.ERRORS)
-        this.errorPageItem_ = assert(data);
-
-      if (fromPage != toPage) {
-        /** @type {extensions.ViewManager} */ (this.$.viewManager)
-            .switchView(toPage);
-      } else {
-        /** @type {extensions.ViewManager} */ (this.$.viewManager)
-            .animateCurrentView('fade-in');
+      let lazyId = toPage + 'Lazy';
+      if (this.$[lazyId]) {
+        this.$[lazyId].get();
       }
 
-      if (newPage.subpage) {
-        assert(newPage.subpage == Dialog.OPTIONS);
-        assert(newPage.extensionId);
-        this.showOptionsDialog_ = true;
-        this.async(() => {
-          this.$$('#options-dialog').show(data);
-        });
-      }
+      this.async(() => {
+        let data;
+        if (newPage.extensionId)
+          data = assert(this.getData_(newPage.extensionId));
 
-      this.currentPage_ = newPage;
+        if (toPage == Page.DETAILS)
+          this.detailViewItem_ = assert(data);
+        else if (toPage == Page.ERRORS)
+          this.errorPageItem_ = assert(data);
+
+        if (fromPage != toPage) {
+          /** @type {extensions.ViewManager} */ (this.$.viewManager)
+              .switchView(toPage);
+        } else {
+          /** @type {extensions.ViewManager} */ (this.$.viewManager)
+              .animateCurrentView('fade-in');
+        }
+
+        if (newPage.subpage) {
+          assert(newPage.subpage == Dialog.OPTIONS);
+          assert(newPage.extensionId);
+          this.showOptionsDialog_ = true;
+          this.async(() => {
+            this.$$('#options-dialog').show(data);
+          });
+        }
+
+        this.currentPage_ = newPage;
+        this.fire('extensions-manager-page-ready');
+      });
     },
 
     /** @private */

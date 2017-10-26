@@ -298,6 +298,7 @@ var CrExtensionsManagerTest = class extends CrExtensionsBrowserTest {
   /** @override */
   get extraLibraries() {
     return super.extraLibraries.concat([
+      '../settings/test_util.js',
       'extension_manager_test.js',
     ]);
   }
