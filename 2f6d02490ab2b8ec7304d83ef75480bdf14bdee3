@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd44f005_865f4e7d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1989,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-26T04:19:49Z",
+      "side": 1,
+      "message": "nit: s/Position/const Position/",
+      "revId": "2f6d02490ab2b8ec7304d83ef75480bdf14bdee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04137ae1_b9b24fc2",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-26T04:19:49Z",
+      "side": 1,
+      "message": "nit: s/Position/const Position/",
+      "revId": "2f6d02490ab2b8ec7304d83ef75480bdf14bdee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b927d15a_2bcb577c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-26T04:19:49Z",
+      "side": 1,
+      "message": "Could you write explicitly as below?\n\nif (start_position.IsNull()) {\n  DCHECK(end_position.IsNull()) \u003c\u003c end_position;\n  return 0;\n}\nDCHECK(end_position.IsNotNull()) \u003c\u003c start_position;\n\nIn this way, debugger log provides more info.",
+      "range": {
+        "startLine": 1991,
+        "startChar": 0,
+        "endLine": 1993,
+        "endChar": 15
+      },
+      "revId": "2f6d02490ab2b8ec7304d83ef75480bdf14bdee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2fe928b_9c2059bf",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-26T04:19:49Z",
+      "side": 1,
+      "message": "I love the name |node_offset_pair|.\n(^_^)b",
+      "revId": "2f6d02490ab2b8ec7304d83ef75480bdf14bdee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4b21622_f8af7507",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-26T04:19:49Z",
+      "side": 1,
+      "message": "s/auto/const auto/",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 6
+      },
+      "revId": "2f6d02490ab2b8ec7304d83ef75480bdf14bdee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a760fca0_7848c0dc",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-26T04:19:49Z",
+      "side": 1,
+      "message": "Will you also make rest of API taking Node+offset to Position, won\u0027t you?",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 68
+      },
+      "revId": "2f6d02490ab2b8ec7304d83ef75480bdf14bdee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
