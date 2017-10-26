@@ -63,6 +63,24 @@
       "revId": "8f05275276f4058e02d37bee076d588098337e3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b403c575_9a5d4623",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-26T00:28:24Z",
+      "side": 1,
+      "message": "I see. I can think of several options: \n1) Do not modify these functions and put them directly into *.mojom. But I think the current names are a little ambiguous.\n\n2) Rename them, use better names than SetWallpaperFromUrl.\n\n3) Combine them into one. I don\u0027t feel strongly about this though.. because the use cases are separate, and they have very different parameters, although both of them accepts an ImageSkia. Right now based on the names, it\u0027s hard to tell their difference, so as long as we can clearly indicate their difference. (e.g. by renaming) then I think it\u0027s fine.\n\nWhat do you think?",
+      "parentUuid": "a49519c3_d480b612",
+      "revId": "8f05275276f4058e02d37bee076d588098337e3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

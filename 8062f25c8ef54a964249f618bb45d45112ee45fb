@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "6c83a5d5_71d2f794",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-26T00:28:24Z",
+      "side": 1,
+      "message": "Thanks for the explanation.",
+      "parentUuid": "e994ce81_998efbd4",
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "104b2ef9_d7f1c602",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 3
@@ -196,6 +214,24 @@
       "side": 1,
       "message": "It was not forgeotten. SetUserWallpaperInfo() is called in line 828 in this patch.",
       "parentUuid": "c68ea52e_49511ce0",
+      "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f89ede93_8d9086c5",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-26T00:28:24Z",
+      "side": 1,
+      "message": "I was referring to SetWallpaperFromImageSkia that does not include SetUserWallpaperInfo(). Please see [1]. SetUserWallpaperInfo is called by clients instead, right after SetWallpaperFromImageSkia. And this is the only place that SetUserWallpaperInfo is exposed outside of WallpaperManager.\n\nI think we should combine the SetUserWallpaperInfo call into SetWallpaperFromImageSkia, and that will require the url to be passed in as a parameter. \n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/extensions/wallpaper_private_api.cc?type\u003dcs\u0026q\u003dsetwallpaperfromimageskia\u0026sq\u003dpackage:chromium\u0026l\u003d344",
+      "parentUuid": "d179b216_c5b10103",
       "revId": "8062f25c8ef54a964249f618bb45d45112ee45fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
