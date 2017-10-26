@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60f65a51_1bfc7b20",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 11
+      },
+      "lineNbr": 3705,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-26T21:11:27Z",
+      "side": 1,
+      "message": "Nit: two bug links for a test might be a little confusing. Could use a short explanation like:\n\nIsolated from RTCPeerConnection-setRemoteDescription-tracks.html until crbug.com/777526 is implemented.",
+      "revId": "bae61a79ec7a3e716d56b8fc8eeabe2e417e2986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
