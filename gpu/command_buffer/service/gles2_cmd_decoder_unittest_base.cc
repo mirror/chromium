@@ -2183,7 +2183,7 @@ void GLES2DecoderTestBase::DoInitializeDiscardableTextureCHROMIUM(
   ClientDiscardableHandle handle(buffer, 0, shared_memory_id_);
 
   cmds::InitializeDiscardableTextureCHROMIUM cmd;
-  cmd.Init(texture_id, shared_memory_id_, 0);
+  cmd.Init(texture_id, static_cast<uint64_t>(shared_memory_id_) << 32);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
 }
 

@@ -55,6 +55,8 @@ source_set("common_sources") {
     "mailbox.h",
     "mailbox_holder.cc",
     "mailbox_holder.h",
+    "raw_memory_transfer_cache_entry.cc",
+    "raw_memory_transfer_cache_entry.h",
     "scheduling_priority.cc",
     "scheduling_priority.h",
     "sync_token.cc",
@@ -62,6 +64,7 @@ source_set("common_sources") {
     "texture_in_use_response.h",
     "thread_local.h",
     "time.h",
+    "transfer_cache_entry.h",
   ]
 
   configs += [ "//gpu:gpu_implementation" ]

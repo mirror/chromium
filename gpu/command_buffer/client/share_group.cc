@@ -350,7 +350,8 @@ class RangeIdHandler : public RangeIdHandlerInterface {
 };
 
 ShareGroup::ShareGroup(bool bind_generates_resource, uint64_t tracing_guid)
-    : bind_generates_resource_(bind_generates_resource),
+    : discardable_texture_manager_(&discardable_manager_),
+      bind_generates_resource_(bind_generates_resource),
       tracing_guid_(tracing_guid) {
   if (bind_generates_resource) {
     for (int i = 0;
