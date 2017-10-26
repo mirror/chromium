@@ -90,7 +90,9 @@ void ManifestVerifier::Verify(content::PaymentAppProvider::PaymentApps apps,
       // supported.
       // https://w3c.github.io/payment-method-basic-card/
       // https://w3c.github.io/webpayments/proposals/interledger-payment-method.html
-      if (method == "basic-card" || method == "interledger") {
+      // https://w3c.github.io/webpayments-methods-credit-transfer-direct-debit/
+      if (method == "basic-card" || method == "interledger" ||
+          method == "basic-credit-transfer") {
         verified_method_names.emplace_back(method);
         continue;
       }
