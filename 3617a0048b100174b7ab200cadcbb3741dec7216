@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0af08884_7089c759",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-26T11:42:11Z",
+      "side": 1,
+      "message": "Typo: superclass",
+      "range": {
+        "startLine": 37,
+        "startChar": 39,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "3617a0048b100174b7ab200cadcbb3741dec7216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151a811f_3f37231c",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-26T11:42:11Z",
+      "side": 1,
+      "message": "Typo",
+      "range": {
+        "startLine": 46,
+        "startChar": 22,
+        "endLine": 46,
+        "endChar": 25
+      },
+      "revId": "3617a0048b100174b7ab200cadcbb3741dec7216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
