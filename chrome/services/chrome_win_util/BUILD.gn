@@ -1,0 +1,30 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//services/service_manager/public/cpp/service.gni")
+import("//services/service_manager/public/service_manifest.gni")
+
+source_set("lib") {
+  sources = [
+    "chrome_win_util_service.cc",
+    "chrome_win_util_service.h",
+    "win_shell_util_impl.cc",
+    "win_shell_util_impl.h",
+  ]
+
+  deps = [
+    "//base",
+    "//mojo/public/cpp/bindings",
+  ]
+
+  public_deps = [
+    "//chrome/services/chrome_win_util/public/interfaces",
+    "//services/service_manager/public/cpp",
+  ]
+}
+
+service_manifest("manifest") {
+  name = "chrome_win_util"
+  source = "manifest.json"
+}

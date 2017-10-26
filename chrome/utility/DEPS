@@ -2,6 +2,8 @@ include_rules = [
   "+chrome/grit",
   "+chrome/installer/util",
   "+chrome/profiling",
+  "+chrome/services/chrome_win_util/chrome_win_util_service.h",
+  "+chrome/services/chrome_win_util/public/interfaces",
   "+components/font_service/font_service_app.h",
   "+components/payments/content/utility",
   "+components/printing/service/public/cpp",
