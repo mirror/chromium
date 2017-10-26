@@ -790,6 +790,14 @@
     "dependencies": ["permission:webrtcLoggingPrivate"],
     "contexts": ["blessed_extension"]
   },
+  "webrtcLoggingPrivate.getLogsDirectory": {
+    "whitelist": [
+      "4F25792AF1AA7483936DE29C07806F203C7170A0",  // http://crbug.com/775961
+      "BD8781D757D830FC2E85470A1B6E8A718B7EE0D9",  // http://crbug.com/775961
+      "4AC2B6C63C6480D150DFDA13E4A5956EB1D0DDBB",  // http://crbug.com/775961
+      "81986D4F846CEDDDB962643FA501D1780DD441BB"   // http://crbug.com/775961
+    ]
+  },
   "webstore": {
     // Hosted apps can use the webstore API from within a blessed context.
     "channel": "stable",
