@@ -93,6 +93,7 @@ void WebFormControlElement::SetValue(const WebString& value, bool send_events) {
 }
 
 void WebFormControlElement::SetAutofillValue(const WebString& value) {
+  LOG(ERROR) << "SetAutofillValue " << String(value);
   // The input and change events will be sent in setValue.
   if (IsHTMLInputElement(*private_) || IsHTMLTextAreaElement(*private_)) {
     if (!Focused()) {
@@ -132,6 +133,7 @@ WebString WebFormControlElement::Value() const {
 }
 
 void WebFormControlElement::SetSuggestedValue(const WebString& value) {
+  LOG(ERROR) << "WebFormControlElement::SetSuggestedValue " << String(value);
   if (auto* input = ToHTMLInputElementOrNull(*private_))
     input->SetSuggestedValue(value);
   else if (auto* textarea = ToHTMLTextAreaElementOrNull(*private_))

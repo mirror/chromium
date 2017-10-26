@@ -719,6 +719,8 @@ bool PasswordAutofillAgent::FillSuggestion(
     return false;
   }
 
+  LOG(ERROR) << "Fill password suggestion";
+
   password_info->password_was_edited_last = false;
   if (element->IsPasswordField()) {
     password_info->password_field_suggestion_was_accepted = true;
@@ -774,8 +776,8 @@ bool PasswordAutofillAgent::PreviewSuggestion(
     was_username_autofilled_ = username_element.IsAutofilled();
     username_element.SetSuggestedValue(username);
     username_element.SetAutofilled(true);
-    form_util::PreviewSuggestion(username_element.SuggestedValue().Utf16(),
-                                 username_query_prefix_, &username_element);
+    // form_util::PreviewSuggestion(username_element.SuggestedValue().Utf16(),
+    //                             username_query_prefix_, &username_element);
   }
   was_password_autofilled_ = password_element.IsAutofilled();
   password_element.SetSuggestedValue(password);
