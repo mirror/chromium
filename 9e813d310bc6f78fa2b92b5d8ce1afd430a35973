@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "67068a62_7870ed6a",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Sounds plausible, but I\u0027m still sketchy on what ownership means in c++.  Is this saying that the web_contents will have the main reference to the observer and will be responsible for cleaning up?  If so I\u0027m confused as to how to reconcile that with the cleanup calls in \u0027xStopLoading\u0027 and \u0027xStartNavxx\u0027 below, but I\u0027m probably misunderstanding something.",
+      "parentUuid": "6991bb55_c8ba2b71",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b2caa8a_40c960ea",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-24T17:12:54Z",
       "side": 1,
       "message": "Will the conditions that enable fullscreen-in-tab behavior guaranteed to be active at the time you fullscreen the video element?",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176c5c14_70c8aea3",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "In my testing so far they always have been, but I\u0027ll look back through the implementation and see.  Since we are always initiating this through the mr ui I\u0027m assuming the answer is yes we will always be capturing the tab and therefore fs-in-tab will be applicable.\n\nI\u0027ll add a comment to clarify.",
+      "parentUuid": "5b2caa8a_40c960ea",
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2d6817ca_d9ad11aa",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Ack.  I\u0027ll remove the DCHECK.",
+      "parentUuid": "558364bb_c86023da",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b87e966f_d4bbc7e0",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -123,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "6983fd57_1486d89c",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Both good questions.  In my experiments it\u0027s worked fine (ie a video element has been created already by the time this runs).  I haven\u0027t tried to click stop to see what happens (but I will give it a try).",
+      "parentUuid": "721bd00c_91063687",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6045e7d_903a5918",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -134,6 +206,24 @@
       "writtenOn": "2017-10-24T17:12:54Z",
       "side": 1,
       "message": "Does it matter where the user is navigating to?  They could be navigating to another file: URL.",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc87ff0c_1eeb2199",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "I think in this case we don\u0027t care.  If they use the tab we created for anything at all we bail on this attempt and clean up.  If they initiated another local cast (via the mr ui) then we will create a new tab and observer there so we don\u0027t need to worry about the one that was created first.  (I\u0027ll try and test out some scenario\u0027s with this though to verify things).",
+      "parentUuid": "e6045e7d_903a5918",
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -157,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "1aed7839_165d5811",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Should we save the URL from when the file is selected?  Per my reply above, if the user actually did anything with this tab we want to bail anyway so this looks ok to me, but we could be more refined in the approach here.",
+      "parentUuid": "37642332_ee49b3ee",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2101fcce_ad7d6cb7",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -168,6 +276,24 @@
       "writtenOn": "2017-10-24T17:12:54Z",
       "side": 1,
       "message": "This method, along with MaybeReportFileInformation, is specific to casting of local media files.  I think we should eventually split the logic for the local media casting flow into a separate class from MediaRouterUI.",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a23149_dd3dfc62",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Sounds good to me.  I\u0027m less familiar with the class design here, I\u0027ll to look over it some more and come up with a proposal.",
+      "parentUuid": "2101fcce_ad7d6cb7",
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -197,6 +323,30 @@
     },
     {
       "key": {
+        "uuid": "5fb89244_0f106fd1",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Yea it does look odd here (copied from the original change).\n\nI\u0027ll verify what we need here and take it out or move it to the header.",
+      "parentUuid": "097e9b83_f3779a25",
+      "range": {
+        "startLine": 249,
+        "startChar": 22,
+        "endLine": 249,
+        "endChar": 29
+      },
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7caa53d_186f0392",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 2
@@ -214,6 +364,24 @@
     },
     {
       "key": {
+        "uuid": "fa76ffb6_518404b0",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b7caa53d_186f0392",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adccab1a_65ea4f06",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 2
@@ -225,6 +393,24 @@
       "writtenOn": "2017-10-24T17:12:54Z",
       "side": 1,
       "message": "I couldn\u0027t quite follow this comment - what is \"it\"?  (Also applies below.)",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519b9260_f77763bb",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "I\u0027ll take a pass at updating these comments.  I think it should say \u0027... because local media always opens in a new tab\u0027",
+      "parentUuid": "adccab1a_65ea4f06",
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -266,6 +452,24 @@
     },
     {
       "key": {
+        "uuid": "3d89d1fc_80fd24ce",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Thanks for the suggestions, I\u0027ll take a stab at trying them out.",
+      "parentUuid": "e2f498e6_40d0a703",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "394eec9f_a428924d",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 2
@@ -283,6 +487,24 @@
     },
     {
       "key": {
+        "uuid": "7fc5b765_a51299c4",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "394eec9f_a428924d",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60f5329b_266e08dc",
         "filename": "content/common/frame_messages.h",
         "patchSetId": 2
@@ -294,6 +516,24 @@
       "writtenOn": "2017-10-24T17:12:54Z",
       "side": 1,
       "message": "What is \"tab fullscreen\"?",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd27ef94_c8f8f759",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Not sure, I just copied from the comment below.  I was assuming it was for differentiating from browser fullscreen.  I\u0027ll try for a better comment.",
+      "parentUuid": "60f5329b_266e08dc",
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -335,6 +575,24 @@
     },
     {
       "key": {
+        "uuid": "2ff6ca1c_7874b935",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Thanks, will give this a try.",
+      "parentUuid": "0cde48e5_7af107e6",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78a48281_4715c8ce",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 2
@@ -346,6 +604,24 @@
       "writtenOn": "2017-10-25T04:43:28Z",
       "side": 1,
       "message": "How about frame_-\u003eGetDocument().QuerySelector(\"video\")?\n\nIt\u0027s probably not worth putting the WebString in static storage... I think?",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa301bb0_6d3f6080",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4815,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Sounds good.  I was just trying to follow patterns I saw in the file (I\u0027m still very rough with c++).",
+      "parentUuid": "78a48281_4715c8ce",
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -369,6 +645,24 @@
     },
     {
       "key": {
+        "uuid": "82146abe_fa2d2d38",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4822,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "I\u0027ll try and see what happens. :)",
+      "parentUuid": "c71e0141_c585d52e",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45883257_b43d02f8",
         "filename": "third_party/WebKit/Source/core/exported/WebElement.cpp",
         "patchSetId": 2
@@ -383,6 +677,24 @@
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7880fe39_10f5e5d4",
+        "filename": "third_party/WebKit/Source/core/exported/WebElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-26T18:03:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45883257_b43d02f8",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
