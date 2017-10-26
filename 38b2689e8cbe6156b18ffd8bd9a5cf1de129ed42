@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ecbf607_11531244",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-26T20:51:44Z",
+      "side": 1,
+      "message": "This was the only case from StartStreamingLoadedScript() that wasn\u0027t handled here already. Resource::ResourceBuffer() might be nullptr before data arrives, in which case we still want to stream, but if the Resource is done loading and has no buffer, then streaming definitely won\u0027t work. I think the existing comment explains that well enough?",
+      "revId": "38b2689e8cbe6156b18ffd8bd9a5cf1de129ed42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19a68f6_34cc9a9b",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-26T20:51:44Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly whether this block goes here or at the end of StartSteamingInternal().",
+      "revId": "38b2689e8cbe6156b18ffd8bd9a5cf1de129ed42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

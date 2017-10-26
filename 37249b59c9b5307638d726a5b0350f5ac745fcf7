@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc49efaa_302d11b1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-26T20:51:44Z",
+      "side": 0,
+      "message": "This case should have been a DCHECK before, and now I think should just work?",
+      "revId": "37249b59c9b5307638d726a5b0350f5ac745fcf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
