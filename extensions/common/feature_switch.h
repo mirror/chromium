@@ -42,6 +42,7 @@ class FeatureSwitch {
   static FeatureSwitch* load_media_router_component_extension();
   static FeatureSwitch* native_crx_bindings();
   static FeatureSwitch* yield_between_content_script_runs();
+  static FeatureSwitch* lock_window_fullscreen();
 
   enum DefaultValue {
     DEFAULT_ENABLED,

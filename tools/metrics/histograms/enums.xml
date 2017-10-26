@@ -14031,7 +14031,7 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="ExtensionPermission3">
-<!-- Generated from extensions/common/permissions/api_permission.h -->
+<!-- Generated from extensions/common/permissions/api_permission.h.-->
 
   <int value="0" label="kInvalid"/>
   <int value="1" label="kUnknown"/>
@@ -14240,6 +14240,8 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="204" label="kMediaPerceptionPrivate"/>
   <int value="205" label="kLockScreen"/>
   <int value="206" label="kNewTabPageOverride"/>
+  <int value="207" label="kDeclarativeNetRequest"/>
+  <int value="208" label="kLockWindowFullscreenPrivate"/>
 </enum>
 
 <enum name="ExtensionServiceVerifyAllSuccess">

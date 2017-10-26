@@ -1,0 +1,10 @@
+{
+  "name": "window/create.locked-fullscreen",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Tests the chrome.windows.create with WindowState = locked.",
+  "background": {
+    "page": "test.html"
+  },
+  "permissions": ["lockWindowFullscreenPrivate"]
+}
