@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_VR_ELEMENTS_RECT_H_
 #define CHROME_BROWSER_VR_ELEMENTS_RECT_H_
 
+#include "cc/animation/transform_operation.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "third_party/skia/include/core/SkColor.h"
 
@@ -33,13 +34,21 @@ class Rect : public UiElement {
   void NotifyClientColorAnimated(SkColor color,
                                  int target_property_id,
                                  cc::Animation* animation) override;
+  void NotifyClientFloatAnimated(float value,
+                                 int target_property_id,
+                                 cc::Animation* animation) override;
 
   void Render(UiElementRenderer* renderer,
               const gfx::Transform& model_view_proj_matrix) const override;
 
+  void SetCircleGrowAnimationEnabled(bool enabled);
+
  private:
   SkColor center_color_ = SK_ColorWHITE;
   SkColor edge_color_ = SK_ColorWHITE;
+
+  cc::TransformOperation scale_before_animation_;
+  float opacity_before_animation_ = 0.f;
 
   DISALLOW_COPY_AND_ASSIGN(Rect);
 };
