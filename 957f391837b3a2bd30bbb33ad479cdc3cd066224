@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a67a762_4bc02fda",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116089
+      },
+      "writtenOn": "2017-10-26T21:56:28Z",
+      "side": 1,
+      "message": "Yes, sure.\nSince this patch is landed already I\u0027ll upload fixup.",
+      "parentUuid": "98fb5277_76555a65",
+      "revId": "957f391837b3a2bd30bbb33ad479cdc3cd066224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d60f9118_3736d615",
         "filename": "device/vr/features/features.gni",
         "patchSetId": 3
@@ -76,6 +94,30 @@
       "writtenOn": "2017-10-26T21:48:28Z",
       "side": 1,
       "message": "This is really enabling Google VR Services (GVR), not only Daydream.",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "957f391837b3a2bd30bbb33ad479cdc3cd066224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c331df7e_dc31b593",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116089
+      },
+      "writtenOn": "2017-10-26T21:56:28Z",
+      "side": 1,
+      "message": "So far I assumed that daydream is an alias of Google VR.\nDo you prefer enable_gvr? Or enable_google_vr?",
+      "parentUuid": "61bff412_54d0c890",
       "range": {
         "startLine": 14,
         "startChar": 9,
