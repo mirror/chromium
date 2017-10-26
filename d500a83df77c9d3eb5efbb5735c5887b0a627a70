@@ -16,6 +16,23 @@
       "revId": "d500a83df77c9d3eb5efbb5735c5887b0a627a70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3657521_6b4bae5f",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller_unittest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-26T10:49:47Z",
+      "side": 1,
+      "message": "missing ) ?",
+      "revId": "d500a83df77c9d3eb5efbb5735c5887b0a627a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
