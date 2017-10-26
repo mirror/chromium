@@ -493,6 +493,8 @@ if (!is_android) {
       "base/interactive_test_utils_mac.mm",
       "base/interactive_test_utils_win.cc",
       "base/interactive_ui_tests_main.cc",
+      "base/process_inspector_win.cc",
+      "base/process_inspector_win.h",
       "base/view_event_test_platform_part.h",
       "base/view_event_test_platform_part_chromeos.cc",
       "base/view_event_test_platform_part_default.cc",
