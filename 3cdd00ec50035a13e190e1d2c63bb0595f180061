@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f9fd688_6f64a50f",
+        "filename": "ios/web_view/public/cwv_web_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-26T22:26:28Z",
+      "side": 1,
+      "message": "Can we avoid changing the initializer? Foe example webState:createNewWebStateForURL:openerURL:initiatedByUser: could set openedByDOM property to YES.",
+      "revId": "3cdd00ec50035a13e190e1d2c63bb0595f180061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
