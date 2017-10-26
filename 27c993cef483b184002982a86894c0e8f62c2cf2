@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb635d9b_d6d30cd5",
+        "filename": "chrome/browser/ui/cocoa/find_bar/find_bar_cocoa_controller.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-26T14:01:49Z",
+      "side": 1,
+      "message": "Allen, once you do that I don\u0027t think you need to change test_browser_window anymore and likely don\u0027t need me as a reviewer?",
+      "parentUuid": "507f1c9b_7f619ab3",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba9d62ab_c54716c4",
         "filename": "chrome/browser/ui/cocoa/find_bar/find_bar_cocoa_controller.mm",
         "patchSetId": 26
