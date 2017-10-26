@@ -20,7 +20,7 @@ const char kActionElement[] = "action";
 const char kActionsElement[] = "actions";
 const char kActivationType[] = "activationType";
 const char kArguments[] = "arguments";
-const char kAttribution[] = "attribution";
+const char kAudioElement[] = "audio";
 const char kBindingElement[] = "binding";
 const char kBindingElementTemplateAttribute[] = "template";
 const char kButtonIndex[] = "buttonIndex=";
@@ -30,8 +30,9 @@ const char kInputElement[] = "input";
 const char kInputId[] = "id";
 const char kInputType[] = "type";
 const char kPlaceholderContent[] = "placeHolderContent";
-const char kPlacement[] = "placement";
+const char kSilent[] = "silent";
 const char kText[] = "text";
+const char kTrue[] = "true";
 const char kUserResponse[] = "userResponse";
 const char kTextElement[] = "text";
 const char kToastElement[] = "toast";
@@ -62,18 +63,18 @@ std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
   builder->StartBindingElement(kDefaultTemplate);
 
   // Content for the toast template.
-  builder->WriteTextElement("1", base::UTF16ToUTF8(notification.title()),
-                            TextType::NORMAL);
-  builder->WriteTextElement("2", base::UTF16ToUTF8(notification.message()),
-                            TextType::NORMAL);
+  builder->WriteTextElement("1", base::UTF16ToUTF8(notification.title()));
+  builder->WriteTextElement("2", base::UTF16ToUTF8(notification.message()));
   builder->WriteTextElement("3",
-                            builder->FormatOrigin(notification.origin_url()),
-                            TextType::ATTRIBUTION);
+                            builder->FormatOrigin(notification.origin_url()));
 
   builder->EndBindingElement();
   builder->EndVisualElement();
 
   builder->AddActions(notification.buttons());
+
+  if (notification.silent())
+    builder->WriteAudioSilentElement();
 
   builder->EndToastElement();
 
@@ -137,11 +138,8 @@ void NotificationTemplateBuilder::EndBindingElement() {
 }
 
 void NotificationTemplateBuilder::WriteTextElement(const std::string& id,
-                                                   const std::string& content,
-                                                   TextType text_type) {
+                                                   const std::string& content) {
   xml_writer_->StartElement(kTextElement);
-  if (text_type == TextType::ATTRIBUTION)
-    xml_writer_->AddAttribute(kPlacement, kAttribution);
   xml_writer_->AppendElementContent(content);
   xml_writer_->EndElement();
 }
@@ -185,6 +183,12 @@ void NotificationTemplateBuilder::StartActionsElement() {
 }
 
 void NotificationTemplateBuilder::EndActionsElement() {
+  xml_writer_->EndElement();
+}
+
+void NotificationTemplateBuilder::WriteAudioSilentElement() {
+  xml_writer_->StartElement(kAudioElement);
+  xml_writer_->AddAttribute(kSilent, kTrue);
   xml_writer_->EndElement();
 }
 
