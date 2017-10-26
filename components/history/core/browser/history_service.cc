@@ -522,7 +522,7 @@ base::CancelableTaskTracker::TaskId HistoryService::GetFavicon(
 
 base::CancelableTaskTracker::TaskId HistoryService::GetFaviconsForURL(
     const GURL& page_url,
-    int icon_types,
+    const favicon_base::IconTypeSet& icon_types,
     const std::vector<int>& desired_sizes,
     const favicon_base::FaviconResultsCallback& callback,
     base::CancelableTaskTracker* tracker) {
@@ -540,7 +540,7 @@ base::CancelableTaskTracker::TaskId HistoryService::GetFaviconsForURL(
 
 base::CancelableTaskTracker::TaskId HistoryService::GetLargestFaviconForURL(
     const GURL& page_url,
-    const std::vector<int>& icon_types,
+    const std::vector<favicon_base::IconTypeSet>& icon_types,
     int minimum_size_in_pixels,
     const favicon_base::FaviconRawBitmapCallback& callback,
     base::CancelableTaskTracker* tracker) {
