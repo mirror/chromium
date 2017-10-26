@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "304eab5d_c723038a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-26T03:11:15Z",
+      "side": 1,
+      "message": "nit: please list spell out initial containing block.",
+      "revId": "87f15d68b850c33d361c96b54fb57bb3a321d880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42fbb05_0b21ed35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-26T03:11:15Z",
+      "side": 1,
+      "message": "Do you think the backgroundClip and clip RLS / non-RLS difference in json layer dumps will be a maintenance burden? Would it be possible to change LayoutTreeAsText in the non-RLS case so it better reflects what the user sees, and so it matches RLS?",
+      "revId": "87f15d68b850c33d361c96b54fb57bb3a321d880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31c6459_90706c78",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-26T03:11:15Z",
+      "side": 1,
+      "message": "I still don\u0027t fully understand this. I think it\u0027s okay to land this and continue discussion though.\n\nFrom the diffs it looks like RLS has flattenInheritedTransform\u003dfalse but non-RLS does not--is that true? Or is it just the JSON output that\u0027s different?",
+      "revId": "87f15d68b850c33d361c96b54fb57bb3a321d880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc1d059_db142077",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/compositing/force-compositing-mode/overflow-iframe-layer-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-26T03:11:15Z",
+      "side": 1,
+      "message": "What is this non-drawing layer from?",
+      "revId": "87f15d68b850c33d361c96b54fb57bb3a321d880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
