@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7bfb6d4_662633fa",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-26T08:51:45Z",
+      "side": 1,
+      "message": "s/.//",
+      "revId": "d447d9dc737e2be9b9936261ff352972e4bcba0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e3be08_8f8dddbe",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-26T08:51:45Z",
+      "side": 1,
+      "message": "nit: \"Returns whether the ModernMediaControlsEnabled runtime flag is on.\"",
+      "revId": "d447d9dc737e2be9b9936261ff352972e4bcba0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
