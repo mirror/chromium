@@ -10,6 +10,7 @@
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "ui/events/blink/did_overscroll_params.h"
 
 namespace content {
 
@@ -51,6 +52,19 @@ class OverscrollController {
   // further processing should cease.
   bool WillHandleEvent(const blink::WebInputEvent& event);
 
+  // This is called whenever an overscroll event is generated on the renderer
+  // side. This is called before InputEventAck. For an overscroll event, the
+  // ack_result of "unconsumed" will trigger swipe-navigation. However, the
+  // renderer can plumb the value of scroll_boundary_behavior by DidOverscroll()
+  // to prevent the swipe-navigation before the ack_result arrives.
+  // This code makes the assumption that the DidOverscroll event arrives before
+  // InputEventAcks of GestureScrollUpdate/GestureScrollEnd (GestureScrollBegin
+  // does not trigger history_swiper) are returned from the renderer. As such,
+  // it's safe to just set a flag and prevent history swipe from starting.
+  // If this assumption ever becomes false, we will need to update the logic of
+  // this method to cancel any ongoing history swipes.
+  void OnDidOverscroll(const ui::DidOverscrollParams& params);
+
   // This must be called when the ACK for any event comes in. This updates the
   // overscroll gesture status as appropriate.
   // Virtual and exported for testing.
@@ -59,7 +73,6 @@ class OverscrollController {
   CONTENT_EXPORT virtual void ReceivedEventACK(
       const blink::WebInputEvent& event,
       bool processed);
-
   OverscrollMode overscroll_mode() const { return overscroll_mode_; }
 
   void set_delegate(OverscrollControllerDelegate* delegate) {
@@ -140,6 +153,10 @@ class OverscrollController {
   // |overscroll_mode_| is set to OVERSCROLL_NONE.
   float overscroll_delta_x_ = 0.f;
   float overscroll_delta_y_ = 0.f;
+
+  // Whether the renderer disables the overscroll effect, e.g. by
+  // CSSScrollBoundaryBehavior.
+  bool renderer_disabled_overscroll_ = false;
 
   // The delegate that receives the overscroll updates. The delegate is not
   // owned by this controller.

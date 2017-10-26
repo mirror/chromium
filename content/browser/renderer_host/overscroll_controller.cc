@@ -96,6 +96,7 @@ bool OverscrollController::WillHandleEvent(const blink::WebInputEvent& event) {
   }
 
   bool reset_scroll_state = false;
+  renderer_disabled_overscroll_ = false;
   if (scroll_state_ != STATE_UNKNOWN ||
       overscroll_delta_x_ || overscroll_delta_y_) {
     switch (event.GetType()) {
@@ -144,9 +145,17 @@ bool OverscrollController::WillHandleEvent(const blink::WebInputEvent& event) {
           event.GetType() == blink::WebInputEvent::kGestureFlingStart);
 }
 
+void OverscrollController::OnDidOverscroll(
+    const ui::DidOverscrollParams& params) {
+  renderer_disabled_overscroll_ =
+      params.scroll_boundary_behavior.x !=
+      cc::ScrollBoundaryBehavior::ScrollBoundaryBehaviorType::
+          kScrollBoundaryBehaviorTypeAuto;
+}
+
 void OverscrollController::ReceivedEventACK(const blink::WebInputEvent& event,
                                             bool processed) {
-  if (!ShouldProcessEvent(event))
+  if (!ShouldProcessEvent(event) || renderer_disabled_overscroll_)
     return;
 
   if (processed) {
@@ -172,12 +181,14 @@ void OverscrollController::Reset() {
   overscroll_mode_ = OVERSCROLL_NONE;
   overscroll_source_ = OverscrollSource::NONE;
   overscroll_delta_x_ = overscroll_delta_y_ = 0.f;
+  renderer_disabled_overscroll_ = false;
   ResetScrollState();
 }
 
 void OverscrollController::Cancel() {
   SetOverscrollMode(OVERSCROLL_NONE, OverscrollSource::NONE);
   overscroll_delta_x_ = overscroll_delta_y_ = 0.f;
+  renderer_disabled_overscroll_ = false;
   ResetScrollState();
 }
 

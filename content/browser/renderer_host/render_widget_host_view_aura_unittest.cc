@@ -95,6 +95,7 @@
 #include "ui/display/screen.h"
 #include "ui/events/blink/blink_event_util.h"
 #include "ui/events/blink/blink_features.h"
+#include "ui/events/blink/did_overscroll_params.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/events/event.h"
 #include "ui/events/event_utils.h"
@@ -5463,6 +5464,82 @@ TEST_F(RenderWidgetHostViewAuraOverscrollTest, OverscrollResetsOnBlur) {
   events = GetAndResetDispatchedMessages();
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
   EXPECT_EQ(OVERSCROLL_EAST, overscroll_delegate()->completed_mode());
+  EXPECT_EQ("GestureScrollEnd", GetMessageNames(events));
+}
+
+TEST_F(RenderWidgetHostViewAuraOverscrollTest,
+       ScrollBoundaryBehaviorControlsOverscroll) {
+  SetUpOverscrollEnvironment();
+
+  // ScrollBoundaryBehaviorAuto shouldn't prevent overscroll.
+  SimulateGestureEvent(WebInputEvent::kGestureScrollBegin,
+                       blink::kWebGestureDeviceTouchscreen);
+  SimulateGestureScrollUpdateEvent(300, -5, 0);
+  MockWidgetInputHandler::MessageVector events =
+      GetAndResetDispatchedMessages();
+  EXPECT_EQ("GestureScrollBegin TouchScrollStarted GestureScrollUpdate",
+            GetMessageNames(events));
+  SendScrollBeginAckIfNeeded(events, INPUT_EVENT_ACK_STATE_CONSUMED);
+
+  ui::DidOverscrollParams params;
+  params.scroll_boundary_behavior.x = cc::ScrollBoundaryBehavior::
+      ScrollBoundaryBehaviorType::kScrollBoundaryBehaviorTypeAuto;
+  events[2]->ToEvent()->CallCallback(
+      InputEventAckSource::MAIN_THREAD, ui::LatencyInfo(),
+      INPUT_EVENT_ACK_STATE_NOT_CONSUMED, params, base::nullopt);
+  EXPECT_EQ(OVERSCROLL_EAST, overscroll_mode());
+  EXPECT_EQ(OverscrollSource::TOUCHSCREEN, overscroll_source());
+  EXPECT_EQ(OVERSCROLL_EAST, overscroll_delegate()->current_mode());
+
+  SimulateGestureEvent(WebInputEvent::kGestureScrollEnd,
+                       blink::kWebGestureDeviceTouchscreen);
+  events = GetAndResetDispatchedMessages();
+  EXPECT_EQ("GestureScrollEnd", GetMessageNames(events));
+
+  // ScrollBoundaryBehaviorContain prevents overscroll.
+  SimulateGestureEvent(WebInputEvent::kGestureScrollBegin,
+                       blink::kWebGestureDeviceTouchscreen);
+  SimulateGestureScrollUpdateEvent(300, -5, 0);
+  events = GetAndResetDispatchedMessages();
+  EXPECT_EQ("GestureScrollBegin TouchScrollStarted GestureScrollUpdate",
+            GetMessageNames(events));
+  SendScrollBeginAckIfNeeded(events, INPUT_EVENT_ACK_STATE_CONSUMED);
+
+  params.scroll_boundary_behavior.x = cc::ScrollBoundaryBehavior::
+      ScrollBoundaryBehaviorType::kScrollBoundaryBehaviorTypeContain;
+  events[2]->ToEvent()->CallCallback(
+      InputEventAckSource::MAIN_THREAD, ui::LatencyInfo(),
+      INPUT_EVENT_ACK_STATE_NOT_CONSUMED, params, base::nullopt);
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
+  EXPECT_EQ(OverscrollSource::NONE, overscroll_source());
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
+
+  SimulateGestureEvent(WebInputEvent::kGestureScrollEnd,
+                       blink::kWebGestureDeviceTouchscreen);
+  events = GetAndResetDispatchedMessages();
+  EXPECT_EQ("GestureScrollEnd", GetMessageNames(events));
+
+  // ScrollBoundaryBehaviorNone prevents overscroll.
+  SimulateGestureEvent(WebInputEvent::kGestureScrollBegin,
+                       blink::kWebGestureDeviceTouchscreen);
+  SimulateGestureScrollUpdateEvent(300, -5, 0);
+  events = GetAndResetDispatchedMessages();
+  EXPECT_EQ("GestureScrollBegin TouchScrollStarted GestureScrollUpdate",
+            GetMessageNames(events));
+  SendScrollBeginAckIfNeeded(events, INPUT_EVENT_ACK_STATE_CONSUMED);
+
+  params.scroll_boundary_behavior.x = cc::ScrollBoundaryBehavior::
+      ScrollBoundaryBehaviorType::kScrollBoundaryBehaviorTypeNone;
+  events[2]->ToEvent()->CallCallback(
+      InputEventAckSource::MAIN_THREAD, ui::LatencyInfo(),
+      INPUT_EVENT_ACK_STATE_NOT_CONSUMED, params, base::nullopt);
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
+  EXPECT_EQ(OverscrollSource::NONE, overscroll_source());
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
+
+  SimulateGestureEvent(WebInputEvent::kGestureScrollEnd,
+                       blink::kWebGestureDeviceTouchscreen);
+  events = GetAndResetDispatchedMessages();
   EXPECT_EQ("GestureScrollEnd", GetMessageNames(events));
 }
 
