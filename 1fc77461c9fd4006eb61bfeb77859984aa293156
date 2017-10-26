@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "14205283_8c64a122",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestFactory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-26T14:34:03Z",
+      "side": 1,
+      "message": "Let\u0027s go with Mathieu\u0027s suggestion of noUpatedPaymentDetails() to avoid confusion with \"abort()\" below.",
+      "parentUuid": "b9f72f22_113607db",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 28
+      },
+      "revId": "1fc77461c9fd4006eb61bfeb77859984aa293156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34f834e2_5c0aceae",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "1fc77461c9fd4006eb61bfeb77859984aa293156",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c6937d_5dd4ea70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-26T14:34:03Z",
+      "side": 1,
+      "message": "mUI can be null either before show() or after user closes the UI. Before show(), the renderer should not call noUpdate(), so it is indeed invalid data from renderer, i.e., the renderer has been compromised. After user closes the UI, PaymentREquestImpl.java in the browser will notify PaymentRequest.cpp in the renderer of this event, at which point the renderer should not make further calls to the browser and thus this noUpdate() call would also be invalid.",
+      "parentUuid": "34f834e2_5c0aceae",
+      "range": {
+        "startLine": 840,
+        "startChar": 50,
+        "endLine": 840,
+        "endChar": 76
+      },
+      "revId": "1fc77461c9fd4006eb61bfeb77859984aa293156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6994dab1_37756aac",
+        "filename": "components/payments/content/payment_request_spec.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-26T14:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8463e4cd_315ec7e9",
+      "range": {
+        "startLine": 73,
+        "startChar": 20,
+        "endLine": 73,
+        "endChar": 25
+      },
+      "revId": "1fc77461c9fd4006eb61bfeb77859984aa293156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4edd6f50_98b079e5",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestUpdateEvent.h",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "41d372fb_a09760ad",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestUpdateEvent.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-26T14:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4edd6f50_98b079e5",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 24
+      },
+      "revId": "1fc77461c9fd4006eb61bfeb77859984aa293156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c860d70_a70f0f16",
         "filename": "third_party/WebKit/public/platform/modules/payments/payment_request.mojom",
         "patchSetId": 10
@@ -108,6 +204,24 @@
       "revId": "1fc77461c9fd4006eb61bfeb77859984aa293156",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160eb51c_bdc0b92a",
+        "filename": "third_party/WebKit/public/platform/modules/payments/payment_request.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-26T14:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c860d70_a70f0f16",
+      "revId": "1fc77461c9fd4006eb61bfeb77859984aa293156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
