@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5c77542_a8a0c346",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-26T16:23:07Z",
+      "side": 1,
+      "message": "enterprise_enrollment_domain_?",
+      "range": {
+        "startLine": 358,
+        "startChar": 14,
+        "endLine": 358,
+        "endChar": 31
+      },
+      "revId": "6e4b32c5bd2ee55a23dee8422afdbaab1a791af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3840246_8d13fbcd",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-26T16:23:07Z",
+      "side": 1,
+      "message": "DeviceActiveDirectoryPolicyStatusProvider",
+      "range": {
+        "startLine": 523,
+        "startChar": 0,
+        "endLine": 523,
+        "endChar": 45
+      },
+      "revId": "6e4b32c5bd2ee55a23dee8422afdbaab1a791af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcca02d_b036ba5b",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-26T16:23:07Z",
+      "side": 1,
+      "message": "What realm is that? The device realm or the user realm or the realm of the admin who enrolled the device?",
+      "range": {
+        "startLine": 598,
+        "startChar": 25,
+        "endLine": 598,
+        "endChar": 33
+      },
+      "revId": "6e4b32c5bd2ee55a23dee8422afdbaab1a791af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
