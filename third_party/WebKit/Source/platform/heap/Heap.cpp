@@ -229,7 +229,7 @@ Address ThreadHeap::CheckAndMarkPointer(
 #endif
 
 void ThreadHeap::PushTraceCallback(void* object, TraceCallback callback) {
-  DCHECK(thread_state_->IsInGC());
+  //DCHECK(thread_state_->IsInGC());
 
   CallbackStack::Item* slot = marking_stack_->AllocateEntry();
   *slot = CallbackStack::Item(object, callback);
@@ -541,7 +541,7 @@ void ThreadHeap::VisitStackRoots(Visitor* visitor) {
 }
 
 BasePage* ThreadHeap::LookupPageForAddress(Address address) {
-  DCHECK(thread_state_->IsInGC());
+  //DCHECK(thread_state_->IsInGC());
   if (PageMemoryRegion* region = region_tree_->Lookup(address)) {
     return region->PageFromAddress(address);
   }
