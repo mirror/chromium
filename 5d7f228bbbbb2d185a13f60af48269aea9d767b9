@@ -33,6 +33,52 @@
       "revId": "5d7f228bbbbb2d185a13f60af48269aea9d767b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd46b738_f8b00c96",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-26T15:06:47Z",
+      "side": 1,
+      "message": "nit: Could this be an enum class to avoid the long prefix?",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "5d7f228bbbbb2d185a13f60af48269aea9d767b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad770a27_d21539ec",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-26T15:06:47Z",
+      "side": 1,
+      "message": "nit: s/ifndef// and remove the extra space before _h.",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "5d7f228bbbbb2d185a13f60af48269aea9d767b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
