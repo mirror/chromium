@@ -49,6 +49,9 @@ PaintRecordBuilder::PaintRecordBuilder(const FloatRect& bounds,
     context_->SetDeviceScaleFactor(containing_context->DeviceScaleFactor());
     context_->SetPrinting(containing_context->Printing());
   }
+
+  if (!paint_controller)
+    cache_skipper_.emplace(*context_);
 }
 
 PaintRecordBuilder::~PaintRecordBuilder() {

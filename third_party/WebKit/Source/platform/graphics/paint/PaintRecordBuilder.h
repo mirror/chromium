@@ -9,6 +9,7 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/geometry/FloatRect.h"
+#include "platform/graphics/paint/DisplayItemCacheSkipper.h"
 #include "platform/graphics/paint/DisplayItemClient.h"
 #include "platform/graphics/paint/PaintCanvas.h"
 #include "platform/graphics/paint/PaintRecord.h"
@@ -69,6 +70,7 @@ class PLATFORM_EXPORT PaintRecordBuilder final : public DisplayItemClient {
   std::unique_ptr<PaintController> paint_controller_ptr_;
   std::unique_ptr<GraphicsContext> context_;
   FloatRect bounds_;
+  Optional<DisplayItemCacheSkipper> cache_skipper_;
 };
 
 }  // namespace blink
