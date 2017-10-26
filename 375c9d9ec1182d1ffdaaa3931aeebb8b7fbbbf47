@@ -158,6 +158,24 @@
       "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0972fac6_d9b09f3d",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-26T07:56:57Z",
+      "side": 1,
+      "message": "As I said earlier, I completely agree with these ideas and was only pointing out that it\u0027s way beyond the scope of this patch. I did file crbug.com/778551 but avoided a TODO before reaching consensus with the actual owners of favicon_base (pkotwicz). I\u0027ll prepare a patch soon anyway.",
+      "parentUuid": "20742a5c_d794fe69",
+      "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
