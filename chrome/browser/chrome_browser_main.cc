@@ -70,6 +70,7 @@
 #include "chrome/browser/gpu/gpu_profile_cache.h"
 #include "chrome/browser/gpu/three_d_api_observer.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
+#include "chrome/browser/memory/swap_thrashing_monitor.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/metrics/expired_histograms_array.h"
 #include "chrome/browser/metrics/field_trial_synchronizer.h"
@@ -1863,6 +1864,10 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
 #if defined(OS_WIN)
   // Clean up old user data directory and disk cache directory.
   downgrade::DeleteMovedUserDataSoon();
+
+  // Start the swap thrashing monitor.
+  memory::SwapThrashingMonitor::SetInstance(
+      base::MakeUnique<memory::SwapThrashingMonitor>());
 #endif
 
 #if defined(OS_ANDROID)
