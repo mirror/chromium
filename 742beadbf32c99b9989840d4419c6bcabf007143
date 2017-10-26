@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc6e9c27_56847303",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-26T05:39:49Z",
+      "side": 1,
+      "message": "This change is fine, since\n\nFirstEditableVisiblePositionAfterPositionInRoot(pos, node)\n\nis simply\n\nCreateVisiblePosition(FirstEditablePositionAfterPositionInRoot(pos, node))",
+      "range": {
+        "startLine": 269,
+        "startChar": 9,
+        "endLine": 269,
+        "endChar": 49
+      },
+      "revId": "742beadbf32c99b9989840d4419c6bcabf007143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
