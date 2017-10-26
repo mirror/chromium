@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa72626d_08c5ee40",
+        "filename": "chrome/browser/resources/md_extensions/app_or_extension_behavior.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-26T19:01:05Z",
+      "side": 1,
+      "message": "Adding as a behavior because I intend to use this to also choose correct a11y text in https://crrev.com/c/738635\n\nThis CL is smaller, so review of this should be easier, then applied in multiple places in other CL.",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "f0741e17c935270eaeb936657b69bfab84c84201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
