@@ -9,6 +9,8 @@
 #include "base/test/histogram_tester.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/extension_apitest.h"
+#include "chrome/browser/extensions/window_controller.h"
+#include "chrome/browser/extensions/window_controller_list.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -32,15 +34,25 @@
 #include "extensions/browser/process_manager.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/feature_switch.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "extensions/test/result_catcher.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/base_window.h"
+
+#if defined(OS_CHROMEOS)
+#include "ash/wm/window_state.h"
+#endif
 
 using content::OpenURLParams;
 using content::Referrer;
 using content::WebContents;
+
+namespace aura {
+class Window;
+}
 
 class WindowOpenApiTest : public ExtensionApiTest {
   void SetUpOnMainThread() override {
@@ -369,3 +381,26 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
     EXPECT_EQ("HOWDIE!!!", result);
   }
 }
+
+#if defined(OS_CHROMEOS)
+IN_PROC_BROWSER_TEST_F(WindowOpenApiTest, OpenLockedFullscreenWindow) {
+  extensions::FeatureSwitch::ScopedOverride lock_window_fullscreen(
+      extensions::FeatureSwitch::lock_window_fullscreen(), true);
+  ASSERT_TRUE(RunExtensionTest("window_open/locked_fullscreen")) << message_;
+
+  // Make sure the newly created window is "trusted pinned" (which means that
+  // it's in locked fullscreen mode).
+  extensions::WindowController* controller = nullptr;
+  for (auto* iter :
+       extensions::WindowControllerList::GetInstance()->windows()) {
+    if (iter->window()->IsActive()) {
+      controller = iter;
+      break;
+    }
+  }
+  ASSERT_TRUE(controller);
+  aura::Window* window = controller->window()->GetNativeWindow();
+  ash::wm::WindowState* window_state = ash::wm::GetWindowState(window);
+  ASSERT_TRUE(window_state->IsTrustedPinned());
+}
+#endif

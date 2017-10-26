@@ -111,6 +111,9 @@ const char kCannotUpdateMuteCaptured[] =
     "being captured";
 const char kCannotDetermineLanguageOfUnloadedTab[] =
     "Cannot determine language: tab not loaded";
+const char kMissingLockWindowFullscreenPrivatePermission[] =
+    "Cannot lock window to fullscreen without lockWindowFullscreenPrivate "
+    "manifest permission";
 
 }  // namespace tabs_constants
 }  // namespace extensions
