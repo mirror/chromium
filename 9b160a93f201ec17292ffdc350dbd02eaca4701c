@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a187cd8d_30c946f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T16:08:29Z",
+      "side": 1,
+      "message": "Correct. In order to avoid warnings about the toolbar variable being untyped, this class has to be typed too.",
+      "parentUuid": "7a7fff54_b17592da",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 82
+      },
+      "revId": "9b160a93f201ec17292ffdc350dbd02eaca4701c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b01a24f4_6e99ce1a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableBottomSheetContent.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9b160a93f201ec17292ffdc350dbd02eaca4701c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d47ac7_15b053d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T16:08:29Z",
+      "side": 1,
+      "message": "We need to cache the toolbar view because detachToolbarView() actually removes the toolbar from its parent view (the method can only be called once).\n\nmContentView, mRecyclerView, and mEmptyView don\u0027t need to be cached though. I removed those variables.",
+      "parentUuid": "b01a24f4_6e99ce1a",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 51
+      },
+      "revId": "9b160a93f201ec17292ffdc350dbd02eaca4701c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
