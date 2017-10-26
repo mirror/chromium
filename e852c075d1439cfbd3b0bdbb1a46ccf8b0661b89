@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a99ddf58_0aec308a",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-26T13:40:34Z",
+      "side": 0,
+      "message": "Did you mean to remove this block?",
+      "range": {
+        "startLine": 1145,
+        "startChar": 6,
+        "endLine": 1145,
+        "endChar": 0
+      },
+      "revId": "e852c075d1439cfbd3b0bdbb1a46ccf8b0661b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ad2e7a_28bba9c7",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-26T13:40:34Z",
+      "side": 0,
+      "message": "The tool is showing this as removed as well.",
+      "range": {
+        "startLine": 1614,
+        "startChar": 46,
+        "endLine": 1614,
+        "endChar": 0
+      },
+      "revId": "e852c075d1439cfbd3b0bdbb1a46ccf8b0661b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

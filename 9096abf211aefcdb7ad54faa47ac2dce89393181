@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "297fae3e_aec87f7e",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-26T13:40:34Z",
+      "side": 1,
+      "message": "nit: else if might make the mutual exclusion clearer; also below @591 (though that has returns)",
+      "range": {
+        "startLine": 481,
+        "startChar": 3,
+        "endLine": 481,
+        "endChar": 0
+      },
+      "revId": "9096abf211aefcdb7ad54faa47ac2dce89393181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
