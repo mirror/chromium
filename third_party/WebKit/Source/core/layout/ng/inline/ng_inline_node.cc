@@ -571,8 +571,7 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
   while (!break_token || !break_token->IsFinished()) {
     NGLineBreaker line_breaker(node, *space, &positioned_floats,
                                &unpositioned_floats, break_token.get());
-    if (!line_breaker.NextLine(empty_exclusion_space, &line_info))
-      break;
+    line_breaker.NextLine(empty_exclusion_space, &line_info);
 
     break_token = line_breaker.CreateBreakToken(nullptr);
     LayoutUnit inline_size = line_info.TextIndent();

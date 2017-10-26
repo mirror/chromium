@@ -100,7 +100,7 @@ void NGLineBreaker::PrepareNextLine(const NGExclusionSpace& exclusion_space,
   FindNextLayoutOpportunity();
 }
 
-bool NGLineBreaker::NextLine(const NGExclusionSpace& exclusion_space,
+void NGLineBreaker::NextLine(const NGExclusionSpace& exclusion_space,
                              NGLineInfo* line_info) {
   bfc_block_offset_ = constraint_space_.BfcOffset().block_offset;
 
@@ -114,8 +114,7 @@ bool NGLineBreaker::NextLine(const NGExclusionSpace& exclusion_space,
   // measuring. Need to decide which one works the best.
   SkipCollapsibleWhitespaces();
 
-  if (line_info->Results().IsEmpty())
-    return false;
+  DCHECK(!line_info->Results().IsEmpty());
 
   // TODO(kojii): There are cases where we need to PlaceItems() without creating
   // line boxes. These cases need to be reviewed.
@@ -127,8 +126,6 @@ bool NGLineBreaker::NextLine(const NGExclusionSpace& exclusion_space,
 
     ComputeLineLocation(line_info);
   }
-
-  return true;
 }
 
 void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
