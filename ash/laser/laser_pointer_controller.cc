@@ -34,6 +34,7 @@ LaserPointerController::LaserPointerController() {}
 LaserPointerController::~LaserPointerController() {}
 
 void LaserPointerController::SetEnabled(bool enabled) {
+  LOG(ERROR) << "SetEnabled " << enabled;
   FastInkPointerController::SetEnabled(enabled);
   if (!enabled)
     DestroyPointerView();

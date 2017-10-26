@@ -272,6 +272,7 @@ void LaserPointerView::OnRedraw(gfx::Canvas& canvas) {
 
   int num_points = laser_points_.GetNumberOfPoints() +
                    predicted_laser_points_.GetNumberOfPoints();
+  // LOG(ERROR) << "JAMES num_points " << num_points;
   if (!num_points)
     return;
 
@@ -328,6 +329,8 @@ void LaserPointerView::OnRedraw(gfx::Canvas& canvas) {
   // Draw the last point as a circle.
   flags.setStyle(cc::PaintFlags::kFill_Style);
   canvas.DrawCircle(previous_point, kPointInitialRadius, flags);
+  LOG(ERROR) << "JAMES DrawCircle " << previous_point.ToString() << " num "
+    << num_points;
 }
 
 }  // namespace ash

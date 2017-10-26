@@ -79,6 +79,7 @@ namespace ui {
 class CommandBufferClientImpl;
 class CommandBufferLocal;
 class GpuState;
+class ClientGpuMemoryBufferManager;
 }
 namespace net {
 class MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives;
@@ -244,6 +245,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
   friend class leveldb::LevelDBMojoProxy;
   friend class media::BlockingUrlProtocol;
   friend class net::MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives;
+  friend class ui::ClientGpuMemoryBufferManager;
 
   ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
   ~ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;

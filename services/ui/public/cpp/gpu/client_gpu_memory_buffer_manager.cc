@@ -34,6 +34,7 @@ void NotifyDestructionOnCorrectThread(
 
 ClientGpuMemoryBufferManager::ClientGpuMemoryBufferManager(mojom::GpuPtr gpu)
     : thread_("GpuMemoryThread"), weak_ptr_factory_(this) {
+  LOG(ERROR) << "JAMES new Client GpuMemoryBufferManager";
   CHECK(thread_.Start());
   // The thread is owned by this object. Which means the task will not run if
   // the object has been destroyed. So Unretained() is safe.
@@ -143,9 +144,13 @@ ClientGpuMemoryBufferManager::CreateGpuMemoryBuffer(
       base::Bind(&ClientGpuMemoryBufferManager::AllocateGpuMemoryBufferOnThread,
                  base::Unretained(this), size, format, usage, &gmb_handle,
                  &wait));
+  //JAMES this isn't allowed
+  base::ScopedAllowBaseSyncPrimitivesForTesting allow;
   wait.Wait();
-  if (gmb_handle.is_null())
+  if (gmb_handle.is_null()) {
+    LOG(ERROR) << "JAMES null gmb handle";
     return nullptr;
+  }
 
   DestructionCallback callback =
       base::Bind(&ClientGpuMemoryBufferManager::DeletedGpuMemoryBuffer,
@@ -156,6 +161,7 @@ ClientGpuMemoryBufferManager::CreateGpuMemoryBuffer(
           base::Bind(&NotifyDestructionOnCorrectThread, thread_.task_runner(),
                      callback)));
   if (!buffer) {
+    LOG(ERROR) << "JAMES failed to allocate buffer";
     DeletedGpuMemoryBuffer(gmb_handle.id, gpu::SyncToken());
     return nullptr;
   }

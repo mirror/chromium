@@ -13,6 +13,7 @@ namespace viz {
 InProcessGpuMemoryBufferManager::InProcessGpuMemoryBufferManager(
     gpu::GpuChannelManager* channel_manager)
     : client_id_(1), channel_manager_(channel_manager), weak_factory_(this) {
+  LOG(ERROR) << "JAMES new InProcessGpuMemoryBufferManager";
   weak_ptr_ = weak_factory_.GetWeakPtr();
 }
 

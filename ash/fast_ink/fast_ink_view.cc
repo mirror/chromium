@@ -47,8 +47,10 @@ struct FastInkView::Resource {
     // context_provider might be null in unit tests when ran with --mash
     // TODO(kaznacheev) Have MASH provide a context provider for tests
     // when crbug/772562 is fixed
-    if (!context_provider)
+    if (!context_provider) {
+      LOG(ERROR) << "JAMES No context_provider";
       return;
+    }
     gpu::gles2::GLES2Interface* gles2 = context_provider->ContextGL();
     if (sync_token.HasData())
       gles2->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
@@ -222,12 +224,14 @@ FastInkView::FastInkView(aura::Window* root_window) : weak_ptr_factory_(this) {
   // be done by the compositor.
   screen_to_buffer_transform_ =
       widget_->GetNativeWindow()->GetHost()->GetRootTransform();
+  LOG(ERROR) << "JAMES new FastInkView transform " << screen_to_buffer_transform_.ToString();
 
   frame_sink_holder_ = std::make_unique<LayerTreeFrameSinkHolder>(
       this, widget_->GetNativeView()->CreateLayerTreeFrameSink());
 }
 
 FastInkView::~FastInkView() {
+  LOG(ERROR) << "JAMES del FastInkView";
   LayerTreeFrameSinkHolder::DeleteWhenLastResourceHasBeenReclaimed(
       std::move(frame_sink_holder_));
 }
@@ -314,8 +318,10 @@ void FastInkView::UpdateBuffer() {
 
   // Constrain pixel rectangle to buffer size and early out if empty.
   pixel_rect.Intersect(gfx::Rect(gpu_memory_buffer_->GetSize()));
-  if (pixel_rect.IsEmpty())
+  if (pixel_rect.IsEmpty()) {
+    LOG(ERROR) << "empty pixel rect";
     return;
+  }
 
   // Map buffer for writing.
   if (!gpu_memory_buffer_->Map()) {

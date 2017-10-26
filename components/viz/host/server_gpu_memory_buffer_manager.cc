@@ -39,6 +39,7 @@ ServerGpuMemoryBufferManager::ServerGpuMemoryBufferManager(
       native_configurations_(gpu::GetNativeGpuMemoryBufferConfigurations()),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       weak_factory_(this) {
+  LOG(ERROR) << "JAMES new ServerGpuMemoryBufferManager";
   weak_ptr_ = weak_factory_.GetWeakPtr();
 }
 
