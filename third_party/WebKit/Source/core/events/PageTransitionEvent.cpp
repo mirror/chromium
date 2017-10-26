@@ -27,11 +27,45 @@
 
 namespace blink {
 
-PageTransitionEvent::PageTransitionEvent() : persisted_(false) {}
+namespace {
+AtomicString TransitionReasonToString(
+    PageTransitionEvent::TransitionReason reason) {
+  switch (reason) {
+    case PageTransitionEvent::TransitionReason::kUnknown:
+      return "unknown";
+    case PageTransitionEvent::TransitionReason::kStopped:
+      return "stopped";
+    case PageTransitionEvent::TransitionReason::kDiscarded:
+      return "discarded";
+  }
+  NOTREACHED();
+  return "";
+}
+
+PageTransitionEvent::TransitionReason TransitionReasonFromString(
+    const String& reason) {
+  if (reason == "unknown")
+    return PageTransitionEvent::TransitionReason::kUnknown;
+  if (reason == "stopped")
+    return PageTransitionEvent::TransitionReason::kStopped;
+  if (reason == "discarded")
+    return PageTransitionEvent::TransitionReason::kDiscarded;
+  return PageTransitionEvent::TransitionReason::kUnknown;
+}
+}  // namespace
+
+PageTransitionEvent::PageTransitionEvent()
+    : persisted_(false), reason_(TransitionReason::kUnknown) {}
 
 PageTransitionEvent::PageTransitionEvent(const AtomicString& type,
-                                         bool persisted)
-    : Event(type, true, true), persisted_(persisted) {}
+                                         bool persisted) {
+  PageTransitionEvent(type, persisted, TransitionReason::kUnknown);
+}
+
+PageTransitionEvent::PageTransitionEvent(const AtomicString& type,
+                                         bool persisted,
+                                         TransitionReason reason)
+    : Event(type, true, true), persisted_(persisted), reason_(reason) {}
 
 PageTransitionEvent::PageTransitionEvent(
     const AtomicString& type,
@@ -39,12 +73,18 @@ PageTransitionEvent::PageTransitionEvent(
     : Event(type, initializer), persisted_(false) {
   if (initializer.hasPersisted())
     persisted_ = initializer.persisted();
+  if (initializer.hasReason())
+    reason_ = TransitionReasonFromString(initializer.reason());
 }
 
 PageTransitionEvent::~PageTransitionEvent() {}
 
 const AtomicString& PageTransitionEvent::InterfaceName() const {
   return EventNames::PageTransitionEvent;
+}
+
+AtomicString PageTransitionEvent::reason() const {
+  return TransitionReasonToString(reason_);
 }
 
 void PageTransitionEvent::Trace(blink::Visitor* visitor) {
