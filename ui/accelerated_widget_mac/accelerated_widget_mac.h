@@ -97,10 +97,6 @@ class ACCELERATED_WIDGET_MAC_EXPORT AcceleratedWidgetMac {
   base::scoped_nsobject<CALayer> flipped_layer_;
   base::scoped_nsobject<CALayer> fslp_flipped_layer_;
 
-  // A CALayer with content provided by the output surface.
-  base::scoped_nsobject<CALayer> content_layer_;
-  base::scoped_nsobject<CALayer> fullscreen_low_power_layer_;
-
   // A CALayer that has its content set to an IOSurface.
   base::scoped_nsobject<CALayer> io_surface_layer_;
 
