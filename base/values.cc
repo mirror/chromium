@@ -322,6 +322,8 @@ Value* Value::FindPath(span<const StringPiece> path) {
 }
 
 const Value* Value::FindPath(std::initializer_list<StringPiece> path) const {
+  DCHECK_GE(path.size(), 2u)
+      << "|path| should have at least length 2. Use |FindKey| otherwise.";
   return FindPath(make_span(path.begin(), path.size()));
 }
 
@@ -347,6 +349,8 @@ Value* Value::FindPathOfType(span<const StringPiece> path, Type type) {
 
 const Value* Value::FindPathOfType(std::initializer_list<StringPiece> path,
                                    Type type) const {
+  DCHECK_GE(path.size(), 2u)
+      << "|path| should have at least length 2. Use |FindKeyOfType| otherwise.";
   return FindPathOfType(make_span(path.begin(), path.size()), type);
 }
 
@@ -359,6 +363,8 @@ const Value* Value::FindPathOfType(span<const StringPiece> path,
 }
 
 Value* Value::SetPath(std::initializer_list<StringPiece> path, Value value) {
+  DCHECK_GE(path.size(), 2u)
+      << "|path| should have at least length 2. Use |SetKey| otherwise.";
   return SetPath(make_span(path.begin(), path.size()), std::move(value));
 }
 
@@ -393,6 +399,8 @@ Value* Value::SetPath(span<const StringPiece> path, Value value) {
 }
 
 bool Value::RemovePath(std::initializer_list<StringPiece> path) {
+  DCHECK_GE(path.size(), 2u)
+      << "|path| should have at least length 2. Use |RemoveKey| otherwise.";
   return RemovePath(make_span(path.begin(), path.size()));
 }
 

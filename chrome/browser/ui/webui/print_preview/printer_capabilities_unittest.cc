@@ -313,7 +313,7 @@ TEST_F(PrinterCapabilitiesTest, FullCddPassthrough) {
 
 TEST_F(PrinterCapabilitiesTest, FilterBadList) {
   base::DictionaryValue printer = GetCapabilitiesFull();
-  printer.RemovePath({kMediaSizes});
+  printer.RemoveKey(kMediaSizes);
   base::Value::ListStorage list_media;
   list_media.push_back(base::Value());
   list_media.push_back(base::Value());
@@ -326,7 +326,7 @@ TEST_F(PrinterCapabilitiesTest, FilterBadList) {
 
 TEST_F(PrinterCapabilitiesTest, FilterBadOptionOneElement) {
   base::DictionaryValue printer = GetCapabilitiesFull();
-  printer.RemovePath({kDpi});
+  printer.RemoveKey(kDpi);
   base::Value::DictStorage options;
   base::Value::ListStorage list_dpi;
   list_dpi.push_back(base::Value());
@@ -341,7 +341,7 @@ TEST_F(PrinterCapabilitiesTest, FilterBadOptionOneElement) {
 
 TEST_F(PrinterCapabilitiesTest, FilterBadOptionAllElement) {
   base::DictionaryValue printer = GetCapabilitiesFull();
-  printer.RemovePath({kDpi});
+  printer.RemoveKey(kDpi);
   base::Value::DictStorage options;
   base::Value::ListStorage list_dpi;
   list_dpi.push_back(base::Value());
@@ -359,8 +359,8 @@ TEST_F(PrinterCapabilitiesTest, FilterBadVendorCapabilityAllElement) {
   base::Value* select_cap_0 =
       printer.FindPathOfType({kVendorCapability}, base::Value::Type::LIST)
           ->GetList()[0]
-          .FindPathOfType({kSelectCapKey}, base::Value::Type::DICTIONARY);
-  select_cap_0->RemovePath({kOptionKey});
+          .FindKeyOfType(kSelectCapKey, base::Value::Type::DICTIONARY);
+  select_cap_0->RemoveKey(kOptionKey);
   base::Value::ListStorage option_list;
   option_list.push_back(base::Value());
   option_list.push_back(base::Value());
@@ -376,8 +376,8 @@ TEST_F(PrinterCapabilitiesTest, FilterBadVendorCapabilityOneElement) {
   base::Value* vendor_dictionary =
       printer.FindPathOfType({kVendorCapability}, base::Value::Type::LIST)
           ->GetList()[0]
-          .FindPathOfType({kSelectCapKey}, base::Value::Type::DICTIONARY);
-  vendor_dictionary->RemovePath({kOptionKey});
+          .FindKeyOfType(kSelectCapKey, base::Value::Type::DICTIONARY);
+  vendor_dictionary->RemoveKey(kOptionKey);
   base::Value::ListStorage pages_per_sheet;
   for (int i = 1; i <= 8; i *= 2) {
     if (i == 2) {
