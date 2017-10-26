@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b76450a_2695c440",
+        "filename": "components/viz/common/frame_sinks/copy_output_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-26T18:08:22Z",
+      "side": 1,
+      "message": "This comment is confusing to me.  I thought area was in the space of the render passes output rect? (\"origin point\" is confusing, whether you mean 0,0 in the space of the output rect or in the space of the render pass itself with 0,0 \u003d upper left).\n\nAlso size is used to determine is also ambiguous? (It sounds like area.size() is the final size, which isn\u0027t true).  Maybe better to say that this clip (pre-scaling) will be used to clip the size of the final output result?",
+      "revId": "cf9f7ed7c374b464ac501a1def125f073e5d5a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
