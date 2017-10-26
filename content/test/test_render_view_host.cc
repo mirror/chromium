@@ -276,9 +276,15 @@ bool TestRenderViewHost::CreateRenderView(
   GetWidget()->set_renderer_initialized(true);
   DCHECK(IsRenderViewLive());
   opener_frame_route_id_ = opener_frame_route_id;
-  RenderFrameHost* main_frame = GetMainFrame();
-  if (main_frame)
-    static_cast<RenderFrameHostImpl*>(main_frame)->SetRenderFrameCreated(true);
+  RenderFrameHostImpl* main_frame =
+      static_cast<RenderFrameHostImpl*>(GetMainFrame());
+  if (main_frame && proxy_route_id == MSG_ROUTING_NONE) {
+    service_manager::mojom::InterfaceProviderPtr
+        isolated_interface_provider_request;
+    main_frame->BindInterfaceProviderRequest(
+        mojo::MakeRequest(&isolated_interface_provider_request));
+    main_frame->SetRenderFrameCreated(true);
+  }
 
   return true;
 }
