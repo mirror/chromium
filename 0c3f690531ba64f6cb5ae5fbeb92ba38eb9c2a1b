@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0c21b95_83ed1990",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyControllerTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T15:22:58Z",
+      "side": 1,
+      "message": "This is failing:\n\nMisplaced argument matcher detected here:\n-\u003e at org.chromium.chrome.browser.survey.ChromeHomeSurveyControllerTest.testValidTab(ChromeHomeSurveyControllerTest.java:101)\nYou cannot use argument matchers outside of verification or stubbing.\nExamples of correct usage of argument matchers:\n    when(mock.get(anyInt())).thenReturn(null);\n    doThrow(new RuntimeException()).when(mock).someVoidMethod(anyObject());\n    verify(mock).someMethod(contains(\"foo\"))\nFollowing methods *cannot* be stubbed/verified: final/private/equals()/hashCode().\nMocking methods declared on non-public parent classes is not supported.\n\tat org.chromium.chrome.browser.survey.ChromeHomeSurveyControllerTest.testValidTab(ChromeHomeSurveyControllerTest.java:101)",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 28
+      },
+      "revId": "0c3f690531ba64f6cb5ae5fbeb92ba38eb9c2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddeb05d9_56727c69",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyControllerTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T15:22:58Z",
+      "side": 1,
+      "message": "Misplaced argument matcher detected here:\n-\u003e at org.chromium.chrome.browser.survey.ChromeHomeSurveyControllerTest.testIncognitoTab(ChromeHomeSurveyControllerTest.java:115)\nYou cannot use argument matchers outside of verification or stubbing.\nExamples of correct usage of argument matchers:\n    when(mock.get(anyInt())).thenReturn(null);\n    doThrow(new RuntimeException()).when(mock).someVoidMethod(anyObject());\n    verify(mock).someMethod(contains(\"foo\"))\nAlso, this error might show up because you use argument matchers with methods that cannot be mocked.\nFollowing methods *cannot* be stubbed/verified: final/private/equals()/hashCode().\nMocking methods declared on non-public parent classes is not supported.\n\tat org.chromium.chrome.browser.survey.ChromeHomeSurveyControllerTest.testIncognitoTab(ChromeHomeSurveyControllerTest.java:115)",
+      "range": {
+        "startLine": 111,
+        "startChar": 16,
+        "endLine": 111,
+        "endChar": 32
+      },
+      "revId": "0c3f690531ba64f6cb5ae5fbeb92ba38eb9c2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86478e6f_4cd17cb3",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyControllerTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-26T15:22:58Z",
+      "side": 1,
+      "message": "This is also failing:\n\nMisplaced argument matcher detected here:\n-\u003e at org.chromium.chrome.browser.survey.ChromeHomeSurveyControllerTest.testTabWithNoWebContents(ChromeHomeSurveyControllerTest.java:123)\nYou cannot use argument matchers outside of verification or stubbing.\nExamples of correct usage of argument matchers:\n    when(mock.get(anyInt())).thenReturn(null);\n    doThrow(new RuntimeException()).when(mock).someVoidMethod(anyObject());\n    verify(mock).someMethod(contains(\"foo\"))\nAlso, this error might show up because you use argument matchers with methods that cannot be mocked.\nFollowing methods *cannot* be stubbed/verified: final/private/equals()/hashCode().\nMocking methods declared on non-public parent classes is not supported.\n\tat org.chromium.chrome.browser.survey.ChromeHomeSurveyControllerTest.testTabWithNoWebContents(ChromeHomeSurveyControllerTest.java:123)",
+      "range": {
+        "startLine": 120,
+        "startChar": 16,
+        "endLine": 120,
+        "endChar": 40
+      },
+      "revId": "0c3f690531ba64f6cb5ae5fbeb92ba38eb9c2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
