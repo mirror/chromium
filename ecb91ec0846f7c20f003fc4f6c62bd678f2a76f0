@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61eb47e1_da8a3323",
+        "filename": "content/app/strings/content_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-26T13:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c01ceca_cb009ef3",
+      "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35abd590_06dfc765",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-18T10:58:49Z",
       "side": 1,
       "message": "The current design also has a capped height but only in appearance. In other words, if you set an \u003caudio\u003e to height: 400px, it will still looks the same with it will have a large padding on top. Wouldn\u0027t this work?",
+      "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0b5aa0_c14a50e0",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-26T13:54:24Z",
+      "side": 1,
+      "message": "In this CL it wasn\u0027t centered, although now it is. The positioning is still different though than with a \u003cvideo\u003e element.",
+      "parentUuid": "35abd590_06dfc765",
       "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "73ee8ad1_b20d92bf",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTextTrackListElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-26T13:54:24Z",
+      "side": 1,
+      "message": "At the moment this will record a time to action when the \"captions\" button is pressed. If the text track menu is dismissed then nothing else is recorded. If we go back to the overflow menu this then restarts the clock. Since we are only interested in the overflow menu TTA I think this is probably the correct way.",
+      "parentUuid": "a577ba3f_84660b3e",
+      "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7fd7458_69e15781",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-18T10:58:49Z",
       "side": 1,
       "message": "Do you have a spec that shows the difference in size between audio and video?",
+      "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99fe6bf_fdd56f14",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-26T13:54:24Z",
+      "side": 1,
+      "message": "It\u0027s from here https://folio.googleplex.com/chrome-ux/mocks/460-media-controls/spec\n\nThe spec itself doesn\u0027t actually have the measurements but if you export them you can measure them and then adjust based on the HTML and things like borders and shadows which will affect the positioning.",
+      "parentUuid": "b7fd7458_69e15781",
       "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
