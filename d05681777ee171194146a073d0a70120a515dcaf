@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26edc17b_c2e6e790",
+        "filename": "content/app/strings/content_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-10-26T01:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58e59daf_5c89e876",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13b4c7c6_660601db",
         "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureElements.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d05681777ee171194146a073d0a70120a515dcaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9560a7ea_db9d3e3c",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureElements.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-10-26T01:34:11Z",
+      "side": 1,
+      "message": "There are a few other elements I plan on adding here, e.g. controls to appear on the pip window, or any other icons on the interstitial.\n\nI could move this as just a HTMLDivElement for now, but will be pulling it out into this file again...",
+      "parentUuid": "13b4c7c6_660601db",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b3dc858a_4249a10f",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-10-26T01:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bcb5496_a959c1b1",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6dbd514_2dcafdf2",
         "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.cpp",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "d05681777ee171194146a073d0a70120a515dcaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a6445c_61005b20",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-10-26T01:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6dbd514_2dcafdf2",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5d8f0731_e34d3ac1",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-10-26T01:34:11Z",
+      "side": 1,
+      "message": "The timer allows the interstitial to fade in/out. After talking to the media remoting folks, they added this in (interval time doesn\u0027t matter -- ours is 0.0), this is necessary to show the interstitial.",
+      "parentUuid": "7176d958_0350d245",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43e87115_47cc1dc8",
         "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "d05681777ee171194146a073d0a70120a515dcaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae744279_e4cdcae9",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-10-26T01:34:11Z",
+      "side": 1,
+      "message": "Yes! I was planning on doing something like this in a follow up CL.",
+      "parentUuid": "43e87115_47cc1dc8",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
