@@ -6,8 +6,9 @@ import("//build/split_static_library.gni")  # When someone uses that target_type
 
 declare_args() {
   # If true, use a jumbo build (files compiled together) to speed up
-  # compilation.
-  use_jumbo_build = false
+  # compilation. Enabled by default for everything official builds and
+  # Android+gcc builds because of a warning that prevents builds.
+  use_jumbo_build = !is_official_build && !(is_android && !is_clang)
 
   # A target to exclude from jumbo builds, for optimal round trip time
   # when frequently changing a single cpp file.
@@ -161,7 +162,7 @@ template("internal_jumbo_target") {
     action(merge_action_name) {
       script = "//build/config/merge_for_jumbo.py"
       response_file_contents =
-          rebase_path(invoker_sources - excluded_sources, gen_target_dir)
+          rebase_path(invoker_sources - excluded_sources, root_build_dir)
       outputs = jumbo_files
       args = [ "--outputs" ] + rebase_path(outputs, root_build_dir) +
              [ "--file-list={{response_file_name}}" ]
@@ -206,6 +207,15 @@ template("internal_jumbo_target") {
           sources += [ source_file ]
         }
       }
+
+      # Change include_dirs to make sure that the jumbo file can find the
+      # files is is doing #include on.
+      variables_to_not_forward += [ "include_dirs" ]
+      include_dirs = []
+      if (defined(invoker.include_dirs)) {
+        include_dirs = invoker.include_dirs
+      }
+      include_dirs += [ root_build_dir ]
     }
     forward_variables_from(invoker, "*", variables_to_not_forward)
   }
