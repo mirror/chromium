@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f786f50_a4771bbc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:50:26Z",
+      "side": 1,
+      "message": "Is this still true?  See my question in the test for it.",
+      "revId": "12346f14f5746da1a05a7fcc7c5fad4d7c6849d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9231e877_86714434",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:50:26Z",
+      "side": 1,
+      "message": "I think this fixes 699493 as well.",
+      "revId": "12346f14f5746da1a05a7fcc7c5fad4d7c6849d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c890187_57e23d97",
+        "filename": "chrome/browser/tab_contents/view_source_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:50:26Z",
+      "side": 1,
+      "message": "Is this fixed now as well?  The CL description says it\u0027s expected to fail, but I don\u0027t see any disabled expectations or TODOs in this test.",
+      "revId": "12346f14f5746da1a05a7fcc7c5fad4d7c6849d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842caf80_808a0664",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3974,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:50:26Z",
+      "side": 1,
+      "message": "Let\u0027s include a comment that we intentionally don\u0027t share the SiteInstance with the original frame so that view source has a consistent process model and always ends up in a new process (https://crbug.com/699493).",
+      "revId": "12346f14f5746da1a05a7fcc7c5fad4d7c6849d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe9ac57_7d03ce09",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3977,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:50:26Z",
+      "side": 1,
+      "message": "Sanity check:  In https://chromium-review.googlesource.com/c/chromium/src/+/725812/4/content/browser/web_contents/web_contents_impl.cc#3967, you mentioned \"I think that the server in the bug linked by this CL depends on preserving the Referer request header.\"  Did that not prove necessary?  (I didn\u0027t follow up on it, and just wanted to verify.)",
+      "revId": "12346f14f5746da1a05a7fcc7c5fad4d7c6849d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb25352d_0b7adea5",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3996,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-26T22:50:26Z",
+      "side": 1,
+      "message": "nit: s/it/which/",
+      "range": {
+        "startLine": 3996,
+        "startChar": 31,
+        "endLine": 3996,
+        "endChar": 34
+      },
+      "revId": "12346f14f5746da1a05a7fcc7c5fad4d7c6849d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
