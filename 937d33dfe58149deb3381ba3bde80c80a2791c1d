@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2ab94193_9eb3b67c",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-10-26T23:36:36Z",
+      "side": 1,
+      "message": "Thanks.  I keep them \"strong\"",
+      "parentUuid": "8466f96a_359d6923",
+      "revId": "937d33dfe58149deb3381ba3bde80c80a2791c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968cfedc_25af5da2",
         "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "937d33dfe58149deb3381ba3bde80c80a2791c1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee23cefb_ee0030f8",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-10-26T23:36:36Z",
+      "side": 1,
+      "message": "oh thx. fixed.",
+      "parentUuid": "968cfedc_25af5da2",
+      "revId": "937d33dfe58149deb3381ba3bde80c80a2791c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
