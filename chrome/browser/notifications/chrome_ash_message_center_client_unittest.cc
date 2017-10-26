@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/notifications/message_center_settings_controller_chromeos.h"
+#include "chrome/browser/notifications/chrome_ash_message_center_client.h"
 
 #include <string>
 #include <utility>
@@ -30,11 +30,18 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/message_center/notifier_settings.h"
 
-class MessageCenterSettingsControllerChromeOsTest : public testing::Test {
+namespace {
+
+void SetNotifierUiData(std::vector<ash::mojom::NotifierUiDataPtr>* out,
+                       std::vector<ash::mojom::NotifierUiDataPtr> in) {
+  *out = std::move(in);
+}
+
+class ChromeAshMessageCenterClientTest : public testing::Test {
  protected:
-  MessageCenterSettingsControllerChromeOsTest()
+  ChromeAshMessageCenterClientTest()
       : testing_profile_manager_(TestingBrowserProcess::GetGlobal()) {}
-  ~MessageCenterSettingsControllerChromeOsTest() override {}
+  ~ChromeAshMessageCenterClientTest() override {}
 
   void SetUp() override {
     ASSERT_TRUE(testing_profile_manager_.SetUp());
@@ -44,7 +51,7 @@ class MessageCenterSettingsControllerChromeOsTest : public testing::Test {
         new chromeos::FakeChromeUserManager));
   }
 
-  void TearDown() override { ResetController(); }
+  void TearDown() override { client_.reset(); }
 
   TestingProfile* CreateProfile(const std::string& name) {
     TestingProfile* profile =
@@ -65,14 +72,12 @@ class MessageCenterSettingsControllerChromeOsTest : public testing::Test {
     GetFakeUserManager()->SwitchActiveUser(AccountId::FromUserEmail(name));
   }
 
-  void CreateController() {
-    controller_.reset(new MessageCenterSettingsControllerChromeOs());
+  void CreateClient() {
+    client_.reset(new ChromeAshMessageCenterClient(nullptr));
   }
 
-  void ResetController() { controller_.reset(); }
-
-  MessageCenterSettingsControllerChromeOs* controller() {
-    return controller_.get();
+  ChromeAshMessageCenterClient* message_center_client() {
+    return client_.get();
   }
 
  private:
@@ -83,16 +88,16 @@ class MessageCenterSettingsControllerChromeOsTest : public testing::Test {
 
   content::TestBrowserThreadBundle thread_bundle_;
   TestingProfileManager testing_profile_manager_;
-  std::unique_ptr<MessageCenterSettingsControllerChromeOs> controller_;
+  std::unique_ptr<ChromeAshMessageCenterClient> client_;
   std::unique_ptr<chromeos::ScopedUserManagerEnabler> user_manager_enabler_;
 
-  DISALLOW_COPY_AND_ASSIGN(MessageCenterSettingsControllerChromeOsTest);
+  DISALLOW_COPY_AND_ASSIGN(ChromeAshMessageCenterClientTest);
 };
 
 // TODO(mukai): write a test case to reproduce the actual guest session scenario
 // in ChromeOS.
 
-TEST_F(MessageCenterSettingsControllerChromeOsTest, NotifierSortOrder) {
+TEST_F(ChromeAshMessageCenterClientTest, NotifierSortOrder) {
   TestingProfile* profile = CreateProfile("Profile-1");
   extensions::TestExtensionSystem* test_extension_system =
       static_cast<extensions::TestExtensionSystem*>(
@@ -198,18 +203,19 @@ TEST_F(MessageCenterSettingsControllerChromeOsTest, NotifierSortOrder) {
 
   baf_app.SetID(kBafId);
   extension_service->AddExtension(baf_app.Build().get());
-  CreateController();
+  CreateClient();
 
-  std::vector<std::unique_ptr<message_center::NotifierUiData>> notifiers;
-  controller()->GetNotifierList(&notifiers);
+  std::vector<ash::mojom::NotifierUiDataPtr> notifiers;
+  message_center_client()->GetNotifierList(
+      base::BindOnce(&SetNotifierUiData, &notifiers));
   EXPECT_EQ(2u, notifiers.size());
   EXPECT_EQ(kBarId, notifiers[0]->notifier_id.id);
   EXPECT_EQ(kFooId, notifiers[1]->notifier_id.id);
 }
 
-TEST_F(MessageCenterSettingsControllerChromeOsTest, SetWebPageNotifierEnabled) {
+TEST_F(ChromeAshMessageCenterClientTest, SetWebPageNotifierEnabled) {
   Profile* profile = CreateProfile("MyProfile");
-  CreateController();
+  CreateClient();
 
   GURL origin("https://example.com/");
 
@@ -223,7 +229,7 @@ TEST_F(MessageCenterSettingsControllerChromeOsTest, SetWebPageNotifierEnabled) {
   PermissionManager* permission_manager = PermissionManager::Get(profile);
 
   // (1) Enable the permission when the default is to ask (expected to set).
-  controller()->SetNotifierEnabled(notifier_id, true);
+  message_center_client()->SetNotifierEnabled(notifier_id, true);
   EXPECT_EQ(CONTENT_SETTING_ALLOW,
             permission_manager
                 ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
@@ -231,7 +237,7 @@ TEST_F(MessageCenterSettingsControllerChromeOsTest, SetWebPageNotifierEnabled) {
                 .content_setting);
 
   // (2) Disable the permission when the default is to ask (expected to clear).
-  controller()->SetNotifierEnabled(notifier_id, false);
+  message_center_client()->SetNotifierEnabled(notifier_id, false);
   EXPECT_EQ(CONTENT_SETTING_ASK,
             permission_manager
                 ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
@@ -244,7 +250,7 @@ TEST_F(MessageCenterSettingsControllerChromeOsTest, SetWebPageNotifierEnabled) {
                                  CONTENT_SETTING_ALLOW);
 
   // (3) Disable the permission when the default is allowed (expected to set).
-  controller()->SetNotifierEnabled(notifier_id, false);
+  message_center_client()->SetNotifierEnabled(notifier_id, false);
   EXPECT_EQ(CONTENT_SETTING_BLOCK,
             permission_manager
                 ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
@@ -252,7 +258,7 @@ TEST_F(MessageCenterSettingsControllerChromeOsTest, SetWebPageNotifierEnabled) {
                 .content_setting);
 
   // (4) Enable the permission when the default is allowed (expected to clear).
-  controller()->SetNotifierEnabled(notifier_id, true);
+  message_center_client()->SetNotifierEnabled(notifier_id, true);
   EXPECT_EQ(CONTENT_SETTING_ALLOW,
             permission_manager
                 ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
@@ -265,7 +271,7 @@ TEST_F(MessageCenterSettingsControllerChromeOsTest, SetWebPageNotifierEnabled) {
                                  CONTENT_SETTING_BLOCK);
 
   // (5) Enable the permission when the default is blocked (expected to set).
-  controller()->SetNotifierEnabled(notifier_id, true);
+  message_center_client()->SetNotifierEnabled(notifier_id, true);
   EXPECT_EQ(CONTENT_SETTING_ALLOW,
             permission_manager
                 ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
@@ -273,10 +279,12 @@ TEST_F(MessageCenterSettingsControllerChromeOsTest, SetWebPageNotifierEnabled) {
                 .content_setting);
 
   // (6) Disable the permission when the default is blocked (expected to clear).
-  controller()->SetNotifierEnabled(notifier_id, false);
+  message_center_client()->SetNotifierEnabled(notifier_id, false);
   EXPECT_EQ(CONTENT_SETTING_BLOCK,
             permission_manager
                 ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
                                       origin, origin)
                 .content_setting);
 }
+
+}  // namespace
