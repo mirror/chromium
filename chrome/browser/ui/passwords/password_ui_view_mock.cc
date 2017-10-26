@@ -6,7 +6,7 @@
 
 MockPasswordUIView::MockPasswordUIView(Profile* profile)
     : profile_(profile), password_manager_presenter_(this) {
-  password_manager_presenter_.Initialize();
+  password_manager_presenter_.Initialize(nullptr, nullptr);
 }
 
 MockPasswordUIView::~MockPasswordUIView() = default;
