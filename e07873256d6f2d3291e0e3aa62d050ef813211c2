@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ba180590_46dd0cf3",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-26T04:41:20Z",
+      "side": 1,
+      "message": "re alpha channel: How common is it to capture with the alpha channel versus not? Meaning, would you get a big performance win for the 99% of use cases, if you used ReadbackYUV when no alpha is needed (and just use the slower path when the alpha channel is needed)?\n\nre origin flipped: ReadbackYUVInterface can do that already. There is a \"flip\" argument in the CreateReadbackYUV() method.",
+      "parentUuid": "5254a41c_e7b060cb",
+      "range": {
+        "startLine": 238,
+        "startChar": 1,
+        "endLine": 239,
+        "endChar": 55
+      },
+      "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1778edc_e060bb46",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 9

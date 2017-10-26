@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "837d3a7b_9912cb6c",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-26T04:41:20Z",
+      "side": 1,
+      "message": "It seems that you could use VideoFramePool legitimately if only there were ARGB support in media::VideoFrame. So, how about just doing that as a \"prerequisite infrastructure\" step? Honestly, there is very little left to complete what was already started there: All the \"byte size\" math is done, and the enums are in-place. Basically, media::VideoFrame::AllocateYUV() just needs to be renamed to Allocate() and changed to zero-out memory for the ARGB format as well. That could probably be completed in about an hour, tops...",
+      "parentUuid": "eb5ea50a_9a676861",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 76
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "464c0fa5_6ac8f35b",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 15
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "I still want to handle the case where WeakPtr\u003cWebGraphicsContext3DProviderWrapper\u003e is null, resulting in |context_provider| null. From the offline discussion with junov@, he suggested checking this in case we switch contexts between capture frames and WeakPtr is invalidated. As far as I read, the underlying ContextProviderCommandBuffer::SetLostContextCallback() is set on a scoped_refptr\u003c\u003e and might not be called yet in this case. Still, junov@ would be better to advise on this. WDYT?\n\nhttps://cs.chromium.org/chromium/src/content/renderer/webgraphicscontext3d_provider_impl.cc?rcl\u003d2c1897b1878afb629d3cc48e8010e6f14366ff61\u0026l\u003d49",
       "parentUuid": "464c0fa5_6ac8f35b",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 27
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810e0eda_d2d5243c",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-26T04:41:20Z",
+      "side": 1,
+      "message": "Yuk. Well, it sounds like someone should do that blink platform layer elimination ASAP. This here is clearly a case where the technical debt is incurring interest. ;-)",
+      "parentUuid": "e1318bda_f05af6df",
       "range": {
         "startLine": 248,
         "startChar": 0,
@@ -331,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "240325de_4171f408",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-26T04:41:20Z",
+      "side": 1,
+      "message": "\u003e Which would be the right one from renderer?\n\nI have no idea. I think you\u0027re treading new ground here, since this is the first use of GLHelper in renderer code. Maybe ask one of the ui/compositor/OWNERS for advice? One of them should probably take a look at your approach in this change, too.",
+      "parentUuid": "04f2146b_0bf5c33e",
+      "range": {
+        "startLine": 256,
+        "startChar": 26,
+        "endLine": 256,
+        "endChar": 49
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "660aa2ed_7917e019",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 15
@@ -472,6 +544,30 @@
     },
     {
       "key": {
+        "uuid": "f3c16b0e_457c98c3",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-26T04:41:20Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be possible. kN32_SkColorType is always RGBA_8888 or BGRA_8888, and \nGLHelperReadbackSupport::GetReadbackConfig() never returns NOT_SUPPORTED for those. If a future code change ever breaks this assumption, your unit tests should catch it before it passes the CQ.",
+      "parentUuid": "89f173a4_3f863c0d",
+      "range": {
+        "startLine": 373,
+        "startChar": 4,
+        "endLine": 373,
+        "endChar": 38
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18fa99f6_9edebe2e",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 15
@@ -587,6 +683,30 @@
       "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21bac390_8d2572e4",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-26T04:41:20Z",
+      "side": 1,
+      "message": "OIC. All good.",
+      "parentUuid": "0b3ec434_e27c0f8b",
+      "range": {
+        "startLine": 232,
+        "startChar": 38,
+        "endLine": 232,
+        "endChar": 42
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
