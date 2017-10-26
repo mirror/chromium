@@ -91,6 +91,12 @@ enum DistanceMetric {
   DISTANCE_TEXTFIELD_HORIZONTAL_TEXT_PADDING,
   // Vertical spacing between controls that are logically unrelated.
   DISTANCE_UNRELATED_CONTROL_VERTICAL,
+  // Vertical spacing at the beginning and end of a content list containing only
+  // one item.
+  DISTANCE_SINGLE_HOVER_CONTENT_LIST_VERTICAL,
+  // Vertical spacing at the beginning and end of a content list containing more
+  // than one item.
+  DISTANCE_MULTI_HOVER_CONTENT_LIST_VERTICAL,
 
   // Embedders must start DistanceMetric enum values from here.
   VIEWS_DISTANCE_END

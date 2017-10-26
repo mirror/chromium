@@ -99,6 +99,10 @@ int LayoutProvider::GetDistanceMetric(int metric) const {
       return 4;
     case DistanceMetric::DISTANCE_UNRELATED_CONTROL_VERTICAL:
       return 20;
+    case DISTANCE_SINGLE_HOVER_CONTENT_LIST_VERTICAL:
+      return 4;
+    case DISTANCE_MULTI_HOVER_CONTENT_LIST_VERTICAL:
+      return 8;
   }
   NOTREACHED();
   return 0;
