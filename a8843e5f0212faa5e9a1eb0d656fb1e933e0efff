@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec84685c_2674d496",
+        "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-26T12:46:33Z",
+      "side": 1,
+      "message": "I wonder if we should move these three methods into a SideSwipeToolbarInteracting requirements protocol.  That would let us move the implementations from BVC into ToolbarCoordinator and start along the path of boxing sideswipe.",
+      "revId": "a8843e5f0212faa5e9a1eb0d656fb1e933e0efff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c8b6e3_3bbcc12f",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_transition_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-26T12:46:33Z",
+      "side": 1,
+      "message": "Looks like a case where a future CL could change this API to take and return the snapshot, rather than returning a view.\n\nAlso, it bugs me a bit that this is using a method from the sideswipe delegate protocol.  Should we add a new protocol for the tabswitcher to use, even if we end up with two identical methods with different names?",
+      "revId": "a8843e5f0212faa5e9a1eb0d656fb1e933e0efff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040653a3_bce907bf",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-26T12:46:33Z",
+      "side": 1,
+      "message": "Perhaps rename this method to be more specific to sideswipe.  Otherwise we might accidentally start using it for taking all toolbar snapshots.",
+      "revId": "a8843e5f0212faa5e9a1eb0d656fb1e933e0efff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
