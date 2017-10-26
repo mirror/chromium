@@ -63,6 +63,7 @@ enum UiElementName {
   kWebVrTimeoutMessageText,
   kWebVrTimeoutMessageButton,
   kWebVrTimeoutMessageButtonText,
+  kSuggestionLayout,
 };
 
 }  // namespace vr
