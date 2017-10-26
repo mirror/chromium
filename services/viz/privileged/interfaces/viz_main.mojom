@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-module ui.mojom;
+module viz.mojom;
 
 import "services/viz/privileged/interfaces/gl/gpu_host.mojom";
 import "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom";
@@ -10,12 +10,12 @@ import "services/viz/privileged/interfaces/gl/gpu_service.mojom";
 
 // This is the primordial interface used to (re)start the mus-gpu bundle
 // of services.
-interface GpuMain {
+interface VizMain {
   CreateFrameSinkManager(
-    viz.mojom.FrameSinkManager& frame_sink_manager,
-    viz.mojom.FrameSinkManagerClient frame_sink_manager_client);
+    mojom.FrameSinkManager& frame_sink_manager,
+    mojom.FrameSinkManagerClient frame_sink_manager_client);
 
-  CreateGpuService(viz.mojom.GpuService& gpu_service,
-                   viz.mojom.GpuHost gpu_host,
+  CreateGpuService(mojom.GpuService& gpu_service,
+                   mojom.GpuHost gpu_host,
                    handle<shared_buffer>? activity_flags);
 };
