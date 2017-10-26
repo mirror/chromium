@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "24d3cbf3_80848509",
+        "filename": "device/u2f/u2f_ble_discovery.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-26T15:02:39Z",
+      "side": 1,
+      "message": "Yes, a static function returning a const BluetoothUUID\u0026 is fine as well as long as you guarantee that it will only be called from a single thread.",
+      "parentUuid": "02d3f92f_0ea61d89",
+      "revId": "fd3ac8603cb325ad0f04713eedbd6964dbddc0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35a71025_18532a57",
         "filename": "device/u2f/u2f_ble_uuids.h",
         "patchSetId": 6
