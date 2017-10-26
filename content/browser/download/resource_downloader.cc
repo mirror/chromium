@@ -56,9 +56,9 @@ std::unique_ptr<ResourceDownloader> ResourceDownloader::BeginDownload(
       params->url().SchemeIs(url::kBlobScheme)
           ? url_loader_factory_getter->GetBlobFactory()
           : url_loader_factory_getter->GetNetworkFactory();
-  auto downloader = base::MakeUnique<ResourceDownloader>(
+  auto downloader = std::make_unique<ResourceDownloader>(
       delegate, std::move(request),
-      base::MakeUnique<DownloadSaveInfo>(params->GetSaveInfo()), download_id,
+      std::make_unique<DownloadSaveInfo>(params->GetSaveInfo()), download_id,
       params->guid(), is_parallel_request, params->is_transient(),
       params->fetch_error_body());
   downloader->Start(factory, file_system_context, std::move(params));
@@ -75,9 +75,9 @@ ResourceDownloader::InterceptNavigationResponse(
     const SSLStatus& ssl_status,
     std::unique_ptr<ThrottlingURLLoader> url_loader,
     base::Optional<ResourceRequestCompletionStatus> completion_status) {
-  auto downloader = base::MakeUnique<ResourceDownloader>(
+  auto downloader = std::make_unique<ResourceDownloader>(
       delegate, std::move(resource_request),
-      base::MakeUnique<DownloadSaveInfo>(), content::DownloadItem::kInvalidId,
+      std::make_unique<DownloadSaveInfo>(), content::DownloadItem::kInvalidId,
       std::string(), false, false, false);
   downloader->InterceptResponse(std::move(url_loader), response,
                                 std::move(consumer_handle), ssl_status,
@@ -166,7 +166,7 @@ void ResourceDownloader::OnResponseStarted(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&UrlDownloadHandler::Delegate::OnUrlDownloadStarted,
                      delegate_, std::move(download_create_info),
-                     base::MakeUnique<DownloadManager::InputStream>(
+                     std::make_unique<DownloadManager::InputStream>(
                          std::move(stream_handle)),
                      callback_));
 }
