@@ -1,0 +1,12 @@
+CREDIT_CARD_NUMBER | c2 | Card Number: |  | c2_1-cc
+CREDIT_CARD_EXP_MONTH | c3 | Expiration Month: |  | c2_1-cc
+CREDIT_CARD_EXP_4_DIGIT_YEAR | c4 | Expiration Year: |  | c2_1-cc
+NAME_FULL | n | Name: |  | c2_1-default
+COMPANY_NAME | cm | Company Name: |  | c2_1-default
+ADDRESS_HOME_LINE1 | a1 | Address line 1: |  | c2_1-default
+ADDRESS_HOME_LINE2 | a2 | Address line 2: |  | c2_1-default
+ADDRESS_HOME_CITY | ct | City: |  | c2_1-default
+ADDRESS_HOME_ZIP | zc | Zip Code: |  | c2_1-default
+ADDRESS_HOME_STATE | st | State: |  | c2_1-default
+EMAIL_ADDRESS | em | Email: |  | c2_1-default
+PHONE_HOME_WHOLE_NUMBER | ph | Phone Number: |  | c2_1-default

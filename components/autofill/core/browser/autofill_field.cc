@@ -606,6 +606,12 @@ void AutofillField::SetHtmlType(HtmlFieldType type, HtmlFieldMode mode) {
 }
 
 void AutofillField::SetTypeTo(ServerFieldType type) {
+  // If the current type already matches the desired type, this is a NOP.
+  if (Type().GetStorableType() == type)
+    return;
+  // Otherwise, set whichever type member is needed for the desired type to
+  // be surfaces. Note that this generally doesn't override an HTML specified
+  // type, unless the desired type is credit card related.
   if (type == UNKNOWN_TYPE || type == NO_SERVER_DATA) {
     heuristic_type_ = UNKNOWN_TYPE;
     overall_server_type_ = NO_SERVER_DATA;

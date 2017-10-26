@@ -1855,7 +1855,7 @@ TEST_F(FormStructureTest, HeuristicsInfernoCC) {
   EXPECT_EQ(5U, form_structure->autofill_count());
 
   // Name on Card.
-  EXPECT_EQ(CREDIT_CARD_NAME_FULL, form_structure->field(0)->heuristic_type());
+  EXPECT_EQ(NAME_FULL, form_structure->field(0)->heuristic_type());
   // Address.
   EXPECT_EQ(ADDRESS_HOME_LINE1, form_structure->field(1)->heuristic_type());
   // Card Number.

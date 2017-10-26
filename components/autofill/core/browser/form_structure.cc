@@ -303,6 +303,36 @@ bool AllTypesCaptured(const FormStructure& form,
   return true;
 }
 
+bool HasFieldType(const AutofillField& field) {
+  const FieldTypeGroup group = field.Type().group();
+  return group != NO_GROUP;
+}
+
+bool IsCreditCardNameField(const AutofillField& field) {
+  const ServerFieldType type = field.Type().GetStorableType();
+  return type == CREDIT_CARD_NAME_FIRST || type == CREDIT_CARD_NAME_LAST ||
+         type == CREDIT_CARD_NAME_FULL;
+}
+
+bool IsCreditCardField(const AutofillField& field) {
+  const FieldTypeGroup group = field.Type().group();
+  return group == CREDIT_CARD;
+}
+
+ServerFieldType CreditCardNameToAddressName(AutofillType type) {
+  switch (type.GetStorableType()) {
+    case CREDIT_CARD_NAME_FIRST:
+      return NAME_FIRST;
+    case CREDIT_CARD_NAME_LAST:
+      return NAME_LAST;
+    case CREDIT_CARD_NAME_FULL:
+      return NAME_FULL;
+    default:
+      NOTREACHED();
+      return type.GetStorableType();
+  }
+}
+
 }  // namespace
 
 FormStructure::FormStructure(const FormData& form)
@@ -375,6 +405,8 @@ void FormStructure::DetermineHeuristicTypes(ukm::UkmRecorder* ukm_recorder) {
 
   int developer_engagement_metrics = 0;
   if (IsAutofillable()) {
+    RationalizeFieldTypePredictions();
+
     AutofillMetrics::DeveloperEngagementMetric metric =
         has_author_specified_types_
             ? AutofillMetrics::FILLABLE_FORM_PARSED_WITH_TYPE_HINTS
@@ -393,9 +425,6 @@ void FormStructure::DetermineHeuristicTypes(ukm::UkmRecorder* ukm_recorder) {
   if (developer_engagement_metrics)
     AutofillMetrics::LogDeveloperEngagementUkm(ukm_recorder, source_url(),
                                                developer_engagement_metrics);
-
-  if (base::FeatureList::IsEnabled(kAutofillRationalizeFieldTypePredictions))
-    RationalizeFieldTypePredictions();
 
   AutofillMetrics::LogDetermineHeuristicTypesTiming(
       base::TimeTicks::Now() - determine_heuristic_types_start_time);
@@ -535,9 +564,7 @@ void FormStructure::ParseQueryResponse(
 
     form->UpdateAutofillCount();
     form->IdentifySections(false);
-
-    if (base::FeatureList::IsEnabled(kAutofillRationalizeFieldTypePredictions))
-      form->RationalizeFieldTypePredictions();
+    form->RationalizeFieldTypePredictions();
   }
 
   AutofillMetrics::ServerQueryMetric metric;
@@ -1122,19 +1149,15 @@ void FormStructure::RationalizeCreditCardFieldPredictions() {
   // with quantity/height fields and/or generic year fields.
   bool cc_date_found = cc_month_found && cc_year_found;
 
-  // Count the credit card related fields in the form.
-  size_t num_cc_fields_found =
-      static_cast<int>(cc_name_found) + static_cast<int>(cc_num_found) +
-      static_cast<int>(cc_date_found) + static_cast<int>(cc_type_found) +
-      static_cast<int>(cc_cvc_found);
-
-  // Retain credit card related fields if the form has multiple fields or has
-  // no unrelated fields (useful for single cc-field forms). Credit card number
-  // is permitted to be alone in an otherwise unrelated form because some
-  // dynamic forms reveal the remainder of the fields only after the credit
-  // card number is entered and identified as a credit card by the site.
-  bool keep_cc_fields =
-      cc_num_found || num_cc_fields_found >= 3 || num_other_fields_found == 0;
+  // Retain credit card related fields if the card number was found, if both
+  // the name and full expiry date were found, or if there areform has multiple
+  // fields or has no unrelated fields (useful for single cc-field forms).
+  // Credit card number is permitted to be alone in an otherwise unrelated form
+  // because some dynamic forms reveal the remainder of the fields only after
+  // the credit card number is entered and identified as a credit card by the
+  // site.
+  bool keep_cc_fields = cc_num_found || (cc_name_found && cc_date_found) ||
+                        num_other_fields_found == 0;
 
   // Do an update pass over the fields to rewrite the types if credit card
   // fields are not to be retained. Some special handling is given to expiry
@@ -1144,19 +1167,20 @@ void FormStructure::RationalizeCreditCardFieldPredictions() {
     auto& field = *it;
     ServerFieldType current_field_type = field->Type().GetStorableType();
     switch (current_field_type) {
+      case NAME_FIRST:
       case CREDIT_CARD_NAME_FIRST:
-        if (!keep_cc_fields)
-          field->SetTypeTo(NAME_FIRST);
+        field->SetTypeTo(keep_cc_fields ? CREDIT_CARD_NAME_FIRST : NAME_FIRST);
         break;
+      case NAME_LAST:
       case CREDIT_CARD_NAME_LAST:
-        if (!keep_cc_fields)
-          field->SetTypeTo(NAME_LAST);
+        field->SetTypeTo(keep_cc_fields ? CREDIT_CARD_NAME_LAST : NAME_LAST);
         break;
+      case NAME_FULL:
       case CREDIT_CARD_NAME_FULL:
-        if (!keep_cc_fields)
-          field->SetTypeTo(NAME_FULL);
+        field->SetTypeTo(keep_cc_fields ? CREDIT_CARD_NAME_FULL : NAME_FULL);
         break;
       case CREDIT_CARD_NUMBER:
+        DCHECK(keep_cc_fields);
       case CREDIT_CARD_TYPE:
       case CREDIT_CARD_VERIFICATION_CODE:
       case CREDIT_CARD_EXP_DATE_2_DIGIT_YEAR:
@@ -1196,6 +1220,22 @@ void FormStructure::RationalizeCreditCardFieldPredictions() {
         break;
       default:
         break;
+    }
+  }
+
+  // Do a final reverse pass to avoid predicting a credit card name when it
+  // directly precedes an address field.
+  if (fields_.size() > 1) {
+    auto next = fields_.rbegin();
+    auto current = next + 1;
+    for (; current != fields_.rend(); ++current, ++next) {
+      if (IsCreditCardNameField(**current)) {
+        if (HasFieldType(**next) && !IsCreditCardField(**next)) {
+          (*current)->SetTypeTo(
+              CreditCardNameToAddressName((*current)->Type()));
+        }
+        (*current)->set_section((*next)->section());
+      }
     }
   }
 }
@@ -1340,6 +1380,8 @@ void FormStructure::RationalizePhoneNumberFieldPredictions() {
 }
 
 void FormStructure::RationalizeFieldTypePredictions() {
+  if (!base::FeatureList::IsEnabled(kAutofillRationalizeFieldTypePredictions))
+    return;
   RationalizeCreditCardFieldPredictions();
   RationalizePhoneNumberFieldPredictions();
 }
