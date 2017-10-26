@@ -37,6 +37,8 @@ namespace blink {
 
 using namespace HTMLNames;
 
+int HTMLFieldSetElement::field_sets_inserted_count = 0;
+
 inline HTMLFieldSetElement::HTMLFieldSetElement(Document& document)
     : HTMLFormControlElement(fieldsetTag, document) {}
 
@@ -88,6 +90,17 @@ void HTMLFieldSetElement::DisabledAttributeChanged() {
   if (Element* focused_element =
           InvalidateDescendantDisabledStateAndFindFocusedOne(*this))
     focused_element->blur();
+}
+
+Node::InsertionNotificationRequest HTMLFieldSetElement::InsertedInto(
+    ContainerNode* node) {
+  field_sets_inserted_count++;
+  return HTMLFormControlElement::InsertedInto(node);
+}
+
+void HTMLFieldSetElement::RemovedFrom(ContainerNode* node) {
+  field_sets_inserted_count--;
+  return HTMLFormControlElement::RemovedFrom(node);
 }
 
 void HTMLFieldSetElement::ChildrenChanged(const ChildrenChange& change) {

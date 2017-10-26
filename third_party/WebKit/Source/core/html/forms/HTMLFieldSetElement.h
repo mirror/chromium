@@ -39,8 +39,12 @@ class CORE_EXPORT HTMLFieldSetElement final : public HTMLFormControlElement {
   HTMLLegendElement* Legend() const;
   HTMLCollection* elements();
 
+  static int field_sets_inserted_count;
+
  protected:
   void DisabledAttributeChanged() override;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
 
  private:
   explicit HTMLFieldSetElement(Document&);

@@ -111,6 +111,10 @@ bool HTMLFormControlElement::FormNoValidate() const {
 }
 
 void HTMLFormControlElement::UpdateAncestorDisabledState() const {
+  if (!HTMLFieldSetElement::field_sets_inserted_count) {
+    ancestor_disabled_state_ = kAncestorDisabledStateEnabled;
+    return;
+  }
   HTMLFieldSetElement* highest_disabled_field_set_ancestor = nullptr;
   ContainerNode* highest_legend_ancestor = nullptr;
   for (HTMLElement* ancestor = Traversal<HTMLElement>::FirstAncestor(*this);
@@ -317,6 +321,8 @@ void HTMLFormControlElement::FormOwnerSetNeedsValidityCheck() {
 void HTMLFormControlElement::FieldSetAncestorsSetNeedsValidityCheck(
     Node* node) {
   if (!node)
+    return;
+  if (!HTMLFieldSetElement::field_sets_inserted_count)
     return;
   for (HTMLFieldSetElement* field_set =
            Traversal<HTMLFieldSetElement>::FirstAncestorOrSelf(*node);
