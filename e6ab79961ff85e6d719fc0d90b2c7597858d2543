@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06e07706_8629a9f8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-event.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-26T06:40:59Z",
+      "side": 1,
+      "message": "nit: I think we don\u0027t need to add the description here since it looks like an expectation or something and we already have description for this test as an parameter of async_test.",
+      "range": {
+        "startLine": 516,
+        "startChar": 46,
+        "endLine": 516,
+        "endChar": 58
+      },
+      "revId": "e6ab79961ff85e6d719fc0d90b2c7597858d2543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95300e9_acf00025",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-event.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-26T06:40:59Z",
+      "side": 1,
+      "message": "promise_test would be better for new tests since we won\u0027t miss rejecting .catch() case.",
+      "range": {
+        "startLine": 519,
+        "startChar": 10,
+        "endLine": 520,
+        "endChar": 37
+      },
+      "revId": "e6ab79961ff85e6d719fc0d90b2c7597858d2543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
