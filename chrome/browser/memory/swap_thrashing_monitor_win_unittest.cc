@@ -13,18 +13,21 @@ namespace memory {
 
 namespace {
 
-using SwapThrashingLevel = SwapThrashingMonitorWin::SwapThrashingLevel;
+using SwapThrashingLevel = SwapThrashingMonitorDelegateWin::SwapThrashingLevel;
 
 class MockPageFaultAverageRate;
 
-class TestSwapThrashingMonitorWin : public SwapThrashingMonitorWin {
+class TestSwapThrashingMonitorDelegateWin
+    : public SwapThrashingMonitorDelegateWin {
  public:
-  using PageFaultAverageRate = SwapThrashingMonitorWin::PageFaultAverageRate;
-  using PageFaultObservation = SwapThrashingMonitorWin::PageFaultObservation;
+  using PageFaultAverageRate =
+      SwapThrashingMonitorDelegateWin::PageFaultAverageRate;
+  using PageFaultObservation =
+      SwapThrashingMonitorDelegateWin::PageFaultObservation;
 
-  TestSwapThrashingMonitorWin()
-      : SwapThrashingMonitorWin::SwapThrashingMonitorWin() {}
-  ~TestSwapThrashingMonitorWin() override {}
+  TestSwapThrashingMonitorDelegateWin()
+      : SwapThrashingMonitorDelegateWin::SwapThrashingMonitorDelegateWin() {}
+  ~TestSwapThrashingMonitorDelegateWin() override {}
 
   bool RecordHardFaultCountForChromeProcesses() override {
     PageFaultObservation observation = {0, base::TimeTicks::Now()};
@@ -62,15 +65,15 @@ class TestSwapThrashingMonitorWin : public SwapThrashingMonitorWin {
 
 // A mock for the PageFaultAverageRate class.
 //
-// Used to induce state transitions in TestSwapThrashingMonitorWin.
+// Used to induce state transitions in TestSwapThrashingMonitorDelegateWin.
 class MockPageFaultAverageRate
-    : public TestSwapThrashingMonitorWin::PageFaultAverageRate {
+    : public TestSwapThrashingMonitorDelegateWin::PageFaultAverageRate {
  public:
   using PageFaultObservation =
-      TestSwapThrashingMonitorWin::PageFaultObservation;
+      TestSwapThrashingMonitorDelegateWin::PageFaultObservation;
 
   MockPageFaultAverageRate()
-      : TestSwapThrashingMonitorWin::PageFaultAverageRate(
+      : TestSwapThrashingMonitorDelegateWin::PageFaultAverageRate(
             base::TimeDelta::FromMilliseconds(1000)),
         observation_override_({0, base::TimeTicks::Now()}),
         invalidated_(false) {}
@@ -79,7 +82,7 @@ class MockPageFaultAverageRate
   // Override this function so we can use the mocked expectations rather than
   // the real ones.
   void OnObservation(PageFaultObservation observation) override {
-    TestSwapThrashingMonitorWin::PageFaultAverageRate::OnObservation(
+    TestSwapThrashingMonitorDelegateWin::PageFaultAverageRate::OnObservation(
         observation_override_);
   }
 
@@ -88,7 +91,7 @@ class MockPageFaultAverageRate
   base::Optional<double> AveragePageFaultRate() const override {
     if (invalidated_)
       return base::nullopt;
-    return TestSwapThrashingMonitorWin::PageFaultAverageRate::
+    return TestSwapThrashingMonitorDelegateWin::PageFaultAverageRate::
         AveragePageFaultRate();
   }
 
@@ -122,7 +125,7 @@ class MockPageFaultAverageRate
   bool invalidated_;
 };
 
-void TestSwapThrashingMonitorWin::ResetEscalationWindow(
+void TestSwapThrashingMonitorDelegateWin::ResetEscalationWindow(
     base::TimeDelta window_length) {
   std::unique_ptr<MockPageFaultAverageRate> escalation_window =
       base::MakeUnique<MockPageFaultAverageRate>();
@@ -130,7 +133,7 @@ void TestSwapThrashingMonitorWin::ResetEscalationWindow(
   swap_thrashing_escalation_window_.reset(escalation_window.release());
 }
 
-void TestSwapThrashingMonitorWin::ResetCooldownWindow(
+void TestSwapThrashingMonitorDelegateWin::ResetCooldownWindow(
     base::TimeDelta window_length) {
   std::unique_ptr<MockPageFaultAverageRate> cooldown_window =
       base::MakeUnique<MockPageFaultAverageRate>();
@@ -138,19 +141,19 @@ void TestSwapThrashingMonitorWin::ResetCooldownWindow(
   swap_thrashing_cooldown_window_.reset(cooldown_window.release());
 }
 
-uint64_t TestSwapThrashingMonitorWin::ComputeHighThrashingRate(
+uint64_t TestSwapThrashingMonitorDelegateWin::ComputeHighThrashingRate(
     base::TimeTicks window_beginning,
     base::TimeTicks next_timestamp) {
-  return SwapThrashingMonitorWin::kPageFaultEscalationThreshold *
+  return SwapThrashingMonitorDelegateWin::kPageFaultEscalationThreshold *
          (next_timestamp - window_beginning).InSeconds();
 }
 
 }  // namespace
 
-class SwapThrashingMonitorWinTest : public testing::Test {
+class SwapThrashingMonitorDelegateWinTest : public testing::Test {
  public:
   using PageFaultObservation =
-      TestSwapThrashingMonitorWin::PageFaultObservation;
+      TestSwapThrashingMonitorDelegateWin::PageFaultObservation;
 
   void SetUp() override {
     mock_escalation_window_ = nullptr;
@@ -179,13 +182,13 @@ class SwapThrashingMonitorWinTest : public testing::Test {
   }
 
  protected:
-  TestSwapThrashingMonitorWin monitor_;
+  TestSwapThrashingMonitorDelegateWin monitor_;
 
   MockPageFaultAverageRate* mock_escalation_window_;
   MockPageFaultAverageRate* mock_cooldown_window_;
 };
 
-TEST_F(SwapThrashingMonitorWinTest, StateTransition) {
+TEST_F(SwapThrashingMonitorDelegateWinTest, StateTransition) {
   // This state test the transitions from the SWAP_THRASHING_LEVEL_NONE state
   // to the SWAP_THRASHING_LEVEL_CONFIRMED one and then ensure that the cooldown
   // mechanism works.
@@ -292,7 +295,7 @@ TEST_F(SwapThrashingMonitorWinTest, StateTransition) {
             monitor_.SampleAndCalculateSwapThrashingLevel());
 }
 
-TEST_F(SwapThrashingMonitorWinTest, PageFaultAverageRateTests) {
+TEST_F(SwapThrashingMonitorDelegateWinTest, PageFaultAverageRateTests) {
   constexpr base::TimeDelta kObservationWindowLength =
       base::TimeDelta::FromSeconds(8);
   MockPageFaultAverageRate escalation_window;
