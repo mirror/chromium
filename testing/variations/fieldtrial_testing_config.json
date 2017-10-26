@@ -3011,6 +3011,23 @@
             ]
         }
     ],
+    "SafeBrowsingAtRiskAccountFlagging": [
+        {
+            "platforms": [
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "SyncPasswordReuseEvent"
+                    ]
+                }
+            ]
+        }
+    ],
     "SafeBrowsingScoutTransitionStudy": [
         {
             "platforms": [
