@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b2fbaa77_5797d64b",
+        "filename": "chrome/browser/ui/libgtkui/gtk3_background_painter.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-26T18:20:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64cdbc36_32fd3958",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "397c91b5_504c558c",
         "filename": "chrome/browser/ui/libgtkui/gtk3_background_painter.h",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cc6632_425a6b8d",
+        "filename": "chrome/browser/ui/libgtkui/gtk3_background_painter.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-26T18:20:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "397c91b5_504c558c",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 2
+      },
+      "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eb57e4ec_f811c2b5",
+        "filename": "chrome/browser/ui/libgtkui/nav_button_provider_gtk3.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-26T18:20:22Z",
+      "side": 1,
+      "message": "Done.  I had to add a Scale function to InsetsF because it didn\u0027t exist. (it was only in regular Insets)",
+      "parentUuid": "a5ac3ae8_ca3cf8d3",
+      "range": {
+        "startLine": 103,
+        "startChar": 5,
+        "endLine": 103,
+        "endChar": 17
+      },
+      "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e4dfca4_c6dca230",
         "filename": "chrome/browser/ui/views/button_background_painter_delegate.h",
         "patchSetId": 16
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-26T14:19:38Z",
       "side": 1,
       "message": "Please add description.\nCan you also motivate why this is necessary? Can\u0027t the background consule the button directly?",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109b46b0_067cb040",
+        "filename": "chrome/browser/ui/views/button_background_painter_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-26T18:20:22Z",
+      "side": 1,
+      "message": "Our case is special because the profile chooser button needs to look pressed when the menu is present.  If we were to pass the avatar button directly, it would add a circular dependency libgtkui -\u003e //chrome/browser/ui -\u003e libgtkui",
+      "parentUuid": "3e4dfca4_c6dca230",
       "range": {
         "startLine": 18,
         "startChar": 6,
