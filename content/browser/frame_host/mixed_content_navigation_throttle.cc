@@ -24,9 +24,9 @@
 #include "url/url_constants.h"
 #include "url/url_util.h"
 
-namespace {
+namespace content {
 
-using namespace content;
+namespace {
 
 // Should return the same value as SchemeRegistry::shouldTreatURLSchemeAsSecure.
 bool IsSecureScheme(const std::string& scheme) {
@@ -107,8 +107,6 @@ void UpdateRendererOnMixedContentFound(NavigationHandleImpl* navigation_handle,
 }
 
 }  // namespace
-
-namespace content {
 
 // static
 std::unique_ptr<NavigationThrottle>
