@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6a7ddbc_170e5d6b",
+        "filename": "chrome/browser/media/media_engagement_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-26T20:39:25Z",
+      "side": 1,
+      "message": "nit: UMA_HISTOGRAM_* macros expand to a fair bit of code, so it\u0027s best practice to create a small wrapper function around any histograms that\u0027s recorded from multiple call sites.",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 62
+      },
+      "revId": "b36ed5eb847b378208084f82d0244c1c306b43bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81f6c18_6e02d51a",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3336,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-26T20:39:25Z",
+      "side": 1,
+      "message": "^^^",
+      "range": {
+        "startLine": 3335,
+        "startChar": 0,
+        "endLine": 3336,
+        "endChar": 78
+      },
+      "revId": "b36ed5eb847b378208084f82d0244c1c306b43bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cd081c_76fd75ee",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 33033,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-26T20:39:25Z",
+      "side": 1,
+      "message": "nit: I think this is recorded once per affected origin, right?  If so, could you please mention that in the histogram description?",
+      "range": {
+        "startLine": 33029,
+        "startChar": 0,
+        "endLine": 33033,
+        "endChar": 19
+      },
+      "revId": "b36ed5eb847b378208084f82d0244c1c306b43bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
