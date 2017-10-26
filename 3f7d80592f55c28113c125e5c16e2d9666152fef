@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "851136a0_c96cce42",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-26T02:55:45Z",
+      "side": 1,
+      "message": "Added it everywhere, so each \"currently\" instance can be updated independently of the other instances.\n\nThat\u0027s a really good idea, thank you!",
+      "parentUuid": "ac4cb6a7_ded98c7a",
+      "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dd64c96_9db14a4c",
         "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24138aa1_ecbb36d8",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-26T02:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dd64c96_9db14a4c",
+      "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "77275b64_5a4aef53",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-26T02:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a485f5a_1e95b499",
+      "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d425ca6_b7864e8a",
         "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e150a2c5_13f97914",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-26T02:55:45Z",
+      "side": 1,
+      "message": "I integrated this in the 2nd subtlety. It\u0027s a better argument than \"V8 is definitely staying in the renderer\".\n\nThank you!",
+      "parentUuid": "9d425ca6_b7864e8a",
+      "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "764c98fc_66260f24",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-26T02:55:45Z",
+      "side": 1,
+      "message": "Done.\n\nThank you very much for mentioning this! It makes perfect sense, but it didn\u0027t occur to me earlier.",
+      "parentUuid": "a77d85a4_b4bb8422",
+      "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deee2810_5b691468",
         "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fb741b_bc21274f",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-26T02:55:45Z",
+      "side": 1,
+      "message": "Done.\n\nThank you very much for pointing this out!",
+      "parentUuid": "deee2810_5b691468",
+      "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "31faecd5_d77dad99",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-26T02:55:45Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for the great tip!",
+      "parentUuid": "5e797aaa_31d15c4e",
+      "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b0a2dd7_625659ba",
         "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f81b62_2a63b662",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-26T02:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b0a2dd7_625659ba",
+      "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "9483f69a_3d919d19",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-26T02:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8532cc8a_7a06cc1c",
+      "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d0c78d8_1814e8e5",
         "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
         "patchSetId": 5
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "3115ade4_cd78878c",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-26T02:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d0c78d8_1814e8e5",
+      "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bdd65ba_c4c7e6c5",
         "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
         "patchSetId": 5
@@ -186,6 +366,24 @@
       "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e3bfc0_0dd7fcb5",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_data_path.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-26T02:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bdd65ba_c4c7e6c5",
+      "revId": "3f7d80592f55c28113c125e5c16e2d9666152fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
