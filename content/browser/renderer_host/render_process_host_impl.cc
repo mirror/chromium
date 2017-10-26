@@ -1854,6 +1854,13 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
                                     base::Unretained(this)));
   }
 
+  media::VideoDecodePerfHistory* video_perf_history =
+      GetBrowserContext()->GetVideoDecodePerfHistory();
+  AddUIThreadInterface(
+      registry.get(),
+      base::BindRepeating(&media::VideoDecodePerfHistory::BindRequest,
+                          base::Unretained(video_perf_history)));
+
   registry->AddInterface(
       base::Bind(&MimeRegistryImpl::Create),
       base::CreateSequencedTaskRunnerWithTraits(
@@ -1938,9 +1945,6 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
         base::Bind(&BlobRegistryWrapper::Bind,
                    storage_partition_impl_->GetBlobRegistry(), GetID()));
   }
-
-  registry->AddInterface(
-      base::Bind(&media::VideoDecodePerfHistory::BindRequest));
 
   ServiceManagerConnection* service_manager_connection =
       BrowserContext::GetServiceManagerConnectionFor(browser_context_);
