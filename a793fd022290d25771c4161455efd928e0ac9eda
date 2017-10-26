@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1644657_6d5a9855",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 5039,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-26T09:17:41Z",
+      "side": 1,
+      "message": "I guess this fix is only for the test case which is reported in bug.\nThis is not a general fix for a case where a mutation event could trigger, is this?\n\nIn other words, can we create a slightly modified test case which still crashes even if this part is *fixed*?\n\nIf so, I don\u0027t think this fix is worth; It sounds like a never ending game...",
+      "revId": "a793fd022290d25771c4161455efd928e0ac9eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
