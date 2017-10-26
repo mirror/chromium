@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb1a1f97_264701a1",
+        "filename": "components/download/internal/scheduler/device_status_listener_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-26T21:57:50Z",
+      "side": 1,
+      "message": "nit:  Maybe call ChangeNetworkType, that will broadcast the event from its source.",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "fa86d6d220ca676b36bfcdc62eddc52ee53f17ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c816d9_03c1079b",
+        "filename": "components/download/internal/scheduler/device_status_listener_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-26T21:57:50Z",
+      "side": 1,
+      "message": "nit: same as above.",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 153,
+        "endChar": 15
+      },
+      "revId": "fa86d6d220ca676b36bfcdc62eddc52ee53f17ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
