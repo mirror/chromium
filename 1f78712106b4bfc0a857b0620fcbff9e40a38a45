@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e76e7de_388eb55e",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T11:17:34Z",
+      "side": 0,
+      "message": "Great. I really wanted to remove these functions :)",
+      "revId": "1f78712106b4bfc0a857b0620fcbff9e40a38a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

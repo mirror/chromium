@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9f184cf_c3fca968",
+        "filename": "third_party/WebKit/common/feature_policy/OWNERS",
+        "patchSetId": 17
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T11:17:34Z",
+      "side": 1,
+      "message": "Would you update this comment?",
+      "revId": "60d5c77c3d13ff877bce3b62a47310ca36540db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b814077d_d099b337",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T11:17:34Z",
+      "side": 1,
+      "message": "Just to confirm: WebKit/common/ is intended to be used for code that is used by both the browser process and the renderer process. Is all the classes in WebKit/common/feature_policy/ used by the both processes?",
+      "revId": "60d5c77c3d13ff877bce3b62a47310ca36540db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad31fb6_857e520a",
+        "filename": "third_party/WebKit/public/platform/WebFeaturePolicyFeature.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-26T11:17:34Z",
+      "side": 1,
+      "message": "Public APIs should have a \"Web\" prefix -- let\u0027s keep it.\n\nBTW do we still need this enum in public APIs? I think that Chromium-side code can just use FeaturePolicyFeature defined in common/feature_policy/feature_policy.h.",
+      "revId": "60d5c77c3d13ff877bce3b62a47310ca36540db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
