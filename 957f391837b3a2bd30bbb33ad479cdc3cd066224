@@ -127,6 +127,30 @@
       "revId": "957f391837b3a2bd30bbb33ad479cdc3cd066224",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6461eba6_570ad7c9",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-26T23:34:12Z",
+      "side": 1,
+      "message": "Google VR Services enables both Cardboard and Daydream on Android.\n`enable_gvr` seems fine. We use \"gvr\" elsewhere.",
+      "parentUuid": "c331df7e_dc31b593",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "957f391837b3a2bd30bbb33ad479cdc3cd066224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
