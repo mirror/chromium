@@ -26,6 +26,7 @@ class ImageBurnerClient;
 class ImageLoaderClient;
 class LorgnetteManagerClient;
 class MediaAnalyticsClient;
+class SmbClientClient;
 class UpstartClient;
 
 // D-Bus clients used only in the browser process.
@@ -46,6 +47,7 @@ class CHROMEOS_EXPORT DBusClientsBrowser {
   std::unique_ptr<ArcObbMounterClient> arc_obb_mounter_client_;
   std::unique_ptr<ArcOemCryptoClient> arc_oemcrypto_client_;
   std::unique_ptr<AuthPolicyClient> auth_policy_client_;
+  std::unique_ptr<SmbClientClient> smb_client_client_;
   std::unique_ptr<CrosDisksClient> cros_disks_client_;
   std::unique_ptr<DebugDaemonClient> debug_daemon_client_;
   std::unique_ptr<EasyUnlockClient> easy_unlock_client_;

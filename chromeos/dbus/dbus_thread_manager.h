@@ -44,6 +44,7 @@ class MediaAnalyticsClient;
 class ModemMessagingClient;
 class PermissionBrokerClient;
 class PowerManagerClient;
+class SmbClientClient;
 class SMSClient;
 class SessionManagerClient;
 class ShillDeviceClient;
@@ -139,6 +140,7 @@ class CHROMEOS_EXPORT DBusThreadManager {
   PermissionBrokerClient* GetPermissionBrokerClient();
   PowerManagerClient* GetPowerManagerClient();
   SessionManagerClient* GetSessionManagerClient();
+  SmbClientClient* GetSmbClientClient();
   ShillDeviceClient* GetShillDeviceClient();
   ShillIPConfigClient* GetShillIPConfigClient();
   ShillManagerClient* GetShillManagerClient();
@@ -202,6 +204,7 @@ class CHROMEOS_EXPORT DBusThreadManagerSetter {
       std::unique_ptr<PermissionBrokerClient> client);
   void SetPowerManagerClient(std::unique_ptr<PowerManagerClient> client);
   void SetSessionManagerClient(std::unique_ptr<SessionManagerClient> client);
+  void SetSmbClientClient(std::unique_ptr<SmbClientClient> client);
   void SetUpdateEngineClient(std::unique_ptr<UpdateEngineClient> client);
   void SetUpstartClient(std::unique_ptr<UpstartClient> client);
 

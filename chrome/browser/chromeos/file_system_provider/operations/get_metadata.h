@@ -15,6 +15,7 @@
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/request_value.h"
 #include "chrome/common/extensions/api/file_system_provider_internal.h"
+#include "chromeos/dbus/smb_client_client.h"
 
 namespace base {
 class FilePath;
@@ -49,6 +50,8 @@ class GetMetadata : public Operation {
               const ProvidedFileSystemInterface::GetMetadataCallback& callback);
   ~GetMetadata() override;
 
+  void HandleEntryCallback(int32_t error, chromeos::EntryData entry);
+
   // Operation overrides.
   bool Execute(int request_id) override;
   void OnSuccess(int request_id,
@@ -62,6 +65,7 @@ class GetMetadata : public Operation {
   base::FilePath entry_path_;
   ProvidedFileSystemInterface::MetadataFieldMask fields_;
   const ProvidedFileSystemInterface::GetMetadataCallback callback_;
+  base::WeakPtrFactory<GetMetadata> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(GetMetadata);
 };

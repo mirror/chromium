@@ -5,6 +5,8 @@
 #include "chrome/browser/chromeos/file_system_provider/operations/get_metadata.h"
 
 #include <stdint.h>
+#include <stddef.h>
+#include <iostream>
 
 #include <algorithm>
 #include <string>
@@ -14,6 +16,9 @@
 #include "base/memory/ptr_util.h"
 #include "chrome/common/extensions/api/file_system_provider.h"
 #include "chrome/common/extensions/api/file_system_provider_internal.h"
+
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/upstart_client.h"
 
 namespace chromeos {
 namespace file_system_provider {
@@ -70,6 +75,23 @@ bool ConvertRequestValueToFileInfo(std::unique_ptr<RequestValue> value,
   }
 
   return true;
+}
+
+bool ConvertMetadata(chromeos::EntryData value, int fields, EntryMetadata* output) {
+  using extensions::api::file_system_provider::EntryMetadata;
+  using extensions::api::file_system_provider_internal::
+  GetMetadataRequestedSuccess::Params;
+
+
+  if (fields & ProvidedFileSystemInterface::METADATA_FIELD_NAME)
+    output->name.reset(new std::string(value.name));
+
+  if (fields & ProvidedFileSystemInterface::METADATA_FIELD_IS_DIRECTORY)
+    output->is_directory.reset(new bool(value.is_directory));
+
+  if (fields & ProvidedFileSystemInterface::METADATA_FIELD_SIZE)
+    output->size.reset(
+        new int64_t(value.size));
 }
 
 }  // namespace
@@ -143,7 +165,7 @@ GetMetadata::GetMetadata(
     : Operation(event_router, file_system_info),
       entry_path_(entry_path),
       fields_(fields),
-      callback_(callback) {
+      callback_(callback), weak_ptr_factory_(this)  {
 }
 
 GetMetadata::~GetMetadata() {
@@ -167,12 +189,39 @@ bool GetMetadata::Execute(int request_id) {
   options.thumbnail =
       fields_ & ProvidedFileSystemInterface::METADATA_FIELD_THUMBNAIL;
 
+//  std::cout << "executing get metadta: " << entry_path_.AsUTF8Unsafe() << std::endl;
+//  chromeos::DBusThreadManager::Get()
+//      ->GetSmbClientClient()
+//      ->GetMetadata(1, entry_path_.AsUTF8Unsafe(),
+//                             base::Bind(&GetMetadata::HandleEntryCallback, weak_ptr_factory_.GetWeakPtr()));
+
+//  return true;
   return SendEvent(
       request_id,
       extensions::events::FILE_SYSTEM_PROVIDER_ON_GET_METADATA_REQUESTED,
       extensions::api::file_system_provider::OnGetMetadataRequested::kEventName,
       extensions::api::file_system_provider::OnGetMetadataRequested::Create(
           options));
+}
+
+void GetMetadata::HandleEntryCallback(int32_t error, chromeos::EntryData entry) {
+  if (error < 0) {
+    callback_.Run(base::WrapUnique<EntryMetadata>(NULL),
+                  base::File::FILE_ERROR_IO);
+    return;
+  }
+  std::cout << "Handle metadata Callback *** " << std::endl;
+  std::cout << "error : " << error;
+  std::cout << "getting metadata for: " << entry.name << " dir: "
+            << entry.is_directory << ", size: " << entry.size;
+
+  std::unique_ptr <EntryMetadata> metadata(new EntryMetadata);
+//  metadata.get()->name.reset(new std::string(entry.name));
+//  metadata.get()->is_directory.reset(new bool(entry.is_directory));
+//  metadata.get()->size.reset(new int64_t((entry.size)));
+//  ConvertMetadata(entry, fields_, metadata.get());
+
+//  callback_.Run(std::move(metadata), base::File::FILE_OK);
 }
 
 void GetMetadata::OnSuccess(int /* request_id */,

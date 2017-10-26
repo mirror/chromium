@@ -39,6 +39,7 @@
 #include "chromeos/dbus/shill_profile_client.h"
 #include "chromeos/dbus/shill_service_client.h"
 #include "chromeos/dbus/shill_third_party_vpn_driver_client.h"
+#include "chromeos/dbus/smb_client_client.h"
 #include "chromeos/dbus/sms_client.h"
 #include "chromeos/dbus/system_clock_client.h"
 #include "chromeos/dbus/update_engine_client.h"
@@ -123,6 +124,11 @@ ArcOemCryptoClient* DBusThreadManager::GetArcOemCryptoClient() {
 
 AuthPolicyClient* DBusThreadManager::GetAuthPolicyClient() {
   return clients_browser_ ? clients_browser_->auth_policy_client_.get()
+                          : nullptr;
+}
+
+SmbClientClient* DBusThreadManager::GetSmbClientClient() {
+  return clients_browser_ ? clients_browser_->smb_client_client_.get()
                           : nullptr;
 }
 
@@ -420,6 +426,12 @@ void DBusThreadManagerSetter::SetPowerManagerClient(
 void DBusThreadManagerSetter::SetSessionManagerClient(
     std::unique_ptr<SessionManagerClient> client) {
   DBusThreadManager::Get()->clients_common_->session_manager_client_ =
+      std::move(client);
+}
+
+void DBusThreadManagerSetter::SetSmbClientClient(
+    std::unique_ptr<SmbClientClient> client) {
+  DBusThreadManager::Get()->clients_browser_->smb_client_client_ =
       std::move(client);
 }
 
