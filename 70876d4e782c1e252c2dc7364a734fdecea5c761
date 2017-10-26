@@ -16,6 +16,24 @@
       "revId": "70876d4e782c1e252c2dc7364a734fdecea5c761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616b70cc_a574e2e7",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/the-stylepropertymap/computed.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-26T23:18:42Z",
+      "side": 1,
+      "message": "Not sure what you mean by inline? I did it for readability since computedStyle is used in six other places.",
+      "parentUuid": "d027940b_20a59603",
+      "revId": "70876d4e782c1e252c2dc7364a734fdecea5c761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
