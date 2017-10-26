@@ -30,8 +30,7 @@ ManagedDisplayInfo CreateDisplayInfo(int64_t id,
                                      const gfx::Rect& bounds) {
   ManagedDisplayInfo info(id, std::string(), false);
   info.SetBounds(bounds);
-  info.AddTouchDevice(
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(device));
+  info.AddTouchDevice(TouchDeviceIdentifier(device));
 
   // Create a default mode.
   ManagedDisplayInfo::ManagedDisplayModeList default_modes(
@@ -550,8 +549,7 @@ TEST_F(TouchTransformControllerTest, AccurateUserTouchCalibration) {
 
   const std::string msg = GetTouchPointString(user_input);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(touchscreen);
+  display::TouchDeviceIdentifier touch_device_identifier(touchscreen);
 
   display.SetTouchCalibrationData(touch_device_identifier, touch_data);
   EXPECT_TRUE(display.HasTouchCalibrationData(touch_device_identifier));
@@ -598,8 +596,7 @@ TEST_F(TouchTransformControllerTest, ErrorProneUserTouchCalibration) {
 
   const std::string msg = GetTouchPointString(user_input);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(touchscreen);
+  display::TouchDeviceIdentifier touch_device_identifier(touchscreen);
 
   display.SetTouchCalibrationData(touch_device_identifier, touch_data);
   EXPECT_TRUE(display.HasTouchCalibrationData(touch_device_identifier));
@@ -648,8 +645,7 @@ TEST_F(TouchTransformControllerTest, ResolutionChangeUserTouchCalibration) {
 
   const std::string msg = GetTouchPointString(user_input);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(touchscreen);
+  display::TouchDeviceIdentifier touch_device_identifier(touchscreen);
 
   display.SetTouchCalibrationData(touch_device_identifier, touch_data);
   EXPECT_TRUE(display.HasTouchCalibrationData(touch_device_identifier));
@@ -693,8 +689,7 @@ TEST_F(TouchTransformControllerTest, DifferentBoundsUserTouchCalibration) {
 
   const std::string msg = GetTouchPointString(user_input);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(touchscreen);
+  display::TouchDeviceIdentifier touch_device_identifier(touchscreen);
 
   display.SetTouchCalibrationData(touch_device_identifier, touch_data);
   EXPECT_TRUE(display.HasTouchCalibrationData(touch_device_identifier));
@@ -740,8 +735,7 @@ TEST_F(TouchTransformControllerTest, LetterboxingUserTouchCalibration) {
                          60, false, false));
   internal_display_info.SetManagedDisplayModes(internal_modes);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(internal_touchscreen);
+  display::TouchDeviceIdentifier touch_device_identifier(internal_touchscreen);
 
   ui::DeviceDataManager* device_manager = ui::DeviceDataManager::GetInstance();
 
@@ -818,8 +812,7 @@ TEST_F(TouchTransformControllerTest, PillarBoxingUserTouchCalibration) {
                          60, false, false));
   internal_display_info.SetManagedDisplayModes(internal_modes);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(internal_touchscreen);
+  display::TouchDeviceIdentifier touch_device_identifier(internal_touchscreen);
 
   ui::DeviceDataManager* device_manager = ui::DeviceDataManager::GetInstance();
 
