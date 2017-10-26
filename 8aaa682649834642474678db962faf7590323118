@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "147af61e_eca96594",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-10-26T20:14:24Z",
+      "side": 1,
+      "message": "I had a brain fart when writing this...we don\u0027t need this ifdef since Android doesn\u0027t use Aura.",
+      "revId": "8aaa682649834642474678db962faf7590323118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
