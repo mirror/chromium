@@ -79,11 +79,11 @@ base::TimeDelta FrameProcessingTimeEstimator::EstimatedTransitTime(
     return base::TimeDelta::FromMinutes(1);
   }
   if (key_frame) {
-    return base::TimeDelta::FromMilliseconds(
-        key_frame_size_.Average() * 8 / bandwidth_kbps_.Average());
+    return base::TimeDelta::FromMilliseconds(key_frame_size_.Average() * 8 /
+                                             bandwidth_kbps_.Average());
   }
-  return base::TimeDelta::FromMilliseconds(
-      delta_frame_size_.Average() * 8 / bandwidth_kbps_.Average());
+  return base::TimeDelta::FromMilliseconds(delta_frame_size_.Average() * 8 /
+                                           bandwidth_kbps_.Average());
 }
 
 base::TimeTicks FrameProcessingTimeEstimator::Now() const {

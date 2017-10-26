@@ -43,9 +43,10 @@ void SanityCheckContext(const CONTEXT& context) {
   constexpr uint32_t may_have = CONTEXT_EXTENDED_REGISTERS;
   ASSERT_EQ(context.ContextFlags & ~(must_have | may_have), 0u);
 #elif defined(ARCH_CPU_X86_64)
-  ASSERT_EQ(context.ContextFlags,
-            static_cast<DWORD>(CONTEXT_AMD64 | CONTEXT_CONTROL |
-                CONTEXT_INTEGER | CONTEXT_SEGMENTS | CONTEXT_FLOATING_POINT));
+  ASSERT_EQ(
+      context.ContextFlags,
+      static_cast<DWORD>(CONTEXT_AMD64 | CONTEXT_CONTROL | CONTEXT_INTEGER |
+                         CONTEXT_SEGMENTS | CONTEXT_FLOATING_POINT));
 #endif
 
 #if defined(ARCH_CPU_X86_FAMILY)

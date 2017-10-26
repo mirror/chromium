@@ -478,9 +478,11 @@ class HarfBuzzLineBreaker {
     paint.getFontMetrics(&metrics);
 
     // max_descent_ is y-down, fDescent is y-down, baseline_offset is y-down
-    max_descent_ = std::max(max_descent_, metrics.fDescent+run.baseline_offset);
+    max_descent_ =
+        std::max(max_descent_, metrics.fDescent + run.baseline_offset);
     // max_ascent_ is y-up, fAscent is y-down, baseline_offset is y-down
-    max_ascent_ = std::max(max_ascent_, -(metrics.fAscent+run.baseline_offset));
+    max_ascent_ =
+        std::max(max_ascent_, -(metrics.fAscent + run.baseline_offset));
 
     if (run.is_rtl) {
       rtl_segments_.push_back(

@@ -61,9 +61,7 @@ TEST(CommandLine, AppendCommandLineArgument) {
     SCOPED_TRACE("simple");
 
     static constexpr const wchar_t* kArguments[] = {
-        L"child.exe",
-        L"argument 1",
-        L"argument 2",
+        L"child.exe", L"argument 1", L"argument 2",
     };
     AppendCommandLineArgumentTest(arraysize(kArguments), kArguments);
   }
@@ -72,10 +70,7 @@ TEST(CommandLine, AppendCommandLineArgument) {
     SCOPED_TRACE("path with spaces");
 
     static constexpr const wchar_t* kArguments[] = {
-        L"child.exe",
-        L"argument1",
-        L"argument 2",
-        L"\\some\\path with\\spaces",
+        L"child.exe", L"argument1", L"argument 2", L"\\some\\path with\\spaces",
     };
     AppendCommandLineArgumentTest(arraysize(kArguments), kArguments);
   }
@@ -96,11 +91,7 @@ TEST(CommandLine, AppendCommandLineArgument) {
     SCOPED_TRACE("argument with unbalanced quotation marks");
 
     static constexpr const wchar_t* kArguments[] = {
-        L"child.exe",
-        L"argument1",
-        L"argument\"2",
-        L"argument3",
-        L"argument4",
+        L"child.exe", L"argument1", L"argument\"2", L"argument3", L"argument4",
     };
     AppendCommandLineArgumentTest(arraysize(kArguments), kArguments);
   }
@@ -109,9 +100,7 @@ TEST(CommandLine, AppendCommandLineArgument) {
     SCOPED_TRACE("argument ending with backslash");
 
     static constexpr const wchar_t* kArguments[] = {
-        L"child.exe",
-        L"\\some\\directory with\\spaces\\",
-        L"argument2",
+        L"child.exe", L"\\some\\directory with\\spaces\\", L"argument2",
     };
     AppendCommandLineArgumentTest(arraysize(kArguments), kArguments);
   }
@@ -120,9 +109,7 @@ TEST(CommandLine, AppendCommandLineArgument) {
     SCOPED_TRACE("empty argument");
 
     static constexpr const wchar_t* kArguments[] = {
-        L"child.exe",
-        L"",
-        L"argument2",
+        L"child.exe", L"", L"argument2",
     };
     AppendCommandLineArgumentTest(arraysize(kArguments), kArguments);
   }
@@ -131,33 +118,13 @@ TEST(CommandLine, AppendCommandLineArgument) {
     SCOPED_TRACE("funny nonprintable characters");
 
     static constexpr const wchar_t* kArguments[] = {
-        L"child.exe",
-        L"argument 1",
-        L"argument\t2",
-        L"argument\n3",
-        L"argument\v4",
-        L"argument\"5",
-        L" ",
-        L"\t",
-        L"\n",
-        L"\v",
-        L"\"",
-        L" x",
-        L"\tx",
-        L"\nx",
-        L"\vx",
-        L"\"x",
-        L"x ",
-        L"x\t",
-        L"x\n",
-        L"x\v",
-        L"x\"",
-        L" ",
-        L"\t\t",
-        L"\n\n",
-        L"\v\v",
-        L"\"\"",
-        L" \t\n\v\"",
+        L"child.exe",   L"argument 1",  L"argument\t2", L"argument\n3",
+        L"argument\v4", L"argument\"5", L" ",           L"\t",
+        L"\n",          L"\v",          L"\"",          L" x",
+        L"\tx",         L"\nx",         L"\vx",         L"\"x",
+        L"x ",          L"x\t",         L"x\n",         L"x\v",
+        L"x\"",         L" ",           L"\t\t",        L"\n\n",
+        L"\v\v",        L"\"\"",        L" \t\n\v\"",
     };
     AppendCommandLineArgumentTest(arraysize(kArguments), kArguments);
   }
