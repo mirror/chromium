@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "0c0f68a5_c4080a27",
+        "filename": "chrome/browser/resources/md_extensions/app_or_extension_behavior.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-26T22:01:29Z",
+      "side": 1,
+      "message": "Sounds good, changed to ItemBehavior",
+      "parentUuid": "2ff31f9c_2777fb0c",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "f0741e17c935270eaeb936657b69bfab84c84201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca59d6a3_60802957",
         "filename": "chrome/browser/resources/md_extensions/item.html",
         "patchSetId": 3
