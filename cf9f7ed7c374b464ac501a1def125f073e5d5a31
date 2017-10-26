@@ -16,6 +16,24 @@
       "revId": "cf9f7ed7c374b464ac501a1def125f073e5d5a31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdec74b8_c8dbd9e2",
+        "filename": "components/viz/common/frame_sinks/copy_output_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-26T20:55:42Z",
+      "side": 1,
+      "message": "Done. I think I confused the issue by trying to describe how set_area() relates to set_result_selection() all at once. So, I changed the comments to just describe what set_area() does by itself.",
+      "parentUuid": "5b76450a_2695c440",
+      "revId": "cf9f7ed7c374b464ac501a1def125f073e5d5a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
