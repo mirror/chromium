@@ -49,6 +49,9 @@ static_library("crashpad_test") {
     "//third_party/crashpad/crashpad/snapshot",
     "//third_party/crashpad/crashpad/util",
   ]
+  data = [
+    "test_paths_test_data_root.txt",
+  ]
   include_dirs = [ ".." ]
   if (is_mac) {
     libs = [ "bsm" ]
