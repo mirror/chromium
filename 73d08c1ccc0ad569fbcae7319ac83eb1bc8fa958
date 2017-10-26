@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cb74a818_1b653552",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T23:17:14Z",
+      "side": 1,
+      "message": "This is pretty confusing and seems like a circular dependency:\n\npassword_manager_porter_.{Iport|ExportFlow} -\u003e password_manager_presenter_\npassword_manager_presenter_.CredentialProviderInterface -\u003e  password_manager_porter_\n\nIt seems like PasswordManagerPresenter should be split up.",
+      "revId": "73d08c1ccc0ad569fbcae7319ac83eb1bc8fa958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55097ef1_a26ee5ef",
         "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.h",
         "patchSetId": 4
@@ -37,6 +54,30 @@
       "side": 1,
       "message": "I\u0027m afraid I don\u0027t fully understand what do you mean by extract. This CL removes the porter from the presenter and makes it a data member here. But you probably mean something different?",
       "parentUuid": "55097ef1_a26ee5ef",
+      "range": {
+        "startLine": 95,
+        "startChar": 44,
+        "endLine": 95,
+        "endChar": 71
+      },
+      "revId": "73d08c1ccc0ad569fbcae7319ac83eb1bc8fa958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412e4250_ccd64e72",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-26T23:17:14Z",
+      "side": 1,
+      "message": "Could you expand on this comment a bit, I had to poke around at the code a bit to make sense of this. e.g.\n\n// PasswordManagerPorter implements |ExportFlow| and |ImportFlow| for |password_manager_presenter_|.",
+      "parentUuid": "ee56abcd_187839f5",
       "range": {
         "startLine": 95,
         "startChar": 44,
