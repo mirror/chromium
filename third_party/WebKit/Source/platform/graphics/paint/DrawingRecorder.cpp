@@ -87,8 +87,11 @@ DrawingRecorder::~DrawingRecorder() {
   sk_sp<const PaintRecord> picture = context_.EndRecording();
 
 #if DCHECK_IS_ON()
+  // When skipping cache (e.g. in PaintRecordBuilder with a temporary
+  // PaintController), the client's painting might be different from its normal
+  // painting.
   if (!RuntimeEnabledFeatures::SlimmingPaintStrictCullRectClippingEnabled() &&
-      !context_.GetPaintController().IsForPaintRecordBuilder() &&
+      !context_.GetPaintController().IsSkippingCache() &&
       client_.PaintedOutputOfObjectHasNoEffectRegardlessOfSize()) {
     DCHECK_EQ(0u, picture->size()) << client_.DebugName();
   }
