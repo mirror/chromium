@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8728723_b3abc939",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-26T20:56:04Z",
+      "side": 1,
+      "message": "I don\u0027t think I agree with this solution of passing the presenting view controller along with the command.  The whole point of the dispatcher system is that it is intercepted by the object with sufficient knowledge of the UI that it can perform the action; this type of parameter seems like a layering violation because you\u0027re letting the UI layer dictate the behavior of the coordinators.  I think a better solution would be this:\n\n1. Make BVC conform to ApplicationSettingsCommands, and forward command handling for those commands from MainController to BVC.  Speaking of which, why do ApplicationCommands conform to ApplicationSettingsCommands?  If we remove that, then we don\u0027t have to do any command forwarding from MainController.\n2. Make BVC conform to SettingsNavigationControllerDelegate.  It can accomplish all of those delegate callbacks using preexisting ApplicationCommands that can be dispatched to MainController.\n3. In BVC\u0027s AppplicationSettingsCommands, create the SettingsNavigationController using itself as the delegate.  You can also perform the DCHECKing against handling this command in incognito there.\n4. If the BVC\u0027s already displaying the navigation controller, forward the command to the navigation controller to switch the top-most view.\n\nSorry, I know this expands the scope of this CL a bit, but I think that it would be a cleaner solution without the problematic layering violations.  WDYT?",
+      "revId": "cb4081efb54a970f51957ea2868d08575e2ffbe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
