@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "d90ad536_fd84edb8",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-26T22:37:26Z",
+      "side": 1,
+      "message": "Yes, the TaskRunnerHelpers make assumptions that aren\u0027t true here.",
+      "parentUuid": "044a03f5_a2d4296a",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34445ef9_211630cf",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
         "patchSetId": 17
@@ -113,6 +137,30 @@
     },
     {
       "key": {
+        "uuid": "3f6b7b3c_95268686",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-26T22:37:26Z",
+      "side": 1,
+      "message": "...and it\u0027s back.\n\nConverted to DCHECK",
+      "parentUuid": "2cf973df_2ece5934",
+      "range": {
+        "startLine": 46,
+        "startChar": 11,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7487749c_2cfbce8e",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
         "patchSetId": 17
@@ -124,6 +172,24 @@
       "writtenOn": "2017-10-24T19:19:24Z",
       "side": 1,
       "message": "This is not what\u0027s intended -\u003e we need to ensure we have the animator thread instance, not the compositor thread.",
+      "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5409b32d_7ee4bdc5",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-26T22:37:26Z",
+      "side": 1,
+      "message": "Fixed - and straightening that out exposed more flaws, which I think are now fixed.",
+      "parentUuid": "7487749c_2cfbce8e",
       "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
