@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0d1960f_502b57a1",
+        "filename": "content/browser/interface_provider_filtering.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-26T17:55:33Z",
+      "side": 1,
+      "message": "I\u0027ll just leave this here in the hope that it is ugly enough that y\u0027all will suggest a better solution. :-)",
+      "revId": "f2d6a3704e0906c521f3940b45d6882825f05b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
