@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bbd8409_6cf18682",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CSSPlugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-26T22:49:31Z",
+      "side": 1,
+      "message": "let\u0027s pass in UISourceCode + textEditor. This will justify the re-creation of the plugins",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "1a996eb7ff70a99ab09a3eab0ba4955f99425e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122cb054_f892cf14",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CSSPlugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-26T22:49:31Z",
+      "side": 1,
+      "message": "can this be inlined?",
+      "range": {
+        "startLine": 307,
+        "startChar": 11,
+        "endLine": 307,
+        "endChar": 26
+      },
+      "revId": "1a996eb7ff70a99ab09a3eab0ba4955f99425e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1941de9c_892c91c7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/UISourceCodeFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-26T22:49:31Z",
+      "side": 1,
+      "message": "why do you need this? This should be handled in onTextEditorContentSet",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 20
+      },
+      "revId": "1a996eb7ff70a99ab09a3eab0ba4955f99425e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

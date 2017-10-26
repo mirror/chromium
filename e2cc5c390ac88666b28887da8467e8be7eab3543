@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95ee9542_7f245c06",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CSSPlugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-26T22:49:31Z",
+      "side": 0,
+      "message": "where did it go?",
+      "range": {
+        "startLine": 288,
+        "startChar": 2,
+        "endLine": 288,
+        "endChar": 24
+      },
+      "revId": "e2cc5c390ac88666b28887da8467e8be7eab3543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
