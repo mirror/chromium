@@ -11,6 +11,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/ash/tablet_mode_client_observer.h"
+#include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "chrome/browser/ui/views/frame/browser_non_client_frame_view.h"
 #include "chrome/browser/ui/views/tab_icon_view_model.h"
 
@@ -26,7 +27,7 @@ class HeaderPainter;
 class BrowserNonClientFrameViewAsh : public BrowserNonClientFrameView,
                                      public ash::ShellObserver,
                                      public TabletModeClientObserver,
-                                     public TabIconViewModel {
+                                     public TabIconViewModel, public TabStripModelObserver {
  public:
   BrowserNonClientFrameViewAsh(BrowserFrame* frame, BrowserView* browser_view);
   ~BrowserNonClientFrameViewAsh() override;
@@ -69,6 +70,11 @@ class BrowserNonClientFrameViewAsh : public BrowserNonClientFrameView,
   // TabIconViewModel:
   bool ShouldTabIconViewAnimate() const override;
   gfx::ImageSkia GetFaviconForTabIconView() override;
+
+  // TabStripModelObserver:
+void TabChangedAt(content::WebContents* contents,
+                            int index,
+                            TabChangeType change_type) override;
 
  protected:
   // BrowserNonClientFrameView:

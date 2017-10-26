@@ -12,6 +12,8 @@
 #include "ui/aura/window.h"
 #include "ui/message_center/notifier_settings.h"
 
+#include "ash/public/cpp/window_properties.h"
+
 namespace ash {
 
 FullscreenNotificationBlocker::FullscreenNotificationBlocker(
@@ -28,8 +30,8 @@ bool FullscreenNotificationBlocker::ShouldShowNotificationAsPopup(
     const message_center::Notification& notification) const {
   bool enabled =
       !should_block_ ||
-      (notification.delegate() &&
-       notification.delegate()->ShouldDisplayOverFullscreen()) ||
+      (fullscreen_window_origin_.is_valid() &&
+       notification.origin_url() == fullscreen_window_origin_) ||
       system_notifier::ShouldAlwaysShowPopups(notification.notifier_id());
 
   if (enabled && !should_block_) {
@@ -58,12 +60,17 @@ void FullscreenNotificationBlocker::OnFullscreenStateChanged(
   // window.
   const aura::Window* fullscreen_window =
       controller->GetWindowForFullscreenMode();
-  bool was_blocked = should_block_;
+  fullscreen_window_origin_ = GURL();
+  if (fullscreen_window) {
+    std::string* origin =
+        fullscreen_window->GetProperty(kWindowContentOriginKey);
+    fullscreen_window_origin_ = origin ? GURL(*origin) : GURL();
+NOTIMPLEMENTED() << " fullsc change " << fullscreen_window_origin_.possibly_invalid_spec();
+  }
   should_block_ =
       fullscreen_window &&
       wm::GetWindowState(fullscreen_window)->hide_shelf_when_fullscreen();
-  if (was_blocked != should_block_)
-    NotifyBlockingStateChanged();
+  NotifyBlockingStateChanged();
 }
 
 }  // namespace ash

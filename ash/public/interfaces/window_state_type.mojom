@@ -36,3 +36,6 @@ enum WindowStateType {
 
 // The window's extended state. Maps to ash::aura::kWindowStateTypeKey.
 const string kWindowStateType_Property = "ash:window-state-type";
+
+// FIXME
+const string kWindowContentOrigin_Property = "ash:window-content-origin";

@@ -107,6 +107,8 @@ WindowManager::WindowManager(service_manager::Connector* connector,
       base::Bind(&ash::IsValidWindowPinType));
   property_converter_->RegisterStringProperty(
       kShelfIDKey, ui::mojom::WindowManager::kShelfID_Property);
+  property_converter_->RegisterStringProperty(
+      kWindowContentOriginKey, ash::mojom::kWindowContentOrigin_Property);
 }
 
 WindowManager::~WindowManager() {

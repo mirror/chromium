@@ -81,6 +81,9 @@ void ChromeBrowserMainExtraPartsAsh::ServiceManagerConnectionStarted(
         base::Bind(&ash::IsValidWindowPinType));
     converter->RegisterStringProperty(
         ash::kShelfIDKey, ui::mojom::WindowManager::kShelfID_Property);
+    converter->RegisterStringProperty(
+        ash::kWindowContentOriginKey,
+        ash::mojom::kWindowContentOrigin_Property);
 
     mus_client->SetMusPropertyMirror(
         base::MakeUnique<ash::MusPropertyMirrorAsh>());

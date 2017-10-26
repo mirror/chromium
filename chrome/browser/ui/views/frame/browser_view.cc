@@ -146,6 +146,7 @@
 #include "ui/views/window/dialog_delegate.h"
 
 #if defined(OS_CHROMEOS)
+#include "ash/public/cpp/window_properties.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/views/location_bar/intent_picker_view.h"
 #else
@@ -781,6 +782,16 @@ void BrowserView::OnActiveTabChanged(content::WebContents* old_contents,
     // The second layout update should be no-op. It will just set the
     // DevTools WebContents.
     UpdateDevToolsForContents(new_contents, true);
+
+#if defined(OS_CHROMEOS)
+    if (new_contents) NOTIMPLEMENTED() << new_contents->GetLastCommittedURL().GetOrigin().spec();
+    frame()->GetNativeWindow()->SetProperty(
+        ash::kWindowContentOriginKey,
+        new std::string(
+            new_contents
+                ? new_contents->GetLastCommittedURL().GetOrigin().spec()
+                : nullptr));
+#endif
   }
 
   if (!browser_->tab_strip_model()->closing_all() && GetWidget()->IsActive() &&

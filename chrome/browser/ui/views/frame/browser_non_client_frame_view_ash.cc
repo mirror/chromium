@@ -14,6 +14,7 @@
 #include "ash/frame/header_painter_util.h"
 #include "ash/public/cpp/app_types.h"
 #include "ash/public/cpp/ash_switches.h"
+#include "ash/public/cpp/window_properties.h"
 #include "ash/shell.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
@@ -23,6 +24,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/frame/browser_frame.h"
 #include "chrome/browser/ui/views/frame/browser_header_painter_ash.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
@@ -77,9 +79,12 @@ BrowserNonClientFrameViewAsh::BrowserNonClientFrameViewAsh(
   ash::wm::InstallResizeHandleWindowTargeterForWindow(frame->GetNativeWindow(),
                                                       nullptr);
   ash::Shell::Get()->AddShellObserver(this);
+
+  browser_view->browser()->tab_strip_model()->AddObserver(this);
 }
 
 BrowserNonClientFrameViewAsh::~BrowserNonClientFrameViewAsh() {
+  browser_view->browser()->tab_strip_model()->RemoveObserver(this);
   if (TabletModeClient::Get())
     TabletModeClient::Get()->RemoveObserver(this);
   ash::Shell::Get()->RemoveShellObserver(this);
@@ -261,10 +266,12 @@ void BrowserNonClientFrameViewAsh::UpdateWindowIcon() {
 void BrowserNonClientFrameViewAsh::UpdateWindowTitle() {
   if (!frame()->IsFullscreen())
     header_painter_->SchedulePaintForTitle();
+
+  if (!frame()->GetNativeWindow() || !browser_view())
+    return;
 }
 
-void BrowserNonClientFrameViewAsh::SizeConstraintsChanged() {
-}
+void BrowserNonClientFrameViewAsh::SizeConstraintsChanged() {}
 
 ///////////////////////////////////////////////////////////////////////////////
 // views::View:
@@ -413,6 +420,18 @@ bool BrowserNonClientFrameViewAsh::ShouldTabIconViewAnimate() const {
 gfx::ImageSkia BrowserNonClientFrameViewAsh::GetFaviconForTabIconView() {
   views::WidgetDelegate* delegate = frame()->widget_delegate();
   return delegate ? delegate->GetWindowIcon() : gfx::ImageSkia();
+}
+
+void BrowserNonClientFrameViewAsh::TabChangedAt(content::WebContents* contents,
+                            int index,
+                            TabChangeType change_type) {
+  if (contents)
+    NOTIMPLEMENTED() << contents->GetLastCommittedURL().GetOrigin().spec();
+  frame()->GetNativeWindow()->SetProperty(
+      ash::kWindowContentOriginKey,
+      new std::string(
+          contents ? contents->GetLastCommittedURL().GetOrigin().spec()
+                       : nullptr));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -151,6 +151,8 @@ void ChromeNativeAppWindowViewsAuraAsh::InitializeWindow(
     window->SetProperty(aura::client::kAppType,
                         static_cast<int>(ash::AppType::CHROME_APP));
   }
+  std::string origin = app_window->initial_url().GetOrigin().spec();
+  window->SetProperty(ash::kWindowContentOriginKey, &origin);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
