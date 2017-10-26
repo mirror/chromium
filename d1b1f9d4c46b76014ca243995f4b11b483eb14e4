@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "595828ab_3a219ca3",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T11:54:50Z",
+      "side": 1,
+      "message": "Style nit: Pull the enum up above the method definitions, please.",
+      "revId": "d1b1f9d4c46b76014ca243995f4b11b483eb14e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afede856_d8f4dcf9",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T11:54:50Z",
+      "side": 1,
+      "message": "Nit: Is this what `git cl format` gave you? I\u0027d have expected this line to be indented.",
+      "revId": "d1b1f9d4c46b76014ca243995f4b11b483eb14e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbcca083_91d99ce5",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T11:54:50Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "d1b1f9d4c46b76014ca243995f4b11b483eb14e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9d5a22_e16c7b75",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T11:54:50Z",
+      "side": 1,
+      "message": "Thanks! Mind filing a bug against the spec to make sure this is clearly defined? I don\u0027t recall what the RFC says on this point; we should check it one way or another.",
+      "revId": "d1b1f9d4c46b76014ca243995f4b11b483eb14e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
