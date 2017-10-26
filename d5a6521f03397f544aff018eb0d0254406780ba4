@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dd2006b_b61d4e82",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-26T15:37:39Z",
+      "side": 1,
+      "message": "Recomputing occlusion at every step of the animation seems unnecessary. Shouldn\u0027t it be sufficient to compute at the start, and/or at the end of animations?",
+      "revId": "d5a6521f03397f544aff018eb0d0254406780ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
