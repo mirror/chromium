@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "87b27969_10ef60b6",
+        "filename": "media/audio/mac/audio_low_latency_input_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-26T08:56:36Z",
+      "side": 1,
+      "message": "We want to enable this for WebRTC only. Can it be enabled from the ProcessedLocalAudioSource (currently only used by WebRTC)? I suppose it\u0027s not aware of any device id.",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d79d671_a8e06973",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-26T08:56:36Z",
+      "side": 1,
+      "message": "The user could change settings after this, and we may not honor that when unsuppressing. \n\n1. NR enabled.\n2. We disable here.\n3. User changes setting, maybe back and forth, settling for disabled. Expects this to stick.\n4. We enable it again when unsuppressing.\n\nIs it possible to listen to property changes for this property? If it changes when listening we just don\u0027t touch it in unsuppress...()",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c304e768_9bce1829",
         "filename": "media/audio/mac/audio_manager_mac.cc",
         "patchSetId": 2
@@ -43,6 +77,40 @@
         "endLine": 1092,
         "endChar": 65
       },
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab30f784_ddf36c14",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-26T08:56:36Z",
+      "side": 1,
+      "message": "If you follow my point below, this can be checked above and return early. Same with the other not supported path.",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b6f10e_29cec8fc",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-26T08:56:36Z",
+      "side": 1,
+      "message": "For clarity, if not supported we shouldn\u0027t count.",
       "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
