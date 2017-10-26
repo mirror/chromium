@@ -77,12 +77,18 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   // TODO(hajimehoshi): Some tests like RendererSchedulerImplTest depends on
   // these functions. These are public or a lot of FORWARD_DECLARE_TEST and
   // FRIEND_TEST_ALL_PREFIXES would be required. Fix the tests not to use these.
-  scoped_refptr<WebTaskRunner> LoadingTaskRunner();
-  scoped_refptr<WebTaskRunner> LoadingControlTaskRunner();
-  scoped_refptr<WebTaskRunner> ThrottleableTaskRunner();
-  scoped_refptr<WebTaskRunner> DeferrableTaskRunner();
-  scoped_refptr<WebTaskRunner> PausableTaskRunner();
-  scoped_refptr<WebTaskRunner> UnpausableTaskRunner();
+  scoped_refptr<WebTaskRunner> LoadingTaskRunner(
+      base::Optional<TaskType> task_type = base::nullopt);
+  scoped_refptr<WebTaskRunner> LoadingControlTaskRunner(
+      base::Optional<TaskType> task_type = base::nullopt);
+  scoped_refptr<WebTaskRunner> ThrottleableTaskRunner(
+      base::Optional<TaskType> task_type = base::nullopt);
+  scoped_refptr<WebTaskRunner> DeferrableTaskRunner(
+      base::Optional<TaskType> task_type = base::nullopt);
+  scoped_refptr<WebTaskRunner> PausableTaskRunner(
+      base::Optional<TaskType> task_type = base::nullopt);
+  scoped_refptr<WebTaskRunner> UnpausableTaskRunner(
+      base::Optional<TaskType> task_type = base::nullopt);
 
  private:
   friend class WebViewSchedulerImpl;
