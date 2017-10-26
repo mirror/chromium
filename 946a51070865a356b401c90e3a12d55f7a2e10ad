@@ -16,6 +16,24 @@
       "revId": "946a51070865a356b401c90e3a12d55f7a2e10ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6265dc6b_7c3d4103",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-10-26T18:30:47Z",
+      "side": 1,
+      "message": "Makes sense; I\u0027ve done that in patch v2.",
+      "parentUuid": "e6fffe33_99cd86f7",
+      "revId": "946a51070865a356b401c90e3a12d55f7a2e10ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
