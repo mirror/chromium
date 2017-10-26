@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fba48590_5f91de9e",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-26T14:19:36Z",
+      "side": 1,
+      "message": "Added tests (also for the previous method)",
+      "parentUuid": "cc26470b_9fc6f2d4",
+      "range": {
+        "startLine": 452,
+        "startChar": 9,
+        "endLine": 452,
+        "endChar": 29
+      },
+      "revId": "627904696ae1d1b116cf98395f3200aa9ab000ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf151df4_82d536a3",
         "filename": "tools/perf/core/perf_data_generator.py",
         "patchSetId": 2
