@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21931d76_ea4637b4",
+        "filename": "media/mojo/services/video_decode_perf_history.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-26T22:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "991d589e_00a24d66",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "998075f3_8f5a5744",
         "filename": "media/mojo/services/video_decode_perf_history.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56fe1e8_8e4c6006",
+        "filename": "media/mojo/services/video_decode_perf_history.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-26T22:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "998075f3_8f5a5744",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a55f426e_5744ba89",
+        "filename": "media/mojo/services/video_decode_perf_history.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-26T22:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "741c3612_084d5822",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f69d8e1_b01fbe13",
         "filename": "media/mojo/services/video_decode_perf_history.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ca878d_2d7ce343",
+        "filename": "media/mojo/services/video_decode_perf_history.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-26T22:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f69d8e1_b01fbe13",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5489e7b4_4eadace0",
+        "filename": "media/mojo/services/video_decode_perf_history.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-26T22:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7851c19_68a20a23",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b8adc2_69fdad64",
         "filename": "media/mojo/services/video_decode_perf_history.h",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-26T17:50:38Z",
       "side": 1,
       "message": "OnGot gives me Halloween shivers, but if you\u0027re going to use it how about OnGotPerfInfo and OnSavePerfRecord so they match the methods above? You could also name them based on the methods you pass these callbacks too.",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614c6470_2c51f279",
+        "filename": "media/mojo/services/video_decode_perf_history.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-26T22:19:47Z",
+      "side": 1,
+      "message": "Lol, OnGot* doesn\u0027t bother me at all. To me OnGet* sounds like a handler for some action... like does the lifting for some API called Get*. But I\u0027m ok to change these to OnGet* if you prefer. \n\nThe current names actually are my attempt to name based on the methods they serve.\n1) OnGotStatsForRequest: to reply to the GetPerfInfo API (user \"requesting\" info)\n2) OnGotStatsForSave: in the path to SavePerfRecord (so we can compare past to latest for UKM)\n\nOnSavePerfRecord seems confusing because that method is not a callback for the save - the actual save is triggered by that callback.\n\nAnother option is to name by what the methods do - MakePerfInfoFromStats() \u0026\u0026 GradeHistoryPredictionAndSave(). Its super clear, but not as flexible for future iteration.",
+      "parentUuid": "79b8adc2_69fdad64",
       "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "86035b6f_b4db2c92",
+        "filename": "media/mojo/services/video_decode_perf_history_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-26T22:19:47Z",
+      "side": 1,
+      "message": "Now using TEST_P for early-vs-deferred initialization for each test.",
+      "parentUuid": "d12424dc_49123231",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b0ad8be_204da436",
         "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8c1dc1_a81512f0",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-26T22:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b0ad8be_204da436",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "83e6c9ac_b89312b3",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-26T22:19:47Z",
+      "side": 1,
+      "message": "Fixed. Cruft from previous CL.",
+      "parentUuid": "bd40811a_58ee5536",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad929798_4059bf2e",
         "filename": "media/mojo/services/video_decode_stats_recorder.h",
         "patchSetId": 3
@@ -169,6 +331,24 @@
       "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db6f371_c3fdc676",
+        "filename": "media/mojo/services/video_decode_stats_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-26T22:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad929798_4059bf2e",
+      "revId": "8e22eb0d03c45316f1ae64ffce70f0765e1fe624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
