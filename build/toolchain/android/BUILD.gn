@@ -60,7 +60,23 @@ template("android_clang_toolchain") {
   }
 }
 
-android_clang_toolchain("android_clang_x86") {
+# WebRTC depends on the name of the old gcc toolchain ("android_arm" instead
+# of "android_clang_arm").  WebRTC does not depend on the android_arm toolchain
+# actually being gcc though, so provide the toolchain for each arch under two
+# names.
+# TODO(thakis): Remove the android_$target_name toolchains once WebRTC no
+# longer needs this, https://crbug.com/778632
+template("android_clang_toolchains_helper") {
+  android_clang_toolchain("android_$target_name") {
+    forward_variables_from(invoker, "*")
+  }
+
+  android_clang_toolchain("android_clang_$target_name") {
+    forward_variables_from(invoker, "*")
+  }
+}
+
+android_clang_toolchains_helper("x86") {
   toolchain_root = x86_android_toolchain_root
   sysroot = "$android_ndk_root/$x86_android_sysroot_subdir"
   lib_dir = "usr/lib"
@@ -70,7 +86,7 @@ android_clang_toolchain("android_clang_x86") {
   }
 }
 
-android_clang_toolchain("android_clang_arm") {
+android_clang_toolchains_helper("arm") {
   toolchain_root = arm_android_toolchain_root
   sysroot = "$android_ndk_root/$arm_android_sysroot_subdir"
   lib_dir = "usr/lib"
@@ -90,7 +106,7 @@ android_clang_toolchain("android_clang_mipsel") {
   }
 }
 
-android_clang_toolchain("android_clang_x64") {
+android_clang_toolchains_helper("x64") {
   toolchain_root = x86_64_android_toolchain_root
   sysroot = "$android_ndk_root/$x86_64_android_sysroot_subdir"
   lib_dir = "usr/lib64"
@@ -100,7 +116,7 @@ android_clang_toolchain("android_clang_x64") {
   }
 }
 
-android_clang_toolchain("android_clang_arm64") {
+android_clang_toolchains_helper("arm64") {
   toolchain_root = arm64_android_toolchain_root
   sysroot = "$android_ndk_root/$arm64_android_sysroot_subdir"
   lib_dir = "usr/lib"
