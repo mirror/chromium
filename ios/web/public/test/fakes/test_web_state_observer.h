@@ -19,6 +19,8 @@ class TestWebStateObserver : public WebStateObserver {
   TestWebStateObserver(WebState* web_state);
   ~TestWebStateObserver() override;
 
+  WebState* web_state() { return web_state_; }
+
   // Arguments passed to |WasShown|.
   web::TestWasShownInfo* was_shown_info() { return was_shown_info_.get(); }
   // Arguments passed to |WasHidden|.
@@ -131,6 +133,10 @@ class TestWebStateObserver : public WebStateObserver {
   void WebStateDestroyed(WebState* web_state) override;
   void DidStartLoading(WebState* web_state) override;
   void DidStopLoading(WebState* web_state) override;
+
+  // The WebState this instance is observing. Will be null after
+  // WebStateDestroyed has been called.
+  web::WebState* web_state_ = nullptr;
 
   std::unique_ptr<web::TestWasShownInfo> was_shown_info_;
   std::unique_ptr<web::TestWasHiddenInfo> was_hidden_info_;
