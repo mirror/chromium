@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "40d00ab2_0792fde7",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-26T21:06:22Z",
+      "side": 1,
+      "message": "Thanks Varun!",
+      "parentUuid": "adb90088_e9f6882d",
+      "range": {
+        "startLine": 107,
+        "startChar": 45,
+        "endLine": 107,
+        "endChar": 53
+      },
+      "revId": "7802694acb07f74cf7825d6ac0772b12866ef85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6ce315f_0db32181",
         "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
         "patchSetId": 1
