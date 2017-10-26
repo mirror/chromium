@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "133b1d01_12df4446",
+        "filename": "components/viz/common/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-26T22:08:46Z",
+      "side": 1,
+      "message": "This is weird cuz GLHelper is client stuff fwiw. Whatever its depending on should be separated.. Given I don\u0027t see any changes in these files, maybe it\u0027s not needed?",
+      "revId": "4f3674b789466d8d0982f691e1b5222ac601c017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63798c24_39c7300a",
         "filename": "services/viz/privileged/interfaces/viz_main.mojom",
         "patchSetId": 1
