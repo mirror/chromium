@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8b65a51_bcd1e94a",
+        "filename": "testing/libfuzzer/proto/json.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T17:18:12Z",
+      "side": 1,
+      "message": "Oh, right! Done.",
+      "parentUuid": "21af6b14_73ce5b3c",
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b582c809_da5431e1",
         "filename": "testing/libfuzzer/proto/json.proto",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a21baf_8cecf5ac",
+        "filename": "testing/libfuzzer/proto/json.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T17:18:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b582c809_da5431e1",
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cf691256_d1bef08d",
+        "filename": "testing/libfuzzer/proto/json.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T17:18:12Z",
+      "side": 1,
+      "message": "I like this idea, thanks for the suggestion! Done.",
+      "parentUuid": "31f80e0f_25efd362",
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8f3aa36_b6af773f",
         "filename": "testing/libfuzzer/proto/json_proto_converter.h",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4933a333_0d477b14",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T17:18:12Z",
+      "side": 1,
+      "message": "Right! Done.",
+      "parentUuid": "b8f3aa36_b6af773f",
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37eb6d77_005d8297",
         "filename": "testing/libfuzzer/proto/json_proto_converter.h",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280ec654_85bc1009",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T17:18:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37eb6d77_005d8297",
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "1ccbd6c5_0073f6fe",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T17:18:12Z",
+      "side": 1,
+      "message": "Very fair point, agreed!",
+      "parentUuid": "aa162a1c_a0f3cfdd",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 21
+      },
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85ace333_7551e4f6",
         "filename": "testing/libfuzzer/proto/json_proto_converter.h",
         "patchSetId": 3
@@ -148,6 +262,24 @@
       "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad98a84_10da0d3b",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-26T17:18:12Z",
+      "side": 1,
+      "message": "Good point, but I think both are fine:\n\n1) CamelCase: https://google.github.io/styleguide/cppguide.html#Function_Names\n\n2) \"Parameter names may be omitted only if the parameter is unused and its purpose is obvious.\": https://google.github.io/styleguide/cppguide.html#Function_Declarations_and_Definitions",
+      "parentUuid": "85ace333_7551e4f6",
+      "revId": "79a29a5962dc386019b1b7189df5a110dd12aba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
