@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1924c254_9362aa05",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T00:46:40Z",
+      "side": 1,
+      "message": "const base::FilePath\u0026 path",
+      "range": {
+        "startLine": 49,
+        "startChar": 30,
+        "endLine": 49,
+        "endChar": 49
+      },
+      "revId": "6ca3d27b837e2e9ce426a240a33df23bdc6c80b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edc8f6d_473887c9",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T00:46:40Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 7
+      },
+      "revId": "6ca3d27b837e2e9ce426a240a33df23bdc6c80b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383858ff_1681f263",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T00:46:40Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 130,
+        "endChar": 11
+      },
+      "revId": "6ca3d27b837e2e9ce426a240a33df23bdc6c80b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4943246_e2aec6d8",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-26T00:46:40Z",
+      "side": 1,
+      "message": "nit: since this one has an early return, it might be best to place it first, and leave a blank like after the if {} closing scope.",
+      "revId": "6ca3d27b837e2e9ce426a240a33df23bdc6c80b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
