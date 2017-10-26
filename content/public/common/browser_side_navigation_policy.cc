@@ -37,4 +37,13 @@ bool IsBrowserSideNavigationEnabled() {
   return base::FeatureList::IsEnabled(features::kBrowserSideNavigation);
 }
 
+// PlzNavigate over Mojo.
+// Design doc: https://goo.gl/Rrrc7n.
+bool IsPlzNavigateOverMojoEnabled() {
+  if (!IsBrowserSideNavigationEnabled())
+    return false;
+
+  return base::FeatureList::IsEnabled(features::kPlzNavigateOverMojo);
+}
+
 }  // namespace content

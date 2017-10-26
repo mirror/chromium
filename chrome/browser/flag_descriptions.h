@@ -75,6 +75,9 @@ extern const char kBlockTabUndersDescription[];
 extern const char kBrowserSideNavigationName[];
 extern const char kBrowserSideNavigationDescription[];
 
+extern const char kPlzNavigateOverMojoName[];
+extern const char kPlzNavigateOverMojoDescription[];
+
 extern const char kBrowserTaskSchedulerName[];
 extern const char kBrowserTaskSchedulerDescription[];
 

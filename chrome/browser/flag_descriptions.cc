@@ -76,6 +76,13 @@ const char kBrowserSideNavigationName[] = "Enable browser side navigation";
 const char kBrowserSideNavigationDescription[] =
     "Enable browser side navigation (aka PlzNavigate).";
 
+const char kPlzNavigateOverMojoName[] =
+    "Enable browser side navigation over Mojo";
+const char kPlzNavigateOverMojoDescription[] =
+    "Browser side navigation (aka PlzNavigate) is using blob URLs to deliver "
+    "the body of the main resource to the renderer process. This flag replaces "
+    "this mechanism by using a Mojo DataPipe.";
+
 const char kBrowserTaskSchedulerName[] = "Task Scheduler";
 const char kBrowserTaskSchedulerDescription[] =
     "Enables redirection of some task posting APIs to the task scheduler.";

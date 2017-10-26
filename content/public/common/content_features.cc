@@ -49,6 +49,12 @@ const base::Feature kBrotliEncoding{"brotli-encoding",
 const base::Feature kBrowserSideNavigation{"browser-side-navigation",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enables browser side navigation (aka PlzNavigate) over mojo.
+// Design doc: https://goo.gl/Rrrc7n.
+// Bug: http://crbug.com/705744
+const base::Feature kPlzNavigateOverMojo{"PlzNavigateOverMojo",
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Toggles whether the buggy RSA parser is used.
 //
 // TODO(davidben): Remove this after Chrome 61 is released to
