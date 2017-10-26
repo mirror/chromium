@@ -5,7 +5,10 @@
 #ifndef CHROME_RENDERER_CHROME_RENDER_FRAME_OBSERVER_H_
 #define CHROME_RENDERER_CHROME_RENDER_FRAME_OBSERVER_H_
 
+#include <vector>
+
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_render_frame.mojom.h"
@@ -96,6 +99,9 @@ class ChromeRenderFrameObserver
 
 
 #if !defined(OS_ANDROID)
+  // Executes javascript accumulated in |webui_javascript_|.
+  void ExecuteAccumulatedWebUIJavascript();
+
   // Save the JavaScript to preload if ExecuteWebUIJavaScript is invoked.
   std::vector<base::string16> webui_javascript_;
 #endif
@@ -103,6 +109,8 @@ class ChromeRenderFrameObserver
   mojo::AssociatedBindingSet<chrome::mojom::ChromeRenderFrame> bindings_;
 
   service_manager::BinderRegistry registry_;
+
+  base::WeakPtrFactory<ChromeRenderFrameObserver> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeRenderFrameObserver);
 };
