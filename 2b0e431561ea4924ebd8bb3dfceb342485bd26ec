@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e123dfa_393329f7",
+        "filename": "content/browser/loader/mime_sniffing_resource_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-26T23:22:51Z",
+      "side": 1,
+      "message": "The problem with testing here is that content/browser/loader is going away completely when we switch to the network service, to be replaced with completely new code, so I\u0027d rather have a test that would survive that.  Odds are the download logic will be removed from this class even before the directory goes away, as downloading is going to be integrated with PlzNavigate logic.",
+      "range": {
+        "startLine": 636,
+        "startChar": 38,
+        "endLine": 636,
+        "endChar": 63
+      },
+      "revId": "2b0e431561ea4924ebd8bb3dfceb342485bd26ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
