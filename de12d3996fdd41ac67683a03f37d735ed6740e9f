@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8fef241_c64da62d",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/css_properties.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-26T23:54:56Z",
+      "side": 1,
+      "message": "CSSProperties is now used in (was inherited by)\n\nmake_style_builder, \nmake_css_property_api_base, \nmake_style_shorthands, \nmake_cssom_types, \nmake_css_property_names\n\nStyleBuilderWriter is inherited by\n\nmake_css_value_id_mappings\nmake_computed_style_base\n\n\nI found that after the refactors I have in flight right now, make_computed_style_base doesn\u0027t actually use any of the StyleBuilderWriter methods, and have made it just a json5_generator.Writer instead. I haven\u0027t looked closely, but I think make_css_value_id_mappings will be the same.\n\nSo yeah, I think the ComputedStyle based inheritance that you\u0027ve got above looks like a good idea, especially given that flipping the inheritance of StyleBuilder/ComputedStyle is easy :)",
+      "parentUuid": "18b2eff3_c8a2a14b",
+      "revId": "de12d3996fdd41ac67683a03f37d735ed6740e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c533d98f_f93e8729",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
         "patchSetId": 8
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "bfa1806a_73b34e76",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/templates/CSSOMKeywords.cpp.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-26T23:54:56Z",
+      "side": 1,
+      "message": "Yup, it\u0027s also why the order of stuff changed in the output.",
+      "parentUuid": "e4161028_4e44df7a",
+      "revId": "de12d3996fdd41ac67683a03f37d735ed6740e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54e4493f_96a11ab7",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 8
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "f843e12c_23285a51",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-26T23:54:56Z",
+      "side": 1,
+      "message": "Yep! I present to you https://chromium-review.googlesource.com/c/chromium/src/+/737724",
+      "parentUuid": "54e4493f_96a11ab7",
+      "revId": "de12d3996fdd41ac67683a03f37d735ed6740e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fad7eb1_21958321",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 8
@@ -84,6 +138,24 @@
       "revId": "de12d3996fdd41ac67683a03f37d735ed6740e9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6965491_41ab00be",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-26T23:54:56Z",
+      "side": 1,
+      "message": "Yeah, I haven\u0027t thought too much about this yet, but this is definitely out of hand already, lol. But not something to fix in this CL.",
+      "parentUuid": "4fad7eb1_21958321",
+      "revId": "de12d3996fdd41ac67683a03f37d735ed6740e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
