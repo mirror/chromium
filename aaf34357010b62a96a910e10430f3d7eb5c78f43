@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9fe38c4_c22222ba",
+        "filename": "components/optimization_guide/optimization_hints_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-26T17:34:26Z",
+      "side": 1,
+      "message": "We may want to add some thread/task assertion here (I\u0027m not sure what exists for checking if on background priority task).",
+      "revId": "aaf34357010b62a96a910e10430f3d7eb5c78f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beec0462_d0326e71",
+        "filename": "components/optimization_guide/optimization_hints_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-26T17:34:26Z",
+      "side": 1,
+      "message": "will is also index?",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "aaf34357010b62a96a910e10430f3d7eb5c78f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e3370c_c1370ba9",
+        "filename": "components/optimization_guide/optimization_hints_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-26T17:34:26Z",
+      "side": 1,
+      "message": "Also mention that it should be run on a background priority task (since it does File I/O).",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "aaf34357010b62a96a910e10430f3d7eb5c78f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
