@@ -552,8 +552,8 @@ class CONTENT_EXPORT RenderThreadImpl
 
   // ChildThread
   bool OnControlMessageReceived(const IPC::Message& msg) override;
-  void OnProcessBackgrounded(bool backgrounded) override;
-  void OnProcessPurgeAndSuspend() override;
+  void SetProcessBackgrounded(bool backgrounded) override;
+  void ProcessPurgeAndSuspend() override;
   void RecordAction(const base::UserMetricsAction& action) override;
   void RecordComputedAction(const std::string& action) override;
 
