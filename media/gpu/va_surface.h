@@ -10,7 +10,7 @@
 
 #include <va/va.h>
 
-#include "base/callback.h"
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "media/gpu/media_gpu_export.h"
@@ -96,8 +96,7 @@ class MEDIA_GPU_EXPORT VASurface
             unsigned int format,
             const ReleaseCB& release_cb);
 
-  VASurfaceID id() { return va_surface_id_; }
-
+  VASurfaceID id() const { return va_surface_id_; }
   const gfx::Size& size() const { return size_; }
   unsigned int format() const { return format_; }
 
@@ -106,9 +105,9 @@ class MEDIA_GPU_EXPORT VASurface
   ~VASurface();
 
   const VASurfaceID va_surface_id_;
-  gfx::Size size_;
-  unsigned int format_;
-  ReleaseCB release_cb_;
+  const gfx::Size size_;
+  const unsigned int format_;
+  const ReleaseCB release_cb_;
 
   DISALLOW_COPY_AND_ASSIGN(VASurface);
 };
