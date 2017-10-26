@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "805f7945_9548ba81",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T22:41:04Z",
+      "side": 1,
+      "message": "Class specific logic should be within class and I feel this logic is strongly linked to what TouchDeviceIdentifier is.",
+      "parentUuid": "39cf46e7_62f4956f",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "650e6199_b916e73b",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T21:59:13Z",
       "side": 1,
       "message": "What about naming this just TouchDeviceId?",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12290d7_4d6585c0",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T22:41:04Z",
+      "side": 1,
+      "message": "ui::InputDeviceManager and ui::TouchscreenDevice use the term touch_device_id. I used this term to make it easier for devs to differentiate.",
+      "parentUuid": "650e6199_b916e73b",
       "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cb95e6a7_cef80321",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T22:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f07cccf_294aa2eb",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50799cf3_9718a475",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211e1c54_5cccb3d6",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T22:41:04Z",
+      "side": 1,
+      "message": "The c++ style guide doesnt state anything regarding this. Also there are multiple instances of it in the codebase:\nhttps://cs.chromium.org/search/?q\u003d%22%3D+default%22+-f:.cc+-f:mojom+f:.h\u0026type\u003dcs",
+      "parentUuid": "50799cf3_9718a475",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ef4eb098_cb4bfa85",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T22:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "614576e1_1e2ee9ff",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "486fcdb2_e8c36146",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 5
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "640b6979_3b6b70b4",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T22:41:04Z",
+      "side": 1,
+      "message": "chromium usually has ToString as the final public member for classes.\n\nhttps://cs.chromium.org/chromium/src/ui/gfx/geometry/rect.h?q\u003dgfx+Rect\u0026dr\u003dCSs\u0026l\u003d207",
+      "parentUuid": "486fcdb2_e8c36146",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3dbe151_74abe2d8",
         "filename": "ui/display/manager/chromeos/touch_transform_controller.cc",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7fc9f9_f69b865b",
+        "filename": "ui/display/manager/chromeos/touch_transform_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-26T22:41:04Z",
+      "side": 1,
+      "message": "That does make it easier to read.\nDone",
+      "parentUuid": "a3dbe151_74abe2d8",
+      "revId": "0450e5754b7b495cc8beabf274e2070b12010994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
