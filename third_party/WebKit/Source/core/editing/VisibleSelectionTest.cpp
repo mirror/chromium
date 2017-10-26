@@ -45,7 +45,19 @@ class VisibleSelectionTest : public EditingTestBase {
             .Extend(PositionTemplate<Strategy>(node, extend))
             .Build());
   }
+
+  std::string SelectWord(const std::string&);
 };
+
+std::string VisibleSelectionTest::SelectWord(
+    const std::string& selection_text) {
+  const Position position = SetSelectionTextToBody(selection_text).Base();
+  return GetSelectionTextFromBody(
+      CreateVisibleSelectionWithGranularity(
+          SelectionInDOMTree::Builder().Collapse(position).Build(),
+          TextGranularity::kWord)
+          .AsSelection());
+}
 
 static void TestFlatTreePositionsToEqualToDOMTreePositions(
     const VisibleSelection& selection,
@@ -384,6 +396,27 @@ TEST_F(VisibleSelectionTest, SelectAllWithInputElement) {
                 .Extend(PositionInFlatTree(last_child, 3))
                 .Build(),
             visible_selection_in_flat_tree.AsSelection());
+}
+
+TEST_F(VisibleSelectionTest, SelectWordWithTextSecurity) {
+  InsertStyleElement("s {-webkit-text-security:disc;}");
+  // Note: |CreateVisibleSelectionWithGranularity()| considers security
+  // characters as a sequence "x".
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("|abc<s>foo bar</s>baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("a|bc<s>foo bar</s>baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc|<s>foo bar</s>baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>|foo bar</s>baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>f|oo bar</s>baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>fo|o bar</s>baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>foo| bar</s>baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>foo |bar</s>baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>foo b|ar</s>baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>foo ba|r</s>baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>foo bar|</s>baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>foo bar</s>|baz"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>foo bar</s>b|az"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>foo bar</s>ba|z"));
+  EXPECT_EQ("^abc<s>foo bar</s>baz|", SelectWord("abc<s>foo bar</s>baz|"));
 }
 
 TEST_F(VisibleSelectionTest, ShadowCrossing) {
