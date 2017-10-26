@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43928452_4e086389",
+        "filename": "chrome/browser/previews/previews_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-26T16:13:45Z",
+      "side": 1,
+      "message": "why is this needed?",
+      "range": {
+        "startLine": 38,
+        "startChar": 44,
+        "endLine": 38,
+        "endChar": 69
+      },
+      "revId": "f3a2b60b0a301e30b5fbcc7f8d6bc58a22b63801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b20dec_f32bfe28",
+        "filename": "chrome/test/data/previews/noscript_test.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-26T16:13:45Z",
+      "side": 1,
+      "message": "This css and the js file are not really needed. If they are missing, the embedded server would simply return 404.",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "f3a2b60b0a301e30b5fbcc7f8d6bc58a22b63801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba739d1a_a58c6fab",
+        "filename": "chrome/test/data/previews/noscript_test.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-26T16:13:45Z",
+      "side": 1,
+      "message": "\u003c/body\u003e\nmissing.",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 7
+      },
+      "revId": "f3a2b60b0a301e30b5fbcc7f8d6bc58a22b63801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
