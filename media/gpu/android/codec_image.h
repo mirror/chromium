@@ -23,8 +23,9 @@ namespace media {
 // as needed in order to draw them.
 class MEDIA_GPU_EXPORT CodecImage : public gpu::gles2::GLStreamTextureImage {
  public:
-  // A callback for observing CodecImage destruction.
-  using DestructionCb = base::Callback<void(CodecImage*)>;
+  // A callback for observing CodecImage destruction.  It's passed as void*
+  // since we're refcounted, and base::Bind gets angry about sending |this|.
+  using DestructionCb = base::Callback<void(void*)>;
 
   CodecImage(std::unique_ptr<CodecOutputBuffer> output_buffer,
              scoped_refptr<SurfaceTextureGLOwner> surface_texture,
