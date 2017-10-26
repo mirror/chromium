@@ -259,6 +259,30 @@
       "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f2b469_d6937c9f",
+        "filename": "chrome/browser/ui/views/button_background_painter_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-26T23:59:59Z",
+      "side": 1,
+      "message": "Done.  I added GetOverridableState() to views::Button.  It feels a bit jankey modifying the button api like this.\n\nI first tried overriding the mouse event handlers, but there were a bunch of them and it was very messy, and it wasn\u0027t always clear how the state needed to change.",
+      "parentUuid": "843619de_41ab6844",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "332158fd0689c27022fd3d15508a086a41eb9814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
