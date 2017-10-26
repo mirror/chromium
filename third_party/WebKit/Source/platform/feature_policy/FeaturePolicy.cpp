@@ -11,10 +11,13 @@
 #include "platform/wtf/BitVector.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/ParsingUtilities.h"
+#include "platform/wtf/text/StringUTF8Adaptor.h"
+#include "url/gurl.h"
 
 namespace blink {
 
 namespace {
+
 // TODO(loonybear): Deprecate the methods in this namesapce when deprecating old
 // allow syntax.
 bool IsValidOldAllowSyntax(const String& policy,
@@ -52,12 +55,11 @@ bool IsValidOldAllowSyntax(const String& policy,
   return true;
 }
 
-Vector<WebParsedFeaturePolicyDeclaration> ParseOldAllowSyntax(
-    const String& policy,
-    RefPtr<SecurityOrigin> origin,
-    Vector<String>* messages,
-    const FeatureNameMap& feature_names) {
-  Vector<WebParsedFeaturePolicyDeclaration> whitelists;
+ParsedFeaturePolicy ParseOldAllowSyntax(const String& policy,
+                                        url::Origin origin,
+                                        Vector<String>* messages,
+                                        const FeatureNameMap& feature_names) {
+  ParsedFeaturePolicy whitelists;
   if (messages) {
     messages->push_back(
         "The old syntax (allow=\"feature1 feature2 feature3 ...\") will soon "
@@ -71,9 +73,9 @@ Vector<WebParsedFeaturePolicyDeclaration> ParseOldAllowSyntax(
         messages->push_back("Unrecognized feature: '" + token + "'.");
       continue;
     }
-    WebParsedFeaturePolicyDeclaration whitelist;
+    ParsedFeaturePolicyDeclaration whitelist;
     whitelist.feature = feature_names.at(token);
-    whitelist.origins = Vector<WebSecurityOrigin>(1UL, {origin});
+    whitelist.origins = std::vector<url::Origin>({origin});
     whitelists.push_back(whitelist);
   }
   return whitelists;
@@ -81,14 +83,26 @@ Vector<WebParsedFeaturePolicyDeclaration> ParseOldAllowSyntax(
 
 }  // namespace
 
-WebParsedFeaturePolicy ParseFeaturePolicyHeader(const String& policy,
-                                                RefPtr<SecurityOrigin> origin,
-                                                Vector<String>* messages) {
+url::Origin GetURLOriginForFeaturePolicy(RefPtr<SecurityOrigin> origin) {
+  return url::Origin::CreateFromNormalizedTupleWithSuborigin(
+      StringUTF8Adaptor(origin->Protocol()).AsStringPiece().as_string(),
+      StringUTF8Adaptor(origin->Host()).AsStringPiece().as_string(),
+      origin->EffectivePort(),
+      origin->HasSuborigin()
+          ? StringUTF8Adaptor(origin->GetSuborigin()->GetName())
+                .AsStringPiece()
+                .as_string()
+          : "");
+}
+
+ParsedFeaturePolicy ParseFeaturePolicyHeader(const String& policy,
+                                             RefPtr<SecurityOrigin> origin,
+                                             Vector<String>* messages) {
   return ParseFeaturePolicy(policy, origin, RefPtr<SecurityOrigin>(), messages,
                             GetDefaultFeatureNameMap());
 }
 
-Vector<WebParsedFeaturePolicyDeclaration> ParseFeaturePolicyAttribute(
+ParsedFeaturePolicy ParseFeaturePolicyAttribute(
     const String& policy,
     RefPtr<SecurityOrigin> self_origin,
     RefPtr<SecurityOrigin> src_origin,
@@ -98,23 +112,23 @@ Vector<WebParsedFeaturePolicyDeclaration> ParseFeaturePolicyAttribute(
                             GetDefaultFeatureNameMap(), old_syntax);
 }
 
-Vector<WebParsedFeaturePolicyDeclaration> ParseFeaturePolicy(
-    const String& policy,
-    RefPtr<SecurityOrigin> self_origin,
-    RefPtr<SecurityOrigin> src_origin,
-    Vector<String>* messages,
-    const FeatureNameMap& feature_names,
-    bool* old_syntax) {
+ParsedFeaturePolicy ParseFeaturePolicy(const String& policy,
+                                       RefPtr<SecurityOrigin> self_origin,
+                                       RefPtr<SecurityOrigin> src_origin,
+                                       Vector<String>* messages,
+                                       const FeatureNameMap& feature_names,
+                                       bool* old_syntax) {
   // Temporarily supporting old allow syntax:
   //     allow = "feature1 feature2 feature3 ... "
   // TODO(loonybear): depracate this old syntax in the future.
   if (IsValidOldAllowSyntax(policy, src_origin)) {
     if (old_syntax)
       *old_syntax = true;
-    return ParseOldAllowSyntax(policy, src_origin, messages, feature_names);
+    return ParseOldAllowSyntax(policy, GetURLOriginForFeaturePolicy(src_origin),
+                               messages, feature_names);
   }
 
-  Vector<WebParsedFeaturePolicyDeclaration> whitelists;
+  ParsedFeaturePolicy whitelists;
   BitVector features_specified(
       static_cast<int>(WebFeaturePolicyFeature::LAST_FEATURE));
 
@@ -148,36 +162,38 @@ Vector<WebParsedFeaturePolicyDeclaration> ParseFeaturePolicy(
       if (features_specified.QuickGet(static_cast<int>(feature)))
         continue;
 
-      WebParsedFeaturePolicyDeclaration whitelist;
+      ParsedFeaturePolicyDeclaration whitelist;
       whitelist.feature = feature;
       features_specified.QuickSet(static_cast<int>(feature));
-      Vector<WebSecurityOrigin> origins;
+      std::vector<url::Origin> origins;
       // If a policy entry has no (optional) values (e,g,
       // allow="feature_name1; feature_name2 value"), enable the feature for:
       //     a. if header policy (i.e., src_origin does not exist), self_origin;
       //     or
       //     b. if allow attribute (i.e., src_origin exists), src_origin.
-      if (tokens.size() == 1)
-        origins.push_back(src_origin ? src_origin : self_origin);
+      if (tokens.size() == 1) {
+        origins.push_back(src_origin
+                              ? GetURLOriginForFeaturePolicy(src_origin)
+                              : GetURLOriginForFeaturePolicy(self_origin));
+      }
 
       for (size_t i = 1; i < tokens.size(); i++) {
         if (EqualIgnoringASCIICase(tokens[i], "'self'")) {
-          origins.push_back(self_origin);
+          origins.push_back(GetURLOriginForFeaturePolicy(self_origin));
         } else if (EqualIgnoringASCIICase(tokens[i], "'src'")) {
-          origins.push_back(src_origin);
+          origins.push_back(GetURLOriginForFeaturePolicy(src_origin));
         } else if (EqualIgnoringASCIICase(tokens[i], "'none'")) {
           continue;
         } else if (tokens[i] == "*") {
           whitelist.matches_all_origins = true;
           break;
         } else {
-          WebSecurityOrigin target_origin =
-              WebSecurityOrigin::CreateFromString(tokens[i]);
-          if (!target_origin.IsNull() && !target_origin.IsUnique()) {
+          url::Origin target_origin = url::Origin::Create(
+              GURL(StringUTF8Adaptor(tokens[i]).AsStringPiece()));
+          if (!target_origin.unique())
             origins.push_back(target_origin);
-          } else if (messages) {
+          else if (messages)
             messages->push_back("Unrecognized origin: '" + tokens[i] + "'.");
-          }
         }
       }
       whitelist.origins = origins;
