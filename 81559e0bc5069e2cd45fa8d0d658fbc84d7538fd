@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "40d4e6b6_a704ffba",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-10-26T19:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3250db1b_fdd2cdad",
+      "revId": "81559e0bc5069e2cd45fa8d0d658fbc84d7538fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b33346e8_56f71aac",
         "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
         "patchSetId": 3
@@ -219,6 +237,30 @@
       "side": 1,
       "message": "Then you use a simple function like:\nToImageDataStorageFormat(CanvasPixelFormat fmt) {\n  switch (fmt) ...\n}",
       "parentUuid": "25182e3d_bc86be43",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "81559e0bc5069e2cd45fa8d0d658fbc84d7538fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c30a29_52cc1a39",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-10-26T19:07:39Z",
+      "side": 1,
+      "message": "My mistake on my previous response. Fixed as you suggested.",
+      "parentUuid": "42b3fe80_380493ef",
       "range": {
         "startLine": 31,
         "startChar": 10,
