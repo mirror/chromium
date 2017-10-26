@@ -117,6 +117,30 @@
       "revId": "ba7286139672fc723bfcb6f75192b606ad1d54c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fddbc69_df51b217",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-26T20:33:46Z",
+      "side": 1,
+      "message": "That sounds reasonable. I updated the design doc with those changes (and cc\u0027d you on the relevant section), can you take a look at it when you have a chance? Thanks.",
+      "parentUuid": "3a37c829_70bb4b47",
+      "range": {
+        "startLine": 253,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 63
+      },
+      "revId": "ba7286139672fc723bfcb6f75192b606ad1d54c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
