@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1af6c78_eae8bed0",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-26T02:58:21Z",
+      "side": 1,
+      "message": "I think this include can be removed now.",
+      "range": {
+        "startLine": 13,
+        "startChar": 23,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "f27564dd2850ea03de47bf48f33a08a3f45de501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
