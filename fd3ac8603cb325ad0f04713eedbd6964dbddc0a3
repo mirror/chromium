@@ -202,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "94333255_ffee5b9c",
+        "filename": "device/u2f/u2f_ble_discovery.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-26T16:22:50Z",
+      "side": 1,
+      "message": "Cool, I\u0027ll have to remember that that an available option.",
+      "parentUuid": "e1777fa6_9ad14da1",
+      "revId": "fd3ac8603cb325ad0f04713eedbd6964dbddc0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35a71025_18532a57",
         "filename": "device/u2f/u2f_ble_uuids.h",
         "patchSetId": 6
