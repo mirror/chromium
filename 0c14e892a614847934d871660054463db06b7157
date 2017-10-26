@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdc88e50_68bd57d3",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1647,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-26T20:53:51Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we clear any existing observer here if one already existed?\n\ni.e.\nif (!value.IsNull() \u0026\u0026 isConnected()) { ... } else { ... }\n\nIf not, why not?",
+      "revId": "0c14e892a614847934d871660054463db06b7157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
