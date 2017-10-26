@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee5049ea_602527c7",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-10-26T02:25:18Z",
+      "side": 1,
+      "message": "nit to be fixed in M63 and ToT:\n\nIn the case of stop discovery been interrupted, this should not be treated as an error.",
+      "range": {
+        "startLine": 1614,
+        "startChar": 0,
+        "endLine": 1619,
+        "endChar": 3
+      },
+      "revId": "68298244a0d61856cc118ca9da25407e28c44410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
