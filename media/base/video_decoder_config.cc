@@ -56,7 +56,6 @@ VideoDecoderConfig::VideoDecoderConfig()
     : codec_(kUnknownVideoCodec),
       profile_(VIDEO_CODEC_PROFILE_UNKNOWN),
       format_(PIXEL_FORMAT_UNKNOWN),
-      color_space_(COLOR_SPACE_UNSPECIFIED),
       rotation_(VIDEO_ROTATION_0) {}
 
 VideoDecoderConfig::VideoDecoderConfig(
@@ -109,7 +108,6 @@ void VideoDecoderConfig::Initialize(VideoCodec codec,
   codec_ = codec;
   profile_ = profile;
   format_ = format;
-  color_space_ = color_space;
   rotation_ = rotation;
   coded_size_ = coded_size;
   visible_rect_ = visible_rect;
@@ -186,6 +184,19 @@ void VideoDecoderConfig::SetIsEncrypted(bool is_encrypted) {
     // decoders at run time. See http://crbug.com/695595
     encryption_scheme_ = AesCtrEncryptionScheme();
   }
+}
+
+ColorSpace VideoDecoderConfig::color_space() const {
+  if (color_space_info_ == VideoColorSpace::JPEG())
+    return ColorSpace::COLOR_SPACE_JPEG;
+
+  if (color_space_info_ == VideoColorSpace::REC709())
+    return ColorSpace::COLOR_SPACE_HD_REC709;
+
+  if (color_space_info_ == VideoColorSpace::REC601())
+    return ColorSpace::COLOR_SPACE_SD_REC601;
+
+  return ColorSpace::COLOR_SPACE_UNSPECIFIED;
 }
 
 }  // namespace media
