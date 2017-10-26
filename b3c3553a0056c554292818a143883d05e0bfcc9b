@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95551e9e_952e78a7",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-26T08:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7639dd0c_0cb6eb06",
+      "revId": "b3c3553a0056c554292818a143883d05e0bfcc9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fbe7f0f_eefd3bcc",
         "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-19T08:34:15Z",
       "side": 1,
       "message": "Can we dedupe the code here w/ https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/loader/fetch/FetchParameters.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d69 ?\n\nAsk tyoshino@-san for ideas.",
+      "revId": "b3c3553a0056c554292818a143883d05e0bfcc9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4b5a3e_45e29c41",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-26T08:53:38Z",
+      "side": 1,
+      "message": "Added a static function to ScriptLoader, not sure if that is the right place.",
+      "parentUuid": "9fbe7f0f_eefd3bcc",
       "revId": "b3c3553a0056c554292818a143883d05e0bfcc9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "b3c3553a0056c554292818a143883d05e0bfcc9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc2904e_1db855c2",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-26T08:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2b69da4_4cc5fc2d",
+      "range": {
+        "startLine": 445,
+        "startChar": 16,
+        "endLine": 445,
+        "endChar": 23
+      },
+      "revId": "b3c3553a0056c554292818a143883d05e0bfcc9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
