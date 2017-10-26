@@ -2459,7 +2459,7 @@ void RenderWidgetHostImpl::DelayedAutoResized(uint64_t sequence_number) {
     return;
 
   if (delegate_)
-    delegate_->ResizeDueToAutoResize(this, new_size);
+    delegate_->ResizeDueToAutoResize(this, new_size, sequence_number);
 
   viz::LocalSurfaceId local_surface_id(view_->GetLocalSurfaceId());
   if (local_surface_id.is_valid()) {
