@@ -70,6 +70,9 @@ static const int kSchemaVersion = 3;
 const char MediaEngagementService::kHistogramScoreAtStartupName[] =
     "Media.Engagement.ScoreAtStartup";
 
+const char MediaEngagementService::kHistogramURLsDeletedScoreReductionName[] =
+    "Media.Engagement.URLsDeletedScoreReduction";
+
 // static
 bool MediaEngagementService::IsEnabled() {
   return base::FeatureList::IsEnabled(media::kRecordMediaEngagementScores);
@@ -189,6 +192,9 @@ void MediaEngagementService::OnURLsDeleted(
 
     // If this results in zero visits then clear the score.
     if (score.visits() <= 0) {
+      // Score is now set to 0 so the reduction is equal to the original score.
+      UMA_HISTOGRAM_PERCENTAGE(kHistogramURLsDeletedScoreReductionName,
+                               round(original_score * 100));
       Clear(kv.first);
       continue;
     }
@@ -197,6 +203,10 @@ void MediaEngagementService::OnURLsDeleted(
     // MEI score consistent.
     score.SetMediaPlaybacks(original_score * score.visits());
     score.Commit();
+
+    UMA_HISTOGRAM_PERCENTAGE(
+        kHistogramURLsDeletedScoreReductionName,
+        round((original_score - score.actual_score()) * 100));
   }
 }
 
