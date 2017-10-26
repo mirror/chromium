@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60c8ec25_9ac1e5ad",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-26T22:37:25Z",
+      "side": 1,
+      "message": "I think about moving DevToolsFrontendImpl to controller (as it has nothing to do with web platform) and also did not find a better place for this (don\u0027t want to put this into CoreInitializer and depend on core/exported for no reason).",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47939e96_22f171ac",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-26T22:37:25Z",
+      "side": 1,
+      "message": "If I move DevToolsFrontendImpl to controller, I\u0027ll need a way for it to be destroyed with a frame, but not retain the frame itself.",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
