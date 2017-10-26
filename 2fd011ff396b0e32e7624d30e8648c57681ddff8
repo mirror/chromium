@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8578b8c2_ca3c917f",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3565,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:28:18Z",
+      "side": 1,
+      "message": "1.  It\u0027s a little strange to have the Safe Browsing throttle make its own decisions about whether or not it should be created for a given request, while delegating that decision to the caller for the origin manifest throttle. I\u0027d prefer to do the same thing Safe Browsing\u0027s doing (e.g. moving the flag check into the `Create()` method).\n\n2.  This should not live in `//chrome`, but `//content`. Can you move it to https://cs.chromium.org/chromium/src/content/public/browser/content_browser_client.cc?rcl\u003dbdda5fb364178ded9d9f50188416edc2dacca26b\u0026l\u003d512 and call it from here via `super::`?",
+      "revId": "2fd011ff396b0e32e7624d30e8648c57681ddff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c701e9_dcf68c9d",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:28:18Z",
+      "side": 1,
+      "message": "Can this happen? Could you DCHECK instead?",
+      "revId": "2fd011ff396b0e32e7624d30e8648c57681ddff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46786b89_5d178b8d",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:28:18Z",
+      "side": 1,
+      "message": "Do you have tests that ensure we\u0027re only using the first header?",
+      "revId": "2fd011ff396b0e32e7624d30e8648c57681ddff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea280b7_7edef520",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:28:18Z",
+      "side": 1,
+      "message": "I\u0027d prefer for you to move all this into the helper function rather than having an `if` clause with several side-effects, perhaps something like:\n\n```\nbool ExtractManifestVersion(const content::ResourceResponseHead\u0026 response_head, std::string* result) {\n  ...\n}\n```",
+      "revId": "2fd011ff396b0e32e7624d30e8648c57681ddff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a5c8c3_2d841dd9",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:28:18Z",
+      "side": 1,
+      "message": "+ TODO(dhausknecht): Clear the stored manifest once we\u0027re storing manifests.",
+      "revId": "2fd011ff396b0e32e7624d30e8648c57681ddff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5229f0b_e222cd63",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:28:18Z",
+      "side": 1,
+      "message": "Hrm. Does the path not start with `/`?",
+      "revId": "2fd011ff396b0e32e7624d30e8648c57681ddff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d5aa5e_846b8c2d",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:28:18Z",
+      "side": 1,
+      "message": "Please verify that `version` doesn\u0027t contain things like `../../../whatever`. Limiting it to [0-9a-zA-Z] seems reasonable.",
+      "revId": "2fd011ff396b0e32e7624d30e8648c57681ddff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065d2e2f_8c32edb4",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:28:18Z",
+      "side": 1,
+      "message": "This looks a little too simplistic. For instance, it doesn\u0027t look like you\u0027re doing MIME type checks on the response value, nor do I know what the behavior is for error pages (do you get the string contents of a 404 page?).\n\nIt looks like `SimpleURLLoader` supports some of this (via `SetAllowHttpErrorResults(false)`, for instance), and you can get the rest by digging through `ResponseInfo()` after the load completes.",
+      "revId": "2fd011ff396b0e32e7624d30e8648c57681ddff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df987058_f6cacdd7",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:28:18Z",
+      "side": 1,
+      "message": "Do you actually need to override either of these? It seems like the `URLLoaderThrottle` implementation will be enough.",
+      "revId": "2fd011ff396b0e32e7624d30e8648c57681ddff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a4c646_e42d4a28",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:28:18Z",
+      "side": 1,
+      "message": "Add a comment for this, please? I suspect we could also make it private.",
+      "revId": "2fd011ff396b0e32e7624d30e8648c57681ddff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59220e9_29b5cac1",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-26T08:28:18Z",
+      "side": 1,
+      "message": "Why protected and not private?",
+      "revId": "2fd011ff396b0e32e7624d30e8648c57681ddff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
