@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12e703c9_68b1a167",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/site-per-process",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-26T17:30:41Z",
+      "side": 1,
+      "message": "This crash also has a specific bug now - I\u0027ll refer to it in a new patchset.",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 100
+      },
+      "revId": "e4ec8befd8373855763d84dc33fac57387014fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134d9456_7820d5c9",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/site-per-process",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-26T17:30:41Z",
+      "side": 1,
+      "message": "I\u0027ll upload another patchset with a specific bug number here.",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 70
+      },
+      "revId": "e4ec8befd8373855763d84dc33fac57387014fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
