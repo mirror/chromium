@@ -14,6 +14,7 @@
 #include "ui/gfx/image/image_skia_rep.h"
 
 namespace gfx {
+class Drawable;
 class ImageSkiaSource;
 class Size;
 
@@ -151,6 +152,8 @@ class GFX_EXPORT ImageSkia {
   // Clears cached representations for non-supported scale factors that are
   // based on |scale|.
   void RemoveUnsupportedRepresentationsForScale(float scale);
+
+  Drawable* GetUnderlyingDrawable() const;
 
  private:
   friend class test::TestOnThread;

@@ -17,6 +17,7 @@
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/effects/SkDashPathEffect.h"
 #include "third_party/skia/include/effects/SkGradientShader.h"
+#include "ui/gfx/drawable/drawable.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/insets_f.h"
 #include "ui/gfx/geometry/rect.h"
@@ -354,6 +355,10 @@ void Canvas::DrawImageInt(const ImageSkia& image,
                           int x,
                           int y,
                           const cc::PaintFlags& flags) {
+  if (gfx::Drawable* underlying = image.GetUnderlyingDrawable()) {
+    underlying->Draw(this, x, y);
+    return;
+  }
   const ImageSkiaRep& image_rep = image.GetRepresentation(image_scale_);
   if (image_rep.is_null())
     return;
@@ -393,6 +398,7 @@ void Canvas::DrawImageInt(const ImageSkia& image,
                           int dest_h,
                           bool filter,
                           const cc::PaintFlags& flags) {
+  DCHECK(!image.GetUnderlyingDrawable());
   const ImageSkiaRep& image_rep = image.GetRepresentation(image_scale_);
   if (image_rep.is_null())
     return;

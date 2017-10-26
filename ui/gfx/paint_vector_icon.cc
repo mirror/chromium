@@ -456,25 +456,19 @@ void PaintPath(Canvas* canvas,
     canvas->DrawPath(paths[i], flags_array[i]);
 }
 
-class VectorIconSource : public CanvasImageSource {
+class VectorDrawable : public DrawableSource {
  public:
-  explicit VectorIconSource(const IconDescription& data)
-      : CanvasImageSource(Size(data.dip_size, data.dip_size), false),
-        data_(data) {}
+  explicit VectorDrawable(const IconDescription& data)
+      : DrawableSource(Size(data.dip_size, data.dip_size)), data_(data) {}
 
-  VectorIconSource(const std::string& definition, int dip_size, SkColor color)
-      : CanvasImageSource(Size(dip_size, dip_size), false),
+  VectorDrawable(const std::string& definition, int dip_size, SkColor color)
+      : DrawableSource(Size(dip_size, dip_size)),
         data_(kNoneIcon, dip_size, color, base::TimeDelta(), kNoneIcon),
         path_(PathFromSource(definition)) {}
 
-  ~VectorIconSource() override {}
+  ~VectorDrawable() override {}
 
-  // CanvasImageSource:
-  bool HasRepresentationAtAllScales() const override {
-    return !data_.icon.is_empty();
-  }
-
-  void Draw(Canvas* canvas) override {
+  void Draw(Canvas* canvas) const override {
     if (path_.empty()) {
       PaintVectorIcon(canvas, data_.icon, size_.width(), data_.color,
                       data_.elapsed_time);
@@ -490,36 +484,8 @@ class VectorIconSource : public CanvasImageSource {
   const IconDescription data_;
   const std::vector<PathElement> path_;
 
-  DISALLOW_COPY_AND_ASSIGN(VectorIconSource);
+  DISALLOW_COPY_AND_ASSIGN(VectorDrawable);
 };
-
-// This class caches vector icons (as ImageSkia) so they don't have to be drawn
-// more than once. This also guarantees the backing data for the images returned
-// by CreateVectorIcon will persist in memory until program termination.
-class VectorIconCache {
- public:
-  VectorIconCache() {}
-  ~VectorIconCache() {}
-
-  ImageSkia GetOrCreateIcon(const IconDescription& description) {
-    auto iter = images_.find(description);
-    if (iter != images_.end())
-      return iter->second;
-
-    ImageSkia icon_image(base::MakeUnique<VectorIconSource>(description),
-                         Size(description.dip_size, description.dip_size));
-    images_.insert(std::make_pair(description, icon_image));
-    return icon_image;
-  }
-
- private:
-  std::map<IconDescription, ImageSkia, CompareIconDescription> images_;
-
-  DISALLOW_COPY_AND_ASSIGN(VectorIconCache);
-};
-
-static base::LazyInstance<VectorIconCache>::DestructorAtExit g_icon_cache =
-    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -567,37 +533,33 @@ void PaintVectorIcon(Canvas* canvas,
   PaintPath(canvas, path, dip_size, color, elapsed_time);
 }
 
-ImageSkia CreateVectorIcon(const IconDescription& params) {
+Drawable CreateVectorIcon(const IconDescription& params) {
   if (params.icon.is_empty())
-    return gfx::ImageSkia();
-
-  return g_icon_cache.Get().GetOrCreateIcon(params);
+    return Drawable();
+  return Drawable(std::make_unique<VectorDrawable>(params));
 }
 
-ImageSkia CreateVectorIcon(const VectorIcon& icon, SkColor color) {
+Drawable CreateVectorIcon(const VectorIcon& icon, SkColor color) {
   return CreateVectorIcon(icon, GetDefaultSizeOfVectorIcon(icon), color);
 }
 
-ImageSkia CreateVectorIcon(const VectorIcon& icon,
-                           int dip_size,
-                           SkColor color) {
+Drawable CreateVectorIcon(const VectorIcon& icon, int dip_size, SkColor color) {
   return CreateVectorIcon(
       IconDescription(icon, dip_size, color, base::TimeDelta(), kNoneIcon));
 }
 
-ImageSkia CreateVectorIconWithBadge(const VectorIcon& icon,
-                                    int dip_size,
-                                    SkColor color,
-                                    const VectorIcon& badge_icon) {
+Drawable CreateVectorIconWithBadge(const VectorIcon& icon,
+                                   int dip_size,
+                                   SkColor color,
+                                   const VectorIcon& badge_icon) {
   return CreateVectorIcon(
       IconDescription(icon, dip_size, color, base::TimeDelta(), badge_icon));
 }
 
-ImageSkia CreateVectorIconFromSource(const std::string& source,
-                                     int dip_size,
-                                     SkColor color) {
-  return CanvasImageSource::MakeImageSkia<VectorIconSource>(source, dip_size,
-                                                            color);
+Drawable CreateVectorIconFromSource(const std::string& source,
+                                    int dip_size,
+                                    SkColor color) {
+  return Drawable(std::make_unique<VectorDrawable>(source, dip_size, color));
 }
 
 int GetDefaultSizeOfVectorIcon(const VectorIcon& icon) {

@@ -11,6 +11,7 @@
 
 namespace gfx {
 
+class Drawable;
 class ImageSkiaRep;
 
 class GFX_EXPORT ImageSkiaSource {
@@ -26,6 +27,9 @@ class GFX_EXPORT ImageSkiaSource {
   // Subclasses should override this to return true when they are capable of
   // providing an exact representation at any desired scale factor.
   virtual bool HasRepresentationAtAllScales() const;
+
+  // Returns nullptr if this is NOT a DrawableImageSource.
+  virtual gfx::Drawable* GetUnderlyingDrawable() const;
 };
 
 }  // namespace gfx
