@@ -23,7 +23,10 @@ bool TabRendererData::operator==(const TabRendererData& other) {
          url == other.url && crashed_status == other.crashed_status &&
          incognito == other.incognito && show_icon == other.show_icon &&
          pinned == other.pinned && blocked == other.blocked &&
-         app == other.app && alert_state == other.alert_state;
+         app == other.app && alert_state == other.alert_state &&
+         was_active_at_least_once == other.was_active_at_least_once &&
+         is_navigation_delayed == other.is_navigation_delayed &&
+         created_by_session_restore == other.created_by_session_restore;
 }
 
 bool TabRendererData::IsCrashed() const {
