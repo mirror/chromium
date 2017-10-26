@@ -45,6 +45,7 @@
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/web_contents_delegate.h"
+#include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 
@@ -126,7 +127,8 @@ class RenderFrameDevToolsAgentHost::FrameHostHolder {
     std::map<CallId, Message> sent_messages;
   };
 
-  void SendChunkedMessage(int session_id, const std::string& message);
+  void SendChunkedMessageIPC(int session_id, const std::string& message);
+  void SendChunkedMessage(const std::string& message);
   SessionInfo& InitInfo(int session_id);
 
   RenderFrameDevToolsAgentHost* agent_;
@@ -223,7 +225,7 @@ RenderFrameDevToolsAgentHost::FrameHostHolder::ProcessChunkedMessageFromAgent(
   return true;
 }
 
-void RenderFrameDevToolsAgentHost::FrameHostHolder::SendChunkedMessage(
+void RenderFrameDevToolsAgentHost::FrameHostHolder::SendChunkedMessageIPC(
     int session_id,
     const std::string& message) {
   auto it = infos_.find(session_id);
@@ -241,6 +243,10 @@ void RenderFrameDevToolsAgentHost::FrameHostHolder::SendChunkedMessage(
       session->SendMessageToClient(message);
     // |this| may be deleted at this point.
   }
+}
+
+void RenderFrameDevToolsAgentHost::FrameHostHolder::SendChunkedMessage(
+    const std::string& message) {
 }
 
 void RenderFrameDevToolsAgentHost::FrameHostHolder::Suspend() {
@@ -263,9 +269,10 @@ void RenderFrameDevToolsAgentHost::FrameHostHolder::Resume() {
 RenderFrameDevToolsAgentHost::FrameHostHolder::SessionInfo&
 RenderFrameDevToolsAgentHost::FrameHostHolder::InitInfo(int session_id) {
   SessionInfo& info = infos_[session_id];
-  info.chunk_processor.reset(new DevToolsMessageChunkProcessor(base::Bind(
-      &RenderFrameDevToolsAgentHost::FrameHostHolder::SendChunkedMessage,
-      base::Unretained(this))));
+  info.chunk_processor.reset(new DevToolsMessageChunkProcessor(
+      base::Bind(&RenderFrameDevToolsAgentHost::FrameHostHolder::SendChunkedMessageIPC, base::Unretained(this)),
+      base::Bind(&RenderFrameDevToolsAgentHost::FrameHostHolder::SendChunkedMessage, base::Unretained(this))
+  ));
   return info;
 }
 
@@ -547,10 +554,8 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
   }
 
   if (IsBrowserSideNavigationEnabled()) {
-    if (frame_host_) {
-      frame_host_->Send(new DevToolsAgentMsg_Attach(frame_host_->GetRoutingID(),
-                                                    session->session_id()));
-    }
+    if (EnsureAgent())
+      session->AttachToAgent(agent_ptr_);
   } else {
     if (current_)
       current_->Attach(session);
@@ -563,10 +568,7 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
 
 void RenderFrameDevToolsAgentHost::DetachSession(int session_id) {
   if (IsBrowserSideNavigationEnabled()) {
-    if (frame_host_) {
-      frame_host_->Send(
-          new DevToolsAgentMsg_Detach(frame_host_->GetRoutingID(), session_id));
-    }
+    // Destroying session automatically detaches in renderer.
     suspended_messages_by_session_id_.erase(session_id);
   } else {
     if (current_)
@@ -595,10 +597,7 @@ bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
           {call_id, method, message});
       return true;
     }
-    if (frame_host_) {
-      frame_host_->Send(new DevToolsAgentMsg_DispatchOnInspectorBackend(
-          frame_host_->GetRoutingID(), session_id, call_id, method, message));
-    }
+    session->DispatchProtocolMessageToAgent(call_id, method, message);
     session->waiting_messages()[call_id] = {method, message};
   } else {
     if (current_)
@@ -614,10 +613,7 @@ void RenderFrameDevToolsAgentHost::InspectElement(
     int x,
     int y) {
   if (IsBrowserSideNavigationEnabled()) {
-    if (frame_host_) {
-      frame_host_->Send(new DevToolsAgentMsg_InspectElement(
-          frame_host_->GetRoutingID(), session->session_id(), x, y));
-    }
+    session->InspectElement(gfx::Point(x, y));
   } else {
     if (current_)
       current_->InspectElement(session->session_id(), x, y);
@@ -705,11 +701,7 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
       int session_id = pair.first;
       DevToolsSession* session = SessionById(session_id);
       for (const Message& message : pair.second) {
-        if (frame_host_) {
-          frame_host_->Send(new DevToolsAgentMsg_DispatchOnInspectorBackend(
-              frame_host_->GetRoutingID(), session_id, message.call_id,
-              message.method, message.message));
-        }
+        session->DispatchProtocolMessageToAgent(message.call_id, message.method, message.message);
         session->waiting_messages()[message.call_id] = {message.method,
                                                         message.message};
       }
@@ -742,6 +734,7 @@ void RenderFrameDevToolsAgentHost::UpdateFrameHost(
   }
 
   frame_host_ = frame_host;
+  agent_ptr_.reset();
   render_frame_alive_ = true;
   if (IsAttached()) {
     GrantPolicy(frame_host_);
@@ -753,18 +746,14 @@ void RenderFrameDevToolsAgentHost::UpdateFrameHost(
 
 void RenderFrameDevToolsAgentHost::MaybeReattachToRenderFrame() {
   DCHECK(IsBrowserSideNavigationEnabled());
-  if (!frame_host_)
+  if (!EnsureAgent())
     return;
   for (DevToolsSession* session : sessions()) {
-    frame_host_->Send(new DevToolsAgentMsg_Reattach(frame_host_->GetRoutingID(),
-                                                    session->session_id(),
-                                                    session->state_cookie()));
+    session->ReattachToAgent(agent_ptr_);
     for (const auto& pair : session->waiting_messages()) {
       int call_id = pair.first;
       const DevToolsSession::Message& message = pair.second;
-      frame_host_->Send(new DevToolsAgentMsg_DispatchOnInspectorBackend(
-          frame_host_->GetRoutingID(), session->session_id(), call_id,
-          message.method, message.message));
+      session->DispatchProtocolMessageToAgent(call_id, message.method, message.message);
     }
   }
 }
@@ -929,6 +918,7 @@ void RenderFrameDevToolsAgentHost::DestroyOnRenderFrameGone() {
     OnClientsDetached();
   ForceDetachAllClients(false);
   frame_host_ = nullptr;
+  agent_ptr_.reset();
   pending_.reset();
   current_.reset();
   frame_tree_node_ = nullptr;
@@ -1004,8 +994,8 @@ bool RenderFrameDevToolsAgentHost::OnMessageReceived(
     const IPC::Message& message,
     RenderFrameHost* render_frame_host) {
   if (IsBrowserSideNavigationEnabled()) {
-    if (render_frame_host != frame_host_)
-      return false;
+    // Handled by sessions.
+    return false;
   } else {
     bool is_current = current_ && current_->host() == render_frame_host;
     bool is_pending = pending_ && pending_->host() == render_frame_host;
@@ -1314,16 +1304,19 @@ void RenderFrameDevToolsAgentHost::SynchronousSwapCompositorFrame(
   }
 }
 
+bool RenderFrameDevToolsAgentHost::EnsureAgent() {
+  if (!agent_ptr_ && frame_host_)
+    frame_host_->GetRemoteAssociatedInterfaces()->GetInterface(&agent_ptr_);
+  return !!agent_ptr_;
+}
+
 void RenderFrameDevToolsAgentHost::OnDispatchOnInspectorFrontend(
     RenderFrameHost* sender,
     const DevToolsMessageChunk& message) {
   bool success = true;
   if (IsBrowserSideNavigationEnabled()) {
-    if (sender == frame_host_) {
-      DevToolsSession* session = SessionById(message.session_id);
-      if (session)
-        success = session->ReceiveMessageChunk(message);
-    }
+    // Handled by session.
+    return;
   } else {
     if (current_ && current_->host() == sender)
       success = current_->ProcessChunkedMessageFromAgent(message);
@@ -1340,6 +1333,11 @@ void RenderFrameDevToolsAgentHost::OnDispatchOnInspectorFrontend(
 void RenderFrameDevToolsAgentHost::OnRequestNewWindow(
     RenderFrameHost* sender,
     int new_routing_id) {
+  if (IsBrowserSideNavigationEnabled()) {
+    // Handled by session.
+    return;
+  }
+
   RenderFrameHostImpl* frame_host = RenderFrameHostImpl::FromID(
       sender->GetProcess()->GetID(), new_routing_id);
 

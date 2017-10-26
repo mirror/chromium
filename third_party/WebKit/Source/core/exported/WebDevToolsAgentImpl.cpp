@@ -549,7 +549,7 @@ void WebDevToolsAgentImpl::InspectElementAt(
   agent_it->value->Inspect(node);
 }
 
-void WebDevToolsAgentImpl::FailedToRequestDevTools() {
+void WebDevToolsAgentImpl::FailedToRequestDevTools(int session_id) {
   ClientMessageLoopAdapter::ResumeForCreateWindow();
 }
 
@@ -571,12 +571,19 @@ void WebDevToolsAgentImpl::PageLayoutInvalidated(bool resized) {
     it.value->PageLayoutInvalidated(resized);
 }
 
-void WebDevToolsAgentImpl::WaitForCreateWindow(LocalFrame* frame) {
-  if (!Attached())
+void WebDevToolsAgentImpl::WaitForCreateWindow(InspectorPageAgent* page_agent,
+                                               LocalFrame* frame) {
+  int session_id = -1;
+  for (auto& it : page_agents_) {
+    if (it.value == page_agent)
+      session_id = it.key;
+  }
+  if (session_id == -1)
     return;
-  if (client_ &&
-      client_->RequestDevToolsForFrame(WebLocalFrameImpl::FromFrame(frame)))
+  if (client_ && client_->RequestDevToolsForFrame(
+      session_id, WebLocalFrameImpl::FromFrame(frame))) {
     ClientMessageLoopAdapter::PauseForCreateWindow(web_local_frame_impl_);
+  }
 }
 
 bool WebDevToolsAgentImpl::IsInspectorLayer(GraphicsLayer* layer) {

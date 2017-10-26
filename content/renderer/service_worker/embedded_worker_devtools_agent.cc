@@ -15,24 +15,52 @@ using blink::WebString;
 
 namespace content {
 
+namespace {
+const size_t kMaxMessageChunkSize = IPC::Channel::kMaximumMessageSize / 4;
+}
+
 EmbeddedWorkerDevToolsAgent::EmbeddedWorkerDevToolsAgent(
     blink::WebEmbeddedWorker* webworker,
     int route_id)
     : webworker_(webworker), route_id_(route_id) {
-  RenderThreadImpl::current()->AddEmbeddedWorkerRoute(route_id_, this);
+  RenderThreadImpl::current()->AddRoute(route_id_, this);
 }
 
 EmbeddedWorkerDevToolsAgent::~EmbeddedWorkerDevToolsAgent() {
-  RenderThreadImpl::current()->RemoveEmbeddedWorkerRoute(route_id_);
+  RenderThreadImpl::current()->RemoveRoute(route_id_);
 }
 
 void EmbeddedWorkerDevToolsAgent::SendMessage(IPC::Sender* sender,
                                               int session_id,
                                               int call_id,
                                               const std::string& message,
-                                              const std::string& state_cookie) {
-  DevToolsAgent::SendChunkedProtocolMessage(sender, route_id_, session_id,
-                                            call_id, message, state_cookie);
+                                              const std::string& post_state) {
+  DevToolsMessageChunk chunk;
+  chunk.message_size = message.size();
+  chunk.is_first = true;
+
+  if (message.length() < kMaxMessageChunkSize) {
+    chunk.data = message;
+    chunk.session_id = session_id;
+    chunk.call_id = call_id;
+    chunk.post_state = post_state;
+    chunk.is_last = true;
+    sender->Send(new DevToolsClientMsg_DispatchOnInspectorFrontend(
+                     route_id_, chunk));
+    return;
+  }
+
+  for (size_t pos = 0; pos < message.length(); pos += kMaxMessageChunkSize) {
+    chunk.is_last = pos + kMaxMessageChunkSize >= message.length();
+    chunk.session_id = session_id;
+    chunk.call_id = chunk.is_last ? call_id : 0;
+    chunk.post_state = chunk.is_last ? post_state : std::string();
+    chunk.data = message.substr(pos, kMaxMessageChunkSize);
+    sender->Send(new DevToolsClientMsg_DispatchOnInspectorFrontend(
+                     route_id_, chunk));
+    chunk.is_first = false;
+    chunk.message_size = 0;
+  }
 }
 
 bool EmbeddedWorkerDevToolsAgent::OnMessageReceived(
