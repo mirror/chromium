@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71c5b739_e7e59640",
+        "filename": "third_party/WebKit/LayoutTests/scrollbars/rtl/overflow-scroll-rtl.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-27T20:09:18Z",
+      "side": 1,
+      "message": "Chao can elaborate if I\u0027m wrong, but I think layout tests already run with mock scrollbars. That said, was this necessary to get this patch through the trybots? If so, I too would be curious why.",
+      "parentUuid": "d58bb1a2_993c6e51",
+      "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80895f76_c229db4b",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 15
@@ -64,6 +82,24 @@
       "writtenOn": "2017-10-27T19:47:47Z",
       "side": 1,
       "message": "How are page settings and RuntimeEnabledFeatures settings different? Are their lifetimes the same?\n\nWill it be a problem that OverlayScrollbarsEnabled is a runtime enabled feature whereas ForceAndroidOverlayScrollbar is a page setting?\n\nWould it be possible to use MobileLayoutThemeEnabled instead of adding a new setting? Or, if a new setting is needed, would it be possible to remove MobileLayoutThemeEnabled?",
+      "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a279c10_1f7b21b9",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-27T20:09:18Z",
+      "side": 1,
+      "message": "That\u0027s a good point, I think REFs are global for the renderer. Does that mean if you open a new tab that shares the renderer with the page you\u0027re emulating, you\u0027ll get overlay scrollbars?\n\nSadly, much of the theming code is static like this. We\u0027re trying to unwind some of that for ScrollbarTheme but in this case it\u0027s the WebThemeEngine that uses this flag to determine how to paint scrollbars - that\u0027s likely a much more difficult and significant change.\n\nChao, do we need the REF at all? Android scrollbars are almost never painted in Blink since we composite scrollers very aggressively. If it\u0027s just for the non-composited cases, I think we can live without it.",
+      "parentUuid": "3473d44b_3789f221",
       "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
