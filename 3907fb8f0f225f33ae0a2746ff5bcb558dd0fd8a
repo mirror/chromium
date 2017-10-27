@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff97ed02_160024d7",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-27T14:51:17Z",
+      "side": 1,
+      "message": "\"or http:// (for localhost)\"",
+      "revId": "3907fb8f0f225f33ae0a2746ff5bcb558dd0fd8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0dfe61_c32f5313",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-27T14:51:17Z",
+      "side": 1,
+      "message": "same comment here",
+      "revId": "3907fb8f0f225f33ae0a2746ff5bcb558dd0fd8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
