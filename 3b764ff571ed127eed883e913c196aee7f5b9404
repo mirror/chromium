@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6bb2dce_febcc511",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-27T21:39:45Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to document this everywhere this occurs. It\u0027s likely to be common and something people will learn. Also, there is a warning if someone tries to merge them.\n\nIf anything, I\u0027d just say \"Define args based on args in the previous block.\"",
+      "revId": "3b764ff571ed127eed883e913c196aee7f5b9404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b81753_2321d554",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-27T21:39:45Z",
+      "side": 1,
+      "message": "Now that I see this, I can see how this might be confusing (only a \u0027g\u0027 difference). enable_google_vr_services is long and enable_google_vr is ambiguous. Perhaps enable_gvr_services. I\u0027m curious what others think.",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 24
+      },
+      "revId": "3b764ff571ed127eed883e913c196aee7f5b9404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94bf37f5_01262b05",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-27T21:39:45Z",
+      "side": 1,
+      "message": "This is backwards. We don\u0027t want to maintain a blacklist. We\u0027d need to update this line every time lines 11-12 are updated.\n\nInstead, I think we want to define enable_vr in terms of VR device support being enabled (plus is_win). Again, I\u0027m curious what others think.",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "3b764ff571ed127eed883e913c196aee7f5b9404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
