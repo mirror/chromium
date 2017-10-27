@@ -505,6 +505,10 @@ void CreateWindowForRequest(const FrameLoadRequest& request,
       opener_frame.GetDocument()->IsSandboxed(kSandboxPopups))
     return;
 
+  probe::windowOpen(opener_frame.GetDocument(),
+                    request.GetResourceRequest().Url(), request.FrameName(), "",
+                    UserGestureIndicator::ProcessingUserGesture());
+
   if (policy == kNavigationPolicyCurrentTab)
     policy = kNavigationPolicyNewForegroundTab;
 
