@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe659b06_8a4745db",
+        "filename": "net/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-27T18:31:33Z",
+      "side": 1,
+      "message": "net-\u003enet/",
+      "range": {
+        "startLine": 5,
+        "startChar": 24,
+        "endLine": 5,
+        "endChar": 27
+      },
+      "revId": "d4dfd7a37a35376118273e068832df4a7009e3b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4574b0a_6042ff6a",
+        "filename": "net/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-27T18:31:33Z",
+      "side": 1,
+      "message": "unused; remove?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "d4dfd7a37a35376118273e068832df4a7009e3b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9eced5_8e5a0858",
+        "filename": "net/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-27T18:31:33Z",
+      "side": 1,
+      "message": "try bot-\u003eline",
+      "range": {
+        "startLine": 17,
+        "startChar": 30,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "d4dfd7a37a35376118273e068832df4a7009e3b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e169f0_e05917cb",
+        "filename": "net/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-27T18:31:33Z",
+      "side": 1,
+      "message": "CQ try bots-\u003eCQ bots",
+      "revId": "d4dfd7a37a35376118273e068832df4a7009e3b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
