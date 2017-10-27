@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "156947f9_6fc147b8",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2017-10-27T05:53:06Z",
+      "side": 1,
+      "message": "you\u0027ll want to set this to the latest origin/test-20170915 before submitting, there have been some platform specific fixes in the branch",
+      "range": {
+        "startLine": 400,
+        "startChar": 53,
+        "endLine": 400,
+        "endChar": 93
+      },
+      "revId": "85ee758835bc928544a65bcad467f4afddfdbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
