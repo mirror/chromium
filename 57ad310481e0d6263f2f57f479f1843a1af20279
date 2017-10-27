@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16ce7a12_61efcbc2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioScheduledSourceNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-27T10:55:29Z",
+      "side": 1,
+      "message": "The problem is that Context()-\u003eGetExecutionContext()-\u003eGetTaskRunner() might be called from non-main thread, and this CL tries to fix this by caching the task runner. (The task runner itself is thread-safe, but logic for getting a task runner should be called from main thread for Document).",
+      "parentUuid": "dd113da5_82870f99",
+      "revId": "57ad310481e0d6263f2f57f479f1843a1af20279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a57cd79_19f62906",
         "filename": "third_party/WebKit/Source/modules/webaudio/MediaElementAudioSourceNode.cpp",
         "patchSetId": 3
