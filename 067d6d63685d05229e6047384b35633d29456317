@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "465e77bc_e18c53f1",
+        "filename": "components/optimization_guide/optimization_hints_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-27T09:26:10Z",
+      "side": 1,
+      "message": "It will be called from a background priority task. Probably this components method needs to return a struct of the parsed and filtered data and the caller handles posting it on IO thread runner.",
+      "parentUuid": "4f394448_8973b13b",
+      "revId": "067d6d63685d05229e6047384b35633d29456317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70194b65_50c24555",
         "filename": "components/optimization_guide/optimization_hints_reader.h",
         "patchSetId": 4
