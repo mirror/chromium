@@ -31,6 +31,7 @@
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_android.h"
 #include "content/browser/web_contents/web_contents_view_android.h"
+#include "content/common/content_switches_internal.h"
 #include "content/common/frame_messages.h"
 #include "content/common/input_messages.h"
 #include "content/common/view_messages.h"
@@ -188,6 +189,7 @@ ContentViewCore::ContentViewCore(JNIEnv* env,
       dpi_scale_(dpi_scale),
       device_orientation_(0) {
   GetViewAndroid()->SetLayer(cc::Layer::Create());
+  GetViewAndroid()->SetIsUseZoomForDSFEnabled(IsUseZoomForDSFEnabled());
 
   // Currently, the only use case we have for overriding a user agent involves
   // spoofing a desktop Linux user agent for "Request desktop site".

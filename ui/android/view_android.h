@@ -150,6 +150,7 @@ class UI_ANDROID_EXPORT ViewAndroid {
   int GetSystemWindowInsetBottom();
 
   ScopedAnchorView AcquireAnchorView();
+  void SetIsUseZoomForDSFEnabled(bool enabled);
   void SetAnchorRect(const base::android::JavaRef<jobject>& anchor,
                      const gfx::RectF& bounds);
 
@@ -232,6 +233,8 @@ class UI_ANDROID_EXPORT ViewAndroid {
   JavaObjectWeakGlobalRef delegate_;
 
   ViewClient* const client_;
+
+  bool is_use_zoom_for_dsf_enabled_;
 
   // Basic view layout information. Used to do hit testing deciding whether
   // the passed events should be processed by the view. Unit in DIP.

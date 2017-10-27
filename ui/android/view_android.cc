@@ -199,13 +199,17 @@ ViewAndroid::ScopedAnchorView ViewAndroid::AcquireAnchorView() {
       env, Java_ViewAndroidDelegate_acquireView(env, delegate), delegate);
 }
 
+void ViewAndroid::SetIsUseZoomForDSFEnabled(bool enabled) {
+  is_use_zoom_for_dsf_enabled_ = enabled;
+}
+
 void ViewAndroid::SetAnchorRect(const JavaRef<jobject>& anchor,
                                 const gfx::RectF& bounds) {
   ScopedJavaLocalRef<jobject> delegate(GetViewAndroidDelegate());
   if (delegate.is_null())
     return;
 
-  float dip_scale = GetDipScale();
+  float dip_scale = is_use_zoom_for_dsf_enabled_ ? 1 : GetDipScale();
   int left_margin = std::round(bounds.x() * dip_scale);
   int top_margin = std::round((content_offset() + bounds.y()) * dip_scale);
   JNIEnv* env = base::android::AttachCurrentThread();
