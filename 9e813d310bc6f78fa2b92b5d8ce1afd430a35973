@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "076465ef_699eaf16",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-27T18:28:54Z",
+      "side": 1,
+      "message": "The code below invokes this ctor without holding on to the returned pointer.  If the code reaches this branch, either something needs to hold onto |this| and delete it at the appropriate time, or there needs to be a guarantee that one of the observer methods below is called that in turn deletes |this|.  It looks like the latter is the case?\n\nMaybe s/if and when/after/ above, and adding a comment here like \"// Destroys self when loading is complete\" would make it clear the two paths.",
+      "parentUuid": "67068a62_7870ed6a",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b2caa8a_40c960ea",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -230,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "76c790b8_867a3b56",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-27T18:28:54Z",
+      "side": 1,
+      "message": "It seems like to preserve the integrity of the \"user gesture\" to initiate fullscreen, we need to verify that the navigation is indeed to the file:// URL that the user intended to cast.",
+      "parentUuid": "cc87ff0c_1eeb2199",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37642332_ee49b3ee",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -259,6 +295,24 @@
       "side": 1,
       "message": "Should we save the URL from when the file is selected?  Per my reply above, if the user actually did anything with this tab we want to bail anyway so this looks ok to me, but we could be more refined in the approach here.",
       "parentUuid": "37642332_ee49b3ee",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c17b4917_013d2bcc",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-27T18:28:54Z",
+      "side": 1,
+      "message": "It seems like this is trying to verify that the user didn\u0027t \"do anything with the tab,\" i.e. initiate a navigation, but the check is not strict enough.",
+      "parentUuid": "1aed7839_165d5811",
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -297,6 +351,24 @@
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785895e4_afdc7f72",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-27T18:28:54Z",
+      "side": 1,
+      "message": "IMO splitting up this class is better done in another patch, but thanks for looking into it - feel free to file a crbug with your thoughts and add a TODO(crbug.com/XXX) in the right place.",
+      "parentUuid": "e1a23149_dd3dfc62",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
