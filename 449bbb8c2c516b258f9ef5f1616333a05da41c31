@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "880c2da2_dfebf567",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-27T19:44:04Z",
+      "side": 1,
+      "message": "Update the comment suggesting that in case of intercepting response we need to issue subrequest.",
+      "revId": "449bbb8c2c516b258f9ef5f1616333a05da41c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e896e09_034824a4",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-27T19:44:04Z",
+      "side": 1,
+      "message": "You should start reading the response in OnResponseStarted delegate method. ReadRawData is not guaranteed to be called at all.",
+      "revId": "449bbb8c2c516b258f9ef5f1616333a05da41c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c2a931_abe3cd3c",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-27T19:44:04Z",
+      "side": 1,
+      "message": "I would think that you return IO_PENDING at this point and we stall the external reader.",
+      "revId": "449bbb8c2c516b258f9ef5f1616333a05da41c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a51ff42_62b1c5fe",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-27T19:44:04Z",
+      "side": 1,
+      "message": "In your case it is not _Initial_",
+      "revId": "449bbb8c2c516b258f9ef5f1616333a05da41c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4d2bde_58580d7b",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-27T19:44:04Z",
+      "side": 1,
+      "message": "Leave the comment.",
+      "revId": "449bbb8c2c516b258f9ef5f1616333a05da41c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc02aad2_69013b3d",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-27T19:44:04Z",
+      "side": 1,
+      "message": "Do we really need this? I think you should be able to replace this pair with Growable.",
+      "revId": "449bbb8c2c516b258f9ef5f1616333a05da41c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a3cd99_2b00d451",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-27T19:44:04Z",
+      "side": 1,
+      "message": "std::pair\u003cscoped_refptr\u003cIOBuffer\u003e, int\u003e, also just store it as two fields.",
+      "revId": "449bbb8c2c516b258f9ef5f1616333a05da41c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421e6040_5f05d2b3",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-27T19:44:04Z",
+      "side": 1,
+      "message": "GrowableIOBuffer",
+      "revId": "449bbb8c2c516b258f9ef5f1616333a05da41c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c432156_95ebd785",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-27T19:44:04Z",
+      "side": 1,
+      "message": "As agreed offline, it should be a three state.",
+      "revId": "449bbb8c2c516b258f9ef5f1616333a05da41c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
