@@ -34,6 +34,24 @@
       "revId": "cb4081efb54a970f51957ea2868d08575e2ffbe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c9c05b_6d22f21f",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-27T18:21:00Z",
+      "side": 1,
+      "message": "The voice search command is a little different because it\u0027s not instructing the receiver of the command how to construct the UIViewController hierarchy (which should be coordinator layer stuff, not UI layer).  The view in the voice search command is only used to calculate the origin point of the radial animation, but doesn\u0027t really effect the coordinator/UIViewController hierarchy.  It really should be replaced with a CGPoint in screen coordinates or something.\n\nAs mentioned offline, I understand if passing the parent UIViewController is a temporary fix, and I don\u0027t want to block your refactor.  I\u0027m okay if you just add a TODO to clean this API up after the rest of the ApplicationSettingsCommands have also stopped using topViewController.",
+      "parentUuid": "34224e61_debe51fb",
+      "revId": "cb4081efb54a970f51957ea2868d08575e2ffbe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
