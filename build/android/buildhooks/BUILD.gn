@@ -5,7 +5,10 @@
 import("//build/config/android/rules.gni")
 
 java_library("build_hooks_java") {
-  java_files = [ "java/org/chromium/build/BuildHooks.java" ]
+  java_files = [
+    "java/org/chromium/build/BuildHooks.java",
+    "java/org/chromium/build/Callback.java",
+  ]
 
   # Make all targets pull in the try-with-resources support files.
   # If an apk ends up not using any such statements, ProGuard will remove

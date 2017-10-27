@@ -2145,6 +2145,9 @@ if (enable_java_templates) {
         if (is_java_debug || dcheck_always_on) {
           defines += [ "_DCHECK_IS_ON" ]
         }
+        if (report_java_assert) {
+          defines += [ "_REPORT_JAVA_ASSERT" ]
+        }
         defines += [
           "COMPRESSED_LOCALE_LIST=" +
               "@FileArg($_rebased_build_config:compressed_locales_java_list)",
