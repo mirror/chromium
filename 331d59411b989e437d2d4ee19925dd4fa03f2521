@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4856310_d0cfffcb",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-27T20:33:52Z",
+      "side": 1,
+      "message": "Sure, once your CL lands, I\u0027ll use the sticky bit to avoid unnecessarily creating a GPU channel.",
+      "parentUuid": "6bd5f084_b0ea379c",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54cfff9f_e349740f",
         "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6672e7e5_2506497f",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-27T20:33:52Z",
+      "side": 1,
+      "message": "Yes, will incorporate the sticky bit once your CL lands.",
+      "parentUuid": "54cfff9f_e349740f",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0252af3a_727b62e5",
+        "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-27T20:33:52Z",
+      "side": 1,
+      "message": "Per piman suggestion, we want to make the tests robust for those who run them on platforms where GPU compositing is blacklisted.",
+      "parentUuid": "6e213e9c_6d77ff0b",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28ee3ab1_57718418",
         "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "84d5ab2b_1010237b",
+        "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-27T20:33:52Z",
+      "side": 1,
+      "message": "Same answer.",
+      "parentUuid": "28ee3ab1_57718418",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebcb8944_35667157",
         "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-27T15:37:27Z",
       "side": 1,
       "message": "This is never false now, but could ask RenderThreadImpl instead?",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514b7daa_3d6a5601",
+        "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-27T20:33:52Z",
+      "side": 1,
+      "message": "We could still disable WebGL and pepper_3d, I think, so why you say it\u0027s never false.",
+      "parentUuid": "ebcb8944_35667157",
       "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "086fb2b8_be1cc3c2",
+        "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-27T20:33:52Z",
+      "side": 1,
+      "message": "This is just moving browser side logic here. If this logic isn\u0027t solid, let\u0027s address it in a separate CL.",
+      "parentUuid": "b61321da_3fdbadc0",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80a8139c_5d0dcf8f",
         "filename": "content/renderer/renderer_blink_platform_impl.cc",
         "patchSetId": 8
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ca410ede_675c0943",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-27T20:33:52Z",
+      "side": 1,
+      "message": "I\u0027ll use your sticky bit and update your sticky bit with blacklisting bit from GpuChannelHost if necessary.",
+      "parentUuid": "80a8139c_5d0dcf8f",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57b20b03_7a420f98",
         "filename": "gpu/config/gpu_util.cc",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0deb8f94_3fb84306",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-27T20:33:52Z",
+      "side": 1,
+      "message": "Same, just moved from browser side to here. Didn\u0027t change the logic.",
+      "parentUuid": "57b20b03_7a420f98",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

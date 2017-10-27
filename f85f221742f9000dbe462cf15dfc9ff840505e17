@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c06f4a8f_bd0430d9",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-27T20:33:52Z",
+      "side": 0,
+      "message": "Blacklisting moves to the GPU side, and swiftshader decision will be soon. So the only valid logic in CanUseGpuBrowserCompositor is commandline switch kDisableGpuCompositing. That will automatically be passed to renderer process if user passes it in.\n\nIf you have other logic and will append kDisableGpuCompositing, then you need to do it explicitly.",
+      "parentUuid": "4cdc283c_bddc8fae",
+      "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb537747_eedb83e2",
         "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-27T15:37:27Z",
       "side": 0,
       "message": "Oh, this is a good hint at other things that should be reading RenderThreadImpl for this state instead of |prefs|.\n\nMaybe we should be removing these prefs fields entirely? Maybe that could be its own CL to remove these, prefs and query RenderThreadImpl instead, which can check the command line flag (and is_gpu_compositing_disabled_ once stickiness is implemented)?",
+      "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999fab4c_4be64160",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-27T20:33:52Z",
+      "side": 0,
+      "message": "This has to be part of this CL because I removed blacklisting from CanUseGpuBrowserCompositor so I have to address this accordingly. Will think about a good solution.",
+      "parentUuid": "fb537747_eedb83e2",
       "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9885e3_c64a4a4a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-27T20:33:52Z",
+      "side": 0,
+      "message": "Here is the situation: ImageTransportFactory won\u0027t have blacklisting decision once I move the decision to GPU process.",
+      "parentUuid": "8606520e_bd254043",
+      "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
