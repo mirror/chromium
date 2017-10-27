@@ -11,6 +11,7 @@
 #include "ash/test/ash_test_base.h"
 #include "base/stl_util.h"
 #include "ui/display/display.h"
+#include "ui/display/manager/chromeos/touch_device_manager.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/events/base_event_utils.h"
 #include "ui/events/devices/device_data_manager.h"
@@ -26,6 +27,10 @@ namespace ash {
 class TouchCalibratorControllerTest : public AshTestBase {
  public:
   TouchCalibratorControllerTest() {}
+
+  display::TouchDeviceManager* touch_device_manager() {
+    return display_manager()->touch_device_manager();
+  }
 
   const Display& InitDisplays() {
     // Initialize 2 displays each with resolution 500x500.
@@ -229,11 +234,10 @@ TEST_F(TouchCalibratorControllerTest, CustomCalibration) {
   const display::ManagedDisplayInfo& info =
       display_manager()->GetDisplayInfo(touch_display.id());
 
-  display::TouchDeviceIdentifier touch_device_identifier =
-      display::TouchDeviceIdentifier::FromDevice(touchdevice);
-  EXPECT_TRUE(info.HasTouchCalibrationData(touch_device_identifier));
+  TouchDeviceManagerTestApi tdm_test_api(touch_device_manager());
+  EXPECT_TRUE(tdm_test_api.AreAssociated(info, touchdevice));
   EXPECT_EQ(calibration_data,
-            info.GetTouchCalibrationData(touch_device_identifier));
+            touch_device_manager()->GetCalibrationData(touchdevice, info.id()));
 }
 
 TEST_F(TouchCalibratorControllerTest, CustomCalibrationInvalidTouchId) {
@@ -273,10 +277,11 @@ TEST_F(TouchCalibratorControllerTest, CustomCalibrationInvalidTouchId) {
   const display::ManagedDisplayInfo& info =
       display_manager()->GetDisplayInfo(touch_display.id());
 
-  display::TouchDeviceIdentifier random_touch_device_identifier(123456);
-  EXPECT_TRUE(info.HasTouchCalibrationData(random_touch_device_identifier));
-  EXPECT_EQ(calibration_data,
-            info.GetTouchCalibrationData(random_touch_device_identifier));
+  ui::TouchscreenDevice random_touchdevice(
+      15, ui::InputDeviceType::INPUT_DEVICE_EXTERNAL,
+      std::string("random touch device"), gfx::Size(123, 456), 1);
+  EXPECT_EQ(calibration_data, touch_device_manager()->GetCalibrationData(
+                                  random_touchdevice, info.id()));
 }
 
 }  // namespace ash
