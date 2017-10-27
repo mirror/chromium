@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09ffc2d3_bd998b0c",
+        "filename": "ash/display/display_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T00:53:08Z",
+      "side": 1,
+      "message": "I added a comment.",
+      "parentUuid": "29eab593_11c82dea",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9239d672_3fc9374f",
         "filename": "ash/display/mirror_window_controller.cc",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T19:48:45Z",
       "side": 1,
       "message": "we shouldn\u0027t handle fatal case, unless there is a good reason.",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738bb351_3628c67c",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T00:53:08Z",
+      "side": 1,
+      "message": "Yes, reverted, and instead checking for |is_shutting_down_|.",
+      "parentUuid": "9239d672_3fc9374f",
       "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "283322f8_c7064229",
+        "filename": "ash/display/unified_mouse_warp_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T00:53:08Z",
+      "side": 1,
+      "message": "display::FindDisplayContainingPoint() will return the wrong display in some cases due to the rounding error that we overcame by storing the source host. I added a TODO.",
+      "parentUuid": "877dc65a_13cdc52e",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d07a18ea_565fb263",
         "filename": "ash/screen_util_unittest.cc",
         "patchSetId": 17
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "06b9114d_be443587",
+        "filename": "ash/screen_util_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T00:53:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d07a18ea_565fb263",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5291d9b_05ab2930",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 17
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-26T19:48:45Z",
       "side": 1,
       "message": "Is this fallback path in case there was an error / issue in layout?",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f4828b_e94546d4",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T00:53:08Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the fallback horizontal layout.",
+      "parentUuid": "f5291d9b_05ab2930",
       "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ec30a73d_3649c1bc",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T00:53:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dc9bf08_b3bf825c",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44e9238a_3dba4b91",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 17
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5f12e4bc_95e61b2f",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T00:53:08Z",
+      "side": 1,
+      "message": "Yes, I agree, and that\u0027s what I plan to do after this.",
+      "parentUuid": "44e9238a_3dba4b91",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c111fcf_0cd03833",
         "filename": "ui/display/unified_desktop_utils.cc",
         "patchSetId": 17
@@ -135,6 +261,24 @@
       "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf66671_969c459e",
+        "filename": "ui/display/unified_desktop_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T00:53:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c111fcf_0cd03833",
+      "revId": "9d17d67e8e34224cc84ac0a8d8b374a46e5e40e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
