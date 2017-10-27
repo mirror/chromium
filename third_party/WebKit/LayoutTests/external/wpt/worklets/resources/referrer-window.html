@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Worklet: Referrer</title>
+</head>
+<body>
+<script>
+// Remove unnecessary parts of the search params.
+let params = (new URLSearchParams(location.search));
+params.delete('pipe');
+
+window.onmessage = () => {
+  const kScriptURL = 'referrer.py?' + params;
+  CSS.paintWorklet.addModule(kScriptURL)
+      .then(() => window.opener.postMessage('RESOLVED', '*'))
+      .catch(e => window.opener.postMessage(e.message, '*'));
+};
+
+window.opener.postMessage('LOADED', '*');
+</script></body>
+</html>

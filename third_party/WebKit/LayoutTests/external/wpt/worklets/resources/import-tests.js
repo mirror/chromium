@@ -1,3 +1,14 @@
+function openWindow(url) {
+  return new Promise(resolve => {
+      let win = window.open(url, '_blank');
+      add_completion_callback(() => win.close());
+      window.onmessage = e => {
+        assert_equals(e.data, 'LOADED');
+        resolve(win);
+      };
+    });
+}
+
 // Runs a series of tests related to importing scripts on a worklet.
 //
 // Usage:
@@ -111,4 +122,35 @@ function runImportTests(worklet) {
                                worklet.addModule(kScriptURL));
     }, 'Importing a cross origin resource without the ' +
        'Access-Control-Allow-Origin header should reject the given promise');
+
+    promise_test(() => {
+        kWindowURL = "resources/referrer-window.html" +
+                     "?policy=no-referrer" +
+                     "&pipe=header(Referrer-Policy,no-referrer)";
+        return openWindow(kWindowURL).then(win => {
+            let promise = new Promise(resolve => window.onmessage = resolve);
+            win.postMessage('ADD_MODULE', '*');
+            return promise;
+        }).then(msg_event => assert_equals(msg_event.data, 'RESOLVED'));
+    }, 'Importing a script from a page that has no-referrer policy should ' +
+       'not send referrer.');
+
+    promise_test(() => {
+        kWindowURL = "resources/referrer-window.html" +
+                     "?policy=origin" +
+                     "&pipe=header(Referrer-Policy,origin)";
+        return openWindow(kWindowURL).then(win => {
+            let promise = new Promise(resolve => window.onmessage = resolve);
+            win.postMessage('ADD_MODULE', '*');
+            return promise;
+        }).then(msg_event => assert_equals(msg_event.data, 'RESOLVED'));
+    }, 'Importing a script from a page that has "Referrer-Policy: origin" ' +
+       'header should send only an origin as referrer.');
+
+    promise_test(t => {
+        const kScriptURL = 'resources/empty-worklet-script.js';
+        return promise_rejects(t, new DOMException('', 'AbortError'),
+                               worklet.addModule(kScriptURL));
+    }, 'Always fail');
+
 }
