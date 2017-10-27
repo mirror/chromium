@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62ab80b4_14abe508",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T17:37:52Z",
+      "side": 1,
+      "message": "Added this per the discussion from this morning. I left out security-dev, since I figure one of us can easily redirect or +cc if needed.",
+      "range": {
+        "startLine": 8,
+        "startChar": 54,
+        "endLine": 8,
+        "endChar": 73
+      },
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
