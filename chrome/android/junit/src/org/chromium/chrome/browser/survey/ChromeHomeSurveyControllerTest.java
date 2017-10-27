@@ -123,4 +123,67 @@ public class ChromeHomeSurveyControllerTest {
         verify(mTab, times(1)).getWebContents();
         verify(mTab, never()).isIncognito();
     }
+
+    @Test
+    public void testDaysMatchUp() {
+        mController = new RiggedSurveyController(5, 5);
+        Assert.assertFalse(
+                mSharedPreferences.contains(ChromeHomeSurveyController.CORRESPONDING_DAY_OF_YEAR));
+        Assert.assertTrue(mController.daysMatchUp());
+        Assert.assertEquals(5,
+                mSharedPreferences.getInt(
+                        ChromeHomeSurveyController.CORRESPONDING_DAY_OF_YEAR, -1));
+    }
+
+    @Test
+    public void testDaysMatchUpPreviouslyStored() {
+        mController = new RiggedSurveyController(6, 5);
+        Assert.assertFalse(
+                mSharedPreferences.contains(ChromeHomeSurveyController.CORRESPONDING_DAY_OF_YEAR));
+        mSharedPreferences.edit()
+                .putInt(ChromeHomeSurveyController.CORRESPONDING_DAY_OF_YEAR, 5)
+                .apply();
+        Assert.assertTrue(mController.daysMatchUp());
+    }
+
+    @Test
+    public void testDaysDontMatchUp() {
+        mController = new RiggedSurveyController(5, 6);
+        Assert.assertFalse(
+                mSharedPreferences.contains(ChromeHomeSurveyController.CORRESPONDING_DAY_OF_YEAR));
+        Assert.assertFalse(mController.daysMatchUp());
+        Assert.assertEquals(5,
+                mSharedPreferences.getInt(
+                        ChromeHomeSurveyController.CORRESPONDING_DAY_OF_YEAR, -1));
+    }
+
+    @Test
+    public void testDaysDontMatchUpPreviouslyStored() {
+        mController = new RiggedSurveyController(5, 5);
+        mSharedPreferences.edit()
+                .putInt(ChromeHomeSurveyController.CORRESPONDING_DAY_OF_YEAR, 6)
+                .apply();
+        Assert.assertFalse(mController.daysMatchUp());
+    }
+
+    class RiggedSurveyController extends ChromeHomeSurveyController {
+        int mNumberToReturn;
+        int mDayOfYear;
+
+        RiggedSurveyController(int numberToReturn, int dayOfYear) {
+            super();
+            mNumberToReturn = numberToReturn;
+            mDayOfYear = dayOfYear;
+        }
+
+        @Override
+        int getRandomNumberUpTo(int max) {
+            return mNumberToReturn;
+        }
+
+        @Override
+        int getDayOfYear() {
+            return mDayOfYear;
+        }
+    }
 }
