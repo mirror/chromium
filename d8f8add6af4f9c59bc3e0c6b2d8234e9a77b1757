@@ -22,6 +22,30 @@
       "revId": "d8f8add6af4f9c59bc3e0c6b2d8234e9a77b1757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58573c82_3b2689d4",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-27T17:13:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3068b550_8b2d56e6",
+      "range": {
+        "startLine": 175,
+        "startChar": 6,
+        "endLine": 175,
+        "endChar": 15
+      },
+      "revId": "d8f8add6af4f9c59bc3e0c6b2d8234e9a77b1757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
