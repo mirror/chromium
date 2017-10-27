@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4d89130_6712bd64",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T12:10:00Z",
+      "side": 1,
+      "message": "What do you mean by \"Base\"? GetIOTaskRunner would be enough?",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fc03f5_847c65ea",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T12:10:00Z",
+      "side": 1,
+      "message": "Can we move the registry instantiation to InitializeWebKit?",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3a494b_b5d192f9",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T12:10:00Z",
+      "side": 1,
+      "message": "Can we move these statements to InitializeWebKit?",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f7272f_f6962784",
+        "filename": "third_party/WebKit/Source/modules/DEPS",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T12:10:00Z",
+      "side": 1,
+      "message": "Maybe can we remove this?",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4692f1_2dd5d346",
+        "filename": "third_party/WebKit/public/platform/InterfaceRegistry.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T12:10:00Z",
+      "side": 1,
+      "message": "GetEmptyInterfaceRegistryForTesting ?",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e6d607_86cf15c8",
+        "filename": "third_party/WebKit/public/platform/InterfaceRegistry.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T12:10:00Z",
+      "side": 1,
+      "message": "Why do we need this change?",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

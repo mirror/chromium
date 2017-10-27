@@ -347,6 +347,30 @@
       "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a6554da_1c35d238",
+        "filename": "third_party/WebKit/public/web/WebKit.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T12:10:00Z",
+      "side": 1,
+      "message": "Yeah, agreed. I didn\u0027t think that we need to pass in an empty InterfaceRegistry from so many places...\n\nI\u0027m sorry but would you mind reverting this part? i.e.: add RegisterInterfaces(InterfaceRegistry\u0026)",
+      "parentUuid": "ec563c4b_68b6981f",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 12
+      },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
