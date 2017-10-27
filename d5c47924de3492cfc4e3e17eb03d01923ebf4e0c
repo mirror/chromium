@@ -88,6 +88,24 @@
       "revId": "d5c47924de3492cfc4e3e17eb03d01923ebf4e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7041421a_86defc73",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-27T01:43:18Z",
+      "side": 1,
+      "message": "Does the comment in LayoutText.h serve this purpose well?",
+      "parentUuid": "41876c2a_e14dad59",
+      "revId": "d5c47924de3492cfc4e3e17eb03d01923ebf4e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
