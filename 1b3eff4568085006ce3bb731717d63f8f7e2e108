@@ -22,6 +22,30 @@
       "revId": "1b3eff4568085006ce3bb731717d63f8f7e2e108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e300ed_84fc91c4",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-27T22:03:15Z",
+      "side": 0,
+      "message": "Yeah neither version of |-invalidate| is influenced by the other.",
+      "parentUuid": "7643f220_61b68a42",
+      "range": {
+        "startLine": 524,
+        "startChar": 37,
+        "endLine": 524,
+        "endChar": 0
+      },
+      "revId": "1b3eff4568085006ce3bb731717d63f8f7e2e108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
