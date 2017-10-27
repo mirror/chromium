@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1c533a3_b702f9e8",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-27T05:03:20Z",
+      "side": 1,
+      "message": "The logic looks wrong here, I think it doesn\u0027t work if only video is requested and is blocked?\n Probably you want:\nx \u003d true\nif (A) x \u0026\u003d ..\nif (B) x \u0026\u003d ..",
+      "revId": "07c5b9be4386f57eb98e4846c380d4258566dd56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
