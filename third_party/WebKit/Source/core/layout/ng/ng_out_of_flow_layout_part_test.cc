@@ -7,6 +7,7 @@
 #include "core/layout/LayoutTestHelper.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/ng_layout_result.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 
 namespace blink {
 namespace {
@@ -14,11 +15,9 @@ namespace {
 class NGOutOfFlowLayoutPartTest : public RenderingTest {
  public:
   NGOutOfFlowLayoutPartTest() {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
     RuntimeEnabledFeatures::SetLayoutNGFragmentCachingEnabled(true);
   };
   ~NGOutOfFlowLayoutPartTest() override {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
     RuntimeEnabledFeatures::SetLayoutNGFragmentCachingEnabled(false);
   };
 };
@@ -27,6 +26,8 @@ class NGOutOfFlowLayoutPartTest : public RenderingTest {
 // inside NGOutOfFlowLayoutPart::Run.
 // This test exercises this loop by placing two fixed elements inside abs.
 TEST_F(NGOutOfFlowLayoutPartTest, FixedInsideAbs) {
+  ScopedLayoutNGForTest layout_ng(true);
+
   SetBodyInnerHTML(
       R"HTML(
       <style>

@@ -14,6 +14,7 @@
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
 #include "core/style/ComputedStyle.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -60,17 +61,20 @@ class NGInlineNodeForTest : public NGInlineNode {
   using NGInlineNode::ShapeText;
 };
 
-class NGInlineNodeTest : public RenderingTest {
+class NGInlineNodeTest : public RenderingTest,
+                         public ::testing::WithParamInterface<bool>,
+                         private ScopedLayoutNGForTest {
+ public:
+  NGInlineNodeTest() : ScopedLayoutNGForTest(GetParam()) {}
+
  protected:
   void SetUp() override {
     RenderingTest::SetUp();
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
     style_ = ComputedStyle::Create();
     style_->GetFont().Update(nullptr);
   }
 
   void TearDown() override {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
     RenderingTest::TearDown();
   }
 

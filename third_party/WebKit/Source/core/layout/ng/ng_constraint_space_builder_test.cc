@@ -5,18 +5,16 @@
 #include "core/layout/ng/ng_constraint_space_builder.h"
 
 #include "core/layout/LayoutTestHelper.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 
 namespace blink {
 namespace {
 
-class NGConstraintSpaceBuilderTest {
+class NGConstraintSpaceBuilderTest : public ::testing::WithParamInterface<bool>,
+                                     private ScopedLayoutNGForTest {
  public:
-  NGConstraintSpaceBuilderTest() {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
-  };
-  ~NGConstraintSpaceBuilderTest() {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
-  };
+  NGConstraintSpaceBuilderTest() : ScopedLayoutNGForTest(GetParam()) {}
+  ~NGConstraintSpaceBuilderTest(){};
 };
 
 // Asserts that indefinite inline length becomes initial containing

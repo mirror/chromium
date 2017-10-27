@@ -6,15 +6,16 @@
 
 #include "core/layout/LayoutTestHelper.h"
 #include "core/layout/MinMaxSize.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 
 namespace blink {
 namespace {
-class NGBlockNodeForTest : public RenderingTest {
+class NGBlockNodeForTest : public RenderingTest,
+                           public ::testing::WithParamInterface<bool>,
+                           private ScopedLayoutNGForTest {
  public:
-  NGBlockNodeForTest() { RuntimeEnabledFeatures::SetLayoutNGEnabled(true); }
-  ~NGBlockNodeForTest() override {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
-  };
+  NGBlockNodeForTest() : ScopedLayoutNGForTest(GetParam()) {}
+  ~NGBlockNodeForTest() override{};
 };
 
 TEST_F(NGBlockNodeForTest, ChildInlineAndBlock) {

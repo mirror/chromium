@@ -11,21 +11,25 @@
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/style/ComputedStyle.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class NGOffsetMappingTest : public RenderingTest {
+class NGOffsetMappingTest : public RenderingTest,
+                            public ::testing::WithParamInterface<bool>,
+                            private ScopedLayoutNGForTest {
+ public:
+  NGOffsetMappingTest() : ScopedLayoutNGForTest(GetParam()) {}
+
  protected:
   void SetUp() override {
     RenderingTest::SetUp();
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
     style_ = ComputedStyle::Create();
     style_->GetFont().Update(nullptr);
   }
 
   void TearDown() override {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
     RenderingTest::TearDown();
   }
 

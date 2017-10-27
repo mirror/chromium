@@ -8,19 +8,18 @@
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 namespace {
 
-class NGBlockChildIteratorTest : public RenderingTest {
+class NGBlockChildIteratorTest : public RenderingTest,
+                                 public ::testing::WithParamInterface<bool>,
+                                 private ScopedLayoutNGForTest {
  public:
-  NGBlockChildIteratorTest() {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
-  }
-  ~NGBlockChildIteratorTest() override {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
-  }
+  NGBlockChildIteratorTest() : ScopedLayoutNGForTest(GetParam()) {}
+  ~NGBlockChildIteratorTest() override {}
 };
 
 TEST_F(NGBlockChildIteratorTest, NullFirstChild) {

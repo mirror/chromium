@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/ng_base_layout_algorithm_test.h"
 
+#include "core/layout/LayoutTestHelper.h"
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_line_breaker.h"
@@ -11,11 +12,17 @@
 #include "core/layout/ng/ng_constraint_space_builder.h"
 #include "core/layout/ng/ng_fragment_builder.h"
 #include "core/layout/ng/ng_positioned_float.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/wtf/text/StringBuilder.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class NGLineBreakerTest : public NGBaseLayoutAlgorithmTest {
+class NGLineBreakerTest : public NGBaseLayoutAlgorithmTest,
+                          private ScopedLayoutNGForTest {
+ public:
+  NGLineBreakerTest() : ScopedLayoutNGForTest(GetParam()) {}
+
  protected:
   NGInlineNode CreateInlineNode(const String& html_content) {
     SetBodyInnerHTML(html_content);
