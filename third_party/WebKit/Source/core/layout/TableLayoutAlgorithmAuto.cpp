@@ -69,12 +69,12 @@ void TableLayoutAlgorithmAuto::RecalcColumn(unsigned eff_col) {
 
         if (cell->ColSpan() == 1) {
           column_layout.min_logical_width =
-              std::max<int>(cell->MinPreferredLogicalWidth().ToInt(),
+              std::max<int>(cell->MinPreferredLogicalWidth().Round(),
                             column_layout.min_logical_width);
           if (cell->MaxPreferredLogicalWidth() >
               column_layout.max_logical_width) {
             column_layout.max_logical_width =
-                cell->MaxPreferredLogicalWidth().ToInt();
+                cell->MaxPreferredLogicalWidth().Round();
             max_contributor = cell;
           }
 
@@ -373,9 +373,9 @@ int TableLayoutAlgorithmAuto::CalcEffectiveLogicalWidth() {
         table_->AbsoluteColumnToEffectiveColumn(cell->AbsoluteColumnIndex());
     size_t last_col = eff_col;
     int cell_min_logical_width =
-        (cell->MinPreferredLogicalWidth() + spacing_in_row_direction).ToInt();
+        (cell->MinPreferredLogicalWidth() + spacing_in_row_direction).Round();
     int cell_max_logical_width =
-        (cell->MaxPreferredLogicalWidth() + spacing_in_row_direction).ToInt();
+        (cell->MaxPreferredLogicalWidth() + spacing_in_row_direction).Round();
     float total_percent = 0;
     int span_min_logical_width = 0;
     int span_max_logical_width = 0;
