@@ -904,17 +904,17 @@
   },
   "chromeos-amd64-generic-rel": {
     "additional_compile_targets": [
-      "chromiumos_preflight"
+      "base_unittests"
     ]
   },
   "chromeos-betty-rel": {
     "additional_compile_targets": [
-      "chromiumos_preflight"
+      "base_unittests"
     ]
   },
   "chromeos-daisy-rel": {
     "additional_compile_targets": [
-      "chromiumos_preflight"
+      "base_unittests"
     ]
   },
   "linux-chromeos-dbg": {
