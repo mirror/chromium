@@ -70,6 +70,30 @@
       "revId": "ef9382dd23d1c2142be8afc4531b65b01f228889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e22df0ec_48f37143",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-27T06:51:41Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/chrome/browser/ui/views/omnibox/omnibox_view_views.cc?type\u003dcs\u0026l\u003d790 \u003c- That\u0027s where the OnOmniboxFocused is called for the new tab tracker. I can technically get the browser from the LocationBarView that the OmniboxViewViews contain: \nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/views/location_bar/location_bar_view.h?l\u003d356 However, that means adding a method get_browser into the location_bar_view. Would that be okay?\n\nI presume for the incognito window tracker, I will also need to do something along those lines from the clear browsing data handler which invokes the tracker.",
+      "parentUuid": "e6f009ca_9e90fc6f",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 1
+      },
+      "revId": "ef9382dd23d1c2142be8afc4531b65b01f228889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
