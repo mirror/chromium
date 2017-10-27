@@ -871,9 +871,6 @@ void GuestViewBase::StartTrackingEmbedderZoomLevel() {
 }
 
 void GuestViewBase::StopTrackingEmbedderZoomLevel() {
-  if (!attached() || !ZoomPropagatesFromEmbedderToGuest())
-    return;
-
   auto* embedder_zoom_controller =
       zoom::ZoomController::FromWebContents(owner_web_contents());
   // Chrome Apps do not have a ZoomController.
