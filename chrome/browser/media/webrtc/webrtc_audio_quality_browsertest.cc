@@ -411,8 +411,13 @@ class MAYBE_WebRtcAudioQualityBrowserTest : public WebRtcTestBase {
                              "score", true);
     }
 
-    DeleteFileUnlessTestFailed(trimmed_reference, false);
-    DeleteFileUnlessTestFailed(trimmed_recording, false);
+    if (CanParseAsFloat(mos_lqo) && atof(mos_lqo.c_str()) < 3.0f) {
+      printf("Suspiciously low MOS-LQO score: keeping recordings...\n");
+      return;
+    } else {
+      DeleteFileUnlessTestFailed(trimmed_reference, false);
+      DeleteFileUnlessTestFailed(trimmed_recording, false);
+    }
   }
 
   bool CanParseAsFloat(const std::string& value) {
@@ -464,7 +469,7 @@ class MAYBE_WebRtcAudioQualityBrowserTest : public WebRtcTestBase {
     if (anchor_pos == std::string::npos) {
       LOG(ERROR)
           << "PESQ was not able to compute a score; we probably recorded "
-          << "only silence. Please check the output/input volume levels.";
+          << "only silence.";
       return false;
     }
 
