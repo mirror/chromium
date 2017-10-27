@@ -64,6 +64,7 @@ var tests = [
       default: 'none',
       allowed: [ 'none' ]
     }
+
   },
 ];
 
@@ -72,7 +73,8 @@ function checkPreloadAttribute(media, value, expected) {
     media.removeAttribute("preload");
     media.preload = value;
     assert_equals(media.getAttribute("preload"), value);
-    assert_equals(media.preload, expected);
+    assert_equals(media.preload, expec
+      ted);
 
     // Use. content attribute.
     media.removeAttribute("preload");
@@ -100,15 +102,15 @@ function runTest(t, test) {
   assert_true('cellular' in test.conditions);
   assert_true('lowEndDevice' in test.conditions);
 
-  internals.settings.setDataSaverEnabled(test.conditions.dataSaver);
+  internals.setDataSaverEnabled(test.conditions.dataSaver);
   if (test.conditions.cellular)
     internals.setNetworkConnectionInfoOverride(true, 'cellular3g', 2.0);
   else
-    internals.clearNetworkConnectionInfoOverride();
+    internals.setNetworkConnectionInfoOverride(true, 'wifi', 2.0);
   internals.settings.setForcePreloadNoneForMediaElements(test.conditions.lowEndDevice);
 
   t.add_cleanup(() => {
-    internals.settings.setDataSaverEnabled(false);
+    internals.setDataSaverEnabled(false);
     internals.clearNetworkConnectionInfoOverride();
     internals.settings.setForcePreloadNoneForMediaElements(false);
   });
