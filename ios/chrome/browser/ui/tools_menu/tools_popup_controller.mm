@@ -46,9 +46,11 @@ NS_INLINE UIEdgeInsets TabHistoryPopupMenuInsets() {
 @implementation ToolsPopupController
 @synthesize isCurrentPageBookmarked = _isCurrentPageBookmarked;
 
-- (instancetype)initWithConfiguration:(ToolsMenuConfiguration*)configuration
-                           dispatcher:(id<ApplicationCommands, BrowserCommands>)
-                                          dispatcher {
+- (instancetype)
+initAndPresentWithConfiguration:(ToolsMenuConfiguration*)configuration
+                     dispatcher:
+                         (id<ApplicationCommands, BrowserCommands>)dispatcher
+                     completion:(void (^)(void))completion {
   DCHECK(configuration.displayView);
   self = [super initWithParentView:configuration.displayView];
   if (self) {
@@ -105,7 +107,9 @@ NS_INLINE UIEdgeInsets TabHistoryPopupMenuInsets() {
     [[self popupContainer] addSubview:_toolsTableViewContainer];
 
     [_toolsMenuViewController setDelegate:self];
-    [self fadeInPopupFromSource:origin toDestination:destination];
+    [self fadeInPopupFromSource:origin
+                  toDestination:destination
+                     completion:completion];
 
     // Insert |toolsButton| above |popupContainer| so it appears stationary.
     // Otherwise the tools button will animate with the tools popup.
@@ -135,9 +139,12 @@ NS_INLINE UIEdgeInsets TabHistoryPopupMenuInsets() {
 }
 
 - (void)fadeInPopupFromSource:(CGPoint)source
-                toDestination:(CGPoint)destination {
+                toDestination:(CGPoint)destination
+                   completion:(void (^)(void))completion {
   [_toolsMenuViewController animateContentIn];
-  [super fadeInPopupFromSource:source toDestination:destination];
+  [super fadeInPopupFromSource:source
+                 toDestination:destination
+                    completion:completion];
 }
 
 - (void)dismissAnimatedWithCompletion:(void (^)(void))completion {

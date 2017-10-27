@@ -12,21 +12,21 @@
 #import "ios/chrome/browser/ui/bubble/bubble_view_anchor_point_provider.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller_constants.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_view.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h"
+#import "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h"
 
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 class ReadingListModel;
-@class ToolsMenuConfiguration;
 
 // Base class for a toolbar, containing the standard button set that is
 // common across different types of toolbars and action handlers for those
 // buttons (forwarding to the delegate). This is not intended to be used
 // on its own, but to be subclassed by more specific toolbars that provide
 // more buttons in the empty space.
-@interface ToolbarController : NSObject<ActivityServicePositioner,
-                                        PopupMenuDelegate,
-                                        BubbleViewAnchorPointProvider>
+@interface ToolbarController
+    : NSObject<ActivityServicePositioner,
+               BubbleViewAnchorPointProvider,
+               ToolsPopupCoordinatorPresentationProvider>
 
 // The top-level toolbar view.
 @property(nonatomic, readonly, strong) ToolbarView* view;
@@ -42,9 +42,10 @@ class ReadingListModel;
 // components of the toolbar.
 @property(nonatomic, readonly, strong) UIImageView* shadowView;
 
-// The tools popup controller. Nil if the tools popup menu is not visible.
-@property(nonatomic, readonly, strong)
-    ToolsPopupController* toolsPopupController;
+// ToolsPopupCoordinator provides information to ToolbarController about the
+// presentation state of the tools menu.
+@property(nonatomic, readwrite, strong)
+    ToolsPopupCoordinator* toolsPopupCoordinator;
 
 // Style of this toolbar.
 @property(nonatomic, readonly, assign) ToolbarControllerStyle style;
@@ -69,14 +70,6 @@ class ReadingListModel;
 
 // Called when the application has entered the background.
 - (void)applicationDidEnterBackground:(NSNotification*)notify;
-
-// Shows the tools popup menu.
-- (void)showToolsMenuPopupWithConfiguration:
-    (ToolsMenuConfiguration*)configuration;
-
-// If |toolsPopupController_| is non-nil, dismisses the tools popup menu with
-// animation.
-- (void)dismissToolsMenuPopup;
 
 // Sets the background to a particular alpha value. Intended for use by
 // subcleasses that need to set the opacity of the entire toolbar.

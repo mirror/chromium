@@ -26,6 +26,7 @@ source_set("overscroll_actions") {
     "//ios/chrome/browser/ui/page_info:coordinator",
     "//ios/chrome/browser/ui/static_content",
     "//ios/chrome/browser/ui/toolbar",
+    "//ios/chrome/browser/ui/tools_menu",
     "//ios/chrome/browser/ui/util",
     "//ios/chrome/browser/ui/voice",
     "//ios/web",
