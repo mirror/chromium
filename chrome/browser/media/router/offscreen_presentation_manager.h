@@ -103,6 +103,13 @@ namespace media_router {
 // thread.
 class OffscreenPresentationManager : public KeyedService {
  public:
+  class Observer {
+   public:
+    // Called when the set of displays with pending presentation controllers
+    // changes.
+    virtual void OnPendingControllersUpdated() = 0;
+  };
+
   ~OffscreenPresentationManager() override;
 
   // Registers controller PresentationConnectionPtr to presentation with
@@ -145,6 +152,17 @@ class OffscreenPresentationManager : public KeyedService {
   // Returns nullptr if |presentation_id| is not associated with an offscreen
   // presentation.
   virtual const MediaRoute* GetRoute(const std::string& presentation_id);
+
+  // Returns true if the display has pending presentation controllers on it.
+  virtual bool HasPendingController(int64_t display_id) const;
+
+  // Called when a pending presentation controller is added to or removed from a
+  // display, i.e. a Media Router dialog is opened or closed.
+  virtual void AddPendingController(int64_t display_id);
+  virtual void RemovePendingController(int64_t display_id);
+
+  void AddObserver(Observer* observer);
+  void RemoveObserver(Observer* observer);
 
  private:
   // Represents an offscreen presentation registered with
@@ -240,6 +258,12 @@ class OffscreenPresentationManager : public KeyedService {
 
   // Maps from presentation ID to OffscreenPresentation.
   OffscreenPresentationMap offscreen_presentations_;
+
+  // Maps from display ID to number of pending presentation controllers on the
+  // display.
+  base::flat_map<int64_t, int> displays_to_pending_controllers_;
+
+  base::ObserverList<Observer> observers_;
 
   base::ThreadChecker thread_checker_;
 
