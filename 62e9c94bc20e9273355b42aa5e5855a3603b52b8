@@ -22,6 +22,29 @@
       "revId": "62e9c94bc20e9273355b42aa5e5855a3603b52b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac5f22a_3588fbf2",
+        "filename": "storage/browser/fileapi/dragged_file_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-27T00:45:25Z",
+      "side": 1,
+      "message": "Fuchsia file systems do not support symlinks.",
+      "range": {
+        "startLine": 381,
+        "startChar": 19,
+        "endLine": 381,
+        "endChar": 26
+      },
+      "revId": "62e9c94bc20e9273355b42aa5e5855a3603b52b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
