@@ -2,11 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var db_name = 'db';
 var obj_store = 'store';
 var module_key = 'my_module';
 
-function createAndSaveToIndexedDB() {
+function createAndSaveToIndexedDB(db_name) {
   return new Promise((resolve, reject) => {
     createWasmModule()
       .then(mod => {
@@ -40,7 +39,7 @@ function createAndSaveToIndexedDB() {
   });
 }
 
-function loadFromIndexedDB(prev) {
+function loadFromIndexedDB(prev, db_name) {
   return new Promise((resolve, reject) => {
     prev.then(() => {
       var open_request = indexedDB.open(db_name);
@@ -66,7 +65,8 @@ function loadFromIndexedDB(prev) {
 }
 
 function TestIndexedDBLoadStoreSecure() {
-  return loadFromIndexedDB(createAndSaveToIndexedDB())
+  var db_name = "db_wasm_test";
+  return loadFromIndexedDB(createAndSaveToIndexedDB(db_name), db_name)
     .then(res => assert_equals(res, 2),
           error => assert_unreached(error));
 }
