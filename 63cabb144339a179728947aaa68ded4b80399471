@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "7feabd72_f7b86ca2",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-27T16:41:34Z",
+      "side": 1,
+      "message": "The reason why your first version crashes is because of this line:\n*buffer \u003d internal_buffer.Get();\n\nThe correct way to pass ownership is \n*buffer \u003d internal_buffer.Detach().\n\nIf you can make the API work with a ComPtr\u003c\u003e*, that\u0027s fine too (but generally uncommon).",
+      "parentUuid": "11ea95ab_6d2197de",
+      "range": {
+        "startLine": 45,
+        "startChar": 38,
+        "endLine": 45,
+        "endChar": 44
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bd1f67e_5a9969d8",
         "filename": "base/win/winrt_storage_util.h",
         "patchSetId": 5

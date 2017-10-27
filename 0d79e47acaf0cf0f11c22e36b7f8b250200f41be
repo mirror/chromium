@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "303f9b3d_5fa452b8",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-27T16:41:34Z",
+      "side": 1,
+      "message": "It\u0027s COM convention to null this out for errors.",
+      "parentUuid": "d0358332_bbd2f79a",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc650452_9721ad20",
         "filename": "base/win/winrt_storage_util.cc",
         "patchSetId": 7
@@ -70,6 +88,29 @@
       "writtenOn": "2017-10-27T13:09:18Z",
       "side": 1,
       "message": "why is the created IBuffer instance not held in a smart pointer here? failures below will lead to a leak unless callers jump through hoops. it makes sense to me that this function would not return an instance in |buffer| unless everything succeeds.",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d013ef_9d2d0308",
+        "filename": "base/win/winrt_storage_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-27T16:41:34Z",
+      "side": 1,
+      "message": "Also document the parameters and indicate which ones are in, out, and/or inout.\n\nFollow the style here:\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/post_task.h?rcl\u003d6ccfd56b6026ff542e4bc4076e8a8e7a9cae0b41\u0026l\u003d85",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 41
+      },
       "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
