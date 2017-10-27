@@ -848,8 +848,12 @@ void FocusController::FocusDocumentView(Frame* frame, bool notify_embedder) {
   if (focused_frame && focused_frame->View()) {
     Document* document = focused_frame->GetDocument();
     Element* focused_element = document ? document->FocusedElement() : nullptr;
-    if (focused_element)
-      DispatchBlurEvent(*document, *focused_element);
+    if (focused_element) {
+      if (IsAncestorOfFrame(focused_frame, frame))
+        document->ClearFocusedElement();
+      else
+        DispatchBlurEvent(*document, *focused_element);
+    }
   }
 
   LocalFrame* new_focused_frame =
@@ -1515,6 +1519,19 @@ void FocusController::RegisterFocusChangedObserver(
   DCHECK(observer);
   DCHECK(!focus_changed_observers_.Contains(observer));
   focus_changed_observers_.insert(observer);
+}
+
+bool FocusController::IsAncestorOfFrame(Frame* ancestor,
+                                        Frame* potential_descendant) const {
+  if (!ancestor || !potential_descendant)
+    return false;
+
+  for (Frame* current = potential_descendant; current;
+       current = current->Client()->Parent()) {
+    if (ancestor == current)
+      return true;
+  }
+  return false;
 }
 
 void FocusController::NotifyFocusChangedObservers() const {

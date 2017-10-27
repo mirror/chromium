@@ -126,6 +126,8 @@ class CORE_EXPORT FocusController final
                                      WebFocusType,
                                      FocusCandidate& closest);
 
+  bool IsAncestorOfFrame(Frame* ancestor, Frame* potential_descendant) const;
+
   void NotifyFocusChangedObservers() const;
 
   Member<Page> page_;
