@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f28e9f70_961deab2",
+        "filename": "net/tools/transport_security_state_generator/input_file_parsers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-27T14:56:04Z",
+      "side": 1,
+      "message": "Is this meant to be case-sensitive? Just confirming.",
+      "revId": "0f9d79e79aa0a031c62b94b29675dd71f854e0dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5b7b49_fe71c7fb",
+        "filename": "net/tools/transport_security_state_generator/input_file_parsers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-27T14:56:04Z",
+      "side": 1,
+      "message": "So I think you should update these to use the constants you introduce. The reason for this is to set the stage that querying for new keys requires introducing new constants, and in doing so, updating the set of valid keys.\n\nAs it stands, one could easily introduce parsed-\u003eGetBoolean(\"some-magic\") and forget to update the set. Granted, this will quickly fail (because it\u0027s not in the magic set), but just a note.\n\n(We have //components/policy/core/common/schema to define JSON schemas for enterprise policies, but I don\u0027t think that\u0027s easily lifted for reuse here, and in particular, is not JSON-Schema but an enterprise-policy-specific one)",
+      "revId": "0f9d79e79aa0a031c62b94b29675dd71f854e0dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
