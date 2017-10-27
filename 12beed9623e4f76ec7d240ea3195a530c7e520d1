@@ -16,6 +16,24 @@
       "revId": "12beed9623e4f76ec7d240ea3195a530c7e520d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53111c0_eae64038",
+        "filename": "ash/public/cpp/voice_interaction_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-27T23:55:42Z",
+      "side": 1,
+      "message": "Okay that sounds reasonable. BTW how do we handle type mapping between mojoms? Since by doing so we need maps between the definitions in ash mojom and arc mojom, but I have not seen a similar case before.",
+      "parentUuid": "cef5b2ff_d7f3b756",
+      "revId": "12beed9623e4f76ec7d240ea3195a530c7e520d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
