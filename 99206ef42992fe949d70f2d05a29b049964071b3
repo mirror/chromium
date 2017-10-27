@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4db5f4f8_ac4c2e6b",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/border-radius-clip-above-fragmented-expected.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-27T18:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "660080ea_7c1d4b36",
+      "revId": "99206ef42992fe949d70f2d05a29b049964071b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f09d279_6518e973",
         "filename": "third_party/WebKit/LayoutTests/fragmentation/border-radius-clip-above-fragmented.html",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-27T17:24:46Z",
       "side": 1,
       "message": "Nit: Can you use a bigger border-radius? It\u0027s hard to see if the border-radius is applied in the png.",
+      "revId": "99206ef42992fe949d70f2d05a29b049964071b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edc2a25_ab01592b",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/border-radius-clip-above-fragmented.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-27T18:01:14Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6f09d279_6518e973",
       "revId": "99206ef42992fe949d70f2d05a29b049964071b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
