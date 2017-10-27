@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff09602a_699dc4ee",
+        "filename": "content/browser/frame_host/mixed_content_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-10-27T10:11:00Z",
+      "side": 1,
+      "message": "So this functions just replicates content::IsOriginSecure. Let\u0027s remove it rather than renaming it.",
+      "revId": "f3c92ff426e100adc929b021eaa42887a02a5e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
