@@ -16,6 +16,24 @@
       "revId": "d2daf02a9104a0a2ac2241e6d0cdc46566677e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7b9b51_226c7134",
+        "filename": "google_apis/test/service_login.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T15:29:05Z",
+      "side": 1,
+      "message": "You\u0027re right - this was a mistake :-(.  I\u0027ll put together a CL to fix this.  Thanks for catching this.",
+      "parentUuid": "83a5a760_a069cc20",
+      "revId": "d2daf02a9104a0a2ac2241e6d0cdc46566677e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
