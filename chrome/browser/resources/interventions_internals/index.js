@@ -204,6 +204,19 @@ InterventionsInternalPageImpl.prototype = {
   },
 
   /**
+   * Update the page with the new value of ignored blacklist decision status.
+   *
+   * @override
+   * @param {boolean} ignored The new status of whether the previews blacklist
+   * decisions is blacklisted or not.
+   */
+  onIgnoreBlacklistDecisionStatusChanged: function(ignored) {
+    let ignoreButton = $('ignore-blacklist-button');
+    ignoreButton.textContent =
+        ignored ? 'Enable Blacklist' : 'Ignore Blacklist';
+  },
+
+  /**
    * Update the page with the new value of estimated effective connection type.
    *
    * @override
@@ -216,11 +229,21 @@ InterventionsInternalPageImpl.prototype = {
 };
 
 cr.define('interventions_internals', () => {
+  // The blacklist decision should not be ignored by default.
   let pageHandler = null;
 
   function init(handler) {
     pageHandler = handler;
     getPreviewsEnabled();
+
+    let ignoreButton = $('ignore-blacklist-button');
+    ignoreButton.addEventListener('click', () => {
+      // Whether the blacklist is currently ignored.
+      let ignored = (ignoreButton.textContent == 'Enable Blacklist');
+
+      // Try to reverse the ignore status.
+      pageHandler.setIgnorePreviewsBlacklistDecision(!ignored);
+    });
   }
 
   /**

@@ -24,10 +24,11 @@ const char kOfflineDesciption[] = "Offline Previews";
 
 InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
     mojom::InterventionsInternalsPageHandlerRequest request,
-    previews::PreviewsLogger* logger)
+    previews::PreviewsUIService* ui_service)
     : binding_(this, std::move(request)),
-      logger_(logger),
+      ui_service_(ui_service),
       current_estimated_ect_(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN) {
+  logger_ = ui_service_->previews_logger();
   DCHECK(logger_);
 }
 
@@ -65,6 +66,17 @@ void InterventionsInternalsPageHandler::OnNewMessageLogAdded(
   mojo_message_ptr->time = message.time.ToJavaTime();
 
   page_->LogNewMessage(std::move(mojo_message_ptr));
+}
+
+void InterventionsInternalsPageHandler::SetIgnorePreviewsBlacklistDecision(
+    bool ignored) {
+  DCHECK(ui_service_);
+  ui_service_->SetIgnorePreviewsBlacklistDecision(ignored);
+}
+
+void InterventionsInternalsPageHandler::OnIgnoreBlacklistDecisionStatusChanged(
+    bool ignored) {
+  page_->OnIgnoreBlacklistDecisionStatusChanged(ignored);
 }
 
 void InterventionsInternalsPageHandler::OnNewBlacklistedHost(
