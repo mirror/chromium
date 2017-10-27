@@ -106,6 +106,23 @@
       "revId": "23eeb0cfbaed25d3e5ddd89497046d8587d05aee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c1ace5_7c642763",
+        "filename": "components/arc/common/voice_interaction_state.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T00:34:15Z",
+      "side": 1,
+      "message": "Hmmm... Given that this requires extensible, I\u0027d actually prefer #3. I\u0027d rather not use extensible more widely than necessary until https://bugs.chromium.org/p/chromium/issues/detail?id\u003d731893 is fixed. Sorry \u003d(",
+      "revId": "23eeb0cfbaed25d3e5ddd89497046d8587d05aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
