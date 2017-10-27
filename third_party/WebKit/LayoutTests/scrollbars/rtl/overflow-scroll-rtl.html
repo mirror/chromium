@@ -4,18 +4,15 @@
 <script src="../../resources/ahem.js"></script>
 <script>
 function runTest() {
-    if (window.internals)
-        internals.settings.setMockScrollbarsEnabled(true);
-
-    if (window.testRunner)
-        testRunner.dumpAsTextWithPixelResults();
+  if (window.testRunner)
+    testRunner.dumpAsTextWithPixelResults();
 }
 </script>
 </head>
 <body onload="runTest();">
 <p>All the digits from 0 to 9 should be visible.</p>
 <div id="outer" style="direction: rtl; background-color: blue; width: 200px; height: 200px; overflow: scroll;">
-    <div id="inner" style="background-color: lightgreen;">0123456789</div>
+  <div id="inner" style="background-color: lightgreen;">0123456789</div>
 </div>
 </body>
 </html>
