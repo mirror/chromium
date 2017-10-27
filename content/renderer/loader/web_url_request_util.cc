@@ -378,6 +378,7 @@ WebHTTPBody GetWebHTTPBodyForRequestBody(
             element.expected_modification_time().ToDoubleT());
         break;
       case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM:
+        CHECK(false);
         http_body.AppendFileSystemURLRange(
             element.filesystem_url(), element.offset(),
             (element.length() != std::numeric_limits<uint64_t>::max())
