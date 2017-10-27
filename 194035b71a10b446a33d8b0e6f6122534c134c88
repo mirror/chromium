@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ef2d666_d5f2c1e6",
+        "filename": "base/android/java/templates/BuildConfig.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-27T17:33:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "448ac980_64bebc40",
+      "revId": "194035b71a10b446a33d8b0e6f6122534c134c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "888ba669_56b20f44",
         "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "194035b71a10b446a33d8b0e6f6122534c134c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5846b74a_a0cbf5f7",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-27T17:33:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "888ba669_56b20f44",
+      "revId": "194035b71a10b446a33d8b0e6f6122534c134c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "04106711_ecf53c0e",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-27T17:33:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e91cd210_655113c2",
+      "revId": "194035b71a10b446a33d8b0e6f6122534c134c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b386201_0e080bbc",
         "filename": "build/config/android/config.gni",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e7e46b04_a1ab74bc",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-27T17:33:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b386201_0e080bbc",
+      "revId": "194035b71a10b446a33d8b0e6f6122534c134c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2bf4f50_843fe22f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "194035b71a10b446a33d8b0e6f6122534c134c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f8c47e2_900c63d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-27T17:33:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2bf4f50_843fe22f",
+      "revId": "194035b71a10b446a33d8b0e6f6122534c134c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
