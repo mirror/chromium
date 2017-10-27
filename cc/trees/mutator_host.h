@@ -13,6 +13,7 @@
 #include "cc/trees/element_id.h"
 #include "cc/trees/layer_tree_mutator.h"
 #include "cc/trees/mutator_host_client.h"
+#include "cc/trees/property_tree.h"
 #include "ui/gfx/geometry/box_f.h"
 #include "ui/gfx/geometry/vector2d_f.h"
 
@@ -58,9 +59,13 @@ class MutatorHost {
   virtual bool NeedsTickAnimations() const = 0;
 
   virtual bool ActivateAnimations() = 0;
-  virtual bool TickAnimations(base::TimeTicks monotonic_time) = 0;
+  // TODO(smcgruer): Once we only tick scroll-based animations on scroll, we
+  // don't need to pass the scroll tree in here.
+  virtual bool TickAnimations(base::TimeTicks monotonic_time,
+                              ScrollTree& scroll_tree) = 0;
   // Tick animations that depends on scroll offset.
-  virtual void TickScrollAnimations(base::TimeTicks monotonic_time) = 0;
+  virtual void TickScrollAnimations(base::TimeTicks monotonic_time,
+                                    ScrollTree& scroll_tree) = 0;
   virtual bool UpdateAnimationState(bool start_ready_animations,
                                     MutatorEvents* events) = 0;
 

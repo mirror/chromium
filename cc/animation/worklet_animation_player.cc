@@ -5,23 +5,36 @@
 #include "cc/animation/worklet_animation_player.h"
 
 #include "base/memory/ptr_util.h"
+#include "cc/animation/scroll_timeline.h"
 
 namespace cc {
 
-WorkletAnimationPlayer::WorkletAnimationPlayer(int id, const std::string& name)
-    : AnimationPlayer(id), name_(name) {}
+WorkletAnimationPlayer::WorkletAnimationPlayer(
+    int id,
+    const std::string& name,
+    std::unique_ptr<ScrollTimeline> scroll_timeline)
+    : AnimationPlayer(id),
+      name_(name),
+      scroll_timeline_(std::move(scroll_timeline)) {}
 
 WorkletAnimationPlayer::~WorkletAnimationPlayer() {}
 
 scoped_refptr<WorkletAnimationPlayer> WorkletAnimationPlayer::Create(
     int id,
-    const std::string& name) {
-  return WrapRefCounted(new WorkletAnimationPlayer(id, name));
+    const std::string& name,
+    std::unique_ptr<ScrollTimeline> scroll_timeline) {
+  return WrapRefCounted(
+      new WorkletAnimationPlayer(id, name, std::move(scroll_timeline)));
 }
 
 scoped_refptr<AnimationPlayer> WorkletAnimationPlayer::CreateImplInstance()
     const {
-  return WrapRefCounted(new WorkletAnimationPlayer(id(), name()));
+  std::unique_ptr<ScrollTimeline> impl_timeline;
+  if (scroll_timeline_)
+    impl_timeline.reset(new ScrollTimeline(*scroll_timeline_.get()));
+
+  return WrapRefCounted(
+      new WorkletAnimationPlayer(id(), name(), std::move(impl_timeline)));
 }
 
 void WorkletAnimationPlayer::SetLocalTime(base::TimeDelta local_time) {
