@@ -71,9 +71,9 @@ class FeaturePolicyTest : public ::testing::Test {
   url::Origin origin_c = url::Origin::Create(GURL(ORIGIN_C));
 
   const FeatureNameMap test_feature_name_map = {
-      {"fullscreen", blink::WebFeaturePolicyFeature::kFullscreen},
-      {"payment", blink::WebFeaturePolicyFeature::kPayment},
-      {"vibrate", blink::WebFeaturePolicyFeature::kVibrate}};
+      {"fullscreen", blink::FeaturePolicyFeature::kFullscreen},
+      {"payment", blink::FeaturePolicyFeature::kPayment},
+      {"vibrate", blink::FeaturePolicyFeature::kVibrate}};
 };
 
 TEST_F(FeaturePolicyTest, ParseValidPolicy) {
@@ -110,7 +110,7 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
                          &messages, test_feature_name_map);
   EXPECT_EQ(1UL, parsed_policy.size());
 
-  EXPECT_EQ(WebFeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
   EXPECT_FALSE(parsed_policy[0].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[0].origins.size());
   EXPECT_TRUE(parsed_policy[0].origins[0].IsSameOriginWith(origin_a));
@@ -119,7 +119,7 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
       ParseFeaturePolicy("vibrate *", origin_a_.get(), origin_b_.get(),
                          &messages, test_feature_name_map);
   EXPECT_EQ(1UL, parsed_policy.size());
-  EXPECT_EQ(WebFeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
   EXPECT_TRUE(parsed_policy[0].matches_all_origins);
   EXPECT_EQ(0UL, parsed_policy[0].origins.size());
 
@@ -130,15 +130,15 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
       "payment 'self'",
       origin_a_.get(), origin_b_.get(), &messages, test_feature_name_map);
   EXPECT_EQ(3UL, parsed_policy.size());
-  EXPECT_EQ(WebFeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
   EXPECT_TRUE(parsed_policy[0].matches_all_origins);
   EXPECT_EQ(0UL, parsed_policy[0].origins.size());
-  EXPECT_EQ(WebFeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
   EXPECT_FALSE(parsed_policy[1].matches_all_origins);
   EXPECT_EQ(2UL, parsed_policy[1].origins.size());
   EXPECT_TRUE(parsed_policy[1].origins[0].IsSameOriginWith(origin_b));
   EXPECT_TRUE(parsed_policy[1].origins[1].IsSameOriginWith(origin_c));
-  EXPECT_EQ(WebFeaturePolicyFeature::kPayment, parsed_policy[2].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kPayment, parsed_policy[2].feature);
   EXPECT_FALSE(parsed_policy[2].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[2].origins.size());
   EXPECT_TRUE(parsed_policy[2].origins[0].IsSameOriginWith(origin_a));
@@ -150,15 +150,15 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
       "payment 'self' badorigin",
       origin_a_.get(), origin_b_.get(), &messages, test_feature_name_map);
   EXPECT_EQ(3UL, parsed_policy.size());
-  EXPECT_EQ(WebFeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
   EXPECT_TRUE(parsed_policy[0].matches_all_origins);
   EXPECT_EQ(0UL, parsed_policy[0].origins.size());
-  EXPECT_EQ(WebFeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
   EXPECT_FALSE(parsed_policy[1].matches_all_origins);
   EXPECT_EQ(2UL, parsed_policy[1].origins.size());
   EXPECT_TRUE(parsed_policy[1].origins[0].IsSameOriginWith(origin_b));
   EXPECT_TRUE(parsed_policy[1].origins[1].IsSameOriginWith(origin_c));
-  EXPECT_EQ(WebFeaturePolicyFeature::kPayment, parsed_policy[2].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kPayment, parsed_policy[2].feature);
   EXPECT_FALSE(parsed_policy[2].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[2].origins.size());
   EXPECT_TRUE(parsed_policy[2].origins[0].IsSameOriginWith(origin_a));
@@ -172,15 +172,15 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
   // feature name.
   EXPECT_EQ(2UL, messages.size());
   EXPECT_EQ(3UL, parsed_policy.size());
-  EXPECT_EQ(WebFeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
   EXPECT_FALSE(parsed_policy[0].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[0].origins.size());
   EXPECT_TRUE(parsed_policy[0].origins[0].IsSameOriginWith(origin_a));
-  EXPECT_EQ(WebFeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
   EXPECT_FALSE(parsed_policy[1].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[1].origins.size());
   EXPECT_TRUE(parsed_policy[1].origins[0].IsSameOriginWith(origin_a));
-  EXPECT_EQ(WebFeaturePolicyFeature::kPayment, parsed_policy[2].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kPayment, parsed_policy[2].feature);
   EXPECT_FALSE(parsed_policy[2].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[2].origins.size());
   EXPECT_TRUE(parsed_policy[2].origins[0].IsSameOriginWith(origin_a));
@@ -190,15 +190,15 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
       ParseFeaturePolicy("vibrate;fullscreen;payment", origin_a_.get(), nullptr,
                          &messages, test_feature_name_map);
   EXPECT_EQ(3UL, parsed_policy.size());
-  EXPECT_EQ(WebFeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
   EXPECT_FALSE(parsed_policy[0].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[0].origins.size());
   EXPECT_TRUE(parsed_policy[0].origins[0].IsSameOriginWith(origin_a));
-  EXPECT_EQ(WebFeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
   EXPECT_FALSE(parsed_policy[1].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[1].origins.size());
   EXPECT_TRUE(parsed_policy[1].origins[0].IsSameOriginWith(origin_a));
-  EXPECT_EQ(WebFeaturePolicyFeature::kPayment, parsed_policy[2].feature);
+  EXPECT_EQ(FeaturePolicyFeature::kPayment, parsed_policy[2].feature);
   EXPECT_FALSE(parsed_policy[2].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[2].origins.size());
   EXPECT_TRUE(parsed_policy[2].origins[0].IsSameOriginWith(origin_a));

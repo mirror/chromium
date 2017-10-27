@@ -21,7 +21,7 @@ namespace blink {
 
 // Returns a map between feature name (string) and WebFeaturePolicyFeature
 // (enum).
-typedef HashMap<String, WebFeaturePolicyFeature> FeatureNameMap;
+typedef HashMap<String, FeaturePolicyFeature> FeatureNameMap;
 PLATFORM_EXPORT const FeatureNameMap& GetDefaultFeatureNameMap();
 
 // Converts a header policy string into a vector of whitelists, one for each
@@ -72,7 +72,7 @@ ParseFeaturePolicy(const String& policy,
 
 // Verifies whether feature policy is enabled and |feature| is supported in
 // feature policy.
-PLATFORM_EXPORT bool IsSupportedInFeaturePolicy(WebFeaturePolicyFeature);
+PLATFORM_EXPORT bool IsSupportedInFeaturePolicy(FeaturePolicyFeature);
 
 // Converts a SecurityOrigin to a url::Origin for feature policy.
 PLATFORM_EXPORT url::Origin GetURLOriginForFeaturePolicy(
