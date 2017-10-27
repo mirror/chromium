@@ -180,6 +180,30 @@
     },
     {
       "key": {
+        "uuid": "48cb1570_c99d7c7e",
+        "filename": "chromeos/dbus/fake_image_loader_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-10-27T16:44:09Z",
+      "side": 1,
+      "message": "I see. The test cros_component_installer_unittest isn\u0027t testing OnCustomInstall (invokes ImageLoaderClient) since it\u0027s a callback used by its parent class. Thanks for pointing this out, I will try to leverage Fake*Client for my unit test next time.",
+      "parentUuid": "007b0c38_15f63b0e",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "bf7df0500f3d04c86c75b3f1dec1637f1fc433c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fdbdc4a_53fe6ef8",
         "filename": "chromeos/dbus/image_loader_client.h",
         "patchSetId": 2
