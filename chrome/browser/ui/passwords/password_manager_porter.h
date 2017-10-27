@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_UI_PASSWORDS_PASSWORD_MANAGER_PORTER_H_
 #define CHROME_BROWSER_UI_PASSWORDS_PASSWORD_MANAGER_PORTER_H_
 
+#include <memory>
+
 #include "components/password_manager/core/browser/import/password_importer.h"
 #include "components/password_manager/core/browser/ui/export_flow.h"
 #include "components/password_manager/core/browser/ui/import_flow.h"
@@ -16,6 +18,7 @@ class WebContents;
 
 namespace password_manager {
 class CredentialProviderInterface;
+class PasswordExporter;
 }
 
 class Profile;
@@ -68,6 +71,8 @@ class PasswordManagerPorter : public ui::SelectFileDialog::Listener,
 
   // Caching the current WebContents for when PresentFileSelector is called.
   content::WebContents* web_contents_ = nullptr;
+
+  std::unique_ptr<password_manager::PasswordExporter> password_exporter_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerPorter);
 };

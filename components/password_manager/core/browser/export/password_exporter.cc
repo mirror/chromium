@@ -26,7 +26,6 @@ void WriteToFile(const base::FilePath& path,
 
 }  // namespace
 
-// static
 void PasswordExporter::Export(
     const base::FilePath& path,
     const std::vector<std::unique_ptr<autofill::PasswordForm>>& passwords) {
