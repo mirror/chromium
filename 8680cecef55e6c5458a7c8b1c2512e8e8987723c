@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98bf32c1_eb57f1da",
+        "filename": "tools/cygprofile/patch_native_library.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-27T11:28:21Z",
+      "side": 1,
+      "message": "Added a comment to clarify. The target has the form MangledSymbol+0x42.",
+      "parentUuid": "2721c86f_4266a03c",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 22
+      },
+      "revId": "8680cecef55e6c5458a7c8b1c2512e8e8987723c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cc4b37e_ca21c6e7",
         "filename": "tools/cygprofile/patch_native_library.py",
         "patchSetId": 4
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "262824f6_3d98cf7a",
+        "filename": "tools/cygprofile/patch_native_library.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-27T11:28:21Z",
+      "side": 1,
+      "message": "Thanks!\nDone.",
+      "parentUuid": "78895cec_9acbbdc4",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 13
+      },
+      "revId": "8680cecef55e6c5458a7c8b1c2512e8e8987723c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f6361f8_7a2684ac",
         "filename": "tools/cygprofile/patch_native_library.py",
         "patchSetId": 4
@@ -91,6 +139,30 @@
       "revId": "8680cecef55e6c5458a7c8b1c2512e8e8987723c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a247470_e4159cf1",
+        "filename": "tools/cygprofile/patch_native_library.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-27T11:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f6361f8_7a2684ac",
+      "range": {
+        "startLine": 125,
+        "startChar": 48,
+        "endLine": 125,
+        "endChar": 57
+      },
+      "revId": "8680cecef55e6c5458a7c8b1c2512e8e8987723c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "2b300830_77873be9",
+        "filename": "tools/cygprofile/patch_native_library.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-27T11:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61458dd1_0ede5d5e",
+      "range": {
+        "startLine": 129,
+        "startChar": 25,
+        "endLine": 129,
+        "endChar": 43
+      },
+      "revId": "8680cecef55e6c5458a7c8b1c2512e8e8987723c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d22b6869_4f1d1a1d",
         "filename": "tools/cygprofile/patch_native_library.py",
         "patchSetId": 4
@@ -137,6 +233,30 @@
       "revId": "8680cecef55e6c5458a7c8b1c2512e8e8987723c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c071d9_25514867",
+        "filename": "tools/cygprofile/patch_native_library.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-27T11:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d22b6869_4f1d1a1d",
+      "range": {
+        "startLine": 219,
+        "startChar": 33,
+        "endLine": 219,
+        "endChar": 42
+      },
+      "revId": "8680cecef55e6c5458a7c8b1c2512e8e8987723c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
