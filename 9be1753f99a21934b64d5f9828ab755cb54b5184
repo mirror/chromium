@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "405ba9a3_e7d93c64",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T18:34:52Z",
+      "side": 1,
+      "message": "A direct ldflag would work too, I\u0027m not sure it matters enough to change it now. otoh, it\u0027s kind of nice to keep flags in configs to ensure everyone uses the same flag.",
+      "parentUuid": "b347f977_f53342c9",
+      "revId": "9be1753f99a21934b64d5f9828ab755cb54b5184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5846bcca_cfce4fbe",
         "filename": "build/android/gyp/create_test_runner_script.py",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-27T18:02:43Z",
       "side": 1,
       "message": "no yoda conditionals please",
+      "revId": "9be1753f99a21934b64d5f9828ab755cb54b5184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593d5b88_25f36c64",
+        "filename": "build/android/gyp/create_test_runner_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T18:34:52Z",
+      "side": 1,
+      "message": "Haha, I\u0027ve never heard term before! \n\nProbably also not worth changing at this point though.",
+      "parentUuid": "5846bcca_cfce4fbe",
       "revId": "9be1753f99a21934b64d5f9828ab755cb54b5184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
