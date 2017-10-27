@@ -22,6 +22,30 @@
       "revId": "3605b933017ca07fb855e5b1e715ef972068f145",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45adadfc_22c1b6c4",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-27T05:34:39Z",
+      "side": 1,
+      "message": "I think are using \"scoped_refptr\u003cbase::RefCountedData\u003cblink::mojom::BlobRegistryPtr\u003e\u003e blob_registry_;\" to share the BlobRegistryPtr from each ServiceWorkerSubresourceLoaders.\nIt might better to have a wrapper class of it.",
+      "parentUuid": "47086245_89fcbe43",
+      "range": {
+        "startLine": 134,
+        "startChar": 21,
+        "endLine": 136,
+        "endChar": 37
+      },
+      "revId": "3605b933017ca07fb855e5b1e715ef972068f145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
