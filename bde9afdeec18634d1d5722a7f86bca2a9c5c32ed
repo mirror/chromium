@@ -22,6 +22,23 @@
       "revId": "bde9afdeec18634d1d5722a7f86bca2a9c5c32ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa45f061_b2749d81",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-27T01:46:00Z",
+      "side": 1,
+      "message": "Since double click word selection is implemented with VSInFlatTree\n(SelectionController::SelectClosestWordFromHitTestResult()),\ncould you use it instead of VSInDOMTree?",
+      "revId": "bde9afdeec18634d1d5722a7f86bca2a9c5c32ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
