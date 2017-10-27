@@ -10,6 +10,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
+#include "base/win/scoped_windows_thread_environment.h"
 #include "build/build_config.h"
 
 namespace base {
@@ -22,7 +23,7 @@ namespace win {
 // similar lifetime as the thread itself.  You should not be using this in
 // random utility functions that make COM calls -- instead ensure these
 // functions are running on a COM-supporting thread!
-class ScopedCOMInitializer {
+class ScopedCOMInitializer : public ScopedWindowsThreadEnvironment {
  public:
   // Enum value provided to initialize the thread as an MTA instead of STA.
   enum SelectMTA { kMTA };
@@ -37,13 +38,14 @@ class ScopedCOMInitializer {
     Initialize(COINIT_MULTITHREADED);
   }
 
-  ~ScopedCOMInitializer() {
+  ~ScopedCOMInitializer() override {
     DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
     if (succeeded())
       CoUninitialize();
   }
 
-  bool succeeded() const { return SUCCEEDED(hr_); }
+  // ScopedWindowsThreadEnvironment:
+  bool succeeded() const override { return SUCCEEDED(hr_); }
 
  private:
   void Initialize(COINIT init) {
