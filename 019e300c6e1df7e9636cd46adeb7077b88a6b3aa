@@ -70,6 +70,30 @@
       "revId": "019e300c6e1df7e9636cd46adeb7077b88a6b3aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3475ae70_80b0c3dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-27T15:58:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0134b555_a55c763c",
+      "range": {
+        "startLine": 152,
+        "startChar": 20,
+        "endLine": 152,
+        "endChar": 49
+      },
+      "revId": "019e300c6e1df7e9636cd46adeb7077b88a6b3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
