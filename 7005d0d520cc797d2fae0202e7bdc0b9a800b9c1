@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5df2591b_c6580620",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T15:52:28Z",
+      "side": 1,
+      "message": "Can\u0027t we make SwapThrashingMonitorDelegateWin inherit from SwapThrashingMonitorDelegate?",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e676be9_25282bdd",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T15:52:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure if the assumption is realistic but let\u0027s give it a shot :)\n\nWhat matters is to iterate until we get a good metric!",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a0f509_683e7a4d",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T15:52:28Z",
+      "side": 1,
+      "message": "kSampleWindowSize ? (since the class name is SampleWindow)",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68266f9b_f6ea6e24",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T15:52:28Z",
+      "side": 1,
+      "message": "kSampleCountToBecomeSuspectedState ?",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529c9d1e_6efa8bdb",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T15:52:28Z",
+      "side": 1,
+      "message": "kSampleCountToBecomeConfirmedState ?",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7385bce4_8a5947da",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T15:52:28Z",
+      "side": 1,
+      "message": "Why do we need to assign a constant to another constant?",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affac5d7_d17df1b1",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T15:52:28Z",
+      "side": 1,
+      "message": "Shall we inline the function in the call site?",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2312c38_4032f071",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T15:52:28Z",
+      "side": 1,
+      "message": "adobe \u003d\u003e above",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
