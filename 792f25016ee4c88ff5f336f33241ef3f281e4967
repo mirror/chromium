@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "501ee35f_061d0ca9",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsLine.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-27T01:57:45Z",
+      "side": 1,
+      "message": "nit: Could you avoid to use one letter variable name?\nHow about using |position1| and |position2|?",
+      "revId": "792f25016ee4c88ff5f336f33241ef3f281e4967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

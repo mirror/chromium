@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6faf0312_b8ebcf53",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsLine.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-27T01:57:45Z",
+      "side": 1,
+      "message": "I think it is better to use RootInlineBox instead of traversing DOM/Flat tree.\n\nSketch is:\n\nfor (PositionInFlatTree runner \u003d position;\n     runner;\n     runner \u003d PreviousBlockFlowOf(runner)) {\n  LayoutBlockFlow* block \u003d EnclosingBlockFlowOf(runner);\n  RootInlineBox line \u003d RootInlineBoxContaining(block, runner);\n  if (!line || IsAtStartOfLine(line, runner))\n   continue;\n  return PositionOfEndOfLine(block);\n}\nreturn PositionInFlatTree();\n\n\u003d\u003d\u003d\u003d\nI think it is better to move line handling into layout/ now and rewrite\nto use RootInlineBox instead of InlineBox. NG version will use NGLineBox\ninstead of RootInlineBox.\n\nThe magical part is PreviousBlockFlowOf(Position) -\u003e Position, it should\nbe implemented in editing/.\n\nPreviousBlockFlowOf() returns line1 from line2 in below example:\n\n\u003cdiv\u003eline 1\u003c/div\u003e\nline 2\n\u003cdiv\u003eline 3\u003c/div\u003e",
+      "parentUuid": "27330de1_08bc548a",
+      "range": {
+        "startLine": 477,
+        "startChar": 0,
+        "endLine": 479,
+        "endChar": 36
+      },
+      "revId": "6d541e265bf85b2e1a372d7d3ea5348181dc2220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a2cb5e1_3eb0dc82",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsLine.cpp",
         "patchSetId": 2
