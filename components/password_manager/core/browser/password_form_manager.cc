@@ -337,8 +337,7 @@ PasswordFormManager::MatchResultMask PasswordFormManager::DoesManage(
 
   result |= RESULT_ORIGINS_OR_FRAMES_MATCH;
 
-  if (CalculateFormSignature(form.form_data) ==
-      CalculateFormSignature(observed_form_.form_data))
+  if (form.form_data.form_signature == observed_form_.form_data.form_signature)
     result |= RESULT_SIGNATURE_MATCH;
 
   if (!form.form_data.name.empty() &&

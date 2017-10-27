@@ -65,7 +65,7 @@ bool ContainsURL(const std::vector<GURL>& urls, const GURL& url) {
 const PasswordFormGenerationData* FindFormGenerationData(
     const std::vector<PasswordFormGenerationData>& forms,
     const PasswordForm& form) {
-  FormSignature form_signature = CalculateFormSignature(form.form_data);
+  const FormSignature form_signature = form.form_data.form_signature;
   for (const auto& form_it : forms) {
     if (form_it.form_signature == form_signature)
       return &form_it;

@@ -1927,7 +1927,7 @@ bool AutofillManager::FindCachedForm(const FormData& form,
   // protocol with the crowdsourcing server does not permit us to discard the
   // original versions of the forms.
   *form_structure = nullptr;
-  const auto& form_signature = autofill::CalculateFormSignature(form);
+  const auto& form_signature = form.form_signature;
   for (auto& cur_form : base::Reversed(form_structures_)) {
     if (cur_form->form_signature() == form_signature || *cur_form == form) {
       *form_structure = cur_form.get();

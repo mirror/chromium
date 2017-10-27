@@ -4,6 +4,7 @@
 
 #include "components/autofill/core/common/signatures_util.h"
 
+#include "base/lazy_instance.h"
 #include "base/sha1.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -21,11 +22,31 @@ namespace {
 // Strip away >= 5 consecutive digits.
 const char kIgnorePatternInFieldName[] = "\\d{5,}";
 
+re2::RE2* CreateMatcher(void* instance, const char* pattern) {
+  re2::RE2::Options options;
+  options.set_case_sensitive(false);
+  // Use placement new to initialize the instance in the preallocated space.
+  // The "(instance)" is very important to force POD type initialization.
+  re2::RE2* matcher = new (instance) re2::RE2(pattern, options);
+  DCHECK(matcher->ok());
+  return matcher;
+}
+
+struct IgnorePatternInFieldNameLazyInstanceTraits
+    : public base::internal::DestructorAtExitLazyInstanceTraits<re2::RE2> {
+  static re2::RE2* New(void* instance) {
+    return CreateMatcher(instance, kIgnorePatternInFieldName);
+  }
+};
+
+base::LazyInstance<re2::RE2, IgnorePatternInFieldNameLazyInstanceTraits>
+    g_ignored_pattern_matcher = LAZY_INSTANCE_INITIALIZER;
+
 // Returns a copy of |input| without all occurrences of
 // |kIgnorePatternInFieldName|
 std::string StripDigitsIfRequired(const base::string16& input) {
   std::string return_string = base::UTF16ToUTF8(input);
-  re2::RE2::GlobalReplace(&return_string, re2::RE2(kIgnorePatternInFieldName),
+  re2::RE2::GlobalReplace(&return_string, g_ignored_pattern_matcher.Get(),
                           re2::StringPiece());
   return return_string;
 }

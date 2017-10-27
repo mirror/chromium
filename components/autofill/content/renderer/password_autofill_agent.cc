@@ -474,8 +474,8 @@ void AnnotateFormsWithSignatures(
     if (password_form) {
       form.SetAttribute(
           blink::WebString::FromASCII(kDebugAttributeForFormSignature),
-          blink::WebString::FromUTF8(base::Uint64ToString(
-              CalculateFormSignature(password_form->form_data))));
+          blink::WebString::FromUTF8(
+              base::Uint64ToString(password_form->form_data.form_signature)));
 
       std::vector<blink::WebFormControlElement> control_elements =
           form_util::ExtractAutofillableElementsInForm(form);

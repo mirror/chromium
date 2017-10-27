@@ -341,7 +341,7 @@ FormStructure::FormStructure(const FormData& form)
     fields_.push_back(base::MakeUnique<AutofillField>(field, unique_name));
   }
 
-  form_signature_ = autofill::CalculateFormSignature(form);
+  form_signature_ = form.form_signature;
   // Do further processing on the fields, as needed.
   ProcessExtractedFields();
 }

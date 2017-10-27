@@ -1132,6 +1132,7 @@ bool FormOrFieldsetsToFormData(
   // Copy the created FormFields into the resulting FormData object.
   for (const auto& field : form_fields)
     form->fields.push_back(*field);
+  form->form_signature = CalculateFormSignature(*form);
   return true;
 }
 

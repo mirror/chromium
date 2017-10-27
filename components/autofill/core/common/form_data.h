@@ -9,6 +9,7 @@
 
 #include "base/strings/string16.h"
 #include "components/autofill/core/common/form_field_data.h"
+#include "components/autofill/core/common/signatures_util.h"
 #include "url/gurl.h"
 
 namespace autofill {
@@ -47,6 +48,8 @@ struct FormData {
   bool is_formless_checkout;
   // A vector of all the input fields in the form.
   std::vector<FormFieldData> fields;
+  // Form signature. Used for form matching on client and server sides.
+  FormSignature form_signature;
 };
 
 // For testing.
