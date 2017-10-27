@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "86563d6c_fb7d0eef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-27T17:42:51Z",
+      "side": 1,
+      "message": "We could try have some mandated \u003cmeta-data\u003e fields in the androidmanifest. Validation could ensure they\u0027re specified and this would match webapk (something we should strive for IMHO)",
+      "parentUuid": "f31202a2_2950921d",
+      "range": {
+        "startLine": 448,
+        "startChar": 37,
+        "endLine": 448,
+        "endChar": 43
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851f0e93_6c19c731",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-27T17:42:51Z",
+      "side": 1,
+      "message": "can you explicitly hard-code dev channel restriction? Don\u0027t want to rely on server for that and we know there will be mroe code changes",
+      "range": {
+        "startLine": 404,
+        "startChar": 31,
+        "endLine": 404,
+        "endChar": 40
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0882127_8d8d1ce5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
         "patchSetId": 5
@@ -36,6 +83,30 @@
       "writtenOn": "2017-10-27T04:41:14Z",
       "side": 1,
       "message": "TODO: the network overriding behaviour in this splash screen controller is probably something we\u0027ll want for TWAs.",
+      "range": {
+        "startLine": 51,
+        "startChar": 18,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2501b53_7896d12d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-27T17:42:51Z",
+      "side": 1,
+      "message": "agreed",
+      "parentUuid": "b0882127_8d8d1ce5",
       "range": {
         "startLine": 51,
         "startChar": 18,
@@ -71,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a2b735d5_073b7e25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-27T17:42:51Z",
+      "side": 1,
+      "message": "Yusuf and I discussed this a bit and it\u0027s complicated. Since the android manifest intent filters dont\u0027 necessarily match the web manifest we could hit weird scenarios. I think we may want to prefer the androidmanifest (since that\u0027s what android sees for intent resolution anyway) but we\u0027d probably want to include some safeguards to ensure that it\u0027s sane",
+      "parentUuid": "a003da78_aa683adf",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 82
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "357c2db9_bc8cd4b9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
         "patchSetId": 5
@@ -82,6 +177,30 @@
       "writtenOn": "2017-10-27T04:41:14Z",
       "side": 1,
       "message": "We probably want this custom external navigation code in TWAs too to handle when external links are run out of TWA sessions?",
+      "range": {
+        "startLine": 152,
+        "startChar": 33,
+        "endLine": 152,
+        "endChar": 57
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd2f35e_ea985663",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-27T17:42:51Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "357c2db9_bc8cd4b9",
       "range": {
         "startLine": 152,
         "startChar": 33,
@@ -110,6 +229,53 @@
         "startChar": 19,
         "endLine": 181,
         "endChar": 45
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851584bb_96c9062b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-27T17:42:51Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "793be5cf_59e0c493",
+      "range": {
+        "startLine": 181,
+        "startChar": 19,
+        "endLine": 181,
+        "endChar": 45
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64562ec_d3452a04",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-27T17:42:51Z",
+      "side": 1,
+      "message": "nit: rename",
+      "range": {
+        "startLine": 223,
+        "startChar": 15,
+        "endLine": 223,
+        "endChar": 33
       },
       "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
