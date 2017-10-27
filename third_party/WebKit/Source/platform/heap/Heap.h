@@ -239,6 +239,8 @@ class PLATFORM_EXPORT ThreadHeap {
     // threads.
     if (!ThreadState::Current())
       return true;
+    //if (!ThreadState::Current()->IsSweepingInProgress())
+    //  return true;
     DCHECK(&ThreadState::Current()->Heap() ==
            &PageFromObject(object)->Arena()->GetThreadState()->Heap());
     return ObjectAliveTrait<T>::IsHeapObjectAlive(object);

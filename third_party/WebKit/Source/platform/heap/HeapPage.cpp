@@ -1266,7 +1266,8 @@ bool FreeList::TakeSnapshot(const String& dump_base_name) {
 }
 
 BasePage::BasePage(PageMemory* storage, BaseArena* arena)
-    : storage_(storage),
+    : magic_(0x12345678),
+      storage_(storage),
       arena_(arena),
       next_(nullptr),
       swept_(true),
@@ -1562,6 +1563,7 @@ void NormalPage::PopulateObjectStartBitMap() {
   for (Address header_address = start; header_address < PayloadEnd();) {
     HeapObjectHeader* header =
         reinterpret_cast<HeapObjectHeader*>(header_address);
+    //CHECK(header->IsValid());
     size_t object_offset = header_address - start;
     DCHECK(!(object_offset & kAllocationMask));
     size_t object_start_number = object_offset / kAllocationGranularity;

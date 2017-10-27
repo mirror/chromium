@@ -33,6 +33,7 @@ WebWidgetTestClient::WebWidgetTestClient(
 WebWidgetTestClient::~WebWidgetTestClient() {}
 
 void WebWidgetTestClient::ScheduleAnimation() {
+  LOG(ERROR) << "WebWidgetTestClient::ScheduleAnimation";
   if (!test_runner()->TestIsRunning())
     return;
 

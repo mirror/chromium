@@ -152,6 +152,7 @@ class TaskRunnerTimer : public TimerBase {
 
   NO_SANITIZE_ADDRESS
   bool CanFire() const override {
+    LOG(ERROR) << "CanFire " << TimerIsObjectAliveTrait<TimerFiredClass>::IsHeapObjectAlive(object_);
     // Oilpan: if a timer fires while Oilpan heaps are being lazily
     // swept, it is not safe to proceed if the object is about to
     // be swept (and this timer will be stopped while doing so.)

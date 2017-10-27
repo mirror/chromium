@@ -730,12 +730,11 @@ void ThreadState::SetGCState(GCState gc_state) {
       break;
     case kIncrementalMarkingStepScheduled:
       DCHECK(CheckThread());
-      VERIFY_STATE_TRANSITION(gc_state_ == kIncrementalMarkingStartScheduled ||
-                              gc_state_ == kIncrementalMarkingStepScheduled);
+      VERIFY_STATE_TRANSITION(gc_state_ == kGCRunning);
       break;
     case kIncrementalMarkingFinalizeScheduled:
       DCHECK(CheckThread());
-      VERIFY_STATE_TRANSITION(gc_state_ == kIncrementalMarkingStepScheduled);
+      VERIFY_STATE_TRANSITION(gc_state_ == kGCRunning);
       break;
     case kIdleGCScheduled:
     case kPreciseGCScheduled:
@@ -937,6 +936,7 @@ BlinkGCObserver::~BlinkGCObserver() {
 }
 
 void ThreadState::PostSweep() {
+  DataLogF("PostSweep\n");
   DCHECK(CheckThread());
   ThreadHeap::ReportMemoryUsageForTracing();
 
@@ -1215,28 +1215,66 @@ void ThreadState::InvokePreFinalizers() {
 }
 
 void ThreadState::IncrementalMarkingStart() {
+  LOG(ERROR) << "ThreadState::IncrementalMarkingStart";
   DataLogF("IncrementalMarkingStart\n");
+  CompleteSweep();
+  GCForbiddenScope gc_forbidden_scope(this);
+  MarkPhasePrologue(BlinkGC::kNoHeapPointersOnStack, BlinkGC::kGCWithoutSweep, BlinkGC::kIdleGC);
+  {
+    CrossThreadPersistentRegion::LockScope persistent_lock(
+      ProcessHeap::GetCrossThreadPersistentRegion());
+    MarkPhaseVisitRoots();
+  }
   Heap().EnableIncrementalMarkingBarrier();
   ScheduleIncrementalMarkingStep();
+  DataLogF("IncrementalMarkingStart END\n");
 }
 
 void ThreadState::IncrementalMarkingStep() {
+  LOG(ERROR) << "ThreadState::IncrementalMarkingStep";
   DataLogF("IncrementalMarkingStep\n");
-  ScheduleIncrementalMarkingFinalize();
+  GCForbiddenScope gc_forbidden_scope(this);
+  SetGCState(kGCRunning);
+  bool complete = MarkPhaseAdvanceMarking(MonotonicallyIncreasingTime() + 0.001);
+  if (complete)
+    IncrementalMarkingFinalize();
+  else
+    ScheduleIncrementalMarkingStep();
+  DataLogF("IncrementalMarkingStep END\n");
 }
 
 void ThreadState::IncrementalMarkingFinalize() {
+  LOG(ERROR) << "ThreadState::IncrementalMarkingFinalize";
   DataLogF("IncrementalMarkingFinalize\n");
+  {
+    CrossThreadPersistentRegion::LockScope persistent_lock(
+      ProcessHeap::GetCrossThreadPersistentRegion());
+    MarkPhaseVisitRoots();
+  }
   Heap().DisableIncrementalMarkingBarrier();
+  MarkPhaseEpilogue();
+  PreSweep(BlinkGC::kGCWithoutSweep);
+  DataLogF("IncrementalMarkingFinalize END\n");
+}
+
+void ThreadState::MarkPhaseAbort() {
+  DataLogF("ThreadState::MarkPhaseAbort\n");
+  Heap().DisableIncrementalMarkingBarrier();
+  current_gc_data_.visitor.reset();
   SetGCState(kNoGCScheduled);
 }
 
 void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
                                  BlinkGC::GCType gc_type,
                                  BlinkGC::GCReason reason) {
+  DataLogF("ThreadState::CollectGarbage\n");
   // Nested collectGarbage() invocations aren't supported.
   CHECK(!IsGCForbidden());
   CompleteSweep();
+
+  if (current_gc_data_.visitor) {
+    MarkPhaseAbort();
+  }
 
   RUNTIME_CALL_TIMER_SCOPE_IF_ISOLATE_EXISTS(
       GetIsolate(), RuntimeCallStats::CounterId::kCollectGarbage);
@@ -1360,6 +1398,8 @@ void ThreadState::MarkPhaseEpilogue() {
   Heap().PostMarkingProcessing(current_gc_data_.visitor.get());
   Heap().WeakProcessing(current_gc_data_.visitor.get());
   Heap().DecommitCallbackStacks();
+
+  current_gc_data_.visitor.reset();
 
   Heap().HeapStats().SetEstimatedMarkingTimePerByte(
       current_gc_data_.marked_object_size
