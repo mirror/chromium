@@ -386,8 +386,9 @@ deps = {
   'src/third_party/libFuzzer/src':
     Var('chromium_git') + '/chromium/llvm-project/compiler-rt/lib/fuzzer.git' + '@' +  Var('libfuzzer_revision'),
 
-  'src/third_party/libaddressinput/src':
-    Var('chromium_git') + '/external/libaddressinput.git' + '@' + '87f69db0b1ca732ba148489d2f75b3af2f236632',
+  'src/third_party/libaddressinput/src': {
+    'url' : 'https://github.com/parastoog/my-libaddressinput',
+  },
 
   # Userspace interface to kernel DRM services.
   'src/third_party/libdrm/src': {
