@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9376e61f_7f7f2b0b",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-27T15:41:19Z",
+      "side": 1,
+      "message": "Done.  Good call on using the Reversed element iterator!  That\u0027s infinitely better.",
+      "parentUuid": "841d415b_e5b6e374",
+      "revId": "ead31558ede1077a72421796941d31c615f358f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad53c427_94522630",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 1
