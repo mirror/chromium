@@ -521,24 +521,6 @@ PlatformFontWin::HFontRef* PlatformFontWin::CreateHFontRefFromSkia(
 
   const bool italic = font_info.lfItalic != 0;
 
-  // Skia does not return all values we need for font metrics. For e.g.
-  // the cap height which indicates the height of capital letters is not
-  // returned even though it is returned by DirectWrite.
-  // TODO(ananta)
-  // Fix SkScalerContext_win_dw.cpp to return all metrics we need from
-  // DirectWrite and remove the code here which retrieves metrics from
-  // DirectWrite to calculate the cap height.
-  Microsoft::WRL::ComPtr<IDWriteFont> dwrite_font;
-  HRESULT hr = GetMatchingDirectWriteFont(
-      &font_info, italic, direct_write_factory_, dwrite_font.GetAddressOf());
-  if (FAILED(hr)) {
-    CHECK(false);
-    return nullptr;
-  }
-
-  DWRITE_FONT_METRICS dwrite_font_metrics = {0};
-  dwrite_font->GetMetrics(&dwrite_font_metrics);
-
   SkFontStyle skia_font_style(font_info.lfWeight, SkFontStyle::kNormal_Width,
                               font_info.lfItalic ? SkFontStyle::kItalic_Slant
                                                  : SkFontStyle::kUpright_Slant);
@@ -568,9 +550,7 @@ PlatformFontWin::HFontRef* PlatformFontWin::CreateHFontRefFromSkia(
   // that they match up closely with GDI.
   const int height = std::ceil(skia_metrics.fDescent - skia_metrics.fAscent);
   const int baseline = std::max<int>(1, std::ceil(-skia_metrics.fAscent));
-  const int cap_height = std::ceil(paint.getTextSize() *
-      static_cast<double>(dwrite_font_metrics.capHeight) /
-          dwrite_font_metrics.designUnitsPerEm);
+  const int cap_height = std::ceil(skia_metrics.fCapHeight);
 
   // The metrics retrieved from skia don't have the average character width. In
   // any case if we get the average character width from skia then use that or
