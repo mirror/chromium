@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f20ce4d0_4a594ad1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-27T21:14:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8d94ce0c_119c2a73",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2202a9f9_90104212",
         "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
         "patchSetId": 1
