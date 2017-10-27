@@ -98,6 +98,9 @@ class CORE_EXPORT PerformanceTiming final : public ScriptWrappable,
   // The time of the first 'meaningful' paint, A meaningful paint is a paint
   // where the page's primary content is visible.
   unsigned long long FirstMeaningfulPaint() const;
+  // The time of the first time the page is considered 'interactive'. This is
+  // determined using heuristics based on main thread and network activity.
+  unsigned long long PageInteractive() const;
 
   unsigned long long ParseStart() const;
   unsigned long long ParseStop() const;

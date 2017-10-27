@@ -166,6 +166,10 @@ double WebPerformance::FirstMeaningfulPaint() const {
   return MillisecondsToSeconds(private_->timing()->FirstMeaningfulPaint());
 }
 
+double WebPerformance::PageInteractive() const {
+  return MillisecondsToSeconds(private_->timing()->PageInteractive());
+}
+
 double WebPerformance::ParseStart() const {
   return MillisecondsToSeconds(private_->timing()->ParseStart());
 }

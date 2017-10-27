@@ -40,6 +40,7 @@
 #include "core/loader/DocumentLoadTiming.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/InteractiveDetector.h"
 #include "core/paint/PaintTiming.h"
 #include "core/timing/PerformanceBase.h"
 #include "platform/loader/fetch/ResourceLoadTiming.h"
@@ -347,6 +348,23 @@ unsigned long long PerformanceTiming::FirstMeaningfulPaint() const {
     return 0;
 
   return MonotonicTimeToIntegerMilliseconds(timing->FirstMeaningfulPaint());
+}
+
+unsigned long long PerformanceTiming::PageInteractive() const {
+  if (!GetFrame())
+    return 0;
+
+  Document* document = GetFrame()->GetDocument();
+  if (!document)
+    return 0;
+
+  InteractiveDetector* interactive_detector =
+      InteractiveDetector::From(*document);
+  if (!interactive_detector)
+    return 0;
+
+  return MonotonicTimeToIntegerMilliseconds(
+      interactive_detector->GetInteractiveTime());
 }
 
 unsigned long long PerformanceTiming::ParseStart() const {

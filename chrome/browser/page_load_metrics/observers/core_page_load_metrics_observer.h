@@ -47,6 +47,7 @@ extern const char kHistogramPageTimingForegroundDurationNoCommit[];
 
 extern const char kRapporMetricsNameCoarseTiming[];
 extern const char kHistogramFirstMeaningfulPaintStatus[];
+extern const char kHistogramTimeToInteractiveStatus[];
 
 extern const char kHistogramFirstNonScrollInputAfterFirstPaint[];
 extern const char kHistogramFirstScrollInputAfterFirstPaint[];
@@ -78,6 +79,15 @@ enum FirstMeaningfulPaintStatus {
   FIRST_MEANINGFUL_PAINT_USER_INTERACTION_BEFORE_FMP,
   FIRST_MEANINGFUL_PAINT_DID_NOT_REACH_FIRST_CONTENTFUL_PAINT,
   FIRST_MEANINGFUL_PAINT_LAST_ENTRY
+};
+
+enum TimeToInteractiveStatus {
+  TIME_TO_INTERACTIVE_RECORDED,
+  TIME_TO_INTERACTIVE_BACKGROUNDED,
+  TIME_TO_INTERACTIVE_DID_NOT_REACH_NETWORK_STABLE,
+  TIME_TO_INTERACTIVE_USER_INTERACTION_BEFORE_FMP,
+  TIME_TO_INTERACTIVE_DID_NOT_REACH_FIRST_MEANINGFUL_PAINT,
+  TIME_TO_INTERACTIVE_LAST_ENTRY
 };
 
 }  // namespace internal
@@ -118,6 +128,9 @@ class CorePageLoadMetricsObserver
       const page_load_metrics::mojom::PageLoadTiming& timing,
       const page_load_metrics::PageLoadExtraInfo& extra_info) override;
   void OnFirstMeaningfulPaintInMainFrameDocument(
+      const page_load_metrics::mojom::PageLoadTiming& timing,
+      const page_load_metrics::PageLoadExtraInfo& extra_info) override;
+  void OnPageInteractive(
       const page_load_metrics::mojom::PageLoadTiming& timing,
       const page_load_metrics::PageLoadExtraInfo& extra_info) override;
   void OnParseStart(

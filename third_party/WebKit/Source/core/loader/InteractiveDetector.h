@@ -60,7 +60,7 @@ class CORE_EXPORT InteractiveDetector
   void OnDomContentLoadedEnd(double dcl_time);
 
   // Returns Interactive Time if already detected, or 0.0 otherwise.
-  double GetInteractiveTime();
+  double GetInteractiveTime() const;
 
   virtual void Trace(Visitor*);
 

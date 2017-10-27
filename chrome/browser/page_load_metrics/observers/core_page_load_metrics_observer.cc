@@ -70,6 +70,11 @@ void RecordFirstMeaningfulPaintStatus(
       status, internal::FIRST_MEANINGFUL_PAINT_LAST_ENTRY);
 }
 
+void RecordTimeToInteractiveStatus(internal::TimeToInteractiveStatus status) {
+  UMA_HISTOGRAM_ENUMERATION(internal::kHistogramTimeToInteractiveStatus, status,
+                            internal::TIME_TO_INTERACTIVE_LAST_ENTRY);
+}
+
 }  // namespace
 
 namespace internal {
@@ -104,6 +109,8 @@ const char kBackgroundHistogramFirstContentfulPaint[] =
     "PageLoad.PaintTiming.NavigationToFirstContentfulPaint.Background";
 const char kHistogramFirstMeaningfulPaint[] =
     "PageLoad.Experimental.PaintTiming.NavigationToFirstMeaningfulPaint";
+const char kHistogramTimeToInteractive[] =
+    "PageLoad.Experimental.NavigationToPageInteractive";
 const char kHistogramParseStartToFirstMeaningfulPaint[] =
     "PageLoad.Experimental.PaintTiming.ParseStartToFirstMeaningfulPaint";
 const char kHistogramParseStartToFirstContentfulPaint[] =
@@ -203,6 +210,9 @@ const char kHistogramFirstContentfulPaintUserInitiated[] =
 
 const char kHistogramFirstMeaningfulPaintStatus[] =
     "PageLoad.Experimental.PaintTiming.FirstMeaningfulPaintStatus";
+
+const char kHistogramTimeToInteractiveStatus[] =
+    "PageLoad.Experimental.TimeToInteractiveStatus";
 
 const char kHistogramFirstNonScrollInputAfterFirstPaint[] =
     "PageLoad.InputTiming.NavigationToFirstNonScroll.AfterPaint";
@@ -486,6 +496,22 @@ void CorePageLoadMetricsObserver::OnFirstMeaningfulPaintInMainFrameDocument(
   } else {
     RecordFirstMeaningfulPaintStatus(
         internal::FIRST_MEANINGFUL_PAINT_BACKGROUNDED);
+  }
+}
+
+void CorePageLoadMetricsObserver::OnPageInteractive(
+    const page_load_metrics::mojom::PageLoadTiming& timing,
+    const page_load_metrics::PageLoadExtraInfo& info) {
+  LOG(ERROR) << "ON PAGE INTERACTIVE!";
+  if (WasStartedInForegroundOptionalEventInForeground(
+          timing.time_to_interactive, info)) {
+    LOG(ERROR) << "Recording histogram value: "
+               << timing.time_to_interactive.value();
+    PAGE_LOAD_HISTOGRAM(internal::kHistogramTimeToInteractive,
+                        timing.time_to_interactive.value());
+    RecordTimeToInteractiveStatus(internal::TIME_TO_INTERACTIVE_RECORDED);
+  } else {
+    RecordTimeToInteractiveStatus(internal::TIME_TO_INTERACTIVE_BACKGROUNDED);
   }
 }
 

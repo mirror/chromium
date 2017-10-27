@@ -9,8 +9,9 @@ namespace page_load_metrics {
 mojom::PageLoadTimingPtr CreatePageLoadTiming() {
   return mojom::PageLoadTiming::New(
       base::Time(), base::Optional<base::TimeDelta>(),
-      mojom::DocumentTiming::New(), mojom::PaintTiming::New(),
-      mojom::ParseTiming::New(), mojom::StyleSheetTiming::New());
+      base::Optional<base::TimeDelta>(), mojom::DocumentTiming::New(),
+      mojom::PaintTiming::New(), mojom::ParseTiming::New(),
+      mojom::StyleSheetTiming::New());
 }
 
 bool IsEmpty(const page_load_metrics::mojom::DocumentTiming& timing) {
@@ -39,6 +40,7 @@ bool IsEmpty(const page_load_metrics::mojom::StyleSheetTiming& timing) {
 
 bool IsEmpty(const page_load_metrics::mojom::PageLoadTiming& timing) {
   return timing.navigation_start.is_null() && !timing.response_start &&
+         !timing.time_to_interactive &&
          (!timing.document_timing ||
           page_load_metrics::IsEmpty(*timing.document_timing)) &&
          (!timing.paint_timing ||

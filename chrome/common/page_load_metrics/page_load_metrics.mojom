@@ -93,6 +93,9 @@ struct PageLoadTiming {
   // future.
   mojo.common.mojom.Time navigation_start;
 
+  // Time relative to navigation_start when the page becomes interactive. Based
+  // on main thread and network heuristics.
+  mojo.common.mojom.TimeDelta? time_to_interactive;
   // Time relative to navigation_start that the first byte of the response is
   // received.
   mojo.common.mojom.TimeDelta? response_start;

@@ -6,6 +6,7 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
+#include "core/loader/DocumentLoader.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/wtf/CurrentTime.h"
@@ -92,7 +93,7 @@ void InteractiveDetector::StartOrPostponeCITimer(double timer_fire_time) {
   }
 }
 
-double InteractiveDetector::GetInteractiveTime() {
+double InteractiveDetector::GetInteractiveTime() const {
   return interactive_time_;
 }
 
@@ -330,6 +331,9 @@ void InteractiveDetector::OnTimeToInteractiveDetected() {
       "loading,rail", "InteractiveTime",
       TraceEvent::ToTraceTimestamp(interactive_time_), "frame",
       GetSupplementable()->GetFrame());
+
+  if (GetSupplementable()->Loader())
+    GetSupplementable()->Loader()->DidChangePerformanceTiming();
 }
 
 void InteractiveDetector::Trace(Visitor* visitor) {
