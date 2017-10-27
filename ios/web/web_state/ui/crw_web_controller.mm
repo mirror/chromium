@@ -1085,10 +1085,15 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
       // Don't create the web view; let it be lazy created as needed.
     } else {
       _webStateImpl->ClearTransientContent();
-      [self removeWebView];
-      _touchTrackingRecognizer.touchTrackingDelegate = nil;
-      _touchTrackingRecognizer = nil;
-      [self resetContainerView];
+
+      // With WKBasedNavigationManager, every load happens in the web view. So
+      // keep the web view alive in this experiment.
+      if (!web::GetWebClient()->IsSlimNavigationManagerEnabled()) {
+        [self removeWebView];
+        _touchTrackingRecognizer.touchTrackingDelegate = nil;
+        _touchTrackingRecognizer = nil;
+        [self resetContainerView];
+      }
     }
   }
 }

@@ -1021,7 +1021,6 @@ TEST_F(LoadIfNecessaryTest, DisableAndReenableWebUsage) {
   web_state_->SetWebUsageEnabled(true);
 
   // |loadCurrentURLIfNecessary| should restore the page.
-  ASSERT_FALSE(test::IsWebViewContainingText(web_state_.get(), "pony"));
   [web_state_->GetWebController() loadCurrentURLIfNecessary];
   EXPECT_TRUE(test::WaitForWebViewContainingText(web_state_.get(), "pony"));
 };
