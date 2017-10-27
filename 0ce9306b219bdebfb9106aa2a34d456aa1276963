@@ -16,6 +16,24 @@
       "revId": "0ce9306b219bdebfb9106aa2a34d456aa1276963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfedcdd_f7c8429c",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-27T23:42:26Z",
+      "side": 1,
+      "message": "I think it\u0027s okay to just leave it as is. The warning at the top of chrome://flags is pretty clear.",
+      "parentUuid": "80d46407_5a420485",
+      "revId": "0ce9306b219bdebfb9106aa2a34d456aa1276963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
