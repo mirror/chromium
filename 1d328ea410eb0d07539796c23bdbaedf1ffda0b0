@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e63bacf_ecf59a56",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T00:27:08Z",
+      "side": 1,
+      "message": "It seems you might want to group these specific checks into one method\n\nnamespace {\nenum LockedState {\n  NONE,\n  PERMISSION_UNAVAILABLE,\n  FEATURE_UNAVAILABLE,\n  LOCKED  \n};\n\nLockedState ParseLockedState(Extension* e, WindowState s) {\n  if (s !\u003d WINDOW_STATE_LOCKED) return NONE;\n  if (!e-\u003e..HasAPIPermission()) return PERMISSION_UNAVAILABLE;\n#if OS_CHROMEOS ..\n  if (FeatureSwitch..-\u003eIsEnabled()) return FEATURE_UNAVAILABLE;\n  return LOCKED;\n}\n}  // namespace\n\nAnd use it here and in WindowsUpdateFunction?",
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a99e866_d9ce30a8",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T00:27:08Z",
+      "side": 1,
+      "message": "Should we also guard this with OS_CHROMEOS?",
+      "range": {
+        "startLine": 576,
+        "startChar": 8,
+        "endLine": 576,
+        "endChar": 58
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72f7cde_f1af8119",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T00:27:08Z",
+      "side": 1,
+      "message": "So if the feature is not available, we silently ignore the request. Is this expected?",
+      "range": {
+        "startLine": 589,
+        "startChar": 6,
+        "endLine": 589,
+        "endChar": 58
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934bf5a1_c0152921",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T00:27:08Z",
+      "side": 1,
+      "message": "Unfortunately, I\u0027m not familiar with ash/aura. You might want to run these through some owners in the respective area.",
+      "range": {
+        "startLine": 590,
+        "startChar": 0,
+        "endLine": 590,
+        "endChar": 67
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f160971_0fa02c69",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T00:27:08Z",
+      "side": 1,
+      "message": "Should line 684-690 go under else clause of the if on line 680?",
+      "range": {
+        "startLine": 684,
+        "startChar": 0,
+        "endLine": 684,
+        "endChar": 24
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d4db8a_3f8ce234",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T00:27:08Z",
+      "side": 1,
+      "message": "If another extension calls chrome.windows.remove on a locked fullscreen window, should we allow it?",
+      "range": {
+        "startLine": 771,
+        "startChar": 34,
+        "endLine": 771,
+        "endChar": 55
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d61d4fe_5c32423d",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T00:27:08Z",
+      "side": 1,
+      "message": "Also add another test that exercises what happens when the feature is not available, i.e. the call to chrome.windows.create fails gracefully/as expected.\n\n\nAlso, a non-chromeos test that always fails on chrome.windows.create() with locked type.",
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224dc8eb_95eccd70",
+        "filename": "chrome/common/extensions/api/windows.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T00:27:08Z",
+      "side": 1,
+      "message": "Also note the availability restrictions?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 113
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "415ca333_c563e4e0",
+        "filename": "chrome/test/data/extensions/api_test/window_open/locked_fullscreen/manifest.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T00:27:08Z",
+      "side": 1,
+      "message": "You can specify \"scripts\": [\"test.js\"] and remove test.html.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 23
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4104c321_a51dfd93",
+        "filename": "chrome/test/data/extensions/api_test/window_open/locked_fullscreen/test.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T00:27:08Z",
+      "side": 1,
+      "message": "Should we be performing any other sanity check on |win|? Also maybe chrome.windows.get to verify that locked state applied?",
+      "range": {
+        "startLine": 8,
+        "startChar": 46,
+        "endLine": 8,
+        "endChar": 47
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2be841e_21637dfd",
+        "filename": "extensions/common/feature_switch.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T00:27:08Z",
+      "side": 1,
+      "message": "Do you need a field trial, i.e. do you plan to control/rollout this feature as finch experiment?",
+      "range": {
+        "startLine": 71,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 43
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
