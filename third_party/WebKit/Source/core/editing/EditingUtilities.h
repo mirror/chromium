@@ -424,6 +424,8 @@ String StringWithRebalancedWhitespace(const String&,
                                       bool should_emit_nbs_pbefore_end);
 const String& NonBreakingSpaceString();
 
+String RepeatString(const String&, unsigned);
+
 // -------------------------------------------------------------------------
 // Distance calculation functions
 // -------------------------------------------------------------------------

@@ -77,8 +77,6 @@ class CORE_TEMPLATE_CLASS_EXPORT SimplifiedBackwardsTextIteratorAlgorithm {
   PositionTemplate<Strategy> StartPosition() const;
   PositionTemplate<Strategy> EndPosition() const;
 
-  bool IsInTextSecurityMode() const;
-
  private:
   void Init(Node* start_node, Node* end_node, int start_offset, int end_offset);
   void ExitNode();
@@ -96,6 +94,8 @@ class CORE_TEMPLATE_CLASS_EXPORT SimplifiedBackwardsTextIteratorAlgorithm {
   void CopyCodeUnitsTo(BackwardsTextBuffer* output,
                        int position,
                        int copy_length) const;
+
+  TextIteratorBehavior behavior_;
 
   // Current position, not necessarily of the text being returned, but position
   // as we walk through the DOM tree.
