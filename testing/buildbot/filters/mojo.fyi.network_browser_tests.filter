@@ -4,7 +4,6 @@
 # Crashed tests that haven't been categorized.
 -BrowserTestNonsecureURLRequest.DidChangeVisibleSecurityStateObserverObsoleteTLSSettings
 -ChromeResourceDispatcherHostDelegateBrowserTest.NavigationDataProcessed
--ChromeServiceWorkerFetchTest.EmbedPdfOtherOrigin
 -ChromeSitePerProcessPDFTest.EmbeddedPDFInsideCrossOriginFrame
 -CrSettingsPeoplePageTest.All
 -DevToolsExtensionTest.HttpIframeInDevToolsExtensionPanel
@@ -51,10 +50,6 @@
 -SaveType/SavePageOriginalVsSavedComparisonTest.ObjectElementsViaFile/0
 -SaveType/SavePageOriginalVsSavedComparisonTest.ObjectElementsViaHttp/0
 -SpellingMenuObserverTest.SuggestionsForceTopSeparator
--WebRtcBrowserTest.RunsAudioVideoWebRTCCallInTwoTabsVP8
--WebRtcBrowserTest.RunsAudioVideoWebRTCCallInTwoTabsVP9
--WebrtcEventLogApiTest.TestStartStopWebRtcEventLogging
--WebrtcEventLogApiTest.TestStartTimedWebRtcEventLogging
 -WebstoreInlineInstallerListenerTest.BothListenersTest
 
 # Timed out tests that haven't been categorized.
@@ -2482,3 +2477,9 @@
 
 # crbug.com/778793
 -PreviewsBrowserTest.NoScriptPreviewsEnabled
+
+# crbug.com/751738 Service worker subresource loader doesn't yet support request bodies.
+-WebRtcBrowserTest.RunsAudioVideoWebRTCCallInTwoTabsVP8
+-WebRtcBrowserTest.RunsAudioVideoWebRTCCallInTwoTabsVP9
+-WebrtcEventLogApiTest.TestStartStopWebRtcEventLogging
+-WebrtcEventLogApiTest.TestStartTimedWebRtcEventLogging
