@@ -16,6 +16,24 @@
       "revId": "2fcaed416d69fde26ca4d48153d20ecf1d02035c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1070ae99_54cd4ff1",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-27T10:49:01Z",
+      "side": 1,
+      "message": "Ha yes, I wanted to add a comment, thanks for reminding me.",
+      "parentUuid": "9b460e8e_aa6eb77e",
+      "revId": "2fcaed416d69fde26ca4d48153d20ecf1d02035c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
