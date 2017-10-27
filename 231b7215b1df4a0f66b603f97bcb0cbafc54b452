@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b75c8180_1f35bbe9",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 17
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-27T14:09:25Z",
+      "side": 1,
+      "message": "Please cover the whole fast/events/ tree with a single virtual suite.",
+      "range": {
+        "startLine": 581,
+        "startChar": 13,
+        "endLine": 581,
+        "endChar": 25
+      },
+      "revId": "231b7215b1df4a0f66b603f97bcb0cbafc54b452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
