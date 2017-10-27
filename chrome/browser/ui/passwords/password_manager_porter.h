@@ -73,6 +73,7 @@ class PasswordManagerPorter : public ui::SelectFileDialog::Listener,
   content::WebContents* web_contents_ = nullptr;
 
   std::unique_ptr<password_manager::PasswordExporter> password_exporter_;
+  std::unique_ptr<password_manager::PasswordImporter> password_importer_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerPorter);
 };

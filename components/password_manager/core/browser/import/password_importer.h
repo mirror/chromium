@@ -22,6 +22,9 @@ namespace password_manager {
 // file.
 class PasswordImporter {
  public:
+  PasswordImporter() = default;
+  virtual ~PasswordImporter() = default;
+
   enum Result {
     SUCCESS,
     IO_ERROR,
@@ -37,15 +40,14 @@ class PasswordImporter {
   // Imports passwords from the file at |path|, and fires |completion| callback
   // on the calling thread with the passwords when ready. The only supported
   // file format is CSV.
-  static void Import(const base::FilePath& path,
-                     const CompletionCallback& completion);
+  void Import(const base::FilePath& path, const CompletionCallback& completion);
 
   // Returns the file extensions corresponding to supported formats.
   static std::vector<std::vector<base::FilePath::StringType>>
   GetSupportedFileExtensions();
 
  private:
-  DISALLOW_IMPLICIT_CONSTRUCTORS(PasswordImporter);
+  DISALLOW_COPY_AND_ASSIGN(PasswordImporter);
 };
 
 }  // namespace password_manager
