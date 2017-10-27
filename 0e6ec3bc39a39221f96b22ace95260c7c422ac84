@@ -22,6 +22,30 @@
       "revId": "0e6ec3bc39a39221f96b22ace95260c7c422ac84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2fd7a1_44676a3c",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary_item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-27T20:19:53Z",
+      "side": 1,
+      "message": "Yeah, this is confusing, I re-factored the code to extract |simLockedOrAbsent_|.",
+      "parentUuid": "a5c74915_b0bbced0",
+      "range": {
+        "startLine": 200,
+        "startChar": 18,
+        "endLine": 200,
+        "endChar": 30
+      },
+      "revId": "0e6ec3bc39a39221f96b22ace95260c7c422ac84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
