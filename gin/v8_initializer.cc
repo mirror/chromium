@@ -360,7 +360,11 @@ void V8Initializer::Initialize(IsolateHolder::ScriptMode mode,
 void V8Initializer::GetV8ExternalSnapshotData(v8::StartupData* natives,
                                               v8::StartupData* snapshot) {
   GetMappedFileData(g_mapped_natives, natives);
-  GetMappedFileData(g_mapped_snapshot, snapshot);
+  if (g_mapped_v8_context_snapshot) {
+    GetMappedFileData(g_mapped_v8_context_snapshot, snapshot);
+  } else {
+    GetMappedFileData(g_mapped_snapshot, snapshot);
+  }
 }
 
 // static
