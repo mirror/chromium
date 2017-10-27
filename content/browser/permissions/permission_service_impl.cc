@@ -17,7 +17,7 @@
 #include "content/public/browser/permission_type.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/content_features.h"
-#include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy.h"
 
 using blink::mojom::PermissionDescriptorPtr;
 using blink::mojom::PermissionName;
@@ -64,7 +64,7 @@ PermissionType PermissionDescriptorToPermissionType(
   return PermissionType::NUM;
 }
 
-blink::WebFeaturePolicyFeature PermissionTypeToFeaturePolicyFeature(
+blink::WebFeaturePolicyFeature PermissionTypeToWebFeaturePolicyFeature(
     PermissionType type) {
   switch (type) {
     case PermissionType::MIDI:
@@ -102,7 +102,7 @@ bool AllowedByFeaturePolicy(RenderFrameHost* rfh, PermissionType type) {
   }
 
   blink::WebFeaturePolicyFeature feature_policy_feature =
-      PermissionTypeToFeaturePolicyFeature(type);
+      PermissionTypeToWebFeaturePolicyFeature(type);
   if (feature_policy_feature == blink::WebFeaturePolicyFeature::kNotFound)
     return true;
 
