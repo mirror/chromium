@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ec5aada_44b61477",
+        "filename": "third_party/WebKit/Source/core/editing/EphemeralRange.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-27T17:51:05Z",
+      "side": 1,
+      "message": "This is going to print \"base\"/\"extent\" instead of \"start\"/\"end\". Better to add a note.\n\nOr it\u0027s better if you fix it in this patch :)",
+      "range": {
+        "startLine": 172,
+        "startChar": 11,
+        "endLine": 172,
+        "endChar": 47
+      },
+      "revId": "2c2b0415c6b045e7c68df4ebcab5d1b550068f1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
