@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa01763_bcce74cd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/preload-conditions.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-27T18:09:49Z",
+      "side": 1,
+      "message": "remove line",
+      "revId": "db89ca0a877ae01684ce3b8f40ea5e2e0c55d8d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc269ea_88604182",
+        "filename": "third_party/WebKit/Source/core/testing/Internals.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 3290,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-27T18:09:49Z",
+      "side": 1,
+      "message": "What\u0027s |exception_state| for?",
+      "range": {
+        "startLine": 3290,
+        "startChar": 36,
+        "endLine": 3290,
+        "endChar": 67
+      },
+      "revId": "db89ca0a877ae01684ce3b8f40ea5e2e0c55d8d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f9ed2d_eddb434b",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-27T18:09:49Z",
+      "side": 1,
+      "message": "optional nit: return IsObserving() ? save_data_ : GetNetworkStateNotifier.SaveData();",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 20
+      },
+      "revId": "db89ca0a877ae01684ce3b8f40ea5e2e0c55d8d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
