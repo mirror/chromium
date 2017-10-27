@@ -2187,8 +2187,9 @@ using ios::material::TimingFunction;
 
   // Don't update the snapshot while the progress bar is moving, or while the
   // tools menu is open, unless |force| is true.
-  BOOL shouldRedraw = force || ([self toolsPopupController] == nil &&
-                                [_determinateProgressView isHidden]);
+  BOOL shouldRedraw =
+      force || ([self.toolsPopupCoordinator isShowingToolsMenuPopup] == NO &&
+                [_determinateProgressView isHidden]);
   if (!shouldRedraw)
     return;
 
