@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d1094ca_6de293c9",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 31
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T23:52:08Z",
+      "side": 1,
+      "message": "Do we not need to pass the margins selected by the user anymore?",
+      "range": {
+        "startLine": 329,
+        "startChar": 67,
+        "endLine": 329,
+        "endChar": 77
+      },
+      "revId": "536b90caea6fdc2195f228caa2752571ee2c01a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b80721_659fa397",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 31
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T23:52:08Z",
+      "side": 1,
+      "message": "What is the difference of NativeLayer\u0027s hidePreview() and dialogClose()? The codepath for Mac \"Open in preview\" before called hidePreview(), and now it calls the latter.  Is that OK?",
+      "revId": "536b90caea6fdc2195f228caa2752571ee2c01a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
