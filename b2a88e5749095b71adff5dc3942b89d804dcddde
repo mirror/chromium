@@ -157,6 +157,24 @@
       "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbbdd39d_ec0d9f4a",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-27T07:28:44Z",
+      "side": 1,
+      "message": "SGTM!",
+      "parentUuid": "ec493b35_42c6d64a",
+      "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
