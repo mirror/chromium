@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1ebc28a2_0717689b",
+        "filename": "media/filters/jpeg_parser.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e3a6c28_7492f693",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09038e84_0ba318a0",
         "filename": "media/gpu/BUILD.gn",
         "patchSetId": 16
@@ -80,6 +98,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952388a2_fe5ea639",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09038e84_0ba318a0",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "f33dc6d5_e9071002",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4694943_c492cc60",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea8b7b86_5e7cc08a",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 16
@@ -114,6 +168,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddef9a42_c75bcac1",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea8b7b86_5e7cc08a",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "c3a8eb65_5ae3e10b",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfa7d2d9_0d813e67",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a30c0585_c956dd76",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 16
@@ -148,6 +238,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5f6566_33734e3a",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a30c0585_c956dd76",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "b05e3445_fcbc82f3",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "703a6b81_be8bcf0f",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1ce111e_5ca2d822",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 16
@@ -185,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "bac804e6_81476278",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1ce111e_5ca2d822",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ca0ed9b_5b3f54d3",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 16
@@ -199,6 +343,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f835ac5_8e3fb263",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Changed to a class.",
+      "parentUuid": "6ca0ed9b_5b3f54d3",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +384,30 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf859a2_ee791f28",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Although the name sounds weird, we do want coded_size() here...\nhttps://cs.chromium.org/chromium/src/media/base/video_frame.h?sq\u003dpackage:chromium\u0026l\u003d507\nThere\u0027s no |input_size| in video_frame.",
+      "parentUuid": "5e7d5b54_5b3153c2",
+      "range": {
+        "startLine": 141,
+        "startChar": 32,
+        "endLine": 141,
+        "endChar": 66
+      },
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -289,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "ecbf8ab2_73f33999",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "But BitstreamBuffer is an output buffer here. I think making it pointer type would be consistent with the \"pass input argument as const....\u0026 and pass output argument as points rule\"",
+      "parentUuid": "1ade74fe_661b60a3",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85da1e25_d1d38161",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 16
@@ -312,6 +516,30 @@
     },
     {
       "key": {
+        "uuid": "1c622cd9_bc133274",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85da1e25_d1d38161",
+      "range": {
+        "startLine": 248,
+        "startChar": 30,
+        "endLine": 248,
+        "endChar": 61
+      },
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ea67718_f9d7825e",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
         "patchSetId": 16
@@ -326,6 +554,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236720d1_a7ec2208",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ea67718_f9d7825e",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -346,6 +592,24 @@
     },
     {
       "key": {
+        "uuid": "44a051ef_46b45388",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32bf661f_d2da0515",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "818adaf7_a005cc54",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
         "patchSetId": 16
@@ -360,6 +624,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145b151f_e8168f9f",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "818adaf7_a005cc54",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -380,6 +662,24 @@
     },
     {
       "key": {
+        "uuid": "4559a45f_d94389c2",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60702665_7f14a4fa",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d58db69_0f96bed3",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
         "patchSetId": 16
@@ -394,6 +694,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48363b8a_82586c66",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d58db69_0f96bed3",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -414,6 +732,24 @@
     },
     {
       "key": {
+        "uuid": "1262863a_e7e10c2f",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84ba880b_eb09f9a6",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1462526d_b6fe99a5",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
         "patchSetId": 16
@@ -428,6 +764,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6a8bba_06b5ff98",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "I would prefer to have a separate (nested) class for those methods running on encoder_task_runner to make it super clear. It\u0027s also suggested by dalecurtis@ in https://chromium-review.googlesource.com/c/chromium/src/+/712134/10/media/gpu/vaapi_jpeg_encode_accelerator.cc#63",
+      "parentUuid": "1462526d_b6fe99a5",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -542,6 +896,24 @@
     },
     {
       "key": {
+        "uuid": "4a53715a_5d97bfc8",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529f0fbe_05ed260c",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d5f9f84_3deac226",
         "filename": "media/gpu/vaapi_jpeg_encoder.cc",
         "patchSetId": 16
@@ -556,6 +928,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ec1e70_46781dff",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d5f9f84_3deac226",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -582,6 +972,30 @@
     },
     {
       "key": {
+        "uuid": "8e4603da_8ad72003",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b20d2bb_e351c0a9",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 56
+      },
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3b28266_6c3e984c",
         "filename": "media/gpu/vaapi_jpeg_encoder.cc",
         "patchSetId": 16
@@ -599,6 +1013,24 @@
     },
     {
       "key": {
+        "uuid": "26239edd_00fe5d28",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3b28266_6c3e984c",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2002db5f_180f2d3c",
         "filename": "media/gpu/vaapi_jpeg_encoder.cc",
         "patchSetId": 16
@@ -613,6 +1045,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8d08db_45116592",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2002db5f_180f2d3c",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -639,6 +1089,30 @@
     },
     {
       "key": {
+        "uuid": "eac20ead_dbcd5763",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f3e182b_f083d74c",
+      "range": {
+        "startLine": 185,
+        "startChar": 32,
+        "endLine": 185,
+        "endChar": 43
+      },
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1c6b2fe_b1da1507",
         "filename": "media/gpu/vaapi_jpeg_encoder.cc",
         "patchSetId": 16
@@ -653,6 +1127,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f744e26_b1aec5ec",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1c6b2fe_b1da1507",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -673,6 +1165,24 @@
     },
     {
       "key": {
+        "uuid": "21fd1573_499de1a9",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "dalecurtis@ suggested that if we don\u0027t memset() them to 0, the uninitialized values can be caught by tooling.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/712134/10/media/gpu/vaapi_jpeg_encoder.cc#87",
+      "parentUuid": "e6ac2781_51f46138",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "def4fc20_16611aac",
         "filename": "media/gpu/vaapi_jpeg_encoder.h",
         "patchSetId": 16
@@ -687,6 +1197,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b3e088_14944e77",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "def4fc20_16611aac",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -707,6 +1235,24 @@
     },
     {
       "key": {
+        "uuid": "5c1acd4d_0b1dd366",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1f4974b_ec742b38",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf14ed19_188ba7e2",
         "filename": "media/gpu/vaapi_jpeg_encoder.h",
         "patchSetId": 16
@@ -721,6 +1267,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a8bd6b_feb2ec59",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "In general, I want to separate the details of filling various VA buffers and populating JPEG segments from the management of threading and creation/destroy of VASurface and VABuffer. This is also consistent with how JDA is structured: VaapiJpegDecodeAccelerator \u003d\u003e VaapiJpegDecoder \u003d\u003e VaapiWrapper.\nOriginally this was a class, but since dalecurtis@ pointed out the rule in https://google.github.io/styleguide/cppguide.html#Nonmember,_Static_Member,_and_Global_Functions\nBut now that the methods have to deal with the cached tables. I think making it a class is better.",
+      "parentUuid": "bf14ed19_188ba7e2",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -741,6 +1305,24 @@
     },
     {
       "key": {
+        "uuid": "897a434d_8c893b49",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a4b5d24_fd1c2d89",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f603db9_f45e98aa",
         "filename": "media/gpu/vaapi_jpeg_encoder.h",
         "patchSetId": 16
@@ -755,6 +1337,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c45cda_ea0ad7fe",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f603db9_f45e98aa",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -775,6 +1375,24 @@
     },
     {
       "key": {
+        "uuid": "7eecdc5b_cadbd9cd",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7a0120f_58e183f7",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "feffafe5_9795baf8",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 16
@@ -789,6 +1407,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54866e1a_86294374",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Sorry. This was for debug purpose...",
+      "parentUuid": "feffafe5_9795baf8",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -809,6 +1445,24 @@
     },
     {
       "key": {
+        "uuid": "aff2859e_b7edec55",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "How would enum class help here? I saw that there are many places in the file using the entries of CodecMode as int for array indexing. Switching to enum class will add lots of casts to them.",
+      "parentUuid": "f87f266a_7b9d82b3",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32805fb1_dd934a9c",
         "filename": "media/gpu/vaapi_wrapper.h",
         "patchSetId": 16
@@ -823,6 +1477,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62820d1b_ef06f4ce",
+        "filename": "media/gpu/vaapi_wrapper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32805fb1_dd934a9c",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -843,6 +1515,24 @@
     },
     {
       "key": {
+        "uuid": "346a58f7_c7f19ea7",
+        "filename": "media/gpu/vaapi_wrapper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Because it uses different VAEntrypoint than kEncode.",
+      "parentUuid": "0f2a19a6_d07688ae",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cca1a59_77e4c50d",
         "filename": "media/gpu/vaapi_wrapper.h",
         "patchSetId": 16
@@ -857,6 +1547,24 @@
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ba4478_f584789e",
+        "filename": "media/gpu/vaapi_wrapper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cca1a59_77e4c50d",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

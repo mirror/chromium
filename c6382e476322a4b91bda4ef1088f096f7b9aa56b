@@ -16,6 +16,24 @@
       "revId": "c6382e476322a4b91bda4ef1088f096f7b9aa56b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82149b35_3d291e2f",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-27T10:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6100402_f0d44a3b",
+      "revId": "c6382e476322a4b91bda4ef1088f096f7b9aa56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
