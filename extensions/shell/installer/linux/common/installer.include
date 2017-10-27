@@ -126,8 +126,8 @@ stage_install_common() {
   # is true.
   if [ -f "${BUILDDIR}/natives_blob.bin" ]; then
     install -m 644 "${BUILDDIR}/natives_blob.bin" "${STAGEDIR}/${INSTALLDIR}/"
-    install -m 644 "${BUILDDIR}/snapshot_blob.bin" "${STAGEDIR}/${INSTALLDIR}/"
   fi
+  install -m 644 "${BUILDDIR}/v8_context_snapshot.bin" "${STAGEDIR}/${INSTALLDIR}/"
 
   # ANGLE
   if [ "${CHANNEL}" != "stable" ]; then
