@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3827469c_1ebe6bb3",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T04:09:25Z",
+      "side": 1,
+      "message": "Could we perhaps keep the\n\nDVLOG(1) \u003c\u003c \"VAAPI version: \" \u003c\u003c major_version \u003c\u003c \".\" \u003c\u003c minor_version;\n\nhere please?",
+      "revId": "25f10c5cbcf09f7739582631fce232d45ebf56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e1a7ef_994ebb30",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T04:09:25Z",
+      "side": 1,
+      "message": "We would ideally prefer to keep this as a Release build message (VLOG(1) could work as well). This should normally not happen, however due to the way Chrome is built and upreved on CrOS, and the fact that libva is a separate package, this message has been helpful in keeping track of incompatibility-related issues.",
+      "revId": "25f10c5cbcf09f7739582631fce232d45ebf56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc85909_aa099159",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T04:09:25Z",
+      "side": 1,
+      "message": "I\u0027m possibly missing something, but we used to refcount_++ on each call to Initialize(), with this change we only increment refcount to 1 and not more. If a client calls Initialize() twice, I think refcount_ will stay at 1, and calling this will deinitialize libva while the second Initialize() client is still active/using it?\nAlso, the refcount will go down to -1, so further calls to Initialize() will initialize libva more than once while it\u0027s \u003c 1?",
+      "revId": "25f10c5cbcf09f7739582631fce232d45ebf56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
