@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c9907710_b4a227fd",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 3520,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:46:19Z",
+      "side": 1,
+      "message": "Oops, my eyes have glazed over the difference in the variable name. Thanks!",
+      "parentUuid": "f47f22b0_5e7dc332",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "907f62c1_26fb1648",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 33
@@ -48,6 +66,24 @@
       "writtenOn": "2017-10-27T17:08:51Z",
       "side": 1,
       "message": "Make this one a CHECK. We want to know whether this is violated in all cases. It is fine to crash the renderer process on violation of this, similarly to other checks in the constructor further down.",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc868ebb_8fd662f1",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:46:19Z",
+      "side": 1,
+      "message": "Let\u0027s make this one a CHECK too.",
+      "parentUuid": "907f62c1_26fb1648",
       "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -171,6 +207,30 @@
     },
     {
       "key": {
+        "uuid": "d65f18c5_e3ba1324",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:46:19Z",
+      "side": 1,
+      "message": "dummy sgtm, also stub/fake might be an alternative if you find it better than dummy.",
+      "parentUuid": "54008639_f842f3b5",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 16
+      },
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2228b27f_f04ea3c0",
         "filename": "content/test/test_render_view_host.cc",
         "patchSetId": 33
@@ -200,6 +260,24 @@
       "side": 1,
       "message": "Yes, in [1], where there is a pending main frame navigation when we cross-site navigate a child frame of the old main frame document. Because of crbug.com/763548, |main_frame| resolves not to nullptr, but to the pending main RFH, even though that\u0027s in a different SiteIntance, and |this| is a swapped-out RVH.\n\nI have to admit that it is not entirely clear to me what GetMainFrame() should return in this scenario, but FWIW, I have updated the check to use is_active() instead to be consistent with the check in RenderViewHostImpl::GetMainFrame().\n\n[1]: RenderFrameHostManagerTestWithSiteIsolation.DontGrantPendingWebUIToSubframe",
       "parentUuid": "2228b27f_f04ea3c0",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2249c15c_3f1160a9",
+        "filename": "content/test/test_render_view_host.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:46:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92931854_0acb441f",
       "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
