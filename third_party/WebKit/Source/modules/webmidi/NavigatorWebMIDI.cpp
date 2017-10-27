@@ -94,7 +94,7 @@ ScriptPromise NavigatorWebMIDI::requestMIDIAccess(ScriptState* script_state,
   UseCounter::CountCrossOriginIframe(
       document, WebFeature::kRequestMIDIAccessIframe_ObscuredByFootprinting);
   Deprecation::CountDeprecationFeaturePolicy(
-      document, WebFeaturePolicyFeature::kMidiFeature);
+      document, FeaturePolicyFeature::kMidiFeature);
 
   return MIDIAccessInitializer::Start(script_state, options);
 }
