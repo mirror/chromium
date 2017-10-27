@@ -370,7 +370,7 @@ bool MessageLoop::ProcessNextDelayedNonNestableTask() {
     return false;
 
   while (incoming_task_queue_->deferred_tasks().HasTasks()) {
-    PendingTask pending_task = incoming_task_queue_->deferred_tasks().Pop();
+    auto pending_task = incoming_task_queue_->deferred_tasks().Pop();
     if (!pending_task.task.IsCancelled()) {
       RunTask(&pending_task);
       return true;
@@ -434,7 +434,7 @@ bool MessageLoop::DoWork() {
 
   // Execute oldest task.
   while (incoming_task_queue_->triage_tasks().HasTasks()) {
-    PendingTask pending_task = incoming_task_queue_->triage_tasks().Pop();
+    auto pending_task = incoming_task_queue_->triage_tasks().Pop();
     if (pending_task.task.IsCancelled())
       continue;
 
@@ -480,7 +480,7 @@ bool MessageLoop::DoDelayedWork(TimeTicks* next_delayed_work_time) {
     }
   }
 
-  PendingTask pending_task = incoming_task_queue_->delayed_tasks().Pop();
+  auto pending_task = incoming_task_queue_->delayed_tasks().Pop();
 
   if (incoming_task_queue_->delayed_tasks().HasTasks()) {
     *next_delayed_work_time =
