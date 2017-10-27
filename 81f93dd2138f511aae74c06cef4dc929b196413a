@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5db5969a_2b31ed05",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-27T15:21:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "605f7397_84cdcf65",
+      "range": {
+        "startLine": 273,
+        "startChar": 9,
+        "endLine": 273,
+        "endChar": 50
+      },
+      "revId": "81f93dd2138f511aae74c06cef4dc929b196413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84e95473_1d9fd783",
         "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e289c45d_22dc8023",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-27T15:21:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84e95473_1d9fd783",
+      "revId": "81f93dd2138f511aae74c06cef4dc929b196413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b50e2ef7_9df0c711",
         "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "81f93dd2138f511aae74c06cef4dc929b196413a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d0d8a2_5b34993a",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-27T15:21:40Z",
+      "side": 1,
+      "message": "The remove pointer will ignore mouse type later in that call.\nRegarding whether or not send the pointercancel this CL doesn\u0027t change that behavior. Sending it was a decision we made back then in that github issue.",
+      "parentUuid": "b50e2ef7_9df0c711",
+      "revId": "81f93dd2138f511aae74c06cef4dc929b196413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "81f93dd2138f511aae74c06cef4dc929b196413a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e055b885_a6865f72",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-27T15:21:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78f24a48_579d561e",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 13
+      },
+      "revId": "81f93dd2138f511aae74c06cef4dc929b196413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
