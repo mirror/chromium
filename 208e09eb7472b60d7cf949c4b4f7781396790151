@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4c64fc4c_c0ae6e80",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-27T14:02:47Z",
+      "side": 1,
+      "message": "CreateAndDestroy should use Create() then and that renders\nScanOneFace superfluous at this point. Remove the latter, \nmodify the former and remove the default argumentless ctor.",
+      "parentUuid": "45610093_0351ed31",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "208e09eb7472b60d7cf949c4b4f7781396790151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97037fd1_31c00186",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 22
