@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e557779_8578b61c",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-27T17:18:25Z",
+      "side": 1,
+      "message": "Do we still need this?",
+      "revId": "1a4f2c71c829aff1b418f91e7c28af9ea417ff59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8eb3b1_31f560f7",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-27T17:18:25Z",
+      "side": 1,
+      "message": "This probably can go now.",
+      "revId": "1a4f2c71c829aff1b418f91e7c28af9ea417ff59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a1b325_bc314c91",
+        "filename": "ui/app_list/views/search_box_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-27T17:18:25Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "1a4f2c71c829aff1b418f91e7c28af9ea417ff59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
