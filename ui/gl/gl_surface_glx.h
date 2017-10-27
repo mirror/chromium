@@ -21,6 +21,9 @@
 
 namespace gl {
 
+class GPUTimer;
+class GPUTimingClient;
+
 // Base class for GLX surfaces.
 class GL_EXPORT GLSurfaceGLX : public GLSurface {
  public:
@@ -81,6 +84,7 @@ class GL_EXPORT NativeViewGLSurfaceGLX : public GLSurfaceGLX {
   unsigned long GetCompatibilityKey() override;
   gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
   gfx::VSyncProvider* GetVSyncProvider() override;
+  bool OnMakeCurrent(GLContext* context) override;
 
   VisualID GetVisualID() const { return visual_id_; }
 
@@ -102,6 +106,8 @@ class GL_EXPORT NativeViewGLSurfaceGLX : public GLSurfaceGLX {
   // The handle for the drawable to make current or swap.
   GLXDrawable GetDrawableHandle() const;
 
+  void PostSwapBuffers();
+
   // Window passed in at creation. Always valid.
   gfx::AcceleratedWidget parent_window_;
 
@@ -116,6 +122,13 @@ class GL_EXPORT NativeViewGLSurfaceGLX : public GLSurfaceGLX {
   VisualID visual_id_;
 
   std::unique_ptr<gfx::VSyncProvider> vsync_provider_;
+
+  GLContext* context_ = nullptr;
+  scoped_refptr<GPUTimingClient> gpu_timing_client_;
+  std::unique_ptr<GPUTimer> front_buffer_gpu_timer_;
+  std::unique_ptr<GPUTimer> back_buffer_gpu_timer_;
+
+  uint64_t swap_count_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(NativeViewGLSurfaceGLX);
 };
