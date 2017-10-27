@@ -8,6 +8,11 @@
 
 #include <assert.h>
 #include <limits.h>
+
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#endif
+
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -86,12 +91,19 @@ std::string ProgramPath() {
   wcstombs(path, wpath, MAX_PATH);
   return std::string(path, res);
 #else
-  char* path = new char[PATH_MAX + 1];
-  assert(path);
+  char path[PATH_MAX + 1];
+  std::string result;
+#ifdef __APPLE__
+  uint32_t sz = PATH_MAX + 1;
+  if (!_NSGetExecutablePath(path, &sz)) {
+    std::unique_ptr<char> resolved_path(realpath(path, nullptr));
+    result = std::string(resolved_path.get());
+  }
+#else
   ssize_t sz = readlink("/proc/self/exe", path, PATH_MAX);
-  assert(sz > 0);
-  std::string result(path, sz);
-  delete[] path;
+  if (sz > 0)
+    result = std::string(path, sz);
+#endif
   return result;
 #endif
 }
