@@ -25,6 +25,54 @@
     },
     {
       "key": {
+        "uuid": "1f81d9d9_b323a705",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T09:35:30Z",
+      "side": 1,
+      "message": "Added lot more detail here.",
+      "parentUuid": "1315ae53_24909ab3",
+      "range": {
+        "startLine": 156,
+        "startChar": 66,
+        "endLine": 160,
+        "endChar": 71
+      },
+      "revId": "3d5c6756ad904b23e434c65ec9432a4e9bd99da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f04a8278_9c566f18",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T09:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1315ae53_24909ab3",
+      "range": {
+        "startLine": 156,
+        "startChar": 66,
+        "endLine": 160,
+        "endChar": 71
+      },
+      "revId": "3d5c6756ad904b23e434c65ec9432a4e9bd99da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29192db1_8d5f68f8",
         "filename": "content/renderer/media/media_factory.cc",
         "patchSetId": 7
@@ -45,6 +93,30 @@
       "revId": "3d5c6756ad904b23e434c65ec9432a4e9bd99da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8b4432_9ba062d7",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T09:35:30Z",
+      "side": 1,
+      "message": "Uhm, not sure where that came from. :-) Fixed.",
+      "parentUuid": "29192db1_8d5f68f8",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 26
+      },
+      "revId": "3d5c6756ad904b23e434c65ec9432a4e9bd99da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
