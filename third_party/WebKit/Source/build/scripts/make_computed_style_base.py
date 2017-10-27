@@ -550,6 +550,7 @@ class ComputedStyleBaseWriter(json5_generator.Writer):
             self._root_group)
 
         self._include_paths = _get_include_paths(self._properties)
+
         self._outputs = {
             'ComputedStyleBase.h': self.generate_base_computed_style_h,
             'ComputedStyleBase.cpp': self.generate_base_computed_style_cpp,
