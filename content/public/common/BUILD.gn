@@ -244,6 +244,8 @@ source_set("common_sources") {
     "url_constants.cc",
     "url_constants.h",
     "url_fetcher.h",
+    "url_loader_factory_bundle.cc",
+    "url_loader_factory_bundle.h",
     "url_loader_throttle.cc",
     "url_loader_throttle.h",
     "url_utils.cc",
@@ -365,6 +367,7 @@ mojom("interfaces") {
     "push_messaging_status.mojom",
     "url_loader.mojom",
     "url_loader_factory.mojom",
+    "url_loader_factory_bundle.mojom",
     "window_container_type.mojom",
   ]
 

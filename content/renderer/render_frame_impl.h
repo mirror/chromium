@@ -46,6 +46,7 @@
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/stop_find_action.h"
 #include "content/public/common/url_loader_factory.mojom.h"
+#include "content/public/common/url_loader_factory_bundle.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/renderer/frame_blame_context.h"
 #include "content/renderer/media/media_factory.h"
@@ -510,14 +511,14 @@ class CONTENT_EXPORT RenderFrameImpl
   // mojom::FrameBindingsControl implementation:
   void AllowBindings(int32_t enabled_bindings_flags) override;
 
-  // mojom::FrameNavigationControl implemenentation:
-  void CommitNavigation(const ResourceResponseHead& head,
-                        const GURL& body_url,
-                        const CommonNavigationParams& common_params,
-                        const RequestNavigationParams& request_params,
-                        mojo::ScopedDataPipeConsumerHandle body_data,
-                        mojom::URLLoaderFactoryPtr
-                            default_subresource_url_loader_factory) override;
+  // mojom::FrameNavigationControl implementation:
+  void CommitNavigation(
+      const ResourceResponseHead& head,
+      const GURL& body_url,
+      const CommonNavigationParams& common_params,
+      const RequestNavigationParams& request_params,
+      mojo::ScopedDataPipeConsumerHandle body_data,
+      base::Optional<URLLoaderFactoryBundle> subresource_loaders) override;
 
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
@@ -1077,7 +1078,8 @@ class CONTENT_EXPORT RenderFrameImpl
       const CommonNavigationParams& common_params,
       const StartNavigationParams& start_params,
       const RequestNavigationParams& request_params,
-      std::unique_ptr<StreamOverrideParameters> stream_params);
+      std::unique_ptr<StreamOverrideParameters> stream_params,
+      base::Optional<URLLoaderFactoryBundle> subresource_loader_factories);
 
   // Update current main frame's encoding and send it to browser window.
   // Since we want to let users see the right encoding info from menu
@@ -1529,6 +1531,10 @@ class CONTENT_EXPORT RenderFrameImpl
       custom_url_loader_factory_;
 
   scoped_refptr<ChildURLLoaderFactoryGetter> url_loader_factory_getter_;
+
+  // URLLoaderFactory instances used for subresource loading when the Network
+  // Service is enabled.
+  base::Optional<URLLoaderFactoryBundle> subresource_loader_factories_;
 
   // AndroidOverlay routing token from the browser, if we have one yet.
   base::Optional<base::UnguessableToken> overlay_routing_token_;
