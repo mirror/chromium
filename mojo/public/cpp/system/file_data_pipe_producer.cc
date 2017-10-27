@@ -52,11 +52,11 @@ class FileDataPipeProducer::FileSequenceState
     is_cancelled_ = true;
   }
 
-  void StartFromFile(base::File file) {
+  void StartFromFile(base::File file, size_t max_bytes) {
     file_task_runner_->PostTask(
         FROM_HERE,
         base::BindOnce(&FileSequenceState::StartFromFileOnFileSequence, this,
-                       std::move(file)));
+                       std::move(file), max_bytes));
   }
 
   void StartFromPath(const base::FilePath& path) {
@@ -72,8 +72,9 @@ class FileDataPipeProducer::FileSequenceState
 
   ~FileSequenceState() = default;
 
-  void StartFromFileOnFileSequence(base::File file) {
+  void StartFromFileOnFileSequence(base::File file, size_t max_bytes) {
     file_ = std::move(file);
+    max_bytes_ = max_bytes;
     TransferSomeBytes();
     if (producer_handle_.is_valid()) {
       // If we didn't nail it all on the first transaction attempt, setup a
@@ -88,7 +89,7 @@ class FileDataPipeProducer::FileSequenceState
 
   void StartFromPathOnFileSequence(const base::FilePath& path) {
     StartFromFileOnFileSequence(
-        base::File(path, base::File::FLAG_OPEN | base::File::FLAG_READ));
+        base::File(path, base::File::FLAG_OPEN | base::File::FLAG_READ), 0);
   }
 
   void OnHandleReady(MojoResult result, const HandleSignalsState& state) {
@@ -128,6 +129,10 @@ class FileDataPipeProducer::FileSequenceState
       // Attempt to read that many bytes from the file, directly into the data
       // pipe.
       DCHECK(base::IsValueInRangeForNumericType<int>(size));
+      if (max_bytes_) {
+        const size_t bytes_remaining = max_bytes_ - bytes_transferred_;
+        size = std::min(size, static_cast<uint32_t>(bytes_remaining));
+      }
       int attempted_read_size = static_cast<int>(size);
       int read_size = file_.ReadAtCurrentPos(static_cast<char*>(pipe_buffer),
                                              attempted_read_size);
@@ -139,9 +144,17 @@ class FileDataPipeProducer::FileSequenceState
         return;
       }
 
+      bytes_transferred_ += read_size;
+
       if (read_size < attempted_read_size) {
         // ReadAtCurrentPos makes a best effort to read all requested bytes. We
         // reasonably assume if it fails to read what we ask for, we've hit EOF.
+        Finish(MOJO_RESULT_OK);
+        return;
+      }
+
+      if (max_bytes_ && bytes_transferred_ == max_bytes_) {
+        // We've read as much as we were asked to read.
         Finish(MOJO_RESULT_OK);
         return;
       }
@@ -161,6 +174,8 @@ class FileDataPipeProducer::FileSequenceState
   // State which is effectively owned and used only on the file sequence.
   ScopedDataPipeProducerHandle producer_handle_;
   base::File file_;
+  size_t max_bytes_ = 0;
+  size_t bytes_transferred_ = 0;
   CompletionCallback callback_;
   std::unique_ptr<SimpleWatcher> watcher_;
 
@@ -182,8 +197,14 @@ FileDataPipeProducer::~FileDataPipeProducer() {
 
 void FileDataPipeProducer::WriteFromFile(base::File file,
                                          CompletionCallback callback) {
+  WriteFromFile(std::move(file), 0, std::move(callback));
+}
+
+void FileDataPipeProducer::WriteFromFile(base::File file,
+                                         size_t max_bytes,
+                                         CompletionCallback callback) {
   InitializeNewRequest(std::move(callback));
-  file_sequence_state_->StartFromFile(std::move(file));
+  file_sequence_state_->StartFromFile(std::move(file), max_bytes);
 }
 
 void FileDataPipeProducer::WriteFromPath(const base::FilePath& path,
