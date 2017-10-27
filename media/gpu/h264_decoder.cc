@@ -33,7 +33,7 @@ H264Decoder::H264Decoder(H264Accelerator* accelerator)
 
 H264Decoder::~H264Decoder() {}
 
-void H264Decoder::Reset() {
+bool H264Decoder::Reset() {
   curr_pic_ = nullptr;
   curr_nalu_ = nullptr;
   curr_slice_hdr_ = nullptr;
@@ -56,12 +56,16 @@ void H264Decoder::Reset() {
   ref_pic_list_b1_.clear();
   dpb_.Clear();
   parser_.Reset();
-  accelerator_->Reset();
+  bool success = accelerator_->Reset();
   last_output_poc_ = std::numeric_limits<int>::min();
 
   // If we are in kDecoding, we can resume without processing an SPS.
-  if (state_ == kDecoding)
+  if (!success)
+    state_ = kError;
+  else if (state_ == kDecoding)
     state_ = kAfterReset;
+
+  return success;
 }
 
 void H264Decoder::PrepareRefPicLists(const H264SliceHeader* slice_hdr) {
@@ -644,8 +648,8 @@ bool H264Decoder::ModifyReferencePicList(const H264SliceHeader* slice_hdr,
       default:
         // May be recoverable.
         DVLOG(1) << "Invalid modification_of_pic_nums_idc="
-                 << list_mod->modification_of_pic_nums_idc
-                 << " in position " << i;
+                 << list_mod->modification_of_pic_nums_idc << " in position "
+                 << i;
         break;
     }
 
@@ -670,8 +674,8 @@ void H264Decoder::OutputPic(scoped_refptr<H264Picture> pic) {
   }
 
   DVLOG_IF(1, pic->pic_order_cnt < last_output_poc_)
-      << "Outputting out of order, likely a broken stream: "
-      << last_output_poc_ << " -> " << pic->pic_order_cnt;
+      << "Outputting out of order, likely a broken stream: " << last_output_poc_
+      << " -> " << pic->pic_order_cnt;
   last_output_poc_ = pic->pic_order_cnt;
 
   DVLOG(4) << "Posting output task for POC: " << pic->pic_order_cnt;
@@ -742,6 +746,8 @@ bool H264Decoder::StartNewFrame(const H264SliceHeader* slice_hdr) {
   UpdatePicNums(frame_num);
   PrepareRefPicLists(slice_hdr);
 
+  // TODO(liberato): if this needs to retry, then post.  not sure how to
+  // notify our caller though.
   if (!accelerator_->SubmitFrameMetadata(sps, pps, dpb_, ref_pic_list_p0_,
                                          ref_pic_list_b0_, ref_pic_list_b1_,
                                          curr_pic_.get()))
