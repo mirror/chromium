@@ -31,6 +31,11 @@ class CORE_EXPORT ClassicPendingScript final
   USING_PRE_FINALIZER(ClassicPendingScript, Prefinalize);
 
  public:
+  static FetchParameters CreateFetchParameters(
+      const KURL& url,
+      const ScriptFetchOptions& options,
+      const Document& element_document);
+
   // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-classic-script
   //
   // For a script from an external file, calls ScriptResource::Fetch() and
@@ -76,6 +81,8 @@ class CORE_EXPORT ClassicPendingScript final
 
   void Prefinalize();
 
+  void SetIntervened(bool v) { intervened_ = v; }
+
  private:
   // See AdvanceReadyState implementation for valid state transitions.
   enum ReadyState {
@@ -93,6 +100,10 @@ class CORE_EXPORT ClassicPendingScript final
                        const ScriptFetchOptions&,
                        bool is_external);
   ClassicPendingScript() = delete;
+
+  static ScriptResource* FirstFetch(FetchParameters&,
+                                    Document&,
+                                    ClassicPendingScript*);
 
   // Advances the current state of the script, reporting to the client if
   // appropriate.
@@ -118,6 +129,8 @@ class CORE_EXPORT ClassicPendingScript final
   const bool is_external_;
   ReadyState ready_state_;
   bool integrity_failure_;
+
+  bool intervened_ = false;
 
   Member<ScriptStreamer> streamer_;
   WTF::Closure streamer_done_;

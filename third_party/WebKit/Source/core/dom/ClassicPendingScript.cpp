@@ -19,13 +19,10 @@
 
 namespace blink {
 
-ClassicPendingScript* ClassicPendingScript::Fetch(
+FetchParameters ClassicPendingScript::CreateFetchParameters(
     const KURL& url,
-    Document& element_document,
     const ScriptFetchOptions& options,
-    const WTF::TextEncoding& encoding,
-    ScriptElementBase* element,
-    FetchParameters::DeferOption defer) {
+    const Document& element_document) {
   // Step 1. Let request be the result of creating a potential-CORS request
   // given url, ... [spec text]
   ResourceRequest resource_request(url);
@@ -65,29 +62,44 @@ ClassicPendingScript* ClassicPendingScript::Fetch(
   // and its parser metadata to options's parser metadata. [spec text]
   params.SetParserDisposition(options.ParserState());
 
-  params.SetCharset(encoding);
+  return params;
+}
+
+ClassicPendingScript* ClassicPendingScript::Fetch(
+    const KURL& url,
+    Document& element_document,
+    const ScriptFetchOptions& options,
+    const WTF::TextEncoding& encoding,
+    ScriptElementBase* element,
+    FetchParameters::DeferOption defer) {
+  ClassicPendingScript* pending_script = new ClassicPendingScript(
+      element, TextPosition(), options, true /* is_external */);
+
+  FetchParameters params =
+      CreateFetchParameters(url, options, element_document);
 
   // This DeferOption logic is only for classic scripts, as we always set
   // |kLazyLoad| for module scripts in ModuleScriptLoader.
   params.SetDefer(defer);
 
+  params.SetCharset(encoding);
+
   // [Intervention]
   // For users on slow connections, we want to avoid blocking the parser in
-  // the main frame on script loads inserted via document.write, since it can
-  // add significant delays before page content is displayed on the screen.
-  auto* client_for_intervention =
+  // the main frame on script loads inserted via document.write, since it
+  // can add significant delays before page content is displayed on the
+  // screen.
+  bool intervened =
       MaybeDisallowFetchForDocWrittenScript(params, element_document);
+  pending_script->SetIntervened(intervened);
 
-  ClassicPendingScript* pending_script = new ClassicPendingScript(
-      element, TextPosition(), options, true /* is_external */);
   ScriptResource* resource =
       ScriptResource::Fetch(params, element_document.Fetcher());
   if (!resource)
     return nullptr;
+
   pending_script->SetResource(resource);
   pending_script->CheckState();
-  if (client_for_intervention)
-    client_for_intervention->SetResource(resource);
   return pending_script;
 }
 
@@ -232,6 +244,10 @@ void ClassicPendingScript::NotifyFinished(Resource* resource) {
                            ResourceIntegrityDisposition::kPassed;
     }
   }
+
+  if (intervened_)
+    PossiblyFetchBlockedDocWriteScript(resource, element->GetDocument(),
+                                       options_);
 
   // We are now waiting for script streaming to finish.
   // If there is no script streamer, this step completes immediately.
