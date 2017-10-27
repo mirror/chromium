@@ -32,6 +32,7 @@
 #include "base/timer/timer.h"
 #include "base/win/core_winrt_util.h"
 #include "base/win/scoped_hstring.h"
+#include "base/win/winrt_storage_util.h"
 #include "media/midi/midi_scheduler.h"
 
 namespace midi {
