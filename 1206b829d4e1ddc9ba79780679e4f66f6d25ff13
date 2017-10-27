@@ -46,6 +46,30 @@
       "revId": "1206b829d4e1ddc9ba79780679e4f66f6d25ff13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd66bea_4fa0aed2",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-27T18:16:17Z",
+      "side": 0,
+      "message": "Fixed, forget to initialize it",
+      "parentUuid": "a036b38b_51fd1abe",
+      "range": {
+        "startLine": 295,
+        "startChar": 15,
+        "endLine": 295,
+        "endChar": 22
+      },
+      "revId": "1206b829d4e1ddc9ba79780679e4f66f6d25ff13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
