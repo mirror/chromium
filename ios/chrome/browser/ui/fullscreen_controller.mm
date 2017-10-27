@@ -13,7 +13,7 @@
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
 #import "ios/chrome/browser/ui/page_info/page_info_legacy_coordinator.h"
 #import "ios/chrome/browser/ui/tabs/requirements/tab_strip_constants.h"
-#import "ios/chrome/browser/ui/toolbar/toolbar_controller_constants.h"
+#import "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h"
 #import "ios/chrome/browser/ui/voice/voice_search_notification_names.h"
 #include "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
@@ -214,11 +214,11 @@ BOOL CGFloatEquals(CGFloat a, CGFloat b) {
                  object:nil];
     [center addObserver:self
                selector:@selector(incrementFullScreenLock)
-                   name:kMenuWillShowNotification
+                   name:kToolsPopupMenuWillShowNotification
                  object:nil];
     [center addObserver:self
                selector:@selector(decrementFullScreenLock)
-                   name:kMenuWillHideNotification
+                   name:kToolsPopupMenuWillHideNotification
                  object:nil];
     [center addObserver:self
                selector:@selector(triggerHeader)

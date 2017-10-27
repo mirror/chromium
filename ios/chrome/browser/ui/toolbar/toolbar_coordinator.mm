@@ -51,19 +51,6 @@
   [self.webToolbarController currentPageLoadStarted];
 }
 
-- (void)showToolsMenuPopupWithConfiguration:
-    (ToolsMenuConfiguration*)configuration {
-  [self.webToolbarController showToolsMenuPopupWithConfiguration:configuration];
-}
-
-- (ToolsPopupController*)toolsPopupController {
-  return [self.webToolbarController toolsPopupController];
-}
-
-- (void)dismissToolsMenuPopup {
-  [self.webToolbarController dismissToolsMenuPopup];
-}
-
 - (CGRect)visibleOmniboxFrame {
   return [self.webToolbarController visibleOmniboxFrame];
 }
