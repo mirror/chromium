@@ -22,6 +22,30 @@
       "revId": "fc10241833c775a6867f0867f8bac9348449a295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f63dbf0_45b956d5",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-27T17:33:31Z",
+      "side": 1,
+      "message": "Correct. That will open the main Settings page if logged in, or do nothing otherwise. (There isn\u0027t anything to do if we are in this state - if SIM unlock is possible a default Cellular network should have been created).",
+      "parentUuid": "a650aa02_e9f33dba",
+      "range": {
+        "startLine": 118,
+        "startChar": 52,
+        "endLine": 118,
+        "endChar": 64
+      },
+      "revId": "fc10241833c775a6867f0867f8bac9348449a295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
