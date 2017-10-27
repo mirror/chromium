@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7588b5a1_695409f5",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-27T11:00:53Z",
+      "side": 1,
+      "message": "I need a spell checker in Xcode :-)",
+      "parentUuid": "17140f87_49c5bb86",
+      "range": {
+        "startLine": 1663,
+        "startChar": 56,
+        "endLine": 1663,
+        "endChar": 67
+      },
+      "revId": "be037f21bfc2809af069e9f256561d17d3d10289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "538c0c6d_b680caac",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-26T21:12:32Z",
       "side": 1,
       "message": "Would this fix also work if you moved the |-layoutIfNeeded| call to |-didRotateFromInterfaceOrientation:|?  That seems like a more logical place to put it.",
+      "revId": "be037f21bfc2809af069e9f256561d17d3d10289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c6f92f_379dba61",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1665,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-27T11:00:53Z",
+      "side": 1,
+      "message": "|-didRotateFromInterfaceOrientation:| is not called while the StackView is not presented, which is when this bug occur (see video at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d777866#c5)",
+      "parentUuid": "538c0c6d_b680caac",
       "revId": "be037f21bfc2809af069e9f256561d17d3d10289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
