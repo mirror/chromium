@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2644b8b6_4c7ca861",
+        "filename": "third_party/WebKit/Source/core/paint/ScrollableAreaPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-27T15:55:08Z",
+      "side": 1,
+      "message": "s/Frame/Composited/,\ns/frame/scrollable area/.",
+      "revId": "384d1e327729d7b48fc63a2dddaa373a8a8062cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d22f4f_941d1804",
+        "filename": "third_party/WebKit/Source/core/paint/ScrollableAreaPainter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-27T15:55:08Z",
+      "side": 1,
+      "message": "Nits:\n1. I think this should be named PaintCompositedScrollbar because we still have different path for non-composited scrollbars.\n2. \"const IntRect\u0026 clip\" might be better to be \"const CullRect\u0026\".\n3. Add a comment about that the space of GraphicsContext and cull rect is in the local space of the scrollbar.",
+      "revId": "384d1e327729d7b48fc63a2dddaa373a8a8062cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
