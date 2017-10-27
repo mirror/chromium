@@ -1199,4 +1199,8 @@ void FrameFetchContext::Trace(blink::Visitor* visitor) {
   BaseFetchContext::Trace(visitor);
 }
 
+void FrameFetchContext::RecordUseCounterForRef() {
+  UseCounter::Count(GetFrame(), WebFeature::kParsedDataUriHasOctothorpe);
+}
+
 }  // namespace blink

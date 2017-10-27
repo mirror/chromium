@@ -94,6 +94,8 @@ class PLATFORM_EXPORT FetchContext
 
   virtual void AddAdditionalRequestHeaders(ResourceRequest&, FetchResourceType);
 
+  virtual void RecordUseCounterForRef() {}
+
   // Returns the cache policy for the resource. ResourceRequest is not passed as
   // a const reference as a header needs to be added for doc.write blocking
   // intervention.
