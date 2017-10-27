@@ -46,6 +46,30 @@
       "revId": "14f33ecd5e10a500044f1d94945d6addc6285040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db993262_3d932bc2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/NativeValueTraitsImplTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-27T15:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42fdfed5_f97e0580",
+      "range": {
+        "startLine": 40,
+        "startChar": 43,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "14f33ecd5e10a500044f1d94945d6addc6285040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
