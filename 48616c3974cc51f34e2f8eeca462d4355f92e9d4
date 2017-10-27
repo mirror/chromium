@@ -16,6 +16,24 @@
       "revId": "48616c3974cc51f34e2f8eeca462d4355f92e9d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388f474e_6faa2564",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-27T06:09:58Z",
+      "side": 0,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/741177",
+      "parentUuid": "e538fa03_f690a25f",
+      "revId": "48616c3974cc51f34e2f8eeca462d4355f92e9d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
