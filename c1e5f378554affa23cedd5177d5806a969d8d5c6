@@ -16,6 +16,24 @@
       "revId": "c1e5f378554affa23cedd5177d5806a969d8d5c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e697dd8_70be5999",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-27T17:56:30Z",
+      "side": 0,
+      "message": "It feels strange that AppListFolderView has AX_ROLE_DESKTOP. Using it in AppListView makes sense since it occupies the full screen. But it is not the case with AppListFolderView.\n\nI am not familiar with a11y either. Please check with dmazzoni@ or dtseng@.",
+      "parentUuid": "d5d7554b_51afb193",
+      "revId": "c1e5f378554affa23cedd5177d5806a969d8d5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
