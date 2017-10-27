@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01e931d3_ff963ba4",
+        "filename": "ash/display/display_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-27T17:24:40Z",
+      "side": 1,
+      "message": "// In unified desktop mode, mirroring host converts to the point to\n// unified host\u0027s pixel coordinates, so we need to apply....",
+      "revId": "673b7f1feb93a041c5e1062b2cb1ef97432fd9c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1853059_7aa49b1a",
+        "filename": "ash/display/unified_mouse_warp_controller_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-27T17:24:40Z",
+      "side": 1,
+      "message": "nit: create scoped_trace for each BoundsaryTestBody so that you can tell which test failed easily.",
+      "revId": "673b7f1feb93a041c5e1062b2cb1ef97432fd9c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
