@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a80b2ba_7eb0e48a",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-27T03:55:46Z",
+      "side": 1,
+      "message": "logic is correct, but this reads wrong. dip_scale is not 1. just call this \"scale\" like java side\n\nalso it\u0027s weird some of the scaling happens in c++ and some happens in java. good place to unify that now, scale everything in c++ maybe? note that webview overrides the java call",
+      "revId": "c838dfbfb3fe31a48c0d2f97fb76a6ca52ee1aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a17c9ab_864789d9",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-27T03:55:46Z",
+      "side": 1,
+      "message": "make this static and set it somewhere early in content",
+      "revId": "c838dfbfb3fe31a48c0d2f97fb76a6ca52ee1aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
