@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.browsing_data.ClearBrowsingDataTab;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.Preferences;
@@ -31,20 +30,6 @@ import java.util.Locale;
  */
 public class ClearBrowsingDataTabsFragment extends Fragment {
     public static final int CBD_TAB_COUNT = 2;
-
-    public ClearBrowsingDataTabsFragment() {
-        // TODO(dullweber): Remove this migration after M62, most users should
-        // be migrated and the others will just get the default settings for
-        // the basic tab.
-        PrefServiceBridge.getInstance().migrateBrowsingDataPreferences();
-    }
-
-    /**
-     * @return Returns whether the CBD dialog with tabs is enabled.
-     */
-    public static boolean isFeatureEnabled() {
-        return ChromeFeatureList.isEnabled(ChromeFeatureList.TABS_IN_CBD);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
