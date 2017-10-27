@@ -87824,7 +87824,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="UMA.ActualLogUploadInterval" units="minutes">
   <owner>asvitkine@chromium.org</owner>
   <summary>
-    The actual interval between log upload start and previous log upload
+    The actual interv
     finished within the same process.
   </summary>
 </histogram>
