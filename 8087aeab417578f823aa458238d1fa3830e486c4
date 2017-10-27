@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6262c55_f0bb972f",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-27T15:11:42Z",
+      "side": 1,
+      "message": "Since you\u0027re here anyhow, can you please add references to the bugs for these two issues?",
+      "revId": "8087aeab417578f823aa458238d1fa3830e486c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
