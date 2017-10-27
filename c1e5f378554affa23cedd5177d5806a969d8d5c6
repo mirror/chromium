@@ -34,6 +34,24 @@
       "revId": "c1e5f378554affa23cedd5177d5806a969d8d5c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62fbcc8_b70285d1",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-27T21:23:14Z",
+      "side": 0,
+      "message": "ROLE_DESKTOP could break some things, right now we are assuming that there is\nonly one node with that role at the root of the tree. I\u0027m not sure what might\nbreak if we changed that.\n\nI\u0027d try ROLE_WINDOW. Any chance that works better?\n\nMaybe you can demo the issue for me next week. I\u0027d rather pick a sensible role\nhere and then fix ChromeVox rather than hack around it here.",
+      "parentUuid": "1e697dd8_70be5999",
+      "revId": "c1e5f378554affa23cedd5177d5806a969d8d5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
