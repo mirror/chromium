@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83040a90_1147bfb7",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T00:51:09Z",
+      "side": 1,
+      "message": "These were previously const\u0026, and were just being copied; so yes, I think we\u0027re copying here, in spite of the std::move() - this can\u0027t be a OnceCallback so its definitely got a copy ctor.\n\nRemoved the const.",
+      "parentUuid": "57e899fb_7352cd3c",
+      "revId": "194272e5377a491ca7f7102d523c0b1a1d94dab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b5b85fd_fc30f207",
         "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "194272e5377a491ca7f7102d523c0b1a1d94dab1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca90e265_a3ae42c1",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T00:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b5b85fd_fc30f207",
+      "revId": "194272e5377a491ca7f7102d523c0b1a1d94dab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
