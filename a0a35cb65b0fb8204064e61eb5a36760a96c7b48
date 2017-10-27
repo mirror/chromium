@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68b092fe_2971bf1c",
+        "filename": "chrome/browser/resources/md_extensions/item.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T21:28:43Z",
+      "side": 1,
+      "message": "Is this behavior necessary? Are there plans to use the appOrExtension() method from other UI components? If so, please mention that in the CL description.",
+      "range": {
+        "startLine": 60,
+        "startChar": 30,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "a0a35cb65b0fb8204064e61eb5a36760a96c7b48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
