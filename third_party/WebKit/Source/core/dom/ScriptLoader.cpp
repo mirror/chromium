@@ -690,7 +690,7 @@ bool ScriptLoader::FetchClassicScript(
     defer = FetchParameters::kLazyLoad;
 
   ResourceLoaderOptions options;
-  options.initiator_info.name = element_->InitiatorName();
+  options.initiator_info.name = "script";
   FetchParameters params(resource_request, options);
 
   // "... cryptographic nonce, ..."
