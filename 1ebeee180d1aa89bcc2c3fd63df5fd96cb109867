@@ -34,6 +34,24 @@
       "revId": "1ebeee180d1aa89bcc2c3fd63df5fd96cb109867",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0da298_de6d4f37",
+        "filename": "chrome/test/data/webui/test_api.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T18:34:15Z",
+      "side": 1,
+      "message": "Already landed, see https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#Template-Literals.",
+      "parentUuid": "7fa22322_3dc5f234",
+      "revId": "1ebeee180d1aa89bcc2c3fd63df5fd96cb109867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
