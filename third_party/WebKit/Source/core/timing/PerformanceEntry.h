@@ -111,7 +111,7 @@ class CORE_EXPORT PerformanceEntry
   const double start_time_;
   const double duration_;
   const PerformanceEntryType entry_type_enum_;
-  size_t index_;
+  const int index_;
 };
 
 }  // namespace blink
