@@ -427,6 +427,30 @@
     },
     {
       "key": {
+        "uuid": "ae4a9a66_a5a824e4",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T16:27:22Z",
+      "side": 1,
+      "message": "What thread is this on? Blink gets its main thread context from Platform::CreateSharedOffscreenGraphicsContext3DProvider()? It can set a lost context callback on that.\n\nBut you should probably only be setting the lost context callback on it if you\u0027re also the owner of it.",
+      "parentUuid": "8776e571_2dd8b7c5",
+      "range": {
+        "startLine": 256,
+        "startChar": 26,
+        "endLine": 256,
+        "endChar": 49
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "660aa2ed_7917e019",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 15
