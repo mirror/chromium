@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f355b87c_4cfdbbd8",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-27T22:28:06Z",
+      "side": 1,
+      "message": "use () \u003d\u003e { .. } instead and inline saveUserPref, i.e.\n\nthis.bluetoothPrivate.setAdapterState(\n     {powered: this.bluetoothToggleState_}, () \u003d\u003e {\n          var error \u003d chrome.runtime.lastError;\n          if (error \u0026\u0026 error !\u003d \u0027Error setting adapter properties: powered\u0027) {\n            console.error(\u0027Error enabling bluetooth: \u0027 + error.message);\n          } else {\n            this.setPrefValue(\n              \u0027ash.user.bluetooth.adapter_enabled\u0027, this.bluetoothToggleState_);\n          }\n        });",
+      "revId": "b63275bd3bec0c4d4649e6a51b183558578d752a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
