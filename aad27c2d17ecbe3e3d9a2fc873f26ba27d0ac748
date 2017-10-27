@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66251fcc_0afa0ea6",
+        "filename": "third_party/zlib/contrib/inffast_chunky.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-27T12:51:35Z",
+      "side": 1,
+      "message": "I feel like these should have a subdir of contrib.\n\nThis is why I don\u0027t think we can only have contrib/arm and contrib/x86. Those two would rely on something like a third contrib/chunky.\n\nIt might be easiest to use contrib/chromium rather than contrib/chunky. That would allow us to have a place for other changes as well.\n\n\nI am okay with parts of contrib/arm depending on contrib/chromium. Not all parts will. It offers a bit of isolation if someone wants to not use the chunky bits, for example. But another option could be to just put everything in contrib/chromium.",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "aad27c2d17ecbe3e3d9a2fc873f26ba27d0ac748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
