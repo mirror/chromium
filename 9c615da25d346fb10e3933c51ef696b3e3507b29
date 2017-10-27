@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39e1c089_adfcbd4d",
+        "filename": "third_party/WebKit/Source/modules/permissions/ClipboardPermissionDescriptor.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-10-27T17:53:13Z",
+      "side": 1,
+      "message": "It looks like you agreed with the idea of having this default to false, in which case you spell it:\n\n    boolean allowWithoutGesture \u003d false;\n\nhttps://heycam.github.io/webidl/#dfn-dictionary-member-default-value",
+      "range": {
+        "startLine": 6,
+        "startChar": 4,
+        "endLine": 6,
+        "endChar": 12
+      },
+      "revId": "9c615da25d346fb10e3933c51ef696b3e3507b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
