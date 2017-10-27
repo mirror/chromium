@@ -2,23 +2,6 @@
 # See https://crbug.com/769401
 
 # Crashed tests that haven't been categorized.
--BrowserTestNonsecureURLRequest.DidChangeVisibleSecurityStateObserverObsoleteTLSSettings
--ChromeResourceDispatcherHostDelegateBrowserTest.NavigationDataProcessed
--ChromeServiceWorkerFetchTest.EmbedPdfOtherOrigin
--ChromeSitePerProcessPDFTest.EmbeddedPDFInsideCrossOriginFrame
--CrSettingsPeoplePageTest.All
--DevToolsExtensionTest.HttpIframeInDevToolsExtensionPanel
--DevToolsReattachAfterCrashTest.TestReattachAfterCrashOnNetwork
--DevToolsReattachAfterCrashTest.TestReattachAfterCrashOnTimeline
--DomDistillerTabUtilsBrowserTest.TestDistillIntoWebContents
--DomDistillerViewerSourceBrowserTest.DistillerJavaScriptExposed
--DomDistillerViewerSourceBrowserTest.DistillerJavaScriptNotInMainWorld
--DomDistillerViewerSourceBrowserTest.EarlyTemplateLoad
--DomDistillerViewerSourceBrowserTest.MultiPageArticle
--DomDistillerViewerSourceBrowserTest.NoWebUIBindingsArticleExists
--DomDistillerViewerSourceBrowserTest.NoWebUIBindingsArticleNotFound
--DomDistillerViewerSourceBrowserTest.PrefPersist
--DownloadTest.SaveLinkAsReferrerPolicyOrigin
 -FlashEmbeds/ChromeContentRendererClientBrowserTest.RewriteYouTubeFlashEmbed/0
 -FlashEmbeds/ChromeContentRendererClientBrowserTest.RewriteYouTubeFlashEmbed/1
 -FlashEmbeds/ChromeContentRendererClientBrowserTest.RewriteYouTubeFlashEmbed/2
@@ -27,35 +10,8 @@
 -FlashEmbeds/ChromeContentRendererClientBrowserTest.RewriteYouTubeFlashEmbedObject/2
 -FlashEmbeds/ChromeContentRendererClientBrowserTest.RewriteYouTubeFlashEmbedObject/3
 -FlashEmbeds/ChromeContentRendererClientBrowserTest.RewriteYouTubeFlashEmbedObject/4
--HotwordInstallerBrowserTest.AbortInstallOnShutdown
--IncognitoWindowTrackerBrowserTest.ShowPromo
--NewTabTrackerBrowserTest.TestShowPromo
 -NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.SSLError/0
--PDFExtensionTest.EnsureCrossOriginRepliesBlocked
--PDFExtensionTest.PostMessageForZeroSizedEmbed
--PDFExtensionTest.TabTitleWithEmbeddedPdf
--PrintPreviewDialogControllerBrowserTest.PdfPluginDisabled
--PrintPreviewDialogControllerBrowserTest.PrintPreviewPdfAccessibility
 -ProxySettingsApiTest.SettingsRemovedOnPolicyBlacklist
--ReferrerPolicyTest.ContextMenuRedirect
--ReferrerPolicyTest.HttpsContextMenuOrigin
--ReferrerPolicyTest.HttpsContextMenuRedirect
--SBNavigationObserverBrowserTest.AddIPMapping
--SBNavigationObserverBrowserTest.DownloadViaHTML5FileApiWithUserGesture
--SBNavigationObserverBrowserTest.DownloadViaHTML5FileApiWithoutUserGesture
--SSLUITest.TestInterstitialJavaScriptGoesBack
--SSLUITest.TestInterstitialJavaScriptProceeds
--SSLUITestWithExtendedReporting.TestBadClockReportingWithNoOptIn
--SSLUITestWithExtendedReporting.TestBadClockReportingWithOptIn
--SavePageBrowserTest.SavePageBrowserTest_NonMHTML
--SaveType/SavePageOriginalVsSavedComparisonTest.ObjectElementsViaFile/0
--SaveType/SavePageOriginalVsSavedComparisonTest.ObjectElementsViaHttp/0
--SpellingMenuObserverTest.SuggestionsForceTopSeparator
--WebRtcBrowserTest.RunsAudioVideoWebRTCCallInTwoTabsVP8
--WebRtcBrowserTest.RunsAudioVideoWebRTCCallInTwoTabsVP9
--WebrtcEventLogApiTest.TestStartStopWebRtcEventLogging
--WebrtcEventLogApiTest.TestStartTimedWebRtcEventLogging
--WebstoreInlineInstallerListenerTest.BothListenersTest
 
 # Timed out tests that haven't been categorized.
 -ActivityLogApiTest.TriggerEvent
@@ -2483,3 +2439,81 @@
 -PolicyTest.FileURLBlacklist
 -PolicyTest.URLBlacklist
 -PolicyTest.URLBlacklistSubresources
+
+# crbug.com/751738 Service worker subresource loader doesn't yet support request bodies.
+# crbug.com/778821 null response body is given to NavigationURLLoaderDelegate::OnResponseStarted() as parameter
+-WebRtcBrowserTest.RunsAudioVideoWebRTCCallInTwoTabsVP8
+-WebRtcBrowserTest.RunsAudioVideoWebRTCCallInTwoTabsVP9
+-WebrtcEventLogApiTest.TestStartStopWebRtcEventLogging
+-WebrtcEventLogApiTest.TestStartTimedWebRtcEventLogging
+
+# crbug.com/778814 null NavigationData is given to NavigationURLLoaderDelegate::OnResponseStarted() as parameter
+-ChromeResourceDispatcherHostDelegateBrowserTest.NavigationDataProcessed
+
+# crbug.com/778842 CHECK_EQ(num_bytes, output_size) failed in ReadData() at web_ui_url_loader_factory.cc
+-DevToolsReattachAfterCrashTest.TestReattachAfterCrashOnNetwork
+-DevToolsReattachAfterCrashTest.TestReattachAfterCrashOnTimeline
+
+# crbug.com/778846 DCHECK() failed at URLDataManagerBackend::CheckURLIsValid()
+-CrSettingsPeoplePageTest.All
+-DomDistillerTabUtilsBrowserTest.TestDistillIntoWebContents
+-DomDistillerViewerSourceBrowserTest.DistillerJavaScriptExposed
+-DomDistillerViewerSourceBrowserTest.DistillerJavaScriptNotInMainWorld
+-DomDistillerViewerSourceBrowserTest.EarlyTemplateLoad
+-DomDistillerViewerSourceBrowserTest.MultiPageArticle
+-DomDistillerViewerSourceBrowserTest.NoWebUIBindingsArticleExists
+-DomDistillerViewerSourceBrowserTest.NoWebUIBindingsArticleNotFound
+-DomDistillerViewerSourceBrowserTest.PrefPersist
+-PrintPreviewDialogControllerBrowserTest.PdfPluginDisabled
+-PrintPreviewDialogControllerBrowserTest.PrintPreviewPdfAccessibility
+
+# crbug.com/778860 SecurityStyleExplanations::info_explanations is empty
+-BrowserTestNonsecureURLRequest.DidChangeVisibleSecurityStateObserverObsoleteTLSSettings
+
+# crbug.com/778862 The URL of the extension to navigate to contains non utf-8 character
+-ChromeSitePerProcessPDFTest.EmbeddedPDFInsideCrossOriginFrame
+-PDFExtensionTest.EnsureCrossOriginRepliesBlocked
+-PDFExtensionTest.PostMessageForZeroSizedEmbed
+-PDFExtensionTest.TabTitleWithEmbeddedPdf
+-SaveType/SavePageOriginalVsSavedComparisonTest.ObjectElementsViaFile/0
+-SaveType/SavePageOriginalVsSavedComparisonTest.ObjectElementsViaHttp/0
+
+# crbug.com/779115 |devtools_extension_panel_rfh| is nullptr
+-DevToolsExtensionTest.HttpIframeInDevToolsExtensionPanel
+
+# crbug.com/779121 The |url_chain_| contains one empty string at DownloadUrlSBClient::StartCheck()
+-DownloadTest.SaveLinkAsReferrerPolicyOrigin
+
+# crbug.com/779153 DCHECK(browser->IsActive()) fails at GetAppMenuButton()
+-IncognitoWindowTrackerBrowserTest.ShowPromo
+
+# crbug.com/779160 BrowserView::GetBrowserViewForBrowser(browser())->tabstrip()->new_tab_button()->new_tab_promo() is nullptr
+-NewTabTrackerBrowserTest.TestShowPromo
+
+# crbug.com/779178 |interstitial_page| is nullptr
+-SSLUITest.TestInterstitialJavaScriptGoesBack
+-SSLUITest.TestInterstitialJavaScriptProceeds
+-SSLUITestWithExtendedReporting.TestBadClockReportingWithNoOptIn
+-SSLUITestWithExtendedReporting.TestBadClockReportingWithOptIn
+
+# crbug.com/779181 The |ip_map->at(test_server_host)| is empty
+-SBNavigationObserverBrowserTest.AddIPMapping
+
+# crbug.com/779197 The |state_| is actualy CANCELLED_INTERNAL
+-SBNavigationObserverBrowserTest.DownloadViaHTML5FileApiWithUserGesture
+-SBNavigationObserverBrowserTest.DownloadViaHTML5FileApiWithoutUserGesture
+
+# crbug.com/779210 NOTREACHED() reached at SaveFileManager::OnSaveURL()
+-SavePageBrowserTest.SavePageBrowserTest_NonMHTML
+
+# crbug.com/779215 The extension hasn't been installed when the test runs
+-WebstoreInlineInstallerListenerTest.BothListenersTest
+
+# crbug.com/779217 The NetworkContext is not created when the network service is enabled
+-HotwordInstallerBrowserTest.AbortInstallOnShutdown
+-SpellingMenuObserverTest.SuggestionsForceTopSeparator
+
+# crbug.com/779236 DCHECK(!params->url.is_empty()) fails at chrome::Navigate()
+-ReferrerPolicyTest.ContextMenuRedirect
+-ReferrerPolicyTest.HttpsContextMenuOrigin
+-ReferrerPolicyTest.HttpsContextMenuRedirect
