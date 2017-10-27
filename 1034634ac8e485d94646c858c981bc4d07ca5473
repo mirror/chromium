@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "6e1b5fd1_e022f2a8",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:52:03Z",
+      "side": 1,
+      "message": "Why not\ng_browser_process-\u003eplatform_part()\n          -\u003ebrowser_policy_connector_chromeos()\n          -\u003eGetMinimumVersionPolicyHandler()\n          -\u003eAddObserver(this);",
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a9eee9_d5ca615a",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:52:03Z",
+      "side": 1,
+      "message": "g_browser_process-\u003eplatform_part()\n          -\u003ebrowser_policy_connector_chromeos()\n          -\u003eGetMinimumVersionPolicyHandler()\n          -\u003eRemoveObserver(this);",
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d4a7d01_e26b4c85",
         "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
         "patchSetId": 3
@@ -88,6 +122,159 @@
         "endLine": 238,
         "endChar": 78
       },
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a675125d_b22dcab9",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:52:03Z",
+      "side": 1,
+      "message": "move to header",
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc68d31_5b6fc865",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:52:03Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76340fc_a57ecefc",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:52:03Z",
+      "side": 1,
+      "message": "Drop {}",
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c668d4fb_f897a17c",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:52:03Z",
+      "side": 1,
+      "message": "nit const. Also, new line before this line",
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b21b044_6787c432",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:52:03Z",
+      "side": 1,
+      "message": "nit const.",
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15e8fea_c01f5541",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:52:03Z",
+      "side": 1,
+      "message": "Drop (c)",
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c136fb_ff3757fb",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:52:03Z",
+      "side": 1,
+      "message": "\u003d true",
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64dc466c_1503032d",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:52:03Z",
+      "side": 1,
+      "message": "\u003d nullptr, or make this const",
+      "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3c5db9_ab54c1f0",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:52:03Z",
+      "side": 1,
+      "message": "weak_factory_{this};",
       "revId": "1034634ac8e485d94646c858c981bc4d07ca5473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
