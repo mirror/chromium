@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "c1d8e6f1_e4f9df7f",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T20:53:42Z",
+      "side": 1,
+      "message": "Yes, all three of the mentioned approaches would work. My longer term goal is to reduce (if possible) the amount of equivalent ways to do mocking of an object during tests, and I am envisioning TestBrowserProxy as the one canonical way to achieve this. So, since this is newly added code, we could use it here directly and avoid having to migrate it later.\n\n\u003e it might be strange to have a TestBrowserProxy for something that is not a BrowserProxy\n\nEven if the prod class is not called \"*BrowserProxy\", it acts very similarly to one. Similar example exists in print_preview where a class called NativeLayer [1], is mocked using a TestBrowserProxy [2].\n\nHaving said that, I am fine leaving this convergence of mocking mechanisms as a separate step and I\u0027ll file a separate bug for tracking the related work in MD Extensions.\n\nAlso, regardless of the approach used here, I still think that asserting on the private state |input.capturing_| is not great, and we should avoid if possible.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/native_layer.js?l\u003d108\n[2] https://cs.chromium.org/chromium/src/chrome/test/data/webui/print_preview/native_layer_stub.js?l\u003d9",
+      "parentUuid": "e028c448_3e564805",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5a0beb3_a91d9c3e",
         "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
         "patchSetId": 3
