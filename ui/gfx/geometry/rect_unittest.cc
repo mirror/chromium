@@ -707,6 +707,10 @@ TEST(RectTest, ScaleToEnclosingRect) {
       Rect(-1, -2, 0, 0),
       1.5f,
       Rect(-2, -3, 0, 0),
+    }, {
+      Rect(230, 263, 1276, 410),
+      0.5f,
+      Rect(115, 131, 638, 206),
     }
   };
 
