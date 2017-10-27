@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b56ef7ba_12697d56",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-27T14:14:35Z",
+      "side": 1,
+      "message": "Note that \u0027screen coordinates\u0027 and \u0027pixel coordinates\u0027 is not the same. \u0027screen coordinate\u0027, at least in aura, includes the origin of the native window. But looking at the code, I think you mean \u0027pixel coordinates\u0027 here. Right? (see use of ScreenPositionClient for getting screen coordinates)",
+      "revId": "9db429e34410fafa287c65e3da3212475dea26fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8409e64b_2d3cfc50",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-27T14:14:35Z",
+      "side": 1,
+      "message": "Same comment applies here.",
+      "range": {
+        "startLine": 928,
+        "startChar": 31,
+        "endLine": 928,
+        "endChar": 37
+      },
+      "revId": "9db429e34410fafa287c65e3da3212475dea26fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
