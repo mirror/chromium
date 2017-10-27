@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8874fb4b_95499834",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-27T13:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85ff3984_9152573a",
+      "range": {
+        "startLine": 89,
+        "startChar": 53,
+        "endLine": 89,
+        "endChar": 69
+      },
+      "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3bad76e_12465c67",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd00639d_940eb4ed",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-27T13:39:59Z",
+      "side": 1,
+      "message": "I think that we should be defensive here. The metrics recorder may be null for tests and (this should not happen) if the model has a ui controller without a form.",
+      "parentUuid": "f3bad76e_12465c67",
+      "range": {
+        "startLine": 229,
+        "startChar": 6,
+        "endLine": 229,
+        "endChar": 22
+      },
+      "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5c5244a1_a353b0af",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-27T13:39:59Z",
+      "side": 1,
+      "message": "Ok, I was careful given that we get a WeakPtr. But you are right, I should have seen that from the many calls to delegate_ below.",
+      "parentUuid": "fc6d7310_64a63caf",
+      "range": {
+        "startLine": 275,
+        "startChar": 24,
+        "endLine": 275,
+        "endChar": 33
+      },
+      "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e0f6f53_9cee5758",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6cd4a0b9_bbadff23",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-27T13:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e0f6f53_9cee5758",
+      "range": {
+        "startLine": 15,
+        "startChar": 51,
+        "endLine": 15,
+        "endChar": 81
+      },
+      "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7e2aa43_b11c4942",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6de14b_957a0d8a",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-27T13:39:59Z",
+      "side": 1,
+      "message": "Yep, good catch. This was a remainder of a previous design in which the InteractionKeeper would ask for the metrics_recorder.\n\nDone.",
+      "parentUuid": "b7e2aa43_b11c4942",
+      "range": {
+        "startLine": 138,
+        "startChar": 49,
+        "endLine": 138,
+        "endChar": 65
+      },
+      "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
