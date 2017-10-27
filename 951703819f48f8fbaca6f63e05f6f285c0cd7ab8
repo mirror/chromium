@@ -46,6 +46,30 @@
       "revId": "951703819f48f8fbaca6f63e05f6f285c0cd7ab8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565b1c7f_bfe5fc4a",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-27T07:05:16Z",
+      "side": 0,
+      "message": "Asked @Pam and got: \nNo, as far as I know there\u0027s no mechanism to delete old prefs automatically. It\u0027s also not really necessary to remove it -- it\u0027s just a line in a text file.",
+      "parentUuid": "294c76b8_7744208e",
+      "range": {
+        "startLine": 96,
+        "startChar": 36,
+        "endLine": 96,
+        "endChar": 60
+      },
+      "revId": "951703819f48f8fbaca6f63e05f6f285c0cd7ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
