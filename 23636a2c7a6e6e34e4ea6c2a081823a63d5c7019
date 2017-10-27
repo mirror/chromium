@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51e7d8cc_1c0b6691",
+        "filename": "ios/web_view/internal/cwv_preferences_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-27T22:34:36Z",
+      "side": 1,
+      "message": "Should autofill pref be set to true here too?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 70
+      },
+      "revId": "23636a2c7a6e6e34e4ea6c2a081823a63d5c7019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
