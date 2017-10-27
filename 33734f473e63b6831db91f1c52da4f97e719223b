@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45b563dc_3e1025bf",
+        "filename": "cc/debug/rendering_stats_instrumentation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T14:46:11Z",
+      "side": 1,
+      "message": "I think this should be CamelCased if u dont mind",
+      "revId": "33734f473e63b6831db91f1c52da4f97e719223b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
