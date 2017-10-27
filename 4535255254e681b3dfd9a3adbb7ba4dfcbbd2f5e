@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9242acba_a57a845c",
+        "filename": "chromecast/public/avsettings.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1203029
+      },
+      "writtenOn": "2017-10-27T18:09:48Z",
+      "side": 1,
+      "message": "must be ?",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 21
+      },
+      "revId": "4535255254e681b3dfd9a3adbb7ba4dfcbbd2f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
