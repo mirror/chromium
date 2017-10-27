@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "329d0bcc_8b1a6d63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-10-27T14:08:15Z",
+      "side": 1,
+      "message": "Yes, that is a much better idea, thanks!",
+      "parentUuid": "3d1553c6_2b268829",
+      "range": {
+        "startLine": 344,
+        "startChar": 8,
+        "endLine": 344,
+        "endChar": 50
+      },
+      "revId": "cdcaf62dc63d377494c8cf747627b6163bd3a9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6d78d0b_55e43757",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T16:43:34Z",
       "side": 1,
       "message": "Is this feature available on iOS?",
+      "range": {
+        "startLine": 2700,
+        "startChar": 47,
+        "endLine": 2700,
+        "endChar": 57
+      },
+      "revId": "cdcaf62dc63d377494c8cf747627b6163bd3a9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea92866_b4d960a6",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2700,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-10-27T14:08:15Z",
+      "side": 1,
+      "message": "This feature is not available on iOS. Flags for iOS are defined in /ios/chrome/browser/about_flags.cc\nSome flags kOsDesktop are using ifdefs but it looks like most don\u0027t, so I removed the ifdef.",
+      "parentUuid": "f6d78d0b_55e43757",
       "range": {
         "startLine": 2700,
         "startChar": 47,

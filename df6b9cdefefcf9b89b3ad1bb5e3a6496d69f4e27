@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee2ab2f8_9080f357",
+        "filename": "chrome/android/java/res/values/values.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-10-27T14:08:15Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d52734cf_04252af7",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 80
+      },
+      "revId": "df6b9cdefefcf9b89b3ad1bb5e3a6496d69f4e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75814bf6_f12460d3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataTabsFragment.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T16:43:34Z",
       "side": 0,
       "message": "What did the migration do? While most users will have migrated, a non-trivial % of users will still be on older versions of Chrome and may update at any point.",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 25
+      },
+      "revId": "df6b9cdefefcf9b89b3ad1bb5e3a6496d69f4e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62a5e4f_c112a59f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataTabsFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-10-27T14:08:15Z",
+      "side": 0,
+      "message": "The migration copied that state of selected checkboxes and timeperiod from the old dialog (and now advanced tab) to the preferences used for the basic tab. Users who haven\u0027t yet updated from \u003c\u003d59 to \u003e\u003d60 will just get the default state (history, cookies and cache selected, time period last hour) which is a safe and valid state.",
+      "parentUuid": "75814bf6_f12460d3",
       "range": {
         "startLine": 36,
         "startChar": 8,
