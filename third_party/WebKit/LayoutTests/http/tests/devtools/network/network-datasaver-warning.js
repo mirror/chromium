@@ -13,7 +13,7 @@
   TestRunner.addResult('');
 
   TestRunner.addResult('Enabling data saver');
-  TestRunner.evaluateInPagePromise('window.internals.settings.setDataSaverEnabled(true)');
+  TestRunner.evaluateInPagePromise('internals.setDataSaverEnabled(true)');
   TestRunner.addResult('Reloading Page');
   await TestRunner.reloadPagePromise();
 

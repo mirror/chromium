@@ -148,7 +148,6 @@ void SharedWorkerRepositoryClientImpl::Connect(SharedWorker* worker,
       url, name, GetId(document), header, header_type,
       worker->GetExecutionContext()->GetSecurityContext().AddressSpace(),
       ToCreationContextType(is_secure_context),
-      document->GetFrame()->GetSettings()->GetDataSaverEnabled(),
       std::move(port), std::move(listener));
 }
 

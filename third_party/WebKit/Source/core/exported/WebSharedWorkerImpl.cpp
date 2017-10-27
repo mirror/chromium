@@ -226,7 +226,6 @@ void WebSharedWorkerImpl::StartWorkerContext(
     const WebString& content_security_policy,
     WebContentSecurityPolicyType policy_type,
     WebAddressSpace creation_address_space,
-    bool data_saver_enabled,
     const WebString& instrumentation_token,
     mojo::ScopedMessagePipeHandle content_settings_handle,
     mojo::ScopedMessagePipeHandle interface_provider) {
@@ -241,7 +240,6 @@ void WebSharedWorkerImpl::StartWorkerContext(
 
   instrumentation_token_ = instrumentation_token;
   shadow_page_ = WTF::MakeUnique<WorkerShadowPage>(this);
-  shadow_page_->GetSettings()->SetDataSaverEnabled(data_saver_enabled);
 
   // If we were asked to pause worker context on start and wait for debugger
   // then now is a good time to do that.
@@ -303,10 +301,6 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
             ->Fetcher()
             ->Context()
             .ApplicationCacheHostID());
-    web_worker_fetch_context->SetDataSaverEnabled(shadow_page_->GetDocument()
-                                                      ->GetFrame()
-                                                      ->GetSettings()
-                                                      ->GetDataSaverEnabled());
     ProvideWorkerFetchContextToWorker(worker_clients,
                                       std::move(web_worker_fetch_context));
   }
