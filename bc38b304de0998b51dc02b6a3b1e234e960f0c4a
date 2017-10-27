@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8d94ce0c_119c2a73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-27T19:34:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this is really feasible without a significant overhaul, because the ui is disabled for testing, meaning that we can\u0027t check whether the OOBE Opt in screen is being shown in the unit test (as far as I can tell).",
+      "parentUuid": "43e6d6b1_afcecdf7",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2202a9f9_90104212",
         "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
         "patchSetId": 1
