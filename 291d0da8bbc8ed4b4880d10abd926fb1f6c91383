@@ -16,6 +16,98 @@
       "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f631788_65e45a0a",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-27T23:20:15Z",
+      "side": 1,
+      "message": "Why the directory change?",
+      "range": {
+        "startLine": 46,
+        "startChar": 39,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07c4211_28ec11d1",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-27T23:20:15Z",
+      "side": 1,
+      "message": "This should probably go to the top of the file as a global constant.\n\nA confused sheriff is more likely to notice your comment there.\n\nIt also looks less weird than setting a local constant and immediately checking its value.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 26
+      },
+      "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0455ee6b_f0f2b6a4",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-27T23:20:15Z",
+      "side": 1,
+      "message": "Is this actually needed? We\u0027ve been talking about outputting annotations as a JSON, but I don\u0027t expect anyone needing the warnings and errors in JSON.\n\nI mean, the warnings and errors themselves are anyways intended to be read by human, so adding any sort of machine-readable structure over it seems meaningless.",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 21
+      },
+      "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79df6cab_1470ecdc",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-27T23:20:15Z",
+      "side": 1,
+      "message": "nit: Given that these are lists, shouldn\u0027t we name them in plural?",
+      "range": {
+        "startLine": 169,
+        "startChar": 18,
+        "endLine": 169,
+        "endChar": 23
+      },
+      "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
