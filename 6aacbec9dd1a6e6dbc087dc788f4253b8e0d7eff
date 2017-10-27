@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9deb48bf_e6e736ce",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T16:57:02Z",
+      "side": 1,
+      "message": "This is a different set of builders than \"webkit-patch rebaseline-cl\" uses (I think rebaseline-cl is using builders.json when is_try_builder\u003dtrue). Can try-flag trigger use the same set of builders as either rebaseline-cl or the CQ?",
+      "revId": "6aacbec9dd1a6e6dbc087dc788f4253b8e0d7eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
