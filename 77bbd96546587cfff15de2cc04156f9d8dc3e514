@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb71a9af_e5ac8b34",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T18:33:55Z",
+      "side": 1,
+      "message": "then handler -\u003e this callback",
+      "range": {
+        "startLine": 20,
+        "startChar": 86,
+        "endLine": 20,
+        "endChar": 90
+      },
+      "revId": "77bbd96546587cfff15de2cc04156f9d8dc3e514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c804cb2_bcd34805",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T18:33:55Z",
+      "side": 1,
+      "message": "_REPORT_JAVA_ASSERT isn\u0027t a gn variable. You want: \n\n(is_java_debug || dcheck_always_on || report_java_assert)",
+      "revId": "77bbd96546587cfff15de2cc04156f9d8dc3e514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
