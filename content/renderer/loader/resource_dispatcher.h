@@ -177,7 +177,6 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
   struct PendingRequestInfo {
     PendingRequestInfo(std::unique_ptr<RequestPeer> peer,
                        ResourceType resource_type,
-                       int origin_pid,
                        const url::Origin& frame_origin,
                        const GURL& request_url,
                        bool download_to_file);
@@ -186,10 +185,6 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
 
     std::unique_ptr<RequestPeer> peer;
     ResourceType resource_type;
-    // The PID of the original process which issued this request. This gets
-    // non-zero only for a request proxied by another renderer, particularly
-    // requests from plugins.
-    int origin_pid;
     MessageQueue deferred_message_queue;
     bool is_deferred = false;
     // Original requested url.
@@ -231,8 +226,7 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
                           const ResourceResponseHead& response_head);
   void OnSetDataBuffer(int request_id,
                        base::SharedMemoryHandle shm_handle,
-                       int shm_size,
-                       base::ProcessId renderer_pid);
+                       int shm_size);
   void OnReceivedData(int request_id,
                       int data_offset,
                       int data_length,
