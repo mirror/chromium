@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ca2a327_dca578b3",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-27T01:12:36Z",
+      "side": 1,
+      "message": "These need to be $i18nPolymer{} so that the \u0027 are handled. This is not a security issue, it just doesn\u0027t work when a language like French that uses \u0027 frequently.",
+      "revId": "e55ef546b5b3957e32f99e79d925e011b8672fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185a8860_d7fb6787",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-27T01:12:36Z",
+      "side": 1,
+      "message": "$i18nPolymer",
+      "revId": "e55ef546b5b3957e32f99e79d925e011b8672fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
