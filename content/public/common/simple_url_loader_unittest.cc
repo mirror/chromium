@@ -1627,6 +1627,17 @@ TEST_P(SimpleURLLoaderTest, RetryWithUnboundFactory) {
   EXPECT_FALSE(test_helper()->response_body());
 }
 
+TEST_P(SimpleURLLoaderTest, DisallowRedirects) {
+  MockURLLoaderFactory loader_factory(&scoped_task_environment_);
+  loader_factory.AddEvents({TestLoaderEvent::kReceivedRedirect});
+  test_helper()->simple_url_loader()->SetAllowRedirects(false);
+  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+
+  EXPECT_EQ(net::ERR_INVALID_REDIRECT,
+            test_helper()->simple_url_loader()->NetError());
+  EXPECT_FALSE(test_helper()->response_body());
+}
+
 INSTANTIATE_TEST_CASE_P(
     /* No prefix */,
     SimpleURLLoaderTest,

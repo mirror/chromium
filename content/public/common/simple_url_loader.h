@@ -174,6 +174,16 @@ class CONTENT_EXPORT SimpleURLLoader {
   // TODO(mmenke): Consider adding a new error code for this.
   virtual void SetAllowHttpErrorResults(bool allow_http_error_results) = 0;
 
+  // Sets whether to allow following redirects. Defautls to true.
+  //
+  // When false, any 3xx result is blocked and the request will fail with
+  // net::INVALID_REDIRECT.
+  //
+  // When true, redirects are treated normally.
+  //
+  // May only be called before the request is started.
+  virtual void SetAllowRedirects(bool allow_redirects) = 0;
+
   // Sets the when to try and the max number of times to retry a request, if
   // any. |max_retries| is the number of times to retry the request, not
   // counting the initial request. |retry_mode| is a combination of one or more

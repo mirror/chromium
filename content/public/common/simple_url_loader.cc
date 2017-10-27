@@ -89,6 +89,7 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
       const OnRedirectCallback& on_redirect_callback) override;
   void SetAllowPartialResults(bool allow_partial_results) override;
   void SetAllowHttpErrorResults(bool allow_http_error_results) override;
+  void SetAllowRedirects(bool allow_redirects) override;
   void SetRetryOptions(int max_retries, int retry_mode) override;
   int NetError() const override;
   const ResourceResponseHead* ResponseInfo() const override;
@@ -177,6 +178,7 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
   OnRedirectCallback on_redirect_callback_;
   bool allow_partial_results_ = false;
   bool allow_http_error_results_ = false;
+  bool allow_redirects_ = true;
 
   // Information related to retrying.
   int remaining_retries_ = 0;
@@ -834,6 +836,12 @@ void SimpleURLLoaderImpl::SetAllowHttpErrorResults(
   allow_http_error_results_ = allow_http_error_results;
 }
 
+void SimpleURLLoaderImpl::SetAllowRedirects(bool allow_redirects) {
+  // Check if a request has not yet been started.
+  DCHECK(!body_handler_);
+  allow_redirects_ = allow_redirects;
+}
+
 void SimpleURLLoaderImpl::SetRetryOptions(int max_retries, int retry_mode) {
   // Check if a request has not yet been started.
   DCHECK(!body_handler_);
@@ -993,6 +1001,12 @@ void SimpleURLLoaderImpl::OnReceiveRedirect(
     // If the headers have already been received, the URLLoader is violating the
     // API contract.
     FinishWithResult(net::ERR_UNEXPECTED);
+    return;
+  }
+
+  // If it was explicitly set to not allow redirects we opt out.
+  if (!allow_redirects_) {
+    FinishWithResult(net::ERR_INVALID_REDIRECT);
     return;
   }
 
