@@ -34,6 +34,24 @@
       "revId": "1edaa238f6f9313b86f55a423bb70c370124b2ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2007afdf_6e7e7411",
+        "filename": "third_party/WebKit/Source/core/paint/ThemePainterMac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-27T17:04:16Z",
+      "side": 1,
+      "message": "Ah ok, I see. I had read it wrong.",
+      "parentUuid": "3cade5f8_10ed22fb",
+      "revId": "1edaa238f6f9313b86f55a423bb70c370124b2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
