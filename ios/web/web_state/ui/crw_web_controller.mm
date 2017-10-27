@@ -2890,15 +2890,26 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // link.
     BOOL isNavigationTypeLinkActivated =
         action.navigationType == WKNavigationTypeLinkActivated;
-    if ([_delegate openExternalURL:requestURL
-                         sourceURL:sourceURL
-                       linkClicked:isNavigationTypeLinkActivated]) {
-      // Record the URL so that errors reported following the 'NO' reply can be
-      // safely ignored.
-      [_openedApplicationURL addObject:request.URL];
-      if ([self shouldClosePageOnNativeApplicationLoad])
-        _webStateImpl->CloseWebState();
-    }
+    __weak CRWWebController* weakSelf = self;
+    [_delegate
+        openExternalURL:requestURL
+              sourceURL:sourceURL
+            linkClicked:isNavigationTypeLinkActivated
+             completion:^(BOOL success) {
+               if (!success)
+                 return;
+               CRWWebController* strongSelf = weakSelf;
+               if (strongSelf) {
+                 // Record the URL so that errors reported following the 'NO'
+                 // reply can be safely ignored.
+                 [strongSelf->_openedApplicationURL addObject:request.URL];
+                 if ([strongSelf shouldClosePageOnNativeApplicationLoad]) {
+                   web::WebStateImpl* webStateImpl = strongSelf->_webStateImpl;
+                   if (webStateImpl)
+                     webStateImpl->CloseWebState();
+                 }
+               }
+             }];
     return NO;
   }
 
