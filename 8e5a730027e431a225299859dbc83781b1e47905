@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2fac61fa_5d3caf10",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-27T15:35:58Z",
+      "side": 1,
+      "message": "These are for the highlighted background, while 245-248 are for the text with rounded corners.",
+      "parentUuid": "a4a00921_8f44b4be",
+      "range": {
+        "startLine": 226,
+        "startChar": 27,
+        "endLine": 226,
+        "endChar": 36
+      },
+      "revId": "8e5a730027e431a225299859dbc83781b1e47905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "debd87be_2814aa0b",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-27T03:12:54Z",
       "side": 1,
       "message": "It seems that for some of the languages, the text would still not fit in one line. Is this case covered? Georgian and some other languages produce long strings - see https://tc.corp.google.com/btviewer/messagedetail?project\u003dChromeClient\u0026msgId\u003d8785781019989003024 .\nDo you think you can try that and post some screenshots on the bug with this change?",
+      "range": {
+        "startLine": 233,
+        "startChar": 20,
+        "endLine": 233,
+        "endChar": 24
+      },
+      "revId": "8e5a730027e431a225299859dbc83781b1e47905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd950ee_18daf44a",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-27T15:35:58Z",
+      "side": 1,
+      "message": "Added a screenshot in Bulgarian, which is the longest string in that link. Since it\u0027s rotated to match the short side of the display, theres still ample space left for one line.",
+      "parentUuid": "debd87be_2814aa0b",
       "range": {
         "startLine": 233,
         "startChar": 20,
