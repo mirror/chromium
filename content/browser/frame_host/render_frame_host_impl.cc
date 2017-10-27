@@ -2166,6 +2166,10 @@ bool RenderFrameHostImpl::IsFeatureEnabled(
                                 feature, GetLastCommittedOrigin());
 }
 
+void RenderFrameHostImpl::ViewSource() {
+  delegate_->ViewSource(this);
+}
+
 void RenderFrameHostImpl::OnDidAccessInitialDocument() {
   delegate_->DidAccessInitialDocument();
 }
