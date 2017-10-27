@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "e490f749_50bdafde",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_match.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-27T23:30:38Z",
+      "side": 1,
+      "message": "nit: White space.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01ccf297_28c3f435",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_match.html",
         "patchSetId": 1
@@ -42,6 +65,23 @@
         "endLine": 43,
         "endChar": 45
       },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "839052ea_4d4c1ffc",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-27T23:30:38Z",
+      "side": 1,
+      "message": "nit: White space",
       "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +196,29 @@
         "startChar": 20,
         "endLine": 3,
         "endChar": 28
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b68747_dbdda91f",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-27T23:30:38Z",
+      "side": 1,
+      "message": "Why do we have to convert from degrees to radiens? Is this a compatibility thing?",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 37
       },
       "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
