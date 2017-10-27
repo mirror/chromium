@@ -16,6 +16,24 @@
       "revId": "189a4b24dc51e8f3e249e0bc2e6ecf86525385eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8994049_4ec776ac",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2646,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-27T21:45:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64fa0ab5_6b6f9b40",
+      "revId": "189a4b24dc51e8f3e249e0bc2e6ecf86525385eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
