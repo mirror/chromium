@@ -125,6 +125,7 @@ void BrowserGpuChannelHostFactory::EstablishRequest::OnEstablishedOnIO(
     const gpu::GPUInfo& gpu_info,
     const gpu::GpuFeatureInfo& gpu_feature_info,
     GpuProcessHost::EstablishChannelStatus status) {
+#if !defined(OS_ANDROID)
   if (!channel_handle.mojo_handle.is_valid() &&
       status == GpuProcessHost::EstablishChannelStatus::GPU_HOST_INVALID) {
     DVLOG(1) << "Failed to create channel on existing GPU process. Trying to "
@@ -132,6 +133,7 @@ void BrowserGpuChannelHostFactory::EstablishRequest::OnEstablishedOnIO(
     EstablishOnIO();
     return;
   }
+#endif
   channel_handle_ = channel_handle;
   gpu_info_ = gpu_info;
   gpu_feature_info_ = gpu_feature_info;
