@@ -204,6 +204,30 @@
     },
     {
       "key": {
+        "uuid": "0c9364a9_5ae675b7",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T12:25:34Z",
+      "side": 1,
+      "message": "Some more details, since the previous message was sent before I could complete it.\n\n1. When the audio stack moves to a separate process, a continuous stream of power-level updates for WebContentsImpl will be a lot more expensive since they will be IPC calls instead of local callback invocations. WCI only needs to know if audio becomes audible or not audible, so reducing notifications to only these events is very important for performance. I don\u0027t see any particular reason why the constant with the silence threshold cannot be defined and used in media/. It can also be used in content and chrome for future features.\n\n2. Nothing prevents us from reporting power-level info from the audio process to the browser process in the future so that the feature you mention can be developed. We just have to be careful about performance. Perhaps the requirements for the feature can be fulfilled without all active audio streams sending 15 IPC calls per second to the browser. Let\u0027s discuss more about it offline.",
+      "parentUuid": "b3ce30e0_1da849f4",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ead9191_0c50f3d6",
         "filename": "media/mojo/interfaces/audio_output_stream.mojom",
         "patchSetId": 1
@@ -224,6 +248,30 @@
       "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdee5fc5_2669aa44",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T12:25:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8ead9191_0c50f3d6",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
