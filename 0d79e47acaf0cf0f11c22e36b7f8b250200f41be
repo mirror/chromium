@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99c82527_14fab027",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T13:09:18Z",
+      "side": 1,
+      "message": "it seems like it would be convenient and more safe for this to also return the length of the buffer.",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0358332_bbd2f79a",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T13:09:18Z",
+      "side": 1,
+      "message": "nit: i think it\u0027s fine to leave |out| undefined in case of error.",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc650452_9721ad20",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T13:09:18Z",
+      "side": 1,
+      "message": "make this a ComPtr?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 44
+      },
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156ae20f_a2820673",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T13:09:18Z",
+      "side": 1,
+      "message": "why is the created IBuffer instance not held in a smart pointer here? failures below will lead to a leak unless callers jump through hoops. it makes sense to me that this function would not return an instance in |buffer| unless everything succeeds.",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc8e480_a2a941b9",
+        "filename": "base/win/winrt_storage_util_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T13:09:18Z",
+      "side": 1,
+      "message": "this should really test the length reported by |buffer| before walking over the buffer data.",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
