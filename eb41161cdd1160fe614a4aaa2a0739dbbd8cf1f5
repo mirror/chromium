@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcc1b92a_d77bc81b",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceIntegrityHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-27T01:09:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffb8e9e6_c399c7ba",
+      "revId": "eb41161cdd1160fe614a4aaa2a0739dbbd8cf1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48072aee_c3afdbf4",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "eb41161cdd1160fe614a4aaa2a0739dbbd8cf1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5d097b_6f17d135",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-27T01:09:19Z",
+      "side": 1,
+      "message": "Done. A part of changes is done in https://chromium-review.googlesource.com/c/chromium/src/+/738789.",
+      "parentUuid": "48072aee_c3afdbf4",
+      "revId": "eb41161cdd1160fe614a4aaa2a0739dbbd8cf1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,24 @@
       "revId": "eb41161cdd1160fe614a4aaa2a0739dbbd8cf1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393ac83e_4d9c0980",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-27T01:09:19Z",
+      "side": 1,
+      "message": "Ack. Thanks for details!",
+      "parentUuid": "247218f3_e693f0e1",
+      "revId": "eb41161cdd1160fe614a4aaa2a0739dbbd8cf1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
