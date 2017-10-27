@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "416b9c37_73e0e0c6",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-27T21:51:46Z",
+      "side": 1,
+      "message": "nit: document literal nullptr parameter name",
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28c6592_d4c3b935",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-27T21:51:46Z",
+      "side": 1,
+      "message": "nit: document literal nullptr parameter name",
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92035221_61e6b1a8",
+        "filename": "ash/login/ui/login_bubble_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-27T21:51:46Z",
+      "side": 1,
+      "message": "nit: document parameter name since this is a literal",
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aeb8269_3b736e17",
+        "filename": "ash/login/ui/login_bubble_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-27T21:51:46Z",
+      "side": 1,
+      "message": "nit: DEACTIVATED",
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "930d78f2_fdec2f64",
         "filename": "ash/login/ui/login_button.cc",
         "patchSetId": 2
@@ -19,6 +87,40 @@
         "endLine": 19,
         "endChar": 27
       },
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73dc9e37_d360170a",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-27T21:51:46Z",
+      "side": 1,
+      "message": "Should LoginButton default this to true?",
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288a4597_de1fc586",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-27T21:51:46Z",
+      "side": 1,
+      "message": "Nice cleanup",
       "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
