@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be2cc4d9_bc2df916",
+        "filename": "components/viz/common/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-27T01:18:28Z",
+      "side": 1,
+      "message": "Yeah, looks like it\u0027s not actually needed anymore. Removed.",
+      "parentUuid": "133b1d01_12df4446",
+      "revId": "4f3674b789466d8d0982f691e1b5222ac601c017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63798c24_39c7300a",
         "filename": "services/viz/privileged/interfaces/viz_main.mojom",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4f3674b789466d8d0982f691e1b5222ac601c017",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be4bd57_0d8cf634",
+        "filename": "services/viz/privileged/interfaces/viz_main.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-27T01:18:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63798c24_39c7300a",
+      "revId": "4f3674b789466d8d0982f691e1b5222ac601c017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
