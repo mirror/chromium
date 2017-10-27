@@ -4,6 +4,8 @@
 
 #include "chrome/browser/chromeos/tether/tether_service.h"
 
+#include "ash/session/session_controller.h"
+#include "ash/shell.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/macros.h"
@@ -106,12 +108,11 @@ std::string TetherService::TetherFeatureStateToString(
 TetherService::TetherService(
     Profile* profile,
     chromeos::PowerManagerClient* power_manager_client,
-    chromeos::SessionManagerClient* session_manager_client,
     cryptauth::CryptAuthService* cryptauth_service,
     chromeos::NetworkStateHandler* network_state_handler)
     : profile_(profile),
+      session_observer_(this),
       power_manager_client_(power_manager_client),
-      session_manager_client_(session_manager_client),
       cryptauth_service_(cryptauth_service),
       network_state_handler_(network_state_handler),
       notification_presenter_(
@@ -122,7 +123,6 @@ TetherService::TetherService(
       timer_(base::MakeUnique<base::OneShotTimer>()),
       weak_ptr_factory_(this) {
   power_manager_client_->AddObserver(this);
-  session_manager_client_->AddObserver(this);
   cryptauth_service_->GetCryptAuthDeviceManager()->AddObserver(this);
   network_state_handler_->AddObserver(this, FROM_HERE);
 
@@ -195,7 +195,6 @@ void TetherService::Shutdown() {
   // Remove all observers. This ensures that once Shutdown() is called, no more
   // calls to UpdateTetherTechnologyState() will be triggered.
   power_manager_client_->RemoveObserver(this);
-  session_manager_client_->RemoveObserver(this);
   cryptauth_service_->GetCryptAuthDeviceManager()->RemoveObserver(this);
   network_state_handler_->RemoveObserver(this, FROM_HERE);
   if (adapter_)
@@ -208,6 +207,10 @@ void TetherService::Shutdown() {
   StopTetherIfNecessary();
 
   notification_presenter_.reset();
+}
+
+void TetherService::OnLockStateChanged(bool locked) {
+  UpdateTetherTechnologyState();
 }
 
 void TetherService::SuspendImminent() {
@@ -226,14 +229,6 @@ void TetherService::SuspendDone(const base::TimeDelta& sleep_duration) {
     tether_component_.reset();
   }
 
-  UpdateTetherTechnologyState();
-}
-
-void TetherService::ScreenIsLocked() {
-  UpdateTetherTechnologyState();
-}
-
-void TetherService::ScreenIsUnlocked() {
   UpdateTetherTechnologyState();
 }
 
@@ -489,7 +484,7 @@ TetherService::TetherFeatureState TetherService::GetTetherFeatureState() {
   if (!GetIsBleAdvertisingSupportedPref())
     return BLE_ADVERTISING_NOT_SUPPORTED;
 
-  if (session_manager_client_->IsScreenLocked())
+  if (ash::Shell::Get()->session_controller()->IsScreenLocked())
     return SCREEN_LOCKED;
 
   if (!HasSyncedTetherHosts())

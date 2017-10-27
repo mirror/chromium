@@ -9,14 +9,18 @@
 
 namespace chromeos {
 
-ExtensionSystemEventObserver::ExtensionSystemEventObserver() {
+ExtensionSystemEventObserver::ExtensionSystemEventObserver()
+    : session_observer_(this) {
   DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(this);
-  DBusThreadManager::Get()->GetSessionManagerClient()->AddObserver(this);
 }
 
 ExtensionSystemEventObserver::~ExtensionSystemEventObserver() {
   DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(this);
-  DBusThreadManager::Get()->GetSessionManagerClient()->RemoveObserver(this);
+}
+
+void ExtensionSystemEventObserver::OnLockStateChanged(bool locked) {
+  if (!locked)
+    extensions::DispatchScreenUnlockedEvent();
 }
 
 void ExtensionSystemEventObserver::BrightnessChanged(int level,
@@ -27,10 +31,6 @@ void ExtensionSystemEventObserver::BrightnessChanged(int level,
 void ExtensionSystemEventObserver::SuspendDone(
     const base::TimeDelta& sleep_duration) {
   extensions::DispatchWokeUpEvent();
-}
-
-void ExtensionSystemEventObserver::ScreenIsUnlocked() {
-  extensions::DispatchScreenUnlockedEvent();
 }
 
 }  // namespace chromeos

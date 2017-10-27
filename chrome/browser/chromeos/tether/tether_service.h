@@ -7,13 +7,13 @@
 
 #include <memory>
 
+#include "ash/session/session_observer.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
 #include "chromeos/components/tether/tether_component.h"
 #include "chromeos/dbus/power_manager_client.h"
-#include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/network/network_state_handler.h"
 #include "chromeos/network/network_state_handler_observer.h"
 #include "components/cryptauth/cryptauth_device_manager.h"
@@ -36,8 +36,8 @@ class PrefRegistrySimple;
 class Profile;
 
 class TetherService : public KeyedService,
+                      public ash::SessionObserver,
                       public chromeos::PowerManagerClient::Observer,
-                      public chromeos::SessionManagerClient::Observer,
                       public cryptauth::CryptAuthDeviceManager::Observer,
                       public device::BluetoothAdapter::Observer,
                       public chromeos::NetworkStateHandlerObserver,
@@ -45,7 +45,6 @@ class TetherService : public KeyedService,
  public:
   TetherService(Profile* profile,
                 chromeos::PowerManagerClient* power_manager_client,
-                chromeos::SessionManagerClient* session_manager_client,
                 cryptauth::CryptAuthService* cryptauth_service,
                 chromeos::NetworkStateHandler* network_state_handler);
   ~TetherService() override;
@@ -68,13 +67,12 @@ class TetherService : public KeyedService,
   // KeyedService:
   void Shutdown() override;
 
+  // ash::SessionObserver:
+  void OnLockStateChanged(bool locked) override;
+
   // chromeos::PowerManagerClient::Observer:
   void SuspendImminent() override;
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
-
-  // chromeos::SessionManagerClient::Observer:
-  void ScreenIsLocked() override;
-  void ScreenIsUnlocked() override;
 
   // cryptauth::CryptAuthDeviceManager::Observer
   void OnSyncFinished(cryptauth::CryptAuthDeviceManager::SyncResult sync_result,
@@ -221,8 +219,8 @@ class TetherService : public KeyedService,
       TetherFeatureState::TETHER_FEATURE_STATE_MAX;
 
   Profile* profile_;
+  ash::ScopedSessionObserver session_observer_;
   chromeos::PowerManagerClient* power_manager_client_;
-  chromeos::SessionManagerClient* session_manager_client_;
   cryptauth::CryptAuthService* cryptauth_service_;
   chromeos::NetworkStateHandler* network_state_handler_;
   std::unique_ptr<chromeos::tether::NotificationPresenter>
