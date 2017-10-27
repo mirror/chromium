@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "eccab762_2aa2137f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: Thanks for acknowledging the CL\u0027s size and clarifying why you chose to avoid splitting it down. :)  However, I don\u0027t think we need this note in the CL description.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 70
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a449497b_f85e42ef",
+        "filename": "chrome/browser/memory/swap_thrashing_level.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: We used to not use namespaces in the //chrome directory, since //chrome is essentially the \"embedder\" for everything else - has that changed?",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc874843_1828b37d",
+        "filename": "chrome/browser/memory/swap_thrashing_level.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: Do we really need a whole header for SwapThrashingLevel?\n\nHow about defining it in the SwapThrashingDelegate header?",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "515fcffd_ad600a6c",
         "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
         "patchSetId": 10
@@ -41,6 +110,75 @@
         "startChar": 0,
         "endLine": 30,
         "endChar": 48
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7d6981_7b6cfd83",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: No need for this comment. :)",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cccf8e1d_a646b76a",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: DCHECK(!g_instance)\n\nDCHECK_EQ(...) will log the values on failure, which isn\u0027t really very useful for pointer values, unless you also have a memory-dump handy!",
+      "range": {
+        "startLine": 63,
+        "startChar": 12,
+        "endLine": 63,
+        "endChar": 19
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c53b033_1e4715f5",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: In non-trivial methods, I usually keep e.g. sequence DCHECKs separated from the actual function logic by a blank line, to aid readability.",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 33
       },
       "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -94,6 +232,282 @@
     },
     {
       "key": {
+        "uuid": "e2f9de9b_361bab98",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: Add a bug # for that work?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 29
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63be3c84_dcbbf6d5",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: Is the state-machine complex enough to deserve a diagram any more?",
+      "range": {
+        "startLine": 15,
+        "startChar": 31,
+        "endLine": 15,
+        "endChar": 40
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7e55a7_3076c909",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: I would suggest describing the levels alongside the enum definition, possibly by breaking it out so that each enum value gets a comment describing the meaning. I\u0027d also recommend keeping the description of the meaning of each level separate from the description of the algorithm - e.g. \"...NONE is the initial level, ...\" doesn\u0027t really describe the NONE level, but the way the monitor behaves; calling code mainly cares about the meaning of the levels, not how they\u0027re generated.",
+      "range": {
+        "startLine": 48,
+        "startChar": 3,
+        "endLine": 48,
+        "endChar": 11
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a35780_7ef13ecd",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: This comment doesn\u0027t add anything useful. :P",
+      "range": {
+        "startLine": 78,
+        "startChar": 16,
+        "endLine": 78,
+        "endChar": 17
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb7d1be_baee168f",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "Under what circumstances would a caller want to create a SwapThrashingMonitor but _not_ then pass it to SetInstance?  Could we just have a static SwapThrashingMonitor::Initialize() that the calling process must invoke at some point before GetCurrentSwapThrashingLevel()?",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 22
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604603d6_b1d19d75",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "Similarly, this comment is pretty much repeating what the code below it expresses; if there is extra detail you want to convey (e.g. that |instance| will actually be leaked on shutdown, in spite of being a unique_ptr? e.g. that this can or can\u0027t be called multiple times, if you want to replace the instance? e.g. that calling it with nullptr to cause the old instance to be deleted is OK? etc) then a comment here would be more reasonable.\n\nAlso, since this is working with a global, you might want to clarify any threading restriction.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 53
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb9efb3_94936d3c",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "As above, is there a threading restriction?",
+      "range": {
+        "startLine": 86,
+        "startChar": 31,
+        "endLine": 86,
+        "endChar": 42
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d0547f_27e70423",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "Similarly, is this thread-safe, or not?",
+      "range": {
+        "startLine": 89,
+        "startChar": 21,
+        "endLine": 89,
+        "endChar": 49
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94151b99_b97c6ffe",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: As above, \"Checks the swap-thrashing pressure\" really just repeats the name of the function (which is a great, descriptive, name already!) so you might want to reword it to be more specific, e.g:\n\n\"Takes fresh measurements from the OS, calculates and stores the level from them, and emits metrics if necessary.\"",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 39
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5fecc9_b336d2a4",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: As above, this function\u0027s name already neatly conveys what this comment expresses. :)",
+      "range": {
+        "startLine": 96,
+        "startChar": 22,
+        "endLine": 96,
+        "endChar": 25
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b60def1_270bbfff",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: As above, the member variable name is sufficient to describe what it does, and is for.",
+      "range": {
+        "startLine": 103,
+        "startChar": 22,
+        "endLine": 103,
+        "endChar": 31
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc43407d_c2471db0",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: You could remove this comment and rename the timer to check_timer_, for example.",
+      "range": {
+        "startLine": 106,
+        "startChar": 25,
+        "endLine": 106,
+        "endChar": 30
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5df2591b_c6580620",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate.h",
         "patchSetId": 10
@@ -111,6 +525,70 @@
     },
     {
       "key": {
+        "uuid": "8e8d47f9_14e6df32",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "This was my suggestion, to mirror the compile-time-implementation-selection we use for other platform-specific code.\n\nIf you prefer that this be an interface (maybe makes testing the Monitor easier?) then that\u0027s fine by me.",
+      "parentUuid": "5df2591b_c6580620",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92022d6_b0d07930",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "There is a neat trick with decltyp that you can use instead, given that you have already included the header that actually defines this function, to just do this all-in-one (see https://cs.chromium.org/chromium/src/base/memory/discardable_shared_memory.cc?type\u003dcs\u0026q\u003dDiscardVirtualMemory\u0026sq\u003dpackage:chromium\u0026l\u003d398).",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 62
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad6eacc_1993af55",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "You need to define the units here; e.g. is that eight hard faults over a second, or a minute, or some other period?",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 77
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e676be9_25282bdd",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
         "patchSetId": 10
@@ -122,6 +600,29 @@
       "writtenOn": "2017-10-27T15:52:28Z",
       "side": 1,
       "message": "I\u0027m not sure if the assumption is realistic but let\u0027s give it a shot :)\n\nWhat matters is to iterate until we get a good metric!",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a339692_1f5c2d5e",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "typo: of",
+      "range": {
+        "startLine": 38,
+        "startChar": 46,
+        "endLine": 38,
+        "endChar": 49
+      },
       "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -179,6 +680,167 @@
     },
     {
       "key": {
+        "uuid": "8685e570_02132547",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "Could this just return a base::Optional\u003cint64_t\u003e instead?",
+      "range": {
+        "startLine": 80,
+        "startChar": 52,
+        "endLine": 80,
+        "endChar": 77
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d8fe00_d4c0bcdd",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "Rather than document future work in-line, can we file a bug with the detail, and just have TODO(...): Use TaskManager to get this information (crbug.com/...).  (Same applies to the other detailed comments on future work!)",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 89,
+        "endChar": 39
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af22ba1e_4431d00d",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: No need for this comment :)",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2584bec_101beb59",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "As per style-guide, can we call this e.g. query_system_information_ptr?",
+      "range": {
+        "startLine": 96,
+        "startChar": 43,
+        "endLine": 96,
+        "endChar": 57
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6922657_40cef146",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: !query_sys_info",
+      "range": {
+        "startLine": 99,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 31
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9646766c_4bd75e1b",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "This assumes that |return_length| is valid regardless of |status|; I\u0027d recommend following the pattern at https://cs.chromium.org/chromium/src/chrome/browser/task_manager/sampling/shared_sampler_win.cc?type\u003dcs\u0026q\u003dNtQuerySystemInformation+task_manager\u0026sq\u003dpackage:chromium\u0026l\u003d116 and only resizing on an explicit size-mismatch |status|.",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 37
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44ad90e_34e3347b",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "Surely we can\u0027t reach here if return_length \u003e buffer.size(), because of the continue in the preceding conditional?",
+      "range": {
+        "startLine": 119,
+        "startChar": 27,
+        "endLine": 119,
+        "endChar": 60
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7385bce4_8a5947da",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
         "patchSetId": 10
@@ -190,6 +852,70 @@
       "writtenOn": "2017-10-27T15:52:28Z",
       "side": 1,
       "message": "Why do we need to assign a constant to another constant?",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3210ec3b_a5bb7b62",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "+1 :)",
+      "parentUuid": "7385bce4_8a5947da",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6abdaed_707bfa50",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "!last_observation_",
+      "range": {
+        "startLine": 163,
+        "startChar": 6,
+        "endLine": 163,
+        "endChar": 40
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7c5ec7_24cd6ac6",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "Maintaining the above-the-threshold count on each observation like this seems more expensive than just recalculating it by iterating over the (very small number of) samples to count them for every calculation - WDYT?\n\nAlso, it\u0027s not clear whether circular_deque() aids readability here - you could instead just have an initially-zero\u0027d array of kSampleCount samples, and an index into that which tells you which one to overwrite next, rather than pushing \u0026 popping.",
+      "range": {
+        "startLine": 170,
+        "startChar": 4,
+        "endLine": 173,
+        "endChar": 5
+      },
       "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -213,6 +939,121 @@
     },
     {
       "key": {
+        "uuid": "f3c2b53d_819c044b",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: This comment would presumably look similar/identical on the other platforms, in which case it is really part of the Delegate API contract with the Monitor, and so belongs with the Delegate interface (if you choose to make it into an interface as Kentaro suggests) or with the Monitor implementation.",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a407ab49_f06603fb",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: Maybe move this into the implementation .cc, since it is really a detail of the implementation, and doesn\u0027t affect how the Monitor should treat the Delegate.",
+      "range": {
+        "startLine": 15,
+        "startChar": 20,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48631bfe_41f31252",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: The preceding comment is general to Delegate implementations, so should go in the interface definition.",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 21
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b707225_3aec94de",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "It\u0027s not clear what is meant by \"posted to a task runner and run asynchronously\" - do you mean whether it should do a PostTask internally, and invoke a Callback with a result, versus having the Monitor arrange to do that, or something else?",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d603dba7_6c515900",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: As noted elsewhere, \"observation\" and \"sample\" are both pretty generic; I\u0027d suggest picking more descriptive names e.g. if you renamed |sample| to |hard_fault_delta| or |hard_fault_rate| that would tell me what the function expects the value to mean.",
+      "range": {
+        "startLine": 56,
+        "startChar": 32,
+        "endLine": 56,
+        "endChar": 38
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2312c38_4032f071",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
         "patchSetId": 10
@@ -224,6 +1065,70 @@
       "writtenOn": "2017-10-27T15:52:28Z",
       "side": 1,
       "message": "adobe \u003d\u003e above",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a60cd1_8e71da3b",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: The name of this is non-obvious, and there is no explanatory comment - IIUC this is the hard-fault rate above which we consider that there is thrashing, so can we call it hard_fault_thrashing_threshold() or something of that sort?\n\nAlthough, reading the comment below, it seems that this is the *number* of samples that were above the threshold, not the threshold itself?",
+      "parentUuid": "b2312c38_4032f071",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3760e1_90d6ed81",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: For comments of this sort, you can usually drop the \"The\", so it just says \"Number of ...\", FWIW.",
+      "range": {
+        "startLine": 63,
+        "startChar": 11,
+        "endLine": 63,
+        "endChar": 17
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a579b306_79a8d38f",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-27T21:25:16Z",
+      "side": 1,
+      "message": "nit: Yay for English; \"last\" might mean \"most recent\" or \"final\", or \"previous\", depending on context; I would suggest calling this something starting with current_ or latest_, for example, to make that clearer.\n\nAlso, \"observation\" isn\u0027t a helpful description, since it doesn\u0027t tell me what the value means - hard_fault_count would be more explicit, so latest_hard_fault_count, for example, might be a more suitable name.",
+      "range": {
+        "startLine": 66,
+        "startChar": 11,
+        "endLine": 66,
+        "endChar": 15
+      },
       "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
