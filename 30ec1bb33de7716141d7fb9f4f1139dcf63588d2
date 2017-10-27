@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d8fba30_b639cfad",
+        "filename": "ui/keyboard/container_full_width_behavior.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-27T07:06:42Z",
+      "side": 1,
+      "message": "SetCanonicalBounds(container, display_bounds)?",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "30ec1bb33de7716141d7fb9f4f1139dcf63588d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c0b033_1bec0408",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-27T07:06:42Z",
+      "side": 1,
+      "message": "Can you add a comment for this method? Please mention that calling this method may invoke hiding and showing the VK.",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 50
+      },
+      "revId": "30ec1bb33de7716141d7fb9f4f1139dcf63588d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
