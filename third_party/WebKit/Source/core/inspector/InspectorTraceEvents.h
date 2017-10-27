@@ -395,7 +395,7 @@ std::unique_ptr<TracedValue> Data(unsigned long identifier, const String& url);
 
 namespace InspectorCompileScriptEvent {
 
-struct V8CacheResult {
+struct CORE_EXPORT V8CacheResult {
   struct ProduceResult {
     ProduceResult(v8::ScriptCompiler::CompileOptions produce_options,
                   int cache_size);

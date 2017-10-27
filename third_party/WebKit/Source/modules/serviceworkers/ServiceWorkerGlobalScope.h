@@ -104,6 +104,11 @@ class MODULES_EXPORT ServiceWorkerGlobalScope final : public WorkerGlobalScope {
                                               WaitUntilObserver*,
                                               RespondWithObserver*);
 
+  bool is_being_installed() const { return is_being_installed_; }
+  void set_is_being_installed(bool is_being_installed) {
+    is_being_installed_ = is_being_installed;
+  }
+
   DEFINE_ATTRIBUTE_EVENT_LISTENER(install);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(activate);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(fetch);
@@ -139,6 +144,7 @@ class MODULES_EXPORT ServiceWorkerGlobalScope final : public WorkerGlobalScope {
   size_t script_count_ = 0;
   size_t script_total_size_ = 0;
   size_t script_cached_metadata_total_size_ = 0;
+  bool is_being_installed_ = false;
 };
 
 DEFINE_TYPE_CASTS(ServiceWorkerGlobalScope,
