@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "caaf6ddf_9f163c33",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioScheduledSourceNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T11:07:59Z",
+      "side": 1,
+      "message": "Ah, sorry. I was misunderstanding the context of this CL.\n\nHmm. Caching task_runner_ looks correct and desirable, but we should have a mechanism to prevent the task from getting posted after the context gets detached.\n\nAn easy fix would be to use:\n\n  if (Context()-\u003eGetExecutionContext())\n    task_runner_-\u003ePostTask(...);\n\nThis pattern is not nice because non-main threads should not access SuspendableObject::GetExecutionContext(). (SuspendableObject is not thread-safe.) However, I\u0027m okay with addressing the issue in a follow-up CL since that\u0027s a separate issue from this CL.",
+      "parentUuid": "16ce7a12_61efcbc2",
+      "revId": "57ad310481e0d6263f2f57f479f1843a1af20279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a57cd79_19f62906",
         "filename": "third_party/WebKit/Source/modules/webaudio/MediaElementAudioSourceNode.cpp",
         "patchSetId": 3
