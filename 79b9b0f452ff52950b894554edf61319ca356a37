@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c66fc634_5354c9a2",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-27T03:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e0e3a2f_154656b0",
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b5048b7_68817ddb",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 12
@@ -84,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "00c75238_07534b34",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-27T03:40:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0dff5340_8174da7f",
+      "range": {
+        "startLine": 290,
+        "startChar": 6,
+        "endLine": 290,
+        "endChar": 45
+      },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1238c31c_a57938f3",
         "filename": "third_party/WebKit/Source/modules/webdatabase/WebDatabaseImpl.cpp",
         "patchSetId": 12
@@ -98,6 +140,24 @@
       "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec8039d_c391914c",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/WebDatabaseImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-27T03:40:22Z",
+      "side": 1,
+      "message": "This is the implementation of the Mojo interface tho - so I think it\u0027s OK as is.",
+      "parentUuid": "1238c31c_a57938f3",
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +184,30 @@
     },
     {
       "key": {
+        "uuid": "a84666c3_0f525b69",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/WebDatabaseImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-27T03:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcd8a19b_02e4975c",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 41
+      },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af8ed3c4_8edfd665",
         "filename": "third_party/WebKit/public/web/WebKit.h",
         "patchSetId": 12
@@ -144,6 +228,30 @@
       "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27c7a53_816f9c07",
+        "filename": "third_party/WebKit/public/web/WebKit.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-27T03:40:22Z",
+      "side": 1,
+      "message": "Fixed via now using InterfaceRegistry.",
+      "parentUuid": "af8ed3c4_8edfd665",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 29
+      },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -215,6 +323,30 @@
       "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec563c4b_68b6981f",
+        "filename": "third_party/WebKit/public/web/WebKit.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-27T03:40:22Z",
+      "side": 1,
+      "message": "Done, although looks a bit ugly - see what you think.",
+      "parentUuid": "47f4e804_8fc657ce",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 12
+      },
+      "revId": "79b9b0f452ff52950b894554edf61319ca356a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
