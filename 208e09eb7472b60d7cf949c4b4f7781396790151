@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "45610093_0351ed31",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T12:19:16Z",
+      "side": 1,
+      "message": "what is that really testing? if the default ctor is never used in the product, what\u0027s the point of adding it so it can be called in a test?",
+      "parentUuid": "89437088_a14b0fe1",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "208e09eb7472b60d7cf949c4b4f7781396790151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97037fd1_31c00186",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 22

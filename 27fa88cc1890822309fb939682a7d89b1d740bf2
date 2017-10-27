@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a4c848e_2d3f020d",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T12:19:16Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Namespaces \"Do not use using-directives (e.g. using namespace foo).\" could you instead create an alias for the namespace (e.g., \"namespace imaging \u003d ABI::Windows::Graphics::Imaging;\") and use the alias below where relevant?",
+      "revId": "27fa88cc1890822309fb939682a7d89b1d740bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327ead05_efa73664",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T12:19:16Z",
+      "side": 1,
+      "message": "nit: can you forward declare SkBitmap to avoid including its header?",
+      "range": {
+        "startLine": 38,
+        "startChar": 20,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "27fa88cc1890822309fb939682a7d89b1d740bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
