@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4b07317_412cd059",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T21:40:33Z",
+      "side": 1,
+      "message": "This looks to be the opposite of what bo wanted I think.. I thot he was looking for this method to be const (you could actually make it const before except for hud_wants_to_draw_, which suggests that should be set where UpdateDamageTracking is called. I\u0027d also like if this method was const.\n\nMaybe UpdateDamageTracking (in another CL) would move to be called when we UpdateDrawProperties on the active tree?",
+      "revId": "d10c903d55b9f769f9954309648bef406cb03202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d37ee4_dcda4d00",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T21:40:33Z",
+      "side": 1,
+      "message": "Mention when this can be called (when the active tree\u0027s draw properties are valid, after updating the damage)?",
+      "revId": "d10c903d55b9f769f9954309648bef406cb03202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
