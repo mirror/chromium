@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef64940a_6e670a4c",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-27T09:43:57Z",
+      "side": 1,
+      "message": "Does MC need to be including this at all?",
+      "range": {
+        "startLine": 120,
+        "startChar": 42,
+        "endLine": 120,
+        "endChar": 70
+      },
+      "revId": "07e56b8dbf7825526c0d09b33e5991389a8f63b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
