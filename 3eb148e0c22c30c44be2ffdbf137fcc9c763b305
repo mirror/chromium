@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "160087dc_f395c14e",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-27T18:51:28Z",
+      "side": 1,
+      "message": "this, plus the few bits below that adds viewport damage probably should be pulled into HasDamage as well I think",
+      "revId": "3eb148e0c22c30c44be2ffdbf137fcc9c763b305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
