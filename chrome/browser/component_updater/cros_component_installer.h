@@ -82,9 +82,14 @@ class CrOSComponentInstallerPolicy : public ComponentInstallerPolicy {
 // This class contains functions used to register and install a component.
 class CrOSComponent {
  public:
+  // Install a component and keep it up-to-date.
   static void LoadComponent(
       const std::string& name,
       base::OnceCallback<void(const std::string&)> load_callback);
+
+  // Stop updating and remove a component.
+  static void RemoveComponent(const std::string& name,
+                              base::OnceCallback<void(bool)> remove_callback);
 
   // Returns all installed components.
   static std::vector<ComponentConfig> GetInstalledComponents();
