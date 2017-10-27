@@ -140,6 +140,46 @@
     },
     {
       "key": {
+        "uuid": "7e42b70c_7b320a41",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-10-27T08:04:43Z",
+      "side": 1,
+      "message": "Tiny nit:\nInitialize parameters with initializer list\nstd::map\u003cstd::string, std::string\u003e parameters \u003d {\n    {kModeParamName, kExternalPrefetchingMode},\n    {kEnableUrlLearningParamName, \"true\"}};",
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79461481_d41b6556",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-10-27T08:04:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 743,
+        "startChar": 39,
+        "endLine": 743,
+        "endChar": 49
+      },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d26a531_a648d25d",
         "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc",
         "patchSetId": 22
