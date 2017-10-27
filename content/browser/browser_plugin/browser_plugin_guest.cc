@@ -256,7 +256,7 @@ void BrowserPluginGuest::SetTooltipText(const base::string16& tooltip_text) {
     return;
   current_tooltip_text_ = tooltip_text;
 
-  SendMessageToEmbedder(base::MakeUnique<BrowserPluginMsg_SetTooltipText>(
+  SendMessageToEmbedder(std::make_unique<BrowserPluginMsg_SetTooltipText>(
       browser_plugin_instance_id_, tooltip_text));
 }
 
@@ -426,7 +426,7 @@ void BrowserPluginGuest::EmbedderVisibilityChanged(bool visible) {
 }
 
 void BrowserPluginGuest::PointerLockPermissionResponse(bool allow) {
-  SendMessageToEmbedder(base::MakeUnique<BrowserPluginMsg_SetMouseLock>(
+  SendMessageToEmbedder(std::make_unique<BrowserPluginMsg_SetMouseLock>(
       browser_plugin_instance_id(), allow));
 }
 
@@ -434,7 +434,7 @@ void BrowserPluginGuest::SetChildFrameSurface(
     const viz::SurfaceInfo& surface_info,
     const viz::SurfaceSequence& sequence) {
   has_attached_since_surface_set_ = false;
-  SendMessageToEmbedder(base::MakeUnique<BrowserPluginMsg_SetChildFrameSurface>(
+  SendMessageToEmbedder(std::make_unique<BrowserPluginMsg_SetChildFrameSurface>(
       browser_plugin_instance_id(), surface_info, sequence));
 }
 
@@ -703,7 +703,7 @@ void BrowserPluginGuest::RenderViewReady() {
   if (attached()) {
     RenderWidgetHostViewGuest* rwhv = static_cast<RenderWidgetHostViewGuest*>(
         web_contents()->GetRenderWidgetHostView());
-    SendMessageToEmbedder(base::MakeUnique<BrowserPluginMsg_GuestReady>(
+    SendMessageToEmbedder(std::make_unique<BrowserPluginMsg_GuestReady>(
         browser_plugin_instance_id(), rwhv->GetFrameSinkId()));
   }
 
@@ -713,7 +713,7 @@ void BrowserPluginGuest::RenderViewReady() {
 }
 
 void BrowserPluginGuest::RenderProcessGone(base::TerminationStatus status) {
-  SendMessageToEmbedder(base::MakeUnique<BrowserPluginMsg_GuestGone>(
+  SendMessageToEmbedder(std::make_unique<BrowserPluginMsg_GuestGone>(
       browser_plugin_instance_id()));
   switch (status) {
 #if defined(OS_CHROMEOS)
@@ -1048,7 +1048,7 @@ void BrowserPluginGuest::OnSetVisibility(int browser_plugin_instance_id,
 }
 
 void BrowserPluginGuest::OnUnlockMouse() {
-  SendMessageToEmbedder(base::MakeUnique<BrowserPluginMsg_SetMouseLock>(
+  SendMessageToEmbedder(std::make_unique<BrowserPluginMsg_SetMouseLock>(
       browser_plugin_instance_id(), false));
 }
 
@@ -1082,7 +1082,7 @@ void BrowserPluginGuest::OnUpdateGeometry(
 
 void BrowserPluginGuest::OnHasTouchEventHandlers(bool accept) {
   SendMessageToEmbedder(
-      base::MakeUnique<BrowserPluginMsg_ShouldAcceptTouchEvents>(
+      std::make_unique<BrowserPluginMsg_ShouldAcceptTouchEvents>(
           browser_plugin_instance_id(), accept));
 }
 
@@ -1118,7 +1118,7 @@ void BrowserPluginGuest::OnShowWidget(int route_id,
 }
 
 void BrowserPluginGuest::OnTakeFocus(bool reverse) {
-  SendMessageToEmbedder(base::MakeUnique<BrowserPluginMsg_AdvanceFocus>(
+  SendMessageToEmbedder(std::make_unique<BrowserPluginMsg_AdvanceFocus>(
       browser_plugin_instance_id(), reverse));
 }
 
