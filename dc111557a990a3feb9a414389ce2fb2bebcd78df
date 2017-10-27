@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "e224aa1f_473ecb68",
+        "filename": "third_party/WebKit/Source/core/dom/ProcessingInstruction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-27T00:48:30Z",
+      "side": 1,
+      "message": "this |loading_ \u003d true| should also be placed before Fetch(); Otherwise loading_ is not reset to false if synchronously notified (because it is expected to be cleared in ProcessingInstruction::ParseStyleSheet() called from SetCSS/XSLTStyleSheet(), which can be called synchronously in Fetch())",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a8d1cb_c510a79f",
+        "filename": "third_party/WebKit/Source/core/dom/ProcessingInstruction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-27T00:48:30Z",
+      "side": 1,
+      "message": "Previously, the Resource reference set by SetResource() is expected to be cleared when loading is done (ClearResource() is called in ParseStyleSheet()), but after this CL it is not cleared because the ClearResource() can be called before SetResource() here if synchronously notified.",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4c856b_213b6fbf",
+        "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-27T00:48:30Z",
+      "side": 1,
+      "message": "This ClearResource() is called BEFORE SetResource() in Line 335 when synchronously notified, and thus the reference to the Resource is set to non-null after this, after SetResource() is called.\nThis might cause longer Resource lifetime, or wrong GetResource() value.\n\n(Anyway the current code doesn\u0027t call ClearResource() in early-exit cases though...)",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e876da2_d05e91e3",
+        "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-27T00:48:30Z",
+      "side": 1,
+      "message": "SetCrossOriginStylesheetStatus() is called from SetCSSStyleSheet() and thus GetResource() here becomes nullptr after this CL (it is expected to be non-null before this CL).",
+      "range": {
+        "startLine": 249,
+        "startChar": 31,
+        "endLine": 249,
+        "endChar": 44
+      },
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b0449ee_b647f462",
         "filename": "third_party/WebKit/Source/core/loader/WorkletScriptLoader.cpp",
         "patchSetId": 6
@@ -67,6 +141,24 @@
       "side": 1,
       "message": "I\u0027m not so sure about if the slight behavior change above would have a real impact. If not I\u0027m fine landing this without being blocked by them.  Hiroshige-san: what\u0027s your thought?",
       "parentUuid": "f3ab0b3c_b39344c7",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb88ea8_43fe64f5",
+        "filename": "third_party/WebKit/Source/core/loader/WorkletScriptLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-27T00:48:30Z",
+      "side": 1,
+      "message": "I feel this is quite likely to cause real problems.\nThis implies GetResource() during NotifyFinished() can be wrong (because SetResource() is not yet called), and ClearResource() during NotifyFinished() might have no effects (because SetResource() will be called immediately after NotifyFinished()).\n\nThe issues in LinkStyle.cpp and ProcessingInstruction.cpp is caused by this issue.\n(They will be resolved if we can make notifications to CSSStyleSheetResource asnyc)\n(There might be more similar issues if we look into the code more thoroughly...)\n\nAnother candidate fix #4 I came up with is:\nProbably SetResource() becomes much more confusing after this CL (because GetResource() in NotifyFinished() cannot see the value that SetResource() wanted to set etc.), so:\n- Stop SetResource()ing (and storing resource pointer when Fetch()ing). The Resource is anyway kept alive until notification, via ResourceLoader, or Persistent in the task created in AddClient().\n- Replace GetResource() with the resource pointer supplied in NotifyFinished()-family.\n- Store the resource pointer only when RemoveClient() is needed.\nThis further hides Resource pointers around Fetch() (probably this is good, because loader code can have more exclusive control on Resources before notifying clients), but not sure whether relying further on the Resource pointer supplied by NotifyFinished() is a good idea or not.",
+      "parentUuid": "ac116b52_ca3e1b5c",
       "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

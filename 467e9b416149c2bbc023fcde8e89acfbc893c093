@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "683defe7_53b77675",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-27T00:48:30Z",
+      "side": 1,
+      "message": "This DCHECK fails because currently RawResourceClient can be notified of redirects synchronously when the request hits MemoryCache with Resource that already received redirects but no main response yet.\nFor an example see https://chromium-review.googlesource.com/c/chromium/src/+/741063.\n\nThis can be (and probably should be) fixed by making the RawResourceClient notification always async.",
+      "revId": "467e9b416149c2bbc023fcde8e89acfbc893c093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
