@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5728fc23_881e6d4c",
+        "filename": "gpu/command_buffer/client/client_discardable_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-27T21:31:36Z",
+      "side": 1,
+      "message": "saturated_cast shouldn\u0027t be needed, and is alomst entirely certianly the wrong thing.\n\noffset*element_size_ is less than allocation_size_, which is less than std::numeric_limits\u003cuint32_t\u003e (we can add a DCHECK for that).\nSo I would recommend DCHECK + static_cast (or checked_cast maybe, but the overflow case can\u0027t happen).",
+      "revId": "2f580972d613ccd6c6e67fb83f5e82eb0df5f52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0166e605_16f9751d",
+        "filename": "gpu/command_buffer/client/client_discardable_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-27T21:31:36Z",
+      "side": 1,
+      "message": "static_cast, since byte_offset() is uint32_t, so handle.byte_offset() / element_size_ always fits in the range.",
+      "revId": "2f580972d613ccd6c6e67fb83f5e82eb0df5f52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb12a27_dd301b7e",
+        "filename": "gpu/command_buffer/client/mapped_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-27T21:31:36Z",
+      "side": 1,
+      "message": "checked_cast",
+      "revId": "2f580972d613ccd6c6e67fb83f5e82eb0df5f52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38106bdd_9c0332c3",
+        "filename": "gpu/command_buffer/client/transfer_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-27T21:31:36Z",
+      "side": 1,
+      "message": "buffer_-\u003esize() is size, which is a unsigned int, so I would just change the code to use size\n\nActually, I wonder if it would make better sense to change Buffer to use uint32_t as a size, since we can\u0027t address anything larger in command buffers anyway.",
+      "revId": "2f580972d613ccd6c6e67fb83f5e82eb0df5f52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7a0733_54c25adf",
+        "filename": "gpu/config/gpu_control_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-27T21:31:36Z",
+      "side": 1,
+      "message": "can we just use \"size_t i\" instead of \"int i\"?",
+      "revId": "2f580972d613ccd6c6e67fb83f5e82eb0df5f52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aad41d5_f3e31be6",
+        "filename": "gpu/config/gpu_control_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-27T21:31:36Z",
+      "side": 1,
+      "message": "Can we change active_entries_ to be std::vector\u003csize_t\u003e instead?",
+      "revId": "2f580972d613ccd6c6e67fb83f5e82eb0df5f52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1879ef_b138b23b",
+        "filename": "gpu/config/gpu_info_collector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-27T21:31:36Z",
+      "side": 1,
+      "message": "Keep size_t in loop indices. Change return to DCHECK + static_cast (or checked_cast), or change function to return size_t with a different sentinel value (e.g. std::numeric_limits\u003csize_t\u003e::max(), which you can define as a constant).",
+      "revId": "2f580972d613ccd6c6e67fb83f5e82eb0df5f52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab3e95d_bd49db39",
+        "filename": "gpu/config/gpu_info_collector_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-27T21:31:36Z",
+      "side": 1,
+      "message": "Change primary_device to be size_t and use a different sentinel value, or use explicit bool? This would remove the (no safer) static_casts on l.201 and 218",
+      "revId": "2f580972d613ccd6c6e67fb83f5e82eb0df5f52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
