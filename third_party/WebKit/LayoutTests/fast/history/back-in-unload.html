@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+  'use strict';
+  async_test((t) => {
+    // 1. Open a new window and navigate it to a page with a child frame that
+    //    tries to navigate back in an unload handler.
+    var w = window.open('resources/back-in-unload-start.html');
+
+    // 2. Wait for a message to signal load complete.
+    window.onmessage = () => {
+      // 3. Now navigate it to a page that posts a done message back.
+      w.location = 'resources/back-in-unload-done.html';
+      window.onmessage = e => {
+        t.step(() => {
+          assert_equals(e.data, 'done');
+        });
+        t.done();
+      };
+    };
+  }, 'history.back() in unload');
+</script>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+window.onload = () => {
+  window.setTimeout(() => {
+    // Do a same document navigation in a posted task so it creates a new
+    // history entry. This gives the nested history.back() call something to
+    // navigate to.
+    location = '#fragment';
+    opener.postMessage('loaded', '*');
+  });
+};
+</script>
+</head>
+<body>
+<iframe srcdoc='<script>window.onunload = () => { top.history.back(); };</script>'>
+</iframe>
+</body>
+</html>

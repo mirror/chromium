@@ -341,8 +341,6 @@ void FrameLoader::SaveScrollState() {
 }
 
 void FrameLoader::DispatchUnloadEvent() {
-  FrameNavigationDisabler navigation_disabler(*frame_);
-
   // If the frame is unloading, the provisional loader should no longer be
   // protected. It will be detached soon.
   protect_provisional_loader_ = false;
@@ -534,7 +532,6 @@ void FrameLoader::DetachDocumentLoader(Member<DocumentLoader>& loader) {
   if (!loader)
     return;
 
-  FrameNavigationDisabler navigation_disabler(*frame_);
   loader->DetachFromFrame();
   loader = nullptr;
 }
@@ -984,6 +981,7 @@ void FrameLoader::DidAccessInitialDocument() {
 }
 
 bool FrameLoader::PrepareForCommit() {
+  FrameNavigationDisabler navigation_disabler(*frame_);
   PluginScriptForbiddenScope forbid_plugin_destructor_scripting;
   DocumentLoader* pdl = provisional_document_loader_;
 

@@ -2123,7 +2123,7 @@ void WebContentsImpl::EnterFullscreenMode(const GURL& origin) {
   RenderWidgetHostView* const widget_view = GetFullscreenRenderWidgetHostView();
   if (widget_view) {
     RenderWidgetHostImpl::From(widget_view->GetRenderWidgetHost())
-        ->ShutdownAndDestroyWidget(true);
+        ->Destroy(true);
   }
 
   if (delegate_)
@@ -2139,7 +2139,7 @@ void WebContentsImpl::ExitFullscreenMode(bool will_cause_resize) {
   RenderWidgetHostView* const widget_view = GetFullscreenRenderWidgetHostView();
   if (widget_view) {
     RenderWidgetHostImpl::From(widget_view->GetRenderWidgetHost())
-        ->ShutdownAndDestroyWidget(true);
+        ->Destroy(true);
   }
 
 #if defined(OS_ANDROID)

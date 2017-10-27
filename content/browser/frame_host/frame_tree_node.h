@@ -344,6 +344,8 @@ class CONTENT_EXPORT FrameTreeNode {
 
   void OnSetHasReceivedUserGesture();
 
+  void SuppressDeleteIpc();
+
  private:
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessFeaturePolicyBrowserTest,
                            ContainerPolicyDynamic);

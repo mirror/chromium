@@ -596,7 +596,7 @@ TEST_F(RenderWidgetHostViewMacTest, FilterNonPrintableCharacter) {
   EXPECT_EQ("RawKeyDown Char", GetInputMessageTypes(process_host));
 
   // Clean up.
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 
 // Test that invalid |keyCode| shouldn't generate key events.
@@ -621,7 +621,7 @@ TEST_F(RenderWidgetHostViewMacTest, InvalidKeyCode) {
   EXPECT_EQ(0U, process_host->sink().message_count());
 
   // Clean up.
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 
 TEST_F(RenderWidgetHostViewMacTest, GetFirstRectForCharacterRangeCaretCase) {
@@ -1020,7 +1020,7 @@ TEST_F(RenderWidgetHostViewMacTest, BlurAndFocusOnSetActive) {
   testing::Mock::VerifyAndClearExpectations(rwh);
 
   // Clean up.
-  rwh->ShutdownAndDestroyWidget(true);
+  rwh->Destroy(true);
 }
 
 TEST_F(RenderWidgetHostViewMacTest, LastWheelEventLatencyInfoExists) {
@@ -1058,7 +1058,7 @@ TEST_F(RenderWidgetHostViewMacTest, LastWheelEventLatencyInfoExists) {
       ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, &ui_component2) );
 
   // Clean up.
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 
 TEST_F(RenderWidgetHostViewMacTest, SourceEventTypeExistsInLatencyInfo) {
@@ -1084,7 +1084,7 @@ TEST_F(RenderWidgetHostViewMacTest, SourceEventTypeExistsInLatencyInfo) {
               ui::SourceEventType::WHEEL);
 
   // Clean up.
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 
 void RenderWidgetHostViewMacTest::ScrollWheelEndEventDelivery() {
@@ -1134,7 +1134,7 @@ void RenderWidgetHostViewMacTest::ScrollWheelEndEventDelivery() {
   }
 
   // Clean up.
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 TEST_F(RenderWidgetHostViewMacTest, ScrollWheelEndEventDelivery) {
   ScrollWheelEndEventDelivery();
@@ -1172,7 +1172,7 @@ TEST_F(RenderWidgetHostViewMacTest, PointerEventWithEraserType) {
             GetInputMessagePointerTypes(process_host));
 
   // Clean up.
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 
 TEST_F(RenderWidgetHostViewMacTest, PointerEventWithPenType) {
@@ -1207,7 +1207,7 @@ TEST_F(RenderWidgetHostViewMacTest, PointerEventWithPenType) {
             GetInputMessagePointerTypes(process_host));
 
   // Clean up.
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 
 TEST_F(RenderWidgetHostViewMacTest, PointerEventWithMouseType) {
@@ -1235,7 +1235,7 @@ TEST_F(RenderWidgetHostViewMacTest, PointerEventWithMouseType) {
             GetInputMessagePointerTypes(process_host));
 
   // Clean up.
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 
 void RenderWidgetHostViewMacTest::
@@ -1317,7 +1317,7 @@ void RenderWidgetHostViewMacTest::
   ASSERT_EQ(NO, view_delegate.get().unhandledWheelEventReceived);
 
   // Clean up.
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 TEST_F(RenderWidgetHostViewMacTest,
        IgnoreEmptyUnhandledWheelEventWithWheelGestures) {
@@ -1356,7 +1356,7 @@ TEST_F(RenderWidgetHostViewMacTest, GuestViewDoesNotLeak) {
   RecycleAndWait();
 
   // Clean up.
-  rwh->ShutdownAndDestroyWidget(true);
+  rwh->Destroy(true);
 
   // Let |guest_rwhv_weak| have a chance to delete itself.
   base::RunLoop run_loop;
@@ -1425,7 +1425,7 @@ TEST_F(RenderWidgetHostViewMacTest, Background) {
   ViewMsg_SetBackgroundOpaque::Read(set_background, &sent_background);
   EXPECT_TRUE(std::get<0>(sent_background));
 
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 
 class RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest
@@ -1493,7 +1493,7 @@ TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
   DCHECK(view->HasPendingWheelEndEventForTesting());
   process_host->sink().ClearMessages();
 
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 
   // Wait for the mouse_wheel_end_dispatch_timer_ to expire after host is
   // destroyed. The pending wheel end event won't get dispatched since the
@@ -1562,7 +1562,7 @@ TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
   DCHECK(!view->HasPendingWheelEndEventForTesting());
   process_host->sink().ClearMessages();
 
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 
 TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
@@ -1622,7 +1622,7 @@ TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
   DCHECK(!view->HasPendingWheelEndEventForTesting());
   process_host->sink().ClearMessages();
 
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 
 class RenderWidgetHostViewMacPinchTest : public RenderWidgetHostViewMacTest {
@@ -1648,7 +1648,7 @@ class RenderWidgetHostViewMacPinchTest : public RenderWidgetHostViewMacTest {
 
   void TearDown() override {
     cocoa_view_.reset();
-    host_->ShutdownAndDestroyWidget(false);
+    host_->Destroy(false);
     host_.reset();
     delegate_.reset();
     process_host_.reset();
@@ -1837,7 +1837,7 @@ TEST_F(RenderWidgetHostViewMacTest, EventLatencyOSMouseWheelHistogram) {
   histogram_tester.ExpectTotalCount("Event.Latency.OS.MOUSE_WHEEL", 1);
 
   // Clean up.
-  host->ShutdownAndDestroyWidget(true);
+  host->Destroy(true);
 }
 
 // This test verifies that |selected_text_| is updated accordingly with
@@ -1885,7 +1885,7 @@ class InputMethodMacTest : public RenderWidgetHostViewMacTest {
   }
 
   void TearDown() override {
-    child_widget_->ShutdownAndDestroyWidget(true);
+    child_widget_->Destroy(true);
 
     RenderWidgetHostViewMacTest::TearDown();
   }
