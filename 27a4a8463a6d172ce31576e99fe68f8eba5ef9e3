@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f47f22b0_5e7dc332",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 3520,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T18:31:12Z",
+      "side": 1,
+      "message": "The order shouldn\u0027t matter, but note this is a different binding.\n\nAs a matter of fact, there used to be a bug here in that we never closed the |frame_host_associated_binding_|.\n\nLet me now if I misunderstood your concern.",
+      "parentUuid": "16eaeae0_252324bb",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "907f62c1_26fb1648",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 33
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "fae62177_10a866f7",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 3326,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T18:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35113ea5_e2e074ef",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63b3c0b3_df9e5b40",
         "filename": "content/renderer/render_view_impl.cc",
         "patchSetId": 33
@@ -67,6 +103,24 @@
       "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b99fb7_1202cfc2",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T18:31:12Z",
+      "side": 1,
+      "message": "Got it. Done.",
+      "parentUuid": "63b3c0b3_df9e5b40",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +147,30 @@
     },
     {
       "key": {
+        "uuid": "54008639_f842f3b5",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T18:31:12Z",
+      "side": 1,
+      "message": "Hmm, although this term is concistent with Mojo methodology, I agree this creates some confusion.\n\nSome ideas: silent, numb, deadend, dangling, dummy, inanimate?",
+      "parentUuid": "14120f13_44eb6fb5",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 16
+      },
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2228b27f_f04ea3c0",
         "filename": "content/test/test_render_view_host.cc",
         "patchSetId": 33
@@ -107,6 +185,24 @@
       "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92931854_0acb441f",
+        "filename": "content/test/test_render_view_host.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T18:31:12Z",
+      "side": 1,
+      "message": "Yes, in [1], where there is a pending main frame navigation when we cross-site navigate a child frame of the old main frame document. Because of crbug.com/763548, |main_frame| resolves not to nullptr, but to the pending main RFH, even though that\u0027s in a different SiteIntance, and |this| is a swapped-out RVH.\n\nI have to admit that it is not entirely clear to me what GetMainFrame() should return in this scenario, but FWIW, I have updated the check to use is_active() instead to be consistent with the check in RenderViewHostImpl::GetMainFrame().\n\n[1]: RenderFrameHostManagerTestWithSiteIsolation.DontGrantPendingWebUIToSubframe",
+      "parentUuid": "2228b27f_f04ea3c0",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
