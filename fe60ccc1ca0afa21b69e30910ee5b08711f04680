@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41425949_8aba57a9",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionAdjuster.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-27T17:46:02Z",
+      "side": 1,
+      "message": "The meaning of |is_base_first| isn\u0027t clear because there\u0027s no selection here. How about using an enum\n\nenum class AdjustOption {\n  kAdjustStart,\n  kAdjustEnd\n};",
+      "range": {
+        "startLine": 205,
+        "startChar": 9,
+        "endLine": 205,
+        "endChar": 22
+      },
+      "revId": "fe60ccc1ca0afa21b69e30910ee5b08711f04680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8622d1c_058f5b42",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionAdjuster.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-27T17:46:02Z",
+      "side": 1,
+      "message": "nit: we should consider changing the class name and the comments. There\u0027s no longer any selection here.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "fe60ccc1ca0afa21b69e30910ee5b08711f04680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09af350b_32ca02a3",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionAdjuster.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-27T17:46:02Z",
+      "side": 1,
+      "message": "The meaning of \"mod shadow\" doesn\u0027t look intuitive. Could you keep the original name \"...ToAvoidCrossingShadowBoundaries\"?",
+      "range": {
+        "startLine": 21,
+        "startChar": 24,
+        "endLine": 21,
+        "endChar": 48
+      },
+      "revId": "fe60ccc1ca0afa21b69e30910ee5b08711f04680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
