@@ -45,6 +45,29 @@
       "revId": "b1b4bf3ca28f124c4977dcb1104df1a276ba0dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c18d70d_3e17c2c0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 91039,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-27T20:20:17Z",
+      "side": 1,
+      "message": "nit: Please add a units\u003d\"files\" attribute.",
+      "range": {
+        "startLine": 91039,
+        "startChar": 58,
+        "endLine": 91039,
+        "endChar": 59
+      },
+      "revId": "b1b4bf3ca28f124c4977dcb1104df1a276ba0dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
