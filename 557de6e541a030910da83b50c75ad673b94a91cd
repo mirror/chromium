@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eecfa72e_0df688c5",
+        "filename": "chrome/browser/apps/drive/drive_app_converter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-27T15:31:39Z",
+      "side": 1,
+      "message": "How is this code compiling, with that extra close parenthesis?",
+      "range": {
+        "startLine": 79,
+        "startChar": 39,
+        "endLine": 79,
+        "endChar": 63
+      },
+      "revId": "557de6e541a030910da83b50c75ad673b94a91cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
