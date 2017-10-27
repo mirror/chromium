@@ -56,7 +56,6 @@ crbug.com/417782 compositing/layer-creation/overlap-transformed-3d.html [ Failur
 crbug.com/417782 compositing/layer-creation/overlap-transformed-preserved-3d.html [ Failure ]
 crbug.com/417782 compositing/layer-creation/scroll-partial-update.html [ Failure ]
 crbug.com/417782 compositing/layer-tree.html [ Failure ]
-crbug.com/417782 compositing/overflow/nested-render-surfaces-with-intervening-clip.html [ Failure ]
 crbug.com/417782 compositing/overflow/nested-render-surfaces-with-rotation.html [ Failure ]
 crbug.com/417782 compositing/overflow/tiled-mask.html [ Failure ]
 crbug.com/417782 compositing/rtl/rtl-iframe-absolute-overflow-scrolled.html [ Failure ]
