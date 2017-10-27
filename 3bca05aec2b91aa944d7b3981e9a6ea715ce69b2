@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e00e40b_ea2c85b5",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-27T06:06:17Z",
+      "side": 1,
+      "message": "Ah, this is going to make things a little more nasty...\n\nNot sure if we really want to support Before/AfterAnchor here, because offset mapping doesn\u0027t support them yet. So it\u0027s a question how far we want to go...\n\nMaybe I should stop coding and revise my docs...",
+      "parentUuid": "4cd6d864_3de51510",
+      "revId": "3bca05aec2b91aa944d7b3981e9a6ea715ce69b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b5d66b2_73ce15ac",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-27T05:30:09Z",
       "side": 1,
       "message": "Same as the other CL; if this function is converting DOM offset to LayoutText offset implicitly, please add comments. This DCHECK will fail if text-transform changes the length, right?",
+      "revId": "3bca05aec2b91aa944d7b3981e9a6ea715ce69b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b327ee_4a9e3952",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-27T06:06:17Z",
+      "side": 1,
+      "message": "There is comment in LayoutText.h about this. Should I replicate it in .cpp files?",
+      "parentUuid": "4b5d66b2_73ce15ac",
       "revId": "3bca05aec2b91aa944d7b3981e9a6ea715ce69b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
