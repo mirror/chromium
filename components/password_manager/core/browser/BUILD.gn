@@ -254,6 +254,8 @@ static_library("test_support") {
     "stub_password_manager_driver.h",
     "test_password_store.cc",
     "test_password_store.h",
+    "ui/mock_export_flow.cc",
+    "ui/mock_export_flow.h",
   ]
 
   public_deps = [
