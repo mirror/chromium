@@ -68,7 +68,7 @@ namespace {
 // Callback to run once the profile has been loaded in order to perform a
 // given |operation| in a notification.
 void ProfileLoadedCallback(NotificationCommon::Operation operation,
-                           NotificationCommon::Type notification_type,
+                           NotificationHandler::Type notification_type,
                            const std::string& origin,
                            const std::string& notification_id,
                            const base::Optional<int>& action_index,
@@ -92,7 +92,7 @@ void ProfileLoadedCallback(NotificationCommon::Operation operation,
 
 // Loads the profile and process the Notification response
 void DoProcessNotificationResponse(NotificationCommon::Operation operation,
-                                   NotificationCommon::Type type,
+                                   NotificationHandler::Type type,
                                    const std::string& profile_id,
                                    bool incognito,
                                    const std::string& origin,
@@ -223,7 +223,7 @@ NotificationPlatformBridge* NotificationPlatformBridge::Create() {
 }
 
 void NotificationPlatformBridgeMac::Display(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id,
     const std::string& profile_id,
     bool incognito,
@@ -249,7 +249,7 @@ void NotificationPlatformBridgeMac::Display(
 
   bool requires_attribution =
       notification.context_message().empty() &&
-      notification_type != NotificationCommon::EXTENSION;
+      notification_type != NotificationHandler::Type::EXTENSION;
   [builder setSubTitle:base::SysUTF16ToNSString(CreateNotificationContext(
                            notification, requires_attribution))];
 
@@ -258,7 +258,7 @@ void NotificationPlatformBridgeMac::Display(
   }
 
   [builder setShowSettingsButton:(notification_type !=
-                                  NotificationCommon::EXTENSION)];
+                                  NotificationHandler::Type::EXTENSION)];
   std::vector<message_center::ButtonInfo> buttons = notification.buttons();
   if (!buttons.empty()) {
     DCHECK_LE(buttons.size(), blink::kWebNotificationMaxActions);
@@ -385,7 +385,7 @@ void NotificationPlatformBridgeMac::ProcessNotificationResponse(
       base::Bind(DoProcessNotificationResponse,
                  static_cast<NotificationCommon::Operation>(
                      operation.unsignedIntValue),
-                 static_cast<NotificationCommon::Type>(
+                 static_cast<NotificationHandler::Type>(
                      notification_type.unsignedIntValue),
                  profile_id, [is_incognito boolValue], notification_origin,
                  notification_id, action_index, base::nullopt /* reply */,
@@ -442,7 +442,7 @@ bool NotificationPlatformBridgeMac::VerifyNotificationData(
     return false;
   }
 
-  if (notification_type.unsignedIntValue > NotificationCommon::TYPE_MAX) {
+  if (notification_type.unsignedIntValue > NotificationHandler::Type::MAX) {
     LOG(ERROR) << notification_type.unsignedIntValue
                << " Does not correspond to a valid operation.";
     return false;

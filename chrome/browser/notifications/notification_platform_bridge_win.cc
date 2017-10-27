@@ -47,7 +47,7 @@ typedef winfoundtn::ITypedEventHandler<
 
 // Hold related data for a notification.
 struct NotificationData {
-  NotificationData(NotificationCommon::Type notification_type,
+  NotificationData(NotificationHandler::Type notification_type,
                    const std::string& notification_id,
                    const std::string& profile_id,
                    bool incognito,
@@ -59,7 +59,7 @@ struct NotificationData {
         origin_url(origin_url) {}
 
   // Same parameters used by NotificationPlatformBridge::Display().
-  NotificationCommon::Type notification_type;
+  NotificationHandler::Type notification_type;
   const std::string notification_id;
   const std::string profile_id;
   const bool incognito;
@@ -145,7 +145,7 @@ HRESULT GetToastNotification(
 
 // Perform |operation| on a notification once the profile has been loaded.
 void ProfileLoadedCallback(NotificationCommon::Operation operation,
-                           NotificationCommon::Type notification_type,
+                           NotificationHandler::Type notification_type,
                            const std::string& origin,
                            const std::string& notification_id,
                            const base::Optional<int>& action_index,
@@ -164,7 +164,7 @@ void ProfileLoadedCallback(NotificationCommon::Operation operation,
 
 void ForwardNotificationOperationOnUiThread(
     NotificationCommon::Operation operation,
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& origin,
     const std::string& notification_id,
     const std::string& profile_id,
@@ -207,7 +207,7 @@ NotificationPlatformBridgeWin::NotificationPlatformBridgeWin() {
 NotificationPlatformBridgeWin::~NotificationPlatformBridgeWin() = default;
 
 void NotificationPlatformBridgeWin::Display(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id,
     const std::string& profile_id,
     bool incognito,

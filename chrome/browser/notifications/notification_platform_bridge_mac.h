@@ -34,7 +34,7 @@ class NotificationPlatformBridgeMac : public NotificationPlatformBridge {
   ~NotificationPlatformBridgeMac() override;
 
   // NotificationPlatformBridge implementation.
-  void Display(NotificationCommon::Type notification_type,
+  void Display(NotificationHandler::Type notification_type,
                const std::string& notification_id,
                const std::string& profile_id,
                bool incognito,

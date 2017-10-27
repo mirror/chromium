@@ -179,7 +179,7 @@ gfx::Image ResizeImageToFdoMaxSize(const gfx::Image& image) {
 // Runs once the profile has been loaded in order to perform a given
 // |operation| on a notification.
 void ProfileLoadedCallback(NotificationCommon::Operation operation,
-                           NotificationCommon::Type notification_type,
+                           NotificationHandler::Type notification_type,
                            const std::string& origin,
                            const std::string& notification_id,
                            const base::Optional<int>& action_index,
@@ -198,7 +198,7 @@ void ProfileLoadedCallback(NotificationCommon::Operation operation,
 
 void ForwardNotificationOperationOnUiThread(
     NotificationCommon::Operation operation,
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& origin,
     const std::string& notification_id,
     const base::Optional<int>& action_index,
@@ -285,7 +285,7 @@ class NotificationPlatformBridgeLinuxImpl
   }
 
   void Display(
-      NotificationCommon::Type notification_type,
+      NotificationHandler::Type notification_type,
       const std::string& notification_id,
       const std::string& profile_id,
       bool is_incognito,
@@ -350,7 +350,7 @@ class NotificationPlatformBridgeLinuxImpl
   friend class base::RefCountedThreadSafe<NotificationPlatformBridgeLinuxImpl>;
 
   struct NotificationData {
-    NotificationData(NotificationCommon::Type notification_type,
+    NotificationData(NotificationHandler::Type notification_type,
                      const std::string& notification_id,
                      const std::string& profile_id,
                      bool is_incognito,
@@ -366,7 +366,7 @@ class NotificationPlatformBridgeLinuxImpl
     uint32_t dbus_id = 0;
 
     // Same parameters used by NotificationPlatformBridge::Display().
-    NotificationCommon::Type notification_type;
+    NotificationHandler::Type notification_type;
     const std::string notification_id;
     const std::string profile_id;
     const bool is_incognito;
@@ -498,7 +498,7 @@ class NotificationPlatformBridgeLinuxImpl
 
   // Makes the "Notify" call to D-Bus.
   void DisplayOnTaskRunner(
-      NotificationCommon::Type notification_type,
+      NotificationHandler::Type notification_type,
       const std::string& notification_id,
       const std::string& profile_id,
       bool is_incognito,
@@ -629,7 +629,7 @@ class NotificationPlatformBridgeLinuxImpl
         actions.push_back("");
       }
       // Always add a settings button for web notifications.
-      if (notification_type != NotificationCommon::EXTENSION) {
+      if (notification_type != NotificationHandler::Type::EXTENSION) {
         actions.push_back(kSettingsButtonId);
         actions.push_back(
             l10n_util::GetStringUTF8(IDS_NOTIFICATION_BUTTON_SETTINGS));
@@ -985,7 +985,7 @@ NotificationPlatformBridgeLinux::NotificationPlatformBridgeLinux(
 NotificationPlatformBridgeLinux::~NotificationPlatformBridgeLinux() = default;
 
 void NotificationPlatformBridgeLinux::Display(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id,
     const std::string& profile_id,
     bool is_incognito,

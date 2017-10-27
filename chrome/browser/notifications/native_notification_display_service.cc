@@ -68,7 +68,7 @@ void NativeNotificationDisplayService::OnNotificationPlatformBridgeReady(
 }
 
 void NativeNotificationDisplayService::Display(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id,
     const message_center::Notification& notification,
     std::unique_ptr<NotificationCommon::Metadata> metadata) {
@@ -89,7 +89,7 @@ void NativeNotificationDisplayService::Display(
 }
 
 void NativeNotificationDisplayService::Close(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id) {
   if (notification_bridge_ready_) {
     NotificationHandler* handler = GetNotificationHandler(notification_type);

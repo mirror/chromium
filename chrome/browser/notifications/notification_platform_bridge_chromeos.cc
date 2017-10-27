@@ -36,7 +36,7 @@ class NotificationPlatformBridgeChromeOsImpl
   ~NotificationPlatformBridgeChromeOsImpl() override;
 
   // NotificationPlatformBridge:
-  void Display(NotificationCommon::Type notification_type,
+  void Display(NotificationHandler::Type notification_type,
                const std::string& notification_id,
                const std::string& profile_id,
                bool is_incognito,
@@ -84,7 +84,7 @@ NotificationPlatformBridgeChromeOsImpl::
 // The unused variables here will not be a part of the future
 // NotificationPlatformBridge interface.
 void NotificationPlatformBridgeChromeOsImpl::Display(
-    NotificationCommon::Type /*notification_type*/,
+    NotificationHandler::Type /*notification_type*/,
     const std::string& /*notification_id*/,
     const std::string& /*profile_id*/,
     bool /*is_incognito*/,
@@ -145,7 +145,7 @@ NotificationPlatformBridgeChromeOs::NotificationPlatformBridgeChromeOs()
 NotificationPlatformBridgeChromeOs::~NotificationPlatformBridgeChromeOs() {}
 
 void NotificationPlatformBridgeChromeOs::Display(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id,
     const std::string& profile_id,
     bool is_incognito,
@@ -153,7 +153,7 @@ void NotificationPlatformBridgeChromeOs::Display(
     std::unique_ptr<NotificationCommon::Metadata> metadata) {
   auto active_notification = std::make_unique<ProfileNotification>(
       GetProfile(profile_id, is_incognito), notification, notification_type);
-  impl_->Display(NotificationCommon::TYPE_MAX, std::string(), std::string(),
+  impl_->Display(NotificationHandler::Type::MAX, std::string(), std::string(),
                  false, active_notification->notification(),
                  std::move(metadata));
 

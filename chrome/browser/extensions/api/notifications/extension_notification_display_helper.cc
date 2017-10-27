@@ -10,6 +10,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
+#include "chrome/browser/notifications/notification_handler.h"
 #include "ui/message_center/notification.h"
 #include "url/gurl.h"
 
@@ -30,8 +31,8 @@ void ExtensionNotificationDisplayHelper::Display(
   notifications_.push_back(
       std::make_unique<message_center::Notification>(notification));
 
-  GetDisplayService()->Display(NotificationCommon::EXTENSION, notification.id(),
-                               notification);
+  GetDisplayService()->Display(NotificationHandler::Type::EXTENSION,
+                               notification.id(), notification);
 }
 
 message_center::Notification*
@@ -78,7 +79,8 @@ bool ExtensionNotificationDisplayHelper::Close(
   if (!EraseDataForNotificationId(notification_id))
     return false;
 
-  GetDisplayService()->Close(NotificationCommon::EXTENSION, notification_id);
+  GetDisplayService()->Close(NotificationHandler::Type::EXTENSION,
+                             notification_id);
   return true;
 }
 

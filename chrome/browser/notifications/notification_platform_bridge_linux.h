@@ -25,7 +25,7 @@ class NotificationPlatformBridgeLinux : public NotificationPlatformBridge {
   ~NotificationPlatformBridgeLinux() override;
 
   // NotificationPlatformBridge:
-  void Display(NotificationCommon::Type notification_type,
+  void Display(NotificationHandler::Type notification_type,
                const std::string& notification_id,
                const std::string& profile_id,
                bool is_incognito,

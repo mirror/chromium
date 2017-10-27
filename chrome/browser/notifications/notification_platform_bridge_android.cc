@@ -102,7 +102,7 @@ ScopedJavaLocalRef<jobjectArray> ConvertToJavaActionInfos(
 // given |operation| in a notification.
 // TODO(miguelg) move it to notification_common?
 void ProfileLoadedCallback(NotificationCommon::Operation operation,
-                           NotificationCommon::Type notification_type,
+                           NotificationHandler::Type notification_type,
                            const std::string& origin,
                            const std::string& notification_id,
                            const base::Optional<int>& action_index,
@@ -184,8 +184,9 @@ void NotificationPlatformBridgeAndroid::OnNotificationClicked(
   profile_manager->LoadProfile(
       profile_id, incognito,
       base::Bind(&ProfileLoadedCallback, NotificationCommon::CLICK,
-                 NotificationCommon::PERSISTENT, origin.spec(), notification_id,
-                 action_index, std::move(reply), base::nullopt /* by_user */));
+                 NotificationHandler::Type::WEB_PERSISTENT, origin.spec(),
+                 notification_id, action_index, std::move(reply),
+                 base::nullopt /* by_user */));
 }
 
 void NotificationPlatformBridgeAndroid::
@@ -229,14 +230,14 @@ void NotificationPlatformBridgeAndroid::OnNotificationClosed(
   profile_manager->LoadProfile(
       profile_id, incognito,
       base::Bind(&ProfileLoadedCallback, NotificationCommon::CLOSE,
-                 NotificationCommon::PERSISTENT,
+                 NotificationHandler::Type::WEB_PERSISTENT,
                  ConvertJavaStringToUTF8(env, java_origin), notification_id,
                  base::nullopt /* action index */, base::nullopt /* reply */,
                  by_user));
 }
 
 void NotificationPlatformBridgeAndroid::Display(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id,
     const std::string& profile_id,
     bool incognito,
@@ -249,7 +250,7 @@ void NotificationPlatformBridgeAndroid::Display(
   // TODO(miguelg): Store the notification type in java instead of assuming it's
   // persistent once/if non persistent notifications are ever implemented on
   // Android.
-  DCHECK_EQ(notification_type, NotificationCommon::PERSISTENT);
+  DCHECK_EQ(notification_type, NotificationHandler::Type::WEB_PERSISTENT);
   GURL scope_url(PersistentNotificationMetadata::From(metadata.get())
                      ->service_worker_scope);
   if (!scope_url.is_valid())

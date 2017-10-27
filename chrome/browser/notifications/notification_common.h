@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_COMMON_H_
 
 #include "base/feature_list.h"
+#include "chrome/browser/notifications/notification_handler.h"
 #include "url/gurl.h"
 
 namespace features {
@@ -34,23 +35,12 @@ class NotificationCommon {
     OPERATION_MAX = SETTINGS
   };
 
-  // Possible kinds of notifications
-  // TODO(peter): Prefix these options with TYPE_.
-  enum Type {
-    PERSISTENT = 0,
-    NON_PERSISTENT = 1,
-    EXTENSION = 2,
-    PRODUCT_EOL = 3,
-    DOWNLOAD = 4,
-    TYPE_MAX = DOWNLOAD,
-  };
-
   // A struct that contains extra data about a notification specific to one of
   // the above types.
   struct Metadata {
     virtual ~Metadata();
 
-    Type type;
+    NotificationHandler::Type type;
   };
 
   // Open the Notification settings screen when clicking the right button.

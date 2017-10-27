@@ -79,7 +79,7 @@ void OnCloseNonPersistentNotificationProfileLoaded(
     const std::string& notification_id,
     Profile* profile) {
   NotificationDisplayServiceFactory::GetForProfile(profile)->Close(
-      NotificationCommon::NON_PERSISTENT, notification_id);
+      NotificationHandler::Type::WEB_NON_PERSISTENT, notification_id);
 }
 
 // Callback used to close an non-persistent notification from blink.
@@ -328,11 +328,12 @@ void PlatformNotificationServiceImpl::DisplayNotification(
   message_center::Notification notification = CreateNotificationFromData(
       profile, origin, notification_id, notification_data,
       notification_resources,
-      new WebNotificationDelegate(NotificationCommon::NON_PERSISTENT, profile,
-                                  notification_id, origin));
+      new WebNotificationDelegate(NotificationHandler::Type::WEB_NON_PERSISTENT,
+                                  profile, notification_id, origin));
 
   NotificationDisplayServiceFactory::GetForProfile(profile)->Display(
-      NotificationCommon::NON_PERSISTENT, notification_id, notification);
+      NotificationHandler::Type::WEB_NON_PERSISTENT, notification_id,
+      notification);
   if (cancel_callback) {
 #if defined(OS_WIN)
     std::string profile_id =
@@ -366,13 +367,13 @@ void PlatformNotificationServiceImpl::DisplayPersistentNotification(
   message_center::Notification notification = CreateNotificationFromData(
       profile, origin, notification_id, notification_data,
       notification_resources,
-      new WebNotificationDelegate(NotificationCommon::PERSISTENT, profile,
-                                  notification_id, origin));
+      new WebNotificationDelegate(NotificationHandler::Type::WEB_PERSISTENT,
+                                  profile, notification_id, origin));
   auto metadata = std::make_unique<PersistentNotificationMetadata>();
   metadata->service_worker_scope = service_worker_scope;
 
   NotificationDisplayServiceFactory::GetForProfile(profile)->Display(
-      NotificationCommon::PERSISTENT, notification_id, notification,
+      NotificationHandler::Type::WEB_PERSISTENT, notification_id, notification,
       std::move(metadata));
   base::RecordAction(base::UserMetricsAction("Notifications.Persistent.Shown"));
 }
@@ -388,7 +389,7 @@ void PlatformNotificationServiceImpl::ClosePersistentNotification(
   closed_notifications_.insert(notification_id);
 
   NotificationDisplayServiceFactory::GetForProfile(profile)->Close(
-      NotificationCommon::PERSISTENT, notification_id);
+      NotificationHandler::Type::WEB_PERSISTENT, notification_id);
 }
 
 void PlatformNotificationServiceImpl::GetDisplayedNotifications(

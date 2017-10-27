@@ -29,7 +29,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
  public:
   PassThroughDelegate(Profile* profile,
                       const message_center::Notification& notification,
-                      NotificationCommon::Type notification_type)
+                      NotificationHandler::Type notification_type)
       : profile_(profile),
         notification_(notification),
         notification_type_(notification_type) {}
@@ -64,7 +64,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
  private:
   Profile* profile_;
   message_center::Notification notification_;
-  NotificationCommon::Type notification_type_;
+  NotificationHandler::Type notification_type_;
 
   DISALLOW_COPY_AND_ASSIGN(PassThroughDelegate);
 };
@@ -77,7 +77,7 @@ MessageCenterDisplayService::MessageCenterDisplayService(Profile* profile)
 MessageCenterDisplayService::~MessageCenterDisplayService() {}
 
 void MessageCenterDisplayService::Display(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id,
     const message_center::Notification& notification,
     std::unique_ptr<NotificationCommon::Metadata> metadata) {
@@ -109,7 +109,7 @@ void MessageCenterDisplayService::Display(
 }
 
 void MessageCenterDisplayService::Close(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id) {
   // This can be called when the browser is shutting down and the
   // NotificationUiManager has already destructed.

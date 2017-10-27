@@ -18,6 +18,16 @@ class Profile;
 // notification type.
 class NotificationHandler {
  public:
+  // Type of notifications that a handler can be responsible for.
+  enum class Type {
+    WEB_PERSISTENT = 0,
+    WEB_NON_PERSISTENT = 1,
+    EXTENSION = 2,
+    PRODUCT_EOL = 3,
+    DOWNLOAD = 4,
+    MAX = DOWNLOAD,
+  };
+
   virtual ~NotificationHandler() {}
 
   // Called after displaying a toast in case the caller needs some processing.

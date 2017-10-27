@@ -6,7 +6,6 @@
 
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/notifications/notification_handler.h"
@@ -62,15 +61,16 @@ class EolNotificationHandler : public NotificationHandler {
         break;
     }
     NotificationDisplayServiceFactory::GetForProfile(profile)->Close(
-        NotificationCommon::PRODUCT_EOL, kEolNotificationId);
+        NotificationHandler::Type::PRODUCT_EOL, kEolNotificationId);
   }
 
   static void Register(Profile* profile) {
     NotificationDisplayService* service =
         NotificationDisplayServiceFactory::GetForProfile(profile);
-    if (!service->GetNotificationHandler(NotificationCommon::PRODUCT_EOL)) {
+    if (!service->GetNotificationHandler(
+            NotificationHandler::Type::PRODUCT_EOL)) {
       service->AddNotificationHandler(
-          NotificationCommon::PRODUCT_EOL,
+          NotificationHandler::Type::PRODUCT_EOL,
           base::WrapUnique(new EolNotificationHandler()));
     }
   }
