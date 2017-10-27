@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72f8769f_ad8dd59a",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-27T18:01:31Z",
+      "side": 1,
+      "message": "IIUC, there is a race here. The following interleaving is possible:\n\n[A component update begins]\nRemoveComponent is called\nImageLoader removes component\n[component update completes, ImageLoader installs new version of the component]\nUnregisterComponent is called\n\nIn this case, we\u0027re left with an extra copy of the component owned by ImageLoader. Two ideas around this are:\n(1) We could introduce a callback in UnregisterComponent and you could UnregisterComponent then call loader-\u003eRemoveComponent. In this case, we might have an race with shutdown situations, though.\n(2) We could introduce a flag in the installer\u0027s OnCustomInstall that doesn\u0027t give ImageLoader a copy if RemoveComponent has been called. (Figuring out the threading requirements of the flag may be important.)",
+      "range": {
+        "startLine": 280,
+        "startChar": 76,
+        "endLine": 280,
+        "endChar": 0
+      },
+      "revId": "4c01bd1f31f2927b5e8bd0d1e5866f5a550ff157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
