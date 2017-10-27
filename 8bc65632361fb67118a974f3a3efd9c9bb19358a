@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a04a2897_8f28e9fe",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-27T08:05:05Z",
+      "side": 1,
+      "message": "UI",
+      "range": {
+        "startLine": 528,
+        "startChar": 21,
+        "endLine": 528,
+        "endChar": 23
+      },
+      "revId": "8bc65632361fb67118a974f3a3efd9c9bb19358a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80231251_cde67cf5",
+        "filename": "chrome/common/extensions/api/webrtc_logging_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-27T08:05:05Z",
+      "side": 1,
+      "message": "Maybe just \"LogsDirectory\"?",
+      "range": {
+        "startLine": 47,
+        "startChar": 13,
+        "endLine": 47,
+        "endChar": 35
+      },
+      "revId": "8bc65632361fb67118a974f3a3efd9c9bb19358a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
