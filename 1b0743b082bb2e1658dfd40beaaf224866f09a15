@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e8d76e9c_364ef8d5",
+        "filename": "media/gpu/va_surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T04:38:40Z",
+      "side": 1,
+      "message": "We use RGB32 when allocating these as well as far I can recall for the image processor output.\n\nLooking deeper into the code:\n\nhttps://cs.chromium.org/chromium/src/media/gpu/vaapi_video_decode_accelerator.cc?l\u003d853\n\ncalls VaapiPicture::Allocate() with format \u003d gfx::BufferFormat::BGRX_8888, which would create a pixmap_ with that format. Then, on VaapiDrmPicture::Initialize(), we\u0027d call VaapiWrapper::CreateVASurfaceForPixmap() for that pixmap, that would call VaapiWrapper::BufferFormatToVARTFormat, which would return VA_RT_FORMAT_RGB32 and use that for CreateUnownedSurface() to create a VASurface...",
+      "parentUuid": "b7d88dde_c5ccb244",
+      "revId": "1b0743b082bb2e1658dfd40beaaf224866f09a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e665616e_1140ad24",
         "filename": "media/gpu/va_surface.h",
         "patchSetId": 6
