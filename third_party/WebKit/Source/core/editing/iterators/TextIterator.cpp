@@ -901,26 +901,18 @@ TextIteratorAlgorithm<Strategy>::EndPositionInCurrentContainer() const {
 
 template <typename Strategy>
 int TextIteratorAlgorithm<Strategy>::RangeLength(
-    const PositionTemplate<Strategy>& start,
-    const PositionTemplate<Strategy>& end,
+    const EphemeralRangeTemplate<Strategy>& range,
     const TextIteratorBehavior& behavior) {
-  DCHECK(start.GetDocument());
+  DCHECK(range.IsNotNull());
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
-      start.GetDocument()->Lifecycle());
+      range.StartPosition().GetDocument()->Lifecycle());
 
   int length = 0;
-  for (TextIteratorAlgorithm<Strategy> it(start, end, behavior); !it.AtEnd();
+  for (TextIteratorAlgorithm<Strategy> it(range, behavior); !it.AtEnd();
        it.Advance())
     length += it.length();
 
   return length;
-}
-
-template <typename Strategy>
-int TextIteratorAlgorithm<Strategy>::RangeLength(
-    const EphemeralRangeTemplate<Strategy>& range,
-    const TextIteratorBehavior& behavior) {
-  return RangeLength(range.StartPosition(), range.EndPosition(), behavior);
 }
 
 template <typename Strategy>

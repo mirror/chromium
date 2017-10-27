@@ -1439,15 +1439,19 @@ void CompositeEditCommand::MoveParagraphs(
       start_index = 0;
       if (start_in_paragraph) {
         start_index = TextIterator::RangeLength(
-            start_of_paragraph_to_move.ToParentAnchoredPosition(),
-            visible_start.ToParentAnchoredPosition(), behavior);
+            EphemeralRange(
+                start_of_paragraph_to_move.ToParentAnchoredPosition(),
+                visible_start.ToParentAnchoredPosition()),
+            behavior);
       }
 
       end_index = 0;
       if (end_in_paragraph) {
         end_index = TextIterator::RangeLength(
-            start_of_paragraph_to_move.ToParentAnchoredPosition(),
-            visible_end.ToParentAnchoredPosition(), behavior);
+            EphemeralRange(
+                start_of_paragraph_to_move.ToParentAnchoredPosition(),
+                visible_end.ToParentAnchoredPosition()),
+            behavior);
       }
     }
   }

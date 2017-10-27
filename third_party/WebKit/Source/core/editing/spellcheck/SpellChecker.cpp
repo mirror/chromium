@@ -371,10 +371,10 @@ void SpellChecker::MarkAndReplaceFor(
     const Position& caret_position =
         GetFrame().Selection().ComputeVisibleSelectionInDOMTree().End();
     const Position& paragraph_start = checking_range.StartPosition();
-    const int selection_offset =
-        paragraph_start < caret_position
-            ? TextIterator::RangeLength(paragraph_start, caret_position)
-            : 0;
+    const int selection_offset = paragraph_start < caret_position
+                                     ? TextIterator::RangeLength(EphemeralRange(
+                                           paragraph_start, caret_position))
+                                     : 0;
     if (selection_offset > 0 &&
         static_cast<unsigned>(selection_offset) <=
             paragraph.GetText().length() &&
@@ -713,9 +713,9 @@ std::pair<String, int> SpellChecker::FindFirstMisspelling(const Position& start,
   Position paragraph_end = paragraph_range.EndPosition();
 
   const int total_range_length =
-      TextIterator::RangeLength(paragraph_start, end);
+      TextIterator::RangeLength(EphemeralRange(paragraph_start, end));
   const int range_start_offset =
-      TextIterator::RangeLength(paragraph_start, start);
+      TextIterator::RangeLength(EphemeralRange(paragraph_start, start));
   int total_length_processed = 0;
 
   bool first_iteration = true;
@@ -723,8 +723,7 @@ std::pair<String, int> SpellChecker::FindFirstMisspelling(const Position& start,
   while (total_length_processed < total_range_length) {
     // Iterate through the search range by paragraphs, checking each one for
     // spelling.
-    int current_length =
-        TextIterator::RangeLength(paragraph_start, paragraph_end);
+    int current_length = TextIterator::RangeLength(paragraph_range);
     int current_start_offset = first_iteration ? range_start_offset : 0;
     int current_end_offset = current_length;
     if (InSameParagraph(CreateVisiblePosition(paragraph_start),
@@ -732,7 +731,8 @@ std::pair<String, int> SpellChecker::FindFirstMisspelling(const Position& start,
       // Determine the character offset from the end of the original search
       // range to the end of the paragraph, since we will want to ignore results
       // in this area.
-      current_end_offset = TextIterator::RangeLength(paragraph_start, end);
+      current_end_offset =
+          TextIterator::RangeLength(EphemeralRange(paragraph_start, end));
       last_iteration = true;
     }
     if (current_start_offset < current_end_offset) {
@@ -758,9 +758,10 @@ std::pair<String, int> SpellChecker::FindFirstMisspelling(const Position& start,
 
         if (!misspelled_word.IsEmpty()) {
           int spelling_offset = spelling_location - current_start_offset;
-          if (!first_iteration)
-            spelling_offset +=
-                TextIterator::RangeLength(start, paragraph_start);
+          if (!first_iteration) {
+            spelling_offset += TextIterator::RangeLength(
+                EphemeralRange(start, paragraph_start));
+          }
           first_found_offset = spelling_offset;
           first_found_item = misspelled_word;
           break;
