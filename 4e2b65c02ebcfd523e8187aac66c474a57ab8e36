@@ -122,6 +122,24 @@
       "revId": "4e2b65c02ebcfd523e8187aac66c474a57ab8e36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0068934b_1b83b2c7",
+        "filename": "services/video_capture/test/device_factory_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-10-27T20:51:35Z",
+      "side": 1,
+      "message": "Thanks for the detail explanation. Will look into it :)",
+      "parentUuid": "cf7ec09e_b5872412",
+      "revId": "4e2b65c02ebcfd523e8187aac66c474a57ab8e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
