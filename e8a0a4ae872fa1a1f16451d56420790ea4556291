@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54e195ce_5bfd0394",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-27T20:52:41Z",
+      "side": 1,
+      "message": "Can you also update this API to almost idle?",
+      "range": {
+        "startLine": 67,
+        "startChar": 23,
+        "endLine": 67,
+        "endChar": 34
+      },
+      "revId": "e8a0a4ae872fa1a1f16451d56420790ea4556291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "415f83e2_94eaef73",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-27T20:52:41Z",
+      "side": 1,
+      "message": "Now with your other CL to make GRC strongly typed, I anticipate that the kLowMainThreadLoad property will be stored in process CU only. Do we still need to do this propagation to frame now? It may be easier to just do this in the CUGraphObserver?",
+      "revId": "e8a0a4ae872fa1a1f16451d56420790ea4556291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
