@@ -22,6 +22,30 @@
       "revId": "4c01bd1f31f2927b5e8bd0d1e5866f5a550ff157",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8acc7d28_4939875b",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-10-27T20:48:21Z",
+      "side": 1,
+      "message": "Thanks for pointing this out!\n\nI started to think about resolving this inconsistency between component updater and imageloader. \n\nLet\u0027s say we use (1), I\u0027m not sure what the race you mean by race with shutdown situations. But doing it in this way does not solve another existing race (happens rarely though):\n\n[A component update begins]\n[component update completes]\nRemoveComponent is called\nUnregisterComponent is called\nImageLoader removes component\n[ImageLoader installs new version of the component]\n\nThe root cause for this is that we are not executing sequentially and transactionally here. Two proposals: (1.1) use SequencedTaskRunner to schedule ImageLoader operations. Then in ImageLoaderClient, make sure that operations are atomic and execution sequence is consistent with calling sequence. (1.2) on top of (1.1), introduce a mechanism to disallow UpdateComponent\u0026RemoveComponent from interleaving each other. Doing it correctly should guarantee consistency. \n\nRegarding (2), it is a handy fix and should solve this properly. I\u0027m a bit hesitant about adding the flag indicating \u0027Remove\u0027 is in progress since update_client already has an \u0027update in progress\u0027 state.",
+      "parentUuid": "72f8769f_ad8dd59a",
+      "range": {
+        "startLine": 280,
+        "startChar": 76,
+        "endLine": 280,
+        "endChar": 0
+      },
+      "revId": "4c01bd1f31f2927b5e8bd0d1e5866f5a550ff157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
