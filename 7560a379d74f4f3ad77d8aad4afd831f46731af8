@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "00b7bdcc_3be3de3c",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T21:31:18Z",
+      "side": 1,
+      "message": "We should be able to use a newly created delegate immediately without explicitly reseting it.",
+      "parentUuid": "a715bf63_e58a392d",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 20
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bf47cf0_5f67d447",
         "filename": "components/cronet/ios/test/cronet_performance_test.mm",
         "patchSetId": 21
@@ -480,6 +504,30 @@
       "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99ee6be1_21dd7d5e",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T21:31:18Z",
+      "side": 1,
+      "message": "I am still not convinced that there is no issue. First, |_semaphores| dictionary is manipulated on multiple threads without synchronization, which can lead to corrupted data by itself. Second, since waitForDone: and URLSession:task:didCompleteWithError: are executed on different threads, it can happen that the methods simultaneously create and reference their own instances of semaphore. As the result, the semaphore referenced by waitForDone: is never going to be signaled.",
+      "parentUuid": "51e7d325_2adab4e2",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 3
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
