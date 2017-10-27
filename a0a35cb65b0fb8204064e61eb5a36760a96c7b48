@@ -22,6 +22,30 @@
       "revId": "a0a35cb65b0fb8204064e61eb5a36760a96c7b48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f24de8_017de3c7",
+        "filename": "chrome/browser/resources/md_extensions/item.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-27T22:45:59Z",
+      "side": 1,
+      "message": "Followup CL uses in more places: https://crrev.com/c/738635\n\nUpdated CL description to mention that ItemBehavior will be used in multiple places",
+      "parentUuid": "68b092fe_2971bf1c",
+      "range": {
+        "startLine": 60,
+        "startChar": 30,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "a0a35cb65b0fb8204064e61eb5a36760a96c7b48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
