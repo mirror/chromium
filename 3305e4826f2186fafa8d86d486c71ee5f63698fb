@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0473e10a_99fbed8f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-27T23:49:51Z",
+      "side": 1,
+      "message": "Looks good. There\u0027s a couple of other files we will need to update.\n\nSearching for mode::kMinimal for https://cs.chromium.org/search/?q\u003dmode::kminimal\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nWe want to update chrome/browser/profiling_host/background_profiling_triggers.cc, chrome/browser/ui/webui/memory_internals_ui.cc\n\nSearching for kmemlog:\nhttps://cs.chromium.org/search/?q\u003dkmemlog\u0026type\u003dcs\n\nWe want to update some UI and flags as well:\nhttps://cs.chromium.org/chromium/src/chrome/browser/about_flags.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d1050\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/memory_internals_ui.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d56\n\nbrowser tests:\nhttps://cs.chromium.org/chromium/src/chrome/browser/profiling_host/memlog_browsertest.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d170",
+      "revId": "3305e4826f2186fafa8d86d486c71ee5f63698fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ad1a77_00f4517b",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-27T23:49:51Z",
+      "side": 1,
+      "message": "should we also be listening for\nNOTIFICATION_RENDERER_PROCESS_CLOSED? not really sure. this might be okay?",
+      "revId": "3305e4826f2186fafa8d86d486c71ee5f63698fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9beb8b89_bca3d032",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-27T23:49:51Z",
+      "side": 1,
+      "message": "for 1/3 you want 3333",
+      "revId": "3305e4826f2186fafa8d86d486c71ee5f63698fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
