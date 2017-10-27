@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56c315a9_3744c259",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-27T05:53:59Z",
+      "side": 1,
+      "message": "I know that this returns a PartnerBookmark iterator, but I\u0027d still call the method getPartnerBookmarkIterator to avoid confusion for people just searching in code.\n\nProbably should javadoc as well to be consistent with the class",
+      "range": {
+        "startLine": 317,
+        "startChar": 44,
+        "endLine": 317,
+        "endChar": 63
+      },
+      "revId": "572422632d57e92ae9f89ced6b657e546eabe87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280adb58_351e3a8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-27T05:53:59Z",
+      "side": 1,
+      "message": "if we are just using the application context, can we remove the param altogether and have the iterator access ContextUtils directly?",
+      "range": {
+        "startLine": 319,
+        "startChar": 29,
+        "endLine": 319,
+        "endChar": 50
+      },
+      "revId": "572422632d57e92ae9f89ced6b657e546eabe87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550c509a_6d7e5ca1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmark.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-27T05:53:59Z",
+      "side": 1,
+      "message": "I\u0027d put a blank line above this to separate public vs package protected fields.",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "572422632d57e92ae9f89ced6b657e546eabe87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4155fc91_128b7b33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmark.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-27T05:53:59Z",
+      "side": 1,
+      "message": "This should be a List on the left side instead of ArrayList if possible.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 13
+      },
+      "revId": "572422632d57e92ae9f89ced6b657e546eabe87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
