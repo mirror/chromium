@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67128c92_1230f40a",
+        "filename": "headless/lib/virtual_time_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-27T11:44:51Z",
+      "side": 1,
+      "message": "typo: Deferred",
+      "range": {
+        "startLine": 282,
+        "startChar": 6,
+        "endLine": 282,
+        "endChar": 43
+      },
+      "revId": "afaee32230f128a5e4d97a13a3b693c3ccea0b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
