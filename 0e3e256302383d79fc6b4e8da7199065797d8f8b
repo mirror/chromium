@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d490e41_90c897bb",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 27
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T20:30:05Z",
+      "side": 1,
+      "message": "Probably worth saying PageStateSerializationTest\u0027s DumpExpectedPageStateForBackwardsCompat test, to give people a sense for what to look for (since it\u0027s 400 lines into the file).",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "0e3e256302383d79fc6b4e8da7199065797d8f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2532a4_53b6bc6f",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 27
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T20:30:05Z",
+      "side": 1,
+      "message": "Let\u0027s mention that this is enforced with static asserts in page_state_serialization.cc.",
+      "revId": "0e3e256302383d79fc6b4e8da7199065797d8f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae26b87_06908c46",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T20:30:05Z",
+      "side": 1,
+      "message": "nit: TODO(pnoland, dcheng):",
+      "range": {
+        "startLine": 655,
+        "startChar": 3,
+        "endLine": 655,
+        "endChar": 24
+      },
+      "revId": "0e3e256302383d79fc6b4e8da7199065797d8f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea7f551_3c54b171",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T20:30:05Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to mention the new field-specific tests.  Can you update it, perhaps also with an explanation of which approach to use when making a change (version number vs field specific)?",
+      "revId": "0e3e256302383d79fc6b4e8da7199065797d8f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16358f83_4a8ed099",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T20:30:05Z",
+      "side": 1,
+      "message": "From afar, these instructions aren\u0027t clear to me.  If I were making the next change to the format, am I supposed to add something like BackwardsCompat_v27 (similar to lines 506-508), or something field-specific like the tests immediately above?\n\nCan you clarify in the instructions here?",
+      "revId": "0e3e256302383d79fc6b4e8da7199065797d8f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
