@@ -10,6 +10,7 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
+#include "services/video_capture/public/interfaces/buffer_factory.mojom.h"
 #include "services/video_capture/public/interfaces/device_factory_provider.mojom.h"
 
 namespace video_capture {
@@ -25,6 +26,8 @@ class DeviceFactoryProviderImpl : public mojom::DeviceFactoryProvider {
 
   // mojom::DeviceFactoryProvider implementation.
   void ConnectToDeviceFactory(mojom::DeviceFactoryRequest request) override;
+  void CreateBufferPool(int32_t max_simultaneous_buffer_count,
+                        mojom::BufferFactoryRequest request) override;
   void SetShutdownDelayInSeconds(float seconds) override;
 
  private:

@@ -1,0 +1,11 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module video_capture.mojom;
+
+interface BufferFactory {
+  // The buffer is released automatically when |buffer_handle| is released.
+  AcquireBuffer(int32 required_buffer_size_in_bytes)
+      => (handle<shared_buffer> buffer_handle);
+};

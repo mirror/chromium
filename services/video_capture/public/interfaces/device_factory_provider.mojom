@@ -4,6 +4,7 @@
 
 module video_capture.mojom;
 
+import "services/video_capture/public/interfaces/buffer_factory.mojom";
 import "services/video_capture/public/interfaces/device_factory.mojom";
 
 // Entry point to the Video Capture Service API.
@@ -12,6 +13,10 @@ import "services/video_capture/public/interfaces/device_factory.mojom";
 // factory, which provides access to fake devices that generates test frames.
 interface DeviceFactoryProvider  {
   ConnectToDeviceFactory(DeviceFactory& request);
+
+  // Creates a BufferFactory backed by a buffer pool. This is useful for
+  // pushing frames into a virtual device, see DeviceFactory.AddVirtualDevice().
+  CreateBufferPool(int32 max_simultaneous_buffer_count, BufferFactory& request);
 
   // The service shuts down after a certain delay when no client is connected.
   // This method allows clients to customize this delay.

@@ -38,6 +38,12 @@ void DeviceFactoryProviderImpl::ConnectToDeviceFactory(
   factory_bindings_.AddBinding(device_factory_.get(), std::move(request));
 }
 
+void DeviceFactoryProviderImpl::CreateBufferPool(
+    int32_t max_simultaneous_buffer_count,
+    mojom::BufferFactoryRequest request) {
+  NOTIMPLEMENTED();
+}
+
 void DeviceFactoryProviderImpl::SetShutdownDelayInSeconds(float seconds) {
   set_shutdown_delay_cb_.Run(seconds);
 }
