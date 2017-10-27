@@ -173,7 +173,6 @@ void BaseArena::MakeConsistentForGC() {
 #endif
   for (BasePage* page = first_page_; page; page = page->Next()) {
     page->MarkAsUnswept();
-    page->InvalidateObjectStartBitmap();
   }
 
   // We should not start a new GC until we finish sweeping in the current GC.
@@ -205,7 +204,6 @@ void BaseArena::MakeConsistentForMutator() {
        previous_page = page, page = page->Next()) {
     page->MakeConsistentForMutator();
     page->MarkAsSwept();
-    page->InvalidateObjectStartBitmap();
   }
   if (previous_page) {
     DCHECK(first_unswept_page_);
@@ -564,6 +562,12 @@ void NormalPageArena::SweepAndCompact() {
     LOG_HEAP_COMPACTION("\n");
   heap.Compaction()->FinishedArenaCompaction(this, freed_page_count,
                                              freed_size);
+
+#if DCHECK_IS_ON()
+  for (NormalPage* page = static_cast<NormalPage*>(first_page_); page;
+       page = static_cast<NormalPage*>(page->Next()))
+    page->VerifyObjectStartBitmap();
+#endif  // DCHECK_IS_ON()
 }
 
 #if DCHECK_IS_ON()
@@ -666,6 +670,10 @@ void NormalPageArena::FreePage(NormalPage* page) {
   GetThreadState()->Heap().GetFreePagePool()->Add(ArenaIndex(), memory);
 }
 
+void NormalPage::InvalidateObjectStartBitmap() {
+  memset(&object_start_bit_map_, 0, kObjectStartBitMapSize);
+}
+
 bool NormalPageArena::Coalesce() {
   // Don't coalesce arenas if there are not enough promptly freed entries
   // to be coalesced.
@@ -687,6 +695,7 @@ bool NormalPageArena::Coalesce() {
   size_t freed_size = 0;
   for (NormalPage* page = static_cast<NormalPage*>(first_page_); page;
        page = static_cast<NormalPage*>(page->Next())) {
+    page->InvalidateObjectStartBitmap();
     Address start_of_gap = page->Payload();
     for (Address header_address = start_of_gap;
          header_address < page->PayloadEnd();) {
@@ -729,6 +738,8 @@ bool NormalPageArena::Coalesce() {
 
     if (start_of_gap != page->PayloadEnd())
       AddToFreeList(start_of_gap, page->PayloadEnd() - start_of_gap);
+
+    page->VerifyObjectStartBitmap();
   }
   GetThreadState()->Heap().HeapStats().DecreaseAllocatedObjectSize(freed_size);
   DCHECK_EQ(promptly_freed_size_, freed_size);
@@ -750,6 +761,8 @@ void NormalPageArena::PromptlyFreeObject(HeapObjectHeader* header) {
     ThreadState::SweepForbiddenScope forbidden_scope(GetThreadState());
     header->Finalize(payload, payload_size);
     if (address + size == current_allocation_point_) {
+      static_cast<NormalPage*>(BasePage::FromHeader(address))
+          ->ClearObjectStartBit(address);
       current_allocation_point_ = address;
       SetRemainingAllocationSize(remaining_allocation_size_ + size);
       SET_MEMORY_INACCESSIBLE(address, size);
@@ -1013,12 +1026,12 @@ Address LargeObjectArena::DoAllocateLargeObjectPage(size_t allocation_size,
     DCHECK(!large_object_address[i]);
 #endif
   DCHECK_GT(gc_info_index, 0u);
+  LargeObjectPage* large_object = new (large_object_address)
+      LargeObjectPage(page_memory, this, allocation_size);
   HeapObjectHeader* header = new (NotNull, header_address)
       HeapObjectHeader(kLargeObjectSizeInHeader, gc_info_index);
   Address result = header_address + sizeof(*header);
   DCHECK(!(reinterpret_cast<uintptr_t>(result) & kAllocationMask));
-  LargeObjectPage* large_object = new (large_object_address)
-      LargeObjectPage(page_memory, this, allocation_size);
 
   // Poison the object header and allocationGranularity bytes after the object
   ASAN_POISON_MEMORY_REGION(header, sizeof(*header));
@@ -1263,9 +1276,18 @@ BasePage::BasePage(PageMemory* storage, BaseArena* arena)
 }
 
 NormalPage::NormalPage(PageMemory* storage, BaseArena* arena)
-    : BasePage(storage, arena), object_start_bit_map_computed_(false) {
+    : BasePage(storage, arena) {
 #if DCHECK_IS_ON()
   DCHECK(IsPageHeaderAddress(reinterpret_cast<Address>(this)));
+#endif  // DCHECK_IS_ON()
+  InvalidateObjectStartBitmap();
+}
+
+NormalPage::~NormalPage() {
+#if DCHECK_IS_ON()
+  DCHECK(IsPageHeaderAddress(reinterpret_cast<Address>(this)));
+// TODO(mlippautz): Go through the object bitmap and verify that there are
+// only free list object headers present.
 #endif
 }
 
@@ -1309,6 +1331,8 @@ static void DiscardPages(Address begin, Address end) {
 #endif
 
 void NormalPage::Sweep() {
+  VerifyObjectStartBitmap();
+  InvalidateObjectStartBitmap();
   size_t marked_object_size = 0;
   Address start_of_gap = Payload();
   NormalPageArena* page_arena = ArenaForNormalPage();
@@ -1359,6 +1383,7 @@ void NormalPage::Sweep() {
         DiscardPages(start_of_gap + sizeof(FreeListEntry), header_address);
 #endif
     }
+    SetObjectStartBit(header_address);
     header->Unmark();
     header_address += size;
     marked_object_size += size;
@@ -1376,9 +1401,12 @@ void NormalPage::Sweep() {
     page_arena->GetThreadState()->Heap().HeapStats().IncreaseMarkedObjectSize(
         marked_object_size);
   }
+
+  VerifyObjectStartBitmap();
 }
 
 void NormalPage::SweepAndCompact(CompactionContext& context) {
+  InvalidateObjectStartBitmap();
   NormalPage*& current_page = context.current_page_;
   size_t& allocation_point = context.allocation_point_;
 
@@ -1467,6 +1495,7 @@ void NormalPage::SweepAndCompact(CompactionContext& context) {
         memcpy(compact_frontier, header_address, size);
       compact->Relocate(payload, compact_frontier + sizeof(HeapObjectHeader));
     }
+    current_page->SetObjectStartBit(compact_frontier);
     header_address += size;
     marked_object_size += size;
     allocation_point += size;
@@ -1490,6 +1519,7 @@ void NormalPage::SweepAndCompact(CompactionContext& context) {
 }
 
 void NormalPage::MakeConsistentForMutator() {
+  InvalidateObjectStartBitmap();
   Address start_of_gap = Payload();
   NormalPageArena* normal_arena = ArenaForNormalPage();
   for (Address header_address = Payload(); header_address < PayloadEnd();) {
@@ -1513,14 +1543,19 @@ void NormalPage::MakeConsistentForMutator() {
     }
     if (start_of_gap != header_address)
       normal_arena->AddToFreeList(start_of_gap, header_address - start_of_gap);
-    if (header->IsMarked())
+    if (header->IsMarked()) {
       header->Unmark();
+      static_cast<NormalPage*>(BasePage::FromHeader(header_address))
+          ->SetObjectStartBit(header_address);
+    }
     header_address += size;
     start_of_gap = header_address;
     DCHECK_LE(header_address, PayloadEnd());
   }
   if (start_of_gap != PayloadEnd())
     normal_arena->AddToFreeList(start_of_gap, PayloadEnd() - start_of_gap);
+
+  VerifyObjectStartBitmap();
 }
 
 #if defined(ADDRESS_SANITIZER)
@@ -1542,24 +1577,6 @@ void NormalPage::PoisonUnmarkedObjects() {
 }
 #endif
 
-void NormalPage::PopulateObjectStartBitMap() {
-  memset(&object_start_bit_map_, 0, kObjectStartBitMapSize);
-  Address start = Payload();
-  for (Address header_address = start; header_address < PayloadEnd();) {
-    HeapObjectHeader* header =
-        reinterpret_cast<HeapObjectHeader*>(header_address);
-    size_t object_offset = header_address - start;
-    DCHECK(!(object_offset & kAllocationMask));
-    size_t object_start_number = object_offset / kAllocationGranularity;
-    size_t map_index = object_start_number / 8;
-    DCHECK_LT(map_index, kObjectStartBitMapSize);
-    object_start_bit_map_[map_index] |= (1 << (object_start_number & 7));
-    header_address += header->size();
-    DCHECK_LE(header_address, PayloadEnd());
-  }
-  object_start_bit_map_computed_ = true;
-}
-
 static int NumberOfLeadingZeroes(uint8_t byte) {
   if (!byte)
     return 8;
@@ -1577,11 +1594,58 @@ static int NumberOfLeadingZeroes(uint8_t byte) {
   return result;
 }
 
+namespace {
+
+int NumberOfTrailingZeroes(uint8_t byte) {
+#ifdef __GNUC__
+  return byte ? __builtin_ctz(byte) : 8;
+#else
+  if (!byte)
+    return 8;
+  int result = 0;
+  for (byte ^= byte - 1; byte >>= 1; ++result) {
+  }
+  return result;
+#endif  // __clang__
+}
+
+}  // namespace
+
+void NormalPage::VerifyObjectStartBitmap() {
+// The following method verifies that a bit indicating the object start is
+// only present iff the object is reachable through iteration on the page.
+#if DCHECK_IS_ON()
+  HeapObjectHeader* current_header =
+      reinterpret_cast<HeapObjectHeader*>(Payload());
+  for (size_t map_index = 0; map_index < kReservedForObjectBitMap;
+       map_index++) {
+    if (!object_start_bit_map_[map_index])
+      continue;
+
+    uint8_t value = object_start_bit_map_[map_index];
+    while (value) {
+      const int trailing_zeroes = NumberOfTrailingZeroes(value);
+      const size_t object_start_number = (map_index * 8) + trailing_zeroes;
+      const Address object_address =
+          Payload() + (kAllocationGranularity * object_start_number);
+      const HeapObjectHeader* object_header =
+          reinterpret_cast<HeapObjectHeader*>(object_address);
+      DCHECK_EQ(object_header, current_header);
+      DCHECK(object_header->IsFree() ||
+             (object_header->GcInfoIndex() != kGcInfoIndexForFreeListHeader));
+      // Advance bitmap and current_header.
+      current_header = reinterpret_cast<HeapObjectHeader*>(
+          object_address + object_header->size());
+      value &= ~(1 << (object_start_number & 7));
+    }
+  }
+#endif  // DCHECK_IS_ON()
+}
+
 HeapObjectHeader* NormalPage::FindHeaderFromAddress(Address address) {
   if (address < Payload())
     return nullptr;
-  if (!object_start_bit_map_computed_)
-    PopulateObjectStartBitMap();
+  VerifyObjectStartBitmap();
   size_t object_offset = address - Payload();
   size_t object_start_number = object_offset / kAllocationGranularity;
   size_t map_index = object_start_number / 8;
