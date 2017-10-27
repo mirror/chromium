@@ -124,9 +124,19 @@ struct FetchAPIRequest {
   url.mojom.Url url;
   string method;
   map<string, string> headers;
+
+  // The request body can be transferred as:
+  // 1.) DataElements (currently only strings are supported). This is the
+  // preferred way of transferring body. Only used in S13nServiceWorker
+  // for subresource requests so far.
+  array<string> body;
+  // 2.) A Blob. There are two variants:
+  // 2a.) A non-MojoBlob.
   string? blob_uuid;
   uint64 blob_size;
+  // 2b.) A MojoBlob.
   Blob? blob;
+
   Referrer referrer;
   FetchCredentialsMode credentials_mode;
   FetchCacheMode cache_mode;

@@ -96,6 +96,11 @@ struct StructTraits<blink::mojom::FetchAPIRequestDataView,
   static std::map<std::string, std::string> headers(
       const content::ServiceWorkerFetchRequest& request);
 
+  static const std::vector<std::string>& body(
+      const content::ServiceWorkerFetchRequest& request) {
+    return request.body;
+  }
+
   static const std::string& blob_uuid(
       const content::ServiceWorkerFetchRequest& request) {
     return request.blob_uuid;

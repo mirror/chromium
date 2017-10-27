@@ -4,6 +4,7 @@
 
 #include "platform/mojo/FetchAPIRequestStructTraits.h"
 
+#include "mojo/public/cpp/bindings/array_traits_wtf_vector.h"
 #include "mojo/public/cpp/bindings/map_traits_wtf_hash_map.h"
 #include "mojo/public/cpp/bindings/string_traits_wtf.h"
 #include "platform/blob/BlobData.h"
@@ -355,6 +356,16 @@ const blink::Referrer& StructTraits<blink::mojom::FetchAPIRequestDataView,
 }
 
 // static
+WTF::Vector<WTF::String> StructTraits<blink::mojom::FetchAPIRequestDataView,
+                                      blink::WebServiceWorkerRequest>::
+    body(const blink::WebServiceWorkerRequest& request) {
+  WTF::Vector<WTF::String> wtf_vector;
+  for (const blink::WebString& str : request.Body())
+    wtf_vector.emplace_back(str);
+  return wtf_vector;
+}
+
+// static
 WTF::String StructTraits<blink::mojom::FetchAPIRequestDataView,
                          blink::WebServiceWorkerRequest>::
     blob_uuid(const blink::WebServiceWorkerRequest& request) {
@@ -412,6 +423,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   blink::KURL url;
   WTF::String method;
   WTF::HashMap<WTF::String, WTF::String> headers;
+  WTF::Vector<WTF::String> body;
   WTF::String blobUuid;
   blink::mojom::blink::BlobPtr blob;
   blink::Referrer referrer;
@@ -423,7 +435,8 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   if (!data.ReadMode(&mode) || !data.ReadRequestContextType(&requestContext) ||
       !data.ReadFrameType(&frameType) || !data.ReadUrl(&url) ||
       !data.ReadMethod(&method) || !data.ReadHeaders(&headers) ||
-      !data.ReadBlobUuid(&blobUuid) || !data.ReadReferrer(&referrer) ||
+      !data.ReadBody(&body) || !data.ReadBlobUuid(&blobUuid) ||
+      !data.ReadReferrer(&referrer) ||
       !data.ReadCredentialsMode(&credentialsMode) ||
       !data.ReadRedirectMode(&redirectMode) || !data.ReadClientId(&clientId) ||
       !data.ReadIntegrity(&integrity)) {
@@ -438,6 +451,8 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   out->SetMethod(method);
   for (const auto& pair : headers)
     out->SetHeader(pair.key, pair.value);
+
+  out->SetBody(blink::WebVector<blink::WebString>(body));
   out->SetBlob(blobUuid, static_cast<long long>(data.blob_size()),
                data.TakeBlob<blink::mojom::blink::BlobPtr>().PassInterface());
   out->SetReferrer(referrer.referrer, static_cast<blink::WebReferrerPolicy>(

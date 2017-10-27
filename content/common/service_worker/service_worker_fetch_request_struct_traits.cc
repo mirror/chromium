@@ -365,7 +365,8 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
       !data.ReadRequestContextType(&out->request_context_type) ||
       !data.ReadFrameType(&out->frame_type) || !data.ReadUrl(&out->url) ||
       !data.ReadMethod(&out->method) || !data.ReadHeaders(&headers) ||
-      !data.ReadBlobUuid(&blob_uuid) || !data.ReadReferrer(&out->referrer) ||
+      !data.ReadBody(&out->body) || !data.ReadBlobUuid(&blob_uuid) ||
+      !data.ReadReferrer(&out->referrer) ||
       !data.ReadCredentialsMode(&out->credentials_mode) ||
       !data.ReadRedirectMode(&out->redirect_mode) ||
       !data.ReadIntegrity(&out->integrity) ||

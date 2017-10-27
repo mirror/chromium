@@ -11,6 +11,7 @@
 #include "modules/fetch/BodyStreamBuffer.h"
 #include "modules/fetch/BytesConsumer.h"
 #include "modules/fetch/FetchHeaderList.h"
+#include "modules/fetch/FormDataBytesConsumer.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
@@ -33,7 +34,18 @@ FetchRequestData* FetchRequestData::Create(
   for (HTTPHeaderMap::const_iterator it = web_request.Headers().begin();
        it != web_request.Headers().end(); ++it)
     request->header_list_->Append(it->key, it->value);
-  if (web_request.GetBlobDataHandle()) {
+
+  if (!web_request.Body().empty()) {
+    RefPtr<EncodedFormData> form_data = EncodedFormData::Create();
+    for (const WebString& web_string : web_request.Body()) {
+      std::string str = web_string.Utf8();
+      form_data->AppendData(str.c_str(), str.size());
+    }
+    request->SetBuffer(new BodyStreamBuffer(
+        script_state,
+        new FormDataBytesConsumer(ExecutionContext::From(script_state),
+                                  std::move(form_data))));
+  } else if (web_request.GetBlobDataHandle()) {
     request->SetBuffer(new BodyStreamBuffer(
         script_state,
         new BlobBytesConsumer(ExecutionContext::From(script_state),

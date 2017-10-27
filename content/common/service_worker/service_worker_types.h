@@ -95,7 +95,15 @@ using ServiceWorkerHeaderMap =
 
 using ServiceWorkerHeaderList = std::vector<std::string>;
 
-// To dispatch fetch request from browser to child process.
+// The Request interface from the Fetch API. See blink::mojom::FetchAPIRequest
+// for documentation, as it is typemapped to this struct.
+//
+// This struct is called "ServiceWorker" for legacy reasons. It is used for
+// FetchEvent#request and also by the Cache Storage and Background Fetch APIs.
+// Meanwhile the Fetch API's fetch() uses content::ResourceRequest directly.
+//
+// TODO(falken): Remove this struct and use the Mojo struct FetchAPIRequest
+// directly or else a typemapping in Blink.
 struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   ServiceWorkerFetchRequest();
   ServiceWorkerFetchRequest(const GURL& url,
@@ -119,6 +127,7 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   GURL url;
   std::string method;
   ServiceWorkerHeaderMap headers;
+  std::vector<std::string> body;
   std::string blob_uuid;
   uint64_t blob_size = 0;
   scoped_refptr<storage::BlobHandle> blob;
@@ -133,7 +142,15 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   ServiceWorkerFetchType fetch_type = ServiceWorkerFetchType::FETCH;
 };
 
-// Represents a response to a fetch.
+// The Response interface from the Fetch API.
+//
+// It is called "ServiceWorker" for legacy reasons. It is used for
+// FetchEvent#respondWith() (via mojom::ServiceWorkerFetchResponseCallback) and
+// also by the Cache Storage and Background Fetch APIs. Meanwhile the Fetch
+// API's fetch() uses content::ResourceResponse directly.
+//
+// TODO(falken): Remove this struct and use a Blink type or else
+// ResourceResponse instead.
 struct CONTENT_EXPORT ServiceWorkerResponse {
   ServiceWorkerResponse();
   ServiceWorkerResponse(
