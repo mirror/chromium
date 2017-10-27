@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "287b2588_db93b29e",
+        "filename": "chrome/browser/ui/cocoa/test/menu_test_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-27T21:43:15Z",
+      "side": 1,
+      "message": "\u003e Currently just a theory, but could this result in flakiness? E.g. what if, the app event queue looks like\n\u003e \n\u003e  - NSMenuDidBeginTrackingNotification\n\u003e  - Another test/process opened a menu / focus loss\n\u003e \n\u003e next iteration, after posting, we get\n\u003e \n\u003e  - Another test/process opened a menu / focus loss\n\u003e  - performOpenTasks\n\u003e \n\u003e The next run loop iteration closes the menu, then performOpenTasks runs with the menu closed.\n\u003e \n\nInteresting theory! I did add a DCHECK to ensure isOpen_ now and then ran views_unittests in the background as you suggested, and it didn\u0027t fire once in 100 runs. What I noticed is that the popup menu seems to wait to claim the \"modal\"ness of the GUI session. So while views_unittest was minimizing windows, it waited to pop up the menu until the animation was done. So I think this is actually robust. The DCHECK should trip if that\u0027s not the case.\n\n\u003e \n\u003e (maybe it\u0027s not flaky, in which case this is fine. Maybe setOpenCallback can immediately post a task to run just in NSEventTrackingRunLoopMode - not sure if that would be more or less robust though..)\n\nI think posting when setOpenCallback is called may be less robust, because the menu may never open.",
+      "parentUuid": "daedf5c0_e64e13f7",
+      "revId": "3b30ae18779352f1034ee73b7a5379eb13cc4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c5c1d46_e608ef3c",
         "filename": "chrome/browser/ui/cocoa/test/menu_test_observer.mm",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "3b30ae18779352f1034ee73b7a5379eb13cc4b56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36f0be2_10846cc8",
+        "filename": "chrome/browser/ui/cocoa/test/menu_test_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-27T21:43:15Z",
+      "side": 1,
+      "message": "Yeah, CommonModes contains both EventTracking and Default, but it also includes others that I don\u0027t necessarily want this event pumped in.",
+      "parentUuid": "8c5c1d46_e608ef3c",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "3b30ae18779352f1034ee73b7a5379eb13cc4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
