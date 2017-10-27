@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23f61d66_fd07916d",
+        "filename": "base/trace_event/heap_profiler_allocation_context_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-27T17:55:16Z",
+      "side": 1,
+      "message": "Are we guaranteed that the char pointer is going to be the same? In the past we had bugs because of string aliasing. However of these can only come from the same scoped macro we should be fine (in that case just add a comment here explicitly)",
+      "revId": "b5a83525c6a4e604ca7dde285c6179dee0f7bf0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0645e51a_3ed5e1a1",
+        "filename": "base/trace_event/heap_profiler_allocation_context_tracker_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-27T17:55:16Z",
+      "side": 1,
+      "message": "Use addresses that are high and multiple of 8.clang is damn smart about these things and can easily not download at you want and end in undefined behavior. Use like 0x1000",
+      "revId": "b5a83525c6a4e604ca7dde285c6179dee0f7bf0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
