@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "988578f1_75e78e2b",
+        "filename": "chrome/common/extensions/api/language_settings_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-27T16:10:03Z",
+      "side": 1,
+      "message": "Hmm... could we collapse all of these into one?\n\nenum MoveType {\n  TO_TOP,\n  UP,\n  DOWN,\n};\n\n...\n\nstatic void moveLanguage(DOMString languageCode, \n                         DOMString languageList,\n                         MoveType moveType);",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51f421b_db8f650f",
+        "filename": "chrome/common/extensions/api/language_settings_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-27T16:10:03Z",
+      "side": 1,
+      "message": "Do we need to pass the languageList here?  It seems like the browser should have that information.  (I\u0027m not familiar with language settings code, so I could be wrong, but it seems a bit odd)",
+      "range": {
+        "startLine": 95,
+        "startChar": 61,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
