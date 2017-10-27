@@ -976,3 +976,52 @@ IN_PROC_BROWSER_TEST_F(ChromeNavigationBrowserTest, CrossSiteRedirectionToPDF) {
                          ->GetActiveWebContents()
                          ->GetLastCommittedURL());
 }
+
+// TODO(csharrison): These tests should become tentative WPT, once the feature
+// is enabled by default.
+class NavigationConsumingTest : public ChromeNavigationBrowserTest {
+  void SetUpCommandLine(base::CommandLine* cmd_line) override {
+    ChromeNavigationBrowserTest::SetUpCommandLine(cmd_line);
+    scoped_feature_.InitFromCommandLine("ConsumeGestureOnNavigation",
+                                        std::string());
+  }
+  base::test::ScopedFeatureList scoped_feature_;
+};
+IN_PROC_BROWSER_TEST_F(NavigationConsumingTest, NavigationConsumesUserGesture) {
+  ui_test_utils::NavigateToURL(
+      browser(),
+      embedded_test_server()->GetURL("/navigation_consumes_gesture.html"));
+  content::WebContents* contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+
+  // Normally, fullscreen should work, as long as there is a user gesture.
+  bool is_fullscreen = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      contents, "document.body.webkitRequestFullscreen();", &is_fullscreen));
+  EXPECT_TRUE(is_fullscreen);
+
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      contents, "document.webkitExitFullscreen();", &is_fullscreen));
+  EXPECT_FALSE(is_fullscreen);
+
+  EXPECT_TRUE(content::ExecuteScriptWithoutUserGestureAndExtractBool(
+      contents, "document.body.webkitRequestFullscreen();", &is_fullscreen));
+  EXPECT_FALSE(is_fullscreen);
+
+  // However, starting a navigation should consume the gesture. Fullscreen
+  // should not work afterwards. Make sure the navigation is synchronously
+  // started via click().
+  std::string script = R"(
+    document.getElementsByTagName('a')[0].click();
+    document.body.webkitRequestFullscreen();
+  )";
+  bool did_fullscreen = false;
+
+  // Use the TestNavigationManager to ensure the navigation is not finished
+  // before fullscreen can occur.
+  content::TestNavigationManager nav_manager(
+      contents, embedded_test_server()->GetURL("/title1.html"));
+  EXPECT_TRUE(
+      content::ExecuteScriptAndExtractBool(contents, script, &did_fullscreen));
+  EXPECT_FALSE(did_fullscreen);
+}
