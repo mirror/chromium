@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5a7417c_bacc8521",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-27T19:42:32Z",
+      "side": 1,
+      "message": "I know this is a string today, but is there any reason not to use `url.mojom.Origin` instead?",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
