@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8bd7f446_ce7e9cb0",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-27T10:09:59Z",
+      "side": 1,
+      "message": "Nit: Really, I would just extract this to a local variable and then use that throughout this method.",
+      "range": {
+        "startLine": 775,
+        "startChar": 4,
+        "endLine": 775,
+        "endChar": 58
+      },
+      "revId": "b36ed5eb847b378208084f82d0244c1c306b43bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6a7ddbc_170e5d6b",
         "filename": "chrome/browser/media/media_engagement_service.cc",
         "patchSetId": 4
