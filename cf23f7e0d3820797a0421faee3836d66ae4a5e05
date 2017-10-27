@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0592d439_874df4b0",
+        "filename": "ash/display/cursor_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "It would be better if we make GetWindows() return a bool.",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 31
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f2f670_525d1093",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure why we need this function at all?\n\nDon\u0027t we already have MirrorWindowController::GetAllRootWindows()?",
+      "range": {
+        "startLine": 318,
+        "startChar": 29,
+        "endLine": 318,
+        "endChar": 39
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5f1c08_e541a783",
+        "filename": "ash/display/mirror_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "How about returning a bool instead?",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 6
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47265406_0eb9d31e",
+        "filename": "ash/system/screen_layout_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "Two issues here:\n1 - Please, use the same type as returned by GetMirroringDisplayIdList(); i.e. DisplayIdList.\n2 - We don\u0027t use rvalue references this way in our codebase. The compiler should be able to do copy elision automatically (http://en.cppreference.com/w/cpp/language/copy_elision).\n\nSo just declare it as:\n\nconst DisplayIdList id_list \u003d display_manager-\u003eGetMirroringDisplayIdList();",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f137d1b4_c51709db",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "Nit: No braces.",
+      "range": {
+        "startLine": 306,
+        "startChar": 25,
+        "endLine": 306,
+        "endChar": 26
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc93f9fa_066d9360",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "This condition alone is not enough. You also need: mirroring_src_id_ \u003d\u003d kInvalidId, becuase you shouldn\u0027t insert the source display into |hardware_mirroring_display_id_list_| (see below comment).",
+      "range": {
+        "startLine": 690,
+        "startChar": 10,
+        "endLine": 690,
+        "endChar": 53
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cf3b72_ddfef3d7",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "You are still inserting the source display ID.",
+      "range": {
+        "startLine": 696,
+        "startChar": 6,
+        "endLine": 696,
+        "endChar": 74
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64de870_f2e79927",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "Add a comment that `multi_display_mode_` is not \u003d\u003d MIRRORING when doing HW mirroring, because this VERY confusing. Maybe also add a TODO to fix this.",
+      "range": {
+        "startLine": 1015,
+        "startChar": 10,
+        "endLine": 1015,
+        "endChar": 45
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e6186a_b4f9772c",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "No else after return.",
+      "range": {
+        "startLine": 1021,
+        "startChar": 2,
+        "endLine": 1021,
+        "endChar": 6
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650a3dfe_82a9920b",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1361,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "Nit: Comments are more useful when they document the why. Please explain why that might happen?",
+      "range": {
+        "startLine": 1361,
+        "startChar": 33,
+        "endLine": 1361,
+        "endChar": 61
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e115e5_1ded2500",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "Reduce indentation by returning early if (!IsInSoftwareMirrorMode()).\n\nWhat about HW mirroring displays?",
+      "range": {
+        "startLine": 1511,
+        "startChar": 2,
+        "endLine": 1511,
+        "endChar": 33
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

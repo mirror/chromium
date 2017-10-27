@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3544f808_a1aa461c",
+        "filename": "ash/system/screen_layout_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "68083b2c_a12ba74c",
+      "range": {
+        "startLine": 139,
+        "startChar": 23,
+        "endLine": 139,
+        "endChar": 60
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a93148e7_ce2cdca1",
         "filename": "ash/system/screen_layout_observer_unittest.cc",
         "patchSetId": 4
@@ -472,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "b6c03fb8_b5198aa3",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "You didn\u0027t resolve this. You are still inserting the source display ID.",
+      "parentUuid": "bb7985f4_1f8ced92",
+      "range": {
+        "startLine": 697,
+        "startChar": 6,
+        "endLine": 697,
+        "endChar": 74
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6706c24_40c7d9f1",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 4
@@ -519,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "507552f7_2375f1fc",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "deee52ff_b59943dc",
+      "range": {
+        "startLine": 1248,
+        "startChar": 6,
+        "endLine": 1248,
+        "endChar": 28
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2449af56_a6cbd286",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 4
@@ -554,6 +626,30 @@
       "side": 1,
       "message": "It seems that I need a local variable as a parameter in in find_if.",
       "parentUuid": "2449af56_a6cbd286",
+      "range": {
+        "startLine": 1352,
+        "startChar": 14,
+        "endLine": 1352,
+        "endChar": 23
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3a87cb_b43c680e",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "Can you capture mirroring_source_id_ by ref in the lambda? [\u0026mirroring_source_id_] ?\n\nYou can also capture `this` ([this]).",
+      "parentUuid": "74bbe902_a0eefec1",
       "range": {
         "startLine": 1352,
         "startChar": 14,
@@ -610,6 +706,30 @@
       "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5767b2dc_dc26177c",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:18:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0807f808_94576f83",
+      "range": {
+        "startLine": 1362,
+        "startChar": 0,
+        "endLine": 1367,
+        "endChar": 47
+      },
+      "revId": "b2c10f3239ee3756ecaf18b1095fc8036dd2e1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
