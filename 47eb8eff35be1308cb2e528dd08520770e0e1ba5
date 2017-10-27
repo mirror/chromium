@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9821fde_3a89b06f",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-27T17:47:19Z",
+      "side": 1,
+      "message": "nit: Inline?",
+      "range": {
+        "startLine": 642,
+        "startChar": 37,
+        "endLine": 642,
+        "endChar": 0
+      },
+      "revId": "47eb8eff35be1308cb2e528dd08520770e0e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
