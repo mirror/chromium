@@ -70,6 +70,24 @@
       "revId": "e95df474f76d2c8513a8e8c2a15181d1ac33f62c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e19ff1_c3b20853",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:16:25Z",
+      "side": 1,
+      "message": "To be clear, I don\u0027t expect us to fix OOPIF support in this CL.  :)  That\u0027s just one of the issues I noticed with the class.  I\u0027ll file a bug for that work.\n\nI\u0027m more concerned about the other things I noted:\n1) The dialog isn\u0027t tied to a process.  If we miss any kind of notification of process swap, we\u0027ll kill the wrong one, which feels fragile.\n2) It seems odd to repurpose the dialog for the new process, which seems unlikely to be marked unresponsive at the same time as the old process shows its dialog.  Would we not get a separate dialog in the case that the new process becomes unresponsive?  (If not, let\u0027s confirm whether the code here correctly updates the list of affected pages, and let\u0027s put some comments in.\n\nI can file a bug for the longer term refactoring and OOPIF support if we decide that there aren\u0027t problems with this short term approach.",
+      "parentUuid": "530bb41c_70538dcf",
+      "revId": "e95df474f76d2c8513a8e8c2a15181d1ac33f62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
