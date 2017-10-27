@@ -2808,6 +2808,10 @@ if (is_android) {
     if (is_java_debug || dcheck_always_on) {
       defines += [ "_DCHECK_IS_ON" ]
     }
+
+    if (report_java_assert) {
+      defines += [ "_REPORT_JAVA_ASSERT" ]
+    }
   }
 
   java_cpp_template("base_native_libraries_gen") {
