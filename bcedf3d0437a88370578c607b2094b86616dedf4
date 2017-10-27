@@ -16,6 +16,24 @@
       "revId": "bcedf3d0437a88370578c607b2094b86616dedf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0e6fd4_8c436a5f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationCompatBuilder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-27T14:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4399b68e_0cb7931c",
+      "revId": "bcedf3d0437a88370578c607b2094b86616dedf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
