@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4627dee5_e01c0e0f",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:30:33Z",
+      "side": 1,
+      "message": "Get rid of this check?",
+      "revId": "54e098d308c4be58a9338592e9be80526bf9750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a77d94_c43edd34",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-27T10:30:33Z",
+      "side": 1,
+      "message": "Is this a valid use of auto? The type is not really deducible from looking at this. I think we prefer to specify the type here?",
+      "revId": "54e098d308c4be58a9338592e9be80526bf9750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
