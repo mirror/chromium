@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "54fc571e_dc946ac5",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-27T00:17:11Z",
+      "side": 1,
+      "message": "I\u0027ve removed the GL_OES_texture_half_float_linear bit, since it\u0027s not necessary for this side of the feature.\n\nI do add the GL_EXT_color_buffer_[half_]float. I\u0027ll make sure that it\u0027s clear in the spec that creating a \u003ccanvas\u003e with half-float will\n- not work unless the extension is available\n- have the effect of requesting the extension",
+      "parentUuid": "4a9e2a93_3ac9d2d8",
+      "range": {
+        "startLine": 133,
+        "startChar": 9,
+        "endLine": 133,
+        "endChar": 24
+      },
+      "revId": "657ea684c79bcc9bda4be04d62116bb48b207708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2688f90_dee108b8",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
         "patchSetId": 4
@@ -132,6 +156,30 @@
       "writtenOn": "2017-10-25T20:51:14Z",
       "side": 1,
       "message": "This if-test doesn\u0027t match the comment, and will cause this path to be taken even for 8-bit back buffers. Should this instead test \"if (use_half_float_storage_)\"?",
+      "range": {
+        "startLine": 689,
+        "startChar": 8,
+        "endLine": 689,
+        "endChar": 30
+      },
+      "revId": "657ea684c79bcc9bda4be04d62116bb48b207708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7181d9f_229bea5b",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-27T00:17:11Z",
+      "side": 1,
+      "message": "Removed this (based on the discussion, we\u0027re just never supporting alpha:false).",
+      "parentUuid": "e2688f90_dee108b8",
       "range": {
         "startLine": 689,
         "startChar": 8,
