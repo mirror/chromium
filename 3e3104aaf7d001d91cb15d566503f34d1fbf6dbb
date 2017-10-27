@@ -19,6 +19,75 @@
     },
     {
       "key": {
+        "uuid": "a6cb77f5_e912d23d",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T11:39:57Z",
+      "side": 1,
+      "message": "Putting DevToolsFrontendImpl in controller/ makes sense.",
+      "parentUuid": "60c8ec25_9ac1e5ad",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2bb6e52_babeeff5",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T11:39:57Z",
+      "side": 1,
+      "message": "Why does Frame need to be a weak pointer? Can we use WrapPersistent?",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e994d267_1742c63b",
+        "filename": "third_party/WebKit/Source/core/exported/DevToolsFrontendImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T11:39:57Z",
+      "side": 1,
+      "message": "Once you make DevToolsFrontendImpl GarbageCollected, accessing devtools_host_ in a destructor is not safe. You need to use a pre-finalizer or find a place to explicitly call devtools_host_-\u003eDisconnectClient().",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb60997_ba0633ee",
+        "filename": "third_party/WebKit/Source/core/exported/DevToolsFrontendImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T11:39:57Z",
+      "side": 1,
+      "message": "Can we make DevToolsFrontendImpl GarbageCollected?\n\nThen you can just use Member\u003c\u003e here.",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47939e96_22f171ac",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.h",
         "patchSetId": 2
@@ -30,6 +99,24 @@
       "writtenOn": "2017-10-26T22:37:25Z",
       "side": 1,
       "message": "If I move DevToolsFrontendImpl to controller, I\u0027ll need a way for it to be destroyed with a frame, but not retain the frame itself.",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca23fab_812cc301",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T11:39:57Z",
+      "side": 1,
+      "message": "I\u0027d prefer making DevToolsFrontendImpl GarbageCollected? Then you can just use Member\u003c\u003e here.",
+      "parentUuid": "47939e96_22f171ac",
       "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
