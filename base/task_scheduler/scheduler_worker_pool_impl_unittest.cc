@@ -43,7 +43,12 @@
 #include "base/threading/thread_local_storage.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if defined(OS_WIN)
+#include "base/win/com_init_util.h"
+#endif  // defined(OS_WIN)
 
 namespace base {
 namespace internal {
@@ -254,6 +259,28 @@ TEST_P(TaskSchedulerWorkerPoolImplTestParam, Saturate) {
   // its TestTaskFactory after it is destroyed.
   worker_pool_->WaitForAllWorkersIdleForTesting();
 }
+
+#if defined(OS_WIN)
+TEST_P(TaskSchedulerWorkerPoolImplTestParam, COMMTAInitialized) {
+  // Verify that SchedulerWorkerPoolImpl workers have a COM MTA available.
+  scoped_refptr<TaskRunner> task_runner =
+      CreateTaskRunnerWithExecutionMode(worker_pool_.get(), GetParam());
+
+  WaitableEvent task_running(WaitableEvent::ResetPolicy::MANUAL,
+                             WaitableEvent::InitialState::NOT_SIGNALED);
+  task_runner->PostTask(
+      FROM_HERE, Bind(
+                     [](WaitableEvent* task_running) {
+                       win::AssertComApartmentType(win::ComApartmentType::MTA);
+                       task_running->Signal();
+                     },
+                     &task_running));
+
+  task_running.Wait();
+
+  worker_pool_->WaitForAllWorkersIdleForTesting();
+}
+#endif  // defined(OS_WIN)
 
 INSTANTIATE_TEST_CASE_P(Parallel,
                         TaskSchedulerWorkerPoolImplTestParam,
