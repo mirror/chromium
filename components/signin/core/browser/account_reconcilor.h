@@ -243,7 +243,7 @@ class AccountReconcilor : public KeyedService,
   // Dice migration methods:
   // Returns true if migration should happen on the next startup.
   bool ShouldMigrateToDiceOnStartup();
-  // Schedules migration to happen at next startup.
+  // Schedules migration to heppen at next startup.
   static void SetDiceMigrationOnStartup(PrefService* prefs, bool migrate);
 
   // The ProfileOAuth2TokenService associated with this reconcilor.
