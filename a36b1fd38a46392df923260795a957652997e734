@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4060f4b_8771ffb6",
+        "filename": "third_party/WebKit/Source/core/frame/DOMTimer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-27T11:08:16Z",
+      "side": 1,
+      "message": "I think it would be great if you could change that bool to be an enum. Alternatively, you can just do:\n`HasTransientUserActivation(frame, true /* checkIfMainThread */);`",
+      "revId": "a36b1fd38a46392df923260795a957652997e734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
