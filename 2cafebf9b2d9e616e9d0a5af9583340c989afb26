@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "679c7dcb_1f98654b",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T19:26:11Z",
+      "side": 1,
+      "message": "Might as well be constexpr I think.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 5
+      },
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab6b969_9e58eb9e",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T19:26:11Z",
+      "side": 1,
+      "message": "Please DCHECK that break_type is BREAK_WORD.\nThis iterator doesn\u0027t support any other types.  Which is fine; it doesn\u0027t have to.\n\n(For example, it doesn\u0027t support BREAK_LINE. Normally BREAK_LINE would for return\n\" foo bar! \"\nreturn breaks where the dots here\n\". .foo .bar! .\"\nThat would make us think this code should do something analogous.  For example,\non the input\n\" foo bar!_\"\nit should return\n\". .foo .bar!_.\"\nIt doesn\u0027t look like it does that.\n)",
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45756417_7248e3d2",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T19:26:11Z",
+      "side": 1,
+      "message": "next_pos perhaps would be clearer",
+      "range": {
+        "startLine": 76,
+        "startChar": 14,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5412fc3_c67151fb",
         "filename": "components/omnibox/browser/break_iterator_adapter.h",
         "patchSetId": 6
@@ -31,6 +94,24 @@
       "side": 1,
       "message": "Sorry for lack of explanation.\n\nBreakIteratorAdapter::Advance() calls BreakIterator::Advance().\nAnd if result of BreakIterator::GetStringPiece() has \u0027underscore\u0027, sets that word to |underscore_word_|. (Otherwise it\u0027s empty)\nFrom then, BreakIteratorAdapter works and deals with the underscore as punctuation in |underscore_word_|.\nNext call to BreakIteratorAdapter::Advance() moves |prev_| and |pos_| considering underscore.\n\nFor example,\nIf get a word of \"ab_cd\", BreakIteratorAdapter sets |underscore_word_| to \"ab_cd\".\nAnd sets |prev_| to 0, |pos_| to 2 by AdvancePosition().\nThen BreakIteratorAdapter::GetString() returns \"ab\".\n\nNext calls to BreakIteratorAdapter::Advance() moves |prev_| to 2, |pos_| to 3.\nBreakIteratorAdapter::GetString() returns \"_\", then BreakIteratorAdapter::IsWord() returns false.\n\nIf |pos_| points the end of |underscore_word_|, BreakIteratorAdapter finish it\u0027s work.\n\nthanks.",
       "parentUuid": "b5412fc3_c67151fb",
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d37ed2_06986303",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T19:26:11Z",
+      "side": 1,
+      "message": "Given all that, I think HasWords would better be called\nHasUnderscoreWords\nditto with AdvancePosition to something like AdvanceInUnderscoreWords",
+      "parentUuid": "cd90232f_530737d4",
       "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
