@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d5ca95a_fb1cf3dc",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T16:22:33Z",
+      "side": 1,
+      "message": "In U2fHidDiscovery we don\u0027t assert that |delegate_| has not been invalidated. Why are the assumptions different here?",
+      "revId": "c4bcdf2e870814ba1cb88937a8079550c1eb0c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387b6c2b_71fdbee1",
+        "filename": "device/u2f/u2f_ble_discovery.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T16:22:33Z",
+      "side": 1,
+      "message": "These types can be forward declared.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "c4bcdf2e870814ba1cb88937a8079550c1eb0c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
