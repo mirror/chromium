@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d741f9c4_264647d3",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-27T14:11:09Z",
+      "side": 1,
+      "message": "This case, it makes some sense.",
+      "parentUuid": "2541bd81_096064fb",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8da8468d_92b67eb1",
         "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
         "patchSetId": 4
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Mixing Just, IsNothing, To, ToLocal, v8Call macros etc is messy.\n\nWe discussed this in the past and have agreed on unifying the usage to To and ToLocal.\n\nhttps://groups.google.com/a/chromium.org/forum/#!searchin/platform-architecture-dev/to$20tolocal%7Csort:date/platform-architecture-dev/vGLGCaMqhCU/sEOLMz_VBQAJ",
       "parentUuid": "9a95cb9a_160dcd74",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b529d807_4e3237a8",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-27T14:11:09Z",
+      "side": 1,
+      "message": "IIUC, that thread is discussing if we really need v8Call family and how we can replace it with To/ToLocal.  There was an assumption that we do use the resulting value, I think?\n\nAgain, in this case, we never use the resulting value itself.  It\u0027s quite strange to introduce an unused variable while it\u0027s pretty easy to avoid it.",
+      "parentUuid": "e5b7b10f_79f06035",
       "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
