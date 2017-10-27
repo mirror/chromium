@@ -30,6 +30,9 @@ class IOSSecurityInterstitialPage : public web::HtmlWebInterstitialDelegate {
   // Creates an interstitial and shows it.
   void Show();
 
+  // web::HtmlWebInterstitialDelegate implementation.
+  std::string GetHtmlContents() const override;
+
  protected:
   // Returns true if the interstitial should create a new navigation item.
   virtual bool ShouldCreateNewNavigation() const = 0;
@@ -41,9 +44,6 @@ class IOSSecurityInterstitialPage : public web::HtmlWebInterstitialDelegate {
   // Gives an opportunity for child classes to react to Show() having run. The
   // |web_interstitial_| will now have a value.
   virtual void AfterShow() = 0;
-
-  // web::HtmlWebInterstitialDelegate implementation.
-  std::string GetHtmlContents() const override;
 
   // Returns the formatted host name for the request url.
   base::string16 GetFormattedHostName() const;

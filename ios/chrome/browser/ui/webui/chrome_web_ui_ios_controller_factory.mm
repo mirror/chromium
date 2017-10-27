@@ -13,6 +13,7 @@
 #include "ios/chrome/browser/ui/webui/crashes_ui.h"
 #include "ios/chrome/browser/ui/webui/flags_ui.h"
 #include "ios/chrome/browser/ui/webui/gcm/gcm_internals_ui.h"
+#include "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.h"
 #include "ios/chrome/browser/ui/webui/net_export/net_export_ui.h"
 #include "ios/chrome/browser/ui/webui/ntp_tiles_internals_ui.h"
 #include "ios/chrome/browser/ui/webui/omaha_ui.h"
@@ -70,6 +71,8 @@ WebUIIOSFactoryFunction GetWebUIIOSFactoryFunction(WebUIIOS* web_ui,
     return &NewWebUIIOS<CrashesUI>;
   if (url_host == kChromeUIGCMInternalsHost)
     return &NewWebUIIOS<GCMInternalsUI>;
+  if (url_host == kChromeUIInterstitialsHost)
+    return &NewWebUIIOS<InterstitialsUI>;
   if (url_host == kChromeUINetExportHost)
     return &NewWebUIIOS<NetExportUI>;
   if (url_host == kChromeUINTPTilesInternalsHost)

@@ -11,6 +11,8 @@ source_set("webui") {
     "crashes_ui.h",
     "flags_ui.cc",
     "flags_ui.h",
+    "interstitials/interstitial_ui.h",
+    "interstitials/interstitial_ui.mm",
     "mojo_web_ui_ios_controller.h",
     "ntp_tiles_internals_ui.cc",
     "ntp_tiles_internals_ui.h",
@@ -29,6 +31,7 @@ source_set("webui") {
   deps = [
     "//base",
     "//base:i18n",
+    "//components/captive_portal:captive_portal",
     "//components/crash/core/browser",
     "//components/flags_ui",
     "//components/keyed_service/core",
@@ -49,7 +52,9 @@ source_set("webui") {
     "//ios/chrome/browser/favicon:favicon",
     "//ios/chrome/browser/metrics",
     "//ios/chrome/browser/ntp_tiles",
+    "//ios/chrome/browser/ssl",
     "//ios/chrome/browser/suggestions",
+    "//ios/chrome/browser/tabs",
     "//ios/chrome/browser/ui",
     "//ios/chrome/common",
     "//ios/web",
@@ -59,6 +64,8 @@ source_set("webui") {
     "//ui/base",
     "//url",
   ]
+
+  libs = [ "Foundation.framework" ]
 }
 
 source_set("webui_internal") {
