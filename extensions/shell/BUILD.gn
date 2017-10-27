@@ -47,6 +47,7 @@ source_set("app_shell_lib") {
     "//components/user_prefs",
     "//components/web_cache/renderer",
     "//content",
+    "//content/public/common",
     "//content/shell:content_shell_lib",
     "//device/base",
     "//device/bluetooth",
@@ -87,6 +88,8 @@ source_set("app_shell_lib") {
   sources = [
     "app/paths_mac.h",
     "app/paths_mac.mm",
+    "app/shell_help.cc",
+    "app/shell_help.h",
     "app/shell_main_delegate.cc",
     "app/shell_main_delegate.h",
     "browser/api/feedback_private/shell_feedback_private_delegate.cc",
@@ -272,6 +275,7 @@ if (is_mac) {
       ":app_shell_lib",
       "//build/config:exe_and_shlib_deps",
       "//build/win:default_exe_manifest",
+      "//content/shell:content_shell_lib",
       "//extensions:shell_and_test_pak",
     ]
 
@@ -285,6 +289,7 @@ if (is_mac) {
 test("app_shell_unittests") {
   sources = [
     "../test/extensions_unittests_main.cc",
+    "app/shell_help_unittest.cc",
     "browser/api/identity/identity_api_unittest.cc",
     "browser/shell_oauth2_token_service_unittest.cc",
     "browser/shell_prefs_unittest.cc",
@@ -307,6 +312,8 @@ test("app_shell_unittests") {
     "//base",
     "//base/test:test_support",
     "//components/feedback",
+    "//content/public/common",
+    "//content/shell:content_shell_lib",
     "//content/test:test_support",
     "//extensions:shell_and_test_pak",
     "//extensions:test_support",

@@ -608,6 +608,7 @@ const char kLoggingLevel[]                  = "log-level";
 // Overrides the default file name to use for general-purpose logging (does not
 // affect which events are logged).
 const char kLogFile[] = "log-file";
+const char kLogFileAoeu[] = "log-file";
 
 // Enables saving net log events to a file and sets the file name to use.
 const char kLogNetLog[]                     = "log-net-log";

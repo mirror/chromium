@@ -4,6 +4,8 @@
 
 #include "extensions/shell/app/shell_main_delegate.h"
 
+#include <stdio.h>
+
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
@@ -12,11 +14,14 @@
 #include "components/nacl/common/features.h"
 #include "content/public/browser/browser_main_runner.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/result_codes.h"
 #include "content/shell/common/shell_switches.h"
 #include "extensions/common/extension_paths.h"
+#include "extensions/shell/app/shell_help.h"
 #include "extensions/shell/browser/default_shell_browser_main_delegate.h"
 #include "extensions/shell/browser/shell_content_browser_client.h"
 #include "extensions/shell/common/shell_content_client.h"
+#include "extensions/shell/common/switches.h"
 #include "extensions/shell/renderer/shell_content_renderer_client.h"
 #include "extensions/shell/utility/shell_content_utility_client.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -48,6 +53,8 @@
 #include "base/base_paths_mac.h"
 #endif
 
+namespace extensions {
+
 namespace {
 
 // Returns the same directory that the browser context will later be
@@ -57,8 +64,8 @@ base::FilePath GetDataPath() {
   // earlier, instead of reading the switch both here and in
   // ShellBrowserContext::InitWhileIOAllowed().
   base::CommandLine* cmd_line = base::CommandLine::ForCurrentProcess();
-  if (cmd_line->HasSwitch(switches::kContentShellDataPath))
-    return cmd_line->GetSwitchValuePath(switches::kContentShellDataPath);
+  if (cmd_line->HasSwitch(::switches::kContentShellDataPath))
+    return cmd_line->GetSwitchValuePath(::switches::kContentShellDataPath);
 
   base::FilePath data_dir;
 #if defined(OS_LINUX)
@@ -80,9 +87,9 @@ base::FilePath GetDataPath() {
 
 void InitLogging() {
   base::FilePath log_path;
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kLogFile)) {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(::switches::kLogFile)) {
     log_path = base::CommandLine::ForCurrentProcess()->GetSwitchValuePath(
-        switches::kLogFile);
+        ::switches::kLogFile);
   } else {
     log_path = GetDataPath().Append(FILE_PATH_LITERAL("app_shell.log"));
   }
@@ -95,7 +102,7 @@ void InitLogging() {
   // Replace the old log file if this is the first process.
   std::string process_type =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kProcessType);
+          ::switches::kProcessType);
   settings.delete_old = process_type.empty() ? logging::DELETE_OLD_LOG_FILE
                                              : logging::APPEND_TO_OLD_LOG_FILE;
 
@@ -118,9 +125,19 @@ base::FilePath GetResourcesPakFilePath() {
 #endif  // OS_MACOSX
 }
 
-}  // namespace
+// Prints help information if --help is specified or no command line switches
+// are present.
+// Returns true if help information was printed.
+bool HandleHelpSwitch(const base::CommandLine& command_line) {
+  if (command_line.HasSwitch(switches::kHelp) ||
+      command_line.GetSwitches().empty()) {
+    printf("%s", GetHelpText(command_line).c_str());
+    return true;
+  }
+  return false;
+}
 
-namespace extensions {
+}  // namespace
 
 ShellMainDelegate::ShellMainDelegate() {
 }
@@ -129,6 +146,14 @@ ShellMainDelegate::~ShellMainDelegate() {
 }
 
 bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+
+  if (HandleHelpSwitch(command_line)) {
+    *exit_code = content::RESULT_CODE_NORMAL_EXIT;
+    return true;
+  }
+
   InitLogging();
   content_client_.reset(CreateContentClient());
   SetContentClient(content_client_.get());
@@ -152,7 +177,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
 void ShellMainDelegate::PreSandboxStartup() {
   std::string process_type =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kProcessType);
+          ::switches::kProcessType);
   if (ProcessNeedsResourceBundle(process_type))
     InitializeResourceBundle();
 }
@@ -215,15 +240,15 @@ bool ShellMainDelegate::ProcessNeedsResourceBundle(
     const std::string& process_type) {
   // The browser process has no process type flag, but needs resources.
   // On Linux the zygote process opens the resources for the renderers.
-  return process_type.empty() || process_type == switches::kZygoteProcess ||
-         process_type == switches::kRendererProcess ||
+  return process_type.empty() || process_type == ::switches::kZygoteProcess ||
+         process_type == ::switches::kRendererProcess ||
 #if BUILDFLAG(ENABLE_NACL)
-         process_type == switches::kNaClLoaderProcess ||
+         process_type == ::switches::kNaClLoaderProcess ||
 #endif
 #if defined(OS_MACOSX)
-         process_type == switches::kGpuProcess ||
+         process_type == ::switches::kGpuProcess ||
 #endif
-         process_type == switches::kUtilityProcess;
+         process_type == ::switches::kUtilityProcess;
 }
 
 }  // namespace extensions
