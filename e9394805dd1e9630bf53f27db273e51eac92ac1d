@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "64c0d1e3_3ea0e979",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 35
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T13:08:59Z",
+      "side": 1,
+      "message": "I recall that this caused issues on Windows 7 in the past. Have these been fixed with the DELAYLOAD calls below?",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "468eae70_ae0b0b67",
         "filename": "chrome/app/chrome_exe_main_win.cc",
         "patchSetId": 35
@@ -47,6 +64,24 @@
       "writtenOn": "2017-10-27T11:37:43Z",
       "side": 1,
       "message": "is it okay to defer creating this thread until later in startup? it\u0027s awfully early to do it here. if possible, i think it\u0027s cleaner to put this somewhere in chrome/browser/chrome_browser_main_win.cc. perhaps go so far as to post a task to the main thread to trigger creation of this extra thread so that it\u0027s only done if the main message loop is actually run. if you go this route, you can post the task to create this thread in PostMainMessageLoopStart or later.",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecdb60ac_74b99643",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T13:08:59Z",
+      "side": 1,
+      "message": "That would also enable us to use the base::Feature flag.\n\nThat said, there is one further thing to consider here: interaction with a notification may not have to create a browser window, so we\u0027ll need some way to accommodate that. (Examples include inline replies and [Like] buttons that just do a fetch.)",
+      "parentUuid": "468eae70_ae0b0b67",
       "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -149,6 +184,24 @@
       "writtenOn": "2017-10-27T11:37:43Z",
       "side": 1,
       "message": "move this into chrome/common/chrome_switches.{cc,h} and use \u0027-\u0027 rather than \u0027_\u0027. consider using a flag (i.e., chrome://flags) if you expect mortals to run chrome with it (see chrome/browser/about_flags.cc).",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2be6dc3_e7857be8",
+        "filename": "chrome/app/chrome_native_notification_prep_win.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T13:08:59Z",
+      "side": 1,
+      "message": "fwiw there\u0027s a base::Feature that we should be using *and* is listed on chrome://flags, but deliberately hasn\u0027t been enabled for Windows yet on that page until some form of activation is implemented -- otherwise it\u0027s a footgun for users to get inactionable notifications.",
+      "parentUuid": "6bc89fd8_1272fab4",
       "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
