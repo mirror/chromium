@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3a1f31c_09bfa73d",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-27T21:01:13Z",
+      "side": 1,
+      "message": "Gah. Yes, indeed. Fixed.",
+      "parentUuid": "4368bf46_69f75283",
+      "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d6de7ae_da954dd3",
         "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4a4812_0b93bfeb",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-27T21:01:13Z",
+      "side": 1,
+      "message": "Oh nice! Thanks. Done.",
+      "parentUuid": "0d6de7ae_da954dd3",
+      "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "358b35ec_93dd5eec",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-27T21:01:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "307f2ab7_41d4426c",
+      "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53c55f01_bd3854f5",
         "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f017c866_711fdc6a",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-27T21:01:13Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "53c55f01_bd3854f5",
+      "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9db9e997_23834d13",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-27T21:01:13Z",
+      "side": 1,
+      "message": "Yes, I think we do. This logs the case where we hit max retries and stop retrying (and then close the connection). The line on 178 is when the retry succeeds. Does that sound right to you?",
+      "parentUuid": "e7ed0497_fc3a5acd",
+      "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa1171af_b2a6304d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c263949_dc044190",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 43719,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-27T21:01:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa1171af_b2a6304d",
+      "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
