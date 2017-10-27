@@ -42,22 +42,6 @@ inline bool IsChromeOS() {
 #endif
 }
 
-inline bool IsArchitectureX86_64() {
-#if defined(__x86_64__)
-  return true;
-#else
-  return false;
-#endif
-}
-
-inline bool IsArchitectureI386() {
-#if defined(__i386__)
-  return true;
-#else
-  return false;
-#endif
-}
-
 inline bool IsArchitectureArm() {
 #if defined(__arm__) || defined(__aarch64__)
   return true;
@@ -266,33 +250,6 @@ bool GpuPreSandboxHook(sandbox::bpf_dsl::Policy* policy,
           },
           std::vector<BrokerFilePermission>(),
           options.accelerated_video_decode_enabled));
-
-  if (IsArchitectureX86_64() || IsArchitectureI386()) {
-    // Accelerated video dlopen()'s some shared objects
-    // inside the sandbox, so preload them now.
-    if (options.vaapi_accelerated_video_encode_enabled ||
-        options.accelerated_video_decode_enabled) {
-      const char* I965DrvVideoPath = NULL;
-      const char* I965HybridDrvVideoPath = NULL;
-
-      if (IsArchitectureX86_64()) {
-        I965DrvVideoPath = "/usr/lib64/va/drivers/i965_drv_video.so";
-        I965HybridDrvVideoPath = "/usr/lib64/va/drivers/hybrid_drv_video.so";
-      } else if (IsArchitectureI386()) {
-        I965DrvVideoPath = "/usr/lib/va/drivers/i965_drv_video.so";
-      }
-
-      dlopen(I965DrvVideoPath, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-      if (I965HybridDrvVideoPath)
-        dlopen(I965HybridDrvVideoPath, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-      dlopen("libva.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-#if defined(USE_OZONE)
-      dlopen("libva-drm.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-#elif defined(USE_X11)
-      dlopen("libva-x11.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-#endif
-    }
-  }
 
   return true;
 }
