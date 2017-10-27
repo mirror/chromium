@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf940cc0_96ca47c2",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptForbiddenScope.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-27T06:43:01Z",
+      "side": 1,
+      "message": "No need this \u0027else if\u0027 clause.",
+      "revId": "4fc66fc98b8d84756f682c084d93ef1d4b01e85f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
