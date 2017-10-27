@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2f10c9_7cc5f741",
+        "filename": "build/android/incremental_install/generate_android_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-10-27T15:17:47Z",
+      "side": 1,
+      "message": "Should in_apk be added here?",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 8
+      },
+      "revId": "20646fef35a5b8e996feee6ac286eb9496716a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb40cf9_6907dfde",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-10-27T15:17:47Z",
+      "side": 1,
+      "message": "nit: fix this comment",
+      "range": {
+        "startLine": 1572,
+        "startChar": 27,
+        "endLine": 1572,
+        "endChar": 38
+      },
+      "revId": "20646fef35a5b8e996feee6ac286eb9496716a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f992cb5_473d8cc5",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-10-27T15:17:47Z",
+      "side": 1,
+      "message": "Do these splits even work right now? Are we just keeping this stuff around assuming we\u0027ll need it in the future?",
+      "range": {
+        "startLine": 1667,
+        "startChar": 34,
+        "endLine": 1667,
+        "endChar": 40
+      },
+      "revId": "20646fef35a5b8e996feee6ac286eb9496716a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
