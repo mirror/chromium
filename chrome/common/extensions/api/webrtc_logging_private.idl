@@ -43,9 +43,15 @@ namespace webrtcLoggingPrivate {
     boolean didManualStop;
   };
 
+  // Result returned from a $(ref:getLogsDirectory) call.
+  dictionary GetLogsDirectoryResult {
+    [instanceOf=DirectoryEntry] object directory;
+  };
+
   callback GenericDoneCallback = void ();
   callback RecordingDoneCallback = void (RecordingInfo info);
   callback UploadDoneCallback = void (UploadResult result);
+  callback GetLogsDirectoryCallback = void (GetLogsDirectoryResult result);
 
   interface Functions {
     // For all functions, |request| determines which render process to apply
@@ -167,5 +173,9 @@ namespace webrtcLoggingPrivate {
     static void stopWebRtcEventLogging(RequestInfo request,
                                        DOMString securityOrigin,
                                        RecordingDoneCallback callback);
+
+    // Returns the directory entry for the "WebRTC Logs" directory. This call
+    // will fail with a runtime error if no such directory exists.
+    static void getLogsDirectory(GetLogsDirectoryCallback callback);
   };
 };
