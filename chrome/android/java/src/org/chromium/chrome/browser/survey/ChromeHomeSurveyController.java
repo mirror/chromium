@@ -28,19 +28,24 @@ import org.chromium.components.variations.VariationsAssociatedData;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 
+import java.util.Calendar;
+
 /**
  * Class that controls if and when to show surveys related to the Chrome Home experiment.
  */
 public class ChromeHomeSurveyController {
+    static final String CORRESPONDING_DAY_OF_YEAR = "chrome_home_survey_user_tag";
     static final String SURVEY_INFO_BAR_DISPLAYED = "chrome_home_survey_info_bar_displayed";
     static final long ONE_WEEK_IN_MILLIS = 604800000L;
 
     private static final String PARAM_NAME = "survey_override_site_id";
     private static final String TRIAL_NAME = "ChromeHome";
+    private static final String MAX_NUMBER = "MaxNumber";
 
     private TabModelSelector mTabModelSelector;
 
-    private ChromeHomeSurveyController() {
+    @VisibleForTesting
+    ChromeHomeSurveyController() {
         // Empty constructor.
     }
 
@@ -51,7 +56,9 @@ public class ChromeHomeSurveyController {
      *                         shown.
      */
     public static void initialize(Context context, TabModelSelector tabModelSelector) {
-        new ChromeHomeSurveyController().startDownload(context, tabModelSelector);
+        ChromeHomeSurveyController controller = new ChromeHomeSurveyController();
+        if (!(controller.daysMatchUp() && controller.isEligibleForDownload())) return;
+        controller.startDownload(context, tabModelSelector);
     }
 
     private void startDownload(Context context, TabModelSelector tabModelSelector) {
@@ -80,10 +87,10 @@ public class ChromeHomeSurveyController {
     }
 
     private boolean doesUserQualifyForSurvey() {
-        if (!isUMAEnabled()) return false;
         if (CommandLine.getInstance().hasSwitch(ChromeSwitches.CHROME_HOME_FORCE_ENABLE_SURVEY)) {
             return true;
         }
+        if (!isUMAEnabled()) return false;
         if (AccessibilityUtil.isAccessibilityEnabled()) return false;
         if (hasInfoBarBeenDisplayed()) return false;
         if (!FeatureUtilities.isChromeHomeEnabled()) return true;
@@ -165,5 +172,37 @@ public class ChromeHomeSurveyController {
     @VisibleForTesting
     public static ChromeHomeSurveyController createChromeHomeSurveyControllerForTests() {
         return new ChromeHomeSurveyController();
+    }
+
+    @VisibleForTesting
+    boolean daysMatchUp() {
+        int dayOfTheYear = getDayOfYear();
+        if (dayOfTheYear == 366) return false;
+        try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
+            SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+            int day = sharedPreferences.getInt(CORRESPONDING_DAY_OF_YEAR, -1);
+            if (day == -1) {
+                day = getRandomNumberUpTo(365);
+                sharedPreferences.edit().putInt(CORRESPONDING_DAY_OF_YEAR, day).apply();
+            }
+            return dayOfTheYear == day;
+        }
+    }
+
+    private boolean isEligibleForDownload() {
+        String number = VariationsAssociatedData.getVariationParamValue(TRIAL_NAME, MAX_NUMBER);
+        if (number == null) return false;
+        int maxNumber = Integer.parseInt(number);
+        return getRandomNumberUpTo(maxNumber) == 1;
+    }
+
+    @VisibleForTesting
+    int getRandomNumberUpTo(int max) {
+        return (int) Math.floor((Math.random() * max) + 1);
+    }
+
+    @VisibleForTesting
+    int getDayOfYear() {
+        return Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
     }
 }
