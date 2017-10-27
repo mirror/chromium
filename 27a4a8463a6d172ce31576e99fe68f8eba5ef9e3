@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2d805c9e_4c8c480e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T20:44:49Z",
+      "side": 1,
+      "message": "Sorry I missed this. Done.",
+      "parentUuid": "fc868ebb_8fd662f1",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35113ea5_e2e074ef",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 33
@@ -228,6 +246,30 @@
       "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de9d5490_e35f56cc",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T20:44:49Z",
+      "side": 1,
+      "message": "Yeah, stub sounds great. Replaced everywhere.",
+      "parentUuid": "d65f18c5_e3ba1324",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 16
+      },
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
