@@ -52,6 +52,24 @@
       "revId": "a190c253b8efe727801315929a14412d4d91af0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a03f33_245e3e87",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-27T21:58:09Z",
+      "side": 0,
+      "message": "ACK. I\u0027ll make the change in this CL, because we would need additional plumbings to make this change separated in another CL.",
+      "parentUuid": "850b1469_c09a97bb",
+      "revId": "a190c253b8efe727801315929a14412d4d91af0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
