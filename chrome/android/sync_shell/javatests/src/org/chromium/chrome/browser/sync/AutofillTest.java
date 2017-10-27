@@ -50,6 +50,9 @@ public class AutofillTest {
 
     private static final String AUTOFILL_TYPE = "Autofill Profiles";
 
+    // From ModelTypeInfo::notification_type
+    private static final String AUTOFILL_NOTIFICATION_STRING = "autofill_profile";
+
     private static final String GUID = "EDC609ED-7EEE-4F27-B00C-423242A9C44B";
     private static final String ORIGIN = "https://www.chromium.org/";
 
@@ -147,7 +150,7 @@ public class AutofillTest {
 
         // Delete on server, sync, and verify deleted locally.
         Autofill autofill = getClientAutofillProfiles().get(0);
-        mSyncTestRule.getFakeServerHelper().deleteEntity(autofill.id);
+        mSyncTestRule.getFakeServerHelper().deleteEntity(autofill.id, "");
         SyncTestUtil.triggerSync();
         waitForClientAutofillProfileCount(0);
     }
@@ -180,8 +183,8 @@ public class AutofillTest {
     }
 
     private List<Autofill> getClientAutofillProfiles() throws JSONException {
-        List<Pair<String, JSONObject>> entities =
-                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), AUTOFILL_TYPE);
+        List<Pair<String, JSONObject>> entities = SyncTestUtil.getLocalData(
+                mSyncTestRule.getTargetContext(), AUTOFILL_TYPE, AUTOFILL_NOTIFICATION_STRING);
         List<Autofill> autofills = new ArrayList<Autofill>(entities.size());
         for (Pair<String, JSONObject> entity : entities) {
             String id = entity.first;
@@ -197,7 +200,10 @@ public class AutofillTest {
 
     private void assertClientAutofillProfileCount(int count) throws JSONException {
         Assert.assertEquals("There should be " + count + " local autofill profiles.", count,
-                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), AUTOFILL_TYPE).size());
+                SyncTestUtil
+                        .getLocalData(mSyncTestRule.getTargetContext(), AUTOFILL_TYPE,
+                                AUTOFILL_NOTIFICATION_STRING)
+                        .size());
     }
 
     private void assertServerAutofillProfileCountWithName(int count, String name) {
@@ -210,7 +216,9 @@ public class AutofillTest {
         CriteriaHelper.pollInstrumentationThread(Criteria.equals(count, new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {
-                return SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), AUTOFILL_TYPE)
+                return SyncTestUtil
+                        .getLocalData(mSyncTestRule.getTargetContext(), AUTOFILL_TYPE,
+                                AUTOFILL_NOTIFICATION_STRING)
                         .size();
             }
         }), SyncTestUtil.TIMEOUT_MS, SyncTestUtil.INTERVAL_MS);

@@ -54,6 +54,9 @@ public class TypedUrlsTest {
 
     private static final String TYPED_URLS_TYPE = "Typed URLs";
 
+    // From ModelTypeInfo::notification_type
+    private static final String TYPED_URL_NOTIFICATION_STRING = "typed_url";
+
     // EmbeddedTestServer is preferred here but it can't be used. The test server
     // serves pages on localhost and Chrome doesn't sync localhost URLs as typed URLs.
     // This type of URL requires no external data connection or resources.
@@ -63,10 +66,12 @@ public class TypedUrlsTest {
     private static class TypedUrl {
         public final String id;
         public final String url;
+        public final String clientTagHash;
 
-        public TypedUrl(String id, String url) {
+        public TypedUrl(String id, String url, String clientTagHash) {
             this.id = id;
             this.url = url;
+            this.clientTagHash = clientTagHash;
         }
     }
 
@@ -120,7 +125,7 @@ public class TypedUrlsTest {
 
         // Delete on server, sync, and verify deleted locally.
         TypedUrl typedUrl = getClientTypedUrls().get(0);
-        mSyncTestRule.getFakeServerHelper().deleteEntity(typedUrl.id);
+        mSyncTestRule.getFakeServerHelper().deleteEntity(typedUrl.id, typedUrl.clientTagHash);
         SyncTestUtil.triggerSync();
         waitForClientTypedUrlCount(0);
     }
@@ -140,25 +145,34 @@ public class TypedUrlsTest {
         specifics.typedUrl = new TypedUrlSpecifics();
         specifics.typedUrl.url = url;
         specifics.typedUrl.title = url;
-        specifics.typedUrl.visits = new long[]{1L};
+        specifics.typedUrl.visits = new long[] {getCurrentTimeInMicroseconds()};
         specifics.typedUrl.visitTransitions = new int[]{SyncEnums.TYPED};
         mSyncTestRule.getFakeServerHelper().injectUniqueClientEntity(url /* name */, specifics);
     }
 
     private List<TypedUrl> getClientTypedUrls() throws JSONException {
-        List<Pair<String, JSONObject>> rawTypedUrls =
-                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), TYPED_URLS_TYPE);
+        List<Pair<String, JSONObject>> rawTypedUrls = SyncTestUtil.getLocalData(
+                mSyncTestRule.getTargetContext(), TYPED_URLS_TYPE, TYPED_URL_NOTIFICATION_STRING);
         List<TypedUrl> typedUrls = new ArrayList<TypedUrl>(rawTypedUrls.size());
         for (Pair<String, JSONObject> rawTypedUrl : rawTypedUrls) {
             String id =  rawTypedUrl.first;
-            typedUrls.add(new TypedUrl(id, rawTypedUrl.second.getString("url")));
+            String client_tag_hash = "";
+            if (rawTypedUrl.second.has("metadata")) {
+                JSONObject metadata = rawTypedUrl.second.getJSONObject("metadata");
+                if (metadata.has("client_tag_hash")) {
+                    client_tag_hash = metadata.getString("client_tag_hash");
+                }
+            }
+            typedUrls.add(new TypedUrl(id, rawTypedUrl.second.getString("url"), client_tag_hash));
         }
         return typedUrls;
     }
 
     private void assertClientTypedUrlCount(int count) throws JSONException {
         Assert.assertEquals("There should be " + count + " local typed URL entities.", count,
-                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), TYPED_URLS_TYPE)
+                SyncTestUtil
+                        .getLocalData(mSyncTestRule.getTargetContext(), TYPED_URLS_TYPE,
+                                TYPED_URL_NOTIFICATION_STRING)
                         .size());
     }
 
@@ -172,7 +186,9 @@ public class TypedUrlsTest {
         CriteriaHelper.pollInstrumentationThread(Criteria.equals(count, new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {
-                return SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), TYPED_URLS_TYPE)
+                return SyncTestUtil
+                        .getLocalData(mSyncTestRule.getTargetContext(), TYPED_URLS_TYPE,
+                                TYPED_URL_NOTIFICATION_STRING)
                         .size();
             }
         }), SyncTestUtil.TIMEOUT_MS, SyncTestUtil.INTERVAL_MS);
@@ -191,5 +207,11 @@ public class TypedUrlsTest {
                 }
             }
         }, SyncTestUtil.TIMEOUT_MS, SyncTestUtil.INTERVAL_MS);
+    }
+
+    private long getCurrentTimeInMicroseconds() {
+        long microsecondsSinceEpoch = System.currentTimeMillis() * 1000;
+        // 11644473600000000L is offset of UNIX epoch from windows FILETIME epoch in microseconds.
+        return 11644473600000000L + microsecondsSinceEpoch;
     }
 }

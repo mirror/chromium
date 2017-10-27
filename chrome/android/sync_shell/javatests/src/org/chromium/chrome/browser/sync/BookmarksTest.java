@@ -53,6 +53,9 @@ public class BookmarksTest {
 
     private static final String BOOKMARKS_TYPE_STRING = "Bookmarks";
 
+    // From ModelTypeInfo::notification_type
+    private static final String BOOKMARK_NOTIFICATION_STRING = "bookmark";
+
     private static final String URL = "http://chromium.org/";
     private static final String TITLE = "Chromium";
     private static final String MODIFIED_TITLE = "Chromium2";
@@ -163,7 +166,7 @@ public class BookmarksTest {
 
         // Delete on server, sync, and verify deleted locally.
         Bookmark bookmark = getClientBookmarks().get(0);
-        mSyncTestRule.getFakeServerHelper().deleteEntity(bookmark.id);
+        mSyncTestRule.getFakeServerHelper().deleteEntity(bookmark.id, "");
         SyncTestUtil.triggerSync();
         waitForClientBookmarkCount(0);
     }
@@ -269,7 +272,7 @@ public class BookmarksTest {
         Bookmark folder = getClientBookmarks().get(0);
         Assert.assertTrue(folder.isFolder());
 
-        mSyncTestRule.getFakeServerHelper().deleteEntity(folder.id);
+        mSyncTestRule.getFakeServerHelper().deleteEntity(folder.id, "");
         assertServerBookmarkCountWithName(0, TITLE);
         SyncTestUtil.triggerSync();
         waitForClientBookmarkCount(0);
@@ -482,7 +485,8 @@ public class BookmarksTest {
 
     private List<Bookmark> getClientBookmarks() throws JSONException {
         List<Pair<String, JSONObject>> rawBookmarks =
-                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING);
+                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING,
+                        BOOKMARK_NOTIFICATION_STRING);
         List<Bookmark> bookmarks = new ArrayList<Bookmark>(rawBookmarks.size());
         for (Pair<String, JSONObject> rawBookmark : rawBookmarks) {
             String id = rawBookmark.first;
@@ -508,7 +512,9 @@ public class BookmarksTest {
 
     private void assertClientBookmarkCount(int count) throws JSONException {
         Assert.assertEquals("There should be " + count + " local bookmarks.", count,
-                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING)
+                SyncTestUtil
+                        .getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING,
+                                BOOKMARK_NOTIFICATION_STRING)
                         .size());
     }
 
@@ -523,7 +529,8 @@ public class BookmarksTest {
             @Override
             public Integer call() throws Exception {
                 return SyncTestUtil
-                        .getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING)
+                        .getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING,
+                                BOOKMARK_NOTIFICATION_STRING)
                         .size();
             }
         }));
