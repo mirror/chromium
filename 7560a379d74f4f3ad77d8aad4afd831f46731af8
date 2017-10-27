@@ -1,0 +1,262 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95bf49e9_1440cbc9",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "Should we also print whether the test succeeded or not? If we are planning to track the results in the future, I wonder whether it will help us to ignore failed runs since they may produce skewed data.",
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1385e311_8f92b9b8",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "Could you add the total number of requests? The number of failed requests make sense in comparison with the total number of requests.",
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93df4f1_eaf650d4",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "We should check that |entry.second.total| is not 0 to avoid possible devision by 0. That is the case when all requests failed.",
+      "range": {
+        "startLine": 88,
+        "startChar": 56,
+        "endLine": 88,
+        "endChar": 74
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05e0d8b_f9de1124",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "We should add the following line before the if statement:\nconfig.requestCachePolicy \u003d NSURLRequestReloadIgnoringLocalCacheData;\notherwise, the responses may be cached in memory. My understanding is that ephemeralSessionConfiguration is not going to persist any cache on disk but can still cache data in memory.",
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7453377_1fc0ae24",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "Do we need to call it? I assume that this is a brand new delegate that wasn\u0027t used before.",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 20
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf47cf0_5f67d447",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "There is possibility that the first request can fail. Should we print the length of the first successful response?",
+      "range": {
+        "startLine": 213,
+        "startChar": 4,
+        "endLine": 213,
+        "endChar": 34
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbccb5f_70067504",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "nit: Can we write it as\nelapsed_max \u003d MAX(elapsed, elapsed_max)?",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 30
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa65c3c_1f34958f",
+        "filename": "components/cronet/ios/test/cronet_test_base.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "Can we add generics to specify the types in the dictionary, e.g. NSMutableDictionary\u003cNSURLSessionTask*, NSError*\u003e?\n\nSame for all new properties.",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 34,
+        "endChar": 46
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcfc30a_5e3b5cfe",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "Is it used somewhere?",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f610e69_3a4cdc4f",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "Maybe we should rename |deadline_ns| to |timeout_ns| for consistency with the method signature.",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 40
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b677ab5a_3ddb1c2b",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "Can there be a concurrency issue (deadlock) if we create the semaphore inside \"waitForDone\"? Imagine someone started a request and the request completed before waitForDone is called. In that scenario, the semaphore in never going to be signaled.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 3
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8c7d0b_edc49b43",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T16:57:21Z",
+      "side": 1,
+      "message": "I suggest we create a new semaphore before we resume (start) the corresponding task.",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 3
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
