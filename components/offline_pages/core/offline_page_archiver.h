@@ -54,6 +54,7 @@ class OfflinePageArchiver {
     ERROR_INTERSTITIAL_PAGE,        // We detected an interstitial page.
     ERROR_SKIPPED,                  // Page shouldn't be archived like NTP or
                                     // file urls.
+    ERROR_FILE_HASH_FAILED,         // Failed to computer file hash.
   };
 
   // Describes the parameters to control how to create an archive.
@@ -73,7 +74,8 @@ class OfflinePageArchiver {
                               const GURL& /* url */,
                               const base::FilePath& /* file_path */,
                               const base::string16& /* title */,
-                              int64_t /* file_size */)>
+                              int64_t /* file_size */,
+                              const std::string& /* file_hash */)>
       CreateArchiveCallback;
 
   virtual ~OfflinePageArchiver() {}
