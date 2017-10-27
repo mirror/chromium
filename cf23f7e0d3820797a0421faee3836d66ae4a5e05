@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1aa8c298_28bbbbf3",
+        "filename": "ash/display/cursor_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T22:47:51Z",
+      "side": 1,
+      "message": "Now use GetAllRootWindow instead, and removed this function. Done",
+      "parentUuid": "0592d439_874df4b0",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 31
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34f2f670_525d1093",
         "filename": "ash/display/mirror_window_controller.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-27T18:18:15Z",
       "side": 1,
       "message": "I\u0027m not entirely sure why we need this function at all?\n\nDon\u0027t we already have MirrorWindowController::GetAllRootWindows()?",
+      "range": {
+        "startLine": 318,
+        "startChar": 29,
+        "endLine": 318,
+        "endChar": 39
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc338f8_9566952c",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T22:47:51Z",
+      "side": 1,
+      "message": "Ah, yes, you are right. I removed this.",
+      "parentUuid": "34f2f670_525d1093",
       "range": {
         "startLine": 318,
         "startChar": 29,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9ebadfe1_54d9f673",
+        "filename": "ash/display/mirror_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T22:47:51Z",
+      "side": 1,
+      "message": "I removed this function as it is duplicate",
+      "parentUuid": "5e5f1c08_e541a783",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 6
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47265406_0eb9d31e",
         "filename": "ash/system/screen_layout_observer.cc",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-27T18:18:15Z",
       "side": 1,
       "message": "Two issues here:\n1 - Please, use the same type as returned by GetMirroringDisplayIdList(); i.e. DisplayIdList.\n2 - We don\u0027t use rvalue references this way in our codebase. The compiler should be able to do copy elision automatically (http://en.cppreference.com/w/cpp/language/copy_elision).\n\nSo just declare it as:\n\nconst DisplayIdList id_list \u003d display_manager-\u003eGetMirroringDisplayIdList();",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a727ddd_58c7aad3",
+        "filename": "ash/system/screen_layout_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T22:47:51Z",
+      "side": 1,
+      "message": "Good to know! Thanks, done.",
+      "parentUuid": "47265406_0eb9d31e",
       "range": {
         "startLine": 56,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b7879adf_88fc08b3",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T22:47:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f137d1b4_c51709db",
+      "range": {
+        "startLine": 306,
+        "startChar": 25,
+        "endLine": 306,
+        "endChar": 26
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc93f9fa_066d9360",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-27T18:18:15Z",
       "side": 1,
       "message": "This condition alone is not enough. You also need: mirroring_src_id_ \u003d\u003d kInvalidId, becuase you shouldn\u0027t insert the source display into |hardware_mirroring_display_id_list_| (see below comment).",
+      "range": {
+        "startLine": 690,
+        "startChar": 10,
+        "endLine": 690,
+        "endChar": 53
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0bb9b95_15ac2c1b",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T22:47:51Z",
+      "side": 1,
+      "message": "origins and this list are both empty at first, so source display (the first one) will not be inserted in the list as origins.find(origin) will reach the end.",
+      "parentUuid": "bc93f9fa_066d9360",
       "range": {
         "startLine": 690,
         "startChar": 10,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3a07666b_7e2d83e0",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T22:47:51Z",
+      "side": 1,
+      "message": "No, this is inside if (iter !\u003d origins.end()), the first display id will not be inserted in this list.",
+      "parentUuid": "25cf3b72_ddfef3d7",
+      "range": {
+        "startLine": 696,
+        "startChar": 6,
+        "endLine": 696,
+        "endChar": 74
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d64de870_f2e79927",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab919fae_53651c24",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T22:47:51Z",
+      "side": 1,
+      "message": "I added a DCHECK and comment here. Done",
+      "parentUuid": "d64de870_f2e79927",
+      "range": {
+        "startLine": 1015,
+        "startChar": 10,
+        "endLine": 1015,
+        "endChar": 45
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "2033ed1e_b1d44056",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T22:47:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2e6186a_b4f9772c",
+      "range": {
+        "startLine": 1021,
+        "startChar": 2,
+        "endLine": 1021,
+        "endChar": 6
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "650a3dfe_82a9920b",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 5
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "0f39902c_bcb4a404",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1361,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T22:47:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "650a3dfe_82a9920b",
+      "range": {
+        "startLine": 1361,
+        "startChar": 33,
+        "endLine": 1361,
+        "endChar": 61
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41e115e5_1ded2500",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 5
@@ -243,6 +483,30 @@
       "writtenOn": "2017-10-27T18:18:15Z",
       "side": 1,
       "message": "Reduce indentation by returning early if (!IsInSoftwareMirrorMode()).\n\nWhat about HW mirroring displays?",
+      "range": {
+        "startLine": 1511,
+        "startChar": 2,
+        "endLine": 1511,
+        "endChar": 33
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d42409a_c4b194d5",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T22:47:51Z",
+      "side": 1,
+      "message": "This function is immediately called before UpdateDisplaysWith() while display info list should not include hardware mirroring displays (except the first one). I added a comment in the header file.",
+      "parentUuid": "41e115e5_1ded2500",
       "range": {
         "startLine": 1511,
         "startChar": 2,
