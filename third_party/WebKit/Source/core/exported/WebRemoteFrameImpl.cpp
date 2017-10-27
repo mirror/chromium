@@ -314,6 +314,10 @@ void WebRemoteFrameImpl::DidStopLoading() {
   }
 }
 
+void WebRemoteFrameImpl::DetachChildren() {
+  GetFrame()->DetachChildren();
+}
+
 bool WebRemoteFrameImpl::IsIgnoredForHitTest() const {
   HTMLFrameOwnerElement* owner = GetFrame()->DeprecatedLocalOwner();
   if (!owner || !owner->GetLayoutObject())

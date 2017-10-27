@@ -565,16 +565,47 @@ void RenderWidgetHostImpl::InitForFrame() {
   renderer_initialized_ = true;
 }
 
-void RenderWidgetHostImpl::ShutdownAndDestroyWidget(bool also_delete) {
-  RejectMouseLockOrUnlockIfNecessary();
+void RenderWidgetHostImpl::Destroy(bool also_delete) {
+  DCHECK(!destroyed_);
+  destroyed_ = true;
 
-  if (process_->HasConnection()) {
+  // RenderWidgetHosts associated with a RenderFrameHost should not send a
+  // close IPC: the renderer will delete it as part of cleaning up the
+  // RenderFrame.
+  if (process_->HasConnection() && !owned_by_render_frame_host_) {
     // Tell the renderer object to close.
     bool rv = Send(new ViewMsg_Close(routing_id_));
     DCHECK(rv);
   }
 
-  Destroy(also_delete);
+  RejectMouseLockOrUnlockIfNecessary();
+
+  NotificationService::current()->Notify(
+      NOTIFICATION_RENDER_WIDGET_HOST_DESTROYED, Source<RenderWidgetHost>(this),
+      NotificationService::NoDetails());
+
+  // Tell the view to die.
+  // Note that in the process of the view shutting down, it can call a ton
+  // of other messages on us.  So if you do any other deinitialization here,
+  // do it after this call to view_->Destroy().
+  if (view_) {
+    view_->Destroy();
+    view_.reset();
+  }
+
+  process_->GetSharedBitmapAllocationNotifier()->RemoveObserver(this);
+  process_->RemoveWidget(this);
+  process_->RemoveRoute(routing_id_);
+  g_routing_id_widget_map.Get().erase(
+      RenderWidgetHostID(process_->GetID(), routing_id_));
+
+  if (delegate_)
+    delegate_->RenderWidgetDeleted(this);
+
+  if (also_delete) {
+    CHECK(!owner_delegate_);
+    delete this;
+  }
 }
 
 bool RenderWidgetHostImpl::IsLoading() const {
@@ -1842,38 +1873,6 @@ void RenderWidgetHostImpl::SetAutoResize(bool enable,
   max_size_for_auto_resize_ = max_size;
 }
 
-void RenderWidgetHostImpl::Destroy(bool also_delete) {
-  DCHECK(!destroyed_);
-  destroyed_ = true;
-
-  NotificationService::current()->Notify(
-      NOTIFICATION_RENDER_WIDGET_HOST_DESTROYED, Source<RenderWidgetHost>(this),
-      NotificationService::NoDetails());
-
-  // Tell the view to die.
-  // Note that in the process of the view shutting down, it can call a ton
-  // of other messages on us.  So if you do any other deinitialization here,
-  // do it after this call to view_->Destroy().
-  if (view_) {
-    view_->Destroy();
-    view_.reset();
-  }
-
-  process_->GetSharedBitmapAllocationNotifier()->RemoveObserver(this);
-  process_->RemoveWidget(this);
-  process_->RemoveRoute(routing_id_);
-  g_routing_id_widget_map.Get().erase(
-      RenderWidgetHostID(process_->GetID(), routing_id_));
-
-  if (delegate_)
-    delegate_->RenderWidgetDeleted(this);
-
-  if (also_delete) {
-    CHECK(!owner_delegate_);
-    delete this;
-  }
-}
-
 void RenderWidgetHostImpl::RendererIsUnresponsive() {
   NotificationService::current()->Notify(
       NOTIFICATION_RENDER_WIDGET_HOST_HANG,
@@ -1949,7 +1948,7 @@ void RenderWidgetHostImpl::OnHittestData(
 }
 
 void RenderWidgetHostImpl::OnClose() {
-  ShutdownAndDestroyWidget(true);
+  Destroy(true);
 }
 
 void RenderWidgetHostImpl::OnSetTooltipText(

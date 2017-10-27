@@ -1634,7 +1634,7 @@ bool RenderWidgetHostViewMac::Send(IPC::Message* message) {
 
 void RenderWidgetHostViewMac::ShutdownHost() {
   weak_factory_.InvalidateWeakPtrs();
-  render_widget_host_->ShutdownAndDestroyWidget(true);
+  render_widget_host_->Destroy(true);
   // Do not touch any members at this point, |this| has been deleted.
 }
 
@@ -2171,7 +2171,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
         renderWidgetHostView_->fullscreen_parent_host_view();
     if (parent)
       parent->cocoa_view()->suppressNextEscapeKeyUp_ = YES;
-    widgetHost->ShutdownAndDestroyWidget(true);
+    widgetHost->Destroy(true);
     return;
   }
 

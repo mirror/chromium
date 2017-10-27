@@ -261,7 +261,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   }
 
   // Tells the renderer to die and optionally delete |this|.
-  void ShutdownAndDestroyWidget(bool also_delete);
+  void Destroy(bool also_delete);
 
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& msg) override;
@@ -649,10 +649,6 @@ class CONTENT_EXPORT RenderWidgetHostImpl
                            NoUnresponsiveDialogInInspectedContents);
   friend class MockRenderWidgetHost;
   friend class TestRenderViewHost;
-
-  // Tell this object to destroy itself. If |also_delete| is specified, the
-  // destructor is called as well.
-  void Destroy(bool also_delete);
 
   // Called by |hang_monitor_timeout_| on delayed response from the renderer.
   void RendererIsUnresponsive();
