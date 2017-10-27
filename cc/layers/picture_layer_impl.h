@@ -115,6 +115,12 @@ class CC_EXPORT PictureLayerImpl
 
   const Region& InvalidationForTesting() const { return invalidation_; }
 
+  // Used for UMA metrics and should only be called when the picture layer is
+  // a mask. A negative return value indicates mask tiling uses more memory than
+  // before.
+  int GPUMemoryUsageInBytesSavedByTiling() const;
+  void set_saved_texture_ratio(float ratio) { saved_texture_ratio_ = ratio; }
+
  protected:
   PictureLayerImpl(LayerTreeImpl* tree_impl,
                    int id,
@@ -186,6 +192,10 @@ class CC_EXPORT PictureLayerImpl
   // of comparing pointers, since objects pointed to are not guaranteed to
   // exist.
   std::vector<PictureLayerTiling*> last_append_quads_tilings_;
+
+  // This is used to estimate the gpu memory usage of a mask layer when mask
+  // tiling is not enabled.
+  float saved_texture_ratio_;
 
   DISALLOW_COPY_AND_ASSIGN(PictureLayerImpl);
 };

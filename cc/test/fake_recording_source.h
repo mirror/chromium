@@ -98,6 +98,15 @@ class FakeRecordingSource : public RecordingSource {
     client_.add_draw_rectf(rect, flags);
   }
 
+  void add_draw_rrect(const SkRRect& rrect) {
+    client_.add_draw_rrect(rrect, default_flags_);
+  }
+
+  void add_draw_rrect_with_flags(const SkRRect& rrect,
+                                 const PaintFlags& flags) {
+    client_.add_draw_rrect(rrect, flags);
+  }
+
   void add_draw_image(sk_sp<SkImage> image, const gfx::Point& point) {
     client_.add_draw_image(std::move(image), point, default_flags_);
   }

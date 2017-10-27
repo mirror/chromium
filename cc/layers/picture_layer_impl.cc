@@ -112,7 +112,8 @@ PictureLayerImpl::PictureLayerImpl(LayerTreeImpl* tree_impl,
       nearest_neighbor_(false),
       use_transformed_rasterization_(false),
       is_directly_composited_image_(false),
-      can_use_lcd_text_(true) {
+      can_use_lcd_text_(true),
+      saved_texture_ratio_(0.f) {
   layer_tree_impl()->RegisterPictureLayerImpl(this);
 }
 
@@ -365,6 +366,8 @@ void PictureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
   only_used_low_res_last_append_quads_ = true;
   gfx::Rect scaled_recorded_viewport = gfx::ScaleToEnclosingRect(
       raster_source_->RecordedViewport(), max_contents_scale);
+  float num_resource_tiles = 0, num_solid_tiles = 0;
+  int64_t texture_area = 0;
   for (PictureLayerTilingSet::CoverageIterator iter(
            tilings_.get(), max_contents_scale,
            shared_quad_state->visible_quad_layer_rect, ideal_contents_scale_);
@@ -394,6 +397,9 @@ void PictureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
       switch (draw_info.mode()) {
         case TileDrawInfo::RESOURCE_MODE: {
           gfx::RectF texture_rect = iter.texture_rect();
+          num_resource_tiles++;
+          texture_area += static_cast<int64_t>(texture_rect.width() *
+                                               texture_rect.height());
 
           // The raster_contents_scale_ is the best scale that the layer is
           // trying to produce, even though it may not be ideal. Since that's
@@ -420,6 +426,7 @@ void PictureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
           break;
         }
         case TileDrawInfo::SOLID_COLOR_MODE: {
+          num_solid_tiles++;
           float alpha =
               (SkColorGetA(draw_info.solid_color()) * (1.0f / 255.0f)) *
               shared_quad_state->opacity;
@@ -491,6 +498,16 @@ void PictureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
       last_append_quads_tilings_.push_back(iter.CurrentTiling());
     }
   }
+
+  gfx::SizeF raster_bounds = gfx::ScaleSize(
+      gfx::SizeF(raster_source_->GetSize()), raster_contents_scale_);
+  set_saved_texture_ratio(
+      mask_type_ == Layer::LayerMaskType::NOT_MASK
+          ? num_solid_tiles / num_resource_tiles
+          : mask_type_ == Layer::LayerMaskType::SINGLE_TEXTURE_MASK
+                ? 0
+                : texture_area /
+                      (raster_bounds.width() * raster_bounds.height()));
 
   // Adjust shared_quad_state with the quad_offset, since we've adjusted each
   // quad we've appended by it.
@@ -1614,6 +1631,10 @@ void PictureLayerImpl::InvalidateRegionForImages(
   SetNeedsPushProperties();
   TRACE_EVENT1("cc", "PictureLayerImpl::InvalidateRegionForImages Invalidation",
                "Invalidation", invalidation.ToString());
+}
+
+int PictureLayerImpl::GPUMemoryUsageInBytesSavedByTiling() const {
+  return GPUMemoryUsageInBytes() * saved_texture_ratio_;
 }
 
 void PictureLayerImpl::RegisterAnimatedImages() {

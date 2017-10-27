@@ -64,6 +64,10 @@ class FakeContentLayerClient : public ContentLayerClient {
     draw_rects_.push_back(std::make_pair(rect, flags));
   }
 
+  void add_draw_rrect(const SkRRect& rrect, const PaintFlags& flags) {
+    draw_rrects_.push_back(std::make_pair(rrect, flags));
+  }
+
   void add_draw_image(sk_sp<SkImage> image,
                       const gfx::Point& point,
                       const PaintFlags& flags) {
@@ -104,10 +108,12 @@ class FakeContentLayerClient : public ContentLayerClient {
 
  private:
   using RectPaintVector = std::vector<std::pair<gfx::RectF, PaintFlags>>;
+  using RRectPaintVector = std::vector<std::pair<SkRRect, PaintFlags>>;
   using ImageVector = std::vector<ImageData>;
 
   bool fill_with_nonsolid_color_;
   RectPaintVector draw_rects_;
+  RRectPaintVector draw_rrects_;
   ImageVector draw_images_;
   SkCanvas* last_canvas_;
   PaintingControlSetting last_painting_control_;
