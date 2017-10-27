@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d8f35287_a7f1467a",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-27T23:08:37Z",
+      "side": 0,
+      "message": "Can you please replace this injection with an injection of SessionManager? i.e. inject SessionManager into TetherService via TetherServiceFactory with SessionManager::Get(). This will prevent having to use SessionManager::Get() in several places across tether_service.cc.",
+      "range": {
+        "startLine": 48,
+        "startChar": 48,
+        "endLine": 48,
+        "endChar": 70
+      },
+      "revId": "1712921af1654b5cfe6caa5d50c7cc47414ff1cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ad96dcb_5ee2e7f4",
         "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
         "patchSetId": 1
