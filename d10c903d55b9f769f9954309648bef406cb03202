@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83168724_3ff7d9a1",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-10-27T23:04:56Z",
+      "side": 1,
+      "message": "We\u0027re able to make this method const by adding an overloaded const hud_layer(). GetAndResetHandleVisibilityChanged() isn\u0027t const, though, so I\u0027m pulling it out.",
+      "parentUuid": "a4b07317_412cd059",
+      "revId": "d10c903d55b9f769f9954309648bef406cb03202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7f7d87a_5bdd29d5",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 6
