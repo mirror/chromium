@@ -16,6 +16,24 @@
       "revId": "cb4081efb54a970f51957ea2868d08575e2ffbe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34224e61_debe51fb",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-27T14:15:23Z",
+      "side": 1,
+      "message": "I agree that this solution is not ideal and is not the end-state. We have a preference for locally starting child coordinators. These changes get us closer to that end-state. \n\nHowever, I don\u0027t think we are making any new layering violations. For example, notice how we pass a UIView inside the StartVoiceSearchCommand, which is passed through the dispatcher.\n\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/commands/start_voice_search_command.h?q\u003dStartVoiceSearchCommand\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d16",
+      "parentUuid": "b8728723_b3abc939",
+      "revId": "cb4081efb54a970f51957ea2868d08575e2ffbe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
