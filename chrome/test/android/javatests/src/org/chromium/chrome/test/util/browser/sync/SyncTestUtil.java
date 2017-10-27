@@ -168,27 +168,39 @@ public final class SyncTestUtil {
      * Extracts datatype-specific information from the given JSONObject. The returned JSONObject
      * contains the same data as a specifics protocol buffer (e.g., TypedUrlSpecifics).
      */
-    private static JSONObject extractSpecifics(JSONObject node) throws JSONException {
-        JSONObject specifics = node.getJSONObject("SPECIFICS");
-        // The key name here is type-specific (e.g., "typed_url" for Typed URLs), so we
-        // can't hard code a value.
-        Iterator<String> keysIterator = specifics.keys();
-        String key = null;
-        if (!keysIterator.hasNext()) {
-            throw new JSONException("Specifics object has 0 keys.");
-        }
-        key = keysIterator.next();
+    private static JSONObject extractSpecifics(JSONObject node, String typeNotificationString)
+            throws JSONException {
+        if (node.has("SPECIFICS")) {
+            // directory type
+            JSONObject specifics = node.getJSONObject("SPECIFICS");
 
-        if (keysIterator.hasNext()) {
-            throw new JSONException("Specifics object has more than 1 key.");
+            Iterator<String> keysIterator = specifics.keys();
+            String key = null;
+            if (!keysIterator.hasNext()) {
+                throw new JSONException("Specifics object has 0 keys.");
+            }
+            key = keysIterator.next();
+
+            if (keysIterator.hasNext()) {
+                throw new JSONException("Specifics object has more than 1 key.");
+            }
+
+            Assert.assertEquals(key, typeNotificationString);
+
+            if (key.equals("bookmark")) {
+                JSONObject bookmarkSpecifics = specifics.getJSONObject(key);
+                bookmarkSpecifics.put("parent_id", node.getString("PARENT_ID"));
+                return bookmarkSpecifics;
+            }
+            return specifics.getJSONObject(key);
         }
 
-        if (key.equals("bookmark")) {
-            JSONObject bookmarkSpecifics = specifics.getJSONObject(key);
-            bookmarkSpecifics.put("parent_id", node.getString("PARENT_ID"));
-            return bookmarkSpecifics;
+        // USS type
+        JSONObject jsonObject = node.getJSONObject(typeNotificationString);
+        if (node.has("metadata") /*&& node.getJSONObject("metadata").has("client_tag_hash")*/) {
+            jsonObject.put("metadata", node.getJSONObject("metadata"));
         }
-        return specifics.getJSONObject(key);
+        return node.getJSONObject(typeNotificationString);
     }
 
     /**
@@ -230,8 +242,8 @@ public final class SyncTestUtil {
      *
      * @return a List of Pair<String, JSONObject> representing the local Sync data
      */
-    public static List<Pair<String, JSONObject>> getLocalData(
-            Context context, String typeString) throws JSONException {
+    public static List<Pair<String, JSONObject>> getLocalData(Context context, String typeString,
+            String typeNotificationString) throws JSONException {
         JSONArray localData = getAllNodesAsJsonArray();
         JSONArray datatypeNodes = new JSONArray();
         for (int i = 0; i < localData.length(); i++) {
@@ -246,13 +258,29 @@ public final class SyncTestUtil {
                 new ArrayList<Pair<String, JSONObject>>(datatypeNodes.length());
         for (int i = 0; i < datatypeNodes.length(); i++) {
             JSONObject entity = datatypeNodes.getJSONObject(i);
-            if (!entity.getString("UNIQUE_SERVER_TAG").isEmpty()) {
+            if (entity.has("UNIQUE_SERVER_TAG")
+                    && !entity.getString("UNIQUE_SERVER_TAG").isEmpty()) {
                 // Ignore permanent items (e.g., root datatype folders).
                 continue;
             }
-            String id = convertToServerId(entity.getString("ID"));
-            localDataForDatatype.add(Pair.create(id, extractSpecifics(entity)));
+            String id = convertToServerId(getClientId(entity));
+            localDataForDatatype.add(
+                    Pair.create(id, extractSpecifics(entity, typeNotificationString)));
         }
         return localDataForDatatype;
+    }
+
+    private static String getClientId(JSONObject entity) throws JSONException {
+        // directory type
+        if (entity.has("ID") && !entity.getString("ID").isEmpty()) {
+            return entity.getString("ID");
+        }
+
+        // USS type
+        if (entity.has("metadata")) {
+            JSONObject metadata = entity.getJSONObject("metadata");
+            return "s" + metadata.getString("server_id");
+        }
+        return "";
     }
 }

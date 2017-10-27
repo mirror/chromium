@@ -63,6 +63,9 @@ public class OpenTabsTest {
 
     private static final String OPEN_TABS_TYPE = "Sessions";
 
+    // From ModelTypeInfo::notification_type
+    private static final String OPEN_TAB_NOTIFICATION_STRING = "session";
+
     // EmbeddedTestServer is preferred here but it can't be used. The test server
     // serves pages on localhost and Chrome doesn't sync localhost URLs as typed URLs.
     // This type of URL requires no external data connection or resources.
@@ -283,9 +286,9 @@ public class OpenTabsTest {
 
     private void deleteServerTabsForClient(String clientName) throws JSONException {
         OpenTabs openTabs = getLocalTabsForClient(clientName);
-        mSyncTestRule.getFakeServerHelper().deleteEntity(openTabs.headerId);
+        mSyncTestRule.getFakeServerHelper().deleteEntity(openTabs.headerId, "");
         for (String tabId : openTabs.tabIds) {
-            mSyncTestRule.getFakeServerHelper().deleteEntity(tabId);
+            mSyncTestRule.getFakeServerHelper().deleteEntity(tabId, "");
         }
     }
 
@@ -324,7 +327,8 @@ public class OpenTabsTest {
             public boolean isSatisfied() {
                 try {
                     return SyncTestUtil
-                                   .getLocalData(mSyncTestRule.getTargetContext(), OPEN_TABS_TYPE)
+                                   .getLocalData(mSyncTestRule.getTargetContext(), OPEN_TABS_TYPE,
+                                           OPEN_TAB_NOTIFICATION_STRING)
                                    .size()
                             > 0;
                 } catch (JSONException e) {
@@ -332,8 +336,8 @@ public class OpenTabsTest {
                 }
             }
         });
-        List<Pair<String, JSONObject>> tabEntities =
-                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), OPEN_TABS_TYPE);
+        List<Pair<String, JSONObject>> tabEntities = SyncTestUtil.getLocalData(
+                mSyncTestRule.getTargetContext(), OPEN_TABS_TYPE, OPEN_TAB_NOTIFICATION_STRING);
         for (Pair<String, JSONObject> tabEntity : tabEntities) {
             if (tabEntity.second.has("header")) {
                 return tabEntity.second.getJSONObject("header").getString("client_name");
@@ -355,8 +359,8 @@ public class OpenTabsTest {
 
     // Distills the local session data into a simple data object for the given client.
     private OpenTabs getLocalTabsForClient(String clientName) throws JSONException {
-        List<Pair<String, JSONObject>> tabEntities =
-                SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), OPEN_TABS_TYPE);
+        List<Pair<String, JSONObject>> tabEntities = SyncTestUtil.getLocalData(
+                mSyncTestRule.getTargetContext(), OPEN_TABS_TYPE, OPEN_TAB_NOTIFICATION_STRING);
         // Output lists.
         List<String> urls = new ArrayList<>();
         List<String> tabEntityIds = new ArrayList<>();
