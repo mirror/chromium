@@ -46,6 +46,30 @@
       "revId": "86abd6f8ff2bb9c3d6c7f0871fe77f97d34d3de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "804e7de7_70cabd59",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-10-27T10:48:20Z",
+      "side": 1,
+      "message": "Yeah, fair point!",
+      "parentUuid": "25de839c_dfa98416",
+      "range": {
+        "startLine": 404,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 63
+      },
+      "revId": "86abd6f8ff2bb9c3d6c7f0871fe77f97d34d3de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
