@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb581154_f550e9ff",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-27T01:35:09Z",
+      "side": 0,
+      "message": "why all these log changes as part of this patch? this really seems like something that should be done separately..",
+      "revId": "2f8a90bb707f336da1c082a0604b193acaff6750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

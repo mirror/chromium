@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "5687fef8_f813e7e3",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-27T01:35:09Z",
+      "side": 1,
+      "message": "nit: change to NativePixmapHandle",
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16a25c5_ebcb7c11",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-27T01:35:09Z",
+      "side": 1,
+      "message": "it\u0027s surprising to see all this custom log stuff in a CL. can\u0027t tell if it\u0027s just temporary debugging code or something that is meant to be here... if the latter, then why are standard chromium logging macros not good enough?",
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583fef39_16e866a0",
+        "filename": "ui/gfx/native_pixmap.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-27T01:35:09Z",
+      "side": 1,
+      "message": "nit: change to crbug.com/771863 and make it clear that removing the need to use this for protected shmem is enough. if the proposed solution on crbug.com/771863 turns out to not work then it can be merged to crbug.com/778563 but I\u0027d rather not have the removal of this API be blocked by bug that might take a year of more to be fixed when we have a possible solution in crbug.com/771863 that could be implemented in a few weeks without kernel changes.",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2e252f8_dc600e8f",
         "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
         "patchSetId": 8
@@ -30,6 +87,47 @@
       "writtenOn": "2017-10-26T15:25:13Z",
       "side": 1,
       "message": "why do we do this? Why should CreateNativePixmapFromHandle support creation of protected pixmaps?\n\nI would have expected CreateNativePixmapFromHandle to do what CreateNativePixmapForProtectedBufffer does and vice-versa?\n\nMoreover, the way that you have written this, why do we need a CreateNativePixmapForProtectedBufferHandle?\n\nPerhaps I am misunderstanding the code.",
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fedc9736_ece0afdf",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surface_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-27T01:35:09Z",
+      "side": 1,
+      "message": "This is confusing right now. CreateNativePixmapForProtectedBufferHandle is needed right now so there\u0027s a way for the callback to call back into ozone without causing infinite recursion. crbug.com/778555 is a short term follow up that will allow the callback to be removed and CreateNativePixmapForProtectedBufferHandle instead to be used to create handle\u003c-\u003eprotected native pixmap mappings here in GbmSurfaceFactory. I\u0027m OK with this temporary confusing code if the follow up to remove the callback is taken care of asap as discussed.",
+      "parentUuid": "40995d38_6b871aa7",
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78898fb8_ca97638b",
+        "filename": "ui/ozone/public/surface_factory_ozone.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-27T01:35:09Z",
+      "side": 1,
+      "message": "nit: as discussed, removing the callback is a short-term improvement that should be done asap. move this TODO to the SetGetProtectedNativePixmapDelegate function below and change the comment to explain that only callback can be removed.",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 20
+      },
       "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
