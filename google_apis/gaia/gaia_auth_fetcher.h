@@ -429,7 +429,7 @@ class GaiaAuthFetcher : public net::URLFetcherDelegate {
 
   // While a fetch is going on:
   std::unique_ptr<net::URLFetcher> fetcher_;
-  GURL client_login_to_oauth2_gurl_;
+  GURL deprecated_client_login_to_oauth2_gurl_;
   std::string request_body_;
   std::string requested_service_;
   bool fetch_pending_ = false;
