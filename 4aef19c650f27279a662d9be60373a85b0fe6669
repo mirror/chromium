@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68651c9b_47decce7",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-27T15:25:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b73a8e8_b50ca110",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "4aef19c650f27279a662d9be60373a85b0fe6669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9e3e5cf_c6db01cd",
         "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "4aef19c650f27279a662d9be60373a85b0fe6669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02db58e_49fc8af6",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-27T15:25:37Z",
+      "side": 1,
+      "message": "Declared a placeholder method, it\u0027s hopefully better now.",
+      "parentUuid": "d9e3e5cf_c6db01cd",
+      "range": {
+        "startLine": 46,
+        "startChar": 62,
+        "endLine": 47,
+        "endChar": 68
+      },
+      "revId": "4aef19c650f27279a662d9be60373a85b0fe6669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
