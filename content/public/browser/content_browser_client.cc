@@ -11,6 +11,7 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "build/build_config.h"
+#include "content/browser/origin_manifest/origin_manifest_url_loader_throttle.h"
 #include "content/public/browser/client_certificate_delegate.h"
 #include "content/public/browser/memory_coordinator_delegate.h"
 #include "content/public/browser/navigation_ui_data.h"
@@ -524,7 +525,13 @@ ContentBrowserClient::GetTaskSchedulerInitParams() {
 std::vector<std::unique_ptr<URLLoaderThrottle>>
 ContentBrowserClient::CreateURLLoaderThrottles(
     const base::Callback<WebContents*()>& wc_getter) {
-  return std::vector<std::unique_ptr<URLLoaderThrottle>>();
+  std::vector<std::unique_ptr<content::URLLoaderThrottle>> result;
+
+  auto origin_manifest_throttle = OriginManifestURLLoaderThrottle::Create();
+  if (origin_manifest_throttle.get())
+    result.push_back(std::move(origin_manifest_throttle));
+
+  return result;
 }
 
 mojom::NetworkContextPtr ContentBrowserClient::CreateNetworkContext(

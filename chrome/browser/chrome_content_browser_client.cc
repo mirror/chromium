@@ -3540,7 +3540,8 @@ ChromeContentBrowserClient::CreateURLLoaderThrottles(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
 
-  std::vector<std::unique_ptr<content::URLLoaderThrottle>> result;
+  std::vector<std::unique_ptr<content::URLLoaderThrottle>> result =
+      ContentBrowserClient::CreateURLLoaderThrottles(wc_getter);
 
   auto safe_browsing_throttle =
       safe_browsing::BrowserURLLoaderThrottle::MaybeCreate(
