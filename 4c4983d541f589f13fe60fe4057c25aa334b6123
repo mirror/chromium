@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e38d772_7c9f0c08",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-27T17:44:19Z",
+      "side": 1,
+      "message": "Why is \u003cmemory\u003e needed?",
+      "revId": "4c4983d541f589f13fe60fe4057c25aa334b6123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c72b3d_32056c98",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-27T17:44:19Z",
+      "side": 1,
+      "message": "I think we tend to say \"associated with\" rather than \"from\" for all these properties.",
+      "range": {
+        "startLine": 34,
+        "startChar": 27,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "4c4983d541f589f13fe60fe4057c25aa334b6123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157850df_12e6abec",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-27T17:44:19Z",
+      "side": 1,
+      "message": "PTAL at my comments in prior CL, but I think this entire comment could be just:\n\"Exposes features that allows autofilling of html forms.\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "4c4983d541f589f13fe60fe4057c25aa334b6123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
