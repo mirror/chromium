@@ -68,6 +68,8 @@ class HungPagesTableModel : public ui::TableModel {
 
     // WebContentsObserver overrides:
     void RenderProcessGone(base::TerminationStatus status) override;
+    void RenderViewHostChanged(content::RenderViewHost* old_host,
+                               content::RenderViewHost* new_host) override;
     void WebContentsDestroyed() override;
 
    private:
@@ -79,6 +81,7 @@ class HungPagesTableModel : public ui::TableModel {
   // Invoked when a WebContents is destroyed. Cleans up |tab_observers_| and
   // notifies the observer and delegate.
   void TabDestroyed(WebContentsObserverImpl* tab);
+  void TabUpdated();
 
   std::vector<std::unique_ptr<WebContentsObserverImpl>> tab_observers_;
 
