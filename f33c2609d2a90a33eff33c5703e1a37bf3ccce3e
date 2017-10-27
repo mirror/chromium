@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23063c51_b3442a7d",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:00:21Z",
+      "side": 1,
+      "message": "nit: {} not needed.",
+      "revId": "f33c2609d2a90a33eff33c5703e1a37bf3ccce3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3aa370_7bf3efa5",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:00:21Z",
+      "side": 1,
+      "message": "nit: drop {}",
+      "range": {
+        "startLine": 232,
+        "startChar": 51,
+        "endLine": 232,
+        "endChar": 52
+      },
+      "revId": "f33c2609d2a90a33eff33c5703e1a37bf3ccce3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56d36cf_3a1d51da",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:00:21Z",
+      "side": 1,
+      "message": "to make it more readable, please apply the strategy of calculating the delay first, based on the particular situation (initialization or other reason to do this), and then make a single call to \nPostDelayedTask.",
+      "range": {
+        "startLine": 283,
+        "startChar": 6,
+        "endLine": 283,
+        "endChar": 21
+      },
+      "revId": "f33c2609d2a90a33eff33c5703e1a37bf3ccce3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

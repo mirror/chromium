@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "ff64be0c_03d00759",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:00:21Z",
+      "side": 1,
+      "message": "Don\u0027t forget about addressing this, please",
+      "parentUuid": "7f57effb_1a6fd4a8",
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d8ef854_90ced3ab",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1
@@ -524,6 +542,30 @@
       "side": 1,
       "message": "Here is how it works now:\n1. [I missed this one in the CL but will add it in next patch] At Chrome start, we post PostClearCachedPagesTask with 20 seconds delay, to clear expired cached pages on the start.\n2. Whenever a page is saved, post PostClearCachedPagesTask without a delay.\n\nWhenever ClearCachedPages executes, it will check if it has been longer than the interval from last clearing, or if we\u0027re having a storage pressure. If both answers are false, there\u0027ll be no actual clearing and returned with ClearStorageResult::UNNECESSARY.\n\nWith your change, it seems that the ClearCachedPages will be guaranteed to be called every 30 minutes, which means the \u0027storage pressure\u0027 check can be removed, since no matter if there\u0027s a storage pressure or not, the storage needs to be cleared.\n\nSo I made the change in clear_storage_task:\n- Removed ShouldClearPages(), since it\u0027s always true. It means whenever this task is created, we should try to clear expired pages.\n- Moved the check of exceeding storage limit into GetPageInfosToClear, which means only when storage usage \u003e limit there will be pages deleted based on quota.\n- Redefined the meaning of ClearStorageResult::UNNECESSARY, now it means we tried to clear storage but no pages should be deleted [so it was unnecessary].\n\nIn the model, I\u0027m going to make the logic look like:\n- Is it at initializing? If yes, post the task with 20 second delay.\n- Otherwise, check if it\u0027s been longer than kClearStorageInterval (which is 30minutes) and if yes, post the task without delay; otherwise do nothing.\n\n\nWDYT? Or maybe let\u0027s chat offline...",
       "parentUuid": "048dcaff_024cbebc",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 35
+      },
+      "revId": "3b4ed95bd98826d03ac6c2e497513b97a0b088f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49285e87_376b4fea",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:00:21Z",
+      "side": 1,
+      "message": "Let\u0027s have a one-pager for this, based on our discussion.",
+      "parentUuid": "359d011e_467b5f04",
       "range": {
         "startLine": 313,
         "startChar": 6,
