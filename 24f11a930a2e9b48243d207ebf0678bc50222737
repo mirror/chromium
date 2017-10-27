@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8e6a2f4_18a4dd7c",
+        "filename": "chrome/browser/notifications/temp_file_keeper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-27T14:40:08Z",
+      "side": 1,
+      "message": "This one should be resolved soon-ish: otherwise different versions of Chromium/Canary/whatever will interfere with each other.",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 74
+      },
+      "revId": "24f11a930a2e9b48243d207ebf0678bc50222737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

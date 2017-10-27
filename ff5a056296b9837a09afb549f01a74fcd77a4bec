@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3680ea4a_5c6b4425",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-27T14:40:08Z",
+      "side": 1,
+      "message": "Could you please prepend paths with a dummy directory to verify that the template contains full paths, not just filenames?",
+      "range": {
+        "startLine": 53,
+        "startChar": 26,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "ff5a056296b9837a09afb549f01a74fcd77a4bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3c56ce_ae5d5178",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-27T14:40:08Z",
+      "side": 1,
+      "message": "No need for a pointer here; just MockTempFileKeeper object will work.",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 56
+      },
+      "revId": "ff5a056296b9837a09afb549f01a74fcd77a4bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
