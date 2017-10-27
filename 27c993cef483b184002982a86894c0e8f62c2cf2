@@ -407,6 +407,24 @@
     },
     {
       "key": {
+        "uuid": "e3c8f6bf_a3bed958",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T00:10:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f18ab069_55fecb38",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca87cbd5_eab6092d",
         "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
         "patchSetId": 26
@@ -436,6 +454,24 @@
       "side": 1,
       "message": "We\u0027re not using an actual bubble right now. That\u0027s going to happen later.",
       "parentUuid": "ca87cbd5_eab6092d",
+      "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "509eb6b8_793acd18",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T00:10:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f1b523f2_447d5404",
       "revId": "27c993cef483b184002982a86894c0e8f62c2cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdde82c2_15c81d55",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T00:10:43Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is the right check for immersive mode on ChromeOS. Methods like BrowserView::RevealTabStripIfNeeded() don\u0027t seem to manipulate the visibility of the location_bar_view -- it just slides off screen, but remains visible in the ui::Layer that contains it.\n\nI could be mistaken.. but I think pressing Ctrl+F in \"immersive\" fullscreen on ChromeOS will cause the find bar widget to anchor against a location bar that is currently offscreen, and so not appear, or show only its bottom edge.",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855dab6b_2c2db419",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T00:10:43Z",
+      "side": 1,
+      "message": "should this logic be applied when anchoring to location_bar_view? Seems a bookmarks bar or infobar could throw off attempts to anchor right up against the omnibox when this is being applied.\n\nMaybe this function needs an early return when anchoring to the omnibox.",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9180dac8_6af0648c",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T00:10:43Z",
+      "side": 1,
+      "message": "it\u0027s hard to think about the logic here (my brain timed out). left_padding depends on right_padding, right_padding depends on top_container_bounds, top_container_bounds depends on has_location_bar. But right_padding also depends on has_location_bar. and, left_padding also depends on has_location_bar. Is there a way to simplify this? Maybe with an `if (has_location_bar)` or by using View::GetMirrored*()",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
