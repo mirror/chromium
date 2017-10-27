@@ -22,6 +22,7 @@
 #include "base/timer/timer.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/ui/app_list/arc/arc_default_app_list.h"
+#include "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h"
 #include "components/arc/common/app.mojom.h"
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -94,7 +95,8 @@ class ArcAppListPrefs
                 int64_t last_backup_android_id,
                 int64_t last_backup_time,
                 bool should_sync,
-                bool system);
+                bool system,
+                bool vpn_provider);
 
     std::string package_name;
     int32_t package_version;
@@ -102,6 +104,7 @@ class ArcAppListPrefs
     int64_t last_backup_time;
     bool should_sync;
     bool system;
+    bool vpn_provider;
   };
 
   class Observer {
@@ -251,6 +254,10 @@ class ArcAppListPrefs
   // associated with this package.
   std::unordered_set<std::string> GetAppsForPackage(
       const std::string& package_name) const;
+
+  app_list::ArcVpnProviderManager* arc_vpn_provider_manager() {
+    return &arc_vpn_provider_manager_;
+  }
 
   void SetDefaltAppsReadyCallback(base::Closure callback);
   void SimulateDefaultAppAvailabilityTimeoutForTesting();
@@ -465,6 +472,7 @@ class ArcAppListPrefs
 
   bool default_apps_ready_ = false;
   ArcDefaultAppList default_apps_;
+  app_list::ArcVpnProviderManager arc_vpn_provider_manager_;
   base::Closure default_apps_ready_callback_;
   int last_shown_batch_installation_revision_ = -1;
   int current_batch_installation_revision_ = 0;
