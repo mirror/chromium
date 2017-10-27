@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afd75133_491c5172",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1949,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-27T12:02:44Z",
+      "side": 1,
+      "message": "Instead of putting this call on self.browsingDataRemovalController in a block that is itself passed into another call to self.browsingDataRemovalController, can the behavior of -removeBrowsringData:timePeriod:completionHandler: just be that it always calls -setWebUsageEnabled:YES on itself before calling completion()?\n\nLikewise, can the mask check and setWebUsageEnabled:NO call also be moved into -removeBrowsingData;?",
+      "range": {
+        "startLine": 1949,
+        "startChar": 10,
+        "endLine": 1949,
+        "endChar": 39
+      },
+      "revId": "4e8c82bfa6d02e2c1d0925f51539274557eb691f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
