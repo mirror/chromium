@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6207b9b1_e700914f",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T20:54:15Z",
+      "side": 1,
+      "message": "I swear I removed it at least 3 times, but it keeps reappearing after rebases. :-)",
+      "parentUuid": "b0b3fbc7_f816fa1a",
+      "range": {
+        "startLine": 862,
+        "startChar": 7,
+        "endLine": 862,
+        "endChar": 42
+      },
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d597bd84_2dd84d77",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2d619b_4a79072a",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T20:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d597bd84_2dd84d77",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "0d808005_58322304",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T20:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8aa94ad_7485b67b",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "024e726b_fdcfe809",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 10
@@ -73,6 +133,24 @@
       "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303fe552_cb225bd9",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T20:54:15Z",
+      "side": 1,
+      "message": "The lifetime of the expectations is equal to that of the mocks, so they don\u0027t go away with the scope. But, in fact, there is no need for the scoping, removed.",
+      "parentUuid": "024e726b_fdcfe809",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "cbffae62_2d68d7f1",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T20:54:15Z",
+      "side": 1,
+      "message": "I was undecided on whether we should do that, please see my other comment.",
+      "parentUuid": "9e2a94b8_c25b732a",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a264437a_5b145e14",
         "filename": "content/public/test/mock_render_thread.cc",
         "patchSetId": 10
@@ -107,6 +203,24 @@
       "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e84ecf1_e108f58d",
+        "filename": "content/public/test/mock_render_thread.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T20:54:15Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "a264437a_5b145e14",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "db4f6b6c_94c0105a",
+        "filename": "content/public/test/render_view_test.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T20:54:15Z",
+      "side": 1,
+      "message": "Due to historical reasons. ;-) Good catch, removed!",
+      "parentUuid": "8cd115e4_fe2a6f19",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20d304de_885867a2",
         "filename": "content/renderer/media/media_factory.h",
         "patchSetId": 10
@@ -167,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "151690ad_19895937",
+        "filename": "content/renderer/media/media_factory.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T20:54:15Z",
+      "side": 1,
+      "message": "The issue here was that media_factory.cc is not the only client issuing GetInterface messages, but instead a InterfaceProvider* is passed around to many places in media/, e.g. to MojoRendererFactory and MediaInterfaceFactory.",
+      "parentUuid": "20d304de_885867a2",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d397a691_86377c9e",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 10
@@ -181,6 +331,24 @@
       "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2537a65_d8f78022",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3929,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T20:54:15Z",
+      "side": 1,
+      "message": "Hmm, looks like DidNavigateWithinPage actually calls into DidCommitProvisionalLoad, so the conditional seems to be needed.",
+      "parentUuid": "d397a691_86377c9e",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
