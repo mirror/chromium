@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d6cf92a_ec5a1c31",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-27T23:52:40Z",
+      "side": 1,
+      "message": "Please document that these enum values are persisted to logs, and should therefore never be renumbered nor reused.",
+      "range": {
+        "startLine": 46,
+        "startChar": 23,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "55b5a41eb81fc4f2ec39dd4e8aff2a5af35c9ef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4bd137_83bfae2e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4358,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-27T23:52:40Z",
+      "side": 1,
+      "message": "nit: This label is a bit confusing given that the two cases below also look like failures.  Does this case also include the two below, or is it disjoint from them?",
+      "range": {
+        "startLine": 4358,
+        "startChar": 34,
+        "endLine": 4358,
+        "endChar": 0
+      },
+      "revId": "55b5a41eb81fc4f2ec39dd4e8aff2a5af35c9ef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
