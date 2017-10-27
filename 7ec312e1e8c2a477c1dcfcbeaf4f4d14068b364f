@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65055ec7_cfb57cc3",
+        "filename": "net/quic/platform/impl/quic_mem_slice_span_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-27T17:35:41Z",
+      "side": 1,
+      "message": "Can we add a test to quic_mem_slice_test.cc which fails without this fix?",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "7ec312e1e8c2a477c1dcfcbeaf4f4d14068b364f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
