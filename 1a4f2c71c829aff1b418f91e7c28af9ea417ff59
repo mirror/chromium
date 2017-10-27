@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9281232_4d18c41d",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-27T18:20:22Z",
+      "side": 1,
+      "message": "Yes, this bool is used to toggle testing with mouse or touch events, not to enable the feature.",
+      "parentUuid": "9e557779_8578b61c",
+      "revId": "1a4f2c71c829aff1b418f91e7c28af9ea417ff59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad8eb3b1_31f560f7",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-27T17:18:25Z",
       "side": 1,
       "message": "This probably can go now.",
+      "revId": "1a4f2c71c829aff1b418f91e7c28af9ea417ff59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636a19a1_cc619e09",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-27T18:20:22Z",
+      "side": 1,
+      "message": "I have another CL which refactors this whole file and removes dead code. Is it alright to set it to true for now, and refactor it in the next cl(just to manage the CL sizes)?",
+      "parentUuid": "ad8eb3b1_31f560f7",
       "revId": "1a4f2c71c829aff1b418f91e7c28af9ea417ff59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "1a4f2c71c829aff1b418f91e7c28af9ea417ff59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ac9b3b_84d970e7",
+        "filename": "ui/app_list/views/search_box_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-27T18:20:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1a1b325_bc314c91",
+      "revId": "1a4f2c71c829aff1b418f91e7c28af9ea417ff59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
