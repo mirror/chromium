@@ -31,7 +31,7 @@ UpdateContext::UpdateContext(
     const std::vector<std::string>& ids,
     const UpdateClient::CrxDataCallback& crx_data_callback,
     const UpdateEngine::NotifyObserversCallback& notify_observers_callback,
-    const UpdateEngine::Callback& callback,
+    UpdateEngine::Callback callback,
     CrxDownloader::Factory crx_downloader_factory)
     : config(config),
       is_foreground(is_foreground),
@@ -39,7 +39,7 @@ UpdateContext::UpdateContext(
       ids(ids),
       crx_data_callback(crx_data_callback),
       notify_observers_callback(notify_observers_callback),
-      callback(callback),
+      callback(std::move(callback)),
       crx_downloader_factory(crx_downloader_factory) {
   for (const auto& id : ids)
     components.insert(
@@ -71,22 +71,23 @@ void UpdateEngine::Update(
     bool is_foreground,
     const std::vector<std::string>& ids,
     const UpdateClient::CrxDataCallback& crx_data_callback,
-    const Callback& callback) {
+    Callback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (IsThrottled(is_foreground)) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(callback, Error::RETRY_LATER));
+        FROM_HERE, base::BindOnce(std::move(callback), Error::RETRY_LATER));
     return;
   }
 
   const auto result = update_contexts_.insert(base::MakeUnique<UpdateContext>(
       config_, is_foreground, ids, crx_data_callback,
-      notify_observers_callback_, callback, crx_downloader_factory_));
+      notify_observers_callback_, std::move(callback),
+      crx_downloader_factory_));
 
   DCHECK(result.second);
 
-  const auto& it = result.first;
+  auto& it = result.first;
   const auto& update_context = *it;
   DCHECK(update_context);
 
@@ -113,14 +114,16 @@ void UpdateEngine::Update(
     component.set_previous_fp(crx_component.fingerprint);
 
     // Handle |kNew| state. This will transition the components to |kChecking|.
-    component.Handle(base::Bind(&UpdateEngine::ComponentCheckingForUpdatesStart,
+    /*
+    component.Handle(base::BindOnce(&UpdateEngine::ComponentCheckingForUpdatesStart,
                                 base::Unretained(this), it,
                                 base::ConstRef(component)));
+    */
   }
 }
 
 void UpdateEngine::ComponentCheckingForUpdatesStart(
-    const UpdateContextIterator& it,
+    UpdateContextIterator& it,
     const Component& component) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
@@ -132,23 +135,27 @@ void UpdateEngine::ComponentCheckingForUpdatesStart(
   DCHECK(update_context->components.at(id));
 
   // Handle |kChecking| state.
+  /*
   auto& mutable_component = *update_context->components.at(id);
-  mutable_component.Handle(base::Bind(
+  mutable_component.Handle(base::BindOnce(
       &UpdateEngine::ComponentCheckingForUpdatesComplete,
       base::Unretained(this), it, base::ConstRef(mutable_component)));
-
+  */
   ++update_context->num_components_ready_to_check;
   if (update_context->num_components_ready_to_check <
       update_context->ids.size()) {
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::BindOnce(&UpdateEngine::DoUpdateCheck, base::Unretained(this), it));
+  /*
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::BindOnce(&UpdateEngine::DoUpdateCheck, base::Unretained(this),
+    it));
+  */
 }
 
-void UpdateEngine::DoUpdateCheck(const UpdateContextIterator& it) {
+void UpdateEngine::DoUpdateCheck(UpdateContextIterator& it) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   auto& update_context = *it;
@@ -156,14 +163,17 @@ void UpdateEngine::DoUpdateCheck(const UpdateContextIterator& it) {
 
   update_context->update_checker =
       update_checker_factory_(config_, metadata_.get());
-
-  update_context->update_checker->CheckForUpdates(
-      update_context->ids, update_context->components,
-      config_->ExtraRequestParams(), update_context->enabled_component_updates,
-      base::Bind(&UpdateEngine::UpdateCheckDone, base::Unretained(this), it));
+  /*
+    update_context->update_checker->CheckForUpdates(
+        update_context->ids, update_context->components,
+        config_->ExtraRequestParams(),
+    update_context->enabled_component_updates,
+        base::BindOnce(&UpdateEngine::UpdateCheckDone, base::Unretained(this),
+    it));
+  */
 }
 
-void UpdateEngine::UpdateCheckDone(const UpdateContextIterator& it,
+void UpdateEngine::UpdateCheckDone(UpdateContextIterator& it,
                                    int error,
                                    int retry_after_sec) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -198,7 +208,7 @@ void UpdateEngine::UpdateCheckDone(const UpdateContextIterator& it,
 }
 
 void UpdateEngine::ComponentCheckingForUpdatesComplete(
-    const UpdateContextIterator& it,
+    UpdateContextIterator& it,
     const Component& component) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
@@ -209,13 +219,14 @@ void UpdateEngine::ComponentCheckingForUpdatesComplete(
   if (update_context->num_components_checked < update_context->ids.size()) {
     return;
   }
-
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(&UpdateEngine::UpdateCheckComplete,
-                                base::Unretained(this), it));
+  /*
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&UpdateEngine::UpdateCheckComplete,
+                                  base::Unretained(this), it));
+                                  */
 }
 
-void UpdateEngine::UpdateCheckComplete(const UpdateContextIterator& it) {
+void UpdateEngine::UpdateCheckComplete(UpdateContextIterator& it) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   const auto& update_context = *it;
@@ -223,13 +234,14 @@ void UpdateEngine::UpdateCheckComplete(const UpdateContextIterator& it) {
 
   for (const auto& id : update_context->ids)
     update_context->component_queue.push(id);
-
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(&UpdateEngine::HandleComponent,
-                                base::Unretained(this), it));
+  /*
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&UpdateEngine::HandleComponent,
+                                  base::Unretained(this), it));
+                                  */
 }
 
-void UpdateEngine::HandleComponent(const UpdateContextIterator& it) {
+void UpdateEngine::HandleComponent(UpdateContextIterator& it) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   auto& update_context = *it;
@@ -238,12 +250,15 @@ void UpdateEngine::HandleComponent(const UpdateContextIterator& it) {
   auto& queue = update_context->component_queue;
 
   if (queue.empty()) {
+    /*
     const Error error = update_context->update_check_error
                             ? Error::UPDATE_CHECK_ERROR
                             : Error::NONE;
+
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&UpdateEngine::UpdateComplete,
+        FROM_HERE, base::BindOnce(&UpdateEngine::UpdateComplete,
                               base::Unretained(this), it, error));
+                              */
     return;
   }
 
@@ -254,12 +269,13 @@ void UpdateEngine::HandleComponent(const UpdateContextIterator& it) {
 
   auto& next_update_delay = (*it)->next_update_delay;
   if (!next_update_delay.is_zero() && component->IsUpdateAvailable()) {
+    /*
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&UpdateEngine::HandleComponent, base::Unretained(this),
                        it),
         next_update_delay);
-
+*/
     next_update_delay = base::TimeDelta();
 
     notify_observers_callback_.Run(
@@ -267,11 +283,13 @@ void UpdateEngine::HandleComponent(const UpdateContextIterator& it) {
     return;
   }
 
-  component->Handle(base::Bind(&UpdateEngine::HandleComponentComplete,
-                               base::Unretained(this), it));
+  /*
+    component->Handle(base::BindOnce(&UpdateEngine::HandleComponentComplete,
+                                 base::Unretained(this), it));
+  */
 }
 
-void UpdateEngine::HandleComponentComplete(const UpdateContextIterator& it) {
+void UpdateEngine::HandleComponentComplete(UpdateContextIterator& it) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   auto& update_context = *it;
@@ -295,20 +313,21 @@ void UpdateEngine::HandleComponentComplete(const UpdateContextIterator& it) {
     queue.pop();
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(&UpdateEngine::HandleComponent,
-                                base::Unretained(this), it));
+  /*
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&UpdateEngine::HandleComponent,
+                                  base::Unretained(this), it));
+  */
 }
 
-void UpdateEngine::UpdateComplete(const UpdateContextIterator& it,
-                                  Error error) {
+void UpdateEngine::UpdateComplete(UpdateContextIterator& it, Error error) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   auto& update_context = *it;
   DCHECK(update_context);
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(update_context->callback, error));
+      FROM_HERE, base::BindOnce(std::move(update_context->callback), error));
 
   update_contexts_.erase(it);
 }
@@ -343,13 +362,13 @@ bool UpdateEngine::IsThrottled(bool is_foreground) const {
 void UpdateEngine::SendUninstallPing(const std::string& id,
                                      const base::Version& version,
                                      int reason,
-                                     const Callback& callback) {
+                                     Callback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   const auto result = update_contexts_.insert(base::MakeUnique<UpdateContext>(
       config_, false, std::vector<std::string>{id},
       UpdateClient::CrxDataCallback(), UpdateEngine::NotifyObserversCallback(),
-      callback, nullptr));
+      std::move(callback), nullptr));
 
   DCHECK(result.second);
 
@@ -364,9 +383,11 @@ void UpdateEngine::SendUninstallPing(const std::string& id,
 
   update_context->component_queue.push(id);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(&UpdateEngine::HandleComponent,
-                                base::Unretained(this), it));
+  /*
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&UpdateEngine::HandleComponent,
+                                  base::Unretained(this), it));
+  */
 }
 
 }  // namespace update_client

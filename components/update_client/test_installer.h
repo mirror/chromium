@@ -22,8 +22,7 @@ class TestInstaller : public CrxInstaller {
 
   void OnUpdateError(int error) override;
 
-  void Install(const base::FilePath& unpack_path,
-               const Callback& callback) override;
+  void Install(const base::FilePath& unpack_path, Callback callback) override;
 
   bool GetInstalledFile(const std::string& file,
                         base::FilePath* installed_file) override;
@@ -37,7 +36,7 @@ class TestInstaller : public CrxInstaller {
  protected:
   ~TestInstaller() override;
 
-  void InstallComplete(const Callback& callback, const Result& result) const;
+  void InstallComplete(Callback callback, const Result& result) const;
 
   int error_;
   int install_count_;
@@ -68,8 +67,7 @@ class VersionedTestInstaller : public TestInstaller {
  public:
   VersionedTestInstaller();
 
-  void Install(const base::FilePath& unpack_path,
-               const Callback& callback) override;
+  void Install(const base::FilePath& unpack_path, Callback callback) override;
 
   bool GetInstalledFile(const std::string& file,
                         base::FilePath* installed_file) override;

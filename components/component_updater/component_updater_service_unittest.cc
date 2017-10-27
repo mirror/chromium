@@ -7,6 +7,7 @@
 #include <limits>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -47,8 +48,15 @@ class MockInstaller : public CrxInstaller {
  public:
   MockInstaller();
 
+  // gMock does not support mocking functions with parameters which have
+  // move semantics. This function is a shim to work around it.
+  void Install(const base::FilePath& unpack_path,
+               update_client::CrxInstaller::Callback callback) {
+    Install_(unpack_path, callback);
+  }
+
   MOCK_METHOD1(OnUpdateError, void(int error));
-  MOCK_METHOD2(Install,
+  MOCK_METHOD2(Install_,
                void(const base::FilePath& unpack_path,
                     const update_client::CrxInstaller::Callback& callback));
   MOCK_METHOD2(GetInstalledFile,
@@ -63,6 +71,8 @@ class MockUpdateClient : public UpdateClient {
  public:
   MockUpdateClient();
 
+  // gMock does not support mocking functions with parameters which have
+  // move semantics. This function is a shim to work around it.
   void Install(const std::string& id,
                const CrxDataCallback& crx_data_callback,
                Callback callback) override {
@@ -192,7 +202,8 @@ void OnDemandTester::OnDemandComplete(update_client::Error error) {
 std::unique_ptr<ComponentUpdateService> TestComponentUpdateServiceFactory(
     const scoped_refptr<Configurator>& config) {
   DCHECK(config);
-  return base::MakeUnique<CrxUpdateService>(config, new MockUpdateClient());
+  return base::MakeUnique<CrxUpdateService>(
+      config, base::MakeRefCounted<MockUpdateClient>());
 }
 
 ComponentUpdaterTest::ComponentUpdaterTest() {

@@ -6,6 +6,7 @@
 #define COMPONENTS_UPDATE_CLIENT_COMPONENT_PATCHER_UNITTEST_H_
 
 #include <memory>
+#include <utility>
 
 #include "base/files/file_path.h"
 #include "base/files/scoped_temp_dir.h"

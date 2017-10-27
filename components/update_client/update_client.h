@@ -172,7 +172,7 @@ class CrxInstaller : public base::RefCountedThreadSafe<CrxInstaller> {
     int extended_error = 0;
   };
 
-  using Callback = base::Callback<void(const Result& result)>;
+  using Callback = base::OnceCallback<void(const Result& result)>;
 
   // Called on the main thread when there was a problem unpacking or
   // verifying the CRX. |error| is a non-zero value which is only meaningful
@@ -185,7 +185,7 @@ class CrxInstaller : public base::RefCountedThreadSafe<CrxInstaller> {
   // invoke the |callback| when the install flow has completed.
   // This method may be called from a thread other than the main thread.
   virtual void Install(const base::FilePath& unpack_path,
-                       const Callback& callback) = 0;
+                       Callback callback) = 0;
 
   // Sets |installed_file| to the full path to the installed |file|. |file| is
   // the filename of the file in this CRX. Returns false if this is
