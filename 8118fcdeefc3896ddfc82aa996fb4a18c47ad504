@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0153dfab_f8b48471",
+        "filename": "chrome/browser/resources/md_user_manager/user_manager_pages.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T18:04:54Z",
+      "side": 1,
+      "message": "+1 on investigating this sooner rather than later. I think listening for events on document is not a great approach to start with. Instead some more relevant level in the DOM Should be used for such listeners (basically the element that has focus when those keystrokes are happening).",
+      "revId": "8118fcdeefc3896ddfc82aa996fb4a18c47ad504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
