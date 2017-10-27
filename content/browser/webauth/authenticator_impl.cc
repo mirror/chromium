@@ -44,7 +44,7 @@ AuthenticatorImpl::AuthenticatorImpl(RenderFrameHost* render_frame_host)
 
 // mojom:Authenticator
 void AuthenticatorImpl::MakeCredential(
-    webauth::mojom::MakeCredentialOptionsPtr options,
+    webauth::mojom::MakePublicKeyCredentialOptionsPtr options,
     MakeCredentialCallback callback) {
   std::string effective_domain;
   std::string relying_party_id;

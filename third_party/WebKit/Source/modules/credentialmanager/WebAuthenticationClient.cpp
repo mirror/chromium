@@ -14,7 +14,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "modules/credentialmanager/AuthenticatorAttestationResponse.h"
-#include "modules/credentialmanager/MakeCredentialOptions.h"
+#include "modules/credentialmanager/MakePublicKeyCredentialOptions.h"
 #include "public/platform/InterfaceProvider.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
@@ -74,9 +74,11 @@ constexpr WTF::TimeDelta kAdjustedTimeoutUpper = WTF::TimeDelta::FromMinutes(2);
 
 namespace mojo {
 using webauth::mojom::blink::AuthenticatorStatus;
-using webauth::mojom::blink::MakeCredentialOptionsPtr;
-using webauth::mojom::blink::PublicKeyCredentialEntity;
-using webauth::mojom::blink::PublicKeyCredentialEntityPtr;
+using webauth::mojom::blink::MakePublicKeyCredentialOptionsPtr;
+using webauth::mojom::blink::PublicKeyCredentialRpEntity;
+using webauth::mojom::blink::PublicKeyCredentialRpEntityPtr;
+using webauth::mojom::blink::PublicKeyCredentialUserEntity;
+using webauth::mojom::blink::PublicKeyCredentialUserEntityPtr;
 using webauth::mojom::blink::PublicKeyCredentialParameters;
 using webauth::mojom::blink::PublicKeyCredentialParametersPtr;
 using webauth::mojom::blink::PublicKeyCredentialType;
@@ -125,15 +127,12 @@ struct TypeConverter<AuthenticatorTransport, String> {
 };
 
 template <>
-struct TypeConverter<PublicKeyCredentialEntityPtr,
+struct TypeConverter<PublicKeyCredentialUserEntityPtr,
                      blink::PublicKeyCredentialUserEntity> {
-  static PublicKeyCredentialEntityPtr Convert(
+  static PublicKeyCredentialUserEntityPtr Convert(
       const blink::PublicKeyCredentialUserEntity& user) {
-    if (!(user.hasId() && user.hasName() && user.hasDisplayName())) {
-      return nullptr;
-    }
-    auto entity = webauth::mojom::blink::PublicKeyCredentialEntity::New();
-    entity->id = user.id();
+    auto entity = webauth::mojom::blink::PublicKeyCredentialUserEntity::New();
+    entity->id = ConvertTo<Vector<uint8_t>>(user.id());
     entity->name = user.name();
     if (user.hasIcon()) {
       entity->icon = blink::KURL(blink::KURL(), user.icon());
@@ -144,14 +143,11 @@ struct TypeConverter<PublicKeyCredentialEntityPtr,
 };
 
 template <>
-struct TypeConverter<PublicKeyCredentialEntityPtr,
-                     blink::PublicKeyCredentialEntity> {
-  static PublicKeyCredentialEntityPtr Convert(
-      const blink::PublicKeyCredentialEntity& rp) {
-    if (!rp.hasName()) {
-      return nullptr;
-    }
-    auto entity = webauth::mojom::blink::PublicKeyCredentialEntity::New();
+struct TypeConverter<PublicKeyCredentialRpEntityPtr,
+                     blink::PublicKeyCredentialRpEntity> {
+  static PublicKeyCredentialRpEntityPtr Convert(
+      const blink::PublicKeyCredentialRpEntity& rp) {
+    auto entity = webauth::mojom::blink::PublicKeyCredentialRpEntity::New();
     entity->id = rp.id();
     entity->name = rp.name();
     if (rp.hasIcon()) {
@@ -173,18 +169,21 @@ struct TypeConverter<PublicKeyCredentialParametersPtr,
     // A COSEAlgorithmIdentifier's value is a number identifying a cryptographic
     // algorithm. Values are registered in the IANA COSE Algorithms registry.
     // https://www.iana.org/assignments/cose/cose.xhtml#algorithms
-    mojo_parameter->algorithm_identifier = parameter.algorithm();
+    mojo_parameter->algorithm_identifier = parameter.alg();
     return mojo_parameter;
   }
 };
 
 template <>
-struct TypeConverter<MakeCredentialOptionsPtr, blink::MakeCredentialOptions> {
-  static MakeCredentialOptionsPtr Convert(
-      const blink::MakeCredentialOptions options) {
-    auto mojo_options = webauth::mojom::blink::MakeCredentialOptions::New();
-    mojo_options->relying_party = PublicKeyCredentialEntity::From(options.rp());
-    mojo_options->user = PublicKeyCredentialEntity::From(options.user());
+struct TypeConverter<MakePublicKeyCredentialOptionsPtr,
+                     blink::MakePublicKeyCredentialOptions> {
+  static MakePublicKeyCredentialOptionsPtr Convert(
+      const blink::MakePublicKeyCredentialOptions options) {
+    auto mojo_options =
+        webauth::mojom::blink::MakePublicKeyCredentialOptions::New();
+    mojo_options->relying_party =
+        PublicKeyCredentialRpEntity::From(options.rp());
+    mojo_options->user = PublicKeyCredentialUserEntity::From(options.user());
     if (!mojo_options->relying_party | !mojo_options->user) {
       return nullptr;
     }
@@ -204,7 +203,7 @@ struct TypeConverter<MakeCredentialOptionsPtr, blink::MakeCredentialOptions> {
     // Steps 8 and 9 of
     // https://www.w3.org/TR/2017/WD-webauthn-20170505/#createCredential
     Vector<PublicKeyCredentialParametersPtr> parameters;
-    for (const auto& parameter : options.parameters()) {
+    for (const auto& parameter : options.pubKeyCredParams()) {
       PublicKeyCredentialParametersPtr normalized_parameter =
           PublicKeyCredentialParameters::From(parameter);
       if (normalized_parameter) {
@@ -212,16 +211,16 @@ struct TypeConverter<MakeCredentialOptionsPtr, blink::MakeCredentialOptions> {
       }
     }
 
-    if (parameters.IsEmpty() && options.hasParameters()) {
+    if (parameters.IsEmpty() && options.hasPubKeyCredParams()) {
       return nullptr;
     }
 
     mojo_options->crypto_parameters = std::move(parameters);
 
-    if (options.hasExcludeList()) {
-      // Adds the excludeList members
+    if (options.hasExcludeCredentials()) {
+      // Adds the excludeCredential members
       for (const blink::PublicKeyCredentialDescriptor& descriptor :
-           options.excludeList()) {
+           options.excludeCredentials()) {
         auto mojo_descriptor =
             webauth::mojom::blink::PublicKeyCredentialDescriptor::New();
         mojo_descriptor->type =
@@ -254,9 +253,10 @@ WebAuthenticationClient::WebAuthenticationClient(LocalFrame& frame) {
 WebAuthenticationClient::~WebAuthenticationClient() {}
 
 void WebAuthenticationClient::DispatchMakeCredential(
-    const MakeCredentialOptions& publicKey,
+    const MakePublicKeyCredentialOptions& publicKey,
     std::unique_ptr<PublicKeyCallbacks> callbacks) {
-  auto options = webauth::mojom::blink::MakeCredentialOptions::From(publicKey);
+  auto options =
+      webauth::mojom::blink::MakePublicKeyCredentialOptions::From(publicKey);
   if (!options) {
     callbacks->OnError(
         WebCredentialManagerError::kWebCredentialManagerNotSupportedError);
