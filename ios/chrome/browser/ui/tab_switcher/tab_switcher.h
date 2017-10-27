@@ -46,8 +46,13 @@
 // presentation and dismissal animations finish.
 @protocol TabSwitcherAnimationDelegate<NSObject>
 
+@optional
 // Informs the delegate that a TabSwitcher presentation animation has completed.
 - (void)tabSwitcherPresentationAnimationDidEnd:(id<TabSwitcher>)tabSwitcher;
+
+@optional
+// Informs the delegate that a TabSwitcher dismissal animation has completed.
+- (void)tabSwitcherDismissalAnimationDidEnd:(id<TabSwitcher>)tabSwitcher;
 
 @end
 

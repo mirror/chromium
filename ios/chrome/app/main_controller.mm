@@ -121,6 +121,7 @@
 #import "ios/chrome/browser/ui/history/history_panel_view_controller.h"
 #import "ios/chrome/browser/ui/main/browser_view_wrangler.h"
 #import "ios/chrome/browser/ui/main/main_coordinator.h"
+#import "ios/chrome/browser/ui/main/main_feature_flags.h"
 #import "ios/chrome/browser/ui/main/view_controller_swapping.h"
 #import "ios/chrome/browser/ui/orientation_limiting_navigation_controller.h"
 #import "ios/chrome/browser/ui/promos/signin_promo_view_controller.h"
@@ -1909,11 +1910,22 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   BrowserViewController* targetBVC =
       (tabModel == self.mainTabModel) ? self.mainBVC : self.otrBVC;
   self.currentBVC = targetBVC;
+
+  // The call to set currentBVC above does not actually display the BVC, because
+  // _dismissingStackView is YES.  When the presentation experiment is enabled,
+  // force the BVC transition to start.
+  if (TabSwitcherPresentsBVCEnabled()) {
+    [self displayCurrentBVC];
+  }
 }
 
 - (void)finishDismissingStackView {
-  DCHECK_EQ(self.mainViewController.activeViewController,
-            _tabSwitcherController);
+  if (TabSwitcherPresentsBVCEnabled()) {
+    DCHECK_EQ(self.mainViewController.activeViewController, self.currentBVC);
+  } else {
+    DCHECK_EQ(self.mainViewController.activeViewController,
+              _tabSwitcherController);
+  }
 
   if (_modeToDisplayOnStackViewDismissal == StackViewDismissalMode::NORMAL) {
     self.currentBVC = self.mainBVC;
@@ -1924,7 +1936,9 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 
   _modeToDisplayOnStackViewDismissal = StackViewDismissalMode::NONE;
 
-  // Displaying the current BVC dismisses the stack view.
+  // Displaying the current BVC dismisses the stack view.  When the tabswitcher
+  // presentation experiment is enabled, this call does nothing because the BVC
+  // is either already presented or in the process of animating in.
   [self displayCurrentBVC];
 
   ProceduralBlock action = [self completionBlockForTriggeringAction:
