@@ -52,6 +52,24 @@
       "revId": "70876d4e782c1e252c2dc7364a734fdecea5c761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24ea3bfa_9081f4a6",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/the-stylepropertymap/computed.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-27T00:35:24Z",
+      "side": 1,
+      "message": "I can see your point. Perhaps the problem is more in computedStyle[i], coz it\u0027s the name of the the ith property, not the ith computed style...",
+      "parentUuid": "518f4d54_5b1601db",
+      "revId": "70876d4e782c1e252c2dc7364a734fdecea5c761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
