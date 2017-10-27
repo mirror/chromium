@@ -50,6 +50,11 @@ class NetworkCertMigrator::MigrationTask
           network->type() != shill::kTypeEthernetEap) {
         continue;
       }
+      // Defer migration of user networks to when the user certificate database
+      // has finished loading.
+      if (!CorrespondingCertificateDatabaseLoaded(network))
+        continue;
+
       const std::string& service_path = network->path();
       DBusThreadManager::Get()->GetShillServiceClient()->GetProperties(
           dbus::ObjectPath(service_path),
@@ -154,6 +159,12 @@ class NetworkCertMigrator::MigrationTask
   virtual ~MigrationTask() {
   }
 
+  bool CorrespondingCertificateDatabaseLoaded(const NetworkState* network) {
+    if (network->IsPrivate())
+      return CertLoader::Get()->user_cert_database_load_finished();
+    return CertLoader::Get()->initial_load_finished();
+  }
+
   net::ScopedCERTCertificateList certs_;
   base::WeakPtr<NetworkCertMigrator> cert_migrator_;
 };
@@ -199,10 +210,8 @@ void NetworkCertMigrator::NetworkListChanged() {
 }
 
 void NetworkCertMigrator::OnCertificatesLoaded(
-    const net::ScopedCERTCertificateList& cert_list,
-    bool initial_load) {
-  if (initial_load)
-    NetworkListChanged();
+    const net::ScopedCERTCertificateList& cert_list) {
+  NetworkListChanged();
 }
 
 }  // namespace chromeos
