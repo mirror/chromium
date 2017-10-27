@@ -22,6 +22,30 @@
       "revId": "86abd6f8ff2bb9c3d6c7f0871fe77f97d34d3de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25de839c_dfa98416",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-27T10:27:36Z",
+      "side": 1,
+      "message": "Oops landed already. Anyway, for workarounds related to weird undocumented behaviours, I prefer in general extracting the workaround separately, so the wanted behaviour can be implemented as expected while keeping context in one place to make archaeology easier later if necessary, avoid unfortunate copy-paste hack spread, etc. Maybe in a future version they will add back the styles and we can just revert this patch anyway :)",
+      "parentUuid": "f4f81efc_d85af27e",
+      "range": {
+        "startLine": 404,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 63
+      },
+      "revId": "86abd6f8ff2bb9c3d6c7f0871fe77f97d34d3de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
