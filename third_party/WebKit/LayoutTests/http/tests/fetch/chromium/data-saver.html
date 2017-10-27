@@ -10,7 +10,7 @@ var REQUESTS =
     METHODS.map(method => new Request(CHECK_PATH, {method: method}));
 
 promise_test(t => {
-  window.internals.settings.setDataSaverEnabled(false);
+  internals.setDataSaverEnabled(false);
   return Promise.all(REQUESTS.map(request => fetch(request.clone())))
     .then(responses => Promise.all(responses.map(response => response.text())))
     .then(texts => {
@@ -24,7 +24,7 @@ promise_test(t => {
 }, 'fetch() from document with Data-Saver disabled.');
 
 promise_test(t => {
-  window.internals.settings.setDataSaverEnabled(true);
+  internals.setDataSaverEnabled(true);
   return Promise.all(REQUESTS.map(request => fetch(request.clone())))
     .then(responses => Promise.all(responses.map(response => response.text())))
     .then(texts => {
@@ -38,7 +38,7 @@ promise_test(t => {
 }, 'fetch() from document with Data-Saver enabled.');
 
 promise_test(t => {
-  window.internals.settings.setDataSaverEnabled(false);
+  internals.setDataSaverEnabled(false);
   var worker =
       new Worker('./resources/data-saver-worker.php?dedicated-disabled');
   return new Promise(resolve =>
@@ -59,7 +59,7 @@ promise_test(t => {
 }, 'fetch() from dedicated worker with Data-Saver disabled.');
 
 promise_test(t => {
-  window.internals.settings.setDataSaverEnabled(true);
+  internals.setDataSaverEnabled(true);
   var worker =
     new Worker('./resources/data-saver-worker.php?dedicated-enabled');
   return new Promise(resolve =>
@@ -79,7 +79,7 @@ promise_test(t => {
 }, 'fetch() from dedicated worker with Data-Saver enabled.');
 
 promise_test(t => {
-  window.internals.settings.setDataSaverEnabled(false);
+  internals.setDataSaverEnabled(false);
   var worker =
       new SharedWorker('./resources/data-saver-worker.php?shared-disabled');
   return new Promise(resolve => {
@@ -102,7 +102,7 @@ promise_test(t => {
 }, 'fetch() from shared worker with Data-Saver disabled.');
 
 promise_test(t => {
-  window.internals.settings.setDataSaverEnabled(true);
+  internals.setDataSaverEnabled(true);
   var worker =
       new SharedWorker('./resources/data-saver-worker.php?shared-enabled');
   return new Promise(resolve => {

@@ -55,7 +55,13 @@ const Optional<TimeDelta> kEthernetTransportRtt(
 const Optional<double> kEthernetThroughputMbps(75.0);
 const Optional<TimeDelta> kUnknownRtt;
 const Optional<double> kUnknownThroughputMbps;
-}
+
+enum SaveData {
+  SAVE_DATA_OFF = 0,
+  SAVE_DATA_ON = 1,
+};
+
+}  // namespace
 
 class StateObserver : public NetworkStateNotifier::NetworkStateObserver {
  public:
@@ -67,6 +73,7 @@ class StateObserver : public NetworkStateNotifier::NetworkStateObserver {
         observed_transport_rtt_(kUnknownRtt),
         observed_downlink_throughput_mbps_(kUnknownThroughputMbps),
         observed_on_line_state_(false),
+        observed_save_data_(SAVE_DATA_OFF),
         callback_count_(0) {}
 
   virtual void ConnectionChange(
@@ -75,13 +82,15 @@ class StateObserver : public NetworkStateNotifier::NetworkStateObserver {
       WebEffectiveConnectionType effective_type,
       const Optional<TimeDelta>& http_rtt,
       const Optional<TimeDelta>& transport_rtt,
-      const Optional<double>& downlink_throughput_mbps) {
+      const Optional<double>& downlink_throughput_mbps,
+      bool save_data) {
     observed_type_ = type;
     observed_max_bandwidth_mbps_ = max_bandwidth_mbps;
     observed_effective_type_ = effective_type;
     observed_http_rtt_ = http_rtt;
     observed_transport_rtt_ = transport_rtt;
     observed_downlink_throughput_mbps_ = downlink_throughput_mbps;
+    observed_save_data_ = save_data ? SAVE_DATA_ON : SAVE_DATA_OFF;
     callback_count_ += 1;
 
     if (closure_)
@@ -109,6 +118,7 @@ class StateObserver : public NetworkStateNotifier::NetworkStateObserver {
     return observed_downlink_throughput_mbps_;
   }
   bool ObservedOnLineState() const { return observed_on_line_state_; }
+  SaveData ObservedSaveData() const { return observed_save_data_; }
   int CallbackCount() const { return callback_count_; }
 
   void AddObserverOnNotification(NetworkStateNotifier* notifier,
@@ -142,6 +152,7 @@ class StateObserver : public NetworkStateNotifier::NetworkStateObserver {
   Optional<TimeDelta> observed_transport_rtt_;
   Optional<double> observed_downlink_throughput_mbps_;
   bool observed_on_line_state_;
+  SaveData observed_save_data_;
   int callback_count_;
   std::unique_ptr<NetworkStateNotifier::NetworkStateObserverHandle>
       added_handle_;
@@ -178,7 +189,8 @@ class NetworkStateNotifierTest : public ::testing::Test {
                      WebEffectiveConnectionType effective_type,
                      const Optional<TimeDelta>& http_rtt,
                      const Optional<TimeDelta>& transport_rtt,
-                     const Optional<double>& downlink_throughput_mbps) {
+                     const Optional<double>& downlink_throughput_mbps,
+                     SaveData save_data) {
     notifier_.SetWebConnection(type, max_bandwidth_mbps);
     notifier_.SetNetworkQuality(
         effective_type,
@@ -189,6 +201,7 @@ class NetworkStateNotifierTest : public ::testing::Test {
         downlink_throughput_mbps.has_value()
             ? downlink_throughput_mbps.value() * 1000
             : -1);
+    notifier_.SetSaveData(save_data == SAVE_DATA_ON);
     RunPendingTasks();
   }
   void SetOnLine(bool on_line) {
@@ -196,14 +209,14 @@ class NetworkStateNotifierTest : public ::testing::Test {
     RunPendingTasks();
   }
 
-  bool VerifyObservations(
-      const StateObserver& observer,
-      WebConnectionType type,
-      double max_bandwidth_mbps,
-      WebEffectiveConnectionType effective_type,
-      const Optional<TimeDelta>& http_rtt,
-      const Optional<TimeDelta>& transport_rtt,
-      const Optional<double>& downlink_throughput_mbps) const {
+  bool VerifyObservations(const StateObserver& observer,
+                          WebConnectionType type,
+                          double max_bandwidth_mbps,
+                          WebEffectiveConnectionType effective_type,
+                          const Optional<TimeDelta>& http_rtt,
+                          const Optional<TimeDelta>& transport_rtt,
+                          const Optional<double>& downlink_throughput_mbps,
+                          SaveData save_data) const {
     EXPECT_EQ(type, observer.ObservedType());
     EXPECT_EQ(max_bandwidth_mbps, observer.ObservedMaxBandwidth());
     EXPECT_EQ(effective_type, observer.ObservedEffectiveType());
@@ -211,6 +224,7 @@ class NetworkStateNotifierTest : public ::testing::Test {
     EXPECT_EQ(transport_rtt, observer.ObservedTransportRtt());
     EXPECT_EQ(downlink_throughput_mbps,
               observer.ObservedDownlinkThroughputMbps());
+    EXPECT_EQ(save_data, observer.ObservedSaveData());
 
     return observer.ObservedType() == type &&
            observer.ObservedMaxBandwidth() == max_bandwidth_mbps &&
@@ -218,7 +232,8 @@ class NetworkStateNotifierTest : public ::testing::Test {
            observer.ObservedHttpRtt() == http_rtt &&
            observer.ObservedTransportRtt() == transport_rtt &&
            observer.ObservedDownlinkThroughputMbps() ==
-               downlink_throughput_mbps;
+               downlink_throughput_mbps &&
+           observer.ObservedSaveData() == save_data;
   }
 
   RefPtr<FakeWebTaskRunner> task_runner_;
@@ -233,57 +248,73 @@ TEST_F(NetworkStateNotifierTest, AddObserver) {
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeNone, kNoneMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
 
   // Change max. bandwidth and the network quality estimates.
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-      kEthernetTransportRtt, kEthernetThroughputMbps));
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF));
   EXPECT_EQ(observer.CallbackCount(), 2);
 
   // Only change the connection type.
   SetConnection(kWebConnectionTypeEthernet, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeEthernet, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-      kEthernetTransportRtt, kEthernetThroughputMbps));
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF));
   EXPECT_EQ(observer.CallbackCount(), 3);
 
   // Only change the max. bandwidth.
   SetConnection(kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-      kEthernetTransportRtt, kEthernetThroughputMbps));
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF));
   EXPECT_EQ(observer.CallbackCount(), 4);
 
   // Only change the transport RTT.
   SetConnection(kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps);
+                kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps,
+                SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-      kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps));
+      kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps,
+      SAVE_DATA_OFF));
   EXPECT_EQ(observer.CallbackCount(), 5);
 
   // Only change the effective connection type.
   SetConnection(kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType4G, kEthernetHttpRtt,
-                kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps);
+                kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps,
+                SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
       WebEffectiveConnectionType::kType4G, kEthernetHttpRtt,
-      kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps));
+      kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps,
+      SAVE_DATA_OFF));
   EXPECT_EQ(observer.CallbackCount(), 6);
+
+  // Only change the save data.
+  SetConnection(kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
+                WebEffectiveConnectionType::kType4G, kEthernetHttpRtt,
+                kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps,
+                SAVE_DATA_ON);
+  EXPECT_TRUE(VerifyObservations(
+      observer, kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
+      WebEffectiveConnectionType::kType4G, kEthernetHttpRtt,
+      kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps,
+      SAVE_DATA_ON));
+  EXPECT_EQ(observer.CallbackCount(), 7);
 }
 
 TEST_F(NetworkStateNotifierTest, RemoveObserver) {
@@ -296,16 +327,16 @@ TEST_F(NetworkStateNotifierTest, RemoveObserver) {
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
 
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeNone, kNoneMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(VerifyObservations(
       observer2, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-      kEthernetTransportRtt, kEthernetThroughputMbps));
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF));
 }
 
 TEST_F(NetworkStateNotifierTest, RemoveSoleObserver) {
@@ -316,11 +347,11 @@ TEST_F(NetworkStateNotifierTest, RemoveSoleObserver) {
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeNone, kNoneMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
 }
 
 TEST_F(NetworkStateNotifierTest, AddObserverWhileNotifying) {
@@ -331,15 +362,15 @@ TEST_F(NetworkStateNotifierTest, AddObserverWhileNotifying) {
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(VerifyObservations(
       observer2, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
 }
 
 TEST_F(NetworkStateNotifierTest, RemoveSoleObserverWhileNotifying) {
@@ -350,19 +381,19 @@ TEST_F(NetworkStateNotifierTest, RemoveSoleObserverWhileNotifying) {
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
 
   SetConnection(kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
 }
 
 TEST_F(NetworkStateNotifierTest, RemoveCurrentObserverWhileNotifying) {
@@ -375,27 +406,27 @@ TEST_F(NetworkStateNotifierTest, RemoveCurrentObserverWhileNotifying) {
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(VerifyObservations(
       observer2, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
 
   SetConnection(kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(VerifyObservations(
       observer2, kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
 }
 
 TEST_F(NetworkStateNotifierTest, RemovePastObserverWhileNotifying) {
@@ -408,21 +439,21 @@ TEST_F(NetworkStateNotifierTest, RemovePastObserverWhileNotifying) {
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   EXPECT_EQ(observer1.ObservedType(), kWebConnectionTypeBluetooth);
   EXPECT_EQ(observer2.ObservedType(), kWebConnectionTypeBluetooth);
 
   SetConnection(kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(VerifyObservations(
       observer2, kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
 }
 
 TEST_F(NetworkStateNotifierTest, RemoveFutureObserverWhileNotifying) {
@@ -437,19 +468,19 @@ TEST_F(NetworkStateNotifierTest, RemoveFutureObserverWhileNotifying) {
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(VerifyObservations(
       observer2, kWebConnectionTypeNone, kNoneMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(VerifyObservations(
       observer3, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
 }
 
 TEST_F(NetworkStateNotifierTest, MultipleContextsAddObserver) {
@@ -461,15 +492,15 @@ TEST_F(NetworkStateNotifierTest, MultipleContextsAddObserver) {
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-      kEthernetTransportRtt, kEthernetThroughputMbps));
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(VerifyObservations(
       observer2, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-      kEthernetTransportRtt, kEthernetThroughputMbps));
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF));
 }
 
 TEST_F(NetworkStateNotifierTest, RemoveContext) {
@@ -482,15 +513,15 @@ TEST_F(NetworkStateNotifierTest, RemoveContext) {
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-      kEthernetTransportRtt, kEthernetThroughputMbps));
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(VerifyObservations(
       observer2, kWebConnectionTypeNone, kNoneMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
 }
 
 TEST_F(NetworkStateNotifierTest, RemoveAllContexts) {
@@ -504,15 +535,15 @@ TEST_F(NetworkStateNotifierTest, RemoveAllContexts) {
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer1, kWebConnectionTypeNone, kNoneMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(VerifyObservations(
       observer2, kWebConnectionTypeNone, kNoneMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
 }
 
 TEST_F(NetworkStateNotifierTest, SetNetworkConnectionInfoOverride) {
@@ -523,11 +554,11 @@ TEST_F(NetworkStateNotifierTest, SetNetworkConnectionInfoOverride) {
   notifier_.SetOnLine(true);
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(notifier_.OnLine());
   EXPECT_EQ(kWebConnectionTypeBluetooth, notifier_.ConnectionType());
   EXPECT_EQ(kBluetoothMaxBandwidthMbps, notifier_.MaxBandwidth());
@@ -538,7 +569,7 @@ TEST_F(NetworkStateNotifierTest, SetNetworkConnectionInfoOverride) {
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(notifier_.OnLine());
   EXPECT_EQ(kWebConnectionTypeEthernet, notifier_.ConnectionType());
   EXPECT_EQ(kEthernetMaxBandwidthMbps, notifier_.MaxBandwidth());
@@ -548,12 +579,12 @@ TEST_F(NetworkStateNotifierTest, SetNetworkConnectionInfoOverride) {
   notifier_.SetOnLine(false);
   SetConnection(kWebConnectionTypeNone, kNoneMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   RunPendingTasks();
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(notifier_.OnLine());
   EXPECT_EQ(kWebConnectionTypeEthernet, notifier_.ConnectionType());
   EXPECT_EQ(kEthernetMaxBandwidthMbps, notifier_.MaxBandwidth());
@@ -563,7 +594,7 @@ TEST_F(NetworkStateNotifierTest, SetNetworkConnectionInfoOverride) {
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeNone, kNoneMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_FALSE(notifier_.OnLine());
   EXPECT_EQ(kWebConnectionTypeNone, notifier_.ConnectionType());
   EXPECT_EQ(kNoneMaxBandwidthMbps, notifier_.MaxBandwidth());
@@ -577,11 +608,11 @@ TEST_F(NetworkStateNotifierTest, SetNetworkQualityInfoOverride) {
   notifier_.SetOnLine(true);
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(notifier_.OnLine());
   EXPECT_EQ(kWebConnectionTypeBluetooth, notifier_.ConnectionType());
   EXPECT_EQ(kBluetoothMaxBandwidthMbps, notifier_.MaxBandwidth());
@@ -595,7 +626,7 @@ TEST_F(NetworkStateNotifierTest, SetNetworkQualityInfoOverride) {
       observer, kWebConnectionTypeOther,
       NetworkStateNotifier::NetworkState::kInvalidMaxBandwidth,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt, kUnknownRtt,
-      kEthernetThroughputMbps));
+      kEthernetThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(notifier_.OnLine());
   EXPECT_EQ(kWebConnectionTypeOther, notifier_.ConnectionType());
   EXPECT_EQ(-1, notifier_.MaxBandwidth());
@@ -607,13 +638,13 @@ TEST_F(NetworkStateNotifierTest, SetNetworkQualityInfoOverride) {
   notifier_.SetOnLine(false);
   SetConnection(kWebConnectionTypeNone, kNoneMaxBandwidthMbps,
                 WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
-                kUnknownRtt, kUnknownThroughputMbps);
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
   RunPendingTasks();
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeOther,
       NetworkStateNotifier::NetworkState::kInvalidMaxBandwidth,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt, kUnknownRtt,
-      kEthernetThroughputMbps));
+      kEthernetThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(notifier_.OnLine());
   EXPECT_EQ(kWebConnectionTypeOther, notifier_.ConnectionType());
   EXPECT_EQ(-1, notifier_.MaxBandwidth());
@@ -628,7 +659,7 @@ TEST_F(NetworkStateNotifierTest, SetNetworkQualityInfoOverride) {
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt, kUnknownRtt,
-      kEthernetThroughputMbps));
+      kEthernetThroughputMbps, SAVE_DATA_OFF));
   EXPECT_TRUE(notifier_.OnLine());
   EXPECT_EQ(kWebConnectionTypeEthernet, notifier_.ConnectionType());
   EXPECT_EQ(kEthernetMaxBandwidthMbps, notifier_.MaxBandwidth());
@@ -636,14 +667,14 @@ TEST_F(NetworkStateNotifierTest, SetNetworkQualityInfoOverride) {
   EXPECT_EQ(kEthernetHttpRtt, notifier_.HttpRtt());
   EXPECT_EQ(kEthernetThroughputMbps, notifier_.DownlinkThroughputMbps());
 
-  // CLearing the override should cause the network state to be changed and
+  // Clearing the override should cause the network state to be changed and
   // notified to observers.
   notifier_.ClearOverride();
   RunPendingTasks();
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeNone, kNoneMaxBandwidthMbps,
       WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
-      kUnknownThroughputMbps));
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
   EXPECT_FALSE(notifier_.OnLine());
   EXPECT_EQ(kWebConnectionTypeNone, notifier_.ConnectionType());
   EXPECT_EQ(kNoneMaxBandwidthMbps, notifier_.MaxBandwidth());
@@ -653,6 +684,82 @@ TEST_F(NetworkStateNotifierTest, SetNetworkQualityInfoOverride) {
   EXPECT_EQ(kUnknownThroughputMbps, notifier_.DownlinkThroughputMbps());
 }
 
+TEST_F(NetworkStateNotifierTest, SaveDataOverride) {
+  StateObserver observer;
+  std::unique_ptr<NetworkStateNotifier::NetworkStateObserverHandle> handle =
+      notifier_.AddConnectionObserver(&observer, GetTaskRunner());
+
+  notifier_.SetOnLine(true);
+  // Set save-data attribute to false.
+  SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
+                WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
+  EXPECT_TRUE(VerifyObservations(
+      observer, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
+      WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt, kUnknownRtt,
+      kUnknownThroughputMbps, SAVE_DATA_OFF));
+  EXPECT_TRUE(notifier_.OnLine());
+  EXPECT_EQ(kWebConnectionTypeBluetooth, notifier_.ConnectionType());
+  EXPECT_EQ(kBluetoothMaxBandwidthMbps, notifier_.MaxBandwidth());
+  EXPECT_FALSE(notifier_.SaveData());
+
+  // Set save-data attribute to true.
+  notifier_.SetSaveDataOverride(true);
+  RunPendingTasks();
+  EXPECT_TRUE(VerifyObservations(observer, kWebConnectionTypeOther, -1,
+                                 WebEffectiveConnectionType::kTypeUnknown,
+                                 kUnknownRtt, kUnknownRtt,
+                                 kUnknownThroughputMbps, SAVE_DATA_ON));
+  EXPECT_TRUE(notifier_.OnLine());
+  EXPECT_EQ(kWebConnectionTypeOther, notifier_.ConnectionType());
+  EXPECT_EQ(-1, notifier_.MaxBandwidth());
+  EXPECT_TRUE(notifier_.SaveData());
+
+  // When override is active, calls to SetConnection are temporary ignored.
+  // save_data is set to false in SetConnection() but would be temporarily
+  // ignored.
+  notifier_.SetOnLine(false);
+  SetConnection(kWebConnectionTypeNone, -1,
+                WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_OFF);
+  RunPendingTasks();
+  EXPECT_TRUE(VerifyObservations(observer, kWebConnectionTypeOther, -1,
+                                 WebEffectiveConnectionType::kTypeUnknown,
+                                 kUnknownRtt, kUnknownRtt,
+                                 kUnknownThroughputMbps, SAVE_DATA_ON));
+  EXPECT_TRUE(notifier_.OnLine());
+  EXPECT_EQ(kWebConnectionTypeOther, notifier_.ConnectionType());
+  EXPECT_EQ(-1, notifier_.MaxBandwidth());
+  EXPECT_TRUE(notifier_.SaveData());
+
+  // CLearing the override should cause the network state to be changed and
+  // notified to observers.
+  notifier_.ClearOverride();
+  RunPendingTasks();
+  EXPECT_TRUE(VerifyObservations(observer, kWebConnectionTypeNone, -1,
+                                 WebEffectiveConnectionType::kTypeUnknown,
+                                 kUnknownRtt, kUnknownRtt,
+                                 kUnknownThroughputMbps, SAVE_DATA_OFF));
+  EXPECT_FALSE(notifier_.OnLine());
+  EXPECT_EQ(kWebConnectionTypeNone, notifier_.ConnectionType());
+  EXPECT_EQ(-1, notifier_.MaxBandwidth());
+  EXPECT_FALSE(notifier_.SaveData());
+
+  // Set save-data attribute to true.
+  SetConnection(kWebConnectionTypeNone, -1,
+                WebEffectiveConnectionType::kTypeUnknown, kUnknownRtt,
+                kUnknownRtt, kUnknownThroughputMbps, SAVE_DATA_ON);
+  RunPendingTasks();
+  EXPECT_TRUE(VerifyObservations(observer, kWebConnectionTypeNone, -1,
+                                 WebEffectiveConnectionType::kTypeUnknown,
+                                 kUnknownRtt, kUnknownRtt,
+                                 kUnknownThroughputMbps, SAVE_DATA_ON));
+  EXPECT_FALSE(notifier_.OnLine());
+  EXPECT_EQ(kWebConnectionTypeNone, notifier_.ConnectionType());
+  EXPECT_EQ(-1, notifier_.MaxBandwidth());
+  EXPECT_TRUE(notifier_.SaveData());
+}
+
 TEST_F(NetworkStateNotifierTest, NoExtraNotifications) {
   StateObserver observer;
   std::unique_ptr<NetworkStateNotifier::NetworkStateObserverHandle> handle =
@@ -660,42 +767,62 @@ TEST_F(NetworkStateNotifierTest, NoExtraNotifications) {
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-      kEthernetTransportRtt, kEthernetThroughputMbps));
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF));
   EXPECT_EQ(observer.CallbackCount(), 2);
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
   EXPECT_EQ(observer.CallbackCount(), 2);
 
   SetConnection(kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType4G,
                 kEthernetHttpRtt.value() * 2, kEthernetTransportRtt.value() * 2,
-                kEthernetThroughputMbps.value() * 2);
+                kEthernetThroughputMbps.value() * 2, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
       WebEffectiveConnectionType::kType4G, kEthernetHttpRtt.value() * 2,
-      kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps.value() * 2));
+      kEthernetTransportRtt.value() * 2, kEthernetThroughputMbps.value() * 2,
+      SAVE_DATA_OFF));
   EXPECT_EQ(observer.CallbackCount(), 4);
 
   SetConnection(kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType4G,
                 kEthernetHttpRtt.value() * 2, kEthernetTransportRtt.value() * 2,
-                kEthernetThroughputMbps.value() * 2);
+                kEthernetThroughputMbps.value() * 2, SAVE_DATA_OFF);
   EXPECT_EQ(observer.CallbackCount(), 4);
 
   SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
   EXPECT_TRUE(VerifyObservations(
       observer, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-      kEthernetTransportRtt, kEthernetThroughputMbps));
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF));
   EXPECT_EQ(observer.CallbackCount(), 6);
+
+  // Changing the Save-Data attribute should trigger one callback.
+  SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
+                WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_ON);
+  EXPECT_TRUE(VerifyObservations(
+      observer, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
+      WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_ON));
+  EXPECT_EQ(observer.CallbackCount(), 7);
+
+  SetConnection(kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
+                WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_ON);
+  EXPECT_TRUE(VerifyObservations(
+      observer, kWebConnectionTypeBluetooth, kBluetoothMaxBandwidthMbps,
+      WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_ON));
+  EXPECT_EQ(observer.CallbackCount(), 7);
 }
 
 TEST_F(NetworkStateNotifierTest, NoNotificationOnInitialization) {
@@ -779,14 +906,14 @@ TEST_F(NetworkStateNotifierTest, MultipleObservers) {
   notifier_.SetOnLine(true);
   SetConnection(kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
                 WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-                kEthernetTransportRtt, kEthernetThroughputMbps);
+                kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF);
 
   EXPECT_TRUE(observer1.ObservedOnLineState());
   EXPECT_TRUE(observer2.ObservedOnLineState());
   EXPECT_TRUE(VerifyObservations(
       observer2, kWebConnectionTypeEthernet, kEthernetMaxBandwidthMbps,
       WebEffectiveConnectionType::kType3G, kEthernetHttpRtt,
-      kEthernetTransportRtt, kEthernetThroughputMbps));
+      kEthernetTransportRtt, kEthernetThroughputMbps, SAVE_DATA_OFF));
   EXPECT_EQ(observer1.CallbackCount(), 3);
   EXPECT_EQ(observer2.CallbackCount(), 5);
 }
