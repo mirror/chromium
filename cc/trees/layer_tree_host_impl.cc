@@ -813,10 +813,9 @@ static viz::RenderPass* FindRenderPassById(const viz::RenderPassList& list,
   return it == list.end() ? nullptr : it->get();
 }
 
-DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
-  DCHECK(frame->render_passes.empty());
+bool LayerTreeHostImpl::HasNoDamage() {
+  DCHECK(!active_tree()->needs_update_draw_properties());
   DCHECK(CanDraw());
-  DCHECK(!active_tree_->LayerListIsEmpty());
 
   // For now, we use damage tracking to compute a global scissor. To do this, we
   // must compute all damage tracking before drawing anything, so that we know
@@ -824,6 +823,10 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   // surface.
   DamageTracker::UpdateDamageTracking(active_tree_.get(),
                                       active_tree_->GetRenderSurfaceList());
+
+  if (!viewport_damage_rect_.IsEmpty()) {
+    return false;
+  }
 
   // If the root render surface has no visible damage, then don't generate a
   // frame at all.
@@ -843,10 +846,18 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   // track of handle visibility changes through |handle_visibility_changed|.
   bool handle_visibility_changed =
       active_tree_->GetAndResetHandleVisibilityChanged();
-  if (root_surface_has_contributing_layers &&
-      root_surface_has_no_visible_damage &&
-      !active_tree_->property_trees()->effect_tree.HasCopyRequests() &&
-      !must_always_swap && !hud_wants_to_draw_ && !handle_visibility_changed) {
+  return root_surface_has_contributing_layers &&
+         root_surface_has_no_visible_damage &&
+         !active_tree_->property_trees()->effect_tree.HasCopyRequests() &&
+         !must_always_swap && !hud_wants_to_draw_ && !handle_visibility_changed;
+}
+
+DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
+  DCHECK(frame->render_passes.empty());
+  DCHECK(CanDraw());
+  DCHECK(!active_tree_->LayerListIsEmpty());
+
+  if (HasNoDamage()) {
     TRACE_EVENT0("cc",
                  "LayerTreeHostImpl::CalculateRenderPasses::EmptyDamageRect");
     frame->has_no_damage = true;
