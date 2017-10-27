@@ -41,7 +41,7 @@
 #include "core/frame/UseCounter.h"
 #include "modules/webmidi/MIDIAccessInitializer.h"
 #include "modules/webmidi/MIDIOptions.h"
-#include "public/platform/WebFeaturePolicyFeature.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
 
 namespace blink {
 
