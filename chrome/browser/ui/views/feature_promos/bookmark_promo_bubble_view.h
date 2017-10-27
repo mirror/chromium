@@ -6,15 +6,23 @@
 #define CHROME_BROWSER_UI_VIEWS_FEATURE_PROMOS_BOOKMARK_PROMO_BUBBLE_VIEW_H_
 
 #include "base/macros.h"
+#include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h"
 
 // The BookmarkPromoBubbleView is a bubble anchored to the left of StarView
 // to draw attention to StarView. It is created by the StarView when
-// prompted by the feature_engagement::BookmarkTracker.
-class BookmarkPromoBubbleView : public FeaturePromoBubbleView {
+// prompted by the BookmarkTracker.  It is owned by its own native widget.
+class BookmarkPromoBubbleView
+    : public feature_engagement::FeaturePromoBubbleView {
  public:
   // Returns a raw pointer that is owned by its native widget.
   static BookmarkPromoBubbleView* CreateOwned(views::View* anchor_view);
+
+  // FeaturePromoBubble:
+  void ClosePromoBubble() override;
+
+  // feature_engagement::FeaturePromoBubbleView:
+  void ShowPromoBubble() override;
 
  private:
   // Anchors the BookmarkPromoBubbleView to |anchor_view|.

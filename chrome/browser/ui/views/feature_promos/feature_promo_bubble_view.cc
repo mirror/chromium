@@ -6,6 +6,14 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "chrome/browser/feature_engagement/feature_promo_bubble.h"
+#include "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.h"
+#include "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/tabs/new_tab_button.h"
+#include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/browser/ui/views/toolbar/app_menu_button.h"
+#include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/variations/variations_associated_data.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -28,6 +36,50 @@ constexpr base::TimeDelta kDelayDefault = base::TimeDelta::FromSeconds(5);
 constexpr base::TimeDelta kDelayShort = base::TimeDelta::FromSeconds(1);
 
 }  // namespace
+
+namespace feature_engagement {
+
+NewTabButton* GetNewTabButton(Browser* browser) {
+  auto* browser_view = BrowserView::GetBrowserViewForBrowser(browser);
+  DCHECK(browser_view);
+  DCHECK(browser_view->IsActive());
+  DCHECK(browser_view->tabstrip());
+  DCHECK(browser_view->tabstrip()->new_tab_button());
+  return browser_view->tabstrip()->new_tab_button();
+}
+
+AppMenuButton* GetAppMenuButton(Browser* browser) {
+  auto* browser_view = BrowserView::GetBrowserViewForBrowser(browser);
+  DCHECK(browser_view);
+  DCHECK(browser_view->IsActive());
+  DCHECK(browser_view->toolbar());
+  DCHECK(browser_view->toolbar()->app_menu_button());
+  return browser_view->toolbar()->app_menu_button();
+}
+
+FeaturePromoBubble* ShowNewTabFeaturePromoBubble(Browser* browser) {
+  auto* new_tab_button = GetNewTabButton(browser);
+  auto* new_tab_promo_bubble_view =
+      NewTabPromoBubbleView::CreateOwned(new_tab_button);
+  new_tab_promo_bubble_view->set_browser(browser);
+  new_tab_promo_bubble_view->set_new_tab_button(new_tab_button);
+  new_tab_promo_bubble_view->ShowPromoBubble();
+  return new_tab_promo_bubble_view;
+}
+
+FeaturePromoBubble* ShowIncognitoFeaturePromoBubble(Browser* browser) {
+  auto* app_menu_button = GetAppMenuButton(browser);
+  auto* incognito_window_promo_bubble_view =
+      IncognitoWindowPromoBubbleView::CreateOwned(app_menu_button);
+  incognito_window_promo_bubble_view->set_browser(browser);
+  incognito_window_promo_bubble_view->set_app_menu_button(app_menu_button);
+  incognito_window_promo_bubble_view->ShowPromoBubble();
+  return incognito_window_promo_bubble_view;
+}
+
+AppMenuIconController::Severity GetAppMenuButtonSeverity(Browser* browser) {
+  return GetAppMenuButton(browser)->severity();
+}
 
 FeaturePromoBubbleView::FeaturePromoBubbleView(
     views::View* anchor_view,
@@ -83,7 +135,7 @@ FeaturePromoBubbleView::FeaturePromoBubbleView(
 
 FeaturePromoBubbleView::~FeaturePromoBubbleView() = default;
 
-void FeaturePromoBubbleView::CloseBubble() {
+void FeaturePromoBubbleView::CloseWidget() {
   GetWidget()->Close();
 }
 
@@ -92,7 +144,7 @@ int FeaturePromoBubbleView::GetDialogButtons() const {
 }
 
 bool FeaturePromoBubbleView::OnMousePressed(const ui::MouseEvent& event) {
-  CloseBubble();
+  CloseWidget();
   return true;
 }
 
@@ -107,5 +159,7 @@ void FeaturePromoBubbleView::OnMouseExited(const ui::MouseEvent& event) {
 void FeaturePromoBubbleView::StartAutoCloseTimer(
     base::TimeDelta auto_close_duration) {
   timer_.Start(FROM_HERE, auto_close_duration, this,
-               &FeaturePromoBubbleView::CloseBubble);
+               &FeaturePromoBubbleView::CloseWidget);
 }
+
+}  // namespace feature_engagement

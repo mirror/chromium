@@ -7,8 +7,10 @@
 
 #include "base/feature_list.h"
 #include "base/scoped_observer.h"
+#include "chrome/browser/feature_engagement/feature_promo_bubble.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/browser.h"
 #include "components/keyed_service/core/keyed_service.h"
 
 namespace feature_engagement {
@@ -53,6 +55,16 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   // Returns whether or not the promo should be displayed.
   bool ShouldShowPromo();
 
+  // Gets an active browser of |profile_|.
+  Browser* GetBrowser();
+
+  // Owned by its native widget.
+  FeaturePromoBubble* feature_promo_bubble() { return feature_promo_bubble_; }
+
+  void set_feature_promo_bubble(FeaturePromoBubble* feature_promo_bubble) {
+    feature_promo_bubble_ = feature_promo_bubble;
+  }
+
  protected:
   ~FeatureTracker() override;
 
@@ -90,6 +102,9 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   // Whether the "x_minutes" param value has already been retrieved to prevent
   // reading from the field trial multiple times for the same param.
   bool has_retrieved_field_trial_minutes_ = false;
+
+  // Promotional UI for |feature_|.
+  FeaturePromoBubble* feature_promo_bubble_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(FeatureTracker);
 };

@@ -11,7 +11,6 @@
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "ui/views/widget/widget_observer.h"
 
-class IncognitoWindowPromoBubbleView;
 
 namespace feature_engagement {
 
@@ -26,8 +25,7 @@ namespace feature_engagement {
 // - At least two hours of observed session time have elapsed.
 // - The user has never opened incognito window through any means.
 // - The user has cleared browsing data.
-class IncognitoWindowTracker : public FeatureTracker,
-                               public views::WidgetObserver {
+class IncognitoWindowTracker : public FeatureTracker {
  public:
   IncognitoWindowTracker(Profile* profile,
                          SessionDurationUpdater* session_duration_updater);
@@ -38,7 +36,7 @@ class IncognitoWindowTracker : public FeatureTracker,
   void OnBrowsingDataCleared();
   // Clears the flag for whether there is any in-product help being displayed.
   void OnPromoClosed();
-  // Shows |incognito_promo_|.
+  // Shows an incognito window in product help feature promo.
   void ShowPromo();
 
  protected:
@@ -54,21 +52,8 @@ class IncognitoWindowTracker : public FeatureTracker,
   FRIEND_TEST_ALL_PREFIXES(IncognitoWindowTrackerTest, TestShouldNotShowPromo);
   FRIEND_TEST_ALL_PREFIXES(IncognitoWindowTrackerTest, TestShouldShowPromo);
 
-  // views::WidgetObserver:
-  void OnWidgetDestroying(views::Widget* widget) override;
-
-  IncognitoWindowPromoBubbleView* incognito_promo() { return incognito_promo_; }
-
   // FeatureTracker:
   void OnSessionTimeMet() override;
-
-  // Promotional UI that appears next to the AppMenuButton and encourages its
-  // use. Owned by its NativeWidget.
-  IncognitoWindowPromoBubbleView* incognito_promo_ = nullptr;
-
-  // Observes the |incognito_promo_|'s Widget. Used to tell whether the promo
-  // is open and is called back when it closes.
-  ScopedObserver<views::Widget, WidgetObserver> incognito_promo_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(IncognitoWindowTracker);
 };

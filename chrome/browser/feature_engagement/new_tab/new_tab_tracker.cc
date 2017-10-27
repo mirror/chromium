@@ -5,8 +5,9 @@
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
 
 #include "base/time/time.h"
+#include "chrome/browser/feature_engagement/feature_promo_bubble.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
-#include "chrome/browser/ui/views/tabs/new_tab_button.h"
+#include "chrome/browser/ui/browser_list.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
@@ -53,11 +54,16 @@ void NewTabTracker::OnSessionTimeMet() {
   GetTracker()->NotifyEvent(events::kNewTabSessionTimeMet);
 }
 
-void NewTabTracker::ShowPromo() {
-  NewTabButton::ShowPromoForLastActiveBrowser();
+void NewTabTracker::CloseBubble() {
+  if (feature_promo_bubble()) {
+    feature_promo_bubble()->ClosePromoBubble();
+    set_feature_promo_bubble(nullptr);
+  }
 }
 
-void NewTabTracker::CloseBubble() {
-  NewTabButton::CloseBubbleForLastActiveBrowser();
+void NewTabTracker::ShowPromo() {
+  DCHECK(!feature_promo_bubble());
+  set_feature_promo_bubble(ShowNewTabFeaturePromoBubble(GetBrowser()));
 }
+
 }  // namespace feature_engagement

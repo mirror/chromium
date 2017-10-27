@@ -9,6 +9,7 @@
 
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
+#include "ui/views/widget/widget_observer.h"
 
 namespace feature_engagement {
 
@@ -40,8 +41,7 @@ class NewTabTracker : public FeatureTracker {
   // Shows new tab in-product help promo bubble in last active browser.
   void ShowPromo();
 
-  // Returns whether there was a bubble that was closed. A bubble closes only
-  // when it exists.
+  // Closes |new_tab_promo_| if it exists.
   void CloseBubble();
 
  protected:
@@ -50,10 +50,10 @@ class NewTabTracker : public FeatureTracker {
   ~NewTabTracker() override;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(NewTabTrackerBrowserTest, ShowPromo);
   FRIEND_TEST_ALL_PREFIXES(NewTabTrackerEventTest, TestOnSessionTimeMet);
   FRIEND_TEST_ALL_PREFIXES(NewTabTrackerTest, TestShouldNotShowPromo);
   FRIEND_TEST_ALL_PREFIXES(NewTabTrackerTest, TestShouldShowPromo);
-  FRIEND_TEST_ALL_PREFIXES(NewTabTrackerBrowserTest, TestShowPromo);
 
   // FeatureTracker:
   void OnSessionTimeMet() override;

@@ -5,6 +5,10 @@
 #include "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.h"
 
 #include "base/strings/string_number_conversions.h"
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h"
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.h"
+#include "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h"
+#include "chrome/browser/ui/views/toolbar/app_menu_button.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/variations/variations_associated_data.h"
 
@@ -19,7 +23,8 @@ IncognitoWindowPromoBubbleView::IncognitoWindowPromoBubbleView(
     : FeaturePromoBubbleView(anchor_view,
                              views::BubbleBorder::TOP_RIGHT,
                              GetStringSpecifier(),
-                             ActivationAction::ACTIVATE) {}
+                             ActivationAction::ACTIVATE),
+      incognito_promo_observer_(this) {}
 
 IncognitoWindowPromoBubbleView::~IncognitoWindowPromoBubbleView() = default;
 
@@ -36,4 +41,32 @@ int IncognitoWindowPromoBubbleView::GetStringSpecifier() {
   }
 
   return kTextIds[text_specifier];
+}
+
+void IncognitoWindowPromoBubbleView::ShowPromoBubble() {
+  DCHECK(!incognito_promo_);
+  incognito_promo_ = this;
+
+  // Owned by its native widget. Will be destroyed when its widget is
+  // destroyed.
+  views::Widget* widget = GetWidget();
+  incognito_promo_observer_.Add(widget);
+  app_menu_button()->SetIsProminent(true);
+}
+
+void IncognitoWindowPromoBubbleView::ClosePromoBubble() {
+  DCHECK(incognito_promo_);
+  incognito_promo_->CloseWidget();
+}
+
+void IncognitoWindowPromoBubbleView::OnWidgetDestroying(views::Widget* widget) {
+  feature_engagement::IncognitoWindowTrackerFactory::GetInstance()
+      ->GetForProfile(browser()->profile())
+      ->OnPromoClosed();
+
+  if (incognito_promo_observer_.IsObserving(widget)) {
+    incognito_promo_observer_.Remove(widget);
+    incognito_promo_ = nullptr;
+    app_menu_button()->SetIsProminent(false);
+  }
 }

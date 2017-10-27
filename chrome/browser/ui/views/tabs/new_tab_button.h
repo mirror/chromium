@@ -10,9 +10,6 @@
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/view.h"
-#include "ui/views/widget/widget_observer.h"
-
-class NewTabPromoBubbleView;
 
 ///////////////////////////////////////////////////////////////////////////////
 // NewTabButton
@@ -22,8 +19,7 @@ class NewTabPromoBubbleView;
 //
 ///////////////////////////////////////////////////////////////////////////////
 class NewTabButton : public views::ImageButton,
-                     public views::MaskedTargeterDelegate,
-                     public views::WidgetObserver {
+                     public views::MaskedTargeterDelegate {
  public:
   NewTabButton(TabStrip* tab_strip, views::ButtonListener* listener);
   ~NewTabButton() override;
@@ -38,21 +34,10 @@ class NewTabButton : public views::ImageButton,
   // button's visible region begins.
   static int GetTopOffset();
 
-  // Retrieves the last active BrowserView instance to display the NewTabPromo.
-  static void ShowPromoForLastActiveBrowser();
-
-  // Returns whether there was a bubble that was closed. A bubble closes only
-  // when it exists.
-  static void CloseBubbleForLastActiveBrowser();
-
-  // Shows the NewTabPromo when the NewTabFeatureEngagementTracker calls for it.
-  void ShowPromo();
-
-  // Returns whether there was a bubble that was closed. A bubble closes only
-  // when it exists.
-  void CloseBubble();
-
-  NewTabPromoBubbleView* new_tab_promo() { return new_tab_promo_; }
+  // Whether a prominent color is needed when painting the new tab button.
+  void set_prominent_color_needed(bool prominent_color_needed) {
+    prominent_color_needed_ = prominent_color_needed;
+  }
 
  private:
 // views::ImageButton:
@@ -64,9 +49,6 @@ class NewTabButton : public views::ImageButton,
 
   // views::MaskedTargeterDelegate:
   bool GetHitTestMask(gfx::Path* mask) const override;
-
-  // views::WidgetObserver:
-  void OnWidgetDestroying(views::Widget* widget) override;
 
   // Returns the gfx::Rect around the visible portion of the New Tab Button.
   // Note: This is different than the rect around the entire New Tab Button as
@@ -94,19 +76,13 @@ class NewTabButton : public views::ImageButton,
   // Tab strip that contains this button.
   TabStrip* tab_strip_;
 
-  // Promotional UI that appears next to the NewTabButton and encourages its
-  // use. Owned by its NativeWidget.
-  NewTabPromoBubbleView* new_tab_promo_;
-
   // The offset used to paint the background image.
   gfx::Point background_offset_;
 
+  bool prominent_color_needed_ = false;
+
   // were we destroyed?
   bool* destroyed_;
-
-  // Observes the NewTabPromo's Widget.  Used to tell whether the promo is
-  // open and get called back when it closes.
-  ScopedObserver<views::Widget, WidgetObserver> new_tab_promo_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(NewTabButton);
 };
