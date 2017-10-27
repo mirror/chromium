@@ -66,10 +66,12 @@
 // Called when the user taps outside of the popup.
 - (void)tappedBehindPopup:(id)sender;
 
-// Called to display the popup with a fade in animation. |completionBlock| is
+// Called to display the popup with a fade in animation. |completion| is
 // executed once the fade animation is complete.
 - (void)fadeInPopupFromSource:(CGPoint)source
-                toDestination:(CGPoint)destination;
+                toDestination:(CGPoint)destination
+                   completion:(void (^)(void))completion;
+
 - (void)dismissAnimatedWithCompletion:(void (^)(void))completion;
 
 // Called to display the popup with a fade in animation. |completionBlock| is

@@ -64,10 +64,6 @@
 - (BOOL)isOmniboxFirstResponder;
 - (BOOL)showingOmniboxPopup;
 - (void)currentPageLoadStarted;
-- (void)showToolsMenuPopupWithConfiguration:
-    (ToolsMenuConfiguration*)configuration;
-- (ToolsPopupController*)toolsPopupController;
-- (void)dismissToolsMenuPopup;
 - (CGRect)visibleOmniboxFrame;
 - (void)triggerToolsMenuButtonAnimation;
 

@@ -172,8 +172,7 @@
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_menu_view_item.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h"
+#import "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/pasteboard_util.h"
@@ -395,6 +394,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     TabModelObserver,
                                     TabSnapshottingDelegate,
                                     TabStripPresentation,
+                                    ToolsPopupCoordinatorConfigurationProvider,
                                     UIGestureRecognizerDelegate,
                                     UpgradeCenterClientProtocol,
                                     VoiceSearchBarDelegate,
@@ -565,6 +565,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
   // Coordinator for the External Search UI.
   ExternalSearchCoordinator* _externalSearchCoordinator;
+
+  // Coordinator for the tools menu UI.
+  ToolsPopupCoordinator* _toolsPopupCoordinator;
 
   // Fake status bar view used to blend the toolbar into the status bar.
   UIView* _fakeStatusBarView;
@@ -1836,6 +1839,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_tabHistoryCoordinator disconnect];
   [_pageInfoCoordinator disconnect];
   [_externalSearchCoordinator disconnect];
+  [_toolsPopupCoordinator disconnect];
   [self.tabStripCoordinator stop];
   self.tabStripCoordinator = nil;
   self.tabStripView = nil;
@@ -1843,6 +1847,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _browserState = nullptr;
   [_dispatcher stopDispatchingToTarget:self];
   _dispatcher = nil;
+  [[NSNotificationCenter defaultCenter]
+      removeObserver:self
+                name:kToolsPopupMenuWillShowNotification
+              object:nil];
 }
 
 - (void)installFakeStatusBar {
@@ -1997,6 +2005,22 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _externalSearchCoordinator = [[ExternalSearchCoordinator alloc] init];
   _externalSearchCoordinator.dispatcher = _dispatcher;
 
+  _toolsPopupCoordinator =
+      [[ToolsPopupCoordinator alloc] initWithBaseViewController:self];
+  _toolsPopupCoordinator.dispatcher = _dispatcher;
+  _toolsPopupCoordinator.configurationProvider = self;
+  _toolsPopupCoordinator.presentationProvider = self.toolbarController;
+
+  // ToolbarController needs to know about whether the tools menu is presented
+  // or not, and does so by storing a reference to the coordinator to query.
+  self.toolbarController.toolsPopupCoordinator = _toolsPopupCoordinator;
+
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(toolsPopupMenuWillShowNotification:)
+             name:kToolsPopupMenuWillShowNotification
+           object:_toolsPopupCoordinator];
+
   if (base::FeatureList::IsEnabled(payments::features::kWebPayments)) {
     _paymentRequestManager = [[PaymentRequestManager alloc]
         initWithBaseViewController:self
@@ -2122,9 +2146,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   // Also update the loading state for the tools menu (that is really an
   // extension of the toolbar on the iPhone).
-  if (!IsIPadIdiom())
-    [[_toolbarCoordinator toolsPopupController]
-        setIsTabLoading:_toolbarModelIOS->IsLoading()];
+  [_toolsPopupCoordinator updateConfiguration];
 
   auto* findHelper = FindTabHelper::FromWebState(tab.webState);
   if (findHelper && findHelper->IsFindUIActive()) {
@@ -2154,7 +2176,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (void)dismissPopups {
-  [_toolbarCoordinator dismissToolsMenuPopup];
+  [self.dispatcher dismissToolsPopup];
   [self.dispatcher hidePageInfo];
   [_tabHistoryCoordinator dismissHistoryPopup];
   [self.tabTipBubblePresenter dismissAnimated:YES];
@@ -4220,13 +4242,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
         currentlyBookmarked:_toolbarModelIOS->IsCurrentTabBookmarkedByUser()];
 }
 
-- (void)showToolsMenu {
+- (void)toolsPopupMenuWillShowNotification:(NSNotification*)note {
   DCHECK(_browserState);
   DCHECK(self.visible || self.dismissingModal);
-
-  // Record the time this menu was requested; to be stored in the configuration
-  // object.
-  NSDate* showToolsMenuPopupRequestDate = [NSDate date];
 
   // Dismiss the omnibox (if open).
   [_toolbarCoordinator cancelOmniboxEdit];
@@ -4234,12 +4252,15 @@ bubblePresenterForFeature:(const base::Feature&)feature
   [[_model currentTab].webController dismissKeyboard];
   // Dismiss Find in Page focus.
   [self updateFindBar:NO shouldFocus:NO];
+}
 
+- (ToolsMenuConfiguration*)menuConfigurationForToolsPopupCoordinator:
+    (ToolsPopupCoordinator*)coordinator {
   ToolsMenuConfiguration* configuration =
       [[ToolsMenuConfiguration alloc] initWithDisplayView:[self view]
                                        baseViewController:self];
-  configuration.requestStartTime =
-      showToolsMenuPopupRequestDate.timeIntervalSinceReferenceDate;
+  configuration.requestStartTime = [NSDate date].timeIntervalSinceReferenceDate;
+
   if ([_model count] == 0)
     [configuration setNoOpenedTabs:YES];
 
@@ -4272,19 +4293,28 @@ bubblePresenterForFeature:(const base::Feature&)feature
     base::RecordAction(UserMetricsAction("NewIncognitoTabTipTargetSelected"));
   }
 
-  [_toolbarCoordinator showToolsMenuPopupWithConfiguration:configuration];
+  return configuration;
+}
 
-  ToolsPopupController* toolsPopupController =
-      [_toolbarCoordinator toolsPopupController];
-  if ([_model currentTab]) {
-    BOOL isBookmarked = _toolbarModelIOS->IsCurrentTabBookmarked();
-    [toolsPopupController setIsCurrentPageBookmarked:isBookmarked];
-    [toolsPopupController setCanShowFindBar:self.canShowFindBar];
-    [toolsPopupController setCanShowShareMenu:self.canShowShareMenu];
+- (BOOL)shouldHighlightBookmarkButtonForToolsPopupCoordinator:
+    (ToolsPopupCoordinator*)coordinator {
+  return [_model currentTab] ? _toolbarModelIOS->IsCurrentTabBookmarked() : NO;
+}
 
-    if (!IsIPadIdiom())
-      [toolsPopupController setIsTabLoading:_toolbarModelIOS->IsLoading()];
-  }
+- (BOOL)shouldShowFindBarForToolsPopupCoordinator:
+    (ToolsPopupCoordinator*)coordinator {
+  return [_model currentTab] ? self.canShowFindBar : NO;
+}
+
+- (BOOL)shouldShowShareMenuForToolsPopupCoordinator:
+    (ToolsPopupCoordinator*)coordinator {
+  return [_model currentTab] ? self.canShowShareMenu : NO;
+}
+
+- (BOOL)tabIsLoadingForToolsPopupCoordinator:
+    (ToolsPopupCoordinator*)coordinator {
+  return ([_model currentTab] && !IsIPadIdiom()) ? _toolbarModelIOS->IsLoading()
+                                                 : NO;
 }
 
 - (void)openNewTab:(OpenNewTabCommand*)command {
@@ -4595,7 +4625,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   [_paymentRequestManager cancelRequest];
   [_printController dismissAnimated:YES];
   _printController = nil;
-  [_toolbarCoordinator dismissToolsMenuPopup];
+  [self.dispatcher dismissToolsPopup];
   [_contextMenuCoordinator stop];
   [self dismissRateThisAppDialog];
 
@@ -4989,7 +5019,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (BOOL)preventSideSwipe {
-  if ([_toolbarCoordinator toolsPopupController])
+  if ([_toolsPopupCoordinator isShowingToolsMenuPopup])
     return YES;
 
   if (_voiceSearchController && _voiceSearchController->IsVisible())
