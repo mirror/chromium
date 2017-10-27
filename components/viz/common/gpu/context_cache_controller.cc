@@ -160,7 +160,7 @@ void ContextCacheController::OnIdle(uint32_t idle_generation) {
   }
 
   if (gr_context_)
-    gr_context_->freeGpuResources();
+    gr_context_->purgeResourcesNotUsedInMs(std::chrono::milliseconds(0));
 
   // Toggle SetAggressivelyFreeResources to drop command buffer data.
   context_support_->SetAggressivelyFreeResources(true);
