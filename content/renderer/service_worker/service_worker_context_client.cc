@@ -204,7 +204,15 @@ void ToWebServiceWorkerRequest(const ServiceWorkerFetchRequest& request,
     web_request->SetHeader(blink::WebString::FromUTF8(pair.first),
                            blink::WebString::FromUTF8(pair.second));
   }
-  if (!request.blob_uuid.empty()) {
+
+  if (!request.body.empty()) {
+    // S13nServiceWorker: Body is sent as a vector of DataElements.
+    std::vector<blink::WebString> web_vector;
+    for (const std::string& str : request.body)
+      web_vector.push_back(blink::WebString::FromUTF8(str));
+    web_request->SetBody(web_vector);
+  } else if (!request.blob_uuid.empty()) {
+    // Non-S13nServiceWorker: Body is sent as a Blob.
     DCHECK_EQ(request.blob != nullptr, features::IsMojoBlobsEnabled());
     mojo::ScopedMessagePipeHandle blob_pipe;
     if (request.blob)
@@ -212,6 +220,7 @@ void ToWebServiceWorkerRequest(const ServiceWorkerFetchRequest& request,
     web_request->SetBlob(blink::WebString::FromASCII(request.blob_uuid),
                          request.blob_size, std::move(blob_pipe));
   }
+
   web_request->SetReferrer(
       blink::WebString::FromUTF8(request.referrer.url.spec()),
       request.referrer.policy);

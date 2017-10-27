@@ -186,13 +186,29 @@ void ServiceWorkerSubresourceLoader::DeleteSoon() {
 
 void ServiceWorkerSubresourceLoader::StartRequest(
     const ResourceRequest& resource_request) {
-  // TODO(kinuko): Implement request.request_body handling.
-  DCHECK(!resource_request.request_body);
+  DCHECK_EQ(Status::kNotStarted, status_);
+  status_ = Status::kStarted;
+
+  // Create the URL request to pass to the fetch event.
   DCHECK(!inflight_fetch_request_);
   inflight_fetch_request_ =
       ServiceWorkerLoaderHelpers::CreateFetchRequest(resource_request);
-  DCHECK_EQ(Status::kNotStarted, status_);
-  status_ = Status::kStarted;
+  if (resource_request.request_body) {
+    for (const storage::DataElement& element :
+         *resource_request.request_body->elements()) {
+      switch (element.type()) {
+        case storage::DataElement::TYPE_BYTES:
+          inflight_fetch_request_->body.emplace_back(element.bytes(),
+                                                     element.length());
+          break;
+        default:
+          // TODO(falken): Support data pipe and file types.
+          DCHECK(false);
+          break;
+      }
+    }
+  }
+
   controller_connector_->AddObserver(this);
   fetch_request_restarted_ = false;
 

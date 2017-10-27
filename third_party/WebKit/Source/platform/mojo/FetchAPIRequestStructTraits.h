@@ -5,6 +5,7 @@
 #ifndef FetchAPIRequestStructTraits_h
 #define FetchAPIRequestStructTraits_h
 
+#include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-blink.h"
@@ -84,6 +85,8 @@ struct StructTraits<::blink::mojom::FetchAPIRequestDataView,
 
   static WTF::HashMap<WTF::String, WTF::String> headers(
       const ::blink::WebServiceWorkerRequest&);
+
+  static WTF::Vector<WTF::String> body(const ::blink::WebServiceWorkerRequest&);
 
   static WTF::String blob_uuid(const ::blink::WebServiceWorkerRequest&);
 
