@@ -46,6 +46,30 @@
       "revId": "24f11a930a2e9b48243d207ebf0678bc50222737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05a686c4_42b248db",
+        "filename": "chrome/browser/notifications/temp_file_keeper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-10-27T15:08:58Z",
+      "side": 1,
+      "message": "Each instance will create a unique folder, yes, but they will also delete all matching folders in the temp directory before doing so :)",
+      "parentUuid": "8c07a0d5_bc58595d",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 74
+      },
+      "revId": "24f11a930a2e9b48243d207ebf0678bc50222737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
