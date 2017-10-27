@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/callback.h"
 #include "base/command_line.h"
 #include "base/containers/adapters.h"
 #include "base/feature_list.h"
@@ -585,6 +586,13 @@ void AutofillManager::OnQueryFormFieldAutofillImpl(
     const FormData& form,
     const FormFieldData& field,
     const gfx::RectF& transformed_box) {
+  CreditCard card("123", "https://google.com");
+  card.SetNumber(base::ASCIIToUTF16("4111111111111111"));
+  card.SetExpirationMonth(5);
+  card.SetExpirationYear(2020);
+  client_->ConfirmSaveCreditCardToCloud(
+      card, std::make_unique<base::DictionaryValue>(), true,
+      base::Bind([]() {}));
   external_delegate_->OnQuery(query_id, form, field, transformed_box);
 
   // Need to refresh models before using the form_event_loggers.

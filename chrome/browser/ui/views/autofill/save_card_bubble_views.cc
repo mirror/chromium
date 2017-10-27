@@ -41,17 +41,17 @@ namespace {
 // Fixed width of the bubble, in dip.
 const int kBubbleWidth = 395;
 
-std::unique_ptr<views::StyledLabel> CreateLegalMessageLineLabel(
-    const LegalMessageLine& line,
-    views::StyledLabelListener* listener) {
-  std::unique_ptr<views::StyledLabel> label(
-      new views::StyledLabel(line.text(), listener));
-  for (const LegalMessageLine::Link& link : line.links()) {
-    label->AddStyleRange(link.range,
-                         views::StyledLabel::RangeStyleInfo::CreateForLink());
-  }
-  return label;
-}
+// std::unique_ptr<views::StyledLabel> CreateLegalMessageLineLabel(
+//     const LegalMessageLine& line,
+//     views::StyledLabelListener* listener) {
+//   std::unique_ptr<views::StyledLabel> label(
+//       new views::StyledLabel(line.text(), listener));
+//   for (const LegalMessageLine::Link& link : line.links()) {
+//     label->AddStyleRange(link.range,
+//                          views::StyledLabel::RangeStyleInfo::CreateForLink());
+//   }
+//   return label;
+// }
 
 }  // namespace
 
@@ -88,19 +88,20 @@ views::View* SaveCardBubbleViews::CreateExtraView() {
 }
 
 views::View* SaveCardBubbleViews::CreateFootnoteView() {
-  if (controller_->GetLegalMessageLines().empty())
-    return nullptr;
+  // if (controller_->GetLegalMessageLines().empty())
+  //   return nullptr;
 
   // Use BoxLayout to provide insets around the label.
   footnote_view_ = new View();
   footnote_view_->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kVertical));
 
-  // Add a StyledLabel for each line of the legal message.
-  for (const LegalMessageLine& line : controller_->GetLegalMessageLines()) {
-    footnote_view_->AddChildView(
-        CreateLegalMessageLineLabel(line, this).release());
-  }
+  // // Add a StyledLabel for each line of the legal message.
+  // for (const LegalMessageLine& line : controller_->GetLegalMessageLines()) {
+  //   footnote_view_->AddChildView(
+  //       CreateLegalMessageLineLabel(line, this).release());
+  // }
+  footnote_view_->AddChildView(new views::Label(base::ASCIIToUTF16("Hello")));
 
   // If on the first step of the 2-step upload flow, hide the footer area until
   // it's time to actually accept the dialog and ToS.
@@ -127,6 +128,7 @@ bool SaveCardBubbleViews::Accept() {
     GetWidget()->UpdateWindowIcon();
     // Disable the Save button until a valid CVC is entered:
     GetDialogClientView()->UpdateDialogButtons();
+
     // Make the legal messaging footer appear:
     DCHECK(footnote_view_);
     footnote_view_->SetVisible(true);
@@ -278,8 +280,8 @@ SaveCardBubbleViews::~SaveCardBubbleViews() {}
 SaveCardBubbleViews::CurrentFlowStep SaveCardBubbleViews::GetCurrentFlowStep()
     const {
   // No legal messages means this is not upload save.
-  if (controller_->GetLegalMessageLines().empty())
-    return LOCAL_SAVE_ONLY_STEP;
+  //  if (controller_->GetLegalMessageLines().empty())
+  //    return LOCAL_SAVE_ONLY_STEP;
   // If we're not requesting CVC, this is the only step on the upload path.
   if (!controller_->ShouldRequestCvcFromUser())
     return UPLOAD_SAVE_ONLY_STEP;
