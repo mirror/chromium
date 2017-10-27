@@ -16,6 +16,7 @@ import org.chromium.payments.mojom.PaymentMethodData;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -126,7 +127,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
             mMethodNames.add(methodNames[i]);
         }
 
-        mCapabilities = capabilities;
+        mCapabilities = Arrays.copyOf(capabilities, capabilities.length);
 
         mPreferredRelatedApplicationIds = new HashSet<>();
         Collections.addAll(mPreferredRelatedApplicationIds, preferredRelatedApplicationIds);
