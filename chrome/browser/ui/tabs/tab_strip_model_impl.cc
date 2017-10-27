@@ -281,10 +281,6 @@ bool TabStripModelImpl::closing_all() const {
   return closing_all_;
 }
 
-TabStripModelOrderController* TabStripModelImpl::order_controller() const {
-  return order_controller_.get();
-}
-
 bool TabStripModelImpl::ContainsIndex(int index) const {
   return index >= 0 && index < count();
 }
@@ -580,51 +576,6 @@ void TabStripModelImpl::SetOpenerOfWebContentsAt(int index,
   contents_data_[index]->set_opener(opener);
 }
 
-int TabStripModelImpl::GetIndexOfNextWebContentsOpenedBy(
-    const WebContents* opener,
-    int start_index,
-    bool use_group) const {
-  DCHECK(opener);
-  DCHECK(ContainsIndex(start_index));
-
-  // Check tabs after start_index first.
-  for (int i = start_index + 1; i < count(); ++i) {
-    if (OpenerMatches(contents_data_[i], opener, use_group))
-      return i;
-  }
-  // Then check tabs before start_index, iterating backwards.
-  for (int i = start_index - 1; i >= 0; --i) {
-    if (OpenerMatches(contents_data_[i], opener, use_group))
-      return i;
-  }
-  return kNoTab;
-}
-
-int TabStripModelImpl::GetIndexOfLastWebContentsOpenedBy(
-    const WebContents* opener,
-    int start_index) const {
-  DCHECK(opener);
-  DCHECK(ContainsIndex(start_index));
-
-  std::set<const WebContents*> opener_and_descendants;
-  opener_and_descendants.insert(opener);
-  int last_index = kNoTab;
-
-  for (int i = start_index + 1; i < count(); ++i) {
-    // Test opened by transitively, i.e. include tabs opened by tabs opened by
-    // opener, etc. Stop when we find the first non-descendant.
-    if (!opener_and_descendants.count(contents_data_[i]->opener())) {
-      // Skip over pinned tabs as new tabs are added after pinned tabs.
-      if (contents_data_[i]->pinned())
-        continue;
-      break;
-    }
-    opener_and_descendants.insert(contents_data_[i]->web_contents());
-    last_index = i;
-  }
-  return last_index;
-}
-
 void TabStripModelImpl::TabNavigating(WebContents* contents,
                                       ui::PageTransition transition) {
   if (ShouldForgetOpenersForTransition(transition)) {
@@ -645,26 +596,6 @@ void TabStripModelImpl::TabNavigating(WebContents* contents,
       ForgetGroup(contents);
     }
   }
-}
-
-void TabStripModelImpl::ForgetAllOpeners() {
-  // Forget all opener memories so we don't do anything weird with tab
-  // re-selection ordering.
-  for (const auto& data : contents_data_)
-    data->set_opener(nullptr);
-}
-
-void TabStripModelImpl::ForgetGroup(WebContents* contents) {
-  int index = GetIndexOfWebContents(contents);
-  DCHECK(ContainsIndex(index));
-  contents_data_[index]->set_group(nullptr);
-  contents_data_[index]->set_opener(nullptr);
-}
-
-bool TabStripModelImpl::ShouldResetGroupOnSelect(WebContents* contents) const {
-  int index = GetIndexOfWebContents(contents);
-  DCHECK(ContainsIndex(index));
-  return contents_data_[index]->reset_group_on_select();
 }
 
 void TabStripModelImpl::SetTabBlocked(int index, bool blocked) {
@@ -714,12 +645,6 @@ int TabStripModelImpl::IndexOfFirstNonPinnedTab() const {
   }
   // No pinned tabs.
   return count();
-}
-
-int TabStripModelImpl::ConstrainInsertionIndex(int index, bool pinned_tab) {
-  return pinned_tab
-             ? std::min(std::max(0, index), IndexOfFirstNonPinnedTab())
-             : std::min(count(), std::max(index, IndexOfFirstNonPinnedTab()));
 }
 
 void TabStripModelImpl::ExtendSelectionTo(int index) {
@@ -1114,8 +1039,79 @@ bool TabStripModelImpl::WillContextMenuPin(int index) {
   return !all_pinned;
 }
 
+int TabStripModelImpl::GetIndexOfNextWebContentsOpenedBy(
+    const WebContents* opener,
+    int start_index,
+    bool use_group) const {
+  DCHECK(opener);
+  DCHECK(ContainsIndex(start_index));
+
+  // Check tabs after start_index first.
+  for (int i = start_index + 1; i < count(); ++i) {
+    if (OpenerMatches(contents_data_[i], opener, use_group))
+      return i;
+  }
+  // Then check tabs before start_index, iterating backwards.
+  for (int i = start_index - 1; i >= 0; --i) {
+    if (OpenerMatches(contents_data_[i], opener, use_group))
+      return i;
+  }
+  return kNoTab;
+}
+
+int TabStripModelImpl::GetIndexOfLastWebContentsOpenedBy(
+    const WebContents* opener,
+    int start_index) const {
+  DCHECK(opener);
+  DCHECK(ContainsIndex(start_index));
+
+  std::set<const WebContents*> opener_and_descendants;
+  opener_and_descendants.insert(opener);
+  int last_index = kNoTab;
+
+  for (int i = start_index + 1; i < count(); ++i) {
+    // Test opened by transitively, i.e. include tabs opened by tabs opened by
+    // opener, etc. Stop when we find the first non-descendant.
+    if (!opener_and_descendants.count(contents_data_[i]->opener())) {
+      // Skip over pinned tabs as new tabs are added after pinned tabs.
+      if (contents_data_[i]->pinned())
+        continue;
+      break;
+    }
+    opener_and_descendants.insert(contents_data_[i]->web_contents());
+    last_index = i;
+  }
+  return last_index;
+}
+
+void TabStripModelImpl::ForgetAllOpeners() {
+  // Forget all opener memories so we don't do anything weird with tab
+  // re-selection ordering.
+  for (const auto& data : contents_data_)
+    data->set_opener(nullptr);
+}
+
+void TabStripModelImpl::ForgetGroup(WebContents* contents) {
+  int index = GetIndexOfWebContents(contents);
+  DCHECK(ContainsIndex(index));
+  contents_data_[index]->set_group(nullptr);
+  contents_data_[index]->set_opener(nullptr);
+}
+
+bool TabStripModelImpl::ShouldResetGroupOnSelect(WebContents* contents) const {
+  int index = GetIndexOfWebContents(contents);
+  DCHECK(ContainsIndex(index));
+  return contents_data_[index]->reset_group_on_select();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // TabStripModel, private:
+
+int TabStripModelImpl::ConstrainInsertionIndex(int index, bool pinned_tab) {
+  return pinned_tab
+             ? std::min(std::max(0, index), IndexOfFirstNonPinnedTab())
+             : std::min(count(), std::max(index, IndexOfFirstNonPinnedTab()));
+}
 
 std::vector<WebContents*> TabStripModelImpl::GetWebContentsFromIndices(
     const std::vector<int>& indices) const {
