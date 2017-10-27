@@ -106,9 +106,10 @@ void SurroundingText::Initialize(const Position& start_position,
   const TextIteratorBehavior behavior =
       TextIteratorBehavior::NoTrailingSpaceRangeLengthBehavior();
   start_offset_in_content_ = TextIterator::RangeLength(
-      backwards_iterator.EndPosition(), start_position, behavior);
+      EphemeralRange(backwards_iterator.EndPosition(), start_position),
+      behavior);
   end_offset_in_content_ = TextIterator::RangeLength(
-      backwards_iterator.EndPosition(), end_position, behavior);
+      EphemeralRange(backwards_iterator.EndPosition(), end_position), behavior);
   content_range_ = Range::Create(*document, backwards_iterator.EndPosition(),
                                  forward_iterator.StartPosition());
   DCHECK(content_range_);

@@ -145,8 +145,7 @@ int TextCheckingParagraph::CheckingEnd() const {
 int TextCheckingParagraph::CheckingLength() const {
   DCHECK(checking_range_.IsNotNull());
   if (-1 == checking_length_)
-    checking_length_ = TextIterator::RangeLength(
-        CheckingRange().StartPosition(), CheckingRange().EndPosition());
+    checking_length_ = TextIterator::RangeLength(CheckingRange());
   return checking_length_;
 }
 
