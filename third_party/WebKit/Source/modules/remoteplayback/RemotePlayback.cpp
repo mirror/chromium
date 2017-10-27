@@ -53,9 +53,9 @@ void RunRemotePlaybackTask(ExecutionContext* context,
   std::move(task).Run();
 }
 
-WebURL GetAvailabilityUrl(const WebURL& source, bool is_source_supported) {
+KURL GetAvailabilityUrl(const WebURL& source, bool is_source_supported) {
   if (source.IsEmpty() || !source.IsValid() || !is_source_supported)
-    return WebURL();
+    return KURL();
 
   // The URL for each media element's source looks like the following:
   // remote-playback://<encoded-data> where |encoded-data| is base64 URL
@@ -393,9 +393,9 @@ void RemotePlayback::SourceChanged(const WebURL& source,
   if (IsBackgroundAvailabilityMonitoringDisabled())
     return;
 
-  WebURL current_url =
-      availability_urls_.IsEmpty() ? WebURL() : availability_urls_[0];
-  WebURL new_url = GetAvailabilityUrl(source, is_source_supported);
+  KURL current_url =
+      availability_urls_.IsEmpty() ? KURL() : availability_urls_[0];
+  KURL new_url = GetAvailabilityUrl(source, is_source_supported);
 
   if (new_url == current_url)
     return;
@@ -404,15 +404,9 @@ void RemotePlayback::SourceChanged(const WebURL& source,
   // URLs vector is updated.
   StopListeningForAvailability();
 
-  // WebVector doesn't have push_back or alternative.
-  if (new_url.IsEmpty()) {
-    WebVector<WebURL> empty;
-    availability_urls_.Swap(empty);
-  } else {
-    WebVector<WebURL> new_urls((size_t)1);
-    new_urls[0] = new_url;
-    availability_urls_.Swap(new_urls);
-  }
+  availability_urls_.clear();
+  if (!new_url.IsEmpty())
+    availability_urls_.push_back(new_url);
 
   MaybeStartListeningForAvailability();
 }
@@ -453,7 +447,7 @@ void RemotePlayback::RemotePlaybackDisabled() {
 }
 
 void RemotePlayback::AvailabilityChanged(
-    mojom::ScreenAvailability availability) {
+    mojom::blink::ScreenAvailability availability) {
   DCHECK(RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled());
   DCHECK(is_listening_);
 
@@ -483,7 +477,7 @@ void RemotePlayback::AvailabilityChanged(
   AvailabilityChanged(remote_playback_availability);
 }
 
-const WebVector<WebURL>& RemotePlayback::Urls() const {
+const Vector<KURL>& RemotePlayback::Urls() const {
   DCHECK(RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled());
   // TODO(avayvod): update the URL format and add frame url, mime type and
   // response headers when available.
@@ -558,12 +552,12 @@ void RemotePlayback::StopListeningForAvailability() {
     return;
 
   availability_ = WebRemotePlaybackAvailability::kUnknown;
-  WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
-  if (!client)
+  PresentationController* controller =
+      PresentationController::FromContext(GetExecutionContext());
+  if (!controller)
     return;
 
-  client->StopListening(this);
+  controller->StopListeningForAvailability(this);
   is_listening_ = false;
 }
 
@@ -577,15 +571,15 @@ void RemotePlayback::MaybeStartListeningForAvailability() {
   if (is_listening_)
     return;
 
-  if (availability_urls_.empty() || availability_callbacks_.IsEmpty())
+  if (availability_urls_.IsEmpty() || availability_callbacks_.IsEmpty())
     return;
 
-  WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
-  if (!client)
+  PresentationController* controller =
+      PresentationController::FromContext(GetExecutionContext());
+  if (!controller)
     return;
 
-  client->StartListening(this);
+  controller->StartListeningForAvailability(this);
   is_listening_ = true;
 }
 
