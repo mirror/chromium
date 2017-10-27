@@ -16,6 +16,40 @@
       "revId": "a1a0d51c1cb08117c3762239961171eb1b54e4ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cbc65e_59410aec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-27T23:01:07Z",
+      "side": 1,
+      "message": "Nit: you can cut out \"/edit?usp\u003dsharing\" from the link",
+      "revId": "a1a0d51c1cb08117c3762239961171eb1b54e4ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100c7acb_e780b792",
+        "filename": "content/common/render_frame_message_filter.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-27T23:01:07Z",
+      "side": 1,
+      "message": "nit: Clarify that we use the IO thread as a serialization point between the cookie setter and  network requests?\n\nProposal: \"Returns after the cookie write request has been scheduled on the IO thread (the database is modified asynchronously). This ensures that network requests issued after the cookie setter call are processed after the cookie change is committed, and therefore see the change.\"",
+      "revId": "a1a0d51c1cb08117c3762239961171eb1b54e4ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
