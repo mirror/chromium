@@ -16,6 +16,24 @@
       "revId": "56fe7d87171f588cfb5b17b5b80e6b7b7ad5a66e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77254ec5_15e125a4",
+        "filename": "third_party/WebKit/LayoutTests/editing/caret/caret-painting-low-dpi.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-27T17:49:39Z",
+      "side": 1,
+      "message": "I think I tried setting the DPI before the onload but that might have been when I had other issues. I\u0027ll file the bug and investigate.",
+      "parentUuid": "783585f9_a234ec66",
+      "revId": "56fe7d87171f588cfb5b17b5b80e6b7b7ad5a66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
