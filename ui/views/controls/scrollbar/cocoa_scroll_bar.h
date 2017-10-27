@@ -88,6 +88,9 @@ class VIEWS_EXPORT CocoaScrollBar : public BaseScrollBar,
   // Returns the thickness of the scrollbar.
   int ScrollbarThickness() const;
 
+  // Calculates and returns the track bounds.
+  gfx::Rect CalculateTrackBounds() const;
+
   // Sets the scrolltrack's visibility and then repaints it.
   void SetScrolltrackVisible(bool visible);
 
