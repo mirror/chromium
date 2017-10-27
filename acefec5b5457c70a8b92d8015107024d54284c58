@@ -16,6 +16,24 @@
       "revId": "acefec5b5457c70a8b92d8015107024d54284c58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2408c3_6365617a",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-27T14:47:48Z",
+      "side": 1,
+      "message": "Not your fault; it was a late edition because the behavior changed late in the CL. I\u0027ll clean it up. We\u0027ll still need one of these tests to make sure \u0027Inline...\u0027 doesn\u0027t touch non-tail suggestions.",
+      "parentUuid": "9bafb60b_8f50416d",
+      "revId": "acefec5b5457c70a8b92d8015107024d54284c58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
