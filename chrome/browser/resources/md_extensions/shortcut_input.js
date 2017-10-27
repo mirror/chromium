@@ -12,23 +12,30 @@ cr.define('extensions', function() {
     behaviors: [I18nBehavior],
 
     properties: {
+      /** @type {!Object} */
+      delegate: Object,
+
       item: {
         type: String,
         value: '',
       },
+
       commandName: {
         type: String,
         value: '',
       },
+
       shortcut: {
         type: String,
         value: '',
       },
+
       /** @private */
       capturing_: {
         type: Boolean,
         value: false,
       },
+
       /** @private */
       pendingShortcut_: {
         type: String,
@@ -50,7 +57,7 @@ cr.define('extensions', function() {
       if (this.capturing_)
         return;
       this.capturing_ = true;
-      this.fire('shortcut-capture-started');
+      this.delegate.setShortcutHandlingSuspended(true);
     },
 
     /** @private */
@@ -60,7 +67,7 @@ cr.define('extensions', function() {
       this.pendingShortcut_ = '';
       this.capturing_ = false;
       this.$['input'].blur();
-      this.fire('shortcut-capture-ended');
+      this.delegate.setShortcutHandlingSuspended(false);
     },
 
     /**
@@ -131,11 +138,8 @@ cr.define('extensions', function() {
     /** @private */
     commitPending_: function() {
       this.shortcut = this.pendingShortcut_;
-      this.fire('shortcut-updated', {
-        keybinding: this.shortcut,
-        item: this.item,
-        commandName: this.commandName
-      });
+      this.delegate.updateExtensionCommand(
+          this.item, this.commandName, this.shortcut);
     },
 
     /**
