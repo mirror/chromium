@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/load_wasm.js"></script>
+<script src="wasm_serialization_tests.js"></script>
+<script src="wasm_indexeddb_test.js"></script>
+<script>
+  promise_test(SaveToIDBAndLoadInWorker, "Save to IDB and load in worker");
+  promise_test(SaveToIDBInWorkerAndLoadInMain, "Save in worker to IDB and load in window");
+</script>
