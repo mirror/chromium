@@ -82,7 +82,7 @@ bool SyncServiceBase::HasObserver(const SyncServiceObserver* observer) const {
   return observers_.HasObserver(observer);
 }
 
-SigninManagerBase* SyncServiceBase::signin() const {
+signin::SigninManagerBase* SyncServiceBase::signin() const {
   DCHECK(thread_checker_.CalledOnValidThread());
   return signin_ ? signin_->GetOriginal() : nullptr;
 }

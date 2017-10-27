@@ -31,6 +31,8 @@ namespace net {
 class URLFetcher;
 }
 
+namespace signin {
+
 // Merges a Google account known to Chrome into the cookie jar.  When merging
 // multiple accounts, one instance of the helper is better than multiple
 // instances if there is the possibility that they run concurrently, since
@@ -339,5 +341,7 @@ class GaiaCookieManagerService : public KeyedService,
 
   DISALLOW_COPY_AND_ASSIGN(GaiaCookieManagerService);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_GAIA_COOKIE_MANAGER_SERVICE_H_

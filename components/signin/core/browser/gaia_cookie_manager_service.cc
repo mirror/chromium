@@ -76,6 +76,8 @@ enum GaiaCookieRequestType {
 
 }  // namespace
 
+namespace signin {
+
 GaiaCookieManagerService::GaiaCookieRequest::GaiaCookieRequest(
     GaiaCookieRequestType request_type,
     const std::string& account_id,
@@ -856,3 +858,5 @@ void GaiaCookieManagerService::HandleNextRequest() {
     }
   }
 }
+
+}  // namespace signin

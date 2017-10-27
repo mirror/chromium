@@ -28,6 +28,8 @@
 
 using namespace signin_internals_util;
 
+namespace signin {
+
 SigninManager::SigninManager(SigninClient* client,
                              ProfileOAuth2TokenService* token_service,
                              AccountTrackerService* account_tracker_service,
@@ -155,7 +157,7 @@ void SigninManager::SignOut(
     signin_metrics::ProfileSignout signout_source_metric,
     signin_metrics::SignoutDelete signout_delete_metric) {
   StartSignOut(signout_source_metric, signout_delete_metric,
-               !signin::IsDiceEnabledForProfile(client_->GetPrefs()));
+               !IsDiceEnabledForProfile(client_->GetPrefs()));
 }
 
 void SigninManager::SignOutAndRemoveAllAccounts(
@@ -467,3 +469,5 @@ void SigninManager::ProhibitSignout(bool prohibit_signout) {
 }
 
 bool SigninManager::IsSignoutProhibited() const { return prohibit_signout_; }
+
+}  // namespace signin

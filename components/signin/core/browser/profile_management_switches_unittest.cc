@@ -31,7 +31,7 @@ TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethodMirror) {
 TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethod) {
   base::MessageLoop loop;
   sync_preferences::TestingPrefServiceSyncable pref_service;
-  signin::RegisterAccountConsistencyProfilePrefs(pref_service.registry());
+  RegisterAccountConsistencyProfilePrefs(pref_service.registry());
   std::unique_ptr<BooleanPrefMember> dice_pref_member =
       CreateDicePrefMember(&pref_service);
 
@@ -73,7 +73,7 @@ TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethod) {
 TEST(ProfileManagementSwitchesTest, DiceMigration) {
   base::MessageLoop loop;
   sync_preferences::TestingPrefServiceSyncable pref_service;
-  signin::RegisterAccountConsistencyProfilePrefs(pref_service.registry());
+  RegisterAccountConsistencyProfilePrefs(pref_service.registry());
   std::unique_ptr<BooleanPrefMember> dice_pref_member =
       CreateDicePrefMember(&pref_service);
 

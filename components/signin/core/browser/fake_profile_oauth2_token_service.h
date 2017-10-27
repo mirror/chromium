@@ -13,6 +13,8 @@
 #include "base/memory/weak_ptr.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 
+namespace signin {
+
 // Helper class to simplify writing unittests that depend on an instance of
 // ProfileOAuth2TokenService.
 //
@@ -119,5 +121,7 @@ class FakeProfileOAuth2TokenService : public ProfileOAuth2TokenService {
 
   DISALLOW_COPY_AND_ASSIGN(FakeProfileOAuth2TokenService);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_FAKE_PROFILE_OAUTH2_TOKEN_SERVICE_H_

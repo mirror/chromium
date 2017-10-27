@@ -78,7 +78,7 @@ class MockAccountReconcilor : public AccountReconcilor {
  public:
   MockAccountReconcilor()
       : AccountReconcilor(nullptr, nullptr, nullptr, nullptr) {}
-  MOCK_METHOD1(OnReceivedManageAccountsResponse, void(signin::GAIAServiceType));
+  MOCK_METHOD1(OnReceivedManageAccountsResponse, void(GAIAServiceType));
 };
 
 // Mock GaiaCookieManagerService to catch call to ForceOnCookieChangedProcessing
@@ -388,8 +388,8 @@ TEST_F(AccountConsistencyServiceTest, ChromeManageAccountsDefault) {
        HTTPVersion:@"HTTP/1.1"
       headerFields:headers];
   account_consistency_service_->SetWebStateHandler(&web_state_, delegate);
-  EXPECT_CALL(account_reconcilor_, OnReceivedManageAccountsResponse(
-                                       signin::GAIA_SERVICE_TYPE_DEFAULT))
+  EXPECT_CALL(account_reconcilor_,
+              OnReceivedManageAccountsResponse(GAIA_SERVICE_TYPE_DEFAULT))
       .Times(1);
   EXPECT_FALSE(
       web_state_.ShouldAllowResponse(response, /* for_main_frame = */ true));

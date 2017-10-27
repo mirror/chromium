@@ -26,6 +26,8 @@
 
 using namespace signin_internals_util;
 
+namespace signin {
+
 SigninManagerBase::SigninManagerBase(
     SigninClient* client,
     AccountTrackerService* account_tracker_service)
@@ -260,3 +262,5 @@ void SigninManagerBase::NotifyDiagnosticsObservers(
   for (auto& observer : signin_diagnostics_observers_)
     observer.NotifySigninValueChanged(field, value);
 }
+
+}  // namespace signin

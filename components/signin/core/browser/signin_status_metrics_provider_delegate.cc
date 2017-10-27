@@ -7,6 +7,8 @@
 #include "base/logging.h"
 #include "components/signin/core/browser/signin_status_metrics_provider.h"
 
+namespace signin {
+
 AccountsStatus::AccountsStatus()
     : num_accounts(0), num_opened_accounts(0), num_signed_in_accounts(0) {}
 
@@ -21,3 +23,5 @@ void SigninStatusMetricsProviderDelegate::SetOwner(
   DCHECK(!owner_);
   owner_ = owner;
 }
+
+}  // namespace signin

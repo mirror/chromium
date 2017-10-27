@@ -11,6 +11,8 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "google_apis/gaia/fake_oauth2_token_service_delegate.h"
 
+namespace signin {
+
 FakeProfileOAuth2TokenService::PendingRequest::PendingRequest() {}
 
 FakeProfileOAuth2TokenService::PendingRequest::PendingRequest(
@@ -137,3 +139,5 @@ void FakeProfileOAuth2TokenService::InvalidateAccessTokenImpl(
     const std::string& access_token) {
   // Do nothing, as we don't have a cache from which to remove the token.
 }
+
+}  // namespace signin

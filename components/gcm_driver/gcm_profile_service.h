@@ -48,7 +48,7 @@ class GCMProfileService : public KeyedService {
       net::URLRequestContextGetter* request_context,
       version_info::Channel channel,
       const std::string& product_category_for_subtypes,
-      std::unique_ptr<ProfileIdentityProvider> identity_provider,
+      std::unique_ptr<signin::ProfileIdentityProvider> identity_provider,
       std::unique_ptr<GCMClientFactory> gcm_client_factory,
       const scoped_refptr<base::SequencedTaskRunner>& ui_task_runner,
       const scoped_refptr<base::SequencedTaskRunner>& io_task_runner,
@@ -72,7 +72,7 @@ class GCMProfileService : public KeyedService {
   GCMProfileService();
 
  private:
-  std::unique_ptr<ProfileIdentityProvider> profile_identity_provider_;
+  std::unique_ptr<signin::ProfileIdentityProvider> profile_identity_provider_;
   std::unique_ptr<GCMDriver> driver_;
 
 #if !BUILDFLAG(USE_GCM_FROM_PLATFORM)

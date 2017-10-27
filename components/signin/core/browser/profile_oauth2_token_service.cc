@@ -10,6 +10,8 @@
 #include "components/signin/core/browser/signin_pref_names.h"
 #endif
 
+namespace signin {
+
 ProfileOAuth2TokenService::ProfileOAuth2TokenService(
     std::unique_ptr<OAuth2TokenServiceDelegate> delegate)
     : OAuth2TokenService(std::move(delegate)), all_credentials_loaded_(false) {
@@ -74,3 +76,5 @@ void ProfileOAuth2TokenService::OnRefreshTokenRevoked(
 void ProfileOAuth2TokenService::OnRefreshTokensLoaded() {
   all_credentials_loaded_ = true;
 }
+
+}  // namespace signin

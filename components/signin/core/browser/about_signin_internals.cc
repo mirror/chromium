@@ -35,6 +35,8 @@
 using base::Time;
 using namespace signin_internals_util;
 
+namespace signin {
+
 namespace {
 
 std::string GetTimeStr(base::Time time) {
@@ -162,16 +164,16 @@ void ClearPref(PrefService* prefs, TimedSigninStatusField field) {
 }
 
 std::string GetAccountConsistencyDescription() {
-  switch (signin::GetAccountConsistencyMethod()) {
-    case signin::AccountConsistencyMethod::kDisabled:
+  switch (GetAccountConsistencyMethod()) {
+    case AccountConsistencyMethod::kDisabled:
       return "None";
-    case signin::AccountConsistencyMethod::kMirror:
+    case AccountConsistencyMethod::kMirror:
       return "Mirror";
-    case signin::AccountConsistencyMethod::kDiceFixAuthErrors:
+    case AccountConsistencyMethod::kDiceFixAuthErrors:
       return "DICE fixing auth errors";
-    case signin::AccountConsistencyMethod::kDiceMigration:
+    case AccountConsistencyMethod::kDiceMigration:
       return "DICE migration";
-    case signin::AccountConsistencyMethod::kDice:
+    case AccountConsistencyMethod::kDice:
       return "DICE";
   }
   NOTREACHED();
@@ -643,7 +645,7 @@ AboutSigninInternals::SigninStatus::ToValue(
   signin_status->Set("accountInfo", std::move(account_info));
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
-  if (signin::IsDiceEnabledForProfile(signin_client->GetPrefs())) {
+  if (IsDiceEnabledForProfile(signin_client->GetPrefs())) {
     auto dice_info = base::MakeUnique<base::DictionaryValue>();
     dice_info->SetBoolean("isSignedIn", signin_manager->IsAuthenticated());
     signin_status->Set("dice", std::move(dice_info));
@@ -652,3 +654,5 @@ AboutSigninInternals::SigninStatus::ToValue(
 
   return signin_status;
 }
+
+}  // namespace signin

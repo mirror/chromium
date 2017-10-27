@@ -13,6 +13,8 @@
 #include "components/signin/core/browser/child_account_info_fetcher_impl.h"
 #endif
 
+namespace signin {
+
 // static
 std::unique_ptr<ChildAccountInfoFetcher> ChildAccountInfoFetcher::CreateFrom(
     const std::string& account_id,
@@ -37,3 +39,5 @@ void ChildAccountInfoFetcher::InitializeForTests() {
   ChildAccountInfoFetcherAndroid::InitializeForTests();
 #endif
 }
+
+}  // namespace signin

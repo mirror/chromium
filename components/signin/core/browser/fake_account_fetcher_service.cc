@@ -8,6 +8,8 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 
+namespace signin {
+
 FakeAccountFetcherService::FakeAccountFetcherService() {}
 
 void FakeAccountFetcherService::FakeUserInfoFetchSuccess(
@@ -51,3 +53,5 @@ void FakeAccountFetcherService::SendRefreshTokenAnnotationRequest(
     const std::string& account_id) {
   // In tests, don't do actual network fetch.
 }
+
+}  // namespace signin

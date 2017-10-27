@@ -4,6 +4,8 @@
 
 #include "components/signin/core/browser/fake_auth_status_provider.h"
 
+namespace signin {
+
 FakeAuthStatusProvider::FakeAuthStatusProvider(SigninErrorController* error)
   : error_provider_(error),
     auth_error_(GoogleServiceAuthError::AuthErrorNone()) {
@@ -28,3 +30,5 @@ void FakeAuthStatusProvider::SetAuthError(const std::string& account_id,
   auth_error_ = error;
   error_provider_->AuthStatusChanged();
 }
+
+}  // namespace signin

@@ -31,7 +31,7 @@ class ProfileDownloader : public net::URLFetcherDelegate,
                           public ImageDecoder::ImageRequest,
                           public OAuth2TokenService::Observer,
                           public OAuth2TokenService::Consumer,
-                          public AccountTrackerService::Observer {
+                          public signin::AccountTrackerService::Observer {
  public:
   enum PictureStatus {
     PICTURE_SUCCESS,
@@ -105,9 +105,8 @@ class ProfileDownloader : public net::URLFetcherDelegate,
   void OnGetTokenFailure(const OAuth2TokenService::Request* request,
                          const GoogleServiceAuthError& error) override;
 
-
-  // Implementation of AccountTrackerService::Observer.
-  void OnAccountUpdated(const AccountInfo& info) override;
+  // Implementation of signin::AccountTrackerService::Observer.
+  void OnAccountUpdated(const signin::AccountInfo& info) override;
 
   // Issues the first request to get user profile image.
   void StartFetchingImage();
@@ -124,10 +123,10 @@ class ProfileDownloader : public net::URLFetcherDelegate,
   std::string auth_token_;
   std::unique_ptr<net::URLFetcher> profile_image_fetcher_;
   std::unique_ptr<OAuth2TokenService::Request> oauth2_access_token_request_;
-  AccountInfo account_info_;
+  signin::AccountInfo account_info_;
   SkBitmap profile_picture_;
   PictureStatus picture_status_;
-  AccountTrackerService* account_tracker_service_;
+  signin::AccountTrackerService* account_tracker_service_;
   bool waiting_for_account_info_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileDownloader);

@@ -8,6 +8,8 @@
 #include "base/macros.h"
 #include "components/metrics/metrics_provider.h"
 
+namespace signin {
+
 // The base class for collecting login status of all opened profiles during one
 // UMA session and recording the value into a histogram before UMA log is
 // uploaded. Overriding class SigninStatusMetricsProvider supports platform
@@ -53,5 +55,7 @@ class SigninStatusMetricsProviderBase : public metrics::MetricsProvider {
 
   DISALLOW_COPY_AND_ASSIGN(SigninStatusMetricsProviderBase);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_STATUS_METRICS_PROVIDER_BASE_H_

@@ -10,6 +10,8 @@
 #include "components/signin/core/browser/signin_manager_base.h"
 #include "google_apis/gaia/identity_provider.h"
 
+namespace signin {
+
 class ProfileOAuth2TokenService;
 
 // An identity provider implementation that's backed by
@@ -43,5 +45,7 @@ class ProfileIdentityProvider : public IdentityProvider,
 
   DISALLOW_COPY_AND_ASSIGN(ProfileIdentityProvider);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_PROFILE_IDENTITY_PROVIDER_H_

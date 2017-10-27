@@ -12,6 +12,8 @@
 #include "base/memory/ptr_util.h"
 #include "components/signin/core/browser/child_account_info_fetcher.h"
 
+namespace signin {
+
 class AccountFetcherService;
 
 class ChildAccountInfoFetcherAndroid : public ChildAccountInfoFetcher {
@@ -33,5 +35,7 @@ class ChildAccountInfoFetcherAndroid : public ChildAccountInfoFetcher {
 
   DISALLOW_COPY_AND_ASSIGN(ChildAccountInfoFetcherAndroid);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_CHILD_ACCOUNT_INFO_FETCHER_ANDROID_H_

@@ -6,6 +6,8 @@
 
 #include "base/metrics/histogram_macros.h"
 
+namespace signin {
+
 SigninStatusMetricsProviderBase::SigninStatusMetricsProviderBase()
     : signin_status_(UNKNOWN_SIGNIN_STATUS) {}
 
@@ -29,3 +31,5 @@ void SigninStatusMetricsProviderBase::UpdateSigninStatus(
 void SigninStatusMetricsProviderBase::ResetSigninStatus() {
   signin_status_ = UNKNOWN_SIGNIN_STATUS;
 }
+
+}  // namespace signin

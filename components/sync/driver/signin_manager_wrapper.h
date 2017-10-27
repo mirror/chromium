@@ -9,7 +9,9 @@
 
 #include "base/macros.h"
 
+namespace signin {
 class SigninManagerBase;
+}
 
 // Wraps SigninManager so subclasses can support different ways of getting
 // account information if necessary. Currently exists for supervised users;
@@ -17,7 +19,7 @@ class SigninManagerBase;
 // this class once supervised users are componentized.
 class SigninManagerWrapper {
  public:
-  explicit SigninManagerWrapper(SigninManagerBase* original);
+  explicit SigninManagerWrapper(signin::SigninManagerBase* original);
   virtual ~SigninManagerWrapper();
 
   // Get the email address to use for this account.
@@ -30,10 +32,10 @@ class SigninManagerWrapper {
   virtual std::string GetSyncScopeToUse() const;
 
   // Return the original SigninManagerBase object that was passed in.
-  SigninManagerBase* GetOriginal();
+  signin::SigninManagerBase* GetOriginal();
 
  private:
-  SigninManagerBase* original_;
+  signin::SigninManagerBase* original_;
 
   DISALLOW_COPY_AND_ASSIGN(SigninManagerWrapper);
 };

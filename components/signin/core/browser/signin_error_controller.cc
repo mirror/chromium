@@ -6,6 +6,8 @@
 
 #include "components/signin/core/browser/signin_metrics.h"
 
+namespace signin {
+
 namespace {
 
 typedef std::set<const SigninErrorController::AuthStatusProvider*>
@@ -108,3 +110,5 @@ void SigninErrorController::AddObserver(Observer* observer) {
 void SigninErrorController::RemoveObserver(Observer* observer) {
   observer_list_.RemoveObserver(observer);
 }
+
+}  // namespace signin

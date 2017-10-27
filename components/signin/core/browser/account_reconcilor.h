@@ -29,6 +29,8 @@
 #include "google_apis/gaia/google_service_auth_error.h"
 #include "google_apis/gaia/oauth2_token_service.h"
 
+namespace signin {
+
 class ProfileOAuth2TokenService;
 class SigninClient;
 
@@ -90,8 +92,7 @@ class AccountReconcilor : public KeyedService,
   // Signal that an X-Chrome-Manage-Accounts was received from GAIA. Pass the
   // ServiceType specified by GAIA in the 204 response.
   // Virtual for testing.
-  virtual void OnReceivedManageAccountsResponse(
-      signin::GAIAServiceType service_type);
+  virtual void OnReceivedManageAccountsResponse(GAIAServiceType service_type);
 
   // KeyedService implementation.
   void Shutdown() override;
@@ -290,5 +291,7 @@ class AccountReconcilor : public KeyedService,
 
   DISALLOW_COPY_AND_ASSIGN(AccountReconcilor);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_ACCOUNT_RECONCILOR_H_

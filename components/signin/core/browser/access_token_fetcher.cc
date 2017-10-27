@@ -8,6 +8,8 @@
 
 #include "base/logging.h"
 
+namespace signin {
+
 AccessTokenFetcher::AccessTokenFetcher(
     const std::string& oauth_consumer_name,
     SigninManagerBase* signin_manager,
@@ -166,3 +168,5 @@ void AccessTokenFetcher::OnGetTokenFailure(
 
   std::move(callback_).Run(error, std::string());
 }
+
+}  // namespace signin

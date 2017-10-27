@@ -5,6 +5,8 @@
 #include "components/signin/core/browser/account_info.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace signin {
+
 class AccountInfoTest : public testing::Test {};
 
 // Tests that IsValid() returns true only when all the fields are non-empty.
@@ -73,3 +75,5 @@ TEST_F(AccountInfoTest, UpdateWithSuccessfulUpdate) {
   EXPECT_EQ("test_name", info.given_name);
   EXPECT_TRUE(info.is_child_account);
 }
+
+}  // namespace signin

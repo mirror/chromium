@@ -64,7 +64,7 @@ bool IOSSigninClient::IsFirstRun() const {
 }
 
 bool IOSSigninClient::AreSigninCookiesAllowed() {
-  return signin::SettingsAllowSigninCookies(cookie_settings_.get());
+  return SettingsAllowSigninCookies(cookie_settings_.get());
 }
 
 void IOSSigninClient::AddContentSettingsObserver(

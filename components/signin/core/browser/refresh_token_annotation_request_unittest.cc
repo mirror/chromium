@@ -10,6 +10,8 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace signin {
+
 class RefreshTokenAnnotationRequestTest : public testing::Test {
  protected:
   TestingPrefServiceSimple pref_service_;
@@ -70,3 +72,5 @@ TEST_F(RefreshTokenAnnotationRequestTest, CreateApiCallBody) {
       "&lib_ver=39.0+(stable)";
   EXPECT_EQ(expected_body, body);
 }
+
+}  // namespace signin

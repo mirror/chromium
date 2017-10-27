@@ -33,6 +33,8 @@ using gaia::ListedAccount;
 using signin_metrics::AccountRelation;
 using signin_metrics::ReportingType;
 
+namespace signin {
+
 class AccountInvestigatorTest : public testing::Test {
  protected:
   AccountInvestigatorTest()
@@ -370,3 +372,5 @@ TEST_F(AccountInvestigatorTest, TryPeriodicReportEmpty) {
 }
 
 }  // namespace
+
+}  // namespace signin

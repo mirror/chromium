@@ -18,7 +18,7 @@ class ListValue;
 }
 
 class SyncConfirmationHandler : public content::WebUIMessageHandler,
-                                public AccountTrackerService::Observer,
+                                public signin::AccountTrackerService::Observer,
                                 public chrome::BrowserListObserver {
  public:
   explicit SyncConfirmationHandler(Browser* browser);
@@ -27,8 +27,8 @@ class SyncConfirmationHandler : public content::WebUIMessageHandler,
   // content::WebUIMessageHandler:
   void RegisterMessages() override;
 
-  // AccountTrackerService::Observer:
-  void OnAccountUpdated(const AccountInfo& info) override;
+  // signin::AccountTrackerService::Observer:
+  void OnAccountUpdated(const signin::AccountInfo& info) override;
 
   // chrome::BrowserListObserver:
   void OnBrowserRemoved(Browser* browser) override;

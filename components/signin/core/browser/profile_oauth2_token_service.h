@@ -18,6 +18,8 @@ namespace user_prefs {
 class PrefRegistrySyncable;
 }
 
+namespace signin {
+
 // ProfileOAuth2TokenService is a KeyedService that retrieves
 // OAuth2 access tokens for a given set of scopes using the OAuth2 login
 // refresh tokens.
@@ -82,5 +84,7 @@ class ProfileOAuth2TokenService : public OAuth2TokenService,
 
   DISALLOW_COPY_AND_ASSIGN(ProfileOAuth2TokenService);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_PROFILE_OAUTH2_TOKEN_SERVICE_H_

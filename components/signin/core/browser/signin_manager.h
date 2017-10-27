@@ -40,9 +40,12 @@
 #include "components/signin/core/browser/signin_metrics.h"
 #include "net/cookies/canonical_cookie.h"
 
-class GaiaCookieManagerService;
 class GoogleServiceAuthError;
 class PrefService;
+
+namespace signin {
+
+class GaiaCookieManagerService;
 class ProfileOAuth2TokenService;
 class SigninClient;
 
@@ -273,5 +276,7 @@ class SigninManager : public SigninManagerBase,
 };
 
 #endif  // !defined(OS_CHROMEOS)
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_MANAGER_H_

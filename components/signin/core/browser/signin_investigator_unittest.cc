@@ -14,6 +14,8 @@
 
 using signin_metrics::AccountEquality;
 
+namespace signin {
+
 namespace {
 const char kSameEmail[] = "user1@domain.com";
 const char kDifferentEmail[] = "user2@domain.com";
@@ -124,3 +126,5 @@ TEST_F(SigninInvestigatorTest, InvestigateDifferentAccount) {
   AssertInvestigatedScenario(kDifferentEmail, kDifferentId,
                              InvestigatedScenario::DIFFERENT_ACCOUNT);
 }
+
+}  // namespace signin

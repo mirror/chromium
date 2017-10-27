@@ -16,6 +16,8 @@
 static const char kTestAccountId[] = "testuser@test.com";
 static const char kOtherTestAccountId[] = "otheruser@test.com";
 
+namespace signin {
+
 class SigninErrorControllerTest : public testing::Test {
  public:
   void SetUp() override {
@@ -259,3 +261,5 @@ TEST_F(SigninErrorControllerTest, AuthStatusChange) {
   fake_provider1.reset();
   ASSERT_FALSE(error_controller_->HasError());
 }
+
+}  // namespace signin

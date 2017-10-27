@@ -11,6 +11,8 @@
 #include "components/signin/core/browser/signin_client.h"
 #include "net/url_request/url_request_context_getter.h"
 
+namespace signin {
+
 // The subscription for a cookie changed events. This class lives on the
 // main thread.
 class SigninCookieChangedSubscription
@@ -75,5 +77,7 @@ class SigninCookieChangedSubscription
 
   DISALLOW_COPY_AND_ASSIGN(SigninCookieChangedSubscription);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_COOKIE_CHANGED_SUBSCRIPTION_H_

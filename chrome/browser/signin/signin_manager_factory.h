@@ -10,10 +10,13 @@
 #include "build/build_config.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 
-class SigninManager;
-class SigninManagerBase;
 class PrefRegistrySimple;
 class Profile;
+
+namespace signin {
+class SigninManager;
+class SigninManagerBase;
+}  // namespace signin
 
 // Singleton that owns all SigninManagers and associates them with
 // Profiles. Listens for the Profile's destruction notification and cleans up
@@ -23,11 +26,11 @@ class SigninManagerFactory : public BrowserContextKeyedServiceFactory {
   class Observer {
    public:
     // Called when a SigninManager(Base) instance is created.
-    virtual void SigninManagerCreated(SigninManagerBase* manager) {}
+    virtual void SigninManagerCreated(signin::SigninManagerBase* manager) {}
 
     // Called when a SigninManager(Base) instance is being shut down. Observers
     // of |manager| should remove themselves at this point.
-    virtual void SigninManagerShutdown(SigninManagerBase* manager) {}
+    virtual void SigninManagerShutdown(signin::SigninManagerBase* manager) {}
 
    protected:
     virtual ~Observer() {}
@@ -37,19 +40,21 @@ class SigninManagerFactory : public BrowserContextKeyedServiceFactory {
   // Returns the instance of SigninManager associated with this profile
   // (creating one if none exists). Returns NULL if this profile cannot have a
   // SigninManager (for example, if |profile| is incognito).
-  static SigninManagerBase* GetForProfile(Profile* profile);
+  static signin::SigninManagerBase* GetForProfile(Profile* profile);
 
   // Returns the instance of SigninManager associated with this profile. Returns
   // null if no SigninManager instance currently exists (will not create a new
   // instance).
-  static SigninManagerBase* GetForProfileIfExists(Profile* profile);
-  static const SigninManagerBase* GetForProfileIfExists(const Profile* profile);
+  static signin::SigninManagerBase* GetForProfileIfExists(Profile* profile);
+  static const signin::SigninManagerBase* GetForProfileIfExists(
+      const Profile* profile);
 #else
   // On non-ChromeOS platforms, the SigninManager the factory creates will be
   // an instance of the extended SigninManager class.
-  static SigninManager* GetForProfile(Profile* profile);
-  static SigninManager* GetForProfileIfExists(Profile* profile);
-  static const SigninManager* GetForProfileIfExists(const Profile* profile);
+  static signin::SigninManager* GetForProfile(Profile* profile);
+  static signin::SigninManager* GetForProfileIfExists(Profile* profile);
+  static const signin::SigninManager* GetForProfileIfExists(
+      const Profile* profile);
 #endif
 
   // Returns an instance of the SigninManagerFactory singleton.
@@ -71,7 +76,7 @@ class SigninManagerFactory : public BrowserContextKeyedServiceFactory {
   // SigninManager subclasses whose construction does not occur in
   // |BuildServiceInstanceFor()|.
   void NotifyObserversOfSigninManagerCreationForTesting(
-      SigninManagerBase* manager);
+      signin::SigninManagerBase* manager);
 
  private:
   friend struct base::DefaultSingletonTraits<SigninManagerFactory>;

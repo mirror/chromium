@@ -27,6 +27,8 @@
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace signin {
+
 namespace {
 
 const std::string kTokenInfoResponseFormat =
@@ -1219,3 +1221,5 @@ TEST_F(AccountTrackerServiceTest, ChildAccountGraduation) {
   fetcher.Shutdown();
   tracker.Shutdown();
 }
+
+}  // namespace signin

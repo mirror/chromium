@@ -18,6 +18,8 @@
 
 class GaiaAuthFetcher;
 
+namespace signin {
+
 class ChildAccountInfoFetcherImpl : public ChildAccountInfoFetcher,
                                     public OAuth2TokenService::Consumer,
                                     public GaiaAuthConsumer,
@@ -73,5 +75,7 @@ class ChildAccountInfoFetcherImpl : public ChildAccountInfoFetcher,
 
   DISALLOW_COPY_AND_ASSIGN(ChildAccountInfoFetcherImpl);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_CHILD_ACCOUNT_INFO_FETCHER_IMPL_H_

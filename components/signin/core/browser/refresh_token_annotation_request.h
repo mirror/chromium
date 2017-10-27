@@ -15,6 +15,9 @@
 #include "google_apis/gaia/oauth2_token_service.h"
 
 class PrefService;
+
+namespace signin {
+
 class SigninClient;
 
 // RefreshTokenAnnotationRequest sends request to IssueToken endpoint with
@@ -89,5 +92,7 @@ class RefreshTokenAnnotationRequest : public OAuth2TokenService::Consumer,
 
   DISALLOW_COPY_AND_ASSIGN(RefreshTokenAnnotationRequest);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_REFRESH_TOKEN_ANNOTATION_REQUEST_H_

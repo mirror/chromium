@@ -14,6 +14,8 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/signin/core/browser/signin_manager.h"
 
+namespace signin {
+
 SigninStatusMetricsProvider::SigninStatusMetricsProvider(
     std::unique_ptr<SigninStatusMetricsProviderDelegate> delegate,
     bool is_test)
@@ -156,3 +158,5 @@ SigninStatusMetricsProvider::SigninStatus
 SigninStatusMetricsProvider::GetSigninStatusForTesting() {
   return signin_status();
 }
+
+}  // namespace signin

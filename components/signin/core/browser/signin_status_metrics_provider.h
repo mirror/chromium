@@ -22,6 +22,8 @@ namespace metrics {
 class ChromeUserMetricsExtension;
 }
 
+namespace signin {
+
 class SigninStatusMetricsProviderDelegate;
 
 // Collect login status of all opened profiles during one UMA session and
@@ -101,5 +103,7 @@ class SigninStatusMetricsProvider : public SigninStatusMetricsProviderBase,
 
   DISALLOW_COPY_AND_ASSIGN(SigninStatusMetricsProvider);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_STATUS_METRICS_PROVIDER_H_

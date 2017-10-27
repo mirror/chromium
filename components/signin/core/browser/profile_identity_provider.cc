@@ -7,6 +7,8 @@
 #include "base/callback.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 
+namespace signin {
+
 ProfileIdentityProvider::ProfileIdentityProvider(
     SigninManagerBase* signin_manager,
     ProfileOAuth2TokenService* token_service,
@@ -50,3 +52,5 @@ void ProfileIdentityProvider::GoogleSignedOut(const std::string& account_id,
                                               const std::string& username) {
   FireOnActiveAccountLogout();
 }
+
+}  // namespace signin

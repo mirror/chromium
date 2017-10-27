@@ -18,7 +18,7 @@ class SigninErrorControllerFactory : public BrowserContextKeyedServiceFactory {
   // Returns the instance of SigninErrorController associated with this profile
   // (creating one if none exists). Returns NULL if this profile cannot have an
   // SigninClient (for example, if |profile| is incognito).
-  static SigninErrorController* GetForProfile(Profile* profile);
+  static signin::SigninErrorController* GetForProfile(Profile* profile);
 
   // Returns an instance of the factory singleton.
   static SigninErrorControllerFactory* GetInstance();

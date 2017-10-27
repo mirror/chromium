@@ -13,6 +13,8 @@
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_metrics.h"
 
+namespace signin {
+
 // SigninManager to use for testing.
 
 class FakeSigninManagerBase : public SigninManagerBase {
@@ -71,5 +73,7 @@ class FakeSigninManager : public SigninManager {
 };
 
 #endif  // !defined (OS_CHROMEOS)
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_FAKE_SIGNIN_MANAGER_H_

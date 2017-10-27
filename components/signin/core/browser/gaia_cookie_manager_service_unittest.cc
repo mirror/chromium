@@ -31,6 +31,8 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace signin {
+
 namespace {
 
 class MockObserver : public GaiaCookieManagerService::Observer {
@@ -795,3 +797,5 @@ TEST_F(GaiaCookieManagerServiceTest, UbertokenSuccessFetchesExternalCCOnce) {
   EXPECT_CALL(helper, StartFetchingMergeSession());
   SimulateUbertokenSuccess(&helper, "token3");
 }
+
+}  // namespace signin

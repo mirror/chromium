@@ -25,7 +25,10 @@ namespace {
 void RecordRequestStatusHistogram(bool success) {
   UMA_HISTOGRAM_BOOLEAN("Signin.RefreshTokenAnnotationRequest", success);
 }
-}
+
+}  // namespace
+
+namespace signin {
 
 RefreshTokenAnnotationRequest::RefreshTokenAnnotationRequest(
     const scoped_refptr<net::URLRequestContextGetter>& request_context_getter,
@@ -203,3 +206,5 @@ RefreshTokenAnnotationRequest::GetNetworkTrafficAnnotationTag() {
         }
       })");
 }
+
+}  // namespace signin

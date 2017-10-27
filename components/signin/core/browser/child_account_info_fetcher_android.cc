@@ -12,6 +12,8 @@
 
 using base::android::JavaParamRef;
 
+namespace signin {
+
 // static
 std::unique_ptr<ChildAccountInfoFetcher> ChildAccountInfoFetcherAndroid::Create(
     AccountFetcherService* service,
@@ -61,3 +63,5 @@ void SetIsChildAccount(JNIEnv* env,
       base::android::ConvertJavaStringToUTF8(env, j_account_id),
       is_child_account);
 }
+
+}  // namespace signin

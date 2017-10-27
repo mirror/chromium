@@ -36,7 +36,7 @@ class SyncSetupInProgressHandle;
 // Waits for successful sign-in notification from the signin manager and then
 // starts the sync machine.  Instances of this class delete themselves once
 // the job is done.
-class OneClickSigninSyncStarter : public SigninTracker::Observer,
+class OneClickSigninSyncStarter : public signin::SigninTracker::Observer,
                                   public chrome::BrowserListObserver,
                                   public content::WebContentsObserver,
                                   public LoginUIService::Observer {
@@ -236,7 +236,7 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
 
   Profile* profile_;
   Browser* browser_;
-  std::unique_ptr<SigninTracker> signin_tracker_;
+  std::unique_ptr<signin::SigninTracker> signin_tracker_;
   StartSyncMode start_mode_;
   ConfirmationRequired confirmation_required_;
   GURL current_url_;

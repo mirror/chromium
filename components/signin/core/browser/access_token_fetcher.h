@@ -14,6 +14,8 @@
 #include "google_apis/gaia/google_service_auth_error.h"
 #include "google_apis/gaia/oauth2_token_service.h"
 
+namespace signin {
+
 // Helper class to ease the task of obtaining an OAuth2 access token for the
 // authenticated account. This handles various special cases, e.g. when the
 // refresh token isn't loaded yet (during startup), or when there is some
@@ -80,5 +82,7 @@ class AccessTokenFetcher : public SigninManagerBase::Observer,
 
   DISALLOW_COPY_AND_ASSIGN(AccessTokenFetcher);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_ACCESS_TOKEN_FETCHER_H_

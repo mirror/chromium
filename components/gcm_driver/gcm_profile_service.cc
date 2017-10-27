@@ -41,7 +41,7 @@ namespace gcm {
 // in. It ensures that account tracker is taking
 class GCMProfileService::IdentityObserver : public IdentityProvider::Observer {
  public:
-  IdentityObserver(ProfileIdentityProvider* identity_provider,
+  IdentityObserver(signin::ProfileIdentityProvider* identity_provider,
                    net::URLRequestContextGetter* request_context,
                    GCMDriver* driver);
   ~IdentityObserver() override;
@@ -67,7 +67,7 @@ class GCMProfileService::IdentityObserver : public IdentityProvider::Observer {
 };
 
 GCMProfileService::IdentityObserver::IdentityObserver(
-    ProfileIdentityProvider* identity_provider,
+    signin::ProfileIdentityProvider* identity_provider,
     net::URLRequestContextGetter* request_context,
     GCMDriver* driver)
     : driver_(driver),
@@ -142,7 +142,7 @@ GCMProfileService::GCMProfileService(
     net::URLRequestContextGetter* request_context,
     version_info::Channel channel,
     const std::string& product_category_for_subtypes,
-    std::unique_ptr<ProfileIdentityProvider> identity_provider,
+    std::unique_ptr<signin::ProfileIdentityProvider> identity_provider,
     std::unique_ptr<GCMClientFactory> gcm_client_factory,
     const scoped_refptr<base::SequencedTaskRunner>& ui_task_runner,
     const scoped_refptr<base::SequencedTaskRunner>& io_task_runner,

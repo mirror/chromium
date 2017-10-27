@@ -313,7 +313,7 @@ void ProfileDownloader::OnGetTokenFailure(
       this, ProfileDownloaderDelegate::TOKEN_ERROR);
 }
 
-void ProfileDownloader::OnAccountUpdated(const AccountInfo& info) {
+void ProfileDownloader::OnAccountUpdated(const signin::AccountInfo& info) {
   if (info.account_id == account_id_ && info.IsValid()) {
     account_info_ = info;
 

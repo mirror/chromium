@@ -16,6 +16,8 @@
 
 class PrefService;
 
+namespace signin {
+
 // An implementation of SigninClient for use in unittests. Instantiates test
 // versions of the various objects that SigninClient is required to provide as
 // part of its interface.
@@ -108,5 +110,7 @@ class TestSigninClient : public SigninClient {
 
   DISALLOW_COPY_AND_ASSIGN(TestSigninClient);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_TEST_SIGNIN_CLIENT_H_

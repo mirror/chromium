@@ -20,7 +20,6 @@
 #include "google_apis/gaia/gaia_auth_util.h"
 
 class PrefService;
-class SigninClient;
 
 namespace base {
 class DictionaryValue;
@@ -29,6 +28,10 @@ class DictionaryValue;
 namespace user_prefs {
 class PrefRegistrySyncable;
 }
+
+namespace signin {
+
+class SigninClient;
 
 // AccountTrackerService is a KeyedService that retrieves and caches GAIA
 // information about Google Accounts.
@@ -159,5 +162,7 @@ class AccountTrackerService : public KeyedService {
 
   DISALLOW_COPY_AND_ASSIGN(AccountTrackerService);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_ACCOUNT_TRACKER_SERVICE_H_

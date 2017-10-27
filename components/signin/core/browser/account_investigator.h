@@ -13,11 +13,8 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/signin/core/browser/gaia_cookie_manager_service.h"
 
-struct AccountInfo;
-class GaiaCookieManagerService;
 class PrefRegistrySimple;
 class PrefService;
-class SigninManagerBase;
 
 namespace base {
 class Time;
@@ -27,6 +24,12 @@ namespace signin_metrics {
 enum class AccountRelation;
 enum class ReportingType;
 }  // namespace signin_metrics
+
+namespace signin {
+
+struct AccountInfo;
+class GaiaCookieManagerService;
+class SigninManagerBase;
 
 // While it is common for the account signed into Chrome and the content area
 // to be identical, this is not the only scenario. The purpose of this class
@@ -134,5 +137,7 @@ class AccountInvestigator : public KeyedService,
 
   DISALLOW_COPY_AND_ASSIGN(AccountInvestigator);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_ACCOUNT_INVESTIGATOR_H_

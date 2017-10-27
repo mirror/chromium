@@ -8,6 +8,8 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace signin {
+
 TEST(SigninStatusMetricsProviderTest, UpdateInitialSigninStatus) {
   SigninStatusMetricsProvider metrics_provider(nullptr, true);
 
@@ -53,3 +55,5 @@ TEST(SigninStatusMetricsProviderTest, GoogleSignedOut) {
   EXPECT_EQ(SigninStatusMetricsProviderBase::MIXED_SIGNIN_STATUS,
             metrics_provider.GetSigninStatusForTesting());
 }
+
+}  // namespace signin

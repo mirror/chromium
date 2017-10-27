@@ -41,6 +41,8 @@ const char kChildAccountGraduationId[] = "UCAGRAD";
 
 }  // namespace
 
+namespace signin {
+
 ChildAccountInfoFetcherImpl::ChildAccountInfoFetcherImpl(
     const std::string& account_id,
     AccountFetcherService* fetcher_service,
@@ -178,3 +180,5 @@ void ChildAccountInfoFetcherImpl::OnIncomingInvalidation(
 std::string ChildAccountInfoFetcherImpl::GetOwnerName() const {
   return std::string(kFetcherId);
 }
+
+}  // namespace signin

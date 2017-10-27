@@ -29,6 +29,8 @@ namespace net {
 class URLRequestContextGetter;
 }
 
+namespace signin {
+
 // An interface that needs to be supplied to the Signin component by its
 // embedder.
 class SigninClient : public KeyedService {
@@ -145,5 +147,7 @@ class SigninClient : public KeyedService {
   // callers must use SignOut() instead.
   virtual void OnSignedOut() = 0;
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_CLIENT_H_

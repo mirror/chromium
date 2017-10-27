@@ -28,6 +28,8 @@ using testing::CallbackToFunctor;
 using testing::InvokeWithoutArgs;
 using testing::StrictMock;
 
+namespace signin {
+
 #if defined(OS_CHROMEOS)
 // ChromeOS doesn't have SigninManager.
 using SigninManagerForTest = FakeSigninManagerBase;
@@ -42,7 +44,7 @@ class AccessTokenFetcherTest : public testing::Test {
 
   AccessTokenFetcherTest() : signin_client_(&pref_service_) {
     AccountTrackerService::RegisterPrefs(pref_service_.registry());
-    signin::RegisterAccountConsistencyProfilePrefs(pref_service_.registry());
+    RegisterAccountConsistencyProfilePrefs(pref_service_.registry());
 #if defined(OS_CHROMEOS)
     SigninManagerBase::RegisterProfilePrefs(pref_service_.registry());
     SigninManagerBase::RegisterPrefs(pref_service_.registry());
@@ -390,3 +392,5 @@ TEST_F(AccessTokenFetcherTest, ShouldNotRetryFailedAccessTokenRequest) {
       "account",
       GoogleServiceAuthError(GoogleServiceAuthError::SERVICE_UNAVAILABLE));
 }
+
+}  // namespace signin

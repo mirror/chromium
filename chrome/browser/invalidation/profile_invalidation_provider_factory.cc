@@ -119,7 +119,7 @@ KeyedService* ProfileInvalidationProviderFactory::BuildServiceInstanceFor(
   Profile* profile = Profile::FromBrowserContext(context);
 
   if (!identity_provider) {
-    identity_provider.reset(new ProfileIdentityProvider(
+    identity_provider.reset(new signin::ProfileIdentityProvider(
         SigninManagerFactory::GetForProfile(profile),
         ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
         LoginUIServiceFactory::GetShowLoginPopupCallbackForProfile(profile)));
