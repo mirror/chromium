@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76afdc1c_6b061bd8",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-27T17:38:27Z",
+      "side": 1,
+      "message": "On Windows, the above logic works. Pressing F11 (immersive full screen), the find bar \"attaches\" directly to the top of the display. I also tested this code on Linux and it works there as well.\n\nWhy would it be different on ChromeOS? That, in and of itself, seems to be wrong.",
+      "parentUuid": "fdde82c2_15c81d55",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "855dab6b_2c2db419",
         "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
         "patchSetId": 28
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "359c7116_1fcbb6e1",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-27T17:38:27Z",
+      "side": 1,
+      "message": "It\u0027s the same thing. If there\u0027s no location bar, top_container_bounds is the top_container_ otherwise it\u0027s the location_bar_view. This extends the bounding_box up to the bottom of whatever the top_container_bounds is set to above. I\u0027ll update the comment to be a little more clear, and maybe along with some ASCII art to illustrate what it\u0027s doing.",
+      "parentUuid": "855dab6b_2c2db419",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9180dac8_6af0648c",
         "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
         "patchSetId": 28
@@ -50,6 +86,24 @@
       "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec4ab19_057bf1ab",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-27T17:38:27Z",
+      "side": 1,
+      "message": "It\u0027d probably more clear if, instead of using |right_padding|, it used gfx::scrollbar_size(). The point is to not overlap the scrollbar regardless of whether it\u0027s on the right or the left.",
+      "parentUuid": "9180dac8_6af0648c",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
