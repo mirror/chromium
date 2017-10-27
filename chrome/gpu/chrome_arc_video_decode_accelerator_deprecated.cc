@@ -2,16 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/gpu/chrome_arc_video_decode_accelerator.h"
+#include "chrome/gpu/chrome_arc_video_decode_accelerator_deprecated.h"
 
+#include "base/bits.h"
 #include "base/callback_helpers.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/numerics/safe_math.h"
 #include "base/run_loop.h"
+#include "base/sys_info.h"
 #include "base/unguessable_token.h"
+#include "chrome/gpu/protected_buffer_manager.h"
 #include "media/base/video_frame.h"
+#include "media/gpu/format_utils.h"
 #include "media/gpu/gpu_video_decode_accelerator_factory.h"
+
+#define VLOGF(level) VLOG(level) << __func__ << "(): "
+#define VPLOGF(level) VPLOG(level) << __func__ << "(): "
 
 namespace chromeos {
 namespace arc {
@@ -29,9 +36,9 @@ const int kMaxConcurrentClients = 8;
 
 }  // anonymous namespace
 
-int ChromeArcVideoDecodeAccelerator::client_count_ = 0;
+int ChromeArcVideoDecodeAcceleratorDeprecated::client_count_ = 0;
 
-ChromeArcVideoDecodeAccelerator::InputRecord::InputRecord(
+ChromeArcVideoDecodeAcceleratorDeprecated::InputRecord::InputRecord(
     int32_t bitstream_buffer_id,
     uint32_t buffer_index,
     int64_t timestamp)
@@ -39,40 +46,52 @@ ChromeArcVideoDecodeAccelerator::InputRecord::InputRecord(
       buffer_index(buffer_index),
       timestamp(timestamp) {}
 
-ChromeArcVideoDecodeAccelerator::InputBufferInfo::InputBufferInfo() = default;
-
-ChromeArcVideoDecodeAccelerator::InputBufferInfo::InputBufferInfo(
-    InputBufferInfo&& other) = default;
-
-ChromeArcVideoDecodeAccelerator::InputBufferInfo::~InputBufferInfo() = default;
-
-ChromeArcVideoDecodeAccelerator::OutputBufferInfo::OutputBufferInfo() = default;
-
-ChromeArcVideoDecodeAccelerator::OutputBufferInfo::OutputBufferInfo(
-    OutputBufferInfo&& other) = default;
-
-ChromeArcVideoDecodeAccelerator::OutputBufferInfo::~OutputBufferInfo() =
+ChromeArcVideoDecodeAcceleratorDeprecated::InputBufferInfo::InputBufferInfo() =
     default;
 
-ChromeArcVideoDecodeAccelerator::ChromeArcVideoDecodeAccelerator(
-    const gpu::GpuPreferences& gpu_preferences)
+ChromeArcVideoDecodeAcceleratorDeprecated::InputBufferInfo::~InputBufferInfo() {
+  if (shm_handle.OwnershipPassesToIPC())
+    shm_handle.Close();
+}
+
+ChromeArcVideoDecodeAcceleratorDeprecated::OutputBufferInfo::
+    OutputBufferInfo() = default;
+
+ChromeArcVideoDecodeAcceleratorDeprecated::OutputBufferInfo::
+    ~OutputBufferInfo() {
+  if (!gpu_memory_buffer_handle.is_null()) {
+    for (const auto& fd : gpu_memory_buffer_handle.native_pixmap_handle.fds) {
+      // Close the fd by wrapping it in a ScopedFD and letting
+      // it fall out of scope.
+      base::ScopedFD scoped_fd(fd.fd);
+    }
+  }
+}
+
+ChromeArcVideoDecodeAcceleratorDeprecated::
+    ChromeArcVideoDecodeAcceleratorDeprecated(
+        const gpu::GpuPreferences& gpu_preferences,
+        ProtectedBufferManager* protected_buffer_manager)
     : arc_client_(nullptr),
       next_bitstream_buffer_id_(0),
       output_pixel_format_(media::PIXEL_FORMAT_UNKNOWN),
       output_buffer_size_(0),
       requested_num_of_output_buffers_(0),
-      gpu_preferences_(gpu_preferences) {}
+      gpu_preferences_(gpu_preferences),
+      protected_buffer_manager_(protected_buffer_manager) {}
 
-ChromeArcVideoDecodeAccelerator::~ChromeArcVideoDecodeAccelerator() {
+ChromeArcVideoDecodeAcceleratorDeprecated::
+    ~ChromeArcVideoDecodeAcceleratorDeprecated() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (vda_) {
     client_count_--;
   }
 }
 
-ArcVideoDecodeAccelerator::Result ChromeArcVideoDecodeAccelerator::Initialize(
+ArcVideoDecodeAcceleratorDeprecated::Result
+ChromeArcVideoDecodeAcceleratorDeprecated::Initialize(
     const Config& config,
-    ArcVideoDecodeAccelerator::Client* client) {
+    ArcVideoDecodeAcceleratorDeprecated::Client* client) {
   auto result = InitializeTask(config, client);
   // Report initialization status to UMA.
   UMA_HISTOGRAM_ENUMERATION(
@@ -81,30 +100,37 @@ ArcVideoDecodeAccelerator::Result ChromeArcVideoDecodeAccelerator::Initialize(
   return result;
 }
 
-ArcVideoDecodeAccelerator::Result
-ChromeArcVideoDecodeAccelerator::InitializeTask(
+ArcVideoDecodeAcceleratorDeprecated::Result
+ChromeArcVideoDecodeAcceleratorDeprecated::InitializeTask(
     const Config& config,
-    ArcVideoDecodeAccelerator::Client* client) {
-  DVLOG(5) << "Initialize(input_pixel_format=" << config.input_pixel_format
-           << ", num_input_buffers=" << config.num_input_buffers << ")";
+    ArcVideoDecodeAcceleratorDeprecated::Client* client) {
+  VLOGF(2) << "input_pixel_format=" << config.input_pixel_format
+           << ", num_input_buffers=" << config.num_input_buffers
+           << ", secure_mode=" << config.secure_mode << ")";
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(client);
 
   if (arc_client_) {
-    DLOG(ERROR) << "Re-Initialize() is not allowed";
+    VLOGF(1) << "Re-Initialize() is not allowed";
     return ILLEGAL_STATE;
-  }
-
-  if (client_count_ >= kMaxConcurrentClients) {
-    LOG(WARNING) << "Reject to Initialize() due to too many clients: "
-                 << client_count_;
-    return INSUFFICIENT_RESOURCES;
   }
 
   arc_client_ = client;
 
+  if (client_count_ >= kMaxConcurrentClients) {
+    VLOGF(1) << "too many clients: " << client_count_;
+    return INSUFFICIENT_RESOURCES;
+  }
+
+  if (config.secure_mode && !protected_buffer_manager_) {
+    VLOGF(1) << "Secure mode unsupported";
+    return PLATFORM_FAILURE;
+  }
+
+  secure_mode_ = config.secure_mode;
+
   if (config.num_input_buffers > kMaxBufferCount) {
-    DLOG(ERROR) << "Request too many buffers: " << config.num_input_buffers;
+    VLOGF(1) << "Request too many buffers: " << config.num_input_buffers;
     return INVALID_ARGUMENT;
   }
   input_buffer_info_.resize(config.num_input_buffers);
@@ -121,7 +147,7 @@ ChromeArcVideoDecodeAccelerator::InitializeTask(
       vda_config.profile = media::VP9PROFILE_PROFILE0;
       break;
     default:
-      DLOG(ERROR) << "Unsupported input format: " << config.input_pixel_format;
+      VLOGF(1) << "Unsupported input format: " << config.input_pixel_format;
       return INVALID_ARGUMENT;
   }
   vda_config.output_mode =
@@ -131,27 +157,28 @@ ChromeArcVideoDecodeAccelerator::InitializeTask(
   vda_ = vda_factory->CreateVDA(
       this, vda_config, gpu::GpuDriverBugWorkarounds(), gpu_preferences_);
   if (!vda_) {
-    DLOG(ERROR) << "Failed to create VDA.";
+    VLOGF(1) << "Failed to create VDA.";
     return PLATFORM_FAILURE;
   }
 
   client_count_++;
-  DVLOG(5) << "Number of concurrent ArcVideoDecodeAccelerator clients: "
+  VLOGF(2) << "Number of concurrent ArcVideoDecodeAccelerator clients: "
            << client_count_;
 
   return SUCCESS;
 }
 
-void ChromeArcVideoDecodeAccelerator::SetNumberOfOutputBuffers(size_t number) {
-  DVLOG(5) << "SetNumberOfOutputBuffers(" << number << ")";
+void ChromeArcVideoDecodeAcceleratorDeprecated::SetNumberOfOutputBuffers(
+    size_t number) {
+  VLOGF(2) << "number=" << number;
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!vda_) {
-    DLOG(ERROR) << "VDA not initialized";
+    VLOGF(1) << "VDA not initialized";
     return;
   }
 
   if (number > kMaxBufferCount) {
-    DLOG(ERROR) << "Too many buffers: " << number;
+    VLOGF(1) << "Too many buffers: " << number;
     arc_client_->OnError(INVALID_ARGUMENT);
     return;
   }
@@ -168,21 +195,86 @@ void ChromeArcVideoDecodeAccelerator::SetNumberOfOutputBuffers(size_t number) {
   buffers_pending_import_.resize(number);
 }
 
-void ChromeArcVideoDecodeAccelerator::BindSharedMemory(PortType port,
-                                                       uint32_t index,
-                                                       base::ScopedFD ashmem_fd,
-                                                       off_t offset,
-                                                       size_t length) {
-  DVLOG(5) << "ArcGVDA::BindSharedMemory, offset: " << offset
-           << ", length: " << length;
+bool ChromeArcVideoDecodeAcceleratorDeprecated::AllocateProtectedBuffer(
+    PortType port,
+    uint32_t index,
+    base::ScopedFD handle_fd,
+    size_t size) {
+  size_t aligned_size =
+      base::bits::Align(size, base::SysInfo::VMAllocationGranularity());
+  VLOGF(2) << "port=" << port << " index=" << index
+           << " handle=" << handle_fd.get() << " size=" << size
+           << " aligned=" << aligned_size;
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  if (!secure_mode_) {
+    VLOGF(1) << "Not in secure mode";
+    arc_client_->OnError(INVALID_ARGUMENT);
+    return false;
+  }
+
+  if (!ValidatePortAndIndex(port, index)) {
+    arc_client_->OnError(INVALID_ARGUMENT);
+    return false;
+  }
+
+  if (port == PORT_INPUT) {
+    auto protected_shmem =
+        protected_buffer_manager_->AllocateProtectedSharedMemory(
+            std::move(handle_fd), aligned_size);
+    if (!protected_shmem) {
+      VLOGF(1) << "Failed allocating protected shared memory";
+      return false;
+    }
+
+    auto input_info = base::MakeUnique<InputBufferInfo>();
+    input_info->shm_handle = protected_shmem->shm_handle();
+    input_info->protected_buffer_handle = std::move(protected_shmem);
+    input_buffer_info_[index] = std::move(input_info);
+  } else if (port == PORT_OUTPUT) {
+    auto protected_pixmap =
+        protected_buffer_manager_->AllocateProtectedNativePixmap(
+            std::move(handle_fd),
+            media::VideoPixelFormatToGfxBufferFormat(output_pixel_format_),
+            coded_size_);
+    if (!protected_pixmap) {
+      VLOGF(1) << "Failed allocating a protected pixmap";
+      return false;
+    }
+    auto output_info = base::MakeUnique<OutputBufferInfo>();
+    output_info->gpu_memory_buffer_handle.type = gfx::NATIVE_PIXMAP;
+    output_info->gpu_memory_buffer_handle.native_pixmap_handle =
+        CloneHandleForIPC(protected_pixmap->native_pixmap_handle());
+    output_info->protected_buffer_handle = std::move(protected_pixmap);
+    buffers_pending_import_[index] = std::move(output_info);
+  }
+
+  return true;
+}
+
+void ChromeArcVideoDecodeAcceleratorDeprecated::BindSharedMemory(
+    PortType port,
+    uint32_t index,
+    base::ScopedFD ashmem_fd,
+    off_t offset,
+    size_t length) {
+  VLOGF(2) << "port=" << port << ", index=" << index << ", offset=" << offset
+           << ", length=" << length;
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  if (secure_mode_) {
+    VLOGF(1) << "not allowed in secure mode";
+    arc_client_->OnError(INVALID_ARGUMENT);
+    return;
+  }
+
   if (!vda_) {
-    DLOG(ERROR) << "VDA not initialized";
+    VLOGF(1) << "VDA not initialized";
     return;
   }
 
   if (port != PORT_INPUT) {
-    DLOG(ERROR) << "SharedBuffer is only supported for input";
+    VLOGF(1) << "SharedMemory is only supported for input";
     arc_client_->OnError(INVALID_ARGUMENT);
     return;
   }
@@ -190,33 +282,37 @@ void ChromeArcVideoDecodeAccelerator::BindSharedMemory(PortType port,
     arc_client_->OnError(INVALID_ARGUMENT);
     return;
   }
-  InputBufferInfo* input_info = &input_buffer_info_[index];
-  input_info->handle = std::move(ashmem_fd);
+
+  auto input_info = base::MakeUnique<InputBufferInfo>();
+  input_info->shm_handle =
+      base::SharedMemoryHandle(base::FileDescriptor(ashmem_fd.release(), true),
+                               length, base::UnguessableToken::Create());
+  DCHECK(input_info->shm_handle.OwnershipPassesToIPC());
   input_info->offset = offset;
-  input_info->length = length;
+  input_buffer_info_[index] = std::move(input_info);
 }
 
-bool ChromeArcVideoDecodeAccelerator::VerifyDmabuf(
+bool ChromeArcVideoDecodeAcceleratorDeprecated::VerifyDmabuf(
     const base::ScopedFD& dmabuf_fd,
     const std::vector<::arc::VideoFramePlane>& planes) const {
   size_t num_planes = media::VideoFrame::NumPlanes(output_pixel_format_);
   if (planes.size() != num_planes) {
-    DLOG(ERROR) << "Invalid number of dmabuf planes passed: " << planes.size()
-                << ", expected: " << num_planes;
+    VLOGF(1) << "Invalid number of dmabuf planes, received: " << planes.size()
+             << ", expected: " << num_planes;
     return false;
   }
 
   off_t size = lseek(dmabuf_fd.get(), 0, SEEK_END);
   lseek(dmabuf_fd.get(), 0, SEEK_SET);
   if (size < 0) {
-    DPLOG(ERROR) << "fail to find the size of dmabuf";
+    VPLOGF(1) << "Failed to find the size of dmabuf";
     return false;
   }
 
   size_t i = 0;
   for (const auto& plane : planes) {
-    DVLOG(4) << "Plane " << i << ", offset: " << plane.offset
-             << ", stride: " << plane.stride;
+    VLOGF(4) << "Plane " << i << ", offset=" << plane.offset
+             << ", stride=" << plane.stride;
 
     size_t rows =
         media::VideoFrame::Rows(i, output_pixel_format_, coded_size_.height());
@@ -224,7 +320,7 @@ bool ChromeArcVideoDecodeAccelerator::VerifyDmabuf(
     current_size += base::CheckMul(plane.stride, rows);
 
     if (!current_size.IsValid() || current_size.ValueOrDie() > size) {
-      DLOG(ERROR) << "Invalid strides/offsets";
+      VLOGF(1) << "Invalid strides/offsets";
       return false;
     }
 
@@ -234,20 +330,28 @@ bool ChromeArcVideoDecodeAccelerator::VerifyDmabuf(
   return true;
 }
 
-void ChromeArcVideoDecodeAccelerator::BindDmabuf(
+void ChromeArcVideoDecodeAcceleratorDeprecated::BindDmabuf(
     PortType port,
     uint32_t index,
     base::ScopedFD dmabuf_fd,
     const std::vector<::arc::VideoFramePlane>& planes) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  VLOGF(2) << "port=" << port << ", index=" << index
+           << ", fd=" << dmabuf_fd.get() << ", planes=" << planes.size();
+
+  if (secure_mode_) {
+    VLOGF(1) << "not allowed in secure mode";
+    arc_client_->OnError(INVALID_ARGUMENT);
+    return;
+  }
 
   if (!vda_) {
-    DLOG(ERROR) << "VDA not initialized";
+    VLOGF(1) << "VDA not initialized";
     return;
   }
 
   if (port != PORT_OUTPUT) {
-    DLOG(ERROR) << "Dmabuf is only supported for input";
+    VLOGF(1) << "Dmabuf is only supported for input";
     arc_client_->OnError(INVALID_ARGUMENT);
     return;
   }
@@ -260,21 +364,32 @@ void ChromeArcVideoDecodeAccelerator::BindDmabuf(
     return;
   }
 
-  OutputBufferInfo& info = buffers_pending_import_[index];
-  info.handle = std::move(dmabuf_fd);
-  info.planes = planes;
+#if defined(USE_OZONE)
+  auto output_info = base::MakeUnique<OutputBufferInfo>();
+  output_info->gpu_memory_buffer_handle.type = gfx::NATIVE_PIXMAP;
+  output_info->gpu_memory_buffer_handle.native_pixmap_handle.fds.emplace_back(
+      base::FileDescriptor(dmabuf_fd.release(), true));
+  for (const auto& plane : planes) {
+    output_info->gpu_memory_buffer_handle.native_pixmap_handle.planes
+        .emplace_back(plane.stride, plane.offset, 0, 0);
+  }
+  buffers_pending_import_[index] = std::move(output_info);
+#else
+  arc_client_->OnError(PLATFORM_FAILURE);
+  return;
+#endif
 }
 
-void ChromeArcVideoDecodeAccelerator::UseBuffer(
+void ChromeArcVideoDecodeAcceleratorDeprecated::UseBuffer(
     PortType port,
     uint32_t index,
     const BufferMetadata& metadata) {
-  DVLOG(5) << "UseBuffer(port=" << port << ", index=" << index
+  VLOGF(4) << "port=" << port << ", index=" << index
            << ", metadata=(bytes_used=" << metadata.bytes_used
            << ", timestamp=" << metadata.timestamp << ")";
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!vda_) {
-    DLOG(ERROR) << "VDA not initialized";
+    VLOGF(1) << "VDA not initialized";
     return;
   }
   if (!ValidatePortAndIndex(port, index)) {
@@ -283,41 +398,44 @@ void ChromeArcVideoDecodeAccelerator::UseBuffer(
   }
   switch (port) {
     case PORT_INPUT: {
-      InputBufferInfo* input_info = &input_buffer_info_[index];
+      auto& input_info = input_buffer_info_[index];
+      if (!input_info) {
+        VLOGF(1) << "Buffer not initialized";
+        arc_client_->OnError(INVALID_ARGUMENT);
+        return;
+      }
+
       int32_t bitstream_buffer_id = next_bitstream_buffer_id_;
       // Mask against 30 bits, to avoid (undefined) wraparound on signed
       // integer.
       next_bitstream_buffer_id_ = (next_bitstream_buffer_id_ + 1) & 0x3FFFFFFF;
-      int dup_fd = HANDLE_EINTR(dup(input_info->handle.get()));
-      if (dup_fd < 0) {
-        DLOG(ERROR) << "dup() failed.";
+
+      auto duplicated_handle = input_info->shm_handle.Duplicate();
+      if (!duplicated_handle.IsValid()) {
         arc_client_->OnError(PLATFORM_FAILURE);
         return;
       }
+
       CreateInputRecord(bitstream_buffer_id, index, metadata.timestamp);
-      base::UnguessableToken guid = base::UnguessableToken::Create();
-      vda_->Decode(media::BitstreamBuffer(
-          bitstream_buffer_id,
-          base::SharedMemoryHandle(base::FileDescriptor(dup_fd, true), 0u,
-                                   guid),
-          metadata.bytes_used, input_info->offset));
+      vda_->Decode(
+          media::BitstreamBuffer(bitstream_buffer_id, duplicated_handle,
+                                 metadata.bytes_used, input_info->offset));
       break;
     }
     case PORT_OUTPUT: {
-      // is_valid() is true for the first time the buffer is passed to the VDA.
+      auto& output_info = buffers_pending_import_[index];
+      if (!output_info) {
+        VLOGF(1) << "Buffer not initialized";
+        arc_client_->OnError(INVALID_ARGUMENT);
+        return;
+      }
+      // is_null() is false the first time the buffer is passed to the VDA.
       // In that case, VDA needs to import the buffer first.
-      OutputBufferInfo& info = buffers_pending_import_[index];
-      if (info.handle.is_valid()) {
-        gfx::GpuMemoryBufferHandle handle;
-#if defined(USE_OZONE)
-        handle.native_pixmap_handle.fds.emplace_back(
-            base::FileDescriptor(info.handle.release(), true));
-        for (const auto& plane : info.planes) {
-          handle.native_pixmap_handle.planes.emplace_back(plane.stride,
-                                                          plane.offset, 0, 0);
-        }
-#endif
-        vda_->ImportBufferForPicture(index, handle);
+      if (!output_info->gpu_memory_buffer_handle.is_null()) {
+        vda_->ImportBufferForPicture(index,
+                                     output_info->gpu_memory_buffer_handle);
+        // VDA takes ownership, so just clear out, don't close the handle.
+        output_info->gpu_memory_buffer_handle = gfx::GpuMemoryBufferHandle();
       } else {
         vda_->ReusePictureBuffer(index);
       }
@@ -328,33 +446,32 @@ void ChromeArcVideoDecodeAccelerator::UseBuffer(
   }
 }
 
-void ChromeArcVideoDecodeAccelerator::Reset() {
+void ChromeArcVideoDecodeAcceleratorDeprecated::Reset() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!vda_) {
-    DLOG(ERROR) << "VDA not initialized";
+    VLOGF(1) << "VDA not initialized";
     return;
   }
   vda_->Reset();
 }
 
-void ChromeArcVideoDecodeAccelerator::Flush() {
+void ChromeArcVideoDecodeAcceleratorDeprecated::Flush() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!vda_) {
-    DLOG(ERROR) << "VDA not initialized";
+    VLOGF(1) << "VDA not initialized";
     return;
   }
   vda_->Flush();
 }
 
-void ChromeArcVideoDecodeAccelerator::ProvidePictureBuffers(
+void ChromeArcVideoDecodeAcceleratorDeprecated::ProvidePictureBuffers(
     uint32_t requested_num_of_buffers,
     media::VideoPixelFormat output_pixel_format,
     uint32_t textures_per_buffer,
     const gfx::Size& dimensions,
     uint32_t texture_target) {
-  DVLOG(5) << "ProvidePictureBuffers("
-           << "requested_num_of_buffers=" << requested_num_of_buffers
-           << ", dimensions=" << dimensions.ToString() << ")";
+  VLOGF(2) << "requested_num_of_buffers=" << requested_num_of_buffers
+           << ", dimensions=" << dimensions.ToString();
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   coded_size_ = dimensions;
 
@@ -374,7 +491,7 @@ void ChromeArcVideoDecodeAccelerator::ProvidePictureBuffers(
   NotifyOutputFormatChanged();
 }
 
-void ChromeArcVideoDecodeAccelerator::NotifyOutputFormatChanged() {
+void ChromeArcVideoDecodeAcceleratorDeprecated::NotifyOutputFormatChanged() {
   VideoFormat video_format;
   switch (output_pixel_format_) {
     case media::PIXEL_FORMAT_I420:
@@ -390,7 +507,7 @@ void ChromeArcVideoDecodeAccelerator::NotifyOutputFormatChanged() {
       video_format.pixel_format = HAL_PIXEL_FORMAT_BGRA_8888;
       break;
     default:
-      DLOG(ERROR) << "Format not supported: " << output_pixel_format_;
+      VLOGF(1) << "Format not supported: " << output_pixel_format_;
       arc_client_->OnError(PLATFORM_FAILURE);
       return;
   }
@@ -405,28 +522,28 @@ void ChromeArcVideoDecodeAccelerator::NotifyOutputFormatChanged() {
   arc_client_->OnOutputFormatChanged(video_format);
 }
 
-void ChromeArcVideoDecodeAccelerator::DismissPictureBuffer(
+void ChromeArcVideoDecodeAcceleratorDeprecated::DismissPictureBuffer(
     int32_t picture_buffer) {
   // no-op
 }
 
-void ChromeArcVideoDecodeAccelerator::PictureReady(
+void ChromeArcVideoDecodeAcceleratorDeprecated::PictureReady(
     const media::Picture& picture) {
-  DVLOG(5) << "PictureReady(picture_buffer_id=" << picture.picture_buffer_id()
+  VLOGF(4) << "picture_buffer_id=" << picture.picture_buffer_id()
            << ", bitstream_buffer_id=" << picture.bitstream_buffer_id();
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   // Handle visible size change.
   if (visible_rect_ != picture.visible_rect()) {
-    DVLOG(5) << "visible size changed: " << picture.visible_rect().ToString();
+    VLOGF(2) << "visible size changed: " << picture.visible_rect().ToString();
     visible_rect_ = picture.visible_rect();
     NotifyOutputFormatChanged();
   }
 
   InputRecord* input_record = FindInputRecord(picture.bitstream_buffer_id());
   if (input_record == nullptr) {
-    DLOG(ERROR) << "Cannot find for bitstream buffer id: "
-                << picture.bitstream_buffer_id();
+    VLOGF(1) << "Cannot find for bitstream buffer id: "
+             << picture.bitstream_buffer_id();
     arc_client_->OnError(PLATFORM_FAILURE);
     return;
   }
@@ -437,9 +554,9 @@ void ChromeArcVideoDecodeAccelerator::PictureReady(
   arc_client_->OnBufferDone(PORT_OUTPUT, picture.picture_buffer_id(), metadata);
 }
 
-void ChromeArcVideoDecodeAccelerator::NotifyEndOfBitstreamBuffer(
+void ChromeArcVideoDecodeAcceleratorDeprecated::NotifyEndOfBitstreamBuffer(
     int32_t bitstream_buffer_id) {
-  DVLOG(5) << "NotifyEndOfBitstreamBuffer(" << bitstream_buffer_id << ")";
+  VLOGF(4) << "bitstream_buffer_id=" << bitstream_buffer_id;
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   InputRecord* input_record = FindInputRecord(bitstream_buffer_id);
   if (input_record == nullptr) {
@@ -450,41 +567,41 @@ void ChromeArcVideoDecodeAccelerator::NotifyEndOfBitstreamBuffer(
                             BufferMetadata());
 }
 
-void ChromeArcVideoDecodeAccelerator::NotifyFlushDone() {
+void ChromeArcVideoDecodeAcceleratorDeprecated::NotifyFlushDone() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   arc_client_->OnFlushDone();
 }
 
-void ChromeArcVideoDecodeAccelerator::NotifyResetDone() {
+void ChromeArcVideoDecodeAcceleratorDeprecated::NotifyResetDone() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   arc_client_->OnResetDone();
 }
 
-static ArcVideoDecodeAccelerator::Result ConvertErrorCode(
+static ArcVideoDecodeAcceleratorDeprecated::Result ConvertErrorCode(
     media::VideoDecodeAccelerator::Error error) {
   switch (error) {
     case media::VideoDecodeAccelerator::ILLEGAL_STATE:
-      return ArcVideoDecodeAccelerator::ILLEGAL_STATE;
+      return ArcVideoDecodeAcceleratorDeprecated::ILLEGAL_STATE;
     case media::VideoDecodeAccelerator::INVALID_ARGUMENT:
-      return ArcVideoDecodeAccelerator::INVALID_ARGUMENT;
+      return ArcVideoDecodeAcceleratorDeprecated::INVALID_ARGUMENT;
     case media::VideoDecodeAccelerator::UNREADABLE_INPUT:
-      return ArcVideoDecodeAccelerator::UNREADABLE_INPUT;
+      return ArcVideoDecodeAcceleratorDeprecated::UNREADABLE_INPUT;
     case media::VideoDecodeAccelerator::PLATFORM_FAILURE:
-      return ArcVideoDecodeAccelerator::PLATFORM_FAILURE;
+      return ArcVideoDecodeAcceleratorDeprecated::PLATFORM_FAILURE;
     default:
-      DLOG(ERROR) << "Unknown error: " << error;
-      return ArcVideoDecodeAccelerator::PLATFORM_FAILURE;
+      VLOGF(1) << "Unknown error: " << error;
+      return ArcVideoDecodeAcceleratorDeprecated::PLATFORM_FAILURE;
   }
 }
 
-void ChromeArcVideoDecodeAccelerator::NotifyError(
+void ChromeArcVideoDecodeAcceleratorDeprecated::NotifyError(
     media::VideoDecodeAccelerator::Error error) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DLOG(ERROR) << "Error notified: " << error;
+  VLOGF(1) << "Error notified: " << error;
   arc_client_->OnError(ConvertErrorCode(error));
 }
 
-void ChromeArcVideoDecodeAccelerator::CreateInputRecord(
+void ChromeArcVideoDecodeAcceleratorDeprecated::CreateInputRecord(
     int32_t bitstream_buffer_id,
     uint32_t buffer_index,
     int64_t timestamp) {
@@ -501,8 +618,9 @@ void ChromeArcVideoDecodeAccelerator::CreateInputRecord(
     input_records_.pop_back();
 }
 
-ChromeArcVideoDecodeAccelerator::InputRecord*
-ChromeArcVideoDecodeAccelerator::FindInputRecord(int32_t bitstream_buffer_id) {
+ChromeArcVideoDecodeAcceleratorDeprecated::InputRecord*
+ChromeArcVideoDecodeAcceleratorDeprecated::FindInputRecord(
+    int32_t bitstream_buffer_id) {
   for (auto& record : input_records_) {
     if (record.bitstream_buffer_id == bitstream_buffer_id)
       return &record;
@@ -510,24 +628,24 @@ ChromeArcVideoDecodeAccelerator::FindInputRecord(int32_t bitstream_buffer_id) {
   return nullptr;
 }
 
-bool ChromeArcVideoDecodeAccelerator::ValidatePortAndIndex(
+bool ChromeArcVideoDecodeAcceleratorDeprecated::ValidatePortAndIndex(
     PortType port,
     uint32_t index) const {
   switch (port) {
     case PORT_INPUT:
       if (index >= input_buffer_info_.size()) {
-        DLOG(ERROR) << "Invalid index: " << index;
+        VLOGF(1) << "Invalid index: " << index;
         return false;
       }
       return true;
     case PORT_OUTPUT:
       if (index >= buffers_pending_import_.size()) {
-        DLOG(ERROR) << "Invalid index: " << index;
+        VLOGF(1) << "Invalid index: " << index;
         return false;
       }
       return true;
     default:
-      DLOG(ERROR) << "Invalid port: " << port;
+      VLOGF(1) << "Invalid port: " << port;
       return false;
   }
 }

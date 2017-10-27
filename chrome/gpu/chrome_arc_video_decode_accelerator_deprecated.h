@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_GPU_CHROME_ARC_VIDEO_DECODE_ACCELERATOR_H_
-#define CHROME_GPU_CHROME_ARC_VIDEO_DECODE_ACCELERATOR_H_
+#ifndef CHROME_GPU_CHROME_ARC_VIDEO_DECODE_ACCELERATOR_DEPRECATED_H_
+#define CHROME_GPU_CHROME_ARC_VIDEO_DECODE_ACCELERATOR_DEPRECATED_H_
 
 #include <list>
 #include <memory>
@@ -12,31 +12,39 @@
 
 #include "base/callback.h"
 #include "base/threading/thread_checker.h"
-#include "chrome/gpu/arc_video_decode_accelerator.h"
+#include "chrome/gpu/arc_video_decode_accelerator_deprecated.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "media/video/video_decode_accelerator.h"
 
 namespace chromeos {
 namespace arc {
 
+class ProtectedBufferManager;
+class ProtectedBufferHandle;
+
 // This class is executed in the GPU process. It takes decoding requests from
 // ARC via IPC channels and translates and sends those requests to an
-// implementation of media::VideoDecodeAccelerator. It also returns the decoded
-// frames back to the ARC side.
-class ChromeArcVideoDecodeAccelerator
-    : public ArcVideoDecodeAccelerator,
+// implementation of media::VideoDecodeAcceleratorDeprecated.
+// It also returns the decoded frames back to the ARC side.
+class ChromeArcVideoDecodeAcceleratorDeprecated
+    : public ArcVideoDecodeAcceleratorDeprecated,
       public media::VideoDecodeAccelerator::Client,
-      public base::SupportsWeakPtr<ChromeArcVideoDecodeAccelerator> {
+      public base::SupportsWeakPtr<ChromeArcVideoDecodeAcceleratorDeprecated> {
  public:
-  explicit ChromeArcVideoDecodeAccelerator(
-      const gpu::GpuPreferences& gpu_preferences);
-  ~ChromeArcVideoDecodeAccelerator() override;
+  ChromeArcVideoDecodeAcceleratorDeprecated(
+      const gpu::GpuPreferences& gpu_preferences,
+      ProtectedBufferManager* protected_buffer_manager);
+  ~ChromeArcVideoDecodeAcceleratorDeprecated() override;
 
-  // Implementation of the ArcVideoDecodeAccelerator interface.
-  ArcVideoDecodeAccelerator::Result Initialize(
+  // Implementation of the ArcVideoDecodeAcceleratorDeprecated interface.
+  ArcVideoDecodeAcceleratorDeprecated::Result Initialize(
       const Config& config,
-      ArcVideoDecodeAccelerator::Client* client) override;
+      ArcVideoDecodeAcceleratorDeprecated::Client* client) override;
   void SetNumberOfOutputBuffers(size_t number) override;
+  bool AllocateProtectedBuffer(PortType port,
+                               uint32_t index,
+                               base::ScopedFD handle_fd,
+                               size_t size) override;
   void BindSharedMemory(PortType port,
                         uint32_t index,
                         base::ScopedFD ashmem_fd,
@@ -80,35 +88,41 @@ class ChromeArcVideoDecodeAccelerator
 
   // The information about the shared memory used as an input buffer.
   struct InputBufferInfo {
-    // The file handle to access the buffer. It is owned by this class and
-    // should be closed after use.
-    base::ScopedFD handle;
+    // SharedMemoryHandle for this buffer to be passed to accelerator.
+    // In non-secure mode, received via BindSharedMemory from the client,
+    // in secure mode, a handle for the SharedMemory in protected_shmem.
+    base::SharedMemoryHandle shm_handle;
 
-    // The offset of the payload to the beginning of the shared memory.
+    // Used only in secure mode; handle to the protected buffer backing
+    // this input buffer.
+    std::unique_ptr<ProtectedBufferHandle> protected_buffer_handle;
+
+    // Offset to the payload from the beginning of the shared memory buffer.
     off_t offset = 0;
 
-    // The size of the payload in bytes.
-    size_t length = 0;
-
     InputBufferInfo();
-    InputBufferInfo(InputBufferInfo&& other);
     ~InputBufferInfo();
   };
 
-  // The information about the dmabuf used as an output buffer.
+  // The information about the native pixmap used as an output buffer.
   struct OutputBufferInfo {
-    base::ScopedFD handle;
-    std::vector<::arc::VideoFramePlane> planes;
+    // GpuMemoryBufferHandle for this buffer to be passed to accelerator.
+    // In non-secure mode, received via BindDmabuf from the client,
+    // in secure mode, a handle to the NativePixmap in protected_pixmap.
+    gfx::GpuMemoryBufferHandle gpu_memory_buffer_handle;
+
+    // Used only in secure mode; handle to the protected buffer backing
+    // this output buffer.
+    std::unique_ptr<ProtectedBufferHandle> protected_buffer_handle;
 
     OutputBufferInfo();
-    OutputBufferInfo(OutputBufferInfo&& other);
     ~OutputBufferInfo();
   };
 
   // The helper method to simplify reporting of the status returned to UMA.
-  ArcVideoDecodeAccelerator::Result InitializeTask(
+  ArcVideoDecodeAcceleratorDeprecated::Result InitializeTask(
       const Config& config,
-      ArcVideoDecodeAccelerator::Client* client);
+      ArcVideoDecodeAcceleratorDeprecated::Client* client);
 
   // Helper function to validate |port| and |index|.
   bool ValidatePortAndIndex(PortType port, uint32_t index) const;
@@ -140,8 +154,8 @@ class ChromeArcVideoDecodeAccelerator
   std::unique_ptr<media::VideoDecodeAccelerator> vda_;
 
   // It's safe to use the pointer here, the life cycle of the |arc_client_|
-  // is longer than this ChromeArcVideoDecodeAccelerator.
-  ArcVideoDecodeAccelerator::Client* arc_client_;
+  // is longer than this ChromeArcVideoDecodeAcceleratorDeprecated.
+  ArcVideoDecodeAcceleratorDeprecated::Client* arc_client_;
 
   // The next ID for the bitstream buffer, started from 0.
   int32_t next_bitstream_buffer_id_;
@@ -155,12 +169,12 @@ class ChromeArcVideoDecodeAccelerator
   std::list<InputRecord> input_records_;
 
   // The details of the shared memory of each input buffers.
-  std::vector<InputBufferInfo> input_buffer_info_;
+  std::vector<std::unique_ptr<InputBufferInfo>> input_buffer_info_;
 
   // To keep those output buffers which have been bound by bindDmabuf() but
   // haven't been passed to VDA yet. Will call VDA::ImportBufferForPicture()
   // when those buffers are used for the first time.
-  std::vector<OutputBufferInfo> buffers_pending_import_;
+  std::vector<std::unique_ptr<OutputBufferInfo>> buffers_pending_import_;
 
   THREAD_CHECKER(thread_checker_);
   size_t output_buffer_size_;
@@ -168,12 +182,15 @@ class ChromeArcVideoDecodeAccelerator
   // The minimal number of requested output buffers.
   uint32_t requested_num_of_output_buffers_;
 
-  gpu::GpuPreferences gpu_preferences_;
+  bool secure_mode_ = false;
 
-  DISALLOW_COPY_AND_ASSIGN(ChromeArcVideoDecodeAccelerator);
+  gpu::GpuPreferences gpu_preferences_;
+  ProtectedBufferManager* protected_buffer_manager_;
+
+  DISALLOW_COPY_AND_ASSIGN(ChromeArcVideoDecodeAcceleratorDeprecated);
 };
 
 }  // namespace arc
 }  // namespace chromeos
 
-#endif  // CHROME_GPU_CHROME_ARC_VIDEO_DECODE_ACCELERATOR_H_
+#endif  // CHROME_GPU_CHROME_ARC_VIDEO_DECODE_ACCELERATOR_DEPRECATED_H_
