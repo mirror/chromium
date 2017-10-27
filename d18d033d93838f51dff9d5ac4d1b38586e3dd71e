@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a9aad53_b373ee73",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/delete-non-editable-range-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-27T07:32:50Z",
+      "side": 1,
+      "message": "Unfortunately turning designMode is mandatory to get same result.",
+      "revId": "d18d033d93838f51dff9d5ac4d1b38586e3dd71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
