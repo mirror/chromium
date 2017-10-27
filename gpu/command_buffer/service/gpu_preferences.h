@@ -60,6 +60,9 @@ struct GPU_EXPORT GpuPreferences {
   // Starts the GPU sandbox before creating a GL context.
   bool gpu_sandbox_start_early = false;
 
+  // Prevent the compositor from using its GPU implementation.
+  bool disable_gpu_compositing = false;
+
   // Disables VA-API accelerated video encode. ChromeOS only.
   bool disable_vaapi_accelerated_video_encode = false;
 
