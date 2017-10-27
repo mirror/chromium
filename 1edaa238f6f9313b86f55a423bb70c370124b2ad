@@ -16,6 +16,24 @@
       "revId": "1edaa238f6f9313b86f55a423bb70c370124b2ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cade5f8_10ed22fb",
+        "filename": "third_party/WebKit/Source/core/paint/ThemePainterMac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T17:00:54Z",
+      "side": 1,
+      "message": "Both mac and non-mac will still paint in this case. Non-mac will just use a different layout object for positioning the cancel button, and mac will continue to use the passed in rect.",
+      "parentUuid": "21661284_95c21f44",
+      "revId": "1edaa238f6f9313b86f55a423bb70c370124b2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
