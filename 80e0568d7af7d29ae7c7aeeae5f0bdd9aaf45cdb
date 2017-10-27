@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2c0679e7_6737da5b",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-27T19:26:58Z",
+      "side": 1,
+      "message": "I was trying to have a method that isolated the logic for selecting the URL and could safely be called from any place. And I wasn\u0027t sure if there was a strong reason for GetLoadingURL to kept private.\n\nChanged it so the new method is private, since it is only needed internally now and RenderFrameImpl can directly update the URL on the compositor. How does this look?",
+      "parentUuid": "5b420e59_164f8797",
+      "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc4558a_37903b98",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 15
