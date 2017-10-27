@@ -115,6 +115,15 @@ public class MultiWindowUtils implements ActivityStateListener {
         intent.setClass(activity, targetActivity);
         intent.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT);
 
+        // Remove LAUNCH_ADJACENT flag if we want to start CTA, but it's already running.
+        // If arleady running CTA was started via .Main activity alias, starting it again with
+        // LAUNCH_ADJACENT will create another CTA instance with just a single tab. There doesn't
+        // seem to be a reliable way to check if an activity was started via an alias, so we're
+        // removing the flag if any CTA instance is running. See crbug.com/771516 for details.
+        if (targetActivity.equals(ChromeTabbedActivity.class) && isChromeBrowserActivityRunning()) {
+            intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT);
+        }
+
         // Let Chrome know that this intent is from Chrome, so that it does not close the app when
         // the user presses 'back' button.
         intent.putExtra(Browser.EXTRA_APPLICATION_ID, activity.getPackageName());
