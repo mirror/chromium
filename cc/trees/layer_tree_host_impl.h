@@ -712,6 +712,11 @@ class CC_EXPORT LayerTreeHostImpl
 
   void UpdateTileManagerMemoryPolicy(const ManagedMemoryPolicy& policy);
 
+  // Returns true if the damage rect is non-empty. This check includes damage
+  // the HUD, but not touch handle. This function should only be called when
+  // the active tree's draw properties are valid and after updating the damage.
+  bool HasDamage() const;
+
   // This function should only be called from PrepareToDraw, as DidDrawAllLayers
   // must be called if this helper function is called.  Returns DRAW_SUCCESS if
   // the frame should be drawn.
