@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c475c688_191d1850",
+        "filename": "chrome/android/java/res/drawable-sw600dp/window_background.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-27T21:53:26Z",
+      "side": 1,
+      "message": "Obvious thing\n\n\u003citem android:gravity\u003d\"top\"\u003e\n    \u003cshape android:shape\u003d\"rectangle\"\u003e\n        \u003csize android:height\u003d\"25dp\"/\u003e\n        \u003csolid android:color\u003d\"@android:color/black\"/\u003e\n    \u003c/shape\u003e\n\u003c/item\u003e\n\ndoesn\u0027t work - if placed *before* toolbar_background item, it causes horrible artifacts. If placed *after*, it doesn\u0027t have any effect.\n\nI\u0027ll discuss this with Android guys later, for now lets just leave this as is.",
+      "parentUuid": "889f5901_70a2dcc6",
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0ef6d0d_e6caccaa",
         "filename": "chrome/android/java/res/drawable-sw600dp/window_background.xml",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "dc1ee895_5854461b",
+        "filename": "chrome/android/java/res/drawable-sw600dp/window_background.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-27T21:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0ef6d0d_e6caccaa",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9350c29a_64a485a1",
         "filename": "chrome/android/java/res/drawable-sw720dp/window_background.xml",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a9c2fb_9c0da788",
+        "filename": "chrome/android/java/res/drawable-sw720dp/window_background.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-27T21:53:26Z",
+      "side": 1,
+      "message": "You\u0027re right. Removed.",
+      "parentUuid": "9350c29a_64a485a1",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "5f563e79_c83ea5e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-27T21:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f56f7e09_9a364bba",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 13
+      },
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d9e4c56_1e5be36c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
         "patchSetId": 4
@@ -131,6 +221,30 @@
       "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6d20ed_e304b9dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-27T21:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d9e4c56_1e5be36c",
+      "range": {
+        "startLine": 421,
+        "startChar": 26,
+        "endLine": 421,
+        "endChar": 27
+      },
+      "revId": "480256ee3b0158691f1e008a5edf169af83ebeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
