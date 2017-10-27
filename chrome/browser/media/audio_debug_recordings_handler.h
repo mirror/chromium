@@ -60,6 +60,10 @@ class AudioDebugRecordingsHandler
                                 const RecordingDoneCallback& callback,
                                 const RecordingErrorCallback& error_callback);
 
+  // Returns whether audio debug recording has is allowed by either at runtime
+  // on the AudioManager or with a command line switch.
+  bool AudioDebugRecordingsAllowed();
+
  private:
   friend class base::RefCountedThreadSafe<AudioDebugRecordingsHandler>;
 

@@ -55,6 +55,8 @@ class MEDIA_EXPORT AudioManagerBase : public AudioManager {
       AudioLogFactory::AudioComponent component) override;
   void EnableDebugRecording(const base::FilePath& base_file_name) final;
   void DisableDebugRecording() final;
+  void SetAudioDebugRecordingsAllowed(bool allowed) override;
+  bool GetAudioDebugRecordingsAllowed() override;
 
   void SetMaxStreamCountForTesting(int max_input, int max_output) final;
 
@@ -187,6 +189,8 @@ class MEDIA_EXPORT AudioManagerBase : public AudioManager {
 
   // Number of currently open output streams.
   int num_output_streams_;
+
+  bool audio_debug_recordings_allowed_;
 
   // Track output state change listeners.
   base::ObserverList<AudioDeviceListener> output_listeners_;

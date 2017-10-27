@@ -167,5 +167,9 @@ namespace webrtcLoggingPrivate {
     static void stopWebRtcEventLogging(RequestInfo request,
                                        DOMString securityOrigin,
                                        RecordingDoneCallback callback);
+
+    // Enables future calls to startAudioDebugRecordings().
+    static void setAudioDebugRecordingsAllowed(boolean allowed,
+                                               GenericDoneCallback callback);
   };
 };

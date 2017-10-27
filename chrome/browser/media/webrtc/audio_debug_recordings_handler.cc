@@ -92,6 +92,13 @@ void AudioDebugRecordingsHandler::StopAudioDebugRecordings(
                  callback, error_callback));
 }
 
+bool AudioDebugRecordingsHandler::AudioDebugRecordingsAllowed() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  return audio_manager_->GetAudioDebugRecordingsAllowed() ||
+         base::CommandLine::ForCurrentProcess()->HasSwitch(
+             switches::kEnableAudioDebugRecordingsFromExtension);
+}
+
 void AudioDebugRecordingsHandler::DoStartAudioDebugRecordings(
     content::RenderProcessHost* host,
     base::TimeDelta delay,
