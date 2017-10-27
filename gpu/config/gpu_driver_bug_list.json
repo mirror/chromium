@@ -2640,9 +2640,18 @@
       "features": [
         "dont_initialize_uninitialized_locals"
       ]
+    },
+    {
+      "id": 243,
+      "description": "Program binaries don't contain transform feedback varyings on Chromebit",
+      "cr_bugs": [778871],
+      "os": {
+        "type": "chromeos"
+      },
+      "gl_renderer": "Mali-T760",
+      "features": [
+        "disable_program_caching_for_transform_feedback"
+      ]
     }
-  ],
-  "comment": [
-    "Please update the version number on top whenever you change this file"
   ]
 }
