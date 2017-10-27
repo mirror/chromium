@@ -227,13 +227,15 @@ gfx::Size LabelButton::CalculatePreferredSize() const {
 }
 
 int LabelButton::GetHeightForWidth(int w) const {
-  w -= GetInsets().width();
+  const gfx::Insets insets = GetInsets();
+  w -= insets.width();
   const gfx::Size image_size(image_->GetPreferredSize());
   w -= image_size.width();
   if (image_size.width() > 0 && !GetText().empty())
     w -= image_label_spacing_;
 
-  int height = std::max(image_size.height(), label_->GetHeightForWidth(w));
+  int height = std::max(image_size.height(), label_->GetHeightForWidth(w)) +
+               insets.height();
   if (border())
     height = std::max(height, border()->GetMinimumSize().height());
 
