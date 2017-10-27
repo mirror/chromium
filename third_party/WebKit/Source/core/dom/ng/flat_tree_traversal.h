@@ -24,8 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef FlatTreeTraversal_h
-#define FlatTreeTraversal_h
+#ifndef FlatTreeTraversalNg_h
+#define FlatTreeTraversalNg_h
 
 #include "core/CoreExport.h"
 #include "core/dom/Document.h"
@@ -50,8 +50,8 @@ class Node;
 //
 // FIXME: Make some functions inline to optimise the performance.
 // https://bugs.webkit.org/show_bug.cgi?id=82702
-class CORE_EXPORT FlatTreeTraversal {
-  STATIC_ONLY(FlatTreeTraversal);
+class CORE_EXPORT FlatTreeTraversalNg {
+  STATIC_ONLY(FlatTreeTraversalNg);
 
  public:
   typedef LayoutTreeBuilderTraversal::ParentDetails ParentTraversalDetails;
@@ -130,7 +130,7 @@ class CORE_EXPORT FlatTreeTraversal {
   //   - InclusiveDescendantsOf()
   //   - StartsAt()
   //   - StartsAfter()
-  static TraversalRange<TraversalChildrenIterator<FlatTreeTraversal>>
+  static TraversalRange<TraversalChildrenIterator<FlatTreeTraversalNg>>
   ChildrenOf(const Node&);
 
  private:
@@ -151,7 +151,8 @@ class CORE_EXPORT FlatTreeTraversal {
 #endif
   }
 
-  static Node* ResolveDistributionStartingAt(const Node*, TraversalDirection);
+  // static Node* ResolveDistributionStartingAt(const Node*,
+  // TraversalDirection);
   static Node* V0ResolveDistributionStartingAt(const Node&, TraversalDirection);
 
   static Node* TraverseNext(const Node&);
@@ -185,7 +186,7 @@ class CORE_EXPORT FlatTreeTraversal {
                                                 const Node* stay_within);
 };
 
-inline ContainerNode* FlatTreeTraversal::Parent(
+inline ContainerNode* FlatTreeTraversalNg::Parent(
     const Node& node,
     ParentTraversalDetails* details) {
   AssertPrecondition(node);
@@ -194,49 +195,50 @@ inline ContainerNode* FlatTreeTraversal::Parent(
   return result;
 }
 
-inline Element* FlatTreeTraversal::ParentElement(const Node& node) {
-  ContainerNode* parent = FlatTreeTraversal::Parent(node);
+inline Element* FlatTreeTraversalNg::ParentElement(const Node& node) {
+  ContainerNode* parent = FlatTreeTraversalNg::Parent(node);
   return parent && parent->IsElementNode() ? ToElement(parent) : nullptr;
 }
 
-inline Node* FlatTreeTraversal::NextSibling(const Node& node) {
+inline Node* FlatTreeTraversalNg::NextSibling(const Node& node) {
   AssertPrecondition(node);
   Node* result = TraverseSiblings(node, kTraversalDirectionForward);
   AssertPostcondition(result);
   return result;
 }
 
-inline Node* FlatTreeTraversal::PreviousSibling(const Node& node) {
+inline Node* FlatTreeTraversalNg::PreviousSibling(const Node& node) {
   AssertPrecondition(node);
   Node* result = TraverseSiblings(node, kTraversalDirectionBackward);
   AssertPostcondition(result);
   return result;
 }
 
-inline Node* FlatTreeTraversal::Next(const Node& node) {
+inline Node* FlatTreeTraversalNg::Next(const Node& node) {
   AssertPrecondition(node);
   Node* result = TraverseNext(node);
   AssertPostcondition(result);
   return result;
 }
 
-inline Node* FlatTreeTraversal::Next(const Node& node,
-                                     const Node* stay_within) {
+inline Node* FlatTreeTraversalNg::Next(const Node& node,
+                                       const Node* stay_within) {
   AssertPrecondition(node);
   Node* result = TraverseNext(node, stay_within);
   AssertPostcondition(result);
   return result;
 }
 
-inline Node* FlatTreeTraversal::NextSkippingChildren(const Node& node,
-                                                     const Node* stay_within) {
+inline Node* FlatTreeTraversalNg::NextSkippingChildren(
+    const Node& node,
+    const Node* stay_within) {
   AssertPrecondition(node);
   Node* result = TraverseNextSkippingChildren(node, stay_within);
   AssertPostcondition(result);
   return result;
 }
 
-inline Node* FlatTreeTraversal::TraverseNext(const Node& node) {
+inline Node* FlatTreeTraversalNg::TraverseNext(const Node& node) {
   if (Node* next = TraverseFirstChild(node))
     return next;
   for (const Node* next = &node; next; next = TraverseParent(*next)) {
@@ -246,14 +248,14 @@ inline Node* FlatTreeTraversal::TraverseNext(const Node& node) {
   return nullptr;
 }
 
-inline Node* FlatTreeTraversal::TraverseNext(const Node& node,
-                                             const Node* stay_within) {
+inline Node* FlatTreeTraversalNg::TraverseNext(const Node& node,
+                                               const Node* stay_within) {
   if (Node* next = TraverseFirstChild(node))
     return next;
   return TraverseNextSkippingChildren(node, stay_within);
 }
 
-inline Node* FlatTreeTraversal::TraverseNextSkippingChildren(
+inline Node* FlatTreeTraversalNg::TraverseNextSkippingChildren(
     const Node& node,
     const Node* stay_within) {
   for (const Node* next = &node; next; next = TraverseParent(*next)) {
@@ -265,14 +267,14 @@ inline Node* FlatTreeTraversal::TraverseNextSkippingChildren(
   return nullptr;
 }
 
-inline Node* FlatTreeTraversal::Previous(const Node& node) {
+inline Node* FlatTreeTraversalNg::Previous(const Node& node) {
   AssertPrecondition(node);
   Node* result = TraversePrevious(node);
   AssertPostcondition(result);
   return result;
 }
 
-inline Node* FlatTreeTraversal::TraversePrevious(const Node& node) {
+inline Node* FlatTreeTraversalNg::TraversePrevious(const Node& node) {
   if (Node* previous = TraversePreviousSibling(node)) {
     while (Node* child = TraverseLastChild(*previous))
       previous = child;
@@ -281,44 +283,45 @@ inline Node* FlatTreeTraversal::TraversePrevious(const Node& node) {
   return TraverseParent(node);
 }
 
-inline Node* FlatTreeTraversal::FirstChild(const Node& node) {
+inline Node* FlatTreeTraversalNg::FirstChild(const Node& node) {
   AssertPrecondition(node);
   Node* result = TraverseChild(node, kTraversalDirectionForward);
   AssertPostcondition(result);
   return result;
 }
 
-inline Node* FlatTreeTraversal::LastChild(const Node& node) {
+inline Node* FlatTreeTraversalNg::LastChild(const Node& node) {
   AssertPrecondition(node);
   Node* result = TraverseLastChild(node);
   AssertPostcondition(result);
   return result;
 }
 
-inline bool FlatTreeTraversal::HasChildren(const Node& node) {
+inline bool FlatTreeTraversalNg::HasChildren(const Node& node) {
   return FirstChild(node);
 }
 
-inline Node* FlatTreeTraversal::TraverseNextSibling(const Node& node) {
+inline Node* FlatTreeTraversalNg::TraverseNextSibling(const Node& node) {
   return TraverseSiblings(node, kTraversalDirectionForward);
 }
 
-inline Node* FlatTreeTraversal::TraversePreviousSibling(const Node& node) {
+inline Node* FlatTreeTraversalNg::TraversePreviousSibling(const Node& node) {
   return TraverseSiblings(node, kTraversalDirectionBackward);
 }
 
-inline Node* FlatTreeTraversal::TraverseFirstChild(const Node& node) {
+inline Node* FlatTreeTraversalNg::TraverseFirstChild(const Node& node) {
   return TraverseChild(node, kTraversalDirectionForward);
 }
 
-inline Node* FlatTreeTraversal::TraverseLastChild(const Node& node) {
+inline Node* FlatTreeTraversalNg::TraverseLastChild(const Node& node) {
   return TraverseChild(node, kTraversalDirectionBackward);
 }
 
 // TraverseRange<T> implementations
-inline TraversalRange<TraversalChildrenIterator<FlatTreeTraversal>>
-FlatTreeTraversal::ChildrenOf(const Node& parent) {
-  return TraversalRange<TraversalChildrenIterator<FlatTreeTraversal>>(&parent);
+inline TraversalRange<TraversalChildrenIterator<FlatTreeTraversalNg>>
+FlatTreeTraversalNg::ChildrenOf(const Node& parent) {
+  return TraversalRange<TraversalChildrenIterator<FlatTreeTraversalNg>>(
+      &parent);
 }
 
 }  // namespace blink
