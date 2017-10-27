@@ -405,11 +405,11 @@ bool UserMediaRequest::IsSecureContextUse(String& error_message) {
         *document, WebFeature::kGetUserMediaSecureOriginIframe);
     if (Audio()) {
       Deprecation::CountDeprecationFeaturePolicy(
-          *document, WebFeaturePolicyFeature::kMicrophone);
+          *document, FeaturePolicyFeature::kMicrophone);
     }
     if (Video()) {
-      Deprecation::CountDeprecationFeaturePolicy(
-          *document, WebFeaturePolicyFeature::kCamera);
+      Deprecation::CountDeprecationFeaturePolicy(*document,
+                                                 FeaturePolicyFeature::kCamera);
     }
 
     HostsUsingFeatures::CountAnyWorld(
