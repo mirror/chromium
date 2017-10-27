@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80d46407_5a420485",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-27T21:32:30Z",
+      "side": 1,
+      "message": "estark@: I think we want this at chrome://flags in the near future, but right now this will make certificate errors unbypassable. Let me know if you think it would be a good idea to add a sentence like \"This flag may make it impossible for you to view or bypass certain error pages.\" and/or withhold it from about_flags for now.",
+      "revId": "0ce9306b219bdebfb9106aa2a34d456aa1276963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
