@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "d4253c28_d219b638",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTextTrackListElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-27T15:15:04Z",
+      "side": 1,
+      "message": "We don\u0027t hide the overflow menu on click, when the text track menu is shown the overflow menu is already hidden so calling ToggleOverflowMenu will show the overflow.",
+      "parentUuid": "77a58d1f_64be3586",
+      "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7fd7458_69e15781",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
         "patchSetId": 1

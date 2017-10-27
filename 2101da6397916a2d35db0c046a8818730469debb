@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "36a47025_a28fead2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-27T15:15:04Z",
+      "side": 1,
+      "message": "The legacy \u003caudio\u003e controls just places them at the bottom if there is vertical room, whereas new modern \u003caudio\u003e controls will center.",
+      "parentUuid": "0ea1d824_3d53bd7e",
+      "revId": "2101da6397916a2d35db0c046a8818730469debb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20f4e23a_e438b947",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTextTrackListElement.h",
         "patchSetId": 3
@@ -50,6 +68,24 @@
       "revId": "2101da6397916a2d35db0c046a8818730469debb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8144418_a3914c80",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTextTrackListElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-27T15:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20f4e23a_e438b947",
+      "revId": "2101da6397916a2d35db0c046a8818730469debb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "be9230ba_6d1eb1f1",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-27T15:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef389108_bd661451",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 390,
+        "endChar": 5
+      },
+      "revId": "2101da6397916a2d35db0c046a8818730469debb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b0d6695_9d31ee4b",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
         "patchSetId": 3
@@ -96,6 +156,30 @@
       "revId": "2101da6397916a2d35db0c046a8818730469debb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7df1e6_e2fd41ec",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-27T15:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b0d6695_9d31ee4b",
+      "range": {
+        "startLine": 414,
+        "startChar": 6,
+        "endLine": 414,
+        "endChar": 7
+      },
+      "revId": "2101da6397916a2d35db0c046a8818730469debb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
