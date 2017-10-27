@@ -8,10 +8,24 @@
 #include <stdint.h>
 #include <string>
 
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "content/common/content_export.h"
+#include "services/network/public/interfaces/cors.mojom.h"
 
 namespace content {
+
+struct CONTENT_EXPORT ResourceRequestCORSError {
+  ResourceRequestCORSError();
+  ResourceRequestCORSError(const ResourceRequestCORSError& status);
+
+  explicit ResourceRequestCORSError(
+      network::mojom::CORSAccessError access_error);
+
+  base::Optional<network::mojom::CORSAccessError> access;
+  base::Optional<network::mojom::CORSPreflightError> preflight;
+  base::Optional<network::mojom::CORSRedirectError> redirect;
+};
 
 struct CONTENT_EXPORT ResourceRequestCompletionStatus {
   ResourceRequestCompletionStatus();
@@ -41,6 +55,9 @@ struct CONTENT_EXPORT ResourceRequestCompletionStatus {
 
   // The length of the response body after decoding.
   int64_t decoded_body_length = 0;
+
+  // Optional CORS error details.
+  base::Optional<struct ResourceRequestCORSError> cors_error;
 };
 
 }  // namespace content

@@ -4,9 +4,50 @@
 
 #include "content/renderer/loader/cors_url_loader.h"
 
+#include "content/public/common/origin_util.h"
+#include "content/public/common/service_worker_modes.h"
+#include "third_party/WebKit/public/platform/WebCORS.h"
+#include "third_party/WebKit/public/platform/WebHTTPHeaderMap.h"
+#include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
+#include "third_party/WebKit/public/platform/WebURLRequest.h"
+
 namespace content {
 
-// TODO(hintzed): At the moment this class simply forwards all calls to the
+namespace {
+
+// TODO(toyoshim): Use mojo enum types in both content and blink.
+blink::WebURLRequest::FetchCredentialsMode WebFetchCredentialsMode(
+    FetchCredentialsMode mode) {
+  return static_cast<blink::WebURLRequest::FetchCredentialsMode>(mode);
+}
+
+ResourceRequestCompletionStatus CreateCompletionStatus(
+    network::mojom::CORSAccessError access_error) {
+  ResourceRequestCompletionStatus completion_status;
+  completion_status.error_code = net::ERR_FAILED;
+  completion_status.cors_error = ResourceRequestCORSError(access_error);
+  return completion_status;
+}
+
+bool CalculateCORSFlag(const ResourceRequest& request) {
+  if (request.fetch_request_mode ==
+          network::mojom::FetchRequestMode::kNavigate &&
+      (request.resource_type == RESOURCE_TYPE_MAIN_FRAME ||
+       request.resource_type == RESOURCE_TYPE_SUB_FRAME)) {
+    return false;
+  }
+  url::Origin url_origin = url::Origin::Create(request.url);
+  if (IsOriginWhiteListedTrustworthy(url_origin))
+    return false;
+  if (!request.request_initiator.has_value())
+    return true;
+  url::Origin security_origin(request.request_initiator.value());
+  return !security_origin.IsSameOriginWith(url_origin);
+}
+
+}  // namespace
+
+// TODO(toyoshim): At the moment this class simply forwards all calls to the
 // underlying network loader. Part of the effort to move CORS handling out of
 // Blink: http://crbug/736308.
 CORSURLLoader::CORSURLLoader(
@@ -19,8 +60,18 @@ CORSURLLoader::CORSURLLoader(
     mojom::URLLoaderFactory* network_loader_factory)
     : network_loader_factory_(network_loader_factory),
       network_client_binding_(this),
-      forwarding_client_(std::move(client)) {
+      forwarding_client_(std::move(client)),
+      security_origin_(resource_request.request_initiator.has_value()
+                           ? resource_request.request_initiator.value()
+                           : url::Origin()),
+      final_url_(resource_request.url),
+      fetch_request_mode_(resource_request.fetch_request_mode),
+      fetch_credentials_mode_(resource_request.fetch_credentials_mode),
+      fetch_cors_flag_(CalculateCORSFlag(resource_request)) {
   DCHECK(network_loader_factory_);
+
+  // TODO(toyoshim): Needs some checks if the calculated fetch_cors_flag_
+  // is allowed in this request or not.
 
   mojom::URLLoaderClientPtr network_client;
   network_client_binding_.Bind(mojo::MakeRequest(&network_client));
@@ -36,27 +87,45 @@ CORSURLLoader::CORSURLLoader(
 CORSURLLoader::~CORSURLLoader() {}
 
 void CORSURLLoader::FollowRedirect() {
-  network_loader_->FollowRedirect();
+  if (network_loader_)
+    network_loader_->FollowRedirect();
 }
 
 void CORSURLLoader::SetPriority(net::RequestPriority priority,
                                 int32_t intra_priority_value) {
-  network_loader_->SetPriority(priority, intra_priority_value);
+  if (network_loader_)
+    network_loader_->SetPriority(priority, intra_priority_value);
 }
 
 void CORSURLLoader::PauseReadingBodyFromNet() {
-  network_loader_->PauseReadingBodyFromNet();
+  if (network_loader_)
+    network_loader_->PauseReadingBodyFromNet();
 }
 
 void CORSURLLoader::ResumeReadingBodyFromNet() {
-  network_loader_->ResumeReadingBodyFromNet();
+  if (network_loader_)
+    network_loader_->ResumeReadingBodyFromNet();
 }
 
-// mojom::URLLoaderClient for simply proxying network for now:
 void CORSURLLoader::OnReceiveResponse(
     const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
+  DCHECK(network_loader_);
+  DCHECK(forwarding_client_);
+  if (fetch_cors_flag_ &&
+      blink::WebCORS::IsCORSEnabledRequestMode(fetch_request_mode_)) {
+    base::Optional<network::mojom::CORSAccessError> cors_error =
+        blink::WebCORS::CheckAccess(
+            final_url_, response_head.headers->response_code(),
+            blink::WebHTTPHeaderMap(response_head.headers.get()),
+            WebFetchCredentialsMode(fetch_credentials_mode_), security_origin_);
+    if (cors_error) {
+      forwarding_client_->OnComplete(CreateCompletionStatus(*cors_error));
+      network_loader_.reset();
+      return;
+    }
+  }
   forwarding_client_->OnReceiveResponse(response_head, ssl_info,
                                         std::move(downloaded_file));
 }
@@ -64,36 +133,53 @@ void CORSURLLoader::OnReceiveResponse(
 void CORSURLLoader::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
     const ResourceResponseHead& response_head) {
+  DCHECK(network_loader_);
+  DCHECK(forwarding_client_);
+  final_url_ = redirect_info.new_url;
   forwarding_client_->OnReceiveRedirect(redirect_info, response_head);
 }
 
 void CORSURLLoader::OnDataDownloaded(int64_t data_len,
                                      int64_t encoded_data_len) {
+  DCHECK(network_loader_);
+  DCHECK(forwarding_client_);
   forwarding_client_->OnDataDownloaded(data_len, encoded_data_len);
 }
 
 void CORSURLLoader::OnUploadProgress(int64_t current_position,
                                      int64_t total_size,
                                      OnUploadProgressCallback ack_callback) {
+  DCHECK(network_loader_);
+  DCHECK(forwarding_client_);
   forwarding_client_->OnUploadProgress(current_position, total_size,
                                        std::move(ack_callback));
 }
 
 void CORSURLLoader::OnReceiveCachedMetadata(const std::vector<uint8_t>& data) {
+  DCHECK(network_loader_);
+  DCHECK(forwarding_client_);
   forwarding_client_->OnReceiveCachedMetadata(data);
 }
 
 void CORSURLLoader::OnTransferSizeUpdated(int32_t transfer_size_diff) {
+  DCHECK(network_loader_);
+  DCHECK(forwarding_client_);
   forwarding_client_->OnTransferSizeUpdated(transfer_size_diff);
 }
 
 void CORSURLLoader::OnStartLoadingResponseBody(
     mojo::ScopedDataPipeConsumerHandle body) {
+  DCHECK(network_loader_);
+  DCHECK(forwarding_client_);
   forwarding_client_->OnStartLoadingResponseBody(std::move(body));
 }
 
 void CORSURLLoader::OnComplete(const ResourceRequestCompletionStatus& status) {
-  forwarding_client_->OnComplete(status);
+  DCHECK(forwarding_client_);
+  // Check |network_loader_| existence since OnComplete can be called even when
+  // the loader is reset.
+  if (network_loader_)
+    forwarding_client_->OnComplete(status);
 }
 
 void CORSURLLoader::OnUpstreamConnectionError() {

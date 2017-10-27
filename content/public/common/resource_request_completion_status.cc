@@ -8,6 +8,14 @@
 
 namespace content {
 
+ResourceRequestCORSError::ResourceRequestCORSError() = default;
+ResourceRequestCORSError::ResourceRequestCORSError(
+    const ResourceRequestCORSError& cors_error) = default;
+
+ResourceRequestCORSError::ResourceRequestCORSError(
+    network::mojom::CORSAccessError access_error)
+    : access(access_error) {}
+
 ResourceRequestCompletionStatus::ResourceRequestCompletionStatus() = default;
 ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(
     const ResourceRequestCompletionStatus& status) = default;

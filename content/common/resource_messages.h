@@ -291,6 +291,21 @@ IPC_STRUCT_TRAITS_BEGIN(content::ResourceRequest)
 IPC_STRUCT_TRAITS_END()
 
 // Parameters for a ResourceMsg_RequestComplete
+IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::CORSAccessError,
+                          network::mojom::CORSAccessError::kLast)
+
+IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::CORSPreflightError,
+                          network::mojom::CORSPreflightError::kLast)
+
+IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::CORSRedirectError,
+                          network::mojom::CORSRedirectError::kLast)
+
+IPC_STRUCT_TRAITS_BEGIN(content::ResourceRequestCORSError)
+  IPC_STRUCT_TRAITS_MEMBER(access)
+  IPC_STRUCT_TRAITS_MEMBER(preflight)
+  IPC_STRUCT_TRAITS_MEMBER(redirect)
+IPC_STRUCT_TRAITS_END()
+
 IPC_STRUCT_TRAITS_BEGIN(content::ResourceRequestCompletionStatus)
   IPC_STRUCT_TRAITS_MEMBER(error_code)
   IPC_STRUCT_TRAITS_MEMBER(exists_in_cache)
@@ -298,6 +313,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::ResourceRequestCompletionStatus)
   IPC_STRUCT_TRAITS_MEMBER(encoded_data_length)
   IPC_STRUCT_TRAITS_MEMBER(encoded_body_length)
   IPC_STRUCT_TRAITS_MEMBER(decoded_body_length)
+  IPC_STRUCT_TRAITS_MEMBER(cors_error)
 IPC_STRUCT_TRAITS_END()
 
 // Resource messages sent from the browser to the renderer.
