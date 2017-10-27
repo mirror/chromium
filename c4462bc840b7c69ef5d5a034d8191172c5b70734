@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "03169151_c6b01d9b",
+        "filename": "tools/android/errorprone_plugin/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T00:45:34Z",
+      "side": 1,
+      "message": "maybe add tommy too? 3 owners is better than 2 :P",
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7cd63b6_340a53e6",
         "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
         "patchSetId": 2
