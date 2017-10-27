@@ -341,19 +341,24 @@ int64_t CalculateResponsePaddingInternal(
 
 // The state needed to pass between CacheStorageCache::Put callbacks.
 struct CacheStorageCache::PutContext {
-  PutContext(std::unique_ptr<ServiceWorkerFetchRequest> request,
-             std::unique_ptr<ServiceWorkerResponse> response,
-             std::unique_ptr<storage::BlobDataHandle> blob_data_handle,
-             CacheStorageCache::ErrorCallback callback)
+  PutContext(
+      std::unique_ptr<ServiceWorkerFetchRequest> request,
+      std::unique_ptr<ServiceWorkerResponse> response,
+      std::unique_ptr<storage::BlobDataHandle> blob_data_handle,
+      std::unique_ptr<storage::BlobDataHandle> side_data_blob_data_handle,
+      CacheStorageCache::ErrorCallback callback)
       : request(std::move(request)),
         response(std::move(response)),
         blob_data_handle(std::move(blob_data_handle)),
+        side_data_blob_data_handle(std::move(side_data_blob_data_handle)),
         callback(std::move(callback)) {}
 
   // Input parameters to the Put function.
   std::unique_ptr<ServiceWorkerFetchRequest> request;
   std::unique_ptr<ServiceWorkerResponse> response;
   std::unique_ptr<storage::BlobDataHandle> blob_data_handle;
+  std::unique_ptr<storage::BlobDataHandle> side_data_blob_data_handle;
+
   CacheStorageCache::ErrorCallback callback;
   disk_cache::ScopedEntryPtr cache_entry;
 
@@ -1181,6 +1186,7 @@ void CacheStorageCache::Put(const CacheStorageBatchOperation& operation,
   std::unique_ptr<ServiceWorkerResponse> response =
       base::MakeUnique<ServiceWorkerResponse>(operation.response);
   std::unique_ptr<storage::BlobDataHandle> blob_data_handle;
+  std::unique_ptr<storage::BlobDataHandle> side_data_blob_data_handle;
 
   if (!response->blob_uuid.empty()) {
     DCHECK_EQ(response->blob != nullptr, features::IsMojoBlobsEnabled());
@@ -1195,6 +1201,20 @@ void CacheStorageCache::Put(const CacheStorageBatchOperation& operation,
       return;
     }
   }
+  if (!response->side_data_blob_uuid.empty()) {
+    DCHECK_EQ(response->side_data_blob != nullptr,
+              features::IsMojoBlobsEnabled());
+    if (!blob_storage_context_) {
+      std::move(callback).Run(CACHE_STORAGE_ERROR_STORAGE);
+      return;
+    }
+    side_data_blob_data_handle = blob_storage_context_->GetBlobDataFromUUID(
+        response->side_data_blob_uuid);
+    if (!side_data_blob_data_handle) {
+      std::move(callback).Run(CACHE_STORAGE_ERROR_STORAGE);
+      return;
+    }
+  }
 
   UMA_HISTOGRAM_ENUMERATION(
       "ServiceWorkerCache.Cache.AllWritesResponseType",
@@ -1203,6 +1223,7 @@ void CacheStorageCache::Put(const CacheStorageBatchOperation& operation,
 
   std::unique_ptr<PutContext> put_context(new PutContext(
       std::move(request), std::move(response), std::move(blob_data_handle),
+      std::move(side_data_blob_data_handle),
       scheduler_->WrapCallbackToRunNext(std::move(callback))));
 
   scheduler_->ScheduleOperation(base::BindOnce(
@@ -1396,6 +1417,50 @@ void CacheStorageCache::PutDidWriteBlobToCache(
   put_context->cache_entry = std::move(entry);
 
   active_blob_to_disk_cache_writers_.Remove(blob_to_cache_key);
+
+  if (!success) {
+    put_context->cache_entry->Doom();
+    std::move(put_context->callback).Run(CACHE_STORAGE_ERROR_STORAGE);
+    return;
+  }
+
+  if (put_context->response->side_data_blob_uuid.empty()) {
+    UpdateCacheSize(
+        base::BindOnce(std::move(put_context->callback), CACHE_STORAGE_OK));
+    return;
+  }
+
+  DCHECK(put_context->side_data_blob_data_handle);
+
+  disk_cache::ScopedEntryPtr tmp_entry(std::move(put_context->cache_entry));
+  put_context->cache_entry = NULL;
+
+  auto blob_to_cache = base::MakeUnique<CacheStorageBlobToDiskCache>();
+  CacheStorageBlobToDiskCache* blob_to_cache_raw = blob_to_cache.get();
+  BlobToDiskCacheIDMap::KeyType side_data_blob_to_cache_key =
+      active_blob_to_disk_cache_writers_.Add(std::move(blob_to_cache));
+
+  std::unique_ptr<storage::BlobDataHandle> side_data_blob_data_handle =
+      std::move(put_context->side_data_blob_data_handle);
+
+  blob_to_cache_raw->StreamBlobToCache(
+      std::move(tmp_entry), INDEX_SIDE_DATA, request_context_getter_.get(),
+      std::move(side_data_blob_data_handle),
+      base::BindOnce(&CacheStorageCache::PutDidWriteSideDataBlobToCache,
+                     weak_ptr_factory_.GetWeakPtr(),
+                     base::Passed(std::move(put_context)),
+                     side_data_blob_to_cache_key));
+}
+
+void CacheStorageCache::PutDidWriteSideDataBlobToCache(
+    std::unique_ptr<PutContext> put_context,
+    BlobToDiskCacheIDMap::KeyType side_data_blob_to_cache_key,
+    disk_cache::ScopedEntryPtr entry,
+    bool success) {
+  DCHECK(entry);
+  put_context->cache_entry = std::move(entry);
+
+  active_blob_to_disk_cache_writers_.Remove(side_data_blob_to_cache_key);
 
   if (!success) {
     put_context->cache_entry->Doom();
