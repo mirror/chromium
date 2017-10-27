@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "515fcffd_ad600a6c",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-27T20:16:11Z",
+      "side": 1,
+      "message": "Please also document that these values are persisted to logs, and should therefore never be renumbered nor reused.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 27
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4af5e0_870b5bc9",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-27T20:16:11Z",
+      "side": 1,
+      "message": "And ditto here.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0485cd_c7893d75",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-27T20:16:11Z",
+      "side": 1,
+      "message": "Please use the UMA_HISTOGRAM_ENUMERATION macro here.  The STATIC_HISTOGRAM_POINTER_BLOCK macro is not intended to be used outside of core histogram implementation code.",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 61
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a4faf5_a191c05f",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-27T20:16:11Z",
+      "side": 1,
+      "message": "And likewise here.",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 59
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5df2591b_c6580620",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate.h",
         "patchSetId": 10
@@ -132,6 +224,29 @@
       "writtenOn": "2017-10-27T15:52:28Z",
       "side": 1,
       "message": "adobe \u003d\u003e above",
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70994f5_a440d324",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 38473,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-27T20:16:11Z",
+      "side": 1,
+      "message": "Optional: You might want to go with shorter labels, like \"None → Suspected\", \"Suspected → Confirmed\", etc.",
+      "range": {
+        "startLine": 38469,
+        "startChar": 0,
+        "endLine": 38473,
+        "endChar": 7
+      },
       "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
