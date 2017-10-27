@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebbfb312_bc85b389",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-27T19:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c353a7eb_8fe00a7e",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce0bcff0_42ffb885",
         "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8d51bcfb_d697f056",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-27T19:59:59Z",
+      "side": 1,
+      "message": "It\u0027s used now, to dispatch to Observers with a specific CU type",
+      "parentUuid": "ce0bcff0_42ffb885",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d93345e_89a45b43",
         "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl_unittest.cc",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc1f227_a7951290",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-27T19:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d93345e_89a45b43",
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "8682f066_2513b772",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-27T19:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6b4f24a_a02f4715",
+      "range": {
+        "startLine": 181,
+        "startChar": 19,
+        "endLine": 181,
+        "endChar": 27
+      },
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "999eee6e_027f95f1",
         "filename": "services/resource_coordinator/public/cpp/resource_coordinator_interface.h",
         "patchSetId": 4
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "fabf4553_4e379508",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_interface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-27T19:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "999eee6e_027f95f1",
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27f04668_e578314b",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 4
@@ -116,6 +224,30 @@
       "writtenOn": "2017-10-27T08:26:29Z",
       "side": 1,
       "message": "So this is a pre-existing thing, but can we move these to a separate control interface for the trusted controller process in a followup? These seem like they should only be available to the trusted browser, but as it\u0027s written, the renderer can freely call these (and thus we need to sanity check for loops in the graph)",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 45
+      },
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19da3e7a_f1240c34",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-27T19:59:59Z",
+      "side": 1,
+      "message": "Yes, we do loop checks in the graph for Frame hierarchical structure. https://chromium-review.googlesource.com/c/chromium/src/+/736036/4/services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.cc#38\n\nI think we may need to split this mojo interface into browser part and renderer part. Will think about it and do it in follow-up patch :)",
+      "parentUuid": "27f04668_e578314b",
       "range": {
         "startLine": 35,
         "startChar": 0,
