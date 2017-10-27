@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e32edbbe_6dfe84cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1249210
+      },
+      "writtenOn": "2017-10-27T14:29:40Z",
+      "side": 0,
+      "message": "Ah, thanks, I missed that in the reference search. Added that back now.",
+      "parentUuid": "11775524_c51bfbe9",
+      "range": {
+        "startLine": 1237,
+        "startChar": 69,
+        "endLine": 1238,
+        "endChar": 65
+      },
+      "revId": "d913be8e7e03161be7a03e2d6039e1632a31a08f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc03f973_fbd1358b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "d913be8e7e03161be7a03e2d6039e1632a31a08f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77d1d08_f0b62d43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1249210
+      },
+      "writtenOn": "2017-10-27T14:29:40Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "cc03f973_fbd1358b",
+      "range": {
+        "startLine": 1241,
+        "startChar": 12,
+        "endLine": 1241,
+        "endChar": 52
+      },
+      "revId": "d913be8e7e03161be7a03e2d6039e1632a31a08f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
