@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25f36dec_0fc890b2",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-27T17:42:50Z",
+      "side": 1,
+      "message": "I think the logic should be better to be placed in split_view_controller.cc? More specifically, in SplitViewController::GetSnappedWindowBoundsInScreen() after getting |left_or_top_rect|. We then need to adjust the |left_or_top_rect| if it\u0027s currently resizing. What do you think?\nAlso, could you add unittest?",
+      "revId": "77b95d836d5e9178b3b3351eb029d13ace220ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
