@@ -365,4 +365,54 @@ test(() => {
       '<div id="second">four |<span id="end"></span>five six</div>',
     ].join(''));
 }, 'computeLeft() and computeTop()');
+
+selection_test(
+    '<div>foo</div>',
+    async selection => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          selection.document.execCommand('selectAll');
+          resolve();}, 0)}
+      );
+    },
+    '<div>^foo|</div>',
+    'aync window.setTimeout()');
+
+/*selection_test(
+    '<div>foo</div>',
+    async selection => {
+      let div = selection.document.querySelector('div');
+      let x = selection.computeLeft(div);
+      let y = selection.computeTop(div) + div.offsetHeight / 2;
+      var pointerActions = [{
+          source: "mouse",
+          actions: [
+              { name: "pointerMove", x: x, y: y },
+              { name: "pointerDown", x: x, y: y },
+              { name: "pointerMove", x: x + div.offsetWidth / 2, y: y}
+          ]
+      }];
+      await selection.pointerActionSequence(pointerActions);
+    },
+    '<div>^foo|</div>',
+    'aync pointerActionSequence()');*/
+
+test(() => {
+    assert_equals(checked_assert_selection('||', async selection => { }, ''),
+        'You should have at least one focus marker "|" in "||".');
+}, 'async exception before call');
+/*test(() => {
+  assert_equals(checked_assert_selection(
+      '',
+      async selection => { throw new Error('foo'); },
+      ''),
+    'You should have at least one focus marker "|" in "||".');
+}, 'async exception in call');*/
+test(() => {
+    assert_equals(checked_assert_selection('foo', async selection => { }, 'foz'),
+        `LayoutTests/editing/assert_selection.html:8:9)\n` +
+        `\t expected foz,\n` +
+        `\t but got  foo,\n` +
+        `\t sameupto fo`);
+}, 'async exception after call');
 </script>

@@ -715,6 +715,19 @@ function setClipboardData(html, opt_text) {
   document.removeEventListener('copy', copyHandler);
 }
 
+/**
+ * @this {!Selection}
+ * @param {Array} actions
+ * @return {Promise}
+ */
+function pointerActionSequence(actions) {
+  return new Promise(resolve => {
+    if (!chrome || !chrome.gpuBenchmarking)
+      assert_unreached('Requires chrome.gpuBenchmarking');
+    chrome.gpuBenchmarking.pointerActionSequence(actions, resolve);
+  });
+}
+
 class Sample {
   /**
    * @public
@@ -740,6 +753,7 @@ class Sample {
     this.selection_.setClipboardData = setClipboardData;
     this.selection_.computeLeft = computeLeft;
     this.selection_.computeTop = computeTop;
+    this.selection_.pointerActionSequence = pointerActionSequence;
     this.load(sampleText);
   }
 
@@ -893,6 +907,15 @@ function commonPrefixOf(str1, str2) {
 }
 
 /**
+ * @param {function(!Selection)|string} tester
+ * @return {Boolean}
+ */
+function isAsyncFunction(tester) {
+  // Note: there is no symbol |AsyncFunction| in global namespace.
+  return tester.constructor.name === 'AsyncFunction';
+}
+
+/**
  * @param {string} passedInputText
  * @param {function(!Selection)|string} tester
  * @param {string} expectedText
@@ -937,6 +960,42 @@ function assertSelection(
 
   checkExpectedText(expectedText);
   const sample = new Sample(inputText);
+
+  let confirm = () => {
+    /** @type {!Traversal} */
+    const traversal = (() => {
+      switch (dumpAs) {
+        case DumpAs.DOM_TREE:
+          return new DOMTreeTraversal();
+        case DumpAs.FLAT_TREE:
+          if (!window.internals)
+            throw new Error('This test requires window.internals.');
+          return new FlatTreeTraversal();
+        default:
+          throw `${kDumpAs} must be one of ` +
+                `{${Object.values(DumpAs).join(', ')}}` +
+                ` instead of '${dumpAs}'`;
+      }
+    })();
+
+    /** @type {string} */
+    const actualText = sample.serialize(traversal, dumpFromRoot);
+    // We keep sample HTML when assertion is false for ease of debugging test
+    // case.
+    if (actualText === expectedText) {
+      if (removeSampleIfSucceeded)
+          sample.remove();
+      return sample;
+    }
+    throw new Error(`${description}\n` +
+      `\t expected ${expectedText},\n` +
+      `\t but got  ${actualText},\n` +
+      `\t sameupto ${commonPrefixOf(expectedText, actualText)}`);
+  };
+
+  if (isAsyncFunction(tester))
+    return tester.call(window, sample.selection).then(confirm);
+
   if (typeof(tester) === 'function') {
     tester.call(window, sample.selection);
   } else if (typeof(tester) === 'string') {
@@ -945,36 +1004,7 @@ function assertSelection(
   } else {
     throw new Error(`Invalid tester: ${tester}`);
   }
-
-  /** @type {!Traversal} */
-  const traversal = (() => {
-    switch (dumpAs) {
-      case DumpAs.DOM_TREE:
-        return new DOMTreeTraversal();
-      case DumpAs.FLAT_TREE:
-        if (!window.internals)
-          throw new Error('This test requires window.internals.');
-        return new FlatTreeTraversal();
-      default:
-        throw `${kDumpAs} must be one of ` +
-              `{${Object.values(DumpAs).join(', ')}}` +
-              ` instead of '${dumpAs}'`;
-    }
-  })();
-
-  /** @type {string} */
-  const actualText = sample.serialize(traversal, dumpFromRoot);
-  // We keep sample HTML when assertion is false for ease of debugging test
-  // case.
-  if (actualText === expectedText) {
-    if (removeSampleIfSucceeded)
-        sample.remove();
-    return sample;
-  }
-  throw new Error(`${description}\n` +
-    `\t expected ${expectedText},\n` +
-    `\t but got  ${actualText},\n` +
-    `\t sameupto ${commonPrefixOf(expectedText, actualText)}`);
+  return confirm();
 }
 
 /**
@@ -989,6 +1019,12 @@ function selectionTest(inputText, tester, expectedText, opt_options,
   const description = typeof(opt_options) === 'string' ? opt_options
                                                        : opt_description;
   const options = typeof(opt_options) === 'string' ? undefined : opt_options;
+  if (isAsyncFunction(tester)) {
+    promise_test(() => {
+        return assertSelection(inputText, tester, expectedText, options); },
+      description);
+    return;
+  }
   test(() => assertSelection(inputText, tester, expectedText, options),
        description);
 }
