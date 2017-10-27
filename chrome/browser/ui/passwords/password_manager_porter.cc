@@ -86,7 +86,8 @@ PasswordManagerPorter::PasswordManagerPorter(
     password_manager::CredentialProviderInterface*
         credential_provider_interface)
     : credential_provider_interface_(credential_provider_interface),
-      password_exporter_(new password_manager::PasswordExporter()) {}
+      password_exporter_(new password_manager::PasswordExporter()),
+      password_importer_(new password_manager::PasswordImporter()) {}
 
 PasswordManagerPorter::~PasswordManagerPorter() {}
 
@@ -166,9 +167,9 @@ void PasswordManagerPorter::ImportPasswordsFromPath(
   // Set up a |PasswordImportConsumer| to process each password entry.
   std::unique_ptr<PasswordImportConsumer> form_consumer(
       new PasswordImportConsumer(profile_));
-  password_manager::PasswordImporter::Import(
-      path, base::Bind(&PasswordImportConsumer::ConsumePassword,
-                       std::move(form_consumer)));
+  password_importer->Import(path,
+                            base::Bind(&PasswordImportConsumer::ConsumePassword,
+                                       std::move(form_consumer)));
 }
 
 void PasswordManagerPorter::ExportPasswordsToPath(const base::FilePath& path) {
