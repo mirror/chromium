@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "671a2f8f_68b08058",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-27T05:49:40Z",
+      "side": 1,
+      "message": "I\u0027d revert my last opinion. We would not say \"kPreflightSuccess\" if preflight hasn\u0027t run yet. So removing success items and make it Optional\u003c\u003e looks better even if we would have them inside a struct.\n\nI removed all success items from enum types below.\n\nOnce I changed type names to *Error, revised code looks more readable. E.g.,\n\nOptional\u003cFooError\u003e foo_err \u003d CheckFoo();\nif (foo_error)\n  SomethingWrong(*foo_error);\n\nI like this.",
+      "parentUuid": "6174b578_aa7550be",
+      "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a32827db_aefeff4c",
         "filename": "services/network/public/interfaces/cors.mojom",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f07355d_2b78d5b1",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-27T05:49:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a32827db_aefeff4c",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ce1c7969_ba621205",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-27T05:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a05c4406_de4678ba",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a189355_cbf3191b",
         "filename": "services/network/public/interfaces/cors.mojom",
         "patchSetId": 2
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "203d6d5b_ede84d92",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-27T05:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a189355_cbf3191b",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "132625d5_923ab9a1",
         "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
         "patchSetId": 2
@@ -108,6 +198,30 @@
       "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11532017_e6f4c4dd",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-27T05:49:40Z",
+      "side": 1,
+      "message": "stale",
+      "parentUuid": "132625d5_923ab9a1",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 58
+      },
+      "revId": "e3f7ef23fc77fd53edd4afc6e2638fec69287ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

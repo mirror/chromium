@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "eaabd551_9fdfc3af",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-27T05:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9360ea44_5a6ba1c3",
+      "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f08a726_2f95382f",
         "filename": "services/network/public/interfaces/cors.mojom",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c36e42_10680236",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-27T05:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f08a726_2f95382f",
+      "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "6b125f33_ee109355",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-27T05:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a1453d_fbb530c7",
+      "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8be0b2ff_11b4cdfd",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 3
@@ -82,6 +136,24 @@
       "writtenOn": "2017-10-26T11:47:12Z",
       "side": 1,
       "message": "Should these still be in the `blink::WebCORS` namespace?",
+      "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec493b35_42c6d64a",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-27T05:49:40Z",
+      "side": 1,
+      "message": "Since these still depends on Blink types, and called from DocumentThreadableLoader in core, I think we would keep them as is for a while. But eventually, we need to move. It\u0027s not only namespace, but also file place, etc.\nWDYT?",
+      "parentUuid": "8be0b2ff_11b4cdfd",
       "revId": "b2a88e5749095b71adff5dc3942b89d804dcddde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
