@@ -6,6 +6,7 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/DocumentWriteIntervention.h"
+#include "core/dom/ScriptLoader.h"
 #include "core/loader/DocumentLoader.h"
 #include "platform/CrossOriginAttributeValue.h"
 #include "platform/loader/fetch/FetchInitiatorInfo.h"
@@ -62,21 +63,9 @@ Resource* PreloadRequest::Start(Document* document) {
 
   if (script_type_ == ScriptType::kModule) {
     DCHECK_EQ(resource_type_, Resource::kScript);
-    WebURLRequest::FetchCredentialsMode credentials_mode =
-        WebURLRequest::kFetchCredentialsModeOmit;
-    switch (cross_origin_) {
-      case kCrossOriginAttributeNotSet:
-        credentials_mode = WebURLRequest::kFetchCredentialsModeOmit;
-        break;
-      case kCrossOriginAttributeAnonymous:
-        credentials_mode = WebURLRequest::kFetchCredentialsModeSameOrigin;
-        break;
-      case kCrossOriginAttributeUseCredentials:
-        credentials_mode = WebURLRequest::kFetchCredentialsModeInclude;
-        break;
-    }
-    params.SetCrossOriginAccessControl(document->GetSecurityOrigin(),
-                                       credentials_mode);
+    params.SetCrossOriginAccessControl(
+        document->GetSecurityOrigin(),
+        ScriptLoader::ModuleScriptCredentialsMode(cross_origin_));
   } else if (cross_origin_ != kCrossOriginAttributeNotSet) {
     params.SetCrossOriginAccessControl(document->GetSecurityOrigin(),
                                        cross_origin_);

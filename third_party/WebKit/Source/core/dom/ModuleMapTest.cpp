@@ -173,7 +173,8 @@ TEST_F(ModuleMapTest, sequentialRequests) {
   platform->AdvanceClockSeconds(1.);  // For non-zero DocumentParserTimings
 
   KURL url(NullURL(), "https://example.com/foo.js");
-  ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
+  ModuleScriptFetchRequest module_request(url, kReferrerPolicyDefault,
+                                          ScriptFetchOptions());
 
   // First request
   TestSingleModuleClient* client = new TestSingleModuleClient;
@@ -215,7 +216,8 @@ TEST_F(ModuleMapTest, concurrentRequestsShouldJoin) {
   platform->AdvanceClockSeconds(1.);  // For non-zero DocumentParserTimings
 
   KURL url(NullURL(), "https://example.com/foo.js");
-  ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
+  ModuleScriptFetchRequest module_request(url, kReferrerPolicyDefault,
+                                          ScriptFetchOptions());
 
   // First request
   TestSingleModuleClient* client = new TestSingleModuleClient;
