@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80de7b5b_21e79ebe",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-27T19:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18327d14_68d09d20",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07912e57_9ae311ea",
         "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e56e16_35b8a8ce",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-27T19:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07912e57_9ae311ea",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "98965193_45e35ce4",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-27T19:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89cd33c1_f21bcd71",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afa72c70_2ecda83d",
         "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d55dfa0_554641bc",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-27T19:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa72c70_2ecda83d",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "86cf1105_1c4988ac",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-27T19:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c3628aa_daadb8c1",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "482d5c4c_2a504855",
         "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-27T16:42:12Z",
       "side": 1,
       "message": "This seems weird to me-- \u0027Develop for developers\u0027. Is this just about extending devtools? If so how about that \u0027Chrome DevTools extensions\u0027",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd9c61d_b6b4c0a3",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-27T19:57:39Z",
+      "side": 1,
+      "message": "My idea for this section was to highlight API\u0027s that might only be relevant to developers - the first one links to extending devtools which covers devtools.inspectedWindow, devtools.network, and devtools.panels - but doesn\u0027t include debugger and pageCapture. Hope that makes sense",
+      "parentUuid": "482d5c4c_2a504855",
       "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e42f8b3_cba6036a",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-27T19:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c930db72_c6d4825f",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
