@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d10776f_2d1ac96d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-27T20:34:04Z",
+      "side": 1,
+      "message": "BindOnce",
+      "range": {
+        "startLine": 272,
+        "startChar": 17,
+        "endLine": 272,
+        "endChar": 21
+      },
+      "revId": "14b93c2194f3bc2380e75e9a05e92284e181eda8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
