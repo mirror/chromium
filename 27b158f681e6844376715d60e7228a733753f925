@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "821b45a8_774a60e2",
+        "filename": "third_party/polymer/v1_0/components-chromium/paper-slider/paper-slider.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T18:00:47Z",
+      "side": 1,
+      "message": "Realizing that there is a bunch of properties that should be removed, but are now not removed with the stricter regex (see diff between 4 and 5).\n\nBasically we can\u0027t guarantee that the line starts with \"--foo-bar\", because these can appear anywhere in the line. Are you OK with relaxing the regex again?",
+      "revId": "27b158f681e6844376715d60e7228a733753f925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -69,6 +69,30 @@
       "revId": "9ba34cad65a7ce9a71e1883b76b57523ea3faa7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4703ff6e_6a083b67",
+        "filename": "third_party/polymer/v1_0/css_strip_prefixes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T18:00:47Z",
+      "side": 1,
+      "message": "Done. I had to adjust the regex a bit to account for cases like this one\n\n-ms-flex-line-pack: justify;  /* IE10 */\n\nBTW, not sure how to wrap this line in Python properly. Looking...",
+      "parentUuid": "4b636000_935b7bcf",
+      "range": {
+        "startLine": 56,
+        "startChar": 13,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "9ba34cad65a7ce9a71e1883b76b57523ea3faa7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
