@@ -71,182 +71,6 @@ gfx::Font::Weight ToGfxFontWeight(int weight) {
   return static_cast<gfx::Font::Weight>(weight);
 }
 
-// Uses the GDI interop functionality exposed by DirectWrite to find a
-// matching DirectWrite font for the LOGFONT passed in. If we fail to
-// find a direct match then we try the DirectWrite font substitution
-// route to find a match.
-// The contents of the LOGFONT pointer |font_info| may be modified on
-// return.
-HRESULT FindDirectWriteFontForLOGFONT(IDWriteFactory* factory,
-                                      LOGFONT* font_info,
-                                      IDWriteFont** dwrite_font) {
-  Microsoft::WRL::ComPtr<IDWriteGdiInterop> gdi_interop;
-  HRESULT hr = factory->GetGdiInterop(gdi_interop.GetAddressOf());
-  if (FAILED(hr)) {
-    CHECK(false);
-    return hr;
-  }
-
-  hr = gdi_interop->CreateFontFromLOGFONT(font_info, dwrite_font);
-  if (SUCCEEDED(hr))
-    return hr;
-
-  Microsoft::WRL::ComPtr<IDWriteFontCollection> font_collection;
-  hr = factory->GetSystemFontCollection(font_collection.GetAddressOf());
-  if (FAILED(hr)) {
-    CHECK(false);
-    return hr;
-  }
-
-  // We try to find a matching font by triggering DirectWrite to substitute the
-  // font passed in with a matching font (FontSubstitutes registry key)
-  // If this succeeds we return the matched font.
-  base::win::ScopedGDIObject<HFONT> font(::CreateFontIndirect(font_info));
-  base::win::ScopedGetDC screen_dc(NULL);
-  base::win::ScopedSelectObject scoped_font(screen_dc, font.get());
-
-  Microsoft::WRL::ComPtr<IDWriteFontFace> font_face;
-  hr = gdi_interop->CreateFontFaceFromHdc(screen_dc, font_face.GetAddressOf());
-  if (FAILED(hr))
-    return hr;
-
-  LOGFONT converted_font = {0};
-  hr = gdi_interop->ConvertFontFaceToLOGFONT(font_face.Get(), &converted_font);
-  if (SUCCEEDED(hr)) {
-    hr = font_collection->GetFontFromFontFace(font_face.Get(), dwrite_font);
-    if (SUCCEEDED(hr)) {
-      wcscpy_s(font_info->lfFaceName, arraysize(font_info->lfFaceName),
-               converted_font.lfFaceName);
-    }
-  }
-  return hr;
-}
-
-// Returns a matching IDWriteFont for the |font_info| passed in. If we fail
-// to find a matching font, then we return the IDWriteFont corresponding to
-// the default font on the system.
-// Returns S_OK on success.
-// The contents of the LOGFONT pointer |font_info| may be modified on
-// return.
-HRESULT GetMatchingDirectWriteFont(LOGFONT* font_info,
-                                   bool italic,
-                                   IDWriteFactory* factory,
-                                   IDWriteFont** dwrite_font) {
-  // First try the GDI compat route to get a matching DirectWrite font.
-  // If that succeeds then we are good. If that fails then try and find a
-  // match from the DirectWrite font collection.
-  HRESULT hr = FindDirectWriteFontForLOGFONT(factory, font_info, dwrite_font);
-  if (SUCCEEDED(hr))
-    return hr;
-
-  // Get a matching font from the system font collection exposed by
-  // DirectWrite.
-  Microsoft::WRL::ComPtr<IDWriteFontCollection> font_collection;
-  hr = factory->GetSystemFontCollection(font_collection.GetAddressOf());
-  if (FAILED(hr)) {
-    CHECK(false);
-    return hr;
-  }
-
-  // Steps as below:-
-  // This mirrors skia.
-  // 1. Attempt to find a DirectWrite font family based on the face name in the
-  //    font. That may not work at all times, as the face name could be random
-  //    GDI has its own font system where in it creates a font matching the
-  //    characteristics in the LOGFONT structure passed into
-  //    CreateFontIndirect. DirectWrite does not do that. If this succeeds then
-  //    return the matching IDWriteFont from the family.
-  // 2. If step 1 fails then repeat with the default system font. This has the
-  //    same limitations with the face name as mentioned above.
-  // 3. If step 2 fails then return the first family from the collection and
-  //    use that.
-  Microsoft::WRL::ComPtr<IDWriteFontFamily> font_family;
-  BOOL exists = FALSE;
-  uint32_t index = 0;
-  hr = font_collection->FindFamilyName(font_info->lfFaceName, &index, &exists);
-  // If we fail to find a match then try fallback to the default font on the
-  // system. This is what skia does as well.
-  if (FAILED(hr) || (index == UINT_MAX) || !exists) {
-    NONCLIENTMETRICS metrics = {0};
-    metrics.cbSize = sizeof(metrics);
-    if (!SystemParametersInfoW(SPI_GETNONCLIENTMETRICS,
-                               sizeof(metrics),
-                               &metrics,
-                               0)) {
-      CHECK(false);
-      return E_FAIL;
-    }
-
-    if (wcsncmp(font_info->lfFaceName, metrics.lfMessageFont.lfFaceName,
-                arraysize(font_info->lfFaceName))) {
-      // First try the GDI compat route to get a matching DirectWrite font. If
-      // that succeeds we are good. If not find a matching font from the font
-      // collection.
-      wcscpy_s(font_info->lfFaceName, arraysize(font_info->lfFaceName),
-                metrics.lfMessageFont.lfFaceName);
-      hr = FindDirectWriteFontForLOGFONT(factory, font_info, dwrite_font);
-      if (SUCCEEDED(hr))
-        return hr;
-
-      // Best effort to find a matching font from the system font collection.
-      hr = font_collection->FindFamilyName(metrics.lfMessageFont.lfFaceName,
-                                           &index,
-                                           &exists);
-    }
-  }
-
-  if (index != UINT_MAX && exists) {
-    hr = font_collection->GetFontFamily(index, font_family.GetAddressOf());
-  } else {
-    // If we fail to find a matching font, then fallback to the first font in
-    // the list. This is what skia does as well.
-    hr = font_collection->GetFontFamily(0, font_family.GetAddressOf());
-  }
-
-  if (FAILED(hr)) {
-    CHECK(false);
-    return hr;
-  }
-
-  DWRITE_FONT_WEIGHT weight =
-      static_cast<DWRITE_FONT_WEIGHT>(font_info->lfWeight);
-  DWRITE_FONT_STRETCH stretch = DWRITE_FONT_STRETCH_NORMAL;
-  DWRITE_FONT_STYLE style =
-      (italic) ? DWRITE_FONT_STYLE_ITALIC : DWRITE_FONT_STYLE_NORMAL;
-
-  // The IDWriteFontFamily::GetFirstMatchingFont call fails on certain machines
-  // for fonts like MS UI Gothic, Segoe UI, etc. It is not clear why these
-  // fonts could be accessible to GDI and not to DirectWrite.
-  // The code below adds some debug fields to help track down these failures.
-  // 1. We get the matching font list for the font attributes passed in.
-  // 2. We get the font count in the family with a debug alias variable.
-  // 3. If GetFirstMatchingFont fails then we CHECK as before.
-  // Next step would be to remove the CHECKs in this function and fallback to
-  // GDI.
-  // http://crbug.com/434425
-  // TODO(ananta)
-  // Remove the GetMatchingFonts and related code here once we get to a stable
-  // state in canary.
-  Microsoft::WRL::ComPtr<IDWriteFontList> matching_font_list;
-  hr = font_family->GetMatchingFonts(weight, stretch, style,
-                                     matching_font_list.GetAddressOf());
-  uint32_t matching_font_count = 0;
-  if (SUCCEEDED(hr))
-    matching_font_count = matching_font_list->GetFontCount();
-
-  hr = font_family->GetFirstMatchingFont(weight, stretch, style, dwrite_font);
-  if (FAILED(hr)) {
-    base::debug::Alias(&matching_font_count);
-    CHECK(false);
-  }
-
-  base::string16 font_name;
-  gfx::GetFamilyNameFromDirectWriteFont(*dwrite_font, &font_name);
-  wcscpy_s(font_info->lfFaceName, arraysize(font_info->lfFaceName),
-           font_name.c_str());
-  return hr;
-}
-
 }  // namespace
 
 namespace gfx {
@@ -521,24 +345,6 @@ PlatformFontWin::HFontRef* PlatformFontWin::CreateHFontRefFromSkia(
 
   const bool italic = font_info.lfItalic != 0;
 
-  // Skia does not return all values we need for font metrics. For e.g.
-  // the cap height which indicates the height of capital letters is not
-  // returned even though it is returned by DirectWrite.
-  // TODO(ananta)
-  // Fix SkScalerContext_win_dw.cpp to return all metrics we need from
-  // DirectWrite and remove the code here which retrieves metrics from
-  // DirectWrite to calculate the cap height.
-  Microsoft::WRL::ComPtr<IDWriteFont> dwrite_font;
-  HRESULT hr = GetMatchingDirectWriteFont(
-      &font_info, italic, direct_write_factory_, dwrite_font.GetAddressOf());
-  if (FAILED(hr)) {
-    CHECK(false);
-    return nullptr;
-  }
-
-  DWRITE_FONT_METRICS dwrite_font_metrics = {0};
-  dwrite_font->GetMetrics(&dwrite_font_metrics);
-
   SkFontStyle skia_font_style(font_info.lfWeight, SkFontStyle::kNormal_Width,
                               font_info.lfItalic ? SkFontStyle::kItalic_Slant
                                                  : SkFontStyle::kUpright_Slant);
@@ -568,9 +374,7 @@ PlatformFontWin::HFontRef* PlatformFontWin::CreateHFontRefFromSkia(
   // that they match up closely with GDI.
   const int height = std::ceil(skia_metrics.fDescent - skia_metrics.fAscent);
   const int baseline = std::max<int>(1, std::ceil(-skia_metrics.fAscent));
-  const int cap_height = std::ceil(paint.getTextSize() *
-      static_cast<double>(dwrite_font_metrics.capHeight) /
-          dwrite_font_metrics.designUnitsPerEm);
+  const int cap_height = std::ceil(skia_metrics.fCapHeight);
 
   // The metrics retrieved from skia don't have the average character width. In
   // any case if we get the average character width from skia then use that or
