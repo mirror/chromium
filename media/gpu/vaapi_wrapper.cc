@@ -273,6 +273,12 @@ bool VaapiWrapper::IsJpegDecodeSupported() {
   return GetProfileInfos()->IsProfileSupported(kDecode, VAProfileJPEGBaseline);
 }
 
+// static
+bool VaapiWrapper::IsJpegEncodeSupported() {
+  return GetProfileInfos()->IsProfileSupported(kEncodeJpeg,
+                                               VAProfileJPEGBaseline);
+}
+
 void VaapiWrapper::TryToSetVADisplayAttributeToLocalGPU() {
   base::AutoLock auto_lock(*va_lock_);
   VADisplayAttribute item = {VADisplayAttribRenderMode,
@@ -320,8 +326,7 @@ VaapiWrapper::GetSupportedProfileInfosForCodecModeInternal(CodecMode mode) {
     return supported_profile_infos;
 
   std::vector<VAConfigAttrib> required_attribs = GetRequiredAttribs(mode);
-  VAEntrypoint entrypoint =
-      (mode == kEncode ? VAEntrypointEncSlice : VAEntrypointVLD);
+  VAEntrypoint entrypoint = GetVaEntryPoint(mode);
 
   base::AutoLock auto_lock(*va_lock_);
   for (const auto& va_profile : va_profiles) {
@@ -488,11 +493,24 @@ bool VaapiWrapper::GetMaxResolution_Locked(
   return true;
 }
 
+VAEntrypoint VaapiWrapper::GetVaEntryPoint(CodecMode mode) {
+  switch (mode) {
+    case kDecode:
+      return VAEntrypointVLD;
+    case kEncode:
+      return VAEntrypointEncSlice;
+    case kEncodeJpeg:
+      return VAEntrypointEncPicture;
+    case kCodecModeMax:
+      NOTREACHED();
+      return VAEntrypointVLD;
+  }
+}
+
 bool VaapiWrapper::Initialize(CodecMode mode, VAProfile va_profile) {
   TryToSetVADisplayAttributeToLocalGPU();
 
-  VAEntrypoint entrypoint =
-      (mode == kEncode ? VAEntrypointEncSlice : VAEntrypointVLD);
+  VAEntrypoint entrypoint = GetVaEntryPoint(mode);
   std::vector<VAConfigAttrib> required_attribs = GetRequiredAttribs(mode);
   base::AutoLock auto_lock(*va_lock_);
   VAStatus va_res =
@@ -962,11 +980,11 @@ bool VaapiWrapper::UploadVideoFrameToSurface(
   return ret == 0;
 }
 
-bool VaapiWrapper::DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
-                                                 VASurfaceID sync_surface_id,
-                                                 uint8_t* target_ptr,
-                                                 size_t target_size,
-                                                 size_t* coded_data_size) {
+bool VaapiWrapper::DownloadFromCodedBuffer(VABufferID buffer_id,
+                                           VASurfaceID sync_surface_id,
+                                           uint8_t* target_ptr,
+                                           size_t target_size,
+                                           size_t* coded_data_size) {
   base::AutoLock auto_lock(*va_lock_);
 
   VAStatus va_res = vaSyncSurface(va_display_, sync_surface_id);
@@ -1003,14 +1021,23 @@ bool VaapiWrapper::DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
 
   va_res = vaUnmapBuffer(va_display_, buffer_id);
   VA_LOG_ON_ERROR(va_res, "vaUnmapBuffer failed");
+  return buffer_segment == NULL;
+}
 
-  va_res = vaDestroyBuffer(va_display_, buffer_id);
+bool VaapiWrapper::DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
+                                                 VASurfaceID sync_surface_id,
+                                                 uint8_t* target_ptr,
+                                                 size_t target_size,
+                                                 size_t* coded_data_size) {
+  bool result = DownloadFromCodedBuffer(buffer_id, sync_surface_id, target_ptr,
+                                        target_size, coded_data_size);
+
+  VAStatus va_res = vaDestroyBuffer(va_display_, buffer_id);
   VA_LOG_ON_ERROR(va_res, "vaDestroyBuffer failed");
-
   const auto was_found = coded_buffers_.erase(buffer_id);
   DCHECK(was_found);
 
-  return buffer_segment == NULL;
+  return result;
 }
 
 bool VaapiWrapper::BlitSurface(

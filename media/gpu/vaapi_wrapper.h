@@ -58,7 +58,8 @@ class MEDIA_GPU_EXPORT VaapiWrapper
  public:
   enum CodecMode {
     kDecode,
-    kEncode,
+    kEncode,      // For any encoding formats except JPEG.
+    kEncodeJpeg,  // For JPEG encoding only.
     kCodecModeMax,
   };
 
@@ -87,6 +88,9 @@ class MEDIA_GPU_EXPORT VaapiWrapper
 
   // Return true when JPEG decode is supported.
   static bool IsJpegDecodeSupported();
+
+  // Return true when JPEG encode is supported.
+  static bool IsJpegEncodeSupported();
 
   // Create |num_surfaces| backing surfaces in driver for VASurfaces of
   // |va_format|, each of size |size|. Returns true when successful, with the
@@ -192,6 +196,13 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   // be used as a sync point, i.e. it will have to become idle before starting
   // the download. |sync_surface_id| should be the source surface passed
   // to the encode job.
+  bool DownloadFromCodedBuffer(VABufferID buffer_id,
+                               VASurfaceID sync_surface_id,
+                               uint8_t* target_ptr,
+                               size_t target_size,
+                               size_t* coded_data_size);
+
+  // See DownloadFromCodedBuffer() for details.
   bool DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
                                      VASurfaceID sync_surface_id,
                                      uint8_t* target_ptr,
@@ -280,6 +291,8 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   void Deinitialize();
   bool VaInitialize(const base::Closure& report_error_to_uma_cb);
   bool GetSupportedVaProfiles(std::vector<VAProfile>* profiles);
+
+  VAEntrypoint GetVaEntryPoint(CodecMode mode);
 
   // Free all memory allocated in CreateSurfaces.
   void DestroySurfaces_Locked();
