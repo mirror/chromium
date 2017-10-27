@@ -102,7 +102,8 @@ void TraceStopTracingComplete(const base::Closure& quit,
 extern int BrowserMain(const MainFunctionParams&);
 
 BrowserTestBase::BrowserTestBase()
-    : expected_exit_code_(0),
+    : field_trial_list_(std::make_unique<base::FieldTrialList>(nullptr)),
+      expected_exit_code_(0),
       enable_pixel_output_(false),
       use_software_compositing_(false),
       set_up_called_(false),
@@ -143,6 +144,10 @@ BrowserTestBase::~BrowserTestBase() {
                            "developer has overridden the method and not called "
                            "the superclass version. In this case, the test "
                            "does not run and reports a false positive result.";
+}
+
+bool BrowserTestBase::IsContentBrowserTest() const {
+  return false;
 }
 
 void BrowserTestBase::SetUp() {
@@ -254,6 +259,24 @@ void BrowserTestBase::SetUp() {
   if (!disabled_features.empty()) {
     command_line->AppendSwitchASCII(switches::kDisableFeatures,
                                     disabled_features);
+  }
+
+  // The current global field trial list contains any trials that were activated
+  // prior to main browser startup. That global field trial list is about to be
+  // destroyed below, and will be recreated during the browser_tests (but not
+  // content_browsertests) browser process startup code. Pass the currently
+  // active trials to the subsequent list via the command line.
+  if (!IsContentBrowserTest()) {
+    std::string field_trial_states;
+    base::FieldTrialList::AllStatesToString(&field_trial_states);
+    if (!field_trial_states.empty()) {
+      // Please use ScopedFeatureList to modify feature and field trials at the
+      // same time.
+      DCHECK(!command_line->HasSwitch(switches::kForceFieldTrials));
+      command_line->AppendSwitchASCII(switches::kForceFieldTrials,
+                                      field_trial_states);
+    }
+    field_trial_list_.reset();
   }
 
   // Need to wipe feature list clean, since BrowserMain calls
