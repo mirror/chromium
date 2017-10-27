@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c34b44b2_39f2efcf",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-27T01:50:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "59dd8890_7e4ff243",
+      "revId": "4f122e10b12d90f186ceed8e1b177d3c32a3ec40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42b09c5b_9c591e3c",
         "filename": "cc/scheduler/scheduler_state_machine.h",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I had originally named it Last* but I was thinking about having 2 copies of this struct, one for the last frame and one for the current one. Right now those are kept as bare members on this class but figured it would be nice to have a struct for state we collect during the impl frame that we want to retain for the next frame.\n\nHow about FrameEvents? Since that\u0027s basically what its capturing, events that happened during the impl frame.",
       "parentUuid": "42b09c5b_9c591e3c",
+      "revId": "4f122e10b12d90f186ceed8e1b177d3c32a3ec40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b750ce_6e616f0a",
+        "filename": "cc/scheduler/scheduler_state_machine.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-27T01:50:34Z",
+      "side": 1,
+      "message": "Any of FrameEvents, FrameSignals, or FrameState sounds good. Please do not name this ImplFrameState because we already have BeginImplFrameState which is completely different and that would cause confusion.",
+      "parentUuid": "17f67603_c21b7e89",
       "revId": "4f122e10b12d90f186ceed8e1b177d3c32a3ec40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
