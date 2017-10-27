@@ -2222,7 +2222,7 @@ TEST_F(NavigationControllerTest, NewSubframe) {
   std::string unique_name("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, std::string(), unique_name,
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
@@ -2299,7 +2299,7 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
   std::string unique_name0("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, std::string(), unique_name0,
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
@@ -2344,7 +2344,7 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
   std::string unique_name1("uniqueName1");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, std::string(), unique_name1,
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe2 = static_cast<TestRenderFrameHost*>(
@@ -2389,7 +2389,7 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
   std::string unique_name2("uniqueName2");
   subframe->OnCreateChildFrame(
       process()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, std::string(), unique_name2,
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe3 =
@@ -2452,7 +2452,7 @@ TEST_F(NavigationControllerTest, BackSubframe) {
   std::string unique_name("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, std::string(), unique_name,
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
@@ -3856,7 +3856,7 @@ TEST_F(NavigationControllerTest, SameSubframe) {
   std::string unique_name("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, std::string(), unique_name,
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
@@ -4031,7 +4031,7 @@ TEST_F(NavigationControllerTest, SubframeWhilePending) {
   std::string unique_name("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, std::string(), unique_name,
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(

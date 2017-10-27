@@ -14,7 +14,6 @@
 #include "modules/vr/latest/VRFrameOfReference.h"
 #include "modules/vr/latest/VRFrameOfReferenceOptions.h"
 #include "modules/vr/latest/VRFrameProvider.h"
-#include "modules/vr/latest/VRPresentationFrame.h"
 #include "modules/vr/latest/VRSessionEvent.h"
 #include "platform/wtf/AutoReset.h"
 
@@ -166,8 +165,7 @@ void VRSession::OnFrame(
   if (detached_)
     return;
 
-  VRPresentationFrame* presentation_frame = new VRPresentationFrame(this);
-  presentation_frame->UpdateBasePose(std::move(base_pose_matrix));
+  // TODO: Use the base_pose_matrix to produce a VRPresentationFrame
 
   if (pending_frame_) {
     pending_frame_ = false;
@@ -176,7 +174,7 @@ void VRSession::OnFrame(
     // within these calls. resolving_frame_ will be true for the duration of the
     // callbacks.
     AutoReset<bool> resolving(&resolving_frame_, true);
-    callback_collection_.ExecuteCallbacks(this, presentation_frame);
+    callback_collection_.ExecuteCallbacks();
   }
 }
 

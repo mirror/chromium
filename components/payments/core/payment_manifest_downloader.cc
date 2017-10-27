@@ -15,7 +15,6 @@
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/link_header_util/link_header_util.h"
 #include "net/base/load_flags.h"
-#include "net/base/url_util.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
 #include "net/http/http_util.h"
@@ -92,7 +91,7 @@ std::string ParseResponseContent(const net::URLFetcher* source) {
 
 PaymentManifestDownloader::PaymentManifestDownloader(
     const scoped_refptr<net::URLRequestContextGetter>& context)
-    : context_(context) {}
+    : context_(context), allow_http_for_test_(false) {}
 
 PaymentManifestDownloader::~PaymentManifestDownloader() {}
 
@@ -108,6 +107,10 @@ void PaymentManifestDownloader::DownloadWebAppManifest(
     PaymentManifestDownloadCallback callback) {
   DCHECK(IsValidManifestUrl(url));
   InitiateDownload(url, net::URLFetcher::GET, std::move(callback));
+}
+
+void PaymentManifestDownloader::AllowHttpForTest() {
+  allow_http_for_test_ = true;
 }
 
 PaymentManifestDownloader::Download::Download() {}
@@ -184,9 +187,10 @@ void PaymentManifestDownloader::InitiateDownload(
 }
 
 bool PaymentManifestDownloader::IsValidManifestUrl(const GURL& url) {
-  return url.is_valid() && (url.SchemeIs(url::kHttpsScheme) ||
-                            (url.SchemeIs(url::kHttpScheme) &&
-                             net::IsLocalhost(url.HostNoBracketsPiece())));
+  return url.is_valid() &&
+         (url.SchemeIs(url::kHttpsScheme) ||
+          (allow_http_for_test_ && url.SchemeIs(url::kHttpScheme) &&
+           url.host() == "127.0.0.1"));
 }
 
 }  // namespace payments

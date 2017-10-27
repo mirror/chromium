@@ -36,12 +36,12 @@ namespace extensions {
 class PrinterProviderAPI : public KeyedService {
  public:
   using GetPrintersCallback =
-      base::RepeatingCallback<void(const base::ListValue& printers, bool done)>;
+      base::Callback<void(const base::ListValue& printers, bool done)>;
   using GetCapabilityCallback =
-      base::OnceCallback<void(const base::DictionaryValue& capability)>;
-  using PrintCallback = base::OnceCallback<void(const base::Value& error)>;
+      base::Callback<void(const base::DictionaryValue& capability)>;
+  using PrintCallback = base::Callback<void(const base::Value& error)>;
   using GetPrinterInfoCallback =
-      base::OnceCallback<void(const base::DictionaryValue& printer_info)>;
+      base::Callback<void(const base::DictionaryValue& printer_info)>;
 
   static PrinterProviderAPI* Create(content::BrowserContext* context);
 
@@ -74,7 +74,7 @@ class PrinterProviderAPI : public KeyedService {
   // reported by the extension.
   virtual void DispatchGetCapabilityRequested(
       const std::string& printer_id,
-      GetCapabilityCallback callback) = 0;
+      const GetCapabilityCallback& callback) = 0;
 
   // It dispatches chrome.printerProvider.onPrintRequested event with the
   // provided print job. The event is dispatched only to the extension that
@@ -82,7 +82,7 @@ class PrinterProviderAPI : public KeyedService {
   // |callback| is passed the print status returned by the extension, and it
   // must not be null.
   virtual void DispatchPrintRequested(const PrinterProviderPrintJob& job,
-                                      PrintCallback callback) = 0;
+                                      const PrintCallback& callback) = 0;
 
   // Returns print job associated with the print request with id |request_id|
   // for extension |extension|.
@@ -96,7 +96,7 @@ class PrinterProviderAPI : public KeyedService {
   virtual void DispatchGetUsbPrinterInfoRequested(
       const std::string& extension_id,
       scoped_refptr<device::UsbDevice> device,
-      GetPrinterInfoCallback callback) = 0;
+      const PrinterProviderAPI::GetPrinterInfoCallback& callback) = 0;
 };
 
 }  // namespace extensions

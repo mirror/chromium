@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_DOWNLOAD_INTERNAL_DEBUGGING_CLIENT_H_
-#define COMPONENTS_DOWNLOAD_INTERNAL_DEBUGGING_CLIENT_H_
-
 #include "base/macros.h"
 #include "components/download/public/client.h"
 
@@ -39,5 +36,3 @@ class DebuggingClient : public Client {
 };
 
 }  // namespace download
-
-#endif  // COMPONENTS_DOWNLOAD_INTERNAL_DEBUGGING_CLIENT_H_

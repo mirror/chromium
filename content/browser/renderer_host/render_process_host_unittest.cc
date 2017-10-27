@@ -131,7 +131,7 @@ TEST_F(RenderProcessHostUnitTest, ReuseCommittedSite) {
   std::string unique_name("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, std::string(), unique_name,
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(

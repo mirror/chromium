@@ -1949,12 +1949,12 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation, DetachPendingChild) {
   contents()->NavigateAndCommit(kUrlA);
   contents()->GetMainFrame()->OnCreateChildFrame(
       contents()->GetMainFrame()->GetProcess()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName1",
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   contents()->GetMainFrame()->OnCreateChildFrame(
       contents()->GetMainFrame()->GetProcess()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName2",
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   RenderFrameHostManager* root_manager =
@@ -2090,7 +2090,7 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
   // |contents1| creates an out of process iframe.
   contents1->GetMainFrame()->OnCreateChildFrame(
       contents1->GetMainFrame()->GetProcess()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName1",
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   RenderFrameHostManager* iframe =
@@ -2140,7 +2140,7 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
   EXPECT_TRUE(main_rfh->IsRenderFrameLive());
   main_rfh->OnCreateChildFrame(
       main_rfh->GetProcess()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, std::string(), "uniqueName1",
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   RenderFrameHostManager* subframe_rfhm =
@@ -2299,12 +2299,12 @@ TEST_F(RenderFrameHostManagerTest, TraverseComplexOpenerChain) {
   FrameTreeNode* root1 = tree1->root();
   int process_id = root1->current_frame_host()->GetProcess()->GetID();
   tree1->AddFrame(root1, process_id, 12,
-                  TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+                  TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
                   blink::WebTreeScopeType::kDocument, std::string(),
                   "uniqueName0", base::UnguessableToken::Create(),
                   FramePolicy(), FrameOwnerProperties());
   tree1->AddFrame(root1, process_id, 13,
-                  TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+                  TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
                   blink::WebTreeScopeType::kDocument, std::string(),
                   "uniqueName1", base::UnguessableToken::Create(),
                   FramePolicy(), FrameOwnerProperties());
@@ -2316,12 +2316,12 @@ TEST_F(RenderFrameHostManagerTest, TraverseComplexOpenerChain) {
   FrameTreeNode* root2 = tree2->root();
   process_id = root2->current_frame_host()->GetProcess()->GetID();
   tree2->AddFrame(root2, process_id, 22,
-                  TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+                  TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
                   blink::WebTreeScopeType::kDocument, std::string(),
                   "uniqueName2", base::UnguessableToken::Create(),
                   FramePolicy(), FrameOwnerProperties());
   tree2->AddFrame(root2, process_id, 23,
-                  TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+                  TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
                   blink::WebTreeScopeType::kDocument, std::string(),
                   "uniqueName3", base::UnguessableToken::Create(),
                   FramePolicy(), FrameOwnerProperties());
@@ -2338,7 +2338,7 @@ TEST_F(RenderFrameHostManagerTest, TraverseComplexOpenerChain) {
   FrameTreeNode* root4 = tree4->root();
   process_id = root4->current_frame_host()->GetProcess()->GetID();
   tree4->AddFrame(root4, process_id, 42,
-                  TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+                  TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
                   blink::WebTreeScopeType::kDocument, std::string(),
                   "uniqueName4", base::UnguessableToken::Create(),
                   FramePolicy(), FrameOwnerProperties());
@@ -2389,17 +2389,17 @@ TEST_F(RenderFrameHostManagerTest, PageFocusPropagatesToSubframeProcesses) {
   contents()->NavigateAndCommit(kUrlA);
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1",
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, "frame2", "uniqueName2",
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, "frame3", "uniqueName3",
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
 
@@ -2490,7 +2490,7 @@ TEST_F(RenderFrameHostManagerTest,
   contents()->NavigateAndCommit(kUrlA);
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1",
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
 
@@ -3035,7 +3035,7 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
   // Create a child frame and navigate it cross-site.
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
-      TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
+      TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest(),
       blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1",
       base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
 

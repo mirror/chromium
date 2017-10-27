@@ -89,6 +89,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
       const ModificationCallback& callback);
   void SendNavigateWithParams(
       FrameHostMsg_DidCommitProvisionalLoad_Params* params);
+  void SendNavigateWithParamsAndInterfaceProvider(
+      FrameHostMsg_DidCommitProvisionalLoad_Params* params,
+      service_manager::mojom::InterfaceProviderRequest request);
 
   // Simulates a navigation to |url| failing with the error code |error_code|.
   // DEPRECATED: use NavigationSimulator instead.
@@ -160,10 +163,13 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
     return last_commit_was_error_page_;
   }
 
+  // Exposes the interface registry to be manipulated for testing.
+  service_manager::BinderRegistry& binder_registry() { return *registry_; }
+
   // Returns a pending InterfaceProvider request that is safe to bind to an
   // implementation, but will never receive any interface requests.
   static service_manager::mojom::InterfaceProviderRequest
-  CreateStubInterfaceProviderRequest();
+  CreateIsolatedInterfaceProviderRequest();
 
  private:
   class NavigationInterceptor;

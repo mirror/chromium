@@ -116,15 +116,15 @@ class PrinterProviderApiTest : public ShellApiTest {
   void StartGetUsbPrinterInfoRequest(
       const std::string& extension_id,
       scoped_refptr<device::UsbDevice> device,
-      PrinterProviderAPI::GetPrinterInfoCallback callback) {
+      const PrinterProviderAPI::GetPrinterInfoCallback& callback) {
     PrinterProviderAPIFactory::GetInstance()
         ->GetForBrowserContext(browser_context())
-        ->DispatchGetUsbPrinterInfoRequested(extension_id, device,
-                                             std::move(callback));
+        ->DispatchGetUsbPrinterInfoRequested(extension_id, device, callback);
   }
 
-  void StartPrintRequestWithNoData(const std::string& extension_id,
-                                   PrinterProviderAPI::PrintCallback callback) {
+  void StartPrintRequestWithNoData(
+      const std::string& extension_id,
+      const PrinterProviderAPI::PrintCallback& callback) {
     PrinterProviderPrintJob job;
     job.printer_id = extension_id + ":printer_id";
     job.ticket_json = "{}";
@@ -132,12 +132,12 @@ class PrinterProviderApiTest : public ShellApiTest {
 
     PrinterProviderAPIFactory::GetInstance()
         ->GetForBrowserContext(browser_context())
-        ->DispatchPrintRequested(job, std::move(callback));
+        ->DispatchPrintRequested(job, callback);
   }
 
   void StartPrintRequestUsingDocumentBytes(
       const std::string& extension_id,
-      PrinterProviderAPI::PrintCallback callback) {
+      const PrinterProviderAPI::PrintCallback& callback) {
     PrinterProviderPrintJob job;
     job.printer_id = extension_id + ":printer_id";
     job.job_title = base::ASCIIToUTF16("Print job");
@@ -149,12 +149,12 @@ class PrinterProviderApiTest : public ShellApiTest {
 
     PrinterProviderAPIFactory::GetInstance()
         ->GetForBrowserContext(browser_context())
-        ->DispatchPrintRequested(job, std::move(callback));
+        ->DispatchPrintRequested(job, callback);
   }
 
   bool StartPrintRequestUsingFileInfo(
       const std::string& extension_id,
-      PrinterProviderAPI::PrintCallback callback) {
+      const PrinterProviderAPI::PrintCallback& callback) {
     PrinterProviderPrintJob job;
 
     const char kBytes[] = {'b', 'y', 't', 'e', 's'};
@@ -171,17 +171,17 @@ class PrinterProviderApiTest : public ShellApiTest {
 
     PrinterProviderAPIFactory::GetInstance()
         ->GetForBrowserContext(browser_context())
-        ->DispatchPrintRequested(job, std::move(callback));
+        ->DispatchPrintRequested(job, callback);
     return true;
   }
 
   void StartCapabilityRequest(
       const std::string& extension_id,
-      PrinterProviderAPI::GetCapabilityCallback callback) {
+      const PrinterProviderAPI::GetCapabilityCallback& callback) {
     PrinterProviderAPIFactory::GetInstance()
         ->GetForBrowserContext(browser_context())
         ->DispatchGetCapabilityRequested(extension_id + ":printer_id",
-                                         std::move(callback));
+                                         callback);
   }
 
   // Loads chrome.printerProvider test app and initializes is for test
@@ -238,21 +238,19 @@ class PrinterProviderApiTest : public ShellApiTest {
 
     switch (data_type) {
       case PRINT_REQUEST_DATA_TYPE_NOT_SET:
-        StartPrintRequestWithNoData(extension_id, std::move(callback));
+        StartPrintRequestWithNoData(extension_id, callback);
         break;
       case PRINT_REQUEST_DATA_TYPE_FILE:
-        ASSERT_TRUE(
-            StartPrintRequestUsingFileInfo(extension_id, std::move(callback)));
+        ASSERT_TRUE(StartPrintRequestUsingFileInfo(extension_id, callback));
         break;
       case PRINT_REQUEST_DATA_TYPE_FILE_DELETED: {
-        ASSERT_TRUE(
-            StartPrintRequestUsingFileInfo(extension_id, std::move(callback)));
+        ASSERT_TRUE(StartPrintRequestUsingFileInfo(extension_id, callback));
         base::ScopedAllowBlockingForTesting allow_blocking;
         ASSERT_TRUE(data_dir_.Delete());
         break;
       }
       case PRINT_REQUEST_DATA_TYPE_BYTES:
-        StartPrintRequestUsingDocumentBytes(extension_id, std::move(callback));
+        StartPrintRequestUsingDocumentBytes(extension_id, callback);
         break;
     }
 

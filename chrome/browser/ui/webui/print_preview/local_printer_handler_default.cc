@@ -67,35 +67,36 @@ LocalPrinterHandlerDefault::~LocalPrinterHandlerDefault() {}
 
 void LocalPrinterHandlerDefault::Reset() {}
 
-void LocalPrinterHandlerDefault::GetDefaultPrinter(DefaultPrinterCallback cb) {
+void LocalPrinterHandlerDefault::GetDefaultPrinter(
+    const DefaultPrinterCallback& cb) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::BindOnce(&GetDefaultPrinterAsync), std::move(cb));
+      base::Bind(&GetDefaultPrinterAsync), cb);
 }
 
 void LocalPrinterHandlerDefault::StartGetPrinters(
     const AddedPrintersCallback& callback,
-    GetPrintersDoneCallback done_callback) {
+    const GetPrintersDoneCallback& done_callback) {
   VLOG(1) << "Enumerate printers start";
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::BindOnce(&EnumeratePrintersAsync),
-      base::BindOnce(&printing::ConvertPrinterListForCallback, callback,
-                     std::move(done_callback)));
+      base::Bind(&EnumeratePrintersAsync),
+      base::Bind(&printing::ConvertPrinterListForCallback, callback,
+                 done_callback));
 }
 
 void LocalPrinterHandlerDefault::StartGetCapability(
     const std::string& device_name,
-    GetCapabilityCallback cb) {
+    const GetCapabilityCallback& cb) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::BindOnce(&FetchCapabilitiesAsync, device_name), std::move(cb));
+      base::Bind(&FetchCapabilitiesAsync, device_name), cb);
 }
 
 void LocalPrinterHandlerDefault::StartPrint(
@@ -105,6 +106,6 @@ void LocalPrinterHandlerDefault::StartPrint(
     const std::string& ticket_json,
     const gfx::Size& page_size,
     const scoped_refptr<base::RefCountedBytes>& print_data,
-    PrintCallback callback) {
+    const PrintCallback& callback) {
   NOTREACHED();
 }

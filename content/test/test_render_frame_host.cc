@@ -122,10 +122,11 @@ void TestRenderFrameHost::InitializeRenderFrameIfNeeded() {
 TestRenderFrameHost* TestRenderFrameHost::AppendChild(
     const std::string& frame_name) {
   std::string frame_unique_name = base::GenerateGUID();
-  OnCreateChildFrame(
-      GetProcess()->GetNextRoutingID(), CreateStubInterfaceProviderRequest(),
-      blink::WebTreeScopeType::kDocument, frame_name, frame_unique_name,
-      base::UnguessableToken::Create(), FramePolicy(), FrameOwnerProperties());
+  OnCreateChildFrame(GetProcess()->GetNextRoutingID(),
+                     CreateIsolatedInterfaceProviderRequest(),
+                     blink::WebTreeScopeType::kDocument, frame_name,
+                     frame_unique_name, base::UnguessableToken::Create(),
+                     FramePolicy(), FrameOwnerProperties());
   return static_cast<TestRenderFrameHost*>(
       child_creation_observer_.last_created_frame());
 }
@@ -430,15 +431,24 @@ void TestRenderFrameHost::SendNavigateWithParameters(
 
 void TestRenderFrameHost::SendNavigateWithParams(
     FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
+  service_manager::mojom::InterfaceProviderPtr isolated_interface_provider;
+  SendNavigateWithParamsAndInterfaceProvider(
+      params, mojo::MakeRequest(&isolated_interface_provider));
+}
+
+void TestRenderFrameHost::SendNavigateWithParamsAndInterfaceProvider(
+    FrameHostMsg_DidCommitProvisionalLoad_Params* params,
+    service_manager::mojom::InterfaceProviderRequest request) {
   if (navigation_handle()) {
     scoped_refptr<net::HttpResponseHeaders> response_headers =
         new net::HttpResponseHeaders(std::string());
-    response_headers->AddHeader(
-        std::string("Content-Type: ") + contents_mime_type_);
+    response_headers->AddHeader(std::string("Content-Type: ") +
+                                contents_mime_type_);
     navigation_handle()->set_response_headers_for_testing(response_headers);
   }
   DidCommitProvisionalLoad(
-      std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>(*params));
+      std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>(*params),
+      std::move(request));
   last_commit_was_error_page_ = params->url_is_unreachable;
 }
 
@@ -569,7 +579,7 @@ TestRenderFrameHost::GetInternalNavigationControl() {
 
 // static
 service_manager::mojom::InterfaceProviderRequest
-TestRenderFrameHost::CreateStubInterfaceProviderRequest() {
+TestRenderFrameHost::CreateIsolatedInterfaceProviderRequest() {
   ::service_manager::mojom::InterfaceProviderPtr dead_interface_provider_proxy;
   return mojo::MakeRequest(&dead_interface_provider_proxy);
 }

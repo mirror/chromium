@@ -154,18 +154,19 @@ void PdfPrinterHandler::Reset() {
 
 void PdfPrinterHandler::StartGetPrinters(
     const AddedPrintersCallback& added_printers_callback,
-    GetPrintersDoneCallback done_callback) {
+    const GetPrintersDoneCallback& done_callback) {
   NOTREACHED();
 }
 
-void PdfPrinterHandler::StartGetCapability(const std::string& destination_id,
-                                           GetCapabilityCallback callback) {
+void PdfPrinterHandler::StartGetCapability(
+    const std::string& destination_id,
+    const GetCapabilityCallback& callback) {
   auto printer_info = base::MakeUnique<base::DictionaryValue>();
   printer_info->SetString(printing::kSettingDeviceName, destination_id);
   printer_info->Set(
       printing::kSettingCapabilities,
       GetPdfCapabilities(g_browser_process->GetApplicationLocale()));
-  std::move(callback).Run(std::move(printer_info));
+  callback.Run(std::move(printer_info));
 }
 
 void PdfPrinterHandler::StartPrint(
@@ -175,7 +176,7 @@ void PdfPrinterHandler::StartPrint(
     const std::string& ticket_json,
     const gfx::Size& page_size,
     const scoped_refptr<base::RefCountedBytes>& print_data,
-    PrintCallback callback) {
+    const PrintCallback& callback) {
   print_data_ = print_data;
   if (!print_to_pdf_path_.empty()) {
     // User has already selected a path, no need to show the dialog again.
@@ -184,7 +185,7 @@ void PdfPrinterHandler::StartPrint(
              !select_file_dialog_->IsRunning(platform_util::GetTopLevel(
                  preview_web_contents_->GetNativeView()))) {
     DCHECK(!print_callback_);
-    print_callback_ = std::move(callback);
+    print_callback_ = callback;
 #if defined(OS_WIN)
     base::FilePath::StringType print_job_title(job_title);
 #elif defined(OS_POSIX)
@@ -214,7 +215,8 @@ void PdfPrinterHandler::FileSelected(const base::FilePath& path,
 }
 
 void PdfPrinterHandler::FileSelectionCanceled(void* params) {
-  std::move(print_callback_).Run(base::Value("PDFPrintCanceled"));
+  print_callback_.Run(base::Value("PDFPrintCanceled"));
+  print_callback_.Reset();
 }
 
 void PdfPrinterHandler::SetPdfSavedClosureForTesting(
@@ -233,7 +235,8 @@ void PdfPrinterHandler::SelectFile(const base::FilePath& default_filename,
     ChromeSelectFilePolicy policy(initiator);
     if (!policy.CanOpenSelectFileDialog()) {
       policy.SelectFileDenied();
-      std::move(print_callback_).Run(base::Value("PDFPrintCannotSelect"));
+      print_callback_.Run(base::Value("PDFPrintCannotSelect"));
+      print_callback_.Reset();
       return;
     }
   }
@@ -275,7 +278,8 @@ void PdfPrinterHandler::PostPrintToPdfTask() {
       base::BindOnce(&PrintToPdfCallback, print_data_, print_to_pdf_path_,
                      pdf_file_saved_closure_));
   print_to_pdf_path_.clear();
-  std::move(print_callback_).Run(base::Value());
+  print_callback_.Run(base::Value());
+  print_callback_.Reset();
 }
 
 void PdfPrinterHandler::OnGotUniqueFileName(const base::FilePath& path) {

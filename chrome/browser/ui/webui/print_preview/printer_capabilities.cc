@@ -213,7 +213,7 @@ std::unique_ptr<base::DictionaryValue> GetSettingsOnBlockingPool(
 
 void ConvertPrinterListForCallback(
     const PrinterHandler::AddedPrintersCallback& callback,
-    PrinterHandler::GetPrintersDoneCallback done_callback,
+    const PrinterHandler::GetPrintersDoneCallback& done_callback,
     const PrinterList& printer_list) {
   base::ListValue printers;
   PrintersToValues(printer_list, &printers);
@@ -222,7 +222,7 @@ void ConvertPrinterListForCallback(
           << " printers";
   if (!printers.empty())
     callback.Run(printers);
-  std::move(done_callback).Run();
+  done_callback.Run();
 }
 
 std::unique_ptr<base::DictionaryValue> ValidateCddForPrintPreview(

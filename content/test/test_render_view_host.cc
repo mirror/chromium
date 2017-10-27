@@ -280,9 +280,9 @@ bool TestRenderViewHost::CreateRenderView(
       static_cast<RenderFrameHostImpl*>(GetMainFrame());
   if (main_frame && is_active()) {
     service_manager::mojom::InterfaceProviderPtr
-        stub_interface_provider_request;
+        isolated_interface_provider_request;
     main_frame->BindInterfaceProviderRequest(
-        mojo::MakeRequest(&stub_interface_provider_request));
+        mojo::MakeRequest(&isolated_interface_provider_request));
     main_frame->SetRenderFrameCreated(true);
   }
 

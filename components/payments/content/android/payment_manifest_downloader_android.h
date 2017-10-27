@@ -41,6 +41,10 @@ class PaymentManifestDownloaderAndroid {
   void Destroy(JNIEnv* env,
                const base::android::JavaParamRef<jobject>& jcaller);
 
+  // Allows HTTP URLs. Should be used for testing only.
+  void AllowHttpForTest(JNIEnv* env,
+                        const base::android::JavaParamRef<jobject>& jcaller);
+
  private:
   PaymentManifestDownloader downloader_;
 
