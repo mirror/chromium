@@ -26,7 +26,6 @@
 #include "modules/webaudio/OfflineAudioDestinationNode.h"
 
 #include <algorithm>
-#include "core/dom/TaskRunnerHelper.h"
 #include "modules/webaudio/AudioNodeInput.h"
 #include "modules/webaudio/AudioNodeOutput.h"
 #include "modules/webaudio/AudioWorkletMessagingProxy.h"
@@ -59,6 +58,11 @@ OfflineAudioDestinationHandler::OfflineAudioDestinationHandler(
 
   SetInternalChannelCountMode(kExplicit);
   SetInternalChannelInterpretation(AudioBus::kSpeakers);
+
+  if (Context()->GetExecutionContext()) {
+    task_runner_ = Context()->GetExecutionContext()->GetTaskRunner(
+        TaskType::kMediaElementEvent);
+  }
 }
 
 scoped_refptr<OfflineAudioDestinationHandler>
@@ -250,13 +254,11 @@ void OfflineAudioDestinationHandler::SuspendOfflineRendering() {
   DCHECK(!IsMainThread());
 
   // The actual rendering has been suspended. Notify the context.
-  if (Context()->GetExecutionContext()) {
-    TaskRunnerHelper::Get(TaskType::kMediaElementEvent,
-                          Context()->GetExecutionContext())
-        ->PostTask(BLINK_FROM_HERE,
-                   CrossThreadBind(
-                       &OfflineAudioDestinationHandler::NotifySuspend,
-                       WrapRefCounted(this), Context()->CurrentSampleFrame()));
+  if (task_runner_) {
+    task_runner_->PostTask(
+        BLINK_FROM_HERE,
+        CrossThreadBind(&OfflineAudioDestinationHandler::NotifySuspend,
+                        WrapRefCounted(this), Context()->CurrentSampleFrame()));
   }
 }
 
@@ -265,12 +267,10 @@ void OfflineAudioDestinationHandler::FinishOfflineRendering() {
 
   // The actual rendering has been completed. Notify the context.
   if (Context()->GetExecutionContext()) {
-    TaskRunnerHelper::Get(TaskType::kMediaElementEvent,
-                          Context()->GetExecutionContext())
-        ->PostTask(
-            BLINK_FROM_HERE,
-            CrossThreadBind(&OfflineAudioDestinationHandler::NotifyComplete,
-                            WrapRefCounted(this)));
+    task_runner_->PostTask(
+        BLINK_FROM_HERE,
+        CrossThreadBind(&OfflineAudioDestinationHandler::NotifyComplete,
+                        WrapRefCounted(this)));
   }
 }
 
