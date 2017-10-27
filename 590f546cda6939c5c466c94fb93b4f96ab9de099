@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38b25b84_a90a54cb",
+        "filename": "testing/libfuzzer/fuzzers/mp4_box_reader_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-27T21:04:38Z",
+      "side": 1,
+      "message": "Can we move this target to //media land? We are trying to store fuzzers closer to the code they are targeting. This is one of the very first fuzzers, this is why it got landed here.",
+      "range": {
+        "startLine": 26,
+        "startChar": 15,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "590f546cda6939c5c466c94fb93b4f96ab9de099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
