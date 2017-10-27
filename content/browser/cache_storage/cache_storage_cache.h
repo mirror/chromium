@@ -351,6 +351,11 @@ class CONTENT_EXPORT CacheStorageCache {
                               BlobToDiskCacheIDMap::KeyType blob_to_cache_key,
                               disk_cache::ScopedEntryPtr entry,
                               bool success);
+  void PutDidWriteSideDataBlobToCache(
+      std::unique_ptr<PutContext> put_context,
+      BlobToDiskCacheIDMap::KeyType blob_to_cache_key,
+      disk_cache::ScopedEntryPtr entry,
+      bool success);
 
   // Asynchronously calculates the current cache size, notifies the quota
   // manager of any change from the last report, and sets cache_size_ to the new

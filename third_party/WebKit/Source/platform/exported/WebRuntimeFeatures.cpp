@@ -390,6 +390,10 @@ void WebRuntimeFeatures::EnableScrollAnchoring(bool enable) {
   RuntimeEnabledFeatures::SetScrollAnchoringEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableServiceWorkerFullCodeCacheInstall(bool enable) {
+  RuntimeEnabledFeatures::SetServiceWorkerFullCodeCacheInstallEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableServiceWorkerScriptStreaming(bool enable) {
   RuntimeEnabledFeatures::SetServiceWorkerScriptStreamingEnabled(enable);
 }

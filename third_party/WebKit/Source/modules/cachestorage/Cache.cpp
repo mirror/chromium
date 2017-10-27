@@ -14,17 +14,26 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/modules/v8/V8Response.h"
 #include "core/dom/DOMException.h"
+#include "core/dom/ExecutionContext.h"
+#include "core/html/parser/TextResourceDecoder.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/inspector/InspectorTraceEvents.h"
 #include "modules/cachestorage/CacheStorageError.h"
 #include "modules/fetch/BodyStreamBuffer.h"
 #include "modules/fetch/FetchDataLoader.h"
 #include "modules/fetch/GlobalFetch.h"
 #include "modules/fetch/Request.h"
 #include "modules/fetch/Response.h"
+#include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
 #include "platform/Histogram.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/bindings/V8Binding.h"
 #include "platform/bindings/V8ThrowException.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
+#include "platform/loader/fetch/CachedMetadata.h"
 #include "platform/network/http_names.h"
+#include "platform/network/mime/MIMETypeRegistry.h"
+#include "platform/runtime_enabled_features.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerCache.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 
@@ -188,6 +197,24 @@ bool VaryHeaderContainsAsterisk(const Response* response) {
   return false;
 }
 
+bool ShouldGenerateV8CodeCache(ScriptState* script_state,
+                               const Response* response) {
+  if (!RuntimeEnabledFeatures::ServiceWorkerFullCodeCacheInstallEnabled())
+    return false;
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  if (!context->IsServiceWorkerGlobalScope())
+    return false;
+  if (!ToServiceWorkerGlobalScope(context)->is_being_installed())
+    return false;
+  if (!MIMETypeRegistry::IsSupportedJavaScriptMIMEType(
+          response->InternalMIMEType())) {
+    return false;
+  }
+  if (!response->InternalBodyBuffer())
+    return false;
+  return true;
+}
+
 }  // namespace
 
 // TODO(nhiroki): Unfortunately, we have to go through V8 to wait for the fetch
@@ -345,6 +372,150 @@ class Cache::BlobHandleCallbackForPut final
   const size_t index_;
   Member<BarrierCallbackForPut> barrier_callback_;
 
+  WebServiceWorkerRequest web_request_;
+  WebServiceWorkerResponse web_response_;
+};
+
+enum CacheTagKind {
+  kCacheTagParser = 0,
+  kCacheTagCode = 1,
+  kCacheTagTimeStamp = 3,
+  kCacheTagLast
+};
+
+static const int kCacheTagKindSize = 2;
+
+uint32_t CacheTag(CacheTagKind kind, const String& encoding) {
+  static_assert((1 << kCacheTagKindSize) >= kCacheTagLast,
+                "CacheTagLast must be large enough");
+
+  static uint32_t v8_cache_data_version =
+      v8::ScriptCompiler::CachedDataVersionTag() << kCacheTagKindSize;
+  return (v8_cache_data_version | kind) + StringHash::GetHash(encoding);
+}
+
+class Cache::CodeCacheHandleCallbackForPut final
+    : public GarbageCollectedFinalized<CodeCacheHandleCallbackForPut>,
+      public FetchDataLoader::Client {
+  USING_GARBAGE_COLLECTED_MIXIN(CodeCacheHandleCallbackForPut);
+
+ public:
+  CodeCacheHandleCallbackForPut(ScriptState* script_state,
+                                size_t index,
+                                BarrierCallbackForPut* barrier_callback,
+                                Request* request,
+                                Response* response)
+      : script_state_(script_state),
+        index_(index),
+        barrier_callback_(barrier_callback),
+        mime_type_(response->InternalMIMEType()) {
+    request->PopulateWebServiceWorkerRequest(web_request_);
+    response->PopulateWebServiceWorkerResponse(web_response_);
+  }
+  ~CodeCacheHandleCallbackForPut() override {}
+  void DidFetchDataLoadedArrayBuffer(DOMArrayBuffer* array_buffer) override {
+    WebServiceWorkerCache::BatchOperation batch_operation;
+    batch_operation.operation_type = WebServiceWorkerCache::kOperationTypePut;
+    batch_operation.request = web_request_;
+    batch_operation.response = web_response_;
+
+    std::unique_ptr<BlobData> blob_data = BlobData::Create();
+    blob_data->SetContentType(mime_type_);
+    blob_data->AppendBytes(array_buffer->Data(), array_buffer->ByteLength());
+    batch_operation.response.SetBlobDataHandle(BlobDataHandle::Create(
+        std::move(blob_data), array_buffer->ByteLength()));
+
+    // TODO(horo): Is it OK to use the ScriptState of the service worker?
+    scoped_refptr<CachedMetadata> cached_metadata =
+        GenerateV8CodeCache(array_buffer);
+    if (!cached_metadata) {
+      barrier_callback_->OnSuccess(index_, batch_operation);
+      return;
+    }
+    const Vector<char>& serialized_data = cached_metadata->SerializedData();
+    std::unique_ptr<BlobData> side_data_blob_data = BlobData::Create();
+    side_data_blob_data->AppendBytes(serialized_data.data(),
+                                     serialized_data.size());
+
+    batch_operation.response.SetSideDataBlobDataHandle(BlobDataHandle::Create(
+        std::move(side_data_blob_data), serialized_data.size()));
+    barrier_callback_->OnSuccess(index_, batch_operation);
+  }
+
+  void DidFetchDataLoadFailed() override {
+    barrier_callback_->OnError("network error");
+  }
+
+  virtual void Trace(blink::Visitor* visitor) {
+    visitor->Trace(barrier_callback_);
+    FetchDataLoader::Client::Trace(visitor);
+  }
+
+ private:
+  scoped_refptr<CachedMetadata> GenerateV8CodeCache(
+      DOMArrayBuffer* array_buffer) {
+    const String& file_name = web_request_.Url().GetString();
+    ScriptState::Scope scope(script_state_.get());
+    v8::Isolate* isolate = script_state_->GetIsolate();
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
+    CHECK(!context.IsEmpty());
+    ReferrerScriptInfo referrer_info(
+        network::mojom::FetchCredentialsMode::kOmit, "",
+        ParserDisposition::kNotParserInserted);
+    v8::ScriptOrigin origin(
+        V8String(isolate, file_name), v8::Integer::New(isolate, 0),
+        v8::Integer::New(isolate, 0),
+        v8::Boolean::New(isolate, true),  // is_shared_cross_origin
+        v8::Local<v8::Integer>(), V8String(isolate, String("")),
+        v8::Boolean::New(isolate, false),  // is_opaque
+        v8::False(isolate),                // is_wasm
+        v8::False(isolate),                // is_module
+        referrer_info.ToV8HostDefinedOptions(isolate));
+    std::unique_ptr<TextResourceDecoder> text_decoder =
+        TextResourceDecoder::Create(
+            TextResourceDecoderOptions::CreateAlwaysUseUTF8ForText());
+    v8::Local<v8::String> code(V8String(
+        isolate,
+        text_decoder->Decode(static_cast<const char*>(array_buffer->Data()),
+                             array_buffer->ByteLength())));
+    v8::ScriptCompiler::Source source(code, origin);
+
+    constexpr const char* kTraceEventCategoryGroup = "v8,devtools.timeline";
+    TRACE_EVENT_BEGIN1(kTraceEventCategoryGroup, "v8.compile", "fileName",
+                       file_name.Utf8());
+
+    v8::MaybeLocal<v8::Script> script = v8::ScriptCompiler::Compile(
+        context, &source, v8::ScriptCompiler::kProduceFullCodeCache);
+
+    CHECK(!script.IsEmpty());
+    const v8::ScriptCompiler::CachedData* cached_data = source.GetCachedData();
+
+    if (*TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(kTraceEventCategoryGroup)) {
+      InspectorCompileScriptEvent::V8CacheResult cache_result;
+      cache_result.produce_result =
+          InspectorCompileScriptEvent::V8CacheResult::ProduceResult(
+              v8::ScriptCompiler::kProduceFullCodeCache,
+              cached_data ? cached_data->length : 0);
+      TRACE_EVENT_END1(kTraceEventCategoryGroup, "v8.compile", "data",
+                       InspectorCompileScriptEvent::Data(
+                           file_name, TextPosition(), cache_result, false));
+    }
+
+    if (!cached_data || !cached_data->length) {
+      return nullptr;
+    }
+    uint32_t data_type_id =
+        CacheTag(kCacheTagCode, text_decoder->Encoding().GetName());
+    return CachedMetadata::Create(
+        data_type_id, reinterpret_cast<const char*>(cached_data->data),
+        cached_data->length);
+  }
+
+  const scoped_refptr<ScriptState> script_state_;
+  const size_t index_;
+  Member<BarrierCallbackForPut> barrier_callback_;
+
+  String mime_type_;
   WebServiceWorkerRequest web_request_;
   WebServiceWorkerResponse web_response_;
 };
@@ -623,8 +794,15 @@ ScriptPromise Cache::PutImpl(ScriptState* script_state,
       barrier_callback->OnError("Response body is already used");
       return promise;
     }
-
     BodyStreamBuffer* buffer = responses[i]->InternalBodyBuffer();
+
+    if (ShouldGenerateV8CodeCache(script_state, responses[i])) {
+      FetchDataLoader* loader = FetchDataLoader::CreateLoaderAsArrayBuffer();
+      buffer->StartLoading(loader, new CodeCacheHandleCallbackForPut(
+                                       script_state, i, barrier_callback,
+                                       requests[i], responses[i]));
+      continue;
+    }
     if (buffer) {
       // If the response has body, read the all data and create
       // the blob handle and dispatch the put batch asynchronously.
