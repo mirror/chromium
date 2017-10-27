@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77590a30_972204fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-27T03:58:20Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "5c5237c0_1010479c",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "18cf435b03a3d5afe5934aa7ea0017dcdd1d3537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bac8c36_d63c5415",
         "filename": "chrome/test/base/ui_test_utils.cc",
         "patchSetId": 5
