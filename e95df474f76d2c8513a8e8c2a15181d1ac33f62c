@@ -52,6 +52,24 @@
       "revId": "e95df474f76d2c8513a8e8c2a15181d1ac33f62c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccad5a3_b9b6146e",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-27T21:12:18Z",
+      "side": 1,
+      "message": "hung OOPIFs shouldn\u0027t contribute to it... Let\u0027s fix this and see what happens with the metrics though.\n\nI agree that is a larger change.",
+      "parentUuid": "530bb41c_70538dcf",
+      "revId": "e95df474f76d2c8513a8e8c2a15181d1ac33f62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
