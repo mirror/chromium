@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c144c9fc_9d78ac7c",
+        "filename": "chrome/browser/budget_service/budget_service_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T08:49:48Z",
+      "side": 1,
+      "message": "Btw how are we going to track the followup work to sanity check / not pass origins if not needed?",
+      "revId": "9775f7cff7039e96fce618a5b1a748fd553f8ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b791b95_f7cf0ca7",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 3041,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T08:49:48Z",
+      "side": 1,
+      "message": "Nit: no .get() here",
+      "revId": "9775f7cff7039e96fce618a5b1a748fd553f8ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
