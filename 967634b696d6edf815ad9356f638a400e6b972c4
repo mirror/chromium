@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "661ed611_940c2e0d",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-27T21:02:29Z",
+      "side": 1,
+      "message": "Will this accurately synthesize the real world situation where GetInterface would as close as possible after DidCommitProvisionalLoad? \n\nI wonder if we are still sending the GetInterface message too late, and maybe we should have it posted to the MessageLoop just before we synchronously invoke DidCommitProvisionalLoad?",
+      "revId": "967634b696d6edf815ad9356f638a400e6b972c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
