@@ -22,6 +22,30 @@
       "revId": "cbe2f108b9f1ee60f8dcfc52dab1428333a50ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75eaccb_57f3324f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-27T14:03:48Z",
+      "side": 1,
+      "message": "1) The key comes from: https://developers.google.com/maps/documentation/javascript/get-api-key\n2) oh! it\u0027s great!",
+      "parentUuid": "cc45ef2c_c7e6f7f9",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 61
+      },
+      "revId": "cbe2f108b9f1ee60f8dcfc52dab1428333a50ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
