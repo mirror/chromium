@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff1f350_551690ac",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:19:53Z",
+      "side": 1,
+      "message": "I am wondering if this is going to be working, for files loaded using content:// links from Download Manager or other apps. Did you consider that?",
+      "range": {
+        "startLine": 32,
+        "startChar": 40,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d79bed_c48e98b7",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:19:53Z",
+      "side": 1,
+      "message": "please use a more descriptive name, e.g. read_byte_count",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8f6f94_2f103a2d",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:19:53Z",
+      "side": 1,
+      "message": "nit: empty line after?",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5cb03d_22ba6549",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:19:53Z",
+      "side": 1,
+      "message": "That +1 made me read what WriteInto does... Did you consider:\n\n  std::string result_bytes(crypto::kSHA256Length, 0);\n  hash-\u003eFinish(base::string_as_array(\u0026result_bytes), result_bytes.size());\n\nLifted from:\nhttps://cs.chromium.org/chromium/src/chrome/browser/extensions/install_signer.cc?type\u003dcs\u0026l\u003d104",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41bbb40a_b2c7d957",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:19:53Z",
+      "side": 1,
+      "message": "Would it make sense to operate with the name \"Digest\" instead?\nI think that is how we were calling it in design and DB.\n\nhttps://cs.chromium.org/chromium/src/components/offline_pages/core/offline_page_metadata_store_sql.cc?sq\u003dpackage:chromium\u0026l\u003d48",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 24
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55dc62d_da48d8cf",
+        "filename": "components/offline_pages/core/offline_page_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:19:53Z",
+      "side": 1,
+      "message": "DIGEST_CALCULATION",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890b5a6e_05ebe5e2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29237,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:19:53Z",
+      "side": 1,
+      "message": "digest calculation",
+      "range": {
+        "startLine": 29237,
+        "startChar": 25,
+        "endLine": 29237,
+        "endChar": 34
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23042428_7ed67537",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29238,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-27T23:19:53Z",
+      "side": 1,
+      "message": "digest",
+      "range": {
+        "startLine": 29238,
+        "startChar": 26,
+        "endLine": 29238,
+        "endChar": 37
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
