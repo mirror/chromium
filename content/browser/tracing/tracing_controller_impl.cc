@@ -198,13 +198,7 @@ TracingControllerImpl::GenerateMetadataDict() const {
   metadata_dict->SetInteger("physical-memory",
                             base::SysInfo::AmountOfPhysicalMemoryMB());
 
-  std::string cpu_brand = cpu.cpu_brand();
-  // Workaround for crbug.com/249713.
-  // TODO(oysteine): Remove workaround when bug is fixed.
-  size_t null_pos = cpu_brand.find('\0');
-  if (null_pos != std::string::npos)
-    cpu_brand.erase(null_pos);
-  metadata_dict->SetString("cpu-brand", cpu_brand);
+  metadata_dict->SetString("cpu-brand", cpu.cpu_brand());
 
   // GPU
   gpu::GPUInfo gpu_info = content::GpuDataManager::GetInstance()->GetGPUInfo();
