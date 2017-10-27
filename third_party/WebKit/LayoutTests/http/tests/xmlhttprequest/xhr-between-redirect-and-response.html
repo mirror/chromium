@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<link rel="preload" href="../resources/redirect.php?url=../resources/redirect.php%3Fdelay%3D2000%26url%3D../resources/dummy.txt" as="fetch" crossorigin="use-credentials">
+<script>
+var t = async_test('When XHR is initiated after redirect is received before non-redirect response is received, DocumentThreadableLoader is notified of redirects synchronously');
+setTimeout(t.step_func(function() {
+    var xhr = new XMLHttpRequest;
+    xhr.withCredentials = true;
+    xhr.open("GET", "../resources/redirect.php?url=../resources/redirect.php%3Fdelay%3D2000%26url%3D../resources/dummy.txt");
+    xhr.onload = t.step_func_done(function() {
+        assert_equals(xhr.responseText, "Hello world\n");
+    });
+    xhr.send();
+}), 1000);
+</script>
