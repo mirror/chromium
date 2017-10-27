@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d73ee667_05659886",
+        "filename": "net/reporting/reporting_header_parser_fuzzer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-27T17:53:09Z",
+      "side": 1,
+      "message": "I\u0027d appreciate an advice on how to avoid failing the presubmit check:\n\n** Presubmit ERRORS **\nYou added one or more #includes that violate checkdeps rules.\n  net/reporting/reporting_header_parser_fuzzer.cc\n      Illegal include: \"third_party/libprotobuf-mutator/src/src/libfuzzer/libfuzzer_macro.h\"\n    Because of no rule applying.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 78
+      },
+      "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
