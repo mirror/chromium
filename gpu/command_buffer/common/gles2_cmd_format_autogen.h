@@ -15996,25 +15996,27 @@ struct InitializeDiscardableTextureCHROMIUM {
 
   void SetHeader() { header.SetCmd<ValueType>(); }
 
-  void Init(GLuint _texture_id, uint32_t _shm_id, uint32_t _shm_offset) {
+  void Init(GLuint _texture_id, GLuint64 _handle_id) {
     SetHeader();
     texture_id = _texture_id;
-    shm_id = _shm_id;
-    shm_offset = _shm_offset;
+    GLES2Util::MapUint64ToTwoUint32(static_cast<uint64_t>(_handle_id),
+                                    &handle_id_0, &handle_id_1);
   }
 
-  void* Set(void* cmd,
-            GLuint _texture_id,
-            uint32_t _shm_id,
-            uint32_t _shm_offset) {
-    static_cast<ValueType*>(cmd)->Init(_texture_id, _shm_id, _shm_offset);
+  void* Set(void* cmd, GLuint _texture_id, GLuint64 _handle_id) {
+    static_cast<ValueType*>(cmd)->Init(_texture_id, _handle_id);
     return NextCmdAddress<ValueType>(cmd);
+  }
+
+  GLuint64 handle_id() const volatile {
+    return static_cast<GLuint64>(
+        GLES2Util::MapTwoUint32ToUint64(handle_id_0, handle_id_1));
   }
 
   gpu::CommandHeader header;
   uint32_t texture_id;
-  uint32_t shm_id;
-  uint32_t shm_offset;
+  uint32_t handle_id_0;
+  uint32_t handle_id_1;
 };
 
 static_assert(sizeof(InitializeDiscardableTextureCHROMIUM) == 16,
@@ -16026,11 +16028,11 @@ static_assert(
     offsetof(InitializeDiscardableTextureCHROMIUM, texture_id) == 4,
     "offset of InitializeDiscardableTextureCHROMIUM texture_id should be 4");
 static_assert(
-    offsetof(InitializeDiscardableTextureCHROMIUM, shm_id) == 8,
-    "offset of InitializeDiscardableTextureCHROMIUM shm_id should be 8");
+    offsetof(InitializeDiscardableTextureCHROMIUM, handle_id_0) == 8,
+    "offset of InitializeDiscardableTextureCHROMIUM handle_id_0 should be 8");
 static_assert(
-    offsetof(InitializeDiscardableTextureCHROMIUM, shm_offset) == 12,
-    "offset of InitializeDiscardableTextureCHROMIUM shm_offset should be 12");
+    offsetof(InitializeDiscardableTextureCHROMIUM, handle_id_1) == 12,
+    "offset of InitializeDiscardableTextureCHROMIUM handle_id_1 should be 12");
 
 struct UnlockDiscardableTextureCHROMIUM {
   typedef UnlockDiscardableTextureCHROMIUM ValueType;
@@ -16294,5 +16296,157 @@ static_assert(offsetof(TexStorage2DImageCHROMIUM, width) == 12,
               "offset of TexStorage2DImageCHROMIUM width should be 12");
 static_assert(offsetof(TexStorage2DImageCHROMIUM, height) == 16,
               "offset of TexStorage2DImageCHROMIUM height should be 16");
+
+struct CreateTransferCacheEntryCHROMIUM {
+  typedef CreateTransferCacheEntryCHROMIUM ValueType;
+  static const CommandId kCmdId = kCreateTransferCacheEntryCHROMIUM;
+  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
+  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+
+  static uint32_t ComputeSize() {
+    return static_cast<uint32_t>(sizeof(ValueType));  // NOLINT
+  }
+
+  void SetHeader() { header.SetCmd<ValueType>(); }
+
+  void Init(GLuint64 _handle_id,
+            GLuint _type,
+            GLuint _shm_id,
+            GLuint _shm_offset) {
+    SetHeader();
+    GLES2Util::MapUint64ToTwoUint32(static_cast<uint64_t>(_handle_id),
+                                    &handle_id_0, &handle_id_1);
+    type = _type;
+    shm_id = _shm_id;
+    shm_offset = _shm_offset;
+  }
+
+  void* Set(void* cmd,
+            GLuint64 _handle_id,
+            GLuint _type,
+            GLuint _shm_id,
+            GLuint _shm_offset) {
+    static_cast<ValueType*>(cmd)->Init(_handle_id, _type, _shm_id, _shm_offset);
+    return NextCmdAddress<ValueType>(cmd);
+  }
+
+  GLuint64 handle_id() const volatile {
+    return static_cast<GLuint64>(
+        GLES2Util::MapTwoUint32ToUint64(handle_id_0, handle_id_1));
+  }
+
+  gpu::CommandHeader header;
+  uint32_t handle_id_0;
+  uint32_t handle_id_1;
+  uint32_t type;
+  uint32_t shm_id;
+  uint32_t shm_offset;
+};
+
+static_assert(sizeof(CreateTransferCacheEntryCHROMIUM) == 24,
+              "size of CreateTransferCacheEntryCHROMIUM should be 24");
+static_assert(offsetof(CreateTransferCacheEntryCHROMIUM, header) == 0,
+              "offset of CreateTransferCacheEntryCHROMIUM header should be 0");
+static_assert(
+    offsetof(CreateTransferCacheEntryCHROMIUM, handle_id_0) == 4,
+    "offset of CreateTransferCacheEntryCHROMIUM handle_id_0 should be 4");
+static_assert(
+    offsetof(CreateTransferCacheEntryCHROMIUM, handle_id_1) == 8,
+    "offset of CreateTransferCacheEntryCHROMIUM handle_id_1 should be 8");
+static_assert(offsetof(CreateTransferCacheEntryCHROMIUM, type) == 12,
+              "offset of CreateTransferCacheEntryCHROMIUM type should be 12");
+static_assert(offsetof(CreateTransferCacheEntryCHROMIUM, shm_id) == 16,
+              "offset of CreateTransferCacheEntryCHROMIUM shm_id should be 16");
+static_assert(
+    offsetof(CreateTransferCacheEntryCHROMIUM, shm_offset) == 20,
+    "offset of CreateTransferCacheEntryCHROMIUM shm_offset should be 20");
+
+struct DeleteTransferCacheEntryCHROMIUM {
+  typedef DeleteTransferCacheEntryCHROMIUM ValueType;
+  static const CommandId kCmdId = kDeleteTransferCacheEntryCHROMIUM;
+  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
+  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+
+  static uint32_t ComputeSize() {
+    return static_cast<uint32_t>(sizeof(ValueType));  // NOLINT
+  }
+
+  void SetHeader() { header.SetCmd<ValueType>(); }
+
+  void Init(GLuint64 _handle_id) {
+    SetHeader();
+    GLES2Util::MapUint64ToTwoUint32(static_cast<uint64_t>(_handle_id),
+                                    &handle_id_0, &handle_id_1);
+  }
+
+  void* Set(void* cmd, GLuint64 _handle_id) {
+    static_cast<ValueType*>(cmd)->Init(_handle_id);
+    return NextCmdAddress<ValueType>(cmd);
+  }
+
+  GLuint64 handle_id() const volatile {
+    return static_cast<GLuint64>(
+        GLES2Util::MapTwoUint32ToUint64(handle_id_0, handle_id_1));
+  }
+
+  gpu::CommandHeader header;
+  uint32_t handle_id_0;
+  uint32_t handle_id_1;
+};
+
+static_assert(sizeof(DeleteTransferCacheEntryCHROMIUM) == 12,
+              "size of DeleteTransferCacheEntryCHROMIUM should be 12");
+static_assert(offsetof(DeleteTransferCacheEntryCHROMIUM, header) == 0,
+              "offset of DeleteTransferCacheEntryCHROMIUM header should be 0");
+static_assert(
+    offsetof(DeleteTransferCacheEntryCHROMIUM, handle_id_0) == 4,
+    "offset of DeleteTransferCacheEntryCHROMIUM handle_id_0 should be 4");
+static_assert(
+    offsetof(DeleteTransferCacheEntryCHROMIUM, handle_id_1) == 8,
+    "offset of DeleteTransferCacheEntryCHROMIUM handle_id_1 should be 8");
+
+struct UnlockTransferCacheEntryCHROMIUM {
+  typedef UnlockTransferCacheEntryCHROMIUM ValueType;
+  static const CommandId kCmdId = kUnlockTransferCacheEntryCHROMIUM;
+  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
+  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+
+  static uint32_t ComputeSize() {
+    return static_cast<uint32_t>(sizeof(ValueType));  // NOLINT
+  }
+
+  void SetHeader() { header.SetCmd<ValueType>(); }
+
+  void Init(GLuint64 _handle_id) {
+    SetHeader();
+    GLES2Util::MapUint64ToTwoUint32(static_cast<uint64_t>(_handle_id),
+                                    &handle_id_0, &handle_id_1);
+  }
+
+  void* Set(void* cmd, GLuint64 _handle_id) {
+    static_cast<ValueType*>(cmd)->Init(_handle_id);
+    return NextCmdAddress<ValueType>(cmd);
+  }
+
+  GLuint64 handle_id() const volatile {
+    return static_cast<GLuint64>(
+        GLES2Util::MapTwoUint32ToUint64(handle_id_0, handle_id_1));
+  }
+
+  gpu::CommandHeader header;
+  uint32_t handle_id_0;
+  uint32_t handle_id_1;
+};
+
+static_assert(sizeof(UnlockTransferCacheEntryCHROMIUM) == 12,
+              "size of UnlockTransferCacheEntryCHROMIUM should be 12");
+static_assert(offsetof(UnlockTransferCacheEntryCHROMIUM, header) == 0,
+              "offset of UnlockTransferCacheEntryCHROMIUM header should be 0");
+static_assert(
+    offsetof(UnlockTransferCacheEntryCHROMIUM, handle_id_0) == 4,
+    "offset of UnlockTransferCacheEntryCHROMIUM handle_id_0 should be 4");
+static_assert(
+    offsetof(UnlockTransferCacheEntryCHROMIUM, handle_id_1) == 8,
+    "offset of UnlockTransferCacheEntryCHROMIUM handle_id_1 should be 8");
 
 #endif  // GPU_COMMAND_BUFFER_COMMON_GLES2_CMD_FORMAT_AUTOGEN_H_

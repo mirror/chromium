@@ -11,6 +11,10 @@
 namespace gpu {
 namespace {
 
+DiscardableHandleId MakeHandle(uint32_t shm_id, uint32_t offset) {
+  return static_cast<uint64_t>(shm_id) << 32 | offset;
+}
+
 // Stores a set of offsets, initially 0 to |element_count_|. Allows callers to
 // take and return offsets from the set. Internally stores the offsets as a set
 // of ranges. This means that in the worst case (every other offset taken), the
@@ -135,37 +139,37 @@ ClientDiscardableManager::ClientDiscardableManager()
     : allocation_size_(AllocationSize()) {}
 ClientDiscardableManager::~ClientDiscardableManager() = default;
 
-ClientDiscardableHandle ClientDiscardableManager::InitializeTexture(
-    CommandBuffer* command_buffer,
-    uint32_t texture_id) {
-  DCHECK(texture_handles_.find(texture_id) == texture_handles_.end());
-
+DiscardableHandleId ClientDiscardableManager::CreateHandle(
+    gles2::GLES2CmdHelper* command_helper) {
   scoped_refptr<Buffer> buffer;
   uint32_t offset = 0;
   int32_t shm_id = 0;
-  FindAllocation(command_buffer, &buffer, &shm_id, &offset);
+  FindAllocation(command_helper->command_buffer(), &buffer, &shm_id, &offset);
   uint32_t byte_offset = offset * element_size_;
+  DiscardableHandleId handle_id = MakeHandle(shm_id, byte_offset);
   ClientDiscardableHandle handle(std::move(buffer), byte_offset, shm_id);
-  texture_handles_.emplace(texture_id, handle);
-  return handle;
+  handles_.emplace(handle_id, handle);
+
+  return handle_id;
 }
 
-bool ClientDiscardableManager::LockTexture(uint32_t texture_id) {
-  auto found = texture_handles_.find(texture_id);
-  DCHECK(found != texture_handles_.end());
+bool ClientDiscardableManager::LockHandle(DiscardableHandleId handle_id) {
+  auto found = handles_.find(handle_id);
+  DCHECK(found != handles_.end());
   return found->second.Lock();
 }
 
-void ClientDiscardableManager::FreeTexture(uint32_t texture_id) {
-  auto found = texture_handles_.find(texture_id);
-  if (found == texture_handles_.end())
+void ClientDiscardableManager::FreeHandle(DiscardableHandleId handle_id) {
+  auto found = handles_.find(handle_id);
+  if (found == handles_.end())
     return;
   pending_handles_.push(found->second);
-  texture_handles_.erase(found);
+  handles_.erase(found);
 }
 
-bool ClientDiscardableManager::TextureIsValid(uint32_t texture_id) const {
-  return texture_handles_.find(texture_id) != texture_handles_.end();
+bool ClientDiscardableManager::HandleIsValid(
+    DiscardableHandleId handle_id) const {
+  return handles_.find(handle_id) != handles_.end();
 }
 
 void ClientDiscardableManager::FindAllocation(CommandBuffer* command_buffer,
@@ -223,9 +227,9 @@ void ClientDiscardableManager::CheckPending(CommandBuffer* command_buffer) {
 }
 
 ClientDiscardableHandle ClientDiscardableManager::GetHandleForTesting(
-    uint32_t texture_id) {
-  auto found = texture_handles_.find(texture_id);
-  DCHECK(found != texture_handles_.end());
+    DiscardableHandleId handle_id) {
+  auto found = handles_.find(handle_id);
+  DCHECK(found != handles_.end());
   return found->second;
 }
 

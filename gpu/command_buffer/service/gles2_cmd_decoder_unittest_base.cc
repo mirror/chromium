@@ -213,7 +213,7 @@ void GLES2DecoderTestBase::InitDecoderWithWorkarounds(
       &shader_translator_cache_, &framebuffer_completeness_cache_, feature_info,
       normalized_init.bind_generates_resource, &image_manager_,
       nullptr /* image_factory */, nullptr /* progress_reporter */,
-      GpuFeatureInfo(), &discardable_manager_));
+      GpuFeatureInfo(), &discardable_manager_, &transfer_cache_));
   bool use_default_textures = normalized_init.bind_generates_resource;
 
   InSequence sequence;
@@ -2183,7 +2183,7 @@ void GLES2DecoderTestBase::DoInitializeDiscardableTextureCHROMIUM(
   ClientDiscardableHandle handle(buffer, 0, shared_memory_id_);
 
   cmds::InitializeDiscardableTextureCHROMIUM cmd;
-  cmd.Init(texture_id, shared_memory_id_, 0);
+  cmd.Init(texture_id, static_cast<uint64_t>(shared_memory_id_) << 32);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
 }
 
@@ -2261,7 +2261,7 @@ void GLES2DecoderPassthroughTestBase::SetUp() {
       &shader_translator_cache_, &framebuffer_completeness_cache_, feature_info,
       context_creation_attribs_.bind_generates_resource, &image_manager_,
       nullptr /* image_factory */, nullptr /* progress_reporter */,
-      GpuFeatureInfo(), &discardable_manager_);
+      GpuFeatureInfo(), &discardable_manager_, &transfer_cache_);
 
   surface_ = gl::init::CreateOffscreenGLSurface(
       context_creation_attribs_.offscreen_framebuffer_size);

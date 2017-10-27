@@ -4627,7 +4627,7 @@ void GLES2Implementation::DeleteTexturesHelper(
     return;
   }
   for (GLsizei ii = 0; ii < n; ++ii) {
-    share_group_->discardable_manager()->FreeTexture(textures[ii]);
+    share_group_->discardable_texture_manager()->FreeTexture(textures[ii]);
 
     for (GLint tt = 0; tt < capabilities_.max_combined_texture_image_units;
          ++tt) {
@@ -6098,7 +6098,8 @@ void GLES2Implementation::AddLatencyInfo(
 
 bool GLES2Implementation::ThreadSafeShallowLockDiscardableTexture(
     uint32_t texture_id) {
-  ClientDiscardableManager* manager = share_group()->discardable_manager();
+  ClientDiscardableTextureManager* manager =
+      share_group()->discardable_texture_manager();
   return manager->TextureIsValid(texture_id) &&
          manager->LockTexture(texture_id);
 }
@@ -7064,20 +7065,20 @@ void GLES2Implementation::ProgramPathFragmentInputGenCHROMIUM(
 
 void GLES2Implementation::InitializeDiscardableTextureCHROMIUM(
     GLuint texture_id) {
-  ClientDiscardableManager* manager = share_group()->discardable_manager();
+  ClientDiscardableTextureManager* manager =
+      share_group()->discardable_texture_manager();
   if (manager->TextureIsValid(texture_id)) {
     SetGLError(GL_INVALID_VALUE, "glInitializeDiscardableTextureCHROMIUM",
                "Texture ID already initialized");
     return;
   }
-  ClientDiscardableHandle handle =
-      manager->InitializeTexture(helper_->command_buffer(), texture_id);
-  helper_->InitializeDiscardableTextureCHROMIUM(texture_id, handle.shm_id(),
-                                                handle.byte_offset());
+  DiscardableHandleId handle = manager->InitializeTexture(helper_, texture_id);
+  helper_->InitializeDiscardableTextureCHROMIUM(texture_id, handle);
 }
 
 void GLES2Implementation::UnlockDiscardableTextureCHROMIUM(GLuint texture_id) {
-  ClientDiscardableManager* manager = share_group()->discardable_manager();
+  ClientDiscardableTextureManager* manager =
+      share_group()->discardable_texture_manager();
   if (!manager->TextureIsValid(texture_id)) {
     SetGLError(GL_INVALID_VALUE, "glUnlockDiscardableTextureCHROMIUM",
                "Texture ID not initialized");
@@ -7087,7 +7088,8 @@ void GLES2Implementation::UnlockDiscardableTextureCHROMIUM(GLuint texture_id) {
 }
 
 bool GLES2Implementation::LockDiscardableTextureCHROMIUM(GLuint texture_id) {
-  ClientDiscardableManager* manager = share_group()->discardable_manager();
+  ClientDiscardableTextureManager* manager =
+      share_group()->discardable_texture_manager();
   if (!manager->TextureIsValid(texture_id)) {
     SetGLError(GL_INVALID_VALUE, "glLockDiscardableTextureCHROMIUM",
                "Texture ID not initialized");
@@ -7101,6 +7103,23 @@ bool GLES2Implementation::LockDiscardableTextureCHROMIUM(GLuint texture_id) {
   }
   helper_->LockDiscardableTextureCHROMIUM(texture_id);
   return true;
+}
+
+void GLES2Implementation::CreateTransferCacheEntryCHROMIUM(GLuint64 id,
+                                                           GLuint type,
+                                                           GLuint size,
+                                                           void* data) {
+  ScopedMappedMemoryPtr mapped_alloc(size, helper_, mapped_memory_.get());
+  DCHECK(mapped_alloc.valid());
+  memcpy(mapped_alloc.address(), data, size);
+  helper_->CreateTransferCacheEntryCHROMIUM(id, type, mapped_alloc.shm_id(),
+                                            mapped_alloc.offset());
+}
+void GLES2Implementation::DeleteTransferCacheEntryCHROMIUM(GLuint64 id) {
+  helper_->DeleteTransferCacheEntryCHROMIUM(id);
+}
+void GLES2Implementation::UnlockTransferCacheEntryCHROMIUM(GLuint64 id) {
+  helper_->UnlockTransferCacheEntryCHROMIUM(id);
 }
 
 void GLES2Implementation::UpdateCachedExtensionsIfNeeded() {
