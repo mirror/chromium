@@ -131,8 +131,12 @@ scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync() {
   DCHECK(IsMainThread());
   if (GetGpuChannel())
     return gpu_channel_;
-  if (!gpu_ || !gpu_.is_bound())
+  if (!gpu_ || !gpu_.is_bound()) {
+    DLOG(ERROR) << "Establishing Gpu connection " << this;
     gpu_ = factory_.Run();
+  }
+
+  DLOG(ERROR) << "Establishing channel " << this;
 
   int client_id = 0;
   mojo::ScopedMessagePipeHandle channel_handle;
@@ -141,7 +145,7 @@ scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync() {
   mojo::SyncCallRestrictions::ScopedAllowSyncCall allow_sync_call;
   if (!gpu_->EstablishGpuChannel(&client_id, &channel_handle, &gpu_info,
                                  &gpu_feature_info)) {
-    DLOG(WARNING) << "Encountered error while establishing gpu channel.";
+    LOG(FATAL) << "Encountered error while establishing gpu channel. " << this;
     return nullptr;
   }
   OnEstablishedGpuChannel(client_id, std::move(channel_handle), gpu_info,
