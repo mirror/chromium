@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83b0c19d_92a13293",
+        "filename": "base/win/shortcut.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T11:37:43Z",
+      "side": 1,
+      "message": "i think \"clsid\" is too generic here. this is specifically setting PKEY_AppUserModel_ToastActivatorCLSID, so i think the member should be named |toast_activator_clsid|.",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9efaab6_7e1d57ef",
+        "filename": "base/win/shortcut.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T11:37:43Z",
+      "side": 1,
+      "message": "here, too: toast_activator_clsid, and make it clear in the comment that it\u0027s for app activation via user interaction with a toast notification in the Action Center.",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468eae70_ae0b0b67",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T11:37:43Z",
+      "side": 1,
+      "message": "is it okay to defer creating this thread until later in startup? it\u0027s awfully early to do it here. if possible, i think it\u0027s cleaner to put this somewhere in chrome/browser/chrome_browser_main_win.cc. perhaps go so far as to post a task to the main thread to trigger creation of this extra thread so that it\u0027s only done if the main message loop is actually run. if you go this route, you can post the task to create this thread in PostMainMessageLoopStart or later.",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac94d27_b2661ae9",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T11:37:43Z",
+      "side": 1,
+      "message": "this is a great thing to move into InstallConstans (chrome/install_static/install_constants.h). The per-channel definitions will then go into chromium_install_modes.cc and google_chrome_install_modes.cc. then add a getter to install_util.h along the lines of install_static::GetAppGuid().",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a0c799_28c8675b",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T11:37:43Z",
+      "side": 1,
+      "message": "this should be moved into the installer; AddInstallWorkItems is a good place.",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c341677e_8f1801ae",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T11:37:43Z",
+      "side": 1,
+      "message": "the clsid should be set when the shortcut is created in CreateOrUpdateShortcuts (install.cc). chrome shouldn\u0027t attempt to add it if it\u0027s missing.",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b52959a_395135c0",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T11:37:43Z",
+      "side": 1,
+      "message": "this creates a static dtor, which is banned. if this really needs to be shut down, doing so explicitly in PostMainMessageLoopRun or PreShutdown seems like a fine place.",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b756ee_b2d2a8fa",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T11:37:43Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#logging",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc89fd8_1272fab4",
+        "filename": "chrome/app/chrome_native_notification_prep_win.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T11:37:43Z",
+      "side": 1,
+      "message": "move this into chrome/common/chrome_switches.{cc,h} and use \u0027-\u0027 rather than \u0027_\u0027. consider using a flag (i.e., chrome://flags) if you expect mortals to run chrome with it (see chrome/browser/about_flags.cc).",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
