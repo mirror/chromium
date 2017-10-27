@@ -277,6 +277,9 @@ void CompositingRequirementsUpdater::UpdateRecursive(
       (compositing_reason_finder_.DirectReasons(layer->AncestorScrollingLayer(),
                                                 false) &
        kCompositingReasonOverflowScrollingTouch);
+  bool use_clipped_bounding_rect =
+      !has_composited_scrolling_ancestor ||
+      layer->AncestorScrollingLayer()->IsRootLayer();
 
   // We have to promote the sticky element to work around the bug
   // (https://crbug.com/698358) of not being able to invalidate the ancestor
@@ -367,14 +370,14 @@ void CompositingRequirementsUpdater::UpdateRecursive(
     }
   }
 
-  const IntRect& abs_bounds = has_composited_scrolling_ancestor
+  const IntRect& abs_bounds = use_clipped_bounding_rect
                                   ? layer->UnclippedAbsoluteBoundingBox()
                                   : layer->ClippedAbsoluteBoundingBox();
   absolute_descendant_bounding_box = abs_bounds;
   if (current_recursion_data.testing_overlap_ &&
       !RequiresCompositingOrSquashing(direct_reasons)) {
-    bool overlaps = overlap_map.OverlapsLayers(
-        abs_bounds, !has_composited_scrolling_ancestor);
+    bool overlaps =
+        overlap_map.OverlapsLayers(abs_bounds, !use_clipped_bounding_rect);
     overlap_compositing_reason =
         overlaps ? kCompositingReasonOverlap : kCompositingReasonNone;
   }
@@ -514,7 +517,7 @@ void CompositingRequirementsUpdater::UpdateRecursive(
     // for overlap.
     if (child_recursion_data.compositing_ancestor_ &&
         !child_recursion_data.compositing_ancestor_->IsRootLayer())
-      overlap_map.Add(layer, abs_bounds, !has_composited_scrolling_ancestor);
+      overlap_map.Add(layer, abs_bounds, !use_clipped_bounding_rect);
 
     // Now check for reasons to become composited that depend on the state of
     // descendant layers.
@@ -532,7 +535,7 @@ void CompositingRequirementsUpdater::UpdateRecursive(
       // second-from-top context of the stack.
       overlap_map.BeginNewOverlapTestingContext();
       overlap_map.Add(layer, absolute_descendant_bounding_box,
-                      !has_composited_scrolling_ancestor);
+                      !use_clipped_bounding_rect);
       will_be_composited_or_squashed = true;
     }
 
