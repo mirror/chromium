@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "304fe018_09b17eb2",
+        "filename": "base/win/scoped_windows_thread_environment.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-27T19:20:04Z",
+      "side": 1,
+      "message": "_H_",
+      "range": {
+        "startLine": 5,
+        "startChar": 50,
+        "endLine": 5,
+        "endChar": 51
+      },
+      "revId": "e6cf7c7cde468b056732dcefcb468f44250c63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754c56c8_32c1f4fd",
+        "filename": "base/win/scoped_windows_thread_environment.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-27T19:20:04Z",
+      "side": 1,
+      "message": "Succeeded()?",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 19,
+        "endChar": 16
+      },
+      "revId": "e6cf7c7cde468b056732dcefcb468f44250c63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03df5dd3_93a4e764",
+        "filename": "base/win/scoped_winrt_initializer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-27T19:20:04Z",
+      "side": 1,
+      "message": "Why does this die?",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "e6cf7c7cde468b056732dcefcb468f44250c63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
