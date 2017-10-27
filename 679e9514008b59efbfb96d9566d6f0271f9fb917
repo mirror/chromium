@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "0c7c5295_3df0b9d4",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-27T20:44:21Z",
+      "side": 1,
+      "message": "Will it be a problem that OverlayScrollbarsEnabled is a runtime enabled feature whereas ForceAndroidOverlayScrollbar is a page setting?\n-----\nNo problem if we change to AndroidOverlayScrollbar with OverlayScrollbarsEnabled. \n\n\nWould it be possible to use MobileLayoutThemeEnabled instead of adding a new setting? Or, if a new setting is needed, would it be possible to remove MobileLayoutThemeEnabled?\n-----\nI saw MobileLayoutThemeEnabled using in a static method of LayoutTheme. It is not easy to remove. https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutTheme.cpp?rcl\u003d318723cc573ab5b141c2a40cf1874a8324f0d01e\u0026l\u003d74",
+      "parentUuid": "8a279c10_1f7b21b9",
+      "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33a20f22_c3f06a58",
         "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
         "patchSetId": 15
@@ -205,6 +223,24 @@
       "writtenOn": "2017-10-27T19:47:47Z",
       "side": 1,
       "message": "I did a simple test with this patch applied on Mac (http://output.jsbin.com/yegovoh/quiet) and the inner scrollbar is really light compared to the same page on my phone. Are we using the right style here?",
+      "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ef95f6_9b161893",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollbarThemeOverlay.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-27T20:44:21Z",
+      "side": 1,
+      "message": "Yes, I remember I have test it by change 0x80808080 to red. I can double check at Monday.",
+      "parentUuid": "b073a5f0_963a2bbe",
       "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
