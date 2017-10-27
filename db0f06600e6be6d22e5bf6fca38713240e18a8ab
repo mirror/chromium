@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5511f204_6ea95996",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-27T23:33:59Z",
+      "side": 1,
+      "message": "nit: \"This is done after...\" \u003d\u003e \"This throttle\u0027s logic will run after...\"\n\n(it\u0027s a little confusing what \"This\" refers to as written)",
+      "range": {
+        "startLine": 1293,
+        "startChar": 30,
+        "endLine": 1294,
+        "endChar": 22
+      },
+      "revId": "db0f06600e6be6d22e5bf6fca38713240e18a8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f6d804_5c6ce459",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-27T23:33:59Z",
+      "side": 1,
+      "message": "optional nit: some people advocate for avoiding \"we\" in comments because it can be confusing what \"we\" is. https://groups.google.com/a/chromium.org/d/msg/chromium-dev/NH-S6KCkr2M/yv0z3bdFPqQJ\n\nIn this case I\u0027d just drop the \"we\" and say \"Check the...\"",
+      "range": {
+        "startLine": 458,
+        "startChar": 5,
+        "endLine": 458,
+        "endChar": 7
+      },
+      "revId": "db0f06600e6be6d22e5bf6fca38713240e18a8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cd6db3_c28daa90",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-27T23:33:59Z",
+      "side": 1,
+      "message": "It looks to me like we could simplify this section and have just a single MaybeUpgradeInsecureRequest() function... maybe? The body of MaybeUpgradeInsecureRequest could look like this:\n\n  // Only form submissions and main-frame navigations to non-about:blank URLs get upgraded.\n  if (!(begin_params_.is_form_submission ||\n        (frame_tree_node()-\u003eIsMainFrame() \u0026\u0026\n        !common_params_.url.SchemeIs(url::kAboutScheme))) {\n    return false;\n  }\n\n  FrameTreeNode* ftn \u003d frame_tree_node();\n  DCHECK(ftn);\n  RenderFrameHostImpl* frame_host \u003d ftn-\u003ecurrent_frame_host();\n  DCHECK(frame_host);\n\n  // TODO(mkwst,estark): upgrade-insecure-requests does not work when following\n  // redirects. Trying to uprade the new URL on redirect here is fruitless: the\n  // redirect URL cannot be changed at this point. upgrade-insecure-requests\n  // needs to move to the net stack to resolve this. https://crbug.com/615885\n  if (!is_redirect) {\n    GURL new_url;\n    if (frame_host-\u003eShouldModifyRequestUrlForCsp(\n            common_params_.url, true /* is_subresource_or_form_submission */,\n            \u0026new_url)) {\n      common_params_.url \u003d new_url;\n      request_params_.original_url \u003d new_url;\n      return true;\n    }\n  }\n  return false;",
+      "range": {
+        "startLine": 1211,
+        "startChar": 0,
+        "endLine": 1214,
+        "endChar": 70
+      },
+      "revId": "db0f06600e6be6d22e5bf6fca38713240e18a8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec062eb0_c5fd90db",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-27T23:33:59Z",
+      "side": 1,
+      "message": "Please add a comment explaining why one\u0027s ERR_ABORTED and the other\u0027s BLOCKED_BY_CLIENT. (IIRC it was because a blocked frame needs an error page inside it, whereas a blocked form submission should just act as if it never happened rather than taking the user to an error page?)\n\noptional nit: since the \"DO NOT ADD CODE\" spots are a little fragile, I\u0027d try to minimize them by structuring it like this:\n\nauto frame_src_result \u003d CheckContentSecurityPolicyFrameSrc(...);\nauto form_action_result \u003d CheckContentSecurityPolicyFormAction(...);\nif (frame_src_result !\u003d CHECK_FAILED \u0026\u0026 form_src_result !\u003d CHECK_FAILED)\n  return CHECK_PASSED;\nCreateNavigationHandle();\nOnRequestFailed(false, frame_src_result \u003d\u003d CHECK_FAILED ? ERR_ABORTED : ERR_BLOCKED_BY_CLIENT, ...);\n// DO NOT ADD CODE...\nreturn CHECK_FAILED;",
+      "range": {
+        "startLine": 1216,
+        "startChar": 2,
+        "endLine": 1235,
+        "endChar": 3
+      },
+      "revId": "db0f06600e6be6d22e5bf6fca38713240e18a8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf1dea6_8143157d",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-27T23:33:59Z",
+      "side": 1,
+      "message": "Could we combine CheckCSPFrameSrc and CheckCSPFormAction into one method that takes a CSPDirective as a parameter? That would reduce some code duplication. We could either take the directive-specific bits out into the callsite or do them conditionally:\n\nCheckResult CheckContentSecurityPolicy(CSPDirective directive, bool is_redirect, bool report_only) {\n  switch (directive) {\n  case CSPDirective::FrameSrc:\n    if (common_params_.url.SchemeIs(url::kAboutScheme))\n      return CHECK_PASSED;\n    ...\n    break;\n  case CSPDirective::FormAction:\n    ..\n  default:\n    // Only frame-src and form-action are checked by NavigationRequest.\n    NOTREACHED();\n  }\n\n  FrameTreeNode* parent_ftn \u003d frame_tree_node()-\u003eparent();\n  ...\n}",
+      "range": {
+        "startLine": 1240,
+        "startChar": 19,
+        "endLine": 1240,
+        "endChar": 53
+      },
+      "revId": "db0f06600e6be6d22e5bf6fca38713240e18a8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d55c40_076f648a",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-27T23:33:59Z",
+      "side": 1,
+      "message": "nit: can these be private?",
+      "range": {
+        "startLine": 247,
+        "startChar": 35,
+        "endLine": 252,
+        "endChar": 24
+      },
+      "revId": "db0f06600e6be6d22e5bf6fca38713240e18a8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
