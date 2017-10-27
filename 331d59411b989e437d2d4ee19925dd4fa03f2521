@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "1da36134_d0c8ec13",
+        "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T22:30:41Z",
+      "side": 1,
+      "message": "I see.. it\u0027s just that we use software gl (osmesa) everywhere except mac and chromeos. I guess on mac there could be a blacklisted machine.",
+      "parentUuid": "0252af3a_727b62e5",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28ee3ab1_57718418",
         "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
         "patchSetId": 8
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "We could still disable WebGL and pepper_3d, I think, so why you say it\u0027s never false.",
       "parentUuid": "ebcb8944_35667157",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e5aa34_166f3cc2",
+        "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T22:30:41Z",
+      "side": 1,
+      "message": "It seems that we should disable pepper if either\na) The command line says to disable it.\nb) RenderThreadImpl::IsGpuCompositingDisabled() is true.\n\nThe pref is redundant with these:\n- It\u0027s set to false if the command line is present in the browser (ie we could check that here equally)\n- And it\u0027s set to false if compositing is blacklisted, but in that cases also IsGpuCompositingDisabled() will also be true.",
+      "parentUuid": "514b7daa_3d6a5601",
       "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -276,6 +312,24 @@
       "side": 1,
       "message": "Same, just moved from browser side to here. Didn\u0027t change the logic.",
       "parentUuid": "57b20b03_7a420f98",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7a50494_e982f8de",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T22:30:41Z",
+      "side": 1,
+      "message": "OK we should double check, these both smell like they come from before force-compositing-mode. Maybe on mac we\u0027d accelerate canvases still, but if we\u0027re software compositing then we may need to draw the canvas into other software resources and if it\u0027s accelerated then it won\u0027t work.",
+      "parentUuid": "0deb8f94_3fb84306",
       "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

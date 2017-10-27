@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5991a8c7_089f0000",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T22:30:41Z",
+      "side": 0,
+      "message": "Yeah, i was suggesting that other logic should be if the compositing mode is known to be software (dynamically not just command line), but my patch will resolve it.",
+      "parentUuid": "c06f4a8f_bd0430d9",
+      "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb537747_eedb83e2",
         "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
         "patchSetId": 8
@@ -72,6 +90,41 @@
     },
     {
       "key": {
+        "uuid": "88820c12_62b938b2",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T22:30:41Z",
+      "side": 0,
+      "message": "This needs to be here if we remove blacklisting, I was wondering if ud like to split the prefs change into a pre-CL, the pepper one looks easy. It seems the canvas one still needs to be a pref, but GpuDataManager doesn\u0027t need to set it. Instead in the renderer, it would need to check the pref and RenderThreadImpl::IsGpuCompositingDisabled() both, instead of just the pref (it needs to anyways, so essentially setting it false here is redundant already once my patch has landed, as we communicate gpu/software compositing thru the watcher interface too). It could help shrink this CL if you like.",
+      "parentUuid": "999fab4c_4be64160",
+      "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc34c5e9_38d9acaa",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T22:30:41Z",
+      "side": 0,
+      "message": "For pepper 3d it looks like the only other setter is to check !command_line.HasSwitch(switches::kDisablePepper3d); We could just forward that flag to the renderer and have it check it, that removes it from all of the (imo complicated) WebPrefs plumbing, if you like.\n\nhttps://cs.chromium.org/search/?q\u003dpepper_3d_enabled\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8606520e_bd254043",
         "filename": "content/browser/renderer_host/render_widget_host_view_browsertest.cc",
         "patchSetId": 8
@@ -101,6 +154,24 @@
       "side": 0,
       "message": "Here is the situation: ImageTransportFactory won\u0027t have blacklisting decision once I move the decision to GPU process.",
       "parentUuid": "8606520e_bd254043",
+      "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34c528d0_9d34d25e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T22:30:41Z",
+      "side": 0,
+      "message": "True, but ImageTransportFactory knows if we\u0027re using gpu compositing or not, of which blacklisting is part of the state but not all (it uses the gpu process info to help make that decision). See ImageTransportFactory::IsGpuCompositingDisabled().",
+      "parentUuid": "5f9885e3_c64a4a4a",
       "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
