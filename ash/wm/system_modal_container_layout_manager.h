@@ -10,8 +10,10 @@
 #include <vector>
 
 #include "ash/ash_export.h"
+#include "ash/tray_action/tray_action_observer.h"
 #include "ash/wm/wm_snap_to_pixel_layout_manager.h"
 #include "base/macros.h"
+#include "base/scoped_observer.h"
 #include "ui/aura/window_observer.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
 
@@ -20,7 +22,12 @@ class Rect;
 }
 
 namespace ash {
+class TrayAction;
 class WindowDimmer;
+
+namespace mojom {
+enum class TrayActionState;
+}
 
 // LayoutManager for the modal window container.
 // System modal windows which are centered on the screen will be kept centered
@@ -28,7 +35,8 @@ class WindowDimmer;
 class ASH_EXPORT SystemModalContainerLayoutManager
     : public wm::WmSnapToPixelLayoutManager,
       public aura::WindowObserver,
-      public keyboard::KeyboardControllerObserver {
+      public keyboard::KeyboardControllerObserver,
+      public TrayActionObserver {
  public:
   explicit SystemModalContainerLayoutManager(aura::Window* container);
   ~SystemModalContainerLayoutManager() override;
@@ -52,6 +60,9 @@ class ASH_EXPORT SystemModalContainerLayoutManager
   // Overridden from keyboard::KeyboardControllerObserver:
   void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
   void OnKeyboardClosed() override;
+
+  // Overriden from TrayActinoObserver:
+  void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
 
   // True if the window is either contained by the top most modal window,
   // or contained by its transient children.
@@ -88,8 +99,31 @@ class ASH_EXPORT SystemModalContainerLayoutManager
   // window was previously centered) or fitted to the screen.
   gfx::Rect GetCenteredAndOrFittedBounds(const aura::Window* window);
 
+  // Adjusts bounds for centered dialogs in lock system modal container
+  // depending on the curren lock screen apps state.
+  // If a lock screen app is active, the bounds are translated vertically so
+  // they overlap with shelf bounds (which are expected to always be positioned
+  // at the bottom on the lock screen).
+  // Dialogs are positioned this way to ensure they overlap with a piece of UI
+  // not controlled by the app window.
+  // |bounds| - the bounds centered in the current usable container area.
+  // Returns the dialog bounds adjusted for lock screen apps state.
+  // No-op in non lock system modal cotnainer.
+  gfx::Rect AdjustCenteredBoundsForLockScreenApps(const gfx::Rect& bounds);
+
   // Returns true if |bounds| is considered centered.
   bool IsBoundsCentered(const gfx::Rect& window_bounds) const;
+
+  // Whether the bounds are considered centered in case a lock screen app is
+  // active.
+  // This will return false in non lock system modal container and if no lock
+  // screen apps are active.
+  bool IsBoundsCenteredForLockScreenApps(const gfx::Rect& window_bounds) const;
+
+  // Sets window dimmer's dim opacity depending on lock screen apps state.
+  // When lock screen app is active, dim opacity in lock system modal dialog is
+  // set to 0.
+  void AdjustDimOpacityForLockScreenApps();
 
   aura::Window* modal_window() {
     return !modal_windows_.empty() ? modal_windows_.back() : nullptr;
@@ -108,6 +142,12 @@ class ASH_EXPORT SystemModalContainerLayoutManager
   // Windows contained in this set are centered. Windows are automatically
   // added to this based on IsBoundsCentered().
   std::set<const aura::Window*> windows_to_center_;
+
+  ScopedObserver<TrayAction, TrayActionObserver> tray_action_observer_;
+
+  // Whether the last know lock screen note state indicated that a lock screen
+  // note app is active.
+  bool lock_screen_app_active_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SystemModalContainerLayoutManager);
 };

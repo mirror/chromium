@@ -36,15 +36,15 @@ void FirstAppRunToastManager::RunForAppWindow(
 
   DCHECK(app_window->GetNativeWindow());
 
-  const extensions::Extension* app = app_window->GetExtension();
-  const base::DictionaryValue* toast_shown =
-      profile_->GetPrefs()->GetDictionary(
-          prefs::kNoteTakingAppsLockScreenToastShown);
-  bool already_shown_for_app = false;
-  if (toast_shown->GetBoolean(app->id(), &already_shown_for_app) &&
-      already_shown_for_app) {
-    return;
-  }
+  /*  const extensions::Extension* app = app_window->GetExtension();
+    const base::DictionaryValue* toast_shown =
+        profile_->GetPrefs()->GetDictionary(
+            prefs::kNoteTakingAppsLockScreenToastShown);
+    bool already_shown_for_app = false;
+    if (toast_shown->GetBoolean(app->id(), &already_shown_for_app) &&
+        already_shown_for_app) {
+      return;
+    }*/
 
   app_window_ = app_window;
 

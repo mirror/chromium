@@ -12,7 +12,6 @@
 #include "chrome/grit/generated_resources.h"
 #include "ui/aura/window.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/views/bubble/bubble_border.h"
 #include "ui/views/bubble/bubble_frame_view.h"
@@ -25,8 +24,6 @@ namespace {
 
 constexpr int kDialogWidthDp = 292;
 
-constexpr int kDialogMarginBottomDp = 28;
-
 constexpr int kDialogMessageMarginTopDp = 0;
 constexpr int kDialogMessageMarginStartDp = 16;
 constexpr int kDialogMessageMarginBottomDp = 18;
@@ -37,18 +34,6 @@ constexpr int kDialogTitleMarginTopDp = 14;
 constexpr int kDialogTitleMarginStartDp = 16;
 constexpr int kDialogTitleMarginBottomDp = 5;
 constexpr int kDialogTitleMarginEndDp = 0;
-
-// Adjust the dialog bounds inside the parent window, so the dialog overlaps
-// the system shelf.
-void AdjustDialogBounds(views::Widget* widget) {
-  gfx::Rect bounds = widget->GetNativeView()->GetBoundsInScreen();
-  gfx::Rect parent_bounds =
-      widget->GetNativeView()->parent()->GetBoundsInScreen();
-  widget->SetBounds(gfx::Rect(
-      parent_bounds.x() + (parent_bounds.width() - bounds.width()) / 2,
-      parent_bounds.bottom() - bounds.height() - kDialogMarginBottomDp,
-      bounds.width(), bounds.height()));
-}
 
 }  // namespace
 
@@ -87,7 +72,6 @@ ToastDialogView::~ToastDialogView() = default;
 
 void ToastDialogView::Show() {
   views::Widget* widget = SystemTrayClient::CreateUnownedDialogWidget(this);
-  AdjustDialogBounds(widget);
   widget->Show();
 }
 
