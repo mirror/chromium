@@ -16,6 +16,24 @@
       "revId": "3704146ff021d9e035a2fda201fb983811c10582",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b369bb1d_48007bd5",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7132,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:42:39Z",
+      "side": 0,
+      "message": "Can we just change the expectations instead, as documentation of what happens in this case?",
+      "parentUuid": "ea30e9e0_c7783e39",
+      "revId": "3704146ff021d9e035a2fda201fb983811c10582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

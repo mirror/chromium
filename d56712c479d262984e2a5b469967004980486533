@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16240680_600e407d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:42:39Z",
+      "side": 1,
+      "message": "nit: Prepare",
+      "range": {
+        "startLine": 11,
+        "startChar": 39,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "d56712c479d262984e2a5b469967004980486533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3ed767_41b7be89",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:42:39Z",
+      "side": 1,
+      "message": "This is big change of its own.  Is it just a prereq which we could land first, separate from the navigation blocking, or is it intertwined?  It\u0027d be nice if we could land them separately, to help with bisecting regressions and understanding which parts of the CL are for which.\n\nI also think we should file a bug for this part.",
+      "revId": "d56712c479d262984e2a5b469967004980486533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e899b3b0_fb5c6b45",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:42:39Z",
+      "side": 1,
+      "message": "I\u0027m having trouble following this.  Maybe writing up an example on the (proposed) bug for this (or in a design doc?) would help?",
+      "revId": "d56712c479d262984e2a5b469967004980486533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b34c5d4_a579ec8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:42:39Z",
+      "side": 1,
+      "message": "I think lfg@ or kenrb@ will be better reviewers for this part.",
+      "revId": "d56712c479d262984e2a5b469967004980486533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2fa4fb_7993f4b8",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:42:39Z",
+      "side": 1,
+      "message": "Is it worthwhile to go straight to this approach?",
+      "revId": "d56712c479d262984e2a5b469967004980486533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9165c8c_96cb8ba6",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:42:39Z",
+      "side": 1,
+      "message": "What about the A-B-A case?  Do the two A frames need to be deleted recursively in the same stack, even though B lives in another process?",
+      "revId": "d56712c479d262984e2a5b469967004980486533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db57aad_a7d0860b",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:42:39Z",
+      "side": 1,
+      "message": "Do we notify observers of these first, then (per line 272)?  Maybe that\u0027s ok?",
+      "revId": "d56712c479d262984e2a5b469967004980486533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54311d1b_678bb8e7",
+        "filename": "content/browser/frame_host/frame_tree_node.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:42:39Z",
+      "side": 1,
+      "message": "This feels like an odd API to have on FTN, and is confusing without a comment.  Maybe we can find a cleaner way to expose the deletion policy as we make progress.",
+      "revId": "d56712c479d262984e2a5b469967004980486533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4fe1af_78249034",
+        "filename": "content/browser/frame_host/render_frame_host_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:42:39Z",
+      "side": 1,
+      "message": "Needs a comment describing what this is doing and why.",
+      "revId": "d56712c479d262984e2a5b469967004980486533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9335fec4_5572f0c8",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T21:42:39Z",
+      "side": 1,
+      "message": "Hmm.  Say we have an A-B-A case, and the top A frame detaches its children.  First it sends an IPC to the B proxy telling it to detach its own children (so that the B process tries to delete B and then the inner RemoteFrame for A, presumably).\n\nThen it tells A\u0027s process to delete its children, including the RemoteFrame for B and then the LocalFrame for the innermost A.\n\nDoes B\u0027s process tell the browser process that it is deleting the B frame?  Wouldn\u0027t that set up a race where the browser process tries to notify A\u0027s process that the B frame is gone now, so it should delete the corresponding RemoteFrame?  And vice versa if B\u0027s process is slow and A\u0027s process goes first?\n\nOr is this prevented in some way?  (I don\u0027t think the IPC suppression you\u0027re doing is for this case, but I could be wrong?)",
+      "revId": "d56712c479d262984e2a5b469967004980486533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
