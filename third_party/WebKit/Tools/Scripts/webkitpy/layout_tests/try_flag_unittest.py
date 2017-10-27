@@ -20,6 +20,45 @@ class TryFlagTest(unittest.TestCase):
         self.win_build = Build('win7_chromium_rel_ng', 102)
         super(TryFlagTest, self).__init__(*args, **kwargs)
 
+    def _run_trigger_test(self, regenerate):
+        host = MockHost()
+        git = host.git()
+        git_cl = MockGitCL(host)
+        layout_tests_dir = '/mock-checkout/third_party/WebKit/LayoutTests'
+        flag_file = layout_tests_dir + '/additional-driver-flag.setting'
+        flag_expectations_file = layout_tests_dir + '/FlagExpectations/foo'
+
+        cmd = ['trigger', '--flag=--foo']
+        if regenerate:
+            cmd.append('--regenerate')
+        TryFlag(cmd, host, git_cl).run()
+
+        expected_added_paths = set([flag_file])
+        expected_commits = [['Flag try job: force --foo for run-webkit-tests.']]
+
+        if regenerate:
+            expected_added_paths.add(flag_expectations_file)
+            expected_commits.append(
+                ['Flag try job: clear expectations for --foo.'])
+
+        self.assertEqual(git.added_paths, expected_added_paths)
+        self.assertEqual(git.local_commits(), expected_commits)
+
+        self.assertEqual(git_cl.calls, [
+            ['git', 'cl', 'upload', '--bypass-hooks', '-f',
+             '-m', 'Flag try job for --foo.'],
+            ['git', 'cl', 'try', '-m', 'tryserver.chromium.linux',
+             '-b', 'linux_chromium_rel_ng'],
+            ['git', 'cl', 'try', '-m', 'tryserver.chromium.mac',
+             '-b', 'mac_chromium_rel_ng'],
+            ['git', 'cl', 'try', '-m', 'tryserver.chromium.win',
+             '-b', 'win7_chromium_rel_ng']
+        ])
+
+    def test_trigger(self):
+        self._run_trigger_test(regenerate=False)
+        self._run_trigger_test(regenerate=True)
+
     def _setup_mock_results(self, buildbot):
         buildbot.set_results(self.linux_build, LayoutTestResults({
             'tests': {
