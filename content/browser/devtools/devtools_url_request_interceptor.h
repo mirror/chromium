@@ -97,9 +97,11 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
     ~Pattern();
     Pattern(const Pattern& other);
     Pattern(const std::string& url_pattern,
-            base::flat_set<ResourceType> resource_types);
+            base::flat_set<ResourceType> resource_types,
+            bool intercept_response);
     const std::string url_pattern;
     const base::flat_set<ResourceType> resource_types;
+    bool intercept_response;
   };
 
   // The State needs to be accessed on both UI and IO threads.

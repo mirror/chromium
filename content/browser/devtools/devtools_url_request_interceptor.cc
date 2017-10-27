@@ -141,8 +141,11 @@ DevToolsURLRequestInterceptor::Pattern::Pattern(const Pattern& other) = default;
 
 DevToolsURLRequestInterceptor::Pattern::Pattern(
     const std::string& url_pattern,
-    base::flat_set<ResourceType> resource_types)
-    : url_pattern(url_pattern), resource_types(std::move(resource_types)) {}
+    base::flat_set<ResourceType> resource_types,
+    bool intercept_response)
+    : url_pattern(url_pattern),
+      resource_types(std::move(resource_types)),
+      intercept_response(intercept_response) {}
 
 DevToolsURLRequestInterceptor::State::State()
     : target_registry_(new DevToolsTargetRegistry(
@@ -212,7 +215,7 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
   if (sub_requests_.find(request) != sub_requests_.end())
     return nullptr;
 
-  bool matchFound = false;
+  const Pattern* foundPattern = nullptr;
   const std::string url =
       protocol::NetworkHandler::ClearUrlRef(request->url()).spec();
   for (const Pattern& pattern : intercepted_page.intercepted_patterns) {
@@ -222,11 +225,12 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
       continue;
     }
     if (base::MatchPattern(url, pattern.url_pattern)) {
-      matchFound = true;
+      foundPattern = &pattern;
       break;
     }
   }
-  if (!matchFound)
+
+  if (!foundPattern)
     return nullptr;
 
   bool is_redirect;
@@ -235,7 +239,8 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
       this, interception_id, request, network_delegate,
       target_info->devtools_token, target_info->devtools_target_id,
       intercepted_page.network_handler, is_redirect,
-      resource_request_info->GetResourceType());
+      resource_request_info->GetResourceType(),
+      foundPattern->intercept_response);
   interception_id_to_job_map_[interception_id] = job;
   return job;
 }

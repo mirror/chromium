@@ -1547,7 +1547,8 @@
                 "description": "Request pattern for interception.",
                 "properties": [
                     { "name": "urlPattern", "type": "string", "optional": true, "description": "Wildcards ('*' -> zero or more, '?' -> exactly one) are allowed. Escape character is backslash. Omitting is equivalent to \"*\"." },
-                    { "name": "resourceType", "$ref": "Page.ResourceType", "optional": true, "description": "If set, only requests for matching resource types will be intercepted." }
+                    { "name": "resourceType", "$ref": "Page.ResourceType", "optional": true, "description": "If set, only requests for matching resource types will be intercepted." },
+                    { "name": "interceptResponse", "type": "boolean", "optional": true, "description": "If set, intercepts request after response has been received. The response properties of the requestIntercepted event will contain the info about the response." }
                 ],
                 "experimental": true
             }
@@ -1934,7 +1935,10 @@
                     { "name": "redirectHeaders", "$ref": "Headers", "optional": true, "description": "HTTP response headers, only sent if a redirect was intercepted." },
                     { "name": "redirectStatusCode", "type": "integer", "optional": true, "description": "HTTP response code, only sent if a redirect was intercepted." },
                     { "name": "redirectUrl", "optional": true, "type": "string", "description": "Redirect location, only sent if a redirect was intercepted."},
-                    { "name": "authChallenge", "$ref": "AuthChallenge", "optional": true, "description": "Details of the Authorization Challenge encountered. If this is set then continueInterceptedRequest must contain an authChallengeResponse." }
+                    { "name": "authChallenge", "$ref": "AuthChallenge", "optional": true, "description": "Details of the Authorization Challenge encountered. If this is set then continueInterceptedRequest must contain an authChallengeResponse." },
+                    { "name": "responseStatusCode", "type": "integer", "optional": true, "description": "Response code if intercepted at response stage." },
+                    { "name": "responseHeaders", "$ref": "Headers", "optional": true, "description": "Response headers if intercepted at the response stage." },
+                    { "name": "responseBody", "type": "string", "optional": true, "description": "Response body Base64-encoded if intercepted at the response stage." }
                 ],
                 "experimental": true
             }

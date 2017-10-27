@@ -1082,7 +1082,8 @@ DispatchResponse NetworkHandler::SetRequestInterception(
         }
       }
       interceptor_patterns.push_back(DevToolsURLRequestInterceptor::Pattern(
-          patterns->get(i)->GetUrlPattern("*"), std::move(resource_types)));
+          patterns->get(i)->GetUrlPattern("*"), std::move(resource_types),
+          patterns->get(i)->GetInterceptResponse(false)));
     }
 
     devtools_url_request_interceptor->StartInterceptingRequests(
