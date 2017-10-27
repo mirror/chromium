@@ -27,6 +27,20 @@ BackgroundFetchRequestInfo::~BackgroundFetchRequestInfo() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
+void BackgroundFetchRequestInfo::InitializeDownloadGuid() {
+  DCHECK(download_guid_.empty());
+
+  download_guid_ = base::GenerateGUID();
+}
+
+void BackgroundFetchRequestInfo::SetDownloadGuid(
+    const std::string& download_guid) {
+  DCHECK(!download_guid.empty());
+  DCHECK(download_guid_.empty());
+
+  download_guid_ = download_guid;
+}
+
 void BackgroundFetchRequestInfo::PopulateWithResponse(
     std::unique_ptr<BackgroundFetchResponse> response) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
