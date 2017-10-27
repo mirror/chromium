@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d7cb3d4_dd61f775",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-27T10:21:38Z",
+      "side": 1,
+      "message": "Would that work if we have more tiles than can fit? Consider:\n\n- 5 tiles are received\n- 4 tiles on a single row can be shown\n- Home is the 5th tile.\n\nnumRows \u003d 1 so we just order the children in their natural order and Home will be dropped. That can happen, right? That is an issue related to screen size now, not the maxColNum and maxRowNum passed around to determine how many we fetch etc.",
+      "revId": "0b01087e34ed28f3921170faa77e9ec930a4b63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
