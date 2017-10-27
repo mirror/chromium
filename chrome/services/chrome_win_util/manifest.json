@@ -1,0 +1,15 @@
+{
+  "name": "chrome_win_util",
+  "display_name": "Chrome Windows Utilities",
+  "sandbox_type": "none",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "win_shell_util": [ "chrome::mojom::WinShellUtil" ]
+       },
+       "requires": {
+         "service_manager": [ "service_manager:all_users" ]
+       }
+     }
+  }
+}
