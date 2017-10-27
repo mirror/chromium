@@ -14,17 +14,29 @@ import common
 
 
 def main_run(args):
-  rc = common.run_command([
-      sys.executable,
-      os.path.join(common.SRC_DIR, 'tools', 'traffic_annotation', 'scripts',
-                   'check_annotations.py'),
-      '--build-path',
-      os.path.join(args.paths['checkout'], 'out', args.build_config_fs),
-  ])
+  with common.temporary_file() as tempfile_path:
+    rc = common.run_command([
+        sys.executable,
+        os.path.join(common.SRC_DIR, 'tools', 'traffic_annotation', 'scripts',
+                     'check_annotations.py'),
+        '--build-path',
+        os.path.join(args.paths['checkout'], 'out', args.build_config_fs),
+        '--json', tempfile_path
+    ])
+
+    with open(tempfile_path) as f:
+      test_results = json.load(f)
+    failures = []
+
+    # Result would be a dictionary with possible 'Error' and/or 'Warning' keys.
+    # The expected value of each one is a list of strs.
+    for key in test_results:
+      for detail in test_results[key]:
+        failures += ['%s: %s' % (key, detail)]
 
   json.dump({
       'valid': True,
-      'failures': ['failure'] if rc else [],
+      'failures': failures,
   }, args.output)
 
   return rc
