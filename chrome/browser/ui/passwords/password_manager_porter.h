@@ -16,6 +16,7 @@ class WebContents;
 
 namespace password_manager {
 class CredentialProviderInterface;
+class PasswordExporter;
 }
 
 class Profile;
@@ -68,6 +69,8 @@ class PasswordManagerPorter : public ui::SelectFileDialog::Listener,
 
   // Caching the current WebContents for when PresentFileSelector is called.
   content::WebContents* web_contents_ = nullptr;
+
+  std::unique_ptr<password_manager::PasswordExporter> password_exporter_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerPorter);
 };

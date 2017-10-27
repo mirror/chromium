@@ -22,10 +22,13 @@ namespace password_manager {
 // file.
 class PasswordExporter {
  public:
+  PasswordExporter() = default;
+  virtual ~PasswordExporter() = default;
+
   // Exports |passwords| into a file at |path|, overwriting any existing file.
   // The format of the export will be selected based on the file extension in
   // |path|.
-  static void Export(
+  virtual void Export(
       const base::FilePath& path,
       const std::vector<std::unique_ptr<autofill::PasswordForm>>& passwords);
 
@@ -36,7 +39,7 @@ class PasswordExporter {
   GetSupportedFileExtensions();
 
  private:
-  DISALLOW_IMPLICIT_CONSTRUCTORS(PasswordExporter);
+  DISALLOW_COPY_AND_ASSIGN(PasswordExporter);
 };
 
 }  // namespace password_manager

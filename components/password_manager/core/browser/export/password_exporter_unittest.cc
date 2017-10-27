@@ -47,7 +47,7 @@ class PasswordExporterTest : public testing::Test {
     base::FilePath output_file =
         temporary_dir.AppendASCII("passwords").AddExtension(provided_extension);
 
-    PasswordExporter::Export(output_file, passwords);
+    password_exporter_.Export(output_file, passwords);
 
     scoped_task_environment_.RunUntilIdle();
 
@@ -58,6 +58,8 @@ class PasswordExporterTest : public testing::Test {
     EXPECT_TRUE(base::ReadFileToString(output_file, output));
     base::DeleteFile(temporary_dir, true);
   }
+
+  PasswordExporter password_exporter_;
 
  private:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
