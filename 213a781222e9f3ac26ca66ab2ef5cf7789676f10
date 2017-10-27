@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3dd537b6_51204a92",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-27T00:48:56Z",
+      "side": 1,
+      "message": "Maybe instead of RunUntilIdle() you need to wait for the unregister callback to be called using RunLoop and QuitClosure?",
+      "revId": "213a781222e9f3ac26ca66ab2ef5cf7789676f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51829fae_c105a9fb",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 4
@@ -36,6 +53,30 @@
       "writtenOn": "2017-10-26T14:12:29Z",
       "side": 1,
       "message": "Now we\u0027re checking the nullity of {|installing|,|waiting|,|active|} to know whether they have changed, but, as we\u0027ll change to pass a nullptr instead of a ServiceWorkerObjectInfo with invalid ids(registration,handle) to indicate a non-existing object in future, now we\u0027d better just add the \u0027int changed_mask\u0027 parameter back to indicate whether objects changed or not?",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 52
+      },
+      "revId": "213a781222e9f3ac26ca66ab2ef5cf7789676f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64058fa7_610b7d11",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-27T00:48:56Z",
+      "side": 1,
+      "message": "Makes sense to me to add the changed mask.",
+      "parentUuid": "2b0cabb2_484b8236",
       "range": {
         "startLine": 87,
         "startChar": 2,
