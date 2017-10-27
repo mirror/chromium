@@ -13,12 +13,12 @@
 #include "base/timer/timer.h"
 #include "chromeos/components/tether/tether_component.h"
 #include "chromeos/dbus/power_manager_client.h"
-#include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/network/network_state_handler.h"
 #include "chromeos/network/network_state_handler_observer.h"
 #include "components/cryptauth/cryptauth_device_manager.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/prefs/pref_change_registrar.h"
+#include "components/session_manager/core/session_manager_observer.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 
 namespace chromeos {
@@ -37,15 +37,14 @@ class Profile;
 
 class TetherService : public KeyedService,
                       public chromeos::PowerManagerClient::Observer,
-                      public chromeos::SessionManagerClient::Observer,
                       public cryptauth::CryptAuthDeviceManager::Observer,
                       public device::BluetoothAdapter::Observer,
                       public chromeos::NetworkStateHandlerObserver,
-                      public chromeos::tether::TetherComponent::Observer {
+                      public chromeos::tether::TetherComponent::Observer,
+                      public session_manager::SessionManagerObserver {
  public:
   TetherService(Profile* profile,
                 chromeos::PowerManagerClient* power_manager_client,
-                chromeos::SessionManagerClient* session_manager_client,
                 cryptauth::CryptAuthService* cryptauth_service,
                 chromeos::NetworkStateHandler* network_state_handler);
   ~TetherService() override;
@@ -72,10 +71,6 @@ class TetherService : public KeyedService,
   void SuspendImminent() override;
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
 
-  // chromeos::SessionManagerClient::Observer:
-  void ScreenIsLocked() override;
-  void ScreenIsUnlocked() override;
-
   // cryptauth::CryptAuthDeviceManager::Observer
   void OnSyncFinished(cryptauth::CryptAuthDeviceManager::SyncResult sync_result,
                       cryptauth::CryptAuthDeviceManager::DeviceChangeResult
@@ -90,6 +85,9 @@ class TetherService : public KeyedService,
 
   // chromeos::tether::TetherComponent::Observer:
   void OnShutdownComplete() override;
+
+  // session_manager::SessionManagerObserver override:
+  void OnSessionStateChanged() override;
 
   // Callback when the controlling pref changes.
   void OnPrefsChanged();
@@ -206,6 +204,9 @@ class TetherService : public KeyedService,
   // was closed).
   bool suspended_ = false;
 
+  // Whether the screen is currently locked.
+  bool screen_locked_ = false;
+
   // Whether the BLE advertising interval has attempted to be set during this
   // session.
   bool has_attempted_to_set_ble_advertising_interval_ = false;
@@ -222,7 +223,6 @@ class TetherService : public KeyedService,
 
   Profile* profile_;
   chromeos::PowerManagerClient* power_manager_client_;
-  chromeos::SessionManagerClient* session_manager_client_;
   cryptauth::CryptAuthService* cryptauth_service_;
   chromeos::NetworkStateHandler* network_state_handler_;
   std::unique_ptr<chromeos::tether::NotificationPresenter>
