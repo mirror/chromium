@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4a6fecb_e78b1aa0",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-27T20:42:58Z",
+      "side": 0,
+      "message": "I think we used to compute the background distance based on location and size of the content quad.  That\u0027s probably why this is still in here.",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 857,
+        "endChar": 52
+      },
+      "revId": "c1954882c7e1f071870e54c354bb0e564b8f30ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
