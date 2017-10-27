@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b4b8381_5e7791a7",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-27T23:32:15Z",
+      "side": 1,
+      "message": "Move this up (talked offline)",
+      "revId": "a0a6c2c0beaee3c9fc4e9497c5b7f8348c195a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3f02ed_c42dc4f2",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-27T23:32:15Z",
+      "side": 1,
+      "message": "Since you use this in two places and one is a compare, can you move this string to a common location that both can access?",
+      "range": {
+        "startLine": 216,
+        "startChar": 18,
+        "endLine": 216,
+        "endChar": 36
+      },
+      "revId": "a0a6c2c0beaee3c9fc4e9497c5b7f8348c195a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
