@@ -168,7 +168,6 @@ Polymer({
     this.adapterState_ = state;
     this.bluetoothToggleState_ = state.powered;
     this.bluetoothToggleDisabled_ = !state.available;
-    this.setPrefValue('ash.user.bluetooth.adapter_enabled', state.powered);
   },
 
   /** @private */
@@ -205,11 +204,18 @@ Polymer({
       return;
     }
     this.bluetoothToggleDisabled_ = true;
+    var saveUserPref = function () {
+      this.setPrefValue(
+          'ash.user.bluetooth.adapter_enabled', this.bluetoothToggleState_);
+    }.bind(this);
     this.bluetoothPrivate.setAdapterState(
         {powered: this.bluetoothToggleState_}, function() {
           var error = chrome.runtime.lastError;
-          if (error && error != 'Error setting adapter properties: powered')
+          if (error && error != 'Error setting adapter properties: powered') {
             console.error('Error enabling bluetooth: ' + error.message);
+          } else {
+            saveUserPref();
+          }
         });
   },
 
