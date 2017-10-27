@@ -5,10 +5,13 @@
 #ifndef UI_CHROMEOS_TOUCH_EXPLORATION_CONTROLLER_H_
 #define UI_CHROMEOS_TOUCH_EXPLORATION_CONTROLLER_H_
 
+#include <map>
+#include <memory>
+#include <vector>
+
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
-#include "base/values.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/chromeos/ui_chromeos_export.h"
 #include "ui/events/event.h"
@@ -23,11 +26,7 @@ class Window;
 
 namespace ui {
 
-class Event;
-class GestureEvent;
-class GestureProviderAura;
 class TouchAccessibilityEnabler;
-class TouchEvent;
 
 // A delegate to handle commands in response to detected accessibility gesture
 // events.
@@ -184,7 +183,7 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
       public ui::GestureProviderAuraClient,
       public ui::GestureConsumer {
  public:
-  explicit TouchExplorationController(
+  TouchExplorationController(
       aura::Window* root_window,
       ui::TouchExplorationControllerDelegate* delegate,
       base::WeakPtr<TouchAccessibilityEnabler> touch_accessibility_enabler);
@@ -255,9 +254,6 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
       const ui::TouchEvent& event,
       std::unique_ptr<ui::Event>* rewritten_event);
 
-  // Returns the current time of the tick clock.
-  base::TimeTicks Now();
-
   // This timer is started every time we get the first press event, and
   // it fires after the double-click timeout elapses (300 ms by default).
   // If the user taps and releases within 300 ms and doesn't press again,
@@ -292,10 +288,10 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
   void SideSlideControl(ui::GestureEvent* gesture);
 
   // Dispatches a single key with the given flags.
-  void DispatchKeyWithFlags(const ui::KeyboardCode key, int flags);
+  void DispatchKeyWithFlags(ui::KeyboardCode key, int flags);
 
   // Binds DispatchKeyWithFlags to a specific key and flags.
-  base::Closure BindKeyEventWithFlags(const ui::KeyboardCode key, int flags);
+  base::Closure BindKeyEventWithFlags(ui::KeyboardCode key, int flags);
 
   std::unique_ptr<ui::MouseEvent> CreateMouseMoveEvent(
       const gfx::PointF& location,
@@ -315,20 +311,6 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
   // Sends a simulated tap, if the anchor point falls within lift activation
   // bounds.
   void MaybeSendSimulatedTapInLiftActivationBounds(const ui::TouchEvent& event);
-
-  // Some constants used in touch_exploration_controller:
-
-  // Within this many dips of the screen edge, the release event generated will
-  // reset the state to NoFingersDown.
-  const float kLeavingScreenEdge = 6;
-
-  // Swipe/scroll gestures within these bounds (in DIPs) will change preset
-  // settings.
-  const float kMaxDistanceFromEdge = 75;
-
-  // After a slide gesture has been triggered, if the finger is still within
-  // these bounds (in DIPs), the preset settings will still change.
-  const float kSlopDistanceFromEdge = kMaxDistanceFromEdge + 40;
 
   // The split tap slop  is a bit more generous since keeping two
   // fingers in place is a bit harder.
@@ -457,12 +439,12 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
   void VlogEvent(const ui::TouchEvent& event, const char* function_name);
 
   // Gets enum name from integer value.
-  const char* EnumStateToString(State state);
+  static const char* EnumStateToString(State state);
 
-  aura::Window* root_window_;
+  aura::Window* const root_window_;
 
   // Handles volume control. Not owned.
-  ui::TouchExplorationControllerDelegate* delegate_;
+  ui::TouchExplorationControllerDelegate* const delegate_;
 
   // A set of touch ids for fingers currently touching the screen.
   std::vector<int> current_touch_ids_;
@@ -472,6 +454,9 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
 
   // The current state.
   State state_;
+
+  // The previous state entered.
+  State prev_state_;
 
   // A copy of the event from the initial touch press.
   std::unique_ptr<ui::TouchEvent> initial_press_;
@@ -524,14 +509,8 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
   // Gesture Handler to interpret the touch events.
   std::unique_ptr<ui::GestureProviderAura> gesture_provider_;
 
-  // The previous state entered.
-  State prev_state_;
-
   // A copy of the previous event passed.
   std::unique_ptr<ui::TouchEvent> prev_event_;
-
-  // This toggles whether VLOGS are turned on or not.
-  bool VLOG_on_;
 
   // LocatedEvents within this area should be left alone.
   gfx::Rect exclude_bounds_;
