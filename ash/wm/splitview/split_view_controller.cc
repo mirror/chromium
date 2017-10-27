@@ -274,12 +274,8 @@ void SplitViewController::Resize(const gfx::Point& location_in_screen) {
       GetBoundedPosition(location_in_screen, work_area_bounds);
 
   // Update |divider_position_|.
-  const int previous_divider_position = divider_position_;
   UpdateDividerPosition(modified_location_in_screen);
   NotifyDividerPositionChanged();
-
-  // Restack windows order if necessary.
-  RestackWindows(previous_divider_position, divider_position_);
 
   // Update the black scrim layer's bounds and opacity.
   UpdateBlackScrim(modified_location_in_screen);
@@ -578,29 +574,6 @@ void SplitViewController::UpdateBlackScrim(
     opacity = 1.f - float(distance_y) / float(work_area_bounds.height());
   }
   black_scrim_layer_->SetOpacity(opacity);
-}
-
-void SplitViewController::RestackWindows(const int previous_divider_position,
-                                         const int current_divider_position) {
-  if (!left_window_ || !right_window_)
-    return;
-  DCHECK(IsSplitViewModeActive());
-  DCHECK_EQ(left_window_->parent(), right_window_->parent());
-
-  const int mid_position = GetDefaultDividerPosition(GetDefaultSnappedWindow());
-  if (std::signbit(previous_divider_position - mid_position) ==
-      std::signbit(current_divider_position - mid_position)) {
-    // No need to restack windows if the divider position doesn't pass over the
-    // middle position.
-    return;
-  }
-
-  if ((current_divider_position < mid_position) ==
-      IsLeftWindowOnTopOrLeftOfScreen(screen_orientation_)) {
-    left_window_->parent()->StackChildAbove(right_window_, left_window_);
-  } else {
-    left_window_->parent()->StackChildAbove(left_window_, right_window_);
-  }
 }
 
 void SplitViewController::UpdateSnappedWindowsAndDividerBounds() {

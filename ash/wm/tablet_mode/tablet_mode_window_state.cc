@@ -82,20 +82,62 @@ gfx::Rect GetBoundsInMaximizedMode(wm::WindowState* state_object) {
   if (state_object->IsFullscreen() || state_object->IsPinned())
     return ScreenUtil::GetDisplayBoundsInParent(state_object->window());
 
-  if (state_object->GetStateType() == mojom::WindowStateType::LEFT_SNAPPED) {
+  mojom::WindowStateType window_state_type = state_object->GetStateType();
+  if (window_state_type == mojom::WindowStateType::LEFT_SNAPPED ||
+      window_state_type == mojom::WindowStateType::RIGHT_SNAPPED) {
     DCHECK(CanSnap(state_object));
-    return Shell::Get()
-        ->split_view_controller()
-        ->GetSnappedWindowBoundsInParent(state_object->window(),
-                                         SplitViewController::LEFT);
-  }
+    SplitViewController* split_view_controller =
+        Shell::Get()->split_view_controller();
+    const blink::WebScreenOrientationLockType screen_orientation =
+        split_view_controller->screen_orientation();
+    gfx::Size window_minimum_size;
 
-  if (state_object->GetStateType() == mojom::WindowStateType::RIGHT_SNAPPED) {
-    DCHECK(CanSnap(state_object));
-    return Shell::Get()
-        ->split_view_controller()
-        ->GetSnappedWindowBoundsInParent(state_object->window(),
-                                         SplitViewController::RIGHT);
+    if (state_object->window() && state_object->window()->delegate()) {
+      window_minimum_size =
+          state_object->window()->delegate()->GetMinimumSize();
+    }
+
+    SplitViewController::SnapPosition snap_position =
+        window_state_type == mojom::WindowStateType::LEFT_SNAPPED
+            ? SplitViewController::LEFT
+            : SplitViewController::RIGHT;
+    gfx::Rect window_bounds =
+        split_view_controller->GetSnappedWindowBoundsInParent(
+            state_object->window(), snap_position);
+
+    // Moves the snapped window that next to the origin of the work area to
+    // outside of the work area if its minimum size is larger than the window
+    // bounds in work area.
+    if (window_state_type == mojom::WindowStateType::LEFT_SNAPPED) {
+      if (screen_orientation ==
+              blink::kWebScreenOrientationLockLandscapePrimary &&
+          window_bounds.width() < window_minimum_size.width()) {
+        window_bounds.set_x(window_bounds.x() - (window_minimum_size.width() -
+                                                 window_bounds.width()));
+      }
+      if (screen_orientation ==
+              blink::kWebScreenOrientationLockPortraitSecondary &&
+          window_bounds.height() < window_minimum_size.height()) {
+        window_bounds.set_y(window_bounds.y() - (window_minimum_size.height() -
+                                                 window_bounds.height()));
+      }
+    } else {
+      if (screen_orientation ==
+              blink::kWebScreenOrientationLockLandscapeSecondary &&
+          window_bounds.width() < window_minimum_size.width()) {
+        window_bounds.set_x(window_bounds.x() - (window_minimum_size.width() -
+                                                 window_bounds.width()));
+      }
+
+      if (screen_orientation ==
+              blink::kWebScreenOrientationLockPortraitPrimary &&
+          window_bounds.height() < window_minimum_size.height()) {
+        window_bounds.set_y(window_bounds.y() - (window_minimum_size.height() -
+                                                 window_bounds.height()));
+      }
+    }
+
+    return window_bounds;
   }
 
   gfx::Rect bounds_in_parent;
