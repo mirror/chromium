@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21661284_95c21f44",
+        "filename": "third_party/WebKit/Source/core/paint/ThemePainterMac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-27T16:54:10Z",
+      "side": 1,
+      "message": "To be consistent with non-Mac, just paint nothing if the input element has no\nLayoutObject?",
+      "revId": "1edaa238f6f9313b86f55a423bb70c370124b2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
