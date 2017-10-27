@@ -431,7 +431,7 @@ ImageResourceContent::UpdateImageResult ImageResourceContent::UpdateImage(
         }
       }
 
-      if (!image_ || image_->IsNull()) {
+      if (!image_ || (!image_->IsSVGImage() && image_->IsNull())) {
         ClearImage();
         return UpdateImageResult::kShouldDecodeError;
       }
