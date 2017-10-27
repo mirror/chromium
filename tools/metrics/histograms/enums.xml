@@ -24041,6 +24041,7 @@ from previous Chrome versions.
   <int value="-1613583483" label="UseNewAcceptLanguageHeader:enabled"/>
   <int value="-1611305202" label="KeepPrefetchedContentSuggestions:disabled"/>
   <int value="-1607691647" label="MojoVideoEncodeAccelerator:disabled"/>
+  <int value="-1606395856" label="experimental-tab-controller:enabled"/>
   <int value="-1605567628" label="disable-overlay-scrollbar"/>
   <int value="-1604051051" label="SpecialLocale:disabled"/>
   <int value="-1603404046" label="V8VmFuture:disabled"/>
@@ -25278,6 +25279,7 @@ from previous Chrome versions.
   <int value="1959148757" label="OffMainThreadFetch:enabled"/>
   <int value="1960169775" label="NewPhotoPicker:disabled"/>
   <int value="1961425320" label="force-qtkit"/>
+  <int value="1963313562" label="experimental-tab-controller:disabled"/>
   <int value="1964816410" label="AndroidPayIntegrationV2:enabled"/>
   <int value="1966730288" label="disable-threaded-compositing"/>
   <int value="1969604362" label="enable-pinch-virtual-viewport"/>
