@@ -194,6 +194,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnUpdateOpener(int opener_routing_id);
   void OnViewChanged(const viz::FrameSinkId& frame_sink_id);
   void OnDidStopLoading();
+  void OnDetachChildren();
   void OnDidUpdateFramePolicy(const FramePolicy& frame_policy);
   void OnDispatchLoad();
   void OnCollapse(bool collapsed);

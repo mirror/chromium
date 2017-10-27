@@ -793,6 +793,9 @@ IPC_MESSAGE_ROUTED0(FrameMsg_DidStartLoading)
 // RenderFrame has completed loading.
 IPC_MESSAGE_ROUTED0(FrameMsg_DidStopLoading)
 
+// A message sent to RenderFrameProxy to detach its children.
+IPC_MESSAGE_ROUTED0(FrameMsg_DetachChildren)
+
 // Add message to the frame console.
 IPC_MESSAGE_ROUTED2(FrameMsg_AddMessageToConsole,
                     content::ConsoleMessageLevel /* level */,

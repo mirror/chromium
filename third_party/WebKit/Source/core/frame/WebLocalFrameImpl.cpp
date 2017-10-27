@@ -650,7 +650,8 @@ WebPerformance WebLocalFrameImpl::Performance() const {
 void WebLocalFrameImpl::DispatchUnloadEvent() {
   if (!GetFrame())
     return;
-  SubframeLoadingDisabler disabler(GetFrame()->GetDocument());
+  FrameNavigationDisabler navigation_disabler(*GetFrame());
+  SubframeLoadingDisabler subframe_loading_disabler(GetFrame()->GetDocument());
   GetFrame()->Loader().DispatchUnloadEvent();
 }
 

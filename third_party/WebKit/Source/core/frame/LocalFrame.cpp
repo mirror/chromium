@@ -266,6 +266,7 @@ void LocalFrame::Reload(FrameLoadType load_type,
 }
 
 void LocalFrame::Detach(FrameDetachType type) {
+  FrameNavigationDisabler navigation_disabler(*this);
   // Note that detach() can be re-entered, so it's not possible to
   // DCHECK(isAttached()) here.
   lifecycle_.AdvanceTo(FrameLifecycle::kDetaching);

@@ -486,6 +486,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       routing_id_(routing_id),
       is_waiting_for_swapout_ack_(false),
       render_frame_created_(false),
+      suppress_delete_ipc_(false),
       navigations_suspended_(false),
       is_waiting_for_beforeunload_ack_(false),
       unload_ack_is_for_navigation_(false),
@@ -609,7 +610,7 @@ RenderFrameHostImpl::~RenderFrameHostImpl() {
   // RenderFrame should be cleaned up (if it exists).
   bool will_render_view_clean_up_render_frame =
       frame_tree_node_->IsMainFrame() && render_view_host_->ref_count() == 1;
-  if (is_active() && render_frame_created_ &&
+  if (is_active() && render_frame_created_ && !suppress_delete_ipc_ &&
       !will_render_view_clean_up_render_frame) {
     Send(new FrameMsg_Delete(routing_id_));
   }
@@ -623,8 +624,7 @@ RenderFrameHostImpl::~RenderFrameHostImpl() {
 
   if (render_widget_host_ &&
       render_widget_host_->owned_by_render_frame_host()) {
-    // Shutdown causes the RenderWidgetHost to delete itself.
-    render_widget_host_->ShutdownAndDestroyWidget(true);
+    render_widget_host_->Destroy(true);
   }
 
   // Notify the FrameTree that this RFH is going away, allowing it to shut down

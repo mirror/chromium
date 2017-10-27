@@ -2000,6 +2000,13 @@ RenderFrameHostManager::GetSiteInstanceForNavigationRequest(
   return dest_site_instance;
 }
 
+void RenderFrameHostManager::DetachProxyChildren() {
+  for (auto& proxy_host : proxy_hosts_) {
+    proxy_host.second->Send(
+        new FrameMsg_DetachChildren(proxy_host.second->GetRoutingID()));
+  }
+}
+
 bool RenderFrameHostManager::InitRenderFrame(
     RenderFrameHostImpl* render_frame_host) {
   if (render_frame_host->IsRenderFrameLive())

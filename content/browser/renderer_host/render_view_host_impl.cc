@@ -769,7 +769,7 @@ void RenderViewHostImpl::ShutdownAndDestroy() {
         GetRoutingID());
   }
 
-  GetWidget()->ShutdownAndDestroyWidget(false);
+  GetWidget()->Destroy(false);
   delete this;
 }
 

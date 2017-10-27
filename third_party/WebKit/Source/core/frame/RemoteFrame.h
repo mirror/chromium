@@ -52,6 +52,8 @@ class CORE_EXPORT RemoteFrame final : public Frame {
 
   RemoteFrameClient* Client() const;
 
+  void DetachChildren();
+
  private:
   RemoteFrame(RemoteFrameClient*, Page&, FrameOwner*);
 
@@ -59,8 +61,6 @@ class CORE_EXPORT RemoteFrame final : public Frame {
   // already RemoteFrame.
   bool IsLocalFrame() const override { return false; }
   bool IsRemoteFrame() const override { return true; }
-
-  void DetachChildren();
 
   Member<RemoteFrameView> view_;
   Member<RemoteSecurityContext> security_context_;

@@ -670,6 +670,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return frame_host_associated_binding_;
   }
 
+  void SuppressDeleteIpc() { suppress_delete_ipc_ = true; }
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -1082,6 +1084,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // the renderer process.  Currently only used for subframes.
   // TODO(creis): Use this for main frames as well when RVH goes away.
   bool render_frame_created_;
+
+  // Whether or not the destructor should send a FrameMsg_Delete
+  bool suppress_delete_ipc_;
 
   // Whether we should buffer outgoing Navigate messages rather than sending
   // them. This will be true when a RenderFrameHost is created for a cross-site
