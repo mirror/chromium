@@ -34,6 +34,24 @@
       "revId": "f66cdd604fcd9274770160a6671f47840dea5c2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "021a8b8d_fc55563f",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-27T02:31:39Z",
+      "side": 0,
+      "message": "Removed.",
+      "parentUuid": "62519982_0c24aa42",
+      "revId": "f66cdd604fcd9274770160a6671f47840dea5c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
