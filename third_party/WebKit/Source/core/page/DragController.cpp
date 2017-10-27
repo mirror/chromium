@@ -269,7 +269,7 @@ void DragController::PerformDrag(DragData* drag_data, LocalFrame& local_root) {
             LayoutPoint(drag_data->ClientPosition()));
         const HitTestResult result = event_handler.HitTestResultAtPoint(point);
         prevented_default |=
-            IsHTMLPlugInElement(*result.InnerNode()) &&
+            result.InnerNode() && IsHTMLPlugInElement(*result.InnerNode()) &&
             ToHTMLPlugInElement(result.InnerNode())->CanProcessDrag();
       }
 
