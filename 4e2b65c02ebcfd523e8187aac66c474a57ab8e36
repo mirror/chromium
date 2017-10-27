@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd1d2afb_1af9bdb6",
+        "filename": "services/video_capture/service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-10-27T17:17:15Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "7675d2cb_f610de75",
+      "revId": "4e2b65c02ebcfd523e8187aac66c474a57ab8e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4062fac9_af02ae1a",
         "filename": "services/video_capture/test/device_factory_provider_unittest.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "36daf5d8_1eed0921",
+        "filename": "services/video_capture/test/device_factory_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-10-27T17:17:15Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "4062fac9_af02ae1a",
+      "revId": "4e2b65c02ebcfd523e8187aac66c474a57ab8e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c449d867_4b59d94c",
         "filename": "services/video_capture/test/device_factory_provider_unittest.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-27T16:51:25Z",
       "side": 1,
       "message": "Waiting for an arbitrarily chosen duration is unfortunately not a deterministic way of testing this. It makes the test run longer than needed in most cases and has the potential for flakiness.\n\nAlso unfortunately, I don\u0027t believe there is any signal or event telling us when the service has received the disconnect. In theory, we could add something to https://cs.chromium.org/chromium/src/services/video_capture/public/interfaces/testing_controls.mojom?dr, but that would mean adding quite a bit of test-only logic, which is not great either.\n\nI wonder if, in order to verify that the service is not shutting down, we could simply try to use |leftover_provider| and see if it still responds. However, this may not be sufficient, since there may not be any guarantee made by Mojo that the disconnect arrives at the service before our subsequent use of |leftover_provider|. Let me ask rockot@ to clarify.",
+      "revId": "4e2b65c02ebcfd523e8187aac66c474a57ab8e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3836790_f3d6fdbe",
+        "filename": "services/video_capture/test/device_factory_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-10-27T17:17:15Z",
+      "side": 1,
+      "message": "Agreed that the use of arbitrary wait time is not a good solution, but couldn\u0027t figure out a way around it. Will wait for rockot@ to clarify. Thanks :)",
+      "parentUuid": "c449d867_4b59d94c",
       "revId": "4e2b65c02ebcfd523e8187aac66c474a57ab8e36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
