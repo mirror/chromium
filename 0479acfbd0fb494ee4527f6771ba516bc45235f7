@@ -45,6 +45,23 @@
       "revId": "0479acfbd0fb494ee4527f6771ba516bc45235f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264ecf3b_a126306b",
+        "filename": "chrome/browser/apps/drive/drive_app_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-27T20:08:58Z",
+      "side": 1,
+      "message": "minor nit: local |callback| shouldn\u0027t be needed and I don\u0027t think it simplifies anything (whereas |loader_factory| I think does).",
+      "revId": "0479acfbd0fb494ee4527f6771ba516bc45235f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
