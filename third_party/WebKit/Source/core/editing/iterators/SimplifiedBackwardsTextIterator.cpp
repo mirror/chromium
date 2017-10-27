@@ -66,7 +66,8 @@ SimplifiedBackwardsTextIteratorAlgorithm<Strategy>::
     SimplifiedBackwardsTextIteratorAlgorithm(
         const EphemeralRangeTemplate<Strategy>& range,
         const TextIteratorBehavior& behavior)
-    : node_(nullptr),
+    : behavior_(behavior),
+      node_(nullptr),
       offset_(0),
       handled_node_(false),
       handled_children_(false),
@@ -236,6 +237,9 @@ bool SimplifiedBackwardsTextIteratorAlgorithm<Strategy>::HandleTextNode() {
   if (!layout_object)
     return true;
 
+  // Note: When |text_node| has CSS property "-webkit-text-security" and
+  // its value other than "none", we get bullet characters from
+  // |LayoutText::GetText()|.
   String text = layout_object->GetText();
   if (!layout_object->HasTextBoxes() && text.length() > 0)
     return true;
@@ -255,7 +259,10 @@ bool SimplifiedBackwardsTextIteratorAlgorithm<Strategy>::HandleTextNode() {
 
   text_length_ = position_end_offset_ - position_start_offset_;
   text_offset_ = position_start_offset_ - offset_in_node;
-  text_container_ = text;
+  text_container_ =
+      behavior_.EmitsSmallXForTextSecurity() && IsTextSecurityNode(node_)
+          ? RepeatString("x", text.length())
+          : text;
   single_character_buffer_ = 0;
   CHECK_LE(static_cast<unsigned>(text_offset_ + text_length_), text.length());
 
@@ -414,12 +421,6 @@ SimplifiedBackwardsTextIteratorAlgorithm<Strategy>::EndPosition() const {
                                                          position_end_offset_);
   return PositionTemplate<Strategy>::EditingPositionOf(start_node_,
                                                        start_offset_);
-}
-
-template <typename Strategy>
-bool SimplifiedBackwardsTextIteratorAlgorithm<Strategy>::IsInTextSecurityMode()
-    const {
-  return IsTextSecurityNode(GetNode());
 }
 
 template <typename Strategy>

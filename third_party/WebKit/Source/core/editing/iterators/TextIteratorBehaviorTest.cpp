@@ -63,6 +63,10 @@ TEST(TextIteratorBehaviorTest, Values) {
                   .Build()
                   .EmitsOriginalText());
   EXPECT_TRUE(TextIteratorBehavior::Builder()
+                  .SetEmitsSmallXForTextSecurity(true)
+                  .Build()
+                  .EmitsSmallXForTextSecurity());
+  EXPECT_TRUE(TextIteratorBehavior::Builder()
                   .SetEntersOpenShadowRoots(true)
                   .Build()
                   .EntersOpenShadowRoots());
