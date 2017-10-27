@@ -70,6 +70,24 @@
       "revId": "d5c47924de3492cfc4e3e17eb03d01923ebf4e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41876c2a_e14dad59",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-27T01:30:07Z",
+      "side": 1,
+      "message": "Ok, then can you add comments in PositionForCaretOffset about this? At some point we would like to support text-transform, and this code is for NG, so it may survive until then. It\u0027s great if the point we intentionally ignore text-transform is clear.",
+      "parentUuid": "92858707_23cf3a87",
+      "revId": "d5c47924de3492cfc4e3e17eb03d01923ebf4e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
