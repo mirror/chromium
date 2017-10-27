@@ -25080,6 +25080,7 @@ from previous Chrome versions.
   <int value="1416592483" label="ash-enable-mirrored-screen"/>
   <int value="1418054870" label="SpecialLocale:enabled"/>
   <int value="1421620678" label="simple-clear-browsing-data-support-string"/>
+  <int value="1424890771" label="ash-keyboard-shortcut-viewer"/>
   <int value="1427905064" label="CreditCardAutofillTouchBar:enabled"/>
   <int value="1431050645" label="PayWithGoogleV1:disabled"/>
   <int value="1434515920" label="ReaderModeInCCT:enabled"/>
