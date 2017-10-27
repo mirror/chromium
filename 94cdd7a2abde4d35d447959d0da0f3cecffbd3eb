@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e45c6dbe_21cfb9ba",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-27T10:50:43Z",
+      "side": 1,
+      "message": "Currently, we set `muted_` to true based on the content attribute when `load()` is called. I think this isn\u0027t per spec and was done to work around this issue. Could you drop it?",
+      "revId": "94cdd7a2abde4d35d447959d0da0f3cecffbd3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
