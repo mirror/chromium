@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e87686ec_b98d1421",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-27T03:03:00Z",
+      "side": 1,
+      "message": "The changes are 99% formatting changes, there are 3 small real code changes.",
+      "revId": "680e35a314ea6421b3c26c55a1f6f3fbdc14785c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a7cde6_fb35fee1",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-27T03:03:00Z",
+      "side": 1,
+      "message": "an actual change to support injecting a handler for testing",
+      "revId": "680e35a314ea6421b3c26c55a1f6f3fbdc14785c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e10081_193e29c6",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-27T03:03:00Z",
+      "side": 1,
+      "message": "an actual change to defend against a renderer calling this method when it doesn\u0027t make sense",
+      "revId": "680e35a314ea6421b3c26c55a1f6f3fbdc14785c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8671eea9_b3d20bb4",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-27T03:03:00Z",
+      "side": 1,
+      "message": "I put together some test instrumentation\u0027ware (mock and test objects), but didn\u0027t compose a full test suite for the all the SubresourceLoader functions.",
+      "revId": "680e35a314ea6421b3c26c55a1f6f3fbdc14785c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
