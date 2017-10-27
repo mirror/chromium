@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4976949a_0987aa37",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-27T00:44:39Z",
+      "side": 1,
+      "message": "Yes. There is an assert in CreateRecorder for it.",
+      "parentUuid": "473dc2e5_0469abdf",
+      "range": {
+        "startLine": 451,
+        "startChar": 6,
+        "endLine": 451,
+        "endChar": 28
+      },
+      "revId": "f3059dcd0b20dbf6c3ed32c6ea4d4a0e6677044b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5710a81_e0e195a7",
         "filename": "content/renderer/render_widget.h",
         "patchSetId": 14
@@ -108,6 +132,30 @@
       "revId": "f3059dcd0b20dbf6c3ed32c6ea4d4a0e6677044b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10200701_1228c2dc",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-27T00:44:39Z",
+      "side": 1,
+      "message": "Sure. That sounds useful too. Added.",
+      "parentUuid": "5878eb37_8f3efa1f",
+      "range": {
+        "startLine": 291,
+        "startChar": 16,
+        "endLine": 291,
+        "endChar": 41
+      },
+      "revId": "f3059dcd0b20dbf6c3ed32c6ea4d4a0e6677044b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
