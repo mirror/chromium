@@ -37,6 +37,7 @@ extern const char kNativeCrxBindings[];
 extern const char kWhitelistedExtensionID[];
 extern const char kEnableCrxHashCheck[];
 extern const char kYieldBetweenContentScriptRuns[];
+extern const char kLockWindowFullscreen[];
 
 }  // namespace switches
 

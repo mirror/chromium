@@ -25,6 +25,8 @@ const char kYieldBetweenContentScriptRunsFieldTrial[] =
 
 const char kNativeCrxBindingsFieldTrial[] = "NativeCrxBindings";
 
+const char kLockWindowFullscreenFieldTrial[] = "LockWindowFullscreen";
+
 class CommonSwitches {
  public:
   CommonSwitches()
@@ -63,6 +65,10 @@ class CommonSwitches {
         yield_between_content_script_runs(
             switches::kYieldBetweenContentScriptRuns,
             kYieldBetweenContentScriptRunsFieldTrial,
+            FeatureSwitch::DEFAULT_DISABLED),
+        lock_window_fullscreen(
+            switches::kLockWindowFullscreen,
+            kLockWindowFullscreenFieldTrial,
             FeatureSwitch::DEFAULT_DISABLED) {
   }
 
@@ -80,6 +86,7 @@ class CommonSwitches {
   FeatureSwitch load_media_router_component_extension;
   FeatureSwitch native_crx_bindings;
   FeatureSwitch yield_between_content_script_runs;
+  FeatureSwitch lock_window_fullscreen;
 };
 
 base::LazyInstance<CommonSwitches>::DestructorAtExit g_common_switches =
@@ -116,6 +123,9 @@ FeatureSwitch* FeatureSwitch::native_crx_bindings() {
 }
 FeatureSwitch* FeatureSwitch::yield_between_content_script_runs() {
   return &g_common_switches.Get().yield_between_content_script_runs;
+}
+FeatureSwitch* FeatureSwitch::lock_window_fullscreen() {
+  return &g_common_switches.Get().lock_window_fullscreen;
 }
 
 FeatureSwitch::ScopedOverride::ScopedOverride(FeatureSwitch* feature,
