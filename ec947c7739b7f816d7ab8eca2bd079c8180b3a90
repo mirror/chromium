@@ -16,6 +16,24 @@
       "revId": "ec947c7739b7f816d7ab8eca2bd079c8180b3a90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc99ae8_aabeff47",
+        "filename": "services/metrics/metrics_mojo_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-27T20:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61bf1827_726ebb83",
+      "revId": "ec947c7739b7f816d7ab8eca2bd079c8180b3a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
