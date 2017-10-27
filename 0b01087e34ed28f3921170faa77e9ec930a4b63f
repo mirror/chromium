@@ -16,6 +16,24 @@
       "revId": "0b01087e34ed28f3921170faa77e9ec930a4b63f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a3bfa2_e0e0745a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-10-27T16:02:15Z",
+      "side": 1,
+      "message": "I reintroduced the old behavior for this edge case. There is a test, too, but I couldn\u0027t figure out yet how to have the layout refresh timely.\nI will pick it up again when I am back (Nov 14).",
+      "parentUuid": "4d7cb3d4_dd61f775",
+      "revId": "0b01087e34ed28f3921170faa77e9ec930a4b63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
