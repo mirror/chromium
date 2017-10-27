@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f16897c8_2a69966e",
+        "filename": "BUILD.gn",
+        "patchSetId": 21
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-27T23:58:52Z",
+      "side": 1,
+      "message": "Let\u0027s move the //third_party target here, and just conditionally include in the target the things you actually want to build, e.g.:\n\ngroup(\"webui_closure_compile\") {\n  data_deps \u003d []\n  if (is_chromeos) {\n    data_deps +\u003d [ \"//chrome/browser/resources/chromeos/login:closure_compile\" ]\n  }\n}",
+      "revId": "e467a1abac7b67b777f0c891f9b16085d61d4177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde3912d_c43ba0af",
+        "filename": "third_party/closure_compiler/BUILD.gn",
+        "patchSetId": 21
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-27T23:58:52Z",
+      "side": 1,
+      "message": "Let\u0027s move this to //BUILD, there\u0027s no reason to put this in //third_party when it\u0027s only referring to other chrome targets.",
+      "revId": "e467a1abac7b67b777f0c891f9b16085d61d4177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
