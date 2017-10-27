@@ -143,15 +143,22 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // or return false on failure.
   bool InitializeFBConfig();
 
-  // Callback to be executed once we have a |va_surface| to be output and
-  // an available |picture| to use for output.
-  // Puts contents of |va_surface| into given |picture|, releases the surface
-  // and passes the resulting picture to client to output the given
-  // |visible_rect| part of it.
+  // Callback to be executed once we have a |va_surface| to be output and an
+  // available |picture| to use for output. Puts contents of |va_surface| into
+  // the given |picture|, releases |va_surface| and passes the resulting
+  // |picture| to |client_| to output the given |visible_rect| part of it. This
+  // operation takes a significant amount of time and can interfere with
+  // |task_runner_| (usually the Main GPU thread) operation, so it's carried out
+  // on |blit_task_runner_|
   void OutputPicture(const scoped_refptr<VASurface>& va_surface,
                      int32_t input_id,
                      gfx::Rect visible_rect,
                      VaapiPicture* picture);
+  void FinishOutputPicture(const scoped_refptr<VASurface>& va_surface,
+                           int32_t input_id,
+                           gfx::Rect visible_rect,
+                           VaapiPicture* picture,
+                           bool result);
 
   // Try to OutputPicture() if we have both a ready surface and picture.
   void TryOutputSurface();
@@ -294,7 +301,10 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // Use this to post tasks to |decoder_thread_| instead of
   // |decoder_thread_.message_loop()| because the latter will be NULL once
   // |decoder_thread_.Stop()| returns.
-  scoped_refptr<base::SingleThreadTaskRunner> decoder_thread_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> decoder_task_runner_;
+
+  base::Thread blit_thread_;
+  scoped_refptr<base::SingleThreadTaskRunner> blit_task_runner_;
 
   int num_frames_at_client_;
   int num_stream_bufs_at_decoder_;
