@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a568f0dd_65f8ada9",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-27T03:10:32Z",
+      "side": 1,
+      "message": "Didn\u0027t realized that we had the win specific file, done.",
+      "parentUuid": "3554d688_6a2f02fc",
+      "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fdab496_e46e63f1",
         "filename": "chrome/browser/memory/swap_thrashing_common.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b50fca_cd417ca5",
+        "filename": "chrome/browser/memory/swap_thrashing_common.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-27T03:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fdab496_e46e63f1",
+      "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f978bebf_60521b7f",
+        "filename": "chrome/browser/memory/swap_thrashing_common.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-27T03:10:32Z",
+      "side": 1,
+      "message": "Referred to the monitor file.",
+      "parentUuid": "1f91b2a9_80363132",
+      "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e54b5613_e0e39bc5",
         "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-27T02:00:04Z",
       "side": 1,
       "message": "Do we need unique_ptr here? Looks like we are (intentionally) leaking the instance.\n\nAnother option would be using a static variable in GetInstance().",
+      "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07fd567_8e23fed0",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-27T03:10:32Z",
+      "side": 1,
+      "message": "I like using this approach because it makes it easier to unittest things, I\u0027m not sure of what\u0027s the best way to do this kind of thing in Chrome.\n\nIdeally this monitor should maybe be owned by \"something\" in Chrome and should probably not be used as a singleton?",
+      "parentUuid": "e54b5613_e0e39bc5",
       "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "cc243c9f_dd64f0d3",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-27T03:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c22daaf0_763b3a6d",
+      "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6a79f19_125942a7",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156e7405_d11f83ff",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-27T03:10:32Z",
+      "side": 1,
+      "message": "Done, good suggestion.",
+      "parentUuid": "e6a79f19_125942a7",
+      "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9fb48d55_00b0d7ce",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-27T03:10:32Z",
+      "side": 1,
+      "message": "For unittesting, added a comment about this.",
+      "parentUuid": "57f082e4_a0b2cb29",
+      "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df662c08_0e4f7204",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
         "patchSetId": 7
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "0c01a911_f0686c92",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-27T03:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df662c08_0e4f7204",
+      "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81e6d5da_d13da0d1",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
         "patchSetId": 7
@@ -152,6 +296,24 @@
       "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63f2c64_de0a7e58",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-27T03:10:32Z",
+      "side": 1,
+      "message": "It\u0027s needed for the unittests.",
+      "parentUuid": "81e6d5da_d13da0d1",
+      "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
