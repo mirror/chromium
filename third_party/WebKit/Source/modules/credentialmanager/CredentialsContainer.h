@@ -15,6 +15,7 @@ class Credential;
 class CredentialCreationOptions;
 class CredentialRequestOptions;
 class ExceptionState;
+class MakePublicKeyCredentialOptions;
 class ScriptPromise;
 class ScriptState;
 
@@ -39,6 +40,7 @@ class MODULES_EXPORT CredentialsContainer final
 
  private:
   CredentialsContainer();
+  bool hasRequiredEntityParameters(const MakePublicKeyCredentialOptions&);
 };
 
 }  // namespace blink

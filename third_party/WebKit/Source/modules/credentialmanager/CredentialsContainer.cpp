@@ -26,7 +26,7 @@
 #include "modules/credentialmanager/CredentialRequestOptions.h"
 #include "modules/credentialmanager/FederatedCredential.h"
 #include "modules/credentialmanager/FederatedCredentialRequestOptions.h"
-#include "modules/credentialmanager/MakeCredentialOptions.h"
+#include "modules/credentialmanager/MakePublicKeyCredentialOptions.h"
 #include "modules/credentialmanager/PasswordCredential.h"
 #include "modules/credentialmanager/PublicKeyCredential.h"
 #include "platform/credentialmanager/PlatformFederatedCredential.h"
@@ -382,6 +382,14 @@ ScriptPromise CredentialsContainer::create(
     // Dispatch the publicKey credential operation.
     // TODO(https://crbug.com/740081): Eventually unify with CredMan's mojo.
     // TODO(engedy): Make frame checks more efficient in the refactor.
+    // Check for required dictionary objects. The check is done here because
+    // these elements are not marked as required in the IDL.
+    if (!hasRequiredEntityParameters(options.publicKey())) {
+      resolver->Reject(V8ThrowException::CreateTypeError(
+          script_state->GetIsolate(),
+          "RP or User entity missing required elements."));
+      return promise;
+    }
     LocalFrame* frame =
         ToDocument(ExecutionContext::From(script_state))->GetFrame();
     CredentialManagerClient::From(ExecutionContext::From(script_state))
@@ -408,4 +416,12 @@ ScriptPromise CredentialsContainer::requireUserMediation(
   return preventSilentAccess(script_state);
 }
 
+bool CredentialsContainer::hasRequiredEntityParameters(
+    const MakePublicKeyCredentialOptions& options) {
+  if (!(options.rp().hasName() && options.user().hasId() &&
+        options.user().hasName() && options.user().hasDisplayName())) {
+    return false;
+  }
+  return true;
+}
 }  // namespace blink
