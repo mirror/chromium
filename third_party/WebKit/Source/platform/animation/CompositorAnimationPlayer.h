@@ -8,7 +8,7 @@
 #include <memory>
 #include "base/memory/scoped_refptr.h"
 #include "cc/animation/animation_delegate.h"
-#include "cc/animation/animation_player.h"
+#include "cc/animation/single_animation_player.h"
 #include "platform/PlatformExport.h"
 #include "platform/graphics/CompositorElementId.h"
 #include "platform/wtf/Noncopyable.h"
@@ -34,7 +34,7 @@ class PLATFORM_EXPORT CompositorAnimationPlayer : public cc::AnimationDelegate {
 
   ~CompositorAnimationPlayer();
 
-  cc::AnimationPlayer* CcAnimationPlayer() const;
+  cc::SingleAnimationPlayer* CcAnimationPlayer() const;
 
   // An animation delegate is notified when animations are started and stopped.
   // The CompositorAnimationPlayer does not take ownership of the delegate, and
@@ -69,7 +69,7 @@ class PLATFORM_EXPORT CompositorAnimationPlayer : public cc::AnimationDelegate {
                                base::TimeTicks animation_start_time,
                                std::unique_ptr<cc::AnimationCurve>) override;
 
-  scoped_refptr<cc::AnimationPlayer> animation_player_;
+  scoped_refptr<cc::SingleAnimationPlayer> animation_player_;
   CompositorAnimationDelegate* delegate_;
 };
 

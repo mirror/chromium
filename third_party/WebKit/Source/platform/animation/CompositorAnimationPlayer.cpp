@@ -12,8 +12,8 @@
 namespace blink {
 
 CompositorAnimationPlayer::CompositorAnimationPlayer()
-    : animation_player_(
-          cc::AnimationPlayer::Create(cc::AnimationIdProvider::NextPlayerId())),
+    : animation_player_(cc::SingleAnimationPlayer::Create(
+          cc::AnimationIdProvider::NextPlayerId())),
       delegate_() {}
 
 CompositorAnimationPlayer::~CompositorAnimationPlayer() {
@@ -24,7 +24,8 @@ CompositorAnimationPlayer::~CompositorAnimationPlayer() {
     animation_player_->animation_timeline()->DetachPlayer(animation_player_);
 }
 
-cc::AnimationPlayer* CompositorAnimationPlayer::CcAnimationPlayer() const {
+cc::SingleAnimationPlayer* CompositorAnimationPlayer::CcAnimationPlayer()
+    const {
   return animation_player_.get();
 }
 

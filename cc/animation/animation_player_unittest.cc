@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/animation/animation_player.h"
+#include "cc/animation/single_animation_player.h"
 
 #include "base/strings/stringprintf.h"
 #include "cc/animation/animation_delegate.h"

@@ -9,11 +9,11 @@
 #include "cc/animation/animation_events.h"
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
-#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/keyframed_animation_curve.h"
 #include "cc/animation/scroll_offset_animation_curve.h"
+#include "cc/animation/single_animation_player.h"
 #include "cc/animation/transform_operations.h"
 #include "cc/test/animation_test_common.h"
 #include "cc/test/animation_timelines_test_common.h"
@@ -60,7 +60,7 @@ class ElementAnimationsTest : public AnimationTimelinesTest {
   AnimationTicker* ticker_impl_;
 };
 
-// See animation_player_unittest.cc for integration with AnimationPlayer.
+// See animation_player_unittest.cc for integration with SingleAnimationPlayer.
 
 TEST_F(ElementAnimationsTest, AttachToLayerInActiveTree) {
   // Set up the layer which is in active tree for main thread and not
@@ -173,10 +173,10 @@ TEST_F(ElementAnimationsTest, AddRemovePlayers) {
       player_->element_animations();
   EXPECT_TRUE(element_animations);
 
-  scoped_refptr<AnimationPlayer> player1 =
-      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
-  scoped_refptr<AnimationPlayer> player2 =
-      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+  scoped_refptr<SingleAnimationPlayer> player1 =
+      SingleAnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+  scoped_refptr<SingleAnimationPlayer> player2 =
+      SingleAnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
 
   timeline_->AttachPlayer(player1);
   timeline_->AttachPlayer(player2);
@@ -303,14 +303,14 @@ class TestAnimationDelegateThatDestroysPlayer : public TestAnimationDelegate {
   };
 
   void setTimelineAndPlayer(scoped_refptr<AnimationTimeline> timeline,
-                            scoped_refptr<AnimationPlayer> player) {
+                            scoped_refptr<SingleAnimationPlayer> player) {
     timeline_ = timeline;
     player_ = player;
   }
 
  private:
   scoped_refptr<AnimationTimeline> timeline_;
-  scoped_refptr<AnimationPlayer> player_;
+  scoped_refptr<SingleAnimationPlayer> player_;
 };
 
 // Test that we don't crash if a player is deleted while ElementAnimations is
@@ -324,7 +324,8 @@ TEST_F(ElementAnimationsTest, AddedPlayerIsDestroyed) {
   TestAnimationDelegateThatDestroysPlayer delegate;
 
   const int player2_id = AnimationIdProvider::NextPlayerId();
-  scoped_refptr<AnimationPlayer> player2 = AnimationPlayer::Create(player2_id);
+  scoped_refptr<SingleAnimationPlayer> player2 =
+      SingleAnimationPlayer::Create(player2_id);
   delegate.setTimelineAndPlayer(timeline_, player2);
 
   timeline_->AttachPlayer(player2);
@@ -336,8 +337,8 @@ TEST_F(ElementAnimationsTest, AddedPlayerIsDestroyed) {
 
   PushProperties();
 
-  scoped_refptr<AnimationPlayer> player2_impl =
-      timeline_impl_->GetPlayerById(player2_id);
+  scoped_refptr<SingleAnimationPlayer> player2_impl =
+      (SingleAnimationPlayer*)timeline_impl_->GetPlayerById(player2_id);
   DCHECK(player2_impl);
 
   player2_impl->ActivateAnimations();
@@ -1890,8 +1891,8 @@ TEST_F(ElementAnimationsTest, ImplThreadTakeoverAnimationGetsDeleted) {
   ticker_->NotifyAnimationTakeover(events->events_[0]);
   EXPECT_TRUE(delegate.takeover());
 
-  // AnimationPlayer::NotifyAnimationTakeover requests SetNeedsPushProperties
-  // to purge CT animations marked for deletion.
+  // SingleAnimationPlayer::NotifyAnimationTakeover requests
+  // SetNeedsPushProperties to purge CT animations marked for deletion.
   EXPECT_TRUE(ticker_->needs_push_properties());
 
   // ElementAnimations::PurgeAnimationsMarkedForDeletion call happens only in

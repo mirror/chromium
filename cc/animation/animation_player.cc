@@ -46,6 +46,10 @@ ElementId AnimationPlayer::element_id() const {
   return animation_ticker_->element_id();
 }
 
+bool AnimationPlayer::IsElementAttached(ElementId id) const {
+  return !!element_to_ticker_map_.count(id);
+}
+
 void AnimationPlayer::SetAnimationHost(AnimationHost* animation_host) {
   animation_host_ = animation_host;
 }
@@ -76,6 +80,12 @@ scoped_refptr<ElementAnimations> AnimationPlayer::element_animations() const {
 }
 
 void AnimationPlayer::AttachElement(ElementId element_id) {
+  for_each(animation_tickers_.begin(), animation_tickers_.end(), [&](auto& x) {
+    x->AttachElement(element_id);
+    element_to_ticker_map_.emplace(element_id, std::move(x));
+  });
+  animation_tickers_.clear();
+  // DebugElementToTickerMap();
   animation_ticker_->AttachElement(element_id);
 
   // Register player only if layer AND host attached.
@@ -229,6 +239,24 @@ std::string AnimationPlayer::ToString() const {
 
 bool AnimationPlayer::IsWorkletAnimationPlayer() const {
   return false;
+}
+
+void AnimationPlayer::AddTicker(std::unique_ptr<AnimationTicker> ticker) {
+  animation_tickers_.push_back(std::move(ticker));
+}
+
+AnimationTicker* AnimationPlayer::GetUniqueTickerForSingleAnimationPlayer()
+    const {
+  DCHECK(!animation_tickers_.empty());
+  return animation_tickers_[0].get();
+}
+
+void AnimationPlayer::DebugElementToTickerMap() {
+  for_each(element_to_ticker_map_.begin(), element_to_ticker_map_.end(),
+           [](ElementToTickerMap::value_type& x) {
+             LOG(ERROR) << "id: " << x.first.ToString()
+                        << " ticker: " << x.second->AnimationsToString();
+           });
 }
 
 }  // namespace cc
