@@ -86,8 +86,8 @@
 // Shows the signin UI.
 - (void)showSignin:(ShowSigninCommand*)command;
 
-// Shows the Add Account UI
-- (void)showAddAccount;
+// Shows the Add Account UI, presenting from |baseViewController|.
+- (void)showAddAccountFromViewController:(UIViewController*)baseViewController;
 
 @end
 
