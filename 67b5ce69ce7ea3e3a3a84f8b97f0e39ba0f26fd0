@@ -2,6 +2,230 @@
   "comments": [
     {
       "key": {
+        "uuid": "35b40b90_1f8f70a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "You can omit this and just refer to FooTest as FooTest.",
+      "range": {
+        "startLine": 9,
+        "startChar": 63,
+        "endLine": 9,
+        "endChar": 65
+      },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582f5aca_e680e1a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "need to set up",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d50d34_e5116213",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "Not exactly sure what \"Browser initialize\" is suppose to be.",
+      "range": {
+        "startLine": 11,
+        "startChar": 47,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f2948f_cb207004",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "where we got DCHECK failures when setting up",
+      "range": {
+        "startLine": 12,
+        "startChar": 41,
+        "endLine": 13,
+        "endChar": 5
+      },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2436ab8_f0523720",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "failures in BrowserTest are caused by FieldTrialParamAssociator and FieldTrialList not being reset before BrowserMain().",
+      "range": {
+        "startLine": 15,
+        "startChar": 40,
+        "endLine": 16,
+        "endChar": 79
+      },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5749fcf_52e6e6c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "Also move FooTest and BarTest to ScopedFeatureList.",
+      "range": {
+        "startLine": 20,
+        "startChar": 29,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d26a531_a648d25d",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "Ask the SB folks if using |kTagAndAttributeParamName| is ok.",
+      "range": {
+        "startLine": 358,
+        "startChar": 16,
+        "endLine": 358,
+        "endChar": 33
+      },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2891016b_94f136cc",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "BTW, theres\u0027s no need to explicitly initialize std::string to \"\".",
+      "range": {
+        "startLine": 262,
+        "startChar": 32,
+        "endLine": 262,
+        "endChar": 37
+      },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034e44f5_dc4d0da8",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "Please find the original author of this and ask them if this should use |kAccountConsistencyFeatureMethodDiceFixAuthErrors| from components/signin/core/browser/profile_management_switches.h.",
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577a2da6_ce4b04f5",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "And if this should be |kAccountConsistencyFeatureMethodParameter|.",
+      "range": {
+        "startLine": 280,
+        "startChar": 15,
+        "endLine": 280,
+        "endChar": 23
+      },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de5112fd_90cf9039",
         "filename": "content/browser/loader/resource_scheduler_browsertest.cc",
         "patchSetId": 22
@@ -19,6 +243,40 @@
         "endLine": 38,
         "endChar": 44
       },
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51416da3_d598c7a4",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "Call field_trial_list_.reset() instead, so it\u0027s obvious that |field_trial_list_| is a smart pointer and not a raw pointer.",
+      "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdf0b15_f883e1bb",
+        "filename": "content/public/test/browser_test_base.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-27T02:05:37Z",
+      "side": 1,
+      "message": "For the base virtual method, explain what it is suppose to do. What does it mean for a content::BrowserTestBase subclass to not be a \"content browser test\" ?",
       "revId": "67b5ce69ce7ea3e3a3a84f8b97f0e39ba0f26fd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
