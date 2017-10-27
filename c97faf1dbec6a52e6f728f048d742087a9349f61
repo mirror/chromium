@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01aaa252_717188d7",
+        "filename": "base/files/file_util_win.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-27T13:20:18Z",
+      "side": 1,
+      "message": "That function is not needed on Posix at the moment and if someone tries to call it they\u0027ll realize they have to implement it themselves. There\u0027s precedent in leaving functions in file_util.h undefined, for example: file_util_android.cc only implements one function from the header.\n\nI\u0027d like to not hold up the CL on this if possible, especially since I don\u0027t have my Linux machines with me to test the changes (not until Tuesday).",
+      "parentUuid": "24b00345_d07f3427",
+      "range": {
+        "startLine": 346,
+        "startChar": 5,
+        "endLine": 346,
+        "endChar": 39
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10eccb99_0324d03e",
         "filename": "chrome/browser/notifications/notification_template_builder.cc",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c06c770_306697d6",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-27T13:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10eccb99_0324d03e",
+      "range": {
+        "startLine": 169,
+        "startChar": 54,
+        "endLine": 169,
+        "endChar": 77
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "60194d90_0e4a2e81",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-27T13:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a31204_e57ef643",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 67
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f7127f1_94736658",
         "filename": "chrome/browser/notifications/temp_file_keeper.cc",
         "patchSetId": 19
@@ -91,6 +163,30 @@
       "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d2c98f_0c20d4c1",
+        "filename": "chrome/browser/notifications/temp_file_keeper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-27T13:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f7127f1_94736658",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6ee6bdfd_f8e5af6a",
+        "filename": "chrome/browser/notifications/temp_file_keeper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-27T13:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9b088cb_40ca48cd",
+      "range": {
+        "startLine": 101,
+        "startChar": 21,
+        "endLine": 101,
+        "endChar": 27
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58ee2d5b_98cf8c4e",
         "filename": "chrome/browser/notifications/temp_file_keeper.cc",
         "patchSetId": 19
@@ -137,6 +257,30 @@
       "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c02f44_2d33b922",
+        "filename": "chrome/browser/notifications/temp_file_keeper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-27T13:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58ee2d5b_98cf8c4e",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 26
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4c18d818_29b2203f",
+        "filename": "chrome/browser/notifications/temp_file_keeper.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-27T13:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73db2028_4d4243ce",
+      "range": {
+        "startLine": 52,
+        "startChar": 57,
+        "endLine": 52,
+        "endChar": 58
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4408a3f_b87ae9b2",
         "filename": "chrome/browser/notifications/temp_file_keeper.h",
         "patchSetId": 19
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "caad14bf_8fe7a934",
+        "filename": "chrome/browser/notifications/temp_file_keeper.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-27T13:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4408a3f_b87ae9b2",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 16
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6369e4ef_4a7c1d85",
         "filename": "ui/message_center/notification.cc",
         "patchSetId": 19
@@ -197,6 +389,30 @@
       "writtenOn": "2017-10-26T17:30:11Z",
       "side": 1,
       "message": "Nit: Is setting empty button icons required? If not, I think it\u0027s easier to read the code if the if statement is outside:\nif (include_icon_images) {\n  for (....)\n}\n(same for the statements above)",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 3
+      },
+      "revId": "c97faf1dbec6a52e6f728f048d742087a9349f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48f84cb_d22c3ca0",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-27T13:20:18Z",
+      "side": 1,
+      "message": "I\u0027m not actually sure. This is from the Linux side of NPB and Linux explicitly doesn\u0027t support the icon images, I believe, so I felt it was best to maintain the same logic (at least for now) -- especially since I don\u0027t have my Linux box to test this at the moment. :)",
+      "parentUuid": "6369e4ef_4a7c1d85",
       "range": {
         "startLine": 180,
         "startChar": 0,
