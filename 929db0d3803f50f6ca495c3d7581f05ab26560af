@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ed92e60_c14aed52",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-27T17:36:49Z",
+      "side": 1,
+      "message": "I was keeping it for documentation, but I fixed the comment instead.",
+      "parentUuid": "1ad38d3b_6fdd6159",
+      "revId": "929db0d3803f50f6ca495c3d7581f05ab26560af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbf2c855_b7d00d6d",
         "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller_unittest.mm",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-27T15:40:44Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 81,
+        "endChar": 20
+      },
+      "revId": "929db0d3803f50f6ca495c3d7581f05ab26560af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3694296_c957c828",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-27T17:36:49Z",
+      "side": 1,
+      "message": "In this case, I inverted the test so this is is_enabled to avoid double-negative in the if later. There\u0027s some documentation value here with the extra BOOL.",
+      "parentUuid": "dbf2c855_b7d00d6d",
       "range": {
         "startLine": 81,
         "startChar": 9,
@@ -62,6 +104,30 @@
       "revId": "929db0d3803f50f6ca495c3d7581f05ab26560af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740954af_7c136bc7",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-27T17:36:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "727f2f88_02088c0c",
+      "range": {
+        "startLine": 16,
+        "startChar": 27,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "929db0d3803f50f6ca495c3d7581f05ab26560af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
