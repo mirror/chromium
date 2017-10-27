@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e93c7b07_96f971b2",
+        "filename": "chrome/browser/extensions/window_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T21:29:19Z",
+      "side": 1,
+      "message": "nit: remove {}",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

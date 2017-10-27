@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ecaafea5_731dc317",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T21:29:19Z",
+      "side": 1,
+      "message": "LG.",
+      "parentUuid": "5f7f9ec7_9f60d545",
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a99e866_d9ce30a8",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 12
@@ -225,6 +243,30 @@
     },
     {
       "key": {
+        "uuid": "a6bf891d_93d05c54",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T21:29:19Z",
+      "side": 1,
+      "message": "The reason I was saying this is because line 682 sets SetFullscreeMode(false, ..) so that and PinWindow would never be executed simultaneously...",
+      "parentUuid": "b939b9a8_1c829093",
+      "range": {
+        "startLine": 684,
+        "startChar": 0,
+        "endLine": 684,
+        "endChar": 24
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18d4db8a_3f8ce234",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 12
@@ -301,6 +343,24 @@
       "side": 1,
       "message": "Will do. Are you fine with me adding these tests in a follow-up CL in 10 days? I want to let Jimmy (he\u0027s working on the extension using this API) start testing as soon as possible, and I\u0027ll be OOO next week.",
       "parentUuid": "2d61d4fe_5c32423d",
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7effd717_1e1c472d",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T21:29:19Z",
+      "side": 1,
+      "message": "Please do. A TODO and bug is probably better so we don\u0027t forget.",
+      "parentUuid": "81059de4_ade532c4",
       "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -483,6 +543,30 @@
       "side": 1,
       "message": "The reason why I included it was because it was mentioned here [1]:\nYour implementation must be kept behind its own feature flag until it works and is secure.  See chrome/common/extensions/feature_switch.h.\n\nI think it\u0027s actually better without it, would you be fine with me removing this whole feature_switch logic?\n\n[1] http://dev.chromium.org/developers/design-documents/extensions/proposed-changes/apis-under-development",
       "parentUuid": "f2be841e_21637dfd",
+      "range": {
+        "startLine": 71,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 43
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b52213a_130e5888",
+        "filename": "extensions/common/feature_switch.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-27T21:29:19Z",
+      "side": 1,
+      "message": "Since this isn\u0027t a full API, and rather a small addition to a private API, it\u0027s probably fine without it.",
+      "parentUuid": "01294220_c00b3bb1",
       "range": {
         "startLine": 71,
         "startChar": 12,
