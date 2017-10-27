@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d1e36f2_3b5a132c",
+        "filename": "chrome/browser/chromeos/extensions/extension_system_event_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-27T15:28:44Z",
+      "side": 1,
+      "message": "This is creating additional in-process dependencies on ash, which won\u0027t work in mustash. Could this browser code:\n1. Continue to monitor at the dbus level? Icky, especially since the connection to session_manager should probably live in the ash process eventually, but would probably work.\n2. Observe SessionControllerClient in the browser?\n3. Observe something else?",
+      "revId": "59cee12dc643db5677456f49ff6f6a4c61fd5e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1862f34_8634f7bb",
         "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2017-10-27T02:57:57Z",
       "side": 1,
       "message": "i am eternally grateful to whoever created this class.",
+      "revId": "59cee12dc643db5677456f49ff6f6a4c61fd5e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a1b08b_482ec565",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-27T15:28:44Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/09464c756f61675a1369bdc750a614d6689c76c9\n\n:-)",
+      "parentUuid": "c1862f34_8634f7bb",
       "revId": "59cee12dc643db5677456f49ff6f6a4c61fd5e54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
