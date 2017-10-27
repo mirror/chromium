@@ -16,11 +16,13 @@ namespace content {
 
 GpuClient::GpuClient(int render_process_id)
     : render_process_id_(render_process_id), weak_factory_(this) {
+  DLOG(ERROR) << "Making GpuClient " << this;
   bindings_.set_connection_error_handler(
       base::Bind(&GpuClient::OnError, base::Unretained(this)));
 }
 
 GpuClient::~GpuClient() {
+  DLOG(ERROR) << "Closing GpuClient " << this;
   bindings_.CloseAllBindings();
   OnError();
 }
