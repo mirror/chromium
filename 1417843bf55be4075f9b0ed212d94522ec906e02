@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "983a0200_b88cd00c",
+        "filename": "ui/base/ime/input_method_auralinux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-10-27T02:22:15Z",
+      "side": 1,
+      "message": "Asynchronously I believe (hence the need for the timer). I believe calling reset, blur, focus in that order generates two commits and they\u0027re both asynchronous, but I\u0027ll double-check.",
+      "parentUuid": "24319a3c_cd5761bf",
+      "revId": "1417843bf55be4075f9b0ed212d94522ec906e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b350e96e_0ff398a8",
         "filename": "ui/base/ime/input_method_auralinux.cc",
         "patchSetId": 2
