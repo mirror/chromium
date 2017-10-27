@@ -1,0 +1,262 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ef03b17_0ab77b47",
+        "filename": "device/u2f/u2f_apdu_command.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "command-\u003eset_p1(check_only ? kP1CheckOnly : kP1TupRequiredConsumed);",
+      "range": {
+        "startLine": 186,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 3
+      },
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c28ed0a_a807aec6",
+        "filename": "device/u2f/u2f_apdu_command.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "|check_only|",
+      "range": {
+        "startLine": 57,
+        "startChar": 63,
+        "endLine": 57,
+        "endChar": 73
+      },
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba279493_8c8bb429",
+        "filename": "device/u2f/u2f_apdu_command.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "Describe what effect this has on the interpretation of the command.",
+      "range": {
+        "startLine": 95,
+        "startChar": 27,
+        "endLine": 95,
+        "endChar": 46
+      },
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06252b92_dd027d1c",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "have",
+      "range": {
+        "startLine": 80,
+        "startChar": 30,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0b7410_c87bd0ac",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "base::ContainsValue(checked_device_id_list_, current_device_-\u003eGetId());",
+      "range": {
+        "startLine": 108,
+        "startChar": 9,
+        "endLine": 109,
+        "endChar": 38
+      },
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b8e315_c95e557c",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "I would write this as:\n\nif (is_duplicate_registration)\n  return_code \u003d U2fReturnCode::CONDITIONS_NOT_SATISFIED;\ncb_.Run(return_code, response_data);",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 48
+      },
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfbc9d9_df125772",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "Is this break intentional? It seems that this would cause the request to hang.",
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf183566_56ed9376",
+        "filename": "device/u2f/u2f_register.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "Use std::set. The table size is unlikely to be large enough for this to be higher performance and memory overhead is high. (See base/containers/README.md.)",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd239aa4_13509306",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "Is this test different from TestRegisterSuccess?",
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fdcd1ea_d83ea365",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "Except we expect TryWink to be called twice...",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 38
+      },
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93acc6e5_d09113e5",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "Put a comment down among the call expectations explaining why this is a duplicate key.",
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d37360_fa3835a4",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T22:11:54Z",
+      "side": 1,
+      "message": "Add \"using testing::_\" at the top of this file.",
+      "range": {
+        "startLine": 352,
+        "startChar": 48,
+        "endLine": 352,
+        "endChar": 58
+      },
+      "revId": "b2684a4c46ed660eaa0116b6fb8a584af6ddd2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
