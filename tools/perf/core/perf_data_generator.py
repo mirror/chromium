@@ -32,9 +32,12 @@ from core.sharding_map_generator import load_benchmark_sharding_map
 
 
 _UNSCHEDULED_TELEMETRY_BENCHMARKS = set([
+  'heap_profiling.disabled',
+  'heap_profiling.native',
+  'heap_profiling.pseudo',
   'speedometer-future',
-  'speedometer2-future'
-  ])
+  'speedometer2-future',
+])
 
 
 ANDROID_BOT_TO_DEVICE_TYPE_MAP = {
@@ -850,18 +853,25 @@ BENCHMARK_REF_BUILD_BLACKLIST = [
 
 
 
-def current_benchmarks():
-  benchmarks_dir = os.path.join(
-      path_util.GetChromiumSrcDir(), 'tools', 'perf', 'benchmarks')
+def find_benchmarks(benchmarks_dir):
   top_level_dir = os.path.dirname(benchmarks_dir)
-
-  all_benchmarks = []
+  benchmarks = []
 
   for b in discover.DiscoverClasses(
       benchmarks_dir, top_level_dir, benchmark_module.Benchmark,
       index_by_class_name=True).values():
     if not b.Name() in _UNSCHEDULED_TELEMETRY_BENCHMARKS:
-      all_benchmarks.append(b)
+      benchmarks.append(b)
+
+  return benchmarks
+
+
+def current_benchmarks():
+  root_dir = os.path.join(path_util.GetChromiumSrcDir(), 'tools', 'perf')
+
+  all_benchmarks = find_benchmarks(os.path.join(root_dir, 'benchmarks'))
+  all_benchmarks += find_benchmarks(
+      os.path.join(root_dir, 'contrib', 'heap_profiling'))
 
   return sorted(all_benchmarks, key=lambda b: b.Name())
 
@@ -1006,7 +1016,7 @@ NON_TELEMETRY_BENCHMARKS = {
     'cc_perftests': BenchmarkMetadata('enne@chromium.org', None, False),
     'gpu_perftests': BenchmarkMetadata('reveman@chromium.org', None, False),
     'tracing_perftests': BenchmarkMetadata(
-        'kkraynov@chromium.org, primiano@chromium.org', None, False),
+        'kraynov@chromium.org, primiano@chromium.org', None, False),
     'load_library_perf_tests': BenchmarkMetadata(None, None, False),
     'media_perftests': BenchmarkMetadata('crouleau@chromium.org', None, False),
     'performance_browser_tests': BenchmarkMetadata(
