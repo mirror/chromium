@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efd3c853_aade9337",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-27T16:41:29Z",
+      "side": 1,
+      "message": "The delegate cannot be instantiated in Incognito mode: https://cs.chromium.org/chromium/src/chrome/browser/background_fetch/background_fetch_delegate_factory.h?q\u003dbackground_fetch_delegate_fac\u0026sq\u003dpackage:chromium\u0026l\u003d28",
+      "parentUuid": "afdf5760_faf01fad",
+      "revId": "93dd82517c5f15830be58cc637aca759277b8258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5de382ef_0993ceb9",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "93dd82517c5f15830be58cc637aca759277b8258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6b29d9_a936368a",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-27T16:41:29Z",
+      "side": 1,
+      "message": "I explicitly only use these types in this function, so there\u0027s no need to add at a higher level. (With jumbo builds now, I\u0027m cautious not to add things to a wider scope than required due to the risk of conflicts).\n\nOfflineItemProgressUnit is only used once so the using directive would add more bloat. (Albeit hidden at the top if I took your suggestion).",
+      "parentUuid": "5de382ef_0993ceb9",
+      "revId": "93dd82517c5f15830be58cc637aca759277b8258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1d4f3afd_86bcb95a",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-27T16:41:29Z",
+      "side": 1,
+      "message": "Generally code in offline_item_collection is not re-entrant.\n\nThis code is not ever called from any of the OfflineContentProvider interface functions now. I\u0027ll add a comment to make it clear, that it should stay this way.",
+      "parentUuid": "4ddb625e_e5c50740",
+      "revId": "93dd82517c5f15830be58cc637aca759277b8258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fb0e2d0_3c2bdec8",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "93dd82517c5f15830be58cc637aca759277b8258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d27e54_804060c5",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-27T16:41:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fb0e2d0_3c2bdec8",
+      "revId": "93dd82517c5f15830be58cc637aca759277b8258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3eb06a5f_018fad8e",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-27T16:41:29Z",
+      "side": 1,
+      "message": "I agree (although possibly the comment below is in conflict with this approach).\n\nI will add a TODO now and address creating the Controller asynchronously in a follow up CL (but separate from any other DB work).",
+      "parentUuid": "acc5188f_a63d1073",
+      "revId": "93dd82517c5f15830be58cc637aca759277b8258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0841e985_096152de",
         "filename": "content/browser/background_fetch/background_fetch_context.cc",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "93dd82517c5f15830be58cc637aca759277b8258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56f4193_c111e4f1",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-27T16:41:29Z",
+      "side": 1,
+      "message": "It\u0027s just moving us towards where we want to get, where this data is supplied at start up time.\nWe could postpone but the interface already exists in the delegate, so I don\u0027t see the harm?",
+      "parentUuid": "0841e985_096152de",
+      "revId": "93dd82517c5f15830be58cc637aca759277b8258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e0b2163d_e7b5e0ee",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-27T16:41:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f59ac76c_9279e1e8",
+      "revId": "93dd82517c5f15830be58cc637aca759277b8258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd831708_bd4e2e56",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "93dd82517c5f15830be58cc637aca759277b8258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c71b6e5_9d3e953b",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-27T16:41:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd831708_bd4e2e56",
+      "revId": "93dd82517c5f15830be58cc637aca759277b8258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
