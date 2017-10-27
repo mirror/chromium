@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0661f860_5b3a49c6",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-27T09:02:16Z",
+      "side": 1,
+      "message": "On the current build the number of unmatched symbols is 0, so this is not spammy at all.\nWe would not be able to match a symbol if a return address falls into a range that doesn\u0027t map to any symbol in the instrumented library, which could happen, but currently doesn\u0027t.\n\nUpdated the warning nonetheless.",
+      "parentUuid": "caeda10f_64d73405",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 41
+      },
+      "revId": "37b478e2b60ba5d109a4860520b4876cc345842e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c369580_c7fcd734",
         "filename": "tools/cygprofile/process_profiles_unittest.py",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T12:56:24Z",
       "side": 1,
       "message": "I\u0027m confused, isn\u0027t it a namedtuple of 4?",
+      "range": {
+        "startLine": 19,
+        "startChar": 20,
+        "endLine": 19,
+        "endChar": 41
+      },
+      "revId": "37b478e2b60ba5d109a4860520b4876cc345842e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c4cb62_c9de7e20",
+        "filename": "tools/cygprofile/process_profiles_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-27T09:02:16Z",
+      "side": 1,
+      "message": "Yes, but the last one is unused in the test, so omitted it.",
+      "parentUuid": "6c369580_c7fcd734",
       "range": {
         "startLine": 19,
         "startChar": 20,
