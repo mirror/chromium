@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24319a3c_cd5761bf",
+        "filename": "ui/base/ime/input_method_auralinux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-10-27T02:19:12Z",
+      "side": 1,
+      "message": "This is to support the IME triggering commits synchronously when ResetContext().\nI think you\u0027d better to make IgnoreingNonKeyInput() can return false while is_sync_mode_ is true, so minimize the potential regressions.\nHowever, I am not sure about the Korean IME\u0027s behavior. Does it trigger commits synchronously or asynchronously?",
+      "parentUuid": "910f67d4_91ebc7e7",
+      "revId": "1417843bf55be4075f9b0ed212d94522ec906e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b350e96e_0ff398a8",
         "filename": "ui/base/ime/input_method_auralinux.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "1417843bf55be4075f9b0ed212d94522ec906e02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113daaf5_7804665d",
+        "filename": "ui/base/ime/input_method_auralinux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-10-27T02:19:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b350e96e_0ff398a8",
+      "revId": "1417843bf55be4075f9b0ed212d94522ec906e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
