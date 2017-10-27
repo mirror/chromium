@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5b420e59_164f8797",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:53:20Z",
+      "side": 1,
+      "message": "You bring up a good point. GetLoadingUrl() does look at few cases that won\u0027t be available if you don\u0027t implement that logic. Why not pass the result of GetLoadingUrl as a parameter into the new method you are adding? This way it will be always correct without the need to expose it as a public method, which is what I want to avoid.\n\nSince you call it in another location outside of commit, you can use the GetWebFrame code for that location.",
+      "parentUuid": "bc0a556c_b6515f5c",
+      "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc4558a_37903b98",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 15
