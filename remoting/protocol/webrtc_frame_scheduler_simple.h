@@ -10,6 +10,7 @@
 #include "base/containers/queue.h"
 #include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
+#include "remoting/base/descending_samples.h"
 #include "remoting/base/leaky_bucket.h"
 #include "remoting/base/running_samples.h"
 #include "remoting/codec/frame_processing_time_estimator.h"
@@ -43,26 +44,6 @@ class WebrtcFrameSchedulerSimple : public VideoChannelStateObserver,
                       HostFrameStats* frame_stats) override;
 
  private:
-  // Helper class used to calculate target encoder bitrate.
-  class EncoderBitrateFilter {
-   public:
-    EncoderBitrateFilter();
-    ~EncoderBitrateFilter();
-
-    void SetBandwidthEstimate(int bandwidth_kbps, base::TimeTicks now);
-    void SetFrameSize(webrtc::DesktopSize size);
-    int GetTargetBitrateKbps() const;
-
-   private:
-    void UpdateTargetBitrate();
-
-    base::queue<std::pair<base::TimeTicks, int>> bandwidth_samples_;
-    int bandwidth_samples_sum_ = 0;
-
-    int minimum_bitrate_ = 0;
-    int current_target_bitrate_ = 0;
-  };
-
   void ScheduleNextFrame();
   void CaptureNextFrame();
 
@@ -84,8 +65,6 @@ class WebrtcFrameSchedulerSimple : public VideoChannelStateObserver,
 
   LeakyBucket pacing_bucket_;
 
-  EncoderBitrateFilter encoder_bitrate_;
-
   // Set to true when a frame is being captured or encoded.
   bool frame_pending_ = false;
 
@@ -97,6 +76,8 @@ class WebrtcFrameSchedulerSimple : public VideoChannelStateObserver,
   // Accumulator for capture and encoder delay history, as well as the transit
   // time.
   FrameProcessingTimeEstimator processing_time_estimator_;
+  // Smooths the bandwidth estimation.
+  DescendingSamples bandwidth_kbps_;
 
   // Accumulator for updated region area in the previously encoded frames.
   RunningSamples updated_region_area_;

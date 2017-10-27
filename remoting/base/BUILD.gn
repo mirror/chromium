@@ -20,6 +20,8 @@ source_set("base") {
     "compound_buffer.h",
     "constants.cc",
     "constants.h",
+    "descending_samples.cc",
+    "descending_samples.h",
     "leaky_bucket.cc",
     "leaky_bucket.h",
     "name_value_map.h",
