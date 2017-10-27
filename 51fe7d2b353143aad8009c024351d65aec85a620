@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "998831f5_237337e5",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-27T18:52:12Z",
+      "side": 1,
+      "message": "\u003e can you change it to CanDeferInvalidation instead of DeferInvalidation?\n\n+1, for consistency.",
+      "parentUuid": "1d11776b_75fab8ae",
+      "revId": "51fe7d2b353143aad8009c024351d65aec85a620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "670f0773_7bb9bd1f",
         "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceObserver.h",
         "patchSetId": 3
