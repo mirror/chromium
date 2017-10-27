@@ -127,7 +127,7 @@ public class TileGridLayout extends FrameLayout {
         int paddingTop = getPaddingTop();
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
 
-        List<TileView> orderedChildren = getCorrectTileViewOrder(numColumns);
+        List<TileView> orderedChildren = getCorrectTileViewOrder(numRows);
 
         for (int i = 0; i < visibleChildCount; i++) {
             View child = orderedChildren.get(i);
@@ -158,21 +158,21 @@ public class TileGridLayout extends FrameLayout {
      * Returns a list of {@link TileView}s in the order that they should be displayed in the tile
      * grid. The {@link TileView}s in the list are the children of the {@link TileGridLayout}.
      *
-     * If there is a home page tile view, it is put on the first row of the grid. If its original
-     * position is on the first row, we keep that position, otherwise we put it as the last tile on
-     * the first row and shift all following tiles.
+     * If there is a home page tile view:
+     *  - pin it to the very first position if there is more than one row of tiles.
+     *  - keep its original position on the first row if it's the only row.
      *
-     * @param numColumns The number of columns that the tile grid will display.
+     * @param numRows The number of rows that the tile grid will display.
      * @return A list of {@link TileView}s in the order they should be displayed.
      */
-    private List<TileView> getCorrectTileViewOrder(int numColumns) {
+    private List<TileView> getCorrectTileViewOrder(int numRows) {
         List<TileView> orderedChildren = new ArrayList<>(getChildCount());
 
         for (int i = 0; i < getChildCount(); i++) {
             TileView view = (TileView) getChildAt(i);
 
-            if (view.getTileSource() == TileSource.HOMEPAGE && i > numColumns - 1) {
-                orderedChildren.add(numColumns - 1, view);
+            if (view.getTileSource() == TileSource.HOMEPAGE && numRows > 1) {
+                orderedChildren.add(0, view);
             } else {
                 orderedChildren.add(view);
             }
