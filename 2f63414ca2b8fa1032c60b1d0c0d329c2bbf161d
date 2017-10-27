@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac18ae2b_dd3c365b",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathMax.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-27T02:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa1312f8_c42df047",
+      "revId": "2f63414ca2b8fa1032c60b1d0c0d329c2bbf161d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52a1c9fb_5e8f012b",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathMin.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "2f63414ca2b8fa1032c60b1d0c0d329c2bbf161d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685c605b_66064eca",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathMin.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-27T02:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52a1c9fb_5e8f012b",
+      "revId": "2f63414ca2b8fa1032c60b1d0c0d329c2bbf161d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "45922c44_7b468f52",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathProduct.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-27T02:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba803d87_f273e7d6",
+      "revId": "2f63414ca2b8fa1032c60b1d0c0d329c2bbf161d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13ae9bdf_772da72c",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathSum.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "2f63414ca2b8fa1032c60b1d0c0d329c2bbf161d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f2b396_028e9add",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathSum.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-27T02:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13ae9bdf_772da72c",
+      "revId": "2f63414ca2b8fa1032c60b1d0c0d329c2bbf161d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
