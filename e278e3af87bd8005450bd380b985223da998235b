@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "987f87d9_951efd6a",
+        "filename": "ui/events/mojo/event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-27T02:21:02Z",
+      "side": 1,
+      "message": "We can probably unify TOUCH and PEN? (only EventPointerType is different between the two)",
+      "revId": "e278e3af87bd8005450bd380b985223da998235b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a31e84_ffbe3ca4",
+        "filename": "ui/events/mojo/event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-27T02:21:02Z",
+      "side": 1,
+      "message": "This is much more readable! Thanks!",
+      "revId": "e278e3af87bd8005450bd380b985223da998235b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
