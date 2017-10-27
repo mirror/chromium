@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1f9a08d_bf06f3ae",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-27T19:04:00Z",
+      "side": 1,
+      "message": "This seems a little unexpected to me, but maybe it works (for now)?\n\nThe dialog seems to be specifically about a process, so I\u0027m surprised to find that it just kills the current main frame process in Cancel().  That means it can\u0027t work for OOPIFs, and indeed, it doesn\u0027t seem to appear for a frozen OOPIF.\n\nIt also seems unexpected for the new process to commit and already be unresponsive, but maybe that\u0027s possible if the timing is just right?  If the new process is unresponsive here, does the TabUpdated() call below effectively change which URLs/titles are displayed in the dialog to reflect the new process rather than the old one?  Can we verify that?\n\nI feel like we could have much more confidence in this dialog (and fixing this stubborn bug) if we made the dialog specific to a given process, opening a separate dialog for the new process if it proves to be unresponsive.  That would also give us a chance to support OOPIFs, where we need to know which process is the unresponsive one and thus needs to be killed.\n\nThat said, that would be a bigger change, so if this fixes the bug and doesn\u0027t introduce new issues, maybe we can proceed with it for the short term.  We should definitely include a test so that we don\u0027t regress it with the followup refactor.",
+      "revId": "e95df474f76d2c8513a8e8c2a15181d1ac33f62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
