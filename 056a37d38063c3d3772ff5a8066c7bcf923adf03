@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2f39d79_41e8db70",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-27T18:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e648a55e_1b8b8e41",
+      "revId": "056a37d38063c3d3772ff5a8066c7bcf923adf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a325a978_c947d090",
         "filename": "content/common/page_state_serialization.cc",
         "patchSetId": 26
@@ -39,6 +57,30 @@
       "revId": "056a37d38063c3d3772ff5a8066c7bcf923adf03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322230f9_634f5b1b",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-27T18:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a325a978_c947d090",
+      "range": {
+        "startLine": 845,
+        "startChar": 6,
+        "endLine": 845,
+        "endChar": 22
+      },
+      "revId": "056a37d38063c3d3772ff5a8066c7bcf923adf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "be59b91c_0df529a9",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-27T18:02:30Z",
+      "side": 1,
+      "message": "The difference between the old code and the new code is that the mojo fields have default values, so it\u0027s safe(albeit redundant) to read regardless of the value of did_save_scroll_or_scale_state. \n\nI like this suggestion; don\u0027t worry about not noticing sooner. Done.",
+      "parentUuid": "2aef723b_924065f3",
+      "range": {
+        "startLine": 893,
+        "startChar": 0,
+        "endLine": 895,
+        "endChar": 0
+      },
+      "revId": "056a37d38063c3d3772ff5a8066c7bcf923adf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dc4a166_b1fd6542",
         "filename": "content/common/page_state_serialization_unittest.cc",
         "patchSetId": 26
@@ -85,6 +151,30 @@
       "revId": "056a37d38063c3d3772ff5a8066c7bcf923adf03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4bdfe36_c213a3b1",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-27T18:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dc4a166_b1fd6542",
+      "range": {
+        "startLine": 197,
+        "startChar": 36,
+        "endLine": 197,
+        "endChar": 47
+      },
+      "revId": "056a37d38063c3d3772ff5a8066c7bcf923adf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
