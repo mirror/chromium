@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f735097_bbe45afb",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-10-27T20:15:48Z",
+      "side": 1,
+      "message": "I\u0027m confused here (I might not understand this properly). If we set report_java_assert \u003d true then won\u0027t we be throwing uncaught exceptions in WebView? Shouldn\u0027t the default behavior be to do nothing? Maybe:\n\nif (BuildConfig.REPORT_JAVA_ASSERT) {\n  if (sAssertCallback !\u003d null) {\n    sAssertCallback.run(assertionError);\n  } else {\n    // Do nothing\n  }\n} else {\n  // asserts enabled for is_java_debug || dcheck_always_on, otherwise disabled.\n  throw assertionError\n}",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "92e47ec1f56095ff6004db5343406a6897285043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
