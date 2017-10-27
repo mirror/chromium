@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "07cc2bcd_c7ffe76a",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "SubmitFrameWithTextureHandle? You\u0027re not really supplying a MemoryBuffer.",
+      "range": {
+        "startLine": 187,
+        "startChar": 7,
+        "endLine": 187,
+        "endChar": 34
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcece908_9de86897",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -94,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "64cd01d3_d0fe1ca6",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "Seconded, especially since this is a separate thread where accidental direct calls or member access could lead to undefined behavior.",
+      "parentUuid": "ecfc681a_b7e0ae50",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 22
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fe30f66_8c608d6d",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -110,6 +157,29 @@
         "startChar": 2,
         "endLine": 171,
         "endChar": 20
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be1771e_f8a36ca6",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "Is it guaranteed that bounds changes apply immediately to the current frame? For WebVR, we needed to be able to apply the bounds change to a future frame to avoid glitches in the dynamic resolution test. If that\u0027s working as-is, maybe add a comment documenting the assumption?",
+      "range": {
+        "startLine": 179,
+        "startChar": 13,
+        "endLine": 179,
+        "endChar": 25
       },
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -221,6 +291,30 @@
       "side": 1,
       "message": "This is Valve\u0027s naming convention, so not sure how much we can/should do about it.",
       "parentUuid": "92280418_509bdcd3",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 4
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc41fac_512ad009",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "Add \"namespace openvr \u003d vr;\"? Not sure if that\u0027s really an improvement though.",
+      "parentUuid": "5e646870_6d2a4924",
       "range": {
         "startLine": 222,
         "startChar": 2,
@@ -441,6 +535,75 @@
     },
     {
       "key": {
+        "uuid": "22fe03bf_533fe112",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "Please put this in a constant with a name that identifies the unit. (milliseconds?)",
+      "range": {
+        "startLine": 27,
+        "startChar": 44,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c830a2c9_2e69efe2",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "This comment is confusing. Please don\u0027t use NOTREACHED() for a path that may well be executed in practice. Use a DLOG or similar if you just want to track how often this happens in debug builds.",
+      "range": {
+        "startLine": 29,
+        "startChar": 36,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99e1505_6cc191ac",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "\"if (!condition) .. else ..\" is an antipattern, can you swap the branches?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "173fca14_564ebd3e",
         "filename": "device/vr/windows/d3d11_texture_helper.cc",
         "patchSetId": 1
@@ -452,6 +615,114 @@
       "writtenOn": "2017-10-26T21:19:10Z",
       "side": 1,
       "message": "Silly question, maybe you\u0027ve already tried: Can we just pass in inverted Y values for the VRTextureBounds_t vMin and vMax?",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "965a1e4b_1c5a2d3b",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "Can you put this one-time initialization into separate methods? It looks cluttered to have it all inline here. Fancy version would be a FlippingCopier subclass with an appropriate constructor that takes care of this.",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57a3ad4_baf4e5e8",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "It looks like you\u0027re not releasing the mutex in the \"return false\" branches, is that ok? \n\nIf not, consider a scoped wrapper for the mutex similar to AutoLock that auto-releases in its destructor?",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381f354e_e8684901",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "add a DLOG here? This looks like it would be a somewhat mystifying error if it just silently draws nothing on mismatch.",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea925fb_d8c3be5d",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "This looks error-prone. Can you put all of these in a rendering_state struct that can be destroyed and reinitialized as a unit?",
+      "range": {
+        "startLine": 213,
+        "startChar": 38,
+        "endLine": 213,
+        "endChar": 44
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b071c4_db006980",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "Should this have a retry limit somewhere? It looks as if you\u0027d be trying the CreateDevice every frame if initialization is failing.",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3539127_7973e252",
+        "filename": "device/vr/windows/flip_pixel_shader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-27T18:20:28Z",
+      "side": 1,
+      "message": "Add a \"AUTOGENERATED, DO NOT EDIT\" warning and a sample command line how this file got generated? Also, maybe add a matching comment to the source file that edits won\u0027t take effect unless the binary representation gets refreshed. (This may be obvious to Windows developers, but could be a bit of a trap for others.)",
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
