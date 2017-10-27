@@ -22,6 +22,30 @@
       "revId": "1efe90b9b53485682546dc05c63afae5536d6836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc43cae_83b332b1",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-10-27T18:03:30Z",
+      "side": 1,
+      "message": "As part of a broader re-factor to better follow the Fetch spec steps (do all reports, then all upgrades, then all enforcemtn), I\u0027ve added a check to make sure it only upgrades at-most once (I\u0027m not sure if trying to upgrade twice would necessarily be problematic, but better to avoid potential complications).\n\nIf you have a chance, could you check the latest version and let me know what you think?",
+      "parentUuid": "6acd047c_a2292776",
+      "range": {
+        "startLine": 1340,
+        "startChar": 27,
+        "endLine": 1340,
+        "endChar": 34
+      },
+      "revId": "1efe90b9b53485682546dc05c63afae5536d6836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
