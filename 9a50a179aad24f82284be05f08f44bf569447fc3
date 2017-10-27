@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08385661_cacad09d",
+        "filename": "content/browser/media/audio_stream_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T12:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d94c758_850a8715",
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac290450_b802602a",
         "filename": "content/browser/media/audio_stream_monitor.h",
         "patchSetId": 1
@@ -150,6 +168,30 @@
       "writtenOn": "2017-10-26T03:12:57Z",
       "side": 1,
       "message": "IMHO, this should be \"float power_dbfs\" instead of a boolean. Two reasons:\n\n1. The threshold that determines whether audio is loud enough to turn the UI indicator on/off should live in content (or chrome) code, not in media code.\n\n2. There are actually other use cases where it will be good to know the power level. My team, for Cast Mirroring, has an open item to add logging of this information to user feedback reports; so that we can determine where break-down in the system is occurring.",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "9a50a179aad24f82284be05f08f44bf569447fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ce30e0_1da849f4",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T12:07:05Z",
+      "side": 1,
+      "message": "The argument for passing a bool only when the stream becomes audible/not audible is to avoid sending a stream of power-level updates at high frequency via Mojo IPC from the audio process to the browser, as this is understood to be significantly more expensive than just invoking a callback in the same process, as is currently done.\n\nWhen the time comes to support your new feature we can modify the Observer interface so that it reports power level separately when that feature is in use. WDYT?",
+      "parentUuid": "fe1b8b53_191fb83f",
       "range": {
         "startLine": 49,
         "startChar": 24,
