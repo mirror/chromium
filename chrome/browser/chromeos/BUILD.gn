@@ -709,6 +709,8 @@ source_set("chromeos") {
     "file_system_provider/service.h",
     "file_system_provider/service_factory.cc",
     "file_system_provider/service_factory.h",
+    "file_system_provider/smb_provided_file_system.cc",
+    "file_system_provider/smb_provided_file_system.h",
     "file_system_provider/throttled_file_system.cc",
     "file_system_provider/throttled_file_system.h",
     "file_system_provider/watcher.cc",
