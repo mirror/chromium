@@ -34,6 +34,24 @@
       "revId": "e95df474f76d2c8513a8e8c2a15181d1ac33f62c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530bb41c_70538dcf",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-27T21:02:48Z",
+      "side": 1,
+      "message": "Yes, I think we might want to think more carefully about whether this dialog should appear for an OOPIF, and how it should look like in that case.  Currently it says \"Page unresponsive\", and and we\u0027d at least need to change \"Page\" to \"Subframe\" or something like that for a hung OOPIF.  It also isn\u0027t clear that the user cares, since the main page is still functional.  On the other hand, IIUC, the hung dialog comes up after you try to interact with the hung widget, so if the user was trying to do something inside the OOPIF, maybe it does make sense to bring this dialog up, allow the user to kill the OOPIF process, and then reload it via right-click?  I don\u0027t know if most users will understand this flow though.\n\nIt does seem like a bigger change, so maybe we could file a bug for it and follow up separately?\n\nA separate question is: given that a hung OOPIF can\u0027t bring up this dialog, there\u0027s no way hung OOPIFs could contribute to these renderer hang crash reports, right?",
+      "parentUuid": "a9c89ee2_c0159fb6",
+      "revId": "e95df474f76d2c8513a8e8c2a15181d1ac33f62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
