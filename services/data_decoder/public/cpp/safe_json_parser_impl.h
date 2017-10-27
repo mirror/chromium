@@ -27,7 +27,14 @@ namespace data_decoder {
 
 class SafeJsonParserImpl : public SafeJsonParser {
  public:
+  // The RunMode reflects whether the parsing should happen in its own process
+  // (ISOLATED) or whether it can run in a process shared with other unrelated
+  // operations (SHARED), such as image decoding, other JSON parsing.
+  // Use SHARED when the JSON parsed is not sensitive.
+  enum RunMode { ISOLATED = 0, SHARED };
+
   SafeJsonParserImpl(service_manager::Connector* connector,
+                     RunMode run_mode,
                      const std::string& unsafe_json,
                      const SuccessCallback& success_callback,
                      const ErrorCallback& error_callback);

@@ -6,21 +6,38 @@
 
 #include "base/callback.h"
 #include "base/sequenced_task_runner.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
+#include "crypto/random.h"
 #include "services/data_decoder/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/interfaces/constants.mojom.h"
 
 namespace data_decoder {
 
 SafeJsonParserImpl::SafeJsonParserImpl(service_manager::Connector* connector,
+                                       RunMode run_mode,
                                        const std::string& unsafe_json,
                                        const SuccessCallback& success_callback,
                                        const ErrorCallback& error_callback)
     : unsafe_json_(unsafe_json),
       success_callback_(success_callback),
       error_callback_(error_callback) {
-  connector->BindInterface(mojom::kServiceName, &json_parser_ptr_);
+  if (run_mode == RunMode::SHARED) {
+    connector->BindInterface(mojom::kServiceName, &json_parser_ptr_);
+    return;
+  }
+  DCHECK(run_mode == RunMode::ISOLATED);
+  // Use a random instance ID to guarantee the connection is to a new service
+  // (running in its own process).
+  constexpr size_t random_data_size = 8;
+  uint8_t random_data[random_data_size];
+  crypto::RandBytes(&random_data, random_data_size);
+  std::string instance_id = base::HexEncode(random_data, random_data_size);
+  service_manager::Identity identity(
+      mojom::kServiceName, service_manager::mojom::kInheritUserID, instance_id);
+  connector->BindInterface(identity, &json_parser_ptr_);
 }
 
 SafeJsonParserImpl::~SafeJsonParserImpl() = default;

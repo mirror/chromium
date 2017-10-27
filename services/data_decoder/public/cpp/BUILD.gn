@@ -22,6 +22,10 @@ source_set("cpp") {
     "//services/service_manager/public/cpp",
   ]
 
+  deps = [
+    "//crypto/",
+  ]
+
   if (is_android) {
     sources -= [ "json_sanitizer.cc" ]
     sources += [
