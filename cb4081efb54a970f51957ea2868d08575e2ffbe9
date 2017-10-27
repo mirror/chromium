@@ -52,6 +52,24 @@
       "revId": "cb4081efb54a970f51957ea2868d08575e2ffbe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c29b0d3_18dc58f3",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-27T18:29:44Z",
+      "side": 1,
+      "message": "This is intended to be temporary, to work around the underlying issue that MainController needs to directly present every settings screen so that it can maintain some internal bookkeeping.\n\nWe intend to remove that responsibility from MainController in a future CL, at which point this dispatcher command can be deleted entirely, because the caller can just present settings directly.\n\nEd, is there a bug # for removing the settings code from MainController?",
+      "parentUuid": "21c9c05b_6d22f21f",
+      "revId": "cb4081efb54a970f51957ea2868d08575e2ffbe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
