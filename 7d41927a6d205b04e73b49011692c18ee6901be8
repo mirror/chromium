@@ -16,6 +16,24 @@
       "revId": "7d41927a6d205b04e73b49011692c18ee6901be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec4226d_ec2b8875",
+        "filename": "testing/buildbot/chromium.clang.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5513,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-27T20:52:00Z",
+      "side": 1,
+      "message": "I dunno, maybe the android port also uses bpf? It looks like it\u0027s testing things related to bpf.\nhttps://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Fchromium.android%2FAndroid_N5X_Swarm_Builder%2F16287%2F%2B%2Frecipes%2Fsteps%2Fsandbox_linux_unittests_on_Android%2F0%2Fstdout",
+      "parentUuid": "67b9fdbf_58cf5f5f",
+      "revId": "7d41927a6d205b04e73b49011692c18ee6901be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
