@@ -31,6 +31,7 @@
 #include "ios/public/provider/chrome/browser/voice/audio_session_controller.h"
 #include "ios/public/provider/chrome/browser/voice/voice_search_provider.h"
 #include "ios/web/public/browser_url_rewriter.h"
+#include "ios/web/public/features.h"
 #include "ios/web/public/user_agent.h"
 #include "net/http/http_util.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -195,5 +196,5 @@ void ChromeWebClient::AllowCertificateError(
 }
 
 bool ChromeWebClient::IsSlimNavigationManagerEnabled() const {
-  return experimental_flags::IsSlimNavigationManagerEnabled();
+  return base::FeatureList::IsEnabled(web::features::kSlimNavigationManager);
 }
