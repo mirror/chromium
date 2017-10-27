@@ -246,36 +246,58 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
       const wallpaper::WallpaperFilesId& wallpaper_files_id,
       const std::string& file);
 
-  // Saves custom wallpaper to file, post task to generate thumbnail and updates
-  // local state preferences. If |update_wallpaper| is false, don't change
-  // wallpaper but only update cache.
+  // Sets wallpaper from policy or from a local file. Saves the custom wallpaper
+  // to file, posts task to generate thumbnail and updates local state. If
+  // |show_wallpaper| is false, don't change wallpaper but only update cache.
   void SetCustomWallpaper(const AccountId& account_id,
                           const wallpaper::WallpaperFilesId& wallpaper_files_id,
                           const std::string& file,
                           wallpaper::WallpaperLayout layout,
                           wallpaper::WallpaperType type,
                           const gfx::ImageSkia& image,
-                          bool update_wallpaper);
+                          bool show_wallpaper);
 
-  // Sets default wallpaper. |update_wallpaper| indicates whether to actually
-  // change the wallpaper, or only update cache.
-  void SetDefaultWallpaper(const AccountId& account_id, bool update_wallpaper);
+  // Sets wallpaper from the wallpaper picker selection. If |show_wallpaper|
+  // is false, don't change wallpaper but only update cache.
+  void SetOnlineWallpaper(const AccountId& account_id,
+                          const gfx::ImageSkia& image,
+                          const std::string& url,
+                          wallpaper::WallpaperLayout layout,
+                          bool show_wallpaper);
 
-  // Sets |account_id|'s wallpaper.
-  void SetUserWallpaper(const AccountId& account_id);
+  // Called from CustomizationDocument. |resized_directory| is the directory
+  // where resized versions are stored and it must be writable.
+  void SetCustomizedDefaultWallpaper(const GURL& wallpaper_url,
+                                     const base::FilePath& downloaded_file,
+                                     const base::FilePath& resized_directory);
 
+  // Sets |account_id|'s wallpaper, which is determined in the following order:
+  // 1) Use device policy wallpaper if it exists AND we are at the login screen.
+  // 2) Use user policy wallpaper if it exists.
+  // 3) Use the wallpaper set by the user (either by |SetOnlineWallpaper| or
+  //    |SetCustomWallpaper|), if any.
+  // 4) Use the default wallpaper of this user. Note: different user types may
+  //    have different default wallpapers.
+  void ShowUserWallpaper(const AccountId& account_id);
+
+  // Mainly used by the gaia-signin UI. Signin wallpaper is considered either as
+  // the device policy wallpaper or the default wallpaper, i.e. it bypasses 2)
+  // and 3) of |SetUserWallpaper|.
+  void ShowSigninWallpaper(const AccountId& account_id);
+
+  // Deletes the wallpaper set for the user, if any. If |show_default_wallpaper|
+  // is true, immediately change the wallpaper to default, otherwise keep the
+  // current wallpaper even though the underlying file has been deleted.
+  void DeleteWallpaper(const AccountId& account_id,
+                       bool show_default_wallpaper);
+
+  // TODO(crbug.com/776464): Make this private. WallpaperInfo should be an
+  // internal concept.
   // Sets wallpaper info for |account_id| and saves it to local state if
   // |is_persistent| is true.
   void SetUserWallpaperInfo(const AccountId& account_id,
                             const wallpaper::WallpaperInfo& info,
                             bool is_persistent);
-
-  // Sets wallpaper to |image|. If |update_wallpaper| is false, skip change
-  // wallpaper but only update cache.
-  void SetWallpaperFromImageSkia(const AccountId& account_id,
-                                 const gfx::ImageSkia& image,
-                                 wallpaper::WallpaperLayout layout,
-                                 bool update_wallpaper);
 
   // Initializes wallpaper. If logged in, loads user's wallpaper. If not logged
   // in, uses a solid color wallpaper. If logged in as a stub user, uses an
@@ -306,9 +328,6 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
   // wallpaper of logged in user.
   void EnsureLoggedInUserWallpaperLoaded();
 
-  // Removes all |account_id| related wallpaper info and saved wallpapers.
-  void RemoveUserWallpaperInfo(const AccountId& account_id);
-
   // Called when the policy-set wallpaper has been fetched.  Initiates decoding
   // of the JPEG |data| with a callback to SetPolicyControlledWallpaper().
   void OnPolicyFetched(const std::string& policy,
@@ -321,10 +340,6 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
   // Ruturns files identifier for the |account_id|.
   wallpaper::WallpaperFilesId GetFilesId(const AccountId& account_id) const;
 
-  // If the device is enterprise managed and the device wallpaper policy exists,
-  // set the device wallpaper as the login screen wallpaper.
-  bool SetDeviceWallpaperIfApplicable(const AccountId& account_id);
-
   // Returns whether a wallpaper policy is enforced for |account_id|.
   bool IsPolicyControlled(const AccountId& account_id) const;
 
@@ -334,13 +349,6 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
 
   // Called when the wallpaper policy has been cleared for |account_id|.
   void OnPolicyCleared(const std::string& policy, const AccountId& account_id);
-
-  // This is called from CustomizationDocument.
-  // |resized_directory| is the directory where resized versions are stored and
-  // must be writable.
-  void SetCustomizedDefaultWallpaper(const GURL& wallpaper_url,
-                                     const base::FilePath& downloaded_file,
-                                     const base::FilePath& resized_directory);
 
   // Adds given observer to the list.
   void AddObserver(Observer* observer);
@@ -416,11 +424,17 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
       gfx::ImageSkia* small_wallpaper_image,
       gfx::ImageSkia* large_wallpaper_image);
 
-  // Initialize wallpaper for the specified user to default and saves this
-  // settings in local state. Note if the device policy controlled wallpaper
-  // exists, use the device wallpaper as the default wallpaper.
-  void InitInitialUserWallpaper(const AccountId& account_id,
-                                bool is_persistent);
+  // Initialize wallpaper info for the user to default and saves the settings
+  // in local state. Note if the device policy controlled wallpaper exists, use
+  // the device wallpaper as the default wallpaper.
+  void InitializeUserWallpaperInfo(const AccountId& account_id);
+
+  // Removes all |account_id| related wallpaper info and saved wallpapers.
+  void RemoveUserWallpaperInfo(const AccountId& account_id);
+
+  // If the device is enterprise managed and the device wallpaper policy exists,
+  // set the device wallpaper as the login screen wallpaper.
+  bool SetDeviceWallpaperIfApplicable(const AccountId& account_id);
 
   // Gets encoded wallpaper from cache. Returns true if success.
   bool GetWallpaperFromCache(const AccountId& account_id,
