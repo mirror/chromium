@@ -205,6 +205,10 @@ class ProfileIOData {
     return &incognito_availibility_pref_;
   }
 
+  BooleanPrefMember* account_consistency_required() const {
+    return &account_consistency_required_pref_;
+  }
+
   chrome_browser_net::LoadingPredictorObserver* loading_predictor_observer()
       const {
     return loading_predictor_observer_.get();
@@ -555,6 +559,7 @@ class ProfileIOData {
   mutable StringPrefMember allowed_domains_for_apps_;
   mutable IntegerPrefMember network_prediction_options_;
   mutable IntegerPrefMember incognito_availibility_pref_;
+  mutable BooleanPrefMember account_consistency_required_pref_;
 
   BooleanPrefMember enable_metrics_;
 

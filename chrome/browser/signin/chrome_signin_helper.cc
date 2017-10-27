@@ -383,6 +383,9 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
       IncognitoModePrefs::ArePlatformParentalControlsEnabled()) {
     profile_mode_mask |= PROFILE_MODE_INCOGNITO_DISABLED;
   }
+  if (io_data->account_consistency_required()->GetValue()) {
+    profile_mode_mask |= PROFILE_MODE_ADD_ACCOUNT_DISABLED;
+  }
 
   std::string account_id = io_data->google_services_account_id()->GetValue();
 
@@ -401,9 +404,9 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
     DiceURLRequestUserData::AttachToRequest(request);
 
   // Mirror header:
-  AppendOrRemoveMirrorRequestHeader(request, redirect_url, account_id,
-                                    io_data->GetCookieSettings(),
-                                    profile_mode_mask);
+  AppendOrRemoveMirrorRequestHeader(
+      request, redirect_url, account_id, io_data->GetCookieSettings(),
+      io_data->account_consistency_required()->GetValue(), profile_mode_mask);
 }
 
 void ProcessAccountConsistencyResponseHeaders(net::URLRequest* request,

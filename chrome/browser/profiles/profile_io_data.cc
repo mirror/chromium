@@ -541,6 +541,10 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
       prefs::kIncognitoModeAvailability, pref_service);
   incognito_availibility_pref_.MoveToThread(io_task_runner);
 
+  account_consistency_required_pref_.Init(prefs::kAccountConsistencyRequired,
+                                          pref_service);
+  account_consistency_required_pref_.MoveToThread(io_task_runner);
+
   // We need to make sure that content initializes its own data structures that
   // are associated with each ResourceContext because we might post this
   // object to the IO thread after this function.
@@ -1369,6 +1373,7 @@ void ProfileIOData::ShutdownOnUIThread(
   if (chrome_http_user_agent_settings_)
     chrome_http_user_agent_settings_->CleanupOnUIThread();
   incognito_availibility_pref_.Destroy();
+  account_consistency_required_pref_.Destroy();
 
   if (!context_getters->empty()) {
     if (BrowserThread::IsMessageLoopValid(BrowserThread::IO)) {

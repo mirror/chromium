@@ -39,12 +39,22 @@ class ChromeConnectedHeaderHelper : public SigninHeaderHelper {
                                  const std::string& account_id,
                                  int profile_mode_mask);
 
+  // Sets whether account consistency is required.
+  void SetAccountConsistencyRequired(bool account_consistency_required);
+
  private:
+  // Whether account consistency is required for this account (e.g. because it's
+  // a child account).
+  bool account_consistency_required_ = false;
+
   // Returns whether the URL is eligible for the Gaia ID parameter.
   bool IsUrlEligibleToIncludeGaiaId(const GURL& url, bool is_header_request);
 
   // Returns whether the URL has a Google Drive origin.
   bool IsDriveOrigin(const GURL& url);
+
+  // Returns whether account consistency should be requested using the header.
+  bool ShouldRequestAccountConsistency();
 
   // SigninHeaderHelper implementation:
   bool IsUrlEligibleForRequestHeader(const GURL& url) override;

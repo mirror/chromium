@@ -893,6 +893,7 @@ extern const char kPrefetchUsageMixedCount[];
 #endif
 
 extern const char kMediaEngagementSchemaVersion[];
+extern const char kAccountConsistencyRequired[];
 
 }  // namespace prefs
 

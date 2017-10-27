@@ -107,6 +107,7 @@ bool ChildAccountService::IsChildAccountDetectionEnabled() {
 void ChildAccountService::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
   registry->RegisterBooleanPref(prefs::kChildAccountStatusKnown, false);
+  registry->RegisterBooleanPref(prefs::kAccountConsistencyRequired, false);
 }
 
 void ChildAccountService::Init() {
@@ -255,6 +256,8 @@ void ChildAccountService::SetIsChildAccount(bool is_child_account) {
     }
   }
   profile_->GetPrefs()->SetBoolean(prefs::kChildAccountStatusKnown, true);
+  profile_->GetPrefs()->SetBoolean(prefs::kAccountConsistencyRequired,
+                                   is_child_account);
 
   for (const auto& callback : status_received_callback_list_)
     callback.Run();

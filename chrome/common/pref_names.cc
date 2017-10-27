@@ -2495,4 +2495,7 @@ const char kPrefetchUsageMixedCount[] = "offline_pages.prefetch_mixed_count";
 // will be wiped.
 const char kMediaEngagementSchemaVersion[] = "media.engagement.schema_version";
 
+// Stores whether account consistency is required.
+const char kAccountConsistencyRequired[] = "account_consistency.required";
+
 }  // namespace prefs
