@@ -925,9 +925,8 @@ void ResourceDispatcherHostImpl::UpdateRequestForTransfer(
   // ResourceHandlers should always get state related to the request from the
   // ResourceRequestInfo rather than caching it locally.  This lets us update
   // the info object when a transfer occurs.
-  info->UpdateForTransfer(route_id, request_data.render_frame_id,
-                          request_data.origin_pid, request_id, requester_info,
-                          std::move(mojo_request),
+  info->UpdateForTransfer(route_id, request_data.render_frame_id, request_id,
+                          requester_info, std::move(mojo_request),
                           std::move(url_loader_client));
 
   // Update maps that used the old IDs, if necessary.  Some transfers in tests
@@ -1355,7 +1354,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   ResourceRequestInfoImpl* extra_info = new ResourceRequestInfoImpl(
       requester_info, route_id,
       -1,  // frame_tree_node_id
-      request_data.origin_pid, request_id, request_data.render_frame_id,
+      request_data.plugin_child_id, request_id, request_data.render_frame_id,
       request_data.is_main_frame, request_data.resource_type,
       request_data.transition_type, request_data.should_replace_current_entry,
       false,  // is download
@@ -1699,7 +1698,8 @@ ResourceRequestInfoImpl* ResourceDispatcherHostImpl::CreateRequestInfo(
       ResourceRequesterInfo::CreateForDownloadOrPageSave(child_id),
       render_view_route_id,
       -1,  // frame_tree_node_id
-      0, MakeRequestID(), render_frame_route_id,
+      0,   // plugin_child_id
+      MakeRequestID(), render_frame_route_id,
       false,  // is_main_frame
       RESOURCE_TYPE_SUB_RESOURCE, ui::PAGE_TRANSITION_LINK,
       false,     // should_replace_current_entry
@@ -2121,7 +2121,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
               : scoped_refptr<ServiceWorkerContextWrapper>()),
       -1,  // route_id
       info.frame_tree_node_id,
-      -1,  // request_data.origin_pid,
+      0,  // plugin_child_id
       MakeRequestID(),
       -1,  // request_data.render_frame_id,
       info.is_main_frame, resource_type, info.common_params.transition,
