@@ -21,64 +21,53 @@
 
 namespace content {
 
-namespace {
+AppCacheSubresourceURLFactory::SubresourceLoader::SubresourceLoader(
+    mojom::URLLoaderRequest url_loader_request,
+    int32_t routing_id,
+    int32_t request_id,
+    uint32_t options,
+    const ResourceRequest& request,
+    mojom::URLLoaderClientPtr client,
+    const net::MutableNetworkTrafficAnnotationTag& annotation,
+    base::WeakPtr<AppCacheHost> appcache_host,
+    scoped_refptr<URLLoaderFactoryGetter> net_factory_getter)
+    : remote_binding_(this, std::move(url_loader_request)),
+      remote_client_(std::move(client)),
+      request_(request),
+      routing_id_(routing_id),
+      request_id_(request_id),
+      options_(options),
+      traffic_annotation_(annotation),
+      network_loader_factory_(std::move(net_factory_getter)),
+      local_client_binding_(this),
+      host_(appcache_host),
+      weak_factory_(this) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  remote_binding_.set_connection_error_handler(base::Bind(
+      &SubresourceLoader::OnConnectionError, base::Unretained(this)));
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&SubresourceLoader::Start, weak_factory_.GetWeakPtr()));
+}
 
-// Max number of http redirects to follow. The Fetch spec says: "If request's
-// redirect count is twenty, return a network error."
-// https://fetch.spec.whatwg.org/#http-redirect-fetch
-const int kMaxRedirects = 20;
+AppCacheSubresourceURLFactory::SubresourceLoader::~SubresourceLoader() {}
 
-// URLLoader implementation that utilizes either a network loader
-// or an appcache loader depending on where the resources should
-// be loaded from. This class binds to the remote client in the
-// renderer and internally creates one or the other kind of loader.
-// The URLLoader and URLLoaderClient interfaces are proxied between
-// the remote consumer and the chosen internal loader.
-//
-// This class owns and scopes the lifetime of the AppCacheRequestHandler
-// for the duration of a subresource load.
-class SubresourceLoader : public mojom::URLLoader,
-                          public mojom::URLLoaderClient {
- public:
-  SubresourceLoader(mojom::URLLoaderRequest url_loader_request,
-                    int32_t routing_id,
-                    int32_t request_id,
-                    uint32_t options,
-                    const ResourceRequest& request,
-                    mojom::URLLoaderClientPtr client,
-                    const net::MutableNetworkTrafficAnnotationTag& annotation,
-                    base::WeakPtr<AppCacheHost> appcache_host,
-                    scoped_refptr<URLLoaderFactoryGetter> net_factory_getter)
-      : remote_binding_(this, std::move(url_loader_request)),
-        remote_client_(std::move(client)),
-        request_(request),
-        routing_id_(routing_id),
-        request_id_(request_id),
-        options_(options),
-        traffic_annotation_(annotation),
-        network_loader_factory_(std::move(net_factory_getter)),
-        local_client_binding_(this),
-        host_(appcache_host),
-        weak_factory_(this) {
-    DCHECK_CURRENTLY_ON(BrowserThread::IO);
-    remote_binding_.set_connection_error_handler(base::Bind(
-        &SubresourceLoader::OnConnectionError, base::Unretained(this)));
-    base::SequencedTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::BindOnce(&SubresourceLoader::Start, weak_factory_.GetWeakPtr()));
+void AppCacheSubresourceURLFactory::SubresourceLoader::SetHandlerForTesting(
+    std::unique_ptr<AppCacheRequestHandler> handler) {
+  handler_ = std::move(handler);
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::OnConnectionError() {
+  delete this;
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::Start() {
+  if (!host_) {
+    remote_client_->OnComplete(
+        ResourceRequestCompletionStatus(net::ERR_FAILED));
+    return;
   }
-
- private:
-  ~SubresourceLoader() override {}
-
-  void OnConnectionError() { delete this; }
-
-  void Start() {
-    if (!host_) {
-      remote_client_->OnComplete(
-          ResourceRequestCompletionStatus(net::ERR_FAILED));
-      return;
-    }
+  if (!handler_) {  // It may be non-null if SetHandlerForTesting was called.
     handler_ = host_->CreateRequestHandler(
         AppCacheURLLoaderRequest::Create(request_), request_.resource_type,
         request_.should_reset_appcache);
@@ -86,225 +75,207 @@ class SubresourceLoader : public mojom::URLLoader,
       CreateAndStartNetworkLoader();
       return;
     }
-    handler_->MaybeCreateSubresourceLoader(
-        request_, base::BindOnce(&SubresourceLoader::ContinueStart,
-                                 weak_factory_.GetWeakPtr()));
+  }
+  handler_->MaybeCreateSubresourceLoader(
+      request_, base::BindOnce(&SubresourceLoader::ContinueStart,
+                               weak_factory_.GetWeakPtr()));
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::ContinueStart(
+    StartLoaderCallback start_function) {
+  if (start_function)
+    CreateAndStartAppCacheLoader(std::move(start_function));
+  else
+    CreateAndStartNetworkLoader();
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::
+    CreateAndStartAppCacheLoader(StartLoaderCallback start_function) {
+  DCHECK(!appcache_loader_) << "only expected to be called onced";
+  DCHECK(start_function);
+
+  // Disconnect from the network loader first.
+  local_client_binding_.Close();
+  network_loader_ = nullptr;
+
+  mojom::URLLoaderClientPtr client_ptr;
+  local_client_binding_.Bind(mojo::MakeRequest(&client_ptr));
+  std::move(start_function)
+      .Run(mojo::MakeRequest(&appcache_loader_), std::move(client_ptr));
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::
+    CreateAndStartNetworkLoader() {
+  DCHECK(!appcache_loader_);
+  mojom::URLLoaderClientPtr client_ptr;
+  local_client_binding_.Bind(mojo::MakeRequest(&client_ptr));
+  network_loader_factory_->GetNetworkFactory()->get()->CreateLoaderAndStart(
+      mojo::MakeRequest(&network_loader_), routing_id_, request_id_, options_,
+      request_, std::move(client_ptr), traffic_annotation_);
+  if (has_set_priority_)
+    network_loader_->SetPriority(priority_, intra_priority_value_);
+  if (has_paused_reading_)
+    network_loader_->PauseReadingBodyFromNet();
+}
+
+// mojom::URLLoader implementation
+// Called by the remote client in the renderer.
+void AppCacheSubresourceURLFactory::SubresourceLoader::FollowRedirect() {
+  if (!network_loader_)
+    return;  // This is a bad message
+  if (!handler_) {
+    network_loader_->FollowRedirect();
+    return;
+  }
+  DCHECK(network_loader_);
+  DCHECK(!appcache_loader_);
+  handler_->MaybeFollowSubresourceRedirect(
+      redirect_info_, base::BindOnce(&SubresourceLoader::ContinueFollowRedirect,
+                                     weak_factory_.GetWeakPtr()));
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::ContinueFollowRedirect(
+    StartLoaderCallback start_function) {
+  if (start_function)
+    CreateAndStartAppCacheLoader(std::move(start_function));
+  else
+    network_loader_->FollowRedirect();
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::SetPriority(
+    net::RequestPriority priority,
+    int32_t intra_priority_value) {
+  has_set_priority_ = true;
+  priority_ = priority;
+  intra_priority_value_ = intra_priority_value;
+  if (network_loader_)
+    network_loader_->SetPriority(priority, intra_priority_value);
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::
+    PauseReadingBodyFromNet() {
+  has_paused_reading_ = true;
+  if (network_loader_)
+    network_loader_->PauseReadingBodyFromNet();
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::
+    ResumeReadingBodyFromNet() {
+  has_paused_reading_ = false;
+  if (network_loader_)
+    network_loader_->ResumeReadingBodyFromNet();
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::OnReceiveResponse(
+    const ResourceResponseHead& response_head,
+    const base::Optional<net::SSLInfo>& ssl_info,
+    mojom::DownloadedTempFilePtr downloaded_file) {
+  // Don't MaybeFallback for appcache produced responses.
+  if (appcache_loader_ || !handler_) {
+    remote_client_->OnReceiveResponse(response_head, ssl_info,
+                                      std::move(downloaded_file));
+    return;
   }
 
-  void ContinueStart(StartLoaderCallback start_function) {
-    if (start_function)
-      CreateAndStartAppCacheLoader(std::move(start_function));
-    else
-      CreateAndStartNetworkLoader();
+  did_receive_network_response_ = true;
+  handler_->MaybeFallbackForSubresourceResponse(
+      response_head,
+      base::BindOnce(&SubresourceLoader::ContinueOnReceiveResponse,
+                     weak_factory_.GetWeakPtr(), response_head, ssl_info,
+                     std::move(downloaded_file)));
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::
+    ContinueOnReceiveResponse(const ResourceResponseHead& response_head,
+                              const base::Optional<net::SSLInfo>& ssl_info,
+                              mojom::DownloadedTempFilePtr downloaded_file,
+                              StartLoaderCallback start_function) {
+  if (start_function) {
+    CreateAndStartAppCacheLoader(std::move(start_function));
+  } else {
+    remote_client_->OnReceiveResponse(response_head, ssl_info,
+                                      std::move(downloaded_file));
   }
+}
 
-  void CreateAndStartAppCacheLoader(StartLoaderCallback start_function) {
-    DCHECK(!appcache_loader_) << "only expected to be called onced";
-    DCHECK(start_function);
-
-    // Disconnect from the network loader first.
-    local_client_binding_.Close();
-    network_loader_ = nullptr;
-
-    mojom::URLLoaderClientPtr client_ptr;
-    local_client_binding_.Bind(mojo::MakeRequest(&client_ptr));
-    std::move(start_function)
-        .Run(mojo::MakeRequest(&appcache_loader_), std::move(client_ptr));
+void AppCacheSubresourceURLFactory::SubresourceLoader::OnReceiveRedirect(
+    const net::RedirectInfo& redirect_info,
+    const ResourceResponseHead& response_head) {
+  DCHECK(network_loader_) << "appcache loader does not produce redirects";
+  if (!redirect_limit_--) {
+    OnComplete(ResourceRequestCompletionStatus(net::ERR_TOO_MANY_REDIRECTS));
+    return;
   }
-
-  void CreateAndStartNetworkLoader() {
-    DCHECK(!appcache_loader_);
-    mojom::URLLoaderClientPtr client_ptr;
-    local_client_binding_.Bind(mojo::MakeRequest(&client_ptr));
-    network_loader_factory_->GetNetworkFactory()->get()->CreateLoaderAndStart(
-        mojo::MakeRequest(&network_loader_), routing_id_, request_id_, options_,
-        request_, std::move(client_ptr), traffic_annotation_);
-    if (has_set_priority_)
-      network_loader_->SetPriority(priority_, intra_priority_value_);
-    if (has_paused_reading_)
-      network_loader_->PauseReadingBodyFromNet();
+  if (!handler_) {
+    remote_client_->OnReceiveRedirect(redirect_info_, response_head);
+    return;
   }
+  redirect_info_ = redirect_info;
+  handler_->MaybeFallbackForSubresourceRedirect(
+      redirect_info,
+      base::BindOnce(&SubresourceLoader::ContinueOnReceiveRedirect,
+                     weak_factory_.GetWeakPtr(), response_head));
+}
 
-  // mojom::URLLoader implementation
-  // Called by the remote client in the renderer.
-  void FollowRedirect() override {
-    if (!handler_) {
-      network_loader_->FollowRedirect();
-      return;
-    }
-    DCHECK(network_loader_);
-    DCHECK(!appcache_loader_);
-    handler_->MaybeFollowSubresourceRedirect(
-        redirect_info_,
-        base::BindOnce(&SubresourceLoader::ContinueFollowRedirect,
-                       weak_factory_.GetWeakPtr()));
+void AppCacheSubresourceURLFactory::SubresourceLoader::
+    ContinueOnReceiveRedirect(const ResourceResponseHead& response_head,
+                              StartLoaderCallback start_function) {
+  if (start_function)
+    CreateAndStartAppCacheLoader(std::move(start_function));
+  else
+    remote_client_->OnReceiveRedirect(redirect_info_, response_head);
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::OnDataDownloaded(
+    int64_t data_len,
+    int64_t encoded_data_len) {
+  remote_client_->OnDataDownloaded(data_len, encoded_data_len);
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::OnUploadProgress(
+    int64_t current_position,
+    int64_t total_size,
+    OnUploadProgressCallback ack_callback) {
+  remote_client_->OnUploadProgress(current_position, total_size,
+                                   std::move(ack_callback));
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::OnReceiveCachedMetadata(
+    const std::vector<uint8_t>& data) {
+  remote_client_->OnReceiveCachedMetadata(data);
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::OnTransferSizeUpdated(
+    int32_t transfer_size_diff) {
+  remote_client_->OnTransferSizeUpdated(transfer_size_diff);
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::
+    OnStartLoadingResponseBody(mojo::ScopedDataPipeConsumerHandle body) {
+  remote_client_->OnStartLoadingResponseBody(std::move(body));
+}
+
+void AppCacheSubresourceURLFactory::SubresourceLoader::OnComplete(
+    const ResourceRequestCompletionStatus& status) {
+  if (!network_loader_ || !handler_ || did_receive_network_response_ ||
+      status.error_code == net::OK) {
+    remote_client_->OnComplete(status);
+    return;
   }
+  handler_->MaybeFallbackForSubresourceResponse(
+      ResourceResponseHead(),
+      base::BindOnce(&SubresourceLoader::ContinueOnComplete,
+                     weak_factory_.GetWeakPtr(), status));
+}
 
-  void ContinueFollowRedirect(StartLoaderCallback start_function) {
-    if (start_function)
-      CreateAndStartAppCacheLoader(std::move(start_function));
-    else
-      network_loader_->FollowRedirect();
-  }
-
-  void SetPriority(net::RequestPriority priority,
-                   int32_t intra_priority_value) override {
-    has_set_priority_ = true;
-    priority_ = priority;
-    intra_priority_value_ = intra_priority_value;
-    if (network_loader_)
-      network_loader_->SetPriority(priority, intra_priority_value);
-  }
-
-  void PauseReadingBodyFromNet() override {
-    has_paused_reading_ = true;
-    if (network_loader_)
-      network_loader_->PauseReadingBodyFromNet();
-  }
-
-  void ResumeReadingBodyFromNet() override {
-    has_paused_reading_ = false;
-    if (network_loader_)
-      network_loader_->ResumeReadingBodyFromNet();
-  }
-
-  // mojom::URLLoaderClient implementation
-  // Called by either the appcache or network loader, whichever is in use.
-  void OnReceiveResponse(
-      const ResourceResponseHead& response_head,
-      const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file) override {
-    // Don't MaybeFallback for appcache produced responses.
-    if (appcache_loader_ || !handler_) {
-      remote_client_->OnReceiveResponse(response_head, ssl_info,
-                                        std::move(downloaded_file));
-      return;
-    }
-
-    did_receive_network_response_ = true;
-    handler_->MaybeFallbackForSubresourceResponse(
-        response_head,
-        base::BindOnce(&SubresourceLoader::ContinueOnReceiveResponse,
-                       weak_factory_.GetWeakPtr(), response_head, ssl_info,
-                       std::move(downloaded_file)));
-  }
-
-  void ContinueOnReceiveResponse(const ResourceResponseHead& response_head,
-                                 const base::Optional<net::SSLInfo>& ssl_info,
-                                 mojom::DownloadedTempFilePtr downloaded_file,
-                                 StartLoaderCallback start_function) {
-    if (start_function) {
-      CreateAndStartAppCacheLoader(std::move(start_function));
-    } else {
-      remote_client_->OnReceiveResponse(response_head, ssl_info,
-                                        std::move(downloaded_file));
-    }
-  }
-
-  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
-                         const ResourceResponseHead& response_head) override {
-    DCHECK(network_loader_) << "appcache loader does not produce redirects";
-    if (!redirect_limit_--) {
-      OnComplete(ResourceRequestCompletionStatus(net::ERR_TOO_MANY_REDIRECTS));
-      return;
-    }
-    if (!handler_) {
-      remote_client_->OnReceiveRedirect(redirect_info_, response_head);
-      return;
-    }
-    redirect_info_ = redirect_info;
-    handler_->MaybeFallbackForSubresourceRedirect(
-        redirect_info,
-        base::BindOnce(&SubresourceLoader::ContinueOnReceiveRedirect,
-                       weak_factory_.GetWeakPtr(), response_head));
-  }
-
-  void ContinueOnReceiveRedirect(const ResourceResponseHead& response_head,
-                                 StartLoaderCallback start_function) {
-    if (start_function)
-      CreateAndStartAppCacheLoader(std::move(start_function));
-    else
-      remote_client_->OnReceiveRedirect(redirect_info_, response_head);
-  }
-
-  void OnDataDownloaded(int64_t data_len, int64_t encoded_data_len) override {
-    remote_client_->OnDataDownloaded(data_len, encoded_data_len);
-  }
-
-  void OnUploadProgress(int64_t current_position,
-                        int64_t total_size,
-                        OnUploadProgressCallback ack_callback) override {
-    remote_client_->OnUploadProgress(current_position, total_size,
-                                     std::move(ack_callback));
-  }
-
-  void OnReceiveCachedMetadata(const std::vector<uint8_t>& data) override {
-    remote_client_->OnReceiveCachedMetadata(data);
-  }
-
-  void OnTransferSizeUpdated(int32_t transfer_size_diff) override {
-    remote_client_->OnTransferSizeUpdated(transfer_size_diff);
-  }
-
-  void OnStartLoadingResponseBody(
-      mojo::ScopedDataPipeConsumerHandle body) override {
-    remote_client_->OnStartLoadingResponseBody(std::move(body));
-  }
-
-  void OnComplete(const ResourceRequestCompletionStatus& status) override {
-    if (!network_loader_ || !handler_ || did_receive_network_response_ ||
-        status.error_code == net::OK) {
-      remote_client_->OnComplete(status);
-      return;
-    }
-    handler_->MaybeFallbackForSubresourceResponse(
-        ResourceResponseHead(),
-        base::BindOnce(&SubresourceLoader::ContinueOnComplete,
-                       weak_factory_.GetWeakPtr(), status));
-  }
-
-  void ContinueOnComplete(const ResourceRequestCompletionStatus& status,
-                          StartLoaderCallback start_function) {
-    if (start_function)
-      CreateAndStartAppCacheLoader(std::move(start_function));
-    else
-      remote_client_->OnComplete(status);
-  }
-
-  // The binding and client pointer associated with the renderer.
-  mojo::Binding<mojom::URLLoader> remote_binding_;
-  mojom::URLLoaderClientPtr remote_client_;
-
-  ResourceRequest request_;
-  int32_t routing_id_;
-  int32_t request_id_;
-  uint32_t options_;
-  net::MutableNetworkTrafficAnnotationTag traffic_annotation_;
-  scoped_refptr<URLLoaderFactoryGetter> network_loader_factory_;
-  net::RedirectInfo redirect_info_;
-  int redirect_limit_ = kMaxRedirects;
-  bool did_receive_network_response_ = false;
-  bool has_paused_reading_ = false;
-  bool has_set_priority_ = false;
-  net::RequestPriority priority_;
-  int32_t intra_priority_value_;
-
-  // Core appcache logic that decides how to handle a request.
-  std::unique_ptr<AppCacheRequestHandler> handler_;
-
-  // The local binding to either our network or appcache loader,
-  // we only use one of them at any given time.
-  mojo::Binding<mojom::URLLoaderClient> local_client_binding_;
-  mojom::URLLoaderPtr network_loader_;
-  mojom::URLLoaderPtr appcache_loader_;
-
-  base::WeakPtr<AppCacheHost> host_;
-
-  base::WeakPtrFactory<SubresourceLoader> weak_factory_;
-  DISALLOW_COPY_AND_ASSIGN(SubresourceLoader);
-};
-
-}  // namespace
+void AppCacheSubresourceURLFactory::SubresourceLoader::ContinueOnComplete(
+    const ResourceRequestCompletionStatus& status,
+    StartLoaderCallback start_function) {
+  if (start_function)
+    CreateAndStartAppCacheLoader(std::move(start_function));
+  else
+    remote_client_->OnComplete(status);
+}
 
 // Implements the URLLoaderFactory mojom for AppCache requests.
 AppCacheSubresourceURLFactory::AppCacheSubresourceURLFactory(

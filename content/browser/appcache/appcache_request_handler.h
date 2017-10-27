@@ -98,15 +98,18 @@ class CONTENT_EXPORT AppCacheRequestHandler
   // MaybeLoadResource, MaybeLoadFallbackForResponse, and
   // MaybeLoadFallbackForRedirect. Eventually one of the Deliver*Response()
   // methods is called and the LoaderCallback is invoked.
-  void MaybeCreateSubresourceLoader(const ResourceRequest& resource_request,
-                                    LoaderCallback callback);
-  void MaybeFallbackForSubresourceResponse(const ResourceResponseHead& response,
-                                           LoaderCallback callback);
-  void MaybeFallbackForSubresourceRedirect(
+  virtual void MaybeCreateSubresourceLoader(
+      const ResourceRequest& resource_request,
+      LoaderCallback callback);
+  virtual void MaybeFallbackForSubresourceResponse(
+      const ResourceResponseHead& response,
+      LoaderCallback callback);
+  virtual void MaybeFallbackForSubresourceRedirect(
       const net::RedirectInfo& redirect_info,
       LoaderCallback callback);
-  void MaybeFollowSubresourceRedirect(const net::RedirectInfo& redirect_info,
-                                      LoaderCallback callback);
+  virtual void MaybeFollowSubresourceRedirect(
+      const net::RedirectInfo& redirect_info,
+      LoaderCallback callback);
 
   static std::unique_ptr<AppCacheRequestHandler>
   InitializeForNavigationNetworkService(
@@ -122,15 +125,16 @@ class CONTENT_EXPORT AppCacheRequestHandler
   static void SetRunningInTests(bool in_tests);
   static bool IsRunningInTests();
 
- private:
-  friend class AppCacheHost;
-  friend class AppCacheRequestHandlerTest;
-
+ protected:
   // Callers should use AppCacheHost::CreateRequestHandler.
   AppCacheRequestHandler(AppCacheHost* host,
                          ResourceType resource_type,
                          bool should_reset_appcache,
                          std::unique_ptr<AppCacheRequest> request);
+
+ private:
+  friend class AppCacheHost;
+  friend class AppCacheRequestHandlerTest;
 
   // AppCacheHost::Observer override
   void OnDestructionImminent(AppCacheHost* host) override;

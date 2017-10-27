@@ -1140,6 +1140,7 @@ test("content_unittests") {
     "../browser/appcache/appcache_service_unittest.cc",
     "../browser/appcache/appcache_storage_impl_unittest.cc",
     "../browser/appcache/appcache_storage_unittest.cc",
+    "../browser/appcache/appcache_subresource_url_factory_unittest.cc",
     "../browser/appcache/appcache_unittest.cc",
     "../browser/appcache/appcache_update_job_unittest.cc",
     "../browser/appcache/appcache_url_request_job_unittest.cc",
