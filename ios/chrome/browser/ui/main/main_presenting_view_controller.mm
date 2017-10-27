@@ -6,6 +6,7 @@
 
 #import "base/logging.h"
 #import "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.h"
+#import "ios/chrome/browser/ui/main/transitions/tab_switcher_to_bvc_container_animator.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -145,6 +146,7 @@
 
   self.bvcContainer = [[BVCContainerViewController alloc] init];
   self.bvcContainer.currentBVC = viewController;
+  self.bvcContainer.transitioningDelegate = self;
   [super presentViewController:self.bvcContainer
                       animated:(self.tabSwitcher != nil)
                     completion:completion];
@@ -187,6 +189,16 @@
 }
 
 #pragma mark - Transitioning Delegate
+
+- (id<UIViewControllerAnimatedTransitioning>)
+animationControllerForPresentedController:(UIViewController*)presented
+                     presentingController:(UIViewController*)presenting
+                         sourceController:(UIViewController*)source {
+  TabSwitcherToBVCContainerAnimator* animator =
+      [[TabSwitcherToBVCContainerAnimator alloc] init];
+  animator.tabSwitcher = self.tabSwitcher;
+  return animator;
+}
 
 - (id<UIViewControllerAnimatedTransitioning>)
 animationControllerForDismissedController:(UIViewController*)dismissed {
