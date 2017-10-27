@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef5b2ff_d7f3b756",
+        "filename": "ash/public/cpp/voice_interaction_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-27T23:24:34Z",
+      "side": 1,
+      "message": "This means we have 3 copies of the VoiceInteractionState enum -- ash::VoiceInteractionState, ash::mojom::VoiceInteractionState, and arc::mojom::VoiceInteractionState. That\u0027s too many. Please eliminate ash::VoiceInteractionState and use ash::mojom::VoiceInteractionState everywhere you can.",
+      "revId": "12beed9623e4f76ec7d240ea3195a530c7e520d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
