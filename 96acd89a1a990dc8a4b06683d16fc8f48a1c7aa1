@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "535cf956_b53e3dad",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-27T18:49:33Z",
+      "side": 1,
+      "message": "Yep, this TODO is still relevant.  It\u0027s about intercepting keyboard shortcuts when the user is typing a new key chord, rather than about the internal events we\u0027re firing.",
+      "parentUuid": "ec520ee9_19c6bdff",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a797a6e_b27da635",
         "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
         "patchSetId": 3
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7a02542a_272cd9a3",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-27T18:49:33Z",
+      "side": 1,
+      "message": "Even simpler might be extending ClickMock:\n\nMockShortcutDelegate.prototype \u003d {\n  __proto__: ClickMock.prototype,\n  setShortcutHandlingSuspended: function(enable) {},\n  updateExtensionCommand(item, commandName, keybinding) {},\n};",
+      "parentUuid": "99541040_3a80a7f3",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5a0beb3_a91d9c3e",
         "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
         "patchSetId": 3
@@ -82,6 +118,23 @@
       "writtenOn": "2017-10-27T01:59:23Z",
       "side": 1,
       "message": "Continuing from previous comment. This would be:\n\nMockInteractions.tap(field);\n\nreturn input.delegate.whenCalled(\u0027setShortcutHandlingSuspended\u0027).then(arg \u003d\u003e {\n  assertTrue(arg);\n   input.delegate.reset();\n   ...\n  \n   MockInteractions.keyDownOn(...)\n   ...\n   return .....whenCalled(....);\n}).then(...);\n\nAlso it seems a bit odd that we are asserting on private member variable |capturing_|. Is that necessary? Can we not effectively test the same thing via the publicly exposed API, meaning by asserting on whether |input| makes the expected calls to the delegate, instead of asserting on internal non-public state?",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e852a4f_00283455",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-27T18:49:33Z",
+      "side": 1,
+      "message": "Or,\n\nmockDelegate.testClickingCalls(\n    field, \u0027setShortcutHandlingSuspended\u0027, [true]);",
       "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
