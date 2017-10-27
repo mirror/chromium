@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16eaeae0_252324bb",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 3520,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T17:08:51Z",
+      "side": 1,
+      "message": "Is there any specific reason this ordering change was made? If yes, it might be useful to put a comment as to why the ordering matters.",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907f62c1_26fb1648",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T17:08:51Z",
+      "side": 1,
+      "message": "Make this one a CHECK. We want to know whether this is violated in all cases. It is fine to crash the renderer process on violation of this, similarly to other checks in the constructor further down.",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35113ea5_e2e074ef",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 3326,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T17:08:51Z",
+      "side": 1,
+      "message": "Another DCHECK -\u003e CHECK.",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b3c0b3_df9e5b40",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T17:08:51Z",
+      "side": 1,
+      "message": "I think this is a very good correctness check and things will likely not work if violated, so I\u0027d say make it a CHECK. We have the same approach in the next if check. It has the bonus of us knowing if something goes wrong, since we crash the renderer and can analyze it.",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14120f13_44eb6fb5",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T17:08:51Z",
+      "side": 1,
+      "message": "What\u0027s the meaning of Isolated here? We use isolation for origins and this doesn\u0027t seem to be bound to origins, so it is slightly confusing.",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 16
+      },
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2228b27f_f04ea3c0",
+        "filename": "content/test/test_render_view_host.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T17:08:51Z",
+      "side": 1,
+      "message": "Did you hit any cases where proxy_route_id is not NONE? I\u0027m curious if you have as we don\u0027t expect to have frame and proxy at the same time.",
+      "revId": "27a4a8463a6d172ce31576e99fe68f8eba5ef9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
