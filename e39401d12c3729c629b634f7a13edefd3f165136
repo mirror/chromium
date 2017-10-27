@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a554e93_2ddb427a",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T01:02:07Z",
+      "side": 1,
+      "message": "nit: remove outer parens?",
+      "revId": "e39401d12c3729c629b634f7a13edefd3f165136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
