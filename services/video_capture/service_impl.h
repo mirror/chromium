@@ -12,6 +12,7 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
+#include "services/video_capture/device_factory_provider_impl.h"
 #include "services/video_capture/public/interfaces/device_factory_provider.mojom.h"
 #include "services/video_capture/public/interfaces/testing_controls.mojom.h"
 
@@ -40,6 +41,8 @@ class ServiceImpl : public service_manager::Service {
   void SetShutdownDelayInSeconds(float seconds);
   void MaybeRequestQuitDelayed();
   void MaybeRequestQuit();
+  void LazyInitializeDeviceFactoryProvider();
+  void OnProviderClientDisconnected();
 
 #if defined(OS_WIN)
   // COM must be initialized in order to access the video capture devices.
@@ -47,6 +50,8 @@ class ServiceImpl : public service_manager::Service {
 #endif
   float shutdown_delay_in_seconds_;
   service_manager::BinderRegistry registry_;
+  mojo::BindingSet<mojom::DeviceFactoryProvider> factory_provider_bindings_;
+  std::unique_ptr<DeviceFactoryProviderImpl> device_factory_provider_;
   std::unique_ptr<service_manager::ServiceContextRefFactory> ref_factory_;
   base::ThreadChecker thread_checker_;
   base::WeakPtrFactory<ServiceImpl> weak_factory_;

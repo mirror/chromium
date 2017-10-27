@@ -13,6 +13,7 @@ using testing::Exactly;
 using testing::_;
 using testing::Invoke;
 using testing::InvokeWithoutArgs;
+using testing::Mock;
 
 namespace video_capture {
 
@@ -71,11 +72,11 @@ TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
   wait_loop.Run();
 }
 
-// Tests that the service requests to be closed when the last client disconnects
+// Tests that the service requests to be closed when the only client disconnects
 // after not having done anything other than obtaining a connection to the
 // fake device factory.
 TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
-       ServiceQuitsWhenNoClientConnected) {
+       ServiceQuitsWhenSingleClientDisconnected) {
   base::RunLoop wait_loop;
   EXPECT_CALL(*service_state_observer_, OnServiceStopped(_))
       .WillOnce(Invoke([&wait_loop](const service_manager::Identity& identity) {
@@ -86,6 +87,56 @@ TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
   // Exercise: Disconnect from service by discarding our references to it.
   factory_.reset();
   factory_provider_.reset();
+
+  wait_loop.Run();
+}
+
+// Tests that the service stays alive when there are two clients connected
+// to the service, and only one of them disconnects.
+TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
+       ServiceNotQuitWhenClientConnected) {
+  // Bind another client to the DeviceFactoryProvider interface.
+  mojom::DeviceFactoryProviderPtr leftover_provider;
+  connector()->BindInterface(mojom::kServiceName, &leftover_provider);
+
+  base::RunLoop wait_loop;
+  EXPECT_CALL(*service_state_observer_, OnServiceStopped(_)).Times(0);
+  // Exit the wait loop after 2 seconds to verify that the service
+  // is still up.
+  base::MessageLoop::current()->task_runner()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind([](base::RunLoop* loop) { loop->Quit(); }, &wait_loop),
+      base::TimeDelta::FromSeconds(2));
+
+  // Disconnect the first client.
+  factory_.reset();
+  factory_provider_.reset();
+
+  wait_loop.Run();
+  // Verify service is not closed.
+  Mock::VerifyAndClearExpectations(service_state_observer_.get());
+}
+
+// Tests that the service requests to be closed when the all clients disconnect
+// after not having done anything other than obtaining a connection to the
+// fake device factory.
+TEST_F(VideoCaptureServiceDeviceFactoryProviderTest,
+       ServiceQuitsWhenAllClientsDisconnected) {
+  // Bind another client to the DeviceFactoryProvider interface.
+  mojom::DeviceFactoryProviderPtr unused_provider;
+  connector()->BindInterface(mojom::kServiceName, &unused_provider);
+
+  base::RunLoop wait_loop;
+  EXPECT_CALL(*service_state_observer_, OnServiceStopped(_))
+      .WillOnce(Invoke([&wait_loop](const service_manager::Identity& identity) {
+        if (identity.name() == mojom::kServiceName)
+          wait_loop.Quit();
+      }));
+
+  // Exercise: Disconnect from service by discarding our references to it.
+  factory_.reset();
+  factory_provider_.reset();
+  unused_provider.reset();
 
   wait_loop.Run();
 }
