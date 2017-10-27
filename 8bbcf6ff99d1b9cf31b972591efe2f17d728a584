@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a040421d_0f04e3ff",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-27T23:34:40Z",
+      "side": 1,
+      "message": "Remove this to the next block",
+      "range": {
+        "startLine": 6,
+        "startChar": 30,
+        "endLine": 6,
+        "endChar": 50
+      },
+      "revId": "8bbcf6ff99d1b9cf31b972591efe2f17d728a584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb2a45f_470af656",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-27T23:34:40Z",
+      "side": 1,
+      "message": "If this is the same function, we can call it AddOrUpdateEntryToEntries().\n\nWe could also merge both into one function which IMO looks a bit cleaner, upto you.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "8bbcf6ff99d1b9cf31b972591efe2f17d728a584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6239ecb_97aa0533",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-27T23:34:40Z",
+      "side": 1,
+      "message": "I think you have to copy the value.\n*entry_ptr \u003d entry?",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 11
+      },
+      "revId": "8bbcf6ff99d1b9cf31b972591efe2f17d728a584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85cde8b2_975da076",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-27T23:34:40Z",
+      "side": 1,
+      "message": "This will crash when nullptr. \n\nYou are returning a DownloadEntry from RetrieveMetadata(). To handle invalid guids, you can either change this to return a DownloadEntry* or base::Optional\u003cDownloadEntry\u003e (which also serves the same purpose)",
+      "range": {
+        "startLine": 86,
+        "startChar": 64,
+        "endLine": 86,
+        "endChar": 73
+      },
+      "revId": "8bbcf6ff99d1b9cf31b972591efe2f17d728a584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d04e41d_6db6c3b8",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-27T23:34:40Z",
+      "side": 1,
+      "message": "\u003e\u003d perhaps\n\nAlternatively you can have \n\nif (entry_index \u003c 0) \n  return;\n\nThis is usually favored in chromium style.",
+      "range": {
+        "startLine": 91,
+        "startChar": 18,
+        "endLine": 91,
+        "endChar": 19
+      },
+      "revId": "8bbcf6ff99d1b9cf31b972591efe2f17d728a584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806f2a23_037f45db",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-27T23:34:40Z",
+      "side": 1,
+      "message": "May be we don\u0027t need this function. Call entries_.clear_entry() inline.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 4
+      },
+      "revId": "8bbcf6ff99d1b9cf31b972591efe2f17d728a584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac4047f_4ec0a96a",
+        "filename": "components/download/internal/in_progress_metadata_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-27T23:34:40Z",
+      "side": 1,
+      "message": "This should move below the private functions (line 59)",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "8bbcf6ff99d1b9cf31b972591efe2f17d728a584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a091e0b_e535eb17",
+        "filename": "components/download/internal/in_progress_metadata_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-27T23:34:40Z",
+      "side": 1,
+      "message": "const metadata_pb::DownloadEntry\u0026 entry",
+      "range": {
+        "startLine": 50,
+        "startChar": 51,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "8bbcf6ff99d1b9cf31b972591efe2f17d728a584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
