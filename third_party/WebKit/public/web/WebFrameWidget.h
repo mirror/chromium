@@ -48,6 +48,8 @@ class WebFrameWidget : public WebWidget {
  public:
   BLINK_EXPORT static WebFrameWidget* Create(WebWidgetClient*, WebLocalFrame*);
 
+  virtual WebWidgetClient* Client() const = 0;
+
   // Sets the visibility of the WebFrameWidget.
   // We still track page-level visibility, but additionally we need to notify a
   // WebFrameWidget when its owning RenderWidget receives a Show or Hide

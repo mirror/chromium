@@ -42,8 +42,6 @@ class CORE_EXPORT WebFrameWidgetBase
   virtual void ScheduleAnimation() = 0;
   virtual CompositorMutatorImpl* CompositorMutator() = 0;
 
-  virtual WebWidgetClient* Client() const = 0;
-
   // Sets the root graphics layer. |GraphicsLayer| can be null when detaching
   // the root layer.
   virtual void SetRootGraphicsLayer(GraphicsLayer*) = 0;
