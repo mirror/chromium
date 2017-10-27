@@ -637,7 +637,6 @@ mojom("mojo_bindings") {
     "shared_worker/shared_worker_info.mojom",
     "storage_partition_service.mojom",
     "video_capture.mojom",
-    "web_database.mojom",
     "widget.mojom",
   ]
 

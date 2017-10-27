@@ -119,6 +119,7 @@
 #include "content/renderer/media/midi_message_filter.h"
 #include "content/renderer/media/render_media_client.h"
 #include "content/renderer/media/video_capture_impl_manager.h"
+#include "content/renderer/mojo/blink_interface_registry_impl.h"
 #include "content/renderer/mus/render_widget_window_tree_client_factory.h"
 #include "content/renderer/mus/renderer_window_tree_client.h"
 #include "content/renderer/net_info_helper.h"
@@ -137,7 +138,6 @@
 #include "content/renderer/service_worker/service_worker_message_filter.h"
 #include "content/renderer/shared_worker/embedded_shared_worker_stub.h"
 #include "content/renderer/shared_worker/shared_worker_factory_impl.h"
-#include "content/renderer/web_database_impl.h"
 #include "content/renderer/web_database_observer_impl.h"
 #include "content/renderer/worker_thread_registry.h"
 #include "device/gamepad/public/cpp/gamepads.h"
@@ -779,8 +779,9 @@ void RenderThreadImpl::Init(
 
   {
     auto registry = std::make_unique<service_manager::BinderRegistry>();
-    registry->AddInterface(base::Bind(&WebDatabaseImpl::Create),
-                           GetIOTaskRunner());
+    auto interface_provider =
+        std::make_unique<BlinkInterfaceRegistryImpl>(registry->GetWeakPtr());
+    blink::RegisterInterfaces(*interface_provider);
     registry->AddInterface(base::Bind(&SharedWorkerFactoryImpl::Create),
                            base::ThreadTaskRunnerHandle::Get());
     GetServiceManagerConnection()->AddConnectionFilter(

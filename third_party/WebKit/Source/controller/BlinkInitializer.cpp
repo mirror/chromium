@@ -109,6 +109,10 @@ void Initialize(Platform* platform) {
   }
 }
 
+void RegisterInterfaces(InterfaceRegistry& registry) {
+  GetBlinkInitializer().RegisterInterfaces(registry);
+}
+
 void BlinkInitializer::InitLocalFrame(LocalFrame& frame) const {
   ModulesInitializer::InitLocalFrame(frame);
 }
