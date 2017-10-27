@@ -172,6 +172,8 @@ DrawingBuffer::DrawingBuffer(
       want_stencil_(want_stencil),
       storage_color_space_(color_params.GetStorageGfxColorSpace()),
       sampler_color_space_(color_params.GetSamplerGfxColorSpace()),
+      use_half_float_storage_(color_params.PixelFormat() ==
+                              kF16CanvasPixelFormat),
       chromium_image_usage_(chromium_image_usage) {
   // Used by browser tests to detect the use of a DrawingBuffer.
   TRACE_EVENT_INSTANT0("test_gpu", "DrawingBufferCreation",
@@ -620,6 +622,22 @@ bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
     return false;
   }
 
+  // Ensure that the extensions required for half-float storage are present if
+  // requested.
+  if (use_half_float_storage_) {
+    const char* color_buffer_extension = webgl_version_ > kWebGL1
+                                             ? "GL_EXT_color_buffer_float"
+                                             : "GL_EXT_color_buffer_half_float";
+    if (!extensions_util_->EnsureExtensionEnabled(color_buffer_extension)) {
+      DLOG(ERROR) << "Half-float color buffers support is absent.";
+      return false;
+    }
+    if (!want_alpha_channel_) {
+      DLOG(ERROR) << "RGB half-float buffers are not supported.";
+      return false;
+    }
+  }
+
   gl_->GetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texture_size_);
 
   int max_sample_count = 0;
@@ -861,10 +879,13 @@ bool DrawingBuffer::ResizeDefaultFramebuffer(const IntSize& size) {
     // Note that the multisample rendertarget will allocate an alpha channel
     // based on |have_alpha_channel_|, not |allocate_alpha_channel_|, since it
     // will resolve into the ColorBuffer.
-    gl_->RenderbufferStorageMultisampleCHROMIUM(
-        GL_RENDERBUFFER, sample_count_,
-        have_alpha_channel_ ? GL_RGBA8_OES : GL_RGB8_OES, size.Width(),
-        size.Height());
+    GLenum internal_format =
+        use_half_float_storage_
+            ? (have_alpha_channel_ ? GL_RGBA16F_EXT : GL_RGB16F_EXT)
+            : (have_alpha_channel_ ? GL_RGBA8_OES : GL_RGB8_OES);
+    gl_->RenderbufferStorageMultisampleCHROMIUM(GL_RENDERBUFFER, sample_count_,
+                                                internal_format, size.Width(),
+                                                size.Height());
 
     if (gl_->GetError() == GL_OUT_OF_MEMORY)
       return false;
@@ -1192,9 +1213,11 @@ scoped_refptr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
     gfx::BufferFormat buffer_format;
     GLenum gl_format = GL_NONE;
     if (allocate_alpha_channel_) {
-      buffer_format = gfx::BufferFormat::RGBA_8888;
+      buffer_format = use_half_float_storage_ ? gfx::BufferFormat::RGBA_F16
+                                              : gfx::BufferFormat::RGBA_8888;
       gl_format = GL_RGBA;
     } else {
+      DCHECK(!use_half_float_storage_);
       buffer_format = gfx::BufferFormat::RGBX_8888;
       if (gpu::IsImageFromGpuMemoryBufferFormatSupported(
               gfx::BufferFormat::BGRX_8888,
@@ -1233,13 +1256,29 @@ scoped_refptr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
   } else {
     if (storage_texture_supported_) {
       GLenum internal_storage_format =
-          allocate_alpha_channel_ ? GL_RGBA8 : GL_RGB8;
+          use_half_float_storage_
+              ? (allocate_alpha_channel_ ? GL_RGBA16F_EXT : GL_RGB16F_EXT)
+              : (allocate_alpha_channel_ ? GL_RGBA8 : GL_RGB8);
       gl_->TexStorage2DEXT(GL_TEXTURE_2D, 1, internal_storage_format,
                            size.Width(), size.Height());
     } else {
-      GLenum gl_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
-      gl_->TexImage2D(texture_target_, 0, gl_format, size.Width(),
-                      size.Height(), 0, gl_format, GL_UNSIGNED_BYTE, nullptr);
+      GLenum internal_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
+      GLenum format = internal_format;
+      GLenum data_type = GL_UNSIGNED_BYTE;
+      // TODO(ccameron): Half-float storage is allocated in GLES 3 but fails to
+      // composite.
+      // https://crbug.com/777750
+      if (use_half_float_storage_) {
+        if (webgl_version_ > kWebGL1) {
+          internal_format = allocate_alpha_channel_ ? GL_RGBA16F : GL_RGB16F;
+          data_type = GL_HALF_FLOAT;
+        } else {
+          internal_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
+          data_type = GL_HALF_FLOAT_OES;
+        }
+      }
+      gl_->TexImage2D(texture_target_, 0, internal_format, size.Width(),
+                      size.Height(), 0, format, data_type, nullptr);
     }
   }
 
