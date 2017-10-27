@@ -18,6 +18,7 @@ import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
+import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.UrlConstants;
@@ -25,6 +26,8 @@ import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmarksReader;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 /**
  * Reads and caches partner browser customizations information if it exists.
@@ -46,6 +49,41 @@ public class PartnerBrowserCustomizations {
     private static volatile boolean sBookmarksEditingDisabled;
     private static boolean sIsInitialized;
     private static List<Runnable> sInitializeAsyncCallbacks = new ArrayList<Runnable>();
+
+    /** Provider of partner customizations. */
+    public interface Provider {
+        @Nullable
+        String getHomepage(ContentResolver contentResolver);
+
+        boolean isBookmarksEditingDisabled(ContentResolver contentResolver);
+    }
+
+    /** Partner customizations provided by ContentProvider package. */
+    public static class ProviderPackage implements Provider {
+        @Override
+        public String getHomepage(ContentResolver contentResolver) {
+            String homepage = null;
+            Cursor cursor = contentResolver.query(
+                    buildQueryUri(PARTNER_HOMEPAGE_PATH), null, null, null, null);
+            if (cursor != null && cursor.moveToFirst() && cursor.getColumnCount() == 1) {
+                homepage = cursor.getString(0);
+            }
+            if (cursor != null) cursor.close();
+            return homepage;
+        }
+
+        @Override
+        public boolean isBookmarksEditingDisabled(ContentResolver contentResolver) {
+            boolean disabled = false;
+            Cursor cursor = contentResolver.query(
+                    buildQueryUri(PARTNER_DISABLE_BOOKMARKS_EDITING_PATH), null, null, null, null);
+            if (cursor != null && cursor.moveToFirst() && cursor.getColumnCount() == 1) {
+                disabled = cursor.getInt(0) == 1;
+            }
+            if (cursor != null) cursor.close();
+            return disabled;
+        }
+    }
 
     /**
      * @return True if the partner homepage content provider exists and enabled. Note that The data
@@ -115,6 +153,7 @@ public class PartnerBrowserCustomizations {
      */
     public static void initializeAsync(final Context context, long timeoutMs) {
         sIsInitialized = false;
+        Provider provider = AppHooks.get().getCustomizationProvider();
         // Setup an initializing async task.
         final AsyncTask<Void, Void, Void> initializeAsyncTask =
                 new AsyncTask<Void, Void, Void>() {
@@ -123,18 +162,13 @@ public class PartnerBrowserCustomizations {
 
             private void refreshHomepage() {
                 try {
-                    ContentResolver contentResolver = context.getContentResolver();
-                    Cursor cursor = contentResolver.query(
-                            buildQueryUri(PARTNER_HOMEPAGE_PATH), null, null, null, null);
-                    if (cursor != null && cursor.moveToFirst() && cursor.getColumnCount() == 1
-                            && !isCancelled()) {
-                        if (TextUtils.isEmpty(sHomepage)
-                                || !sHomepage.equals(cursor.getString(0))) {
+                    String homepage = provider.getHomepage(context.getContentResolver());
+                    if (!isCancelled()) {
+                        if (TextUtils.isEmpty(sHomepage) || !sHomepage.equals(homepage)) {
                             mHomepageUriChanged = true;
                         }
-                        sHomepage = cursor.getString(0);
+                        sHomepage = homepage;
                     }
-                    if (cursor != null) cursor.close();
                 } catch (Exception e) {
                     Log.w(TAG, "Partner homepage provider URL read failed : ", e);
                 }
@@ -158,19 +192,14 @@ public class PartnerBrowserCustomizations {
 
             private void refreshBookmarksEditingDisabled() {
                 try {
-                    ContentResolver contentResolver = context.getContentResolver();
-                    Cursor cursor = contentResolver.query(
-                            buildQueryUri(PARTNER_DISABLE_BOOKMARKS_EDITING_PATH),
-                                    null, null, null, null);
-                    if (cursor != null && cursor.moveToFirst() && cursor.getColumnCount() == 1
-                            && !isCancelled()) {
-                        boolean bookmarksEditingDisabled = cursor.getInt(0) == 1;
-                        if (bookmarksEditingDisabled != sBookmarksEditingDisabled) {
+                    boolean disabled =
+                            provider.isBookmarksEditingDisabled(context.getContentResolver());
+                    if (!isCancelled()) {
+                        if (disabled) {
                             mDisablePartnerBookmarksShim = true;
                         }
-                        sBookmarksEditingDisabled = bookmarksEditingDisabled;
+                        sBookmarksEditingDisabled = disabled;
                     }
-                    if (cursor != null) cursor.close();
                 } catch (Exception e) {
                     Log.w(TAG, "Partner disable bookmarks editing read failed : ", e);
                 }
@@ -184,7 +213,7 @@ public class PartnerBrowserCustomizations {
                             || !ChromeVersionInfo.isStableBuild();
                     if (!systemOrPreStable) {
                         // Only allow partner customization if this browser is a system package, or
-                        // forced for testing purposes.
+                        // is in pre-stable channels.
                         return null;
                     }
 
