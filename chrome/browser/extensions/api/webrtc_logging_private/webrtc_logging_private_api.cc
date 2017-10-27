@@ -49,6 +49,7 @@ namespace StartWebRtcEventLogging =
     api::webrtc_logging_private::StartWebRtcEventLogging;
 namespace StopWebRtcEventLogging =
     api::webrtc_logging_private::StopWebRtcEventLogging;
+namespace GetLogsDirectory = api::webrtc_logging_private::GetLogsDirectory;
 
 namespace {
 std::string HashIdWithOrigin(const std::string& security_origin,
@@ -520,6 +521,21 @@ bool WebrtcLoggingPrivateStopWebRtcEventLoggingFunction::RunAsync() {
                  this));
 
   return true;
+}
+
+bool WebrtcLoggingPrivateGetLogsDirectoryFunction::RunAsync() {
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &WebrtcLoggingPrivateGetLogsDirectoryFunction::FireCallback, this));
+  return true;
+}
+
+void WebrtcLoggingPrivateGetLogsDirectoryFunction::FireCallback() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  // TODO(crbug.com/775961): Return a DirectoryEntry for WebRTC Logs.
+  SetError("API function is not implmented.");
+  SendResponse(false);
 }
 
 }  // namespace extensions
