@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87851df0_40827ce4",
+        "filename": "third_party/WebKit/LayoutTests/images/image-with-zero-size-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-27T10:52:55Z",
+      "side": 1,
+      "message": "Nit: Excess space.",
+      "range": {
+        "startLine": 2,
+        "startChar": 7,
+        "endLine": 2,
+        "endChar": 8
+      },
+      "revId": "bb121c19bc7605c517d129c5da5ec32df291b2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e514a0_1cb8d8ff",
+        "filename": "third_party/WebKit/LayoutTests/images/image-with-zero-size-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-27T10:52:55Z",
+      "side": 1,
+      "message": "Could you also add a test where the document is in error (and thus should fire \u0027error\u0027)? Hopefully something like \"data:image/svg+xml,\" or \"data:image/svg+xml,\u003cfoo\u003e\u003c/foo\u003e\" should suffice.",
+      "range": {
+        "startLine": 8,
+        "startChar": 15,
+        "endLine": 8,
+        "endChar": 34
+      },
+      "revId": "bb121c19bc7605c517d129c5da5ec32df291b2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7184fcb7_582cd772",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-27T10:52:55Z",
+      "side": 1,
+      "message": "I suspect we\u0027d rather want this to have a predicate that\u0027s more to the point (not sure we have one ATM, I suspect will need to be taught about some additional error cases so that it can return kSizeUnavailable in those cases.) - I also suspect that this doesn\u0027t work if the SVGImage is in error.",
+      "range": {
+        "startLine": 434,
+        "startChar": 22,
+        "endLine": 434,
+        "endChar": 63
+      },
+      "revId": "bb121c19bc7605c517d129c5da5ec32df291b2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
