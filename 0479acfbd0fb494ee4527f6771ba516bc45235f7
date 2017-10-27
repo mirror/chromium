@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2887834f_907ce8df",
+        "filename": "chrome/browser/apps/drive/drive_app_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-27T19:34:04Z",
+      "side": 1,
+      "message": "nit:  No longer needed.",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "0479acfbd0fb494ee4527f6771ba516bc45235f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eaa0887_29bb3faa",
+        "filename": "chrome/browser/apps/drive/drive_app_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-27T19:34:04Z",
+      "side": 1,
+      "message": "nit:  Not needed.",
+      "range": {
+        "startLine": 32,
+        "startChar": 26,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "0479acfbd0fb494ee4527f6771ba516bc45235f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
