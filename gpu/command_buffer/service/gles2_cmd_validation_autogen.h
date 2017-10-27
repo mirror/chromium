@@ -138,12 +138,7 @@ class IndexedBufferTargetValidator {
 };
 IndexedBufferTargetValidator indexed_buffer_target;
 
-class IndexedGLStateValidator {
- public:
-  bool IsValid(const GLenum value) const;
-};
-IndexedGLStateValidator indexed_g_l_state;
-
+ValueValidator<GLenum> indexed_g_l_state;
 class InternalFormatParameterValidator {
  public:
   bool IsValid(const GLenum value) const;
