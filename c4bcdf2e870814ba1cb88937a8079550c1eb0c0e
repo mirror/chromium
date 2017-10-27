@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d372f721_33ee5420",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-27T16:47:29Z",
+      "side": 1,
+      "message": "No reason, haven\u0027t noticed how it was in U2fHidDiscovery. Replaced DCHECKs with conditionals.",
+      "parentUuid": "8d5ca95a_fb1cf3dc",
+      "revId": "c4bcdf2e870814ba1cb88937a8079550c1eb0c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "387b6c2b_71fdbee1",
         "filename": "device/u2f/u2f_ble_discovery.h",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-27T16:22:33Z",
       "side": 1,
       "message": "These types can be forward declared.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "c4bcdf2e870814ba1cb88937a8079550c1eb0c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f26c85d_64ac0671",
+        "filename": "device/u2f/u2f_ble_discovery.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-27T16:47:29Z",
+      "side": 1,
+      "message": "Done.\n\nNote: BluetoothAdapter can\u0027t be forward declared because its nested class BluetoothAdapter::Observer is used here.",
+      "parentUuid": "387b6c2b_71fdbee1",
       "range": {
         "startLine": 10,
         "startChar": 0,
