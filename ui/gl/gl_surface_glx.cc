@@ -28,8 +28,10 @@ extern "C" {
 #include "ui/gfx/x/x11_connection.h"
 #include "ui/gfx/x/x11_types.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_context.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_visual_picker_glx.h"
+#include "ui/gl/gpu_timing.h"
 #include "ui/gl/sync_control_vsync_provider.h"
 
 namespace gl {
@@ -265,6 +267,7 @@ class SGIVideoSyncProviderThreadShim {
   }
 
   void GetVSyncParameters(
+      uint64_t count,
       const gfx::VSyncProvider::UpdateVSyncCallback& callback) {
     base::TimeTicks now;
     {
@@ -282,7 +285,8 @@ class SGIVideoSyncProviderThreadShim {
 
       TRACE_EVENT_INSTANT0("gpu", "vblank", TRACE_EVENT_SCOPE_THREAD);
       now = base::TimeTicks::Now();
-
+      TRACE_EVENT2("GLX", "GetVSyncParameters", "count", count, "timestamp",
+                   (now - base::TimeTicks()).InMicroseconds());
       glXMakeContextCurrent(display_, 0, 0, nullptr);
     }
 
@@ -351,11 +355,13 @@ class SGIVideoSyncVSyncProvider
           FROM_HERE,
           base::Bind(
               &SGIVideoSyncProviderThreadShim::GetVSyncParameters,
-              base::Unretained(shim_.get()),
+              base::Unretained(shim_.get()), swap_count_,
               base::Bind(&SGIVideoSyncVSyncProvider::PendingCallbackRunner,
                          AsWeakPtr())));
     }
   }
+
+  void SetSwapCount(uint64_t count) { swap_count_ = count; }
 
  private:
   void PendingCallbackRunner(const base::TimeTicks timebase,
@@ -364,6 +370,8 @@ class SGIVideoSyncVSyncProvider
     pending_callback_->Run(timebase, interval);
     pending_callback_.reset();
   }
+
+  uint64_t swap_count_ = 0;
 
   scoped_refptr<SGIVideoSyncThread> vsync_thread_;
 
@@ -545,6 +553,31 @@ GLXDrawable NativeViewGLSurfaceGLX::GetDrawableHandle() const {
   return glx_window_;
 }
 
+void NativeViewGLSurfaceGLX::PostSwapBuffers() {
+  if (!gpu_timing_client_) {
+    gpu_timing_client_ = context_->CreateGPUTimingClient();
+    front_buffer_gpu_timer_ = gpu_timing_client_->CreateGPUTimer(false);
+    back_buffer_gpu_timer_ = gpu_timing_client_->CreateGPUTimer(false);
+  }
+
+  GLuint i = 0;
+  glGenTextures(1, &i);
+  glDeleteTextures(1, &i);
+
+  front_buffer_gpu_timer_->QueryTimeStamp();
+  std::swap(front_buffer_gpu_timer_, back_buffer_gpu_timer_);
+  if (front_buffer_gpu_timer_->IsAvailable()) {
+    int64_t start, end;
+    front_buffer_gpu_timer_->GetStartEndTimestamps(&start, &end);
+    TRACE_EVENT2("GLX", "PostSwapBuffers", "count", swap_count_ - 1,
+                 "timestamp", start);
+  }
+  front_buffer_gpu_timer_->Reset();
+  auto* vp = static_cast<SGIVideoSyncVSyncProvider*>(vsync_provider_.get());
+  vp->SetSwapCount(swap_count_);
+  ++swap_count_;
+}
+
 bool NativeViewGLSurfaceGLX::Initialize(GLSurfaceFormat format) {
   XWindowAttributes attributes;
   if (!XGetWindowAttributes(g_display, parent_window_, &attributes)) {
@@ -606,6 +639,14 @@ bool NativeViewGLSurfaceGLX::Initialize(GLSurfaceFormat format) {
 }
 
 void NativeViewGLSurfaceGLX::Destroy() {
+  if (front_buffer_gpu_timer_)
+    front_buffer_gpu_timer_->Destroy(context_);
+  if (back_buffer_gpu_timer_)
+    back_buffer_gpu_timer_->Destroy(context_);
+  front_buffer_gpu_timer_ = nullptr;
+  back_buffer_gpu_timer_ = nullptr;
+  gpu_timing_client_ = nullptr;
+
   vsync_provider_.reset();
   if (glx_window_) {
     glXDestroyWindow(g_display, glx_window_);
@@ -638,6 +679,7 @@ gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers() {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceGLX:RealSwapBuffers", "width",
                GetSize().width(), "height", GetSize().height());
   glXSwapBuffers(g_display, GetDrawableHandle());
+  PostSwapBuffers();
   return gfx::SwapResult::SWAP_ACK;
 }
 
@@ -673,11 +715,18 @@ gfx::SwapResult NativeViewGLSurfaceGLX::PostSubBuffer(int x,
                                                       int height) {
   DCHECK(g_driver_glx.ext.b_GLX_MESA_copy_sub_buffer);
   glXCopySubBufferMESA(g_display, GetDrawableHandle(), x, y, width, height);
+  // PostSwapBuffers();
   return gfx::SwapResult::SWAP_ACK;
 }
 
 gfx::VSyncProvider* NativeViewGLSurfaceGLX::GetVSyncProvider() {
   return vsync_provider_.get();
+}
+
+bool NativeViewGLSurfaceGLX::OnMakeCurrent(GLContext* context) {
+  DCHECK(context == context_ || !context || !context_);
+  context_ = context;
+  return GLSurfaceGLX::OnMakeCurrent(context);
 }
 
 NativeViewGLSurfaceGLX::~NativeViewGLSurfaceGLX() {
