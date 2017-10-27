@@ -5,11 +5,15 @@
 #include "platform/feature_policy/FeaturePolicy.h"
 
 #include "testing/gtest/include/gtest/gtest.h"
+#include "url/gurl.h"
+#include "url/origin.h"
 
 // Origin strings used for tests
 #define ORIGIN_A "https://example.com/"
 #define ORIGIN_B "https://example.net/"
 #define ORIGIN_C "https://example.org/"
+
+class GURL;
 
 namespace blink {
 
@@ -62,6 +66,10 @@ class FeaturePolicyTest : public ::testing::Test {
   RefPtr<SecurityOrigin> origin_b_ = SecurityOrigin::CreateFromString(ORIGIN_B);
   RefPtr<SecurityOrigin> origin_c_ = SecurityOrigin::CreateFromString(ORIGIN_C);
 
+  url::Origin origin_a = url::Origin::Create(GURL(ORIGIN_A));
+  url::Origin origin_b = url::Origin::Create(GURL(ORIGIN_B));
+  url::Origin origin_c = url::Origin::Create(GURL(ORIGIN_C));
+
   const FeatureNameMap test_feature_name_map = {
       {"fullscreen", blink::WebFeaturePolicyFeature::kFullscreen},
       {"payment", blink::WebFeaturePolicyFeature::kPayment},
@@ -92,7 +100,7 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
   Vector<String> messages;
 
   // Empty policy.
-  WebParsedFeaturePolicy parsed_policy = ParseFeaturePolicy(
+  ParsedFeaturePolicy parsed_policy = ParseFeaturePolicy(
       "", origin_a_.get(), origin_b_.get(), &messages, test_feature_name_map);
   EXPECT_EQ(0UL, parsed_policy.size());
 
@@ -105,8 +113,7 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
   EXPECT_EQ(WebFeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
   EXPECT_FALSE(parsed_policy[0].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[0].origins.size());
-  EXPECT_TRUE(origin_a_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[0].origins[0].Get()));
+  EXPECT_TRUE(parsed_policy[0].origins[0].IsSameOriginWith(origin_a));
   // Simple policy with *.
   parsed_policy =
       ParseFeaturePolicy("vibrate *", origin_a_.get(), origin_b_.get(),
@@ -129,15 +136,12 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
   EXPECT_EQ(WebFeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
   EXPECT_FALSE(parsed_policy[1].matches_all_origins);
   EXPECT_EQ(2UL, parsed_policy[1].origins.size());
-  EXPECT_TRUE(origin_b_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[1].origins[0].Get()));
-  EXPECT_TRUE(origin_c_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[1].origins[1].Get()));
+  EXPECT_TRUE(parsed_policy[1].origins[0].IsSameOriginWith(origin_b));
+  EXPECT_TRUE(parsed_policy[1].origins[1].IsSameOriginWith(origin_c));
   EXPECT_EQ(WebFeaturePolicyFeature::kPayment, parsed_policy[2].feature);
   EXPECT_FALSE(parsed_policy[2].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[2].origins.size());
-  EXPECT_TRUE(origin_a_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[2].origins[0].Get()));
+  EXPECT_TRUE(parsed_policy[2].origins[0].IsSameOriginWith(origin_a));
 
   // Multiple policies.
   parsed_policy = ParseFeaturePolicy(
@@ -152,15 +156,12 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
   EXPECT_EQ(WebFeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
   EXPECT_FALSE(parsed_policy[1].matches_all_origins);
   EXPECT_EQ(2UL, parsed_policy[1].origins.size());
-  EXPECT_TRUE(origin_b_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[1].origins[0].Get()));
-  EXPECT_TRUE(origin_c_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[1].origins[1].Get()));
+  EXPECT_TRUE(parsed_policy[1].origins[0].IsSameOriginWith(origin_b));
+  EXPECT_TRUE(parsed_policy[1].origins[1].IsSameOriginWith(origin_c));
   EXPECT_EQ(WebFeaturePolicyFeature::kPayment, parsed_policy[2].feature);
   EXPECT_FALSE(parsed_policy[2].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[2].origins.size());
-  EXPECT_TRUE(origin_a_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[2].origins[0].Get()));
+  EXPECT_TRUE(parsed_policy[2].origins[0].IsSameOriginWith(origin_a));
 
   // Old (to be deprecated) iframe allow syntax.
   messages.clear();
@@ -174,18 +175,15 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
   EXPECT_EQ(WebFeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
   EXPECT_FALSE(parsed_policy[0].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[0].origins.size());
-  EXPECT_TRUE(origin_a_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[0].origins[0].Get()));
+  EXPECT_TRUE(parsed_policy[0].origins[0].IsSameOriginWith(origin_a));
   EXPECT_EQ(WebFeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
   EXPECT_FALSE(parsed_policy[1].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[1].origins.size());
-  EXPECT_TRUE(origin_a_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[1].origins[0].Get()));
+  EXPECT_TRUE(parsed_policy[1].origins[0].IsSameOriginWith(origin_a));
   EXPECT_EQ(WebFeaturePolicyFeature::kPayment, parsed_policy[2].feature);
   EXPECT_FALSE(parsed_policy[2].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[2].origins.size());
-  EXPECT_TRUE(origin_a_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[2].origins[0].Get()));
+  EXPECT_TRUE(parsed_policy[2].origins[0].IsSameOriginWith(origin_a));
 
   // Header policies with no optional origin lists.
   parsed_policy =
@@ -195,18 +193,15 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
   EXPECT_EQ(WebFeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
   EXPECT_FALSE(parsed_policy[0].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[0].origins.size());
-  EXPECT_TRUE(origin_a_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[0].origins[0].Get()));
+  EXPECT_TRUE(parsed_policy[0].origins[0].IsSameOriginWith(origin_a));
   EXPECT_EQ(WebFeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
   EXPECT_FALSE(parsed_policy[1].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[1].origins.size());
-  EXPECT_TRUE(origin_a_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[1].origins[0].Get()));
+  EXPECT_TRUE(parsed_policy[1].origins[0].IsSameOriginWith(origin_a));
   EXPECT_EQ(WebFeaturePolicyFeature::kPayment, parsed_policy[2].feature);
   EXPECT_FALSE(parsed_policy[2].matches_all_origins);
   EXPECT_EQ(1UL, parsed_policy[2].origins.size());
-  EXPECT_TRUE(origin_a_->IsSameSchemeHostPortAndSuborigin(
-      parsed_policy[2].origins[0].Get()));
+  EXPECT_TRUE(parsed_policy[2].origins[0].IsSameOriginWith(origin_a));
 }
 
 }  // namespace blink

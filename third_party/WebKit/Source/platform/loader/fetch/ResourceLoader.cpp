@@ -47,6 +47,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebCORS.h"
 #include "public/platform/WebData.h"
+#include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebURLResponse.h"
