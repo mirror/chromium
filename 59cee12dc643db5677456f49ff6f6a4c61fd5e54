@@ -19,6 +19,58 @@
     },
     {
       "key": {
+        "uuid": "f3be6b5c_8750efa7",
+        "filename": "chrome/browser/chromeos/extensions/extension_system_event_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-27T16:07:43Z",
+      "side": 1,
+      "message": "+1\n\nIn browser, please use session_manager::SessionManagerObserver in components/session_manager/core/session_manager_observer.h. (I know the names are bad and confusing with session_manager daemon. Eventually I would like to rename it to UserSessionManager but could only do that after I move the current UserSessionManager code).\n\nWhether screen is locked or not can be retrieved from session state. i.e.\n  SessionManager::Get()-\u003esession_state() \u003d\u003d SessionState::LOCKED",
+      "parentUuid": "3d1e36f2_3b5a132c",
+      "revId": "59cee12dc643db5677456f49ff6f6a4c61fd5e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c68ab3e_9bfbadeb",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-27T16:07:43Z",
+      "side": 1,
+      "message": "ditto, use components/session_manager/core/session_manager_observer.h",
+      "revId": "59cee12dc643db5677456f49ff6f6a4c61fd5e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a323d0b_113542e3",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-27T16:07:43Z",
+      "side": 1,
+      "message": "Drop this since we should not use ash::SessionObserver.\n\nYou can create a session_manager::SessionManager instance for test to mock the session state in unit test.\n\ne.g.\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/ash/session_controller_client_unittest.cc?rcl\u003d8bffda4cd007e678135806ec0861f046cb378e02\u0026l\u003d483",
+      "revId": "59cee12dc643db5677456f49ff6f6a4c61fd5e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1862f34_8634f7bb",
         "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
         "patchSetId": 1
