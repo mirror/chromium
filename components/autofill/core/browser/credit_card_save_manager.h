@@ -78,6 +78,9 @@ class CreditCardSaveManager : public payments::PaymentsClientSaveDelegate {
   // has accepted the prompt.
   void OnDidGetUploadRiskData(const std::string& risk_data);
 
+  // Finalizes the upload request and calls PaymentsClient::UploadCard().
+  void UploadCard();
+
   // Returns metric relevant to the CVC field based on values in
   // |found_cvc_field_|, |found_value_in_cvc_field_| and
   // |found_cvc_value_in_non_cvc_field_|.
