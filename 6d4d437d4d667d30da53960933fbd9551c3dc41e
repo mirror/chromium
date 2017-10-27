@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c474e75_228e1d37",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-27T11:57:20Z",
+      "side": 1,
+      "message": "Please only decrease the counter when it is positive, to avoid underflow.",
+      "range": {
+        "startLine": 654,
+        "startChar": 6,
+        "endLine": 654,
+        "endChar": 21
+      },
+      "revId": "6d4d437d4d667d30da53960933fbd9551c3dc41e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b6706d_643d7624",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2599,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-27T11:57:20Z",
+      "side": 1,
+      "message": "To avoid a fragile dependency, make the value \"5\" a named static constant in PasswordFormManager and use it to initialise PasswordFormManager::autofills_left_ as well as to compute the number of expected calls here.\n\nAlso: if this constant were to stay, it should have been constexpr and named in the kCamelCase style.",
+      "range": {
+        "startLine": 2599,
+        "startChar": 12,
+        "endLine": 2599,
+        "endChar": 25
+      },
+      "revId": "6d4d437d4d667d30da53960933fbd9551c3dc41e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef1dcfa_d19709f1",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2601,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-27T11:57:20Z",
+      "side": 1,
+      "message": "I feel stupid, but I don\u0027t see why there needs to be the \"+1\", when the counter being zero already prevents autofilling.",
+      "range": {
+        "startLine": 2601,
+        "startChar": 13,
+        "endLine": 2601,
+        "endChar": 30
+      },
+      "revId": "6d4d437d4d667d30da53960933fbd9551c3dc41e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0183867_0eb0a799",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2604,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-27T11:57:20Z",
+      "side": 1,
+      "message": "Having this magic number the same as the initial value of |autofills_left_| might cause confusion. Perhaps make it a named constant like this?\nconstexpr int kNumberOfExtraIgnoredFillRequests \u003d 7;",
+      "range": {
+        "startLine": 2604,
+        "startChar": 38,
+        "endLine": 2604,
+        "endChar": 39
+      },
+      "revId": "6d4d437d4d667d30da53960933fbd9551c3dc41e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
