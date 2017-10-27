@@ -4,6 +4,39 @@
 
 /** @fileoverview Suite of tests for extension-keyboard-shortcuts. */
 cr.define('extension_shortcut_input_tests', function() {
+  class DelegateMock {
+    constructor() {
+      // For test verification only.
+      this.binding = {};
+      this.startCaptureFlag = false;
+    }
+
+    /**
+     * @param {boolean} enable
+     */
+    setShortcutHandlingSuspended(enable) {
+      this.startCaptureFlag = enable;
+    }
+
+    /**
+     * @param {string} item
+     * @param {string} commandName
+     * @param {string} keybinding
+     */
+    updateExtensionCommand(item, commandName, keybinding) {
+      this.binding.item = item;
+      this.binding.commandName = commandName;
+      this.binding.keybinding = keybinding;
+    }
+
+    /* Testing only. */
+    verifyExtensionCommand(binding) {
+      expectEquals(this.binding.item, binding.item);
+      expectEquals(this.binding.commandName, binding.commandName);
+      expectEquals(this.binding.keybinding, binding.keybinding);
+    }
+  }
+
   /** @enum {string} */
   var TestNames = {
     Basic: 'basic',
@@ -15,6 +48,7 @@ cr.define('extension_shortcut_input_tests', function() {
     setup(function() {
       PolymerTest.clearBody();
       input = new extensions.ShortcutInput();
+      input.delegate = new DelegateMock();
       input.commandName = 'Command';
       input.item = 'itemid';
       document.body.appendChild(input);
@@ -32,12 +66,10 @@ cr.define('extension_shortcut_input_tests', function() {
       expectFalse(isClearVisible());
 
       // Click the input. Capture should start.
-      {
-        let startCaptureListener = new extension_test_util.ListenerMock();
-        startCaptureListener.addListener(input, 'shortcut-capture-started');
-        MockInteractions.tap(field);
-        startCaptureListener.verify();
-      }
+      expectFalse(input.delegate.startCaptureFlag);
+      MockInteractions.tap(field);
+      expectTrue(input.delegate.startCaptureFlag);
+
       expectEquals('', fieldText());
       expectTrue(input.capturing_);
       expectFalse(isClearVisible());
@@ -61,44 +93,40 @@ cr.define('extension_shortcut_input_tests', function() {
       MockInteractions.keyUpOn(field, 18, ['ctrl']);
       expectEquals('Ctrl', fieldText());
       expectTrue(input.capturing_);
-      {
-        // Add 'A'. Once a valid shortcut is typed (like Ctrl + A), it is
-        // committed.
-        let updatedListener = new extension_test_util.ListenerMock();
-        updatedListener.addListener(
-            input, 'shortcut-updated',
-            {keybinding: 'Ctrl+A', item: 'itemid', commandName: 'Command'});
-        updatedListener.addListener(input, 'shortcut-capture-ended');
-        MockInteractions.keyDownOn(field, 65, ['ctrl']);
-        updatedListener.verify();
-      }
+
+      // Add 'A'. Once a valid shortcut is typed (like Ctrl + A), it is
+      // committed.
+      MockInteractions.keyDownOn(field, 65, ['ctrl']);
+      input.delegate.verifyExtensionCommand({
+        keybinding: 'Ctrl+A',
+        item: 'itemid',
+        commandName: 'Command',
+      });
+
       expectEquals('Ctrl + A', fieldText());
       expectFalse(input.capturing_);
       expectEquals('Ctrl+A', input.shortcut);
       expectTrue(isClearVisible());
 
-      {
-        // Test clearing the shortcut.
-        let updatedListener = new extension_test_util.ListenerMock();
-        updatedListener.addListener(
-            input, 'shortcut-updated',
-            {keybinding: '', item: 'itemid', commandName: 'Command'});
-        MockInteractions.tap(input.$['clear']);
-        updatedListener.verify();
-      }
+      // Test clearing the shortcut.
+      MockInteractions.tap(input.$['clear']);
+      input.delegate.verifyExtensionCommand({
+        keybinding: '',
+        item: 'itemid',
+        commandName: 'Command',
+      });
+
       expectEquals('', input.shortcut);
       expectFalse(isClearVisible());
 
       MockInteractions.tap(field);
-      {
-        // Test ending capture using the escape key.
-        expectTrue(input.capturing_);
-        let captureEndedListener = new extension_test_util.ListenerMock();
-        captureEndedListener.addListener(input, 'shortcut-capture-ended');
-        MockInteractions.keyDownOn(field, 27);  // Escape key.
-        expectFalse(input.capturing_);
-        captureEndedListener.verify();
-      }
+
+      // Test ending capture using the escape key.
+      expectTrue(input.capturing_);
+      expectTrue(input.delegate.startCaptureFlag);
+      MockInteractions.keyDownOn(field, 27);  // Escape key.
+      expectFalse(input.capturing_);
+      expectFalse(input.delegate.startCaptureFlag);
     });
   });
 
