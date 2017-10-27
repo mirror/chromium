@@ -51,7 +51,6 @@ class InteractiveUITestSuite : public ChromeTestSuite {
 #elif defined(USE_AURA)
 #if defined(OS_WIN)
     com_initializer_.reset(new base::win::ScopedCOMInitializer());
-    KillAlwaysOnTopWindows(RunType::BEFORE_TEST);
 #endif
 
 #if defined(OS_LINUX)
@@ -70,7 +69,6 @@ class InteractiveUITestSuite : public ChromeTestSuite {
 
   void Shutdown() override {
 #if defined(OS_WIN)
-    KillAlwaysOnTopWindows(RunType::AFTER_TEST);
     com_initializer_.reset();
 #endif
   }
@@ -79,6 +77,30 @@ class InteractiveUITestSuite : public ChromeTestSuite {
 #if defined(OS_WIN)
   std::unique_ptr<base::win::ScopedCOMInitializer> com_initializer_;
 #endif
+};
+
+class InteractiveUITestLauncherDelegate : public ChromeTestLauncherDelegate {
+ public:
+  explicit InteractiveUITestLauncherDelegate(ChromeTestSuiteRunner* runner)
+      : ChromeTestLauncherDelegate(runner) {}
+
+ protected:
+  // content::TestLauncherDelegate:
+  void PreSharding() override {
+    ChromeTestLauncherDelegate::PreSharding();
+#if defined(OS_WIN)
+    KillAlwaysOnTopWindows(RunType::BEFORE_TEST);
+#endif
+  }
+  void OnDoneRunningTests() override {
+#if defined(OS_WIN)
+    KillAlwaysOnTopWindows(RunType::AFTER_TEST);
+#endif
+    ChromeTestLauncherDelegate::OnDoneRunningTests();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(InteractiveUITestLauncherDelegate);
 };
 
 class InteractiveUITestSuiteRunner : public ChromeTestSuiteRunner {
@@ -106,6 +128,6 @@ int main(int argc, char** argv) {
   size_t parallel_jobs = 1U;
 
   InteractiveUITestSuiteRunner runner;
-  ChromeTestLauncherDelegate delegate(&runner);
+  InteractiveUITestLauncherDelegate delegate(&runner);
   return LaunchChromeTests(parallel_jobs, &delegate, argc, argv);
 }

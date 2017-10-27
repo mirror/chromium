@@ -15,12 +15,12 @@
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/message_loop/message_loop.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/process/process.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
+#include "chrome/test/base/process_inspector_win.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_capture_options.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_capturer.h"
@@ -101,7 +101,6 @@ SkBitmap CaptureScreen() {
     // While webrtc::DesktopCapturer seems to be synchronous, comments in its
     // implementation seem to indicate that it may require a UI message loop on
     // its thread.
-    base::MessageLoopForUI message_loop;
     base::RunLoop run_loop;
     CaptureWorker worker(std::move(capturer), run_loop.QuitClosure());
     run_loop.Run();
@@ -185,6 +184,12 @@ class WindowEnumerator {
   void Run();
 
  private:
+  // Properies of a running process.
+  struct ProcessProperties {
+    DWORD process_id;
+    base::string16 command_line;
+  };
+
   // An EnumWindowsProc invoked by EnumWindows once for each window.
   static BOOL CALLBACK OnWindowProc(HWND hwnd, LPARAM l_param);
 
@@ -200,6 +205,9 @@ class WindowEnumerator {
   // Returns true if |class_name| is the name of a window owned by the Windows
   // shell.
   static bool IsShellWindowClass(const base::string16& class_name);
+
+  // Returns the lineage of |process_id|.
+  static std::vector<ProcessProperties> GetProcessLineage(DWORD process_id);
 
   // Main processing function run for each window.
   BOOL OnWindow(HWND hwnd);
@@ -254,6 +262,36 @@ bool WindowEnumerator::IsShellWindowClass(const base::string16& class_name) {
          class_name == L"Shell_SecondaryTrayWnd";
 }
 
+// static
+std::vector<WindowEnumerator::ProcessProperties>
+WindowEnumerator::GetProcessLineage(DWORD process_id) {
+  std::vector<ProcessProperties> properties;
+
+  while (true) {
+    base::Process process = base::Process::OpenWithAccess(
+        process_id, PROCESS_QUERY_INFORMATION | SYNCHRONIZE | PROCESS_VM_READ);
+
+    // It's possible that |process_id| has gone away and that a new process
+    // using the same PID has appeared. If this turns out to be an issue, we
+    // could fetch the process start time here and compare it with the time just
+    // before getting |thread_id| in OnWindow(). This is likely overkill for
+    // diagnostic purposes.
+    if (!process.IsValid())
+      break;
+
+    auto inspector = ProcessInspector::Create(process);
+    if (!inspector)
+      break;
+
+    properties.push_back({process_id, inspector->command_line()});
+    DWORD parent_pid = inspector->GetParentPid();
+    if (process_id == parent_pid)
+      break;
+    process_id = parent_pid;
+  }
+  return properties;
+}
+
 BOOL WindowEnumerator::OnWindow(HWND hwnd) {
   const BOOL kContinueIterating = TRUE;
 
@@ -294,30 +332,22 @@ BOOL WindowEnumerator::OnWindow(HWND hwnd) {
 
   // All other always-on-top windows may be problematic, but in theory tests
   // should not be creating an always on top window that outlives the test. Log
-  // attributes of the window in case there are problems.
+  // attributes of the window's process in case there are problems.
   DWORD process_id = 0;
-  DWORD thread_id = GetWindowThreadProcessId(hwnd, &process_id);
-
-  base::Process process = base::Process::Open(process_id);
-  base::string16 process_path(MAX_PATH, L'\0');
-  if (process.IsValid()) {
-    // It's possible that the actual process owning |hwnd| has gone away and
-    // that a new process using the same PID has appeared. If this turns out to
-    // be an issue, we could fetch the process start time here and compare it
-    // with the time just before getting |thread_id| above. This is likely
-    // overkill for diagnostic purposes.
-    DWORD str_len = process_path.size();
-    if (!::QueryFullProcessImageName(process.Handle(), 0, &process_path[0],
-                                     &str_len) ||
-        str_len >= MAX_PATH) {
-      str_len = 0;
-    }
-    process_path.resize(str_len);
+  GetWindowThreadProcessId(hwnd, &process_id);
+  std::vector<ProcessProperties> process_properties =
+      GetProcessLineage(process_id);
+  std::wostringstream sstream;
+  base::string16 sep;
+  for (const auto& prop : process_properties) {
+    sstream << sep << L"(process_id: " << prop.process_id
+            << L", command_line: \"" << prop.command_line << "\")";
+    if (sep.empty())
+      sep = L", ";
   }
   LOG(ERROR) << (run_type_ == RunType::BEFORE_TEST ? kWindowFoundBeforeTest
                                                    : kWindowFoundPostTest)
-             << class_name << " process_id=" << process_id
-             << " thread_id=" << thread_id << " process_path=" << process_path;
+             << "\"" << class_name << "\", process lineage: " << sstream.str();
 
   return kContinueIterating;
 }
