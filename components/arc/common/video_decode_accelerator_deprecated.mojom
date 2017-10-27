@@ -16,11 +16,6 @@ enum HalPixelFormatExtension {
   HAL_PIXEL_FORMAT_VP8 = 0x00385056,
 };
 
-enum PortType {
-  PORT_INPUT = 0,
-  PORT_OUTPUT = 1,
-};
-
 struct BufferMetadata {
   int64 timestamp;  // in microseconds
   uint32 bytes_used;
