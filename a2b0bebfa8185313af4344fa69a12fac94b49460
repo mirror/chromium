@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ef5ad0a_5e52f269",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-27T22:26:20Z",
+      "side": 1,
+      "message": "nit: \"owned\"",
+      "revId": "a2b0bebfa8185313af4344fa69a12fac94b49460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
