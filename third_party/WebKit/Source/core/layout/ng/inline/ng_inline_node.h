@@ -38,7 +38,7 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   LayoutBlockFlow* GetLayoutBlockFlow() const {
     return ToLayoutBlockFlow(box_);
   }
-  NGLayoutInputNode NextSibling();
+  NGLayoutInputNode NextSibling() { return nullptr; }
 
   scoped_refptr<NGLayoutResult> Layout(const NGConstraintSpace&,
                                        NGBreakToken* = nullptr);
