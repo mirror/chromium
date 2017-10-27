@@ -185,6 +185,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/browser_url_handler.h"
 #include "content/public/browser/browsing_data_remover.h"
+#include "content/public/browser/certificate_request_result_type.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/client_certificate_delegate.h"
@@ -2251,6 +2252,13 @@ void ChromeContentBrowserClient::AllowCertificateError(
     if (!callback.is_null()) {
       callback.Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_CANCEL);
     }
+    return;
+  }
+
+  // If we're using committed interstitials, deny the request.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kCommittedInterstitials)) {
+    callback.Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_DENY);
     return;
   }
 
