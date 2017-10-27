@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "841d415b_e5b6e374",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000554
+      },
+      "writtenOn": "2017-10-27T14:33:45Z",
+      "side": 1,
+      "message": "Please don\u0027t do this as this method is overridden and we could miss recurring (or risk redundant layout). See comments in ui_scene.cc",
+      "revId": "ead31558ede1077a72421796941d31c615f358f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad53c427_94522630",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000554
+      },
+      "writtenOn": "2017-10-27T14:33:45Z",
+      "side": 1,
+      "message": "Please use base::Reversed to visit children first: https://cs.chromium.org/chromium/src/v8/src/base/adapters.h?rcl\u003dffcf97e75961cd59bff022854e3491a3bf668d04\u0026l\u003d40\n\nEventually, it would be good to combine the texture/size updates with the layout updates in the same walk. When we do this, we can create a recursive, non-virtual function that handles both.",
+      "revId": "ead31558ede1077a72421796941d31c615f358f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
