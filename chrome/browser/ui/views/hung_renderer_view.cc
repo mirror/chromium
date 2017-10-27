@@ -153,6 +153,11 @@ void HungPagesTableModel::TabDestroyed(WebContentsObserverImpl* tab) {
   // WARNING: we've likely been deleted.
 }
 
+void HungPagesTableModel::TabUpdated() {
+  if (observer_)
+    observer_->OnModelChanged();
+}
+
 HungPagesTableModel::WebContentsObserverImpl::WebContentsObserverImpl(
     HungPagesTableModel* model, WebContents* tab)
     : content::WebContentsObserver(tab),
@@ -162,6 +167,16 @@ HungPagesTableModel::WebContentsObserverImpl::WebContentsObserverImpl(
 void HungPagesTableModel::WebContentsObserverImpl::RenderProcessGone(
     base::TerminationStatus status) {
   model_->TabDestroyed(this);
+}
+
+void HungPagesTableModel::WebContentsObserverImpl::RenderViewHostChanged(
+    content::RenderViewHost* old_host,
+    content::RenderViewHost* new_host) {
+  if (!new_host || !new_host->GetWidget()->IsCurrentlyUnresponsive()) {
+    model_->TabDestroyed(this);
+    return;
+  }
+  model_->TabUpdated();
 }
 
 void HungPagesTableModel::WebContentsObserverImpl::WebContentsDestroyed() {
