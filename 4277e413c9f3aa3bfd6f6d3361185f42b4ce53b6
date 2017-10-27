@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "816d4070_d6f4d05c",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-27T00:51:52Z",
+      "side": 1,
+      "message": "This could get out of date... Maybe it\u0027s better to say: \"See the \"FetchRequestMode\" enum in enums.xml.\"",
+      "revId": "4277e413c9f3aa3bfd6f6d3361185f42b4ce53b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f5307e_f4da718f",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-27T00:51:52Z",
+      "side": 1,
+      "message": "See the \"FetchResponseType\" enum in enums.xml.",
+      "revId": "4277e413c9f3aa3bfd6f6d3361185f42b4ce53b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
