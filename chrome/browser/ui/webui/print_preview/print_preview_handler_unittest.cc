@@ -135,6 +135,35 @@ base::Value GetPrintTicket(printing::PrinterType type, bool cloud) {
   return ticket;
 }
 
+base::Value GetPrintPreviewTicket(bool is_pdf) {
+  base::Value print_ticket = GetPrintTicket(kLocalPrinter, false);
+
+  // Make some modifications to match a preview print ticket.
+  print_ticket.SetKey(kSettingPageRange, base::Value());
+  print_ticket.SetKey(kIsFirstRequest, base::Value(true));
+  print_ticket.SetKey(kPreviewRequestID, base::Value(0));
+  print_ticket.SetKey(kSettingPreviewModifiable, base::Value(is_pdf));
+  print_ticket.SetKey(kSettingGenerateDraftData, base::Value(true));
+  print_ticket.RemoveKey(kSettingPageWidth);
+  print_ticket.RemoveKey(kSettingPageHeight);
+  print_ticket.RemoveKey(kSettingShowSystemDialog);
+
+  return print_ticket;
+}
+
+base::ListValue ConstructPreviewArgs(std::string callback_id,
+                                     const base::Value& print_ticket) {
+  base::ListValue args;
+  args.AppendString(callback_id);
+  std::string json;
+  base::JSONWriter::Write(print_ticket, &json);
+  args.AppendString(json);
+  std::string page_count;
+  base::JSONWriter::Write(base::Value(-1), &page_count);
+  args.AppendString(page_count);
+  return args;
+}
+
 class TestPrinterHandler : public PrinterHandler {
  public:
   explicit TestPrinterHandler(const std::vector<PrinterInfo>& printers) {
@@ -228,7 +257,8 @@ class TestPrintPreviewHandler : public PrintPreviewHandler {
  public:
   TestPrintPreviewHandler(std::unique_ptr<PrinterHandler> printer_handler,
                           content::WebContents* initiator)
-      : test_printer_handler_(std::move(printer_handler)),
+      : bad_messages_(0),
+        test_printer_handler_(std::move(printer_handler)),
         initiator_(initiator) {}
 
   PrinterHandler* GetPrinterHandler(PrinterType printer_type) override {
@@ -243,6 +273,8 @@ class TestPrintPreviewHandler : public PrintPreviewHandler {
     sink_.Send(message);
   }
 
+  void BadMessageReceived() override { bad_messages_++; }
+
   content::WebContents* GetInitiator() const override { return initiator_; }
 
   bool CalledOnlyForType(PrinterType printer_type) {
@@ -254,9 +286,12 @@ class TestPrintPreviewHandler : public PrintPreviewHandler {
 
   void reset_calls() { called_for_type_.clear(); }
 
+  int bad_messages() { return bad_messages_; }
+
   IPC::TestSink* sink() { return &sink_; }
 
  private:
+  int bad_messages_;
   base::flat_set<PrinterType> called_for_type_;
   std::unique_ptr<PrinterHandler> test_printer_handler_;
   IPC::TestSink sink_;
@@ -375,6 +410,18 @@ class PrintPreviewHandlerTest : public testing::Test {
         settings->FindKeyOfType("printerName", base::Value::Type::STRING);
     ASSERT_TRUE(printer);
     EXPECT_EQ(default_printer_name, printer->GetString());
+  }
+
+  base::DictionaryValue VerifyPreviewMessage() {
+    // Verify that the preview was requested from the renderer
+    EXPECT_TRUE(
+        handler()->sink()->GetUniqueMessageMatching(PrintMsg_PrintPreview::ID));
+    const IPC::Message* msg =
+        handler()->sink()->GetFirstMessageMatching(PrintMsg_PrintPreview::ID);
+    EXPECT_TRUE(msg);
+    PrintMsg_PrintPreview::Param param;
+    PrintMsg_PrintPreview::Read(msg, &param);
+    return std::move(std::get<0>(param));
   }
 
   const Profile* profile() { return profile_.get(); }
@@ -568,43 +615,17 @@ TEST_F(PrintPreviewHandlerTest, Print) {
 TEST_F(PrintPreviewHandlerTest, GetPreview) {
   Initialize();
 
-  base::ListValue args;
   std::string callback_id_in = "test-callback-id-1";
-  args.AppendString(callback_id_in);
-  base::Value print_ticket =
-      printing::GetPrintTicket(printing::kLocalPrinter, false);
-
-  // Make some modifications to match a preview print ticket.
-  print_ticket.SetKey(printing::kSettingPageRange, base::Value());
-  print_ticket.SetKey(printing::kIsFirstRequest, base::Value(true));
-  print_ticket.SetKey(printing::kPreviewRequestID, base::Value(0));
-  print_ticket.SetKey(printing::kSettingPreviewModifiable, base::Value(true));
-  print_ticket.SetKey(printing::kSettingGenerateDraftData, base::Value(true));
-  print_ticket.RemoveKey(printing::kSettingPageWidth);
-  print_ticket.RemoveKey(printing::kSettingPageHeight);
-  print_ticket.RemoveKey(printing::kSettingShowSystemDialog);
-
-  std::string json;
-  base::JSONWriter::Write(print_ticket, &json);
-  args.AppendString(json);
-
-  std::string page_count;
-  base::JSONWriter::Write(base::Value(-1), &page_count);
-  args.AppendString(page_count);
-
+  base::Value print_ticket = printing::GetPrintPreviewTicket(false);
+  base::ListValue args =
+      printing::ConstructPreviewArgs(callback_id_in, print_ticket);
   handler()->HandleGetPreview(&args);
 
   // Verify that the preview was requested from the renderer with the
   // appropriate settings.
-  EXPECT_TRUE(
-      handler()->sink()->GetUniqueMessageMatching(PrintMsg_PrintPreview::ID));
-  const IPC::Message* msg =
-      handler()->sink()->GetFirstMessageMatching(PrintMsg_PrintPreview::ID);
-  ASSERT_TRUE(msg);
-  PrintMsg_PrintPreview::Param param;
-  PrintMsg_PrintPreview::Read(msg, &param);
+  base::DictionaryValue preview_params = VerifyPreviewMessage();
   bool set_id = false;
-  for (const auto& it : std::get<0>(param).DictItems()) {
+  for (const auto& it : preview_params.DictItems()) {
     base::Value* value_in = print_ticket.FindKey(it.first);
     if (it.first == printing::kPreviewUIID) {  // This is added by the handler.
       set_id = true;
@@ -614,4 +635,71 @@ TEST_F(PrintPreviewHandlerTest, GetPreview) {
     EXPECT_EQ(*value_in, it.second);
   }
   EXPECT_TRUE(set_id);
+}
+
+TEST_F(PrintPreviewHandlerTest, SendPreviewUpdates) {
+  Initialize();
+
+  std::string callback_id_in = "test-callback-id-1";
+  base::Value print_ticket = printing::GetPrintPreviewTicket(false);
+  base::ListValue args =
+      printing::ConstructPreviewArgs(callback_id_in, print_ticket);
+  handler()->HandleGetPreview(&args);
+  base::DictionaryValue preview_params = VerifyPreviewMessage();
+
+  // Read the preview UI ID and request ID
+  int preview_request_id = preview_params
+                               .FindKeyOfType(printing::kPreviewRequestID,
+                                              base::Value::Type::INTEGER)
+                               ->GetInt();
+  int preview_ui_id =
+      preview_params
+          .FindKeyOfType(printing::kPreviewUIID, base::Value::Type::INTEGER)
+          ->GetInt();
+
+  // Simulate renderer responses: PageLayoutReady, PageCountReady,
+  // PagePreviewReady, and OnPrintPreviewReady will be called in that order.
+  base::DictionaryValue layout;
+  layout.SetKey(printing::kSettingMarginTop, base::Value(34.0));
+  layout.SetKey(printing::kSettingMarginLeft, base::Value(34.0));
+  layout.SetKey(printing::kSettingMarginBottom, base::Value(34.0));
+  layout.SetKey(printing::kSettingMarginRight, base::Value(34.0));
+  layout.SetKey(printing::kSettingContentWidth, base::Value(544.0));
+  layout.SetKey(printing::kSettingContentHeight, base::Value(700.0));
+  layout.SetKey(printing::kSettingPrintableAreaX, base::Value(17));
+  layout.SetKey(printing::kSettingPrintableAreaY, base::Value(17));
+  layout.SetKey(printing::kSettingPrintableAreaWidth, base::Value(578));
+  layout.SetKey(printing::kSettingPrintableAreaHeight, base::Value(734));
+  handler()->SendPageLayoutReady(layout, false);
+
+  // Verify that page-layout-ready webUI event was fired.
+  AssertWebUIEventFired(*web_ui()->call_data().back(), "page-layout-ready");
+
+  // 1 page document. Modifiable so send default 100 scaling.
+  handler()->SendPageCountReady(1, preview_request_id, 100);
+  AssertWebUIEventFired(*web_ui()->call_data().back(), "page-count-ready");
+
+  // Page at index 0 is ready.
+  handler()->SendPagePreviewReady(0, preview_ui_id, preview_request_id);
+  AssertWebUIEventFired(*web_ui()->call_data().back(), "page-preview-ready");
+
+  // Print preview is ready.
+  handler()->OnPrintPreviewReady(preview_ui_id, preview_request_id);
+  CheckWebUIResponse(*web_ui()->call_data().back(), callback_id_in, true);
+
+  // Renderer responses have been as expected.
+  EXPECT_EQ(handler()->bad_messages(), 0);
+
+  // None of these should work since there has been no new preview request.
+  // Check that after each the most recent call is still the response to
+  // getPreview.
+  handler()->SendPageLayoutReady(base::DictionaryValue(), false);
+  CheckWebUIResponse(*web_ui()->call_data().back(), callback_id_in, true);
+  handler()->SendPageCountReady(1, 0, -1);
+  CheckWebUIResponse(*web_ui()->call_data().back(), callback_id_in, true);
+  handler()->OnPrintPreviewReady(0, 0);
+  CheckWebUIResponse(*web_ui()->call_data().back(), callback_id_in, true);
+
+  // Handler should have tried to kill the renderer for each of these.
+  EXPECT_EQ(handler()->bad_messages(), 3);
 }
