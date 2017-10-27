@@ -22,6 +22,30 @@
       "revId": "517d2cbe7f6a2323e3784c7d1f227b041181a5a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3efb06f_c35d403a",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-27T22:41:08Z",
+      "side": 1,
+      "message": "Unfortunately, calling the context-\u003eGetDownloadManagerDelegate() will check whether DownloadManager is created or not, so the SetDownloadManager() and SetDelegate() call are strongly ordered. Calling SetDelegate() first will go into an infinite loop.",
+      "parentUuid": "19894961_4d9095f4",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 20
+      },
+      "revId": "517d2cbe7f6a2323e3784c7d1f227b041181a5a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
