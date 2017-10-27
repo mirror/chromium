@@ -14,6 +14,21 @@ std::unique_ptr<OverlayWindow> OverlayWindow::Create() {
   return base::WrapUnique(new OverlayWindowViews());
 }
 
+namespace {
+
+// OverlayWindow implementation of Widget.
+class OverlayWindowWidget : public views::Widget {
+ public:
+  OverlayWindowWidget() {}
+
+  // views::Widget:
+  gfx::Size GetMinimumSize() const override { return gfx::Size(100, 100); }
+  gfx::Size GetMaximumSize() const override { return gfx::Size(1000, 1000); }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(OverlayWindowWidget);
+};
+
 // OverlayWindow implementation of WidgetDelegate.
 class OverlayWindowWidgetDelegate : public views::WidgetDelegate {
  public:
@@ -39,8 +54,10 @@ class OverlayWindowWidgetDelegate : public views::WidgetDelegate {
   DISALLOW_COPY_AND_ASSIGN(OverlayWindowWidgetDelegate);
 };
 
+}  // namespace
+
 OverlayWindowViews::OverlayWindowViews() {
-  widget_.reset(new views::Widget());
+  widget_.reset(new OverlayWindowWidget());
 }
 
 OverlayWindowViews::~OverlayWindowViews() = default;
