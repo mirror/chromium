@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "733ef294_de26b0c5",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-27T18:27:39Z",
+      "side": 1,
+      "message": "Removed in diff CL",
+      "parentUuid": "5e38d772_7c9f0c08",
+      "revId": "4c4983d541f589f13fe60fe4057c25aa334b6123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9c72b3d_32056c98",
         "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4a24b095_abc883f6",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-27T18:27:39Z",
+      "side": 1,
+      "message": "Updated in diff CL.",
+      "parentUuid": "f9c72b3d_32056c98",
+      "range": {
+        "startLine": 34,
+        "startChar": 27,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "4c4983d541f589f13fe60fe4057c25aa334b6123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "157850df_12e6abec",
         "filename": "ios/web_view/public/cwv_autofill_controller.h",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "4c4983d541f589f13fe60fe4057c25aa334b6123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff50fcc_e31865ef",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-27T18:27:39Z",
+      "side": 1,
+      "message": "PTAL. I trimmed it down a bit.",
+      "parentUuid": "157850df_12e6abec",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "4c4983d541f589f13fe60fe4057c25aa334b6123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
