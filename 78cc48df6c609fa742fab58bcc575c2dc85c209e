@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a36bd58f_23d5b923",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-27T02:06:35Z",
+      "side": 1,
+      "message": "Filed a bug with screenshots here crbug.com/778088. I refactored a bit but we can start a new comment thread to discuss further.",
+      "parentUuid": "399dc877_7c13f968",
+      "revId": "78cc48df6c609fa742fab58bcc575c2dc85c209e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7f17939_239d692f",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "78cc48df6c609fa742fab58bcc575c2dc85c209e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b63ff6db_2ea416dd",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-27T02:06:35Z",
+      "side": 1,
+      "message": "Sorry, that is actually what I meant to use, thanks!",
+      "parentUuid": "a7f17939_239d692f",
+      "range": {
+        "startLine": 233,
+        "startChar": 13,
+        "endLine": 233,
+        "endChar": 49
+      },
+      "revId": "78cc48df6c609fa742fab58bcc575c2dc85c209e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cf9c530_7b0caaa3",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-27T02:06:35Z",
+      "side": 1,
+      "message": "I can move all these changes to Layout() if you prefer? I think it\u0027s OK to delete this comment as well if so, but then GetStringWidth() would get called for every permission to show on every layout - is that OK?",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
