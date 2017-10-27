@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30554d8b_60281f45",
+        "filename": "content/browser/download/download_manager_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-27T17:55:44Z",
+      "side": 1,
+      "message": "nit:  explicit",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 21
+      },
+      "revId": "526f184ce84ba6fc3a3ccf2bae4670be0e1658d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff745ee8_6782e2b6",
+        "filename": "content/browser/download/download_manager_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-27T17:55:44Z",
+      "side": 1,
+      "message": "I\u0027m not seeing where you\u0027re initializing this now?  Looks like it\u0027s still being used.",
+      "range": {
+        "startLine": 254,
+        "startChar": 15,
+        "endLine": 254,
+        "endChar": 23
+      },
+      "revId": "526f184ce84ba6fc3a3ccf2bae4670be0e1658d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
