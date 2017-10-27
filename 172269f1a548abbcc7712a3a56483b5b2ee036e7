@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82400732_a17fc403",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-27T15:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b258946b_8676ab3a",
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3b6ef31_620ca474",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 24
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3537598a_ee720a2a",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-27T15:45:08Z",
+      "side": 1,
+      "message": "(I presume you mean AnimationWorkletGlobalScope:Dispose) No, it is not guaranteed. It was, in fact, happening quite repeatedly in testing.  So long as there isn\u0027t an access violation caused by reading the same/modified variable, we are now correct whichever branch of this if is taken (IIUC). The Mutate gets handled emptily after PrepareForShutdownOnWorkerThread, causing is_done to be signalled and allowing progress here emptily.\n\nThere is a defined ordering on the backing thread, since the scheduler gives us one or the other (PrepareForShutdownOnWorkerThread|Mutate) at a time.",
+      "parentUuid": "a3b6ef31_620ca474",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85acd0c7_fad05d09",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 24
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-27T00:40:50Z",
       "side": 1,
       "message": "As majidvp@ commented, this should be TaskRunnerHelper::Get()-\u003ePostTask() to post a task to a per-global-scope scheduler. GetSingleThreadTaskRunner()-\u003ePostTask() posts a task to thread\u0027s default task queue that may run the posted task even after the AnimationWorkletGlobalScope is gone.\n\nI guess you hit DCHECK(IsContextThread()) in the WorkerOrWorkletGlobalScope::GetTaskRunner(), right? GlobalScope is not thread-safe and it\u0027s generally discouraged to access it from a non-context thread. To post a task to the context thread, we need to...\n\n1) take context\u0027s task runner on the context thread and then pass it to the non-context thread, OR\n2) take context\u0027s task runner in some thread-safe way. TaskRunnerHelper::Get(WorkerThread*) is available on the main thread.",
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d59b9a_ca41d790",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-27T15:45:08Z",
+      "side": 1,
+      "message": "Does using that scheduler not give us a starvation condition in the compositor thread if we have posted a Mutate, but the Shutdown/Dispose is handled first?  It Kills that scheduler, causing us is_done to never get signalled below, correct?",
+      "parentUuid": "85acd0c7_fad05d09",
       "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
