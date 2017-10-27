@@ -195,6 +195,24 @@
       "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93ffe041_edb52538",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-27T20:02:53Z",
+      "side": 1,
+      "message": "The Mac code is in chrome/browser/ui/cocoa/tabs.",
+      "parentUuid": "65ba38b6_d7b969e7",
+      "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
