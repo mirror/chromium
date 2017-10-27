@@ -52,8 +52,14 @@ class PLATFORM_EXPORT WebViewScheduler {
   // there's no reason to do this in production.
   virtual void DisableVirtualTimeForTesting() = 0;
 
-  // Returns true if virtual time is currently allowed to advance.
-  virtual bool VirtualTimeAllowedToAdvance() const = 0;
+  enum class TaskStatus {
+    UNPAUSED,
+    DELAYED_TASKS_PAUSED,
+    DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+  };
+
+  // Returns the current TaskStatus.
+  virtual TaskStatus GetTaskStatus() const = 0;
 
   enum class VirtualTimePolicy {
     // In this policy virtual time is allowed to advance. If the blink scheduler

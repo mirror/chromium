@@ -15,8 +15,10 @@ const size_t kTotalCacheLimitInBytes = 5 * 1024 * 1024;
 }  // namespace
 
 LocalStorageCachedAreas::LocalStorageCachedAreas(
-    mojom::StoragePartitionService* storage_partition_service)
+    mojom::StoragePartitionService* storage_partition_service,
+    blink::scheduler::RendererScheduler* renderer_scheduler)
     : storage_partition_service_(storage_partition_service),
+      renderer_scheduler_(renderer_scheduler),
       total_cache_limit_(base::SysInfo::IsLowEndDevice()
                              ? kTotalCacheLimitInBytesLowEnd
                              : kTotalCacheLimitInBytes) {}
@@ -52,7 +54,8 @@ scoped_refptr<LocalStorageCachedArea> LocalStorageCachedAreas::GetCachedArea(
     ClearAreasIfNeeded();
     it = cached_areas_
              .emplace(origin, new LocalStorageCachedArea(
-                                  origin, storage_partition_service_, this))
+                                  origin, storage_partition_service_, this,
+                                  renderer_scheduler_))
              .first;
   }
   return it->second;

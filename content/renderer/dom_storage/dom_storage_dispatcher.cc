@@ -49,6 +49,8 @@ class MessageThrottlingFilter : public IPC::MessageFilter {
   int IncrementPendingCountN(int increment) {
     base::AutoLock locker(lock_);
     pending_count_ += increment;
+    sender_->GetRendererScheduler()->SetPendingDomStorageMessageCount(
+        pending_count_);
     return pending_count_;
   }
 

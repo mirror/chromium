@@ -22,6 +22,7 @@
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebData.h"
+#include "third_party/WebKit/public/platform/scheduler/test/fake_renderer_scheduler.h"
 
 using blink::WebBlobInfo;
 using blink::WebData;
@@ -125,12 +126,14 @@ class WebIDBCursorImplTest : public testing::Test {
     mock_cursor_ =
         base::MakeUnique<MockCursorImpl>(mojo::MakeIsolatedRequest(&ptr));
     cursor_ = base::MakeUnique<WebIDBCursorImpl>(
-        ptr.PassInterface(), 1, base::ThreadTaskRunnerHandle::Get());
+        ptr.PassInterface(), 1, base::ThreadTaskRunnerHandle::Get(),
+        &fake_renderer_scheduler);
   }
 
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   WebIDBKey null_key_;
+  blink::scheduler::FakeRendererScheduler fake_renderer_scheduler;
   std::unique_ptr<WebIDBCursorImpl> cursor_;
   std::unique_ptr<MockCursorImpl> mock_cursor_;
 

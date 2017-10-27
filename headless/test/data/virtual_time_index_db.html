@@ -1,0 +1,48 @@
+<html>
+<body>
+<script>
+var request = window.indexedDB.open("TestDatabase", 1);
+request.onsuccess = function(event) {
+  var db = event.target.result;
+
+  function getCount(callback) {
+    var request =
+        db.transaction(["testStore"]).objectStore("testStore").get("id");
+    request.onsuccess = function(event) {
+      callback(request.result.count);
+    };
+  }
+
+  function setCount(count, callback) {
+     var request = db.transaction(["testStore"], "readwrite")
+        .objectStore("testStore")
+        .put({ id: "id", count: count });
+    request.onsuccess = function(event) {
+      callback();
+    };
+  }
+
+  function onSet() {
+    getCount(function(count) {
+      setCount(count + 1, onSet);
+    });
+  };
+
+  setCount(1, onSet);
+
+  // Print the number of events after 4 seconds.
+  setTimeout(function() {
+    getCount(function(count){
+      console.log(count);
+    });
+  }, 4000);
+};
+
+request.onupgradeneeded = function(event) {
+  var store = event.currentTarget.result.createObjectStore(
+      "testStore", { keyPath: "id" });
+};
+
+</script>
+</body>
+</html>

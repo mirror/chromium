@@ -63,6 +63,12 @@ class FakeRendererScheduler : public RendererScheduler {
   bool MainThreadSeemsUnresponsive(
       base::TimeDelta main_thread_responsiveness_threshold) override;
   void SetRendererProcessType(RendererProcessType type) override;
+  void SetPendingDomStorageMessageCount(int pending_count) override;
+  void IncrementPendingLocalStorageMessageCount(const std::string& id) override;
+  void DecrementPendingLocalStorageMessageCount(const std::string& id) override;
+  void ClearPendingLocalStorageMessageCount(const std::string& id) override;
+  void IncrementPendingIndexDbTransactionCount() override;
+  void DecrementPendingIndexDbTransactionCount() override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeRendererScheduler);

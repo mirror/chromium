@@ -102,16 +102,19 @@ WebViewSchedulerImpl::WebViewSchedulerImpl(
     : intervention_reporter_(intervention_reporter),
       renderer_scheduler_(renderer_scheduler),
       virtual_time_policy_(VirtualTimePolicy::ADVANCE),
+      task_status_(TaskStatus::UNPAUSED),
       background_parser_count_(0),
+      pending_dom_storage_message_count_(0),
       max_task_starvation_count_(0),
       page_visible_(true),
       disable_background_timer_throttling_(disable_background_timer_throttling),
-      allow_virtual_time_to_advance_(true),
       virtual_time_(false),
       is_audio_playing_(false),
       reported_background_throttling_since_navigation_(false),
       has_active_connection_(false),
       nested_runloop_(false),
+      pending_local_storage_messages_(false),
+      pending_index_db_transactions_(false),
       background_time_budget_pool_(nullptr),
       delegate_(delegate) {
   renderer_scheduler->AddWebViewScheduler(this);
@@ -184,16 +187,23 @@ void WebViewSchedulerImpl::EnableVirtualTime() {
 
   virtual_time_ = true;
   renderer_scheduler_->GetVirtualTimeDomain()->SetCanAdvanceVirtualTime(
-      allow_virtual_time_to_advance_);
+      task_status_ == TaskStatus::UNPAUSED);
 
   renderer_scheduler_->GetVirtualTimeDomain()->SetObserver(this);
+  renderer_scheduler_->EnableVirtualTime();
 
-  if (!allow_virtual_time_to_advance_) {
-    renderer_scheduler_->VirtualTimePaused();
-    NotifyVirtualTimePaused();
+  switch (task_status_) {
+    case TaskStatus::UNPAUSED:
+      break;
+    case TaskStatus::DELAYED_TASKS_PAUSED:
+      NotifyVirtualTimePaused();
+      break;
+    case TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED:
+      renderer_scheduler_->VirtualTimePaused();
+      NotifyVirtualTimePaused();
+      break;
   }
 
-  renderer_scheduler_->EnableVirtualTime();
   virtual_time_control_task_queue_ = WebTaskRunnerImpl::Create(
       renderer_scheduler_->VirtualTimeControlTaskQueue());
   ApplyVirtualTimePolicy();
@@ -210,30 +220,48 @@ void WebViewSchedulerImpl::DisableVirtualTimeForTesting() {
   ApplyVirtualTimePolicy();
 }
 
-void WebViewSchedulerImpl::SetAllowVirtualTimeToAdvance(
-    bool allow_virtual_time_to_advance) {
-  if (allow_virtual_time_to_advance_ == allow_virtual_time_to_advance)
+void WebViewSchedulerImpl::SetTaskStatus(TaskStatus task_status) {
+  if (task_status_ == task_status)
     return;
-  allow_virtual_time_to_advance_ = allow_virtual_time_to_advance;
+
+  const TaskStatus previous_task_status = task_status_;
+  task_status_ = task_status;
 
   if (!virtual_time_)
     return;
 
-  if (!allow_virtual_time_to_advance)
-    NotifyVirtualTimePaused();
+  switch (task_status_) {
+    case TaskStatus::UNPAUSED:
+      renderer_scheduler_->GetVirtualTimeDomain()->SetCanAdvanceVirtualTime(
+          true);
+      if (previous_task_status ==
+          TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED) {
+        renderer_scheduler_->VirtualTimeResumed();
+      }
+      break;
 
-  renderer_scheduler_->GetVirtualTimeDomain()->SetCanAdvanceVirtualTime(
-      allow_virtual_time_to_advance);
+    case TaskStatus::DELAYED_TASKS_PAUSED:
+      renderer_scheduler_->GetVirtualTimeDomain()->SetCanAdvanceVirtualTime(
+          false);
+      NotifyVirtualTimePaused();
+      if (previous_task_status ==
+          TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED) {
+        renderer_scheduler_->VirtualTimeResumed();
+      }
+      break;
 
-  if (allow_virtual_time_to_advance) {
-    renderer_scheduler_->VirtualTimeResumed();
-  } else {
-    renderer_scheduler_->VirtualTimePaused();
+    case TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED:
+      renderer_scheduler_->GetVirtualTimeDomain()->SetCanAdvanceVirtualTime(
+          false);
+      NotifyVirtualTimePaused();
+      if (previous_task_status == TaskStatus::UNPAUSED)
+        renderer_scheduler_->VirtualTimePaused();
+      break;
   }
 }
 
-bool WebViewSchedulerImpl::VirtualTimeAllowedToAdvance() const {
-  return allow_virtual_time_to_advance_;
+WebViewScheduler::TaskStatus WebViewSchedulerImpl::GetTaskStatus() const {
+  return task_status_;
 }
 
 void WebViewSchedulerImpl::DidStartLoading(unsigned long identifier) {
@@ -277,6 +305,23 @@ void WebViewSchedulerImpl::DidEndProvisionalLoad(
   ApplyVirtualTimePolicy();
 }
 
+void WebViewSchedulerImpl::SetPendingDomStorageMessageCount(int pending_count) {
+  pending_dom_storage_message_count_ = pending_count;
+  ApplyVirtualTimePolicy();
+}
+
+void WebViewSchedulerImpl::SetPendingLocalStorageMessages(
+    bool pending_local_storage_messages) {
+  pending_local_storage_messages_ = pending_local_storage_messages;
+  ApplyVirtualTimePolicy();
+}
+
+void WebViewSchedulerImpl::SetPendingIndexDbTransactions(
+    bool pending_index_db_transactions) {
+  pending_index_db_transactions_ = pending_index_db_transactions;
+  ApplyVirtualTimePolicy();
+}
+
 void WebViewSchedulerImpl::OnBeginNestedRunLoop() {
   nested_runloop_ = true;
   ApplyVirtualTimePolicy();
@@ -290,19 +335,7 @@ void WebViewSchedulerImpl::OnExitNestedRunLoop() {
 void WebViewSchedulerImpl::SetVirtualTimePolicy(VirtualTimePolicy policy) {
   virtual_time_policy_ = policy;
 
-  switch (virtual_time_policy_) {
-    case VirtualTimePolicy::ADVANCE:
-      SetAllowVirtualTimeToAdvance(true);
-      break;
-
-    case VirtualTimePolicy::PAUSE:
-      SetAllowVirtualTimeToAdvance(false);
-      break;
-
-    case VirtualTimePolicy::DETERMINISTIC_LOADING:
-      ApplyVirtualTimePolicy();
-      break;
-  }
+  ApplyVirtualTimePolicy();
 }
 
 void WebViewSchedulerImpl::GrantVirtualTimeBudget(
@@ -324,7 +357,7 @@ void WebViewSchedulerImpl::RemoveVirtualTimeObserver(
 }
 
 void WebViewSchedulerImpl::OnVirtualTimeAdvanced() {
-  DCHECK(allow_virtual_time_to_advance_);
+  DCHECK_EQ(task_status_, TaskStatus::UNPAUSED);
 
   for (auto& observer : virtual_time_observers_) {
     observer.OnVirtualTimeAdvanced(
@@ -334,7 +367,7 @@ void WebViewSchedulerImpl::OnVirtualTimeAdvanced() {
 }
 
 void WebViewSchedulerImpl::NotifyVirtualTimePaused() {
-  DCHECK(!allow_virtual_time_to_advance_);
+  DCHECK_NE(task_status_, TaskStatus::UNPAUSED);
 
   for (auto& observer : virtual_time_observers_) {
     observer.OnVirtualTimePaused(
@@ -364,10 +397,11 @@ void WebViewSchedulerImpl::ApplyVirtualTimePolicy() {
     case VirtualTimePolicy::ADVANCE:
       virtual_time_domain->SetMaxVirtualTimeTaskStarvationCount(
           nested_runloop_ ? 0 : max_task_starvation_count_);
-      SetAllowVirtualTimeToAdvance(true);
+      SetTaskStatus(TaskStatus::UNPAUSED);
       break;
     case VirtualTimePolicy::PAUSE:
       virtual_time_domain->SetMaxVirtualTimeTaskStarvationCount(0);
+      SetTaskStatus(TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED);
       break;
     case VirtualTimePolicy::DETERMINISTIC_LOADING:
       virtual_time_domain->SetMaxVirtualTimeTaskStarvationCount(
@@ -375,12 +409,28 @@ void WebViewSchedulerImpl::ApplyVirtualTimePolicy() {
 
       // We pause virtual time while the run loop is nested because that implies
       // something modal is happening such as the DevTools debugger pausing the
-      // system.  We also pause while the renderer is either waiting for a
-      // resource load or a navigation is about to start.
-      SetAllowVirtualTimeToAdvance(
-          pending_loads_.size() == 0 && background_parser_count_ == 0 &&
-          provisional_loads_.empty() && !nested_runloop_ &&
-          expect_backward_forwards_navigation_.empty());
+      // system.  We also pause while the renderer is waiting for asynchronous
+      // results from the Browser for the following signals: pending navigation,
+      // resource loads, local and session storage and index db queries.
+      if (!pending_loads_.empty() || !provisional_loads_.empty() ||
+          !expect_backward_forwards_navigation_.empty() ||
+          background_parser_count_ > 0 || nested_runloop_ ||
+          pending_dom_storage_message_count_ > 0 ||
+          pending_local_storage_messages_) {
+        SetTaskStatus(TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED);
+        break;
+      }
+
+      // Significant machinery in blink is needed to process index db events,
+      // including posting immediate tasks. Because there can be overlapping
+      // pending index db transactions, we can't pause immediate tasks while
+      // waiting for indexed db queries to complete without breaking web
+      // content.
+      if (pending_index_db_transactions_) {
+        SetTaskStatus(TaskStatus::DELAYED_TASKS_PAUSED);
+        break;
+      }
+      SetTaskStatus(TaskStatus::UNPAUSED);
       break;
   }
 }
@@ -416,12 +466,17 @@ void WebViewSchedulerImpl::AsValueInto(
   state->SetBoolean("page_visible", page_visible_);
   state->SetBoolean("disable_background_timer_throttling",
                     disable_background_timer_throttling_);
-  state->SetBoolean("allow_virtual_time_to_advance",
-                    allow_virtual_time_to_advance_);
+  state->SetBoolean("task_status", TaskStatusToString(task_status_));
   state->SetBoolean("virtual_time", virtual_time_);
   state->SetBoolean("is_audio_playing", is_audio_playing_);
   state->SetBoolean("reported_background_throttling_since_navigation",
                     reported_background_throttling_since_navigation_);
+  state->SetBoolean("pending_local_storage_messages",
+                    pending_local_storage_messages_);
+  state->SetBoolean("pending_index_db_transactions",
+                    pending_index_db_transactions_);
+  state->SetInteger("pending_dom_storage_message_count",
+                    pending_dom_storage_message_count_);
 
   state->BeginDictionary("frame_schedulers");
   for (WebFrameSchedulerImpl* frame_scheduler : frame_schedulers_) {
@@ -513,6 +568,21 @@ void WebViewSchedulerImpl::SetMaxVirtualTimeTaskStarvationCount(
     int max_task_starvation_count) {
   max_task_starvation_count_ = max_task_starvation_count;
   ApplyVirtualTimePolicy();
+}
+
+// static
+const char* WebViewSchedulerImpl::TaskStatusToString(TaskStatus task_status) {
+  switch (task_status) {
+    case TaskStatus::UNPAUSED:
+      return "UNPAUSED";
+    case TaskStatus::DELAYED_TASKS_PAUSED:
+      return "DELAYED_TASKS_PAUSED";
+    case TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED:
+      return "DELAYED_AND_IMMEDIATE_TASKS_PAUSED";
+    default:
+      NOTREACHED();
+      return nullptr;
+  }
 }
 
 // static

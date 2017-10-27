@@ -12,6 +12,7 @@
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 
 using blink::WebIDBCallbacks;
 using blink::WebIDBDatabase;
@@ -26,7 +27,8 @@ namespace content {
 
 class WebIDBFactoryImpl::IOThreadHelper {
  public:
-  IOThreadHelper(scoped_refptr<IPC::SyncMessageFilter> sync_message_filter);
+  IOThreadHelper(scoped_refptr<IPC::SyncMessageFilter> sync_message_filter,
+                 blink::scheduler::RendererScheduler* renderer_scheduler);
   ~IOThreadHelper();
 
   FactoryAssociatedPtr& GetService();
@@ -51,15 +53,19 @@ class WebIDBFactoryImpl::IOThreadHelper {
  private:
   scoped_refptr<IPC::SyncMessageFilter> sync_message_filter_;
   FactoryAssociatedPtr service_;
+  blink::scheduler::RendererScheduler* const renderer_scheduler_;
 
   DISALLOW_COPY_AND_ASSIGN(IOThreadHelper);
 };
 
 WebIDBFactoryImpl::WebIDBFactoryImpl(
     scoped_refptr<IPC::SyncMessageFilter> sync_message_filter,
-    scoped_refptr<base::SingleThreadTaskRunner> io_runner)
-    : io_helper_(new IOThreadHelper(std::move(sync_message_filter))),
-      io_runner_(std::move(io_runner)) {}
+    scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+    blink::scheduler::RendererScheduler* renderer_scheduler)
+    : io_helper_(new IOThreadHelper(std::move(sync_message_filter),
+                                    renderer_scheduler)),
+      io_runner_(std::move(io_runner)),
+      renderer_scheduler_(renderer_scheduler) {}
 
 WebIDBFactoryImpl::~WebIDBFactoryImpl() {
   io_runner_->DeleteSoon(FROM_HERE, io_helper_);
@@ -69,7 +75,7 @@ void WebIDBFactoryImpl::GetDatabaseNames(WebIDBCallbacks* callbacks,
                                          const WebSecurityOrigin& origin) {
   auto callbacks_impl = base::MakeUnique<IndexedDBCallbacksImpl>(
       base::WrapUnique(callbacks), IndexedDBCallbacksImpl::kNoTransaction,
-      nullptr, io_runner_);
+      nullptr, io_runner_, renderer_scheduler_);
   io_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&IOThreadHelper::GetDatabaseNames,
@@ -84,7 +90,8 @@ void WebIDBFactoryImpl::Open(const WebString& name,
                              WebIDBDatabaseCallbacks* database_callbacks,
                              const WebSecurityOrigin& origin) {
   auto callbacks_impl = base::MakeUnique<IndexedDBCallbacksImpl>(
-      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_);
+      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_,
+      renderer_scheduler_);
   auto database_callbacks_impl =
       base::MakeUnique<IndexedDBDatabaseCallbacksImpl>(
           base::WrapUnique(database_callbacks));
@@ -102,7 +109,7 @@ void WebIDBFactoryImpl::DeleteDatabase(const WebString& name,
                                        bool force_close) {
   auto callbacks_impl = base::MakeUnique<IndexedDBCallbacksImpl>(
       base::WrapUnique(callbacks), IndexedDBCallbacksImpl::kNoTransaction,
-      nullptr, io_runner_);
+      nullptr, io_runner_, renderer_scheduler_);
   io_runner_->PostTask(
       FROM_HERE, base::BindOnce(&IOThreadHelper::DeleteDatabase,
                                 base::Unretained(io_helper_), name.Utf16(),
@@ -111,8 +118,10 @@ void WebIDBFactoryImpl::DeleteDatabase(const WebString& name,
 }
 
 WebIDBFactoryImpl::IOThreadHelper::IOThreadHelper(
-    scoped_refptr<IPC::SyncMessageFilter> sync_message_filter)
-    : sync_message_filter_(std::move(sync_message_filter)) {}
+    scoped_refptr<IPC::SyncMessageFilter> sync_message_filter,
+    blink::scheduler::RendererScheduler* renderer_scheduler)
+    : sync_message_filter_(std::move(sync_message_filter)),
+      renderer_scheduler_(renderer_scheduler) {}
 
 WebIDBFactoryImpl::IOThreadHelper::~IOThreadHelper() {}
 
@@ -127,6 +136,7 @@ CallbacksAssociatedPtrInfo WebIDBFactoryImpl::IOThreadHelper::GetCallbacksProxy(
   CallbacksAssociatedPtrInfo ptr_info;
   auto request = mojo::MakeRequest(&ptr_info);
   mojo::MakeStrongAssociatedBinding(std::move(callbacks), std::move(request));
+  renderer_scheduler_->IncrementPendingIndexDbTransactionCount();
   return ptr_info;
 }
 
@@ -136,6 +146,7 @@ WebIDBFactoryImpl::IOThreadHelper::GetDatabaseCallbacksProxy(
   DatabaseCallbacksAssociatedPtrInfo ptr_info;
   auto request = mojo::MakeRequest(&ptr_info);
   mojo::MakeStrongAssociatedBinding(std::move(callbacks), std::move(request));
+  renderer_scheduler_->IncrementPendingIndexDbTransactionCount();
   return ptr_info;
 }
 

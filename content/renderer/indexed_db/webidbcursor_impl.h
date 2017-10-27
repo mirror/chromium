@@ -25,13 +25,20 @@ namespace base {
 class SingleThreadTaskRunner;
 }
 
+namespace blink {
+namespace scheduler {
+class RendererScheduler;
+}  // namespace scheduler
+}  // namespace blink
+
 namespace content {
 
 class CONTENT_EXPORT WebIDBCursorImpl : public blink::WebIDBCursor {
  public:
   WebIDBCursorImpl(indexed_db::mojom::CursorAssociatedPtrInfo cursor,
                    int64_t transaction_id,
-                   scoped_refptr<base::SingleThreadTaskRunner> io_runner);
+                   scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+                   blink::scheduler::RendererScheduler* renderer_scheduler);
   ~WebIDBCursorImpl() override;
 
   void Advance(unsigned long count, blink::WebIDBCallbacks* callback) override;
@@ -70,6 +77,7 @@ class CONTENT_EXPORT WebIDBCursorImpl : public blink::WebIDBCursor {
 
   IOThreadHelper* helper_;
   scoped_refptr<base::SingleThreadTaskRunner> io_runner_;
+  blink::scheduler::RendererScheduler* const renderer_scheduler_;
 
   // Prefetch cache.
   base::circular_deque<IndexedDBKey> prefetch_keys_;

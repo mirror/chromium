@@ -17,6 +17,12 @@
 #include "url/gurl.h"
 #include "url/origin.h"
 
+namespace blink {
+namespace scheduler {
+class RendererScheduler;
+}
+}  // namespace blink
+
 namespace content {
 class LocalStorageArea;
 class LocalStorageCachedAreas;
@@ -40,7 +46,8 @@ class CONTENT_EXPORT LocalStorageCachedArea
   LocalStorageCachedArea(
       const url::Origin& origin,
       mojom::StoragePartitionService* storage_partition_service,
-      LocalStorageCachedAreas* cached_areas);
+      LocalStorageCachedAreas* cached_areas,
+      blink::scheduler::RendererScheduler* renderer_scheduler);
 
   // These correspond to blink::WebStorageArea.
   unsigned GetLength();
@@ -116,6 +123,7 @@ class CONTENT_EXPORT LocalStorageCachedArea
   mojom::LevelDBWrapperPtr leveldb_;
   mojo::AssociatedBinding<mojom::LevelDBObserver> binding_;
   LocalStorageCachedAreas* cached_areas_;
+  blink::scheduler::RendererScheduler* const renderer_scheduler_;
   std::map<std::string, LocalStorageArea*> areas_;
   base::WeakPtrFactory<LocalStorageCachedArea> weak_factory_;
 

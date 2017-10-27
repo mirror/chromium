@@ -16,7 +16,11 @@
 namespace blink {
 class WebSecurityOrigin;
 class WebString;
-}
+
+namespace scheduler {
+class RendererScheduler;
+}  // namespace scheduler
+}  // namespace blink
 
 namespace IPC {
 class SyncMessageFilter;
@@ -27,7 +31,8 @@ namespace content {
 class WebIDBFactoryImpl : public blink::WebIDBFactory {
  public:
   WebIDBFactoryImpl(scoped_refptr<IPC::SyncMessageFilter> sync_message_filter,
-                    scoped_refptr<base::SingleThreadTaskRunner> io_runner);
+                    scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+                    blink::scheduler::RendererScheduler* renderer_scheduler);
   ~WebIDBFactoryImpl() override;
 
   // See WebIDBFactory.h for documentation on these functions.
@@ -49,6 +54,7 @@ class WebIDBFactoryImpl : public blink::WebIDBFactory {
 
   IOThreadHelper* io_helper_;
   scoped_refptr<base::SingleThreadTaskRunner> io_runner_;
+  blink::scheduler::RendererScheduler* const renderer_scheduler_;
 };
 
 }  // namespace content

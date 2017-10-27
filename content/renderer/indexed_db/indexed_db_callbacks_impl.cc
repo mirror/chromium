@@ -15,6 +15,7 @@
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBDatabaseError.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBMetadata.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBValue.h"
+#include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 
 using blink::WebBlobInfo;
 using blink::WebIDBCallbacks;
@@ -105,17 +106,19 @@ void IndexedDBCallbacksImpl::ConvertValue(
   web_value->web_blob_info.Swap(local_blob_info);
 }
 
-
 IndexedDBCallbacksImpl::IndexedDBCallbacksImpl(
     std::unique_ptr<WebIDBCallbacks> callbacks,
     int64_t transaction_id,
     const base::WeakPtr<WebIDBCursorImpl>& cursor,
-    scoped_refptr<base::SingleThreadTaskRunner> io_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+    blink::scheduler::RendererScheduler* renderer_scheduler)
     : internal_state_(new InternalState(std::move(callbacks),
                                         transaction_id,
                                         cursor,
-                                        std::move(io_runner))),
-      callback_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+                                        std::move(io_runner),
+                                        renderer_scheduler)),
+      callback_runner_(base::ThreadTaskRunnerHandle::Get()),
+      renderer_scheduler_(renderer_scheduler) {}
 
 IndexedDBCallbacksImpl::~IndexedDBCallbacksImpl() {
   callback_runner_->DeleteSoon(FROM_HERE, internal_state_);
@@ -123,6 +126,7 @@ IndexedDBCallbacksImpl::~IndexedDBCallbacksImpl() {
 
 void IndexedDBCallbacksImpl::Error(int32_t code,
                                    const base::string16& message) {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&InternalState::Error, base::Unretained(internal_state_),
@@ -131,12 +135,14 @@ void IndexedDBCallbacksImpl::Error(int32_t code,
 
 void IndexedDBCallbacksImpl::SuccessStringList(
     const std::vector<base::string16>& value) {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(
       FROM_HERE, base::BindOnce(&InternalState::SuccessStringList,
                                 base::Unretained(internal_state_), value));
 }
 
 void IndexedDBCallbacksImpl::Blocked(int64_t existing_version) {
+  // PendingIndexDbTransactionCount not decremented.
   callback_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&InternalState::Blocked, base::Unretained(internal_state_),
@@ -149,6 +155,7 @@ void IndexedDBCallbacksImpl::UpgradeNeeded(
     blink::WebIDBDataLoss data_loss,
     const std::string& data_loss_message,
     const content::IndexedDBDatabaseMetadata& metadata) {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&InternalState::UpgradeNeeded,
@@ -159,6 +166,7 @@ void IndexedDBCallbacksImpl::UpgradeNeeded(
 void IndexedDBCallbacksImpl::SuccessDatabase(
     DatabaseAssociatedPtrInfo database,
     const content::IndexedDBDatabaseMetadata& metadata) {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(FROM_HERE,
                              base::BindOnce(&InternalState::SuccessDatabase,
                                             base::Unretained(internal_state_),
@@ -170,6 +178,7 @@ void IndexedDBCallbacksImpl::SuccessCursor(
     const IndexedDBKey& key,
     const IndexedDBKey& primary_key,
     indexed_db::mojom::ValuePtr value) {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&InternalState::SuccessCursor,
@@ -179,6 +188,7 @@ void IndexedDBCallbacksImpl::SuccessCursor(
 
 void IndexedDBCallbacksImpl::SuccessValue(
     indexed_db::mojom::ReturnValuePtr value) {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&InternalState::SuccessValue,
@@ -189,6 +199,7 @@ void IndexedDBCallbacksImpl::SuccessCursorContinue(
     const IndexedDBKey& key,
     const IndexedDBKey& primary_key,
     indexed_db::mojom::ValuePtr value) {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(
       FROM_HERE, base::BindOnce(&InternalState::SuccessCursorContinue,
                                 base::Unretained(internal_state_), key,
@@ -199,6 +210,7 @@ void IndexedDBCallbacksImpl::SuccessCursorPrefetch(
     const std::vector<IndexedDBKey>& keys,
     const std::vector<IndexedDBKey>& primary_keys,
     std::vector<indexed_db::mojom::ValuePtr> values) {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(
       FROM_HERE, base::BindOnce(&InternalState::SuccessCursorPrefetch,
                                 base::Unretained(internal_state_), keys,
@@ -207,6 +219,7 @@ void IndexedDBCallbacksImpl::SuccessCursorPrefetch(
 
 void IndexedDBCallbacksImpl::SuccessArray(
     std::vector<indexed_db::mojom::ReturnValuePtr> values) {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&InternalState::SuccessArray,
@@ -214,18 +227,21 @@ void IndexedDBCallbacksImpl::SuccessArray(
 }
 
 void IndexedDBCallbacksImpl::SuccessKey(const IndexedDBKey& key) {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(
       FROM_HERE, base::BindOnce(&InternalState::SuccessKey,
                                 base::Unretained(internal_state_), key));
 }
 
 void IndexedDBCallbacksImpl::SuccessInteger(int64_t value) {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(
       FROM_HERE, base::BindOnce(&InternalState::SuccessInteger,
                                 base::Unretained(internal_state_), value));
 }
 
 void IndexedDBCallbacksImpl::Success() {
+  renderer_scheduler_->DecrementPendingIndexDbTransactionCount();
   callback_runner_->PostTask(FROM_HERE,
                              base::BindOnce(&InternalState::Success,
                                             base::Unretained(internal_state_)));
@@ -235,11 +251,13 @@ IndexedDBCallbacksImpl::InternalState::InternalState(
     std::unique_ptr<blink::WebIDBCallbacks> callbacks,
     int64_t transaction_id,
     const base::WeakPtr<WebIDBCursorImpl>& cursor,
-    scoped_refptr<base::SingleThreadTaskRunner> io_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+    blink::scheduler::RendererScheduler* renderer_scheduler)
     : callbacks_(std::move(callbacks)),
       transaction_id_(transaction_id),
       cursor_(cursor),
-      io_runner_(std::move(io_runner)) {
+      io_runner_(std::move(io_runner)),
+      renderer_scheduler_(renderer_scheduler) {
   IndexedDBDispatcher::ThreadSpecificInstance()->RegisterMojoOwnedCallbacks(
       this);
 }
@@ -278,8 +296,8 @@ void IndexedDBCallbacksImpl::InternalState::UpgradeNeeded(
     blink::WebIDBDataLoss data_loss,
     const std::string& data_loss_message,
     const content::IndexedDBDatabaseMetadata& metadata) {
-  WebIDBDatabase* database =
-      new WebIDBDatabaseImpl(std::move(database_info), io_runner_);
+  WebIDBDatabase* database = new WebIDBDatabaseImpl(
+      std::move(database_info), io_runner_, renderer_scheduler_);
   WebIDBMetadata web_metadata;
   ConvertDatabaseMetadata(metadata, &web_metadata);
   callbacks_->OnUpgradeNeeded(old_version, database, web_metadata, data_loss,
@@ -292,7 +310,8 @@ void IndexedDBCallbacksImpl::InternalState::SuccessDatabase(
     const content::IndexedDBDatabaseMetadata& metadata) {
   WebIDBDatabase* database = nullptr;
   if (database_info.is_valid())
-    database = new WebIDBDatabaseImpl(std::move(database_info), io_runner_);
+    database = new WebIDBDatabaseImpl(std::move(database_info), io_runner_,
+                                      renderer_scheduler_);
 
   WebIDBMetadata web_metadata;
   ConvertDatabaseMetadata(metadata, &web_metadata);
@@ -309,8 +328,8 @@ void IndexedDBCallbacksImpl::InternalState::SuccessCursor(
   if (value)
     IndexedDBCallbacksImpl::ConvertValue(value, &web_value);
 
-  WebIDBCursorImpl* cursor =
-      new WebIDBCursorImpl(std::move(cursor_info), transaction_id_, io_runner_);
+  WebIDBCursorImpl* cursor = new WebIDBCursorImpl(
+      std::move(cursor_info), transaction_id_, io_runner_, renderer_scheduler_);
   callbacks_->OnSuccess(cursor, WebIDBKeyBuilder::Build(key),
                         WebIDBKeyBuilder::Build(primary_key), web_value);
   callbacks_.reset();

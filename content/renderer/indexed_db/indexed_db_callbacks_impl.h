@@ -12,7 +12,11 @@
 namespace blink {
 class WebIDBCallbacks;
 struct WebIDBValue;
-}
+
+namespace scheduler {
+class RendererScheduler;
+}  // namespace scheduler
+}  // namespace blink
 
 namespace content {
 
@@ -32,7 +36,8 @@ class IndexedDBCallbacksImpl : public indexed_db::mojom::Callbacks {
     InternalState(std::unique_ptr<blink::WebIDBCallbacks> callbacks,
                   int64_t transaction_id,
                   const base::WeakPtr<WebIDBCursorImpl>& cursor,
-                  scoped_refptr<base::SingleThreadTaskRunner> io_runner);
+                  scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+                  blink::scheduler::RendererScheduler* renderer_scheduler);
     ~InternalState();
 
     void Error(int32_t code, const base::string16& message);
@@ -66,6 +71,7 @@ class IndexedDBCallbacksImpl : public indexed_db::mojom::Callbacks {
     int64_t transaction_id_;
     base::WeakPtr<WebIDBCursorImpl> cursor_;
     scoped_refptr<base::SingleThreadTaskRunner> io_runner_;
+    blink::scheduler::RendererScheduler* const renderer_scheduler_;
 
     DISALLOW_COPY_AND_ASSIGN(InternalState);
   };
@@ -73,10 +79,12 @@ class IndexedDBCallbacksImpl : public indexed_db::mojom::Callbacks {
   static void ConvertValue(const indexed_db::mojom::ValuePtr& value,
                            blink::WebIDBValue* web_value);
 
-  IndexedDBCallbacksImpl(std::unique_ptr<blink::WebIDBCallbacks> callbacks,
-                         int64_t transaction_id,
-                         const base::WeakPtr<WebIDBCursorImpl>& cursor,
-                         scoped_refptr<base::SingleThreadTaskRunner> io_runner);
+  IndexedDBCallbacksImpl(
+      std::unique_ptr<blink::WebIDBCallbacks> callbacks,
+      int64_t transaction_id,
+      const base::WeakPtr<WebIDBCursorImpl>& cursor,
+      scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+      blink::scheduler::RendererScheduler* renderer_scheduler);
   ~IndexedDBCallbacksImpl() override;
 
   // indexed_db::mojom::Callbacks implementation:
@@ -115,6 +123,7 @@ class IndexedDBCallbacksImpl : public indexed_db::mojom::Callbacks {
   // executes tasks and must be destroyed there.
   InternalState* internal_state_;
   scoped_refptr<base::SingleThreadTaskRunner> callback_runner_;
+  blink::scheduler::RendererScheduler* const renderer_scheduler_;
 
   DISALLOW_COPY_AND_ASSIGN(IndexedDBCallbacksImpl);
 };

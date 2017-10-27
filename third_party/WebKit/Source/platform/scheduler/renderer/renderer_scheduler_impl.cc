@@ -256,7 +256,8 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       rail_mode_observer(nullptr),
       wake_up_budget_pool(nullptr),
       metrics_helper(renderer_scheduler_impl, now, renderer_backgrounded),
-      process_type(RendererProcessType::kRenderer) {}
+      process_type(RendererProcessType::kRenderer),
+      pending_index_db_transactions(false) {}
 
 RendererSchedulerImpl::MainThreadOnly::~MainThreadOnly() {}
 
@@ -268,7 +269,9 @@ RendererSchedulerImpl::AnyThread::AnyThread()
       default_gesture_prevented(true),
       have_seen_a_potentially_blocking_gesture(false),
       waiting_for_meaningful_paint(false),
-      have_seen_input_since_navigation(false) {}
+      have_seen_input_since_navigation(false),
+      use_virtual_time(false),
+      pending_index_db_transaction_count(0) {}
 
 RendererSchedulerImpl::AnyThread::~AnyThread() {}
 
@@ -1743,6 +1746,86 @@ void RendererSchedulerImpl::RemovePendingNavigation(NavigatingFrameType type) {
   }
 }
 
+void RendererSchedulerImpl::SetPendingDomStorageMessageCount(
+    int pending_count) {
+  if (!control_task_queue_->BelongsToCurrentThread()) {
+    control_task_queue_->PostTask(
+        FROM_HERE,
+        base::Bind(&RendererSchedulerImpl::SetPendingDomStorageMessageCount,
+                   base::Unretained(this), pending_count));
+    return;
+  }
+
+  for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+    web_view_scheduler->SetPendingDomStorageMessageCount(pending_count);
+}
+
+void RendererSchedulerImpl::IncrementPendingLocalStorageMessageCount(
+    const std::string& id) {
+  bool was_empty =
+      main_thread_only().pending_local_storage_message_count.empty();
+  main_thread_only().pending_local_storage_message_count[id]++;
+  if (main_thread_only().use_virtual_time && was_empty) {
+    for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+      web_view_scheduler->SetPendingLocalStorageMessages(true);
+  }
+}
+
+void RendererSchedulerImpl::DecrementPendingLocalStorageMessageCount(
+    const std::string& id) {
+  DCHECK_GE(main_thread_only().pending_local_storage_message_count[id], 1);
+  int count = --main_thread_only().pending_local_storage_message_count[id];
+  if (count == 0) {
+    main_thread_only().pending_local_storage_message_count.erase(id);
+    if (main_thread_only().use_virtual_time &&
+        main_thread_only().pending_local_storage_message_count.empty()) {
+      for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+        web_view_scheduler->SetPendingLocalStorageMessages(false);
+    }
+  }
+}
+
+void RendererSchedulerImpl::ClearPendingLocalStorageMessageCount(
+    const std::string& id) {
+  main_thread_only().pending_local_storage_message_count.erase(id);
+  if (main_thread_only().pending_local_storage_message_count.empty()) {
+    for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+      web_view_scheduler->SetPendingLocalStorageMessages(false);
+  }
+}
+
+void RendererSchedulerImpl::IncrementPendingIndexDbTransactionCount() {
+  base::AutoLock lock(any_thread_lock_);
+  if (++any_thread().pending_index_db_transaction_count == 1 &&
+      any_thread().use_virtual_time) {
+    control_task_queue_->PostTask(
+        FROM_HERE,
+        base::Bind(&RendererSchedulerImpl::NotifyPendingIndexDbTransactions,
+                   base::Unretained(this), true));
+  }
+}
+
+void RendererSchedulerImpl::DecrementPendingIndexDbTransactionCount() {
+  base::AutoLock lock(any_thread_lock_);
+  DCHECK_GE(any_thread().pending_index_db_transaction_count, 1);
+  if (--any_thread().pending_index_db_transaction_count == 0 &&
+      any_thread().use_virtual_time) {
+    control_task_queue_->PostTask(
+        FROM_HERE,
+        base::Bind(&RendererSchedulerImpl::NotifyPendingIndexDbTransactions,
+                   base::Unretained(this), false));
+  }
+}
+
+void RendererSchedulerImpl::NotifyPendingIndexDbTransactions(
+    bool pending_index_db_transactions) {
+  main_thread_only().pending_index_db_transactions =
+      pending_index_db_transactions;
+  for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+    web_view_scheduler->SetPendingIndexDbTransactions(
+        pending_index_db_transactions);
+}
+
 std::unique_ptr<base::SingleSampleMetric>
 RendererSchedulerImpl::CreateMaxQueueingTimeMetric() {
   return base::SingleSampleMetricsFactory::Get()->CreateCustomCountsMetric(
@@ -2057,6 +2140,20 @@ AutoAdvancingVirtualTimeDomain* RendererSchedulerImpl::GetVirtualTimeDomain() {
 void RendererSchedulerImpl::EnableVirtualTime() {
   main_thread_only().use_virtual_time = true;
 
+  {
+    base::AutoLock lock(any_thread_lock_);
+    any_thread().use_virtual_time = true;
+  }
+
+  // Make sure the WebViewSchedulers have up to date signals.
+  for (WebViewSchedulerImpl* web_view_scheduler :
+       main_thread_only().web_view_schedulers) {
+    web_view_scheduler->SetPendingLocalStorageMessages(
+        !main_thread_only().pending_local_storage_message_count.empty());
+    web_view_scheduler->SetPendingIndexDbTransactions(
+        main_thread_only().pending_index_db_transactions);
+  }
+
   DCHECK(!virtual_time_control_task_queue_);
   virtual_time_control_task_queue_ =
       helper_.NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
@@ -2071,6 +2168,11 @@ void RendererSchedulerImpl::EnableVirtualTime() {
 void RendererSchedulerImpl::DisableVirtualTimeForTesting() {
   // Reset virtual time and all tasks queues back to their initial state.
   main_thread_only().use_virtual_time = false;
+
+  {
+    base::AutoLock lock(any_thread_lock_);
+    any_thread().use_virtual_time = true;
+  }
 
   if (main_thread_only().virtual_time_stopped) {
     main_thread_only().virtual_time_stopped = false;

@@ -136,6 +136,12 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   bool MainThreadSeemsUnresponsive(
       base::TimeDelta main_thread_responsiveness_threshold) override;
   void SetRendererProcessType(RendererProcessType type) override;
+  void SetPendingDomStorageMessageCount(int pending_count) override;
+  void IncrementPendingLocalStorageMessageCount(const std::string& id) override;
+  void DecrementPendingLocalStorageMessageCount(const std::string& id) override;
+  void ClearPendingLocalStorageMessageCount(const std::string& id) override;
+  void IncrementPendingIndexDbTransactionCount() override;
+  void DecrementPendingIndexDbTransactionCount() override;
 
   // RenderWidgetSignals::Observer implementation:
   void SetAllRenderWidgetsHidden(bool hidden) override;
@@ -531,6 +537,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void PauseRendererImpl();
   void ResumeRendererImpl();
 
+  void NotifyPendingIndexDbTransactions(bool pending_index_db_transactions);
+
   MainThreadSchedulerHelper helper_;
   IdleHelper idle_helper_;
   IdleCanceledDelayedTaskSweeper idle_canceled_delayed_task_sweeper_;
@@ -621,6 +629,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     WakeUpBudgetPool* wake_up_budget_pool;                // Not owned.
     RendererMetricsHelper metrics_helper;
     RendererProcessType process_type;
+    std::map<std::string, int> pending_local_storage_message_count;
+    bool pending_index_db_transactions;
   };
 
   struct AnyThread {
@@ -638,6 +648,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     bool have_seen_a_potentially_blocking_gesture;
     bool waiting_for_meaningful_paint;
     bool have_seen_input_since_navigation;
+    bool use_virtual_time;
+    int pending_index_db_transaction_count;
   };
 
   struct CompositorThreadOnly {

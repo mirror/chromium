@@ -214,6 +214,31 @@ class BLINK_PLATFORM_EXPORT RendererScheduler : public ChildScheduler {
   // once.
   virtual void SetRendererProcessType(RendererProcessType type) = 0;
 
+  // Tells the scheduler how many pending DomStorage messages there are. This
+  // may cause virtual time to be paused / unpaused. Can be called on any
+  // thread.
+  virtual void SetPendingDomStorageMessageCount(int pending_count) = 0;
+
+  // Tells the scheduler a pending LocalStorage message is in flight. This
+  // may cause virtual time to be paused / unpaused. This must be called on the
+  // main thread.
+  virtual void IncrementPendingLocalStorageMessageCount(
+      const std::string& id) = 0;
+
+  // Tells the scheduler a LocalStorage message has been received. This may
+  // cause virtual time to be paused / unpaused. This must be called on the
+  // main thread.
+  virtual void DecrementPendingLocalStorageMessageCount(
+      const std::string& id) = 0;
+
+  // Tells the scheduler a LocalStorage area has been removed. This may cause
+  // virtual time to be paused / unpaused. This must be called on the main
+  // thread.
+  virtual void ClearPendingLocalStorageMessageCount(const std::string& id) = 0;
+
+  virtual void IncrementPendingIndexDbTransactionCount() = 0;
+  virtual void DecrementPendingIndexDbTransactionCount() = 0;
+
  protected:
   RendererScheduler();
   DISALLOW_COPY_AND_ASSIGN(RendererScheduler);

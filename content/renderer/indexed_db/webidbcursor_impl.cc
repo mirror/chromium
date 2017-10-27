@@ -14,6 +14,7 @@
 #include "content/renderer/indexed_db/indexed_db_key_builders.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBValue.h"
+#include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 
 using blink::WebBlobInfo;
 using blink::WebData;
@@ -27,7 +28,8 @@ namespace content {
 
 class WebIDBCursorImpl::IOThreadHelper {
  public:
-  IOThreadHelper();
+  explicit IOThreadHelper(
+      blink::scheduler::RendererScheduler* renderer_scheduler);
   ~IOThreadHelper();
 
   void Bind(CursorAssociatedPtrInfo cursor_info);
@@ -46,6 +48,7 @@ class WebIDBCursorImpl::IOThreadHelper {
   CallbacksAssociatedPtrInfo GetCallbacksProxy(
       std::unique_ptr<IndexedDBCallbacksImpl> callbacks);
 
+  blink::scheduler::RendererScheduler* const renderer_scheduler_;
   indexed_db::mojom::CursorAssociatedPtr cursor_;
 
   DISALLOW_COPY_AND_ASSIGN(IOThreadHelper);
@@ -54,10 +57,12 @@ class WebIDBCursorImpl::IOThreadHelper {
 WebIDBCursorImpl::WebIDBCursorImpl(
     indexed_db::mojom::CursorAssociatedPtrInfo cursor_info,
     int64_t transaction_id,
-    scoped_refptr<base::SingleThreadTaskRunner> io_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+    blink::scheduler::RendererScheduler* renderer_scheduler)
     : transaction_id_(transaction_id),
-      helper_(new IOThreadHelper()),
+      helper_(new IOThreadHelper(renderer_scheduler)),
       io_runner_(std::move(io_runner)),
+      renderer_scheduler_(renderer_scheduler),
       continue_count_(0),
       used_prefetches_(0),
       pending_onsuccess_callbacks_(0),
@@ -93,7 +98,7 @@ void WebIDBCursorImpl::Advance(unsigned long count,
 
   auto callbacks_impl = base::MakeUnique<IndexedDBCallbacksImpl>(
       std::move(callbacks), transaction_id_, weak_factory_.GetWeakPtr(),
-      io_runner_);
+      io_runner_, renderer_scheduler_);
   io_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&IOThreadHelper::Advance, base::Unretained(helper_), count,
@@ -122,7 +127,7 @@ void WebIDBCursorImpl::Continue(const WebIDBKey& key,
 
       auto callbacks_impl = base::MakeUnique<IndexedDBCallbacksImpl>(
           std::move(callbacks), transaction_id_, weak_factory_.GetWeakPtr(),
-          io_runner_);
+          io_runner_, renderer_scheduler_);
       io_runner_->PostTask(
           FROM_HERE,
           base::BindOnce(&IOThreadHelper::Prefetch, base::Unretained(helper_),
@@ -146,7 +151,7 @@ void WebIDBCursorImpl::Continue(const WebIDBKey& key,
 
   auto callbacks_impl = base::MakeUnique<IndexedDBCallbacksImpl>(
       std::move(callbacks), transaction_id_, weak_factory_.GetWeakPtr(),
-      io_runner_);
+      io_runner_, renderer_scheduler_);
   io_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&IOThreadHelper::Continue, base::Unretained(helper_),
@@ -255,7 +260,9 @@ void WebIDBCursorImpl::ResetPrefetchCache() {
   pending_onsuccess_callbacks_ = 0;
 }
 
-WebIDBCursorImpl::IOThreadHelper::IOThreadHelper() {}
+WebIDBCursorImpl::IOThreadHelper::IOThreadHelper(
+    blink::scheduler::RendererScheduler* renderer_scheduler)
+    : renderer_scheduler_(renderer_scheduler) {}
 
 WebIDBCursorImpl::IOThreadHelper::~IOThreadHelper() {}
 
@@ -295,6 +302,7 @@ CallbacksAssociatedPtrInfo WebIDBCursorImpl::IOThreadHelper::GetCallbacksProxy(
   CallbacksAssociatedPtrInfo ptr_info;
   auto request = mojo::MakeRequest(&ptr_info);
   mojo::MakeStrongAssociatedBinding(std::move(callbacks), std::move(request));
+  renderer_scheduler_->IncrementPendingIndexDbTransactionCount();
   return ptr_info;
 }
 

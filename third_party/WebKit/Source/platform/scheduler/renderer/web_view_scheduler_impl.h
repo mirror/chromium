@@ -53,7 +53,7 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
       WebFrameScheduler::FrameType frame_type) override;
   void EnableVirtualTime() override;
   void DisableVirtualTimeForTesting() override;
-  bool VirtualTimeAllowedToAdvance() const override;
+  TaskStatus GetTaskStatus() const override;
   void SetVirtualTimePolicy(VirtualTimePolicy virtual_time_policy) override;
   void GrantVirtualTimeBudget(base::TimeDelta budget,
                               WTF::Closure budget_exhausted_callback) override;
@@ -84,6 +84,9 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   void WillNavigateBackForwardSoon(WebFrameSchedulerImpl* frame_scheduler);
   void DidBeginProvisionalLoad(WebFrameSchedulerImpl* frame_scheduler);
   void DidEndProvisionalLoad(WebFrameSchedulerImpl* frame_scheduler);
+  void SetPendingDomStorageMessageCount(int pending_count);
+  void SetPendingLocalStorageMessages(bool pending_local_storage_messages);
+  void SetPendingIndexDbTransactions(bool pending_index_db_transactions);
 
   void OnBeginNestedRunLoop();
   void OnExitNestedRunLoop();
@@ -105,10 +108,12 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   CPUTimeBudgetPool* BackgroundCPUTimeBudgetPool();
   void MaybeInitializeBackgroundCPUTimeBudgetPool();
 
-  void SetAllowVirtualTimeToAdvance(bool allow_virtual_time_to_advance);
+  void SetTaskStatus(TaskStatus task_status);
   void ApplyVirtualTimePolicy();
 
   void OnThrottlingReported(base::TimeDelta throttling_duration);
+
+  static const char* TaskStatusToString(TaskStatus task_status);
 
   static const char* VirtualTimePolicyToString(
       VirtualTimePolicy virtual_time_policy);
@@ -133,7 +138,9 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   VirtualTimePolicy virtual_time_policy_;
   scoped_refptr<WebTaskRunnerImpl> virtual_time_control_task_queue_;
   TaskHandle virtual_time_budget_expired_task_handle_;
+  TaskStatus task_status_;
   int background_parser_count_;
+  int pending_dom_storage_message_count_;
 
   // The maximum number amount of delayed task starvation we will allow in
   // VirtualTimePolicy::ADVANCE or VirtualTimePolicy::DETERMINISTIC_LOADING
@@ -143,12 +150,13 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
 
   bool page_visible_;
   bool disable_background_timer_throttling_;
-  bool allow_virtual_time_to_advance_;
   bool virtual_time_;
   bool is_audio_playing_;
   bool reported_background_throttling_since_navigation_;
   bool has_active_connection_;
   bool nested_runloop_;
+  bool pending_local_storage_messages_;
+  bool pending_index_db_transactions_;
   CPUTimeBudgetPool* background_time_budget_pool_;  // Not owned.
   WebViewScheduler::WebViewSchedulerDelegate* delegate_;  // Not owned.
   base::ObserverList<VirtualTimeObserver> virtual_time_observers_;

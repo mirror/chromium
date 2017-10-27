@@ -498,31 +498,40 @@ TEST_F(WebViewSchedulerImplTest, DeleteThrottledQueue_InTask) {
 TEST_F(WebViewSchedulerImplTest, VirtualTimePolicy_DETERMINISTIC_LOADING) {
   web_view_scheduler_->SetVirtualTimePolicy(
       VirtualTimePolicy::DETERMINISTIC_LOADING);
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStartLoading(1u);
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStartLoading(2u);
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStopLoading(2u);
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStartLoading(3u);
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStopLoading(1u);
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStopLoading(3u);
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStartLoading(4u);
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStopLoading(4u);
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 }
 
 TEST_F(WebViewSchedulerImplTest, RedundantDidStopLoadingCallsAreHarmless) {
@@ -530,58 +539,74 @@ TEST_F(WebViewSchedulerImplTest, RedundantDidStopLoadingCallsAreHarmless) {
       VirtualTimePolicy::DETERMINISTIC_LOADING);
 
   web_view_scheduler_->DidStartLoading(1u);
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStopLoading(1u);
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStopLoading(1u);
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStopLoading(1u);
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStartLoading(2u);
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidStopLoading(2u);
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 }
 
 TEST_F(WebViewSchedulerImplTest, BackgroundParser_DETERMINISTIC_LOADING) {
   web_view_scheduler_->SetVirtualTimePolicy(
       VirtualTimePolicy::DETERMINISTIC_LOADING);
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->IncrementBackgroundParserCount();
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->IncrementBackgroundParserCount();
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DecrementBackgroundParserCount();
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DecrementBackgroundParserCount();
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->IncrementBackgroundParserCount();
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DecrementBackgroundParserCount();
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 }
 
 TEST_F(WebViewSchedulerImplTest, NestedMessageLoop_DETERMINISTIC_LOADING) {
   web_view_scheduler_->SetVirtualTimePolicy(
       VirtualTimePolicy::DETERMINISTIC_LOADING);
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->OnBeginNestedRunLoop();
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->OnExitNestedRunLoop();
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 }
 
 TEST_F(WebViewSchedulerImplTest, ProvisionalLoads) {
@@ -590,7 +615,8 @@ TEST_F(WebViewSchedulerImplTest, ProvisionalLoads) {
   web_view_scheduler_->DidStartLoading(1u);
   web_view_scheduler_->DidStopLoading(1u);
 
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   std::unique_ptr<WebFrameSchedulerImpl> frame1 =
       web_view_scheduler_->CreateWebFrameSchedulerImpl(
@@ -601,16 +627,20 @@ TEST_F(WebViewSchedulerImplTest, ProvisionalLoads) {
 
   // Provisional loads are refcounted.
   web_view_scheduler_->DidBeginProvisionalLoad(frame1.get());
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidBeginProvisionalLoad(frame2.get());
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidEndProvisionalLoad(frame2.get());
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidEndProvisionalLoad(frame1.get());
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 }
 
 TEST_F(WebViewSchedulerImplTest, WillNavigateBackForwardSoon) {
@@ -619,20 +649,63 @@ TEST_F(WebViewSchedulerImplTest, WillNavigateBackForwardSoon) {
   web_view_scheduler_->DidStartLoading(1u);
   web_view_scheduler_->DidStopLoading(1u);
 
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   std::unique_ptr<WebFrameSchedulerImpl> frame =
       web_view_scheduler_->CreateWebFrameSchedulerImpl(
           nullptr, WebFrameScheduler::FrameType::kSubframe);
 
   web_view_scheduler_->WillNavigateBackForwardSoon(frame.get());
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidBeginProvisionalLoad(frame.get());
-  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_AND_IMMEDIATE_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
 
   web_view_scheduler_->DidEndProvisionalLoad(frame.get());
-  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
+}
+
+TEST_F(WebViewSchedulerImplTest, PendingIndexDbTransactions) {
+  std::vector<int> run_order;
+
+  web_view_scheduler_->SetVirtualTimePolicy(
+      VirtualTimePolicy::DETERMINISTIC_LOADING);
+  web_view_scheduler_->EnableVirtualTime();
+
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
+
+  std::unique_ptr<WebFrameSchedulerImpl> web_frame_scheduler =
+      web_view_scheduler_->CreateWebFrameSchedulerImpl(
+          nullptr, WebFrameScheduler::FrameType::kSubframe);
+
+  web_view_scheduler_->SetPendingIndexDbTransactions(true);
+  EXPECT_EQ(WebViewScheduler::TaskStatus::DELAYED_TASKS_PAUSED,
+            web_view_scheduler_->GetTaskStatus());
+
+  // Immediate tasks should still be able to run.
+  web_frame_scheduler->ThrottleableTaskRunner()->PostTask(
+      BLINK_FROM_HERE,
+      WTF::Bind(&RunOrderTask, 1, WTF::Unretained(&run_order)));
+
+  // But not delayed tasks.
+  web_frame_scheduler_->ThrottleableTaskRunner()->PostDelayedTask(
+      BLINK_FROM_HERE, WTF::Bind(&RunOrderTask, 2, WTF::Unretained(&run_order)),
+      TimeDelta::FromMilliseconds(1));
+
+  mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
+  EXPECT_THAT(run_order, ElementsAre(1));
+
+  web_view_scheduler_->SetPendingIndexDbTransactions(false);
+  EXPECT_EQ(WebViewScheduler::TaskStatus::UNPAUSED,
+            web_view_scheduler_->GetTaskStatus());
+
+  mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
+  EXPECT_THAT(run_order, ElementsAre(1, 2));
 }
 
 TEST_F(WebViewSchedulerImplTest, PauseTimersWhileVirtualTimeIsPaused) {
