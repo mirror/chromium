@@ -104,6 +104,24 @@
       "revId": "4e2b65c02ebcfd523e8187aac66c474a57ab8e36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7ec09e_b5872412",
+        "filename": "services/video_capture/test/device_factory_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-27T17:26:36Z",
+      "side": 1,
+      "message": "Yeah, this is definitely not a good thing to do.\n\nAnd yes, different interfaces operate independently. Detecting disconnection of an interface is similar to receiving a message on that interface, and as such is ordered only with respect to messages on that interface.\n\nThere\u0027s no magic secret here though; what you conceptually need to do if you want to follow the current testing strategy is this:\n\n1. Establish connection 1\n2. Establish connection 2\n3. Verify that connection 2 is operational (some kind of ping-pong)\n4. Disconnect connection 1\n5. Verify that service has acknowledged connection 1\u0027s disconnection\n6. Verify that connection 2 is still operation (another ping-pong)\n\nThis does not require any arbitrary delays or wishful thinking, but it does require that you solve #5 somehow. That is beyond the scope of Mojo bindings and more a concern of either service design or testing strategy (you could e.g. add some kind of crazy ClientMonitorForTesting API in your service, which tests could use to monitor clients of this particular interface. I *don\u0027t* recommend it though.)\n\nTaking a step back for a moment: do you really need to simulate everything at such a high level to test these internal details of your service implementation? The Service Manager makes certain guarantees about the Service API contract and those guarantees are already tested in Service Manager tests. i.e., you can be sure we\u0027ll call OnStart at a certain time, we\u0027ll call OnBindInterface at certain times, etc.\n\nRather than removing your test code so far from the implementation by going through a real Service Manager in these tests, have you considered just unit-testing the implementation directly? Note that we have even introduced service_manager::TestConnectorFactory to make this easier (https://chromium-review.googlesource.com/c/chromium/src/+/738642 makes a slight modification to it and may give you an idea of usage.)\n\nThe gist is that you have the test code instantiate the Service directly (which means you can observe its internals without needing to expose new mojom interfaces to do so), but you can also still bind its exposed production interfaces via a service_manager::Connector and use that to test e.g. client library code or to write tests which look mostly like normal client code.",
+      "parentUuid": "c449d867_4b59d94c",
+      "revId": "4e2b65c02ebcfd523e8187aac66c474a57ab8e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
