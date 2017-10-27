@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "d724d630_95f50286",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-27T10:31:19Z",
+      "side": 1,
+      "message": "Or use ObserverList?",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 16
+      },
+      "revId": "bf8486f8657209050d33c03fdfe836ff01c2853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39ba5419_5b81e260",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 6
@@ -48,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "9dfb85b4_dc6c5589",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-27T10:31:19Z",
+      "side": 1,
+      "message": "Do we even need to do this? The RecyclerView shouldn\u0027t outlive this object, right?",
+      "range": {
+        "startLine": 287,
+        "startChar": 8,
+        "endLine": 287,
+        "endChar": 62
+      },
+      "revId": "bf8486f8657209050d33c03fdfe836ff01c2853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28754145_9c00e3d8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 6
@@ -59,6 +105,75 @@
       "writtenOn": "2017-10-26T16:24:10Z",
       "side": 1,
       "message": "Why does the logo view need to request layout after it\u0027s \"GONE\"?",
+      "revId": "bf8486f8657209050d33c03fdfe836ff01c2853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b1071e_9f75b8a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-27T10:31:19Z",
+      "side": 1,
+      "message": "Maybe move these lines down to where |sheetHeightPx| is used?",
+      "range": {
+        "startLine": 408,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 0
+      },
+      "revId": "bf8486f8657209050d33c03fdfe836ff01c2853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ccdd3c_75e39a9a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-27T10:31:19Z",
+      "side": 1,
+      "message": "Tiny nit: URL",
+      "range": {
+        "startLine": 414,
+        "startChar": 51,
+        "endLine": 414,
+        "endChar": 54
+      },
+      "revId": "bf8486f8657209050d33c03fdfe836ff01c2853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a799db5_6735f6b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-27T10:31:19Z",
+      "side": 1,
+      "message": "This is -mMaxToolbarOffset * transitionFraction.",
+      "range": {
+        "startLine": 428,
+        "startChar": 17,
+        "endLine": 428,
+        "endChar": 85
+      },
       "revId": "bf8486f8657209050d33c03fdfe836ff01c2853a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
