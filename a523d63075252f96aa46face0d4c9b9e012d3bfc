@@ -34,6 +34,24 @@
       "revId": "a523d63075252f96aa46face0d4c9b9e012d3bfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6aa562_3db09ea5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-27T05:09:44Z",
+      "side": 1,
+      "message": "I suspect this is more of a historical thing than anything else.\n\nAndroid\u0027s style guide only reference\u0027s Oracle\u0027s javadoc doc:\nhttp://www.oracle.com/technetwork/articles/java/index-137868.html\n\nAll references in there show line wrapping as I mentioned above, which is why I\u0027ve always said we should do it that way.\n\nGoogle\u0027s style guide is more aligned with Boris\u0027s:\nhttps://google.github.io/styleguide/javaguide.html#s7.1.3-javadoc-block-tags\n(but they use 2 space indent, so 4 in their world is likely 8 in Android\u0027s)\n\nI wouldn\u0027t say that we\u0027re horribly consistent, but I actually visually prefer the Oracle one for no good reason other than I do.\n\nI won\u0027t push this too much though :-P",
+      "parentUuid": "0bc7c82a_fb34d95f",
+      "revId": "a523d63075252f96aa46face0d4c9b9e012d3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
