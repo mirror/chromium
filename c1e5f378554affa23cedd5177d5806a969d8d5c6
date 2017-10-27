@@ -52,6 +52,24 @@
       "revId": "c1e5f378554affa23cedd5177d5806a969d8d5c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1d302d_a534377f",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-27T22:04:44Z",
+      "side": 0,
+      "message": "Changed to ROLE_WINDOW does not work. It will announce \"[folder name], edit text, open folder, window\" for issue 779150.\n\nLet us meet next week for this issue, thanks!",
+      "parentUuid": "a62fbcc8_b70285d1",
+      "revId": "c1e5f378554affa23cedd5177d5806a969d8d5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
