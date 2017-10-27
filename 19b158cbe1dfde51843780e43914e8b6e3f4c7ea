@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d25c436_a3c957a2",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-27T20:11:03Z",
+      "side": 1,
+      "message": "I think this is a good time to move this to be a method on AnimationWorkletPlayer.\n\n GetCurrentTime(monotonic_time) \u003d\u003e returns either time based on scroll timline or monotonic_time. \n\nIn future this can also be extended to support the case when someone does \"animation.currenTime \u003d 123\" on main thread. :D",
+      "range": {
+        "startLine": 353,
+        "startChar": 5,
+        "endLine": 353,
+        "endChar": 0
+      },
+      "revId": "19b158cbe1dfde51843780e43914e8b6e3f4c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8514c0a7_7a566482",
+        "filename": "cc/animation/scroll_timeline.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-27T20:11:03Z",
+      "side": 1,
+      "message": "I think writing mode should be taken into account in Blink and \njust have cc operate on physical direction.",
+      "range": {
+        "startLine": 42,
+        "startChar": 21,
+        "endLine": 42,
+        "endChar": 40
+      },
+      "revId": "19b158cbe1dfde51843780e43914e8b6e3f4c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562afab1_433d8b35",
+        "filename": "cc/animation/scroll_timeline.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-27T20:11:03Z",
+      "side": 1,
+      "message": "Since this has CurrentTime I feel it should be a class instead of struct. [1]\n\n[1] http://google.github.io/styleguide/cppguide.html#Structs_vs._Classes",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 6
+      },
+      "revId": "19b158cbe1dfde51843780e43914e8b6e3f4c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a45827_59c4af7a",
+        "filename": "cc/animation/worklet_animation_player.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-27T20:11:03Z",
+      "side": 1,
+      "message": "nit: Should we just have a ScrollTimeline::CreateImplInstance instead? That seems to be the pattern used in cc/animation",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 69
+      },
+      "revId": "19b158cbe1dfde51843780e43914e8b6e3f4c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42664b93_5b22fe06",
+        "filename": "cc/trees/mutator_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-27T20:11:03Z",
+      "side": 1,
+      "message": "It seems to me that this should be a const reference. I suggest making\nScrollTree::FindScrollNodeById a const method if possible and making this a const\nreference.",
+      "range": {
+        "startLine": 65,
+        "startChar": 30,
+        "endLine": 65,
+        "endChar": 53
+      },
+      "revId": "19b158cbe1dfde51843780e43914e8b6e3f4c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199c22d2_548b5ffb",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/animationworklet/animation-worklet-scroll-timeline.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-27T20:11:03Z",
+      "side": 1,
+      "message": "I filed this issue for you: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d779189\nPlease use a TODO here.",
+      "range": {
+        "startLine": 67,
+        "startChar": 27,
+        "endLine": 67,
+        "endChar": 100
+      },
+      "revId": "19b158cbe1dfde51843780e43914e8b6e3f4c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457c5489_0dc68d51",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-27T20:11:03Z",
+      "side": 1,
+      "message": "I think should take into account the writing mode here. This way cc/animation\nwould operate on physical direction.",
+      "range": {
+        "startLine": 62,
+        "startChar": 39,
+        "endLine": 62,
+        "endChar": 44
+      },
+      "revId": "19b158cbe1dfde51843780e43914e8b6e3f4c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
