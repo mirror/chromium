@@ -45,32 +45,6 @@ typedef winfoundtn::ITypedEventHandler<
     winui::Notifications::ToastDismissedEventArgs*>
     ToastDismissedHandler;
 
-// Hold related data for a notification.
-struct NotificationData {
-  NotificationData(NotificationCommon::Type notification_type,
-                   const std::string& notification_id,
-                   const std::string& profile_id,
-                   bool incognito,
-                   const GURL& origin_url)
-      : notification_type(notification_type),
-        notification_id(notification_id),
-        profile_id(profile_id),
-        incognito(incognito),
-        origin_url(origin_url) {}
-
-  // Same parameters used by NotificationPlatformBridge::Display().
-  NotificationCommon::Type notification_type;
-  const std::string notification_id;
-  const std::string profile_id;
-  const bool incognito;
-
-  // A copy of the origin_url from the underlying message_center::Notification.
-  // Used to pass back to NotificationDisplayService.
-  const GURL origin_url;
-
-  DISALLOW_COPY_AND_ASSIGN(NotificationData);
-};
-
 namespace {
 
 // Templated wrapper for winfoundtn::GetActivationFactory().
@@ -143,57 +117,6 @@ HRESULT GetToastNotification(
   return S_OK;
 }
 
-// Perform |operation| on a notification once the profile has been loaded.
-void ProfileLoadedCallback(NotificationCommon::Operation operation,
-                           NotificationCommon::Type notification_type,
-                           const std::string& origin,
-                           const std::string& notification_id,
-                           const base::Optional<int>& action_index,
-                           const base::Optional<base::string16>& reply,
-                           const base::Optional<bool>& by_user,
-                           Profile* profile) {
-  if (!profile)
-    return;
-
-  auto* display_service =
-      NotificationDisplayServiceFactory::GetForProfile(profile);
-  display_service->ProcessNotificationOperation(operation, notification_type,
-                                                origin, notification_id,
-                                                action_index, reply, by_user);
-}
-
-void ForwardNotificationOperationOnUiThread(
-    NotificationCommon::Operation operation,
-    NotificationCommon::Type notification_type,
-    const std::string& origin,
-    const std::string& notification_id,
-    const std::string& profile_id,
-    bool incognito) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (!g_browser_process)
-    return;
-
-  g_browser_process->profile_manager()->LoadProfile(
-      profile_id, incognito,
-      base::Bind(&ProfileLoadedCallback, operation, notification_type, origin,
-                 notification_id, base::nullopt /*action_index*/,
-                 base::nullopt /*reply*/, base::nullopt /*by_user*/));
-}
-
-void ForwardNotificationOperation(NotificationData* data,
-                                  NotificationCommon::Operation operation) {
-  if (!data)
-    return;
-
-  content::BrowserThread::PostTask(
-      content::BrowserThread::UI, FROM_HERE,
-      base::Bind(&ForwardNotificationOperationOnUiThread, operation,
-                 data->notification_type, data->origin_url.spec(),
-                 data->notification_id, data->profile_id, data->incognito));
-}
-
-}  // namespace
-
 // static
 NotificationPlatformBridge* NotificationPlatformBridge::Create() {
   return new NotificationPlatformBridgeWin();
@@ -215,14 +138,6 @@ void NotificationPlatformBridgeWin::Display(
     std::unique_ptr<NotificationCommon::Metadata> metadata) {
   // TODO(finnur): Move this to a RoInitialized thread, as per crbug.com/761039.
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  NotificationData* data = FindNotificationData(
-      notification_id, profile_id, notification.origin_url(), incognito);
-  if (!data) {
-    data = new NotificationData(notification_type, notification_id, profile_id,
-                                incognito, notification.origin_url());
-    notifications_.emplace(data, base::WrapUnique(data));
-  }
 
   mswr::ComPtr<winui::Notifications::IToastNotificationManagerStatics>
       toast_manager;
@@ -306,16 +221,6 @@ HRESULT NotificationPlatformBridgeWin::OnActivated(
     IInspectable* /* inspectable */) {
   // TODO(chengx): We need to write profile id and incognito information into
   // the toast, so that we can retrieve them from |notification| here.
-  std::string notification_id = "";
-  std::string profile_id = "";
-  bool incognito = false;
-  GURL origin_url;
-
-  NotificationData* data =
-      FindNotificationData(notification_id, profile_id, origin_url, incognito);
-  if (data)
-    ForwardNotificationOperation(data, NotificationCommon::CLICK);
-
   return S_OK;
 }
 
@@ -324,34 +229,5 @@ HRESULT NotificationPlatformBridgeWin::OnDismissed(
     winui::Notifications::IToastDismissedEventArgs* /* args */) {
   // TODO(chengx): We need to write profile_id and incognito information into
   // the toast, so that we can retrieve them from |notification| here.
-  std::string notification_id = "";
-  std::string profile_id = "";
-  bool incognito = false;
-  GURL origin_url;
-
-  NotificationData* data =
-      FindNotificationData(notification_id, profile_id, origin_url, incognito);
-  if (data) {
-    ForwardNotificationOperation(data, NotificationCommon::CLOSE);
-    notifications_.erase(data);
-  }
-
   return S_OK;
-}
-
-NotificationData* NotificationPlatformBridgeWin::FindNotificationData(
-    const std::string& notification_id,
-    const std::string& profile_id,
-    const GURL& origin_url,
-    bool incognito) {
-  for (const auto& item : notifications_) {
-    NotificationData* data = item.first;
-    if (data->notification_id == notification_id &&
-        data->profile_id == profile_id && data->origin_url == origin_url &&
-        data->incognito == incognito) {
-      return data;
-    }
-  }
-
-  return nullptr;
 }
