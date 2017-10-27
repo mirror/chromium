@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b512d2e2_604e861b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-27T19:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ded4a030_bf747cdc",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 45
+      },
+      "revId": "bc12e85a43432af2c991ec66766696e65bcbcd01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dc3dd7c_0b1df09f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "bc12e85a43432af2c991ec66766696e65bcbcd01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc98fcb_f64176f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-27T19:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc3dd7c_0b1df09f",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 84
+      },
+      "revId": "bc12e85a43432af2c991ec66766696e65bcbcd01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a76033ea_f5cd5d54",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4018,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-27T19:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cab00301_e6868699",
+      "range": {
+        "startLine": 4018,
+        "startChar": 66,
+        "endLine": 4018,
+        "endChar": 0
+      },
+      "revId": "bc12e85a43432af2c991ec66766696e65bcbcd01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a867fdd_2adcf015",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-26T20:47:24Z",
       "side": 1,
       "message": "It looks like you\u0027re adding a new top-level group name.  That might be appropriate; but could you please check whether there is already an existing top-level name that would be appropriate for this data?  If there isn\u0027t, then please consider whether \"BrowserActions\" is sufficiently general as a top-level name, or if this would make more sense to name as \"Foo.BrowserActions.SelectedOption\", where \"Foo\" is a more general name that encompasses browser actions plus related projects.",
+      "range": {
+        "startLine": 7838,
+        "startChar": 17,
+        "endLine": 7838,
+        "endChar": 31
+      },
+      "revId": "bc12e85a43432af2c991ec66766696e65bcbcd01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8709b8_727bc451",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7838,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-27T19:16:07Z",
+      "side": 1,
+      "message": "Browser Actions is a new component in Chrome, so it might not be able to put under other name. And we add SelectedOption as sub-level name because later we might need more histograms for Browser Actions.",
+      "parentUuid": "2a867fdd_2adcf015",
       "range": {
         "startLine": 7838,
         "startChar": 17,
