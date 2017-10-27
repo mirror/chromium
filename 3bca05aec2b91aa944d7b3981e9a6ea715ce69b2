@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "91fa7b01_6740455c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-27T17:30:25Z",
+      "side": 1,
+      "message": "Added a TODO. I still have confusion with \"text\"@Before/AfterAnchor\n\nConsider \u003cdiv\u003efoo\u003c/div\u003e\n\nAs we discussed in crrev.com/c/722464, we consider DIV@0 and \"foo\"@0 as inequivalent positions, and hence introduce different syntax for them.\n\nHowever, DIV@0 and \"foo\"@BeforeAnchor are equivalent positions.\n\nIf \"foo\"@0 and \"foo\"@BeforeAnchor are equivalent, then the equivalence relation is intransitive, which is really weird.",
+      "parentUuid": "5c08d8d2_8f2bda11",
+      "revId": "3bca05aec2b91aa944d7b3981e9a6ea715ce69b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b5d66b2_73ce15ac",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 4
@@ -105,6 +123,24 @@
       "revId": "3bca05aec2b91aa944d7b3981e9a6ea715ce69b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aed1790_050f0465",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-27T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ff6dcc9_59ae51c4",
+      "revId": "3bca05aec2b91aa944d7b3981e9a6ea715ce69b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
