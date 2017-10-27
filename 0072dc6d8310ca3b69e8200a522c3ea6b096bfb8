@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9a9cf2d_ab797f57",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-27T08:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f375656a_7daa62e8",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b18173f_f7d4a545",
         "filename": "ui/base/resource/data_pack.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T17:51:13Z",
       "side": 1,
       "message": "While you\u0027re here, can you fix the name of this param to be hacker_style per convention?",
+      "range": {
+        "startLine": 440,
+        "startChar": 42,
+        "endLine": 440,
+        "endChar": 58
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0acb09a5_80680dcd",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-27T08:52:34Z",
+      "side": 1,
+      "message": "Sure :) Done.",
+      "parentUuid": "3b18173f_f7d4a545",
       "range": {
         "startLine": 440,
         "startChar": 42,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c5aaaace_7854b86a",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-27T08:52:34Z",
+      "side": 1,
+      "message": "ok, I\u0027ve removed them.",
+      "parentUuid": "8ce4f57a_90597eec",
+      "range": {
+        "startLine": 470,
+        "startChar": 8,
+        "endLine": 470,
+        "endChar": 21
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c22f3dee_eafb207e",
         "filename": "ui/base/resource/data_pack.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7e5106e0_e51bf78d",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-27T08:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c22f3dee_eafb207e",
+      "range": {
+        "startLine": 478,
+        "startChar": 47,
+        "endLine": 478,
+        "endChar": 54
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d78e783e_c08fc1b5",
         "filename": "ui/base/resource/data_pack.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-26T17:51:13Z",
       "side": 1,
       "message": "So I\u0027m guessing the file format is supposed to be always little endian since you\u0027re not doing any byteswapping anywhere? Could you add a DCHECK() at the beginning of the function that verifies that the current platform is little endian?",
+      "range": {
+        "startLine": 480,
+        "startChar": 42,
+        "endLine": 480,
+        "endChar": 0
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6278fabe_2090eb83",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-27T08:52:34Z",
+      "side": 1,
+      "message": "There was already a compile-time check in a previous part of the source-code for this. I\u0027ve updated it to use base/sys_byteorder.h instead of Linux/Mac specific checks though, and included another one in this function.",
+      "parentUuid": "d78e783e_c08fc1b5",
       "range": {
         "startLine": 480,
         "startChar": 42,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "2f2ac1cb_b78a0ca2",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-27T08:52:34Z",
+      "side": 1,
+      "message": "Damn, you\u0027re right. My bad, the alias table was even malformed, but this was hidden by the full resource table, which masked it completely. This is now fixed. Thanks for spotting this.",
+      "parentUuid": "3e8cce31_ffbfaa5a",
+      "range": {
+        "startLine": 492,
+        "startChar": 49,
+        "endLine": 492,
+        "endChar": 50
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dad8897_bbd7dccf",
         "filename": "ui/base/resource/data_pack.cc",
         "patchSetId": 2
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c8e592ab_87c5128f",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-27T08:52:34Z",
+      "side": 1,
+      "message": "Will do. This code is not used in the Chrome build process, only at runtime when setting a theme through an extension I believe. More details in the upcoming commit description change. Thanks.",
+      "parentUuid": "6dad8897_bbd7dccf",
+      "range": {
+        "startLine": 505,
+        "startChar": 37,
+        "endLine": 505,
+        "endChar": 0
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71c68e2b_86c522ee",
         "filename": "ui/base/resource/data_pack.cc",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2017-10-26T17:51:13Z",
       "side": 1,
       "message": "Why not use Alias type here?",
+      "range": {
+        "startLine": 506,
+        "startChar": 13,
+        "endLine": 506,
+        "endChar": 21
+      },
+      "revId": "0072dc6d8310ca3b69e8200a522c3ea6b096bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca473b2b_7de51d80",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-27T08:52:34Z",
+      "side": 1,
+      "message": "That works too. Done.",
+      "parentUuid": "71c68e2b_86c522ee",
       "range": {
         "startLine": 506,
         "startChar": 13,
