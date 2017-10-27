@@ -648,6 +648,32 @@ _STATES = {
       },
     ],
   },
+  #'WindowRectanglesEXT': {
+  #  'type': 'Normal',
+  #  'custom_function': True,
+  #  'func': 'WindowRectanglesEXT',
+  #  'extension_flag': 'ext_window_rectangles',
+  #  'states': [
+  #    {
+  #      'name': 'window_rectangle_mode',
+  #      'type': 'GLenum',
+  #      'enum': 'GL_WINDOW_RECTANGLE_MODE_EXT',
+  #      'default': 'GL_EXCLUSIVE_EXT',
+  #    },
+  #    {
+  #      'name': 'num_window_rectangles',
+  #      'type': 'GLsizei',
+  #      'enum': 'GL_NUM_WINDOW_RECTANGLES_EXT',
+  #      'default': '0',
+  #    },
+  #    {
+  #      'name': 'window_rectangles',
+  #      'type': 'std::vector<GLint>',
+  #      'enum': 'GL_WINDOW_RECTANGLE',
+  #      'default': '{}',
+  #    },
+  #  ],
+  #},
 }
 
 # Named type info object represents a named type that is used in OpenGL call
@@ -4620,6 +4646,13 @@ _FUNCTION_INFO = {
     'cmd_args': 'GLuint texture_id, GLuint shm_id, GLuint shm_offset, '
                 'GLsizei color_space_size',
     'extension': 'CHROMIUM_color_space_metadata',
+  },
+  'WindowRectanglesEXT': {
+    'type': 'PUTn',
+    'count': 4,
+    'decoder_func': 'DoWindowRectanglesEXT',
+    'extension': 'EXT_window_rectangles',
+    'extension_flag': 'ext_window_rectangles',
   },
 }
 

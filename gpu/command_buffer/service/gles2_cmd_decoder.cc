@@ -1978,6 +1978,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                              GLint pixel_config);
   void DoEndRasterCHROMIUM();
 
+  void DoWindowRectanglesEXT(GLenum mode, GLsizei n, const volatile GLint* box);
+
   // Returns false if textures were replaced.
   bool PrepareTexturesForRender();
   void RestoreStateForTextures();
@@ -7246,6 +7248,11 @@ void GLES2DecoderImpl::DoGetIntegeri_v(GLenum target,
                                        GLuint index,
                                        GLint* params,
                                        GLsizei params_size) {
+  if (features().ext_window_rectangles && target == GL_WINDOW_RECTANGLE_EXT) {
+    DCHECK_EQ(params_size, 4);
+    glGetIntegeri_v(target, index, params);
+    return;
+  }
   GetIndexedIntegerImpl<GLint>("glGetIntegeri_v", target, index, params);
 }
 
@@ -7253,6 +7260,11 @@ void GLES2DecoderImpl::DoGetInteger64i_v(GLenum target,
                                          GLuint index,
                                          GLint64* params,
                                          GLsizei params_size) {
+  if (features().ext_window_rectangles && target == GL_WINDOW_RECTANGLE_EXT) {
+    DCHECK_EQ(params_size, 4);
+    glGetInteger64i_v(target, index, params);
+    return;
+  }
   GetIndexedIntegerImpl<GLint64>("glGetInteger64i_v", target, index, params);
 }
 
@@ -20331,6 +20343,12 @@ void GLES2DecoderImpl::DoEndRasterCHROMIUM() {
   sk_surface_.reset();
 
   RestoreState(nullptr);
+}
+
+void GLES2DecoderImpl::DoWindowRectanglesEXT(GLenum mode,
+                                             GLsizei n,
+                                             const volatile GLint* box) {
+  api()->glWindowRectanglesEXTFn(mode, n, const_cast<const GLint*>(box));
 }
 
 // Include the auto-generated part of this file. We split this because it means
