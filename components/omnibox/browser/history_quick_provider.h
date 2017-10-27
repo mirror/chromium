@@ -47,6 +47,9 @@ class HistoryQuickProvider : public HistoryProvider {
   // Performs the autocomplete matching and scoring.
   void DoAutocomplete();
 
+  // Helper function for highlighting already open matches.
+  void ConvertOpenTabMatches();
+
   // Creates an AutocompleteMatch from |history_match|, assigning it
   // the score |score|.
   AutocompleteMatch QuickMatchToACMatch(const ScoredHistoryMatch& history_match,
