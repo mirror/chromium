@@ -13,6 +13,7 @@
 #include "build/build_config.h"
 #include "components/viz/service/display_embedder/gpu_display_provider.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager_test_connector_impl.h"
 #include "components/viz/service/gl/gpu_service_impl.h"
 #include "gpu/command_buffer/common/activity_flags.h"
 #include "gpu/config/gpu_switches.h"
@@ -130,6 +131,17 @@ void GpuMain::BindAssociated(mojom::GpuMainAssociatedRequest request) {
   associated_binding_.Bind(std::move(request));
 }
 
+void GpuMain::BindFrameSinkManagerTestConnectorRequest(
+    viz::mojom::FrameSinkManagerTestConnectorRequest request) {
+  if (!frame_sink_manager_)
+    return;
+
+  compositor_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&GpuMain::BindFrameSinkManagerTestConnectorOnCompositorThread,
+                 base::Unretained(this), base::Passed(std::move(request))));
+}
+
 void GpuMain::TearDown() {
   DCHECK(!gpu_thread_task_runner_->BelongsToCurrentThread());
   DCHECK(!compositor_thread_task_runner_->BelongsToCurrentThread());
@@ -238,6 +250,12 @@ void GpuMain::CreateFrameSinkManagerOnCompositorThread(
       viz::SurfaceManager::LifetimeType::REFERENCES, display_provider_.get());
   frame_sink_manager_->BindAndSetClient(std::move(request), nullptr,
                                         std::move(client));
+}
+
+void GpuMain::BindFrameSinkManagerTestConnectorOnCompositorThread(
+    viz::mojom::FrameSinkManagerTestConnectorRequest request) {
+  viz::FrameSinkManagerTestConnectorImpl::CreateAndBind(
+      frame_sink_manager_.get(), std::move(request));
 }
 
 void GpuMain::CloseGpuMainBindingOnGpuThread(base::WaitableEvent* wait) {

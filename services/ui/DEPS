@@ -12,6 +12,7 @@ include_rules = [
   "+services/service_manager",
   "-services/ui/gpu",
   "-services/ui/surfaces",
+  "+services/viz/privileged/interfaces/compositing",
   "+third_party/skia/include",
   "+ui",
 ]

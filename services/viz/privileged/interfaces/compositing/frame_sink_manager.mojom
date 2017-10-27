@@ -109,3 +109,20 @@ interface FrameSinkManagerClient {
   SwitchActiveAggregatedHitTestRegionList(FrameSinkId frame_sink_id,
                                           uint8 active_handle_index);
 };
+
+// FrameSinkManagerTestConnector is a priveleged interface that allows full
+// browser tests to connect to the viz process. Clients can implement
+// FrameSinkManagerTestObserver to receive notifications of changes.
+interface FrameSinkManagerTestConnector {
+  AddObserver(FrameSinkManagerTestObserver observer);
+};
+
+// FrameSinkManagerTestObserver is a priveleged interface that allows a browser
+// test to implement an observer of changes in FrameSinkManagerClient. It is
+// connected via the FrameSinkManagerTestConnector. It will not be notified of
+// state changes which occurred before connection.
+interface FrameSinkManagerTestObserver {
+   // Called by FrameSinkManagerTestConnector when a CompositorFrame with a new
+   // SurfaceId activates for the first time.
+   OnFirstSurfaceActivation(SurfaceInfo surface_info);
+};

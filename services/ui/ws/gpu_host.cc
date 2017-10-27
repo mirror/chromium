@@ -92,6 +92,11 @@ void DefaultGpuHost::CreateFrameSinkManager(
   gpu_main_->CreateFrameSinkManager(std::move(request), std::move(client));
 }
 
+void DefaultGpuHost::BindFrameSinkManagerTestConnectorRequest(
+    viz::mojom::FrameSinkManagerTestConnectorRequest request) {
+  gpu_main_impl_->BindFrameSinkManagerTestConnectorRequest(std::move(request));
+}
+
 GpuClient* DefaultGpuHost::AddInternal(mojom::GpuRequest request) {
   auto client(base::MakeUnique<GpuClient>(
       next_client_id_++, &gpu_info_, &gpu_feature_info_,
