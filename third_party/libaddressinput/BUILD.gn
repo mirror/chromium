@@ -158,8 +158,6 @@ source_set("test_support") {
     "//build/config/compiler:no_chromium_code",
   ]
 
-  defines = [ "TEST_DATA_DIR=\"src/third_party/libaddressinput/src/testdata\"" ]
-
   include_dirs = [ "src/cpp/src" ]
 
   deps = [
