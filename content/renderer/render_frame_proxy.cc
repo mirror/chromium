@@ -622,6 +622,12 @@ void RenderFrameProxy::SetIsInert(bool inert) {
   Send(new FrameHostMsg_SetIsInert(routing_id_, inert));
 }
 
+void RenderFrameProxy::UpdateRenderThrottlingStatus(bool isThrottled,
+                                                    bool subtreeThrottled) {
+  Send(new FrameHostMsg_UpdateRenderThrottlingStatus(routing_id_, isThrottled,
+                                                     subtreeThrottled));
+}
+
 void RenderFrameProxy::DidChangeOpener(blink::WebFrame* opener) {
   // A proxy shouldn't normally be disowning its opener.  It is possible to get
   // here when a proxy that is being detached clears its opener, in which case
