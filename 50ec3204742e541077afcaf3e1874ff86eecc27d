@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2232c44f_1fac1915",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T23:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8c1878c_ccd27562",
+      "range": {
+        "startLine": 20,
+        "startChar": 54,
+        "endLine": 20,
+        "endChar": 67
+      },
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b17f4c73_9e7032ac",
         "filename": "/COMMIT_MSG",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c5163fae_57c577fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T23:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b17f4c73_9e7032ac",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 17
+      },
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd5a6220_9ca4b936",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 18
@@ -62,6 +110,24 @@
       "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba14bf1_bb279de0",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3184,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T23:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd5a6220_9ca4b936",
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "e05f1ce1_f8bfd662",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T23:17:54Z",
+      "side": 1,
+      "message": "I tried to reword the comment.",
+      "parentUuid": "7014a45e_eb3d046d",
+      "range": {
+        "startLine": 140,
+        "startChar": 37,
+        "endLine": 140,
+        "endChar": 52
+      },
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75042f4d_b5f81c81",
         "filename": "content/common/unique_name_helper.h",
         "patchSetId": 18
@@ -102,6 +192,24 @@
       "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf0b776_2dfe31f3",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T23:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75042f4d_b5f81c81",
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "08c55909_68a5bc7d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3182,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T23:17:54Z",
+      "side": 1,
+      "message": "I am not sure why this is the right way to define dynamic (other than it works and passes the tests).  :-(\n\nFWIW, I\u0027ve also tried V8Context::IsInUse, but this impacted too many frames (static frames AFAICouldTell).  And earlier in CR we\u0027ve concluded that HasFinishedParsing doesn\u0027t cover frames created by inline scripts.\n\nLet me leave this comment thread unresolved.  I am not sure what we need to do here to proceed.",
+      "parentUuid": "b6c23c95_cc2cdd8b",
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bd04b38_ef354904",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 18
@@ -136,6 +262,24 @@
       "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454e49f0_0ea1301c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3215,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T23:17:54Z",
+      "side": 1,
+      "message": "I\u0027ve added a long comment to UniqueNameHelper::Freeze method.  Is this sufficient?",
+      "parentUuid": "8bd04b38_ef354904",
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "0af22aab_c5649c5a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/history/dynamic-frame-creation-order.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T23:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ffdd571_e3b52e9c",
+      "range": {
+        "startLine": 127,
+        "startChar": 26,
+        "endLine": 127,
+        "endChar": 27
+      },
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48d86b43_35feef4d",
         "filename": "third_party/WebKit/LayoutTests/http/tests/history/dynamic-frame-creation-order2.html",
         "patchSetId": 18
@@ -176,6 +344,24 @@
       "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865a8af1_7b6a914d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/history/dynamic-frame-creation-order2.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T23:17:54Z",
+      "side": 1,
+      "message": "Done (+ I\u0027ve also renamed the other test).",
+      "parentUuid": "48d86b43_35feef4d",
+      "revId": "50ec3204742e541077afcaf3e1874ff86eecc27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

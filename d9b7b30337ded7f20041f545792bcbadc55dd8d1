@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f462d4e2_f8ec44ba",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T23:17:54Z",
+      "side": 0,
+      "message": "\u003e Because cross_site_iframe_factory.html creates iframes dynamically?\n\nYes - history navigations to such iframes are broken when they involve recreating the frames (because after the CL, in the frames get a brand new unique name every time they are recreated).\n\n\u003e That\u0027s unfortunate.  I\u0027m surprised that doesn\u0027t affect more tests.\n\u003e \n\u003e I suppose if we wanted to, we could rewrite that to be a \"server-generated\" page by coding it in testserver.py instead (and spitting out static HTML files with iframes), but that might limit some ways people use the current HTML file for testing.\n\nWe could also write a custom handler for embedded_test_server.\n\nDo you think this is important enough to open a bug to track this?  We\u0027ll probably remember anyway, once we hit this in practice (e.g. when authoring new tests).\n\u003e \n\u003e Ok, I guess we can live with it.\n\nAck.",
+      "parentUuid": "1b87f51e_74f9326e",
+      "range": {
+        "startLine": 950,
+        "startChar": 10,
+        "endLine": 950,
+        "endChar": 29
+      },
+      "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07bd1f37_cace774a",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 18
@@ -60,6 +84,24 @@
       "writtenOn": "2017-10-26T22:18:58Z",
       "side": 0,
       "message": "Wasn\u0027t this part of the intention of the test?  I\u0027m very nervous about any changes in behavior here, since this test relates to https://crbug.com/657896, which is about breaking ads on back/forward.  We need to be very careful not to regress that.",
+      "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c6a6c2_0cc2a32a",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3280,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-27T23:17:54Z",
+      "side": 0,
+      "message": "\u003e Wasn\u0027t this part of the intention of the test?\n\nYes :-/  This CL means that we will not restore recreated dynamic frames.  This also means forms and/or file access.\n\nSo - what I have done in the latest patchset is (sorry for not catching the need for these changes earlier):\n- I changed the comments describing the test intent\n- I reintroduced the opposite of the removed assertions (copy\u0026pasted from FrameNavigationEntry_RecreatedInjectedBlankSubframe).\n\nFWIW, I\u0027ve verified that RenderFrameHostManagerTest.RestoreSubframeFileAccessForHistoryNavigation still passes.  I do note that the srcdoc iframe in that test is static (i.e. not injected via javascript).\n\nIf we agree that dynamic frames should not be restored when recreated, then I don\u0027t think we can avoid removing/reversing the affected test assertions, right?\n\n\u003e I\u0027m very nervous about any changes in behavior here, since this test relates to https://crbug.com/657896, which is about breaking ads on back/forward.  We need to be very careful not to regress that.\n\nI have manually run (after this CL) the repro steps from https://crbug.com/657896 and verified that the ad still shows up after coming back to the page.  This is probably not unexpected, since after the CL newly created dynamic frames do not participate in session history, so the ad just goes through a fresh load.\n\n\nPS. Is there something else you think we should be doing to verify no regressions around this area?",
+      "parentUuid": "07bd1f37_cace774a",
       "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
