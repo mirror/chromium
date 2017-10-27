@@ -88,6 +88,24 @@
       "revId": "23eeb0cfbaed25d3e5ddd89497046d8587d05aee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2cacfc_b530fe22",
+        "filename": "ash/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-27T00:15:13Z",
+      "side": 1,
+      "message": "OK. Then I\u0027m OK with a DEP here, but make it just on components/arc/common/voice_interaction_state.mojom.h and leave a comment/todo about sorting out the dependency graph.\n\nAlso, could you drop a README.md into //components/arc/common explaining that it\u0027s just for mojoms, and that these mojoms exist in other repos?",
+      "parentUuid": "84caa887_2350735f",
+      "revId": "23eeb0cfbaed25d3e5ddd89497046d8587d05aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
