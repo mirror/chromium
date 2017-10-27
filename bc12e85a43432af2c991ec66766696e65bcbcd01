@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "79eb7cab_3dc3c7f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-27T20:28:05Z",
+      "side": 1,
+      "message": "Sorry I misunderstand that the values only need to be consistent with definition in enum.xml. I will add the comments explicitly states they cannot be renumber or reused.",
+      "parentUuid": "0cfa3772_4496cb41",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 45
+      },
+      "revId": "bc12e85a43432af2c991ec66766696e65bcbcd01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dc3dd7c_0b1df09f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
         "patchSetId": 2
