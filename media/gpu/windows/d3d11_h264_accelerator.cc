@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/d3d11_h264_accelerator.h"
+#include "media/gpu/windows/d3d11_h264_accelerator.h"
 
 #include <d3d11.h>
 #include <dxva.h>
@@ -32,105 +32,13 @@ namespace media {
     }                                       \
   } while (0)
 
-D3D11PictureBuffer::D3D11PictureBuffer(PictureBuffer picture_buffer,
-                                       size_t level)
-    : picture_buffer_(picture_buffer), level_(level) {}
-
-D3D11PictureBuffer::D3D11PictureBuffer(
-    PictureBuffer picture_buffer,
-    size_t level,
-    const std::vector<scoped_refptr<gpu::gles2::TextureRef>>& texture_refs,
-    const MailboxHolderArray& mailbox_holders)
-    : picture_buffer_(picture_buffer),
-      level_(level),
-      texture_refs_(texture_refs) {
-  memcpy(&mailbox_holders_, mailbox_holders, sizeof(mailbox_holders_));
-}
-
-D3D11PictureBuffer::~D3D11PictureBuffer() {}
-
-bool D3D11PictureBuffer::Init(
-    base::win::ScopedComPtr<ID3D11VideoDevice> video_device,
-    base::win::ScopedComPtr<ID3D11Texture2D> texture,
-    const GUID& decoder_guid) {
-  texture_ = texture;
-  D3D11_VIDEO_DECODER_OUTPUT_VIEW_DESC view_desc = {};
-  view_desc.DecodeProfile = decoder_guid;
-  view_desc.ViewDimension = D3D11_VDOV_DIMENSION_TEXTURE2D;
-  view_desc.Texture2D.ArraySlice = (UINT)level_;
-
-  HRESULT hr = video_device->CreateVideoDecoderOutputView(
-      texture.Get(), &view_desc, output_view_.GetAddressOf());
-
-  CHECK(SUCCEEDED(hr));
-  EGLDisplay egl_display = gl::GLSurfaceEGL::GetHardwareDisplay();
-  const EGLint stream_attributes[] = {
-      EGL_CONSUMER_LATENCY_USEC_KHR,
-      0,
-      EGL_CONSUMER_ACQUIRE_TIMEOUT_USEC_KHR,
-      0,
-      EGL_NONE,
-  };
-  stream_ = eglCreateStreamKHR(egl_display, stream_attributes);
-  RETURN_ON_FAILURE(!!stream_, "Could not create stream", false);
-  gl_image_ =
-      base::MakeRefCounted<gl::GLImageDXGI>(picture_buffer_.size(), stream_);
-  gl::ScopedActiveTexture texture0(GL_TEXTURE0);
-  gl::ScopedTextureBinder texture0_binder(
-      GL_TEXTURE_EXTERNAL_OES, picture_buffer_.service_texture_ids()[0]);
-  gl::ScopedActiveTexture texture1(GL_TEXTURE1);
-  gl::ScopedTextureBinder texture1_binder(
-      GL_TEXTURE_EXTERNAL_OES, picture_buffer_.service_texture_ids()[1]);
-
-  EGLAttrib consumer_attributes[] = {
-      EGL_COLOR_BUFFER_TYPE,
-      EGL_YUV_BUFFER_EXT,
-      EGL_YUV_NUMBER_OF_PLANES_EXT,
-      2,
-      EGL_YUV_PLANE0_TEXTURE_UNIT_NV,
-      0,
-      EGL_YUV_PLANE1_TEXTURE_UNIT_NV,
-      1,
-      EGL_NONE,
-  };
-  EGLBoolean result = eglStreamConsumerGLTextureExternalAttribsNV(
-      egl_display, stream_, consumer_attributes);
-  RETURN_ON_FAILURE(result, "Could not set stream consumer", false);
-
-  EGLAttrib producer_attributes[] = {
-      EGL_NONE,
-  };
-
-  result = eglCreateStreamProducerD3DTextureNV12ANGLE(egl_display, stream_,
-                                                      producer_attributes);
-
-  EGLAttrib frame_attributes[] = {
-      EGL_D3D_TEXTURE_SUBRESOURCE_ID_ANGLE, level_, EGL_NONE,
-  };
-
-  result = eglStreamPostD3DTextureNV12ANGLE(egl_display, stream_,
-                                            static_cast<void*>(texture.Get()),
-                                            frame_attributes);
-  RETURN_ON_FAILURE(result, "Could not post texture", false);
-  result = eglStreamConsumerAcquireKHR(egl_display, stream_);
-  RETURN_ON_FAILURE(result, "Could not post acquire stream", false);
-  gl::GLImageDXGI* gl_image_dxgi =
-      static_cast<gl::GLImageDXGI*>(gl_image_.get());
-
-  gl_image_dxgi->SetTexture(texture, level_);
-  return true;
-}
-
 class D3D11H264Picture : public H264Picture {
  public:
-  D3D11H264Picture(D3D11PictureBuffer* picture, size_t input_buffer_id)
-      : picture(picture),
-        level_(picture->level()),
-        input_buffer_id_(input_buffer_id) {}
+  D3D11H264Picture(D3D11PictureBuffer* picture)
+      : picture(picture), level_(picture->level()) {}
 
   D3D11PictureBuffer* picture;
   size_t level_;
-  size_t input_buffer_id_;
 
  protected:
   ~D3D11H264Picture() override;
@@ -154,8 +62,7 @@ scoped_refptr<H264Picture> D3D11H264Accelerator::CreateH264Picture() {
     return nullptr;
   }
   picture->set_in_picture_use(true);
-  return base::MakeRefCounted<D3D11H264Picture>(picture,
-                                                client_->input_buffer_id());
+  return base::MakeRefCounted<D3D11H264Picture>(picture);
 }
 
 bool D3D11H264Accelerator::SubmitFrameMetadata(
@@ -172,16 +79,17 @@ bool D3D11H264Accelerator::SubmitFrameMetadata(
   HRESULT hr;
   for (;;) {
     hr = video_context_->DecoderBeginFrame(
-        video_decoder_.Get(), our_pic->picture->output_view_.Get(), 0, nullptr);
+        video_decoder_.Get(), our_pic->picture->output_view().Get(), 0,
+        nullptr);
 
-    if (hr == E_PENDING || hr == D3DERR_WASSTILLDRAWING) {
-      // Hardware is busy.  We should make the call again.
-      // TODO(liberato): For now, just busy wait.
-      ;
-    } else {
-      CHECK(SUCCEEDED(hr));
+    // If the hardware is busy, then we should make the call again later.
+    // TODO(liberato): For now, just busy wait.
+    if (hr == E_PENDING || hr == D3DERR_WASSTILLDRAWING)
+      continue;
+    else if (!SUCCEEDED(hr))
+      return false;
+    else
       break;
-    }
   }
 
   sps_ = *sps;
@@ -218,20 +126,26 @@ bool D3D11H264Accelerator::SubmitFrameMetadata(
     i++;
   }
   slice_info_.clear();
-  RetrieveBitstreamBuffer();
-  return true;
+  return RetrieveBitstreamBuffer();
 }
 
-void D3D11H264Accelerator::RetrieveBitstreamBuffer() {
+bool D3D11H264Accelerator::RetrieveBitstreamBuffer() {
+  DCHECK(!bitstream_buffer_bytes_);
+  DCHECK(!bitstream_buffer_size_);
+
   current_offset_ = 0;
   void* buffer;
   UINT buffer_size;
   HRESULT hr = video_context_->GetDecoderBuffer(
       video_decoder_.Get(), D3D11_VIDEO_DECODER_BUFFER_BITSTREAM, &buffer_size,
       &buffer);
+  if (!SUCCEEDED(hr))
+    return false;
+
   bitstream_buffer_bytes_ = (uint8_t*)buffer;
   bitstream_buffer_size_ = buffer_size;
-  CHECK(SUCCEEDED(hr));
+
+  return true;
 }
 
 bool D3D11H264Accelerator::SubmitSlice(const H264PPS* pps,
@@ -333,12 +247,14 @@ bool D3D11H264Accelerator::SubmitSlice(const H264PPS* pps,
   HRESULT hr = video_context_->GetDecoderBuffer(
       video_decoder_.Get(), D3D11_VIDEO_DECODER_BUFFER_PICTURE_PARAMETERS,
       &buffer_size, &buffer);
-  CHECK(SUCCEEDED(hr));
+  if (!SUCCEEDED(hr))
+    return false;
 
   memcpy(buffer, &pic_param, sizeof(pic_param));
   hr = video_context_->ReleaseDecoderBuffer(
       video_decoder_.Get(), D3D11_VIDEO_DECODER_BUFFER_PICTURE_PARAMETERS);
-  CHECK(SUCCEEDED(hr));
+  if (!SUCCEEDED(hr))
+    return false;
 
   DXVA_Qmatrix_H264 iq_matrix_buf = {};
 
@@ -367,7 +283,8 @@ bool D3D11H264Accelerator::SubmitSlice(const H264PPS* pps,
       video_decoder_.Get(),
       D3D11_VIDEO_DECODER_BUFFER_INVERSE_QUANTIZATION_MATRIX, &buffer_size,
       &buffer);
-  CHECK(SUCCEEDED(hr));
+  if (!SUCCEEDED(hr))
+    return false;
   memcpy(buffer, &iq_matrix_buf, sizeof(iq_matrix_buf));
   hr = video_context_->ReleaseDecoderBuffer(
       video_decoder_.Get(),
@@ -386,7 +303,8 @@ bool D3D11H264Accelerator::SubmitSlice(const H264PPS* pps,
     if (bitstream_buffer_size_ < remaining_bitstream &&
         slice_info_.size() > 0) {
       SubmitSliceData();
-      RetrieveBitstreamBuffer();
+      if (!RetrieveBitstreamBuffer())
+        return false;
     }
 
     size_t bytes_to_copy = remaining_bitstream;
@@ -429,21 +347,31 @@ bool D3D11H264Accelerator::SubmitSlice(const H264PPS* pps,
   return true;
 }
 
-void D3D11H264Accelerator::SubmitSliceData() {
+bool D3D11H264Accelerator::SubmitSliceData() {
   CHECK(slice_info_.size() > 0);
   UINT buffer_size;
   void* buffer;
+
+  // TODO(liberato): should we release the other buffers on failure?
+
   HRESULT hr = video_context_->GetDecoderBuffer(
       video_decoder_.Get(), D3D11_VIDEO_DECODER_BUFFER_SLICE_CONTROL,
       &buffer_size, &buffer);
-  CHECK(SUCCEEDED(hr));
+  if (!SUCCEEDED(hr))
+    return false;
+
   CHECK_LE(sizeof(slice_info_[0]) * slice_info_.size(), buffer_size);
   memcpy(buffer, &slice_info_[0], sizeof(slice_info_[0]) * slice_info_.size());
   hr = video_context_->ReleaseDecoderBuffer(
       video_decoder_.Get(), D3D11_VIDEO_DECODER_BUFFER_SLICE_CONTROL);
+  if (!SUCCEEDED(hr))
+    return false;
 
   hr = video_context_->ReleaseDecoderBuffer(
       video_decoder_.Get(), D3D11_VIDEO_DECODER_BUFFER_BITSTREAM);
+  if (!SUCCEEDED(hr))
+    return false;
+
   D3D11_VIDEO_DECODER_BUFFER_DESC buffers[4] = {};
   buffers[0].BufferType = D3D11_VIDEO_DECODER_BUFFER_PICTURE_PARAMETERS;
   buffers[0].DataOffset = 0;
@@ -464,18 +392,20 @@ void D3D11H264Accelerator::SubmitSliceData() {
   slice_info_.clear();
   bitstream_buffer_bytes_ = nullptr;
   bitstream_buffer_size_ = 0;
+
+  return SUCCEEDED(hr);
 }
 
 bool D3D11H264Accelerator::SubmitDecode(const scoped_refptr<H264Picture>& pic) {
-  SubmitSliceData();
+  if (!SubmitSliceData())
+    return false;
 
   HRESULT hr = video_context_->DecoderEndFrame(video_decoder_.Get());
-  CHECK(SUCCEEDED(hr));
-
-  return true;
+  return SUCCEEDED(hr);
 }
 
-void D3D11H264Accelerator::Reset() {
+bool D3D11H264Accelerator::Reset() {
+  bool success = true;
   if (bitstream_buffer_bytes_) {
     HRESULT hr = video_context_->ReleaseDecoderBuffer(
         video_decoder_.Get(), D3D11_VIDEO_DECODER_BUFFER_BITSTREAM);
@@ -483,15 +413,17 @@ void D3D11H264Accelerator::Reset() {
     bitstream_buffer_bytes_ = nullptr;
     bitstream_buffer_size_ = 0;
     current_offset_ = 0;
-    CHECK(SUCCEEDED(hr));
+    success = SUCCEEDED(hr);
   }
+
+  return success;
 }
 
 bool D3D11H264Accelerator::OutputPicture(
     const scoped_refptr<H264Picture>& pic) {
   scoped_refptr<D3D11H264Picture> our_pic(
       static_cast<D3D11H264Picture*>(pic.get()));
-  client_->OutputResult(our_pic->picture, our_pic->input_buffer_id_);
+  client_->OutputResult(our_pic->picture);
   return true;
 }
 
