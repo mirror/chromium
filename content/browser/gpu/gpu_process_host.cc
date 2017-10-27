@@ -377,8 +377,10 @@ GpuProcessHost* GpuProcessHost::Get(GpuProcessKind kind, bool force_create) {
   // Don't grant further access to GPU if it is not allowed.
   GpuDataManagerImpl* gpu_data_manager = GpuDataManagerImpl::GetInstance();
   DCHECK(gpu_data_manager);
-  if (!gpu_data_manager->GpuAccessAllowed(NULL))
+  if (!gpu_data_manager->GpuAccessAllowed(NULL)) {
+    DLOG(ERROR) << "Gpu access not allowed";
     return NULL;
+  }
 
   if (g_gpu_process_hosts[kind] && ValidateHost(g_gpu_process_hosts[kind]))
     return g_gpu_process_hosts[kind];
@@ -387,8 +389,10 @@ GpuProcessHost* GpuProcessHost::Get(GpuProcessKind kind, bool force_create) {
     return nullptr;
 
   // Do not create a new process if browser is shutting down.
-  if (BrowserMainRunner::ExitedMainMessageLoop())
+  if (BrowserMainRunner::ExitedMainMessageLoop()) {
+    DLOG(ERROR) << "Browser closing don't launch Gpu process";
     return nullptr;
+  }
 
   static int last_host_id = 0;
   int host_id;
