@@ -16,6 +16,7 @@
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
+#include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager_test_utils.h"
 #include "chrome/browser/image_decoder.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
@@ -131,6 +132,8 @@ class ArcWallpaperServiceTest : public ash::AshTestBase {
 TEST_F(ArcWallpaperServiceTest, SetDefaultWallpaper) {
   service_->SetDefaultWallpaper();
   RunAllPendingInMessageLoop();
+  // Wait until wallpaper loading is done.
+  chromeos::wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
   ASSERT_EQ(1u, wallpaper_instance_->changed_ids().size());
   EXPECT_EQ(-1, wallpaper_instance_->changed_ids()[0]);
 }
