@@ -1,0 +1,250 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b18cc4ea_19618e5e",
+        "filename": "ios/chrome/browser/ui/webui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "Do we really need a separate directory for these files? If we do then that directory should have a BUILD file.",
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2682f593_8e6e5394",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "Please explain the purpose of chrome://interstitials page in the comments",
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b72734c_f845d82a",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf944768_31ac03c8",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308eb1c5_387d57a0",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603ab4ff_2a8bdd2d",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "Tab is supposed to be removed, and this change makes it harder to remove Tab. Please look at NetExportMessageHandler::SendEmail. You probably want to follow the same approach with TabHelper here.",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 46
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0479ad08_000fe514",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "nit: s/HTML/Html",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbec339c_263f52e6",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand this comment.",
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80c233c_55aad88e",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not sure if I understand the logic behind needs_real_pageload_ variable. I think more comments inside StartDataRequest and DidStopLoading would be helpful.\n\nWhy this code can not be inside InterstitialHTMLSource::StartDataRequest? Why DidStopLoading is called more than once?",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ec4b1c_143fef70",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "nit: Avoid \"we\" in the comments (go/avoidwe)",
+      "range": {
+        "startLine": 121,
+        "startChar": 36,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882c0c68_02ea0d12",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "nit: s/url/url_no_query ?",
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2216e5a_0fdf4004",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:57:26Z",
+      "side": 1,
+      "message": "nit: extra ;",
+      "range": {
+        "startLine": 151,
+        "startChar": 18,
+        "endLine": 151,
+        "endChar": 33
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
