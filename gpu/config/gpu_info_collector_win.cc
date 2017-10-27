@@ -24,6 +24,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/scoped_native_library.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
@@ -157,7 +158,7 @@ CollectInfoResult CollectDriverInfoD3D(const std::wstring& device_id,
           std::wstring id = new_device_id;
 
           if (id.compare(0, device_id.size(), device_id) == 0)
-            primary_device = drivers.size();
+            primary_device = base::saturated_cast<int>(drivers.size());
 
           uint32_t vendor_id = 0, device_id = 0;
           DeviceIDToVendorAndDevice(id, &vendor_id, &device_id);
