@@ -51,7 +51,7 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
 
   // Caller guarantees that |net_log| will remain valid
   // for the lifetime of DownloadManagerImpl (until Shutdown() is called).
-  DownloadManagerImpl(net::NetLog* net_log, BrowserContext* browser_context);
+  DownloadManagerImpl(BrowserContext* browser_context);
   ~DownloadManagerImpl() override;
 
   // Implementation functions (not part of the DownloadManager interface).
@@ -251,7 +251,7 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
   // Allows an embedder to control behavior. Guaranteed to outlive this object.
   DownloadManagerDelegate* delegate_;
 
-  net::NetLog* net_log_;
+  net::NetLog net_log_;
 
   std::vector<UniqueUrlDownloadHandlerPtr> url_download_handlers_;
 

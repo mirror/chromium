@@ -284,15 +284,13 @@ base::FilePath GetTemporaryDownloadDirectory() {
 
 }  // namespace
 
-DownloadManagerImpl::DownloadManagerImpl(net::NetLog* net_log,
-                                         BrowserContext* browser_context)
+DownloadManagerImpl::DownloadManagerImpl(BrowserContext* browser_context)
     : item_factory_(new DownloadItemFactoryImpl()),
       file_factory_(new DownloadFileFactory()),
       shutdown_needed_(true),
       initialized_(false),
       browser_context_(browser_context),
       delegate_(nullptr),
-      net_log_(net_log),
       weak_factory_(this) {
   DCHECK(browser_context);
 }
@@ -307,7 +305,7 @@ DownloadItemImpl* DownloadManagerImpl::CreateActiveItem(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!base::ContainsKey(downloads_, id));
   net::NetLogWithSource net_log =
-      net::NetLogWithSource::Make(net_log_, net::NetLogSourceType::DOWNLOAD);
+      net::NetLogWithSource::Make(&net_log_, net::NetLogSourceType::DOWNLOAD);
   DownloadItemImpl* download =
       item_factory_->CreateActiveItem(this, id, info, net_log);
   downloads_[id] = base::WrapUnique(download);
@@ -576,7 +574,7 @@ void DownloadManagerImpl::CreateSavePackageDownloadItemWithId(
   DCHECK_NE(content::DownloadItem::kInvalidId, id);
   DCHECK(!base::ContainsKey(downloads_, id));
   net::NetLogWithSource net_log =
-      net::NetLogWithSource::Make(net_log_, net::NetLogSourceType::DOWNLOAD);
+      net::NetLogWithSource::Make(&net_log_, net::NetLogSourceType::DOWNLOAD);
   DownloadItemImpl* download_item = item_factory_->CreateSavePageItem(
       this, id, main_file_path, page_url, mime_type, std::move(request_handle),
       net_log);
@@ -775,7 +773,7 @@ DownloadItem* DownloadManagerImpl::CreateDownloadItem(
       start_time, end_time, etag, last_modified, received_bytes, total_bytes,
       hash, state, danger_type, interrupt_reason, opened, last_access_time,
       transient, received_slices,
-      net::NetLogWithSource::Make(net_log_, net::NetLogSourceType::DOWNLOAD));
+      net::NetLogWithSource::Make(&net_log_, net::NetLogSourceType::DOWNLOAD));
   downloads_[id] = base::WrapUnique(item);
   downloads_by_guid_[guid] = item;
   for (auto& observer : observers_)
