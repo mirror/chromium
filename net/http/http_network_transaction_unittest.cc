@@ -7890,7 +7890,7 @@ TEST_F(HttpNetworkTransactionTest, ResetStateForRestart) {
   EXPECT_FALSE(response->headers);
   EXPECT_FALSE(response->was_cached);
   EXPECT_EQ(0U, response->ssl_info.cert_status);
-  EXPECT_FALSE(response->vary_data.is_valid());
+  EXPECT_EQ(HttpVaryData::VARY_NONE, response->vary_data.vary_status());
 }
 
 // Test HTTPS connections to a site with a bad certificate
