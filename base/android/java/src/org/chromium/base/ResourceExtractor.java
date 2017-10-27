@@ -84,8 +84,7 @@ public class ResourceExtractor {
                 File output = new File(outputDir, assetName + extractSuffix);
                 TraceEvent.begin("ExtractResource");
                 try {
-                    InputStream inputStream =
-                            ContextUtils.getApplicationContext().getAssets().open(assetName);
+                    InputStream inputStream = ContextUtils.getApplicationAssets().open(assetName);
                     extractResourceHelper(inputStream, output, buffer);
                 } catch (IOException e) {
                     // The app would just crash later if files are missing.
