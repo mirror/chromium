@@ -37,6 +37,7 @@
 #include "build/build_config.h"
 #include "core/dom/DOMImplementation.h"
 #include "core/dom/Document.h"
+#include "core/dom/DocumentTiming.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
@@ -56,6 +57,7 @@
 #include "core/inspector/V8InspectorString.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/IdlenessDetector.h"
 #include "core/loader/ScheduledNavigation.h"
 #include "core/loader/resource/CSSStyleSheetResource.h"
 #include "core/loader/resource/ScriptResource.h"
@@ -422,6 +424,42 @@ Response InspectorPageAgent::enable() {
   enabled_ = true;
   state_->setBoolean(PageAgentState::kPageAgentEnabled, true);
   instrumenting_agents_->addInspectorPageAgent(this);
+
+  for (LocalFrame* frame : *inspected_frames_) {
+    Document* document = frame->GetDocument();
+    if (document) {
+      double domcontentloaded_timestamp =
+          document->GetTiming().DomContentLoadedEventEnd();
+      if (domcontentloaded_timestamp) {
+        GetFrontend()->lifecycleEvent(IdentifiersFactory::FrameId(frame),
+                                      "DOMContentLoaded",
+                                      domcontentloaded_timestamp);
+      }
+    }
+    DocumentLoader* document_loader = frame->Loader().GetDocumentLoader();
+    if (document_loader) {
+      DocumentLoadTiming& timing = document_loader->GetTiming();
+      double load_timestamp = timing.LoadEventEnd();
+      if (load_timestamp) {
+        GetFrontend()->lifecycleEvent(IdentifiersFactory::FrameId(frame),
+                                      "load", load_timestamp);
+      }
+    }
+
+    IdlenessDetector* idleness_detector = frame->GetIdlenessDetector();
+    double network_idle_timestamp = idleness_detector->GetNetworkIdleTime();
+    if (network_idle_timestamp) {
+      GetFrontend()->lifecycleEvent(IdentifiersFactory::FrameId(frame),
+                                    "networkIdle", network_idle_timestamp);
+    }
+    double network_almost_idle_timestamp =
+        idleness_detector->GetNetworkAlmostIdleTime();
+    if (network_almost_idle_timestamp) {
+      GetFrontend()->lifecycleEvent(IdentifiersFactory::FrameId(frame),
+                                    "networkAlmostIdle",
+                                    network_almost_idle_timestamp);
+    }
+  }
   return Response::OK();
 }
 

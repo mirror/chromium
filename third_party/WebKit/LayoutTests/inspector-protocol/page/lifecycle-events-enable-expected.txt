@@ -1,0 +1,4 @@
+Test lifecycle events
+Received initial lifecycle events.
+Received lifecycle events after reenabling.
+
