@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f2649c_b2f23002",
+        "filename": "chrome/browser/resources/safe_browsing/download_file_types.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-27T13:20:34Z",
+      "side": 1,
+      "message": "swap this and the prev one to maintain order of uma_value?",
+      "range": {
+        "startLine": 814,
+        "startChar": 13,
+        "endLine": 814,
+        "endChar": 16
+      },
+      "revId": "ef05d259d83a01c03cae1d88069122a0f684ca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
