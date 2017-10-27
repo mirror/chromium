@@ -2594,6 +2594,18 @@ TEST_F(PasswordFormManagerTest, ProcessFrame_MoreProcessFrameMoreFill) {
   form_manager()->ProcessFrame(client()->mock_driver()->AsWeakPtr());
 }
 
+// Test that we stop autofilling if triggered too many times.
+TEST_F(PasswordFormManagerTest, ProcessFrame_MaxTimes) {
+  const int max_autofills = 5;
+  EXPECT_CALL(*client()->mock_driver(), FillPasswordForm(_))
+      .Times(max_autofills + 1);
+  fake_form_fetcher()->SetNonFederated({saved_match()}, 0u);
+  // Process more times to exceed the limit.
+  for (int i = 0; i < max_autofills + 5; i++) {
+    form_manager()->ProcessFrame(client()->mock_driver()->AsWeakPtr());
+  }
+}
+
 // Test that when ProcessFrame is called on a driver added after receiving
 // matches, such driver is still told to call FillPasswordForm.
 TEST_F(PasswordFormManagerTest, ProcessFrame_TwoDrivers) {
