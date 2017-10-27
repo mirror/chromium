@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82489a31_6c962837",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-27T07:54:25Z",
+      "side": 1,
+      "message": "nit: I thought even with \"test\" the feature will be enabled by -run-layout-test being passed\nto content_shell. what\u0027s the difference otherwise? (If we don\u0027t accidentally ship this, it\u0027s\nsafe, anyway)",
+      "revId": "266f377ff66143081e3652fb15bfc51fc2b3f6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
