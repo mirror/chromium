@@ -16,6 +16,24 @@
       "revId": "7a009baa2cabd0d0ecf54fc4d0dc96e0c6cedbbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb6f6ea_c8a24435",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/timeline-network/timeline-network-resource-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-27T18:05:30Z",
+      "side": 1,
+      "message": "Let\u0027s give it a try",
+      "parentUuid": "7ce0621a_5028f251",
+      "revId": "7a009baa2cabd0d0ecf54fc4d0dc96e0c6cedbbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
