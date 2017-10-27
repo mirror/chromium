@@ -54,7 +54,8 @@ class FileHandlers {
   bool IsValid();
 
   base::FilePath GetPwgPath() const {
-    return temp_dir_.GetPath().AppendASCII("output.pwg");
+    return base::FilePath::FromUTF8Unsafe("/tmp/henrique.pwg");
+    // return temp_dir_.GetPath().AppendASCII("output.pwg");
   }
 
   base::FilePath GetPdfPath() const {
