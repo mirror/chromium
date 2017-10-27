@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6b7d951_a6c5b679",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T21:48:59Z",
+      "side": 1,
+      "message": "Could you use TODO(crbug.com/761493) so there\u0027s more context? Ditto for the TODO below.",
+      "range": {
+        "startLine": 231,
+        "startChar": 12,
+        "endLine": 231,
+        "endChar": 19
+      },
+      "revId": "9c2e6fc5ffbe7cba8ff52236e0ec60388c9fad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
