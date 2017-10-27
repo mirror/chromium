@@ -1,0 +1,331 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2e6bc44_3b8da918",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Add descriptive messages to all (or most) of these, since many will be mapped to a more cryptic standard error.\n\nMEDIA_DEVICE_PERMISSION_DENIED: \"Permission denied\"\nMEDIA_DEVICE_PERMISSION_DISMISSED: \"Permission dismissed\"\nMEDIA_DEVICE_INVALID_STATE: \"Invalid state\"\nMEDIA_DEVICE_TAB_CAPTURE_FAILURE: \"Error starting tab capture\"\nMEDIA_DEVICE_SCREEN_CAPTURE_FAILURE: \"Error starting screen capture\"\nMEDIA_DEVICE_CAPTURE_FAILURE: \"Error starting capture\" (Apparently not used)\nMEDIA_DEVICE_CONSTRAINT_NOT_SATISFIED: Error message should be \"Constraints could not be satisfied\", but it should not be set here.\nMEDIA_DEVICE_TRACK_START_FAILURE: \"Could not start source\"\nMEDIA_DEVICE_NOT_SUPPORTED: \"Not supported\"\nMEDIA_DEVICE_FAILED_DUE_TO_SHUTDOWN: \"Failed due to shutdown\"\nMEDIA_DEVICE_KILL_SWITCH_ON: No message.",
+      "range": {
+        "startLine": 972,
+        "startChar": 17,
+        "endLine": 972,
+        "endChar": 36
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c67763_19a3598e",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Rename this variable to |constraint_name|",
+      "range": {
+        "startLine": 998,
+        "startChar": 42,
+        "endLine": 998,
+        "endChar": 53
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc948d6_bc01166d",
+        "filename": "third_party/WebKit/Source/modules/mediastream/NavigatorUserMediaErrorCallback.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Rephrase the comment to say something like:\nThe only valid types for MediaStreamError are DOMException and OverconstrainedError. The spec defines MediaStreamError as object because DOMException and Overconstrained error are not IDL types in the spec.\nSee http://crbug.com/737497 and http://crbug.com/769726\n\nRemove the reference to issue 484 since it\u0027s invalid/not actionable (unless they change the WebIDL spec).",
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954d270a_1d5b62eb",
+        "filename": "third_party/WebKit/Source/modules/mediastream/UserMediaRequest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Initialize to kNotSupported.",
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f878bd8_23692db3",
+        "filename": "third_party/WebKit/Source/modules/mediastream/UserMediaRequest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Map kTabCapture, kScreenCapture and kCapture to AbortError",
+      "range": {
+        "startLine": 502,
+        "startChar": 37,
+        "endLine": 502,
+        "endChar": 48
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f00a420_f95d61ea",
+        "filename": "third_party/WebKit/Source/modules/mediastream/UserMediaRequest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Map kNotSupported, kInvalidState, kKillSwitchOn and kFailedDueToShutdown to NotAllowedError.",
+      "range": {
+        "startLine": 507,
+        "startChar": 37,
+        "endLine": 507,
+        "endChar": 61
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfb489e_5328393a",
+        "filename": "third_party/WebKit/Source/modules/mediastream/UserMediaRequest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "use message only once and let Create use the default null value for the last parameter.",
+      "range": {
+        "startLine": 519,
+        "startChar": 44,
+        "endLine": 519,
+        "endChar": 51
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317b7e82_3af27a8f",
+        "filename": "third_party/WebKit/Source/modules/mediastream/UserMediaRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Remove this method and use a single Fail method for all DOMExceptions.",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c002509_c0aad76a",
+        "filename": "third_party/WebKit/Source/modules/mediastream/UserMediaRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Remove the |constraint_name| parameter since that field only exists for OverconstrainedError. This method should be used for the errors that will translate to a DOMException.\nAlso, rename the method to just Fail() since the UASpecific part is not really descriptive. In the end, everything is translated to a standard DOMException.",
+      "range": {
+        "startLine": 82,
+        "startChar": 28,
+        "endLine": 82,
+        "endChar": 34
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5186a88_f20cfde0",
+        "filename": "third_party/WebKit/public/web/WebUserMediaRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Add kPermissionDenied and get rid of the RequestDenied  method.",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 24
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a19e15_4fbe9595",
+        "filename": "third_party/WebKit/public/web/WebUserMediaRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Remove the Device prefix, it was part of the MEDIA_DEVICE_ prefix in the original enum. Also see below.",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 18
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fdf9f94_624c7aae",
+        "filename": "third_party/WebKit/public/web/WebUserMediaRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Remove kMediaDeviceNotSupported. It\u0027s the same as kNotSupported.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 28
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5846695c_6715ee10",
+        "filename": "third_party/WebKit/public/web/WebUserMediaRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Remove the MediaDevice prefix from all constants. The MEDIA_DEVICE_ prefix in the original enum is equivalent to the Error namespace introduced by your enum class.",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7f4515_1a2d0c59",
+        "filename": "third_party/WebKit/public/web/WebUserMediaRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Remove this method.",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 20
+      },
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f90d672d_8eac1650",
+        "filename": "third_party/WebKit/public/web/WebUserMediaRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T10:16:40Z",
+      "side": 1,
+      "message": "Rename to RequestFailed and use for all errors that translate to DOMException.\nAlso remove the |constraint_name| parameter.",
+      "revId": "acc7e21a3a8886470fcabbcd8a0823463cf2f18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
