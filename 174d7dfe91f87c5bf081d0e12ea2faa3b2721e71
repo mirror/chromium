@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c23bc58d_a82a4d8a",
+        "filename": "device/u2f/u2f_hid_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T20:54:41Z",
+      "side": 1,
+      "message": "This constant can go in an anonymous namespace in u2f_hid_device.cc.",
+      "revId": "174d7dfe91f87c5bf081d0e12ea2faa3b2721e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f276c6b_abc8b5ad",
+        "filename": "device/u2f/u2f_packet.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T20:54:41Z",
+      "side": 1,
+      "message": "Can you move |payload_size| down to line 79 and define and initialize it in the same expression?",
+      "revId": "174d7dfe91f87c5bf081d0e12ea2faa3b2721e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf89754_a3d88461",
+        "filename": "device/u2f/u2f_packet.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T20:54:41Z",
+      "side": 1,
+      "message": "Same here with |data_size|.",
+      "revId": "174d7dfe91f87c5bf081d0e12ea2faa3b2721e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
