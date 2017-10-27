@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cdd7063_1afcef72",
+        "filename": "components/language/ios/browser/ios_language_detection_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-27T14:00:03Z",
+      "side": 1,
+      "message": "drive-by naming nit: \"Client\" is typically reserved for interfaces that are injected into a component by its embedder. This seems to be something different, since it\u0027s just a class that\u0027s being implemented in the component itself. BTW, where is the corresponding //content-based class? It looks like //components/language/content is empty.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 32
+      },
+      "revId": "3bc887d0f75a9f178502c1b714d72c8a2f2b25fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
