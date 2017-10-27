@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c15d1a0_060ad623",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T02:09:53Z",
+      "side": 1,
+      "message": "Nit: remove this bit of the comment!",
+      "range": {
+        "startLine": 32,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 27
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14dbfd91_39f0395e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T02:09:53Z",
+      "side": 1,
+      "message": "NOT_SHOWING?",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86447c57_746ed42d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T02:09:53Z",
+      "side": 1,
+      "message": "Can this be REQUEST_ANDROID_PERMISSIONS?",
+      "range": {
+        "startLine": 46,
+        "startChar": 29,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad9347b_ca783dbc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T02:09:53Z",
+      "side": 1,
+      "message": "Nit: private @State int mState;",
+      "range": {
+        "startLine": 65,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 10
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abca3ab_5362bfc2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T02:09:53Z",
+      "side": 1,
+      "message": "Suppress",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 18
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd250709_b6aacea4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T02:09:53Z",
+      "side": 1,
+      "message": "It might be worth adding NEW_TAB here as a defensive measure.",
+      "range": {
+        "startLine": 176,
+        "startChar": 64,
+        "endLine": 176,
+        "endChar": 74
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

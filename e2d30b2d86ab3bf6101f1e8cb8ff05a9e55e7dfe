@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e353debc_554bb335",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T02:09:53Z",
+      "side": 0,
+      "message": "Are you sure this is safe to remove (does the clearing of the dismiss handler lower down fix  it?)",
+      "range": {
+        "startLine": 198,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "e2d30b2d86ab3bf6101f1e8cb8ff05a9e55e7dfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
