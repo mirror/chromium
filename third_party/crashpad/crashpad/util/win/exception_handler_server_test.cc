@@ -183,9 +183,9 @@ class TestClient final : public WinChildProcess {
 // https://crashpad.chromium.org/bug/205
 #if defined(CRASHPAD_IN_CHROMIUM)
 #define MAYBE_MultipleConnections DISABLED_MultipleConnections
-#else
+#else  // CRASHPAD_IN_CHROMIUM
 #define MAYBE_MultipleConnections MultipleConnections
-#endif
+#endif  // CRASHPAD_IN_CHROMIUM
 TEST_F(ExceptionHandlerServerTest, MAYBE_MultipleConnections) {
   WinChildProcess::EntryPoint<TestClient>();
 

@@ -92,9 +92,9 @@ class ScopedProcessSuspendTest final : public WinChildProcess {
 // https://crashpad.chromium.org/bug/205
 #if defined(CRASHPAD_IN_CHROMIUM)
 #define MAYBE_ScopedProcessSuspend DISABLED_ScopedProcessSuspend
-#else
+#else  // CRASHPAD_IN_CHROMIUM
 #define MAYBE_ScopedProcessSuspend ScopedProcessSuspend
-#endif
+#endif  // CRASHPAD_IN_CHROMIUM
 TEST(ScopedProcessSuspend, MAYBE_ScopedProcessSuspend) {
   WinChildProcess::EntryPoint<ScopedProcessSuspendTest>();
   std::unique_ptr<WinChildProcess::Handles> handles = WinChildProcess::Launch();
