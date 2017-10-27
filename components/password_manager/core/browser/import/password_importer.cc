@@ -44,7 +44,6 @@ static void ParsePasswords(
 
 }  // namespace
 
-// static
 void PasswordImporter::Import(const base::FilePath& path,
                               const CompletionCallback& completion) {
   // Posting with USER_VISIBLE priority, because the result of the import is

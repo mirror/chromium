@@ -32,9 +32,9 @@ class PasswordImporterTest : public testing::Test {
 
  protected:
   void StartImportAndWaitForCompletion(const base::FilePath& input_file) {
-    PasswordImporter::Import(input_file,
-                             base::Bind(&PasswordImporterTest::OnImportFinished,
-                                        base::Unretained(this)));
+    password_importer_.Import(
+        input_file, base::Bind(&PasswordImporterTest::OnImportFinished,
+                               base::Unretained(this)));
 
     scoped_task_environment_.RunUntilIdle();
 
@@ -55,6 +55,8 @@ class PasswordImporterTest : public testing::Test {
 
   // Directory for creating files by this test.
   base::ScopedTempDir temp_directory_;
+
+  PasswordImporter password_importer_;
 
  private:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
