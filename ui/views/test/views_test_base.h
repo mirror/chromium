@@ -15,6 +15,7 @@
 #include "ui/views/test/scoped_views_test_helper.h"
 #include "ui/views/test/test_views_delegate.h"
 #include "ui/views/widget/widget.h"
+#include "base/test/icu_test_util.h"
 
 #if defined(OS_WIN)
 #include "ui/base/win/scoped_ole_initializer.h"
@@ -64,6 +65,8 @@ class ViewsTestBase : public PlatformTest {
 
  private:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
+  // Restores locale to the default when destructor is called.
+  base::test::ScopedRestoreICUDefaultLocale restore_locale_;
   std::unique_ptr<TestViewsDelegate> views_delegate_for_setup_;
   std::unique_ptr<ScopedViewsTestHelper> test_helper_;
   bool setup_called_;

@@ -72,6 +72,7 @@
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 #include "ui/wm/core/coordinate_conversion.h"
+#include "base/test/icu_test_util.h"
 
 using testing::ElementsAre;
 using testing::IsEmpty;
@@ -660,37 +661,18 @@ const char*
         ShelfButtonPressedMetricTracker::
             kTimeBetweenWindowMinimizedAndActivatedActionsHistogramName;
 
-class ScopedTextDirectionChange {
- public:
-  explicit ScopedTextDirectionChange(bool is_rtl) : is_rtl_(is_rtl) {
-    original_locale_ = base::i18n::GetConfiguredLocale();
-    if (is_rtl_)
-      base::i18n::SetICUDefaultLocale("he");
-    CheckTextDirectionIsCorrect();
-  }
-
-  ~ScopedTextDirectionChange() {
-    if (is_rtl_)
-      base::i18n::SetICUDefaultLocale(original_locale_);
-  }
-
- private:
-  void CheckTextDirectionIsCorrect() {
-    ASSERT_EQ(is_rtl_, base::i18n::IsRTL());
-  }
-
-  bool is_rtl_;
-  std::string original_locale_;
-};
-
 class ShelfViewTextDirectionTest : public ShelfViewTest,
                                    public testing::WithParamInterface<bool> {
  public:
-  ShelfViewTextDirectionTest() : text_direction_change_(GetParam()) {}
+  ShelfViewTextDirectionTest() {
+    if (GetParam())
+       base::i18n::SetICUDefaultLocale("he");
+  }
   virtual ~ShelfViewTextDirectionTest() {}
 
  private:
-  ScopedTextDirectionChange text_direction_change_;
+  // Restores locale to the default when destructor is called.
+  base::test::ScopedRestoreICUDefaultLocale restore_locale_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfViewTextDirectionTest);
 };
@@ -2100,7 +2082,10 @@ TEST_F(ShelfViewTest, MouseWheelScrollOnAppIconTransitionsAppList) {
 class ShelfViewVisibleBoundsTest : public ShelfViewTest,
                                    public testing::WithParamInterface<bool> {
  public:
-  ShelfViewVisibleBoundsTest() : text_direction_change_(GetParam()) {}
+  ShelfViewVisibleBoundsTest() {
+    if (GetParam())
+       base::i18n::SetICUDefaultLocale("he");
+  }
 
   void CheckAllItemsAreInBounds() {
     gfx::Rect visible_bounds = shelf_view_->GetVisibleItemsBoundsInScreen();
@@ -2122,7 +2107,8 @@ class ShelfViewVisibleBoundsTest : public ShelfViewTest,
   }
 
  private:
-  ScopedTextDirectionChange text_direction_change_;
+  // Restores locale to the default when destructor is called.
+  base::test::ScopedRestoreICUDefaultLocale restore_locale_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfViewVisibleBoundsTest);
 };
@@ -3082,7 +3068,10 @@ class OverflowButtonTextDirectionTest
     : public OverflowButtonInkDropTest,
       public testing::WithParamInterface<bool> {
  public:
-  OverflowButtonTextDirectionTest() : text_direction_change_(GetParam()) {}
+  OverflowButtonTextDirectionTest() {
+    if (GetParam())
+      base::i18n::SetICUDefaultLocale("he");
+  }
   ~OverflowButtonTextDirectionTest() override {}
 
   void SetUp() override {
@@ -3096,7 +3085,8 @@ class OverflowButtonTextDirectionTest
   std::unique_ptr<OverflowButtonTestApi> overflow_button_test_api_;
 
  private:
-  ScopedTextDirectionChange text_direction_change_;
+  // Restores locale to the default when destructor is called.
+  base::test::ScopedRestoreICUDefaultLocale restore_locale_;
 
   DISALLOW_COPY_AND_ASSIGN(OverflowButtonTextDirectionTest);
 };
