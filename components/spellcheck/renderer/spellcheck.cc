@@ -170,22 +170,15 @@ class SpellCheck::SpellcheckRequest {
 // values.
 // TODO(groby): Simplify this.
 SpellCheck::SpellCheck(
+    service_manager::BinderRegistry* registry,
     service_manager::LocalInterfaceProvider* embedder_provider)
     : embedder_provider_(embedder_provider), spellcheck_enabled_(true) {
-  if (!content::ChildThread::Get())
+  if (!registry)
     return;  // Can be NULL in tests.
 
-  auto* service_manager_connection =
-      content::ChildThread::Get()->GetServiceManagerConnection();
-  DCHECK(service_manager_connection);
-
-  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(
       base::Bind(&SpellCheck::SpellCheckerRequest, base::Unretained(this)),
       base::ThreadTaskRunnerHandle::Get());
-
-  service_manager_connection->AddConnectionFilter(
-      base::MakeUnique<content::SimpleConnectionFilter>(std::move(registry)));
 }
 
 SpellCheck::~SpellCheck() {

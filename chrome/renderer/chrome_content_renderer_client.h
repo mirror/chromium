@@ -221,6 +221,7 @@ class ChromeContentRendererClient
       const GURL& url,
       base::Time cert_validity_start,
       std::string* console_messsage) override;
+  void RegisterServices(StaticServiceMap* services) override;
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   // Sets a new |spellcheck|. Used for testing only.

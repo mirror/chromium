@@ -445,6 +445,20 @@ class RendererLocalSurfaceIdProvider : public viz::LocalSurfaceIdProvider {
   RenderWidgetSurfaceProperties surface_properties_;
 };
 
+class RendererServiceFactory : public ServiceFactory {
+ public:
+  RendererServiceFactory() {}
+  ~RendererServiceFactory() override {}
+
+  // ServiceFactory overrides:
+  void RegisterServices(ServiceMap* services) override {
+    GetContentClient()->renderer()->RegisterServices(services);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(RendererServiceFactory);
+};
+
 }  // namespace
 
 RenderThreadImpl::HistogramCustomizer::HistogramCustomizer() {
@@ -769,7 +783,8 @@ void RenderThreadImpl::Init(
 
   AddFilter((new ServiceWorkerContextMessageFilter())->GetFilter());
 
-// Register exported services:
+  // Register exported services:
+  service_factory_ = std::make_unique<RendererServiceFactory>();
 
 #if defined(USE_AURA)
   if (IsRunningInMash()) {
@@ -779,6 +794,10 @@ void RenderThreadImpl::Init(
 
   {
     auto registry = std::make_unique<service_manager::BinderRegistry>();
+    registry->AddInterface(
+        base::Bind(&RenderThreadImpl::BindServiceFactoryRequest,
+                   base::Unretained(this)),
+        base::ThreadTaskRunnerHandle::Get());
     registry->AddInterface(base::Bind(&WebDatabaseImpl::Create),
                            GetIOTaskRunner());
     registry->AddInterface(base::Bind(&SharedWorkerFactoryImpl::Create),
@@ -2587,6 +2606,13 @@ bool RenderThreadImpl::NeedsToRecordFirstActivePaint(
     return false;
   base::TimeDelta passed = base::TimeTicks::Now() - was_backgrounded_time_;
   return passed.InMinutes() >= 5;
+}
+
+void RenderThreadImpl::BindServiceFactoryRequest(
+    service_manager::mojom::ServiceFactoryRequest request) {
+  DCHECK(service_factory_);
+  service_factory_bindings_.AddBinding(service_factory_.get(),
+                                       std::move(request));
 }
 
 }  // namespace content

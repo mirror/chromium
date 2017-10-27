@@ -31,6 +31,7 @@ template <typename T> class WebVector;
 }
 
 namespace service_manager {
+class BinderRegistry;
 class LocalInterfaceProvider;
 }
 
@@ -49,7 +50,8 @@ class SpellCheck : public content::RenderThreadObserver,
     USE_NATIVE_CHECKER,  // Use native checker to double-check.
   };
 
-  explicit SpellCheck(
+  SpellCheck(
+      service_manager::BinderRegistry* registry,
       service_manager::LocalInterfaceProvider* embedder_provider);
   ~SpellCheck() override;
 

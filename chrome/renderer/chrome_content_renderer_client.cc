@@ -1706,3 +1706,10 @@ bool ChromeContentRendererClient::OverrideLegacySymantecCertConsoleMessage(
       url::Origin::Create(url).Serialize().c_str(), in_future_string);
   return true;
 }
+
+void ChromeContentRendererClient::RegisterServices(StaticServiceMap* services) {
+  service_manager::EmbeddedServiceInfo chrome_renderer_service_info;
+  chrome_renderer_service_info.factory =
+      base::Bind(&ChromeRendererService::Create);
+  services->emplace(mojom::kRendererServiceName, chrome_renderer_service_info);
+}
