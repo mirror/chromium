@@ -34,6 +34,24 @@
       "revId": "a190c253b8efe727801315929a14412d4d91af0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850b1469_c09a97bb",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-27T04:22:46Z",
+      "side": 0,
+      "message": "The only reason for WebURLRequest::kFetchCredentialsModeOmit was that this was the default per spec before scriptfetchoptions was introduced.\nI\u0027m ok with making the change in this CL or split CL.",
+      "parentUuid": "850a3992_6f96b8ce",
+      "revId": "a190c253b8efe727801315929a14412d4d91af0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
