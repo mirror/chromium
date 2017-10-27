@@ -93,6 +93,7 @@ class TestPixmap : public gfx::NativePixmap {
   gfx::NativePixmapHandle ExportHandle() override {
     return gfx::NativePixmapHandle();
   }
+  uint32_t GetUniqueId() const override { return 0; }
 
  private:
   ~TestPixmap() override {}

@@ -15,6 +15,8 @@
 #include "mojo/public/cpp/bindings/type_converter.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
+#define VLOGF(level) VLOG(level) << __func__ << "(): "
+
 // Make sure arc::mojom::VideoDecodeAccelerator::Result and
 // chromeos::arc::ArcVideoDecodeAccelerator::Result match.
 static_assert(
@@ -98,6 +100,7 @@ struct TypeConverter<chromeos::arc::ArcVideoDecodeAccelerator::Config,
     chromeos::arc::ArcVideoDecodeAccelerator::Config result;
     result.num_input_buffers = input->num_input_buffers;
     result.input_pixel_format = input->input_pixel_format;
+    result.secure_mode = input->secure_mode;
     return result;
   }
 };
@@ -108,9 +111,12 @@ namespace chromeos {
 namespace arc {
 
 GpuArcVideoDecodeAccelerator::GpuArcVideoDecodeAccelerator(
-    const gpu::GpuPreferences& gpu_preferences)
+    const gpu::GpuPreferences& gpu_preferences,
+    ProtectedBufferManager* protected_buffer_manager)
     : gpu_preferences_(gpu_preferences),
-      accelerator_(new ChromeArcVideoDecodeAccelerator(gpu_preferences_)) {}
+      accelerator_(
+          new ChromeArcVideoDecodeAccelerator(gpu_preferences_,
+                                              protected_buffer_manager)) {}
 
 GpuArcVideoDecodeAccelerator::~GpuArcVideoDecodeAccelerator() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -118,7 +124,7 @@ GpuArcVideoDecodeAccelerator::~GpuArcVideoDecodeAccelerator() {
 
 void GpuArcVideoDecodeAccelerator::OnError(
     ArcVideoDecodeAccelerator::Result error) {
-  DVLOG(2) << "OnError " << error;
+  VLOGF(1) << error;
   DCHECK_NE(error, ArcVideoDecodeAccelerator::SUCCESS);
   DCHECK(client_);
   client_->OnError(
@@ -129,27 +135,27 @@ void GpuArcVideoDecodeAccelerator::OnBufferDone(
     PortType port,
     uint32_t index,
     const BufferMetadata& metadata) {
-  DVLOG(2) << "OnBufferDone " << port << "," << index;
+  VLOGF(4) << "port=" << port << ", index=" << index;
   DCHECK(client_);
   client_->OnBufferDone(static_cast<::arc::mojom::PortType>(port), index,
                         ::arc::mojom::BufferMetadata::From(metadata));
 }
 
 void GpuArcVideoDecodeAccelerator::OnFlushDone() {
-  DVLOG(2) << "OnFlushDone";
+  VLOGF(2);
   DCHECK(client_);
   client_->OnFlushDone();
 }
 
 void GpuArcVideoDecodeAccelerator::OnResetDone() {
-  DVLOG(2) << "OnResetDone";
+  VLOGF(2);
   DCHECK(client_);
   client_->OnResetDone();
 }
 
 void GpuArcVideoDecodeAccelerator::OnOutputFormatChanged(
     const VideoFormat& format) {
-  DVLOG(2) << "OnOutputFormatChanged";
+  VLOGF(2);
   DCHECK(client_);
   client_->OnOutputFormatChanged(::arc::mojom::VideoFormat::From(format));
 }
@@ -158,15 +164,17 @@ void GpuArcVideoDecodeAccelerator::Initialize(
     ::arc::mojom::VideoDecodeAcceleratorConfigPtr config,
     ::arc::mojom::VideoDecodeClientPtr client,
     InitializeCallback callback) {
-  DVLOG(2) << "Initialize";
+  VLOGF(2);
   DCHECK(!client_);
   if (config->device_type_deprecated !=
       ::arc::mojom::VideoDecodeAcceleratorConfig::DeviceTypeDeprecated::
           DEVICE_DECODER) {
-    LOG(ERROR) << "only decoder is supported";
+    VLOGF(1) << "only decoder is supported";
     std::move(callback).Run(
         ::arc::mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT);
+    return;
   }
+
   client_ = std::move(client);
   ArcVideoDecodeAccelerator::Result result = accelerator_->Initialize(
       config.To<ArcVideoDecodeAccelerator::Config>(), this);
@@ -178,7 +186,7 @@ base::ScopedFD GpuArcVideoDecodeAccelerator::UnwrapFdFromMojoHandle(
     mojo::ScopedHandle handle) {
   DCHECK(client_);
   if (!handle.is_valid()) {
-    LOG(ERROR) << "handle is invalid";
+    VLOGF(1) << "handle is invalid";
     client_->OnError(
         ::arc::mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT);
     return base::ScopedFD();
@@ -188,7 +196,7 @@ base::ScopedFD GpuArcVideoDecodeAccelerator::UnwrapFdFromMojoHandle(
   MojoResult mojo_result =
       mojo::UnwrapPlatformFile(std::move(handle), &platform_file);
   if (mojo_result != MOJO_RESULT_OK) {
-    LOG(ERROR) << "UnwrapPlatformFile failed: " << mojo_result;
+    VLOGF(1) << "failed with error: " << mojo_result;
     client_->OnError(
         ::arc::mojom::VideoDecodeAccelerator::Result::PLATFORM_FAILURE);
     return base::ScopedFD();
@@ -197,18 +205,39 @@ base::ScopedFD GpuArcVideoDecodeAccelerator::UnwrapFdFromMojoHandle(
   return base::ScopedFD(platform_file);
 }
 
+void GpuArcVideoDecodeAccelerator::AllocateProtectedBuffer(
+    ::arc::mojom::PortType port,
+    uint32_t index,
+    mojo::ScopedHandle handle,
+    uint64_t size,
+    AllocateProtectedBufferCallback callback) {
+  VLOGF(2) << "port=" << port << ", index=" << index << ", size=" << size;
+
+  base::ScopedFD fd = UnwrapFdFromMojoHandle(std::move(handle));
+  if (!fd.is_valid()) {
+    std::move(callback).Run(false);
+    return;
+  }
+
+  bool result = accelerator_->AllocateProtectedBuffer(
+      static_cast<PortType>(port), index, std::move(fd), size);
+
+  std::move(callback).Run(result);
+}
+
 void GpuArcVideoDecodeAccelerator::BindSharedMemory(
     ::arc::mojom::PortType port,
     uint32_t index,
     mojo::ScopedHandle ashmem_handle,
     uint32_t offset,
     uint32_t length) {
-  DVLOG(2) << "BindSharedMemoryCallback port=" << port << ", index=" << index
-           << ", offset=" << offset << ", length=" << length;
+  VLOGF(2) << "port=" << port << ", index=" << index << ", offset=" << offset
+           << ", length=" << length;
 
   base::ScopedFD fd = UnwrapFdFromMojoHandle(std::move(ashmem_handle));
   if (!fd.is_valid())
     return;
+
   accelerator_->BindSharedMemory(static_cast<PortType>(port), index,
                                  std::move(fd), offset, length);
 }
@@ -218,7 +247,7 @@ void GpuArcVideoDecodeAccelerator::BindDmabuf(
     uint32_t index,
     mojo::ScopedHandle dmabuf_handle,
     std::vector<::arc::VideoFramePlane> planes) {
-  DVLOG(2) << "BindDmabuf port=" << port << ", index=" << index;
+  VLOGF(2) << "port=" << port << ", index=" << index;
 
   base::ScopedFD fd = UnwrapFdFromMojoHandle(std::move(dmabuf_handle));
   if (!fd.is_valid())
@@ -232,23 +261,23 @@ void GpuArcVideoDecodeAccelerator::UseBuffer(
     ::arc::mojom::PortType port,
     uint32_t index,
     ::arc::mojom::BufferMetadataPtr metadata) {
-  DVLOG(2) << "UseBuffer port=" << port << ", index=" << index;
+  VLOGF(4) << "port=" << port << ", index=" << index;
   accelerator_->UseBuffer(static_cast<PortType>(port), index,
                           metadata.To<BufferMetadata>());
 }
 
 void GpuArcVideoDecodeAccelerator::SetNumberOfOutputBuffers(uint32_t number) {
-  DVLOG(2) << "SetNumberOfOutputBuffers number=" << number;
+  VLOGF(2) << "number=" << number;
   accelerator_->SetNumberOfOutputBuffers(number);
 }
 
 void GpuArcVideoDecodeAccelerator::Reset() {
-  DVLOG(2) << "Reset";
+  VLOGF(2);
   accelerator_->Reset();
 }
 
 void GpuArcVideoDecodeAccelerator::Flush() {
-  DVLOG(2) << "Flush";
+  VLOGF(2);
   accelerator_->Flush();
 }
 
