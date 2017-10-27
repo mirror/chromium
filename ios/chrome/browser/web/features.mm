@@ -8,11 +8,6 @@
 #error "This file requires ARC support."
 #endif
 
-// Feature flag to control default value for mailto: URL rewriting feature.
-// Change the default value here to enable or disable this feature.
-const base::Feature kMailtoUrlRewriting{"MailtoUrlRewriting",
-                                        base::FEATURE_ENABLED_BY_DEFAULT};
-
 // Feature flag to prompt user to choose a mail client app. Change the default
 // value here to enable or disable this feature.
 const base::Feature kMailtoPromptForUserChoice{

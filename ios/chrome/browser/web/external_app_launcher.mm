@@ -361,8 +361,7 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
 
   // If feature mailto: URL rewriting is enabled, replaces |URL| with a
   // rewritten URL if it is of mailto: scheme.
-  if (base::FeatureList::IsEnabled(kMailtoUrlRewriting) &&
-      gURL.SchemeIs(url::kMailToScheme)) {
+  if (gURL.SchemeIs(url::kMailToScheme)) {
     MailtoURLRewriter* rewriter =
         base::FeatureList::IsEnabled(kMailtoPromptForUserChoice)
             ? [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers]

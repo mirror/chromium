@@ -139,11 +139,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
       toSectionWithIdentifier:SectionIdentifierSettings];
   [model addItem:[self translateItem]
       toSectionWithIdentifier:SectionIdentifierSettings];
-  // Show Compose Email setting if mailto: URL rewriting feature is enabled.
-  if (base::FeatureList::IsEnabled(kMailtoUrlRewriting)) {
-    [model addItem:[self composeEmailItem]
-        toSectionWithIdentifier:SectionIdentifierSettings];
-  }
+  [model addItem:[self composeEmailItem]
+      toSectionWithIdentifier:SectionIdentifierSettings];
 }
 
 - (CollectionViewItem*)blockPopupsItem {
