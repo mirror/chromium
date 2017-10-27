@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9a87f29_59097335",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T17:29:15Z",
+      "side": 1,
+      "message": "nit: if you\u0027re moving this line, you might as well make it const while you\u0027re here.",
+      "revId": "f44ffa8aefb36117619f84a103aedc05d0f6d159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e359ac_d3a89da3",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T17:29:15Z",
+      "side": 1,
+      "message": "I was thinking about whether this test was backwards.  I think it\u0027s right, but in the process of thinking about it, I realize that there\u0027s nothing in the unit tests that tests this behavior.  Can you please add a unit test that would fail only if the test was backwards?",
+      "revId": "f44ffa8aefb36117619f84a103aedc05d0f6d159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe82e01_442672ed",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T17:29:15Z",
+      "side": 1,
+      "message": "There\u0027s some subtlety here.  In particular, the code below may remove the match you decide |would_be_default|.  (It\u0027s possible a tail suggestion is the top-scoring allowed_to_be_default match.)  Somewhere in this function you need to comment why that is okay.\n\nOn second thought, I\u0027m not actually sure it\u0027s okay.  Search provider is the provider that ensures the omnibox has a default match under all circumstances.  (ref: for example https://cs.chromium.org/chromium/src/components/omnibox/browser/search_provider.cc?l\u003d570-575 ) Suppose the suggestion system came back and returned set of tail suggestions, all allowed to be default match (and only returned tail suggestions--the server decided that all the tail suggestions were more likely than the what-you-typed query).  Suppose, HQP came back with a non-default suggestion too.  The above code would find a default match (tail), find a non-tail, and remove all tail suggestions, leaving no default match at all.\n\nWhen you fix this, please add a test for this case too.",
+      "revId": "f44ffa8aefb36117619f84a103aedc05d0f6d159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76b5ef4_60a482f6",
+        "filename": "components/omnibox/browser/autocomplete_result.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T17:29:15Z",
+      "side": 1,
+      "message": "Why is this public?",
+      "revId": "f44ffa8aefb36117619f84a103aedc05d0f6d159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

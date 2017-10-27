@@ -514,6 +514,24 @@
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73685fb_8f95a829",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T17:29:15Z",
+      "side": 1,
+      "message": "\u003e \u003e Initially, I think that sounds good to me.  (Disclaimer: I haven\u0027t yet thought\n\u003e \u003e deeply about any problems that may arise.)\n\u003e \n\u003e The primary thing that concerned me was the prediction of \"would be default\". As far as I can tell, it\u0027s a straightforward comparison, but I may have overlooked something.\n\u003e \n\u003e \u003e Also, please think about the CopyOldMatches() code.  This code preserves matches\n\u003e \u003e from the previous keystroke in order to keep the omnibox dropdown more stable.\n\u003e \u003e I think this new code might interact fine with it, but I\u0027m not sure and\n\u003e \u003e I\u0027d appreciate someone else thinking about this situation more.\n\u003e \n\u003e So UpdateResults calls CopyOldMatches calls SortAndCull calls our tail culling code. All of the callers assume that the subroutines are going to remove matches. If this change breaks something, then I think it\u0027s fair to say that the old code made assumptions that it shouldn\u0027t have.\n\nI\u0027m more curious about the following:\nCopyOldMatches() copies some old matches.\nWe see some non-tail matches and remove all tail suggestions.\nThen the old matches expire.\nWe decide to display the tail suggestions.\n\nHow will that look/feel?",
+      "parentUuid": "22f2886a_bd78903e",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
