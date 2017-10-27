@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5832018c_d922c6e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-27T18:21:13Z",
+      "side": 1,
+      "message": "FloatPropertly looks relatively simple.  Would it be worth adding something like that here?  Ideally we could avoid all the Float GC churn if we keep creating/destroying them each frame?",
+      "range": {
+        "startLine": 113,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 31
+      },
+      "revId": "c171eec280d7a3ab1c79b74fbfcf3a5127a7b97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
