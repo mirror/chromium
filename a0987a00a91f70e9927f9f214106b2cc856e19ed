@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5145221_ae393968",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1826,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T18:31:09Z",
+      "side": 1,
+      "message": "Why is this not\nSetShouldDoFullPaintInvalidationWithoutGeometryChange(defer \u003d\u003d CanDeferInvalidation::kYes \u0026\u0026 maybe_animated ? deferred : kImage)?",
+      "revId": "a0987a00a91f70e9927f9f214106b2cc856e19ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e2fa3d_349f9535",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImage.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T18:31:09Z",
+      "side": 1,
+      "message": "Should this be deferred? It doesn\u0027t involve an animated image.",
+      "revId": "a0987a00a91f70e9927f9f214106b2cc856e19ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0e2134_b225ad01",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGImage.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T18:31:09Z",
+      "side": 1,
+      "message": "It looks like the delayed invalidation logic is largely in LayoutBox::IntersectsVisibleViewport and LayoutBox::EnsureIsReadyForPaintInvalidation. LayoutSVGImage isn\u0027t a subclass of LayoutBox so I don\u0027t think we can support the delayed invalidation here.",
+      "revId": "a0987a00a91f70e9927f9f214106b2cc856e19ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
