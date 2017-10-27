@@ -129,6 +129,7 @@ class AutocompleteProvider
     : public base::RefCountedThreadSafe<AutocompleteProvider> {
  public:
   // Different AutocompleteProvider implementations.
+  // clang-format off
   enum Type {
     TYPE_BOOKMARK         = 1 << 0,
     TYPE_BUILTIN          = 1 << 1,
@@ -141,6 +142,7 @@ class AutocompleteProvider
     TYPE_CLIPBOARD_URL    = 1 << 8,
     TYPE_PHYSICAL_WEB     = 1 << 9,
   };
+  // clang-format on
 
   explicit AutocompleteProvider(Type type);
 
