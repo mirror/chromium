@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ef917a4_3d222d59",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-10-27T07:13:49Z",
+      "side": 1,
+      "message": "I don\u0027t understand.\nWhy here flips the caps state upon KEY_RELEASED while accelerator controller has already handled it upon KEY_PRESSED? https://cs.chromium.org/chromium/src/ash/accelerators/accelerator_controller.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d733",
+      "range": {
+        "startLine": 813,
+        "startChar": 18,
+        "endLine": 813,
+        "endChar": 36
+      },
+      "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
