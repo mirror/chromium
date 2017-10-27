@@ -16,6 +16,23 @@
       "revId": "5f81ab21a298d0c705374d2230e8f95cc456f500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d138ae68_3a6226cc",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T10:46:59Z",
+      "side": 1,
+      "message": "It\u0027s not usually necessary to have a kLast enum value for mojo enums: maybe it can be removed?",
+      "revId": "5f81ab21a298d0c705374d2230e8f95cc456f500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
