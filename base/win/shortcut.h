@@ -40,10 +40,12 @@ struct BASE_EXPORT ShortcutProperties {
     PROPERTIES_ICON = 1U << 4,
     PROPERTIES_APP_ID = 1U << 5,
     PROPERTIES_DUAL_MODE = 1U << 6,
+    PROPERTIES_CLSID = 1U << 7,
     // Be sure to update the values below when adding a new property.
     PROPERTIES_ALL = PROPERTIES_TARGET | PROPERTIES_WORKING_DIR |
                      PROPERTIES_ARGUMENTS | PROPERTIES_DESCRIPTION |
-                     PROPERTIES_ICON | PROPERTIES_APP_ID | PROPERTIES_DUAL_MODE
+                     PROPERTIES_ICON | PROPERTIES_APP_ID |
+                     PROPERTIES_DUAL_MODE | PROPERTIES_CLSID
   };
 
   ShortcutProperties();
@@ -90,6 +92,11 @@ struct BASE_EXPORT ShortcutProperties {
     options |= PROPERTIES_DUAL_MODE;
   }
 
+  void set_clsid(CLSID clsid_in) {
+    clsid = clsid_in;
+    options |= PROPERTIES_CLSID;
+  }
+
   // The target to launch from this shortcut. This is mandatory when creating
   // a shortcut.
   FilePath target;
@@ -109,6 +116,9 @@ struct BASE_EXPORT ShortcutProperties {
   string16 app_id;
   // Whether this is a dual mode shortcut (Win8+).
   bool dual_mode;
+  // CLSID of the COM object registered with the OS via the shortcut (Win10
+  // version 1607, build 14393, and beyond).
+  CLSID clsid;
   // Bitfield made of IndividualProperties. Properties set in |options| will be
   // set on the shortcut, others will be ignored.
   uint32_t options;

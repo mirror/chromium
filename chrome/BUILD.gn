@@ -212,6 +212,15 @@ if (!is_android && !is_mac) {
           "//chrome/app/version_assembly:version_assembly_manifest",
         ]
 
+        if (enable_native_notifications) {
+          sources += [
+            "app/chrome_native_notification_prep_win.cc",
+            "app/chrome_native_notification_prep_win.h",
+          ]
+
+          libs = [ "runtimeobject.lib" ]
+        }
+
         if (win_console_app) {
           defines += [ "WIN_CONSOLE_APP" ]
         } else {
@@ -227,6 +236,9 @@ if (!is_android && !is_mac) {
           "/DELAYLOAD:uxtheme.dll",
           "/DELAYLOAD:ole32.dll",
           "/DELAYLOAD:oleaut32.dll",
+          "/DELAYLOAD:api-ms-win-core-winrt-error-l1-1-0.dll",
+          "/DELAYLOAD:api-ms-win-core-winrt-l1-1-0.dll",
+          "/DELAYLOAD:api-ms-win-core-winrt-string-l1-1-0.dll",
         ]
 
         if (current_cpu == "x64") {
