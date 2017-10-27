@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a5674b8_420a8b67",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T22:58:35Z",
+      "side": 1,
+      "message": "Nit (optional): Can fit in single line\n\n/** @param {boolean} enable */",
+      "revId": "148d28fe765eac82665502aff05a9c494bb1d49e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2002785c_b7d8a3f1",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T22:58:35Z",
+      "side": 1,
+      "message": "Semi-colon missing.",
+      "revId": "148d28fe765eac82665502aff05a9c494bb1d49e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5cf207_660eb447",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T22:58:35Z",
+      "side": 1,
+      "message": "Semi-colon missing. Also (optional), the parentheses around a single argument are not-necessary.\n\nUnfortunately we are not yet running our lint checks under chrome/test/data, but eventually we will.",
+      "revId": "148d28fe765eac82665502aff05a9c494bb1d49e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a076c3_c0035b44",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T22:58:35Z",
+      "side": 1,
+      "message": "Nit (optional): Instead of resetting individual resolvers each time, perhaps you could simply do\ninput.delegate.reset();",
+      "revId": "148d28fe765eac82665502aff05a9c494bb1d49e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b4592b_db9a5d77",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T22:58:35Z",
+      "side": 1,
+      "message": "Nit (optional):\nexpectDeepEquals([\u0027itemid\u0027, \u0027Command\u0027, \u0027Ctrl + A\u0027], arg);",
+      "revId": "148d28fe765eac82665502aff05a9c494bb1d49e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716da21c_242cc917",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T22:58:35Z",
+      "side": 1,
+      "message": "Semicolon missing.",
+      "revId": "148d28fe765eac82665502aff05a9c494bb1d49e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bcd785f_0c7445a1",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T22:58:35Z",
+      "side": 1,
+      "message": "Semicolon missing.",
+      "revId": "148d28fe765eac82665502aff05a9c494bb1d49e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e210ab84_f547504f",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T22:58:35Z",
+      "side": 1,
+      "message": "Nit: Same as\nthen(expectFalse);",
+      "revId": "148d28fe765eac82665502aff05a9c494bb1d49e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
