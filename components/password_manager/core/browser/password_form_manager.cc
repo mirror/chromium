@@ -649,6 +649,11 @@ void PasswordFormManager::ProcessMatches(
 void PasswordFormManager::ProcessFrame(
     const base::WeakPtr<PasswordManagerDriver>& driver) {
   DCHECK_EQ(PasswordForm::SCHEME_HTML, observed_form_.scheme);
+
+  // Don't keep processing the same frame
+  if (autofills_left_-- <= 0)
+    return;
+
   if (form_fetcher_->GetState() == FormFetcher::State::NOT_WAITING)
     ProcessFrameInternal(driver);
 
