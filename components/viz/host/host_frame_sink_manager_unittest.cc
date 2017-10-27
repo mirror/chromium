@@ -17,6 +17,7 @@
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "components/viz/test/mock_compositor_frame_sink_client.h"
+#include "components/viz/test/mock_host_frame_sink_client.h"
 #include "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -45,19 +46,6 @@ SurfaceId MakeSurfaceId(const FrameSinkId& frame_sink_id, uint32_t local_id) {
 SurfaceInfo MakeSurfaceInfo(const SurfaceId& surface_id) {
   return SurfaceInfo(surface_id, 1.f, gfx::Size(1, 1));
 }
-
-// A fake (do-nothing) implementation of HostFrameSinkClient.
-class FakeHostFrameSinkClient : public HostFrameSinkClient {
- public:
-  FakeHostFrameSinkClient() = default;
-  ~FakeHostFrameSinkClient() override = default;
-
-  // HostFrameSinkClient implementation.
-  void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) override {}
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(FakeHostFrameSinkClient);
-};
 
 // A mock implementation of mojom::FrameSinkManager.
 class MockFrameSinkManagerImpl : public FrameSinkManagerImpl {
@@ -215,7 +203,7 @@ class HostFrameSinkManagerRemoteTest : public HostFrameSinkManagerTestBase {
 // Verify that creating and destroying a CompositorFrameSink using
 // mojom::CompositorFrameSink works correctly.
 TEST_F(HostFrameSinkManagerLocalTest, CreateMojomCompositorFrameSink) {
-  FakeHostFrameSinkClient host_client;
+  MockHostFrameSinkClient host_client;
 
   // Register then create CompositorFrameSink for child.
   EXPECT_CALL(impl(), RegisterFrameSinkId(kFrameSinkChild1));
@@ -252,7 +240,7 @@ TEST_F(HostFrameSinkManagerLocalTest, CreateMojomCompositorFrameSink) {
 
 // Verify that that creating two CompositorFrameSinkSupports works.
 TEST_F(HostFrameSinkManagerLocalTest, CreateCompositorFrameSinkSupport) {
-  FakeHostFrameSinkClient host_client;
+  MockHostFrameSinkClient host_client;
 
   host().RegisterFrameSinkId(kFrameSinkChild1, &host_client);
   auto support_child =
@@ -290,7 +278,7 @@ TEST_F(HostFrameSinkManagerLocalTest, CreateCompositorFrameSinkSupport) {
 }
 
 TEST_F(HostFrameSinkManagerLocalTest, AssignTemporaryReference) {
-  FakeHostFrameSinkClient host_client;
+  MockHostFrameSinkClient host_client;
   host().RegisterFrameSinkId(kFrameSinkParent1, &host_client);
 
   const SurfaceId surface_id = MakeSurfaceId(kFrameSinkChild1, 1);
@@ -311,7 +299,7 @@ TEST_F(HostFrameSinkManagerLocalTest, AssignTemporaryReference) {
 // Verify that we drop temporary reference to a surface that doesn't have any
 // registered parent.
 TEST_F(HostFrameSinkManagerLocalTest, DropTemporaryReference) {
-  FakeHostFrameSinkClient host_client;
+  MockHostFrameSinkClient host_client;
 
   const SurfaceId surface_id = MakeSurfaceId(kFrameSinkChild1, 1);
   host().RegisterFrameSinkId(surface_id.frame_sink_id(), &host_client);
@@ -328,7 +316,7 @@ TEST_F(HostFrameSinkManagerLocalTest, DropTemporaryReference) {
 // Verify that we drop the temporary reference to a new surface if the frame
 // sink that corresponds to the new surface has been invalidated.
 TEST_F(HostFrameSinkManagerLocalTest, DropTemporaryReferenceForStaleClient) {
-  FakeHostFrameSinkClient host_client;
+  MockHostFrameSinkClient host_client;
 
   host().RegisterFrameSinkId(kFrameSinkChild1, &host_client);
   auto support_child =
@@ -372,7 +360,7 @@ TEST_F(HostFrameSinkManagerLocalTest, DropTemporaryReferenceForStaleClient) {
 
 // Verify that multiple parents in the frame sink hierarchy works.
 TEST_F(HostFrameSinkManagerLocalTest, HierarchyMultipleParents) {
-  FakeHostFrameSinkClient host_client;
+  MockHostFrameSinkClient host_client;
 
   // Register two parent and child CompositorFrameSink.
   const FrameSinkId& id_parent1 = kFrameSinkParent1;
@@ -421,7 +409,7 @@ TEST_F(HostFrameSinkManagerLocalTest, HierarchyMultipleParents) {
 // frame sink registered as an embedder has been invalidated.
 TEST_F(HostFrameSinkManagerLocalTest,
        DropTemporaryReferenceForInvalidatedParent) {
-  FakeHostFrameSinkClient host_client;
+  MockHostFrameSinkClient host_client;
 
   host().RegisterFrameSinkId(kFrameSinkChild1, &host_client);
   auto support_child =
@@ -464,7 +452,7 @@ TEST_F(HostFrameSinkManagerLocalTest,
 }
 
 TEST_F(HostFrameSinkManagerLocalTest, DisplayRootTemporaryReference) {
-  FakeHostFrameSinkClient host_client;
+  MockHostFrameSinkClient host_client;
 
   const SurfaceId surface_id = MakeSurfaceId(kFrameSinkParent1, 1);
   host().RegisterFrameSinkId(surface_id.frame_sink_id(), &host_client);
@@ -482,7 +470,7 @@ TEST_F(HostFrameSinkManagerLocalTest, DisplayRootTemporaryReference) {
 // Test the creation and desctruction of HitTestQuery, which is stored in
 // HostFrameSinkManager::display_hit_test_query_.
 TEST_F(HostFrameSinkManagerLocalTest, DisplayHitTestQueryMap) {
-  FakeHostFrameSinkClient client;
+  MockHostFrameSinkClient client;
   EXPECT_FALSE(FrameSinkDataExists(kFrameSinkChild1));
   host().RegisterFrameSinkId(kFrameSinkChild1, &client);
   EXPECT_TRUE(FrameSinkDataExists(kFrameSinkChild1));
@@ -501,7 +489,7 @@ TEST_F(HostFrameSinkManagerLocalTest, DisplayHitTestQueryMap) {
 
 // Verify that HostFrameSinkManager can handle restarting after a GPU crash.
 TEST_F(HostFrameSinkManagerRemoteTest, RestartOnGpuCrash) {
-  FakeHostFrameSinkClient host_client;
+  MockHostFrameSinkClient host_client;
 
   // Register two FrameSinkIds, hierarchy between them and create a
   // CompositorFrameSink for one.
@@ -555,7 +543,7 @@ TEST_F(HostFrameSinkManagerRemoteTest, RestartOnGpuCrash) {
 // Verify that HostFrameSinkManager does early return when trying to send
 // hit-test data after HitTestQuery was deleted.
 TEST_F(HostFrameSinkManagerRemoteTest, DeletedHitTestQuery) {
-  FakeHostFrameSinkClient host_client;
+  MockHostFrameSinkClient host_client;
 
   // Register a FrameSinkId, and create a RootCompositorFrameSink, which should
   // create a HitTestQuery.
