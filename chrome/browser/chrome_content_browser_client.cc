@@ -758,8 +758,8 @@ void CreateWebUsbChooserService(
 
 void CreateBudgetService(blink::mojom::BudgetServiceRequest request,
                          content::RenderFrameHost* render_frame_host) {
-  BudgetServiceImpl::Create(render_frame_host->GetProcess()->GetID(),
-                            std::move(request));
+  BudgetServiceImpl::Create(std::move(request), render_frame_host->GetProcess(),
+                            render_frame_host->GetLastCommittedOrigin());
 }
 
 bool GetDataSaverEnabledPref(const PrefService* prefs) {
@@ -2928,9 +2928,6 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
       content::BrowserThread::GetTaskRunnerForThread(
           content::BrowserThread::UI);
   registry->AddInterface(
-      base::Bind(&BudgetServiceImpl::Create, render_process_host->GetID()),
-      ui_task_runner);
-  registry->AddInterface(
       base::Bind(&rappor::RapporRecorderImpl::Create,
                  g_browser_process->rappor_service()),
       ui_task_runner);
@@ -3009,8 +3006,10 @@ void ChromeContentBrowserClient::BindInterfaceRequestFromFrame(
     content::RenderFrameHost* render_frame_host,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  if (!frame_interfaces_.get() && !frame_interfaces_parameterized_.get())
-    InitFrameInterfaces();
+  if (!frame_interfaces_.get() && !frame_interfaces_parameterized_.get() &&
+      !worker_interfaces_parameterized_) {
+    InitWebContextInterfaces();
+  }
 
   if (!frame_interfaces_parameterized_->TryBindInterface(
           interface_name, &interface_pipe, render_frame_host)) {
@@ -3032,6 +3031,20 @@ bool ChromeContentBrowserClient::BindAssociatedInterfaceRequestFromFrame(
     return true;
   }
   return false;
+}
+
+void ChromeContentBrowserClient::BindInterfaceRequestFromWorker(
+    content::RenderProcessHost* render_process_host,
+    const url::Origin& origin,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  if (!frame_interfaces_.get() && !frame_interfaces_parameterized_.get() &&
+      !worker_interfaces_parameterized_) {
+    InitWebContextInterfaces();
+  }
+
+  worker_interfaces_parameterized_->BindInterface(
+      interface_name, std::move(interface_pipe), render_process_host, origin);
 }
 
 void ChromeContentBrowserClient::BindInterfaceRequest(
@@ -3427,10 +3440,13 @@ void ChromeContentBrowserClient::OverridePageVisibilityState(
   }
 }
 
-void ChromeContentBrowserClient::InitFrameInterfaces() {
+void ChromeContentBrowserClient::InitWebContextInterfaces() {
   frame_interfaces_ = base::MakeUnique<service_manager::BinderRegistry>();
   frame_interfaces_parameterized_ = base::MakeUnique<
       service_manager::BinderRegistryWithArgs<content::RenderFrameHost*>>();
+  worker_interfaces_parameterized_ =
+      base::MakeUnique<service_manager::BinderRegistryWithArgs<
+          content::RenderProcessHost*, const url::Origin&>>();
 
   if (base::FeatureList::IsEnabled(features::kWebUsb)) {
     frame_interfaces_parameterized_->AddInterface(
@@ -3484,6 +3500,9 @@ void ChromeContentBrowserClient::InitFrameInterfaces() {
 
   frame_interfaces_parameterized_->AddInterface(
       base::Bind(&CreateBudgetService));
+
+  worker_interfaces_parameterized_->AddInterface(
+      base::Bind(&BudgetServiceImpl::Create));
 }
 
 #if BUILDFLAG(ENABLE_WEBRTC)
