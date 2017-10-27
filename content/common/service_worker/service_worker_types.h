@@ -173,6 +173,11 @@ struct CONTENT_EXPORT ServiceWorkerResponse {
   bool is_in_cache_storage = false;
   std::string cache_storage_cache_name;
   ServiceWorkerHeaderList cors_exposed_header_names;
+
+  std::string side_data_blob_uuid;
+  uint64_t side_data_blob_size;
+  // |blob| is only used when features::kMojoBlobs is enabled.
+  scoped_refptr<storage::BlobHandle> side_data_blob;
 };
 
 struct CONTENT_EXPORT ServiceWorkerVersionAttributes {
