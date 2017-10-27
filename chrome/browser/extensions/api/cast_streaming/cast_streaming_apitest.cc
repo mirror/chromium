@@ -186,10 +186,9 @@ class TestPatternReceiver : public media::cast::InProcessReceiver {
     VLOG(1) << "Current audio tone frequency: " << frequency;
 
     const int kTargetWindowHz = 20;
-    for (std::vector<int>::iterator it = expected_tones_.begin();
-         it != expected_tones_.end(); ++it) {
-      if (abs(static_cast<int>(frequency) - *it) < kTargetWindowHz) {
-        LOG(INFO) << "Heard tone at frequency " << *it << " Hz.";
+    for (int tone : expected_tones_) {
+      if (abs(static_cast<int>(frequency) - tone) < kTargetWindowHz) {
+        LOG(INFO) << "Heard tone at frequency " << tone << " Hz.";
         expected_tones_.erase(it);
         MaybeRunDoneCallback();
         break;
