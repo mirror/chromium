@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18327d14_68d09d20",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-27T16:42:12Z",
+      "side": 1,
+      "message": "Remove sentence 4. It is unnecessary and has a typo.",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07912e57_9ae311ea",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-27T16:42:12Z",
+      "side": 1,
+      "message": "Functinality should be functionality.",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cd33c1_f21bcd71",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-27T16:42:12Z",
+      "side": 1,
+      "message": "Does this point to the event pages which then points to background_pages? Might want to just link to the background pages section in anticipation of this.",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa72c70_2ecda83d",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-27T16:42:12Z",
+      "side": 1,
+      "message": "visted should be visited",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3628aa_daadb8c1",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-27T16:42:12Z",
+      "side": 1,
+      "message": "Small nit - Preform-- perform",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482d5c4c_2a504855",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-27T16:42:12Z",
+      "side": 1,
+      "message": "This seems weird to me-- \u0027Develop for developers\u0027. Is this just about extending devtools? If so how about that \u0027Chrome DevTools extensions\u0027",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c930db72_c6d4825f",
+        "filename": "chrome/common/extensions/docs/templates/articles/devguide.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-27T16:42:12Z",
+      "side": 1,
+      "message": "Remove etc (we try not to use this too often for some reason).",
+      "revId": "ac3a71ae4829ff4ad69f144b93222d0f497855a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
