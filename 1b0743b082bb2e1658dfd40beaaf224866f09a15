@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6e9df1a8_350e7ae5",
+        "filename": "media/gpu/va_surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-27T13:36:24Z",
+      "side": 1,
+      "message": "The I\u0027m surprised it worked for decoding video with overlays \nbut I won\u0027t dig further. Let\u0027s just remove this line then.\nJust wanted to hardcode what I thought it was an otherwise \nfloating assumption.",
+      "parentUuid": "e8d76e9c_364ef8d5",
+      "revId": "1b0743b082bb2e1658dfd40beaaf224866f09a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e665616e_1140ad24",
         "filename": "media/gpu/va_surface.h",
         "patchSetId": 6

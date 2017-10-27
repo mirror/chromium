@@ -16,6 +16,24 @@
       "revId": "a522a0144d34936aa3a02b75105d81b4223770bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb596f4_10e3adb4",
+        "filename": "media/gpu/va_surface.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-27T13:36:24Z",
+      "side": 1,
+      "message": "const at this level only specifies that it may not be touched \nafter the initialization list of the ctor, so if there was a \ncopy before, there will be still, and if there was no copy \nbefore, there wouldn\u0027t be one now.  \n\nAside from that, and regarding the change from base::Callback\nto base::OnceCallback indicated in PS6, base::OnceCallback is \na move-only type [1], so there should be no copy; the ctor \nthat will be used in the initialization list of the ctor is a \nmove-only too [2]. (Arguably, this is a change in behaviour\nbecause the base::RepeatingCallback used on ToT is copyable, \nso there _is_ a copy there, but of the internal BindStateBase \nwhich is a scoped_refptr, so it\u0027s cheap).\n\n\n[1] https://cs.chromium.org/chromium/src/base/callback.h?dr\u003dSs\u0026l\u003d33\n[2] https://cs.chromium.org/chromium/src/base/callback.h?dr\u003dSs\u0026l\u003d40",
+      "parentUuid": "67d1c472_402de415",
+      "revId": "a522a0144d34936aa3a02b75105d81b4223770bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
