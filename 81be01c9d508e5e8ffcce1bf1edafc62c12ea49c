@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9f1cf50_f3a6a8cf",
+        "filename": "chrome/browser/policy/profile_policy_connector_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-27T11:06:17Z",
+      "side": 1,
+      "message": "nit: Do you actually need a separate method for the const version? Inside the factory we know that the object doesn\u0027t need to be lazily constructed here, therefore a single method (accepting const-pointer |context| and returning a non-const pointer) should be enough.",
+      "revId": "81be01c9d508e5e8ffcce1bf1edafc62c12ea49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
