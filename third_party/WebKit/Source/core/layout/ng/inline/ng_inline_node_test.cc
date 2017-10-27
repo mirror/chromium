@@ -40,27 +40,30 @@ class NGInlineNodeForTest : public NGInlineNode {
   }
 
   void Append(UChar character) {
-    MutableData()->text_content_.append(character);
-    unsigned end = Data().text_content_.length();
-    MutableData()->items_.push_back(
+    NGInlineNodeData* data = MutableData();
+    data->text_content_.append(character);
+    unsigned end = data->text_content_.length();
+    data->items_.push_back(
         NGInlineItem(NGInlineItem::kBidiControl, end - 1, end, nullptr));
-    MutableData()->is_bidi_enabled_ = true;
-    MutableData()->is_empty_inline_ = false;
+    data->is_bidi_enabled_ = true;
+    data->is_empty_inline_ = false;
   }
 
   void ClearText() {
-    MutableData()->text_content_ = String();
-    MutableData()->items_.clear();
-    MutableData()->is_empty_inline_ = true;
+    NGInlineNodeData* data = MutableData();
+    data->text_content_ = String();
+    data->items_.clear();
+    data->is_empty_inline_ = true;
   }
 
   void SegmentText() {
-    MutableData()->is_bidi_enabled_ = true;
-    NGInlineNode::SegmentText();
+    NGInlineNodeData* data = MutableData();
+    data->is_bidi_enabled_ = true;
+    NGInlineNode::SegmentText(data);
   }
 
-  using NGInlineNode::CollectInlines;
-  using NGInlineNode::ShapeText;
+  void CollectInlines() { NGInlineNode::CollectInlines(MutableData()); }
+  void ShapeText() { NGInlineNode::ShapeText(MutableData()); }
 };
 
 class NGInlineNodeTest : public RenderingTest {
