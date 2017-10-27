@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5334bc7_57cbcbf1",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-27T16:55:16Z",
+      "side": 1,
+      "message": "This is getting pretty big, do you think you could split it in subfunctions?",
+      "range": {
+        "startLine": 1088,
+        "startChar": 20,
+        "endLine": 1088,
+        "endChar": 57
+      },
+      "revId": "ccccb702d15091550d2c7417c64d52efbda3c7a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6497af_4b7f2bac",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-27T16:55:16Z",
+      "side": 1,
+      "message": "nit: Rephrase :)",
+      "range": {
+        "startLine": 1153,
+        "startChar": 52,
+        "endLine": 1154,
+        "endChar": 38
+      },
+      "revId": "ccccb702d15091550d2c7417c64d52efbda3c7a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
