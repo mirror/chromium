@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a57dbbb7_b47127d8",
+        "filename": "base/values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-27T06:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf5407ab_59539bd0",
+      "revId": "d0dc60fe34ef3004cac0bd9e1f844233b557a759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5d644e1_9d11572a",
         "filename": "chrome/browser/extensions/api/web_request/web_request_event_details_unittest.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4a268abb_fdc2ec24",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_event_details_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-27T06:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5d644e1_9d11572a",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "d0dc60fe34ef3004cac0bd9e1f844233b557a759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f85ba489_b84e4ebd",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "d0dc60fe34ef3004cac0bd9e1f844233b557a759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d774d3dd_824eb1d3",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-27T06:54:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f85ba489_b84e4ebd",
+      "revId": "d0dc60fe34ef3004cac0bd9e1f844233b557a759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
