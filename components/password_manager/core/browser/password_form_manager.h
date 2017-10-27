@@ -598,6 +598,11 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // forms.
   bool blacklisted_origin_found_ = false;
 
+  // If we've already autofilled a few times, it is probable that autofill is
+  // triggered by programmatic changes in the page. We set a maximum number of
+  // times that we will autofill to avoid being stuck in an infinite loop.
+  int autofills_left_ = 5;
+
   DISALLOW_COPY_AND_ASSIGN(PasswordFormManager);
 };
 
