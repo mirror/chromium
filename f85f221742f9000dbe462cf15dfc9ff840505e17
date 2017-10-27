@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cdc283c_bddc8fae",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T15:37:27Z",
+      "side": 0,
+      "message": "If you agree about the stickiness, then this should be checking that variable and setting the command line based on it to prevent making a gpu channel/process when the renderer starts and we\u0027re not using gpu compositing. This is the change in https://chromium-review.googlesource.com/c/chromium/src/+/714365/19/content/browser/renderer_host/render_process_host_impl.cc\n\nAnd then RenderThreadImpl should also be sticky which is the is_gpu_compositing_disabled_ there. This is starting to feel like most of my patch..\n\nso I guess the options are:\n- pull out the sticky parts in my cl\n- wait for my cl\n- be ok with the gpu process launching when gpu is disabled until my cl lands - i\u0027m not sure if that would be a regression on bots? probably we don\u0027t look at gpu disabled rly..?",
+      "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb537747_eedb83e2",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T15:37:27Z",
+      "side": 0,
+      "message": "Oh, this is a good hint at other things that should be reading RenderThreadImpl for this state instead of |prefs|.\n\nMaybe we should be removing these prefs fields entirely? Maybe that could be its own CL to remove these, prefs and query RenderThreadImpl instead, which can check the command line flag (and is_gpu_compositing_disabled_ once stickiness is implemented)?",
+      "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8606520e_bd254043",
+        "filename": "content/browser/renderer_host/render_widget_host_view_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T15:37:27Z",
+      "side": 0,
+      "message": "This could check ImageTransportFactory to see if gpu is disabled if we had the sticky bit there also.",
+      "revId": "f85f221742f9000dbe462cf15dfc9ff840505e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bd5f084_b0ea379c",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T15:37:27Z",
+      "side": 1,
+      "message": "As it is, this will now try to make a gpu_channel_host for every compositor, even if gpu is disabled by commandline, or we failed in the past and won\u0027t use it now.\n\nShould we make this decision sticky? If so that\u0027s the is_gpu_compositing_disabled_ bits in https://chromium-review.googlesource.com/c/chromium/src/+/714365/18/content/browser/compositor/gpu_process_transport_factory.cc#697",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54cfff9f_e349740f",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T15:37:27Z",
+      "side": 1,
+      "message": "Same thoughts here about stickiness, we\u0027re going to try make a channel host when we won\u0027t use it? This pointed out to me that I was missing checking is_gpu_compositing_disabled_ here in my CL so I fixed that as well fwiw.",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e213e9c_6d77ff0b",
+        "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T15:37:27Z",
+      "side": 1,
+      "message": "TBH I\u0027m confused why this is here - when would a browser test be in software compositing mode without explicitly asking for it?",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ee3ab1_57718418",
+        "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T15:37:27Z",
+      "side": 1,
+      "message": "same?",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcb8944_35667157",
+        "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T15:37:27Z",
+      "side": 1,
+      "message": "This is never false now, but could ask RenderThreadImpl instead?",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61321da_3fdbadc0",
+        "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T15:37:27Z",
+      "side": 1,
+      "message": "Why is this use_aura? We can use software compositing on non-aura (mac)?",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a8139c_5d0dcf8f",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T15:37:27Z",
+      "side": 1,
+      "message": "same thots here about making a gpu process when its not going to be used, and this reminded me that my CL should be asking RenderThreadImpl not the command line anymore.. I did that now.",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b20b03_7a420f98",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T15:37:27Z",
+      "side": 1,
+      "message": "same question about USE_AURA",
+      "revId": "331d59411b989e437d2d4ee19925dd4fa03f2521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
