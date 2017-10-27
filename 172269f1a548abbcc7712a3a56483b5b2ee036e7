@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b258946b_8676ab3a",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-27T00:40:50Z",
+      "side": 1,
+      "message": "DCHECK(!IsMainThread() \u0026\u0026 !global_scope_-\u003eIsContextThread()) ?",
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b6ef31_620ca474",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-27T00:40:50Z",
+      "side": 1,
+      "message": "I\u0027d recommend avoiding |global_scope_| access on non-context thread because it sometimes causes race conditions. In this case, is it guaranteed that Mutate() is never called during Dispose()?",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85acd0c7_fad05d09",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-27T00:40:50Z",
+      "side": 1,
+      "message": "As majidvp@ commented, this should be TaskRunnerHelper::Get()-\u003ePostTask() to post a task to a per-global-scope scheduler. GetSingleThreadTaskRunner()-\u003ePostTask() posts a task to thread\u0027s default task queue that may run the posted task even after the AnimationWorkletGlobalScope is gone.\n\nI guess you hit DCHECK(IsContextThread()) in the WorkerOrWorkletGlobalScope::GetTaskRunner(), right? GlobalScope is not thread-safe and it\u0027s generally discouraged to access it from a non-context thread. To post a task to the context thread, we need to...\n\n1) take context\u0027s task runner on the context thread and then pass it to the non-context thread, OR\n2) take context\u0027s task runner in some thread-safe way. TaskRunnerHelper::Get(WorkerThread*) is available on the main thread.",
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9276c7_aae471a0",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-27T00:40:50Z",
+      "side": 1,
+      "message": "Can you update this comment? Looks like this class is constructed on the main thread, and used on both a worklet backing thread (worker thread) and the compositor thread (I assume Mutate() is still accessed on the compositor thread after this CL).",
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
