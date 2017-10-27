@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "77a58d1f_64be3586",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTextTrackListElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-27T13:50:27Z",
+      "side": 1,
+      "message": "I was thinking of the fact that we hide the overflow menu on click. How does it interact with this?",
+      "parentUuid": "73ee8ad1_b20d92bf",
+      "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7fd7458_69e15781",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
         "patchSetId": 1

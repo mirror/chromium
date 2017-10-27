@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "2c125ccc_526fb53c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-27T13:50:27Z",
+      "side": 1,
+      "message": "Because it was fixed in another CL, we should probably update the commit message :)",
+      "revId": "2101da6397916a2d35db0c046a8818730469debb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea1d824_3d53bd7e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-27T13:50:27Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure I understand why it\u0027s needed. I might need to look at this.",
+      "revId": "2101da6397916a2d35db0c046a8818730469debb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f4e23a_e438b947",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTextTrackListElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-27T13:50:27Z",
+      "side": 1,
+      "message": "Maybe add a comment to describe the method?",
+      "revId": "2101da6397916a2d35db0c046a8818730469debb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef389108_bd661451",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
         "patchSetId": 3
