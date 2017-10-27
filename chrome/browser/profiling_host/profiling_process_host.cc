@@ -10,6 +10,7 @@
 #include "base/files/file_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/process/process_iterator.h"
+#include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
@@ -188,10 +189,30 @@ void ProfilingProcessHost::Unregister() {
 
 void ProfilingProcessHost::BrowserChildProcessLaunchedAndConnected(
     const content::ChildProcessData& data) {
-  // In minimal mode, only profile the GPU process.
-  if (mode_ == Mode::kMinimal &&
-      data.process_type != content::ProcessType::PROCESS_TYPE_GPU) {
-    return;
+  // Ensure this is only called for all non-renderer browser child processes
+  // so as not to collide with logic in ProfilingProcessHost::Observe().
+  DCHECK_EQ(data.process_type, content::ProcessType::PROCESS_TYPE_RENDERER);
+
+  switch (mode()) {
+    case Mode::kMinimal:
+    case Mode::kGpu:
+      // In minimal and GPU-only modes, the only child process being
+      // profiled is the GPU process.
+      if (data.process_type != content::ProcessType::PROCESS_TYPE_GPU) {
+        return;
+      }
+      break;
+
+    case Mode::kBrowser:
+    case Mode::kRendererSampling:
+      return;
+
+    case Mode::kAll:
+      break;
+
+    case Mode::kCount:
+    case Mode::kNone:
+      DLOG(FATAL) << "Invalid mode()";
   }
 
   if (!content::BrowserThread::CurrentlyOn(content::BrowserThread::IO)) {
@@ -224,10 +245,25 @@ void ProfilingProcessHost::Observe(
     const content::NotificationDetails& details) {
   // Ignore newly launched renderer if only profiling a minimal set of
   // processes.
-  if (mode_ == Mode::kMinimal)
-    return;
+  switch (mode()) {
+    case Mode::kAll:
+    case Mode::kRendererSampling:
+      break;
 
-  if (type != content::NOTIFICATION_RENDERER_PROCESS_CREATED)
+    case Mode::kBrowser:
+    case Mode::kGpu:
+    case Mode::kMinimal:
+      return;
+
+    case Mode::kCount:
+    case Mode::kNone:
+      DLOG(FATAL) << "Invalid mode()";
+  }
+
+  // TODO(ajwong): This is too much logic before the thread-bounce. It feels
+  // odd. See if there's a way to refactor.
+  if (type != content::NOTIFICATION_RENDERER_PROCESS_CREATED &&
+      type != content::NOTIFICATION_RENDERER_PROCESS_TERMINATED)
     return;
 
   if (!content::BrowserThread::CurrentlyOn(content::BrowserThread::IO)) {
@@ -238,12 +274,36 @@ void ProfilingProcessHost::Observe(
     return;
   }
 
-  // Tell the child process to start profiling.
   content::RenderProcessHost* host =
       content::Source<content::RenderProcessHost>(source).ptr();
-  ProfilingClientBinder client(host);
-  AddClientToProfilingService(client.take(), base::GetProcId(host->GetHandle()),
-                              profiling::mojom::ProcessType::RENDERER);
+
+  // In kRendererSampling mode, only allowe one process to be sampled at a time.
+  // This is achieved by tracking the actively profiled RenderProcessHost
+  // until a NOTIFICATION_RENDERER_PROCESS_TERMINATED signal is received for it.
+  static content::RenderProcessHost* currently_profiled_renderer = nullptr;
+  if (type == content::NOTIFICATION_RENDERER_PROCESS_TERMINATED) {
+    if (mode() == Mode::kRendererSampling) {
+      if (currently_profiled_renderer == host) {
+        currently_profiled_renderer = nullptr;
+      }
+    }
+    return;
+  } else if (type == content::NOTIFICATION_RENDERER_PROCESS_CREATED) {
+    if (mode() == Mode::kRendererSampling) {
+      // Sample a renderer at a 1/3 chance if none is already being profiled.
+      if (!currently_profiled_renderer && (base::RandUint64() % 10000 < 333)) {
+        currently_profiled_renderer = host;
+      } else {
+        return;
+      }
+    }
+
+    // Tell the child process to start profiling.
+    ProfilingClientBinder client(host);
+    AddClientToProfilingService(client.take(),
+                                base::GetProcId(host->GetHandle()),
+                                profiling::mojom::ProcessType::RENDERER);
+  }
 }
 
 bool ProfilingProcessHost::OnMemoryDump(
@@ -338,6 +398,12 @@ ProfilingProcessHost::Mode ProfilingProcessHost::GetCurrentMode() {
       return Mode::kAll;
     if (mode == switches::kMemlogModeMinimal)
       return Mode::kMinimal;
+    if (mode == switches::kMemlogModeBrowser)
+      return Mode::kBrowser;
+    if (mode == switches::kMemlogModeGpu)
+      return Mode::kGpu;
+    if (mode == switches::kMemlogModeRendererSampling)
+      return Mode::kRendererSampling;
 
     DLOG(ERROR) << "Unsupported value: \"" << mode << "\" passed to --"
                 << switches::kMemlog;

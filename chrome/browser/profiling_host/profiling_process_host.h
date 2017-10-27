@@ -59,6 +59,16 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
 
     // Profile all processes.
     kAll = 2,
+
+    // Profile only the browser process.
+    kBrowser = 3,
+
+    // Profile only the gpu process.
+    kGpu = 4,
+
+    // Profile a sampled number of renderer processes.
+    kRendererSampling = 5,
+
     kCount
   };
 
