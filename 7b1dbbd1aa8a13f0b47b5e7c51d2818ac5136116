@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ebf2567_35cfc434",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/GeneratedCodeHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-27T13:53:54Z",
+      "side": 1,
+      "message": "I don\u0027t know.  This is the simple copy from the original implementation.  I can convert this into a return-value-test, if you want.",
+      "parentUuid": "890ee21c_fb6ba63b",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2541bd81_096064fb",
         "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-27T12:18:22Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a95cb9a_160dcd74",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-27T13:53:54Z",
+      "side": 1,
+      "message": "Could you elaborate why we need to avoid IsNothing, IsJust, and FromJust?  They\u0027re well-defined in V8 and seem settle for a long time.\n\nEspecially in this case, we don\u0027t use the value itself.\n\n  bool value;\n  bool had_exception \u003d call_result.To(\u0026value);\n  ALLOW_UNUSED_LOCAL(value);\n  callback_error \u003d !had_exception;\n\nLooks wierd to me.",
+      "parentUuid": "8da8468d_92b67eb1",
       "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
