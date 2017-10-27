@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db56627b_b7828985",
+        "filename": "cc/trees/ukm_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-27T18:25:15Z",
+      "side": 1,
+      "message": "I think the cc namespace should be enough to scope this as something used to record compositing metrics. We\u0027d want to keep this as a generic class within cc that can be used to record metrics by any sub-component.",
+      "parentUuid": "397aeb78_e3817cfc",
+      "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "920f4a4e_35332ca2",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-27T16:32:03Z",
       "side": 1,
       "message": "This doesn\u0027t strike me as the right method to use. It is meant to be used during loading of a document, so once the document load has completed I\u0027m not sure it will give you the right result.\n\nIt is more correct to use GetWebFrame()-\u003eGetDocument()-\u003eUrl();",
+      "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0a556c_b6515f5c",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-27T18:25:15Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion. I\u0027m updating the URL in DidCommitProvisionalLoad, I hope the above is fine to use at that time?",
+      "parentUuid": "920f4a4e_35332ca2",
       "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "26787322_8862c2d3",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-27T18:25:15Z",
+      "side": 1,
+      "message": "We don\u0027t clamp these so the max should be the max value UKM supports.",
+      "parentUuid": "ebc4558a_37903b98",
+      "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f93ff4b_233d05ba",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608a128b_5217ca6c",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-27T18:25:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f93ff4b_233d05ba",
+      "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
