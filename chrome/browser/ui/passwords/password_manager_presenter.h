@@ -14,7 +14,6 @@
 
 #include "base/macros.h"
 #include "chrome/browser/ui/passwords/password_access_authenticator.h"
-#include "chrome/browser/ui/passwords/password_manager_porter.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/password_manager/core/browser/ui/credential_provider_interface.h"
@@ -81,11 +80,11 @@ class PasswordManagerPresenter
 
   // Trigger the password import procedure, allowing the user to load passwords
   // from a file.
-  void ImportPasswords(content::WebContents* web_contents);
+  void ImportPasswords();
 
   // Trigger the password export procedure, allowing the user to save all their
   // passwords to a file.
-  void ExportPasswords(content::WebContents* web_contents);
+  void ExportPasswords();
 
   // Wrapper around |PasswordStore::AddLogin| that adds the corresponding undo
   // action to |undo_manager_|.
@@ -179,8 +178,6 @@ class PasswordManagerPresenter
 
   // UI view that owns this presenter.
   PasswordUIView* password_view_;
-
-  PasswordManagerPorter password_manager_porter_;
 
   PasswordAccessAuthenticator password_access_authenticator_;
 
