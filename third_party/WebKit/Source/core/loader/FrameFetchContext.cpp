@@ -78,6 +78,7 @@
 #include "platform/loader/fetch/UniqueIdentifier.h"
 #include "platform/loader/fetch/fetch_initiator_type_names.h"
 #include "platform/mhtml/MHTMLArchive.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
 #include "platform/weborigin/SchemeRegistry.h"
@@ -339,7 +340,7 @@ void FrameFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
   if (IsReloadLoadType(MasterDocumentLoader()->LoadType()))
     request.ClearHTTPHeaderField(HTTPNames::Save_Data);
 
-  if (GetSettings() && GetSettings()->GetDataSaverEnabled())
+  if (GetNetworkStateNotifier().SaveData())
     request.SetHTTPHeaderField(HTTPNames::Save_Data, "on");
 
   if (GetLocalFrameClient()->IsClientLoFiActiveForFrame()) {
