@@ -129,11 +129,10 @@ const NGOffsetMapping* NGOffsetMapping::GetFor(
   if (!block_flow)
     return nullptr;
   DCHECK(block_flow->ChildrenInline());
-  // Note: We are assuming that every LayoutNGBlockFlow with inline children is
-  // laid out with NG, and hence, has offset mapping. If any change breaks this
-  // assumption (e.g., disabling NG on contenteditable), extra checking is
-  // needed here.
-  return &NGInlineNode(block_flow).ComputeOffsetMappingIfNeeded();
+  NGLayoutInputNode node = NGBlockNode(block_flow).FirstChild();
+  if (node && node.IsInline())
+    return ToNGInlineNode(node).ComputeOffsetMappingIfNeeded();
+  return nullptr;
 }
 
 NGOffsetMapping::NGOffsetMapping(NGOffsetMapping&& other)
