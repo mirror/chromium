@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67d1c472_402de415",
+        "filename": "media/gpu/va_surface.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-10-27T04:35:43Z",
+      "side": 1,
+      "message": "Can this be \"const\"? Won\u0027t it generate unnecessary copy?\n\nhttps://stackoverflow.com/questions/28595117/why-can-we-use-stdmove-on-a-const-object\nI feel I still don\u0027t understand c++\u0027s move well enough.",
+      "revId": "a522a0144d34936aa3a02b75105d81b4223770bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
