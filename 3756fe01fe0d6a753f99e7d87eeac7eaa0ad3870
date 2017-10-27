@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28aed9f0_9cf2a1a0",
+        "filename": "chrome/browser/media/router/media_router_feature.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T03:00:10Z",
+      "side": 1,
+      "message": "\u003e extern const base::Feature kEnableCastLocalMedia;\n\nadded this to keep media_router_integration_browsertest.cc happy",
+      "revId": "3756fe01fe0d6a753f99e7d87eeac7eaa0ad3870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
