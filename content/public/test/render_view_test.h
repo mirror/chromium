@@ -20,6 +20,7 @@
 #include "content/public/common/page_state.h"
 #include "content/public/test/mock_render_thread.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
