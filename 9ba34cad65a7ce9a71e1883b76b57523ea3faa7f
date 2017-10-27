@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d2d66e35_3e63b10f",
+        "filename": "third_party/polymer/v1_0/css_strip_prefixes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T17:57:19Z",
+      "side": 1,
+      "message": "I have manually reviewed all changes caused by this CL and verified that the non-prefixed version exists. Also prefixes have been deprecated by Blink itself, so they are discouraged either way.\n\nPolymer UI authors seem to always include all prefixed versions (moz, ms, webkit) as well as the non-prefixed version, so I don\u0027t think there will be a problem. In the rare cases that a non-prefixed version is missing, we can always send a PR to fix that.",
+      "parentUuid": "5e4350fb_34deda65",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "9ba34cad65a7ce9a71e1883b76b57523ea3faa7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b636000_935b7bcf",
         "filename": "third_party/polymer/v1_0/css_strip_prefixes.py",
         "patchSetId": 4
