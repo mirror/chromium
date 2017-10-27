@@ -58,7 +58,6 @@ CookieCreationTimeManager::~CookieCreationTimeManager() {
 void CookieCreationTimeManager::SetCreationTime(
     NSHTTPCookie* cookie,
     const base::Time& creation_time) {
-  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(unique_times_.find(creation_time) == unique_times_.end());
 
   // If the cookie overrides an existing cookie, remove its creation time.
@@ -74,7 +73,6 @@ void CookieCreationTimeManager::SetCreationTime(
 
 base::Time CookieCreationTimeManager::MakeUniqueCreationTime(
     const base::Time& creation_time) {
-  DCHECK(thread_checker_.CalledOnValidThread());
   auto it = unique_times_.find(creation_time);
 
   if (it == unique_times_.end())
@@ -94,7 +92,6 @@ base::Time CookieCreationTimeManager::MakeUniqueCreationTime(
 }
 
 base::Time CookieCreationTimeManager::GetCreationTime(NSHTTPCookie* cookie) {
-  DCHECK(thread_checker_.CalledOnValidThread());
   base::hash_map<std::string, base::Time>::iterator it =
       creation_times_.find(GetCookieUniqueID(cookie));
   if (it != creation_times_.end())
