@@ -42,6 +42,7 @@
 #include "components/policy/core/common/cloud/cloud_policy_store.h"
 #include "components/policy/core/common/cloud/cloud_policy_validator.h"
 #include "components/policy/core/common/policy_details.h"
+#include "components/policy/core/common/policy_scheduler.h"
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/core/common/remote_commands/remote_commands_service.h"
 #include "components/policy/core/common/schema.h"
@@ -271,11 +272,11 @@ class UserCloudPolicyStatusProvider : public CloudPolicyCoreStatusProvider {
 
 #if defined(OS_CHROMEOS)
 // A cloud policy status provider for device policy.
-class DevicePolicyStatusProvider : public CloudPolicyCoreStatusProvider {
+class DeviceCloudPolicyStatusProvider : public CloudPolicyCoreStatusProvider {
  public:
-  explicit DevicePolicyStatusProvider(
+  explicit DeviceCloudPolicyStatusProvider(
       policy::BrowserPolicyConnectorChromeOS* connector);
-  ~DevicePolicyStatusProvider() override;
+  ~DeviceCloudPolicyStatusProvider() override;
 
   // CloudPolicyCoreStatusProvider implementation.
   void GetStatus(base::DictionaryValue* dict) override;
@@ -284,7 +285,7 @@ class DevicePolicyStatusProvider : public CloudPolicyCoreStatusProvider {
   std::string enterprise_enrollment_domain_;
   std::string enterprise_display_domain_;
 
-  DISALLOW_COPY_AND_ASSIGN(DevicePolicyStatusProvider);
+  DISALLOW_COPY_AND_ASSIGN(DeviceCloudPolicyStatusProvider);
 };
 
 // A cloud policy status provider that reads policy status from the policy core
@@ -316,13 +317,15 @@ class DeviceLocalAccountPolicyStatusProvider
   DISALLOW_COPY_AND_ASSIGN(DeviceLocalAccountPolicyStatusProvider);
 };
 
-// Provides status for any kind of Active Directory policy (device or user).
-class ActiveDirectoryPolicyStatusProvider
+// Provides status for User Active Directory policy.
+class UserActiveDirectoryPolicyStatusProvider
     : public PolicyStatusProvider,
       public policy::CloudPolicyStore::Observer {
  public:
-  explicit ActiveDirectoryPolicyStatusProvider(policy::CloudPolicyStore* store);
-  ~ActiveDirectoryPolicyStatusProvider() override;
+  explicit UserActiveDirectoryPolicyStatusProvider(
+      policy::ActiveDirectoryPolicyManager* policy_manager);
+
+  ~UserActiveDirectoryPolicyStatusProvider() override;
 
   // PolicyStatusProvider implementation.
   void GetStatus(base::DictionaryValue* dict) override;
@@ -332,9 +335,30 @@ class ActiveDirectoryPolicyStatusProvider
   void OnStoreError(policy::CloudPolicyStore* store) override;
 
  private:
-  policy::CloudPolicyStore* store_;
+  policy::ActiveDirectoryPolicyManager* policy_manager_;  // not owned.
 
-  DISALLOW_COPY_AND_ASSIGN(ActiveDirectoryPolicyStatusProvider);
+  DISALLOW_COPY_AND_ASSIGN(UserActiveDirectoryPolicyStatusProvider);
+};
+
+// Provides status for Device Active Directory policy.
+class DeviceActiveDirectoryPolicyStatusProvider
+    : public UserActiveDirectoryPolicyStatusProvider {
+ public:
+  DeviceActiveDirectoryPolicyStatusProvider(
+      policy::ActiveDirectoryPolicyManager* policy_manager,
+      const std::string& enterprise_enrollment_domain,
+      const std::string& enterprise_display_domain);
+
+  ~DeviceActiveDirectoryPolicyStatusProvider() override = default;
+
+  // PolicyStatusProvider implementation.
+  void GetStatus(base::DictionaryValue* dict) override;
+
+ private:
+  std::string enterprise_enrollment_domain_;
+  std::string enterprise_display_domain_;
+
+  DISALLOW_COPY_AND_ASSIGN(DeviceActiveDirectoryPolicyStatusProvider);
 };
 #endif
 
@@ -390,18 +414,17 @@ void UserCloudPolicyStatusProvider::GetStatus(base::DictionaryValue* dict) {
 }
 
 #if defined(OS_CHROMEOS)
-DevicePolicyStatusProvider::DevicePolicyStatusProvider(
+DeviceCloudPolicyStatusProvider::DeviceCloudPolicyStatusProvider(
     policy::BrowserPolicyConnectorChromeOS* connector)
-      : CloudPolicyCoreStatusProvider(
-            connector->GetDeviceCloudPolicyManager()->core()) {
+    : CloudPolicyCoreStatusProvider(
+          connector->GetDeviceCloudPolicyManager()->core()) {
   enterprise_enrollment_domain_ = connector->GetEnterpriseEnrollmentDomain();
   enterprise_display_domain_ = connector->GetEnterpriseDisplayDomain();
 }
 
-DevicePolicyStatusProvider::~DevicePolicyStatusProvider() {
-}
+DeviceCloudPolicyStatusProvider::~DeviceCloudPolicyStatusProvider() {}
 
-void DevicePolicyStatusProvider::GetStatus(base::DictionaryValue* dict) {
+void DeviceCloudPolicyStatusProvider::GetStatus(base::DictionaryValue* dict) {
   GetStatusFromCore(core_, dict);
   dict->SetString("enterpriseEnrollmentDomain", enterprise_enrollment_domain_);
   dict->SetString("enterpriseDisplayDomain", enterprise_display_domain_);
@@ -448,33 +471,71 @@ void DeviceLocalAccountPolicyStatusProvider::OnDeviceLocalAccountsChanged() {
   NotifyStatusChange();
 }
 
-ActiveDirectoryPolicyStatusProvider::ActiveDirectoryPolicyStatusProvider(
-    policy::CloudPolicyStore* store)
-    : store_(store) {
-  store_->AddObserver(this);
+UserActiveDirectoryPolicyStatusProvider::
+    UserActiveDirectoryPolicyStatusProvider(
+        policy::ActiveDirectoryPolicyManager* policy_manager)
+    : policy_manager_(policy_manager) {
+  policy_manager_->store()->AddObserver(this);
 }
 
-ActiveDirectoryPolicyStatusProvider::~ActiveDirectoryPolicyStatusProvider() {
-  store_->RemoveObserver(this);
+UserActiveDirectoryPolicyStatusProvider::
+    ~UserActiveDirectoryPolicyStatusProvider() {
+  policy_manager_->store()->RemoveObserver(this);
 }
 
-// TODO(tnagel): Provide more details and/or remove unused fields from UI.  See
-// https://crbug.com/664747.
-void ActiveDirectoryPolicyStatusProvider::GetStatus(
+void UserActiveDirectoryPolicyStatusProvider::GetStatus(
     base::DictionaryValue* dict) {
+  const em::PolicyData* policy = policy_manager_->store()->policy();
+  std::string client_id = policy ? policy->device_id() : std::string();
+  std::string username = policy ? policy->username() : std::string();
   base::string16 status =
-      policy::FormatStoreStatus(store_->status(), store_->validation_status());
+      policy::FormatStoreStatus(policy_manager_->store()->status(),
+                                policy_manager_->store()->validation_status());
   dict->SetString("status", status);
+  dict->SetString("username", username);
+  dict->SetString("clientId", client_id);
+  const base::TimeDelta refresh_interval =
+      policy_manager_->scheduler()->interval();
+  dict->SetString(
+      "refreshInterval",
+      ui::TimeFormat::Simple(ui::TimeFormat::FORMAT_DURATION,
+                             ui::TimeFormat::LENGTH_SHORT, refresh_interval));
+  const base::TimeTicks last_refresh_time =
+      policy_manager_->scheduler()->last_task_time();
+
+  dict->SetString(
+      "timeSinceLastRefresh",
+      last_refresh_time.is_null()
+          ? l10n_util::GetStringUTF16(IDS_POLICY_NEVER_FETCHED)
+          : ui::TimeFormat::Simple(ui::TimeFormat::FORMAT_ELAPSED,
+                                   ui::TimeFormat::LENGTH_SHORT,
+                                   base::TimeTicks::Now() - last_refresh_time));
 }
 
-void ActiveDirectoryPolicyStatusProvider::OnStoreLoaded(
+void UserActiveDirectoryPolicyStatusProvider::OnStoreLoaded(
     policy::CloudPolicyStore* store) {
   NotifyStatusChange();
 }
 
-void ActiveDirectoryPolicyStatusProvider::OnStoreError(
+void UserActiveDirectoryPolicyStatusProvider::OnStoreError(
     policy::CloudPolicyStore* store) {
   NotifyStatusChange();
+}
+
+DeviceActiveDirectoryPolicyStatusProvider::
+    DeviceActiveDirectoryPolicyStatusProvider(
+        policy::ActiveDirectoryPolicyManager* policy_manager,
+        const std::string& enterprise_enrollment_domain,
+        const std::string& enterprise_display_domain)
+    : UserActiveDirectoryPolicyStatusProvider(policy_manager),
+      enterprise_enrollment_domain_(enterprise_enrollment_domain),
+      enterprise_display_domain_(enterprise_display_domain) {}
+
+void DeviceActiveDirectoryPolicyStatusProvider::GetStatus(
+    base::DictionaryValue* dict) {
+  UserActiveDirectoryPolicyStatusProvider::GetStatus(dict);
+  dict->SetString("enterpriseEnrollmentDomain", enterprise_enrollment_domain_);
+  dict->SetString("enterpriseDisplayDomain", enterprise_display_domain_);
 }
 
 #endif  // defined(OS_CHROMEOS)
@@ -534,11 +595,12 @@ void PolicyUIHandler::RegisterMessages() {
   if (connector->IsEnterpriseManaged()) {
     if (connector->GetDeviceActiveDirectoryPolicyManager()) {
       device_status_provider_ =
-          base::MakeUnique<ActiveDirectoryPolicyStatusProvider>(
-              connector->GetDeviceActiveDirectoryPolicyManager()->store());
+          base::MakeUnique<DeviceActiveDirectoryPolicyStatusProvider>(
+              connector->GetDeviceActiveDirectoryPolicyManager(),
+              connector->GetRealm(), connector->GetEnterpriseDisplayDomain());
     } else {
       device_status_provider_ =
-          base::MakeUnique<DevicePolicyStatusProvider>(connector);
+          base::MakeUnique<DeviceCloudPolicyStatusProvider>(connector);
     }
   }
 
@@ -565,8 +627,8 @@ void PolicyUIHandler::RegisterMessages() {
         user_cloud_policy->core());
   } else if (active_directory_policy) {
     user_status_provider_ =
-        base::MakeUnique<ActiveDirectoryPolicyStatusProvider>(
-            active_directory_policy->store());
+        base::MakeUnique<UserActiveDirectoryPolicyStatusProvider>(
+            active_directory_policy);
   }
 #else
   policy::UserCloudPolicyManager* user_cloud_policy_manager =
