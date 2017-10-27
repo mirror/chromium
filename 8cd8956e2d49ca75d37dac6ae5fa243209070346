@@ -22,6 +22,57 @@
       "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2363a9a_5a492e58",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-27T11:38:47Z",
+      "side": 1,
+      "message": "What\u0027s about the first section - \"Enrollment and Access\"? Shouldn\u0027t there be a group for it too?\nIt would absorb some contents of groups like \"Attestation\".",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339cf6b9_af9157e7",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-27T11:38:47Z",
+      "side": 1,
+      "message": "I think that accessibility settings are missing here, comparing to the Help Center Article? Device policies like DeviceLoginScreenDefaultSpokenFeedbackEnabled - they currently belong to the \"Accessibility\" group, but, if I understand your intention right, this is expected to be under \"SignIn\" now?",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad684de6_e4e8221f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-27T11:38:47Z",
+      "side": 1,
+      "message": "Is it intentional that not all device policies are referenced here? For instance, \"DeviceOffHours\" or \"CastReceiverName\" or \"SupervisedUsersEnabled\" (likely not an exhaustive list).\n\nI\u0027m personally not sure which approach is better - either strictly following the Help Center Article or trying to attribute every policy to some group. But I think you\u0027re anyway deviating from the Article in this CL - for instance, \"ExtensionCacheSize\" doesn\u0027t seem to be mentioned in it.",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
