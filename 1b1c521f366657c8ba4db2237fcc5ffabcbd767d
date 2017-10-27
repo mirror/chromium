@@ -16,6 +16,24 @@
       "revId": "1b1c521f366657c8ba4db2237fcc5ffabcbd767d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3270cabd_6ef69fd0",
+        "filename": "third_party/WebKit/LayoutTests/editing/caret/caret-painting-low-dpi.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-27T17:20:24Z",
+      "side": 1,
+      "message": "I had the same question but I can\u0027t run content shell on windows for some reason. This is borrowed from another test for a dpi-specific situation so for the initial test result generation I thought I would play safe.\n\nI\u0027ll see if it can be improved once I have results and a working content shell.",
+      "parentUuid": "b7a25877_8c5bffca",
+      "revId": "1b1c521f366657c8ba4db2237fcc5ffabcbd767d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
