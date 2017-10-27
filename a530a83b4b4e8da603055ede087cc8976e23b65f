@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "18ca20cf_0ecf3693",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-27T20:38:17Z",
+      "side": 1,
+      "message": "I created one: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d779196\n\ndcheng: I suggest changing this paragraph to \"Even better would be to fix Issue 779196, and then recommend its use here. TODO(crbug.com/779196)\"",
+      "parentUuid": "cacec30d_bf24c0e6",
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e1f50e9_9ede63ae",
         "filename": "docs/security/mojo.md",
         "patchSetId": 7
@@ -77,6 +95,24 @@
       "writtenOn": "2017-10-27T18:39:54Z",
       "side": 1,
       "message": "This recommendation is quite new to me, and is a bit surprising given the long practice of doing it.",
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0f5d39_6d5887ee",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-27T20:38:17Z",
+      "side": 1,
+      "message": "It made sense in classic IPC world, and some uses of it have crossed over. Sometimes out of necessity, sometimes out of cargo culting.",
+      "parentUuid": "9e1f50e9_9ede63ae",
       "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
