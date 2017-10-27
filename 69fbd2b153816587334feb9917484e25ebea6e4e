@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "630e9731_453fa412",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T23:02:37Z",
+      "side": 1,
+      "message": "Nit: Maybe move this after line 114, to keep those generic strings in alphabetical order?",
+      "revId": "69fbd2b153816587334feb9917484e25ebea6e4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
