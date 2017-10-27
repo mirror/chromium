@@ -133,9 +133,10 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateContextCommon(
     bool support_locking,
     ui::ContextProviderCommandBuffer* shared_context_provider,
     ui::command_buffer_metrics::ContextType type) {
-  DCHECK(
-      content::GpuDataManagerImpl::GetInstance()->CanUseGpuBrowserCompositor());
   DCHECK(gpu_channel_host);
+  DCHECK_EQ(gpu::kGpuFeatureStatusEnabled,
+            gpu_channel_host->gpu_feature_info()
+                .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING]);
 
   // All browser contexts get the same stream id because we don't use sync
   // tokens for browser surfaces.
@@ -363,7 +364,6 @@ void GpuProcessTransportFactory::CreateLayerTreeFrameSink(
 
   const bool use_vulkan = static_cast<bool>(SharedVulkanContextProvider());
   const bool use_gpu_compositing =
-      GpuDataManagerImpl::GetInstance()->CanUseGpuBrowserCompositor() &&
       !compositor->force_software_compositor();
   if (use_gpu_compositing && !use_vulkan) {
     gpu_channel_factory_->EstablishGpuChannel(base::Bind(
@@ -380,10 +380,6 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
     scoped_refptr<gpu::GpuChannelHost> gpu_channel_host) {
   if (!compositor)
     return;
-
-  // CanUseGpuBrowserCompositor can change as a result of EstablishGpuChannel().
-  if (!GpuDataManagerImpl::GetInstance()->CanUseGpuBrowserCompositor())
-    use_gpu_compositing = false;
 
   // The widget might have been released in the meantime.
   PerCompositorDataMap::iterator it =
@@ -413,12 +409,15 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       SharedVulkanContextProvider();
   scoped_refptr<ui::ContextProviderCommandBuffer> context_provider;
 
-  if (!use_gpu_compositing || vulkan_context_provider) {
+  if (vulkan_context_provider) {
     // If not using GL compositing, don't keep the old shared worker context.
     shared_worker_context_provider_ = nullptr;
-  } else if (!gpu_channel_host) {
+  } else if (!gpu_channel_host ||
+             gpu_channel_host->gpu_feature_info()
+                     .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING] !=
+                 gpu::kGpuFeatureStatusEnabled) {
     // Failed to establish a channel, which is a fatal error, so stop trying to
-    // use gpu compositing.
+    // use gpu compositing. Or, GPU compositing is not allowed.
     use_gpu_compositing = false;
     shared_worker_context_provider_ = nullptr;
   } else {
@@ -922,12 +921,12 @@ GpuProcessTransportFactory::SharedMainThreadContextProvider() {
   if (shared_main_thread_contexts_)
     return shared_main_thread_contexts_;
 
-  if (!GpuDataManagerImpl::GetInstance()->CanUseGpuBrowserCompositor())
-    return nullptr;
-
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_host =
       gpu_channel_factory_->EstablishGpuChannelSync();
-  if (!gpu_channel_host)
+  if (!gpu_channel_host ||
+      gpu_channel_host->gpu_feature_info()
+              .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING] !=
+          gpu::kGpuFeatureStatusEnabled)
     return nullptr;
 
   // We need a separate context from the compositor's so that skia and gl_helper

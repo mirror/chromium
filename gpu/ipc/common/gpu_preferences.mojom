@@ -23,6 +23,7 @@ struct GpuPreferences {
   bool gpu_startup_dialog;
   bool disable_gpu_watchdog;
   bool gpu_sandbox_start_early;
+  bool disable_gpu_compositing;
 
   bool disable_vaapi_accelerated_video_encode;
 

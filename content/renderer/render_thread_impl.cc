@@ -1485,6 +1485,11 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
   if (result != gpu::ContextResult::kSuccess)
     return nullptr;
 
+  bool gpu_compositing_enabled =
+      gpu_channel_host->gpu_feature_info()
+          .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING] ==
+      gpu::kGpuFeatureStatusEnabled;
+
   scoped_refptr<base::SingleThreadTaskRunner> media_task_runner =
       GetMediaThreadTaskRunner();
   const bool enable_video_accelerator =
@@ -1492,12 +1497,10 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
   const bool enable_gpu_memory_buffer_video_frames =
 #if defined(OS_MACOSX) || defined(OS_LINUX)
       !cmd_line->HasSwitch(switches::kDisableGpuMemoryBufferVideoFrames) &&
-      !cmd_line->HasSwitch(switches::kDisableGpuCompositing) &&
-      !gpu_channel_host->gpu_info().software_rendering;
+      gpu_compositing_enabled;
 #elif defined(OS_WIN)
       !cmd_line->HasSwitch(switches::kDisableGpuMemoryBufferVideoFrames) &&
-      !cmd_line->HasSwitch(switches::kDisableGpuCompositing) &&
-      !gpu_channel_host->gpu_info().software_rendering &&
+      gpu_compositing_enabled &&
       (cmd_line->HasSwitch(switches::kEnableGpuMemoryBufferVideoFrames) ||
        gpu_channel_host->gpu_info().supports_overlays);
 #else
@@ -1974,8 +1977,20 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
     const LayerTreeFrameSinkCallback& callback) {
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
-  if (command_line.HasSwitch(switches::kDisableGpuCompositing))
-    use_software = true;
+
+  // Create a gpu process channel and verify we want to use GPU compositing
+  // before creating any context providers.
+  scoped_refptr<gpu::GpuChannelHost> gpu_channel_host;
+  if (!use_software) {
+    gpu_channel_host = EstablishGpuChannelSync();
+    // GPU process may be blocked, or GPU compositing may be blacklisted.
+    if (!gpu_channel_host ||
+        gpu_channel_host->gpu_feature_info()
+                .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING] !=
+            gpu::kGpuFeatureStatusEnabled) {
+      use_software = true;
+    }
+  }
 
   viz::ClientLayerTreeFrameSink::InitParams params;
   params.enable_surface_synchronization =
@@ -1999,16 +2014,9 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       callback.Run(nullptr);
       return;
     }
-    scoped_refptr<gpu::GpuChannelHost> channel = EstablishGpuChannelSync();
-    // If the channel could not be established correctly, then return null. This
-    // would cause the compositor to wait and try again at a later time.
-    if (!channel) {
-      callback.Run(nullptr);
-      return;
-    }
     RendererWindowTreeClient::Get(routing_id)
         ->RequestLayerTreeFrameSink(
-            gpu_->CreateContextProvider(std::move(channel)),
+            gpu_->CreateContextProvider(std::move(gpu_channel_host)),
             GetGpuMemoryBufferManager(), callback);
     return;
   }
@@ -2030,22 +2038,6 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
           std::move(vulkan_context_provider), &params));
       return;
     }
-  }
-
-  // Create a gpu process channel and verify we want to use GPU compositing
-  // before creating any context providers.
-  scoped_refptr<gpu::GpuChannelHost> gpu_channel_host;
-  if (!use_software) {
-    gpu_channel_host = EstablishGpuChannelSync();
-    if (!gpu_channel_host) {
-      // Cause the compositor to wait and try again.
-      callback.Run(nullptr);
-      return;
-    }
-    // We may get a valid channel, but with a software renderer. In that case,
-    // disable GPU compositing.
-    if (gpu_channel_host->gpu_info().software_rendering)
-      use_software = true;
   }
 
   if (use_software) {

@@ -705,11 +705,6 @@ void GpuDataManagerImplPrivate::AppendRendererCommandLine(
 
   if (ShouldDisableAcceleratedVideoDecode(command_line))
     command_line->AppendSwitch(switches::kDisableAcceleratedVideoDecode);
-
-#if defined(USE_AURA)
-  if (!CanUseGpuBrowserCompositor())
-    command_line->AppendSwitch(switches::kDisableGpuCompositing);
-#endif
 }
 
 void GpuDataManagerImplPrivate::AppendGpuCommandLine(
@@ -803,14 +798,6 @@ void GpuDataManagerImplPrivate::AppendGpuCommandLine(
 void GpuDataManagerImplPrivate::UpdateRendererWebPrefs(
     WebPreferences* prefs) const {
   DCHECK(prefs);
-
-#if defined(USE_AURA)
-  if (!CanUseGpuBrowserCompositor()) {
-    prefs->accelerated_2d_canvas_enabled = false;
-    prefs->pepper_3d_enabled = false;
-  }
-#endif
-
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
   if (!ShouldDisableAcceleratedVideoDecode(command_line) &&
@@ -960,17 +947,6 @@ bool GpuDataManagerImplPrivate::UpdateActiveGpu(uint32_t vendor_id,
     gpu_info_.gpu.active = false;
   }
   UpdateGpuInfoHelper();
-  return true;
-}
-
-bool GpuDataManagerImplPrivate::CanUseGpuBrowserCompositor() const {
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableGpuCompositing))
-    return false;
-  if (ShouldUseSwiftShader())
-    return false;
-  if (IsFeatureBlacklisted(gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING))
-    return false;
   return true;
 }
 
