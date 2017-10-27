@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89d2654c_2cb529bd",
+        "filename": "gin/v8_isolate_memory_dump_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2017-10-27T14:05:38Z",
+      "side": 1,
+      "message": "Can we assert that task_runner is not null? Otherwise, we\u0027ll be hiding the same bug.",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 17
+      },
+      "revId": "5111dd71b0ce3158611c5cbd5b16452359fea220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
