@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89177e41_76738a66",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-27T17:00:12Z",
+      "side": 1,
+      "message": "This bool was stored as part of third_party/WebKit/Source/core/frame/Settings.json5. The earlier version of the CL moved it out from third_party/WebKit/Source/core/frame/Settings.json5 to this file.\n\nThe latest patch completely removes this boolean as a WebSetting and stores it only in the NetworkStateNotifier.",
+      "parentUuid": "80a54d0e_54e1d936",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "d3c0d317bedaf75054e42cc039ef59e8de5dbd15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "001d09a8_e081147f",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "05e09797_055ca219",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-27T17:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "001d09a8_e081147f",
+      "range": {
+        "startLine": 213,
+        "startChar": 31,
+        "endLine": 213,
+        "endChar": 40
+      },
+      "revId": "d3c0d317bedaf75054e42cc039ef59e8de5dbd15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c1010d9_076093e1",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
         "patchSetId": 14
@@ -68,6 +116,30 @@
       "revId": "d3c0d317bedaf75054e42cc039ef59e8de5dbd15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b4e21f_e1da1ea1",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-27T17:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c1010d9_076093e1",
+      "range": {
+        "startLine": 726,
+        "startChar": 5,
+        "endLine": 726,
+        "endChar": 13
+      },
+      "revId": "d3c0d317bedaf75054e42cc039ef59e8de5dbd15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
