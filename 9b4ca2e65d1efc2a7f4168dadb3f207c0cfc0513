@@ -22,6 +22,30 @@
       "revId": "9b4ca2e65d1efc2a7f4168dadb3f207c0cfc0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10dbecef_dfec1a9e",
+        "filename": "mojo/public/cpp/bindings/lib/message_header_validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T20:26:19Z",
+      "side": 1,
+      "message": "Ah, was thinking these manual checks wouldn\u0027t matter since this line should show up in stack traces. I can certainly fix it to be a 5 though :P. Will make a follow-up on Monday.",
+      "parentUuid": "bc6a5413_64046307",
+      "range": {
+        "startLine": 76,
+        "startChar": 64,
+        "endLine": 76,
+        "endChar": 65
+      },
+      "revId": "9b4ca2e65d1efc2a7f4168dadb3f207c0cfc0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
