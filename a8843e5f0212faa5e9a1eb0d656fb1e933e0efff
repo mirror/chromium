@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c99cf0b4_4d2a4e2c",
+        "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-27T11:26:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec84685c_2674d496",
+      "revId": "a8843e5f0212faa5e9a1eb0d656fb1e933e0efff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65c8b6e3_3bbcc12f",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_transition_context.mm",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8f852fc0_4ab5f79f",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_transition_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-27T11:26:35Z",
+      "side": 1,
+      "message": "Yes. I am design a plan to have the stack view use snapshot instead of the real toolbar.\nAs part of this I will probably create an interface to have toolbar snapshot. I will update this call to use the new API.",
+      "parentUuid": "65c8b6e3_3bbcc12f",
+      "revId": "a8843e5f0212faa5e9a1eb0d656fb1e933e0efff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "040653a3_bce907bf",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "a8843e5f0212faa5e9a1eb0d656fb1e933e0efff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da79c445_01085f7c",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-27T11:26:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "040653a3_bce907bf",
+      "revId": "a8843e5f0212faa5e9a1eb0d656fb1e933e0efff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
