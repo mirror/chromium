@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51bb1b40_8dd8f03e",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-27T22:35:32Z",
+      "side": 1,
+      "message": "This is still unresolved...",
+      "parentUuid": "c4e08842_9085936e",
+      "revId": "56f0e274c4e01093430375307397cfa7ba2a6995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c9c14f7_98f3a43f",
         "filename": "components/offline_pages/core/snapshot_controller.cc",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I\u0027m not sure the algorithm is right.  I want to experiment with both a \"n-1\" and a \"percentage\" algorithm.  I envision two finch variables, one to switch between algorithms, and a second for the threshold.  (I plan both for another changelist)",
       "parentUuid": "8c9c14f7_98f3a43f",
+      "revId": "56f0e274c4e01093430375307397cfa7ba2a6995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1fb63b_876ab4d6",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-27T22:35:32Z",
+      "side": 1,
+      "message": "If that\u0027s the plan, then why not just avoid complexity and wait for all images? I believe the way RequestCoordinator works, the last attempt will make snapshot even if the SnapshotControlled did not signal the completion, so if we simply wait for all images and not getting some, timeouts and attempt counters will work as expected.",
+      "parentUuid": "31db1cd1_54c2e85e",
       "revId": "56f0e274c4e01093430375307397cfa7ba2a6995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
