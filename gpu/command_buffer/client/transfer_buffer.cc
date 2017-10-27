@@ -12,6 +12,7 @@
 #include "base/bits.h"
 #include "base/logging.h"
 #include "base/memory/shared_memory_handle.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "gpu/command_buffer/client/cmd_buffer_helper.h"
 
@@ -118,8 +119,9 @@ void TransferBuffer::AllocateRingBuffer(unsigned int size) {
       DCHECK(buffer.get());
       buffer_ = buffer;
       ring_buffer_ = std::make_unique<RingBuffer>(
-          alignment_, result_size_, buffer_->size() - result_size_, helper_,
-          static_cast<char*>(buffer_->memory()) + result_size_);
+          alignment_, result_size_,
+          base::saturated_cast<unsigned int>(buffer_->size() - result_size_),
+          helper_, static_cast<char*>(buffer_->memory()) + result_size_);
       buffer_id_ = id;
       result_buffer_ = buffer_->memory();
       result_shm_offset_ = 0;
