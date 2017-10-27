@@ -104,7 +104,7 @@ class WebLocalFrame : public WebFrame {
       blink::InterfaceRegistry*,
       WebRemoteFrame*,
       WebSandboxFlags,
-      WebParsedFeaturePolicy);
+      ParsedFeaturePolicy);
 
   // Creates a new local child of this frame. Similar to the other methods that
   // create frames, the returned frame should be freed by calling Close() when
