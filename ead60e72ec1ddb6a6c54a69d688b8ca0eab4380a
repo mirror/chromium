@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec8be528_5b0939f8",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-27T19:53:16Z",
+      "side": 1,
+      "message": "This seems too early. I am not completely sure, but, e.g., form-\u003eaction does not seem to be set at this point.",
+      "range": {
+        "startLine": 1135,
+        "startChar": 25,
+        "endLine": 1135,
+        "endChar": 47
+      },
+      "revId": "ead60e72ec1ddb6a6c54a69d688b8ca0eab4380a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce69372_8612559c",
+        "filename": "components/autofill/core/common/form_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-27T19:53:16Z",
+      "side": 1,
+      "message": "Please ensure initialization to some defined value in FormData\u0027s constructor.",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "ead60e72ec1ddb6a6c54a69d688b8ca0eab4380a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6fa6138_520bdbed",
+        "filename": "components/autofill/core/common/signatures_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-27T19:53:16Z",
+      "side": 1,
+      "message": "Could components/autofill/content/renderer/password_form_conversion_utils.cc reuse this method? Or did you have a reason to duplicate it?",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "ead60e72ec1ddb6a6c54a69d688b8ca0eab4380a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
