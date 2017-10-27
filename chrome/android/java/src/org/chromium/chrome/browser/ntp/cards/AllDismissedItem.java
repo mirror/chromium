@@ -13,6 +13,8 @@ import android.widget.TextView;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.metrics.ImpressionTracker;
+import org.chromium.chrome.browser.metrics.ImpressionTracker.Listener;
+import org.chromium.chrome.browser.metrics.OneShotImpressionTracker;
 import org.chromium.chrome.browser.ntp.NewTabPageUma;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 
@@ -23,14 +25,12 @@ import java.util.Calendar;
  * to restore the dismissed sections and load new suggestions from the server.
  */
 public class AllDismissedItem extends OptionalLeaf {
-    private final ImpressionTracker mImpressionTracker = new ImpressionTracker(
-            () -> {
-                    if (FeatureUtilities.isChromeHomeEnabled()) {
-                        RecordUserAction.record("Suggestions.AllDismissed.Shown");
-                    }
-                    this.mImpressionTracker.reset(null);
+    private final OneShotImpressionTracker mOneShotImpressionTracker =
+            new OneShotImpressionTracker(() -> {
+                if (FeatureUtilities.isChromeHomeEnabled()) {
+                    RecordUserAction.record("Suggestions.AllDismissed.Shown");
                 }
-            );
+            });
 
     @Override
     @ItemViewType
@@ -40,9 +40,9 @@ public class AllDismissedItem extends OptionalLeaf {
 
     @Override
     public void onBindViewHolder(NewTabPageViewHolder holder) {
-        ((ViewHolder) holder).onBindViewHolder(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
-
-        mImpressionTracker.reset(mImpressionTracker.wasTriggered() ? null : holder.itemView);
+        ((ViewHolder) holder)
+                .onBindViewHolder(Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
+                        mOneShotImpressionTracker);
     }
 
     @Override
@@ -60,9 +60,12 @@ public class AllDismissedItem extends OptionalLeaf {
     public static class ViewHolder extends NewTabPageViewHolder {
         private final TextView mBodyTextView;
 
+        private final ImpressionTracker mImpressionTracker;
+
         public ViewHolder(ViewGroup root, final SectionList sections) {
             super(LayoutInflater.from(root.getContext()).inflate(getLayout(), root, false));
             mBodyTextView = itemView.findViewById(R.id.body_text);
+            mImpressionTracker = new ImpressionTracker(itemView);
 
             if (!FeatureUtilities.isChromeHomeEnabled()) {
                 itemView.findViewById(R.id.action_button).setOnClickListener(v -> {
@@ -72,7 +75,7 @@ public class AllDismissedItem extends OptionalLeaf {
             }
         }
 
-        public void onBindViewHolder(int hourOfDay) {
+        public void onBindViewHolder(int hourOfDay, Listener listener) {
             @StringRes
             final int messageId;
             if (FeatureUtilities.isChromeHomeEnabled()) {
@@ -85,6 +88,13 @@ public class AllDismissedItem extends OptionalLeaf {
                 messageId = R.string.ntp_all_dismissed_body_text_evening;
             }
             mBodyTextView.setText(messageId);
+            mImpressionTracker.setListener(listener);
+        }
+
+        @Override
+        public void recycle() {
+            mImpressionTracker.setListener(null);
+            super.recycle();
         }
 
         @LayoutRes

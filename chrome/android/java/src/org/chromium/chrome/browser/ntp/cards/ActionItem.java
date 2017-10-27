@@ -162,6 +162,7 @@ public class ActionItem extends OptionalLeaf {
         private final ProgressIndicatorView mProgressIndicator;
         private final Button mButton;
         private final SuggestionsUiDelegate mUiDelegate;
+        private final ImpressionTracker mImpressionTracker;
 
         public ViewHolder(SuggestionsRecyclerView recyclerView,
                 ContextMenuManager contextMenuManager, final SuggestionsUiDelegate uiDelegate,
@@ -174,12 +175,7 @@ public class ActionItem extends OptionalLeaf {
             mButton.setOnClickListener(v -> mActionListItem.performAction(uiDelegate,
                     this::showFetchFailureSnackbar, this::showNoNewSuggestionsSnackbar));
 
-            new ImpressionTracker(itemView, () -> {
-                if (mActionListItem != null && !mActionListItem.mImpressionTracked) {
-                    mActionListItem.mImpressionTracked = true;
-                    uiDelegate.getEventReporter().onMoreButtonShown(mActionListItem);
-                }
-            });
+            mImpressionTracker = new ImpressionTracker(itemView);
         }
 
         private void showFetchFailureSnackbar() {
@@ -204,7 +200,14 @@ public class ActionItem extends OptionalLeaf {
         public void onBindViewHolder(ActionItem item) {
             super.onBindViewHolder();
             mActionListItem = item;
+            mImpressionTracker.setListener(this::onImpression);
             setState(item.mState);
+        }
+
+        @Override
+        public void recycle() {
+            mImpressionTracker.setListener(null);
+            super.recycle();
         }
 
         @LayoutRes
@@ -228,6 +231,13 @@ public class ActionItem extends OptionalLeaf {
             } else {
                 // Not even HIDDEN is supported as the item should not be able to receive updates.
                 assert false : "ActionViewHolder got notified of an unsupported state: " + state;
+            }
+        }
+
+        private void onImpression() {
+            if (mActionListItem != null && !mActionListItem.mImpressionTracked) {
+                mActionListItem.mImpressionTracked = true;
+                mUiDelegate.getEventReporter().onMoreButtonShown(mActionListItem);
             }
         }
     }

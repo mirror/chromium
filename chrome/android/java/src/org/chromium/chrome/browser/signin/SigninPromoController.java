@@ -20,6 +20,7 @@ import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.metrics.ImpressionTracker;
+import org.chromium.chrome.browser.metrics.OneShotImpressionTracker;
 import org.chromium.chrome.browser.signin.AccountSigninActivity.AccessPoint;
 
 
@@ -29,7 +30,7 @@ import org.chromium.chrome.browser.signin.AccountSigninActivity.AccessPoint;
  * or not. The controller also takes care of counting impressions, recording signin related user
  * actions and histograms.
  */
-public class SigninPromoController implements ImpressionTracker.Listener {
+public class SigninPromoController {
     /**
      * Receives notifications when user clicks close button in the promo.
      */
@@ -48,8 +49,10 @@ public class SigninPromoController implements ImpressionTracker.Listener {
     private static final int MAX_IMPRESSIONS_BOOKMARKS = 20;
     private static final int MAX_IMPRESSIONS_SETTINGS = 20;
 
-    private final ImpressionTracker mImpressionTracker = new ImpressionTracker(this);
     private @Nullable DisplayableProfileData mProfileData;
+    private @Nullable ImpressionTracker mImpressionTracker;
+    private final OneShotImpressionTracker mOneShotImpressionTracker =
+            new OneShotImpressionTracker(this::recordSigninPromoImpression);
     private final @AccessPoint int mAccessPoint;
     private final @Nullable String mImpressionCountName;
     private final String mImpressionUserActionName;
@@ -166,7 +169,11 @@ public class SigninPromoController implements ImpressionTracker.Listener {
     /**
      * Called when the signin promo is destroyed.
      */
-    public void onPromoDestroyed() {
+    public void detach() {
+        if (mImpressionTracker != null) {
+            mImpressionTracker.setListener(null);
+            mImpressionTracker = null;
+        }
         if (!mWasDisplayed || mWasUsed || mImpressionsTilDismissHistogramName == null) {
             return;
         }
@@ -189,7 +196,12 @@ public class SigninPromoController implements ImpressionTracker.Listener {
             final @Nullable OnDismissListener onDismissListener) {
         mProfileData = profileData;
         mWasDisplayed = true;
-        mImpressionTracker.reset(mImpressionTracker.wasTriggered() ? null : view);
+        if (mImpressionTracker != null) {
+            assert false;
+            mImpressionTracker.setListener(null);
+        }
+        mImpressionTracker = new ImpressionTracker(view);
+        mImpressionTracker.setListener(mOneShotImpressionTracker);
 
         view.getDescription().setText(mDescriptionStringId);
 
@@ -216,13 +228,6 @@ public class SigninPromoController implements ImpressionTracker.Listener {
     /** @return the resource used for the text displayed as promo description. */
     public @StringRes int getDescriptionStringId() {
         return mDescriptionStringId;
-    }
-
-    // ImpressionTracker.Listener implementation.
-    @Override
-    public void onImpression() {
-        recordSigninPromoImpression();
-        mImpressionTracker.reset(null);
     }
 
     private void setupColdState(final Context context, PersonalizedSigninPromoView view) {
