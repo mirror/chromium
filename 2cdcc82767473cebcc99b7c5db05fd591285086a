@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbedfe31_e530b5d6",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T17:17:52Z",
+      "side": 1,
+      "message": "Check |delegate| here.",
+      "revId": "2cdcc82767473cebcc99b7c5db05fd591285086a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3ad867_8db2ce52",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T17:17:52Z",
+      "side": 1,
+      "message": "Check |delegate| here.",
+      "revId": "2cdcc82767473cebcc99b7c5db05fd591285086a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda52dd9_ed53df34",
+        "filename": "device/u2f/u2f_ble_discovery.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T17:17:52Z",
+      "side": 1,
+      "message": "nit: no braces for single line if",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 5
+      },
+      "revId": "2cdcc82767473cebcc99b7c5db05fd591285086a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
