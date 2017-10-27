@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "db9b5ccc_7ef7178e",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-27T04:08:04Z",
+      "side": 1,
+      "message": "Thanks. John forwarded me a mail thread with discussion of usage of WEAKIFY/STRONGIFY, and looks like there is no consensus whether they should be encouraged or discouraged. And our code base uses it a lot as John mentioned :) But I will consider it discouraged in Chromium.",
+      "parentUuid": "7bd4f1af_44197648",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "38cb6c3603726969a399c9e04069342d2f3becbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "738862c5_3e573a57",
         "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
         "patchSetId": 13
