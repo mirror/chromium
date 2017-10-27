@@ -9,9 +9,9 @@ instead of "initial value".
 |   <shadow:root>
 |     <div>
 |       id="placeholder"
-|       pseudo="-webkit-input-suggested"
+|       pseudo="-internal-input-suggested"
 |       style="display: none !important;"
-|       shadow:pseudoId="-webkit-input-suggested"
+|       shadow:pseudoId="-internal-input-suggested"
 |       "suggested value"
 |     <div>
 |       id="inner-editor"
@@ -71,9 +71,9 @@ instead of "initial value".
 |   this.value="initial value"
 |   <shadow:root>
 |       id="placeholder"
-|       pseudo="-webkit-input-suggestedx"
+|       pseudo="-internal-input-suggestedx"
 |       style="display: none !important;"
-|       shadow:pseudoId="-webkit-input-suggested"
+|       shadow:pseudoId="-internal-input-suggested"
 |     <div>
 |       id="inner-editor"
 | <select>
