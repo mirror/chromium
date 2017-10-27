@@ -34,6 +34,24 @@
       "revId": "a522a0144d34936aa3a02b75105d81b4223770bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8fc96335_70009d36",
+        "filename": "media/gpu/va_surface.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-27T14:54:42Z",
+      "side": 1,
+      "message": "Actually I removed the use of OnceCallback because it\nneeded changes in ctor sites and it spread this CL too\nmuch. We\u0027ll do that any other time.",
+      "parentUuid": "6bb596f4_10e3adb4",
+      "revId": "a522a0144d34936aa3a02b75105d81b4223770bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

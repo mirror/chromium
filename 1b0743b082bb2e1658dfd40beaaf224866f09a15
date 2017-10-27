@@ -105,6 +105,24 @@
       "revId": "1b0743b082bb2e1658dfd40beaaf224866f09a15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6817f83d_8e9c6bb4",
+        "filename": "media/gpu/va_surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-27T14:54:42Z",
+      "side": 1,
+      "message": "Ended up not doing this change because it needed changes in \nctor sites and it spread this CL too much. We\u0027ll do that \nany other time.",
+      "parentUuid": "3fb998e3_806647a4",
+      "revId": "1b0743b082bb2e1658dfd40beaaf224866f09a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
