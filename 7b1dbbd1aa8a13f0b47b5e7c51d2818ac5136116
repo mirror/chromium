@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "890ee21c_fb6ba63b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/GeneratedCodeHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T12:18:22Z",
+      "side": 1,
+      "message": "How is it guaranteed that context is not suspended here?",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2541bd81_096064fb",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T12:18:22Z",
+      "side": 1,
+      "message": "Avoid using Just, IsNothing etc as much as possible. Use To().",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da8468d_92b67eb1",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T12:18:22Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
