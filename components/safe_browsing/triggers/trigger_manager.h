@@ -13,6 +13,8 @@
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "components/security_interstitials/core/base_safe_browsing_error_ui.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_observer.h"
+#include "content/public/browser/web_contents_user_data.h"
 
 class PrefService;
 
@@ -113,6 +115,14 @@ class TriggerManager {
       int num_visits,
       const SBErrorOptions& error_display_options);
 
+  // Called when a ThreatDetails report finishes for the specified
+  // |web_contents|.
+  void ThreatDetailsDone(content::WebContents* web_contents);
+
+  // Called when the specified |web_contents| is being destroyed. Used to clean
+  // up our map.
+  void WebContentsDestroyed(content::WebContents* web_contents);
+
  private:
   friend class TriggerManagerTest;
 
@@ -129,7 +139,33 @@ class TriggerManager {
   // Keeps track of how often triggers fire and throttles them when needed.
   std::unique_ptr<TriggerThrottler> trigger_throttler_;
 
+  base::WeakPtrFactory<TriggerManager> weak_factory_;
+  // WeakPtrFactory should be last, don't add any members below it.
   DISALLOW_COPY_AND_ASSIGN(TriggerManager);
+};
+
+// A helper class that listens for events happening on a WebContents and can
+// notify TriggerManager of any that are relevant.
+class TriggerManagerWebContentsHelper
+    : public content::WebContentsObserver,
+      public content::WebContentsUserData<TriggerManagerWebContentsHelper> {
+ public:
+  ~TriggerManagerWebContentsHelper() override;
+
+  static void CreateForWebContents(content::WebContents* web_contents,
+                                   TriggerManager* trigger_manager);
+
+  // WebContentsObserver implementation.
+  void WebContentsDestroyed() override;
+
+ private:
+  friend class content::WebContentsUserData<TriggerManagerWebContentsHelper>;
+
+  TriggerManagerWebContentsHelper(content::WebContents* web_contents,
+                                  TriggerManager* trigger_manager);
+
+  // Trigger Manager will be notified of any relevant WebContents events.
+  TriggerManager* trigger_manager_;
 };
 
 }  // namespace safe_browsing
