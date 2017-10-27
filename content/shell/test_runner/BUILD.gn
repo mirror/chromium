@@ -64,8 +64,6 @@ component("test_runner") {
     "test_common.h",
     "test_interfaces.cc",
     "test_interfaces.h",
-    "test_plugin.cc",
-    "test_plugin.h",
     "test_preferences.cc",
     "test_preferences.h",
     "test_runner.cc",

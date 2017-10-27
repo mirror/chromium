@@ -18,7 +18,6 @@
 #include "content/shell/test_runner/mock_web_user_media_client.h"
 #include "content/shell/test_runner/test_common.h"
 #include "content/shell/test_runner/test_interfaces.h"
-#include "content/shell/test_runner/test_plugin.h"
 #include "content/shell/test_runner/test_runner.h"
 #include "content/shell/test_runner/web_frame_test_proxy.h"
 #include "content/shell/test_runner/web_test_delegate.h"
@@ -367,13 +366,6 @@ void WebFrameTestClient::DidChangeSelection(bool is_empty_callback) {
     delegate_->PrintMessage(
         "EDITING DELEGATE: "
         "webViewDidChangeSelection:WebViewDidChangeSelectionNotification\n");
-}
-
-blink::WebPlugin* WebFrameTestClient::CreatePlugin(
-    const blink::WebPluginParams& params) {
-  if (TestPlugin::IsSupportedMimeType(params.mime_type))
-    return TestPlugin::Create(params, delegate_);
-  return delegate_->CreatePluginPlaceholder(params);
 }
 
 void WebFrameTestClient::ShowContextMenu(

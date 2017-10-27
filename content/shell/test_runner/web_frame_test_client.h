@@ -47,7 +47,6 @@ class WebFrameTestClient : public blink::WebFrameClient {
   void PostAccessibilityEvent(const blink::WebAXObject& object,
                               blink::WebAXEvent event) override;
   void DidChangeSelection(bool is_selection_empty) override;
-  blink::WebPlugin* CreatePlugin(const blink::WebPluginParams& params) override;
   void ShowContextMenu(
       const blink::WebContextMenuData& context_menu_data) override;
   blink::WebUserMediaClient* UserMediaClient() override;
