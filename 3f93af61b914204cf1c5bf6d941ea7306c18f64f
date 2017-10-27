@@ -34,6 +34,24 @@
       "revId": "3f93af61b914204cf1c5bf6d941ea7306c18f64f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d1d306_e47fb00f",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-27T00:44:18Z",
+      "side": 1,
+      "message": "That\u0027s fine with me.",
+      "parentUuid": "9779fe51_59810ed1",
+      "revId": "3f93af61b914204cf1c5bf6d941ea7306c18f64f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
