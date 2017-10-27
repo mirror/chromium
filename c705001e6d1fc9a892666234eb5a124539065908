@@ -46,6 +46,30 @@
       "revId": "c705001e6d1fc9a892666234eb5a124539065908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8c41ce_8cf71722",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-27T08:06:39Z",
+      "side": 1,
+      "message": "You\u0027re right. InnerEditorElement looks like it is mostly used in the context of TextControlElement so it looks like it makes sense to put it there.",
+      "parentUuid": "b6831dbb_0fa4e8bc",
+      "range": {
+        "startLine": 206,
+        "startChar": 22,
+        "endLine": 206,
+        "endChar": 35
+      },
+      "revId": "c705001e6d1fc9a892666234eb5a124539065908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
