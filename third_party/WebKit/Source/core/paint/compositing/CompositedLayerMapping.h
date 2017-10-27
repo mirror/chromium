@@ -309,6 +309,10 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
     return draws_background_onto_content_layer_;
   }
 
+  static void PaintScrollbar(const Scrollbar*,
+                             GraphicsContext&,
+                             const IntRect& clip);
+
  private:
   IntRect RecomputeInterestRect(const GraphicsLayer*) const;
   static bool InterestRectChangedEnoughToRepaint(

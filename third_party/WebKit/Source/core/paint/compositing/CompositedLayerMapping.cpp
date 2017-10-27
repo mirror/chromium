@@ -3204,9 +3204,10 @@ void CompositedLayerMapping::DoPaintTask(
   }
 }
 
-static void PaintScrollbar(const Scrollbar* scrollbar,
-                           GraphicsContext& context,
-                           const IntRect& clip) {
+// static
+void CompositedLayerMapping::PaintScrollbar(const Scrollbar* scrollbar,
+                                            GraphicsContext& context,
+                                            const IntRect& clip) {
   if (!scrollbar)
     return;
 
