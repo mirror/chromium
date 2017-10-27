@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36460c7d_c21b6f66",
+        "filename": "testing/scripts/check_network_annotations.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-27T23:12:19Z",
+      "side": 1,
+      "message": "Failures is meant to be a list of identifiers, not a generic set of descriptions. The actual descriptions should just be printed to stdout.\n\nThe list of identifiers is then used to \"re-test\" things without the patch, i.e., you should just check for the given failures and not all failures.\n\nIt\u0027s not clear to me if these concepts actually even make sense for your test, which is why the earlier version just had a single \u0027failure\u0027 result.",
+      "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
