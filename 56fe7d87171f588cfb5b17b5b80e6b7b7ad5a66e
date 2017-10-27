@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "783585f9_a234ec66",
+        "filename": "third_party/WebKit/LayoutTests/editing/caret/caret-painting-low-dpi.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T17:36:57Z",
+      "side": 1,
+      "message": "Oh yeah, I see a bunch of tests re-discovered this non-obvious behavior. Can you file a bug and see if this area can be cleaned up? I think this may be as simple as moving the setBackingScaleFactor call to before the first paint.",
+      "revId": "56fe7d87171f588cfb5b17b5b80e6b7b7ad5a66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
