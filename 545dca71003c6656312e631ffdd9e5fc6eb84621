@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "487bdd3b_3fba08cc",
+        "filename": "ios/web/public/test/fakes/test_web_client.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T15:48:40Z",
+      "side": 1,
+      "message": "Do we even need this API now? //ios/web layer could use |base::FeatureList::IsEnabled(web::features::kSlimNavigationManager);| directly, right?",
+      "range": {
+        "startLine": 68,
+        "startChar": 20,
+        "endLine": 68,
+        "endChar": 50
+      },
+      "revId": "545dca71003c6656312e631ffdd9e5fc6eb84621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
