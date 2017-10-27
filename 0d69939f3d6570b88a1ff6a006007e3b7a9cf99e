@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d35460e1_9a2e4ecf",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-10-27T18:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e464f7_6edf28a5",
+      "range": {
+        "startLine": 184,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 28
+      },
+      "revId": "0d69939f3d6570b88a1ff6a006007e3b7a9cf99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6398f311_f3fcadee",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4c8b7b4f_e5914c65",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-10-27T18:55:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6398f311_f3fcadee",
+      "range": {
+        "startLine": 186,
+        "startChar": 6,
+        "endLine": 186,
+        "endChar": 22
+      },
+      "revId": "0d69939f3d6570b88a1ff6a006007e3b7a9cf99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdd35281_7aa6fea7",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "0d69939f3d6570b88a1ff6a006007e3b7a9cf99e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96dbc27a_cee98ee0",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-10-27T18:55:28Z",
+      "side": 1,
+      "message": "Yes. That is better.",
+      "parentUuid": "fdd35281_7aa6fea7",
+      "range": {
+        "startLine": 187,
+        "startChar": 12,
+        "endLine": 187,
+        "endChar": 13
+      },
+      "revId": "0d69939f3d6570b88a1ff6a006007e3b7a9cf99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
