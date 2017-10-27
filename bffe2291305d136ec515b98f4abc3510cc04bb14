@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2711cbe6_577c42ae",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-27T16:11:43Z",
+      "side": 1,
+      "message": "Needed because constructor uses unique_ptr\u003cTaskQueueImpl\u003e.",
+      "revId": "bffe2291305d136ec515b98f4abc3510cc04bb14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
