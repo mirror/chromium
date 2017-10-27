@@ -6,9 +6,21 @@
 
 #include <utility>
 
+#include "base/metrics/histogram_macros.h"
 #include "net/quic/platform/api/quic_endian.h"
 
 namespace net {
+
+namespace {
+
+enum FilterSupportedAltSvcVersionsInputValue {
+  IETF_NOT_SUPPORTED_READ_GOOGLE_FORMAT = 0,
+  IETF_SUPPORTED_READ_GOOGLE_FORMAT = 1,
+  IETF_SUPPORTED_READ_IETF_FORMAT = 2,
+  FILTER_SUPPORTED_ALTSVC_VERSIONS_INPUT_VALUE_MAX
+};
+
+};  // namespace
 
 SpdyPriority ConvertRequestPriorityToQuicPriority(
     const RequestPriority priority) {
@@ -42,7 +54,20 @@ QuicTransportVersionVector FilterSupportedAltSvcVersions(
     const QuicTransportVersionVector& supported_versions,
     bool support_ietf_format_quic_altsvc) {
   QuicTransportVersionVector supported_alt_svc_versions;
-  if (support_ietf_format_quic_altsvc && quic_alt_svc.protocol_id == "hq") {
+  if (quic_alt_svc.protocol_id == "quic") {
+    for (uint32_t quic_version : quic_alt_svc.version) {
+      for (QuicTransportVersion supported : supported_versions) {
+        if (static_cast<uint32_t>(supported) == quic_version)
+          supported_alt_svc_versions.push_back(supported);
+      }
+    }
+    UMA_HISTOGRAM_ENUMERATION("Net.QuicFilterSupportedAltSvcVersionsInput",
+                              support_ietf_format_quic_altsvc
+                                  ? IETF_SUPPORTED_READ_GOOGLE_FORMAT
+                                  : IETF_NOT_SUPPORTED_READ_GOOGLE_FORMAT,
+                              FILTER_SUPPORTED_ALTSVC_VERSIONS_INPUT_VALUE_MAX);
+  } else if (support_ietf_format_quic_altsvc &&
+             quic_alt_svc.protocol_id == "hq") {
     // Using IETF format for advertising QUIC. In this case,
     // |alternative_service_entry.version| will store QUIC version labels.
     for (uint32_t quic_version_label : quic_alt_svc.version) {
@@ -56,13 +81,9 @@ QuicTransportVersionVector FilterSupportedAltSvcVersions(
           supported_alt_svc_versions.push_back(supported);
       }
     }
-  } else if (quic_alt_svc.protocol_id == "quic") {
-    for (uint32_t quic_version : quic_alt_svc.version) {
-      for (QuicTransportVersion supported : supported_versions) {
-        if (static_cast<uint32_t>(supported) == quic_version)
-          supported_alt_svc_versions.push_back(supported);
-      }
-    }
+    UMA_HISTOGRAM_ENUMERATION("Net.QuicFilterSupportedAltSvcVersionsInput",
+                              IETF_SUPPORTED_READ_IETF_FORMAT,
+                              FILTER_SUPPORTED_ALTSVC_VERSIONS_INPUT_VALUE_MAX);
   }
   return supported_alt_svc_versions;
 }
