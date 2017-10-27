@@ -6,6 +6,7 @@
 #define AnimationWorkletProxyClientImpl_h
 
 #include "core/animation/CompositorAnimator.h"
+#include "core/animation/CompositorMutatorImpl.h"
 #include "core/dom/AnimationWorkletProxyClient.h"
 #include "modules/ModulesExport.h"
 #include "modules/compositorworker/AnimationWorkletGlobalScope.h"
@@ -23,7 +24,7 @@ class WorkletGlobalScope;
 // for a given mutator and animatorWorklet.
 //
 // This is constructed on the main thread but it is used in the worklet backing
-// thread i.e., compositor thread.
+// thread.
 class MODULES_EXPORT AnimationWorkletProxyClientImpl final
     : public GarbageCollectedFinalized<AnimationWorkletProxyClientImpl>,
       public AnimationWorkletProxyClient,
@@ -46,7 +47,7 @@ class MODULES_EXPORT AnimationWorkletProxyClientImpl final
   static AnimationWorkletProxyClientImpl* FromDocument(Document*);
 
  private:
-  CrossThreadPersistent<CompositorMutatorImpl> mutator_;
+  CompositorMutatorImpl* mutator_;
 
   CrossThreadPersistent<AnimationWorkletGlobalScope> global_scope_;
 };

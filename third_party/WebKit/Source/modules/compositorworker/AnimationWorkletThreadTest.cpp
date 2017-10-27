@@ -38,17 +38,27 @@ namespace {
 
 class AnimationWorkletTestPlatform : public TestingPlatformSupport {
  public:
-  AnimationWorkletTestPlatform()
-      : thread_(old_platform_->CreateThread("Compositor")) {}
+  // The Test Platform sets up and tears down the shared backing thread.
+  AnimationWorkletTestPlatform() {
+    AnimationWorkletThread::CreateSharedBackingThreadForTest();
+  }
 
-  WebThread* CompositorThread() const override { return thread_.get(); }
+  ~AnimationWorkletTestPlatform() {
+    AnimationWorkletThread::ClearSharedBackingThread();
+  }
 
   WebCompositorSupport* CompositorSupport() override {
     return &compositor_support_;
   }
 
+  // Need to override the thread creating support so we can actually run
+  // Animation Worklet code that would usually go on a backing thread.
+  std::unique_ptr<WebThread> CreateThread(const char* name) {
+    return old_platform_->CreateThread(name);
+  }
+  WebThread* CurrentThread() { return old_platform_->CurrentThread(); }
+
  private:
-  std::unique_ptr<WebThread> thread_;
   TestingCompositorSupport compositor_support_;
 };
 
@@ -68,13 +78,11 @@ class TestAnimationWorkletProxyClient
 class AnimationWorkletThreadTest : public ::testing::Test {
  public:
   void SetUp() override {
-    AnimationWorkletThread::CreateSharedBackingThreadForTest();
     reporting_proxy_ = WTF::MakeUnique<WorkerReportingProxy>();
     security_origin_ = SecurityOrigin::Create(KURL("http://fake.url/"));
   }
 
   void TearDown() override {
-    AnimationWorkletThread::ClearSharedBackingThread();
   }
 
   std::unique_ptr<AnimationWorkletThread> CreateAnimationWorkletThread() {
@@ -137,8 +145,6 @@ class AnimationWorkletThreadTest : public ::testing::Test {
 };
 
 TEST_F(AnimationWorkletThreadTest, Basic) {
-  ScopedTestingPlatformSupport<AnimationWorkletTestPlatform> platform;
-
   std::unique_ptr<AnimationWorkletThread> worklet =
       CreateAnimationWorkletThread();
   CheckWorkletCanExecuteScript(worklet.get());

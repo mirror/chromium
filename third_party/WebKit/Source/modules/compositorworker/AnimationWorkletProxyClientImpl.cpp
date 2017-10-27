@@ -8,6 +8,8 @@
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "modules/compositorworker/AnimationWorkletThread.h"
+#include "platform/WaitableEvent.h"
 
 namespace blink {
 
@@ -24,8 +26,8 @@ void AnimationWorkletProxyClientImpl::Trace(blink::Visitor* visitor) {
 
 void AnimationWorkletProxyClientImpl::SetGlobalScope(
     WorkletGlobalScope* global_scope) {
-  DCHECK(global_scope->IsContextThread());
   DCHECK(global_scope);
+  DCHECK(global_scope->IsContextThread());
   global_scope_ = static_cast<AnimationWorkletGlobalScope*>(global_scope);
   mutator_->RegisterCompositorAnimator(this);
 }
@@ -41,13 +43,25 @@ void AnimationWorkletProxyClientImpl::Dispose() {
 
 void AnimationWorkletProxyClientImpl::Mutate(
     const CompositorMutatorInputState& state) {
-  DCHECK(global_scope_->IsContextThread());
+  DCHECK(!IsMainThread() && !global_scope_->IsContextThread());
 
   std::unique_ptr<CompositorMutatorOutputState> output = nullptr;
 
-  if (global_scope_)
-    output = global_scope_->Mutate(state);
-
+  if (global_scope_) {
+    // TODO(petermayo) Schedule a pending mutation rather than block on
+    // the mutation to complete. (Or ensure a mutation is pending).
+    // crbug.com/767210
+    WaitableEvent is_done;
+    AnimationWorkletThread::GetSharedBackingThread()
+        ->GetSingleThreadTaskRunner()
+        ->PostTask(
+            BLINK_FROM_HERE,
+            ConvertToBaseCallback(WTF::Bind(
+                &AnimationWorkletGlobalScope::MutateWithEvent, global_scope_,
+                CrossThreadUnretained(&state), CrossThreadUnretained(&output),
+                CrossThreadUnretained(&is_done))));
+    is_done.Wait();
+  }
   mutator_->SetMutationUpdate(std::move(output));
 }
 

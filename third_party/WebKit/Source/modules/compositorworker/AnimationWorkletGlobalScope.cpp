@@ -11,6 +11,7 @@
 #include "core/dom/AnimationWorkletProxyClient.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/workers/GlobalScopeCreationParams.h"
+#include "platform/WaitableEvent.h"
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 
@@ -115,7 +116,7 @@ Animator* AnimationWorkletGlobalScope::GetAnimatorFor(int player_id,
 }
 
 std::unique_ptr<CompositorMutatorOutputState>
-AnimationWorkletGlobalScope::Mutate(
+AnimationWorkletGlobalScope::MutateInternal(
     const CompositorMutatorInputState& mutator_input) {
   DCHECK(IsContextThread());
 
@@ -149,6 +150,20 @@ AnimationWorkletGlobalScope::Mutate(
   }
 
   return result;
+}
+
+void AnimationWorkletGlobalScope::MutateWithEvent(
+    AnimationWorkletGlobalScope* global,
+    const CompositorMutatorInputState* mutator_input,
+    std::unique_ptr<CompositorMutatorOutputState>* mutator_output,
+    WaitableEvent* when_done) {
+  // We need to ignore any Mutates queued after Shutdown was queued.
+  // (and presumably before we shutdown and unregistered ourselves)
+  if (global->GetThread()) {
+    DCHECK(global->IsContextThread());
+    *mutator_output = global->MutateInternal(*mutator_input);
+  }
+  when_done->Signal();
 }
 
 void AnimationWorkletGlobalScope::registerAnimator(
