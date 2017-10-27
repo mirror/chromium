@@ -715,8 +715,6 @@ jumbo_component("base") {
     "sequenced_task_runner.cc",
     "sequenced_task_runner.h",
     "sequenced_task_runner_helpers.h",
-    "sha1.cc",
-    "sha1.h",
     "single_thread_task_runner.h",
     "stl_util.h",
     "strings/latin1_string_conversions.cc",
@@ -1685,64 +1683,6 @@ jumbo_component("base") {
   }
 }
 
-# Build flags for Control Flow Integrity
-# https://www.chromium.org/developers/testing/control-flow-integrity
-buildflag_header("cfi_flags") {
-  header = "cfi_flags.h"
-
-  # buildflag entries added to this header must also must be manually added to
-  # tools/gn/bootstrap/bootstrap.py
-  flags = [
-    # TODO(pcc): remove CFI_CAST_CHECK, see https://crbug.com/626794.
-    "CFI_CAST_CHECK=$is_cfi && $use_cfi_cast",
-    "CFI_ENFORCEMENT_TRAP=$is_cfi && !$use_cfi_diag",
-    "CFI_ENFORCEMENT_DIAGNOSTIC=$is_cfi && $use_cfi_diag && !$use_cfi_recover",
-  ]
-}
-
-buildflag_header("debugging_flags") {
-  header = "debugging_flags.h"
-  header_dir = "base/debug"
-
-  # buildflag entries added to this header must also must be manually added to
-  # tools/gn/bootstrap/bootstrap.py
-  flags = [
-    "ENABLE_LOCATION_SOURCE=$enable_location_source",
-    "ENABLE_PROFILING=$enable_profiling",
-    "CAN_UNWIND_WITH_FRAME_POINTERS=$can_unwind_with_frame_pointers",
-    "UNSAFE_DEVELOPER_BUILD=$is_unsafe_developer_build",
-  ]
-}
-
-# This is the subset of files from base that should not be used with a dynamic
-# library. Note that this library cannot depend on base because base depends on
-# base_static.
-static_library("base_static") {
-  sources = [
-    "base_switches.cc",
-    "base_switches.h",
-    "task_scheduler/switches.cc",
-    "task_scheduler/switches.h",
-  ]
-
-  if (is_win) {
-    public_deps = [
-      "//base/win:pe_image",
-    ]
-
-    # Disable sanitizer coverage in win/pe_image.cc. It is called by the sandbox
-    # before sanitizer coverage can initialize. http://crbug.com/484711
-    configs -= [ "//build/config/sanitizers:default_sanitizer_flags" ]
-    configs +=
-        [ "//build/config/sanitizers:default_sanitizer_flags_but_coverage" ]
-  }
-
-  if (!is_debug) {
-    configs -= [ "//build/config/compiler:default_optimization" ]
-    configs += [ "//build/config/compiler:optimize_max" ]
-  }
-}
-
 component("i18n") {
   output_name = "base_i18n"
   sources = [
@@ -1812,6 +1752,88 @@ component("i18n") {
     libs = [ "CoreFoundation.framework" ]
   }
 }
+
+# Build flags for Control Flow Integrity
+# https://www.chromium.org/developers/testing/control-flow-integrity
+buildflag_header("cfi_flags") {
+  header = "cfi_flags.h"
+
+  # buildflag entries added to this header must also must be manually added to
+  # tools/gn/bootstrap/bootstrap.py
+  flags = [
+    # TODO(pcc): remove CFI_CAST_CHECK, see https://crbug.com/626794.
+    "CFI_CAST_CHECK=$is_cfi && $use_cfi_cast",
+    "CFI_ENFORCEMENT_TRAP=$is_cfi && !$use_cfi_diag",
+    "CFI_ENFORCEMENT_DIAGNOSTIC=$is_cfi && $use_cfi_diag && !$use_cfi_recover",
+  ]
+}
+
+buildflag_header("debugging_flags") {
+  header = "debugging_flags.h"
+  header_dir = "base/debug"
+
+  # buildflag entries added to this header must also must be manually added to
+  # tools/gn/bootstrap/bootstrap.py
+  flags = [
+    "ENABLE_LOCATION_SOURCE=$enable_location_source",
+    "ENABLE_PROFILING=$enable_profiling",
+    "CAN_UNWIND_WITH_FRAME_POINTERS=$can_unwind_with_frame_pointers",
+    "UNSAFE_DEVELOPER_BUILD=$is_unsafe_developer_build",
+  ]
+}
+
+# ------------------------------------------------------------------------------
+# static base libraries
+# ---------------------
+# Individual "component" static libraries should not have any dependency on
+# other parts of base.  They should be usable independently.
+#
+# Note: base_static is a dependency of base, and is used as a wrapper project
+#       for pulling individual static libs into base.
+# ------------------------------------------------------------------------------
+
+# This is the subset of files from base that should not be used with a dynamic
+# library. Note that this library cannot depend on base because base depends on
+# base_static.
+static_library("base_static") {
+  sources = [
+    "base_switches.cc",
+    "base_switches.h",
+    "task_scheduler/switches.cc",
+    "task_scheduler/switches.h",
+  ]
+
+  public_deps = [
+    ":sha1_static",
+  ]
+
+  if (is_win) {
+    public_deps += [ "//base/win:pe_image" ]
+
+    # Disable sanitizer coverage in win/pe_image.cc. It is called by the sandbox
+    # before sanitizer coverage can initialize. http://crbug.com/484711
+    configs -= [ "//build/config/sanitizers:default_sanitizer_flags" ]
+    configs +=
+        [ "//build/config/sanitizers:default_sanitizer_flags_but_coverage" ]
+  }
+
+  if (!is_debug) {
+    configs -= [ "//build/config/compiler:default_optimization" ]
+    configs += [ "//build/config/compiler:optimize_max" ]
+  }
+}
+
+static_library("sha1_static") {
+  sources = [
+    "sha1.cc",
+    "sha1.h",
+    "sys_byteorder.h",
+  ]
+}
+
+# ------------------------------------------------------------------------------
+# Testing
+# ------------------------------------------------------------------------------
 
 test("base_perftests") {
   sources = [
