@@ -98,6 +98,25 @@ RenderFrameHost* NavigationSimulator::Reload(WebContents* web_contents) {
   return simulator.GetFinalRenderFrameHost();
 }
 
+RenderFrameHost* NavigationSimulator::GoBack(WebContents* web_contents) {
+  NavigationSimulator simulator(GURL(), true /* browser_initiated */,
+                                static_cast<WebContentsImpl*>(web_contents),
+                                nullptr);
+  simulator.SetIsBackNavigation(true);
+  simulator.Commit();
+  return simulator.GetFinalRenderFrameHost();
+}
+
+// static
+RenderFrameHost* NavigationSimulator::GoForward(WebContents* web_contents) {
+  NavigationSimulator simulator(GURL(), true /* browser_initiated */,
+                                static_cast<WebContentsImpl*>(web_contents),
+                                nullptr);
+  simulator.SetIsForwardNavigation(true);
+  simulator.Commit();
+  return simulator.GetFinalRenderFrameHost();
+}
+
 // static
 RenderFrameHost* NavigationSimulator::NavigateAndCommitFromDocument(
     const GURL& original_url,
@@ -136,6 +155,20 @@ RenderFrameHost* NavigationSimulator::ReloadAndFail(WebContents* web_contents,
                                 static_cast<WebContentsImpl*>(web_contents),
                                 nullptr);
   simulator.SetReloadType(ReloadType::NORMAL);
+  simulator.Fail(net_error_code);
+  if (net_error_code == net::ERR_ABORTED)
+    return nullptr;
+  simulator.CommitErrorPage();
+  return simulator.GetFinalRenderFrameHost();
+}
+
+// static
+RenderFrameHost* NavigationSimulator::GoBackAndFail(WebContents* web_contents,
+                                                    int net_error_code) {
+  NavigationSimulator simulator(GURL(), true /* browser_initiated */,
+                                static_cast<WebContentsImpl*>(web_contents),
+                                nullptr);
+  simulator.SetIsBackNavigation(true);
   simulator.Fail(net_error_code);
   if (net_error_code == net::ERR_ABORTED)
     return nullptr;
@@ -424,10 +457,7 @@ void NavigationSimulator::Commit() {
   params.origin = url::Origin::Create(navigation_url_);
   params.transition = transition_;
   params.should_update_history = true;
-  params.did_create_new_entry =
-      !ui::PageTransitionCoreTypeIs(transition_,
-                                    ui::PAGE_TRANSITION_AUTO_SUBFRAME) &&
-      reload_type_ == ReloadType::NONE;
+  params.did_create_new_entry = DidCreateNewEntry();
   params.gesture =
       has_user_gesture_ ? NavigationGestureUser : NavigationGestureAuto;
   params.contents_mime_type = "text/html";
@@ -543,10 +573,7 @@ void NavigationSimulator::CommitErrorPage() {
       base::TimeTicks::Now()));
   FrameHostMsg_DidCommitProvisionalLoad_Params params;
   params.nav_entry_id = handle_->pending_nav_entry_id();
-  params.did_create_new_entry =
-      !ui::PageTransitionCoreTypeIs(transition_,
-                                    ui::PAGE_TRANSITION_AUTO_SUBFRAME) &&
-      reload_type_ == ReloadType::NONE;
+  params.did_create_new_entry = DidCreateNewEntry();
   params.url = navigation_url_;
   params.transition = transition_;
   params.was_within_same_document = false;
@@ -623,6 +650,10 @@ void NavigationSimulator::SetTransition(ui::PageTransition transition) {
       << "The transition cannot be set after the navigation has started";
   CHECK_EQ(ReloadType::NONE, reload_type_)
       << "The transition cannot be specified for reloads";
+  CHECK_EQ(false, is_back_navigation_)
+      << "The transition cannot be specified for back navigations";
+  CHECK_EQ(false, is_forward_navigation_)
+      << "The transition cannot be specified for forward navigations";
   transition_ = transition;
 }
 
@@ -637,9 +668,44 @@ void NavigationSimulator::SetReloadType(ReloadType reload_type) {
                                       "be set after the navigation has started";
   CHECK(browser_initiated_) << "The reload_type parameter can only be set for "
                                "browser-intiated navigations";
+  CHECK_EQ(false, is_back_navigation_)
+      << "The reload_type parameter cannot be set for "
+         "back navigations";
+  CHECK_EQ(false, is_forward_navigation_)
+      << "The reload_type parameter cannot be set for "
+         "forward navigations";
   reload_type_ = reload_type;
   if (reload_type_ != ReloadType::NONE)
     transition_ = ui::PAGE_TRANSITION_RELOAD;
+}
+
+void NavigationSimulator::SetIsBackNavigation(bool is_back_navigation) {
+  CHECK_EQ(INITIALIZATION, state_) << "The is_back_navigation parameter cannot "
+                                      "be set after the navigation has started";
+  CHECK(browser_initiated_)
+      << "The is_back_navigation parameter can only be set for "
+         "browser-intiated navigations";
+  CHECK_EQ(ReloadType::NONE, reload_type_)
+      << "The is_back_navigation parameter cannot be set for "
+         "reload navigations";
+  is_back_navigation_ = is_back_navigation;
+  if (is_back_navigation_)
+    transition_ = ui::PAGE_TRANSITION_FORWARD_BACK;
+}
+
+void NavigationSimulator::SetIsForwardNavigation(bool is_forward_navigation) {
+  CHECK_EQ(INITIALIZATION, state_)
+      << "The is_forward_navigation parameter cannot "
+         "be set after the navigation has started";
+  CHECK(browser_initiated_)
+      << "The is_forward_navigation parameter can only be set for "
+         "browser-initiated navigations";
+  CHECK_EQ(ReloadType::NONE, reload_type_)
+      << "The is_forward_navigation parameter cannot be set for "
+         "reload navigations";
+  is_forward_navigation_ = is_forward_navigation;
+  if (is_forward_navigation_)
+    transition_ = ui::PAGE_TRANSITION_FORWARD_BACK;
 }
 
 void NavigationSimulator::SetReferrer(const Referrer& referrer) {
@@ -769,6 +835,10 @@ bool NavigationSimulator::SimulateBrowserInitiatedStart() {
   if (reload_type_ != ReloadType::NONE) {
     web_contents_->GetController().Reload(reload_type_,
                                           false /*check_for_repost */);
+  } else if (is_back_navigation_) {
+    web_contents_->GetController().GoBack();
+  } else if (is_forward_navigation_) {
+    web_contents_->GetController().GoForward();
   } else {
     web_contents_->GetController().LoadURL(navigation_url_, referrer_,
                                            transition_, std::string());
@@ -984,6 +1054,18 @@ bool NavigationSimulator::CheckIfSameDocument() {
   return url_copy.ReplaceComponents(replacements) ==
          render_frame_host_->GetLastCommittedURL().ReplaceComponents(
              replacements);
+}
+
+bool NavigationSimulator::DidCreateNewEntry() {
+  if (ui::PageTransitionCoreTypeIs(transition_,
+                                   ui::PAGE_TRANSITION_AUTO_SUBFRAME))
+    return false;
+  if (reload_type_ != ReloadType::NONE)
+    return false;
+  if (is_back_navigation_ || is_forward_navigation_)
+    return false;
+
+  return true;
 }
 
 }  // namespace content

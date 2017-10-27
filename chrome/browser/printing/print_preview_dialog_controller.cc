@@ -341,6 +341,7 @@ void PrintPreviewDialogController::OnNavEntryCommitted(
     NOTREACHED();
     return;
   }
+
   if (details) {
     ui::PageTransition type = details->entry->GetTransitionType();
     content::NavigationType nav_type = details->type;
