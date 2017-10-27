@@ -579,6 +579,30 @@
     },
     {
       "key": {
+        "uuid": "08b35736_7f17c839",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-27T23:52:37Z",
+      "side": 1,
+      "message": "You can use @synchronized{} block to synchronize the access.",
+      "parentUuid": "8be24e72_022d1689",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 3
+      },
+      "revId": "7560a379d74f4f3ad77d8aad4afd831f46731af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f8c7d0b_edc49b43",
         "filename": "components/cronet/ios/test/cronet_test_base.mm",
         "patchSetId": 21
