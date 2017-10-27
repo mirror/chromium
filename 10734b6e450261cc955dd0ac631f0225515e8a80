@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b277ab33_cf830382",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-27T22:11:33Z",
+      "side": 1,
+      "message": "This looks like a thread race if the SharedGpuContext is being used on multiple threads atm.",
+      "revId": "10734b6e450261cc955dd0ac631f0225515e8a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
