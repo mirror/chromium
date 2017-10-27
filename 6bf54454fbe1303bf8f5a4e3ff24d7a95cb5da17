@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e9ddc7c_354d834b",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-27T22:32:06Z",
+      "side": 1,
+      "message": "nit: Remove this.",
+      "revId": "6bf54454fbe1303bf8f5a4e3ff24d7a95cb5da17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3d1a35_620ce646",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-27T22:32:06Z",
+      "side": 1,
+      "message": "nit: std::make_unique\u003c\u003e",
+      "revId": "6bf54454fbe1303bf8f5a4e3ff24d7a95cb5da17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
