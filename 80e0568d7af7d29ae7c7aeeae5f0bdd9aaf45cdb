@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "397aeb78_e3817cfc",
+        "filename": "cc/trees/ukm_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-27T15:20:53Z",
+      "side": 1,
+      "message": "naming nit - UkmManager is a very generic sounding name. I\u0027d think you\u0027d want to add the class of metrics that could get used here - CompositingUkmManager? Do you think that it is under cc/ is enough? I think adding to the name might make it more obvious - up to you.",
+      "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc4558a_37903b98",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-27T15:20:53Z",
+      "side": 1,
+      "message": "can you mention what the maxes are for these metrics (and nummissing)",
+      "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f93ff4b_233d05ba",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-27T15:20:53Z",
+      "side": 1,
+      "message": "I\u0027d be explicit this is an int from 0-100",
+      "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
