@@ -17406,6 +17406,12 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="20" label=".log"/>
 </enum>
 
+<enum name="FilterSupportedAltSvcVersionsInputValue">
+  <int value="0" label="IETF format not supported, read Google format"/>
+  <int value="1" label="IETF format supported, read Google format"/>
+  <int value="2" label="IETF format supported, read IETF format"/>
+</enum>
+
 <enum name="FirstMeaningfulPaintOrdering">
   <int value="0" label="FMP 0-quiet &lt; FMP 2-quiet"/>
   <int value="1" label="FMP 0-quiet &gt; FMP 2-quiet"/>

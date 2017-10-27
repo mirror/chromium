@@ -42344,6 +42344,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The number of ports suggested per server.</summary>
 </histogram>
 
+<histogram name="Net.QuicFilterSupportedAltSvcVersionsInput"
+    enum="FilterSupportedAltSvcVersionsInputValue">
+  <owner>wangyix@chromium.org</owner>
+  <summary>
+    The inputs that FilterSupportedAltSvcVersions() is called with.
+    Specifically, whether or not it should accept alt-svc headers advertising
+    QUIC in IETF format (as opposed to Google format), and whether or not it
+    actually ends up processing an alt-svc header advertising QUIC in IETF
+    format.
+  </summary>
+</histogram>
+
 <histogram name="Net.QuicHandshakeNotConfirmedNumPacketsReceived">
   <owner>rch@chromium.org</owner>
   <summary>
