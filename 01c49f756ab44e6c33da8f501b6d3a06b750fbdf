@@ -16,6 +16,24 @@
       "revId": "01c49f756ab44e6c33da8f501b6d3a06b750fbdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c08b168_588fc1ff",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-27T23:34:28Z",
+      "side": 1,
+      "message": "AFAICT the two paths that lead to a call to PrintingContextDelegate::GetWebContents() originate in PrintingMessageFilter::OnScriptedPrint and PrintingMessageFilter::OnGetDefaultPrintSettings, both of which create a printer query if one does not exist with different IDs.",
+      "parentUuid": "4ed71a15_3b910996",
+      "revId": "01c49f756ab44e6c33da8f501b6d3a06b750fbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
