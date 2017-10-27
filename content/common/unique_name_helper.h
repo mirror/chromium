@@ -134,13 +134,33 @@ class CONTENT_EXPORT UniqueNameHelper {
   // egg problem, this method is designed to be called on the *parent* frame of
   // the future new child frame and return the value the new child frame should
   // use.
-  std::string GenerateNameForNewChildFrame(const std::string& name) const;
+  //
+  // |is_new_child_dynamic| indicates if the new child is created via javascript
+  // (as opposed to being created from static html).  In this case, the new
+  // child cannot be reliably identified in session history entries - to avoid
+  // accidentally using incorrect session history entries such a child gets a
+  // fresh, random, unique name every time it is created or recreated.
+  // See also https://crbug.com/500260.
+  std::string GenerateNameForNewChildFrame(const std::string& name,
+                                           bool is_new_child_dynamic) const;
 
   // Called after a browsing context name change to generate a new name. Note
   // that this should not be called if the frame is no longer displaying the
   // initial empty document, as unique name changes after that point will break
   // history navigations. See https://crbug.com/607205.
   void UpdateName(const std::string& name);
+
+  // Prevents future changes of the unique name - this avoids changing the
+  // unique name when the frame's assigned name changes in the future.
+  //
+  // Such freeze is desirable in case of frames created from javascript
+  // (see |is_new_child_dynamic| parameter of GenerateNameForNewChildFrame)
+  // because their order of creation can be undeterministic and therefore
+  // their unique name should NOT be derived from their assigned name
+  // (because in case of a conflicting assigned name, their final unique
+  // names would be undetetministic potentially leading to
+  // https://crbug.com/500260.
+  void Freeze() { frozen_ = true; }
 
   // Helper to update legacy names generated for PageState v24 and earlier. This
   // function should be invoked starting from the root of the tree, traversing
@@ -155,9 +175,21 @@ class CONTENT_EXPORT UniqueNameHelper {
   static std::string CalculateLegacyNameForTesting(const FrameAdapter* frame,
                                                    const std::string& name);
 
+  // Enters a mode causing future uses of GenerateNameForNewChildFrame to
+  // preserve the original unique name, so that it can be recovered (e.g. for
+  // layout tests) by RemoveDynamicFrameSuffixForTesting method below.
+  static void PreserveOriginalUniqueNameForTesting();
+
+  // Removes the random, unique suffix that is appended to unique names
+  // for dynamically (see |is_new_child_dynamic| parameter of
+  // GenerateNameForNewChildFrame) created frames.
+  static std::string RemoveDynamicFrameSuffixForTesting(
+      const std::string& name);
+
  private:
   FrameAdapter* const frame_;
   std::string unique_name_;
+  bool frozen_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(UniqueNameHelper);
 };
