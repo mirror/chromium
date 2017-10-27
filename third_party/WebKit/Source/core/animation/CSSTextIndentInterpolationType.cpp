@@ -141,9 +141,10 @@ InterpolationValue CSSTextIndentInterpolationType::MaybeConvertNeutral(
 InterpolationValue CSSTextIndentInterpolationType::MaybeConvertInitial(
     const StyleResolverState&,
     ConversionCheckers&) const {
-  IndentMode mode(ComputedStyle::InitialTextIndentLine(),
-                  ComputedStyle::InitialTextIndentType());
-  return CreateValue(ComputedStyle::InitialTextIndent(), mode, 1);
+  IndentMode mode(ComputedStyleInitialFunctions::InitialTextIndentLine(),
+                  ComputedStyleInitialFunctions::InitialTextIndentType());
+  return CreateValue(ComputedStyleInitialFunctions::InitialTextIndent(), mode,
+                     1);
 }
 
 InterpolationValue CSSTextIndentInterpolationType::MaybeConvertInherit(
@@ -162,8 +163,8 @@ InterpolationValue CSSTextIndentInterpolationType::MaybeConvertValue(
     const StyleResolverState*,
     ConversionCheckers&) const {
   InterpolationValue length = nullptr;
-  TextIndentLine line = ComputedStyle::InitialTextIndentLine();
-  TextIndentType type = ComputedStyle::InitialTextIndentType();
+  TextIndentLine line = ComputedStyleInitialFunctions::InitialTextIndentLine();
+  TextIndentType type = ComputedStyleInitialFunctions::InitialTextIndentType();
 
   for (const auto& item : ToCSSValueList(value)) {
     if (item->IsIdentifierValue() &&
