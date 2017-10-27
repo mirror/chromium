@@ -22,6 +22,30 @@
       "revId": "b480fe9853eac4050f5575722f83b031e250a2c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3f2e92_c1a5f7b8",
+        "filename": "base/win/scoped_com_initializer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-27T20:40:59Z",
+      "side": 0,
+      "message": "The subtlety between ScopedCOMInitializer+MTA and ScopedWinrtInitializer was enough to justify having a separate class to manage this. Oddly enough, WinRT can also be initialized as an STA too, but that\u0027s currently only for apps that are in the Windows Store.\n\nRenaming ScopedCOMInitializer to ScopedWindowThreadEnvironment was unnecessarily disruptive as not all components need or want to initialize WinRT.\n\nLet\u0027s keep the SchedulerWorkerPoolImpl discussion in that change.",
+      "parentUuid": "2fd52d91_36f05be4",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 3
+      },
+      "revId": "b480fe9853eac4050f5575722f83b031e250a2c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
