@@ -57,7 +57,9 @@ void CallOnMainThread(MainThreadFunction* function, void* context) {
 }  // namespace internal
 
 bool IsMainThread() {
-  return CurrentThread() == g_main_thread_identifier;
+  if (UNLIKELY(MayNotBeMainThread))
+    return CurrentThread() == g_main_thread_identifier;
+  return true;
 }
 
 void Initialize(void (*call_on_main_thread_function)(MainThreadFunction,
