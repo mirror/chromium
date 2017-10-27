@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4f81efc_d85af27e",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-10-27T10:21:16Z",
+      "side": 1,
+      "message": "Interesting, I\u0027d probably just have inserted\n\u003citem name\u003d\"android:textSize\"\u003e@dimen/notification_subtext_size\u003c/item\u003e into each style below; I\u0027m not sure whether this new style and comment make things easier to follow. But I guess if we think we\u0027re more likely to change all the styles that inherit from this together rather than individually then this is better. (Also, doing it this way makes it really clear what changed + easy to review! :)",
+      "range": {
+        "startLine": 404,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 63
+      },
+      "revId": "86abd6f8ff2bb9c3d6c7f0871fe77f97d34d3de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
