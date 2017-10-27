@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "5959f39d_fe935aa0",
+        "filename": "ash/public/interfaces/voice_interaction_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-27T23:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eb98f99_62852cd2",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47cf6989_fcb38052",
         "filename": "ash/public/interfaces/voice_interaction_controller.mojom",
         "patchSetId": 1
@@ -491,6 +509,24 @@
       "side": 1,
       "message": "OK.",
       "parentUuid": "9d3c4565_e3534600",
+      "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d332452_0143ebd4",
+        "filename": "ash/voice_interaction/voice_interaction_struct_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-27T23:00:45Z",
+      "side": 1,
+      "message": "Moved it to //ash/public/cpp since we have to keep it.",
+      "parentUuid": "51ba31c8_b0d7a455",
       "revId": "291362dcea96e0d11e177623c4394d8b8852b436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

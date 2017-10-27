@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b8f66baa_4b563d9e",
+        "filename": "ash/public/interfaces/voice_interaction_controller.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-27T23:00:45Z",
+      "side": 1,
+      "message": "Removed the extensible flag in ash.",
+      "parentUuid": "6dacf3fa_e3ade941",
+      "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea09a469_a598a7cc",
         "filename": "ash/voice_interaction/voice_interaction_struct_traits.h",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e6a4b5_997a5ba1",
+        "filename": "ash/voice_interaction/voice_interaction_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-27T23:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea09a469_a598a7cc",
+      "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2ee66244_1577dc1e",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-27T23:00:45Z",
+      "side": 1,
+      "message": "Just want to be consistent with the existing code here -- the HighlighterClient is created in a similar way.",
+      "parentUuid": "271904d7_de16ae83",
+      "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b68f3a9c_29427ba5",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
         "patchSetId": 2
@@ -85,6 +139,24 @@
       "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae12b14_7bab0672",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-27T23:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b68f3a9c_29427ba5",
+      "revId": "93a2ec279e1ac34e4e47bb5d11add7e1d8decdbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
