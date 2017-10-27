@@ -387,6 +387,15 @@ void StateController::OnAppWindowRemoved(extensions::AppWindow* app_window) {
 }
 
 void StateController::OnStylusStateChanged(ui::StylusState state) {
+  // Temporarily disable launching lock screen notes on stylus eject, to avoid
+  // issues with lock screen UI flashing if app is launced when stylus is
+  // ejected while display is turned off (action which would turn the display
+  // back on).
+  // TODO(tbarzic): Remove when https://crbug.com/767711 is fixed.
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          "launch-lock-screen-note-on-stylus-eject"))
+    return;
+
   if (lock_screen_note_state_ != TrayActionState::kAvailable)
     return;
 

@@ -401,7 +401,8 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
 
   void SetUp() override {
     command_line_ = base::MakeUnique<base::test::ScopedCommandLine>();
-    command_line_->GetProcessCommandLine()->InitFromArgv({""});
+    command_line_->GetProcessCommandLine()->InitFromArgv(
+        {"", "--launch-lock-screen-note-on-stylus-eject"});
     SetUpCommandLine(command_line_->GetProcessCommandLine());
 
     ASSERT_TRUE(profile_manager_.SetUp());
