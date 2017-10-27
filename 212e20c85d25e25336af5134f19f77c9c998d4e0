@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9699ea8d_c47a9637",
+        "filename": "third_party/WebKit/Source/modules/budget/BudgetService.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-27T01:42:01Z",
+      "side": 1,
+      "message": "I think it\u0027s when the frame is detached. In particular, in fast/dom/navigator-detached-no-crash.html.\n\nI\u0027ve moved the check back into NavigatorBudget to be more consistent with the previous code.",
+      "parentUuid": "08b66dbf_4197dd4e",
+      "revId": "212e20c85d25e25336af5134f19f77c9c998d4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e81ecf9_7cf53e63",
         "filename": "third_party/WebKit/Source/modules/shapedetection/BarcodeDetector.cpp",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "212e20c85d25e25336af5134f19f77c9c998d4e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68eac4b0_e3a93594",
+        "filename": "third_party/WebKit/Source/modules/shapedetection/BarcodeDetector.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-27T01:42:01Z",
+      "side": 1,
+      "message": "WorkerThread::GetInterfaceProvider and WorkerGlobalScope::GetInterfaceProvider return different InterfaceProviders, with the WorkerGlobalScope InterfaceProvider overriding ExecutionContext::GetInterfaceProvider. The WorkerGlobalScope InterfaceProvider sends requests to the worker hosts in the browser, while the WorkerThread InterfaceProvider forwards to the process-wide connector.\n\nThe blink side of this CL migrates these things from the WorkerThread InterfaceProvider to the WorkerGlobalScope InterfaceProvider. Since the WorkerGlobalScope InterfaceProvider is accessible via ExecutionContext (just like the LocalFrame InterfaceProvider), this allows that code to be simplified like this.",
+      "parentUuid": "9e81ecf9_7cf53e63",
+      "revId": "212e20c85d25e25336af5134f19f77c9c998d4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
