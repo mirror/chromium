@@ -16,6 +16,24 @@
       "revId": "77d2150476f82304fa7f92342d86e52f6563d9e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e4ebd0_d05bd8f0",
+        "filename": "chrome/common/extensions/api/webrtc_logging_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-10-27T17:43:48Z",
+      "side": 1,
+      "message": "Replied in doc.",
+      "parentUuid": "f21ab790_686d6046",
+      "revId": "77d2150476f82304fa7f92342d86e52f6563d9e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
