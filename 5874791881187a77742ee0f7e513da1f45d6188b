@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6924f911_3ea5e806",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-10-27T13:27:14Z",
+      "side": 0,
+      "message": "Remove these two declarations",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 22
+      },
+      "revId": "5874791881187a77742ee0f7e513da1f45d6188b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
