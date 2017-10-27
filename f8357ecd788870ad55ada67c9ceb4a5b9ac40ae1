@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e97c93c2_5ccd63ce",
+        "filename": "components/language/ios/browser/ios_language_detection_client.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-27T07:26:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beac6f5a_872b5a68",
+      "revId": "f8357ecd788870ad55ada67c9ceb4a5b9ac40ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac498ced_58a14104",
         "filename": "components/translate/ios/browser/BUILD.gn",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b027de5e_9f6c4e16",
+        "filename": "components/translate/ios/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-27T07:26:59Z",
+      "side": 1,
+      "message": "I think you\u0027re right, yes. Removed.",
+      "parentUuid": "ac498ced_58a14104",
+      "revId": "f8357ecd788870ad55ada67c9ceb4a5b9ac40ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d746929_f1219a32",
         "filename": "ios/chrome/browser/language/BUILD.gn",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "f8357ecd788870ad55ada67c9ceb4a5b9ac40ae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9eaa8f3_5338a3ba",
+        "filename": "ios/chrome/browser/language/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-27T07:26:59Z",
+      "side": 1,
+      "message": "Good pickup - this was left over from discarded work. Removed.",
+      "parentUuid": "5d746929_f1219a32",
+      "revId": "f8357ecd788870ad55ada67c9ceb4a5b9ac40ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
