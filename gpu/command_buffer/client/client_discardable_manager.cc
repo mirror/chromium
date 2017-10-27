@@ -6,6 +6,7 @@
 
 #include "base/containers/flat_set.h"
 #include "base/memory/ptr_util.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/sys_info.h"
 
 namespace gpu {
@@ -144,7 +145,7 @@ ClientDiscardableHandle ClientDiscardableManager::InitializeTexture(
   uint32_t offset = 0;
   int32_t shm_id = 0;
   FindAllocation(command_buffer, &buffer, &shm_id, &offset);
-  uint32_t byte_offset = offset * element_size_;
+  uint32_t byte_offset = base::saturated_cast<uint32_t>(offset * element_size_);
   ClientDiscardableHandle handle(std::move(buffer), byte_offset, shm_id);
   texture_handles_.emplace(texture_id, handle);
   return handle;
@@ -203,8 +204,8 @@ void ClientDiscardableManager::ReturnAllocation(
     if (allocation->shm_id != handle.shm_id())
       continue;
 
-    allocation->free_offsets.ReturnFreeOffset(handle.byte_offset() /
-                                              element_size_);
+    allocation->free_offsets.ReturnFreeOffset(
+        base::saturated_cast<uint32_t>(handle.byte_offset() / element_size_));
 
     if (!allocation->free_offsets.HasUsedOffset()) {
       command_buffer->DestroyTransferBuffer(allocation->shm_id);

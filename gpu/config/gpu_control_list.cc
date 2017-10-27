@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -553,7 +554,7 @@ std::set<int32_t> GpuControlList::MakeDecision(GpuControlList::OsType os,
       }
 
       if (!needs_more_info_main)
-        active_entries_.push_back(ii);
+        active_entries_.push_back(base::checked_cast<int>(ii));
     }
   }
 

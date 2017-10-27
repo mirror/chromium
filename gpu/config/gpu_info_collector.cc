@@ -91,8 +91,9 @@ int StringContainsName(
     const std::string& str, const std::string* names, size_t num_names) {
   std::vector<std::string> tokens = base::SplitString(
       str, " .,()-_", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
-  for (size_t ii = 0; ii < tokens.size(); ++ii) {
-    for (size_t name_index = 0; name_index < num_names; ++name_index) {
+  for (int ii = 0; ii < base::saturated_cast<int>(tokens.size()); ++ii) {
+    for (int name_index = 0; name_index < base::saturated_cast<int>(num_names);
+         ++name_index) {
       if (tokens[ii] == names[name_index])
         return name_index;
     }
