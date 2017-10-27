@@ -86,6 +86,24 @@
       "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b7b10f_79f06035",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T13:58:41Z",
+      "side": 1,
+      "message": "Mixing Just, IsNothing, To, ToLocal, v8Call macros etc is messy.\n\nWe discussed this in the past and have agreed on unifying the usage to To and ToLocal.\n\nhttps://groups.google.com/a/chromium.org/forum/#!searchin/platform-architecture-dev/to$20tolocal%7Csort:date/platform-architecture-dev/vGLGCaMqhCU/sEOLMz_VBQAJ",
+      "parentUuid": "9a95cb9a_160dcd74",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
