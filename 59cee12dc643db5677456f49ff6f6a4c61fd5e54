@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1b410869_bd3b8839",
+        "filename": "chrome/browser/chromeos/extensions/extension_system_event_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-27T22:02:53Z",
+      "side": 1,
+      "message": "thanks, i didn\u0027t know about session_manager::SessionManager!",
+      "parentUuid": "f3be6b5c_8750efa7",
+      "revId": "59cee12dc643db5677456f49ff6f6a4c61fd5e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c68ab3e_9bfbadeb",
         "filename": "chrome/browser/chromeos/tether/tether_service.h",
         "patchSetId": 1
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d1fe6ef7_b398efd2",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-27T22:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c68ab3e_9bfbadeb",
+      "revId": "59cee12dc643db5677456f49ff6f6a4c61fd5e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a323d0b_113542e3",
         "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
         "patchSetId": 1
@@ -68,6 +104,24 @@
       "revId": "59cee12dc643db5677456f49ff6f6a4c61fd5e54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3baca603_318edb34",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-27T22:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a323d0b_113542e3",
+      "revId": "59cee12dc643db5677456f49ff6f6a4c61fd5e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
