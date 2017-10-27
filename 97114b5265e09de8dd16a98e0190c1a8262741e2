@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4193ad5b_2a3abec2",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-10-27T21:26:34Z",
+      "side": 1,
+      "message": "I\u0027m fine with a numbered sink name now, but are we still interested in having a direction heuristic in the future?  I think moving a display into or out of mirroring mode could some indices but that\u0027s definitely an edge case.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63f949e_8b91429d",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-10-27T21:26:34Z",
+      "side": 1,
+      "message": "This is actually an odd API that was created for the Hangouts MRP.  The mojom file isn\u0027t clear about the purpose of |sink_id|, but basically it would be a special ID used to initiate the search, not the ID you\u0027re looking for.  I don\u0027t think this MRP needs to support search, but Derek can also weigh in here.",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 35
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6df5c2_d41e560c",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-10-27T21:26:34Z",
+      "side": 1,
+      "message": "Have you confirmed this is how we can detect mirroring displays with display::Display?  I would certainly think so but we should definitely test it.",
+      "range": {
+        "startLine": 308,
+        "startChar": 67,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
