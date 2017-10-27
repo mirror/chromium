@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75b70b3f_d3620cbd",
+        "filename": "ios/chrome/browser/ui/main_content/main_content_ui.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-27T15:46:46Z",
+      "side": 1,
+      "message": "I think I prefer not to do this, since it\u0027s not a net win for readability (easier to read, but it obscures the fact that MainContentViewController isn\u0027t a class).",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 7
+      },
+      "revId": "128682df9023bc0e8f8622de6bc974563f5f92e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b5c7db_0922d6ed",
+        "filename": "ios/chrome/browser/ui/main_content/main_content_ui_forwarder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-27T15:46:46Z",
+      "side": 1,
+      "message": "I think I\u0027m not wild about this approach; the idea was that coordinators (who have access to the global broadcaster) would just broadcast observable properties of view controllers. All the view controller layer knows is that some of its properties are public (and KVO-compliant). This looks like the *broadcasting* logic will be installed into the view controller via this object.",
+      "range": {
+        "startLine": 22,
+        "startChar": 46,
+        "endLine": 22,
+        "endChar": 57
+      },
+      "revId": "128682df9023bc0e8f8622de6bc974563f5f92e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8114de4_edaeef8b",
+        "filename": "ios/chrome/browser/ui/main_content/main_content_ui_forwarder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-27T15:46:46Z",
+      "side": 1,
+      "message": "Is the expectation that the owning VC will be the scroll view delegate, but will just forward some calls to this object? It seems like this object wants to be the delegate.",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "128682df9023bc0e8f8622de6bc974563f5f92e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f56d182_91275620",
+        "filename": "ios/chrome/browser/ui/main_content/main_content_ui_forwarder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-27T15:46:46Z",
+      "side": 1,
+      "message": "pragma mark UIScrollViewDelegate?",
+      "revId": "128682df9023bc0e8f8622de6bc974563f5f92e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
