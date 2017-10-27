@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21a62ce0_1fc4d65c",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-27T02:16:20Z",
+      "side": 1,
+      "message": "Yeah I was also suspecting about this and tried the QuitClosure, then the test hangs waiting for the response of unregister. Strange..",
+      "parentUuid": "3dd537b6_51204a92",
+      "revId": "213a781222e9f3ac26ca66ab2ef5cf7789676f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51829fae_c105a9fb",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 4
