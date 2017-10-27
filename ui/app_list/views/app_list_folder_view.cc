@@ -85,10 +85,6 @@ AppListFolderView::~AppListFolderView() {
 }
 
 void AppListFolderView::SetAppListFolderItem(AppListFolderItem* folder) {
-  accessible_name_ = ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
-      IDS_APP_LIST_FOLDER_OPEN_FOLDER_ACCESSIBILE_NAME);
-  NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
-
   folder_item_ = folder;
   items_grid_view_->SetItemList(folder_item_->item_list());
   folder_header_view_->SetFolderItem(folder_item_);
@@ -183,9 +179,16 @@ void AppListFolderView::OnAppListItemWillBeDeleted(AppListItem* item) {
 }
 
 void AppListFolderView::OnImplicitAnimationsCompleted() {
-  // Show the top items when the opening folder animation is done.
-  if (layer()->opacity() == 1.0f)
+  // Show the top items when the opening folder animation is done and send a11y
+  // event alert.
+  if (layer()->opacity() == 1.0f) {
     items_grid_view_->SetTopItemViewsVisible(true);
+
+    accessible_name_ =
+        ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
+            IDS_APP_LIST_FOLDER_OPEN_FOLDER_ACCESSIBILE_NAME);
+    NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
+  }
 
   // If the view is hidden for reparenting a folder item, it has to be visible,
   // so that drag_view_ can keep receiving mouse events.
@@ -347,7 +350,7 @@ void AppListFolderView::SetRootLevelDragViewVisible(bool visible) {
 }
 
 void AppListFolderView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_GENERIC_CONTAINER;
+  node_data->role = ui::AX_ROLE_DESKTOP;
   node_data->SetName(accessible_name_);
 }
 
