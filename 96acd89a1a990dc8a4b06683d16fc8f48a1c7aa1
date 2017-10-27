@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2b991ca2_f825de5d",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-27T21:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a797a6e_b27da635",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99541040_3a80a7f3",
         "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
         "patchSetId": 3
