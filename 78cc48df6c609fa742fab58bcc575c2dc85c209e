@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1c172dac_8bec404d",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T02:58:03Z",
+      "side": 1,
+      "message": "\u003e Filed a bug with screenshots here crbug.com/778088. I refactored a bit but we can start a new comment thread to discuss further.\n\nadd to BUG\u003d line?",
+      "parentUuid": "a36bd58f_23d5b923",
+      "revId": "78cc48df6c609fa742fab58bcc575c2dc85c209e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7f17939_239d692f",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 2

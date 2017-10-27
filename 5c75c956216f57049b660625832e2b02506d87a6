@@ -16,6 +16,166 @@
       "revId": "5c75c956216f57049b660625832e2b02506d87a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd928ec_ce578f75",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T02:58:03Z",
+      "side": 1,
+      "message": "I think here is good",
+      "parentUuid": "3cf9c530_7b0caaa3",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba10c48_820c0fa0",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T02:58:03Z",
+      "side": 1,
+      "message": "can the logic above be moved into a new loop inside this `if` block? another iteration is fine - it\u0027s better to keep the logic together (and it probably doesn\u0027t also need use_md).",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4497c66_3924e734",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T02:58:03Z",
+      "side": 1,
+      "message": "initialize? \u003d 0",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924a8f0c_9904fef0",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T02:58:03Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0099269_16548e95",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T02:58:03Z",
+      "side": 1,
+      "message": "How about, before this `if`, something like\n\n  // Calculate the maximum size of the Combobox before possibly shrinking\n  // the width.\n  max_width_ \u003d GetPreferredSize().width();\n\nAnd provide a get_max_width() accessor.",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf44a54_f63ee47d",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T02:58:03Z",
+      "side": 1,
+      "message": "Then I think this can just be set_min_width(int width) { min_width_ \u003d width; }",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713345be_32d00ba5",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T02:58:03Z",
+      "side": 1,
+      "message": "And this\n\n gfx::Size preferred_size \u003d Combobox::CalculatePreferredSize();\n preferred_size.SetToMax(gfx::Size(min_width_, 0));\n return preferred_size;",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f0f568_c8211eed",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T02:58:03Z",
+      "side": 1,
+      "message": "with PermissionCombobox::max_width_, I think this can then be\n\nPermissionSelectorRow::GetMaxLinkableWidth() {\n  return combobox_-\u003emax_width() \u003c DISTANCE_BUTTON_MAX_LINKABLE_WIDTH\n      ? combobox_-\u003emax_width()\n      : 0;\n}",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69dcbd51_837b06f3",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T02:58:03Z",
+      "side": 1,
+      "message": ". Returns 0 if it exceeds a threshold.",
+      "range": {
+        "startLine": 61,
+        "startChar": 30,
+        "endLine": 61,
+        "endChar": 75
+      },
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
