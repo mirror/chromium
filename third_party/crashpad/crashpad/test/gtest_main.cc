@@ -15,8 +15,21 @@
 #include "gtest/gtest.h"
 #include "test/main_arguments.h"
 
+#if defined(CRASHPAD_IN_CHROMIUM)
+#include "base/test/launcher/unit_test_launcher.h"
+#include "base/test/test_suite.h"
+#endif
+
 int main(int argc, char* argv[]) {
   crashpad::test::InitializeMainArguments(argc, argv);
   testing::InitGoogleTest(&argc, argv);
+#if defined(CRASHPAD_IN_CHROMIUM)
+  // Writes a json file with test details which is needed by swarming.
+  base::TestSuite test_suite(argc, argv);
+  return base::LaunchUnitTestsSerially(
+        argc, argv,
+        base::Bind(&base::TestSuite::Run, base::Unretained(&test_suite)));
+#else
   return RUN_ALL_TESTS();
+#endif
 }
