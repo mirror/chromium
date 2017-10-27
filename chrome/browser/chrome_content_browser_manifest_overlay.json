@@ -55,7 +55,8 @@
           "ime_registrar",
           "input_device_controller",
           "window_manager"
-        ]
+        ],
+        "chrome_win_util" : [ "win_shell_util" ]
       }
     },
     "navigation:frame": {

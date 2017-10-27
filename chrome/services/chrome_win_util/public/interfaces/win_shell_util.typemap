@@ -2,7 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-mojom = "//chrome/common/shell_handler_win.mojom"
+mojom =
+    "//chrome/services/chrome_win_util/public/interfaces/win_shell_util.mojom"
 
 public_headers = [ "//base/strings/string16.h" ]
 

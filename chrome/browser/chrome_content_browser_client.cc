@@ -244,6 +244,7 @@
 #include "chrome/browser/chrome_browser_main_win.h"
 #include "chrome/browser/conflicts/module_database_win.h"
 #include "chrome/browser/conflicts/module_event_sink_impl_win.h"
+#include "chrome/services/chrome_win_util/public/interfaces/constants.mojom.h"
 #include "sandbox/win/src/sandbox_policy.h"
 #elif defined(OS_MACOSX)
 #include "chrome/browser/chrome_browser_main_mac.h"
@@ -3115,6 +3116,11 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
 
   (*services)[proxy_resolver::mojom::kProxyResolverServiceName] =
       l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PROXY_RESOLVER_NAME);
+#endif
+
+#if defined(OS_WIN)
+  (*services)[chrome::mojom::kChromeWinUtilServiceName] =
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_CHROME_WIN_UTILITIES_NAME);
 #endif
 
 #if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
