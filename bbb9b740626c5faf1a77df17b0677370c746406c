@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d615ba02_282989f6",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-27T23:47:54Z",
+      "side": 1,
+      "message": "Added comment on states.\n\nThis class doesn\u0027t really care if it\u0027s returned or not. Discarding it on error is an optimization CdmStorageImpl makes. I didn\u0027t see any need to pass it back, since the other side can\u0027t do any operations on it anyway (other than close it, which would simply trigger the destruction of |this| anyway).",
+      "parentUuid": "02fccff9_2b38a249",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d2740ba_b06f0bac",
         "filename": "content/browser/media/cdm_storage_impl.cc",
         "patchSetId": 16
@@ -39,6 +57,30 @@
       "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1b77b5_0207aa0d",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-27T23:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d2740ba_b06f0bac",
+      "range": {
+        "startLine": 119,
+        "startChar": 22,
+        "endLine": 119,
+        "endChar": 47
+      },
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6c686057_408d5697",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-27T23:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb624330_485368b1",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 24
+      },
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40bf9bec_74d3c45f",
         "filename": "media/mojo/interfaces/cdm_storage.mojom",
         "patchSetId": 16
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "2ae5dc10_22b1518a",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-27T23:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40bf9bec_74d3c45f",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30cc9e1e_0d710f49",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 16
@@ -99,6 +189,24 @@
       "writtenOn": "2017-10-27T19:55:26Z",
       "side": 1,
       "message": "The size limit needs to be enforced in the browser (perhaps by the browser using ftruncate?)",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbecf96f_f8dbfb61",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-27T23:47:54Z",
+      "side": 1,
+      "message": "The other side has no file descriptor, so checking the size is a non-trivial operation. Is it OK if I do that in a following CL?",
+      "parentUuid": "30cc9e1e_0d710f49",
       "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -119,6 +227,24 @@
       "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5604b1a4_07ce3dad",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-27T23:47:54Z",
+      "side": 1,
+      "message": "This is a CDM interface restriction. On the browser side we allow any valid file name (well whatever the file system allows).",
+      "parentUuid": "5431e568_11501f4d",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "1310d0c9_82150b85",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-27T23:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eddd3a83_a7cc254b",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 18
+      },
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "916f4be2_81473d50",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 16
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "6e01aded_42a961f6",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-27T23:47:54Z",
+      "side": 1,
+      "message": "|cdm_storage_| is owned by the MojoCdmHelper, and shared among all the files created. I think you can only have 1 error handler, so it would need some sort of way to find out that the connection has been closed (helper keeps a list of active MojoCdmFileIO objects?).",
+      "parentUuid": "916f4be2_81473d50",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f2450e5_8a6d256f",
         "filename": "media/mojo/services/mojo_cdm_helper.cc",
         "patchSetId": 16
@@ -173,6 +341,24 @@
       "writtenOn": "2017-10-27T19:55:26Z",
       "side": 1,
       "message": "Is it needed to return false? most code doesn\u0027t bother doing this checking (like you said, the document is going away, so it doesn\u0027t really matter if we pretend it works or not?) Calling methods through the interface won\u0027t actually error out; it just won\u0027t get routed anywhere.",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd847a1_14418528",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-27T23:47:54Z",
+      "side": 1,
+      "message": "This was done so the calls on the client don\u0027t just hang waiting for a response (as they get an error immediately). I guess if everything is going away it doesn\u0027t make any difference. However, what happens if CdmStorage was never registered (or registered incorrectly)?",
+      "parentUuid": "9f2450e5_8a6d256f",
       "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
