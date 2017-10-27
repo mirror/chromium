@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "212a7f63_7e1234e2",
+        "filename": "chrome/android/webapk/strings/android_webapk_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-10-27T15:28:21Z",
+      "side": 1,
+      "message": "I think changes to this file will affect the Shell that is uploaded to the server. We\u0027d better increment the shell version.",
+      "range": {
+        "startLine": 115,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 16
+      },
+      "revId": "55d801ca2a838bdd8e40ff3ad0788903e0b60337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
