@@ -26,6 +26,7 @@ class FrameCoordinationUnitImpl : public CoordinationUnitBase,
   // CoordinationUnitBase implementation.
   std::set<CoordinationUnitBase*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) const override;
+  void RecalculateProperty(const mojom::PropertyType property_type) override;
 
   // FrameCoordinationUnit implementation.
   void SetAudibility(bool audible) override;
@@ -34,6 +35,7 @@ class FrameCoordinationUnitImpl : public CoordinationUnitBase,
   void OnNonPersistentNotificationCreated() override;
 
   PageCoordinationUnitImpl* GetPageCoordinationUnit() const;
+  ProcessCoordinationUnitImpl* GetProcessCoordinationUnit() const;
   bool IsMainFrame() const;
 
  private:

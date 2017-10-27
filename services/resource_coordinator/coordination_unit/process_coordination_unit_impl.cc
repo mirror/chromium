@@ -93,6 +93,22 @@ void ProcessCoordinationUnitImpl::PropagateProperty(
       }
       break;
     }
+    case mojom::PropertyType::kLowMainThreadLoad: {
+      for (auto* cu :
+           GetAssociatedCoordinationUnitsOfType(CoordinationUnitType::kFrame)) {
+        FrameCoordinationUnitImpl* frame_cu = ToFrameCoordinationUnit(cu);
+        if (!frame_cu->IsMainFrame())
+          continue;
+        int64_t is_main_thread_load_low = -1;
+        if (!frame_cu->GetProperty(mojom::PropertyType::kLowMainThreadLoad,
+                                   &is_main_thread_load_low) ||
+            is_main_thread_load_low != value) {
+          frame_cu->RecalculateProperty(
+              mojom::PropertyType::kLowMainThreadLoad);
+        }
+      }
+      break;
+    }
     default:
       break;
   }

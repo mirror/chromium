@@ -6,7 +6,6 @@
 
 #include <utility>
 
-#include "base/values.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h"
@@ -38,17 +37,17 @@ void TabSignalGeneratorImpl::OnFramePropertyChanged(
     const FrameCoordinationUnitImpl* frame_cu,
     const mojom::PropertyType property_type,
     int64_t value) {
-  if (property_type == mojom::PropertyType::kNetworkAlmostIdle) {
+  if (property_type == mojom::PropertyType::kNetworkAlmostIdle ||
+      property_type == mojom::PropertyType::kLowMainThreadLoad) {
     // Ignore when the signal doesn't come from main frame.
-    if (!frame_cu->IsMainFrame())
+    if (!value || !frame_cu->IsMainFrame())
       return;
-    // TODO(lpy) Combine CPU usage or long task idleness signal.
-    for (auto* parent : frame_cu->parents()) {
-      if (parent->id().type != CoordinationUnitType::kPage)
-        continue;
-      DISPATCH_TAB_SIGNAL(observers_, OnEventReceived, parent,
-                          mojom::TabEvent::kDoneLoading);
-      break;
+    if (IsAlmostIdle(frame_cu)) {
+      auto* page_cu = frame_cu->GetPageCoordinationUnit();
+      if (!page_cu)
+        return;
+      DISPATCH_TAB_SIGNAL(observers_, OnEventReceived, page_cu,
+                          mojom::TabEvent::kAlmostIdle);
     }
   }
 }
@@ -67,6 +66,19 @@ void TabSignalGeneratorImpl::BindToInterface(
     resource_coordinator::mojom::TabSignalGeneratorRequest request,
     const service_manager::BindSourceInfo& source_info) {
   bindings_.AddBinding(this, std::move(request));
+}
+
+bool TabSignalGeneratorImpl::IsAlmostIdle(
+    const FrameCoordinationUnitImpl* frame_cu) const {
+  int64_t is_main_thread_load_low = 0;
+  int64_t is_network_almost_idle = 0;
+  if (!frame_cu->GetProperty(mojom::PropertyType::kLowMainThreadLoad,
+                             &is_main_thread_load_low) ||
+      !frame_cu->GetProperty(mojom::PropertyType::kNetworkAlmostIdle,
+                             &is_network_almost_idle)) {
+    return false;
+  }
+  return is_main_thread_load_low && is_network_almost_idle;
 }
 
 }  // namespace resource_coordinator
