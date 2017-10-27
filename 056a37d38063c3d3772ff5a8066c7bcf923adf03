@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e648a55e_1b8b8e41",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T04:23:29Z",
+      "side": 1,
+      "message": "Maybe we can just update the legacy callers to use the base::Time overloads? That seems like a pretty safe change.",
+      "revId": "056a37d38063c3d3772ff5a8066c7bcf923adf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a325a978_c947d090",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T04:23:29Z",
+      "side": 1,
+      "message": "Nit: just merge with line 844",
+      "range": {
+        "startLine": 845,
+        "startChar": 6,
+        "endLine": 845,
+        "endChar": 22
+      },
+      "revId": "056a37d38063c3d3772ff5a8066c7bcf923adf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aef723b_924065f3",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T04:23:29Z",
+      "side": 1,
+      "message": "Just to confirm: it\u0027s not a problem that these were previously optional, because we only read these out of ExplodedFrameState if did_save_scroll_or_scale_state is true right?\n\nTo make this a bit clearer, let\u0027s group these (+page_scale_factor) into one optional struct called ViewState or the like: then we can represent the did_save_scroll_or_scale_state bool by whether or not the struct is present, and group all the related members in there.\n\nSorry for noticing this in the many earlier reviews \u003d(",
+      "range": {
+        "startLine": 893,
+        "startChar": 0,
+        "endLine": 895,
+        "endChar": 0
+      },
+      "revId": "056a37d38063c3d3772ff5a8066c7bcf923adf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc4a166_b1fd6542",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T04:23:29Z",
+      "side": 1,
+      "message": "Nit: const ref?",
+      "range": {
+        "startLine": 197,
+        "startChar": 36,
+        "endLine": 197,
+        "endChar": 47
+      },
+      "revId": "056a37d38063c3d3772ff5a8066c7bcf923adf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
