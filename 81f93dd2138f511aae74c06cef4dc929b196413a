@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "01b5b1d0_26ebeafa",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-27T15:29:09Z",
+      "side": 1,
+      "message": "\u003e This is non-mouse only, we shouldn\u0027t remove mouse-pointer-id.\n\nI take back this one, the factory skips removing id\u003d1.\n\n\u003e \n\u003e We need a test, may be in the same place we test pointer cancel for mouse-like pen: mouse-pointer-id remains \u003d\u003d 1 after a pointercancel.\n\nI think it\u0027s better to have a new test: while all types of pointers {pen, touch, mouse} are active:\n- have the pen fire pointercancel and expect no pointercancel from {touch, mouse}, then\n- have the touch fire pointercancel and expect no pointercancel from {mouse}.\n\n\u003e \n\u003e Or wait: perhaps we shouldn\u0027t even send pointer cancel with id \u003d\u003d 1 since this pointer event sequence is never canceled!\n\nAfter you reminded me about right-click pointer cancel possibility, this seems fine as is.  Hopefully we won\u0027t see more Sortable-like bugs.",
+      "parentUuid": "b50e2ef7_9df0c711",
+      "revId": "81f93dd2138f511aae74c06cef4dc929b196413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78f24a48_579d561e",
         "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
         "patchSetId": 1
