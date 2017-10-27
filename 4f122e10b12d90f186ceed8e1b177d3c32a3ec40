@@ -105,6 +105,24 @@
       "revId": "4f122e10b12d90f186ceed8e1b177d3c32a3ec40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518667d2_3d532296",
+        "filename": "cc/scheduler/scheduler_state_machine.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-27T18:39:27Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "72b750ce_6e616f0a",
+      "revId": "4f122e10b12d90f186ceed8e1b177d3c32a3ec40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
