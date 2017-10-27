@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09fedf93_6a71d1c6",
+        "filename": "chrome/test/data/extensions/api_test/serial/api/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-27T16:09:06Z",
+      "side": 1,
+      "message": "While you\u0027re modifying this file can you indent these blocks properly?",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "6a2538c11372947c1b6094f03bcdad8b8f535b78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
