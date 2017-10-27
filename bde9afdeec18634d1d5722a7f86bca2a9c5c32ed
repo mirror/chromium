@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4aa5c8c_a2d8ed47",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-27T04:41:07Z",
+      "side": 1,
+      "message": "Thanks for better name!\nRename to GetWordSelectionText()",
+      "parentUuid": "8c6629b0_a1c58874",
+      "range": {
+        "startLine": 49,
+        "startChar": 14,
+        "endLine": 49,
+        "endChar": 24
+      },
+      "revId": "bde9afdeec18634d1d5722a7f86bca2a9c5c32ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa45f061_b2749d81",
         "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "bde9afdeec18634d1d5722a7f86bca2a9c5c32ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3de4f6_bb55b3ce",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-27T04:41:07Z",
+      "side": 1,
+      "message": "Good idea!\nDone.",
+      "parentUuid": "fa45f061_b2749d81",
+      "revId": "bde9afdeec18634d1d5722a7f86bca2a9c5c32ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
