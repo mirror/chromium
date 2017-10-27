@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9a47771_a679fbda",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-27T17:44:43Z",
+      "side": 1,
+      "message": "Can this be pulled out into some common config that all of the Crashpad targets pick up?",
+      "revId": "95175b70c64de7620fd3debf88725298381c9f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7783e89e_2577741d",
+        "filename": "third_party/crashpad/crashpad/test/gtest_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-27T17:44:43Z",
+      "side": 1,
+      "message": "I may be wrong, but it appears that this is TestSuite or LaunchUnitTests’ responsibility when using Chromium’s test runner.\n\nSee Chrome’s base/test/run_all_unittests.cc, for example.",
+      "revId": "95175b70c64de7620fd3debf88725298381c9f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ca969d_32a8b414",
+        "filename": "third_party/crashpad/crashpad/test/gtest_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-27T17:44:43Z",
+      "side": 1,
+      "message": "IWYU: #include \"base/bind.h\" for this too, but only in the CRASHPAD_IN_CHROMIUM block because we don’t have it in mini_chromium.",
+      "revId": "95175b70c64de7620fd3debf88725298381c9f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fd583c_98ddaded",
+        "filename": "third_party/crashpad/crashpad/util/win/process_info_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-27T17:44:43Z",
+      "side": 1,
+      "message": "I can sync yesterday’s Crashpad into Chromium today, which should obviate the need to disable these.",
+      "revId": "95175b70c64de7620fd3debf88725298381c9f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
