@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "d6638659_5b343e7b",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityObserver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-27T13:30:53Z",
+      "side": 1,
+      "message": "Could this be const `Vector\u003cKURL\u003e\u0026`?",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2948d5bb_2d52fde9",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
         "patchSetId": 10
@@ -166,6 +183,40 @@
       "writtenOn": "2017-10-26T23:20:12Z",
       "side": 1,
       "message": "Should this be here or in PresentationAvailability?",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d02d882_23a6fd7a",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-27T13:30:53Z",
+      "side": 1,
+      "message": "I think we could switch `availability_urls_` to KURL as this seems a bit wasteful. In general, it would be better if we could return `const Vector\u003cKURL\u003e\u0026` but even if we can\u0027t, returning `availability_urls_` without conversion would be better.",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aed53b8_781ff70a",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlaybackTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-27T13:30:53Z",
+      "side": 1,
+      "message": "Two nits:\n- you can use `\u003d default;` instead of {}\n- you can use `final` on the class.",
       "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
