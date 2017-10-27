@@ -19,7 +19,6 @@
 #include "ui/base/hit_test.h"
 #include "ui/base/ime/input_method.h"
 #include "ui/base/ime/text_input_client.h"
-#include "ui/compositor/layer_animation_observer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -163,49 +162,6 @@ std::string StateToStr(keyboard::KeyboardControllerState state) {
 }  // namespace
 
 namespace keyboard {
-
-// Observer for both keyboard show and hide animations. It should be owned by
-// KeyboardController.
-class CallbackAnimationObserver : public ui::LayerAnimationObserver {
- public:
-  CallbackAnimationObserver(const scoped_refptr<ui::LayerAnimator>& animator,
-                            base::OnceCallback<void(void)> callback);
-  ~CallbackAnimationObserver() override;
-
- private:
-  // Overridden from ui::LayerAnimationObserver:
-  void OnLayerAnimationEnded(ui::LayerAnimationSequence* seq) override;
-  void OnLayerAnimationAborted(ui::LayerAnimationSequence* seq) override;
-  void OnLayerAnimationScheduled(ui::LayerAnimationSequence* seq) override {}
-
-  scoped_refptr<ui::LayerAnimator> animator_;
-  base::OnceCallback<void(void)> callback_;
-
-  DISALLOW_COPY_AND_ASSIGN(CallbackAnimationObserver);
-};
-
-CallbackAnimationObserver::CallbackAnimationObserver(
-    const scoped_refptr<ui::LayerAnimator>& animator,
-    base::OnceCallback<void(void)> callback)
-    : animator_(animator), callback_(std::move(callback)) {}
-
-CallbackAnimationObserver::~CallbackAnimationObserver() {
-  animator_->RemoveObserver(this);
-}
-
-void CallbackAnimationObserver::OnLayerAnimationEnded(
-    ui::LayerAnimationSequence* seq) {
-  if (animator_->is_animating())
-    return;
-  animator_->RemoveObserver(this);
-  DCHECK(!callback_.is_null());
-  std::move(callback_).Run();
-}
-
-void CallbackAnimationObserver::OnLayerAnimationAborted(
-    ui::LayerAnimationSequence* seq) {
-  animator_->RemoveObserver(this);
-}
 
 // static
 KeyboardController* KeyboardController::instance_ = NULL;
@@ -367,13 +323,9 @@ void KeyboardController::HideKeyboard(HideReason reason) {
 
       set_keyboard_locked(false);
 
-      ui::LayerAnimator* container_animator =
-          container_->layer()->GetAnimator();
-      animation_observer_.reset(new CallbackAnimationObserver(
-          container_animator,
-          base::BindOnce(&KeyboardController::HideAnimationFinished,
-                         base::Unretained(this))));
-      container_animator->AddObserver(animation_observer_.get());
+      ui::ScopedLayerAnimationSettings layer_animation_settings(
+          container_->layer()->GetAnimator());
+      layer_animation_settings.AddObserver(this);
 
       aura::Window* window = container_.get();
 
@@ -394,16 +346,6 @@ void KeyboardController::HideKeyboard(HideReason reason) {
     }
     default:
       NOTREACHED();
-  }
-}
-
-void KeyboardController::HideAnimationFinished() {
-  if (state_ != KeyboardControllerState::HIDDEN)
-    return;
-
-  if (enqueued_container_type_ != container_behavior_->GetType()) {
-    SetContainerBehaviorInternal(enqueued_container_type_);
-    ShowKeyboard(false /* lock */);
   }
 }
 
@@ -464,6 +406,23 @@ void KeyboardController::OnWindowBoundsChanged(aura::Window* window,
     return;
 
   container_behavior_->SetCanonicalBounds(GetContainerWindow(), new_bounds);
+}
+
+void KeyboardController::OnImplicitAnimationsCompleted() {
+  // This is invoked when a keyboard show or hide animation completes.
+  DCHECK(
+      WasAnimationCompletedForProperty(ui::LayerAnimationElement::TRANSFORM));
+  DCHECK(WasAnimationCompletedForProperty(ui::LayerAnimationElement::OPACITY));
+
+  if (state_ == KeyboardControllerState::HIDDEN) {
+    if (enqueued_container_type_ != container_behavior_->GetType()) {
+      SetContainerBehaviorInternal(enqueued_container_type_);
+      ShowKeyboard(false /* lock */);
+    }
+  } else {
+    DCHECK_EQ(state_, KeyboardControllerState::SHOWN);
+    MarkKeyboardLoadFinished();
+  }
 }
 
 void KeyboardController::Reload() {
@@ -625,15 +584,10 @@ void KeyboardController::PopulateKeyboardContent(int64_t display_id,
   container_animator->set_preemption_strategy(
       ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
 
-  animation_observer_.reset(new CallbackAnimationObserver(
-      container_animator,
-      base::BindOnce(&KeyboardController::ShowAnimationFinished,
-                     base::Unretained(this))));
-  container_animator->AddObserver(animation_observer_.get());
-
   ui_->ShowKeyboardContainer(container_.get());
 
   ui::ScopedLayerAnimationSettings settings(container_animator);
+  settings.AddObserver(this);
 
   container_behavior_->DoShowingAnimation(container_.get(), &settings);
 
@@ -645,10 +599,6 @@ bool KeyboardController::WillHideKeyboard() const {
   bool res = weak_factory_will_hide_.HasWeakPtrs();
   DCHECK(res == (state_ == KeyboardControllerState::WILL_HIDE));
   return res;
-}
-
-void KeyboardController::ShowAnimationFinished() {
-  MarkKeyboardLoadFinished();
 }
 
 void KeyboardController::

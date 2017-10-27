@@ -244,7 +244,6 @@ void StickyKeysOverlay::Show(bool visible) {
   overlay_widget_->SetBounds(CalculateOverlayBounds());
 
   ui::LayerAnimator* animator = overlay_widget_->GetLayer()->GetAnimator();
-  animator->AddObserver(this);
 
   // Ensure transform is correct before beginning animation.
   if (!animator->is_animating()) {
@@ -256,6 +255,7 @@ void StickyKeysOverlay::Show(bool visible) {
   }
 
   ui::ScopedLayerAnimationSettings settings(animator);
+  settings.AddObserver(this);
   settings.SetPreemptionStrategy(
       ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
   settings.SetTweenType(visible ? gfx::Tween::EASE_OUT : gfx::Tween::EASE_IN);
@@ -293,23 +293,11 @@ gfx::Rect StickyKeysOverlay::CalculateOverlayBounds() {
   return gfx::Rect(gfx::Point(x, kVerticalOverlayOffset), widget_size_);
 }
 
-void StickyKeysOverlay::OnLayerAnimationEnded(
-    ui::LayerAnimationSequence* sequence) {
-  ui::LayerAnimator* animator = overlay_widget_->GetLayer()->GetAnimator();
-  if (animator)
-    animator->RemoveObserver(this);
-  if (!is_visible_)
+void StickyKeysOverlay::OnImplicitAnimationsCompleted() {
+  if (!is_visible_ &&
+      !WasAnimationAbortedForProperty(ui::LayerAnimationElement::TRANSFORM)) {
     overlay_widget_->Hide();
+  }
 }
-
-void StickyKeysOverlay::OnLayerAnimationAborted(
-    ui::LayerAnimationSequence* sequence) {
-  ui::LayerAnimator* animator = overlay_widget_->GetLayer()->GetAnimator();
-  if (animator)
-    animator->RemoveObserver(this);
-}
-
-void StickyKeysOverlay::OnLayerAnimationScheduled(
-    ui::LayerAnimationSequence* sequence) {}
 
 }  // namespace ash

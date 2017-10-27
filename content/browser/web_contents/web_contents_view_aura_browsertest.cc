@@ -8,6 +8,7 @@
 #include <tuple>
 
 #include "base/command_line.h"
+#include "base/debug/stack_trace.h"
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -409,6 +410,7 @@ class SpuriousMouseMoveEventObserver
   }
 
   void OnInputEvent(const blink::WebInputEvent& event) override {
+    base::debug::StackTrace().Print();
     EXPECT_NE(blink::WebInputEvent::kMouseMove, event.GetType())
         << "Unexpected mouse move event.";
   }
