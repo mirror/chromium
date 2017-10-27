@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "abe9e987_672ba81e",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-27T00:53:08Z",
+      "side": 1,
+      "message": "Also we don\u0027t need to mention enums.xml now for this one.",
+      "range": {
+        "startLine": 35,
+        "startChar": 44,
+        "endLine": 35,
+        "endChar": 57
+      },
+      "revId": "4277e413c9f3aa3bfd6f6d3361185f42b4ce53b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1f5307e_f4da718f",
         "filename": "services/network/public/interfaces/fetch_api.mojom",
         "patchSetId": 2
