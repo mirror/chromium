@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5add642_3bf25708",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2258,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-27T23:41:30Z",
+      "side": 1,
+      "message": "Rather than saying what the code does, explain why, maybe something like this:\n\nThe committed interstitials code path commits certificate error pages as navigations instead of displaying them in interstitials. Deny the request to trigger the code path that loads an error page instead of going on to display an interstitial page.",
+      "range": {
+        "startLine": 2258,
+        "startChar": 2,
+        "endLine": 2258,
+        "endChar": 62
+      },
+      "revId": "b1085f61d23912c33c29aa67f788ec8c46ade860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
