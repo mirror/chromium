@@ -4353,6 +4353,13 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="4" label="Init Verification Failed"/>
 </enum>
 
+<enum name="CdmLoadResult">
+  <int value="0" label="Success"/>
+  <int value="1" label="Failure"/>
+  <int value="2" label="File Missing"/>
+  <int value="3" label="Entry Point Missing"/>
+</enum>
+
 <enum name="CdmPromiseResult">
   <int value="0" label="Success"/>
   <int value="1" label="NotSupportedError"/>
