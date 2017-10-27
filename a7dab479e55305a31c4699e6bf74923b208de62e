@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "250cd9e7_3dbcec66",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-10-27T20:22:55Z",
+      "side": 1,
+      "message": "since these are already \u0027PageLoad\u0027 metrics, let\u0027s just call this NavigationToInteractive",
+      "revId": "a7dab479e55305a31c4699e6bf74923b208de62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a871b11_16df8d5c",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-10-27T20:22:55Z",
+      "side": 1,
+      "message": "let\u0027s just call this \u0027interactive\u0027 - that\u0027s more consistent with other fields which aren\u0027t prefixed with things like \u0027time_to_\u0027.",
+      "revId": "a7dab479e55305a31c4699e6bf74923b208de62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
