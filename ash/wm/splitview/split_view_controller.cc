@@ -229,13 +229,43 @@ gfx::Rect SplitViewController::GetSnappedWindowBoundsInScreen(
       work_area_bounds_in_screen, screen_orientation_, divider_position_,
       false /* is_dragging */);
 
+  bool is_landscape = IsCurrentScreenOrientationLandscape();
   gfx::Rect left_or_top_rect;
   gfx::Rect right_or_bottom_rect;
-  SplitRect(work_area_bounds_in_screen, divider_bounds,
-            IsCurrentScreenOrientationLandscape(), &left_or_top_rect,
-            &right_or_bottom_rect);
+  SplitRect(work_area_bounds_in_screen, divider_bounds, is_landscape,
+            &left_or_top_rect, &right_or_bottom_rect);
 
-  if (IsLeftWindowOnTopOrLeftOfScreen(screen_orientation_))
+  gfx::Size left_window_minimum_size, right_window_minimum_size;
+  if (left_window_ && left_window_->delegate())
+    left_window_minimum_size = left_window_->delegate()->GetMinimumSize();
+  if (right_window_ && right_window_->delegate())
+    right_window_minimum_size = right_window_->delegate()->GetMinimumSize();
+
+  // Adjust the bounds of the left or top snapped window when its minimum size
+  // is larger than current window bounds. To make sure it can be moved outside
+  // of work area in this case.
+  bool is_left_window_on_top_or_left =
+      IsLeftWindowOnTopOrLeftOfScreen(screen_orientation_);
+  gfx::Size left_or_top_minimum_size = is_left_window_on_top_or_left
+                                           ? left_window_minimum_size
+                                           : right_window_minimum_size;
+  if (is_landscape) {
+    if (left_or_top_rect.width() < left_or_top_minimum_size.width()) {
+      left_or_top_rect.set_x(
+          left_or_top_rect.x() -
+          (left_or_top_minimum_size.width() - left_or_top_rect.width()));
+      left_or_top_rect.set_width(left_or_top_minimum_size.width());
+    }
+  } else {
+    if (left_or_top_rect.height() < left_or_top_minimum_size.height()) {
+      left_or_top_rect.set_y(
+          left_or_top_rect.y() -
+          (left_or_top_minimum_size.height() - left_or_top_rect.height()));
+      left_or_top_rect.set_height(left_or_top_minimum_size.height());
+    }
+  }
+
+  if (is_left_window_on_top_or_left)
     return (snap_position == LEFT) ? left_or_top_rect : right_or_bottom_rect;
   else
     return (snap_position == LEFT) ? right_or_bottom_rect : left_or_top_rect;
@@ -274,12 +304,8 @@ void SplitViewController::Resize(const gfx::Point& location_in_screen) {
       GetBoundedPosition(location_in_screen, work_area_bounds);
 
   // Update |divider_position_|.
-  const int previous_divider_position = divider_position_;
   UpdateDividerPosition(modified_location_in_screen);
   NotifyDividerPositionChanged();
-
-  // Restack windows order if necessary.
-  RestackWindows(previous_divider_position, divider_position_);
 
   // Update the black scrim layer's bounds and opacity.
   UpdateBlackScrim(modified_location_in_screen);
@@ -578,29 +604,6 @@ void SplitViewController::UpdateBlackScrim(
     opacity = 1.f - float(distance_y) / float(work_area_bounds.height());
   }
   black_scrim_layer_->SetOpacity(opacity);
-}
-
-void SplitViewController::RestackWindows(const int previous_divider_position,
-                                         const int current_divider_position) {
-  if (!left_window_ || !right_window_)
-    return;
-  DCHECK(IsSplitViewModeActive());
-  DCHECK_EQ(left_window_->parent(), right_window_->parent());
-
-  const int mid_position = GetDefaultDividerPosition(GetDefaultSnappedWindow());
-  if (std::signbit(previous_divider_position - mid_position) ==
-      std::signbit(current_divider_position - mid_position)) {
-    // No need to restack windows if the divider position doesn't pass over the
-    // middle position.
-    return;
-  }
-
-  if ((current_divider_position < mid_position) ==
-      IsLeftWindowOnTopOrLeftOfScreen(screen_orientation_)) {
-    left_window_->parent()->StackChildAbove(right_window_, left_window_);
-  } else {
-    left_window_->parent()->StackChildAbove(left_window_, right_window_);
-  }
 }
 
 void SplitViewController::UpdateSnappedWindowsAndDividerBounds() {

@@ -842,4 +842,29 @@ TEST_F(SplitViewControllerTest, SnapWindowWithMinimumSizeTest) {
   EXPECT_FALSE(split_view_controller()->CanSnap(window1.get()));
 }
 
+// Tests that the left or top snapped window can be moved outside of work area
+// when its minimum size is larger than its current bounds.
+TEST_F(SplitViewControllerTest, SnapWindowBoundsWithMinimumSizeTest) {
+  const gfx::Rect bounds(0, 0, 200, 200);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+  aura::test::TestWindowDelegate* delegate1 =
+      static_cast<aura::test::TestWindowDelegate*>(window1->delegate());
+  ui::test::EventGenerator& generator(GetEventGenerator());
+  gfx::Rect display_bounds =
+      split_view_controller()->GetDisplayWorkAreaBoundsInScreen(window1.get());
+
+  split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
+  delegate1->set_minimum_size(
+      gfx::Size(display_bounds.width() * 0.4f, display_bounds.height()));
+  gfx::Rect divider_bounds =
+      split_view_divider()->GetDividerBoundsInScreen(false);
+  generator.set_current_location(divider_bounds.CenterPoint());
+  generator.DragMouseTo(gfx::Point(display_bounds.width() * 0.33f, 0));
+  gfx::Rect snapped_window_bounds =
+      split_view_controller()->GetSnappedWindowBoundsInScreen(
+          window1.get(), SplitViewController::LEFT);
+  EXPECT_LT(snapped_window_bounds.x(), display_bounds.x());
+  EXPECT_EQ(snapped_window_bounds.width(), display_bounds.width() * 0.4f);
+}
+
 }  // namespace ash
