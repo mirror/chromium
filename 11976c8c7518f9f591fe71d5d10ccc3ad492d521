@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d360ccab_d9d349d4",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-27T16:38:15Z",
+      "side": 1,
+      "message": "I\u0027ve done that, but I wonder why? Even the Google C++ guide says this should be in the public: section (though it shouldn\u0027t matter because access control happens after overload resultion / function matching).\n\nhttps://google.github.io/styleguide/cppguide.html#Copyable_Movable_Types",
+      "parentUuid": "0312418c_a1ce9848",
+      "range": {
+        "startLine": 136,
+        "startChar": 44,
+        "endLine": 136,
+        "endChar": 45
+      },
+      "revId": "11976c8c7518f9f591fe71d5d10ccc3ad492d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "791c2fb2_b94a6ce6",
         "filename": "ui/base/resource/data_pack.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c0154aae_f03d6b2c",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-27T16:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "791c2fb2_b94a6ce6",
+      "range": {
+        "startLine": 464,
+        "startChar": 10,
+        "endLine": 464,
+        "endChar": 0
+      },
+      "revId": "11976c8c7518f9f591fe71d5d10ccc3ad492d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075428db_1e4f2492",
         "filename": "ui/base/resource/data_pack.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "11976c8c7518f9f591fe71d5d10ccc3ad492d521",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043cd311_3acb4c18",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-27T16:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075428db_1e4f2492",
+      "range": {
+        "startLine": 518,
+        "startChar": 13,
+        "endLine": 518,
+        "endChar": 17
+      },
+      "revId": "11976c8c7518f9f591fe71d5d10ccc3ad492d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
