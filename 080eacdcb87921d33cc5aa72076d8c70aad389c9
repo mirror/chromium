@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a6abd98_5c5d8cdd",
+        "filename": "device/u2f/u2f_apdu_command.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-27T04:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b692e8c1_eeec7851",
+      "range": {
+        "startLine": 185,
+        "startChar": 2,
+        "endLine": 188,
+        "endChar": 34
+      },
+      "revId": "080eacdcb87921d33cc5aa72076d8c70aad389c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9534dab6_6dfb55c0",
         "filename": "device/u2f/u2f_register.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T19:33:42Z",
       "side": 1,
       "message": "Are you using check only here?",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 25
+      },
+      "revId": "080eacdcb87921d33cc5aa72076d8c70aad389c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0156e588_93f5a288",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-27T04:46:17Z",
+      "side": 1,
+      "message": "Yes! The \"true\" boolean at the next line makes this function all check only. For some reason, git cl format forces the \"true\" parameter to be located at the next line. If you would like be to override that please let me know!",
+      "parentUuid": "9534dab6_6dfb55c0",
       "range": {
         "startLine": 47,
         "startChar": 21,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "98d4a8b4_33cdb7f0",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-27T04:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97125a52_86c5f942",
+      "range": {
+        "startLine": 60,
+        "startChar": 18,
+        "endLine": 60,
+        "endChar": 51
+      },
+      "revId": "080eacdcb87921d33cc5aa72076d8c70aad389c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f69a7b6_a90acba0",
         "filename": "device/u2f/u2f_register.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-26T19:33:42Z",
       "side": 1,
       "message": "Complete",
+      "range": {
+        "startLine": 103,
+        "startChar": 18,
+        "endLine": 103,
+        "endChar": 47
+      },
+      "revId": "080eacdcb87921d33cc5aa72076d8c70aad389c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e967335d_23207697",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-27T04:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f69a7b6_a90acba0",
       "range": {
         "startLine": 103,
         "startChar": 18,
