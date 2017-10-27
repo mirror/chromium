@@ -11,12 +11,12 @@ constexpr char kCarrier[] = "FakeCarrier";
 FakeTetherService::FakeTetherService(
     Profile* profile,
     chromeos::PowerManagerClient* power_manager_client,
-    chromeos::SessionManagerClient* session_manager_client,
+    session_manager::SessionManager* session_manager,
     cryptauth::CryptAuthService* cryptauth_service,
     chromeos::NetworkStateHandler* network_state_handler)
     : TetherService(profile,
                     power_manager_client,
-                    session_manager_client,
+                    session_manager,
                     cryptauth_service,
                     network_state_handler) {}
 

@@ -24,6 +24,7 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/proximity_auth/logging/logging.h"
+#include "components/session_manager/core/session_manager.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "ui/message_center/message_center.h"
 
@@ -106,12 +107,13 @@ std::string TetherService::TetherFeatureStateToString(
 TetherService::TetherService(
     Profile* profile,
     chromeos::PowerManagerClient* power_manager_client,
-    chromeos::SessionManagerClient* session_manager_client,
+    session_manager::SessionManager* session_manager,
     cryptauth::CryptAuthService* cryptauth_service,
     chromeos::NetworkStateHandler* network_state_handler)
-    : profile_(profile),
+    : screen_locked_(session_manager::SessionManager::Get()->IsScreenLocked()),
+      profile_(profile),
       power_manager_client_(power_manager_client),
-      session_manager_client_(session_manager_client),
+      session_manager_(session_manager),
       cryptauth_service_(cryptauth_service),
       network_state_handler_(network_state_handler),
       notification_presenter_(
@@ -122,7 +124,7 @@ TetherService::TetherService(
       timer_(base::MakeUnique<base::OneShotTimer>()),
       weak_ptr_factory_(this) {
   power_manager_client_->AddObserver(this);
-  session_manager_client_->AddObserver(this);
+  session_manager_->AddObserver(this);
   cryptauth_service_->GetCryptAuthDeviceManager()->AddObserver(this);
   network_state_handler_->AddObserver(this, FROM_HERE);
 
@@ -195,7 +197,7 @@ void TetherService::Shutdown() {
   // Remove all observers. This ensures that once Shutdown() is called, no more
   // calls to UpdateTetherTechnologyState() will be triggered.
   power_manager_client_->RemoveObserver(this);
-  session_manager_client_->RemoveObserver(this);
+  session_manager_->RemoveObserver(this);
   cryptauth_service_->GetCryptAuthDeviceManager()->RemoveObserver(this);
   network_state_handler_->RemoveObserver(this, FROM_HERE);
   if (adapter_)
@@ -226,14 +228,6 @@ void TetherService::SuspendDone(const base::TimeDelta& sleep_duration) {
     tether_component_.reset();
   }
 
-  UpdateTetherTechnologyState();
-}
-
-void TetherService::ScreenIsLocked() {
-  UpdateTetherTechnologyState();
-}
-
-void TetherService::ScreenIsUnlocked() {
   UpdateTetherTechnologyState();
 }
 
@@ -309,6 +303,13 @@ void TetherService::OnShutdownComplete() {
   // restart TetherComponent.
   if (!shut_down_)
     StartTetherIfPossible();
+}
+
+void TetherService::OnSessionStateChanged() {
+  const bool was_locked = screen_locked_;
+  screen_locked_ = session_manager_->IsScreenLocked();
+  if (screen_locked_ != was_locked)
+    UpdateTetherTechnologyState();
 }
 
 void TetherService::OnPrefsChanged() {
@@ -489,7 +490,7 @@ TetherService::TetherFeatureState TetherService::GetTetherFeatureState() {
   if (!GetIsBleAdvertisingSupportedPref())
     return BLE_ADVERTISING_NOT_SUPPORTED;
 
-  if (session_manager_client_->IsScreenLocked())
+  if (session_manager_->IsScreenLocked())
     return SCREEN_LOCKED;
 
   if (!HasSyncedTetherHosts())
