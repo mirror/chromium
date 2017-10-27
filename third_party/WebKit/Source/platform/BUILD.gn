@@ -1273,6 +1273,8 @@ jumbo_component("platform") {
     "network/ParsedContentHeaderFieldParameters.h",
     "network/ParsedContentType.cpp",
     "network/ParsedContentType.h",
+    "network/ServerTimingHeader.cpp",
+    "network/ServerTimingHeader.h",
     "network/WebSocketHandshakeRequest.cpp",
     "network/WebSocketHandshakeRequest.h",
     "network/WebSocketHandshakeResponse.cpp",
