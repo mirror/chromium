@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1dcf670_7a41485e",
+        "filename": "base/win/shortcut.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-27T18:25:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83b0c19d_92a13293",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9efaab6_7e1d57ef",
         "filename": "base/win/shortcut.h",
         "patchSetId": 35
