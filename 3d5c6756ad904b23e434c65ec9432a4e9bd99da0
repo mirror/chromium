@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1315ae53_24909ab3",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T08:42:42Z",
+      "side": 1,
+      "message": "Let\u0027s mention that this is only set for cross-document navigations, so it\u0027s clear.",
+      "range": {
+        "startLine": 156,
+        "startChar": 66,
+        "endLine": 160,
+        "endChar": 71
+      },
+      "revId": "3d5c6756ad904b23e434c65ec9432a4e9bd99da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29192db1_8d5f68f8",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T08:42:42Z",
+      "side": 1,
+      "message": "Nit: delete these two lines",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 26
+      },
+      "revId": "3d5c6756ad904b23e434c65ec9432a4e9bd99da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
