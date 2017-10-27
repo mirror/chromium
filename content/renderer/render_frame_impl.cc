@@ -758,7 +758,8 @@ NOINLINE void BadCastCrashIntentionally() {
 }
 
 #if defined(ADDRESS_SANITIZER) || defined(SYZYASAN)
-NOINLINE void MaybeTriggerAsanError(const GURL& url) {
+// Returns true if the URL is a debug URL that was handled, false otherwise.
+NOINLINE bool MaybeTriggerAsanError(const GURL& url) {
   // NOTE(rogerm): We intentionally perform an invalid heap access here in
   //     order to trigger an Address Sanitizer (ASAN) error report.
   const char kCrashDomain[] = "crash";
@@ -772,88 +773,106 @@ NOINLINE void MaybeTriggerAsanError(const GURL& url) {
 #endif
 
   if (!url.DomainIs(kCrashDomain))
-    return;
+    return false;
 
   if (!url.has_path())
-    return;
+    return false;
 
   std::string crash_type(url.path());
   if (crash_type == kHeapOverflow) {
     LOG(ERROR) << "Intentionally causing ASAN heap overflow"
                << " because user navigated to " << url.spec();
     base::debug::AsanHeapOverflow();
+    return true;
   } else if (crash_type == kHeapUnderflow) {
     LOG(ERROR) << "Intentionally causing ASAN heap underflow"
                << " because user navigated to " << url.spec();
     base::debug::AsanHeapUnderflow();
+    return true;
   } else if (crash_type == kUseAfterFree) {
     LOG(ERROR) << "Intentionally causing ASAN heap use-after-free"
                << " because user navigated to " << url.spec();
     base::debug::AsanHeapUseAfterFree();
+    return true;
 #if defined(SYZYASAN)
   } else if (crash_type == kCorruptHeapBlock) {
     LOG(ERROR) << "Intentionally causing ASAN corrupt heap block"
                << " because user navigated to " << url.spec();
     base::debug::AsanCorruptHeapBlock();
+    return true;
   } else if (crash_type == kCorruptHeap) {
     LOG(ERROR) << "Intentionally causing ASAN corrupt heap"
                << " because user navigated to " << url.spec();
     base::debug::AsanCorruptHeap();
+    return true;
   } else if (crash_type == kDcheck) {
     LOG(ERROR) << "Intentionally DCHECKING because user navigated to "
                << url.spec();
 
     DCHECK(false) << "Intentional DCHECK.";
+    return true;
 #endif
   }
+  return false;
 }
 #endif  // ADDRESS_SANITIZER || SYZYASAN
 
-void MaybeHandleDebugURL(const GURL& url) {
+// Returns true if the URL is a debug URL that was handled, false otherwise.
+bool MaybeHandleDebugURL(const GURL& url) {
   if (!url.SchemeIs(kChromeUIScheme))
-    return;
+    return false;
   if (url == kChromeUIBadCastCrashURL) {
     LOG(ERROR) << "Intentionally crashing (with bad cast)"
                << " because user navigated to " << url.spec();
     BadCastCrashIntentionally();
+    return true;
   } else if (url == kChromeUICrashURL) {
     LOG(ERROR) << "Intentionally crashing (with null pointer dereference)"
                << " because user navigated to " << url.spec();
     CrashIntentionally();
+    return true;
   } else if (url == kChromeUIDumpURL) {
     // This URL will only correctly create a crash dump file if content is
     // hosted in a process that has correctly called
     // base::debug::SetDumpWithoutCrashingFunction.  Refer to the documentation
     // of base::debug::DumpWithoutCrashing for more details.
     base::debug::DumpWithoutCrashing();
+    return true;
   } else if (url == kChromeUIKillURL) {
     LOG(ERROR) << "Intentionally issuing kill signal to current process"
                << " because user navigated to " << url.spec();
     base::Process::Current().Terminate(1, false);
+    return true;
   } else if (url == kChromeUIHangURL) {
     LOG(ERROR) << "Intentionally hanging ourselves with sleep infinite loop"
                << " because user navigated to " << url.spec();
     for (;;) {
       base::PlatformThread::Sleep(base::TimeDelta::FromSeconds(1));
     }
+    return true;
   } else if (url == kChromeUIShorthangURL) {
     LOG(ERROR) << "Intentionally sleeping renderer for 20 seconds"
                << " because user navigated to " << url.spec();
     base::PlatformThread::Sleep(base::TimeDelta::FromSeconds(20));
+    return true;
   } else if (url == kChromeUIMemoryExhaustURL) {
     LOG(ERROR)
         << "Intentionally exhausting renderer memory because user navigated to "
         << url.spec();
     ExhaustMemory();
+    return true;
   } else if (url == kChromeUICheckCrashURL) {
     LOG(ERROR) << "Intentionally causing CHECK because user navigated to "
                << url.spec();
     CHECK(false);
+    return true;
   }
 
+  bool was_handled = false;
 #if defined(ADDRESS_SANITIZER) || defined(SYZYASAN)
-  MaybeTriggerAsanError(url);
+  was_handled = MaybeTriggerAsanError(url);
 #endif  // ADDRESS_SANITIZER || SYZYASAN
+  return was_handled;
 }
 
 struct RenderFrameImpl::PendingFileChooser {
@@ -6075,6 +6094,17 @@ void RenderFrameImpl::NavigateInternal(
     std::unique_ptr<StreamOverrideParameters> stream_params) {
   bool browser_side_navigation = IsBrowserSideNavigationEnabled();
 
+  // First, check if this is a Debug URL. If so, handle it and stop the
+  // naviagtion right away.
+  base::WeakPtr<RenderFrameImpl> weak_this = weak_factory_.GetWeakPtr();
+  if (MaybeHandleDebugURL(common_params.url)) {
+    // The browser expects the frame to be loading this navigation. Inform it
+    // that the load stopped if needed.
+    if (weak_this && frame_ && !frame_->IsLoading())
+      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+    return;
+  }
+
   // PlzNavigate
   // Clear pending navigations which weren't sent to the browser because we
   // did not get a didStartProvisionalLoad() notification for them.
@@ -6305,16 +6335,14 @@ void RenderFrameImpl::NavigateInternal(
                   item_for_history_navigation, history_load_type,
                   is_client_redirect);
     } else {
-      // The load of the URL can result in this frame being removed. Use a
-      // WeakPtr as an easy way to detect whether this has occured. If so, this
-      // method should return immediately and not touch any part of the object,
-      // otherwise it will result in a use-after-free bug.
-      base::WeakPtr<RenderFrameImpl> weak_this = weak_factory_.GetWeakPtr();
-
       // Load the request.
       frame_->Load(request, load_type, item_for_history_navigation,
                    history_load_type, is_client_redirect);
 
+      // The load of the URL can result in this frame being removed. Use a
+      // WeakPtr as an easy way to detect whether this has occured. If so, this
+      // method should return immediately and not touch any part of the object,
+      // otherwise it will result in a use-after-free bug.
       if (!weak_this)
         return;
     }
@@ -6437,8 +6465,6 @@ void RenderFrameImpl::PrepareRenderViewForNavigation(
     const GURL& url,
     const RequestNavigationParams& request_params) {
   DCHECK(render_view_->webview());
-
-  MaybeHandleDebugURL(url);
 
   if (is_main_frame_) {
     for (auto& observer : render_view_->observers_)
