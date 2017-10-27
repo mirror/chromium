@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85ff3984_9152573a",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-27T11:09:59Z",
+      "side": 1,
+      "message": "Why can\u0027t you retrieve |metrics_recorder| from |model|?",
+      "range": {
+        "startLine": 89,
+        "startChar": 53,
+        "endLine": 89,
+        "endChar": 69
+      },
+      "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3bad76e_12465c67",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-27T11:09:59Z",
+      "side": 1,
+      "message": "Are there cases when |metrics_recorder| is NULL?",
+      "range": {
+        "startLine": 229,
+        "startChar": 6,
+        "endLine": 229,
+        "endChar": 22
+      },
+      "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6d7310_64a63caf",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-27T11:09:59Z",
+      "side": 1,
+      "message": "|delegate| can\u0027t be NULL",
+      "range": {
+        "startLine": 275,
+        "startChar": 24,
+        "endLine": 275,
+        "endChar": 33
+      },
+      "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0f6f53_9cee5758",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-27T11:09:59Z",
+      "side": 1,
+      "message": "A forward declaration seems to be good enough.",
+      "range": {
+        "startLine": 15,
+        "startChar": 51,
+        "endLine": 15,
+        "endChar": 81
+      },
+      "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e2aa43_b11c4942",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-27T11:09:59Z",
+      "side": 1,
+      "message": "I wonder why you need a public getter if you never used it? You could just use |metrics_recorder_|",
+      "range": {
+        "startLine": 138,
+        "startChar": 49,
+        "endLine": 138,
+        "endChar": 65
+      },
+      "revId": "03b68f42e2bbfb0acc4389ac6fb105b2ab6c1f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
