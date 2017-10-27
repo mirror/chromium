@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7643f220_61b68a42",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-27T09:32:03Z",
+      "side": 0,
+      "message": "Are you sure ordering here isn\u0027t important? Fore example, does [_overscrollActionsController invalidate] change behavior if [_fullScreenController invalidate] hasn\u0027t been called (or vice-versa)?",
+      "range": {
+        "startLine": 524,
+        "startChar": 37,
+        "endLine": 524,
+        "endChar": 0
+      },
+      "revId": "1b3eff4568085006ce3bb731717d63f8f7e2e108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
