@@ -37,7 +37,7 @@ TEST(NativeValueTraitsImplTest, IDLInterface) {
             scope.GetIsolate(), v8::Undefined(scope.GetIsolate()),
             exception_state);
     EXPECT_TRUE(exception_state.HadException());
-    EXPECT_EQ("Failed to convert value to 'TestSequenceCallback'.",
+    EXPECT_EQ("Failed to convert value to 'Function'.",
               exception_state.Message());
     EXPECT_EQ(nullptr, callback_function);
   }
