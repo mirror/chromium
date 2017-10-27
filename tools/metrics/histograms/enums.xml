@@ -24054,6 +24054,7 @@ from previous Chrome versions.
   <int value="-1571841513" label="enable-devtools-experiments"/>
   <int value="-1559789642" label="RunAllFlashInAllowMode:enabled"/>
   <int value="-1557527869" label="LoadingWithMojo:disabled"/>
+  <int value="-1556611790" label="ServiceWorkerFullCodeCacheInstall:disabled"/>
   <int value="-1553477903" label="ash-disable-text-filtering-in-overview-mode"/>
   <int value="-1549871007" label="OneGoogleBarOnLocalNtp:disabled"/>
   <int value="-1546903171" label="enable-touch-drag-drop"/>
@@ -24324,6 +24325,7 @@ from previous Chrome versions.
   <int value="-812461825" label="AutofillCreditCardSigninPromo:enabled"/>
   <int value="-810684526"
       label="AutofillToolkitViewsCreditCardDialogsMac:disabled"/>
+  <int value="-809347743" label="ServiceWorkerFullCodeCacheInstall:enabled"/>
   <int value="-802348444" label="disable-site-engagement-service"/>
   <int value="-798187384" label="try-supported-channel-layouts"/>
   <int value="-795600188" label="disable-async-dns"/>

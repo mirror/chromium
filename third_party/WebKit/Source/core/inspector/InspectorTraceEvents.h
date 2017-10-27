@@ -395,7 +395,7 @@ std::unique_ptr<TracedValue> Data(unsigned long identifier, const String& url);
 
 namespace InspectorCompileScriptEvent {
 
-struct V8CacheResult {
+struct CORE_EXPORT V8CacheResult {
   struct ProduceResult {
     ProduceResult(v8::ScriptCompiler::CompileOptions produce_options,
                   int cache_size);
@@ -414,10 +414,10 @@ struct V8CacheResult {
   Optional<ConsumeResult> consume_result;
 };
 
-std::unique_ptr<TracedValue> Data(const String& url,
-                                  const WTF::TextPosition&,
-                                  const V8CacheResult&,
-                                  bool streamed);
+CORE_EXPORT std::unique_ptr<TracedValue> Data(const String& url,
+                                              const WTF::TextPosition&,
+                                              const V8CacheResult&,
+                                              bool streamed);
 }
 
 namespace InspectorFunctionCallEvent {
