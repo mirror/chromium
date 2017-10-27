@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65070328_9619d687",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-27T10:49:27Z",
+      "side": 1,
+      "message": "no longer needed",
+      "revId": "8fbfd35969b128469dce0c7197fb57d080765f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3b2a18_03ade79a",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-27T10:49:27Z",
+      "side": 1,
+      "message": "nit. please add some comments what those methods do",
+      "revId": "8fbfd35969b128469dce0c7197fb57d080765f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
