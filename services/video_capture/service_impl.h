@@ -26,6 +26,9 @@ class ServiceImpl : public service_manager::Service {
   ServiceImpl();
   ~ServiceImpl() override;
 
+  void SetFactoryProviderClientDisconnectedObserver(
+      base::RepeatingClosure observer_cb);
+
   // service_manager::Service implementation.
   void OnStart() override;
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
@@ -48,6 +51,7 @@ class ServiceImpl : public service_manager::Service {
   float shutdown_delay_in_seconds_;
   service_manager::BinderRegistry registry_;
   std::unique_ptr<service_manager::ServiceContextRefFactory> ref_factory_;
+  base::RepeatingClosure optional_factory_provider_client_disconnected_cb_;
   base::ThreadChecker thread_checker_;
   base::WeakPtrFactory<ServiceImpl> weak_factory_;
 

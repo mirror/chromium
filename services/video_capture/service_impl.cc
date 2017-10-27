@@ -21,6 +21,12 @@ ServiceImpl::~ServiceImpl() {
   DCHECK(thread_checker_.CalledOnValidThread());
 }
 
+void ServiceImpl::SetFactoryProviderClientDisconnectedObserver(
+    base::RepeatingClosure observer_cb) {
+  optional_factory_provider_client_disconnected_cb_ = observer_cb;
+  // TODO: Call it at the right time
+}
+
 void ServiceImpl::OnStart() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
