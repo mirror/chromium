@@ -12,6 +12,8 @@
 #include "base/memory/ref_counted.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
 #include "content/public/browser/browser_thread.h"
 #include "printing/backend/print_backend.h"
@@ -61,7 +63,9 @@ std::string GetDefaultPrinterAsync() {
 
 }  // namespace
 
-LocalPrinterHandlerDefault::LocalPrinterHandlerDefault() {}
+LocalPrinterHandlerDefault::LocalPrinterHandlerDefault(
+    content::WebContents* preview_web_contents)
+    : preview_web_contents_(preview_web_contents) {}
 
 LocalPrinterHandlerDefault::~LocalPrinterHandlerDefault() {}
 
@@ -107,5 +111,6 @@ void LocalPrinterHandlerDefault::StartPrint(
     const gfx::Size& page_size,
     const scoped_refptr<base::RefCountedBytes>& print_data,
     const PrintCallback& callback) {
-  NOTREACHED();
+  printing::StartLocalPrint(ticket_json, print_data, callback,
+                            preview_web_contents_);
 }

@@ -9,18 +9,25 @@
 #include <utility>
 #include <vector>
 
+#include "base/json/json_reader.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/ref_counted_memory.h"
 #include "base/stl_util.h"
 #include "base/strings/string_piece.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "chrome/browser/printing/print_preview_dialog_controller.h"
+#include "chrome/browser/printing/print_view_manager.h"
+#include "chrome/browser/ui/webui/print_preview/print_preview_ui.h"
 #include "chrome/browser/ui/webui/print_preview/printer_handler.h"
 #include "chrome/common/cloud_print/cloud_print_cdd_conversion.h"
 #include "chrome/common/crash_keys.h"
+#include "content/public/browser/render_frame_host.h"
 #include "printing/backend/print_backend.h"
 #include "printing/backend/print_backend_consts.h"
+#include "printing/page_range.h"
 
 #if defined(OS_WIN)
 #include "base/strings/string_split.h"
@@ -161,6 +168,17 @@ bool VendorCapabilityInvalid(const base::Value& val) {
   return false;
 }
 
+scoped_refptr<base::RefCountedBytes> GetPageData(PrintPreviewUI* preview_ui,
+                                                 int page_num) {
+  scoped_refptr<base::RefCountedBytes> data;
+  preview_ui->GetPrintPreviewDataForIndex(page_num, &data);
+  return data;
+}
+
+void SystemDialogDone(const base::Value& error) {
+  // intentional no-op
+}
+
 }  // namespace
 
 std::pair<std::string, std::string> GetPrinterNameAndDescription(
@@ -281,4 +299,87 @@ std::unique_ptr<base::DictionaryValue> ValidateCddForPrintPreview(
   return validated_cdd;
 }
 
+void StartLocalPrint(const std::string& ticket_json,
+                     const scoped_refptr<base::RefCountedBytes>& print_data,
+                     const PrinterHandler::PrintCallback& callback,
+                     content::WebContents* preview_web_contents) {
+  std::unique_ptr<base::DictionaryValue> job_settings =
+      base::DictionaryValue::From(base::JSONReader::Read(ticket_json));
+  if (!job_settings) {
+    callback.Run(base::Value("Invalid settings"));
+    return;
+  }
+  int page_count = 0;
+  if (!job_settings->GetInteger(kSettingPreviewPageCount, &page_count) ||
+      page_count <= 0) {
+    callback.Run(base::Value("Empty page range"));
+    return;
+  }
+
+  // Get print view manager.
+  PrintPreviewDialogController* dialog_controller =
+      PrintPreviewDialogController::GetInstance();
+  content::WebContents* initiator =
+      dialog_controller ? dialog_controller->GetInitiator(preview_web_contents)
+                        : nullptr;
+  PrintViewManager* print_view_manager =
+      PrintViewManager::FromWebContents(initiator);
+  if (!print_view_manager) {
+    callback.Run(base::Value("Initiator closed"));
+    return;
+  }
+
+  PrintPreviewUI* preview_ui = static_cast<PrintPreviewUI*>(
+      preview_web_contents->GetWebUI()->GetController());
+#if defined(OS_MACOSX)
+  int first_page = INT_MAX;
+  const base::ListValue* page_range_array = NULL;
+  if (job_settings->GetList(kSettingPageRange, &page_range_array)) {
+    for (size_t index = 0; index < page_range_array->GetSize(); ++index) {
+      const base::DictionaryValue* dict;
+      if (!page_range_array->GetDictionary(index, &dict))
+        continue;
+
+      PageRange range;
+      if (!dict->GetInteger(kSettingPageRangeFrom, &range.from) ||
+          !dict->GetInteger(kSettingPageRangeTo, &range.to)) {
+        continue;
+      }
+
+      // Page numbers are 1-based in the dictionary.
+      // Page numbers are 0-based for the printing context.
+      if (range.from < first_page)
+        first_page = range.from;
+    }
+  }
+  if (first_page == INT_MAX)
+    first_page = 0;
+  scoped_refptr<base::RefCountedBytes> first_page_data;
+  preview_ui->GetPrintPreviewDataForIndex(first_page, &first_page_data);
+  if (!first_page_data.get()) {
+    callback.Run(base::Value("Print failed"));
+    return;
+  }
+#endif  // defined(OS_MACOSX)
+  bool system_dialog = false;
+  job_settings->GetBoolean(printing::kSettingShowSystemDialog, &system_dialog);
+  bool open_in_pdf = false;
+  job_settings->GetBoolean(printing::kSettingOpenPDFInPreview, &open_in_pdf);
+  if (system_dialog || open_in_pdf) {
+    // Run the callback early, or the modal dialogs will prevent the preview
+    // from closing until they do.
+    callback.Run(base::Value());
+  }
+  print_view_manager->PrintForPrintPreview(
+      (system_dialog || open_in_pdf) ? base::BindOnce(&SystemDialogDone)
+                                     : callback,
+      std::move(job_settings), page_count,
+#if defined(OS_MACOSX)
+      first_page_data,
+#else
+      print_data,
+#endif
+      preview_web_contents->GetMainFrame(),
+      base::Bind(&GetPageData, preview_ui));
+}
 }  // namespace printing
