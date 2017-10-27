@@ -46,6 +46,30 @@
       "revId": "87d9b7c7ebe4b1385f88de9689bafa0e9820583a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f74d01_5b9c0f49",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-27T16:23:24Z",
+      "side": 1,
+      "message": "Ok moved into 3 Strings with relevant messages.",
+      "parentUuid": "1b1dd8d5_2b055466",
+      "range": {
+        "startLine": 618,
+        "startChar": 30,
+        "endLine": 618,
+        "endChar": 41
+      },
+      "revId": "87d9b7c7ebe4b1385f88de9689bafa0e9820583a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
