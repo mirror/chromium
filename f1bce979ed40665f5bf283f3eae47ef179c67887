@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1438c3e3_91f0b6f5",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-27T09:08:02Z",
+      "side": 1,
+      "message": "path_prefix needs a comment somewhere. It was not what I first expected when I saw the name.",
+      "revId": "f1bce979ed40665f5bf283f3eae47ef179c67887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
