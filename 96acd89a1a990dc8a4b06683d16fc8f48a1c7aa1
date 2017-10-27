@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfbab95c_3406f18e",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T01:59:23Z",
+      "side": 1,
+      "message": "Is this TODO still relevant? Perhaps CC devlin, if not sure.",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a797a6e_b27da635",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T01:59:23Z",
+      "side": 1,
+      "message": "Nit: @override",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99541040_3a80a7f3",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T01:59:23Z",
+      "side": 1,
+      "message": "Given our discussion about making the delegate more like a familiar BrowserProxy, how about making this a TestBrowserProxy instance and simplify its internals?\n\nclass DelegateMock extends TestBrowserProxy {\n  constructor() {\n    super([\u0027setShortcutHandlingSuspended\u0027, \u0027updateExtensionCommand\u0027]);\n  }\n\n  setShortcutHandlingSuspended(enable) {\n    this.methodCalled(\u0027setShortcutHandlingSuspended\u0027, enable);\n  }\n\n  updateExtensionCommand(item, commandName, keybinding) {\n    this.methodCalled(\u0027setShortcutHandlingSuspended\u0027, [item, commandName, keybinding]);\n  }\n}",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a0beb3_a91d9c3e",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-27T01:59:23Z",
+      "side": 1,
+      "message": "Continuing from previous comment. This would be:\n\nMockInteractions.tap(field);\n\nreturn input.delegate.whenCalled(\u0027setShortcutHandlingSuspended\u0027).then(arg \u003d\u003e {\n  assertTrue(arg);\n   input.delegate.reset();\n   ...\n  \n   MockInteractions.keyDownOn(...)\n   ...\n   return .....whenCalled(....);\n}).then(...);\n\nAlso it seems a bit odd that we are asserting on private member variable |capturing_|. Is that necessary? Can we not effectively test the same thing via the publicly exposed API, meaning by asserting on whether |input| makes the expected calls to the delegate, instead of asserting on internal non-public state?",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
