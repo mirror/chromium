@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cedc8ca7_db2c12c7",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-27T20:03:44Z",
+      "side": 1,
+      "message": "Can you put the codes in a separate function with the name like AdjustSnappedWindowBoundsDuringResizing() or something else? I think it\u0027s only necessary to adjust the bounds during resizing as it\u0027s impossible for a window to snap in a position that makes the bounds size smaller than its minimal size.",
+      "revId": "9601839324f75c2ecd6e6479d5649e8ef1eb2663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
