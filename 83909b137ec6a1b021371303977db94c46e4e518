@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "504cb5f1_203bf516",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T13:29:04Z",
+      "side": 1,
+      "message": "Consider removing NotificationData and inline its default values in the usages below. Fine to do in a follow-up too.",
+      "revId": "83909b137ec6a1b021371303977db94c46e4e518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
