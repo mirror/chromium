@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44c844bb_f14b19df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T00:44:46Z",
+      "side": 1,
+      "message": "nit: Since the vast majority of uses of this class call getInstance() as the first thing, it\u0027s probably even better to drop the nested class and just initialize statically in the outer class.",
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb4bd41_71ebbe3c",
+        "filename": "third_party/errorprone/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T00:44:46Z",
+      "side": 1,
+      "message": "Looks like this is a separate project, so probably should be in its own third_party directory.",
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7cd63b6_340a53e6",
+        "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T00:44:46Z",
+      "side": 1,
+      "message": "Suggestion: Triggers an Error for public methods that use \"synchronized\" in their signatures.",
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbfee2ea_d617cd8d",
+        "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T00:44:46Z",
+      "side": 1,
+      "message": "Suggestion: Use of synchronized in public method signature disallowed.",
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728049d6_29f3b9dc",
+        "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T00:44:46Z",
+      "side": 1,
+      "message": "Probably don\u0027t want to link to findbugs. How about just link to:\nhttps://stackoverflow.com/questions/20906548/why-is-synchronized-block-better-than-synchronized-method",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 12
+      },
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7edafa5_d762ba24",
+        "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-27T00:44:46Z",
+      "side": 1,
+      "message": "method -\u003e public method",
+      "range": {
+        "startLine": 49,
+        "startChar": 55,
+        "endLine": 49,
+        "endChar": 61
+      },
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
