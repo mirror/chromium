@@ -42,6 +42,8 @@ function onResize() {
 }
 
 function setupMobileNav() {
+  // Check for screens with a low bit colour depth.
+  document.body.classList.toggle('low-color-depth', screen.colorDepth < 24);
   window.addEventListener('resize', onResize);
   onResize();
 }
