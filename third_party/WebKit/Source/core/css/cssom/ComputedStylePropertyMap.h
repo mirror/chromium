@@ -19,7 +19,7 @@ namespace blink {
 // The computed StylePropertyMapReadOnly retrieves computed styles and returns
 // them as CSSStyleValues. The IDL for this class is in StylePropertyMap.idl.
 // The computed StylePropertyMapReadOnly for an element is accessed via
-// window.getComputedStyleMap(element) (see WindowGetComputedStyle.idl/h)
+// Element.computedStyleMap() (see ElementComputedStyleMap.idl/h)
 class CORE_EXPORT ComputedStylePropertyMap : public StylePropertyMapReadonly {
   WTF_MAKE_NONCOPYABLE(ComputedStylePropertyMap);
 
