@@ -316,9 +316,9 @@ public class ShareHelper {
             return;
         }
 
-        new AsyncTask<Void, Void, File>() {
+        new AsyncTask<Void, Void, Uri>() {
             @Override
-            protected File doInBackground(Void... params) {
+            protected Uri doInBackground(Void... params) {
                 FileOutputStream fOut = null;
                 try {
                     File path = new File(UiUtils.getDirectoryForImageCapture(activity),
@@ -329,32 +329,27 @@ public class ShareHelper {
                         fOut = new FileOutputStream(saveFile);
                         fOut.write(jpegImageData);
                         fOut.flush();
-                        fOut.close();
 
-                        return saveFile;
+                        return ApiCompatibilityUtils.getUriForImageCaptureFile(saveFile);
                     } else {
                         Log.w(TAG, "Share failed -- Unable to create share image directory.");
                     }
                 } catch (IOException ie) {
-                    if (fOut != null) {
-                        try {
-                            fOut.close();
-                        } catch (IOException e) {
-                            // Ignore exception.
-                        }
-                    }
+                    // Ignore exception.
+                }
+                finally {
+                    StreamUtil.closeQuietly(fOut);
                 }
 
                 return null;
             }
 
             @Override
-            protected void onPostExecute(File saveFile) {
-                if (saveFile == null) return;
+            protected void onPostExecute(Uri imageUri) {
+                if (imageUri == null) return;
 
                 if (ApplicationStatus.getStateForApplication()
                         != ApplicationState.HAS_DESTROYED_ACTIVITIES) {
-                    Uri imageUri = ApiCompatibilityUtils.getUriForImageCaptureFile(saveFile);
                     Intent shareIntent = getShareImageIntent(imageUri);
                     if (name == null) {
                         if (TargetChosenReceiver.isSupported()) {
@@ -390,9 +385,9 @@ public class ShareHelper {
             return;
         }
 
-        new AsyncTask<Void, Void, File>() {
+        new AsyncTask<Void, Void, Uri>() {
             @Override
-            protected File doInBackground(Void... params) {
+            protected Uri doInBackground(Void... params) {
                 FileOutputStream fOut = null;
                 try {
                     File path = new File(UiUtils.getDirectoryForImageCapture(context) + "/"
@@ -402,7 +397,10 @@ public class ShareHelper {
                         File saveFile = File.createTempFile(fileName, JPEG_EXTENSION, path);
                         fOut = new FileOutputStream(saveFile);
                         screenshot.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
-                        return saveFile;
+                        if (ApplicationStatus.getStateForApplication()
+                                != ApplicationState.HAS_DESTROYED_ACTIVITIES) {
+                            return ApiCompatibilityUtils.getUriForImageCaptureFile(saveFile);
+                        }
                     }
                 } catch (IOException ie) {
                     Log.w(TAG, "Ignoring IOException when saving screenshot.", ie);
@@ -414,13 +412,7 @@ public class ShareHelper {
             }
 
             @Override
-            protected void onPostExecute(File savedFile) {
-                Uri fileUri = null;
-                if (ApplicationStatus.getStateForApplication()
-                        != ApplicationState.HAS_DESTROYED_ACTIVITIES
-                        && savedFile != null) {
-                    fileUri = ApiCompatibilityUtils.getUriForImageCaptureFile(savedFile);
-                }
+            protected void onPostExecute(Uri fileUri) {
                 callback.onResult(fileUri);
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
