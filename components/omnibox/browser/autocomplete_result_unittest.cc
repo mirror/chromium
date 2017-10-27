@@ -15,6 +15,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/autocomplete_match_type.h"
@@ -392,6 +393,106 @@ TEST_F(AutocompleteResultTest, SortAndCullEmptyDestinationURLs) {
   EXPECT_EQ(1100, result.match_at(2)->relevance);
   EXPECT_EQ("http://b/", result.match_at(3)->destination_url.spec());
   EXPECT_EQ(1000, result.match_at(3)->relevance);
+}
+
+#if !(defined(OS_ANDROID) || defined(OS_IOS))
+TEST_F(AutocompleteResultTest, SortAndCullTailSuggestions) {
+  // clang-format off
+  TestData data[] = {
+      {1, 1, 500,  true},
+      {2, 1, 1100, false},
+      {3, 1, 1000, false},
+      {4, 1, 1300, false},
+      {5, 1, 1200, false},
+  };
+  // clang-format on
+
+  ACMatches matches;
+  PopulateAutocompleteMatches(data, arraysize(data), &matches);
+  // These will get sorted down, but not removed.
+  matches[1].type = AutocompleteMatchType::SEARCH_SUGGEST_TAIL;
+  matches[2].type = AutocompleteMatchType::SEARCH_SUGGEST_TAIL;
+
+  AutocompleteInput input(base::ASCIIToUTF16("a"),
+                          metrics::OmniboxEventProto::OTHER,
+                          TestSchemeClassifier());
+  AutocompleteResult result;
+  result.AppendMatches(input, matches);
+  result.SortAndCull(input, template_url_service_.get());
+
+  EXPECT_EQ(3UL, result.size());
+  EXPECT_NE(AutocompleteMatchType::SEARCH_SUGGEST_TAIL,
+            result.match_at(0)->type);
+  EXPECT_NE(AutocompleteMatchType::SEARCH_SUGGEST_TAIL,
+            result.match_at(1)->type);
+  EXPECT_NE(AutocompleteMatchType::SEARCH_SUGGEST_TAIL,
+            result.match_at(2)->type);
+}
+
+TEST_F(AutocompleteResultTest, SortAndCullNonTailSuggestions) {
+  // clang-format off
+  TestData data[] = {
+      {1, 1, 500,  true},
+      {2, 1, 1100, false},
+      {3, 1, 1000, false},
+      {4, 1, 1300, false},
+      {5, 1, 1200, false},
+  };
+  // clang-format on
+
+  ACMatches matches;
+  PopulateAutocompleteMatches(data, arraysize(data), &matches);
+  // These will get sorted up and kept.
+  matches[3].type = AutocompleteMatchType::SEARCH_SUGGEST_TAIL;
+  matches[4].type = AutocompleteMatchType::SEARCH_SUGGEST_TAIL;
+
+  AutocompleteInput input(base::ASCIIToUTF16("a"),
+                          metrics::OmniboxEventProto::OTHER,
+                          TestSchemeClassifier());
+  AutocompleteResult result;
+  result.AppendMatches(input, matches);
+  result.SortAndCull(input, template_url_service_.get());
+
+  EXPECT_EQ(3UL, result.size());
+  EXPECT_NE(AutocompleteMatchType::SEARCH_SUGGEST_TAIL,
+            result.match_at(0)->type);
+  EXPECT_NE(AutocompleteMatchType::SEARCH_SUGGEST_TAIL,
+            result.match_at(1)->type);
+  EXPECT_NE(AutocompleteMatchType::SEARCH_SUGGEST_TAIL,
+            result.match_at(2)->type);
+}
+#endif
+
+TEST_F(AutocompleteResultTest, SortAndCullOnlyTailSuggestions) {
+  // clang-format off
+  TestData data[] = {
+      {1, 1, 500,  true},
+      {2, 1, 1100, false},
+      {3, 1, 1000, false},
+      {4, 1, 1300, false},
+      {5, 1, 1200, false},
+  };
+  // clang-format on
+
+  ACMatches matches;
+  PopulateAutocompleteMatches(data, arraysize(data), &matches);
+  // These will get sorted down, but not removed.
+  for (size_t i = 1; i < 5; ++i)
+    matches[i].type = AutocompleteMatchType::SEARCH_SUGGEST_TAIL;
+
+  AutocompleteInput input(base::ASCIIToUTF16("a"),
+                          metrics::OmniboxEventProto::OTHER,
+                          TestSchemeClassifier());
+  AutocompleteResult result;
+  result.AppendMatches(input, matches);
+  result.SortAndCull(input, template_url_service_.get());
+
+  EXPECT_EQ(5UL, result.size());
+  EXPECT_NE(AutocompleteMatchType::SEARCH_SUGGEST_TAIL,
+            result.match_at(0)->type);
+  for (size_t i = 1; i < 5; ++i)
+    EXPECT_EQ(AutocompleteMatchType::SEARCH_SUGGEST_TAIL,
+              result.match_at(i)->type);
 }
 
 TEST_F(AutocompleteResultTest, SortAndCullDuplicateSearchURLs) {
