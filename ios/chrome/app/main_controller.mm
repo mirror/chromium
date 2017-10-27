@@ -1488,7 +1488,7 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   }
 }
 
-- (void)showAddAccount {
+- (void)showAddAccountFromViewController:(UIViewController*)baseViewController {
   if (!self.signinInteractionCoordinator) {
     self.signinInteractionCoordinator = [[SigninInteractionCoordinator alloc]
         initWithBrowserState:_mainBrowserState
@@ -1500,7 +1500,7 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                                     ACCESS_POINT_UNKNOWN
                     promoAction:signin_metrics::PromoAction::
                                     PROMO_ACTION_NO_SIGNIN_PROMO
-       presentingViewController:[self topPresentedViewController]
+       presentingViewController:baseViewController
                      completion:nil];
 }
 

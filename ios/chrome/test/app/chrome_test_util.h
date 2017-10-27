@@ -18,8 +18,12 @@ class ChromeBrowserState;
 @class GenericChromeCommand;
 @class MainController;
 @class NewTabPageController;
+@class UIViewController;
 
 namespace chrome_test_util {
+
+// Gets the active UIViewController.
+UIViewController* GetActiveViewController();
 
 // Returns the main controller.
 MainController* GetMainController();
