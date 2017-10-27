@@ -4621,6 +4621,13 @@ _FUNCTION_INFO = {
                 'GLsizei color_space_size',
     'extension': 'CHROMIUM_color_space_metadata',
   },
+  'WindowRectanglesEXT': {
+    'type': 'PUTn',
+    'count': 4,
+    'decoder_func': 'DoWindowRectanglesEXT',
+    'extension': 'EXT_window_rectangles',
+    'extension_flag': 'ext_window_rectangles',
+  },
 }
 
 

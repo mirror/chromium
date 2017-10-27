@@ -545,6 +545,7 @@ void DriverGL::InitializeStaticBindings() {
   fn.glViewportFn =
       reinterpret_cast<glViewportProc>(GetGLProcAddress("glViewport"));
   fn.glWaitSyncFn = 0;
+  fn.glWindowRectanglesEXTFn = 0;
 }
 
 void DriverGL::InitializeDynamicBindings(const GLVersionInfo* ver,
@@ -647,6 +648,8 @@ void DriverGL::InitializeDynamicBindings(const GLVersionInfo* ver,
       HasExtension(extensions, "GL_EXT_transform_feedback");
   ext.b_GL_EXT_unpack_subimage =
       HasExtension(extensions, "GL_EXT_unpack_subimage");
+  ext.b_GL_EXT_window_rectangles =
+      HasExtension(extensions, "GL_EXT_window_rectangles");
   ext.b_GL_IMG_multisampled_render_to_texture =
       HasExtension(extensions, "GL_IMG_multisampled_render_to_texture");
   ext.b_GL_INTEL_framebuffer_CMAA =
@@ -2511,6 +2514,11 @@ void DriverGL::InitializeDynamicBindings(const GLVersionInfo* ver,
       ext.b_GL_ARB_sync) {
     fn.glWaitSyncFn =
         reinterpret_cast<glWaitSyncProc>(GetGLProcAddress("glWaitSync"));
+  }
+
+  if (ext.b_GL_EXT_window_rectangles) {
+    fn.glWindowRectanglesEXTFn = reinterpret_cast<glWindowRectanglesEXTProc>(
+        GetGLProcAddress("glWindowRectanglesEXT"));
   }
 }
 
@@ -5176,6 +5184,12 @@ void GLApiBase::glViewportFn(GLint x, GLint y, GLsizei width, GLsizei height) {
 
 void GLApiBase::glWaitSyncFn(GLsync sync, GLbitfield flags, GLuint64 timeout) {
   driver_->fn.glWaitSyncFn(sync, flags, timeout);
+}
+
+void GLApiBase::glWindowRectanglesEXTFn(GLenum mode,
+                                        GLsizei n,
+                                        const GLint* box) {
+  driver_->fn.glWindowRectanglesEXTFn(mode, n, box);
 }
 
 void TraceGLApi::glActiveTextureFn(GLenum texture) {
@@ -8304,6 +8318,13 @@ void TraceGLApi::glViewportFn(GLint x, GLint y, GLsizei width, GLsizei height) {
 void TraceGLApi::glWaitSyncFn(GLsync sync, GLbitfield flags, GLuint64 timeout) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::glWaitSync")
   gl_api_->glWaitSyncFn(sync, flags, timeout);
+}
+
+void TraceGLApi::glWindowRectanglesEXTFn(GLenum mode,
+                                         GLsizei n,
+                                         const GLint* box) {
+  TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::glWindowRectanglesEXT")
+  gl_api_->glWindowRectanglesEXTFn(mode, n, box);
 }
 
 void DebugGLApi::glActiveTextureFn(GLenum texture) {
@@ -12446,6 +12467,15 @@ void DebugGLApi::glWaitSyncFn(GLsync sync, GLbitfield flags, GLuint64 timeout) {
   gl_api_->glWaitSyncFn(sync, flags, timeout);
 }
 
+void DebugGLApi::glWindowRectanglesEXTFn(GLenum mode,
+                                         GLsizei n,
+                                         const GLint* box) {
+  GL_SERVICE_LOG("glWindowRectanglesEXT"
+                 << "(" << GLEnums::GetStringEnum(mode) << ", " << n << ", "
+                 << static_cast<const void*>(box) << ")");
+  gl_api_->glWindowRectanglesEXTFn(mode, n, box);
+}
+
 void NoContextGLApi::glActiveTextureFn(GLenum texture) {
   NOTREACHED() << "Trying to call glActiveTexture() without current GL context";
   LOG(ERROR) << "Trying to call glActiveTexture() without current GL context";
@@ -15961,6 +15991,15 @@ void NoContextGLApi::glWaitSyncFn(GLsync sync,
                                   GLuint64 timeout) {
   NOTREACHED() << "Trying to call glWaitSync() without current GL context";
   LOG(ERROR) << "Trying to call glWaitSync() without current GL context";
+}
+
+void NoContextGLApi::glWindowRectanglesEXTFn(GLenum mode,
+                                             GLsizei n,
+                                             const GLint* box) {
+  NOTREACHED()
+      << "Trying to call glWindowRectanglesEXT() without current GL context";
+  LOG(ERROR)
+      << "Trying to call glWindowRectanglesEXT() without current GL context";
 }
 
 }  // namespace gl
