@@ -62,7 +62,7 @@ class PreviewsUIService {
   virtual void OnBlacklistCleared(base::Time time);
 
   // Change the status of whether to ignored or consider PreviewsBlackList
-  // decisions in |oi_data_|. Virtualized in testing.
+  // decisions in |io_data_|. Virtualized in testing.
   virtual void SetIgnorePreviewsBlacklistDecision(bool ignored);
 
   // Notifies |logger_| whether PreviewsBlackList decisions are ignored or not.

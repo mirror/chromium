@@ -95,7 +95,7 @@ class PreviewsLogger {
   virtual void OnBlacklistCleared(base::Time time);
 
   // Notify observers that the status of whether blacklist decisions are ignored
-  // or not.
+  // or not. Virtualized in testing.
   virtual void OnIgnoreBlacklistDecisionStatusChanged(bool ignored);
 
  private:

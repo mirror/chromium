@@ -242,8 +242,7 @@ TEST_F(PreviewsLoggerTest, ObserverIsNotifiedOfHistoricalNavigationsWhenAdded) {
       PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE;
   PreviewsType type = PreviewsType::LOFI;
   const GURL urls[] = {
-      GURL("http://www.url_0.com/url_0"),
-      GURL("http://www.url_1.com/url_1"),
+      GURL("http://www.url_0.com/url_0"), GURL("http://www.url_1.com/url_1"),
       GURL("http://www.url_2.com/url_2"),
   };
   const base::Time times[] = {
@@ -267,8 +266,7 @@ TEST_F(PreviewsLoggerTest, ObserverIsNotifiedOfHistoricalNavigationsWhenAdded) {
   EXPECT_EQ(expected_size, received_messages.size());
 
   const std::string expected_types[] = {
-      kPreviewsDecisionMadeEventType,
-      kPreviewsNavigationEventType,
+      kPreviewsDecisionMadeEventType, kPreviewsNavigationEventType,
       kPreviewsDecisionMadeEventType,
   };
 

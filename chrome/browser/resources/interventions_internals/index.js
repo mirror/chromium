@@ -4,6 +4,9 @@
 
 /** The columns that are used to find rows that contain the keyword. */
 const KEY_COLUMNS = ['log-type', 'log-description', 'log-url'];
+const ENABLE_BLACKLIST_BUTTON = 'Enable Blacklist';
+const IGNORE_BLACKLIST_BUTTON = 'Ignore Blacklist';
+const IGNORE_BLACKLIST_MESSAGE = 'Blacklist decisions are ignored.';
 
 /**
  * Convert milliseconds to human readable date/time format.
@@ -211,7 +214,11 @@ InterventionsInternalPageImpl.prototype = {
   onIgnoreBlacklistDecisionStatusChanged: function(ignored) {
     let ignoreButton = $('ignore-blacklist-button');
     ignoreButton.textContent =
-        ignored ? 'Enable Blacklist' : 'Ignore Blacklist';
+        ignored ? ENABLE_BLACKLIST_BUTTON : IGNORE_BLACKLIST_BUTTON;
+
+    // Update the status of blacklist ignored on the page.
+    $('blacklist-ignored-status').textContent =
+        ignored ? IGNORE_BLACKLIST_MESSAGE : '';
   },
 
   /**
@@ -227,7 +234,6 @@ InterventionsInternalPageImpl.prototype = {
 };
 
 cr.define('interventions_internals', () => {
-  // The blacklist decision should not be ignored by default.
   let pageHandler = null;
 
   function init(handler) {
@@ -237,8 +243,7 @@ cr.define('interventions_internals', () => {
     let ignoreButton = $('ignore-blacklist-button');
     ignoreButton.addEventListener('click', () => {
       // Whether the blacklist is currently ignored.
-      let ignored = (ignoreButton.textContent == 'Enable Blacklist');
-
+      let ignored = (ignoreButton.textContent == ENABLE_BLACKLIST_BUTTON);
       // Try to reverse the ignore status.
       pageHandler.setIgnorePreviewsBlacklistDecision(!ignored);
     });

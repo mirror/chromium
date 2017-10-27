@@ -35,10 +35,10 @@ interface InterventionsInternalsPageHandler {
   // Inject the client side page object.
   SetClientPage(InterventionsInternalsPage page);
 
-  // Change the status of ignoring blacklist to |ignore|. |ignore| will indicate
-  // whether the blacklist decision would be ignored when deciding if a preview
-  // should be shown or not.
-  SetIgnorePreviewsBlacklistDecision(bool ignore);
+  // Change the status of ignoring blacklist to |ignored|. |ignored| will
+  // indicate whether the blacklist decision would be ignored when deciding if a
+  // preview should be shown or not.
+  SetIgnorePreviewsBlacklistDecision(bool ignored);
 };
 
 interface InterventionsInternalsPage {

@@ -29,7 +29,7 @@ class InterventionsInternalsUI
       mojom::InterventionsInternalsPageHandlerRequest request) override;
 
   // The PreviewsUIService associated with this UI.
-  previews::PreviewsUIService* ui_service_;
+  previews::PreviewsUIService* previews_ui_service_;
 
   // The network quality estimator service for getting the estimate effective
   // conntection type.
