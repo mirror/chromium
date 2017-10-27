@@ -46,6 +46,30 @@
       "revId": "aad27c2d17ecbe3e3d9a2fc873f26ba27d0ac748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028513cd_79926ee9",
+        "filename": "third_party/zlib/contrib/inffast_chunky.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-27T17:57:55Z",
+      "side": 1,
+      "message": "contrib/optimizations/[platform] makes a ton of sense to me. I like it. Maybe update the contrib README and add a few of us?",
+      "parentUuid": "33c27b80_72cfe873",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "aad27c2d17ecbe3e3d9a2fc873f26ba27d0ac748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
