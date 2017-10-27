@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4624a599_cf89244a",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_match.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-27T23:20:49Z",
+      "side": 1,
+      "message": "Pink in Gerrit is bad :P Here and elsewhere",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ccf297_28c3f435",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_match.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-27T23:20:49Z",
+      "side": 1,
+      "message": "This should be rightView, correct? I feel like the test should have failed with this in...",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 45
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a00b6ad_ff3ad931",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-27T23:20:49Z",
+      "side": 1,
+      "message": "rightView?",
+      "range": {
+        "startLine": 33,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 47
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4d6547_71a5c737",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-27T23:20:49Z",
+      "side": 1,
+      "message": "rightView?",
+      "range": {
+        "startLine": 42,
+        "startChar": 39,
+        "endLine": 42,
+        "endChar": 47
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed93173_53c1ff8c",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-27T23:20:49Z",
+      "side": 1,
+      "message": "Should be rightView here as well?",
+      "range": {
+        "startLine": 57,
+        "startChar": 39,
+        "endLine": 57,
+        "endChar": 47
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ceab76e_4753b0d1",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-27T23:20:49Z",
+      "side": 1,
+      "message": "Nit: I\u0027m not 100% sure what happens if you call t.done() multiple times within a test (I should hope it\u0027s a NOOP but I can never be sure with the testharness) - maybe only schedule the session.requestFrame again when counter \u003d\u003d 0?",
+      "range": {
+        "startLine": 59,
+        "startChar": 10,
+        "endLine": 59,
+        "endChar": 14
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941b3d30_b18f12f9",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/test-constants.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-27T23:20:49Z",
+      "side": 1,
+      "message": "What\u0027s the reasoning behind this?",
+      "range": {
+        "startLine": 3,
+        "startChar": 20,
+        "endLine": 3,
+        "endChar": 28
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
