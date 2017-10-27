@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2326d733_4808c430",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-27T06:20:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9079428_bd70ef4f",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80097118_a57fffae",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/blink_types.py",
         "patchSetId": 16
@@ -1164,6 +1182,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c2448a_d9b7e57b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-27T06:20:20Z",
+      "side": 1,
+      "message": "agreed. done.",
+      "parentUuid": "7a909167_f2c18700",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
