@@ -8,7 +8,9 @@
 
 #include "base/macros.h"
 #include "base/run_loop.h"
+#include "base/test/mock_callback.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
+#include "content/browser/interface_provider_filtering.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/public/browser/javascript_dialog_manager.h"
@@ -24,10 +26,13 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
+#include "content/test/did_commit_provisional_load_interceptor.h"
+#include "content/test/frame_host_test_interface.mojom.h"
 #include "content/test/test_content_browser_client.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
+#include "testing/gmock/include/gmock/gmock.h"
 
 namespace content {
 
@@ -61,7 +66,6 @@ class PrerenderTestContentBrowserClient : public TestContentBrowserClient {
 
   DISALLOW_COPY_AND_ASSIGN(PrerenderTestContentBrowserClient);
 };
-
 }  // anonymous namespace
 
 // TODO(mlamouri): part of these tests were removed because they were dependent
@@ -818,6 +822,226 @@ IN_PROC_BROWSER_TEST_F(
   std::string second_part_received;
   EXPECT_TRUE(dom_message_queue.WaitForMessage(&second_part_received));
   EXPECT_EQ("\"Second part received\"", second_part_received);
+}
+
+namespace {
+
+// Allows injecting a fake, test-provided |interface_provider_request| into
+// DidCommitProvisionalLoad messages in a given |render_frame_host| instead of
+// the real one coming from the renderer process.
+class ScopedFakeInterfaceProviderRequestInjector
+    : public DidCommitProvisionalLoadInterceptor {
+ public:
+  ScopedFakeInterfaceProviderRequestInjector(RenderFrameHost* render_frame_host)
+      : DidCommitProvisionalLoadInterceptor(
+            WebContents::FromRenderFrameHost(render_frame_host)),
+        render_frame_host_(render_frame_host) {}
+  ~ScopedFakeInterfaceProviderRequestInjector() override = default;
+
+  // Sets the fake InterfaceProvider |request| to inject into the next incoming
+  // DidCommitProvisionalLoad message.
+  void set_fake_request_for_next_commit(
+      service_manager::mojom::InterfaceProviderRequest request) {
+    next_fake_request_ = std::move(request);
+  }
+
+  GURL url_of_last_intercepted_commit() const {
+    return url_of_last_intercepted_commit_;
+  }
+
+ protected:
+  void WillDispatchDidCommitProvisionalLoad(
+      RenderFrameHost* render_frame_host,
+      ::FrameHostMsg_DidCommitProvisionalLoad_Params* params,
+      service_manager::mojom::InterfaceProviderRequest*
+          interface_provider_request) override {
+    ASSERT_EQ(render_frame_host_, render_frame_host);
+    url_of_last_intercepted_commit_ = params->url;
+    *interface_provider_request = std::move(next_fake_request_);
+  }
+
+ private:
+  RenderFrameHost* render_frame_host_;
+  service_manager::mojom::InterfaceProviderRequest next_fake_request_;
+  GURL url_of_last_intercepted_commit_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedFakeInterfaceProviderRequestInjector);
+};
+
+// Monitors the |document_scoped_interface_provider_binding_| of the given
+// |render_frame_host| for incoming interface requests for |interface_name|, and
+// invokes |callback| synchronously just before such a request would be
+// dispatched.
+class ScopedInterfaceRequestMonitor
+    : public service_manager::mojom::InterfaceProviderInterceptorForTesting {
+ public:
+  ScopedInterfaceRequestMonitor(RenderFrameHost* render_frame_host,
+                                base::StringPiece interface_name,
+                                base::RepeatingClosure callback)
+      : rfhi_(static_cast<RenderFrameHostImpl*>(render_frame_host)),
+        impl_(binding().SwapImplForTesting(this)),
+        interface_name_(interface_name),
+        request_callback_(callback) {}
+
+  ~ScopedInterfaceRequestMonitor() override {
+    auto* old_impl = binding().SwapImplForTesting(impl_);
+    DCHECK_EQ(old_impl, this);
+  }
+
+ protected:
+  // service_manager::mojom::InterfaceProviderInterceptorForTesting:
+  service_manager::mojom::InterfaceProvider* GetForwardingInterface() override {
+    return impl_;
+  }
+
+  void GetInterface(const std::string& interface_name,
+                    mojo::ScopedMessagePipeHandle pipe) override {
+    if (interface_name == interface_name_)
+      request_callback_.Run();
+    GetForwardingInterface()->GetInterface(interface_name, std::move(pipe));
+  }
+
+ private:
+  mojo::Binding<service_manager::mojom::InterfaceProvider>& binding() {
+    return rfhi_->document_scoped_interface_provider_binding_for_testing();
+  }
+
+  RenderFrameHostImpl* rfhi_;
+  service_manager::mojom::InterfaceProvider* impl_;
+
+  std::string interface_name_;
+  base::RepeatingClosure request_callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedInterfaceRequestMonitor);
+};
+
+// Calls |callback| whenever a navigation finishes in |render_frame_host|.
+class DidFinishNavigationObserver : public WebContentsObserver {
+ public:
+  DidFinishNavigationObserver(RenderFrameHost* render_frame_host,
+                              base::RepeatingClosure callback)
+      : WebContentsObserver(
+            WebContents::FromRenderFrameHost(render_frame_host)),
+        callback_(callback) {}
+
+ protected:
+  // WebContentsObserver:
+  void DidFinishNavigation(NavigationHandle* navigation_handle) override {
+    callback_.Run();
+  }
+
+ private:
+  base::RepeatingClosure callback_;
+  DISALLOW_COPY_AND_ASSIGN(DidFinishNavigationObserver);
+};
+
+}  // anonymous namespace
+
+IN_PROC_BROWSER_TEST_F(
+    RenderFrameHostImplBrowserTest,
+    EarlyInterfaceRequestsFromNewDocumentDispatchedAfterNavigationFinished) {
+  const GURL first_url(embedded_test_server()->GetURL("/title1.html"));
+  const GURL second_url(embedded_test_server()->GetURL("/title2.html"));
+
+  ASSERT_TRUE(NavigateToURL(shell(), first_url));
+
+  // Prepare an InterfaceProviderRequest with pending interface requests.
+  service_manager::mojom::InterfaceProviderPtr
+      interface_provider_with_pending_request;
+  service_manager::mojom::InterfaceProviderRequest
+      interface_provider_request_with_pending_request =
+          mojo::MakeRequest(&interface_provider_with_pending_request);
+  mojom::FrameHostTestInterfacePtr test_interface;
+  interface_provider_with_pending_request->GetInterface(
+      mojom::FrameHostTestInterface::Name_,
+      mojo::MakeRequest(&test_interface).PassMessagePipe());
+
+  auto* main_rfh = shell()->web_contents()->GetMainFrame();
+  ScopedFakeInterfaceProviderRequestInjector injector(main_rfh);
+  injector.set_fake_request_for_next_commit(
+      std::move(interface_provider_request_with_pending_request));
+
+  base::MockCallback<base::Closure> dispatched_interface_request_callback;
+  ScopedInterfaceRequestMonitor monitor(
+      main_rfh, mojom::FrameHostTestInterface::Name_,
+      dispatched_interface_request_callback.Get());
+
+  base::MockCallback<base::Closure> navigation_finished_callback;
+  DidFinishNavigationObserver navigation_finish_observer(
+      main_rfh, navigation_finished_callback.Get());
+
+  {
+    testing::InSequence in_sequence;
+    EXPECT_CALL(navigation_finished_callback, Run());
+    EXPECT_CALL(dispatched_interface_request_callback, Run());
+  }
+
+  test::ScopedInterfaceFilterBypass filter_bypass;
+  ASSERT_TRUE(NavigateToURL(shell(), second_url));
+  ASSERT_EQ(second_url, injector.url_of_last_intercepted_commit());
+}
+
+IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
+                       LateInterfaceRequestsFromOldDocumentNotDispatched) {
+  const GURL first_url(embedded_test_server()->GetURL("/title1.html"));
+  const GURL second_url(embedded_test_server()->GetURL("/title2.html"));
+
+  // Prepare an InterfaceProviderRequest with no pending requests.
+  service_manager::mojom::InterfaceProviderPtr interface_provider;
+  service_manager::mojom::InterfaceProviderRequest interface_provider_request =
+      mojo::MakeRequest(&interface_provider);
+
+  auto* main_rfh = shell()->web_contents()->GetMainFrame();
+
+  {
+    ScopedFakeInterfaceProviderRequestInjector injector(main_rfh);
+    test::ScopedInterfaceFilterBypass filter_bypass;
+    injector.set_fake_request_for_next_commit(
+        std::move(interface_provider_request));
+
+    ASSERT_TRUE(NavigateToURL(shell(), first_url));
+    ASSERT_EQ(first_url, injector.url_of_last_intercepted_commit());
+  }
+
+  base::MockCallback<base::Closure> dispatched_interface_request_callback;
+  ScopedInterfaceRequestMonitor monitor(
+      main_rfh, mojom::FrameHostTestInterface::Name_,
+      dispatched_interface_request_callback.Get());
+
+  // Prepare an interface request.
+  mojom::FrameHostTestInterfacePtr test_interface;
+  auto test_interface_request = mojo::MakeRequest(&test_interface);
+  ASSERT_TRUE(test_interface.is_bound());
+
+  // Schedule sending the interface request on the old InterfaceProvider after
+  // DidFinishNavigation.
+  base::MockCallback<base::Closure> navigation_finished_callback;
+  DidFinishNavigationObserver navigation_finish_observer(
+      main_rfh,
+      base::Bind(
+          [](service_manager::mojom::InterfaceProviderPtr
+                 old_interface_provider,
+             mojom::FrameHostTestInterfaceRequest test_interface_request,
+             base::Closure callback) {
+            old_interface_provider->GetInterface(
+                mojom::FrameHostTestInterface::Name_,
+                test_interface_request.PassMessagePipe());
+            std::move(callback).Run();
+          },
+          base::Passed(&interface_provider),
+          base::Passed(&test_interface_request),
+          navigation_finished_callback.Get()));
+
+  EXPECT_CALL(dispatched_interface_request_callback, Run()).Times(0);
+  EXPECT_CALL(navigation_finished_callback, Run());
+
+  ASSERT_TRUE(NavigateToURL(shell(), second_url));
+
+  base::RunLoop run_loop;
+  test_interface.set_connection_error_handler(run_loop.QuitClosure());
+  run_loop.Run();
+
+  EXPECT_TRUE(test_interface.encountered_error());
 }
 
 }  // namespace content
