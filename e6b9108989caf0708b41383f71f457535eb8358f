@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30459592_057f3c91",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:37:56Z",
+      "side": 1,
+      "message": "WebView is removed not because of the memory usage, but because we did not want the previous page to live (it may play audio or video or do something else in JavaScript). We could (and should) have loaded about://blank?\u003crandom_token\u003e instead, but I learned about this trick from you a few weeks ago :)",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "e6b9108989caf0708b41383f71f457535eb8358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a119547b_0f200cb8",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T23:37:56Z",
+      "side": 1,
+      "message": "WebView is purged here because this is the only way to clear visited links when clearing the browsing data. So I think this change breaks visited links clearing.",
+      "range": {
+        "startLine": 1091,
+        "startChar": 16,
+        "endLine": 1091,
+        "endChar": 28
+      },
+      "revId": "e6b9108989caf0708b41383f71f457535eb8358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
