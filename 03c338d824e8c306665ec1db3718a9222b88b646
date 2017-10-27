@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cacc6b4c_ad11472f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/multiwindow/MultiWindowUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-27T00:44:48Z",
+      "side": 1,
+      "message": "This is left over from legacy samsung multiwindow days and technically not correct since ChromeTabbedActivity2 is also an instance of Chrome. Can we update the method name/description?",
+      "range": {
+        "startLine": 285,
+        "startChar": 27,
+        "endLine": 285,
+        "endChar": 59
+      },
+      "revId": "03c338d824e8c306665ec1db3718a9222b88b646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
