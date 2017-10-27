@@ -14,6 +14,7 @@
 
 @class CardSideSwipeView;
 @class SideSwipeGestureRecognizer;
+@protocol SideSwipeToolbarInteracting;
 @protocol TabStripHighlighting;
 @class WebToolbarController;
 
@@ -46,8 +47,6 @@ extern NSString* const kSideSwipeDidStopNotification;
 - (void)sideSwipeViewDismissAnimationDidEnd:(UIView*)sideSwipeView;
 // Returns the main content view.
 - (UIView*)contentView;
-// Returns the toolbar controller.
-- (WebToolbarController*)toolbarController;
 // Makes |tab| the currently visible tab, displaying its view.  Calls
 // -selectedTabChanged on the toolbar only if |newSelection| is YES.
 - (void)displayTab:(Tab*)tab isNewSelection:(BOOL)newSelection;
@@ -75,6 +74,8 @@ extern NSString* const kSideSwipeDidStopNotification;
 
 @property(nonatomic, assign) BOOL inSwipe;
 @property(nonatomic, weak) id<SideSwipeControllerDelegate> swipeDelegate;
+@property(nonatomic, weak) id<SideSwipeToolbarInteracting>
+    toolbarInteractionHandler;
 @property(nonatomic, weak) id<TabSnapshottingDelegate> snapshotDelegate;
 @property(nonatomic, weak) id<TabStripHighlighting> tabStripDelegate;
 
