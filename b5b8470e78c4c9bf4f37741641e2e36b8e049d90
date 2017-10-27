@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8808a7b_ebeffd6a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-27T04:07:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c15d1a0_060ad623",
+      "range": {
+        "startLine": 32,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 27
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14dbfd91_39f0395e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830bad67_29eefde3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-27T04:07:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14dbfd91_39f0395e",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,47 @@
     },
     {
       "key": {
+        "uuid": "7b44ba84_d5bae60e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-27T04:07:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86447c57_746ed42d",
+      "range": {
+        "startLine": 46,
+        "startChar": 29,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a728e48_9018a9cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-27T04:07:47Z",
+      "side": 1,
+      "message": "Updated this comment as it wasn\u0027t accurate. By themselves, the cases below mean we have an active dialog and a single queued request, we only have multiple elements when both are true (or there are \u003e2 Chrome windows?)",
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad9347b_ca783dbc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
         "patchSetId": 6
@@ -91,6 +180,30 @@
       "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa7e8c8_4bc9ae30",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-27T04:07:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad9347b_ca783dbc",
+      "range": {
+        "startLine": 65,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 10
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "63ef22a3_855e352d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-27T04:07:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2abca3ab_5362bfc2",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 18
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd250709_b6aacea4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
         "patchSetId": 6
@@ -137,6 +274,30 @@
       "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ced8bf_102fbe0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-27T04:07:47Z",
+      "side": 1,
+      "message": "Added",
+      "parentUuid": "fd250709_b6aacea4",
+      "range": {
+        "startLine": 176,
+        "startChar": 64,
+        "endLine": 176,
+        "endChar": 74
+      },
+      "revId": "b5b8470e78c4c9bf4f37741641e2e36b8e049d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

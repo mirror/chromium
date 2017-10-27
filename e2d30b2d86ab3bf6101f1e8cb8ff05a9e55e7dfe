@@ -22,6 +22,30 @@
       "revId": "e2d30b2d86ab3bf6101f1e8cb8ff05a9e55e7dfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e1ea47_d41efa09",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-27T04:07:47Z",
+      "side": 0,
+      "message": "Clearing of the dismiss lower down removes the first part of the comment. I suspect the unknown reason was something like:\n\n- Request permission A -\u003e mDialog is set, mDelegate is set\n- Accept permission A -\u003e mDialog is cleared, Android permission is requested\n- Request permission B -\u003e mDialog is set, mDelegate is clobbered (could be from same tab prior to PermissionQueueController removal, now needs split-screen or navigation from underneath)\n- Accept Android permission -\u003e mDelegate is cleared\n- Accept permission B -\u003e crash because no mDelegate\n\nWith this patch the second permission request doesn\u0027t come through until after the Android prompt is resolved.",
+      "parentUuid": "e353debc_554bb335",
+      "range": {
+        "startLine": 198,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "e2d30b2d86ab3bf6101f1e8cb8ff05a9e55e7dfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
