@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b893c658_f9d5f965",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-27T22:41:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54e195ce_5bfd0394",
+      "range": {
+        "startLine": 67,
+        "startChar": 23,
+        "endLine": 67,
+        "endChar": 34
+      },
+      "revId": "e8a0a4ae872fa1a1f16451d56420790ea4556291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "415f83e2_94eaef73",
         "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-27T20:52:41Z",
       "side": 1,
       "message": "Now with your other CL to make GRC strongly typed, I anticipate that the kLowMainThreadLoad property will be stored in process CU only. Do we still need to do this propagation to frame now? It may be easier to just do this in the CUGraphObserver?",
+      "revId": "e8a0a4ae872fa1a1f16451d56420790ea4556291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ecdafd_8d08f769",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-27T22:41:19Z",
+      "side": 1,
+      "message": "I think we should have a follow-up patch to clean such logic inside resource_coordinator/. If this patch is going to be landed before that patch, then we will use propagation in this patch.",
+      "parentUuid": "415f83e2_94eaef73",
       "revId": "e8a0a4ae872fa1a1f16451d56420790ea4556291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
