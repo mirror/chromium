@@ -2417,6 +2417,24 @@ void GLES2DecoderPassthroughTestBase::DoTexImage2D(
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
 }
 
+void GLES2DecoderPassthroughTestBase::DoTexImage3D(
+    GLenum target,
+    GLint level,
+    GLenum internal_format,
+    GLsizei width,
+    GLsizei height,
+    GLsizei depth,
+    GLint border,
+    GLenum format,
+    GLenum type,
+    uint32_t shared_memory_id,
+    uint32_t shared_memory_offset) {
+  cmds::TexImage3D cmd;
+  cmd.Init(target, level, internal_format, width, height, depth, format, type,
+           shared_memory_id, shared_memory_offset);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+}
+
 void GLES2DecoderPassthroughTestBase::DoBindFramebuffer(GLenum target,
                                                         GLuint client_id) {
   cmds::BindFramebuffer cmd;
@@ -2445,11 +2463,32 @@ void GLES2DecoderPassthroughTestBase::DoFramebufferRenderbuffer(
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
 }
 
+GLenum GLES2DecoderPassthroughTestBase::DoCheckFramebufferStatus(
+    GLenum target) {
+  auto* result = static_cast<cmds::CheckFramebufferStatus::Result*>(
+      shared_memory_address_);
+  *result = 0;
+  cmds::CheckFramebufferStatus cmd;
+  cmd.Init(GL_FRAMEBUFFER, shared_memory_id_, shared_memory_offset_);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  return *result;
+}
+
 void GLES2DecoderPassthroughTestBase::DoBindRenderbuffer(GLenum target,
                                                          GLuint client_id) {
   cmds::BindRenderbuffer cmd;
   cmd.Init(target, client_id);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+}
+
+void GLES2DecoderPassthroughTestBase::DoGetIntegerv(GLenum pname,
+                                                    GLint* result,
+                                                    size_t num_results) {
+  cmds::GetIntegerv cmd;
+  cmd.Init(pname, shared_memory_id_, shared_memory_offset_);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  GLint* cmd_result = GetSharedMemoryAs<GLint*>();
+  std::copy(cmd_result, cmd_result + num_results, result);
 }
 
 // GCC requires these declarations, but MSVC requires they not be present
