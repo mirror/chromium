@@ -16,6 +16,24 @@
       "revId": "e95df474f76d2c8513a8e8c2a15181d1ac33f62c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c89ee2_c0159fb6",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-27T19:12:25Z",
+      "side": 1,
+      "message": "The WebContentsObserver code doesn\u0027t deal with OOPIFs it only looks at the main frame. If a OOPIF is hung it won\u0027t tell the user. kenrb@ and I talked about this.. but I\u0027ll leave it to site isolation team to decide what to do there.",
+      "parentUuid": "c1f9a08d_bf06f3ae",
+      "revId": "e95df474f76d2c8513a8e8c2a15181d1ac33f62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
