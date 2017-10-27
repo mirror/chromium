@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97369256_5bb60265",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-27T19:59:15Z",
+      "side": 1,
+      "message": "nit: return std::string();",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 15
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a12addd_5b13eee1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 104805,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-27T19:59:15Z",
+      "side": 1,
+      "message": "nit: I don\u0027t believe that specifying an owner for the list of suffixes does anything.  IIRC, we always read the base histogram\u0027s owners, and treat those as the owners for the suffixes as well.  (Possibly we should make this more flexible?)",
+      "range": {
+        "startLine": 104805,
+        "startChar": 33,
+        "endLine": 104805,
+        "endChar": 0
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5f5aa8_482a097d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 104827,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-27T19:59:15Z",
+      "side": 1,
+      "message": "Hmm, you also have a histogram with this same name in the list of suffixes below.  Is this name currently overloaded?",
+      "range": {
+        "startLine": 104825,
+        "startChar": 0,
+        "endLine": 104827,
+        "endChar": 77
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
