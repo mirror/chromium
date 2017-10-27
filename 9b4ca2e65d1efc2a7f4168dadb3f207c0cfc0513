@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc6a5413_64046307",
+        "filename": "mojo/public/cpp/bindings/lib/message_header_validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-27T20:09:14Z",
+      "side": 1,
+      "message": "This is the 5th (0 based) field of the struct, not the first.",
+      "range": {
+        "startLine": 76,
+        "startChar": 64,
+        "endLine": 76,
+        "endChar": 65
+      },
+      "revId": "9b4ca2e65d1efc2a7f4168dadb3f207c0cfc0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
