@@ -11,8 +11,13 @@ declare_args() {
   enable_vr = (is_android && (current_cpu == "arm" || current_cpu == "arm64") &&
                !is_chromecast) || is_win
   enable_openvr = false
-  enable_daydream = is_android && (current_cpu == "arm" || current_cpu == "arm64")
 
   # Whether to include VR extras like test APKs in non-VR-specific targets
   include_vr_data = false
+}
+
+declare_args() {
+  # Has to be placed in separate declare_args section because it uses enable_vr
+  # https://codereview.chromium.org/2509333003
+  enable_gvr = enable_vr && !is_win
 }
