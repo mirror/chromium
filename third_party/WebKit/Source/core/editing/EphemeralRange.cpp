@@ -8,6 +8,7 @@
 #include "core/dom/Element.h"
 #include "core/dom/Range.h"
 #include "core/dom/Text.h"
+#include "core/editing/SelectionTemplate.h"
 
 namespace blink {
 
@@ -158,6 +159,22 @@ template <typename Strategy>
 bool EphemeralRangeTemplate<Strategy>::IsValid() const {
   return true;
 }
+#endif
+
+#ifndef NDEBUG
+
+template <typename Strategy>
+void EphemeralRangeTemplate<Strategy>::ShowTreeForThis() const {
+  if (IsNull()) {
+    LOG(INFO) << "<null range>" << std::endl;
+    return;
+  }
+  typename SelectionTemplate<Strategy>::Builder()
+      .SetAsForwardSelection(*this)
+      .Build()
+      .ShowTreeForThis();
+}
+
 #endif
 
 Range* CreateRange(const EphemeralRange& range) {
