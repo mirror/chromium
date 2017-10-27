@@ -32,6 +32,7 @@
 #include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "chrome/browser/prerender/prerender_field_trial.h"
 #include "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h"
+#include "chrome/browser/ui/tabs/tab_features.h"
 #include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/common/chrome_features.h"
@@ -3594,6 +3595,13 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kModuleScriptsImportMetaUrlName,
      flag_descriptions::kModuleScriptsImportMetaUrlDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kModuleScriptsImportMetaUrl)},
+
+#if defined(OS_WIN)
+    {"enable-experimental-tab-controller",
+     flag_descriptions::kExperimentalTabControllerName,
+     flag_descriptions::kExperimentalTabControllerDescription, kOsWin,
+     FEATURE_VALUE_TYPE(kExperimentalTabControllerFeature)},
+#endif  // defined(OS_WIN)
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
