@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1b46e63_6ec939e6",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "The consequence is simply that PresentationServiceImpl will lose connection to the blink::PresentationController represented by the existing pointer. I changed this to catch this impossible scenario similar to SetReceiver which was suggested by dcheng@.\n\nThere\u0027s a slight difference in behavior regarding this that\u0027s introduced in this patch. Before this patch, the Binding is held by PresentationDispatcher which is 1:1 with RenderFrame. Now the Binding is held by PresentationController, and there can be more than one per RenderFrame (possibly due to GC not deterministic). So to prevent this scenario, PresentationController has to close its Binding eagerly in contextDestroyed. PSImpl also resets its controller ptr on navigation.",
+      "parentUuid": "3462b064_4c792f5d",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6638659_5b343e7b",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityObserver.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1f19541c_0218d556",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityObserver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6638659_5b343e7b",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2948d5bb_2d52fde9",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-26T23:20:12Z",
       "side": 1,
       "message": "ISTM the caller in PresentationRequest should be responsible for posting a callback with an error value to the appropriate thread.",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb2d89b_e1f133a9",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "I think it could go either way. Below we also have to PostTask to invoke callbacks with a known vlaue. For now I slightly prefer this method to invoke the callbacks in all cases since this method takes ownership of them.",
+      "parentUuid": "2948d5bb_2d52fde9",
       "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "22b2da88_96596c5e",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "Since it\u0027s only used here, I added a factory function in anonymous namespace in this file.",
+      "parentUuid": "67f3caef_43ef0843",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87355b6a_6ef33aa2",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b8f776_9e350b85",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87355b6a_6ef33aa2",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "051bc0ae_c7416989",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e9d172d_2acdb775",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c952f09d_c0531ac9",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
         "patchSetId": 10
@@ -118,6 +226,24 @@
       "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65eef79_a29e7d91",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c952f09d_c0531ac9",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "ca1223d8_6544f421",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22a6c4a3_d486701c",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90f04489_3c88a23c",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
         "patchSetId": 10
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "7b002601_edf60f8a",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90f04489_3c88a23c",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58ad641d_d43692cc",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
         "patchSetId": 10
@@ -166,6 +328,24 @@
       "writtenOn": "2017-10-26T23:20:12Z",
       "side": 1,
       "message": "When would there be more than one callback/observer for an availability object?  I believe the spec requires that they be 1:1; Blink will handle propagating a change in the availability value to all event listeners on PresentationAvailability.",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3814124c_e13225df",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "I suppose that could happen right now, because even though spec / WPT says the an existing object should be returned under some circumstances, our implementation currently always create new getAvailability Promises / PresentationAvailability objects. This didn\u0027t seem trivial to fix in this patch though.",
+      "parentUuid": "58ad641d_d43692cc",
       "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "c8164d33_2f3b7e01",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "I think this is good place for it, since it is shared between PresentationAvailability objects.",
+      "parentUuid": "489b1b6c_258b2afd",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d02d882_23a6fd7a",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 10
@@ -200,6 +398,24 @@
       "writtenOn": "2017-10-27T13:30:53Z",
       "side": 1,
       "message": "I think we could switch `availability_urls_` to KURL as this seems a bit wasteful. In general, it would be better if we could return `const Vector\u003cKURL\u003e\u0026` but even if we can\u0027t, returning `availability_urls_` without conversion would be better.",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519f3d1a_c0fb8441",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "Done. The switch is a bit easier than I previously anticipated.",
+      "parentUuid": "1d02d882_23a6fd7a",
       "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "4ed31184_18949d07",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlaybackTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aed53b8_781ff70a",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6028a223_20a0f391",
         "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
         "patchSetId": 10
@@ -237,6 +471,24 @@
       "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a96b138_5a199fa7",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-27T19:48:27Z",
+      "side": 1,
+      "message": "Yeah we will split this interface into controller / receiver interfaces (similarly for PresentationServiceImpl -- there\u0027s a TODO there)",
+      "parentUuid": "6028a223_20a0f391",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
