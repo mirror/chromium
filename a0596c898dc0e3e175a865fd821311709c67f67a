@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a239be4_c870381e",
+        "filename": "tools/gn/parser_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-27T19:34:51Z",
+      "side": 1,
+      "message": "contents reads like it ends mid sentence",
+      "revId": "a0596c898dc0e3e175a865fd821311709c67f67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa8dffb_8fd7ad0c",
+        "filename": "tools/gn/parser_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-27T19:34:51Z",
+      "side": 1,
+      "message": "nit: asking your variables \"vector\" is a bit asking for trouble. Maybe \"tokens\"?",
+      "revId": "a0596c898dc0e3e175a865fd821311709c67f67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
