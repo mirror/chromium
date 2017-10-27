@@ -224,6 +224,7 @@
 #include "url/origin.h"
 #include "url/url_constants.h"
 #include "url/url_util.h"
+#include "v8/include/v8.h"
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "content/renderer/pepper/pepper_browser_connection.h"
@@ -3286,8 +3287,11 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   // Note that Blink can't be changed to just pass |fallback_name| as |name| in
   // the case |name| is empty: |fallback_name| should never affect the actual
   // browsing context name, only unique name generation.
+  bool is_new_subframe_dynamic =
+      v8::Isolate::GetCurrent() && v8::Isolate::GetCurrent()->InContext();
   params.frame_unique_name = unique_name_helper_.GenerateNameForNewChildFrame(
-      params.frame_name.empty() ? fallback_name.Utf8() : params.frame_name);
+      params.frame_name.empty() ? fallback_name.Utf8() : params.frame_name,
+      is_new_subframe_dynamic);
   params.frame_policy = {sandbox_flags,
                          FeaturePolicyHeaderFromWeb(container_policy)};
   params.frame_owner_properties =
@@ -3316,6 +3320,8 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
       render_view_, child_routing_id, devtools_frame_token);
   child_render_frame->unique_name_helper_.set_propagated_name(
       params.frame_unique_name);
+  if (is_new_subframe_dynamic)
+    child_render_frame->unique_name_helper_.Freeze();
   child_render_frame->InitializeBlameContext(this);
   blink::WebLocalFrame* web_frame = parent->CreateLocalChild(
       scope, child_render_frame,
