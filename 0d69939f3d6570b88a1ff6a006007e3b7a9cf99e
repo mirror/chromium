@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6398f311_f3fcadee",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-27T18:47:52Z",
+      "side": 1,
+      "message": "did you mean !response_headers?",
+      "range": {
+        "startLine": 186,
+        "startChar": 6,
+        "endLine": 186,
+        "endChar": 22
+      },
+      "revId": "0d69939f3d6570b88a1ff6a006007e3b7a9cf99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd35281_7aa6fea7",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-27T18:47:52Z",
+      "side": 1,
+      "message": "Why not return request.received_response_content_length(); as in line 216 below?",
+      "range": {
+        "startLine": 187,
+        "startChar": 12,
+        "endLine": 187,
+        "endChar": 13
+      },
+      "revId": "0d69939f3d6570b88a1ff6a006007e3b7a9cf99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
