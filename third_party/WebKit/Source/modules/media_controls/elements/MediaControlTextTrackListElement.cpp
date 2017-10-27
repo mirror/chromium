@@ -68,7 +68,10 @@ void MediaControlTextTrackListElement::SetVisible(bool visible) {
 }
 
 void MediaControlTextTrackListElement::DefaultEventHandler(Event* event) {
-  if (event->type() == EventTypeNames::change) {
+  if (event->type() == EventTypeNames::click) {
+    GetMediaControls().ToggleOverflowMenu();
+    event->SetDefaultHandled();
+  } else if (event->type() == EventTypeNames::change) {
     // Identify which input element was selected and set track to showing
     Node* target = event->target()->ToNode();
     if (!target || !target->IsElementNode())
@@ -132,9 +135,15 @@ Element* MediaControlTextTrackListElement::CreateTextTrackListItem(
       track_item_input->setChecked(true);
   }
 
-  track_item->AppendChild(track_item_input);
+  // Modern media controls should have the checkbox after the text instead of
+  // the other way around.
+  if (!MediaControlsImpl::IsModern())
+    track_item->AppendChild(track_item_input);
   String track_label = GetTextTrackLabel(track);
   track_item->AppendChild(Text::Create(GetDocument(), track_label));
+  if (MediaControlsImpl::IsModern())
+    track_item->AppendChild(track_item_input);
+
   // Add a track kind marker icon if there are multiple tracks with the same
   // label or if the track has no label.
   if (track && (track->label().IsEmpty() || HasDuplicateLabel(track))) {
@@ -152,6 +161,17 @@ Element* MediaControlTextTrackListElement::CreateTextTrackListItem(
   return track_item;
 }
 
+Element* MediaControlTextTrackListElement::CreateTextTrackHeaderItem() {
+  HTMLLabelElement* header_item = HTMLLabelElement::Create(GetDocument());
+  header_item->SetShadowPseudoId(
+      "-internal-media-controls-text-track-list-header");
+  header_item->AppendChild(
+      Text::Create(GetDocument(),
+                   GetLocale().QueryString(
+                       WebLocalizedString::kOverflowMenuCaptionsSubmenuTitle)));
+  return header_item;
+}
+
 void MediaControlTextTrackListElement::RefreshTextTrackListMenu() {
   if (!MediaElement().HasClosedCaptions() ||
       !MediaElement().TextTracksAreReady()) {
@@ -160,6 +180,9 @@ void MediaControlTextTrackListElement::RefreshTextTrackListMenu() {
 
   EventDispatchForbiddenScope::AllowUserAgentEvents allow_events;
   RemoveChildren(kOmitSubtreeModifiedEvent);
+
+  if (MediaControlsImpl::IsModern())
+    AppendChild(CreateTextTrackHeaderItem());
 
   // Construct a menu for subtitles and captions.  Pass in a nullptr to
   // createTextTrackListItem to create the "Off" track item.

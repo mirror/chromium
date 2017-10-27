@@ -1309,8 +1309,14 @@ void MediaControlsImpl::PositionPopupMenu(Element* popup_menu) {
   DOMRect* bounding_client_rect = MediaElement().getBoundingClientRect();
   DOMVisualViewport* viewport = GetDocument().domWindow()->visualViewport();
 
+  // The modern audio controls should use the center as the baseline instead of
+  // the bottom of the element (since they are centered).
+  int element_bottom = bounding_client_rect->bottom();
+  if (IsModern() && MediaElement().IsHTMLAudioElement())
+    element_bottom -= bounding_client_rect->height() / 2;
+
   WTF::String bottom_str_value = WTF::String::Number(
-      viewport->height() - bounding_client_rect->bottom() + kPopupMenuMarginPx);
+      viewport->height() - element_bottom + kPopupMenuMarginPx);
   WTF::String right_str_value = WTF::String::Number(
       viewport->width() - bounding_client_rect->right() + kPopupMenuMarginPx);
 
