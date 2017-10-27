@@ -524,17 +524,8 @@ static SelectionTemplate<Strategy> ComputeVisibleSelection(
                                                         expanded_end);
 
   const EphemeralRangeTemplate<Strategy> shadow_adjusted_range =
-      canonicalized_selection.IsBaseFirst()
-          ? EphemeralRangeTemplate<Strategy>(
-                expanded_range.StartPosition(),
-                SelectionAdjuster::
-                    AdjustSelectionEndToAvoidCrossingShadowBoundaries(
-                        expanded_range))
-          : EphemeralRangeTemplate<Strategy>(
-                SelectionAdjuster::
-                    AdjustSelectionStartToAvoidCrossingShadowBoundaries(
-                        expanded_range),
-                expanded_range.EndPosition());
+      SelectionAdjuster::AdjustSelectionModShadow(
+          expanded_range, canonicalized_selection.IsBaseFirst());
 
   const EphemeralRangeTemplate<Strategy> editing_adjusted_range =
       AdjustSelectionToAvoidCrossingEditingBoundaries(
