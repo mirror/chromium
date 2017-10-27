@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "da9d7bf7_f4f71b6d",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-27T19:25:00Z",
+      "side": 1,
+      "message": "It sounds like all three of these solutions work.\n\nI liked the readability of having all the code for this Mock right here in this file and thought it might be strange to have a TestBrowserProxy for something that is not a BrowserProxy. But any of these would work in a pragmatic sense.\n\nI\u0027d normally go with the TL\u0027s call, but I *think* you\u0027re both TLs for this code (like your TL Venn diagram circles slightly overlap here). It would help me if ya discuss it and let me know what the decision is*\n\n*I\u0027m happy to be a part of that decisions making, but I\u0027m asking to be :).",
+      "parentUuid": "7a02542a_272cd9a3",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5a0beb3_a91d9c3e",
         "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
         "patchSetId": 3
