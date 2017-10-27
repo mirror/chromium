@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beac6f5a_872b5a68",
+        "filename": "components/language/ios/browser/ios_language_detection_client.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-10-27T06:07:30Z",
+      "side": 1,
+      "message": "I personally think that adding curly braces here is better.\nAs the following spans 3 lines.",
+      "revId": "f8357ecd788870ad55ada67c9ceb4a5b9ac40ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac498ced_58a14104",
+        "filename": "components/translate/ios/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-10-27T06:07:30Z",
+      "side": 1,
+      "message": "Is \"//components/language/core/browser\" redundant here?",
+      "revId": "f8357ecd788870ad55ada67c9ceb4a5b9ac40ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d746929_f1219a32",
+        "filename": "ios/chrome/browser/language/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-10-27T06:07:30Z",
+      "side": 1,
+      "message": "Are the 2 new deps really needed?\nIt seems you didn\u0027t modify the source files in source_set(\"language\").",
+      "revId": "f8357ecd788870ad55ada67c9ceb4a5b9ac40ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
