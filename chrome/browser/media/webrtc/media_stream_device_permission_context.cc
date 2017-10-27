@@ -14,7 +14,7 @@
 
 namespace {
 
-blink::WebFeaturePolicyFeature GetFeaturePolicyFeature(
+blink::WebFeaturePolicyFeature GetWebFeaturePolicyFeature(
     ContentSettingsType type) {
   if (type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC)
     return blink::WebFeaturePolicyFeature::kMicrophone;
@@ -30,7 +30,7 @@ MediaStreamDevicePermissionContext::MediaStreamDevicePermissionContext(
     const ContentSettingsType content_settings_type)
     : PermissionContextBase(profile,
                             content_settings_type,
-                            GetFeaturePolicyFeature(content_settings_type)),
+                            GetWebFeaturePolicyFeature(content_settings_type)),
       content_settings_type_(content_settings_type) {
   DCHECK(content_settings_type_ == CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC ||
          content_settings_type_ == CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
