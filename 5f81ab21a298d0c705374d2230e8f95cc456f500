@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ee1bc3d_d6c1183e",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-27T08:54:02Z",
+      "side": 1,
+      "message": "I may want to merge following three enums into single enum CORSError in the next CL.\nThe reason is we will need more error codes to pass CORSURLLoader detected errors to Blink, that currently DocumentThreadableLoader detects and just shows strings in console.",
+      "revId": "5f81ab21a298d0c705374d2230e8f95cc456f500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
