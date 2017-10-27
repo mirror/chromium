@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64fa0ab5_6b6f9b40",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2646,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-10-27T21:31:22Z",
+      "side": 1,
+      "message": "I would say \"on mali GPUs\". Chromebit is just one of these. Actually this blacklist applies to all chrome os mali T760 devices.",
+      "revId": "189a4b24dc51e8f3e249e0bc2e6ecf86525385eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

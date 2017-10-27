@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d6ebe90_43b770c0",
+        "filename": "gpu/config/software_rendering_list.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-10-27T21:31:22Z",
+      "side": 0,
+      "message": "\\o/",
+      "revId": "77bb6a420f583b590a9f47faac96c0e191c231b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
