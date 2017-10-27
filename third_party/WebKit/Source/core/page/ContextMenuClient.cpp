@@ -38,6 +38,7 @@
 #include "core/editing/EditingTriState.h"
 #include "core/editing/Editor.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/ime/InputMethodController.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/markers/SpellCheckMarker.h"
 #include "core/editing/spellcheck/SpellChecker.h"
@@ -370,8 +371,12 @@ bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
   }
 
   // HitTestResult::isSelected() ensures clean layout by performing a hit test.
-  if (r.IsSelected())
+  if (r.IsSelected()) {
     data.selected_text = selected_frame->SelectedText();
+    WebRange range =
+        selected_frame->GetInputMethodController().GetSelectionOffsets();
+    data.selection_start_offset = range.StartOffset();
+  }
 
   if (r.IsContentEditable()) {
     data.is_editable = true;
