@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a12c42e4_100044c2",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-27T20:04:13Z",
+      "side": 1,
+      "message": "If we start using ui::Gpu in the browser, do we want it to be fatal too?",
+      "revId": "edfe27264bfd1a815138d21ffcb00f2188bc8d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
