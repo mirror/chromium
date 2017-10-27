@@ -440,6 +440,14 @@ void RenderWidgetHostViewChildFrame::SetIsInert() {
   }
 }
 
+void RenderWidgetHostViewChildFrame::UpdateRenderThrottlingStatus() {
+  if (host_ && frame_connector_) {
+    host_->Send(new ViewMsg_UpdateRenderThrottlingStatus(
+        host_->GetRoutingID(), frame_connector_->IsThrottled(),
+        frame_connector_->IsSubtreeThrottled()));
+  }
+}
+
 void RenderWidgetHostViewChildFrame::GestureEventAck(
     const blink::WebGestureEvent& event,
     InputEventAckState ack_result) {
@@ -762,6 +770,7 @@ void RenderWidgetHostViewChildFrame::WillSendScreenRects() {
   if (frame_connector_) {
     UpdateViewportIntersection(frame_connector_->ViewportIntersection());
     SetIsInert();
+    UpdateRenderThrottlingStatus();
   }
 }
 
