@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b92b8cbb_5289b6d9",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T15:27:28Z",
+      "side": 1,
+      "message": "nit: please comment what these booleans mean.\n\nDeepCopy(notification, true /* include_body_image */, ...)",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af2cf6e_2271c696",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T15:27:28Z",
+      "side": 1,
+      "message": "Could we consider having NotificationPlatformBridgeWinImpl live on the task runner thread, and NotificationPlatformBridgeWin on the UI thread? That\u0027d create a really clear barrier between the two classes.",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918672fb_84f6f4cf",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T15:27:28Z",
+      "side": 1,
+      "message": "One downside of implementing the NotificationPlatformBridge interface is that you need these two methods to be defined here, even though they don\u0027t do anything yet.",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ca6909_c5e35c50",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T15:27:28Z",
+      "side": 1,
+      "message": "{} \u003d\u003e \"\u003d default;\"",
+      "range": {
+        "startLine": 273,
+        "startChar": 47,
+        "endLine": 273,
+        "endChar": 50
+      },
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be69d95_82044741",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T15:27:28Z",
+      "side": 1,
+      "message": "The reason that the Linux bridge uses this pattern is that it needed to replicate `tag` behaviour in a way that was compatible with DBus semantics.\n\nWe might be able to take a different approach here, so we should aim for simplicity -- it\u0027s not used yet. Could we punt this entire set of changes?",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2504389_13cc6792",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T15:27:28Z",
+      "side": 1,
+      "message": "note: we should probably do this in the constructor, or some other first-time-init function.",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d533b6cd_c0ed4bea",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T15:27:28Z",
+      "side": 1,
+      "message": "nit: delete the assignment for these strings, that\u0027s redundant. Dito on line 377-378.",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4637c2_4df6c7ef",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T15:27:28Z",
+      "side": 1,
+      "message": "This is rather unfortunate and doesn\u0027t work. Can we remove it for now? (Did I review Xi\u0027s CL?)",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad141e9a_eaa597e2",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T15:27:28Z",
+      "side": 1,
+      "message": "Could we give this a more notification-esque name? NotificationImageRetainer or something?",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a30324c_f7c2ca77",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-27T15:27:28Z",
+      "side": 1,
+      "message": "nit: consider passing this as a pointer. Non-const references being modified/used are really unclear on the callsite.",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
