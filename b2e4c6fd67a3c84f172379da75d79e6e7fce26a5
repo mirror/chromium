@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23fdc3f_a2c6da01",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-27T16:44:22Z",
+      "side": 1,
+      "message": "Is this really needed (i.e., is the DCHECK sufficient)?",
+      "revId": "b2e4c6fd67a3c84f172379da75d79e6e7fce26a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
