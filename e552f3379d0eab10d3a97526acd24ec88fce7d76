@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0db32a35_4842b069",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-27T15:46:10Z",
+      "side": 1,
+      "message": "q: This is a slightly different impl, I assume that\u0027s okay?",
+      "revId": "e552f3379d0eab10d3a97526acd24ec88fce7d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34925f5b_2699d0ce",
+        "filename": "chrome/browser/ui/ash/multi_user/user_switch_animator_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-27T15:46:10Z",
+      "side": 1,
+      "message": "aside: It\u0027d be nice to have ui/aura/client helper functions instead of all these one-off window property checks (maybe that\u0027s worth a followup CL to cleanup here and elsewhere?)",
+      "revId": "e552f3379d0eab10d3a97526acd24ec88fce7d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b0a6fd_d168111f",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-27T15:46:10Z",
+      "side": 1,
+      "message": "This seems like something that needs a mash impl, so maybe it doesn\u0027t make sense to mark shell.h mash-ok yet? Ditto for line 404; I dunno...",
+      "revId": "e552f3379d0eab10d3a97526acd24ec88fce7d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
