@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "85c5f6c0_fe0f6f31",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-10-27T16:07:51Z",
+      "side": 1,
+      "message": "Ah, my bad, thanks for clearing this!",
+      "parentUuid": "2fac61fa_5d3caf10",
+      "range": {
+        "startLine": 226,
+        "startChar": 27,
+        "endLine": 226,
+        "endChar": 36
+      },
+      "revId": "8e5a730027e431a225299859dbc83781b1e47905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "debd87be_2814aa0b",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Added a screenshot in Bulgarian, which is the longest string in that link. Since it\u0027s rotated to match the short side of the display, theres still ample space left for one line.",
       "parentUuid": "debd87be_2814aa0b",
+      "range": {
+        "startLine": 233,
+        "startChar": 20,
+        "endLine": 233,
+        "endChar": 24
+      },
+      "revId": "8e5a730027e431a225299859dbc83781b1e47905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385f913a_0569cb19",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-10-27T16:07:51Z",
+      "side": 1,
+      "message": "LG, thanks!",
+      "parentUuid": "0fd950ee_18daf44a",
       "range": {
         "startLine": 233,
         "startChar": 20,
