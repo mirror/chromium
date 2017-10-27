@@ -28,10 +28,10 @@
   {% if property.font %}
 #include "core/css/resolver/FontBuilder.h"
   {% elif property.svg %}
-#include "core/style/ComputedStyle.h"
+#include "core/style/ComputedStyleInitialFunctions.h"
 #include "core/style/SVGComputedStyle.h"
   {% else %}
-#include "core/style/ComputedStyle.h"
+#include "core/style/ComputedStyleInitialFunctions.h"
   {% endif %}
 {% endif %}
 {% if property.runtime_flag %}
@@ -92,7 +92,7 @@ class {{api_classname}} : public CSSPropertyAPI {
       {% elif property.font %}
     {{set_value(property)}}(FontBuilder::{{property.initial}}());
       {% else %}
-    {{set_value(property)}}(ComputedStyle::{{property.initial}}());
+    {{set_value(property)}}(ComputedStyleInitialFunctions::{{property.initial}}());
       {% endif %}
       {% if property.independent %}
     state.Style()->{{property.is_inherited_setter}}(false);
