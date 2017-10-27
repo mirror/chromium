@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d78e0a72_aa432a4e",
+        "filename": "tools/gn/variables.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-27T23:16:01Z",
+      "side": 1,
+      "message": "Did you format this by hand, or did clang-format do this?",
+      "revId": "225e202fdf7caa31f782da71007b0057d479afdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
