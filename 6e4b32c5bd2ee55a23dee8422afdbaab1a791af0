@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4367b0f_11e6f01e",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-27T09:24:38Z",
+      "side": 1,
+      "message": "Done\nI\u0027m not sure which is better. In reality it is the realm. But in the UI we refer to it as enrollment domain. We probably should also change UI.",
+      "parentUuid": "e5c77542_a8a0c346",
+      "range": {
+        "startLine": 358,
+        "startChar": 14,
+        "endLine": 358,
+        "endChar": 31
+      },
+      "revId": "6e4b32c5bd2ee55a23dee8422afdbaab1a791af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3840246_8d13fbcd",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1aa2d503_c012c3d8",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-27T09:24:38Z",
+      "side": 1,
+      "message": "Search and replace gone wrong :)",
+      "parentUuid": "f3840246_8d13fbcd",
+      "range": {
+        "startLine": 523,
+        "startChar": 0,
+        "endLine": 523,
+        "endChar": 45
+      },
+      "revId": "6e4b32c5bd2ee55a23dee8422afdbaab1a791af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fcca02d_b036ba5b",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-26T16:23:07Z",
       "side": 1,
       "message": "What realm is that? The device realm or the user realm or the realm of the admin who enrolled the device?",
+      "range": {
+        "startLine": 598,
+        "startChar": 25,
+        "endLine": 598,
+        "endChar": 33
+      },
+      "revId": "6e4b32c5bd2ee55a23dee8422afdbaab1a791af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99df302a_a226e110",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-27T09:24:38Z",
+      "side": 1,
+      "message": "This should be a device realm. Now it is the realm of the admin who enrolled the device.",
+      "parentUuid": "0fcca02d_b036ba5b",
       "range": {
         "startLine": 598,
         "startChar": 25,
