@@ -10,6 +10,7 @@
 #include "base/time/time.h"
 #include "platform/PlatformExport.h"
 #include "platform/scheduler/renderer/main_thread_task_queue.h"
+#include "platform/scheduler/renderer/renderer_metrics_helper.h"
 
 #include <vector>
 
@@ -53,15 +54,16 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
     explicit Calculator(int steps_per_window);
     static std::string GetReportingMessageFromQueueType(
         MainThreadTaskQueue::QueueType queue_type);
+    static std::string GetReportingMessageFromFrameType(int frame_type);
 
-    void UpdateQueueType(MainThreadTaskQueue::QueueType queue_type);
+    void UpdateTaskQueue(MainThreadTaskQueue* queue);
     void AddQueueingTime(base::TimeDelta queuing_time);
     void EndStep(Client* client);
     void ResetStep();
 
-   private:
-    static bool IsSupportedQueueType(MainThreadTaskQueue::QueueType queue_type);
+    static constexpr int kOtherFrameType = -1;
 
+   private:
     // Variables to compute the total Expected Queueing Time.
     // |steps_per_window_| is the ratio of window duration to the sliding
     // window's step width. It is an integer since the window must be a integer
@@ -102,6 +104,12 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
         message_by_queue_type_;
     MainThreadTaskQueue::QueueType current_queue_type_ =
         MainThreadTaskQueue::QueueType::OTHER;
+
+    // Variables to split Expected Queueing Time by frame type.
+    base::small_map<std::map<int, base::TimeDelta>> eqt_by_frame_type_;
+    base::small_map<std::map<int, std::string>> message_by_frame_type_;
+    // This is a FrameType, except -1 is used for the 'other' category.
+    int current_frame_type_ = kOtherFrameType;
   };
 
   class State {
@@ -109,7 +117,7 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
     explicit State(int steps_per_window);
     void OnTopLevelTaskStarted(Client* client,
                                base::TimeTicks task_start_time,
-                               MainThreadTaskQueue::QueueType queue_type);
+                               MainThreadTaskQueue* queue);
     void OnTopLevelTaskCompleted(Client* client, base::TimeTicks task_end_time);
     void OnBeginNestedRunLoop();
     void OnRendererStateChanged(Client* client,
@@ -136,7 +144,7 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
   explicit QueueingTimeEstimator(const State& state);
 
   void OnTopLevelTaskStarted(base::TimeTicks task_start_time,
-                             MainThreadTaskQueue::QueueType queue_type);
+                             MainThreadTaskQueue* queue);
   void OnTopLevelTaskCompleted(base::TimeTicks task_end_time);
   void OnBeginNestedRunLoop();
   void OnRendererStateChanged(bool backgrounded,

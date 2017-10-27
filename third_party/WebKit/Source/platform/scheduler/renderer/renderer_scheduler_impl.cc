@@ -1950,10 +1950,7 @@ void RendererSchedulerImpl::OnTaskStarted(MainThreadTaskQueue* queue,
                                           base::TimeTicks start) {
   main_thread_only().current_task_start_time = start;
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
-  // Use QueueType::OTHER if |queue| is null.
-  seqlock_queueing_time_estimator_.data.OnTopLevelTaskStarted(
-      start,
-      queue ? queue->queue_type() : MainThreadTaskQueue::QueueType::OTHER);
+  seqlock_queueing_time_estimator_.data.OnTopLevelTaskStarted(start, queue);
   seqlock_queueing_time_estimator_.seqlock.WriteEnd();
 }
 
