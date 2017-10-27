@@ -128,9 +128,10 @@ bool UiScene::OnBeginFrame(const base::TimeTicks& current_time,
   {
     TRACE_EVENT0("gpu", "UiScene::OnBeginFrame.UpdateLayout");
 
-    // Update layout, which depends on size.
+    // Update layout, which depends on size. This must be done recursively, as
+    // layout elements adjust their size to the cumulative size of children.
+    root_element_->LayOutChildren();
     for (auto& element : *root_element_) {
-      element.LayOutChildren();
       element.set_update_phase(UiElement::kUpdatedLayout);
     }
   }
