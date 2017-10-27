@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef6e9d39_9889859f",
+        "filename": "ash/display/display_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01e931d3_ff963ba4",
+      "revId": "673b7f1feb93a041c5e1062b2cb1ef97432fd9c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1853059_7aa49b1a",
         "filename": "ash/display/unified_mouse_warp_controller_unittest.cc",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "673b7f1feb93a041c5e1062b2cb1ef97432fd9c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03dc1732_c4038417",
+        "filename": "ash/display/unified_mouse_warp_controller_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-27T18:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1853059_7aa49b1a",
+      "revId": "673b7f1feb93a041c5e1062b2cb1ef97432fd9c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
