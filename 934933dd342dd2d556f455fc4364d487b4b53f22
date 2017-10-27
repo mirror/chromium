@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71f694b4_f26feeed",
+        "filename": "components/viz/service/display_embedder/compositing_mode_reporter_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-27T18:18:10Z",
+      "side": 1,
+      "message": "nit: std::remove_if+erase?",
+      "revId": "934933dd342dd2d556f455fc4364d487b4b53f22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
