@@ -20,6 +20,8 @@ struct ButtonInfo;
 class Notification;
 }
 
+class TempFileKeeper;
+
 // Builds XML-based notification templates for displaying a given notification
 // in the Windows Action Center.
 //
@@ -31,8 +33,10 @@ class NotificationTemplateBuilder {
  public:
   // Builds the notification template for the given |notification|. The given
   // |notification_id| will be available when the user interacts with the toast.
+  // TODOf fix const reference vs ptr
   static std::unique_ptr<NotificationTemplateBuilder> Build(
       const std::string& notification_id,
+      TempFileKeeper& temp_file_keeper,
       const message_center::Notification& notification);
 
   ~NotificationTemplateBuilder();
@@ -41,9 +45,6 @@ class NotificationTemplateBuilder {
   base::string16 GetNotificationTemplate() const;
 
  private:
-  // The different types of text nodes to output.
-  enum class TextType { NORMAL, ATTRIBUTION };
-
   NotificationTemplateBuilder();
 
   // Formats the |origin| for display in the notification template.
@@ -62,20 +63,29 @@ class NotificationTemplateBuilder {
   void StartBindingElement(const std::string& template_name);
   void EndBindingElement();
 
-  // Writes the <text> element with the given |id| and |content|. If
-  // |text_type| is ATTRIBUTION then |content| is treated as the source that the
-  // notification is attributed to.
-  void WriteTextElement(const std::string& id,
-                        const std::string& content,
-                        TextType text_type);
+  // Writes the <text> element with the given |content|.
+  void WriteTextElement(const std::string& content);
+
+  // Writes the <image> element for the notification icon.
+  void WriteIconElement(const message_center::Notification& notification,
+                        TempFileKeeper& temp_file_keeper);
+  // Writes the <image> element for showing an image within the notification
+  // body.
+  void WriteImageElement(const message_center::Notification& notification,
+                         TempFileKeeper& temp_file_keeper);
 
   // Writes the <actions> element.
   void StartActionsElement();
   void EndActionsElement();
 
-  // Fills in the details for the actions.
-  void AddActions(const std::vector<message_center::ButtonInfo>& buttons);
-  void WriteActionElement(const message_center::ButtonInfo& button, int index);
+  // Fills in the details for the actions (the buttons the notification
+  // contains).
+  void AddActions(const message_center::Notification& notification,
+                  TempFileKeeper& temp_file_keeper);
+  void WriteActionElement(const message_center::ButtonInfo& button,
+                          int index,
+                          const GURL& origin,
+                          TempFileKeeper& temp_file_keeper);
 
   // The XML writer to which the template will be written.
   std::unique_ptr<XmlWriter> xml_writer_;

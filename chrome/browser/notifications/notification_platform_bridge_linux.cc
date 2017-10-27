@@ -26,7 +26,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/dbus/dbus_thread_linux.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -117,6 +117,7 @@ base::string16 CreateNotificationTitle(
   return title;
 }
 
+// TODOf remove
 gfx::Image DeepCopyImage(const gfx::Image& image) {
   if (image.IsEmpty())
     return gfx::Image();
@@ -264,7 +265,12 @@ class NotificationPlatformBridgeLinuxImpl
   explicit NotificationPlatformBridgeLinuxImpl(scoped_refptr<dbus::Bus> bus)
       : bus_(bus) {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-    task_runner_ = chrome::GetDBusTaskRunner();
+    // While the tasks in NotificationPlatformBridgeLinux merely need
+    // to run in sequence, many APIs in ::dbus are required to be
+    // called from the same thread (https://crbug.com/130984), so
+    // |task_runner_| is created as the single-threaded flavor.
+    task_runner_ = base::CreateSingleThreadTaskRunnerWithTraits(
+        {base::MayBlock(), base::TaskPriority::USER_BLOCKING});
     registrar_.Add(this, chrome::NOTIFICATION_APP_TERMINATING,
                    content::NotificationService::AllSources());
   }
@@ -277,7 +283,7 @@ class NotificationPlatformBridgeLinuxImpl
   // destructed.
   void Init() {
     product_logo_png_bytes_ =
-        gfx::Image(*ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
+        gfx::Image(*ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
                        IDR_PRODUCT_LOGO_256))
             .As1xPNGBytes();
     PostTaskToTaskRunnerThread(base::BindOnce(
@@ -289,7 +295,7 @@ class NotificationPlatformBridgeLinuxImpl
       const std::string& notification_id,
       const std::string& profile_id,
       bool is_incognito,
-      const message_center::Notification& notification,
+      const Notification& notification,
       std::unique_ptr<NotificationCommon::Metadata> metadata) override {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
     // Notifications contain gfx::Image's which have reference counts
@@ -297,15 +303,8 @@ class NotificationPlatformBridgeLinuxImpl
     // notification and its images.  Wrap the notification in a
     // unique_ptr to transfer ownership of the notification (and the
     // non-thread-safe reference counts) to the task runner thread.
-    auto notification_copy =
-        std::make_unique<message_center::Notification>(notification);
-    notification_copy->set_icon(DeepCopyImage(notification_copy->icon()));
-    notification_copy->set_image(body_images_supported_.value()
-                                     ? DeepCopyImage(notification_copy->image())
-                                     : gfx::Image());
-    notification_copy->set_small_image(gfx::Image());
-    for (size_t i = 0; i < notification_copy->buttons().size(); i++)
-      notification_copy->SetButtonIcon(i, gfx::Image());
+    auto notification_copy = message_center::Notification::DeepCopy(
+        notification, body_images_supported_.value(), false, false);
 
     PostTaskToTaskRunnerThread(base::BindOnce(
         &NotificationPlatformBridgeLinuxImpl::DisplayOnTaskRunner, this,
@@ -989,7 +988,7 @@ void NotificationPlatformBridgeLinux::Display(
     const std::string& notification_id,
     const std::string& profile_id,
     bool is_incognito,
-    const message_center::Notification& notification,
+    const Notification& notification,
     std::unique_ptr<NotificationCommon::Metadata> metadata) {
   impl_->Display(notification_type, notification_id, profile_id, is_incognito,
                  notification, std::move(metadata));
