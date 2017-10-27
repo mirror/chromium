@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/dom/FlatTreeTraversal.h"
+#include "core/dom/ng/flat_tree_traversal_ng.h"
 
 #include <memory>
 #include "bindings/core/v8/ExceptionState.h"
@@ -15,6 +15,7 @@
 #include "core/html/HTMLElement.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/geometry/IntSize.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/wtf/Compiler.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/Vector.h"
@@ -22,13 +23,21 @@
 
 namespace blink {
 
-class FlatTreeTraversalTest : public ::testing::Test {
+class FlatTreeTraversalNgTest : public ::testing::Test {
+ public:
+  FlatTreeTraversalNgTest() {
+    RuntimeEnabledFeatures::SetIncrementalShadowDOMEnabled(true);
+  }
+  ~FlatTreeTraversalNgTest() {
+    RuntimeEnabledFeatures::SetIncrementalShadowDOMEnabled(false);
+  }
+
  protected:
   Document& GetDocument() const;
 
   // Sets |mainHTML| to BODY element with |innerHTML| property and attaches
   // shadow root to child with |shadowHTML|, then update distribution for
-  // calling member functions in |FlatTreeTraversal|.
+  // calling member functions in |FlatTreeTraversalNg|.
   void SetupSampleHTML(const char* main_html,
                        const char* shadow_html,
                        unsigned);
@@ -46,19 +55,19 @@ class FlatTreeTraversalTest : public ::testing::Test {
   std::unique_ptr<DummyPageHolder> dummy_page_holder_;
 };
 
-void FlatTreeTraversalTest::SetUp() {
+void FlatTreeTraversalNgTest::SetUp() {
   dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
   document_ = &dummy_page_holder_->GetDocument();
   DCHECK(document_);
 }
 
-Document& FlatTreeTraversalTest::GetDocument() const {
+Document& FlatTreeTraversalNgTest::GetDocument() const {
   return *document_;
 }
 
-void FlatTreeTraversalTest::SetupSampleHTML(const char* main_html,
-                                            const char* shadow_html,
-                                            unsigned index) {
+void FlatTreeTraversalNgTest::SetupSampleHTML(const char* main_html,
+                                              const char* shadow_html,
+                                              unsigned index) {
   Element* body = GetDocument().body();
   body->SetInnerHTMLFromString(String::FromUTF8(main_html));
   Element* shadow_host = ToElement(NodeTraversal::ChildAt(*body, index));
@@ -67,19 +76,20 @@ void FlatTreeTraversalTest::SetupSampleHTML(const char* main_html,
   body->UpdateDistribution();
 }
 
-void FlatTreeTraversalTest::SetupDocumentTree(const char* main_html) {
+void FlatTreeTraversalNgTest::SetupDocumentTree(const char* main_html) {
   Element* body = GetDocument().body();
   body->SetInnerHTMLFromString(String::FromUTF8(main_html));
 }
 
-void FlatTreeTraversalTest::AttachV0ShadowRoot(Element& shadow_host,
-                                               const char* shadow_inner_html) {
+void FlatTreeTraversalNgTest::AttachV0ShadowRoot(
+    Element& shadow_host,
+    const char* shadow_inner_html) {
   ShadowRoot& shadow_root = shadow_host.CreateShadowRootInternal();
   shadow_root.SetInnerHTMLFromString(String::FromUTF8(shadow_inner_html));
   GetDocument().body()->UpdateDistribution();
 }
 
-void FlatTreeTraversalTest::AttachOpenShadowRoot(
+void FlatTreeTraversalNgTest::AttachOpenShadowRoot(
     Element& shadow_host,
     const char* shadow_inner_html) {
   ShadowRoot& shadow_root =
@@ -93,11 +103,11 @@ namespace {
 void TestCommonAncestor(Node* expected_result,
                         const Node& node_a,
                         const Node& node_b) {
-  Node* result1 = FlatTreeTraversal::CommonAncestor(node_a, node_b);
+  Node* result1 = FlatTreeTraversalNg::CommonAncestor(node_a, node_b);
   EXPECT_EQ(expected_result, result1)
       << "commonAncestor(" << node_a.textContent() << ","
       << node_b.textContent() << ")";
-  Node* result2 = FlatTreeTraversal::CommonAncestor(node_b, node_a);
+  Node* result2 = FlatTreeTraversalNg::CommonAncestor(node_b, node_a);
   EXPECT_EQ(expected_result, result2)
       << "commonAncestor(" << node_b.textContent() << ","
       << node_a.textContent() << ")";
@@ -111,7 +121,7 @@ void TestCommonAncestor(Node* expected_result,
 //  - hasChildren
 //  - index
 //  - isDescendantOf
-TEST_F(FlatTreeTraversalTest, childAt) {
+TEST_F(FlatTreeTraversalNgTest, childAt) {
   const char* main_html =
       "<div id='m0'>"
       "<span id='m00'>m00</span>"
@@ -141,29 +151,30 @@ TEST_F(FlatTreeTraversalTest, childAt) {
   Node* expected_child_nodes[5] = {s00, m01, s02, s03, s04};
 
   ASSERT_EQ(kNumberOfChildNodes,
-            FlatTreeTraversal::CountChildren(*shadow_host));
-  EXPECT_TRUE(FlatTreeTraversal::HasChildren(*shadow_host));
+            FlatTreeTraversalNg::CountChildren(*shadow_host));
+  EXPECT_TRUE(FlatTreeTraversalNg::HasChildren(*shadow_host));
 
   for (unsigned index = 0; index < kNumberOfChildNodes; ++index) {
-    Node* child = FlatTreeTraversal::ChildAt(*shadow_host, index);
+    Node* child = FlatTreeTraversalNg::ChildAt(*shadow_host, index);
     EXPECT_EQ(expected_child_nodes[index], child)
-        << "FlatTreeTraversal::childAt(*shadowHost, " << index << ")";
-    EXPECT_EQ(index, FlatTreeTraversal::Index(*child))
-        << "FlatTreeTraversal::index(FlatTreeTraversal(*shadowHost, " << index
-        << "))";
-    EXPECT_TRUE(FlatTreeTraversal::IsDescendantOf(*child, *shadow_host))
-        << "FlatTreeTraversal::isDescendantOf(*FlatTreeTraversal(*shadowHost, "
+        << "FlatTreeTraversalNg::childAt(*shadowHost, " << index << ")";
+    EXPECT_EQ(index, FlatTreeTraversalNg::Index(*child))
+        << "FlatTreeTraversalNg::index(FlatTreeTraversalNg(*shadowHost, "
+        << index << "))";
+    EXPECT_TRUE(FlatTreeTraversalNg::IsDescendantOf(*child, *shadow_host))
+        << "FlatTreeTraversalNg::isDescendantOf(*FlatTreeTraversalNg(*"
+           "shadowHost, "
         << index << "), *shadowHost)";
   }
   EXPECT_EQ(nullptr,
-            FlatTreeTraversal::ChildAt(*shadow_host, kNumberOfChildNodes + 1))
+            FlatTreeTraversalNg::ChildAt(*shadow_host, kNumberOfChildNodes + 1))
       << "Out of bounds childAt() returns nullptr.";
 
   // Distribute node |m00| is child of node in shadow tree |s03|.
-  EXPECT_EQ(m00, FlatTreeTraversal::ChildAt(*s03, 0));
+  EXPECT_EQ(m00, FlatTreeTraversalNg::ChildAt(*s03, 0));
 }
 
-TEST_F(FlatTreeTraversalTest, ChildrenOf) {
+TEST_F(FlatTreeTraversalNgTest, ChildrenOf) {
   SetupSampleHTML(
       "<p id=sample>ZERO<span slot=three>three</b><span "
       "slot=one>one</b>FOUR</p>",
@@ -171,13 +182,13 @@ TEST_F(FlatTreeTraversalTest, ChildrenOf) {
   Element* const sample = GetDocument().getElementById("sample");
 
   HeapVector<Member<Node>> expected_nodes;
-  for (Node* runner = FlatTreeTraversal::FirstChild(*sample); runner;
-       runner = FlatTreeTraversal::NextSibling(*runner)) {
+  for (Node* runner = FlatTreeTraversalNg::FirstChild(*sample); runner;
+       runner = FlatTreeTraversalNg::NextSibling(*runner)) {
     expected_nodes.push_back(runner);
   }
 
   HeapVector<Member<Node>> actual_nodes;
-  for (Node& child : FlatTreeTraversal::ChildrenOf(*sample))
+  for (Node& child : FlatTreeTraversalNg::ChildrenOf(*sample))
     actual_nodes.push_back(&child);
 
   EXPECT_EQ(expected_nodes, actual_nodes);
@@ -186,7 +197,7 @@ TEST_F(FlatTreeTraversalTest, ChildrenOf) {
 // Test case for
 //  - commonAncestor
 //  - isDescendantOf
-TEST_F(FlatTreeTraversalTest, commonAncestor) {
+TEST_F(FlatTreeTraversalNgTest, commonAncestor) {
   // We build following flat tree:
   //             ____BODY___
   //             |    |     |
@@ -276,7 +287,7 @@ TEST_F(FlatTreeTraversalTest, commonAncestor) {
 // Test case for
 //  - nextSkippingChildren
 //  - previousSkippingChildren
-TEST_F(FlatTreeTraversalTest, nextSkippingChildren) {
+TEST_F(FlatTreeTraversalNgTest, nextSkippingChildren) {
   const char* main_html =
       "<div id='m0'>m0</div>"
       "<div id='m1'>"
@@ -307,33 +318,33 @@ TEST_F(FlatTreeTraversalTest, nextSkippingChildren) {
   Element* s120 = shadow_root->QuerySelector("#s120");
 
   // Main tree node to main tree node
-  EXPECT_EQ(*m1, FlatTreeTraversal::NextSkippingChildren(*m0));
-  EXPECT_EQ(*m0, FlatTreeTraversal::PreviousSkippingChildren(*m1));
+  EXPECT_EQ(*m1, FlatTreeTraversalNg::NextSkippingChildren(*m0));
+  EXPECT_EQ(*m0, FlatTreeTraversalNg::PreviousSkippingChildren(*m1));
 
   // Distribute node to main tree node
-  EXPECT_EQ(*m2, FlatTreeTraversal::NextSkippingChildren(*m10));
-  EXPECT_EQ(*m1, FlatTreeTraversal::PreviousSkippingChildren(*m2));
+  EXPECT_EQ(*m2, FlatTreeTraversalNg::NextSkippingChildren(*m10));
+  EXPECT_EQ(*m1, FlatTreeTraversalNg::PreviousSkippingChildren(*m2));
 
   // Distribute node to node in shadow tree
-  EXPECT_EQ(*s11, FlatTreeTraversal::NextSkippingChildren(*m11));
-  EXPECT_EQ(*m11, FlatTreeTraversal::PreviousSkippingChildren(*s11));
+  EXPECT_EQ(*s11, FlatTreeTraversalNg::NextSkippingChildren(*m11));
+  EXPECT_EQ(*m11, FlatTreeTraversalNg::PreviousSkippingChildren(*s11));
 
   // Node in shadow tree to distributed node
-  EXPECT_EQ(*s11, FlatTreeTraversal::NextSkippingChildren(*m11));
-  EXPECT_EQ(*m11, FlatTreeTraversal::PreviousSkippingChildren(*s11));
+  EXPECT_EQ(*s11, FlatTreeTraversalNg::NextSkippingChildren(*m11));
+  EXPECT_EQ(*m11, FlatTreeTraversalNg::PreviousSkippingChildren(*s11));
 
-  EXPECT_EQ(*m10, FlatTreeTraversal::NextSkippingChildren(*s120));
-  EXPECT_EQ(*s120, FlatTreeTraversal::PreviousSkippingChildren(*m10));
+  EXPECT_EQ(*m10, FlatTreeTraversalNg::NextSkippingChildren(*s120));
+  EXPECT_EQ(*s120, FlatTreeTraversalNg::PreviousSkippingChildren(*m10));
 
   // Node in shadow tree to main tree
-  EXPECT_EQ(*m2, FlatTreeTraversal::NextSkippingChildren(*s12));
-  EXPECT_EQ(*m1, FlatTreeTraversal::PreviousSkippingChildren(*m2));
+  EXPECT_EQ(*m2, FlatTreeTraversalNg::NextSkippingChildren(*s12));
+  EXPECT_EQ(*m1, FlatTreeTraversalNg::PreviousSkippingChildren(*m2));
 }
 
 // Test case for
 //  - lastWithin
 //  - lastWithinOrSelf
-TEST_F(FlatTreeTraversalTest, lastWithin) {
+TEST_F(FlatTreeTraversalNgTest, lastWithin) {
   const char* main_html =
       "<div id='m0'>m0</div>"
       "<div id='m1'>"
@@ -361,23 +372,23 @@ TEST_F(FlatTreeTraversalTest, lastWithin) {
   Element* s11 = shadow_root->QuerySelector("#s11");
   Element* s12 = shadow_root->QuerySelector("#s12");
 
-  EXPECT_EQ(m0->firstChild(), FlatTreeTraversal::LastWithin(*m0));
-  EXPECT_EQ(*m0->firstChild(), FlatTreeTraversal::LastWithinOrSelf(*m0));
+  EXPECT_EQ(m0->firstChild(), FlatTreeTraversalNg::LastWithin(*m0));
+  EXPECT_EQ(*m0->firstChild(), FlatTreeTraversalNg::LastWithinOrSelf(*m0));
 
-  EXPECT_EQ(m10->firstChild(), FlatTreeTraversal::LastWithin(*m1));
-  EXPECT_EQ(*m10->firstChild(), FlatTreeTraversal::LastWithinOrSelf(*m1));
+  EXPECT_EQ(m10->firstChild(), FlatTreeTraversalNg::LastWithin(*m1));
+  EXPECT_EQ(*m10->firstChild(), FlatTreeTraversalNg::LastWithinOrSelf(*m1));
 
-  EXPECT_EQ(nullptr, FlatTreeTraversal::LastWithin(*m2));
-  EXPECT_EQ(*m2, FlatTreeTraversal::LastWithinOrSelf(*m2));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::LastWithin(*m2));
+  EXPECT_EQ(*m2, FlatTreeTraversalNg::LastWithinOrSelf(*m2));
 
-  EXPECT_EQ(s11->firstChild(), FlatTreeTraversal::LastWithin(*s11));
-  EXPECT_EQ(*s11->firstChild(), FlatTreeTraversal::LastWithinOrSelf(*s11));
+  EXPECT_EQ(s11->firstChild(), FlatTreeTraversalNg::LastWithin(*s11));
+  EXPECT_EQ(*s11->firstChild(), FlatTreeTraversalNg::LastWithinOrSelf(*s11));
 
-  EXPECT_EQ(m10->firstChild(), FlatTreeTraversal::LastWithin(*s12));
-  EXPECT_EQ(*m10->firstChild(), FlatTreeTraversal::LastWithinOrSelf(*s12));
+  EXPECT_EQ(m10->firstChild(), FlatTreeTraversalNg::LastWithin(*s12));
+  EXPECT_EQ(*m10->firstChild(), FlatTreeTraversalNg::LastWithinOrSelf(*s12));
 }
 
-TEST_F(FlatTreeTraversalTest, previousPostOrder) {
+TEST_F(FlatTreeTraversalNgTest, previousPostOrder) {
   const char* main_html =
       "<div id='m0'>m0</div>"
       "<div id='m1'>"
@@ -407,27 +418,27 @@ TEST_F(FlatTreeTraversalTest, previousPostOrder) {
   Element* s12 = shadow_root->QuerySelector("#s12");
   Element* s120 = shadow_root->QuerySelector("#s120");
 
-  EXPECT_EQ(*m0->firstChild(), FlatTreeTraversal::PreviousPostOrder(*m0));
-  EXPECT_EQ(*s12, FlatTreeTraversal::PreviousPostOrder(*m1));
-  EXPECT_EQ(*m10->firstChild(), FlatTreeTraversal::PreviousPostOrder(*m10));
-  EXPECT_EQ(*s120, FlatTreeTraversal::PreviousPostOrder(*m10->firstChild()));
+  EXPECT_EQ(*m0->firstChild(), FlatTreeTraversalNg::PreviousPostOrder(*m0));
+  EXPECT_EQ(*s12, FlatTreeTraversalNg::PreviousPostOrder(*m1));
+  EXPECT_EQ(*m10->firstChild(), FlatTreeTraversalNg::PreviousPostOrder(*m10));
+  EXPECT_EQ(*s120, FlatTreeTraversalNg::PreviousPostOrder(*m10->firstChild()));
   EXPECT_EQ(*s120,
-            FlatTreeTraversal::PreviousPostOrder(*m10->firstChild(), s12));
-  EXPECT_EQ(*m11->firstChild(), FlatTreeTraversal::PreviousPostOrder(*m11));
-  EXPECT_EQ(*m0, FlatTreeTraversal::PreviousPostOrder(*m11->firstChild()));
+            FlatTreeTraversalNg::PreviousPostOrder(*m10->firstChild(), s12));
+  EXPECT_EQ(*m11->firstChild(), FlatTreeTraversalNg::PreviousPostOrder(*m11));
+  EXPECT_EQ(*m0, FlatTreeTraversalNg::PreviousPostOrder(*m11->firstChild()));
   EXPECT_EQ(nullptr,
-            FlatTreeTraversal::PreviousPostOrder(*m11->firstChild(), m11));
-  EXPECT_EQ(*m2->firstChild(), FlatTreeTraversal::PreviousPostOrder(*m2));
+            FlatTreeTraversalNg::PreviousPostOrder(*m11->firstChild(), m11));
+  EXPECT_EQ(*m2->firstChild(), FlatTreeTraversalNg::PreviousPostOrder(*m2));
 
-  EXPECT_EQ(*s11->firstChild(), FlatTreeTraversal::PreviousPostOrder(*s11));
-  EXPECT_EQ(*m10, FlatTreeTraversal::PreviousPostOrder(*s12));
-  EXPECT_EQ(*s120->firstChild(), FlatTreeTraversal::PreviousPostOrder(*s120));
-  EXPECT_EQ(*s11, FlatTreeTraversal::PreviousPostOrder(*s120->firstChild()));
+  EXPECT_EQ(*s11->firstChild(), FlatTreeTraversalNg::PreviousPostOrder(*s11));
+  EXPECT_EQ(*m10, FlatTreeTraversalNg::PreviousPostOrder(*s12));
+  EXPECT_EQ(*s120->firstChild(), FlatTreeTraversalNg::PreviousPostOrder(*s120));
+  EXPECT_EQ(*s11, FlatTreeTraversalNg::PreviousPostOrder(*s120->firstChild()));
   EXPECT_EQ(nullptr,
-            FlatTreeTraversal::PreviousPostOrder(*s120->firstChild(), s12));
+            FlatTreeTraversalNg::PreviousPostOrder(*s120->firstChild(), s12));
 }
 
-TEST_F(FlatTreeTraversalTest, nextSiblingNotInDocumentFlatTree) {
+TEST_F(FlatTreeTraversalNgTest, nextSiblingNotInDocumentFlatTree) {
   const char* main_html =
       "<div id='m0'>m0</div>"
       "<div id='m1'>"
@@ -441,11 +452,11 @@ TEST_F(FlatTreeTraversalTest, nextSiblingNotInDocumentFlatTree) {
   Element* body = GetDocument().body();
   Element* m10 = body->QuerySelector("#m10");
 
-  EXPECT_EQ(nullptr, FlatTreeTraversal::NextSibling(*m10));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::PreviousSibling(*m10));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::NextSibling(*m10));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::PreviousSibling(*m10));
 }
 
-TEST_F(FlatTreeTraversalTest, redistribution) {
+TEST_F(FlatTreeTraversalNgTest, redistribution) {
   const char* main_html =
       "<div id='m0'>m0</div>"
       "<div id='m1'>"
@@ -478,18 +489,18 @@ TEST_F(FlatTreeTraversalTest, redistribution) {
   ShadowRoot* shadow_root2 = s1->OpenShadowRoot();
   Element* s21 = shadow_root2->QuerySelector("#s21");
 
-  EXPECT_EQ(s21, FlatTreeTraversal::NextSibling(*m10));
-  EXPECT_EQ(m10, FlatTreeTraversal::PreviousSibling(*s21));
+  EXPECT_EQ(s21, FlatTreeTraversalNg::NextSibling(*m10));
+  EXPECT_EQ(m10, FlatTreeTraversalNg::PreviousSibling(*s21));
 
-  // FlatTreeTraversal::traverseSiblings does not work for a node which is not
+  // FlatTreeTraversalNg::traverseSiblings does not work for a node which is not
   // in a document flat tree.
   // e.g. The following test fails. The result of
-  // FlatTreeTraversal::previousSibling(*m11)) will be #m10, instead of nullptr.
-  // Element* m11 = body->querySelector("#m11");
-  // EXPECT_EQ(nullptr, FlatTreeTraversal::previousSibling(*m11));
+  // FlatTreeTraversalNg::previousSibling(*m11)) will be #m10, instead of
+  // nullptr. Element* m11 = body->querySelector("#m11"); EXPECT_EQ(nullptr,
+  // FlatTreeTraversalNg::previousSibling(*m11));
 }
 
-TEST_F(FlatTreeTraversalTest, v1Simple) {
+TEST_F(FlatTreeTraversalNgTest, v1Simple) {
   const char* main_html =
       "<div id='host'>"
       "<div id='child1' slot='slot1'></div>"
@@ -516,13 +527,45 @@ TEST_F(FlatTreeTraversalTest, v1Simple) {
 
   EXPECT_TRUE(slot1);
   EXPECT_TRUE(slot2);
-  EXPECT_EQ(shadow_child1, FlatTreeTraversal::FirstChild(*host));
-  EXPECT_EQ(child1, FlatTreeTraversal::NextSibling(*shadow_child1));
-  EXPECT_EQ(child2, FlatTreeTraversal::NextSibling(*child1));
-  EXPECT_EQ(shadow_child2, FlatTreeTraversal::NextSibling(*child2));
+  EXPECT_EQ(shadow_child1, FlatTreeTraversalNg::FirstChild(*host));
+  EXPECT_EQ(slot1, FlatTreeTraversalNg::NextSibling(*shadow_child1));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::NextSibling(*child1));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::NextSibling(*child2));
+  EXPECT_EQ(slot2, FlatTreeTraversalNg::NextSibling(*slot1));
+  EXPECT_EQ(shadow_child2, FlatTreeTraversalNg::NextSibling(*slot2));
 }
 
-TEST_F(FlatTreeTraversalTest, v1Redistribution) {
+TEST_F(FlatTreeTraversalNgTest, v1Redistribution) {
+  // composed tree:
+  // d1
+  // ├──/shadow-root
+  // │   └── d1-1
+  // │       ├──/shadow-root
+  // │       │   ├── d1-1-1
+  // │       │   ├── slot name=d1-1-s1
+  // │       │   ├── slot name=d1-1-s2
+  // │       │   └── d1-1-2
+  // │       ├── d1-2
+  // │       ├── slot id=d1-s0
+  // │       ├── slot name=d1-s1 slot=d1-1-s1
+  // │       ├── slot name=d1-s2
+  // │       ├── d1-3
+  // │       └── d1-4 slot=d1-1-s1
+  // ├── d2 slot=d1-s1
+  // ├── d3 slot=d1-s2
+  // ├── d4 slot=nonexistent
+  // └── d5
+
+  // flat tree:
+  // d1
+  // └── d1-1
+  //     ├── d1-1-1
+  //     ├── slot name=d1-1-s1
+  //     │   ├── slot name=d1-s1 slot=d1-1-s1
+  //     │   │   └── d2 slot=d1-s1
+  //     │   └── d1-4 slot=d1-1-s1
+  //     ├── slot name=d1-1-s2
+  //     └── d1-1-2
   const char* main_html =
       "<div id='d1'>"
       "<div id='d2' slot='d1-s1'></div>"
@@ -581,24 +624,28 @@ TEST_F(FlatTreeTraversalTest, v1Redistribution) {
   EXPECT_TRUE(d1s2);
   EXPECT_TRUE(d11s1);
   EXPECT_TRUE(d11s2);
-  EXPECT_EQ(d11, FlatTreeTraversal::Next(*d1));
-  EXPECT_EQ(d111, FlatTreeTraversal::Next(*d11));
-  EXPECT_EQ(d2, FlatTreeTraversal::Next(*d111));
-  EXPECT_EQ(d14, FlatTreeTraversal::Next(*d2));
-  EXPECT_EQ(d112, FlatTreeTraversal::Next(*d14));
-  EXPECT_EQ(d6, FlatTreeTraversal::Next(*d112));
 
-  EXPECT_EQ(d112, FlatTreeTraversal::Previous(*d6));
+  EXPECT_EQ(d11, FlatTreeTraversalNg::Next(*d1));
+  EXPECT_EQ(d111, FlatTreeTraversalNg::Next(*d11));
+  EXPECT_EQ(d11s1, FlatTreeTraversalNg::Next(*d111));
+  EXPECT_EQ(d1s1, FlatTreeTraversalNg::Next(*d11s1));
+  EXPECT_EQ(d2, FlatTreeTraversalNg::Next(*d1s1));
+  EXPECT_EQ(d14, FlatTreeTraversalNg::Next(*d2));
+  EXPECT_EQ(d11s2, FlatTreeTraversalNg::Next(*d14));
+  EXPECT_EQ(d112, FlatTreeTraversalNg::Next(*d11s2));
+  EXPECT_EQ(d6, FlatTreeTraversalNg::Next(*d112));
 
-  EXPECT_EQ(d11, FlatTreeTraversal::Parent(*d111));
-  EXPECT_EQ(d11, FlatTreeTraversal::Parent(*d112));
-  EXPECT_EQ(d11, FlatTreeTraversal::Parent(*d2));
-  EXPECT_EQ(d11, FlatTreeTraversal::Parent(*d14));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::Parent(*d3));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::Parent(*d4));
+  EXPECT_EQ(d112, FlatTreeTraversalNg::Previous(*d6));
+
+  EXPECT_EQ(d11, FlatTreeTraversalNg::Parent(*d111));
+  EXPECT_EQ(d11, FlatTreeTraversalNg::Parent(*d112));
+  EXPECT_EQ(d1s1, FlatTreeTraversalNg::Parent(*d2));
+  EXPECT_EQ(d11s1, FlatTreeTraversalNg::Parent(*d14));
+  EXPECT_EQ(d1s2, FlatTreeTraversalNg::Parent(*d3));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::Parent(*d4));
 }
 
-TEST_F(FlatTreeTraversalTest, v1SlotInDocumentTree) {
+TEST_F(FlatTreeTraversalNgTest, v1SlotInDocumentTree) {
   const char* main_html =
       "<div id='parent'>"
       "<slot>"
@@ -614,16 +661,16 @@ TEST_F(FlatTreeTraversalTest, v1SlotInDocumentTree) {
   Element* child1 = body->QuerySelector("#child1");
   Element* child2 = body->QuerySelector("#child2");
 
-  EXPECT_EQ(slot, FlatTreeTraversal::FirstChild(*parent));
-  EXPECT_EQ(child1, FlatTreeTraversal::FirstChild(*slot));
-  EXPECT_EQ(child2, FlatTreeTraversal::NextSibling(*child1));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::NextSibling(*child2));
-  EXPECT_EQ(slot, FlatTreeTraversal::Parent(*child1));
-  EXPECT_EQ(slot, FlatTreeTraversal::Parent(*child2));
-  EXPECT_EQ(parent, FlatTreeTraversal::Parent(*slot));
+  EXPECT_EQ(slot, FlatTreeTraversalNg::FirstChild(*parent));
+  EXPECT_EQ(child1, FlatTreeTraversalNg::FirstChild(*slot));
+  EXPECT_EQ(child2, FlatTreeTraversalNg::NextSibling(*child1));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::NextSibling(*child2));
+  EXPECT_EQ(slot, FlatTreeTraversalNg::Parent(*child1));
+  EXPECT_EQ(slot, FlatTreeTraversalNg::Parent(*child2));
+  EXPECT_EQ(parent, FlatTreeTraversalNg::Parent(*slot));
 }
 
-TEST_F(FlatTreeTraversalTest, v1FallbackContent) {
+TEST_F(FlatTreeTraversalNgTest, v1FallbackContent) {
   const char* main_html = "<div id='d1'></div>";
   const char* shadow_html =
       "<div id='before'></div>"
@@ -640,21 +687,24 @@ TEST_F(FlatTreeTraversalTest, v1FallbackContent) {
   Element* before = shadow_root->QuerySelector("#before");
   Element* after = shadow_root->QuerySelector("#after");
   Element* fallback_content = shadow_root->QuerySelector("p");
+  Element* slot = shadow_root->QuerySelector("slot");
 
-  EXPECT_EQ(before, FlatTreeTraversal::FirstChild(*d1));
-  EXPECT_EQ(after, FlatTreeTraversal::LastChild(*d1));
-  EXPECT_EQ(d1, FlatTreeTraversal::Parent(*fallback_content));
+  EXPECT_EQ(before, FlatTreeTraversalNg::FirstChild(*d1));
+  EXPECT_EQ(after, FlatTreeTraversalNg::LastChild(*d1));
+  EXPECT_EQ(slot, FlatTreeTraversalNg::Parent(*fallback_content));
 
-  EXPECT_EQ(fallback_content, FlatTreeTraversal::NextSibling(*before));
-  EXPECT_EQ(after, FlatTreeTraversal::NextSibling(*fallback_content));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::NextSibling(*after));
+  EXPECT_EQ(slot, FlatTreeTraversalNg::NextSibling(*before));
+  EXPECT_EQ(after, FlatTreeTraversalNg::NextSibling(*slot));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::NextSibling(*fallback_content));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::NextSibling(*after));
 
-  EXPECT_EQ(fallback_content, FlatTreeTraversal::PreviousSibling(*after));
-  EXPECT_EQ(before, FlatTreeTraversal::PreviousSibling(*fallback_content));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::PreviousSibling(*before));
+  EXPECT_EQ(slot, FlatTreeTraversalNg::PreviousSibling(*after));
+  EXPECT_EQ(before, FlatTreeTraversalNg::PreviousSibling(*slot));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::PreviousSibling(*fallback_content));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::PreviousSibling(*before));
 }
 
-TEST_F(FlatTreeTraversalTest, v1FallbackContentSkippedInTraversal) {
+TEST_F(FlatTreeTraversalNgTest, v1FallbackContentSkippedInTraversal) {
   const char* main_html = "<div id='d1'><span></span></div>";
   const char* shadow_html =
       "<div id='before'></div>"
@@ -672,25 +722,27 @@ TEST_F(FlatTreeTraversalTest, v1FallbackContentSkippedInTraversal) {
   Element* before = shadow_root->QuerySelector("#before");
   Element* after = shadow_root->QuerySelector("#after");
   Element* fallback_content = shadow_root->QuerySelector("p");
+  Element* slot = shadow_root->QuerySelector("slot");
 
-  EXPECT_EQ(before, FlatTreeTraversal::FirstChild(*d1));
-  EXPECT_EQ(after, FlatTreeTraversal::LastChild(*d1));
-  EXPECT_EQ(d1, FlatTreeTraversal::Parent(*span));
+  EXPECT_EQ(before, FlatTreeTraversalNg::FirstChild(*d1));
+  EXPECT_EQ(after, FlatTreeTraversalNg::LastChild(*d1));
+  EXPECT_EQ(slot, FlatTreeTraversalNg::Parent(*span));
+  EXPECT_EQ(d1, FlatTreeTraversalNg::Parent(*slot));
 
-  EXPECT_EQ(span, FlatTreeTraversal::NextSibling(*before));
-  EXPECT_EQ(after, FlatTreeTraversal::NextSibling(*span));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::NextSibling(*after));
+  EXPECT_EQ(slot, FlatTreeTraversalNg::NextSibling(*before));
+  EXPECT_EQ(after, FlatTreeTraversalNg::NextSibling(*slot));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::NextSibling(*after));
 
-  EXPECT_EQ(span, FlatTreeTraversal::PreviousSibling(*after));
-  EXPECT_EQ(before, FlatTreeTraversal::PreviousSibling(*span));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::PreviousSibling(*before));
+  EXPECT_EQ(slot, FlatTreeTraversalNg::PreviousSibling(*after));
+  EXPECT_EQ(before, FlatTreeTraversalNg::PreviousSibling(*slot));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::PreviousSibling(*before));
 
-  EXPECT_EQ(nullptr, FlatTreeTraversal::Parent(*fallback_content));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::NextSibling(*fallback_content));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::PreviousSibling(*fallback_content));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::Parent(*fallback_content));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::NextSibling(*fallback_content));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::PreviousSibling(*fallback_content));
 }
 
-TEST_F(FlatTreeTraversalTest, v1AllFallbackContent) {
+TEST_F(FlatTreeTraversalNgTest, v1AllFallbackContent) {
   const char* main_html = "<div id='d1'></div>";
   const char* shadow_html =
       "<slot name='a'><p id='x'>fallback content X</p></slot>"
@@ -704,23 +756,32 @@ TEST_F(FlatTreeTraversalTest, v1AllFallbackContent) {
 
   AttachOpenShadowRoot(*d1, shadow_html);
   ShadowRoot* shadow_root = d1->OpenShadowRoot();
+  Element* slot_a = shadow_root->QuerySelector("slot[name=a]");
+  Element* slot_b = shadow_root->QuerySelector("slot[name=b]");
+  Element* slot_c = shadow_root->QuerySelector("slot[name=c]");
   Element* fallback_x = shadow_root->QuerySelector("#x");
   Element* fallback_y = shadow_root->QuerySelector("#y");
   Element* fallback_z = shadow_root->QuerySelector("#z");
 
-  EXPECT_EQ(fallback_x, FlatTreeTraversal::FirstChild(*d1));
-  EXPECT_EQ(fallback_z, FlatTreeTraversal::LastChild(*d1));
-  EXPECT_EQ(d1, FlatTreeTraversal::Parent(*fallback_x));
-  EXPECT_EQ(d1, FlatTreeTraversal::Parent(*fallback_y));
-  EXPECT_EQ(d1, FlatTreeTraversal::Parent(*fallback_z));
+  EXPECT_EQ(slot_a, FlatTreeTraversalNg::FirstChild(*d1));
+  EXPECT_EQ(slot_c, FlatTreeTraversalNg::LastChild(*d1));
 
-  EXPECT_EQ(fallback_y, FlatTreeTraversal::NextSibling(*fallback_x));
-  EXPECT_EQ(fallback_z, FlatTreeTraversal::NextSibling(*fallback_y));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::NextSibling(*fallback_z));
+  EXPECT_EQ(fallback_x, FlatTreeTraversalNg::FirstChild(*slot_a));
+  EXPECT_EQ(fallback_y, FlatTreeTraversalNg::FirstChild(*slot_b));
+  EXPECT_EQ(fallback_z, FlatTreeTraversalNg::FirstChild(*slot_c));
 
-  EXPECT_EQ(fallback_y, FlatTreeTraversal::PreviousSibling(*fallback_z));
-  EXPECT_EQ(fallback_x, FlatTreeTraversal::PreviousSibling(*fallback_y));
-  EXPECT_EQ(nullptr, FlatTreeTraversal::PreviousSibling(*fallback_x));
+  EXPECT_EQ(slot_a, FlatTreeTraversalNg::Parent(*fallback_x));
+  EXPECT_EQ(slot_b, FlatTreeTraversalNg::Parent(*fallback_y));
+  EXPECT_EQ(slot_c, FlatTreeTraversalNg::Parent(*fallback_z));
+  EXPECT_EQ(d1, FlatTreeTraversalNg::Parent(*slot_a));
+
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::NextSibling(*fallback_x));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::NextSibling(*fallback_y));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::NextSibling(*fallback_z));
+
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::PreviousSibling(*fallback_z));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::PreviousSibling(*fallback_y));
+  EXPECT_EQ(nullptr, FlatTreeTraversalNg::PreviousSibling(*fallback_x));
 }
 
 }  // namespace blink
