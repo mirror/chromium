@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7fabf86_9dbaf4da",
+        "filename": "cc/trees/property_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-27T18:53:01Z",
+      "side": 1,
+      "message": "Note: I wasn\u0027t sure if this method could be const without returning a \u0027const ScrollNode*\u0027. You mentioned being concerned that one could use a non-const ScrollNode to modify the tree somehow, so I opted for the safest approach since that works for the current code.",
+      "revId": "8fb88bac8a1beff86564d720d5c86e5ef9e81cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
