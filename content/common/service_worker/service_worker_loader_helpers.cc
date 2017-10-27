@@ -6,6 +6,7 @@
 
 #include "base/strings/stringprintf.h"
 #include "content/common/service_worker/service_worker_utils.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_response.h"
@@ -27,7 +28,7 @@ ServiceWorkerLoaderHelpers::CreateFetchRequest(const ResourceRequest& request) {
   new_request->method = request.method;
   // |blob_uuid| and |blob_size| aren't used in MojoBlobs, so just clear them.
   // The caller is responsible for setting the MojoBlob field |blob| if needed.
-  DCHECK(features::IsMojoBlobsEnabled());
+  DCHECK(features::IsMojoBlobsEnabled() || IsNavigationMojoResponseEnabled());
   new_request->blob_uuid.clear();
   new_request->blob_size = 0;
   new_request->credentials_mode = request.fetch_credentials_mode;

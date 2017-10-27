@@ -196,7 +196,8 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoader(
     const ResourceRequest& resource_request,
     ResourceContext* resource_context,
     LoaderCallback callback) {
-  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
+  DCHECK(ServiceWorkerUtils::IsServicificationEnabled() ||
+         IsNavigationMojoResponseEnabled());
   DCHECK(is_main_resource_load_);
   ClearJob();
 

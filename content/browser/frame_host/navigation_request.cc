@@ -25,6 +25,7 @@
 #include "content/browser/frame_host/navigator_impl.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/loader/navigation_url_loader.h"
+#include "content/browser/loader/navigation_url_loader_network_service.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_navigation_handle.h"
@@ -41,6 +42,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/appcache_info.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
@@ -1046,17 +1048,27 @@ void NavigationRequest::OnStartChecksComplete(
   bool report_raw_headers =
       RenderFrameDevToolsAgentHost::IsNetworkHandlerEnabled(frame_tree_node_);
 
-  loader_ = NavigationURLLoader::Create(
-      browser_context->GetResourceContext(), partition,
-      base::MakeUnique<NavigationRequestInfo>(
-          common_params_, begin_params_, site_for_cookies,
-          frame_tree_node_->IsMainFrame(), parent_is_main_frame,
-          IsSecureFrame(frame_tree_node_->parent()),
-          frame_tree_node_->frame_tree_node_id(), is_for_guests_only,
-          report_raw_headers, navigating_frame_host->GetVisibilityState()),
-      std::move(navigation_ui_data),
-      navigation_handle_->service_worker_handle(),
-      navigation_handle_->appcache_handle(), this);
+  auto request_info = std::make_unique<NavigationRequestInfo>(
+      common_params_, begin_params_, site_for_cookies,
+      frame_tree_node_->IsMainFrame(), parent_is_main_frame,
+      IsSecureFrame(frame_tree_node_->parent()),
+      frame_tree_node_->frame_tree_node_id(), is_for_guests_only,
+      report_raw_headers, navigating_frame_host->GetVisibilityState());
+
+  if (IsNavigationMojoResponseEnabled()) {
+    loader_ = std::make_unique<NavigationURLLoaderNetworkService>(
+        browser_context->GetResourceContext(), partition,
+        std::move(request_info), std::move(navigation_ui_data),
+        navigation_handle_->service_worker_handle(),
+        navigation_handle_->appcache_handle(), this,
+        std::vector<std::unique_ptr<URLLoaderRequestHandler>>());
+  } else {
+    loader_ = NavigationURLLoader::Create(
+        browser_context->GetResourceContext(), partition,
+        std::move(request_info), std::move(navigation_ui_data),
+        navigation_handle_->service_worker_handle(),
+        navigation_handle_->appcache_handle(), this);
+  }
 }
 
 void NavigationRequest::OnRedirectChecksComplete(
