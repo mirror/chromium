@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b460e8e_aa6eb77e",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-27T03:32:34Z",
+      "side": 1,
+      "message": "Maybe adding a comment something like \"confirm this works on both low-end/high-end machines\"? I\u0027m curios about this configuration works on most devices.",
+      "revId": "2fcaed416d69fde26ca4d48153d20ecf1d02035c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

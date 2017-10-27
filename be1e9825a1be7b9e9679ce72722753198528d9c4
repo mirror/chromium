@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "049d8f38_cc40730a",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-27T03:32:34Z",
+      "side": 1,
+      "message": "I missed that. Thanks for the clarification!",
+      "parentUuid": "9fb48d55_00b0d7ce",
+      "revId": "be1e9825a1be7b9e9679ce72722753198528d9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df662c08_0e4f7204",
         "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.h",
         "patchSetId": 7
