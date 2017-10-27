@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82417e67_877563ff",
+        "filename": "chrome/browser/media/webrtc/webrtc_audio_quality_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-27T12:53:26Z",
+      "side": 1,
+      "message": "nit: Based on the CL description, I would guess that keeping recordings means they will be uploaded somewhere. It would be good to clarify what\u0027s going on either in the CL description or with a comment in this part of the code.",
+      "range": {
+        "startLine": 416,
+        "startChar": 6,
+        "endLine": 416,
+        "endChar": 12
+      },
+      "revId": "08654b7b1c6073172ffecfb5dc7e0c926aaec8fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
