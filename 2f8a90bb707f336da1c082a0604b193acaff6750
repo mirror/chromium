@@ -16,6 +16,24 @@
       "revId": "2f8a90bb707f336da1c082a0604b193acaff6750",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7408d238_87d0b9bd",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T09:56:02Z",
+      "side": 0,
+      "message": "Ack (replying to a similar comment in another file).",
+      "parentUuid": "eb581154_f550e9ff",
+      "revId": "2f8a90bb707f336da1c082a0604b193acaff6750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

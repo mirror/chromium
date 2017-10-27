@@ -124,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "b3c95b5d_b2d4f81a",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T09:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c8fe1e_333fc525",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 72
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d19d3398_34876666",
         "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
         "patchSetId": 6
@@ -135,6 +159,24 @@
       "writtenOn": "2017-10-18T09:06:18Z",
       "side": 1,
       "message": "Instead of downgrading the ScopedFD to an unscoped base::SharedMemoryHandle in the BindSharedMemory() case, is it possible to wrap this protected_shmem-\u003eshm_handle()-\u003eRelease() in a ScopedFD?",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c516b7e6_1bbd10e6",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T09:56:02Z",
+      "side": 1,
+      "message": "I was trying to avoid duplicating shared memory handles (keeping 2), unless you feel that would not be a big issue? InputBufferInfo will close this handle automatically on destruction if it\u0027s owned, but if you prefer, I can duplicate.",
+      "parentUuid": "d19d3398_34876666",
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "c947e882_6f8a70b0",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T09:56:02Z",
+      "side": 1,
+      "message": "Removing.",
+      "parentUuid": "30bddde5_40d73c97",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d41c2d6f_9997f974",
         "filename": "chrome/gpu/protected_buffer_manager.cc",
         "patchSetId": 6
@@ -302,6 +362,30 @@
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54345715_e6899152",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T09:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77f5b07e_5de41dd6",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

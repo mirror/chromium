@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27e717a7_39285740",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T09:56:02Z",
+      "side": 1,
+      "message": "The existing VideoDecodeAccelerator IPC/API uses a GBM handle for this (https://cs.chromium.org/chromium/src/media/video/video_decode_accelerator.h?l\u003d289), and it is unrelated to this CL.\n\nWe are already creating a GBM in this class for regular playback as well (https://cs.chromium.org/chromium/src/chrome/gpu/chrome_arc_video_decode_accelerator.cc?l\u003d311). \n\nMoving this here is just cosmetic to deduplicate/unify code, otherwise we\u0027d have to have the same code in two paths. Would you be ok with keeping it, or do you prefer to wrap into NativePixmapHandle, and then convert to GMBH before sending to VDA?",
+      "parentUuid": "5687fef8_f813e7e3",
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c16a25c5_ebcb7c11",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-27T01:35:09Z",
       "side": 1,
       "message": "it\u0027s surprising to see all this custom log stuff in a CL. can\u0027t tell if it\u0027s just temporary debugging code or something that is meant to be here... if the latter, then why are standard chromium logging macros not good enough?",
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68bb06f_aa24ae53",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T09:56:02Z",
+      "side": 1,
+      "message": "Yes, sorry for lack of context. This is intentional, most of our video acceleration code has moved to this style of logging and having it in this CL was mostly to simplify any potential merges. But it\u0027s true that this is confusing, so I will once again separate this in the next patchset.",
+      "parentUuid": "c16a25c5_ebcb7c11",
       "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d7753491_1356c591",
+        "filename": "ui/gfx/native_pixmap.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T09:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "583fef39_16e866a0",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2e252f8_dc600e8f",
         "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
         "patchSetId": 8
@@ -70,6 +130,24 @@
       "writtenOn": "2017-10-26T15:25:13Z",
       "side": 1,
       "message": "nit: you are calling gbm_device_is_format_supported twice? Do you need to?",
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70949c9d_9a2a9819",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T09:56:02Z",
+      "side": 1,
+      "message": "The second call is after removing GBM_BO_USE_SCANOUT, we first try the format with it, and if not supported, remove it and try again to see if the format is usable without scanout.",
+      "parentUuid": "d2e252f8_dc600e8f",
       "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -134,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "c5433a65_fbcf8825",
+        "filename": "ui/ozone/public/surface_factory_ozone.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T09:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78898fb8_ca97638b",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 20
+      },
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8553a780_d8915c2e",
         "filename": "ui/ozone/public/surface_factory_ozone.h",
         "patchSetId": 8
@@ -148,6 +250,24 @@
       "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a678d96_825a152b",
+        "filename": "ui/ozone/public/surface_factory_ozone.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-27T09:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8553a780_d8915c2e",
+      "revId": "f2f569fa3043055d40f8ebd6c51d9d9f684bec7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
