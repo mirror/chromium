@@ -108,6 +108,7 @@ group("gn_all") {
       "//chrome/test:interactive_ui_tests",
       "//chrome/test:sync_integration_tests",
       "//chrome/test/chromedriver:chromedriver_unittests",
+      "//components/printing/service:pdf_compositor_service_unittest",
       "//components/sync/tools:sync_client",
       "//components/sync/tools:sync_listen_notifications",
       "//gpu/gles2_conform_support:gles2_conform_test",

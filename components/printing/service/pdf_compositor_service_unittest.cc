@@ -69,9 +69,7 @@ class PdfCompositorServiceTest : public service_manager::test::ServiceTest {
     base::SharedMemory shared_memory;
     if (shared_memory.Create(options) && shared_memory.Map(len)) {
       memcpy(shared_memory.memory(), content.data(), len);
-      base::SharedMemoryHandle handle = shared_memory.handle();
-      if (len == handle.GetSize())
-        return base::SharedMemory::DuplicateHandle(handle);
+      return base::SharedMemory::DuplicateHandle(shared_memory.handle());
     }
     return invalid_handle;
   }

@@ -36,7 +36,7 @@ service_manifest("pdf_compositor_manifest") {
   source = "pdf_compositor_manifest.json"
 }
 
-service("pdf_compositor_test_service") {
+service("pdf_compositor") {
   testonly = true
 
   sources = [
@@ -61,13 +61,18 @@ service_test("pdf_compositor_service_unittest") {
 
   include_dirs = [ "testing/gmock/include" ]
   deps = [
-    ":pdf_compositor_test_service",
     "//base",
     "//components/printing/service/public/interfaces",
     "//mojo/common",
     "//services/service_manager/public/cpp:service_test_support",
     "//testing/gmock",
     "//testing/gtest",
+  ]
+  data_deps = [
+    ":pdf_compositor",
+  ]
+  data = [
+    "//components/test/data/printing/google.mskp",
   ]
 }
 
