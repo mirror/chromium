@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9546324_25bdab45",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceEntry.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-27T17:49:13Z",
+      "side": 1,
+      "message": "Please use base::AtomicSequenceNumber, which captures this pattern. We prefer to avoid direct use of \u003catomic\u003e, since it\u0027s subtle.\n\nWe\u0027re starting to allow use of some of the abstractions we\u0027ve built in base in Blink, and I\u0027ve checked with dcheng that this should be okay to add to the DEPS whitelist.\n\nPlease also be aware of what guarantees this does and doesn\u0027t offer. In particular, without additional synchronization, there are few guarantees about the order in which this operation will appear to occur compared with other memory accesses -- but we do have that until things wrap around, no two accesses will get the same number.\n\nThe present use seems okay (just to break ties for entries with equal timestamp IIUC), but if this becomes more complicated you might want a mutex instead.",
+      "revId": "f5b071fa5d34cefadc0815402e1623f250483b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
