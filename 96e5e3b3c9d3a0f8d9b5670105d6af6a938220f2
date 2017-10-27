@@ -177,6 +177,24 @@
       "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65ba38b6_d7b969e7",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-27T19:57:51Z",
+      "side": 1,
+      "message": "Hi Avi, do you know which file I should modify to make this work for Mac? I just tested this CL on Mac and the UI code is not working. So I think there is a different code path to show favicon and title on Mac.",
+      "parentUuid": "af9a8a85_7ebefa4a",
+      "revId": "96e5e3b3c9d3a0f8d9b5670105d6af6a938220f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
