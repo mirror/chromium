@@ -1728,9 +1728,9 @@ int HttpCache::Transaction::DoUpdateCachedResponse() {
   response_.network_accessed = new_response_->network_accessed;
   response_.unused_since_prefetch = new_response_->unused_since_prefetch;
   response_.ssl_info = new_response_->ssl_info;
-  if (new_response_->vary_data.is_valid()) {
+  if (new_response_->vary_data.vary_status() != HttpVaryData::VARY_NONE) {
     response_.vary_data = new_response_->vary_data;
-  } else if (response_.vary_data.is_valid()) {
+  } else if (response_.vary_data.vary_status() != HttpVaryData::VARY_NONE) {
     // There is a vary header in the stored response but not in the current one.
     // Update the data with the new request headers.
     HttpVaryData new_vary_data;
@@ -2544,7 +2544,7 @@ bool HttpCache::Transaction::RequiresValidation() {
   //  - watch out for cached responses that depend on authentication
 
   if (!(effective_load_flags_ & LOAD_SKIP_VARY_CHECK) &&
-      response_.vary_data.is_valid() &&
+      response_.vary_data.vary_status() == HttpVaryData::VARY_SPECIFIC &&
       !response_.vary_data.MatchesRequest(*request_,
                                           *response_.headers.get())) {
     vary_mismatch_ = true;
@@ -2554,6 +2554,13 @@ bool HttpCache::Transaction::RequiresValidation() {
 
   if (effective_load_flags_ & LOAD_SKIP_CACHE_VALIDATION)
     return false;
+
+  if (!(effective_load_flags_ & LOAD_SKIP_VARY_CHECK) &&
+      response_.vary_data.vary_status() == HttpVaryData::VARY_STAR) {
+    vary_mismatch_ = true;
+    validation_cause_ = VALIDATION_CAUSE_VARY_MISMATCH;
+    return true;
+  }
 
   if (response_.unused_since_prefetch &&
       !(effective_load_flags_ & LOAD_PREFETCH) &&
