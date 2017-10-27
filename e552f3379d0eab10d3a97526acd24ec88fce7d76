@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16505b30_63ce1f13",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-27T17:59:52Z",
+      "side": 1,
+      "message": "Yes, James had me show off that this works.",
+      "parentUuid": "0db32a35_4842b069",
+      "revId": "e552f3379d0eab10d3a97526acd24ec88fce7d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34925f5b_2699d0ce",
         "filename": "chrome/browser/ui/ash/multi_user/user_switch_animator_chromeos.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e305a388_f6be1363",
+        "filename": "chrome/browser/ui/ash/multi_user/user_switch_animator_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-27T17:59:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "34925f5b_2699d0ce",
+      "revId": "e552f3379d0eab10d3a97526acd24ec88fce7d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b0a6fd_d168111f",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "e552f3379d0eab10d3a97526acd24ec88fce7d76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1609e83_23af648f",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-27T17:59:52Z",
+      "side": 1,
+      "message": "I thought of mash-ok as describing linking. Removed the comment.",
+      "parentUuid": "27b0a6fd_d168111f",
+      "revId": "e552f3379d0eab10d3a97526acd24ec88fce7d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
