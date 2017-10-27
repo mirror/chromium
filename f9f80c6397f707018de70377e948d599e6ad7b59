@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2feb255_31710419",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mixed-editability-10.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-27T08:20:49Z",
+      "side": 1,
+      "message": "Please use lower CamelCase, e.g. camelCase. JS uses CamelCase for class name.",
+      "revId": "f9f80c6397f707018de70377e948d599e6ad7b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8055aef9_3f233ae5",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mixed-editability-10.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-27T08:20:49Z",
+      "side": 1,
+      "message": "We want to have\n\nif (!window.eventSender)\n  assert_not_reached(\u0027This test requires eventSender.\u0027);",
+      "revId": "f9f80c6397f707018de70377e948d599e6ad7b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
