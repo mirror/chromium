@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d73f7082_afe61cc2",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-27T17:03:08Z",
+      "side": 1,
+      "message": "For consistency with the rest of the Chromium codebase.\n\nAlso, did you see my comment about the test from the previous reply?",
+      "parentUuid": "d360ccab_d9d349d4",
+      "range": {
+        "startLine": 136,
+        "startChar": 44,
+        "endLine": 136,
+        "endChar": 45
+      },
+      "revId": "11976c8c7518f9f591fe71d5d10ccc3ad492d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "791c2fb2_b94a6ce6",
         "filename": "ui/base/resource/data_pack.cc",
         "patchSetId": 4
