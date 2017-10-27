@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0b3fbc7_f816fa1a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:36:30Z",
+      "side": 1,
+      "message": "This isn\u0027t used anywhere. What\u0027s its goal?",
+      "range": {
+        "startLine": 862,
+        "startChar": 7,
+        "endLine": 862,
+        "endChar": 42
+      },
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d597bd84_2dd84d77",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:36:30Z",
+      "side": 1,
+      "message": "Adding a sentence or two describing the goal of the test is very useful. The name doesn\u0027t always do it justice : ).",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8aa94ad_7485b67b",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:36:30Z",
+      "side": 1,
+      "message": "All this setup in the test is hard to follow with just the method names. I think it calls for short description in a comment for each steps. It will help developers who aren\u0027t very versed in Mojo/services to follow what is happening.",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024e726b_fdcfe809",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:36:30Z",
+      "side": 1,
+      "message": "Why are these scoped? Wouldn\u0027t they be destroyed when the scope is left? The navigation call is outside of the scope so I don\u0027t follow how these expectations are enforced.",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e2a94b8_c25b732a",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:36:30Z",
+      "side": 1,
+      "message": "Can we also add a test that checks for same document commit supplying a new InterfaceProviderRequest also results in a termination?",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a264437a_5b145e14",
+        "filename": "content/public/test/mock_render_thread.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:36:30Z",
+      "side": 1,
+      "message": "Should this check for existing entry being overwritten?",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ee8df4_e16eb7e7",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:36:30Z",
+      "side": 1,
+      "message": "nit: Let\u0027s change that to match whatever replacement we find on your other CL.",
+      "range": {
+        "startLine": 199,
+        "startChar": 66,
+        "endLine": 199,
+        "endChar": 74
+      },
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd115e4_fe2a6f19",
+        "filename": "content/public/test/render_view_test.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:36:30Z",
+      "side": 1,
+      "message": "Why do we need this include here in the header?",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d304de_885867a2",
+        "filename": "content/renderer/media/media_factory.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:36:30Z",
+      "side": 1,
+      "message": "Do we need this if we already have the render_frame_ here? I think it will be more clear to always call the GetRemoteInterfaces on the render_frame_ member, would it not?",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d397a691_86377c9e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3929,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T18:36:30Z",
+      "side": 1,
+      "message": "This check shouldn\u0027t be needed here as I think same-document navigations don\u0027t go through here, but through RenderFrameImpl::DidNavigateWithinPage. We can turn this into a DCHECK.",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
