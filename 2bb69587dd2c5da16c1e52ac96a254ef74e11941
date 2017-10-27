@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c353a7eb_8fe00a7e",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T08:26:29Z",
+      "side": 1,
+      "message": "Nit: please use emplace instead of insert + std::make_pair",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0bcff0_42ffb885",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T08:26:29Z",
+      "side": 1,
+      "message": "Will these be going away in future CLs?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d93345e_89a45b43",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T08:26:29Z",
+      "side": 1,
+      "message": "Nit: consider reducing the amount of code that is #ifdef out. I would probably just use EXPECT_DEATH_IF_SUPPORTED on line 44, and not bother with the #else case (as there\u0027s no platform specific behaviors outside of death tests that we\u0027re exercising anyway).",
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b4f24a_a02f4715",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T08:26:29Z",
+      "side": 1,
+      "message": "Nit: use C++ style casts",
+      "range": {
+        "startLine": 181,
+        "startChar": 19,
+        "endLine": 181,
+        "endChar": 27
+      },
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999eee6e_027f95f1",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_interface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T08:26:29Z",
+      "side": 1,
+      "message": "Is this needed? It doesn\u0027t seem like it adds anything right now (and it\u0027s not using the CRTP so that it can be overridden either). Maybe just get rid of it?",
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f04668_e578314b",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T08:26:29Z",
+      "side": 1,
+      "message": "So this is a pre-existing thing, but can we move these to a separate control interface for the trusted controller process in a followup? These seem like they should only be available to the trusted browser, but as it\u0027s written, the renderer can freely call these (and thus we need to sanity check for loops in the graph)",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 45
+      },
+      "revId": "2bb69587dd2c5da16c1e52ac96a254ef74e11941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
