@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20f8b2df_6840955e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2558,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-27T19:02:37Z",
+      "side": 1,
+      "message": "Can you add a comment (or a TODO) about why this block of code here and why we don\u0027t just check for !\u003d VARY_NONE above.",
+      "range": {
+        "startLine": 2558,
+        "startChar": 2,
+        "endLine": 2558,
+        "endChar": 56
+      },
+      "revId": "e8d30602d9c0408531c3f3d4150c7550227ad553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9f370b_e0b7bafd",
+        "filename": "net/http/http_vary_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-27T19:02:37Z",
+      "side": 1,
+      "message": "s/not/don\u0027t/",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "e8d30602d9c0408531c3f3d4150c7550227ad553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
