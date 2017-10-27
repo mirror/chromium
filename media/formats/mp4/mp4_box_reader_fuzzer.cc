@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/logging.h"
+#include "media/base/media_log.h"
 #include "media/formats/mp4/box_reader.h"
 
 class NullMediaLog : public media::MediaLog {
@@ -29,4 +30,6 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
       media::mp4::BoxReader::ReadTopLevelBox(data, static_cast<int>(size),
                                              &media_log, &err));
   return !err && reader && reader->ScanChildren() ? 0 : 0;
+  // BIG TODO resolve merge conflict here once sandersd@'s
+  // https://chromium-review.googlesource.com/729705 lands...
 }

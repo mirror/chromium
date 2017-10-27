@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/bind.h"
+#include "media/base/media_log.h"
 #include "media/formats/mp2t/es_parser_mpeg1audio.h"
 
 class NullMediaLog : public media::MediaLog {

@@ -376,4 +376,52 @@ if (proprietary_codecs) {
       "//base",
     ]
   }
+
+  # BIG TODO: Should this target name be changed to be media_*? Would
+  # renaming destroy any existing non-seed corpus in CF?
+  fuzzer_test("mp4_box_reader_fuzzer") {
+    sources = [
+      "formats/mp4/mp4_box_reader_fuzzer.cc",
+    ]
+    deps = [
+      ":media",
+      "//base",
+    ]
+    libfuzzer_options = [ "max_len=500" ]
+    dict = "test/mp4.dict"
+  }
+}
+
+if (enable_mse_mpeg2ts_stream_parser) {
+  # BIG TODO: Should these target names be changed to be media_*? Would
+  # renaming destroy any existing non-seed corpus in CF?
+  fuzzer_test("es_parser_adts_fuzzer") {
+    sources = [
+      "formats/mp2t/es_parser_adts_fuzzer.cc",
+    ]
+    deps = [
+      ":media",
+      "//base",
+    ]
+  }
+
+  fuzzer_test("es_parser_h264_fuzzer") {
+    sources = [
+      "formats/mp2t/es_parser_h264_fuzzer.cc",
+    ]
+    deps = [
+      ":media",
+      "//base",
+    ]
+  }
+
+  fuzzer_test("es_parser_mpeg1audio_fuzzer") {
+    sources = [
+      "formats/mp2t/es_parser_mpeg1audio_fuzzer.cc",
+    ]
+    deps = [
+      ":media",
+      "//base",
+    ]
+  }
 }
