@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57074394_f04f405e",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-27T18:50:38Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "083f1c4a403ace012e6449bd51d96e3e02d8fa5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed35b25_63aa0b28",
+        "filename": "components/crash/content/browser/crash_dump_manager_android_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-27T18:50:38Z",
+      "side": 1,
+      "message": "ASSERT_TRUE the result ?",
+      "revId": "083f1c4a403ace012e6449bd51d96e3e02d8fa5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2ac28c_11a3436f",
+        "filename": "components/crash/content/browser/crash_dump_manager_android_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-27T18:50:38Z",
+      "side": 1,
+      "message": "nit: reverse the order of these two variables for safer destruction order",
+      "revId": "083f1c4a403ace012e6449bd51d96e3e02d8fa5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
