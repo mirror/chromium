@@ -16,6 +16,24 @@
       "revId": "092c75dd92f4fb9621dde69cd2e8fb2b8c3ca0b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6f3d3d_358173a3",
+        "filename": "chromecast/public/avsettings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2017-10-27T17:59:04Z",
+      "side": 1,
+      "message": "This patch now just adds OnKeyReleased.",
+      "parentUuid": "c5b738d0_598edd8a",
+      "revId": "092c75dd92f4fb9621dde69cd2e8fb2b8c3ca0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
