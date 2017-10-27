@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6418e154_98e505b5",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-27T16:18:56Z",
+      "side": 1,
+      "message": "DCHECK that this was false above. Also, add EXPECT_FALSE(root_scrollable-\u003eVerticalScrollbar())",
+      "range": {
+        "startLine": 987,
+        "startChar": 1,
+        "endLine": 987,
+        "endChar": 51
+      },
+      "revId": "e57a2e801b56ae4d3f648bb9e580d02463737021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
