@@ -9,6 +9,8 @@
 
 namespace blink {
 
+unsigned ScriptForbiddenScope::g_main_thread_counter_ = 0;
+
 unsigned& ScriptForbiddenScope::GetMutableCounter() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(WTF::ThreadSpecific<unsigned>,
                                   script_forbidden_counter_, ());
