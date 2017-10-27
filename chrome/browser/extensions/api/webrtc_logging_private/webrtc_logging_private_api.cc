@@ -23,6 +23,7 @@
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/common/error_utils.h"
+#include "media/audio/audio_manager.h"
 
 namespace extensions {
 
@@ -49,6 +50,8 @@ namespace StartWebRtcEventLogging =
     api::webrtc_logging_private::StartWebRtcEventLogging;
 namespace StopWebRtcEventLogging =
     api::webrtc_logging_private::StopWebRtcEventLogging;
+namespace SetAudioDebugRecordingsAllowed =
+    api::webrtc_logging_private::SetAudioDebugRecordingsAllowed;
 
 namespace {
 std::string HashIdWithOrigin(const std::string& security_origin,
@@ -401,19 +404,9 @@ bool WebrtcLoggingPrivateStopRtpDumpFunction::RunAsync() {
 }
 
 bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableAudioDebugRecordingsFromExtension)) {
-    return false;
-  }
-
   std::unique_ptr<StartAudioDebugRecordings::Params> params(
       StartAudioDebugRecordings::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params.get());
-
-  if (params->seconds < 0) {
-    FireErrorCallback("seconds must be greater than or equal to 0");
-    return true;
-  }
 
   content::RenderProcessHost* host =
       RphFromRequest(params->request, params->security_origin);
@@ -423,6 +416,16 @@ bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
   scoped_refptr<AudioDebugRecordingsHandler> audio_debug_recordings_handler(
       base::UserDataAdapter<AudioDebugRecordingsHandler>::Get(
           host, AudioDebugRecordingsHandler::kAudioDebugRecordingsHandlerKey));
+
+  if (!audio_debug_recordings_handler->AudioDebugRecordingsAllowed()) {
+    FireErrorCallback("Audio debug recording is not allowed");
+    return true;
+  }
+
+  if (params->seconds < 0) {
+    FireErrorCallback("seconds must be greater than or equal to 0");
+    return true;
+  }
 
   audio_debug_recordings_handler->StartAudioDebugRecordings(
       host, base::TimeDelta::FromSeconds(params->seconds),
@@ -436,11 +439,6 @@ bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
 }
 
 bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableAudioDebugRecordingsFromExtension)) {
-    return false;
-  }
-
   std::unique_ptr<StopAudioDebugRecordings::Params> params(
       StopAudioDebugRecordings::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params.get());
@@ -453,6 +451,11 @@ bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
   scoped_refptr<AudioDebugRecordingsHandler> audio_debug_recordings_handler(
       base::UserDataAdapter<AudioDebugRecordingsHandler>::Get(
           host, AudioDebugRecordingsHandler::kAudioDebugRecordingsHandlerKey));
+
+  if (!audio_debug_recordings_handler->AudioDebugRecordingsAllowed()) {
+    FireErrorCallback("Audio debug recording is not allowed");
+    return true;
+  }
 
   audio_debug_recordings_handler->StopAudioDebugRecordings(
       host,
@@ -520,6 +523,32 @@ bool WebrtcLoggingPrivateStopWebRtcEventLoggingFunction::RunAsync() {
                  this));
 
   return true;
+}
+
+bool WebrtcLoggingPrivateSetAudioDebugRecordingsAllowedFunction::RunAsync() {
+  std::unique_ptr<SetAudioDebugRecordingsAllowed::Params> params(
+      SetAudioDebugRecordingsAllowed::Params::Create(*args_));
+
+  // It's safe to get the AudioManager pointer here. That pointer is invalidated
+  // on the UI thread, which we're on.
+  // AudioManager is deleted on the audio thread, and the AudioManager outlives
+  // this object, so it's safe to post unretained to the audio thread.
+  media::AudioManager* audio_manager = media::AudioManager::Get();
+  audio_manager->SetAudioDebugRecordingsAllowed(params->allowed);
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &WebrtcLoggingPrivateSetAudioDebugRecordingsAllowedFunction::
+              FireCallback,
+          this));
+  return true;
+}
+
+void WebrtcLoggingPrivateSetAudioDebugRecordingsAllowedFunction::
+    FireCallback() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  SendResponse(true);
 }
 
 }  // namespace extensions

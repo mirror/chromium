@@ -98,4 +98,10 @@ bool WebrtcLoggingPrivateStopWebRtcEventLoggingFunction::RunAsync() {
   return false;
 }
 
+bool WebrtcLoggingPrivateSetAudioDebugRecordingsAllowedFunction::RunAsync() {
+  SetError(kErrorNotSupported);
+  SendResponse(false);
+  return false;
+}
+
 }  // namespace extensions

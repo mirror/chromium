@@ -109,6 +109,7 @@ AudioManagerBase::AudioManagerBase(std::unique_ptr<AudioThread> audio_thread,
       max_num_output_streams_(kDefaultMaxOutputStreams),
       max_num_input_streams_(kDefaultMaxInputStreams),
       num_output_streams_(0),
+      audio_debug_recordings_allowed_(false),
       // TODO(dalecurtis): Switch this to an base::ObserverListThreadSafe, so we
       // don't block the UI thread when swapping devices.
       output_listeners_(
@@ -196,6 +197,14 @@ AudioOutputStream* AudioManagerBase::MakeAudioOutputStream(
   }
 
   return stream;
+}
+
+void AudioManagerBase::SetAudioDebugRecordingsAllowed(bool allowed) {
+  audio_debug_recordings_allowed_ = allowed;
+}
+
+bool AudioManagerBase::GetAudioDebugRecordingsAllowed() {
+  return audio_debug_recordings_allowed_;
 }
 
 AudioOutputStream* AudioManagerBase::MakeBitstreamOutputStream(
