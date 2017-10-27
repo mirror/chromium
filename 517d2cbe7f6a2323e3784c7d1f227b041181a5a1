@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19894961_4d9095f4",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-27T18:19:14Z",
+      "side": 1,
+      "message": "completely optional:  While you\u0027re here, may want to switch this to using std::make_unique\u003cDownloadManagerImpl\u003e (Would also have to set the delegate before passing it to SetDownloadManager, so you don\u0027t have to have both a unique_ptr and a raw pointer).",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 20
+      },
+      "revId": "517d2cbe7f6a2323e3784c7d1f227b041181a5a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
