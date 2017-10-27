@@ -407,6 +407,12 @@ class CONTENT_EXPORT RenderWidget
   uint32_t GetContentSourceId();
   void IncrementContentSourceId();
 
+  // Updates the URL used by the compositor for keying UKM metrics.
+  // Note that this uses the main frame's URL and only if its available in the
+  // current process. In the case where it is not available, no metrics will be
+  // recorded.
+  void UpdateURLForCompositorUkm();
+
   // MainThreadEventQueueClient overrides.
 
   // Requests a BeginMainFrame callback from the compositor.
