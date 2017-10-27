@@ -431,15 +431,24 @@ void TestRenderFrameHost::SendNavigateWithParameters(
 
 void TestRenderFrameHost::SendNavigateWithParams(
     FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
+  service_manager::mojom::InterfaceProviderPtr isolated_interface_provider;
+  SendNavigateWithParamsAndInterfaceProvider(
+      params, mojo::MakeRequest(&isolated_interface_provider));
+}
+
+void TestRenderFrameHost::SendNavigateWithParamsAndInterfaceProvider(
+    FrameHostMsg_DidCommitProvisionalLoad_Params* params,
+    service_manager::mojom::InterfaceProviderRequest request) {
   if (navigation_handle()) {
     scoped_refptr<net::HttpResponseHeaders> response_headers =
         new net::HttpResponseHeaders(std::string());
-    response_headers->AddHeader(
-        std::string("Content-Type: ") + contents_mime_type_);
+    response_headers->AddHeader(std::string("Content-Type: ") +
+                                contents_mime_type_);
     navigation_handle()->set_response_headers_for_testing(response_headers);
   }
   DidCommitProvisionalLoad(
-      base::MakeUnique<FrameHostMsg_DidCommitProvisionalLoad_Params>(*params));
+      base::MakeUnique<FrameHostMsg_DidCommitProvisionalLoad_Params>(*params),
+      std::move(request));
   last_commit_was_error_page_ = params->url_is_unreachable;
 }
 

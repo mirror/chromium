@@ -680,6 +680,11 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return frame_host_associated_binding_;
   }
 
+  mojo::Binding<service_manager::mojom::InterfaceProvider>&
+  document_scoped_interface_provider_binding_for_testing() {
+    return document_scoped_interface_provider_binding_;
+  }
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -852,13 +857,20 @@ class CONTENT_EXPORT RenderFrameHostImpl
                            const gfx::Rect& initial_rect,
                            bool user_gesture);
 
+  // Binds the |request| end of InterfaceProvider interface, to be used in the
+  // context of the new active document in the frame.
+  void BindInterfaceProviderForNewDocument(
+      service_manager::mojom::InterfaceProviderRequest request);
+
   // mojom::FrameHost:
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override;
   void IssueKeepAliveHandle(mojom::KeepAliveHandleRequest request) override;
   void DidCommitProvisionalLoad(
       std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
-          validated_params) override;
+          validated_params,
+      service_manager::mojom::InterfaceProviderRequest
+          interface_provider_request) override;
 
   // Registers Mojo interfaces that this frame host makes available.
   void RegisterMojoInterfaces();
@@ -1317,17 +1329,37 @@ class CONTENT_EXPORT RenderFrameHostImpl
   std::unique_ptr<JavaInterfaceProvider> java_interface_registry_;
 #endif
 
-  // Binding for the InterfaceProvider through which this RFHI exposes Mojo
-  // services to the corresonding RenderFrame.
+  // Binding for the InterfaceProvider through which this RenderFrameHost
+  // exposes Mojo services to the currently active document in the corresponding
+  // RenderFrame.
   //
-  // Normally, whoever creates this RFHI, is responsible for creating a message
-  // pipe, then supplying the request end to BindInterfaceProviderRequest(), and
-  // plumbing the client end to the RenderFrame in the renderer process.
+  // GetInterface messages dispatched through this binding are guaranteed to
+  // originate from document corresponding to the last committed navigation; or
+  // the inital empty document if no real navigation has ever been committed.
   //
-  // Currently the only exception to this rule are out-of-process iframes, where
-  // the child RFHI takes care of this internally in CreateRenderFrame().
+  // The InterfaceProvider interface connection is established as follows:
+  //
+  // 1) For the initial empty document, the call site that creates this
+  //    RenderFrameHost is responsible for creating a message pipe, binding its
+  //    request end to this instance by calling BindInterfaceProviderRequest(),
+  //    and plumbing the client end to the renderer process, and ultimately
+  //    supplying it to the RenderFrame synchronously at construction time.
+  //
+  //    The only exception to this rule are out-of-process child frames, whose
+  //    RenderFrameHosts take care of this internally in CreateRenderFrame().
+  //
+  // 2) For subsequent documents, the RenderFrame creates a new message pipe on
+  //    the commit of each non-same-document navigation, and pushes the request
+  //    end to the browser process as part of DidCommitProvisionalLoad. The
+  //    client end will be used by the document corresponding of the committed
+  //    naviagation to access services exposed by the RenderFrameHost.
+  //
+  // This additional complexity is needed to prevent GetInterface messages
+  // racing with navigation commit to be serviced in the security context
+  // corresponding to the wrong active document in the RenderFrame; without
+  // requiring making the InterfaceProvider a Channel-associated interface.
   mojo::Binding<service_manager::mojom::InterfaceProvider>
-      interface_provider_binding_;
+      document_scoped_interface_provider_binding_;
 
   // IPC-friendly token that represents this host for AndroidOverlays, if we
   // have created one yet.
