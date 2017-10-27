@@ -1,0 +1,289 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e44b96bd_685d6b82",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 3056,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "nit: This feature does not search tabs.  Instead, it enables a switch to tab feature.  Please revise the flag name, parameter names, and parameter descriptions to reflect actual behavior.  I want people who turn this on to have the right idea of what that the feature is supposed to do.",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db063619_9a3c9864",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "GetURL() is deprecated.\nhttps://cs.chromium.org/chromium/src/content/public/browser/web_contents.h?l\u003d226-229\nPlease choose a different function.",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7838ca_e657dc45",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "I know we used to do things like this in the code base.  But a code search shows that these have been removed.  Is there a new right way to do this?",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 65
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09c794b_176929da",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "ditto comment elsewhere",
+      "range": {
+        "startLine": 50,
+        "startChar": 30,
+        "endLine": 50,
+        "endChar": 36
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9ae7a0_412f43d4",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "Am I correct that moving these two functions to be public is just to correct an oversight in a past refactoring, entirely unconnected with this change?",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e1b0da_db820c95",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "nit: ending period, following style.\n\nAlso, I\u0027m not sure what \"or title\" means here.  This whole list mainly talks about URL or searches.  Consider removing.  (It\u0027s not like we\u0027re suggesting a title.  I know you\u0027re getting at that the URL might be shown due to a title match.  If you want to express that, say so directly.)",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e9523b_1be3a90d",
+        "filename": "components/omnibox/browser/autocomplete_provider.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "No need to touch this file at all.",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855d29ec_635790a1",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "Can you rewrite or revise the last sentence?  I don\u0027t understand it.",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf3fae6_e998e57f",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "Why is this necessary?  During this loop I don\u0027t think you should (re-)encounter any matches you\u0027ve already promoted to TAB_SEARCH matches.",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a172f22_2996a916",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872694cb_77bdd81f",
+        "filename": "components/omnibox/browser/history_quick_provider.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "Highlighting?",
+      "range": {
+        "startLine": 50,
+        "startChar": 25,
+        "endLine": 50,
+        "endChar": 37
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fde7f3f_a94fe7de",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t see how that\u0027s possible, but yes, it returns true if found. I don\u0027t see a success indication on ActivateContents().\n\nIn that case (switching always happens), please add something like\n... and so the tab is switched to.\n\nAlso add something like:\n// Only closes the current tab if the tab is switched to.",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b430d0_02eec87e",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "Please comment why you\u0027re sending permanent_text_.empty() as |close_this|.",
+      "range": {
+        "startLine": 701,
+        "startChar": 40,
+        "endLine": 701,
+        "endChar": 63
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8855124c_c1d10874",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "nit: switching to",
+      "range": {
+        "startLine": 55,
+        "startChar": 30,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0e5d79_43726bfd",
+        "filename": "components/omnibox/browser/omnibox_metrics_provider.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "Please add the same TODO(bug) that you\u0027re putting elsewhere.",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8f685f6c_49f332f6",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "\u003e The line that you\u0027re referring to loops over all the browsers. Note lines 50-51.\n\nI saw that.  And I looked up the documentation on BrowserList, and I couldn\u0027t figure out what it means.\n\n// Maintains a list of Browser objects.\nclass BrowserList {\n\nand then I look up Browser and discover that class has no top-level comments.\n\nBut neither of those tell me if BrowserList is just a list of windows, each possibly with its own profile, or just a list of windows that all have the same profile.\n\nNow resolved with the additional \u003d\u003d profile test and comment.",
+      "parentUuid": "d2ff0ced_9f2ac26b",
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4390cc93_32976a48",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
         "patchSetId": 12
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I\u0027m not sure what your recommendation is, so I made it preserve the address. I don\u0027t think it hurts to (re)activate the contents.",
       "parentUuid": "4390cc93_32976a48",
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46d4b008_d2d2b32d",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure what your recommendation is, so I made it preserve the address. I don\u0027t think it hurts to (re)activate the contents.\n\nOkay, as long as you thought it and decided re-activation is probably okay.  (I\u0027m not sure what gets triggered on \"activation\".)",
+      "parentUuid": "151bc9f9_0e4eb445",
       "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -268,6 +304,48 @@
       "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2c4ba6_324b5e5e",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3aa1d30_1450ee6b",
+      "range": {
+        "startLine": 36,
+        "startChar": 18,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "301e1f8d_437253ef",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-27T18:44:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8861ee7a_9502c5ce",
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
