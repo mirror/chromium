@@ -100,6 +100,9 @@ std::unique_ptr<net::UploadDataStream> UploadDataStreamBuilder::Build(
             body, file_task_runner, element));
         break;
       case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM:
+        // TODO(jam): temporary to see if this code is reached.
+        // http://crbug.com/761117
+        CHECK(false);
         // If |body| contains any filesystem URLs, the caller should have
         // supplied a FileSystemContext.
         DCHECK(file_system_context);
