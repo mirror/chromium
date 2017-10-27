@@ -78,6 +78,7 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/plugin_service.h"
@@ -87,6 +88,7 @@
 #include "content/public/browser/stream_handle.h"
 #include "content/public/browser/stream_info.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_request_body.h"
@@ -276,6 +278,27 @@ void HandleSyncLoadResult(base::WeakPtr<ResourceMessageFilter> filter,
     sync_result->set_reply_error();
   }
   filter->Send(sync_result.release());
+}
+
+bool IsValidPluginChildId(int plugin_child_id,
+                          int embedding_render_process_id,
+                          int embedding_render_frame_host_id) {
+  if (plugin_child_id == 0)
+    return true;
+
+#if BUILDFLAG(ENABLE_PLUGINS)
+  auto* ppapi_host = GetContentClient()->browser()->GetExternalBrowserPpapiHost(
+      plugin_child_id);
+  if (ppapi_host) {
+    // TODO(nick): If we had the pp_instance here, we could validate
+    // |embedding_render_process_id|. However, |plugin_child_host| is currently
+    // only used for network usage monitoring, it seems sufficient to enforce
+    // that it's a valid plugin.
+    return true;
+  }
+#endif
+
+  return false;
 }
 
 // Used to log the cache flags for back-forward navigation requests.
@@ -925,9 +948,8 @@ void ResourceDispatcherHostImpl::UpdateRequestForTransfer(
   // ResourceHandlers should always get state related to the request from the
   // ResourceRequestInfo rather than caching it locally.  This lets us update
   // the info object when a transfer occurs.
-  info->UpdateForTransfer(route_id, request_data.render_frame_id,
-                          request_data.origin_pid, request_id, requester_info,
-                          std::move(mojo_request),
+  info->UpdateForTransfer(route_id, request_data.render_frame_id, request_id,
+                          requester_info, std::move(mojo_request),
                           std::move(url_loader_client));
 
   // Update maps that used the old IDs, if necessary.  Some transfers in tests
@@ -1355,7 +1377,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   ResourceRequestInfoImpl* extra_info = new ResourceRequestInfoImpl(
       requester_info, route_id,
       -1,  // frame_tree_node_id
-      request_data.origin_pid, request_id, request_data.render_frame_id,
+      request_data.plugin_child_id, request_id, request_data.render_frame_id,
       request_data.is_main_frame, request_data.resource_type,
       request_data.transition_type, request_data.should_replace_current_entry,
       false,  // is download
@@ -1699,7 +1721,8 @@ ResourceRequestInfoImpl* ResourceDispatcherHostImpl::CreateRequestInfo(
       ResourceRequesterInfo::CreateForDownloadOrPageSave(child_id),
       render_view_route_id,
       -1,  // frame_tree_node_id
-      0, MakeRequestID(), render_frame_route_id,
+      0,   // plugin_child_id
+      MakeRequestID(), render_frame_route_id,
       false,  // is_main_frame
       RESOURCE_TYPE_SUB_RESOURCE, ui::PAGE_TRANSITION_LINK,
       false,     // should_replace_current_entry
@@ -2117,7 +2140,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
               : scoped_refptr<ServiceWorkerContextWrapper>()),
       -1,  // route_id
       info.frame_tree_node_id,
-      -1,  // request_data.origin_pid,
+      0,  // plugin_child_id
       MakeRequestID(),
       -1,  // request_data.render_frame_id,
       info.is_main_frame, resource_type, info.common_params.transition,
@@ -2708,6 +2731,12 @@ bool ResourceDispatcherHostImpl::ShouldServiceRequest(
                                   requester_info->file_system_context(),
                                   request_data.request_body)) {
     NOTREACHED() << "Denied unauthorized upload";
+    return false;
+  }
+
+  // Check that plugin_child_id, if present, is actually a plugin process.
+  if (!IsValidPluginChildId(request_data.plugin_child_id, child_id,
+                            request_data.render_frame_id)) {
     return false;
   }
 
