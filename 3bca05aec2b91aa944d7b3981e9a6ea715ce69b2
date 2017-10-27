@@ -87,6 +87,24 @@
       "revId": "3bca05aec2b91aa944d7b3981e9a6ea715ce69b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff6dcc9_59ae51c4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-27T12:50:18Z",
+      "side": 1,
+      "message": "TODO is better placed in the code I think. Someone who hit this DCHECK won\u0027t check the header file.",
+      "parentUuid": "e6b327ee_4a9e3952",
+      "revId": "3bca05aec2b91aa944d7b3981e9a6ea715ce69b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
