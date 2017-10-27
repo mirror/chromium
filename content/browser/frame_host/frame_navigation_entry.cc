@@ -93,7 +93,6 @@ void FrameNavigationEntry::set_document_sequence_number(
 
 void FrameNavigationEntry::SetPageState(const PageState& page_state) {
   page_state_ = page_state;
-
   ExplodedPageState exploded_state;
   if (!DecodePageState(page_state_.ToEncodedData(), &exploded_state))
     return;
