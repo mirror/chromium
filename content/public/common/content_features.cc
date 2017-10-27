@@ -54,7 +54,7 @@ const base::Feature kBrowserSideNavigation{"browser-side-navigation",
 // NavigationMojoResponse feature replaces this mechanism by a Mojo DataPipe.
 // Design doc: https://goo.gl/Rrrc7n.
 const base::Feature kNavigationMojoResponse{"NavigationMojoResponse",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Toggles whether the buggy RSA parser is used.
 //
