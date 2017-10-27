@@ -37,6 +37,126 @@
     },
     {
       "key": {
+        "uuid": "787bc82a_33550415",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/GeneratedCodeHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "The removed custom implementation of V8SQLStatementErrorCallback has this check.",
+      "parentUuid": "7ebf2567_35cfc434",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af36d660_f118a427",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/GeneratedCodeHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "Why do we need to check IsContextDestroyed() while you\u0027ve already checked script_state-\u003eContextIsValid()?\n\nI think we should just remove line 37 - 38.",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8027ae_fc22ea2e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/GeneratedCodeHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "I\u0027m just curious but why do we need to check the validity of both contexts?",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e6e3ba2_8f8bd708",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "We normally use the following pattern.\n\nv8::Local\u003cv8::Value\u003e call_result;\nif (!V8ScriptRunner::CallFunction(...).ToLocal(call_result)) {\n\n}\n...;",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babcf959_7da92470",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "It looks weird to catch an exception state and then convert it to v8::Maybe...\n\nWhy do you want to return v8::Maybe from this method (instead of making the method take ExceptionState\u0026 as an output parameter)?",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fc900b_3502ef1e",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "who need",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e16918_bc6448bf",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "So... considering the void case, would it be better to use ExceptionState?",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2541bd81_096064fb",
         "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
         "patchSetId": 4
@@ -66,6 +186,24 @@
       "side": 1,
       "message": "This case, it makes some sense.",
       "parentUuid": "2541bd81_096064fb",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e8b88c_958d238a",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "I\u0027d prefer writing it as follows:\n\nbool result;\n// When we failed at calling the callback interface.\nif (!error_callback-\u003ehandleEvent(...).To(\u0026result))\n  callback_error \u003d true;\n// When the callback returns an error.\nif (!result)\n  callback_error \u003d true;",
+      "parentUuid": "d741f9c4_264647d3",
       "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -137,6 +275,194 @@
       "side": 1,
       "message": "IIUC, that thread is discussing if we really need v8Call family and how we can replace it with To/ToLocal.  There was an assumption that we do use the resulting value, I think?\n\nAgain, in this case, we never use the resulting value itself.  It\u0027s quite strange to introduce an unused variable while it\u0027s pretty easy to avoid it.",
       "parentUuid": "e5b7b10f_79f06035",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91aeb4f_8c5807bb",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "The discussion was about how to treat Maybe/MaybeLocal handles in the binding code base in general.\n\nI\u0027d prefer having a comment like this since not using a return value is not a common pattern.\n\nbool result;\n// When we failed at calling the callback interface.\nif (!error_callback-\u003ehandleEvent(...).To(\u0026result))\n  callback_error \u003d true;\n// We ignore the result of the callback interface.\nelse\n  callback_error \u003d false;",
+      "parentUuid": "b529d807_4e3237a8",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7075d1_c6c477d9",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80691661_d0e3b5b9",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "You must pass in callback_object.\n\nWhy is this CL working...? :)",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8f11a1_a118bdc4",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "single_op_or_not \u003d\u003d (kSingleOperation \u0026\u0026 callback_object-\u003eIsCallable())",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a760c405_ed58aa3d",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "it provides",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ca9a62_8872dbe6",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "Add USING_FAST_MALLOC.",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a53094_5614c903",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "Use an enum class.",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8a6dba_8b26eafc",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "CallbackRelevantScriptState (or RelevantScriptState) ?",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb5d566_e56ab15c",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "Nit: We normally avoid adding two overloaded methods just for handling constness.",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae00fa15_2079d26c",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "IncumbentScriptState ?",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb9e065_e66df3db",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T16:38:08Z",
+      "side": 1,
+      "message": "How is it guaranteed that this ScopedPersistent doesn\u0027t create a cycle?",
       "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
