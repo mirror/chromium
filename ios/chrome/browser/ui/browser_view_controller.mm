@@ -170,6 +170,7 @@
 #include "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_delegate_ios.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
+#import "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_view_item.h"
@@ -386,6 +387,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     PreloadControllerDelegate,
                                     QRScannerPresenting,
                                     RepostFormTabHelperDelegate,
+                                    SideSwipeControllerDelegate,
                                     SKStoreProductViewControllerDelegate,
                                     SnapshotOverlayProvider,
                                     StoreKitLauncher,
@@ -1089,6 +1091,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       _dispatcher);
 }
 
+- (id<ToolbarSnapshotProviding>)toolbarSnapshotProvider {
+  return _toolbarCoordinator;
+}
+
 - (void)setActive:(BOOL)active {
   if (_active == active) {
     return;
@@ -1162,6 +1168,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
         [[SideSwipeController alloc] initWithTabModel:_model
                                          browserState:_browserState];
     [_sideSwipeController setSnapshotDelegate:self];
+    _sideSwipeController.toolbarInteractionHandler = _toolbarCoordinator;
     [_sideSwipeController setSwipeDelegate:self];
     [_sideSwipeController setTabStripDelegate:self.tabStripCoordinator];
   }
@@ -1882,6 +1889,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       newToolbarModelIOSWithDelegate:_toolbarModelDelegate.get()]);
   _toolbarCoordinator =
       [[LegacyToolbarCoordinator alloc] initWithBaseViewController:self];
+  _sideSwipeController.toolbarInteractionHandler = _toolbarCoordinator;
   _toolbarCoordinator.tabModel = _model;
   [_toolbarCoordinator
       setWebToolbar:[_dependencyFactory
@@ -4982,10 +4990,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (UIView*)contentView {
   return _contentArea;
-}
-
-- (WebToolbarController*)toolbarController {
-  return _toolbarCoordinator.webToolbarController;
 }
 
 - (BOOL)preventSideSwipe {
