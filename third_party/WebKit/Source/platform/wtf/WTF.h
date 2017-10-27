@@ -32,20 +32,27 @@
 #define WTF_h
 
 #include "platform/wtf/Compiler.h"
+#include "platform/wtf/StackUtil.h"
+#include "platform/wtf/Threading.h"
 #include "platform/wtf/WTFExport.h"
 
 namespace WTF {
 
 typedef void MainThreadFunction(void*);
 
+namespace internal {
+void CallOnMainThread(MainThreadFunction*, void* context);
+extern WTF_EXPORT ThreadIdentifier g_main_thread_identifier;
+}  // namespace internal
+
 // This function must be called exactly once from the main thread before using
 // anything else in WTF.
 WTF_EXPORT void Initialize(void (*)(MainThreadFunction, void*));
-WTF_EXPORT bool IsMainThread();
-
-namespace internal {
-void CallOnMainThread(MainThreadFunction*, void* context);
-}  // namespace internal
+WTF_EXPORT bool inline IsMainThread() {
+  if (LIKELY(!MayNotBeMainThread()))
+    return true;
+  return internal::CurrentThreadSyscall() == internal::g_main_thread_identifier;
+}
 
 }  // namespace WTF
 

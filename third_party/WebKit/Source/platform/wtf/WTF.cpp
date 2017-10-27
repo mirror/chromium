@@ -32,9 +32,7 @@
 
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
-#include "platform/wtf/StackUtil.h"
 #include "platform/wtf/ThreadSpecific.h"
-#include "platform/wtf/Threading.h"
 #include "platform/wtf/allocator/Partitions.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "platform/wtf/text/StringStatics.h"
@@ -46,19 +44,16 @@ extern void InitializeThreading();
 
 bool g_initialized;
 void (*g_call_on_main_thread_function)(MainThreadFunction, void*);
-ThreadIdentifier g_main_thread_identifier;
 
 namespace internal {
+
+ThreadIdentifier g_main_thread_identifier;
 
 void CallOnMainThread(MainThreadFunction* function, void* context) {
   (*g_call_on_main_thread_function)(function, context);
 }
 
 }  // namespace internal
-
-bool IsMainThread() {
-  return CurrentThread() == g_main_thread_identifier;
-}
 
 void Initialize(void (*call_on_main_thread_function)(MainThreadFunction,
                                                      void*)) {
@@ -67,7 +62,7 @@ void Initialize(void (*call_on_main_thread_function)(MainThreadFunction,
   CHECK(!g_initialized);
   g_initialized = true;
   InitializeCurrentThread();
-  g_main_thread_identifier = CurrentThread();
+  internal::g_main_thread_identifier = CurrentThread();
 
   InitializeThreading();
 
