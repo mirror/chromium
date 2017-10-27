@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6652a3f0_8b628e06",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-10-27T23:54:28Z",
+      "side": 1,
+      "message": "I just want to check if this is meant to be 10.0 or 11.0?",
+      "revId": "4fa9abb21536d2587d4400ef00c19beea814d375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
