@@ -9,6 +9,9 @@
 
 #import "base/ios/block_types.h"
 
+class GURL;
+typedef void (^PlaceholderNavigationCompletion)(const GURL&);
+
 NS_ASSUME_NONNULL_BEGIN
 
 // An NSObject wrapper for a completion handler for a placeholder navigation.
@@ -25,10 +28,15 @@ NS_ASSUME_NONNULL_BEGIN
 // trigger the NativeView or WebUI HTML load.
 @interface CRWPlaceholderNavigationInfo : NSObject
 
+// The actual URL being loaded into the WKWebView.
+@property(nonatomic, readonly, assign) const GURL& url;
+
 // Create a new instance that encapsulates a completion handler to be executed
 // when |navigation| is finished.
 + (instancetype)createForNavigation:(WKNavigation*)navigation
-              withCompletionHandler:(ProceduralBlock)completionHandler;
+                              toURL:(const GURL&)url
+              withCompletionHandler:
+                  (PlaceholderNavigationCompletion)completionHandler;
 
 // Returns the CRWPlaceholderNavigationInfo associated with |navigation|.
 + (nullable CRWPlaceholderNavigationInfo*)infoForNavigation:

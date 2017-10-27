@@ -7,6 +7,7 @@
 #import <objc/runtime.h>
 
 #include "base/logging.h"
+#include "url/gurl.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -22,20 +23,26 @@ const void* kPlaceholderNavigationKey = &kPlaceholderNavigationKey;
 @interface CRWPlaceholderNavigationInfo ()
 
 // Initializes a new instance wrapping |handler|.
-- (instancetype)initWithCompletionHandler:(ProceduralBlock)handler
+- (instancetype)initWithURL:(const GURL&)url
+          completionHandler:(PlaceholderNavigationCompletion)handler
     NS_DESIGNATED_INITIALIZER;
 
 @end
 
 @implementation CRWPlaceholderNavigationInfo {
-  ProceduralBlock _completionHandler;
+  GURL _url;
+  PlaceholderNavigationCompletion _completionHandler;
 }
 
+@synthesize url = _url;
+
 + (instancetype)createForNavigation:(nonnull WKNavigation*)navigation
-              withCompletionHandler:(ProceduralBlock)handler {
+                              toURL:(const GURL&)url
+              withCompletionHandler:(PlaceholderNavigationCompletion)handler {
   DCHECK(navigation);
   CRWPlaceholderNavigationInfo* info =
-      [[CRWPlaceholderNavigationInfo alloc] initWithCompletionHandler:handler];
+      [[CRWPlaceholderNavigationInfo alloc] initWithURL:url
+                                      completionHandler:handler];
   objc_setAssociatedObject(navigation, &kPlaceholderNavigationKey, info,
                            OBJC_ASSOCIATION_RETAIN);
   return info;
@@ -46,16 +53,18 @@ const void* kPlaceholderNavigationKey = &kPlaceholderNavigationKey;
   return objc_getAssociatedObject(navigation, &kPlaceholderNavigationKey);
 }
 
-- (instancetype)initWithCompletionHandler:(ProceduralBlock)handler {
+- (instancetype)initWithURL:(const GURL&)url
+          completionHandler:(PlaceholderNavigationCompletion)handler {
   self = [super init];
   if (self) {
+    _url = url;
     _completionHandler = [handler copy];
   }
   return self;
 }
 
 - (void)runCompletionHandler {
-  _completionHandler();
+  _completionHandler(_url);
 }
 
 @end
