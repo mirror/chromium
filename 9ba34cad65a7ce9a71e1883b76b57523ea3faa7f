@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e4350fb_34deda65",
+        "filename": "third_party/polymer/v1_0/css_strip_prefixes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-27T04:17:40Z",
+      "side": 1,
+      "message": "How confident are we that every instance of one of the -webkit-properties will have a corresponding non-prefixed property defined?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "9ba34cad65a7ce9a71e1883b76b57523ea3faa7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b636000_935b7bcf",
+        "filename": "third_party/polymer/v1_0/css_strip_prefixes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-27T04:17:40Z",
+      "side": 1,
+      "message": "i\u0027d be more comfortable with a stricter regular expression, something like\n\n    \u0027^\\s*\u0027 + escaped_p + \u0027:\\s*[^;]*;\\s*$\u0027\n\nthe important bits are that the line starts with the property and ends with a semicolon, otherwise we might be removing one line of a multi-line rule, or some compound expression that includes `p` (if that\u0027s even possible).",
+      "range": {
+        "startLine": 56,
+        "startChar": 13,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "9ba34cad65a7ce9a71e1883b76b57523ea3faa7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
