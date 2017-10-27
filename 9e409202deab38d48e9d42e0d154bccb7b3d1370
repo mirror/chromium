@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a33a1b_9f7c0c03",
+        "filename": "third_party/WebKit/LayoutTests/cssom/elementfrompoint.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-27T16:06:08Z",
+      "side": 1,
+      "message": "There\u0027s no reason for this test to be async, is there?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "9e409202deab38d48e9d42e0d154bccb7b3d1370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6fcd14e_4c01df8d",
+        "filename": "third_party/WebKit/LayoutTests/cssom/elementfrompoint.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-27T16:06:08Z",
+      "side": 1,
+      "message": "Add a style:\n\nbody { margin: 0; } so that you can just say 100.25 and we\u0027re not relying on the browser\u0027s margin style.",
+      "range": {
+        "startLine": 12,
+        "startChar": 48,
+        "endLine": 12,
+        "endChar": 54
+      },
+      "revId": "9e409202deab38d48e9d42e0d154bccb7b3d1370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e82f17f_2bd0de66",
+        "filename": "third_party/WebKit/LayoutTests/cssom/elementfrompoint.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-27T16:06:08Z",
+      "side": 1,
+      "message": "I would also add a case with some scroll offset to make sure the viewport.Contains() check is actually using the correct coordinates.",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 7
+      },
+      "revId": "9e409202deab38d48e9d42e0d154bccb7b3d1370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef6ad6f_839f4537",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-27T16:06:08Z",
+      "side": 1,
+      "message": "please rename this to point_in_frame",
+      "range": {
+        "startLine": 201,
+        "startChar": 54,
+        "endLine": 201,
+        "endChar": 59
+      },
+      "revId": "9e409202deab38d48e9d42e0d154bccb7b3d1370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951fe9e5_88c3567f",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-27T16:06:08Z",
+      "side": 1,
+      "message": "point is in frame coordinates so you can avoid this copy by avoiding the point.Move() call below and then checking if it\u0027s contained in IntRect(IntPoint(), frame_view-\u003eVisibleContentSize()). You can then call Move() only if !RootLayerScrollingEnabled() and simplify this method.",
+      "range": {
+        "startLine": 212,
+        "startChar": 14,
+        "endLine": 212,
+        "endChar": 31
+      },
+      "revId": "9e409202deab38d48e9d42e0d154bccb7b3d1370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
