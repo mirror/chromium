@@ -18,6 +18,7 @@
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/tray_popup_utils.h"
+#include "ash/voice_interaction/voice_interaction_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
@@ -74,6 +75,7 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
   DCHECK(shelf_);
   Shell::Get()->AddShellObserver(this);
   Shell::Get()->session_controller()->AddObserver(this);
+  Shell::Get()->voice_interaction_controller()->AddObserver(this);
   SetInkDropMode(InkDropMode::ON_NO_GESTURE_HANDLER);
   set_ink_drop_base_color(kShelfInkDropBaseColor);
   set_ink_drop_visible_opacity(kShelfInkDropVisibleOpacity);
@@ -98,6 +100,7 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
 }
 
 AppListButton::~AppListButton() {
+  Shell::Get()->voice_interaction_controller()->RemoveObserver(this);
   Shell::Get()->RemoveShellObserver(this);
   Shell::Get()->session_controller()->RemoveObserver(this);
 }
@@ -381,12 +384,15 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     fg_flags.setStyle(cc::PaintFlags::kStroke_Style);
     fg_flags.setColor(kShelfIconColor);
 
-    if (UseVoiceInteractionStyle())
+    if (UseVoiceInteractionStyle()) {
+      ash::VoiceInteractionState state = Shell::Get()
+                                             ->voice_interaction_controller()
+                                             ->voice_interaction_state();
       // active: 100% alpha, inactive: 54% alpha
-      fg_flags.setAlpha(Shell::Get()->voice_interaction_state() ==
-                                ash::VoiceInteractionState::RUNNING
+      fg_flags.setAlpha(state == ash::VoiceInteractionState::RUNNING
                             ? kVoiceInteractionRunningAlpha
                             : kVoiceInteractionNotRunningAlpha);
+    }
 
     const float thickness = std::ceil(ring_thickness_dp * dsf);
     const float radius = std::ceil(ring_outer_radius_dp * dsf) - thickness / 2;
@@ -525,11 +531,11 @@ void AppListButton::OnVoiceInteractionStatusChanged(
   }
 }
 
-void AppListButton::OnVoiceInteractionEnabled(bool enabled) {
+void AppListButton::OnVoiceInteractionSettingsEnabled(bool enabled) {
   SchedulePaint();
 }
 
-void AppListButton::OnVoiceInteractionSetupCompleted() {
+void AppListButton::OnVoiceInteractionSetupCompleted(bool completed) {
   SchedulePaint();
 }
 
@@ -537,7 +543,8 @@ void AppListButton::OnActiveUserSessionChanged(const AccountId& account_id) {
   SchedulePaint();
   // Initialize voice interaction overlay when primary user session becomes
   // active.
-  if (IsUserPrimary() && !voice_interaction_overlay_ &&
+  if (Shell::Get()->session_controller()->IsUserPrimary() &&
+      !voice_interaction_overlay_ &&
       chromeos::switches::IsVoiceInteractionEnabled()) {
     InitializeVoiceInteractionOverlay();
   }
@@ -548,11 +555,13 @@ void AppListButton::StartVoiceInteractionAnimation() {
   // shelf is at the bottom position and voice interaction is not running and
   // voice interaction setup flow has completed.
   ShelfAlignment alignment = shelf_->alignment();
-  bool show_icon = (alignment == SHELF_ALIGNMENT_BOTTOM ||
-                    alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) &&
-                   Shell::Get()->voice_interaction_state() ==
-                       VoiceInteractionState::STOPPED &&
-                   Shell::Get()->voice_interaction_setup_completed();
+  ash::VoiceInteractionState state =
+      Shell::Get()->voice_interaction_controller()->voice_interaction_state();
+  bool show_icon =
+      (alignment == SHELF_ALIGNMENT_BOTTOM ||
+       alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) &&
+      state == VoiceInteractionState::STOPPED &&
+      Shell::Get()->voice_interaction_controller()->setup_completed();
   voice_interaction_overlay_->StartAnimation(show_icon);
 }
 
@@ -595,10 +604,14 @@ void AppListButton::GenerateAndSendBackEvent(
 }
 
 bool AppListButton::UseVoiceInteractionStyle() {
+  VoiceInteractionController* controller =
+      Shell::Get()->voice_interaction_controller();
+  bool settings_enabled = controller->settings_enabled();
+  bool setup_completed = controller->setup_completed();
   if (voice_interaction_overlay_ &&
-      chromeos::switches::IsVoiceInteractionEnabled() && IsUserPrimary() &&
-      (Shell::Get()->voice_interaction_settings_enabled() ||
-       !Shell::Get()->voice_interaction_setup_completed())) {
+      chromeos::switches::IsVoiceInteractionEnabled() &&
+      Shell::Get()->session_controller()->IsUserPrimary() &&
+      (settings_enabled || !setup_completed)) {
     return true;
   }
   return false;
@@ -612,13 +625,6 @@ void AppListButton::InitializeVoiceInteractionOverlay() {
       std::make_unique<base::OneShotTimer>();
   voice_interaction_animation_hide_delay_timer_ =
       std::make_unique<base::OneShotTimer>();
-}
-
-bool AppListButton::IsUserPrimary() {
-  // TODO(updowndota) Switch to use SessionController::IsUserPrimary() when
-  // refactoring voice interaction related shell methods (crbug.com/758650).
-  return Shell::Get()->session_controller()->GetPrimaryUserSession() ==
-         Shell::Get()->session_controller()->GetUserSession(0);
 }
 
 }  // namespace ash

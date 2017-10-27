@@ -6,5 +6,6 @@ typemaps = [
   "//ash/public/interfaces/session_controller.typemap",
   "//ash/public/interfaces/shelf.typemap",
   "//ash/public/interfaces/user_info.typemap",
+  "//ash/public/interfaces/voice_interaction_controller.typemap",
   "//ash/public/interfaces/wallpaper.typemap",
 ]
