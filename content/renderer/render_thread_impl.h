@@ -53,6 +53,7 @@
 #include "net/base/network_change_notifier.h"
 #include "net/nqe/effective_connection_type.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 #include "third_party/WebKit/public/platform/WebConnectionType.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 #include "third_party/WebKit/public/web/WebMemoryStatistics.h"
@@ -573,7 +574,8 @@ class CONTENT_EXPORT RenderThreadImpl
   void InitializeCompositorThread();
 
   void InitializeWebKit(
-      const scoped_refptr<base::SingleThreadTaskRunner>& resource_task_queue);
+      const scoped_refptr<base::SingleThreadTaskRunner>& resource_task_queue,
+      service_manager::BinderRegistry& registry);
 
   void OnTransferBitmap(const SkBitmap& bitmap, int resource_id);
   void OnGetAccessibilityTree();

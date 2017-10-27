@@ -27,6 +27,7 @@
 #include "media/base/media.h"
 #include "media/media_features.h"
 #include "net/cookies/cookie_monster.h"
+#include "third_party/WebKit/public/platform/InterfaceRegistry.h"
 #include "third_party/WebKit/public/platform/WebConnectionType.h"
 #include "third_party/WebKit/public/platform/WebData.h"
 #include "third_party/WebKit/public/platform/WebNetworkStateNotifier.h"
@@ -115,6 +116,12 @@ class WebURLLoaderFactoryWithMock : public blink::WebURLLoaderFactory {
   DISALLOW_COPY_AND_ASSIGN(WebURLLoaderFactoryWithMock);
 };
 
+class DummyInterfaceRegistry : public blink::InterfaceRegistry {
+ public:
+  void AddInterface(const char* name,
+                    const blink::InterfaceFactory&,
+                    blink::SingleThreadTaskRunnerRefPtr) override {}
+};
 }  // namespace
 
 namespace content {
@@ -158,7 +165,8 @@ TestBlinkWebUnitTestSupport::TestBlinkWebUnitTestSupport()
   // Initialize mojo firstly to enable Blink initialization to use it.
   InitializeMojo();
 
-  blink::Initialize(this);
+  DummyInterfaceRegistry registry;
+  blink::Initialize(this, registry);
   blink::SetLayoutTestMode(true);
   blink::WebRuntimeFeatures::EnableDatabase(true);
   blink::WebRuntimeFeatures::EnableNotifications(true);

@@ -39,6 +39,7 @@
 #include "content/test/test_content_client.h"
 #include "content/test/test_render_frame.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "third_party/WebKit/public/platform/InterfaceRegistry.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
@@ -110,6 +111,13 @@ bool GetWindowsKeyCode(char ascii_character, int* key_code) {
       return false;
   }
 }
+
+class DummyInterfaceRegistry : public blink::InterfaceRegistry {
+ public:
+  void AddInterface(const char* name,
+                    const blink::InterfaceFactory&,
+                    blink::SingleThreadTaskRunnerRefPtr) override {}
+};
 
 }  // namespace
 
@@ -246,7 +254,8 @@ void RenderViewTest::SetUp() {
   // Blink needs to be initialized before calling CreateContentRendererClient()
   // because it uses blink internally.
   blink_platform_impl_.Initialize();
-  blink::Initialize(blink_platform_impl_.Get());
+  DummyInterfaceRegistry registry;
+  blink::Initialize(blink_platform_impl_.Get(), registry);
 
   content_client_.reset(CreateContentClient());
   content_browser_client_.reset(CreateContentBrowserClient());

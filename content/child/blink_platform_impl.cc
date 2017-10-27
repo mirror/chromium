@@ -311,13 +311,14 @@ static int ToMessageID(WebLocalizedString::Name name) {
 BlinkPlatformImpl::BlinkPlatformImpl()
     : BlinkPlatformImpl(base::ThreadTaskRunnerHandle::IsSet()
                             ? base::ThreadTaskRunnerHandle::Get()
-                            : nullptr) {
-}
+                            : nullptr,
+                        nullptr) {}
 
 BlinkPlatformImpl::BlinkPlatformImpl(
-    scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner)
-    : main_thread_task_runner_(main_thread_task_runner) {
-}
+    scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner)
+    : main_thread_task_runner_(main_thread_task_runner),
+      io_thread_task_runner_(io_thread_task_runner) {}
 
 void BlinkPlatformImpl::WaitUntilWebThreadTLSUpdate(
     blink::scheduler::WebThreadBase* thread) {
@@ -748,6 +749,11 @@ BlinkPlatformImpl::DuplicateFeaturePolicyWithOrigin(
     const blink::WebSecurityOrigin& new_origin) {
   return FeaturePolicy::CreateFromPolicyWithOrigin(
       static_cast<const FeaturePolicy&>(policy), url::Origin(new_origin));
+}
+
+scoped_refptr<base::SingleThreadTaskRunner>
+BlinkPlatformImpl::BaseIOTaskRunner() const {
+  return io_thread_task_runner_;
 }
 
 }  // namespace content

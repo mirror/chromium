@@ -9,6 +9,7 @@
 #include "base/task_scheduler/task_scheduler.h"
 #include "gin/v8_initializer.h"
 #include "mojo/edk/embedder/embedder.h"
+#include "third_party/WebKit/public/platform/InterfaceRegistry.h"
 #include "third_party/WebKit/public/platform/WebThread.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebV8ContextSnapshot.h"
@@ -30,6 +31,13 @@ class SnapshotPlatform final : public blink::Platform {
     static SnapshotThread dummy_thread;
     return &dummy_thread;
   }
+};
+
+class SnapshotInterfaceRegistry : public blink::InterfaceRegistry {
+ public:
+  void AddInterface(const char* name,
+                    const blink::InterfaceFactory&,
+                    blink::SingleThreadTaskRunnerRefPtr) override {}
 };
 
 }  // namespace
@@ -54,7 +62,8 @@ int main(int argc, char** argv) {
 
   // Take a snapshot.
   SnapshotPlatform platform;
-  blink::Initialize(&platform);
+  SnapshotInterfaceRegistry registry;
+  blink::Initialize(&platform, registry);
   v8::StartupData blob = blink::WebV8ContextSnapshot::TakeSnapshot();
 
   // Save the snapshot as a file. Filename is given in a command line option.

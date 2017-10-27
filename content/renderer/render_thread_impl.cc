@@ -119,6 +119,7 @@
 #include "content/renderer/media/midi_message_filter.h"
 #include "content/renderer/media/render_media_client.h"
 #include "content/renderer/media/video_capture_impl_manager.h"
+#include "content/renderer/mojo/blink_interface_registry_impl.h"
 #include "content/renderer/mus/render_widget_window_tree_client_factory.h"
 #include "content/renderer/mus/renderer_window_tree_client.h"
 #include "content/renderer/net_info_helper.h"
@@ -137,7 +138,6 @@
 #include "content/renderer/service_worker/service_worker_message_filter.h"
 #include "content/renderer/shared_worker/embedded_shared_worker_stub.h"
 #include "content/renderer/shared_worker/shared_worker_factory_impl.h"
-#include "content/renderer/web_database_impl.h"
 #include "content/renderer/web_database_observer_impl.h"
 #include "content/renderer/worker_thread_registry.h"
 #include "device/gamepad/public/cpp/gamepads.h"
@@ -161,7 +161,6 @@
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/base/url_util.h"
 #include "ppapi/features/features.h"
-#include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
@@ -696,7 +695,8 @@ void RenderThreadImpl::Init(
 
   AddFilter(quota_message_filter_->GetFilter());
 
-  InitializeWebKit(resource_task_queue);
+  auto registry = std::make_unique<service_manager::BinderRegistry>();
+  InitializeWebKit(resource_task_queue, *registry);
   blink_initialized_time_ = base::TimeTicks::Now();
 
   // In single process the single process is all there is.
@@ -777,15 +777,10 @@ void RenderThreadImpl::Init(
   }
 #endif
 
-  {
-    auto registry = std::make_unique<service_manager::BinderRegistry>();
-    registry->AddInterface(base::Bind(&WebDatabaseImpl::Create),
-                           GetIOTaskRunner());
-    registry->AddInterface(base::Bind(&SharedWorkerFactoryImpl::Create),
-                           base::ThreadTaskRunnerHandle::Get());
-    GetServiceManagerConnection()->AddConnectionFilter(
-        std::make_unique<SimpleConnectionFilter>(std::move(registry)));
-  }
+  registry->AddInterface(base::Bind(&SharedWorkerFactoryImpl::Create),
+                         base::ThreadTaskRunnerHandle::Get());
+  GetServiceManagerConnection()->AddConnectionFilter(
+      std::make_unique<SimpleConnectionFilter>(std::move(registry)));
 
   {
     auto registry_with_source_info =
@@ -1211,7 +1206,8 @@ void RenderThreadImpl::InitializeCompositorThread() {
 }
 
 void RenderThreadImpl::InitializeWebKit(
-    const scoped_refptr<base::SingleThreadTaskRunner>& resource_task_queue) {
+    const scoped_refptr<base::SingleThreadTaskRunner>& resource_task_queue,
+    service_manager::BinderRegistry& registry) {
   DCHECK(!blink_platform_impl_);
 
   const base::CommandLine& command_line =
@@ -1228,7 +1224,9 @@ void RenderThreadImpl::InitializeWebKit(
   GetContentClient()
       ->renderer()
       ->SetRuntimeFeaturesDefaultsBeforeBlinkInitialization();
-  blink::Initialize(blink_platform_impl_.get());
+  auto interface_registry =
+      std::make_unique<BlinkInterfaceRegistryImpl>(registry.GetWeakPtr());
+  blink::Initialize(blink_platform_impl_.get(), *interface_registry);
 
   v8::Isolate* isolate = blink::MainThreadIsolate();
   isolate->SetCreateHistogramFunction(CreateHistogram);
