@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8213e5ae_7ca9d072",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitTaskRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-27T20:05:31Z",
+      "side": 1,
+      "message": "Check that the split result has at least one entry.",
+      "range": {
+        "startLine": 96,
+        "startChar": 70,
+        "endLine": 96,
+        "endChar": 71
+      },
+      "revId": "0e688d7005b21f781a880e1606eac8c0bf79560c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf573f3_f5033cb5",
+        "filename": "components/variations/android/java/src/org/chromium/components/variations/firstrun/VariationsSeedFetcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-27T20:05:31Z",
+      "side": 1,
+      "message": "downloadContent() is also called from AwVariationsSeedFetchService.java for android webview. Please update that caller too.\n\nCan either pass empty params from there or ask paulmiller@ on what they should be for that case.",
+      "range": {
+        "startLine": 151,
+        "startChar": 52,
+        "endLine": 151,
+        "endChar": 64
+      },
+      "revId": "0e688d7005b21f781a880e1606eac8c0bf79560c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688b9d1b_f88df8d6",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-27T20:05:31Z",
+      "side": 1,
+      "message": "Nit: Add {}\u0027s for multi-line if body.",
+      "range": {
+        "startLine": 351,
+        "startChar": 48,
+        "endLine": 351,
+        "endChar": 0
+      },
+      "revId": "0e688d7005b21f781a880e1606eac8c0bf79560c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19df05a_e852f9ff",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-27T20:05:31Z",
+      "side": 1,
+      "message": "Can you add an if to make sure there\u0027s at least one entry in the result? In case there are some weird version numbers in some configurations.",
+      "range": {
+        "startLine": 358,
+        "startChar": 71,
+        "endLine": 358,
+        "endChar": 72
+      },
+      "revId": "0e688d7005b21f781a880e1606eac8c0bf79560c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5807b4_89dc2195",
+        "filename": "components/variations/service/variations_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-27T20:05:31Z",
+      "side": 1,
+      "message": "Nit: You can put this initializer on line 91 directly now.",
+      "range": {
+        "startLine": 60,
+        "startChar": 45,
+        "endLine": 60,
+        "endChar": 57
+      },
+      "revId": "0e688d7005b21f781a880e1606eac8c0bf79560c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
