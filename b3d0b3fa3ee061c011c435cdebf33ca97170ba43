@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16989a2b_3f55d576",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion_internal.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T18:54:10Z",
+      "side": 1,
+      "message": "Would you mind sending headers along with the implementation and tests? Otherwise it\u0027s hard to reason what should and what should not be a part of the private interface. Example of a CL could be cwv_autofill_suggestion_internals.h/cwv_autofill_suggestion.mm/cwv_autofill_suggestion_unittests.mm files. And then cwv_autofill_controller_internals.h, cwv_autofill_controller.mm, cwv_autofill_controller_unittest.mm",
+      "range": {
+        "startLine": 22,
+        "startChar": 31,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "b3d0b3fa3ee061c011c435cdebf33ca97170ba43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
