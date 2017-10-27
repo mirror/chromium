@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fd1ba59_8234876e",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-27T23:58:09Z",
+      "side": 1,
+      "message": "nit: two space (or more) indent before comment",
+      "revId": "9d39b1e586f9909f9e91e7bd84ec8c7afe87ea4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8f2864_25943b58",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-27T23:58:09Z",
+      "side": 1,
+      "message": "paper-menu can be removed/replaced as well.\nMD extensions is one of the few remaining users of paper-menu\nhttps://cs.chromium.org/search/?q\u003dpaper-menu%3E+file:html$+-file:third_party\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "9d39b1e586f9909f9e91e7bd84ec8c7afe87ea4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
