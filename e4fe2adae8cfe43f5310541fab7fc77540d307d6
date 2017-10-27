@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30e994ca_dcc770b0",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-27T22:44:12Z",
+      "side": 1,
+      "message": "Should this target name remain the same to preserve previous CF corpus? Or can we rename it to media_mp4_box_reader_fuzzer and somehow migrate the corpus?",
+      "range": {
+        "startLine": 380,
+        "startChar": 15,
+        "endLine": 380,
+        "endChar": 36
+      },
+      "revId": "e4fe2adae8cfe43f5310541fab7fc77540d307d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d3ac64_d938a6c9",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-27T22:44:12Z",
+      "side": 1,
+      "message": "ditto: Preserve target name, or rename target and migrate corpus?",
+      "range": {
+        "startLine": 394,
+        "startChar": 15,
+        "endLine": 394,
+        "endChar": 36
+      },
+      "revId": "e4fe2adae8cfe43f5310541fab7fc77540d307d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
