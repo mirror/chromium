@@ -118,6 +118,8 @@ content::WebUIDataSource* CreateMdExtensionsSource() {
   source->AddLocalizedString("done", IDS_DONE);
   source->AddLocalizedString("ok", IDS_OK);
 
+  source->AddLocalizedString("back", IDS_ACCNAME_BACK);
+
   // Add extension-specific strings.
   source->AddLocalizedString("title",
                              IDS_MANAGE_EXTENSIONS_SETTING_WINDOWS_TITLE);

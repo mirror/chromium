@@ -169,6 +169,7 @@
       <div id="main">
         <div id="top-bar">
           <button id="close-button" is="paper-icon-button-light"
+              aria-label="$i18n{back}"
               class="icon-arrow-back no-overlap"
               on-tap="onCloseButtonTap_"></button>
           <img alt="" id="icon" src="[[data.iconUrl]]">
@@ -329,8 +330,9 @@
         <div class="section control-line actionable" id="extensions-options"
             on-tap="onOptionsTap_"
             hidden$="[[!shouldShowOptionsLink_(data.*)]]">
-          <span>$i18n{itemOptions}</span>
+          <span id="optionLabel">$i18n{itemOptions}</span>
           <button class="icon-external" is="paper-icon-button-light"
+              aria-labelledby="optionLabel"
               actionable></button>
         </div>
         <button class="hr" is="cr-link-row"
