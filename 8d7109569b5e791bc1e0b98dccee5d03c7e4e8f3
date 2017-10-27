@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebb4a379_06dbcb08",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-27T19:42:21Z",
+      "side": 1,
+      "message": "buffers -\u003e buffer",
+      "revId": "8d7109569b5e791bc1e0b98dccee5d03c7e4e8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
