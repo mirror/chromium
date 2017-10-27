@@ -173,11 +173,11 @@ void U2fHidDevice::WriteMessage(std::unique_ptr<U2fMessage> message,
   }
 
   scoped_refptr<net::IOBufferWithSize> io_buffer = message->PopNextPacket();
-  std::vector<uint8_t> buffer(io_buffer->data() + 1,
+  std::vector<uint8_t> buffer(io_buffer->data(),
                               io_buffer->data() + io_buffer->size());
 
   connection_->Write(
-      0 /* report_id */, buffer,
+      kReportId, buffer,
       base::BindOnce(&U2fHidDevice::PacketWritten, weak_factory_.GetWeakPtr(),
                      std::move(message), true, std::move(callback)));
 }

@@ -39,6 +39,10 @@ class U2fHidDevice : public U2fDevice {
   // Command line flag to enable tests on actual U2f HID hardware
   static bool IsTestEnabled();
 
+ protected:
+  // The report_id of HID interface is supported here, so specify it to 0.
+  static constexpr uint8_t kReportId = 0x00;
+
  private:
   FRIEND_TEST_ALL_PREFIXES(U2fHidDeviceTest, TestConnectionFailure);
   FRIEND_TEST_ALL_PREFIXES(U2fHidDeviceTest, TestDeviceError);
