@@ -50,6 +50,15 @@ Polymer({
     },
 
     /**
+     * True if Media Remoting is enabled.
+     * @private {boolean}
+     */
+    mediaRemotingEnabled_: {
+      type: Boolean,
+      value: false,
+    },
+
+    /**
      * The timestamp for when the initial media status was loaded.
      * @private {number}
      */
@@ -362,6 +371,11 @@ Polymer({
     }
     this.hangoutsLocalPresent_ = !!newRouteStatus.hangoutsExtraData &&
         newRouteStatus.hangoutsExtraData.localPresent;
+
+    if (newRouteStatus.mirroringExtraData) {
+      this.mediaRemotingEnabled_ =
+          newRouteStatus.mirroringExtraData.mediaRemotingEnabled;
+    }
   },
 
   /**
@@ -433,6 +447,16 @@ Polymer({
     var target = /** @type {{immediateValue: number}} */ (e.target);
     this.displayedVolume_ = target.immediateValue;
     media_router.browserApi.setCurrentMediaVolume(this.displayedVolume_);
+  },
+
+  /**
+   * Called when the user clicks on or stops dragging the intellicast slider.
+   * @param {!Event} e
+   * @private
+   */
+  onMediaRemotingEnabledChange_: function(e) {
+    this.mediaRemotingEnabled_ = e.target.checked;
+    media_router.browserApi.setMediaRemotingEnabled(this.mediaRemotingEnabled_);
   },
 
   /**

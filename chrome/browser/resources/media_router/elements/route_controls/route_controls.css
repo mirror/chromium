@@ -109,3 +109,18 @@
   margin-top: 2px;
   width: 249px;
 }
+
+#media-remoting-enabled-checkbox {
+  --paper-checkbox-checked-color: #1976D2;
+  --paper-checkbox-vertical-align: middle;
+  --paper-checkbox-label-spacing: 10%;
+  padding: 0.3em 0 0.3em 0;
+  width: 100%;
+}
+
+#media-remoting-enabled-controls {
+  display: inline-block;
+  font-size: 0.8em;
+  margin: 2px 8px;
+  width: 100%;
+}

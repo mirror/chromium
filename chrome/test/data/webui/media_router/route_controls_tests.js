@@ -278,6 +278,27 @@ cr.define('route_controls', function() {
         }, 1000);
       });
 
+      test('set media remoting enabled', function(done) {
+        assertElementHidden('media-remoting-enabled-controls');
+        let routeStatus = createRouteStatus();
+        controls.routeStatus = routeStatus;
+        assertElementHidden('media-remoting-enabled-controls');
+
+        routeStatus = createRouteStatus();
+        routeStatus.mirroringExtraData = {mediaRemotingEnabled: true};
+        controls.routeStatus = routeStatus;
+        assertElementShown('media-remoting-enabled-controls');
+        assertTrue(controls.$$('#media-remoting-enabled-checkbox').checked);
+
+        document.addEventListener('mock-set-media-remoting-enabled',
+            function(e) {
+              done();
+            });
+
+        MockInteractions.tap(controls.$$('#media-remoting-enabled-checkbox'));
+        assertFalse(controls.$$('#media-remoting-enabled-checkbox').checked);
+      });
+
       test('hangouts local present mode', function(done) {
         assertElementHidden('hangouts-local-present-controls');
         let routeStatus = createRouteStatus();
