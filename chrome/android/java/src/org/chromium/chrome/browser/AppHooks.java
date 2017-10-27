@@ -33,6 +33,7 @@ import org.chromium.chrome.browser.offlinepages.CCTRequestStatus;
 import org.chromium.chrome.browser.omaha.RequestGenerator;
 import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmark;
 import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmarksProviderIterator;
+import org.chromium.chrome.browser.partnercustomizations.PartnerBrowserCustomizations;
 import org.chromium.chrome.browser.physicalweb.PhysicalWebBleClient;
 import org.chromium.chrome.browser.policy.PolicyAuditor;
 import org.chromium.chrome.browser.preferences.LocationSettings;
@@ -317,5 +318,9 @@ public abstract class AppHooks {
     public PartnerBookmark.BookmarkIterator getBookmarkIterator() {
         return PartnerBookmarksProviderIterator.createIfAvailable(
                 ContextUtils.getApplicationContext().getContentResolver());
+    }
+
+    public PartnerBrowserCustomizations.Provider getCustomizationProvider() {
+        return new PartnerBrowserCustomizations.ProviderPackage();
     }
 }
