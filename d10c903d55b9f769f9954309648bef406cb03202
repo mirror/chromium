@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "f7f7d87a_5bdd29d5",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-27T21:42:31Z",
+      "side": 1,
+      "message": "style: no need for braces (note the style rule for this is different between c++ and java..)",
+      "revId": "d10c903d55b9f769f9954309648bef406cb03202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09d37ee4_dcda4d00",
         "filename": "cc/trees/layer_tree_host_impl.h",
         "patchSetId": 6
@@ -30,6 +47,23 @@
       "writtenOn": "2017-10-27T21:40:33Z",
       "side": 1,
       "message": "Mention when this can be called (when the active tree\u0027s draw properties are valid, after updating the damage)?",
+      "revId": "d10c903d55b9f769f9954309648bef406cb03202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bb0d1d_d321922f",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-27T21:42:31Z",
+      "side": 1,
+      "message": "would HasDamage read easier?",
       "revId": "d10c903d55b9f769f9954309648bef406cb03202",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
