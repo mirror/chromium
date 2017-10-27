@@ -56,6 +56,9 @@ class VIEWS_EXPORT Combobox : public View,
   // The combobox's class name.
   static const char kViewClassName[];
 
+  // Limit how small a combobox can be.
+  static const int kMinComboboxWidth;
+
   // |model| is owned by the combobox when using this constructor.
   explicit Combobox(std::unique_ptr<ui::ComboboxModel> model,
                     Style style = STYLE_NORMAL);
@@ -117,6 +120,9 @@ class VIEWS_EXPORT Combobox : public View,
   void ButtonPressed(Button* sender, const ui::Event& event) override;
 
  protected:
+  // Returns the width of the combobox's arrow container.
+  int GetArrowContainerWidth() const;
+
   void set_size_to_largest_label(bool size_to_largest_label) {
     size_to_largest_label_ = size_to_largest_label;
   }
@@ -161,9 +167,6 @@ class VIEWS_EXPORT Combobox : public View,
   void HandleClickEvent();
 
   PrefixSelector* GetPrefixSelector();
-
-  // Returns the width of the combobox's arrow container.
-  int GetArrowContainerWidth() const;
 
   // Optionally used to tie the lifetime of the model to this combobox. See
   // constructor.

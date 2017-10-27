@@ -53,22 +53,19 @@ namespace views {
 namespace {
 
 // STYLE_ACTION arrow container padding widths.
-const int kActionLeftPadding = 12;
-const int kActionRightPadding = 11;
+constexpr int kActionLeftPadding = 12;
+constexpr int kActionRightPadding = 11;
 
 // Menu border widths
-const int kMenuBorderWidthLeft = 1;
-const int kMenuBorderWidthTop = 1;
-const int kMenuBorderWidthRight = 1;
-
-// Limit how small a combobox can be.
-const int kMinComboboxWidth = 25;
+constexpr int kMenuBorderWidthLeft = 1;
+constexpr int kMenuBorderWidthTop = 1;
+constexpr int kMenuBorderWidthRight = 1;
 
 // Define the id of the first item in the menu (since it needs to be > 0)
-const int kFirstMenuItemId = 1000;
+constexpr int kFirstMenuItemId = 1000;
 
 // Used to indicate that no item is currently selected by the user.
-const int kNoSelection = -1;
+constexpr int kNoSelection = -1;
 
 const int kBodyButtonImages[] = IMAGE_GRID(IDR_COMBOBOX_BUTTON);
 const int kHoveredBodyButtonImages[] = IMAGE_GRID(IDR_COMBOBOX_BUTTON_H);
@@ -287,7 +284,8 @@ void PaintArrowButton(
 }  // namespace
 
 // static
-const char Combobox::kViewClassName[] = "views/Combobox";
+constexpr char Combobox::kViewClassName[] = "views/Combobox";
+constexpr int Combobox::kMinComboboxWidth = 25;
 
 // Adapts a ui::ComboboxModel to a ui::MenuModel.
 class Combobox::ComboboxMenuModel : public ui::MenuModel,
@@ -820,6 +818,16 @@ void Combobox::ButtonPressed(Button* sender, const ui::Event& event) {
   }
 }
 
+int Combobox::GetArrowContainerWidth() const {
+  constexpr int kMdPaddingWidth = 8;
+  constexpr int kNormalPaddingWidth = 7;
+  int arrow_pad = UseMd() ? kMdPaddingWidth : kNormalPaddingWidth;
+  int padding = style_ == STYLE_NORMAL
+                    ? arrow_pad * 2
+                    : kActionLeftPadding + kActionRightPadding;
+  return ArrowSize().width() + padding;
+}
+
 void Combobox::UpdateBorder() {
   std::unique_ptr<FocusableBorder> border(new FocusableBorder());
   if (style_ == STYLE_ACTION)
@@ -1031,16 +1039,6 @@ PrefixSelector* Combobox::GetPrefixSelector() {
   if (!selector_)
     selector_.reset(new PrefixSelector(this, this));
   return selector_.get();
-}
-
-int Combobox::GetArrowContainerWidth() const {
-  constexpr int kMdPaddingWidth = 8;
-  constexpr int kNormalPaddingWidth = 7;
-  int arrow_pad = UseMd() ? kMdPaddingWidth : kNormalPaddingWidth;
-  int padding = style_ == STYLE_NORMAL
-                    ? arrow_pad * 2
-                    : kActionLeftPadding + kActionRightPadding;
-  return ArrowSize().width() + padding;
 }
 
 }  // namespace views

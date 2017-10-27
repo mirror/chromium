@@ -57,6 +57,13 @@ class PermissionSelectorRow {
 
   void PermissionChanged(const PageInfoUI::PermissionInfo& permission);
 
+  // Returns the maximum content width for all the selectable options in
+  // |combobox_model_adapter_|, provided they don't exceed a max threshold.
+  int GetMaxLinkableContentWidth() const;
+
+  // Sets the minimum width for |combobox_|.
+  void SetMinComboboxContentWidth(int width);
+
  private:
   friend class test::PageInfoBubbleViewTestApi;
 
