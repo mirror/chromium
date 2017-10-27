@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "9ece5b27_5d9bf282",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-27T22:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1d8e6f1_e4f9df7f",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5a0beb3_a91d9c3e",
         "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
         "patchSetId": 3
@@ -210,6 +228,41 @@
       "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d35e8cd_da2dfafc",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-27T22:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e852a4f_00283455",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99d1803f_d57c84e9",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-27T22:33:54Z",
+      "side": 1,
+      "message": "\u003eAlso it seems a bit odd that we are asserting on private member variable |capturing_|. \n\u003e Is that necessary? \n\nIt looks like it\u0027s not necessary.\n\n\u003e Can we not effectively test the same thing via the publicly exposed API, \n\u003e meaning by asserting on whether |input| makes the expected calls to the \n\u003e delegate, instead of asserting on internal non-public state?\"\n\nYeah, it\u0027s this part, \"whether |input| makes the expected calls to the delegate\", is why it looks unnecessary. \n\nI removed the unnecessary bits.\n\nDone",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
