@@ -93,6 +93,30 @@
       "revId": "df6b9cdefefcf9b89b3ad1bb5e3a6496d69f4e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12497a11_d0dd28b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataTabsFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-27T15:34:50Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "a62a5e4f_c112a59f",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 25
+      },
+      "revId": "df6b9cdefefcf9b89b3ad1bb5e3a6496d69f4e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

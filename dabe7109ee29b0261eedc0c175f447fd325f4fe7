@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e86a8f3_e50a3499",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataTabsFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-27T15:34:50Z",
+      "side": 1,
+      "message": "I think we probably want to also set help.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);",
+      "revId": "dabe7109ee29b0261eedc0c175f447fd325f4fe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
