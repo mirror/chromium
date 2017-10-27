@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fd52d91_36f05be4",
+        "filename": "base/win/scoped_com_initializer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-27T20:33:36Z",
+      "side": 0,
+      "message": "Alternatively, rename ScopedCOMInitializer -\u003e ScopedWindowThreadEnvironment and provide a constructor that takes an enum EnvironmentType { STA, MTA, WINRT } (you can have STA as default value). Then, in SchedulerWorkerPoolImpl, use a base::Optional\u003cScopedWindowsThreadEnvironment\u003e instead of a std::unique_ptr\u003cScopedWindowThreadEnvironment\u003e and use .emplace() instead of make_unique\u003c\u003e() to avoid an allocation.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 3
+      },
+      "revId": "b480fe9853eac4050f5575722f83b031e250a2c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
