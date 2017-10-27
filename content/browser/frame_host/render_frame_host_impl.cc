@@ -549,9 +549,12 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
         RenderWidgetHostImpl::FromID(GetProcess()->GetID(), widget_routing_id);
 
     mojom::WidgetInputHandlerAssociatedPtr widget_handler;
+    mojom::WidgetInputHandlerHostPtr host;
+    mojom::WidgetInputHandlerHostRequest host_request =
+        mojo::MakeRequest(&host);
     if (frame_input_handler_) {
       frame_input_handler_->GetWidgetInputHandler(
-          mojo::MakeRequest(&widget_handler));
+          mojo::MakeRequest(&widget_handler), std::move(host));
     }
     if (!render_widget_host_) {
       DCHECK(frame_tree_node->parent());
@@ -564,7 +567,8 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       DCHECK(!render_widget_host_->owned_by_render_frame_host());
       render_widget_host_->SetWidget(std::move(widget));
     }
-    render_widget_host_->SetWidgetInputHandler(std::move(widget_handler));
+    render_widget_host_->SetWidgetInputHandler(std::move(widget_handler),
+                                               std::move(host_request));
     render_widget_host_->input_router()->SetFrameTreeNodeId(
         frame_tree_node_->frame_tree_node_id());
   }
@@ -1242,9 +1246,13 @@ void RenderFrameHostImpl::SetRenderFrameCreated(bool created) {
 
     if (frame_input_handler_) {
       mojom::WidgetInputHandlerAssociatedPtr widget_handler;
+      mojom::WidgetInputHandlerHostPtr host;
+      mojom::WidgetInputHandlerHostRequest host_request =
+          mojo::MakeRequest(&host);
       frame_input_handler_->GetWidgetInputHandler(
-          mojo::MakeRequest(&widget_handler));
-      render_widget_host_->SetWidgetInputHandler(std::move(widget_handler));
+          mojo::MakeRequest(&widget_handler), std::move(host));
+      render_widget_host_->SetWidgetInputHandler(std::move(widget_handler),
+                                                 std::move(host_request));
     }
 
     render_widget_host_->InitForFrame();
