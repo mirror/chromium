@@ -8,6 +8,7 @@
 #import "testing/gtest_mac.h"
 #include "testing/platform_test.h"
 #include "third_party/ocmock/OCMock/OCMock.h"
+#include "url/gurl.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -21,13 +22,15 @@ TEST_F(CRWPlaceholderNavigationInfoTest, SetInfoForNavigation) {
   WKNavigation* navigation = OCMClassMock([WKNavigation class]);
   EXPECT_NSEQ(nil, [CRWPlaceholderNavigationInfo infoForNavigation:navigation]);
 
+  GURL url("http://chromium.test");
   __block BOOL called = NO;
-  ProceduralBlock completionHandler = ^{
+  PlaceholderNavigationCompletion completionHandler = ^(const GURL& url) {
     called = YES;
   };
 
   CRWPlaceholderNavigationInfo* info =
       [CRWPlaceholderNavigationInfo createForNavigation:navigation
+                                                  toURL:url
                                   withCompletionHandler:completionHandler];
   EXPECT_EQ(NO, called);
 
