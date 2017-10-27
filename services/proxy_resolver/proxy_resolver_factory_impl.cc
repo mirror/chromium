@@ -115,6 +115,8 @@ void ProxyResolverFactoryImpl::CreateResolver(
   jobs_[job_ptr] = std::move(job);
 }
 
+void ProxyResolverFactoryImpl::OnResolverDestroyed() {}
+
 void ProxyResolverFactoryImpl::RemoveJob(Job* job) {
   size_t erased_count = jobs_.erase(job);
   DCHECK_EQ(1U, erased_count);
