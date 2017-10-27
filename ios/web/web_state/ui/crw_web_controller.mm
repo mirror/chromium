@@ -580,7 +580,9 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // callback of the placeholder navigation. See "Handling App-specific URLs"
 // section of go/bling-navigation-experiment for details.
 - (void)loadPlaceholderInWebViewForURL:(const GURL&)originalURL
-                     completionHandler:(ProceduralBlock)completionHandler;
+                            virtualURL:(const GURL&)virtualURL
+                     completionHandler:
+                         (PlaceholderNavigationCompletion)completionHandler;
 // Loads the current nativeController in a native view. If a web view is
 // present, removes it and swaps in the native view in its place. |context| can
 // not be null.
@@ -1760,53 +1762,58 @@ registerLoadRequestForURL:(const GURL&)requestURL
 // into the web view, upon the completion of which the native controller will
 // be triggered.
 - (void)loadCurrentURLInNativeView {
-  ProceduralBlock finishLoadCurrentURLInNativeView = ^{
-    web::NavigationItem* item = self.currentNavItem;
-    const GURL targetURL = item ? item->GetURL() : GURL::EmptyGURL();
-    const web::Referrer referrer;
-    id<CRWNativeContent> nativeContent =
-        [_nativeProvider controllerForURL:targetURL webState:self.webState];
-    // Unlike the WebView case, always create a new controller and view.
-    // TODO(crbug.com/759178): What to do if this does return nil?
-    [self setNativeController:nativeContent];
-    if ([nativeContent respondsToSelector:@selector(virtualURL)]) {
-      item->SetVirtualURL([nativeContent virtualURL]);
-    }
+  PlaceholderNavigationCompletion finishLoadCurrentURLInNativeView =
+      ^(const GURL& targetURL) {
+        const web::Referrer referrer;
+        id<CRWNativeContent> nativeContent =
+            [_nativeProvider controllerForURL:targetURL webState:self.webState];
+        // Unlike the WebView case, always create a new controller and view.
+        // TODO(crbug.com/759178): What to do if this does return nil?
+        [self setNativeController:nativeContent];
+        if ([nativeContent respondsToSelector:@selector(virtualURL)]) {
+          web::NavigationItem* item = self.currentNavItem;
+          item->SetVirtualURL([nativeContent virtualURL]);
+        }
 
-    std::unique_ptr<web::NavigationContextImpl> navigationContext =
-        [self registerLoadRequestForURL:targetURL
-                               referrer:referrer
-                             transition:self.currentTransition
-                 sameDocumentNavigation:NO];
-    [self loadNativeViewWithSuccess:YES
-                  navigationContext:navigationContext.get()];
-  };
+        std::unique_ptr<web::NavigationContextImpl> navigationContext =
+            [self registerLoadRequestForURL:targetURL
+                                   referrer:referrer
+                                 transition:self.currentTransition
+                     sameDocumentNavigation:NO];
+        [self loadNativeViewWithSuccess:YES
+                      navigationContext:navigationContext.get()];
+      };
 
+  web::NavigationItem* item = self.currentNavItem;
   if (!web::GetWebClient()->IsSlimNavigationManagerEnabled()) {
     // Free the web view.
     [self removeWebView];
-    finishLoadCurrentURLInNativeView();
+    const GURL targetURL = item ? item->GetURL() : GURL::EmptyGURL();
+    finishLoadCurrentURLInNativeView(targetURL);
   } else {
-    web::NavigationItem* item = self.currentNavItem;
     DCHECK(item);
-    [self loadPlaceholderInWebViewForURL:item->GetVirtualURL()
+    [self loadPlaceholderInWebViewForURL:item->GetURL()
+                              virtualURL:item->GetVirtualURL()
                        completionHandler:finishLoadCurrentURLInNativeView];
   }
 }
 
 - (void)loadPlaceholderInWebViewForURL:(const GURL&)originalURL
-                     completionHandler:(ProceduralBlock)completionHandler {
+                            virtualURL:(const GURL&)virtualURL
+                     completionHandler:
+                         (PlaceholderNavigationCompletion)completionHandler {
   web::WebClient* webClient = web::GetWebClient();
   DCHECK(webClient->IsSlimNavigationManagerEnabled() &&
-         webClient->IsAppSpecificURL(originalURL));
+         webClient->IsAppSpecificURL(virtualURL));
 
-  GURL placeholderURL = CreatePlaceholderUrlForUrl(originalURL);
+  GURL placeholderURL = CreatePlaceholderUrlForUrl(virtualURL);
   [self ensureWebViewCreated];
 
   NSURLRequest* request =
       [NSURLRequest requestWithURL:net::NSURLWithGURL(placeholderURL)];
   WKNavigation* navigation = [_webView loadRequest:request];
   [CRWPlaceholderNavigationInfo createForNavigation:navigation
+                                              toURL:originalURL
                               withCompletionHandler:completionHandler];
 }
 
@@ -4068,18 +4075,20 @@ registerLoadRequestForURL:(const GURL&)requestURL
 - (void)loadHTML:(NSString*)HTML forAppSpecificURL:(const GURL&)URL {
   CHECK(web::GetWebClient()->IsAppSpecificURL(URL));
 
-  ProceduralBlock finishLoadHTMLForAppSpecificURL = ^{
-    [self loadHTML:HTML forURL:URL];
-  };
+  PlaceholderNavigationCompletion finishLoadHTMLForAppSpecificURL =
+      ^(const GURL& targetURL) {
+        [self loadHTML:HTML forURL:targetURL];
+      };
 
   // When using WKBasedNavigationManagerImpl, a placeholder must be loaded into
   // the web view for each WebUI page so that the WKBackForwardList has an entry
   // for each user-visible navigation.
   if (web::GetWebClient()->IsSlimNavigationManagerEnabled()) {
     [self loadPlaceholderInWebViewForURL:URL
+                              virtualURL:URL
                        completionHandler:finishLoadHTMLForAppSpecificURL];
   } else {
-    finishLoadHTMLForAppSpecificURL();
+    finishLoadHTMLForAppSpecificURL(URL);
   }
 }
 
