@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1862f34_8634f7bb",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-27T02:57:57Z",
+      "side": 1,
+      "message": "i am eternally grateful to whoever created this class.",
+      "revId": "59cee12dc643db5677456f49ff6f6a4c61fd5e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
