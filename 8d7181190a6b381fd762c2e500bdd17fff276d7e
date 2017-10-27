@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe29c817_74206933",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-27T12:43:00Z",
+      "side": 1,
+      "message": "nit: go/avoidwe argues that \"we\" is often just making comments ambiguous. In this instance perhaps a better way would be to say: \"...Chrome will try to autofill...\"\n\nPlease also consider using \"we\" in the other added comments.",
+      "range": {
+        "startLine": 98,
+        "startChar": 39,
+        "endLine": 98,
+        "endChar": 41
+      },
+      "revId": "8d7181190a6b381fd762c2e500bdd17fff276d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
