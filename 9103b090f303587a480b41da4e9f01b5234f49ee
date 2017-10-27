@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0731efae_a3839037",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-10-27T23:12:44Z",
+      "side": 1,
+      "message": "shoot, I changed this inadvertently. I\u0027ll change it back, but I\u0027ll hold off in case there are other changes I should make.",
+      "range": {
+        "startLine": 861,
+        "startChar": 17,
+        "endLine": 861,
+        "endChar": 19
+      },
+      "revId": "9103b090f303587a480b41da4e9f01b5234f49ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
