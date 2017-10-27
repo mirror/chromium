@@ -1,9 +1,9 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef ASH_MUS_BRIDGE_SHELL_PORT_MASH_H_
-#define ASH_MUS_BRIDGE_SHELL_PORT_MASH_H_
+#ifndef ASH_MUS_SHELL_PORT_MUS_H_
+#define ASH_MUS_SHELL_PORT_MUS_H_
 
 #include <stdint.h>
 
@@ -34,22 +34,22 @@ class AcceleratorControllerDelegateMus;
 class AcceleratorControllerRegistrar;
 class ImmersiveHandlerFactoryMus;
 class WindowManager;
-class ShellPortMashTestApi;
+class ShellPortMusTestApi;//JAMES
 
-// ShellPort implementation for mash. See ash/README.md for more.
-class ShellPortMash : public ShellPort {
+// ShellPort implementation for mash/mus. See ash/README.md for more.
+class ShellPortMus : public ShellPort {
  public:
-  ShellPortMash(WindowManager* window_manager,
+  ShellPortMus(WindowManager* window_manager,
                 views::PointerWatcherEventRouter* pointer_watcher_event_router);
-  ~ShellPortMash() override;
+  ~ShellPortMus() override;
 
-  static ShellPortMash* Get();
+  static ShellPortMus* Get();
 
   ash::RootWindowController* GetRootWindowControllerWithDisplayId(int64_t id);
 
-  // AcceleratorControllerDelegateClassic* accelerator_controller_delegate_mus() {
-  //   return mus_state_->accelerator_controller_delegate.get();
-  // }
+  AcceleratorControllerDelegateClassic* accelerator_controller_delegate_mus() {
+    return mus_state_->accelerator_controller_delegate.get();
+  }
 
   aura::WindowTreeClient* window_tree_client();
 
@@ -102,33 +102,30 @@ class ShellPortMash : public ShellPort {
   std::unique_ptr<AcceleratorController> CreateAcceleratorController() override;
 
  private:
-  friend class ShellPortMashTestApi;
+  friend class ShellPortMusTestApi;
 
-  struct MashSpecificState {
-    MashSpecificState();
-    ~MashSpecificState();
+  struct MusSpecificState {
+    MusSpecificState();
+    ~MusSpecificState();
 
-    views::PointerWatcherEventRouter* pointer_watcher_event_router = nullptr;
-    std::unique_ptr<AcceleratorControllerDelegateMus>
+    std::unique_ptr<PointerWatcherAdapterClassic> pointer_watcher_adapter;
+    std::unique_ptr<AcceleratorControllerDelegateClassic>
         accelerator_controller_delegate;
-    std::unique_ptr<AcceleratorControllerRegistrar>
-        accelerator_controller_registrar;
-    std::unique_ptr<ImmersiveHandlerFactoryMus> immersive_handler_factory;
   };
 
   WindowManager* window_manager_;
 
-  // TODO(jamescook): Inline the members.
-  std::unique_ptr<MashSpecificState> mash_state_;
+  // TODO(jamescook): Eliminate this and inline members.
+  std::unique_ptr<MusSpecificState> mus_state_;
 
   std::unique_ptr<DisplaySynchronizer> display_synchronizer_;
 
   bool cursor_touch_visible_ = true;
 
-  DISALLOW_COPY_AND_ASSIGN(ShellPortMash);
+  DISALLOW_COPY_AND_ASSIGN(ShellPortMus);
 };
 
 }  // namespace mus
 }  // namespace ash
 
-#endif  // ASH_MUS_BRIDGE_SHELL_PORT_MASH_H_
+#endif  // ASH_MUS_SHELL_PORT_MUS_H_

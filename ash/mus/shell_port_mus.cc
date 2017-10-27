@@ -1,8 +1,8 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/mus/bridge/shell_port_mash.h"
+#include "ash/mus/shell_port_mus.h"
 
 #include <memory>
 #include <utility>
@@ -57,32 +57,28 @@
 namespace ash {
 namespace mus {
 
-ShellPortMash::MashSpecificState::MashSpecificState() = default;
+ShellPortMus::MusSpecificState::MusSpecificState() = default;
 
-ShellPortMash::MashSpecificState::~MashSpecificState() = default;
+ShellPortMus::MusSpecificState::~MusSpecificState() = default;
 
-ShellPortMash::ShellPortMash(
+ShellPortMus::ShellPortMus(
     WindowManager* window_manager,
     views::PointerWatcherEventRouter* pointer_watcher_event_router)
     : window_manager_(window_manager) {
-  DCHECK_EQ(Config::MASH, GetAshConfig());
-  mash_state_ = std::make_unique<MashSpecificState>();
-  mash_state_->pointer_watcher_event_router = pointer_watcher_event_router;
-  mash_state_->immersive_handler_factory =
-      std::make_unique<ImmersiveHandlerFactoryMus>();
+  DCHECK_EQ(Config::MUS, GetAshConfig());
+  mus_state_ = std::make_unique<MusSpecificState>();
 }
 
-ShellPortMash::~ShellPortMash() {}
+ShellPortMus::~ShellPortMus() {}
 
 // static
-ShellPortMash* ShellPortMash::Get() {
+ShellPortMus* ShellPortMus::Get() {
   const ash::Config config = ShellPort::Get()->GetAshConfig();
-  CHECK_EQ(Config::MASH, config);
-  return static_cast<ShellPortMash*>(ShellPort::Get());
+  CHECK(config == Config::MUS);
+  return static_cast<ShellPortMus*>(ShellPort::Get());
 }
 
-//JAMES move up?
-RootWindowController* ShellPortMash::GetRootWindowControllerWithDisplayId(
+RootWindowController* ShellPortMus::GetRootWindowControllerWithDisplayId(
     int64_t id) {
   for (RootWindowController* root_window_controller :
        RootWindowController::root_window_controllers()) {
@@ -95,143 +91,139 @@ RootWindowController* ShellPortMash::GetRootWindowControllerWithDisplayId(
   return nullptr;
 }
 
-//JAMES move up?
-aura::WindowTreeClient* ShellPortMash::window_tree_client() {
+aura::WindowTreeClient* ShellPortMus::window_tree_client() {
   return window_manager_->window_tree_client();
 }
 
-void ShellPortMash::Shutdown() {
+void ShellPortMus::Shutdown() {
   display_synchronizer_.reset();
+
+  mus_state_->pointer_watcher_adapter.reset();
+
   ShellPort::Shutdown();
 }
 
-Config ShellPortMash::GetAshConfig() const {
-  return Config::MASH;
+Config ShellPortMus::GetAshConfig() const {
+  return Config::MUS;
 }
 
-//JAMES move up?
 std::unique_ptr<display::TouchTransformSetter>
-ShellPortMash::CreateTouchTransformDelegate() {
+ShellPortMus::CreateTouchTransformDelegate() {
   return std::make_unique<TouchTransformSetterMus>(
       window_manager_->connector());
 }
 
-void ShellPortMash::LockCursor() {
+void ShellPortMus::LockCursor() {
   // When we are running in mus, we need to keep track of state not just in the
   // window server, but also locally in ash because ash treats the cursor
   // manager as the canonical state for now. NativeCursorManagerAsh will keep
   // this state, while also forwarding it to the window manager for us.
-  window_manager_->window_manager_client()->LockCursor();
+  Shell::Get()->cursor_manager()->LockCursor();
 }
 
-void ShellPortMash::UnlockCursor() {
-  window_manager_->window_manager_client()->UnlockCursor();
+void ShellPortMus::UnlockCursor() {
+  Shell::Get()->cursor_manager()->UnlockCursor();
 }
 
-void ShellPortMash::ShowCursor() {
-  window_manager_->window_manager_client()->SetCursorVisible(true);
+void ShellPortMus::ShowCursor() {
+  Shell::Get()->cursor_manager()->ShowCursor();
 }
 
-void ShellPortMash::HideCursor() {
-  window_manager_->window_manager_client()->SetCursorVisible(false);
+void ShellPortMus::HideCursor() {
+  Shell::Get()->cursor_manager()->HideCursor();
 }
 
-void ShellPortMash::SetCursorSize(ui::CursorSize cursor_size) {
-    window_manager_->window_manager_client()->SetCursorSize(cursor_size);
+void ShellPortMus::SetCursorSize(ui::CursorSize cursor_size) {
+  Shell::Get()->cursor_manager()->SetCursorSize(cursor_size);
 }
 
-void ShellPortMash::SetGlobalOverrideCursor(
+void ShellPortMus::SetGlobalOverrideCursor(
     base::Optional<ui::CursorData> cursor) {
-  window_manager_->window_manager_client()->SetGlobalOverrideCursor(
-      std::move(cursor));
+  NOTREACHED();
 }
 
-bool ShellPortMash::IsMouseEventsEnabled() {
-    return cursor_touch_visible_;
+bool ShellPortMus::IsMouseEventsEnabled() {
+  return Shell::Get()->cursor_manager()->IsMouseEventsEnabled();
 }
 
-void ShellPortMash::SetCursorTouchVisible(bool enabled) {
-  window_manager_->window_manager_client()->SetCursorTouchVisible(enabled);
+void ShellPortMus::SetCursorTouchVisible(bool enabled) {
+  NOTREACHED();
 }
 
-void ShellPortMash::OnCursorTouchVisibleChanged(bool enabled) {
-    cursor_touch_visible_ = enabled;
+void ShellPortMus::OnCursorTouchVisibleChanged(bool enabled) {
+  //JAMES
+  // if (GetAshConfig() == Config::MASH)
+  //   cursor_touch_visible_ = enabled;
 }
 
-std::unique_ptr<WindowResizer> ShellPortMash::CreateDragWindowResizer(
+std::unique_ptr<WindowResizer> ShellPortMus::CreateDragWindowResizer(
     std::unique_ptr<WindowResizer> next_window_resizer,
     wm::WindowState* window_state) {
-  return std::make_unique<ash::mus::DragWindowResizer>(
-      std::move(next_window_resizer), window_state);
+  return base::WrapUnique(ash::DragWindowResizer::Create(
+      next_window_resizer.release(), window_state));
 }
 
 std::unique_ptr<WindowCycleEventFilter>
-ShellPortMash::CreateWindowCycleEventFilter() {
-  // TODO: implement me, http://crbug.com/629191.
-  return nullptr;
+ShellPortMus::CreateWindowCycleEventFilter() {
+  return std::make_unique<WindowCycleEventFilterClassic>();
 }
 
 std::unique_ptr<wm::TabletModeEventHandler>
-ShellPortMash::CreateTabletModeEventHandler() {
-  // TODO: need support for window manager to get events before client:
-  // http://crbug.com/624157.
-  NOTIMPLEMENTED();
-  return nullptr;
+ShellPortMus::CreateTabletModeEventHandler() {
+  return std::make_unique<wm::TabletModeEventHandlerClassic>();
 }
 
 std::unique_ptr<WorkspaceEventHandler>
-ShellPortMash::CreateWorkspaceEventHandler(aura::Window* workspace_window) {
-  return std::make_unique<WorkspaceEventHandlerMus>(workspace_window);
+ShellPortMus::CreateWorkspaceEventHandler(aura::Window* workspace_window) {
+  return std::make_unique<WorkspaceEventHandlerClassic>(workspace_window);
 }
 
 std::unique_ptr<ImmersiveFullscreenController>
-ShellPortMash::CreateImmersiveFullscreenController() {
-  // TODO: Move to Shell.
+ShellPortMus::CreateImmersiveFullscreenController() {
+  // TODO: Move this to Shell.
   return std::make_unique<ImmersiveFullscreenController>();
 }
 
-std::unique_ptr<KeyboardUI> ShellPortMash::CreateKeyboardUI() {
-  return KeyboardUIMus::Create(window_manager_->connector());
+std::unique_ptr<KeyboardUI> ShellPortMus::CreateKeyboardUI() {
+  return KeyboardUI::Create();
 }
 
-void ShellPortMash::AddPointerWatcher(views::PointerWatcher* watcher,
+void ShellPortMus::AddPointerWatcher(views::PointerWatcher* watcher,
                                       views::PointerWatcherEventTypes events) {
-  // TODO: implement drags for mus pointer watcher, http://crbug.com/641164.
-  // NOTIMPLEMENTED drags for mus pointer watcher.
-  mash_state_->pointer_watcher_event_router->AddPointerWatcher(
-      watcher, events == views::PointerWatcherEventTypes::MOVES);
+  mus_state_->pointer_watcher_adapter->AddPointerWatcher(watcher, events);
 }
 
-void ShellPortMash::RemovePointerWatcher(views::PointerWatcher* watcher) {
-  mash_state_->pointer_watcher_event_router->RemovePointerWatcher(watcher);
+void ShellPortMus::RemovePointerWatcher(views::PointerWatcher* watcher) {
+  mus_state_->pointer_watcher_adapter->RemovePointerWatcher(watcher);
 }
 
-bool ShellPortMash::IsTouchDown() {
-  // TODO: implement me, http://crbug.com/634967.
-  // NOTIMPLEMENTED is too spammy here.
-  return false;
+bool ShellPortMus::IsTouchDown() {
+  return aura::Env::GetInstance()->is_touch_down();
 }
 
-void ShellPortMash::ToggleIgnoreExternalKeyboard() {
-  NOTIMPLEMENTED();
+void ShellPortMus::ToggleIgnoreExternalKeyboard() {
+  Shell::Get()->virtual_keyboard_controller()->ToggleIgnoreExternalKeyboard();
 }
 
-void ShellPortMash::SetLaserPointerEnabled(bool enabled) {
-  NOTIMPLEMENTED();
+void ShellPortMus::SetLaserPointerEnabled(bool enabled) {
+  // TODO: Eliminate this.
+  Shell::Get()->laser_pointer_controller()->SetEnabled(enabled);
 }
 
-void ShellPortMash::SetPartialMagnifierEnabled(bool enabled) {
-  NOTIMPLEMENTED();
+void ShellPortMus::SetPartialMagnifierEnabled(bool enabled) {
+  // TODO: Eliminate this.
+  Shell::Get()->partial_magnification_controller()->SetEnabled(enabled);
 }
 
-void ShellPortMash::CreatePointerWatcherAdapter() {
+void ShellPortMus::CreatePointerWatcherAdapter() {
   // In Config::MUS PointerWatcherAdapterClassic must be created when this
   // function is called (it is order dependent), that is not the case with
   // Config::MASH.
+  mus_state_->pointer_watcher_adapter =
+      std::make_unique<PointerWatcherAdapterClassic>();
 }
 
-//JAMES move up?
-std::unique_ptr<AshWindowTreeHost> ShellPortMash::CreateAshWindowTreeHost(
+std::unique_ptr<AshWindowTreeHost> ShellPortMus::CreateAshWindowTreeHost(
     const AshWindowTreeHostInitParams& init_params) {
   std::unique_ptr<aura::DisplayInitParams> display_params =
       std::make_unique<aura::DisplayInitParams>();
@@ -258,7 +250,7 @@ std::unique_ptr<AshWindowTreeHost> ShellPortMash::CreateAshWindowTreeHost(
   return std::make_unique<AshWindowTreeHostMus>(std::move(aura_init_params));
 }
 
-void ShellPortMash::OnCreatedRootWindowContainers(
+void ShellPortMus::OnCreatedRootWindowContainers(
     RootWindowController* root_window_controller) {
   // TODO: To avoid lots of IPC AddActivationParent() should take an array.
   // http://crbug.com/682048.
@@ -271,7 +263,7 @@ void ShellPortMash::OnCreatedRootWindowContainers(
   UpdateSystemModalAndBlockingContainers();
 }
 
-void ShellPortMash::UpdateSystemModalAndBlockingContainers() {
+void ShellPortMus::UpdateSystemModalAndBlockingContainers() {
   std::vector<aura::BlockingContainers> all_blocking_containers;
   for (RootWindowController* root_window_controller :
        Shell::GetAllRootWindowControllers()) {
@@ -286,13 +278,13 @@ void ShellPortMash::UpdateSystemModalAndBlockingContainers() {
       all_blocking_containers);
 }
 
-void ShellPortMash::OnHostsInitialized() {
+void ShellPortMus::OnHostsInitialized() {
   display_synchronizer_ = std::make_unique<DisplaySynchronizer>(
       window_manager_->window_manager_client());
 }
 
 std::unique_ptr<display::NativeDisplayDelegate>
-ShellPortMash::CreateNativeDisplayDelegate() {
+ShellPortMus::CreateNativeDisplayDelegate() {
   display::mojom::NativeDisplayDelegatePtr native_display_delegate;
   if (window_manager_->connector()) {
     window_manager_->connector()->BindInterface(ui::mojom::kServiceName,
@@ -303,24 +295,12 @@ ShellPortMash::CreateNativeDisplayDelegate() {
 }
 
 std::unique_ptr<AcceleratorController>
-ShellPortMash::CreateAcceleratorController() {
-  DCHECK(!mash_state_->accelerator_controller_delegate);
-
-  uint16_t accelerator_namespace_id = 0u;
-  const bool add_result =
-      window_manager_->GetNextAcceleratorNamespaceId(&accelerator_namespace_id);
-  // ShellPortMash is created early on, so that GetNextAcceleratorNamespaceId()
-  // should always succeed.
-  DCHECK(add_result);
-
-  mash_state_->accelerator_controller_delegate =
-      std::make_unique<AcceleratorControllerDelegateMus>(window_manager_);
-  mash_state_->accelerator_controller_registrar =
-      base ::MakeUnique<AcceleratorControllerRegistrar>(
-          window_manager_, accelerator_namespace_id);
+ShellPortMus::CreateAcceleratorController() {
+  DCHECK(!mus_state_->accelerator_controller_delegate);
+  mus_state_->accelerator_controller_delegate =
+      std::make_unique<AcceleratorControllerDelegateClassic>();
   return std::make_unique<AcceleratorController>(
-      mash_state_->accelerator_controller_delegate.get(),
-      mash_state_->accelerator_controller_registrar.get());
+      mus_state_->accelerator_controller_delegate.get(), nullptr);
 }
 
 }  // namespace mus

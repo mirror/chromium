@@ -11,6 +11,7 @@
 #include "ash/accelerators/accelerator_controller_delegate_classic.h"
 #include "ash/display/display_configuration_controller_test_api.h"
 #include "ash/mus/bridge/shell_port_mash.h"
+#include "ash/mus/shell_port_mus.h"
 #include "ash/mus/window_manager.h"
 #include "ash/mus/window_manager_application.h"
 #include "ash/public/cpp/ash_switches.h"
@@ -197,11 +198,12 @@ void AshTestHelper::SetUp(bool start_session, bool provide_local_state) {
             std::unique_ptr<ScreenshotDelegate>(test_screenshot_delegate_));
   } else if (config_ == Config::MUS) {
     test_screenshot_delegate_ = new TestScreenshotDelegate();
-    mus::ShellPortMash::Get()
+    mus::ShellPortMus::Get()
         ->accelerator_controller_delegate_mus()
         ->SetScreenshotDelegate(
             std::unique_ptr<ScreenshotDelegate>(test_screenshot_delegate_));
   }
+  //JAMES config_ == Config::MASH goes here
 }
 
 void AshTestHelper::TearDown() {
